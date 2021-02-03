@@ -137,27 +137,34 @@ describe('packages/mongo-nav/user-menu', () => {
       fireEvent.click(trigger);
     });
 
-    test('atlas SubMenu links to cloud.mongodb.com', () => {
+    test('Atlas SubMenu links to cloud.mongodb.com', () => {
       const cloud = screen.getByText('Cloud').closest('a');
       expect(cloud?.href).toBe('https://cloud.mongodb.com/');
     });
 
-    test('university SubMenu links to university.mongodb.com', () => {
+    test('University SubMenu links to university.mongodb.com', () => {
       const cloud = screen.getByText('University').closest('a');
       expect(cloud?.href).toBe('https://university.mongodb.com/');
     });
 
-    test('docs SubMenu links to docs.mongodb.com', () => {
+    test('Docs SubMenu links to docs.mongodb.com', () => {
       const cloud = screen.getByText('Documentation').closest('a');
       expect(cloud?.href).toBe('https://docs.mongodb.com/');
     });
 
-    test('devhub SubMenu links to developer.mongodb.com', () => {
+    test('Forums SubMenu links to developer.mongodb.com', () => {
+      const cloud = screen.getByText('Forums').closest('a');
+      expect(cloud?.href).toBe(
+        'https://developer.mongodb.com/community/forums',
+      );
+    });
+
+    test('DevHub SubMenu links to developer.mongodb.com', () => {
       const cloud = screen.getByText('Developer Hub').closest('a');
       expect(cloud?.href).toBe('https://developer.mongodb.com/');
     });
 
-    test('support SubMenu links to support.mongodb.com', () => {
+    test('Support SubMenu links to support.mongodb.com', () => {
       const cloud = screen.getByText('Support').closest('a');
       expect(cloud?.href).toBe('https://support.mongodb.com/');
     });

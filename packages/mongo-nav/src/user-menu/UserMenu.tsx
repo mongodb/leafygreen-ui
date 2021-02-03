@@ -151,7 +151,7 @@ const descriptionStyle = css`
 
 interface DescriptionProps {
   isActive: boolean;
-  product: 'cloud' | 'university' | 'support' | 'developer' | 'docs';
+  product: 'cloud' | 'university' | 'support' | 'developer' | 'docs' | 'forums';
   isGovernment?: boolean;
 }
 
@@ -160,15 +160,23 @@ function Description({
   product,
   isGovernment = false,
 }: DescriptionProps) {
+  let link: string;
+
+  if (isGovernment && product === 'cloud') {
+    link = 'cloud.mongodbgov.com';
+  } else if (product === 'forums') {
+    link = 'developer.mongodb.com/community/forums/';
+  } else {
+    link = `${product}.mongodb.com`;
+  }
+
   return (
     <div
       className={cx(productLinkStyle, {
         [activePlatformLinkStyle]: isActive,
       })}
     >
-      {isGovernment && product === 'cloud'
-        ? 'cloud.mongodbgov.com'
-        : `${product}.mongodb.com`}
+      {link}
       <ArrowRightIcon size="small" className={productLinkIconStyle} />
     </div>
   );
@@ -308,14 +316,16 @@ function UserMenu({
   const isGovernment = environment === Environment.Government;
   const isDocs = activePlatform === Platform.Docs;
   const isDevHub = activePlatform === Platform.DevHub;
+  const isForum = activePlatform === Platform.Forum;
+
+  const onClick = (e: React.MouseEvent) => {
+    onProductChange(e);
+    setOpen(false);
+  };
 
   const sharedProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
-    onClick: (e: React.MouseEvent) => {
-      onProductChange(e);
-      setOpen(false);
-    },
   };
 
   const feedbackAnchorProps = {
@@ -390,9 +400,13 @@ function UserMenu({
           <SubMenu
             {...subMenuContainer.prop}
             {...sharedProps}
+            data-testid="user-submenu-cloud"
             active={isCloud}
             disabled={!account}
             href={hosts.cloud}
+            title={isGovernment ? 'Cloud for Government' : 'Cloud'}
+            glyph={<CloudIcon {...ariaHiddenProps} />}
+            onClick={onElementClick(NavElement.UserMenuCloud, onClick)}
             description={
               <Description
                 isActive={isCloud}
@@ -400,8 +414,6 @@ function UserMenu({
                 isGovernment={isGovernment}
               />
             }
-            title={isGovernment ? 'Cloud for Government' : 'Cloud'}
-            glyph={<CloudIcon {...ariaHiddenProps} />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
             })}
@@ -470,6 +482,30 @@ function UserMenu({
           </MenuItem>
         )}
 
+        <MenuItem
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          size="large"
+          active={isDocs}
+          disabled={!account}
+          href="https://docs.mongodb.com"
+          glyph={<DocsIcon {...ariaHiddenProps} />}
+          className={cx(
+            subMenuContainerStyle,
+            {
+              [subMenuActiveContainerStyle]: isDocs,
+            },
+            css`
+              background-color: ${uiColors.gray.light3};
+              border-top: 1px solid ${uiColors.gray.light2};
+            `,
+          )}
+          description={<Description isActive={isDocs} product="docs" />}
+          onClick={onElementClick(NavElement.UserMenuDocs, onClick)}
+        >
+          Documentation
+        </MenuItem>
+
         <SubMenu
           {...subMenuContainer.prop}
           {...sharedProps}
@@ -477,7 +513,9 @@ function UserMenu({
           disabled={!account}
           href={hosts.university}
           title="University"
+          data-testid="user-submenu-university"
           glyph={<UniversityIcon {...ariaHiddenProps} />}
+          onClick={onElementClick(NavElement.UserMenuUniversity, onClick)}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -498,47 +536,49 @@ function UserMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           size="large"
-          active={isDocs}
-          disabled={!account}
-          href="https://docs.mongodb.com"
-          title="Documentation"
-          glyph={<DocsIcon {...ariaHiddenProps} />}
+          active={isForum}
+          data-testid="user-menuitem-forums"
+          href="https://developer.mongodb.com/community/forums/"
+          glyph={<DevHubIcon {...ariaHiddenProps} />}
+          onClick={onElementClick(NavElement.UserMenuForums, onClick)}
           className={cx(
             subMenuContainerStyle,
             {
-              [subMenuActiveContainerStyle]: isDocs,
+              [subMenuActiveContainerStyle]: isForum,
             },
             css`
               background-color: ${uiColors.gray.light3};
               border-top: 1px solid ${uiColors.gray.light2};
             `,
           )}
-          description={<Description isActive={isDocs} product="docs" />}
+          description={<Description isActive={isForum} product="forums" />}
         >
-          Documentation
+          Forums
         </MenuItem>
 
-        <SubMenu
+        <MenuItem
           {...subMenuContainer.prop}
           {...sharedProps}
+          size="large"
           active={isDevHub}
-          disabled={!account}
           href="https://developer.mongodb.com"
-          title="Developer Hub"
+          data-testid="user-menuitem-devhub"
           glyph={<DevHubIcon {...ariaHiddenProps} />}
-          className={cx(subMenuContainerStyle, {
-            [subMenuActiveContainerStyle]: isDevHub,
-          })}
+          onClick={onElementClick(NavElement.UserMenuDevHub, onClick)}
+          className={cx(
+            subMenuContainerStyle,
+            {
+              [subMenuActiveContainerStyle]: isDevHub,
+            },
+            css`
+              background-color: ${uiColors.gray.light3};
+              border-top: 1px solid ${uiColors.gray.light2};
+            `,
+          )}
           description={<Description isActive={isDevHub} product="developer" />}
         >
-          <MenuItem
-            as="a"
-            href="https://developer.mongodb.com/community/forums/"
-            data-testid="user-menuitem-devhub-community"
-          >
-            Forums
-          </MenuItem>
-        </SubMenu>
+          Developer Hub
+        </MenuItem>
 
         <SubMenu
           {...subMenuContainer.prop}
@@ -546,8 +586,10 @@ function UserMenu({
           active={isSupport}
           disabled={!account}
           href={hosts.support}
+          data-testid="user-submenu-support"
           title="Support"
           glyph={<SupportIcon {...ariaHiddenProps} />}
+          onClick={onElementClick(NavElement.UserMenuSupport, onClick)}
           description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
@@ -573,7 +615,7 @@ function UserMenu({
         </MenuItem>
         <MenuSeparator />
         <MenuItem
-          onClick={onLogout}
+          onClick={onElementClick(NavElement.UserMenuLogout, onLogout)}
           href={userMenu.logout}
           as={userMenu.logout ? 'a' : 'button'}
           size="large"
