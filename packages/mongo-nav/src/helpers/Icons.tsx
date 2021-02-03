@@ -496,28 +496,17 @@ export function DevHubIcon(props: HTMLElementProps<'svg'>) {
       version="1.1"
       {...props}
     >
-      <g
-        id="Annotations"
-        stroke="none"
-        strokeWidth="1"
-        fill="none"
-        fillRule="evenodd"
-      >
+      <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g
-          id="03"
           transform="translate(-1607.000000, -498.000000)"
           stroke="currentColor"
         >
-          <g id="Group-2" transform="translate(1586.000000, 177.000000)">
-            <g id="Nav" transform="translate(0.000000, 192.000000)">
-              <g
-                id="Menu-Item-/-Base-/-Support-/-Inactive-Copy"
-                transform="translate(0.000000, 112.000000)"
-              >
-                <g id="Group" transform="translate(20.000000, 16.000000)">
+          <g transform="translate(1586.000000, 177.000000)">
+            <g transform="translate(0.000000, 192.000000)">
+              <g transform="translate(0.000000, 112.000000)">
+                <g transform="translate(20.000000, 16.000000)">
                   <g transform="translate(2.137559, 2.137559)">
                     <rect
-                      id="Rectangle"
                       x="1.77635684e-15"
                       y="3.01980663e-14"
                       width="19.7248819"
@@ -529,26 +518,20 @@ export function DevHubIcon(props: HTMLElementProps<'svg'>) {
                       y1="8.9041144"
                       x2="8.75278527"
                       y2="14.0717614"
-                      id="Path"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     ></line>
                     <polyline
-                      id="Path"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       points="6.2311361 14.0950598 3.62387873 11.4878024 6.2311361 8.88054505"
                     ></polyline>
                     <polyline
-                      id="Path"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       points="13.4937458 14.0950598 16.1010031 11.4878024 13.4937458 8.88054505"
                     ></polyline>
-                    <path
-                      d="M1,1.24344979e-14 L18.7248819,1.24344979e-14 C19.2771666,1.23330448e-14 19.7248819,0.44771525 19.7248819,1 L19.7248819,4.38802133 L19.7248819,4.38802133 L2.66453526e-14,4.38802133 L2.66453526e-14,1 C2.65777172e-14,0.44771525 0.44771525,1.25359509e-14 1,1.24344979e-14 Z"
-                      id="Rectangle"
-                    ></path>
+                    <path d="M1,1.24344979e-14 L18.7248819,1.24344979e-14 C19.2771666,1.23330448e-14 19.7248819,0.44771525 19.7248819,1 L19.7248819,4.38802133 L19.7248819,4.38802133 L2.66453526e-14,4.38802133 L2.66453526e-14,1 C2.65777172e-14,0.44771525 0.44771525,1.25359509e-14 1,1.24344979e-14 Z"></path>
                   </g>
                 </g>
               </g>

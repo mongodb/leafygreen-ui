@@ -140,6 +140,11 @@ const subMenuItemStyle = css`
   justify-content: space-between;
 `;
 
+const menuItemStyle = css`
+  background-color: ${uiColors.gray.light3};
+  border-top: 1px solid ${uiColors.gray.light2};
+`;
+
 const descriptionStyle = css`
   font-size: 12px;
   line-height: 14px;
@@ -219,7 +224,6 @@ interface UserMenuProps {
 
   /**
    * MongoDB platform that is currently active.
-   * Possible values: ['account', 'cloud',  'support', 'university', 'devHub']
    */
   activePlatform?: Platform;
 
@@ -286,9 +290,12 @@ function UserMenu({
         invitations: `${hosts.cloud}/v2#/preferences/invitations`,
         mfa: `${hosts.cloud}/v2#/preferences/2fa`,
       },
+      docs: 'https://docs.mongodb.com',
       university: {
         universityPreferences: `${hosts.university}/edit_profile`,
       },
+      devHub: 'https://developer.mongodb.com',
+      forums: 'https://developer.mongodb.com/community/forums/',
       support: {
         userPreferences: `${hosts.support}/profile`,
       },
@@ -487,19 +494,11 @@ function UserMenu({
           {...sharedProps}
           size="large"
           active={isDocs}
-          disabled={!account}
-          href="https://docs.mongodb.com"
+          href={urls.userMenu.docs}
           glyph={<DocsIcon {...ariaHiddenProps} />}
-          className={cx(
-            subMenuContainerStyle,
-            {
-              [subMenuActiveContainerStyle]: isDocs,
-            },
-            css`
-              background-color: ${uiColors.gray.light3};
-              border-top: 1px solid ${uiColors.gray.light2};
-            `,
-          )}
+          className={cx(subMenuContainerStyle, menuItemStyle, {
+            [subMenuActiveContainerStyle]: isDocs,
+          })}
           description={<Description isActive={isDocs} product="docs" />}
           onClick={onElementClick(NavElement.UserMenuDocs, onClick)}
         >
@@ -538,19 +537,12 @@ function UserMenu({
           size="large"
           active={isForum}
           data-testid="user-menuitem-forums"
-          href="https://developer.mongodb.com/community/forums/"
+          href={urls.userMenu.forums}
           glyph={<DevHubIcon {...ariaHiddenProps} />}
           onClick={onElementClick(NavElement.UserMenuForums, onClick)}
-          className={cx(
-            subMenuContainerStyle,
-            {
-              [subMenuActiveContainerStyle]: isForum,
-            },
-            css`
-              background-color: ${uiColors.gray.light3};
-              border-top: 1px solid ${uiColors.gray.light2};
-            `,
-          )}
+          className={cx(subMenuContainerStyle, menuItemStyle, {
+            [subMenuActiveContainerStyle]: isForum,
+          })}
           description={<Description isActive={isForum} product="forums" />}
         >
           Forums
@@ -561,20 +553,13 @@ function UserMenu({
           {...sharedProps}
           size="large"
           active={isDevHub}
-          href="https://developer.mongodb.com"
+          href={urls.userMenu.devHub}
           data-testid="user-menuitem-devhub"
           glyph={<DevHubIcon {...ariaHiddenProps} />}
           onClick={onElementClick(NavElement.UserMenuDevHub, onClick)}
-          className={cx(
-            subMenuContainerStyle,
-            {
-              [subMenuActiveContainerStyle]: isDevHub,
-            },
-            css`
-              background-color: ${uiColors.gray.light3};
-              border-top: 1px solid ${uiColors.gray.light2};
-            `,
-          )}
+          className={cx(subMenuContainerStyle, menuItemStyle, {
+            [subMenuActiveContainerStyle]: isDevHub,
+          })}
           description={<Description isActive={isDevHub} product="developer" />}
         >
           Developer Hub
