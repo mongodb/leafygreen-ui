@@ -1,6 +1,7 @@
 import { css } from 'emotion';
 import Card from '@leafygreen-ui/card';
 import Toast from '@leafygreen-ui/toast';
+import { breakpoints } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { CDN } from 'utils/routes';
@@ -173,6 +174,9 @@ Toasts can either be dismissable (via the top "X"), or can disappear automatical
     justify-content: flex-start;
     flex-grow: 1;
     width: 824px;
+    @media only screen and (max-width: ${breakpoints.Tablet}px) {
+      width: 100%;
+    }
   `}
 >
   <img
@@ -194,8 +198,11 @@ Do not use toasts for notifying a user of a local action (like pressing copy on 
     justify-content: flex-start;
     flex-grow: 1;
     width: 825px;
-  `}
->
+    @media only screen and (max-width: ${breakpoints.Tablet}px){
+      width: 100%;
+    }
+`}>
+
   <img src={`${CDN}/images/guidelines/toast-6.png`} alt="" width="100%" />
 </div>
 
