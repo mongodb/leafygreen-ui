@@ -87,7 +87,10 @@ export default function Select({
   'aria-labelledby': ariaLabelledBy,
 }: Props) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
-  const labelId = 'aria-labelledby' ?? `${id}-label`;
+  const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
+    ariaLabelledBy,
+    id,
+  ]);
   const descriptionId = `${id}-description`;
   const menuId = `${id}-menu`;
 
@@ -489,6 +492,7 @@ export default function Select({
           aria-describedby={descriptionId}
         >
           <ListMenu
+            labelId={labelId}
             id={menuId}
             referenceElement={menuButtonRef}
             ref={listMenuRef}
