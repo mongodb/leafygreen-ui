@@ -1,8 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import { IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import { Select as LGUISelect, Option } from '@leafygreen-ui/select';
 import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
@@ -105,6 +106,10 @@ export interface SelectInterface extends KnobInterface {
 }
 
 function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
+  const viewport = useViewportSize();
+  const isTouchDevice =
+    viewport !== null ? viewport.width < breakpoints.Tablet : false;
+
   const handleChange = () => {
     onChange(!value, prop);
   };
@@ -131,7 +136,7 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
       <Toggle
         onChange={handleChange}
         checked={value}
-        size="small"
+        size={isTouchDevice ? 'default' : 'small'}
         darkMode={darkMode}
         aria-labelledby={labelId}
       />

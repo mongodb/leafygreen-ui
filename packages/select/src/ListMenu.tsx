@@ -30,6 +30,7 @@ interface ListMenuProps {
   onFocusNextOption: () => void;
   className?: string;
   usePortal?: boolean;
+  labelId?: string;
 }
 
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
@@ -44,6 +45,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       onSelectFocusedOption,
       className,
       usePortal,
+      labelId,
     }: ListMenuProps,
     forwardedRef,
   ) {
@@ -126,6 +128,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         usePortal={usePortal}
       >
         <ul
+          aria-labelledby={labelId}
           role="listbox"
           ref={ref}
           tabIndex={-1}
