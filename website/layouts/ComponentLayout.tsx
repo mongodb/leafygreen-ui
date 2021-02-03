@@ -14,6 +14,7 @@ import { mq } from 'utils/mediaQuery';
 import { pageContainerWidth } from 'styles/constants';
 import figmaLinks from 'utils/figmaLinks';
 import { Component } from 'utils/types';
+import metaTagKey from 'utils/metaTagKey';
 
 const layout = css`
   ${mq({
@@ -96,19 +97,23 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
   const isMobile =
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
+  const pageTitle = `${toTitleCase(
+    componentName,
+  )} – LeafyGreen Design System | MongoDB`;
+
   return (
     <div role="main" className={layout}>
       <Head>
-        <title>
-          {toTitleCase(componentName)} – LeafyGreen Design System | MongoDB
-        </title>
+        <title>{pageTitle}</title>
+
+        <meta property="og:title" content={pageTitle} key={metaTagKey.Title} />
       </Head>
 
       <div className={margin4}>
         {/* Intentionally left blank, as we want to preserve this space for when we */}
         {/* Have other sections on the SideNav and want to add back 'components' above */}
         {/* The name of each component */}
-        <small className={componentsStyle}>‎‎‎‎‏‏‎ ‎</small>
+        <small className={componentsStyle}>‎‎‎‎‏‏‎ </small>
         <div className={flexContainer}>
           <H2 as="h1" className={caps}>
             {componentName.split('-').join(' ')}
