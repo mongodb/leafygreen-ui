@@ -155,7 +155,7 @@ describe('packages/mongo-nav/user-menu', () => {
     test('Forums SubMenu links to developer.mongodb.com', () => {
       const cloud = screen.getByText('Forums').closest('a');
       expect(cloud?.href).toBe(
-        'https://developer.mongodb.com/community/forums',
+        'https://developer.mongodb.com/community/forums/',
       );
     });
 
