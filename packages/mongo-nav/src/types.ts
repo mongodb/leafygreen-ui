@@ -31,6 +31,7 @@ const NavElement = {
   ProjectNavAlerts: 'projectNavAlerts',
   UserMenuTrigger: 'userMenuTrigger',
   UserMenuFeedback: 'userMenuFeedback',
+  UserMenuCloud: 'userMenuCloud',
   UserMenuCloudMFA: 'userMenuCloudMFA',
   UserMenuCloudInvitations: 'userMenuCloudInvitations',
   UserMenuCloudOrganizations: 'userMenuCloudOrganizations',
@@ -45,6 +46,12 @@ const NavElement = {
   UserMenuOnPremFeatureRequest: 'userMenuOnPremFeatureRequest',
   UserMenuOnPremSignOut: 'userMenuOnPremSignOut',
   UserMenuOnPremOther: 'userMenuOnPremOther',
+  UserMenuDocs: 'userMenuDocs',
+  UserMenuUniversity: 'userMenuUniversity',
+  UserMenuDevHub: 'userMenuDevHub',
+  UserMenuForums: 'userMenuForums',
+  UserMenuSupport: 'userMenuSupport',
+  UserMenuLogout: 'userMenuLogout',
 } as const;
 
 type NavElement = typeof NavElement[keyof typeof NavElement];
@@ -100,6 +107,8 @@ const Platform = {
   Support: 'support',
   Cloud: 'cloud',
   Account: 'account',
+  DevHub: 'devHub',
+  Forum: 'forum',
 };
 
 type Platform = typeof Platform[keyof typeof Platform];

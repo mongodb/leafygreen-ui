@@ -142,6 +142,13 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
 
   describe('when the UserMenu is open', () => {
     testForCallback({
+      navElement: NavElement.UserMenuCloud,
+      testId: 'user-submenu-cloud',
+      trigger: 'user-menu-trigger',
+      shouldNavigate: false,
+    });
+
+    testForCallback({
       navElement: NavElement.UserMenuFeedback,
       testId: 'user-menuitem-feedback',
       trigger: 'user-menu-trigger',
@@ -170,6 +177,41 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
       navElement: NavElement.UserMenuCloudUserPreferences,
       testId: 'user-menuitem-cloud-user-preferences',
       trigger: 'user-menu-trigger',
+    });
+
+    testForCallback({
+      navElement: NavElement.UserMenuUniversity,
+      testId: 'user-submenu-university',
+      trigger: 'user-menu-trigger',
+      shouldNavigate: false,
+    });
+
+    testForCallback({
+      navElement: NavElement.UserMenuForums,
+      testId: 'user-menuitem-forums',
+      trigger: 'user-menu-trigger',
+      shouldNavigate: false,
+    });
+
+    testForCallback({
+      navElement: NavElement.UserMenuDevHub,
+      testId: 'user-menuitem-devhub',
+      trigger: 'user-menu-trigger',
+      shouldNavigate: false,
+    });
+
+    testForCallback({
+      navElement: NavElement.UserMenuSupport,
+      testId: 'user-submenu-support',
+      trigger: 'user-menu-trigger',
+      shouldNavigate: false,
+    });
+
+    testForCallback({
+      navElement: NavElement.UserMenuFeedback,
+      testId: 'user-menuitem-feedback',
+      trigger: 'user-menu-trigger',
+      shouldNavigate: false,
     });
 
     testForCallback({
