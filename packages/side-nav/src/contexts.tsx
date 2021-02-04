@@ -15,6 +15,7 @@ interface SideNavGroupData {
   removePath: (path: string) => void;
   collapsed: boolean;
   collapsible: boolean;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 export const SideNavGroupContext = createContext<SideNavGroupData | null>(null);

@@ -1,4 +1,11 @@
-import React, { useCallback, useContext, useEffect, useMemo } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -10,10 +17,12 @@ import {
   OneOf,
 } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
+import Portal from '@leafygreen-ui/portal';
 import { SideNavContext, SideNavGroupContext } from './contexts';
 import {
   GlyphElement,
   GlyphVisibility,
+  sideNavCollapsedWidth,
   sideNavWidth,
   transitionDurationMilliseconds,
 } from './utils';
@@ -89,40 +98,52 @@ const sideNavItemNonGroupLinkStyle = css`
   color: ${uiColors.blue.base};
 `;
 
-const sideNavItemExpandedCollapsibleGroupStyle = css`
+const sideNavItemCollapsibleGroupStyle = css`
   padding-left: 28px;
 `;
 
 const sideNavItemCollapsedStyle = css`
-  padding-top: 0;
-  padding-bottom: 0;
-
-  &:hover {
-    background-color: inherit;
+  & svg:first-child {
+    margin-right: 0;
   }
 `;
 
 const sideNavItemWithGlyphNavCollapsedStyle = css`
-  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
   height: 40px;
-  border-top-width: 1px;
+  width: ${sideNavCollapsedWidth}px;
   color: ${uiColors.green.dark2};
-  overflow: hidden;
-
-  &:hover {
-    cursor: inherit;
-  }
-`;
-
-const sideNavItemContentStyle = css`
+  border-top: 1px solid ${uiColors.gray.light2};
   opacity: 1;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
 `;
 
-const sideNavItemContentCollapsedStyle = css`
-  opacity: 0;
-  height: 0;
+const sideNavItemWithoutGlyphNavCollapsedStyle = css`
+  padding: 0;
 `;
+
+type TransitionStatus = Parameters<
+  Extract<React.ComponentProps<typeof Transition>['children'], Function>
+>[0];
+
+function getCollapsedItemWithGlyphTransitionStyles(
+  state: TransitionStatus,
+): Record<string, boolean> {
+  return {
+    [css`
+      height: 0;
+      padding: 0 16px;
+      opacity: 0;
+      border: none;
+    `]: state === 'exiting' || state === 'exited',
+    [css`
+      overflow: hidden;
+    `]: state === 'exited',
+  };
+}
 
 type Props = {
   className?: string;
@@ -166,6 +187,7 @@ const SideNavItem: ExtendableBox<
   const groupContextData = useContext(SideNavGroupContext);
   const groupCollapsed = groupContextData?.collapsed ?? false;
   const groupCollapsible = groupContextData?.collapsible ?? false;
+  const containerRef = groupContextData?.containerRef ?? null;
 
   const { usingKeyboard } = useUsingKeyboardContext();
 
@@ -243,7 +265,7 @@ const SideNavItem: ExtendableBox<
   const isLink = href !== undefined;
 
   const shouldRenderGlyph = useMemo(() => {
-    if (!hasGlyph || (groupCollapsed && !navCollapsed)) {
+    if (!hasGlyph) {
       return false;
     }
 
@@ -261,15 +283,32 @@ const SideNavItem: ExtendableBox<
       default:
         enforceExhaustive(glyphVisibility);
     }
-  }, [disabled, glyphVisibility, groupCollapsed, hasGlyph, navCollapsed]);
+  }, [disabled, glyphVisibility, hasGlyph, navCollapsed]);
+
+  const shouldRenderCollapsedGlyph = navCollapsed && shouldRenderGlyph;
+
+  // SideNavGroup will animate and hide it's <li /> list
+  // when collapsed so we render outside of the list so
+  // the collapsed state will appear
+  const shouldPortalCollapsedGlyph = isInGroup && shouldRenderCollapsedGlyph;
+  const nodeRef = useRef<HTMLDivElement>(null);
 
   const ariaLabel =
     ariaLabelProp ?? (typeof children === 'string' ? children : undefined);
+
+  const renderedGlyph = shouldRenderGlyph
+    ? React.cloneElement(glyph!, {
+        'aria-hidden': true,
+        role: 'presentation',
+      })
+    : null;
 
   const props = useMemo(() => {
     const commonStyles = cx(sideNavItemStyle, {
       [sideNavItemNonGroupStyle]: !isInGroup,
       [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
+      [sideNavItemCollapsibleGroupStyle]: groupCollapsible,
+      [sideNavItemWithGlyphStyle]: hasGlyph,
     });
 
     if (shouldRenderCollapsedState) {
@@ -277,8 +316,14 @@ const SideNavItem: ExtendableBox<
         'aria-label': shouldRenderGlyph ? ariaLabel : undefined,
         tabIndex: -1,
         className: cx(commonStyles, sideNavItemCollapsedStyle, {
-          [sideNavItemWithGlyphNavCollapsedStyle]: shouldRenderGlyph,
+          [sideNavItemWithGlyphNavCollapsedStyle]:
+            shouldRenderCollapsedGlyph && !shouldPortalCollapsedGlyph,
+          [sideNavItemWithoutGlyphNavCollapsedStyle]: !(
+            isInGroup || shouldRenderCollapsedGlyph
+          ),
         }),
+        children:
+          isInGroup || shouldRenderCollapsedGlyph ? renderedGlyph : null,
       };
     } else {
       return {
@@ -292,48 +337,76 @@ const SideNavItem: ExtendableBox<
           commonStyles,
           {
             [sideNavItemFocusStyle]: usingKeyboard,
-            [sideNavItemWithGlyphStyle]: hasGlyph,
             [sideNavItemActiveStyle]: isActive,
             [sideNavItemDisabledStyle]: disabled,
-            [sideNavItemExpandedCollapsibleGroupStyle]:
-              groupCollapsible && !groupCollapsed,
           },
           className,
         ),
         onClick,
         onKeyDown,
         href,
+        children: (
+          <>
+            {renderedGlyph}
+            {shouldRenderCollapsedGlyph ? null : children}
+          </>
+        ),
       };
     }
   }, [
     ariaLabel,
-    className,
-    disabled,
-    hasGlyph,
-    href,
-    isActive,
     isInGroup,
     isLink,
-    onClick,
-    onKeyDown,
     groupCollapsible,
-    groupCollapsed,
+    hasGlyph,
     shouldRenderCollapsedState,
     shouldRenderGlyph,
+    shouldRenderCollapsedGlyph,
+    shouldPortalCollapsedGlyph,
+    renderedGlyph,
+    isActive,
+    disabled,
     usingKeyboard,
+    className,
+    onClick,
+    onKeyDown,
+    href,
+    children,
   ]);
 
   return (
-    <Box as="a" ref={setRef} {...props} {...rest}>
-      {shouldRenderGlyph && glyph}
-      <div
-        className={cx(sideNavItemContentStyle, {
-          [sideNavItemContentCollapsedStyle]: shouldRenderCollapsedState,
-        })}
+    <>
+      <li role="none">
+        <Box
+          as="a"
+          ref={shouldPortalCollapsedGlyph ? undefined : setRef}
+          role={isInGroup ? 'menuitem' : undefined}
+          {...props}
+          {...rest}
+        />
+      </li>
+      <Transition
+        in={shouldPortalCollapsedGlyph}
+        timeout={transitionDurationMilliseconds}
+        nodeRef={nodeRef}
+        mountOnEnter
+        unmountOnExit
       >
-        {children}
-      </div>
-    </Box>
+        {state => (
+          <Portal container={containerRef?.current}>
+            <div
+              ref={nodeRef}
+              className={cx(
+                sideNavItemWithGlyphNavCollapsedStyle,
+                getCollapsedItemWithGlyphTransitionStyles(state),
+              )}
+            >
+              {renderedGlyph}
+            </div>
+          </Portal>
+        )}
+      </Transition>
+    </>
   );
 });
 

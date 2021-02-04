@@ -20,10 +20,16 @@
       "path": "../icon-button"
     },
     {
+      "path": "../leafygreen-provider"
+    },
+    {
       "path": "../lib"
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../portal"
     },
     {
       "path": "../tooltip"

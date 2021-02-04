@@ -1,7 +1,7 @@
 import React from 'react';
 import {
+  act,
   fireEvent,
-  getByLabelText,
   queryByLabelText,
   render,
   waitFor,
@@ -9,37 +9,6 @@ import {
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { keyMap } from '@leafygreen-ui/lib';
 import { GlyphVisibility, SideNav, SideNavGroup, SideNavItem } from '.';
-
-function toHaveGlyph(
-  item: HTMLElement,
-  glyphLabel: string,
-): jest.CustomMatcherResult {
-  try {
-    const icon = getByLabelText(item, glyphLabel);
-    expect(icon).toBeVisible();
-
-    try {
-      expect(icon).not.toBeInTheDocument();
-    } catch (exception) {
-      return { pass: true, message: () => exception.toString() };
-    }
-
-    throw Error('unreachable');
-  } catch (exception) {
-    return { pass: false, message: () => exception.toString() };
-  }
-}
-
-declare global {
-  namespace jest {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    interface Matchers<R, T> {
-      toHaveGlyph(glyphName: string): R;
-    }
-  }
-}
-
-expect.extend({ toHaveGlyph });
 
 describe('packages/collapsible-side-nav', () => {
   describe('SideNav', () => {
@@ -206,7 +175,7 @@ describe('packages/collapsible-side-nav', () => {
               groupHeader,
             ].forEach(item => {
               expect(item).toBeVisible();
-              expect(item).not.toHaveGlyph('Cloud Icon');
+              expect(item?.querySelector('svg')).toBeNull();
             });
 
             [
@@ -215,7 +184,7 @@ describe('packages/collapsible-side-nav', () => {
               groupWithGlyphHeader,
             ].forEach(item => {
               expect(item).toBeVisible();
-              expect(item).toHaveGlyph('Cloud Icon');
+              expect(item?.querySelector('svg')).toBeVisible();
             });
 
             // Button should have correct aria attributes
@@ -246,7 +215,7 @@ describe('packages/collapsible-side-nav', () => {
               });
 
               expect(groupHeader).toBeVisible();
-              expect(groupHeader).not.toHaveGlyph('Cloud Icon');
+              expect(groupHeader.querySelector('svg')).toBeNull();
 
               [
                 itemWithOnlyCollapsedGlyph,
@@ -254,7 +223,7 @@ describe('packages/collapsible-side-nav', () => {
                 groupWithGlyphHeader,
               ].forEach(item => {
                 expect(item).toBeVisible();
-                expect(item).toHaveGlyph('Cloud Icon');
+                expect(item?.querySelector('svg')).toBeVisible();
               });
 
               // aria attributes have been updated
@@ -299,7 +268,7 @@ describe('packages/collapsible-side-nav', () => {
         function expectCollapsed() {
           const items = ['One', 'Two'].map(label => queryByText(label));
           const header = queryGroupHeaderByLabelText(container, 'group');
-          items.forEach(item => expect(item).not.toBeVisible());
+          items.forEach(item => expect(item).not.toBeInTheDocument());
           expect(header).not.toBeInTheDocument();
 
           // Button should have correct aria attributes
@@ -331,10 +300,18 @@ describe('packages/collapsible-side-nav', () => {
         expect(nav).toBeVisible();
 
         fireEvent.mouseOver(nav!);
-        await waitFor(() => expectHovered());
+        await waitFor(() => {
+          act(() => {
+            expectHovered();
+          });
+        });
 
         fireEvent.mouseLeave(nav!);
-        await waitFor(() => expectCollapsed());
+        await waitFor(() => {
+          act(() => {
+            expectCollapsed();
+          });
+        });
       });
     });
 

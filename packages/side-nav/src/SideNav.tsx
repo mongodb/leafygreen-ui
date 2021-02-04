@@ -20,7 +20,7 @@ const navStyle = css`
   min-height: 100%;
   min-width: ${sideNavWidth}px;
   width: ${sideNavWidth}px;
-
+  user-select: none;
   background-color: ${uiColors.gray.light3};
   border-right: 1px solid ${uiColors.gray.light2};
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
@@ -49,14 +49,21 @@ const collapsedSpacerStyle = css`
 
 const navListStyle = css`
   position: relative;
-  padding-top: 16px;
-  height: 100%;
+  padding: 0;
+  margin-top: 16px;
   overflow: hidden;
+  list-style: none;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+  border-top: 1px solid rgba(0, 0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
 `;
 
 const collapsedNavListStyle = css`
-  padding-top: 64px;
+  margin-top: 64px;
+
+  &:not(:empty) {
+    border-bottom-color: ${uiColors.gray.light2};
+  }
 `;
 
 type Props = {
@@ -162,13 +169,13 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
             hovered={hovered}
           />
         )}
-        <div
+        <ul
           className={cx(navListStyle, {
             [collapsedNavListStyle]: shouldRenderCollapsedState,
           })}
         >
           {children}
-        </div>
+        </ul>
       </nav>
     </SideNavContext.Provider>
   );

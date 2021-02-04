@@ -5,13 +5,13 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Overline } from '@leafygreen-ui/typography';
 import {
-  createDataProp,
   HTMLElementProps,
   IdAllocator,
   keyMap,
@@ -21,26 +21,21 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { SideNavContext, SideNavGroupContext } from './contexts';
 import { GlyphElement, transitionDurationMilliseconds } from './utils';
 
-const childContainerDataProp = createDataProp('side-nav-group-child-container');
-
 const sideNavGroupStyle = css`
   display: flex;
   flex-direction: column;
   margin-top: 8px;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out, margin none;
   border: 0 solid rgba(0, 0, 0, 0);
-  border-top-width: 1px;
   cursor: default;
 
-  &:last-of-type {
-    border-bottom-width: 1px;
-  }
+  // &:last-of-type {
+  //   border-bottom-width: 1px;
+  // }
 `;
 
 const sideNavGroupExpandedCollapsibleStyle = css`
-  &:not(:last-of-type) {
-    border-bottom: 1px solid ${uiColors.gray.light2};
-  }
+  border-bottom: 1px solid ${uiColors.gray.light2};
 `;
 
 const sideNavGroupNavCollapsedStyle = css`
@@ -49,6 +44,7 @@ const sideNavGroupNavCollapsedStyle = css`
 
 const sideNavGroupWithGlyphNavCollapsedStyle = css`
   border-color: ${uiColors.gray.light2};
+  border-top: 1px solid ${uiColors.gray.light2};
 `;
 
 const sideNavGroupWithGlyphNavCollapsedAndCurrentStyle = css`
@@ -63,7 +59,7 @@ const sideNavGroupHeaderStyle = css`
   color: ${uiColors.green.dark2};
   outline: none;
 
-  &:hover + ${childContainerDataProp.selector} {
+  &:hover {
     border-color: ${uiColors.green.base};
   }
 `;
@@ -71,10 +67,7 @@ const sideNavGroupHeaderStyle = css`
 const sideNavGroupHeaderFocusStyle = css`
   &:focus {
     color: ${uiColors.blue.base};
-
-    & + ${childContainerDataProp.selector} {
-      border-color: ${uiColors.blue.base};
-    }
+    border-color: ${uiColors.blue.base};
   }
 `;
 
@@ -89,6 +82,7 @@ const sideNavGroupHeaderWithGlyphNavCollapsedStyle = css`
 
 const sideNavGroupHeaderCollapsibleStyle = css`
   cursor: pointer;
+  border-bottom: 1px solid ${uiColors.gray.light2};
 `;
 
 const glyphStyle = css`
@@ -99,8 +93,8 @@ const glyphStyle = css`
 `;
 
 const chevronStyle = css`
-  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
   margin: 0 6px;
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
 `;
 
 const chevronCollapsedStyle = css`
@@ -111,11 +105,35 @@ const sideNavGroupHeaderTextStyle = css`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  color: ${uiColors.green.dark2};
+  color: inherit;
 `;
 
-const sideNavGroupChildrenCollapsibleStyle = css`
-  border-top: 1px solid ${uiColors.gray.light2};
+const sideNavGroupChildrenStyle = css`
+  opacity: 1;
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+`;
+
+type TransitionStatus = Parameters<
+  Extract<React.ComponentProps<typeof Transition>['children'], Function>
+>[0];
+
+function getGroupChildrenTransitionStyles(
+  state: TransitionStatus,
+): Record<string, boolean> {
+  return {
+    [css`
+      max-height: 0;
+      opacity: 0;
+    `]: state === 'exiting' || state === 'exited',
+    [css`
+      overflow: hidden;
+    `]: state === 'exited',
+  };
+}
+
+const ulStyle = css`
+  padding: 0;
+  list-style: none;
 `;
 
 type Props = {
@@ -131,7 +149,7 @@ type Props = {
 
 const idAllocator = IdAllocator.create('side-nav-group-header');
 
-const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
+const SideNavGroup = React.forwardRef<HTMLLIElement, Props>(
   function SideNavGroup(
     {
       className,
@@ -233,86 +251,119 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
       }
     }, [canRenderAsCollapsible, collapsed, id, toggleCollapse]);
 
+    const nodeRef = React.useRef<HTMLDivElement>(null);
+    const groupRef = React.useRef<HTMLDivElement>(null);
+    const ulRef = React.useRef<HTMLUListElement>(null);
+
     const providerData = useMemo(
       () => ({
         addPath,
         removePath,
         collapsed,
         collapsible,
+        containerRef: groupRef,
       }),
-      [addPath, removePath, collapsible, collapsed],
+      [addPath, removePath, collapsible, collapsed, groupRef],
     );
+
+    const shouldCollapseChildren = collapsed || navCollapsed;
 
     return (
       /* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */
-      <div
-        ref={ref}
-        role={navCollapsed ? undefined : 'group'}
-        aria-labelledby={navCollapsed ? undefined : id}
-        aria-label={navCollapsed && !hasGlyph ? ariaLabel : undefined}
-        className={cx(
-          sideNavGroupStyle,
-          {
-            [sideNavGroupNavCollapsedStyle]: navCollapsed,
-            [sideNavGroupExpandedCollapsibleStyle]:
-              canRenderAsCollapsible && !collapsed,
-            [sideNavGroupWithGlyphNavCollapsedStyle]: hasGlyph && navCollapsed,
-            [sideNavGroupWithGlyphNavCollapsedAndCurrentStyle]:
-              navCollapsed && containsCurrentPath && hasGlyph,
-          },
-          className,
-        )}
-        {...rest}
-      >
+      <li ref={ref}>
         <div
-          id={id}
-          aria-hidden={navCollapsed}
-          className={cx(sideNavGroupHeaderStyle, {
-            [sideNavGroupHeaderFocusStyle]: usingKeyboard,
-            [sideNavGroupHeaderNavCollapsedStyle]: navCollapsed,
-            [sideNavGroupHeaderWithGlyphNavCollapsedStyle]:
-              hasGlyph && navCollapsed,
-            [sideNavGroupHeaderCollapsibleStyle]: canRenderAsCollapsible,
-          })}
-          {...headerProps}
+          ref={groupRef}
+          aria-labelledby={navCollapsed ? undefined : id}
+          aria-label={navCollapsed && !hasGlyph ? ariaLabel : undefined}
+          className={cx(
+            sideNavGroupStyle,
+            {
+              [sideNavGroupNavCollapsedStyle]: navCollapsed,
+              [sideNavGroupExpandedCollapsibleStyle]:
+                canRenderAsCollapsible && !collapsed,
+              [sideNavGroupWithGlyphNavCollapsedStyle]:
+                hasGlyph && navCollapsed,
+              [sideNavGroupWithGlyphNavCollapsedAndCurrentStyle]:
+                navCollapsed && containsCurrentPath && hasGlyph,
+            },
+            className,
+          )}
+          {...rest}
         >
           <div
-            className={css`
-              display: flex;
-              // Leave space for chevron and its margins = 16px + 2 * 6px
-              width: calc(100% - 28px);
-            `}
+            id={id}
+            aria-hidden={navCollapsed}
+            className={cx(sideNavGroupHeaderStyle, {
+              [sideNavGroupHeaderFocusStyle]: usingKeyboard,
+              [sideNavGroupHeaderNavCollapsedStyle]: navCollapsed,
+              [sideNavGroupHeaderWithGlyphNavCollapsedStyle]:
+                hasGlyph && navCollapsed,
+              [sideNavGroupHeaderCollapsibleStyle]: canRenderAsCollapsible,
+            })}
+            {...headerProps}
           >
-            {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
+            <div
+              className={css`
+                display: flex;
+                // Leave space for chevron and its margins = 16px + 2 * 6px
+                width: calc(100% - ${canRenderAsCollapsible ? 28 : 0}px);
+              `}
+            >
+              {hasGlyph && (
+                <div className={glyphStyle}>
+                  {React.cloneElement(glyph!, {
+                    'aria-hidden': true,
+                    role: 'presentation',
+                  })}
+                </div>
+              )}
 
-            {!navCollapsed && (
-              <Overline className={sideNavGroupHeaderTextStyle}>
-                {label}
-              </Overline>
+              {!navCollapsed && (
+                <Overline as="h2" className={sideNavGroupHeaderTextStyle}>
+                  {label}
+                </Overline>
+              )}
+            </div>
+            {canRenderAsCollapsible && (
+              <ChevronDownIcon
+                size="small"
+                className={cx(chevronStyle, {
+                  [chevronCollapsedStyle]: collapsed,
+                })}
+                aria-hidden
+                role="presentation"
+              />
             )}
           </div>
-          {canRenderAsCollapsible && (
-            <ChevronDownIcon
-              size="small"
-              className={cx(chevronStyle, {
-                [chevronCollapsedStyle]: collapsed,
-              })}
-              aria-hidden
-              role="presentation"
-            />
-          )}
+          <Transition
+            in={!shouldCollapseChildren}
+            timeout={transitionDurationMilliseconds}
+            nodeRef={nodeRef}
+            mountOnEnter
+          >
+            {state => (
+              <div
+                ref={nodeRef}
+                aria-hidden={shouldCollapseChildren}
+                className={cx(
+                  sideNavGroupChildrenStyle,
+                  css`
+                    max-height: ${ulRef.current?.getBoundingClientRect?.()
+                      ?.height}px;
+                  `,
+                  getGroupChildrenTransitionStyles(state),
+                )}
+              >
+                <ul ref={ulRef} role="menu" className={ulStyle}>
+                  <SideNavGroupContext.Provider value={providerData}>
+                    {children}
+                  </SideNavGroupContext.Provider>
+                </ul>
+              </div>
+            )}
+          </Transition>
         </div>
-        <div
-          {...childContainerDataProp.prop}
-          className={cx({
-            [sideNavGroupChildrenCollapsibleStyle]: canRenderAsCollapsible,
-          })}
-        >
-          <SideNavGroupContext.Provider value={providerData}>
-            {children}
-          </SideNavGroupContext.Provider>
-        </div>
-      </div>
+      </li>
     );
   },
 );
