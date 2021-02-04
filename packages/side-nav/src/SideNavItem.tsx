@@ -76,7 +76,7 @@ const sideNavItemDisabledStyle = css`
 `;
 
 const sideNavItemWithGlyphStyle = css`
-  & svg:first-child {
+  & > svg:first-child {
     margin-right: 5px;
   }
 `;
@@ -128,6 +128,12 @@ const sideNavItemWithGlyphNavCollapsedStyle = css`
   border-top: 1px solid ${uiColors.gray.light2};
   opacity: 1;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+`;
+
+const sideNavItemNonGroupWithGlyphNavCollapsedStyle = css`
+  & > svg:first-child {
+    margin-right: 0;
+  }
 `;
 
 const sideNavItemWithoutGlyphNavCollapsedStyle = css`
@@ -327,6 +333,10 @@ const SideNavItem: ExtendableBox<
         className: cx(commonStyles, {
           [sideNavItemWithGlyphNavCollapsedStyle]:
             shouldRenderCollapsedGlyph && !shouldPortalCollapsedGlyph,
+          [sideNavItemNonGroupWithGlyphNavCollapsedStyle]:
+            !isInGroup &&
+            shouldRenderCollapsedGlyph &&
+            !shouldPortalCollapsedGlyph,
           [sideNavItemWithoutGlyphNavCollapsedStyle]: !(
             isInGroup || shouldRenderCollapsedGlyph
           ),
