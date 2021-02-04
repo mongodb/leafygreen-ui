@@ -339,10 +339,12 @@ function Tooltip({
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
+  const active = enabled && open;
+
   const tooltip = (
     <Popover
       key="tooltip"
-      active={enabled && open}
+      active={active}
       align={align}
       justify={justify}
       adjustOnMutation={true}
@@ -393,14 +395,14 @@ function Tooltip({
       return trigger({
         ...createTriggerProps(triggerEvent),
         className: positionRelative,
-        'aria-describedby': tooltipId,
+        'aria-describedby': active ? tooltipId : undefined,
         children: tooltip,
       });
     }
 
     return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
-      'aria-describedby': tooltipId,
+      'aria-describedby': active ? tooltipId : undefined,
       children: (
         <>
           {trigger.props.children}
