@@ -292,7 +292,7 @@ function UserMenu({
         universityPreferences: `${hosts.university}/edit_profile`,
       },
       devHub: 'https://developer.mongodb.com',
-      forums: 'https://forums.mongodb.com',
+      forums: 'http://forums.mongodb.com',
       support: {
         userPreferences: `${hosts.support}/profile`,
       },

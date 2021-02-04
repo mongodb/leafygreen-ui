@@ -149,7 +149,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
     test('Forums SubMenu links to developer.mongodb.com', () => {
       const cloud = screen.getByText('Forums').closest('a');
-      expect(cloud?.href).toBe('https://forums.mongodb.com/');
+      expect(cloud?.href).toBe('http://forums.mongodb.com/');
     });
 
     test('DevHub SubMenu links to developer.mongodb.com', () => {
