@@ -34,6 +34,8 @@ import {
   SupportIcon,
   UniversityIcon,
   MegaphoneIcon,
+  DevHubIcon,
+  ForumsIcon,
 } from '../helpers/Icons';
 
 const subMenuContainer = createDataProp('sub-menu-container');
@@ -138,6 +140,11 @@ const subMenuItemStyle = css`
   justify-content: space-between;
 `;
 
+const menuItemStyle = css`
+  background-color: ${uiColors.gray.light3};
+  border-top: 1px solid ${uiColors.gray.light2};
+`;
+
 const descriptionStyle = css`
   font-size: 12px;
   line-height: 14px;
@@ -149,7 +156,7 @@ const descriptionStyle = css`
 
 interface DescriptionProps {
   isActive: boolean;
-  product: 'cloud' | 'university' | 'support';
+  product: 'cloud' | 'university' | 'support' | 'developer' | 'docs' | 'forums';
   isGovernment?: boolean;
 }
 
@@ -158,15 +165,21 @@ function Description({
   product,
   isGovernment = false,
 }: DescriptionProps) {
+  let link: string;
+
+  if (isGovernment && product === 'cloud') {
+    link = 'cloud.mongodbgov.com';
+  } else {
+    link = `${product}.mongodb.com`;
+  }
+
   return (
     <div
       className={cx(productLinkStyle, {
         [activePlatformLinkStyle]: isActive,
       })}
     >
-      {isGovernment && product === 'cloud'
-        ? 'cloud.mongodbgov.com'
-        : `${product}.mongodb.com`}
+      {link}
       <ArrowRightIcon size="small" className={productLinkIconStyle} />
     </div>
   );
@@ -209,7 +222,6 @@ interface UserMenuProps {
 
   /**
    * MongoDB platform that is currently active.
-   * Possible values: ['account', 'cloud',  'support', 'university']
    */
   activePlatform?: Platform;
 
@@ -279,6 +291,8 @@ function UserMenu({
       university: {
         universityPreferences: `${hosts.university}/edit_profile`,
       },
+      devHub: 'https://developer.mongodb.com',
+      forums: 'https://forums.mongodb.com',
       support: {
         userPreferences: `${hosts.support}/profile`,
       },
@@ -304,20 +318,29 @@ function UserMenu({
   const isSupport = activePlatform === Platform.Support;
   const isUniversity = activePlatform === Platform.University;
   const isGovernment = environment === Environment.Government;
+  const isDevHub = activePlatform === Platform.DevHub;
+  const isForums = activePlatform === Platform.Forum;
+
+  const onClick = (e: React.MouseEvent) => {
+    onProductChange(e);
+    setOpen(false);
+  };
 
   const sharedProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
-    onClick: (e: React.MouseEvent) => {
-      onProductChange(e);
-      setOpen(false);
-    },
   };
 
   const feedbackAnchorProps = {
     href: 'https://feedback.mongodb.com/',
     target: '_blank',
     rel: 'noopener noreferrer',
+  };
+
+  const ariaHiddenProps = {
+    'aria-hidden': true,
+    alt: '',
+    role: 'presentation',
   };
 
   const [triggerNode, setTriggerNode] = useState<HTMLDivElement | null>(null);
@@ -380,9 +403,13 @@ function UserMenu({
           <SubMenu
             {...subMenuContainer.prop}
             {...sharedProps}
+            data-testid="user-submenu-cloud"
             active={isCloud}
             disabled={!account}
             href={hosts.cloud}
+            title={isGovernment ? 'Cloud for Government' : 'Cloud'}
+            glyph={<CloudIcon {...ariaHiddenProps} />}
+            onClick={onElementClick(NavElement.UserMenuCloud, onClick)}
             description={
               <Description
                 isActive={isCloud}
@@ -390,8 +417,6 @@ function UserMenu({
                 isGovernment={isGovernment}
               />
             }
-            title={isGovernment ? 'Cloud for Government' : 'Cloud'}
-            glyph={<CloudIcon />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
             })}
@@ -447,7 +472,7 @@ function UserMenu({
             {...menuItemContainer.prop}
             href={hosts.cloud}
             size="large"
-            glyph={<CloudIcon />}
+            glyph={<CloudIcon {...ariaHiddenProps} />}
             description={
               <Description
                 isActive={false}
@@ -459,6 +484,7 @@ function UserMenu({
             {isGovernment ? 'Cloud for Government' : 'Cloud'}
           </MenuItem>
         )}
+
         <SubMenu
           {...subMenuContainer.prop}
           {...sharedProps}
@@ -466,7 +492,9 @@ function UserMenu({
           disabled={!account}
           href={hosts.university}
           title="University"
-          glyph={<UniversityIcon />}
+          data-testid="user-submenu-university"
+          glyph={<UniversityIcon {...ariaHiddenProps} />}
+          onClick={onElementClick(NavElement.UserMenuUniversity, onClick)}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -482,14 +510,51 @@ function UserMenu({
             University Preferences
           </MenuItem>
         </SubMenu>
+
+        <MenuItem
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          size="large"
+          active={isForums}
+          data-testid="user-menuitem-forums"
+          href={urls.userMenu.forums}
+          glyph={<ForumsIcon {...ariaHiddenProps} />}
+          onClick={onElementClick(NavElement.UserMenuForums, onClick)}
+          className={cx(subMenuContainerStyle, menuItemStyle, {
+            [subMenuActiveContainerStyle]: isForums,
+          })}
+          description={<Description isActive={isForums} product="forums" />}
+        >
+          Forums
+        </MenuItem>
+
+        <MenuItem
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          size="large"
+          active={isDevHub}
+          href={urls.userMenu.devHub}
+          data-testid="user-menuitem-devhub"
+          glyph={<DevHubIcon {...ariaHiddenProps} />}
+          onClick={onElementClick(NavElement.UserMenuDevHub, onClick)}
+          className={cx(subMenuContainerStyle, menuItemStyle, {
+            [subMenuActiveContainerStyle]: isDevHub,
+          })}
+          description={<Description isActive={isDevHub} product="developer" />}
+        >
+          Developer Hub
+        </MenuItem>
+
         <SubMenu
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isSupport}
           disabled={!account}
           href={hosts.support}
+          data-testid="user-submenu-support"
           title="Support"
-          glyph={<SupportIcon />}
+          glyph={<SupportIcon {...ariaHiddenProps} />}
+          onClick={onElementClick(NavElement.UserMenuSupport, onClick)}
           description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
@@ -507,7 +572,7 @@ function UserMenu({
         <MenuItem
           {...feedbackAnchorProps}
           size="large"
-          glyph={<MegaphoneIcon />}
+          glyph={<MegaphoneIcon {...ariaHiddenProps} />}
           data-testid="user-menuitem-feedback"
           onClick={onElementClick(NavElement.UserMenuFeedback)}
         >
@@ -515,7 +580,7 @@ function UserMenu({
         </MenuItem>
         <MenuSeparator />
         <MenuItem
-          onClick={onLogout}
+          onClick={onElementClick(NavElement.UserMenuLogout, onLogout)}
           href={userMenu.logout}
           as={userMenu.logout ? 'a' : 'button'}
           size="large"
@@ -537,6 +602,8 @@ UserMenu.propTypes = {
     'cloud',
     'support',
     'university',
+    'devHub',
+    'forums',
   ]),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
