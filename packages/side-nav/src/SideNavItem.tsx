@@ -51,7 +51,9 @@ const sideNavItemStyle = css`
   // Chrome has a bug that makes the border black during transition so
   // just disable the border transition since it's hard to notice anyway
   transition: all ${transitionDurationMilliseconds}ms ease-in-out, border none;
+`;
 
+const sideNavItemExpandedStyle = css`
   &:hover {
     background-color: ${uiColors.gray.light2};
   }
@@ -362,6 +364,7 @@ const SideNavItem: ExtendableBox<
         tabIndex: disabled ? -1 : 0,
         className: cx(
           commonStyles,
+          sideNavItemExpandedStyle,
           {
             [sideNavItemFocusStyle]: usingKeyboard,
             [sideNavItemActiveStyle]: isActive,
