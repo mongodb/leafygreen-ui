@@ -110,90 +110,82 @@ describe('packages/collapsible-side-nav', () => {
         },
       } as const;
 
-      test.each(Object.keys(actions) as Array<keyof typeof actions>)(
-        'collapses and expands when %s',
-        action => {
-          const { container, getByLabelText, queryByLabelText } = render(
-            <SideNav>
-              <SideNavItem>Item</SideNavItem>
-              <SideNavItem glyph={<CloudIcon />}>
-                Item With Only Collapsed Glyph
-              </SideNavItem>
-              <SideNavItem
-                glyph={<CloudIcon />}
-                glyphVisibility={GlyphVisibility.NavExpanded}
-              >
-                Item With Only Expanded Glyph
-              </SideNavItem>
-              <SideNavItem
-                glyph={<CloudIcon />}
-                glyphVisibility={GlyphVisibility.Visible}
-              >
-                Item With Always Visible Glyph
-              </SideNavItem>
-              <SideNavGroup label="Group">
-                <SideNavItem>Group Item</SideNavItem>
-              </SideNavGroup>
-              <SideNavGroup label="Group with Glyph" glyph={<CloudIcon />}>
-                <SideNavItem>Group With Glyph Item</SideNavItem>
+      describe('non-collapsible nav', () => {
+        test('renders no collapse button', () => {
+          const { queryByLabelText } = render(
+            <SideNav collapsible={false}>
+              <SideNavItem path="/one">One</SideNavItem>
+              <SideNavGroup label="group">
+                <SideNavItem path="/two">Two</SideNavItem>
               </SideNavGroup>
             </SideNav>,
           );
 
-          function queryAllItems() {
-            return [
-              'Item',
-              'Item With Only Collapsed Glyph',
-              'Item With Only Expanded Glyph',
-              'Item With Always Visible Glyph',
-              'Group Item',
-              'Group With Glyph Item',
-            ].map(label => queryByLabelText(label));
-          }
+          expect(queryByLabelText('Expand sidebar')).not.toBeInTheDocument();
+          expect(queryByLabelText('Collapse sidebar')).not.toBeInTheDocument();
+        });
 
-          function expectExpanded() {
-            const [
-              item,
-              itemWithOnlyCollapsedGlyph,
-              itemWithOnlyExpandedGlyph,
-              itemWithAlwaysVisibleGlyph,
-              groupItem,
-              groupWithGlyphItem,
-            ] = queryAllItems();
+        test('does not respond to "[" key', async () => {
+          const { queryByLabelText } = render(
+            <SideNav collapsible={false}>
+              <SideNavItem path="/one">One</SideNavItem>
+              <SideNavGroup label="group">
+                <SideNavItem path="/two">Two</SideNavItem>
+              </SideNavGroup>
+            </SideNav>,
+          );
 
-            const groupHeader = getGroupHeaderByLabelText(container, 'Group');
-            const groupWithGlyphHeader = getGroupHeaderByLabelText(
-              container,
-              'Group with Glyph',
+          const item = queryByLabelText('One');
+          expect(item).toBeVisible();
+
+          actions['pressing "[" key']();
+          expect(item).toBeVisible();
+        });
+      });
+
+      describe('collapsible nav', () => {
+        test.each(Object.keys(actions) as Array<keyof typeof actions>)(
+          'collapses and expands when %s',
+          action => {
+            const { container, getByLabelText, queryByLabelText } = render(
+              <SideNav>
+                <SideNavItem>Item</SideNavItem>
+                <SideNavItem glyph={<CloudIcon />}>
+                  Item With Only Collapsed Glyph
+                </SideNavItem>
+                <SideNavItem
+                  glyph={<CloudIcon />}
+                  glyphVisibility={GlyphVisibility.NavExpanded}
+                >
+                  Item With Only Expanded Glyph
+                </SideNavItem>
+                <SideNavItem
+                  glyph={<CloudIcon />}
+                  glyphVisibility={GlyphVisibility.Visible}
+                >
+                  Item With Always Visible Glyph
+                </SideNavItem>
+                <SideNavGroup label="Group">
+                  <SideNavItem>Group Item</SideNavItem>
+                </SideNavGroup>
+                <SideNavGroup label="Group with Glyph" glyph={<CloudIcon />}>
+                  <SideNavItem>Group With Glyph Item</SideNavItem>
+                </SideNavGroup>
+              </SideNav>,
             );
 
-            [
-              item,
-              itemWithOnlyCollapsedGlyph,
-              groupItem,
-              groupWithGlyphItem,
-              groupHeader,
-            ].forEach(item => {
-              expect(item).toBeVisible();
-              expect(item?.querySelector('svg')).toBeNull();
-            });
+            function queryAllItems() {
+              return [
+                'Item',
+                'Item With Only Collapsed Glyph',
+                'Item With Only Expanded Glyph',
+                'Item With Always Visible Glyph',
+                'Group Item',
+                'Group With Glyph Item',
+              ].map(label => queryByLabelText(label));
+            }
 
-            [
-              itemWithOnlyExpandedGlyph,
-              itemWithAlwaysVisibleGlyph,
-              groupWithGlyphHeader,
-            ].forEach(item => {
-              expect(item).toBeVisible();
-              expect(item?.querySelector('svg')).toBeVisible();
-            });
-
-            // Button should have correct aria attributes
-            expect(queryByLabelText('Expand sidebar')).not.toBeInTheDocument();
-            const collapseButton = getByLabelText('Collapse sidebar');
-            expect(collapseButton).toBeVisible();
-            expect(collapseButton).toHaveAttribute('aria-expanded', 'true');
-
-            function expectCollapsed() {
+            function expectExpanded() {
               const [
                 item,
                 itemWithOnlyCollapsedGlyph,
@@ -203,22 +195,25 @@ describe('packages/collapsible-side-nav', () => {
                 groupWithGlyphItem,
               ] = queryAllItems();
 
-              expect(collapseButton).not.toBeInTheDocument();
+              const groupHeader = getGroupHeaderByLabelText(container, 'Group');
+              const groupWithGlyphHeader = getGroupHeaderByLabelText(
+                container,
+                'Group with Glyph',
+              );
 
               [
                 item,
-                itemWithOnlyExpandedGlyph,
+                itemWithOnlyCollapsedGlyph,
                 groupItem,
                 groupWithGlyphItem,
+                groupHeader,
               ].forEach(item => {
-                expect(item).not.toBeInTheDocument();
+                expect(item).toBeVisible();
+                expect(item?.querySelector('svg')).toBeNull();
               });
 
-              expect(groupHeader).toBeVisible();
-              expect(groupHeader.querySelector('svg')).toBeNull();
-
               [
-                itemWithOnlyCollapsedGlyph,
+                itemWithOnlyExpandedGlyph,
                 itemWithAlwaysVisibleGlyph,
                 groupWithGlyphHeader,
               ].forEach(item => {
@@ -226,30 +221,72 @@ describe('packages/collapsible-side-nav', () => {
                 expect(item?.querySelector('svg')).toBeVisible();
               });
 
-              // aria attributes have been updated
-              const expandButton = getByLabelText('Expand sidebar');
-              expect(expandButton).toBeVisible();
-              expect(expandButton).toHaveAttribute('aria-expanded', 'false');
-              return { expandButton };
+              // Button should have correct aria attributes
+              expect(
+                queryByLabelText('Expand sidebar'),
+              ).not.toBeInTheDocument();
+              const collapseButton = getByLabelText('Collapse sidebar');
+              expect(collapseButton).toBeVisible();
+              expect(collapseButton).toHaveAttribute('aria-expanded', 'true');
+
+              function expectCollapsed() {
+                const [
+                  item,
+                  itemWithOnlyCollapsedGlyph,
+                  itemWithOnlyExpandedGlyph,
+                  itemWithAlwaysVisibleGlyph,
+                  groupItem,
+                  groupWithGlyphItem,
+                ] = queryAllItems();
+
+                expect(collapseButton).not.toBeInTheDocument();
+
+                [
+                  item,
+                  itemWithOnlyExpandedGlyph,
+                  groupItem,
+                  groupWithGlyphItem,
+                ].forEach(item => {
+                  expect(item).not.toBeInTheDocument();
+                });
+
+                expect(groupHeader).toBeVisible();
+                expect(groupHeader.querySelector('svg')).toBeNull();
+
+                [
+                  itemWithOnlyCollapsedGlyph,
+                  itemWithAlwaysVisibleGlyph,
+                  groupWithGlyphHeader,
+                ].forEach(item => {
+                  expect(item).toBeVisible();
+                  expect(item?.querySelector('svg')).toBeVisible();
+                });
+
+                // aria attributes have been updated
+                const expandButton = getByLabelText('Expand sidebar');
+                expect(expandButton).toBeVisible();
+                expect(expandButton).toHaveAttribute('aria-expanded', 'false');
+                return { expandButton };
+              }
+
+              return { collapseButton, expectCollapsed };
             }
 
-            return { collapseButton, expectCollapsed };
-          }
+            const { collapseButton, expectCollapsed } = expectExpanded();
 
-          const { collapseButton, expectCollapsed } = expectExpanded();
+            actions[action](collapseButton);
+            const { expandButton } = expectCollapsed();
 
-          actions[action](collapseButton);
-          const { expandButton } = expectCollapsed();
-
-          // Toggling back should return things to how they were before
-          actions[action](expandButton);
-          expectExpanded();
-        },
-      );
+            // Toggling back should return things to how they were before
+            actions[action](expandButton);
+            expectExpanded();
+          },
+        );
+      });
     });
 
     describe('when collapsed', () => {
-      test('hovering', async () => {
+      test('hovering expands the nav', async () => {
         const {
           container,
           getByText,
@@ -350,6 +387,8 @@ describe('packages/collapsible-side-nav', () => {
   });
 
   describe('SideNavGroup', () => {
+    describe('collapsibility', () => {});
+
     /* eslint-disable jest/expect-expect */
     // eslint-disable-next-line jest/no-disabled-tests
     describe.skip('types work as expected', () => {

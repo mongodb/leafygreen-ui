@@ -27,6 +27,13 @@ import {
   transitionDurationMilliseconds,
 } from './utils';
 
+const sideNavItemNavExpandedNonGroupLiMarginStyle = css`
+  // If it's the first item in the nav we want it to be aligned to the chevron
+  &:first-of-type {
+    margin-top: 11px;
+  }
+`;
+
 const sideNavItemStyle = css`
   display: flex;
   align-items: center;
@@ -376,7 +383,13 @@ const SideNavItem: ExtendableBox<
 
   return (
     <>
-      <li role="none">
+      <li
+        role="none"
+        className={cx({
+          [sideNavItemNavExpandedNonGroupLiMarginStyle]:
+            !isInGroup && !navCollapsed,
+        })}
+      >
         <Box
           as="a"
           ref={shouldPortalCollapsedGlyph ? undefined : setRef}

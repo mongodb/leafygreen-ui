@@ -50,7 +50,7 @@ const collapsedSpacerStyle = css`
 const navListStyle = css`
   position: relative;
   padding: 0;
-  margin-top: 16px;
+  margin-top: 5px;
   overflow: hidden;
   list-style: none;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
