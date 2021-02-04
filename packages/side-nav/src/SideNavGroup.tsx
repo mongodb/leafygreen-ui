@@ -28,10 +28,6 @@ const sideNavGroupStyle = css`
   transition: all ${transitionDurationMilliseconds}ms ease-in-out, margin none;
   border: 0 solid rgba(0, 0, 0, 0);
   cursor: default;
-
-  // &:last-of-type {
-  //   border-bottom-width: 1px;
-  // }
 `;
 
 const sideNavGroupExpandedCollapsibleStyle = css`
@@ -56,8 +52,10 @@ const sideNavGroupHeaderStyle = css`
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
   color: ${uiColors.green.dark2};
   outline: none;
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
 
   &:hover {
     border-color: ${uiColors.green.base};
@@ -72,6 +70,7 @@ const sideNavGroupHeaderFocusStyle = css`
 `;
 
 const sideNavGroupHeaderNavCollapsedStyle = css`
+  height: 0;
   padding-top: 0;
   padding-bottom: 0;
 `;
@@ -82,7 +81,7 @@ const sideNavGroupHeaderWithGlyphNavCollapsedStyle = css`
 
 const sideNavGroupHeaderCollapsibleStyle = css`
   cursor: pointer;
-  border-bottom: 1px solid ${uiColors.gray.light2};
+  border-color: ${uiColors.gray.light2};
 `;
 
 const glyphStyle = css`
@@ -92,8 +91,19 @@ const glyphStyle = css`
   margin-right: 4px;
 `;
 
-const chevronStyle = css`
+const chevronContainerStyle = css`
   margin: 0 6px;
+  opacity: 1;
+  overflow: hidden;
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+`;
+
+const chevronContainerHiddenStyle = css`
+  margin: 0;
+  opacity: 0;
+`;
+
+const chevronStyle = css`
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
 `;
 
@@ -110,26 +120,9 @@ const sideNavGroupHeaderTextStyle = css`
 
 const sideNavGroupChildrenStyle = css`
   opacity: 1;
+  overflow: hidden;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
 `;
-
-type TransitionStatus = Parameters<
-  Extract<React.ComponentProps<typeof Transition>['children'], Function>
->[0];
-
-function getGroupChildrenTransitionStyles(
-  state: TransitionStatus,
-): Record<string, boolean> {
-  return {
-    [css`
-      max-height: 0;
-      opacity: 0;
-    `]: state === 'exiting' || state === 'exited',
-    [css`
-      overflow: hidden;
-    `]: state === 'exited',
-  };
-}
 
 const ulStyle = css`
   padding: 0;
@@ -305,6 +298,7 @@ const SideNavGroup = React.forwardRef<HTMLLIElement, Props>(
             <div
               className={css`
                 display: flex;
+                transition: all ${transitionDurationMilliseconds}ms ease-in-out;
                 // Leave space for chevron and its margins = 16px + 2 * 6px
                 width: calc(100% - ${canRenderAsCollapsible ? 28 : 0}px);
               `}
@@ -324,16 +318,22 @@ const SideNavGroup = React.forwardRef<HTMLLIElement, Props>(
                 </Overline>
               )}
             </div>
-            {canRenderAsCollapsible && (
-              <ChevronDownIcon
-                size="small"
-                className={cx(chevronStyle, {
-                  [chevronCollapsedStyle]: collapsed,
+            {
+              <div
+                className={cx(chevronContainerStyle, {
+                  [chevronContainerHiddenStyle]: !canRenderAsCollapsible,
                 })}
-                aria-hidden
-                role="presentation"
-              />
-            )}
+              >
+                <ChevronDownIcon
+                  size="small"
+                  className={cx(chevronStyle, {
+                    [chevronCollapsedStyle]: collapsed,
+                  })}
+                  aria-hidden
+                  role="presentation"
+                />
+              </div>
+            }
           </div>
           <Transition
             in={!shouldCollapseChildren}
@@ -351,7 +351,12 @@ const SideNavGroup = React.forwardRef<HTMLLIElement, Props>(
                     max-height: ${ulRef.current?.getBoundingClientRect?.()
                       ?.height}px;
                   `,
-                  getGroupChildrenTransitionStyles(state),
+                  {
+                    [css`
+                      max-height: 0;
+                      opacity: 0;
+                    `]: state === 'exiting' || state === 'exited',
+                  },
                 )}
               >
                 <ul ref={ulRef} role="menu" className={ulStyle}>

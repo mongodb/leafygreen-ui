@@ -109,10 +109,12 @@ const sideNavItemCollapsibleGroupStyle = css`
   padding-left: 28px;
 `;
 
-const sideNavItemCollapsedStyle = css`
-  & svg:first-child {
-    margin-right: 0;
-  }
+const contentsStyle = css`
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+`;
+
+const hiddenContentsStyle = css`
+  opacity: 0;
 `;
 
 const sideNavItemWithGlyphNavCollapsedStyle = css`
@@ -322,15 +324,23 @@ const SideNavItem: ExtendableBox<
       return {
         'aria-label': shouldRenderGlyph ? ariaLabel : undefined,
         tabIndex: -1,
-        className: cx(commonStyles, sideNavItemCollapsedStyle, {
+        className: cx(commonStyles, {
           [sideNavItemWithGlyphNavCollapsedStyle]:
             shouldRenderCollapsedGlyph && !shouldPortalCollapsedGlyph,
           [sideNavItemWithoutGlyphNavCollapsedStyle]: !(
             isInGroup || shouldRenderCollapsedGlyph
           ),
         }),
-        children:
-          isInGroup || shouldRenderCollapsedGlyph ? renderedGlyph : null,
+        children: (
+          <>
+            {isInGroup || shouldRenderCollapsedGlyph ? renderedGlyph : null}
+            {isInGroup && (
+              <div className={cx(contentsStyle, hiddenContentsStyle)}>
+                {children}
+              </div>
+            )}
+          </>
+        ),
       };
     } else {
       return {
@@ -355,7 +365,14 @@ const SideNavItem: ExtendableBox<
         children: (
           <>
             {renderedGlyph}
-            {shouldRenderCollapsedGlyph ? null : children}
+            <div
+              aria-hidden={shouldRenderCollapsedGlyph}
+              className={cx(contentsStyle, {
+                [hiddenContentsStyle]: shouldRenderCollapsedGlyph,
+              })}
+            >
+              {children}
+            </div>
           </>
         ),
       };

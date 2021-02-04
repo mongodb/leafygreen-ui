@@ -115,9 +115,6 @@ describe('packages/collapsible-side-nav', () => {
           const { queryByLabelText } = render(
             <SideNav collapsible={false}>
               <SideNavItem path="/one">One</SideNavItem>
-              <SideNavGroup label="group">
-                <SideNavItem path="/two">Two</SideNavItem>
-              </SideNavGroup>
             </SideNav>,
           );
 
@@ -129,9 +126,6 @@ describe('packages/collapsible-side-nav', () => {
           const { queryByLabelText } = render(
             <SideNav collapsible={false}>
               <SideNavItem path="/one">One</SideNavItem>
-              <SideNavGroup label="group">
-                <SideNavItem path="/two">Two</SideNavItem>
-              </SideNavGroup>
             </SideNav>,
           );
 
@@ -387,7 +381,9 @@ describe('packages/collapsible-side-nav', () => {
   });
 
   describe('SideNavGroup', () => {
-    describe('collapsibility', () => {});
+    describe('collapsibility', () => {
+      test.todo('collapsible group is collapsible', () => {});
+    });
 
     /* eslint-disable jest/expect-expect */
     // eslint-disable-next-line jest/no-disabled-tests
