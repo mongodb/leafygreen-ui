@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import useSSR from 'use-ssr';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
@@ -117,6 +118,7 @@ const Row = React.forwardRef(
     }: RowProps,
     ref: React.Ref<any>,
   ) => {
+    const { isBrowser } = useSSR();
     const {
       state: { data, columnInfo, hasNestedRows, hasRowSpan },
       dispatch: tableDispatch,
@@ -172,7 +174,7 @@ const Row = React.forwardRef(
       }
     }, [children, hasNestedRows, hasRowSpan, tableDispatch, data]);
 
-    const { rowHasNestedRows, renderedNestedRows } = React.useMemo(() => {
+    const { rowHasNestedRows, renderedNestedRows } = useMemo(() => {
       const renderedNestedRows: Array<React.ReactElement> = [];
       let rowHasNestedRows = false;
 
@@ -197,7 +199,7 @@ const Row = React.forwardRef(
       return { rowHasNestedRows, renderedNestedRows };
     }, [isAnyAncestorCollapsedProp, isExpanded, indentLevel, children]);
 
-    const renderedChildren = React.useMemo(() => {
+    const renderedChildren = useMemo(() => {
       const renderedChildren: Array<React.ReactElement> = [];
 
       React.Children.forEach(children, (child, index) => {
@@ -242,17 +244,13 @@ const Row = React.forwardRef(
       return renderedChildren;
     }, [children, rowHasNestedRows, isExpanded, setIsExpanded]);
 
-    // Depending on network speed, will noticeably render columns with incorrect
-    // alignment, would rather wait for proper information before rendering
-    if (!columnInfo) {
-      return null;
-    }
-
     const shouldAltRowColor = data && data.length >= 10 && !hasNestedRows;
 
-    const alignmentStyles = Object.entries(
-      columnInfo,
-    ).map(([key, { dataType }]) => styleColumn(key, dataType));
+    const alignmentStyles = columnInfo
+      ? Object.entries(columnInfo).map(([key, { dataType }]) =>
+          styleColumn(key, dataType),
+        )
+      : [''];
 
     const rowClassName = cx(
       rowStyle,
@@ -265,19 +263,9 @@ const Row = React.forwardRef(
       className,
     );
 
-    return (
-      <>
-        <tr
-          role="row"
-          className={rowClassName}
-          aria-disabled={disabled}
-          ref={ref}
-          key={indexRef.current}
-          {...rest}
-        >
-          {renderedChildren}
-        </tr>
-        {renderedNestedRows.length > 0 && (
+    // We don't need the transition group except on the client here, and rendering this bit on the server breaks rendering these rows.
+    const renderedTransitionGroup = isBrowser
+      ? renderedNestedRows.length > 0 && (
           <Transition
             in={isExpanded && !isAnyAncestorCollapsedProp}
             timeout={150}
@@ -298,7 +286,23 @@ const Row = React.forwardRef(
               </>
             )}
           </Transition>
-        )}
+        )
+      : renderedNestedRows;
+
+    return (
+      <>
+        <tr
+          role="row"
+          className={rowClassName}
+          aria-disabled={disabled}
+          ref={ref}
+          key={indexRef.current}
+          {...rest}
+        >
+          {renderedChildren}
+        </tr>
+
+        {renderedTransitionGroup}
       </>
     );
   },
