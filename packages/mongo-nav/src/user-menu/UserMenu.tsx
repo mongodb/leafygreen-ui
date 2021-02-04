@@ -407,7 +407,7 @@ function UserMenu({
             active={isCloud}
             disabled={!account}
             href={hosts.cloud}
-            title={isGovernment ? 'Cloud for Government' : 'MongoDB Cloud'}
+            title={isGovernment ? 'Cloud for Government' : 'Cloud'}
             glyph={<CloudIcon {...ariaHiddenProps} />}
             onClick={onElementClick(NavElement.UserMenuCloud, onClick)}
             description={
@@ -481,7 +481,7 @@ function UserMenu({
               />
             }
           >
-            {isGovernment ? 'Cloud for Government' : 'MongoDB Cloud'}
+            {isGovernment ? 'Cloud for Government' : 'Cloud'}
           </MenuItem>
         )}
 

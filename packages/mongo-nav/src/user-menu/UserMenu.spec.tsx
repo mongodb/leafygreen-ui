@@ -138,7 +138,7 @@ describe('packages/mongo-nav/user-menu', () => {
     });
 
     test('Atlas SubMenu links to cloud.mongodb.com', () => {
-      const cloud = screen.getByText('MongoDB Cloud').closest('a');
+      const cloud = screen.getByText('Cloud').closest('a');
       expect(cloud?.href).toBe('https://cloud.mongodb.com/');
     });
 
