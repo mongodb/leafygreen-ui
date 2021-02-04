@@ -54,6 +54,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta
           property="og:description"
           content="MongoDB's open-source, accessible design system for designing and building web applications with React."
+          key={metaTagKey.Description}
         />
 
         <link rel="preconnect" href="https://fonts.gstatic.com" />
