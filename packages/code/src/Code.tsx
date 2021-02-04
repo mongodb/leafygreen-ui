@@ -63,9 +63,6 @@ const singleLineWrapperStyle = css`
   display: flex;
 
   ${mq({
-    // Keeps the component from breaking on mobile.
-    height: ['36px', 'auto', '36px'],
-
     '& > code': {
       lineHeight: ['1em', '24px', '1em'],
     },

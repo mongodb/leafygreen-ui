@@ -15,8 +15,8 @@ export function notchPositionStyles(
     };
   }
 
-  const containerSize = 15;
-  const notchSize = 8;
+  const containerSize = 20;
+  const notchSize = 10;
   const notchOverlap = -notchSize / 2;
 
   type Styles = 'left' | 'right' | 'top' | 'bottom' | 'margin';
@@ -64,10 +64,10 @@ export function notchPositionStyles(
       notchStyleObj.right = '0px';
 
       if (align === 'top') {
-        containerStyleObj.top = '100%';
+        containerStyleObj.top = 'calc(100% - 1px)';
         notchStyleObj.top = `${notchOverlap}px`;
       } else {
-        containerStyleObj.bottom = '100%';
+        containerStyleObj.bottom = 'calc(100% - 1px)';
         notchStyleObj.bottom = `${notchOverlap}px`;
       }
 
@@ -171,8 +171,8 @@ export function notchPositionStyles(
       ${css(notchStyleObj)};
       position: absolute;
       transform: rotate(45deg);
-      width: 8px;
-      height: 8px;
+      width: ${notchSize}px;
+      height: ${notchSize}px;
       margin: auto;
     `,
     tooltip: css`

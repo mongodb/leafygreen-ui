@@ -72,7 +72,7 @@ export { Justify };
 const baseStyles = css`
   padding: 14px 16px;
   border-radius: 3px;
-  box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+  box-shadow: 0px 2px 4px -1px ${transparentize(0.8, uiColors.black)};
   cursor: default;
   overflow-wrap: break-word;
 `;
@@ -92,7 +92,7 @@ const colorSet = {
     `,
     notch: css`
       background-color: ${uiColors.gray.dark3};
-      box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+      box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)};
     `,
   },
 
@@ -108,7 +108,7 @@ const colorSet = {
     notch: css`
       background-color: ${uiColors.gray.light3};
       border: 1px solid ${uiColors.gray.light2};
-      box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+      box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)};
     `,
   },
 };
@@ -369,10 +369,6 @@ function Tooltip({
             )}
             ref={setTooltipNode}
           >
-            <div className={notchContainerStyle}>
-              <div className={cx(notchStyle, colorSet[mode].notch)} />
-            </div>
-
             <div
               className={cx(
                 baseTypeStyle,
@@ -381,6 +377,10 @@ function Tooltip({
               )}
             >
               {children}
+            </div>
+
+            <div className={notchContainerStyle}>
+              <div className={cx(notchStyle, colorSet[mode].notch)} />
             </div>
           </div>
         );

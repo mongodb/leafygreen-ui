@@ -4,6 +4,7 @@ import {
   fireEvent,
   getByLabelText,
   waitFor,
+  screen,
 } from '@testing-library/react';
 import { JestDOM } from '@leafygreen-ui/testing-lib';
 import { urlFixtures, hostDefaults } from '../data';
@@ -127,49 +128,39 @@ describe('packages/mongo-nav/user-menu', () => {
     fireEvent.click(trigger);
     expect(queryByText('Legacy 2FA')).not.toBeInTheDocument();
   });
-  test('atlas MenuItem links to cloud.mongodb.com', () => {
-    const { getByTestId } = renderUserMenu({
-      activePlatform: 'cloud',
+
+  describe('SubMenus link to their respective URL', () => {
+    beforeEach(() => {
+      renderUserMenu({ activePlatform: 'cloud' });
+
+      const trigger = screen.getByTestId('user-menu-trigger');
+      fireEvent.click(trigger);
     });
-    const trigger = getByTestId('user-menu-trigger');
-    fireEvent.click(trigger);
 
-    const atlasItem = document.querySelectorAll(
-      '[data-leafygreen-ui="sub-menu-container"]',
-    )[0];
-    expect((atlasItem as HTMLAnchorElement).href).toBe(
-      'https://cloud.mongodb.com/',
-    );
-  });
-
-  test('university MenuItem links to university.mongodb.com', () => {
-    const { getByTestId } = renderUserMenu({
-      activePlatform: 'cloud',
+    test('Atlas SubMenu links to cloud.mongodb.com', () => {
+      const cloud = screen.getByText('Cloud').closest('a');
+      expect(cloud?.href).toBe('https://cloud.mongodb.com/');
     });
-    const trigger = getByTestId('user-menu-trigger');
-    fireEvent.click(trigger);
 
-    const universityItem = document.querySelectorAll(
-      '[data-leafygreen-ui="sub-menu-container"]',
-    )[1];
-    expect((universityItem as HTMLAnchorElement).href).toBe(
-      'https://university.mongodb.com/',
-    );
-  });
-
-  test('support MenuItem links to support.mongodb.com', () => {
-    const { getByTestId } = renderUserMenu({
-      activePlatform: 'cloud',
+    test('University SubMenu links to university.mongodb.com', () => {
+      const cloud = screen.getByText('University').closest('a');
+      expect(cloud?.href).toBe('https://university.mongodb.com/');
     });
-    const trigger = getByTestId('user-menu-trigger');
-    fireEvent.click(trigger);
 
-    const supportItem = document.querySelectorAll(
-      '[data-leafygreen-ui="sub-menu-container"]',
-    )[2];
-    expect((supportItem as HTMLAnchorElement).href).toBe(
-      'https://support.mongodb.com/',
-    );
+    test('Forums SubMenu links to developer.mongodb.com', () => {
+      const cloud = screen.getByText('Forums').closest('a');
+      expect(cloud?.href).toBe('http://forums.mongodb.com/');
+    });
+
+    test('DevHub SubMenu links to developer.mongodb.com', () => {
+      const cloud = screen.getByText('Developer Hub').closest('a');
+      expect(cloud?.href).toBe('https://developer.mongodb.com/');
+    });
+
+    test('Support SubMenu links to support.mongodb.com', () => {
+      const cloud = screen.getByText('Support').closest('a');
+      expect(cloud?.href).toBe('https://support.mongodb.com/');
+    });
   });
 
   test('onLogout fires when logout is clicked', async () => {
