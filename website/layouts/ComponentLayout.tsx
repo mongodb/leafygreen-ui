@@ -18,9 +18,9 @@ import metaTagKey from 'utils/metaTagKey';
 
 const layout = css`
   ${mq({
-  marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
-  width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
-})}
+    marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
+    width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
+  })}
 `;
 
 const componentsStyle = css`
@@ -101,7 +101,7 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
     componentName,
   )} – LeafyGreen Design System | MongoDB`;
 
-  const { figmaLink, metaTagDescription } = componentData[componentName] ?? {}
+  const { figmaLink, metaTagDescription } = componentData[componentName] ?? {};
 
   return (
     <div role="main" className={layout}>
@@ -109,7 +109,13 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
         <title>{pageTitle}</title>
 
         <meta property="og:title" content={pageTitle} key={metaTagKey.Title} />
-        {metaTagDescription && <meta property="og:description" content={metaTagDescription} key={metaTagKey.Description} />}
+        {metaTagDescription && (
+          <meta
+            property="og:description"
+            content={metaTagDescription}
+            key={metaTagKey.Description}
+          />
+        )}
       </Head>
 
       <div className={margin4}>
