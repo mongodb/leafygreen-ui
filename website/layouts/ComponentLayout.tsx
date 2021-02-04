@@ -12,15 +12,15 @@ import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
 import { mq } from 'utils/mediaQuery';
 import { pageContainerWidth } from 'styles/constants';
-import figmaLinks from 'utils/figmaLinks';
+import componentData from 'utils/componentData';
 import { Component } from 'utils/types';
 import metaTagKey from 'utils/metaTagKey';
 
 const layout = css`
   ${mq({
-    marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
-    width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
-  })}
+  marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
+  width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
+})}
 `;
 
 const componentsStyle = css`
@@ -101,12 +101,15 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
     componentName,
   )} – LeafyGreen Design System | MongoDB`;
 
+  const { figmaLink, metaTagDescription } = componentData[componentName] ?? {}
+
   return (
     <div role="main" className={layout}>
       <Head>
         <title>{pageTitle}</title>
 
         <meta property="og:title" content={pageTitle} key={metaTagKey.Title} />
+        {metaTagDescription && <meta property="og:description" content={metaTagDescription} key={metaTagKey.Description} />}
       </Head>
 
       <div className={margin4}>
@@ -119,11 +122,11 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
             {componentName.split('-').join(' ')}
           </H2>
 
-          {!isMobile && figmaLinks[componentName] && (
+          {!isMobile && figmaLink && (
             <Button
               glyph={<FigmaIcon />}
               variant="primary"
-              href={figmaLinks[componentName]}
+              href={figmaLink}
               target="_blank"
               rel="noopener noreferrer"
             >
