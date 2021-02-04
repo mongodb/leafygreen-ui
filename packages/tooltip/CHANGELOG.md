@@ -1,5 +1,13 @@
 # @leafygreen-ui/tooltip
 
+## 6.1.5
+
+### Patch Changes
+
+- 7cd81360: The tooltip notch no longer intercepts pointer events
+- 04cbe342: Fixes several issues where Tooltips were not visually consistent with the Figma component.
+- 55e3789c: Fixes the issue where the `aria-describedby` attribute was being set on the Tooltip trigger when the Tooltip is not visible.
+
 ## 6.1.4
 
 ### Patch Changes
