@@ -9,6 +9,7 @@ import {
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { keyMap } from '@leafygreen-ui/lib';
 import { GlyphVisibility, SideNav, SideNavGroup, SideNavItem } from '.';
+import { debug } from 'webpack';
 
 describe('packages/collapsible-side-nav', () => {
   describe('SideNav', () => {
@@ -200,11 +201,13 @@ describe('packages/collapsible-side-nav', () => {
                 itemWithOnlyCollapsedGlyph,
                 groupItem,
                 groupWithGlyphItem,
-                groupHeader,
               ].forEach(item => {
                 expect(item).toBeVisible();
                 expect(item?.querySelector('svg')).toBeNull();
               });
+
+              expect(groupHeader).toBeVisible();
+              expect(groupHeader?.querySelector('svg')).not.toBeVisible();
 
               [
                 itemWithOnlyExpandedGlyph,
@@ -241,11 +244,15 @@ describe('packages/collapsible-side-nav', () => {
                   groupItem,
                   groupWithGlyphItem,
                 ].forEach(item => {
-                  expect(item).not.toBeInTheDocument();
+                  // If it's a top-level item, it won't be in the DOM at all
+                  // and if it's in a group then it won't be visible
+                  if (item !== null) {
+                    expect(item).not.toBeVisible();
+                  }
                 });
 
                 expect(groupHeader).toBeVisible();
-                expect(groupHeader.querySelector('svg')).toBeNull();
+                expect(groupHeader.querySelector('svg')).not.toBeVisible();
 
                 [
                   itemWithOnlyCollapsedGlyph,
@@ -299,7 +306,14 @@ describe('packages/collapsible-side-nav', () => {
         function expectCollapsed() {
           const items = ['One', 'Two'].map(label => queryByText(label));
           const header = queryGroupHeaderByLabelText(container, 'group');
-          items.forEach(item => expect(item).not.toBeInTheDocument());
+
+          items.forEach(item => {
+            // If it's a top-level item, it won't be in the DOM at all
+            // and if it's in a group then it won't be visible
+            if (item !== null) {
+              expect(item).not.toBeVisible();
+            }
+          });
           expect(header).not.toBeInTheDocument();
 
           // Button should have correct aria attributes
@@ -382,7 +396,7 @@ describe('packages/collapsible-side-nav', () => {
 
   describe('SideNavGroup', () => {
     describe('collapsibility', () => {
-      test.todo('collapsible group is collapsible', () => {});
+      test.todo('collapsible group is collapsible');
     });
 
     /* eslint-disable jest/expect-expect */
