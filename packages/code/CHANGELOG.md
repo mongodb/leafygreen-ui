@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 8.0.4
+
+### Patch Changes
+
+- 717c7023: Fix issue where border wouldn't stretch the full height of the component with a wrapping, single line code example.
+
 ## 8.0.3
 
 ### Patch Changes

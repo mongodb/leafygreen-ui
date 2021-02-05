@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 1.1.4
+
+### Patch Changes
+
+- d85f65de: Adds accessible name to ARIA input field
+
 ## 1.1.3
 
 ### Patch Changes

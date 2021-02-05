@@ -1,5 +1,20 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.2.0
+
+### Minor Changes
+
+- f8669b33: - Adds `'devHub'` and `'forums'` as options for `activePlatform` prop
+  - Adds DevHub and Forums to UserMenu
+  - Adds the following as possible options for NavElement, and passes onElementClick handler to the respective elements: `'userMenuDevHub'`, `'userMenuForums'`, `'userMenuLogout'`. `'userMenuSupport'`, `'userMenuUniversity'`
+
+### Patch Changes
+
+- Updated dependencies [7cd81360]
+- Updated dependencies [04cbe342]
+- Updated dependencies [55e3789c]
+  - @leafygreen-ui/tooltip@6.1.5
+
 ## 5.1.3
 
 ### Patch Changes
