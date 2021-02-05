@@ -1,20 +1,24 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import ClipboardJS from 'clipboard';
+import facepaint from 'facepaint';
+import debounce from 'lodash/debounce';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
-import Syntax from './Syntax';
+import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { variantColors } from './globalStyles';
-import { Language, CodeProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { variantColors } from './globalStyles';
+import { Language, CodeProps, Mode } from './types';
+import Syntax from './Syntax';
 import WindowChrome from './WindowChrome';
-import debounce from 'lodash/debounce';
-import { uiColors } from '@leafygreen-ui/palette';
-import ClipboardJS from 'clipboard';
-import facepaint from 'facepaint';
+
+export function hasMultipleLines(string: string): boolean {
+  return string.trim().includes('\n');
+}
 
 // We use max-device-width to select specifically for iOS devices
 const mq = facepaint([
@@ -22,8 +26,14 @@ const mq = facepaint([
   `@media only screen and (min-device-width: 813px) and (-webkit-min-device-pixel-ratio: 2)`,
 ]);
 
+const singleLineComponentHeight = 36;
+const lineHeight = 24;
+
 const codeWrapperStyle = css`
   overflow-x: auto;
+  // Many applications have global styles that are adding a border and border radius to this element.
+  border-radius: 0;
+  border: 0;
   border-left: 2px solid;
   // We apply left / right padding in Syntax to support line highlighting
   padding-top: ${spacing[2]}px;
@@ -53,23 +63,15 @@ const copyStyle = css`
 `;
 
 const singleLineCopyStyle = css`
-  height: 36px;
-  padding-top: 0;
-  justify-content: center;
+  min-height: ${singleLineComponentHeight}px;
+  padding-top: ${spacing[1]}px;
 `;
 
 const singleLineWrapperStyle = css`
-  align-items: center;
   display: flex;
-
-  ${mq({
-    // Keeps the component from breaking on mobile.
-    height: ['36px', 'auto', '36px'],
-
-    '& > code': {
-      lineHeight: ['1em', '24px', '1em'],
-    },
-  })}
+  align-items: center;
+  padding-top: ${(singleLineComponentHeight - lineHeight) / 2}px;
+  padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
 `;
 
 const wrapperFocusStyle = css`
@@ -232,7 +234,7 @@ function Code({
   const [copied, setCopied] = useState(false);
   const [showCopyBar, setShowCopyBar] = useState(false);
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const isMultiline = useMemo(() => children.includes('\n'), [children]);
+  const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
 
   useEffect(() => {
     setShowCopyBar(!showWindowChrome && copyable && ClipboardJS.isSupported());
@@ -330,6 +332,7 @@ function Code({
   const borderStyle = darkMode
     ? `border: 0`
     : `border: 1px solid ${variantColors[mode][1]}`;
+
   const wrapperStyle = css`
     ${borderStyle};
     border-radius: 4px;
