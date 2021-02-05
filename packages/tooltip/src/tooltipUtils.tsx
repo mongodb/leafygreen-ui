@@ -165,6 +165,7 @@ export function notchPositionStyles(
       height: ${containerSize}px;
       overflow: hidden;
       margin: auto;
+      pointer-events: none;
       ${css(containerStyleObj)};
     `,
     notch: css`
