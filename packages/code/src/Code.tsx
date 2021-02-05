@@ -27,6 +27,9 @@ const lineHeight = 24;
 
 const codeWrapperStyle = css`
   overflow-x: auto;
+  // Many applications have global styles that are adding a border and border radius to this element.
+  border-radius: 0;
+  border: 0;
   border-left: 2px solid;
   // We apply left / right padding in Syntax to support line highlighting
   padding-top: ${spacing[2]}px;
