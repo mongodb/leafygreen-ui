@@ -129,6 +129,7 @@ const sideNavItemWithGlyphNavCollapsedStyle = css`
   color: ${uiColors.green.dark2};
   border-top: 1px solid ${uiColors.gray.light2};
   opacity: 1;
+  overflow: hidden;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
 `;
 
@@ -141,26 +142,6 @@ const sideNavItemNonGroupWithGlyphNavCollapsedStyle = css`
 const sideNavItemWithoutGlyphNavCollapsedStyle = css`
   padding: 0;
 `;
-
-type TransitionStatus = Parameters<
-  Extract<React.ComponentProps<typeof Transition>['children'], Function>
->[0];
-
-function getCollapsedItemWithGlyphTransitionStyles(
-  state: TransitionStatus,
-): Record<string, boolean> {
-  return {
-    [css`
-      height: 0;
-      padding: 0 16px;
-      opacity: 0;
-      border: none;
-    `]: state === 'exiting' || state === 'exited',
-    [css`
-      overflow: hidden;
-    `]: state === 'exited',
-  };
-}
 
 type Props = {
   className?: string;
@@ -439,10 +420,14 @@ const SideNavItem: ExtendableBox<
           <Portal container={containerRef?.current}>
             <div
               ref={nodeRef}
-              className={cx(
-                sideNavItemWithGlyphNavCollapsedStyle,
-                getCollapsedItemWithGlyphTransitionStyles(state),
-              )}
+              className={cx(sideNavItemWithGlyphNavCollapsedStyle, {
+                [css`
+                  height: 0;
+                  padding: 0 16px;
+                  opacity: 0;
+                  border: none;
+                `]: state === 'exiting' || state === 'exited',
+              })}
             >
               {renderedGlyph}
             </div>

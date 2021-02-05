@@ -16,14 +16,14 @@ describe('packages/collapsible-side-nav', () => {
       const { getByText } = render(
         <SideNav>
           <SideNavItem path="/one">One</SideNavItem>
-          <SideNavGroup label="group">
+          <SideNavGroup label="Group">
             <SideNavItem path="/two">Two</SideNavItem>
           </SideNavGroup>
         </SideNav>,
       );
 
       expect(getByText('One')).toBeVisible();
-      expect(getByText('group')).toBeVisible();
+      expect(getByText('Group')).toBeVisible();
       expect(getByText('Two')).toBeVisible();
     });
 
@@ -50,7 +50,7 @@ describe('packages/collapsible-side-nav', () => {
       render(
         <SideNav currentPath="/current">
           <SideNavItem path="/before">Before</SideNavItem>
-          <SideNavGroup label="group">
+          <SideNavGroup label="Group">
             <SideNavItem path="/current">Current</SideNavItem>
           </SideNavGroup>
           <SideNavItem path="/after">After</SideNavItem>
@@ -72,7 +72,7 @@ describe('packages/collapsible-side-nav', () => {
         <SideNav currentPath="/no-match">
           <SideNavItem path="/one">One</SideNavItem>
           <SideNavItem path="/two">Two</SideNavItem>
-          <SideNavGroup label="group">
+          <SideNavGroup label="Group">
             <SideNavItem path="/three">Three</SideNavItem>
           </SideNavGroup>
         </SideNav>,
@@ -296,7 +296,7 @@ describe('packages/collapsible-side-nav', () => {
         } = render(
           <SideNav initialCollapsed>
             <SideNavItem>One</SideNavItem>
-            <SideNavGroup label="group" glyph={<CloudIcon />}>
+            <SideNavGroup label="Group" glyph={<CloudIcon />}>
               <SideNavItem>Two</SideNavItem>
             </SideNavGroup>
           </SideNav>,
@@ -304,7 +304,7 @@ describe('packages/collapsible-side-nav', () => {
 
         function expectCollapsed() {
           const items = ['One', 'Two'].map(label => queryByText(label));
-          const header = queryGroupHeaderByLabelText(container, 'group');
+          const header = queryGroupHeaderByLabelText(container, 'Group');
 
           items.forEach(item => {
             // If it's a top-level item, it won't be in the DOM at all
@@ -330,7 +330,7 @@ describe('packages/collapsible-side-nav', () => {
 
             // Items are now fully visible
             const items = ['One', 'Two'].map(label => getByText(label));
-            const header = queryGroupHeaderByLabelText(container, 'group');
+            const header = queryGroupHeaderByLabelText(container, 'Group');
             items.forEach(item => expect(item).toBeVisible());
             expect(header).toBeVisible();
           }
@@ -395,25 +395,124 @@ describe('packages/collapsible-side-nav', () => {
 
   describe('SideNavGroup', () => {
     describe('collapsibility', () => {
-      test.todo('collapsible group is collapsible');
+      test('non-collapsible group cannot be collapsed', () => {
+        const { getByText } = render(
+          <SideNav>
+            <SideNavGroup label="Group">
+              <SideNavItem>Item</SideNavItem>
+            </SideNavGroup>
+          </SideNav>,
+        );
+
+        const headerText = getByText('Group');
+        expect(headerText.closest('[role=button]')).toBeNull();
+        expect(getByText('Item')).toBeVisible();
+
+        fireEvent.click(headerText);
+        expect(getByText('Item')).toBeVisible();
+      });
+
+      test('collapsible group is initially collapsed by default', () => {
+        const { getByText, queryByText } = render(
+          <SideNav>
+            <SideNavGroup label="Group" collapsible>
+              <SideNavItem>Item</SideNavItem>
+            </SideNavGroup>
+          </SideNav>,
+        );
+
+        const headerText = getByText('Group');
+        const header = headerText.closest('[role=button]');
+        expect(header).toHaveAttribute('aria-expanded', 'false');
+        expect(queryByText('Item')).not.toBeVisible();
+      });
+
+      test('collapsible group with `initialCollapsed={false}` is initially expanded', () => {
+        const { getByText, queryByText } = render(
+          <SideNav>
+            <SideNavGroup label="Group" collapsible initialCollapsed={false}>
+              <SideNavItem>Item</SideNavItem>
+            </SideNavGroup>
+          </SideNav>,
+        );
+
+        const headerText = getByText('Group');
+        const header = headerText.closest('[role=button]');
+        expect(header).toHaveAttribute('aria-expanded', 'true');
+        expect(queryByText('Item')).toBeVisible();
+      });
+
+      test('collapsible group is collapsible and expandable', () => {
+        const { getByText, queryByText } = render(
+          <SideNav>
+            <SideNavGroup label="Group" collapsible>
+              <SideNavItem>Item</SideNavItem>
+            </SideNavGroup>
+          </SideNav>,
+        );
+
+        const headerText = getByText('Group');
+        const header = headerText.closest('[role=button]');
+
+        fireEvent.click(headerText);
+        expect(header).toHaveAttribute('aria-expanded', 'true');
+        expect(getByText('Item')).toBeVisible();
+
+        fireEvent.click(headerText);
+        expect(header).toHaveAttribute('aria-expanded', 'false');
+        expect(queryByText('Item')).not.toBeVisible();
+      });
     });
 
     /* eslint-disable jest/expect-expect */
     // eslint-disable-next-line jest/no-disabled-tests
     describe.skip('types work as expected', () => {
       test('valid `aria-label` is always provided or derived from label', () => {
-        <SideNavGroup label="group"> </SideNavGroup>;
+        <SideNavGroup label="Group"> </SideNavGroup>;
 
-        <SideNavGroup label={<>group</>} aria-label="group">
+        <SideNavGroup label={<>group</>} aria-label="Group">
           {' '}
         </SideNavGroup>;
 
-        <SideNavGroup label="group" aria-label="group">
+        <SideNavGroup label="Group" aria-label="Group">
           {' '}
         </SideNavGroup>;
 
         // @ts-expect-error
         <SideNavGroup label={<>group</>}> </SideNavGroup>;
+      });
+
+      test('`initialCollapsed` can only `false` when not collapsible', () => {
+        <SideNavGroup label="Group"> </SideNavGroup>;
+
+        <SideNavGroup label="Group" initialCollapsed={false}>
+          {' '}
+        </SideNavGroup>;
+        <SideNavGroup label="Group" initialCollapsed>
+          {' '}
+        </SideNavGroup>;
+
+        <SideNavGroup label="Group" collapsible initialCollapsed={false}>
+          {' '}
+        </SideNavGroup>;
+        <SideNavGroup label="Group" collapsible initialCollapsed>
+          {' '}
+        </SideNavGroup>;
+
+        <SideNavGroup label="Group" collapsible initialCollapsed={false}>
+          {' '}
+        </SideNavGroup>;
+        <SideNavGroup label="Group" collapsible initialCollapsed>
+          {' '}
+        </SideNavGroup>;
+
+        <SideNavGroup label="Group" collapsible initialCollapsed={false}>
+          {' '}
+        </SideNavGroup>;
+        // @ts-expect-error
+        <SideNavGroup label="Group" collapsible={false} initialCollapsed>
+          {' '}
+        </SideNavGroup>;
       });
     });
     /* eslint-enable jest/expect-expect */

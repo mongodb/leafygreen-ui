@@ -343,7 +343,6 @@ const SideNavGroup = React.forwardRef<HTMLLIElement, Props>(
             in={!shouldCollapseChildren}
             timeout={transitionDurationMilliseconds}
             nodeRef={nodeRef}
-            mountOnEnter
           >
             {state => (
               <div
