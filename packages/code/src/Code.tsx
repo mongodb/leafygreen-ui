@@ -16,6 +16,10 @@ import { Language, CodeProps, Mode } from './types';
 import Syntax from './Syntax';
 import WindowChrome from './WindowChrome';
 
+export function hasMultipleLines(string: string): boolean {
+  return string.trim().includes('\n');
+}
+
 // We use max-device-width to select specifically for iOS devices
 const mq = facepaint([
   `@media only screen and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2)`,
@@ -230,7 +234,7 @@ function Code({
   const [copied, setCopied] = useState(false);
   const [showCopyBar, setShowCopyBar] = useState(false);
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const isMultiline = useMemo(() => children.trim().includes('\n'), [children]);
+  const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
 
   useEffect(() => {
     setShowCopyBar(!showWindowChrome && copyable && ClipboardJS.isSupported());
