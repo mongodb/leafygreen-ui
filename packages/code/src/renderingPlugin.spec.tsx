@@ -207,8 +207,6 @@ describe('flattenNestedTree()', () => {
 
     const [modifiedObj1, modifiedObj2] = flattenNestedTree([obj1, obj2]);
 
-    console.log(modifiedObj2);
-
     expect(typeof modifiedObj1 === 'object').toBeTruthy();
     expect((modifiedObj1 as any).children[0]).toEqual('obj1');
     expect((modifiedObj1 as any).kind).toEqual(
