@@ -58,7 +58,7 @@ const sideNavGroupHeaderStyle = css`
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
 `;
 
-const sideNavGroupHeaderExpandedStyle = css`
+const sideNavGroupHeaderCollapsibleExpandedStyle = css`
   &:hover {
     border-color: ${uiColors.green.base};
   }
@@ -289,11 +289,12 @@ const SideNavGroup = React.forwardRef<HTMLLIElement, Props>(
             id={id}
             aria-hidden={navCollapsed}
             className={cx(sideNavGroupHeaderStyle, {
-              [sideNavGroupHeaderExpandedStyle]: !navCollapsed,
               [sideNavGroupHeaderFocusStyle]: usingKeyboard,
               [sideNavGroupHeaderNavCollapsedStyle]: navCollapsed,
               [sideNavGroupHeaderWithGlyphNavCollapsedStyle]:
                 hasGlyph && navCollapsed,
+              [sideNavGroupHeaderCollapsibleExpandedStyle]:
+                canRenderAsCollapsible && !navCollapsed,
               [sideNavGroupHeaderCollapsibleStyle]: canRenderAsCollapsible,
             })}
             {...headerProps}

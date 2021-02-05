@@ -9,7 +9,6 @@ import {
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { keyMap } from '@leafygreen-ui/lib';
 import { GlyphVisibility, SideNav, SideNavGroup, SideNavItem } from '.';
-import { debug } from 'webpack';
 
 describe('packages/collapsible-side-nav', () => {
   describe('SideNav', () => {
