@@ -6,9 +6,11 @@ import {
   render,
   waitFor,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { keyMap } from '@leafygreen-ui/lib';
 import { GlyphVisibility, SideNav, SideNavGroup, SideNavItem } from '.';
+import { transitionDurationMilliseconds } from './utils';
 
 describe('packages/collapsible-side-nav', () => {
   describe('SideNav', () => {
@@ -140,7 +142,7 @@ describe('packages/collapsible-side-nav', () => {
       describe('collapsible nav', () => {
         test.each(Object.keys(actions) as Array<keyof typeof actions>)(
           'collapses and expands when %s',
-          action => {
+          async action => {
             const { container, getByLabelText, queryByLabelText } = render(
               <SideNav>
                 <SideNavItem>Item</SideNavItem>
@@ -344,18 +346,19 @@ describe('packages/collapsible-side-nav', () => {
         expect(nav).toBeVisible();
 
         fireEvent.mouseOver(nav!);
-        await waitFor(() => {
-          act(() => {
-            expectHovered();
-          });
-        });
+        await waitFor(() => expectHovered());
 
         fireEvent.mouseLeave(nav!);
-        await waitFor(() => {
-          act(() => {
-            expectCollapsed();
-          });
-        });
+        await waitFor(() => expectCollapsed());
+
+        // wait a little bit for any transitions to finish so that we
+        // don't get warnings about not wrapping re-renders in `act`
+        await act(
+          () =>
+            new Promise(resolve =>
+              setTimeout(resolve, transitionDurationMilliseconds),
+            ),
+        );
       });
     });
 
@@ -539,6 +542,51 @@ describe('packages/collapsible-side-nav', () => {
       expect(clickSpy).not.toHaveBeenCalled();
       fireEvent.click(item);
       expect(clickSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('tabbing', () => {
+      const { getByLabelText } = render(
+        <SideNav>
+          <SideNavItem>One</SideNavItem>
+          <SideNavGroup label="Group">
+            <SideNavItem>Two</SideNavItem>
+          </SideNavGroup>
+          <SideNavGroup label="Collapsed Group" collapsible>
+            <SideNavItem>X</SideNavItem>
+          </SideNavGroup>
+          <SideNavGroup
+            label="Expanded Group"
+            collapsible
+            initialCollapsed={false}
+          >
+            <SideNavItem>Three</SideNavItem>
+          </SideNavGroup>
+        </SideNav>,
+      );
+
+      expect(document.body).toHaveFocus();
+
+      const collapseButton = getByLabelText('Collapse sidebar');
+      userEvent.tab();
+      expect(collapseButton).toHaveFocus();
+
+      userEvent.tab();
+      expect(document.activeElement).toHaveTextContent('One');
+
+      userEvent.tab();
+      expect(document.activeElement).toHaveTextContent('Two');
+
+      userEvent.tab();
+      expect(document.activeElement).toHaveTextContent('Collapsed Group');
+
+      userEvent.tab();
+      expect(document.activeElement).toHaveTextContent('Expanded Group');
+
+      userEvent.tab();
+      expect(document.activeElement).toHaveTextContent('Three');
+
+      userEvent.tab();
+      expect(document.body).toHaveFocus();
     });
 
     /* eslint-disable jest/expect-expect */
