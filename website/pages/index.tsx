@@ -194,7 +194,6 @@ function ComponentPreview({
     </div>
   );
 }
-
 interface MarketingPreview {
   marketingURL: string;
   children: string;
@@ -242,6 +241,11 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
   const isTouchDevice = viewport?.width
     ? viewport?.width < breakpoints.Tablet
     : false;
+
+  const sharedSmallComponentPreviewProps = {
+    isTouchDevice,
+    className: smallHeight,
+  };
 
   return (
     <>
@@ -329,38 +333,222 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         {/* Third Row */}
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
             route="/component/icon/example"
             backgroundURL={`${landingURL}/icons-thumbnail.png`}
             content="Icons"
-            className={smallHeight}
-            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
             route="/component/card/example"
             backgroundURL={`${landingURL}/card-thumbnail.png`}
             content="Card"
-            className={smallHeight}
-            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
             route="/component/tooltip/example"
             backgroundURL={`${landingURL}/tooltip-thumbnail.png`}
             content="Tooltip"
-            className={smallHeight}
-            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
             route="/component/checkbox/example"
             backgroundURL={`${landingURL}/checkbox-thumbnail.png`}
             content="Checkbox"
-            className={smallHeight}
-            isTouchDevice={isTouchDevice}
+          />
+        </GridItem>
+
+        {/* Fourth Row */}
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/badge/example"
+            backgroundURL={`${landingURL}/badges-thumb.png`}
+            content="Badge"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/callout/example"
+            backgroundURL={`${landingURL}/callout-thumb.png`}
+            content="Callout"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/inline-definition/example"
+            backgroundURL={`${landingURL}/inlinedefinition-thumb.png`}
+            content="Inline Definition"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/button/example"
+            backgroundURL={`${landingURL}/button-thumb.png`}
+            content="Button"
+          />
+        </GridItem>
+
+        {/* Fifth Row */}
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/toast/example"
+            backgroundURL={`${landingURL}/toast-thumb.png`}
+            content="Toast"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/icon-button/example"
+            backgroundURL={`${landingURL}/iconbutton-thumb.png`}
+            content="Icon Button"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/menu/example"
+            backgroundURL={`${landingURL}/menu-thumb.png`}
+            content="Menu"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/text-area/example"
+            backgroundURL={`${landingURL}/textarea-thumb.png`}
+            content="Text Area"
+          />
+        </GridItem>
+
+        {/* Sixth Row */}
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/copyable/example"
+            backgroundURL={`${landingURL}/copyable-thumb.png`}
+            content="Copyable"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/tabs/example"
+            backgroundURL={`${landingURL}/tabs-thumb.png`}
+            content="Tabs"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/marketing-modal/example"
+            backgroundURL={`${landingURL}/marketingmodal-thumb.png`}
+            content="Marketing Modal"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/typography/example"
+            backgroundURL={`${landingURL}/typography-thumb.png`}
+            content="Typography"
+          />
+        </GridItem>
+
+        {/* Seventh Row */}
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/code/example"
+            backgroundURL={`${landingURL}/code-thumb.png`}
+            content="Code"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/toggle/example"
+            backgroundURL={`${landingURL}/toggles-thumb.png`}
+            content="Toggle"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/table/example"
+            backgroundURL={`${landingURL}/table-thumb.png`}
+            content="Table"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/confirmation-modal/example"
+            backgroundURL={`${landingURL}/confirmationmodal-thumb.png`}
+            content="Confirmation Modal"
+          />
+        </GridItem>
+
+        {/* Eighth Row */}
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/modal/example"
+            backgroundURL={`${landingURL}/modal-thumb.png`}
+            content="Modal"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/stepper/example"
+            backgroundURL={`${landingURL}/stepper-thumb.png`}
+            content="Stepper"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/palette/example"
+            backgroundURL={`${landingURL}/palette-thumb.png`}
+            content="Palette"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/side-nav/example"
+            backgroundURL={`${landingURL}/sidenav-thumb.png`}
+            content="Side Nav"
+          />
+        </GridItem>
+
+        {/* Ninth Row */}
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/radio-group/example"
+            backgroundURL={`${landingURL}/radiogroup-thumb.png`}
+            content="Radio Group"
+          />
+        </GridItem>
+        <GridItem sm={6} md={3} lg={3}>
+          <ComponentPreview
+            {...sharedSmallComponentPreviewProps}
+            route="/component/select/example"
+            backgroundURL={`${landingURL}/select-thumb.png`}
+            content="Select"
           />
         </GridItem>
       </GridContainer>
