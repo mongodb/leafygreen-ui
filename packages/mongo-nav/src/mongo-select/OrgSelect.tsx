@@ -340,6 +340,12 @@ function OrgSelect({
 
   const caretIconStyle = cx(caretBaseStyle, { [iconLoadingStyle]: loading });
 
+  const caretProps = {
+    role: 'presentation',
+    size: 'small',
+    className: caretIconStyle,
+  } as const;
+
   return (
     <>
       <InteractionRing
@@ -371,6 +377,7 @@ function OrgSelect({
               <BuildingIcon
                 size="small"
                 className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
+                role="presentation"
               />
             )}
             <span
@@ -382,9 +389,9 @@ function OrgSelect({
               {disabled ? 'All Organizations' : current?.orgName ?? ''}
             </span>
             {open ? (
-              <CaretUpIcon size="small" className={caretIconStyle} />
+              <CaretUpIcon {...caretProps} />
             ) : (
-              <CaretDownIcon size="small" className={caretIconStyle} />
+              <CaretDownIcon {...caretProps} />
             )}
           </button>
           <Menu
