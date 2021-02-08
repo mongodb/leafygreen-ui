@@ -23,13 +23,21 @@ npm install @leafygreen-ui/toggle
 ```js
 import Toggle from '@leafygreen-ui/toggle';
 
-<label id="label" htmlFor="toggle">Change setting</label>
+return (
+  <>
+    <label id="label" htmlFor="toggle">
+      Change setting
+    </label>
 
-<Toggle
-  id="toggle"
-  aria-labelledby="label"
-  onChange={(checked, event) => { /* Handle the change event */ }}
-/>;
+    <Toggle
+      id="toggle"
+      aria-labelledby="label"
+      onChange={(checked, event) => {
+        /* Handle the change event */
+      }}
+    />
+  </>
+);
 ```
 
 **Output HTML**

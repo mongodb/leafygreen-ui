@@ -29,31 +29,37 @@ import {
   CloudManagerLogo,
 } from '@leafygreen-ui/logo';
 
-<Logo />;
+return (
+  <div>
+    <Logo />
+  </div>
+);
 ```
 
 **Output HTML**
 
 ```html
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 1112.61 300"
-  height="40"
-  width="100%"
->
-  <title>MongoDB Logo</title>
-  <path class="leafygreen-ui-17842x1"></path>
-  <path class="leafygreen-ui-197s9ut"></path>
-  <path class="leafygreen-ui-1wkd47u"></path>
-  <path fill="#21313C"></path>
-  <path fill="#21313C"></path>
-  <path fill="#21313C"></path>
-  <path fill="#21313C"></path>
-  <path fill="#21313C"></path>
-  <path fill="#21313C"></path>
-  <path fill="#21313C"></path>
-  <path fill="#21313C"></path>
-</svg>
+<div>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 1112.61 300"
+    height="40"
+    width="100%"
+  >
+    <title>MongoDB Logo</title>
+    <path class="leafygreen-ui-17842x1"></path>
+    <path class="leafygreen-ui-197s9ut"></path>
+    <path class="leafygreen-ui-1wkd47u"></path>
+    <path fill="#21313C"></path>
+    <path fill="#21313C"></path>
+    <path fill="#21313C"></path>
+    <path fill="#21313C"></path>
+    <path fill="#21313C"></path>
+    <path fill="#21313C"></path>
+    <path fill="#21313C"></path>
+    <path fill="#21313C"></path>
+  </svg>
+</div>
 ```
 
 ## Properties
