@@ -5,18 +5,16 @@ import Syntax from './Syntax';
 function testSnippetRenders(codeSnippet: string) {
   test("renders the full content that's passed in", () => {
     const { getByRole } = render(
-      <Syntax language="javascript">
-        {codeSnippet}
-      </Syntax>,
+      <Syntax language="javascript">{codeSnippet}</Syntax>,
     );
 
-    const table = getByRole('table')
+    const table = getByRole('table');
 
     // We expect textContent to equal the content that's passed in, except
     // that new line characters are completely removed.
     const expectedContent = codeSnippet.replace(/\r?\n|\r/g, '');
 
-    expect(table.textContent).toEqual(expectedContent)
+    expect(table.textContent).toEqual(expectedContent);
   });
 }
 
@@ -33,12 +31,6 @@ describe('packages/Syntax', () => {
   console.log(greeting('World'));
 
   `;
-
-  const codeSnippets = [
-    singleLine,
-    singleLineJSX,
-    multipleLines,
-  ];
 
   test(`renders "${className}" in the code element's classList`, () => {
     const { container } = render(
@@ -84,5 +76,7 @@ describe('packages/Syntax', () => {
     });
   });
 
-  codeSnippets.forEach(testSnippetRenders)
+  const codeSnippets = [singleLine, singleLineJSX, multipleLines];
+
+  codeSnippets.forEach(testSnippetRenders);
 });

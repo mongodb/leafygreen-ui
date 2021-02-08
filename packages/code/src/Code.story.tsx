@@ -6,7 +6,15 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Language } from './types';
 import Code from '.';
 
-const jsSnippet = '() => <Icon glyph="Plus" fill="#FF0000" />';
+const jsSnippet = `
+
+function greeting(entity) {
+  return \`Hello, \${entity}!\`;
+}
+
+console.log(greeting('World'));
+
+`;
 
 storiesOf('Code', module).add(
   'Multiline',

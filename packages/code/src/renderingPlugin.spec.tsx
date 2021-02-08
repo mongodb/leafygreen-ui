@@ -223,19 +223,15 @@ describe('flattenNestedTree()', () => {
   test('when passed a token object, returns an array', () => {
     const [item1, item2] = flattenNestedTree({
       kind: 'test1',
-      children: [
-        'hello',
-        { kind: 'test2', children: ['world'] }
-      ]
-    })
+      children: ['hello', { kind: 'test2', children: ['world'] }],
+    });
 
-    expect(item1).toEqual('hello')
-    expect((item2 as TokenObject).kind).toEqual(generateKindClassName('test2'))
-    expect((item2 as TokenObject).children[0]).toEqual('world')
+    expect(item1).toEqual('hello');
+    expect((item2 as TokenObject).kind).toEqual(generateKindClassName('test2'));
+    expect((item2 as TokenObject).children[0]).toEqual('world');
 
-    console.log(item1, item2);
-    expect(true).toBeTruthy()
-  })
+    expect(true).toBeTruthy();
+  });
 
   test('when passed an array with a nested object, returns a flattened array of objects with updated kind', () => {
     expect(true).toBe(true);

@@ -245,10 +245,7 @@ export function flattenNestedTree(
     }
 
     if (isTokenObject(val)) {
-      return [
-        ...acc,
-        ...flattenNestedTree(val),
-      ];
+      return [...acc, ...flattenNestedTree(val)];
     }
 
     return acc;
@@ -324,8 +321,6 @@ export function treeToLines(
       lines[currentLineIndex].push(child);
     }
   });
-
-  
 
   return lines;
 }
