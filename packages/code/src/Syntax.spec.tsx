@@ -2,14 +2,48 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import Syntax from './Syntax';
 
-const codeSnippet = 'const greeting = "Hello, world!";';
-const className = 'test-class';
+function testSnippetRenders(codeSnippet: string) {
+  test("renders the full content that's passed in", () => {
+    const { getByRole } = render(
+      <Syntax language="javascript">
+        {codeSnippet}
+      </Syntax>,
+    );
+
+    const table = getByRole('table')
+
+    // We expect textContent to equal the content that's passed in, except
+    // that new line characters are completely removed.
+    const expectedContent = codeSnippet.replace(/\r?\n|\r/g, '');
+
+    expect(table.textContent).toEqual(expectedContent)
+  });
+}
 
 describe('packages/Syntax', () => {
+  const className = 'test-class';
+  const singleLine = 'const greeting = "Hello, world!";';
+  const singleLineJSX = '() => <Icon glyph="Plus" fill="#FF0000" />';
+  const multipleLines = `
+
+  function greeting(entity) {
+    return \`Hello, \${entity}!\`;
+  }
+
+  console.log(greeting('World'));
+
+  `;
+
+  const codeSnippets = [
+    singleLine,
+    singleLineJSX,
+    multipleLines,
+  ];
+
   test(`renders "${className}" in the code element's classList`, () => {
     const { container } = render(
       <Syntax language="none" className={className}>
-        {codeSnippet}
+        {singleLine}
       </Syntax>,
     );
 
@@ -20,7 +54,7 @@ describe('packages/Syntax', () => {
   test("doesn't highlight code when language is 'none'", () => {
     const { container } = render(
       <Syntax language="none" className={className}>
-        {codeSnippet}
+        {singleLine}
       </Syntax>,
     );
 
@@ -37,9 +71,10 @@ describe('packages/Syntax', () => {
   test("highlights code when language is 'javascript'", () => {
     const { container } = render(
       <Syntax className={className} language="javascript">
-        {codeSnippet}
+        {singleLine}
       </Syntax>,
     );
+
     const tableCells = container.querySelectorAll('td');
 
     Array.from(tableCells).forEach(child => {
@@ -48,4 +83,6 @@ describe('packages/Syntax', () => {
       expect(child.children.length).toBeGreaterThan(1);
     });
   });
+
+  codeSnippets.forEach(testSnippetRenders)
 });
