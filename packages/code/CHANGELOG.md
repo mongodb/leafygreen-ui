@@ -1,5 +1,18 @@
 # @leafygreen-ui/code
 
+## 8.0.5
+
+### Patch Changes
+
+- 63a6c2f6: - Fixes issue where many applications had global styles for pre tags that added a second border and border radius to the pre element.
+  - Fixes issue where code examples would be detected as multi-line when a single line example has preceding or subsequent new line characters.
+
+## 8.0.4
+
+### Patch Changes
+
+- 717c7023: Fix issue where border wouldn't stretch the full height of the component with a wrapping, single line code example.
+
 ## 8.0.3
 
 ### Patch Changes
