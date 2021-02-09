@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.2.1
+
+### Patch Changes
+
+- 6058739f: Updates University icon in MongoNav
+
 ## 5.2.0
 
 ### Minor Changes
