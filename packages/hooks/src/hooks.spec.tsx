@@ -5,6 +5,7 @@ import {
   usePoller,
   usePrevious,
   useObjectDependency,
+  useAccessibleFormField,
 } from './index';
 
 describe('packages/hooks', () => {
@@ -310,6 +311,40 @@ describe('packages/hooks', () => {
 
       rerender();
       expect(result.current).toEqual(2020);
+    });
+  });
+
+  describe('useAccessibleFormField', () => {
+    test('when id is supplied to hook', () => {
+      const inputId = 'text-input-id';
+      const { result } = renderHook(
+        (props: string) => useAccessibleFormField(props),
+        { initialProps: inputId },
+      );
+
+      expect(result.current.inputProps).toEqual({
+        id: inputId,
+        ['aria-labelledby']: 'label-0',
+      });
+      expect(result.current.labelProps).toEqual({
+        id: 'label-0',
+        htmlFor: inputId,
+      });
+    });
+
+    test('when no id is supplied to hook', () => {
+      const { result } = renderHook((props: string) =>
+        useAccessibleFormField(props),
+      );
+
+      expect(result.current.inputProps).toEqual({
+        id: 'input-0',
+        ['aria-labelledby']: 'label-1',
+      });
+      expect(result.current.labelProps).toEqual({
+        id: 'label-1',
+        htmlFor: 'input-0',
+      });
     });
   });
 });
