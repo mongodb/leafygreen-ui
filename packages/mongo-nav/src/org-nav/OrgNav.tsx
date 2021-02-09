@@ -100,6 +100,7 @@ function DropdownMenuIcon({ open }: { open: boolean }) {
   const Icon = open ? CaretUpIcon : CaretDownIcon;
   return (
     <Icon
+      role="presentation"
       className={cx(
         css`
           margin-left: 8px;
