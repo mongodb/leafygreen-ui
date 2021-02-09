@@ -1,9 +1,10 @@
 import React from 'react';
+import { transparentize } from 'polished';
+import { enforceExhaustive } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useSyntaxContext } from './SyntaxContext';
 import { spacing } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
+import { useSyntaxContext } from './SyntaxContext';
 
 interface TokenProps {
   kind?: string;
