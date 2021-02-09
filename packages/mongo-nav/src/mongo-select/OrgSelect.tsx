@@ -338,7 +338,7 @@ function OrgSelect({
 
   const [buttonElement, setButtonElement] = useState<HTMLElement | null>(null);
 
-  const caretIconStyle = cx(caretBaseStyle, { [iconLoadingStyle]: loading });
+  const CaretIcon = open ? CaretUpIcon : CaretDownIcon;
 
   return (
     <>
@@ -371,6 +371,7 @@ function OrgSelect({
               <BuildingIcon
                 size="small"
                 className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
+                role="presentation"
               />
             )}
             <span
@@ -381,11 +382,11 @@ function OrgSelect({
             >
               {disabled ? 'All Organizations' : current?.orgName ?? ''}
             </span>
-            {open ? (
-              <CaretUpIcon size="small" className={caretIconStyle} />
-            ) : (
-              <CaretDownIcon size="small" className={caretIconStyle} />
-            )}
+            <CaretIcon
+              role="presentation"
+              size="small"
+              className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+            />
           </button>
           <Menu
             usePortal={false}
