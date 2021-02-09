@@ -48,6 +48,8 @@ const componentData: Partial<Record<Component, ComponentData>> = {
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=0%3A1',
   },
   [Component.ConfirmationModal]: {
+    metaTagDescription:
+      'Modals are great way to add a speedbump before a user takes an action.',
     figmaLink:
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=283%3A14380',
   },
@@ -64,6 +66,8 @@ const componentData: Partial<Record<Component, ComponentData>> = {
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=7%3A34778',
   },
   [Component.Icon]: {
+    metaTagDescription:
+      'Icons can work together with text, or can serve as a standalone straightforward way of communicating actions or information to a user.',
     figmaLink:
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=7%3A13274',
   },
@@ -74,6 +78,8 @@ const componentData: Partial<Record<Component, ComponentData>> = {
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=7%3A24706',
   },
   [Component.MarketingModal]: {
+    metaTagDescription:
+      "Marketing modals are a great way to showcase a new service or feature to the user, but make sure they'll be interested in it.",
     figmaLink:
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=283%3A14380',
   },
@@ -113,6 +119,8 @@ const componentData: Partial<Record<Component, ComponentData>> = {
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=273%3A322',
   },
   [Component.SideNav]: {
+    metaTagDescription:
+      'This side navigation is used throughout the MongoDB product suite.',
     figmaLink:
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=273%3A368',
   },
@@ -166,7 +174,13 @@ const componentData: Partial<Record<Component, ComponentData>> = {
     figmaLink:
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=9%3A3788',
   },
+  [Component.Tokens]: {
+    metaTagDescription:
+      'Tokens cover spacers, font family and grid breakpoints.',
+  },
   [Component.Typography]: {
+    metaTagDescription:
+      'Typograpaphy covers everything you need to know to set type successfully in MongoDB products.',
     figmaLink:
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=7%3A7169',
   },
