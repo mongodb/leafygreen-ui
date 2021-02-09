@@ -74,7 +74,7 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
 function News({ updates }: { updates: Array<UpdateProps> }) {
   return (
     <div className={newsContainer}>
-      <H2 as="h1">{`What's New`}</H2>
+      <H2 as="h1">What&rsquo;s New</H2>
       {updates.map(update => (
         <Update
           key={update.story}
