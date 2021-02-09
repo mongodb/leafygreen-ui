@@ -233,7 +233,7 @@ function ProjectSelect({
 
   const [buttonElement, setButtonElement] = useState<HTMLElement | null>(null);
 
-  const CurrentIcon = open ? CaretUpIcon : CaretDownIcon;
+  const CaretIcon = open ? CaretUpIcon : CaretDownIcon;
 
   return (
     <InteractionRing
@@ -267,6 +267,7 @@ function ProjectSelect({
           aria-expanded={open}
         >
           <FolderIcon
+            role="presentation"
             className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
           />
           <span
@@ -276,7 +277,8 @@ function ProjectSelect({
             {current?.projectName ?? ''}
           </span>
 
-          <CurrentIcon
+          <CaretIcon
+            role="presentation"
             size="small"
             className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
           />
