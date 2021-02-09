@@ -1,6 +1,5 @@
 import React from 'react';
 import { transparentize } from 'polished';
-import { enforceExhaustive } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
