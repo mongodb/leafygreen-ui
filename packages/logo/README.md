@@ -29,11 +29,7 @@ import {
   CloudManagerLogo,
 } from '@leafygreen-ui/logo';
 
-return (
-  <div>
-    <Logo />
-  </div>
-);
+return <Logo />;
 ```
 
 **Output HTML**
