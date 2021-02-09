@@ -1,9 +1,9 @@
 import React from 'react';
+import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useSyntaxContext } from './SyntaxContext';
 import { spacing } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
+import { useSyntaxContext } from './SyntaxContext';
 
 interface TokenProps {
   kind?: string;
@@ -52,6 +52,14 @@ function isString(item: any): item is string {
 
 function isNumber(item: any): item is number {
   return item != null && typeof item === 'number';
+}
+
+function isTokenObject(item: any): item is TokenObject {
+  if (item == null || typeof item !== 'object') {
+    return false;
+  }
+
+  return typeof item.kind === 'string' && item.children instanceof Array;
 }
 
 export function processToken(token: TreeItem, key?: number): React.ReactNode {
@@ -192,11 +200,15 @@ function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
 
 // If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
 export function flattenNestedTree(
-  children: TokenObject['children'],
+  children: TokenObject['children'] | TokenObject,
   kind?: string,
 ): Array<string | FlatTokenObject> {
   if (typeof children === 'string') {
     return children;
+  }
+
+  if (isTokenObject(children)) {
+    return flattenNestedTree(children.children, kind);
   }
 
   return children.reduce((acc: Array<string | FlatTokenObject>, val) => {
@@ -226,6 +238,10 @@ export function flattenNestedTree(
         ...acc,
         { kind: generateKindClassName(kind, val.kind), children: val.children },
       ];
+    }
+
+    if (isTokenObject(val)) {
+      return [...acc, ...flattenNestedTree(val)];
     }
 
     return acc;
