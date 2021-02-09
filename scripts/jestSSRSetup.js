@@ -46,6 +46,8 @@ Context.within(new ArtificialServerContext(), () => {
   // Emotion detects whether the document exists at module load time >:(
   // so we have to preload it here so that it doesn't load in a non-server context
   require('@emotion/cache');
+
+  require('use-ssr')
 });
 
 const { CacheProvider } = require('@emotion/core');
