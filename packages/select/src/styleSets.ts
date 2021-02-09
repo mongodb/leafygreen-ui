@@ -138,13 +138,14 @@ export const Size = {
   Small: 'small',
   Default: 'default',
   Large: 'large',
+  Fill: 'fill',
 } as const;
 
 export type Size = typeof Size[keyof typeof Size];
 
 interface SizeSet {
   height: number;
-  width: number;
+  width: number | string;
   text: number;
   label: {
     text: number;
@@ -222,6 +223,22 @@ export const sizeSets: Record<Size, SizeSet> = {
     },
     option: {
       text: 16,
+    },
+  },
+  [Size.Fill]: {
+    height: 36,
+    width: '100%',
+    text: 14,
+    label: {
+      text: 14,
+      lineHeight: 16,
+    },
+    description: {
+      text: 14,
+      lineHeight: 20,
+    },
+    option: {
+      text: 14,
     },
   },
 };

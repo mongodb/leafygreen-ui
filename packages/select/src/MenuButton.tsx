@@ -166,7 +166,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         menuButtonStyle,
         css`
           height: ${sizeSet.height}px;
-          width: ${sizeSet.width}px;
+          width: ${typeof sizeSet.width === 'number'
+            ? `${sizeSet.width}px`
+            : sizeSet.width};
           font-size: ${sizeSet.text}px;
           color: ${deselected ? colorSet.text.deselected : colorSet.text.base};
           border-color: ${open && !disabled
