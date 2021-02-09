@@ -55,15 +55,11 @@ function isNumber(item: any): item is number {
 }
 
 function isTokenObject(item: any): item is TokenObject {
-  // kind: string;
-  // children: Array<string | TokenObject>;
-  // sublanguage?: boolean;
-
   if (item == null || typeof item !== 'object') {
     return false;
   }
 
-  return typeof item?.kind === 'string' && item?.children instanceof Array;
+  return typeof item.kind === 'string' && item.children instanceof Array;
 }
 
 export function processToken(token: TreeItem, key?: number): React.ReactNode {
