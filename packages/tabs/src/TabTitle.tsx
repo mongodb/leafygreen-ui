@@ -177,7 +177,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
         [listTitleSelected]: selected,
         [modeColors[mode].listTitleFocus]: showFocus,
         [textOverflowStyles]: showEllipsis,
-        [modeColors[mode].listTitleHover]: !disabled,
+        [modeColors[mode].listTitleHover]: !disabled && !selected,
       },
       className,
     ),
