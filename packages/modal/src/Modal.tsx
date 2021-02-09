@@ -1,5 +1,6 @@
 import React, { SetStateAction, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import FocusLock from 'react-focus-lock';
 import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
@@ -96,8 +97,8 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
   large: css`
     ${mq({
-      width: ['720px', '720px', '960px'],
-    })}
+    width: ['720px', '720px', '960px'],
+  })}
   `,
 };
 
@@ -192,7 +193,7 @@ interface ModalProps {
 function Modal({
   open = false,
   size = ModalSize.Default,
-  setOpen = () => {},
+  setOpen = () => { },
   shouldClose = () => true,
   closeOnBackdropClick = true,
   children,
@@ -245,31 +246,33 @@ function Modal({
               [visibleBackdrop]: state === 'entered',
             })}
           >
-            <div className={scrollContainer} ref={setScrollContainerNode}>
-              <div
-                aria-modal="true"
-                role="dialog"
-                tabIndex={-1}
-                className={cx(
-                  modalContentStyle,
-                  modalSizes[size],
-                  {
-                    [visibleModalContentStyle]: state === 'entered',
-                  },
-                  contentClassName,
-                )}
-              >
-                <IconButton
-                  onClick={handleClose}
-                  aria-label="Close modal"
-                  className={closeButton}
+            <FocusLock returnFocus>
+              <div className={scrollContainer} ref={setScrollContainerNode}>
+                <div
+                  aria-modal="true"
+                  role="dialog"
+                  tabIndex={-1}
+                  className={cx(
+                    modalContentStyle,
+                    modalSizes[size],
+                    {
+                      [visibleModalContentStyle]: state === 'entered',
+                    },
+                    contentClassName,
+                  )}
                 >
-                  <XIcon />
-                </IconButton>
+                  <IconButton
+                    onClick={handleClose}
+                    aria-label="Close modal"
+                    className={closeButton}
+                  >
+                    <XIcon />
+                  </IconButton>
 
-                {children}
+                  {children}
+                </div>
               </div>
-            </div>
+            </FocusLock>
           </div>
         </Portal>
       )}

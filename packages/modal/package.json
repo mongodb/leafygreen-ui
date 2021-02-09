@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",
+    "react-focus-lock": "^2.5.0",
     "@leafygreen-ui/hooks": "^6.0.0",
     "@leafygreen-ui/icon": "^9.0.0",
     "@leafygreen-ui/icon-button": "^9.0.1",
