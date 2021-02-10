@@ -1,32 +1,42 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { typeIs } from '@leafygreen-ui/lib';
+import { render } from '@testing-library/react';
+import { axe, toHaveNoViolations } from 'jest-axe';
 import Badge from './Badge';
 
-afterAll(cleanup);
+expect.extend(toHaveNoViolations);
 
-describe('packages/Badge', () => {
-  const onClick = jest.fn();
-  const className = 'test-pill-class';
-  const child = 'Bubble Pill';
+const onClick = jest.fn();
+const className = 'test-pill-class';
+const child = 'Bubble Pill';
 
-  const { container } = render(
-    <Badge className={className} onClick={onClick}>
+function renderBadge() {
+  const { container, getByTestId } = render(
+    <Badge className={className} onClick={onClick} data-testid="badge-test">
       {child}
     </Badge>,
   );
 
-  const badge = container.firstChild;
+  const badge = getByTestId('badge-test');
+  return { badge, container };
+}
 
-  if (!typeIs.element(badge)) {
-    throw new Error('Badge element not found');
-  }
+describe('packages/Badge', () => {
+  describe('a11y', () => {
+    test('does not have basic a11y issues', async () => {
+      const { container } = renderBadge();
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+  });
 
   test(`renders "${className}" in the badge's classList`, () => {
+    const { badge } = renderBadge();
     expect(badge.classList.contains(className)).toBe(true);
   });
 
   test(`renders "${child}" as the badge's textContent`, () => {
+    const { badge } = renderBadge();
     expect(badge.textContent).toBe(child);
   });
 });
