@@ -24,6 +24,10 @@ const rowStyle = css`
   }
 `;
 
+const hideRow = css`
+  opacity: 0;
+`;
+
 const altColor = css`
   &:nth-of-type(even) {
     background-color: ${uiColors.gray.light3};
@@ -244,7 +248,8 @@ const Row = React.forwardRef(
       return renderedChildren;
     }, [children, rowHasNestedRows, isExpanded, setIsExpanded]);
 
-    const shouldAltRowColor = data && data.length >= 10 && !hasNestedRows;
+    const shouldAltRowColor =
+      data && data.length >= 10 && hasNestedRows != null && !hasNestedRows;
 
     const alignmentStyles = columnInfo
       ? Object.entries(columnInfo).map(([key, { dataType }]) =>
@@ -257,6 +262,8 @@ const Row = React.forwardRef(
       getIndentLevelStyle(indentLevel),
       [...alignmentStyles],
       {
+        // Hide the row until we can apply correct alignment to cells.
+        [hideRow]: !columnInfo,
         [altColor]: shouldAltRowColor,
         [disabledStyle]: disabled,
       },
