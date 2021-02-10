@@ -7,16 +7,17 @@ import React, {
 } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   AriaCurrentValue,
   enforceExhaustive,
   keyMap,
   OneOf,
 } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { ExtendableBox } from '@leafygreen-ui/box';
 import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 import Portal from '@leafygreen-ui/portal';
 import { SideNavContext, SideNavGroupContext } from './contexts';
 import {
@@ -35,9 +36,12 @@ const sideNavItemNavExpandedNonGroupLiMarginStyle = css`
 `;
 
 const sideNavItemStyle = css`
+  // Chrome has a bug that makes the border black during transition so
+  // just disable the border transition since it's hard to notice anyway
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out, border none;
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: ${spacing[2]}px ${spacing[3]}px;
   width: ${sideNavWidth}px;
   cursor: pointer;
   font-size: 14px;
@@ -48,9 +52,6 @@ const sideNavItemStyle = css`
   overflow: hidden;
   border: 0 solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
-  // Chrome has a bug that makes the border black during transition so
-  // just disable the border transition since it's hard to notice anyway
-  transition: all ${transitionDurationMilliseconds}ms ease-in-out, border none;
 `;
 
 const sideNavItemExpandedStyle = css`
@@ -74,12 +75,6 @@ const sideNavItemDisabledStyle = css`
   &:focus {
     color: ${uiColors.gray.base};
     background-color: inherit;
-  }
-`;
-
-const sideNavItemWithGlyphStyle = css`
-  & > svg:first-child {
-    margin-right: 5px;
   }
 `;
 
@@ -294,19 +289,11 @@ const SideNavItem: ExtendableBox<
   const ariaLabel =
     ariaLabelProp ?? (typeof children === 'string' ? children : undefined);
 
-  const renderedGlyph = shouldRenderGlyph
-    ? React.cloneElement(glyph!, {
-        'aria-hidden': true,
-        role: 'presentation',
-      })
-    : null;
-
   const props = useMemo(() => {
     const commonStyles = cx(sideNavItemStyle, {
       [sideNavItemNonGroupStyle]: !isInGroup,
       [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
       [sideNavItemCollapsibleGroupStyle]: groupCollapsible,
-      [sideNavItemWithGlyphStyle]: hasGlyph,
     });
 
     if (shouldRenderCollapsedState) {
@@ -324,16 +311,6 @@ const SideNavItem: ExtendableBox<
             isInGroup || shouldRenderCollapsedGlyph
           ),
         }),
-        children: (
-          <>
-            {isInGroup || shouldRenderCollapsedGlyph ? renderedGlyph : null}
-            {isInGroup && (
-              <div className={cx(contentsStyle, hiddenContentsStyle)}>
-                {children}
-              </div>
-            )}
-          </>
-        ),
       };
     } else {
       return {
@@ -356,19 +333,6 @@ const SideNavItem: ExtendableBox<
         onClick,
         onKeyDown,
         href,
-        children: (
-          <>
-            {renderedGlyph}
-            <div
-              aria-hidden={shouldRenderCollapsedGlyph}
-              className={cx(contentsStyle, {
-                [hiddenContentsStyle]: shouldRenderCollapsedGlyph,
-              })}
-            >
-              {children}
-            </div>
-          </>
-        ),
       };
     }
   }, [
@@ -376,12 +340,10 @@ const SideNavItem: ExtendableBox<
     isInGroup,
     isLink,
     groupCollapsible,
-    hasGlyph,
     shouldRenderCollapsedState,
     shouldRenderGlyph,
     shouldRenderCollapsedGlyph,
     shouldPortalCollapsedGlyph,
-    renderedGlyph,
     isActive,
     disabled,
     usingKeyboard,
@@ -389,8 +351,42 @@ const SideNavItem: ExtendableBox<
     onClick,
     onKeyDown,
     href,
-    children,
   ]);
+
+  const renderedGlyph = shouldRenderGlyph
+    ? React.cloneElement(glyph!, {
+        'aria-hidden': true,
+        role: 'presentation',
+        className: css`
+          margin-right: 5px;
+        `,
+      })
+    : null;
+
+  const renderedChildren = shouldRenderCollapsedState ? (
+    <>
+      {isInGroup || shouldRenderCollapsedGlyph ? renderedGlyph : null}
+
+      {isInGroup && (
+        <div className={cx(contentsStyle, hiddenContentsStyle)}>
+          {children}
+        </div>
+      )}
+    </>
+  ) : (
+    <>
+      {renderedGlyph}
+
+      <div
+        aria-hidden={shouldRenderCollapsedGlyph}
+        className={cx(contentsStyle, {
+          [hiddenContentsStyle]: shouldRenderCollapsedGlyph,
+        })}
+      >
+        {children}
+      </div>
+    </>
+  )
 
   return (
     <>
@@ -401,14 +397,16 @@ const SideNavItem: ExtendableBox<
             !isInGroup && !navCollapsed,
         })}
       >
-        <Box
-          as="a"
+        <a
           ref={shouldPortalCollapsedGlyph ? undefined : setRef}
           role={isInGroup ? 'menuitem' : undefined}
           {...props}
           {...rest}
-        />
+        >
+          {renderedChildren}
+        </a>
       </li>
+
       <Transition
         in={shouldPortalCollapsedGlyph}
         timeout={transitionDurationMilliseconds}
@@ -423,7 +421,8 @@ const SideNavItem: ExtendableBox<
               className={cx(sideNavItemWithGlyphNavCollapsedStyle, {
                 [css`
                   height: 0;
-                  padding: 0 16px;
+                  padding-left: ${spacing[3]}px;
+                  padding-right: ${spacing[3]}px;
                   opacity: 0;
                   border: none;
                 `]: state === 'exiting' || state === 'exited',

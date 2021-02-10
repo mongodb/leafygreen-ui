@@ -104,7 +104,7 @@ export const keyMap = {
   Escape: 27,
   Space: 32,
   Tab: 9,
-};
+} as const;
 
 /**
  * An enum of accepted values for the "aria-current" attribute, used for

@@ -18,7 +18,7 @@ const buttonStyle = css`
   width: 32px;
   z-index: 1;
   color: ${uiColors.green.dark2};
-  background-color: ${uiColors.gray.light3};
+  background-color: ${uiColors.white};
   border: 1px solid ${uiColors.gray.light2};
   box-shadow: 0 3px 4px ${transparentize(0.88, uiColors.black)};
   cursor: pointer;

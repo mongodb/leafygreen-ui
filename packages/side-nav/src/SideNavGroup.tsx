@@ -11,6 +11,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Overline } from '@leafygreen-ui/typography';
+import { spacing } from '@leafygreen-ui/tokens';
 import {
   HTMLElementProps,
   IdAllocator,
@@ -24,7 +25,7 @@ import { GlyphElement, transitionDurationMilliseconds } from './utils';
 const sideNavGroupStyle = css`
   display: flex;
   flex-direction: column;
-  margin-top: 8px;
+  margin-top: ${spacing[2]}px;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out, margin none;
   border: 0 solid rgba(0, 0, 0, 0);
   cursor: default;
@@ -90,11 +91,11 @@ const glyphStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 4px;
+  margin-right: ${spacing[2]}px;
 `;
 
 const chevronContainerStyle = css`
-  margin: 0 6px;
+  margin-left: ${spacing[2]}px;
   opacity: 1;
   overflow: hidden;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
@@ -303,8 +304,8 @@ const SideNavGroup = React.forwardRef<HTMLLIElement, Props>(
               className={css`
                 display: flex;
                 transition: all ${transitionDurationMilliseconds}ms ease-in-out;
-                // Leave space for chevron and its margins = 16px + 2 * 6px
-                width: calc(100% - ${canRenderAsCollapsible ? 28 : 0}px);
+                // Leave space for chevron and its margins = 16px + 6px
+                width: calc(100% - ${canRenderAsCollapsible ? 22 : 0}px);
               `}
             >
               {hasGlyph && (

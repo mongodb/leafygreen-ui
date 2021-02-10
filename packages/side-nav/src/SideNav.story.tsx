@@ -38,6 +38,7 @@ function WithPath({ children, path, setPath }: WithPathProps) {
   const onSelect = useCallback(() => {
     setPath(path);
   }, [path, setPath]);
+
   return React.cloneElement(children, {
     path,
     onSelect,
@@ -237,6 +238,7 @@ storiesOf('SideNav', module)
             <div className={contentStyle}>
               <h1>Title</h1>
               <h2>Section</h2>
+              <input type="text" />
               <p>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industrys standard dummy text

@@ -116,13 +116,19 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
     setCollapsedState(collapsedState => !collapsedState);
   }, []);
 
+  const disabledTagNames = ['INPUT', 'TEXTAREA']
+
   useEventListener(
     'keydown',
     event => {
       if (event.keyCode === keyMap.BracketLeft) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        toggleCollapse();
+        // Disable toggling the side navigation when a user is typing in an input.
+        // The typing for useEventListener doesn't seem to like using event.target,
+        // so we disable this here.
+        // @ts-expect-error
+        if (!disabledTagNames.includes(event.target?.tagName)) {
+          toggleCollapse();
+        }
       }
     },
     { dependencies: [collapsible, toggleCollapse], enabled: collapsible },
