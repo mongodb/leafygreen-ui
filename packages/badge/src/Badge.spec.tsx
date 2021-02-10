@@ -1,9 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
+import { axe } from 'jest-axe';
 import Badge from './Badge';
-
-expect.extend(toHaveNoViolations);
 
 const onClick = jest.fn();
 const className = 'test-pill-class';
@@ -22,7 +20,7 @@ function renderBadge() {
 
 describe('packages/Badge', () => {
   describe('a11y', () => {
-    test('does not have basic a11y issues', async () => {
+    test('does not have basic accessibility issues', async () => {
       const { container } = renderBadge();
       const results = await axe(container);
 

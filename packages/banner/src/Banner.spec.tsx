@@ -1,10 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
+import { axe } from 'jest-axe';
 import VerticalEllipsisIcon from '@leafygreen-ui/icon/dist/VerticalEllipsis';
 import Banner, { Variant } from '.';
-
-expect.extend(toHaveNoViolations);
 
 const className = 'test-classname';
 const children = 'this is the banner content.';
@@ -18,13 +16,14 @@ function renderBanner(props = {}) {
 
 describe('packages/banner', () => {
   describe('a11y', () => {
-    test('does not have basic a11y violations', async () => {
-      const { container } = renderBanner()
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderBanner();
       const results = await axe(container);
 
       expect(results).toHaveNoViolations();
-    })
-  })
+    });
+  });
+
   describe('by default', () => {
     test(`renders "${className}" in the badge's classList`, () => {
       const { banner } = renderBanner({

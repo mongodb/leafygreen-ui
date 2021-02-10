@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Box, { ExtendableBox, BoxProps } from '.';
 
 interface LinkWrapperProps {
@@ -55,6 +56,15 @@ describe('packages/box', () => {
   afterEach(() => {
     jest.clearAllMocks();
     cleanup();
+  });
+
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = render(<Box />);
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
   });
 
   describe('when rendered with only shared props', () => {

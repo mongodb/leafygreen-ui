@@ -1,10 +1,9 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { typeIs } from '@leafygreen-ui/lib';
 import RadioBox from './RadioBox';
 import RadioBoxGroup from './RadioBoxGroup';
-
-afterAll(cleanup);
 
 const className = 'test-radio-box-class';
 
@@ -26,6 +25,11 @@ describe('packages/RadioBox', () => {
   if (!typeIs.input(radioBox)) {
     throw new Error('Could not find radio box input element');
   }
+
+  test('does not have basic accessibility issues', async () => {
+    const results = await axe(radioBoxContainer);
+    expect(results).toHaveNoViolations();
+  });
 
   test(`renders "${className}" in RadioBox's classList`, () => {
     expect(radioBoxContainer.classList.contains(className)).toBe(true);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Button from './Button';
 
 const onClick = jest.fn();
@@ -14,6 +15,25 @@ function renderButton(props = {}) {
 }
 
 describe('packages/button', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues when rendered as a button', async () => {
+      const { container } = renderButton({ children: child });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+
+    test('does not have basic accessibility issues when rendered as an anchor tag', async () => {
+      const { container } = renderButton({
+        href: 'https://mongodb.design',
+        children: child,
+      });
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   test(`renders "${className}" in the component's markup`, () => {
     const { button } = renderButton({
       className,
