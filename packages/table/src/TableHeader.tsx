@@ -19,12 +19,11 @@ const thStyle = css`
 const flexDisplay = css`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   min-height: 32px;
 `;
 
 const labelStyle = css`
-  display: flex;
-  align-items: center;
   color: ${uiColors.gray.dark2};
   padding-right: 4px;
 `;
@@ -158,13 +157,7 @@ function TableHeader<Shape>({
       <div className={flexDisplay}>
         <span className={labelStyle}>{label}</span>
         {sortBy != null && (
-          <IconButton
-            aria-label="sort"
-            onClick={sortRows}
-            className={css`
-              margin-bottom: 2px;
-            `}
-          >
+          <IconButton aria-label="sort" onClick={sortRows}>
             <Glyph
               size="small"
               title={`${glyph}-${index}`}
