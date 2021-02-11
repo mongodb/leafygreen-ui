@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen, act } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Toggle from '.';
 
 function renderToggle(props = {}) {
@@ -22,6 +23,22 @@ function renderToggle(props = {}) {
 }
 
 describe('packages/Toggle', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderToggle();
+
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+
+      let newResults = null as any;
+      act(() => void fireEvent.click(screen.getByRole('switch')));
+      await act(async () => {
+        newResults = await axe(container);
+      });
+      expect(newResults).toHaveNoViolations();
+    });
+  });
+
   test('toggle is not checked by default', () => {
     const { toggle } = renderToggle();
     expect(toggle.getAttribute('aria-checked')).toBe('false');
