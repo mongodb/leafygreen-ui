@@ -302,15 +302,19 @@ function ProjectSelect({
             />
           </FocusableMenuItem>
 
-          <ul className={ulStyle}>
+          <div className={ulStyle} role="none">
             {isAdminSearch && isFetching && (
-              <li className={emptyStateStyle}>Searching...</li>
+              <li role="none" className={emptyStateStyle}>
+                <div role="menuitem">Searching...</div>
+              </li>
             )}
             {isAdminSearch && !isFetching && renderedData.length === 0 && (
-              <li className={emptyStateStyle}>No matches found</li>
+              <li role="none" className={emptyStateStyle}>
+                <div role="menuitem">No matches found</div>
+              </li>
             )}
             {renderedData?.map(renderProjectOption)}
-          </ul>
+          </div>
 
           <MenuSeparator />
 

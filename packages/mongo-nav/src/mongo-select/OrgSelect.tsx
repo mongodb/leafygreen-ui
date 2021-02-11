@@ -408,24 +408,30 @@ function OrgSelect({
               </FocusableMenuItem>
             )}
 
-            <ul className={ulStyle}>
+            <div role="none" className={ulStyle}>
               {isAdminSearch && isFetching && (
-                <li className={emptyStateStyle}>Searching...</li>
-              )}
-              {isAdminSearch && !isFetching && renderedData.length === 0 && (
-                <li className={emptyStateStyle}>No matches found</li>
-              )}
-              {renderedData?.map(renderOrganizationOption) ?? (
-                <li className={emptyStateStyle}>
-                  You do not belong to any organizations. Create an organization
-                  on the{' '}
-                  <a href={urls.viewAllOrganizations} className={linkStyle}>
-                    Organizations
-                  </a>{' '}
-                  page.
+                <li role="none" className={emptyStateStyle}>
+                  <div role="menuitem">Searching...</div>
                 </li>
               )}
-            </ul>
+              {isAdminSearch && !isFetching && renderedData.length === 0 && (
+                <li role="none" className={emptyStateStyle}>
+                  <div role="menuitem">No matches found</div>
+                </li>
+              )}
+              {renderedData?.map(renderOrganizationOption) ?? (
+                <li role="none" className={emptyStateStyle}>
+                  <div role="menuitem">
+                    You do not belong to any organizations. Create an
+                    organization on the{' '}
+                    <a href={urls.viewAllOrganizations} className={linkStyle}>
+                      Organizations
+                    </a>{' '}
+                    page.
+                  </div>
+                </li>
+              )}
+            </div>
 
             {renderedData && (
               <>
