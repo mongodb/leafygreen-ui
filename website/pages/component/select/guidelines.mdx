@@ -1,0 +1,78 @@
+import { css } from 'emotion';
+import { CDN } from 'utils/routes';
+
+Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.
+
+<img
+  src={`${CDN}/images/guidelines/selectInputs-1.png`}
+  alt=""
+  className={css`
+    margin: 40px 0;
+  `}
+/>
+
+Select inputs are not menus. In a menu, a user takes an action (like copy/delete a property or navigate to a different section/screen). In a select input, a selection is being made — the user’s selection will be shown after a selection is made (unlike with the menu).
+
+<img
+  src={`${CDN}/images/guidelines/selectInputs-2.png`}
+  alt=""
+  className={css`
+    margin: 40px 0;
+    width: 100%;
+  `}
+/>
+
+In a select input where there are less than 3-4 items, consider using radio boxes, or radio inputs instead.
+
+<img
+  src={`${CDN}/images/guidelines/selectInputs-3.png`}
+  alt=""
+  className={css`
+    margin: 40px 0;
+    width: 100%;
+  `}
+/>
+
+Select inputs come in various sizes. We recommend limiting the use of the XS size. Default size supports 16px body font as well as 14px body font.
+
+<img
+  src={`${CDN}/images/guidelines/selectInputs-4.png`}
+  alt=""
+  className={css`
+    margin: 40px 0;
+    height: 100%;
+  `}
+/>
+
+Use labels to organize groups of items.
+
+<img
+  src={`${CDN}/images/guidelines/selectInputs-5.png`}
+  alt=""
+  className={css`
+    margin: 40px 0;
+    height: 100%;
+  `}
+/>
+
+Unlike buttons, there is no primary or secondary select input. Use a progressive disclosure pattern so as to emphasize the input the user should interact with before surfacing other UI elements. (For example, for a billing form, show the country select input before surfacing the state select input, since not all countries have states.)
+
+<img
+  src={`${CDN}/images/guidelines/selectInputs-6.png`}
+  alt=""
+  className={css`
+    margin: 40px 0;
+    height: 100%;
+  `}
+/>
+
+When the user selects the default prompt text in the dropdown they are making a null selection, or in other words not making a selection.
+
+<img
+  src={`${CDN}/images/guidelines/selectInputs-7.png`}
+  alt=""
+  className={css`
+    margin: 40px 0;
+    height: 100%;
+  `}
+/>

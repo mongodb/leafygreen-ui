@@ -1,0 +1,50 @@
+import { css } from 'emotion';
+import { CDN } from 'utils/routes';
+
+Tooltips should be used to show supplementary information only. It can be triggered when the user hovers over an element, say an info sprinkle or button.
+
+<div
+  className={css`
+    margin: 40px 0px;
+  `}
+>
+  <img
+    src={`${CDN}/images/guidelines/tooltips-1.png`}
+    alt=""
+    className={css`
+      width: 100%;
+    `}
+  />
+</div>
+
+Never nest call to actions within tooltips. The behavior of moussing over something and then mousing over a link is unexpected. (You’re hiding the link).
+
+<div
+  className={css`
+    margin: 40px 0px;
+  `}
+>
+  <img
+    src={`${CDN}/images/guidelines/tooltips-2.png`}
+    alt=""
+    className={css`
+      width: 100%;
+    `}
+  />
+</div>
+
+Light mode tooltips are darker in color and dark mode tooltips are lighter in color.
+
+<div
+  className={css`
+    margin: 40px 0px;
+  `}
+>
+  <img
+    src={`${CDN}/images/guidelines/tooltips-3.png`}
+    alt=""
+    className={css`
+      width: 100%;
+    `}
+  />
+</div>
