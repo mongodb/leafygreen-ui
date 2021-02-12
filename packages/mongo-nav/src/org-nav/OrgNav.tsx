@@ -48,15 +48,15 @@ const navContainer = css`
 
 const supportContainer = css`
   ${mq({
-  marginRight: ['16px', '16px', '24px'],
-  marginLeft: ['16px', '16px', '24px'],
-})}
+    marginRight: ['16px', '16px', '24px'],
+    marginLeft: ['16px', '16px', '24px'],
+  })}
 `;
 
 const rightLinkMargin = css`
   ${mq({
-  marginRight: ['16px', '16px', '24px'],
-})}
+    marginRight: ['16px', '16px', '24px'],
+  })}
 `;
 
 const paymentStatusMap: {
@@ -236,8 +236,8 @@ function NavLinks({
           {items}
         </MoreDropdownMenu>
       ) : (
-          items
-        )}
+        items
+      )}
     </div>
   );
 }

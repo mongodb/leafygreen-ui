@@ -334,7 +334,15 @@ function ProjectSelect({
                 data-testid="project-select-add-new-project"
                 onClick={onElementClick(NavElement.ProjectNavAddProject)}
               >
-                + New Project
+                <span
+                  aria-hidden
+                  className={css`
+                    margin-right: 2px;
+                  `}
+                >
+                  +
+                </span>
+                New Project
               </Button>
             </FocusableMenuItem>
           </li>

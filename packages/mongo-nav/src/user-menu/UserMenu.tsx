@@ -175,12 +175,17 @@ function Description({
 
   return (
     <div
+      aria-hidden
       className={cx(productLinkStyle, {
         [activePlatformLinkStyle]: isActive,
       })}
     >
       {link}
-      <ArrowRightIcon size="small" className={productLinkIconStyle} />
+      <ArrowRightIcon
+        size="small"
+        className={productLinkIconStyle}
+        role="presentation"
+      />
     </div>
   );
 }
