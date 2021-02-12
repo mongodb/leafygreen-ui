@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'jest-axe';
 import { Tabs, Tab } from '.';
 
 const tabsClassName = 'tabs-class-name';
@@ -8,7 +9,7 @@ const tabsTestId = 'tabs-component';
 const setSelected = jest.fn();
 
 const renderTabs = (tabsProps = {}, tabProps = {}) => {
-  render(
+  return render(
     <Tabs {...tabsProps} data-testid={tabsTestId} aria-label="Testing tabs">
       <Tab {...tabProps} name="First">
         Content 1
@@ -20,6 +21,13 @@ const renderTabs = (tabsProps = {}, tabProps = {}) => {
 };
 
 describe('packages/tabs', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderTabs();
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
   describe('when controlled', () => {
     test('clicking a tab fires setSelected callback', () => {
       renderTabs({ setSelected, selected: 1 });

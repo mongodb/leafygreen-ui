@@ -65,7 +65,6 @@ const contentStyle = css`
 const footerContentStyle = css`
   line-height: 24px;
   padding-bottom: 40px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
