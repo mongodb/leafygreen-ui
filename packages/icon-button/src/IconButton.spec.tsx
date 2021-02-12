@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import IconButton from './IconButton';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 
@@ -22,6 +23,13 @@ function renderIconButton(props = {}) {
 }
 
 describe('packages/icon-button', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderIconButton({ children: iconChild });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
   test(`renders ${className} in the classList`, () => {
     const { iconButton } = renderIconButton({ className, children: iconChild });
     expect(iconButton.classList.contains(className)).toBe(true);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import TextInput, { State } from './TextInput';
 
 const error = 'This is the error message';
@@ -28,6 +29,13 @@ function renderTextInput(props = {}) {
 }
 
 describe('packages/text-input', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderTextInput();
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
   test(`renders ${defaultProps.label} as the input label and ${defaultProps.description} as the description`, () => {
     const { label, description } = renderTextInput(defaultProps);
     expect(label?.innerHTML).toContain(defaultProps.label);

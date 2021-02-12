@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, act } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Popover from './Popover';
 import { PopoverProps } from './types';
 
@@ -17,6 +18,20 @@ function renderPopover(props: Partial<PopoverProps> = {}) {
 }
 
 describe('packages/popover', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container, getByText } = renderPopover();
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+
+      let newResults = null as any;
+      act(() => void fireEvent.click(getByText('Trigger Element')));
+      await act(async () => {
+        newResults = await axe(container);
+      });
+      expect(newResults).toHaveNoViolations();
+    });
+  });
   test('displays popover when the "active" prop is set', () => {
     const { getByTestId } = renderPopover({ active: true });
     expect(getByTestId('popover-test-id')).toBeInTheDocument();

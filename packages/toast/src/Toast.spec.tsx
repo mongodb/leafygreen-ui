@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Toast, { ToastProps, Variant } from './Toast';
 
 function renderToast(props: ToastProps) {
@@ -7,6 +8,18 @@ function renderToast(props: ToastProps) {
 }
 
 describe('packages/toast', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderToast({
+        open: true,
+        body: 'hello world',
+        variant: Variant.Success,
+      });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   describe(`when 'open' prop is`, () => {
     test(`undefined, Toast doesn't render`, () => {
       const { queryByRole } = renderToast({

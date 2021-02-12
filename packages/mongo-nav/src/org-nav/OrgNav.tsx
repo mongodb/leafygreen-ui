@@ -400,7 +400,7 @@ function OrgNav({
               onClick={onElementClick(NavElement.OrgNavLeaf)}
               data-testid="org-nav-leaf"
             >
-              <LogoMark height={30} />
+              <LogoMark height={30} aria-label="Go to the Organization Home" />
             </a>
           }
         >

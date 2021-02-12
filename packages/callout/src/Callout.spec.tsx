@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Callout, { headerIcons, headerLabels, Variant } from './Callout';
 
 const title = 'this is the callout title';
@@ -12,6 +13,15 @@ const defaultProps = {
 };
 
 describe('packages/callout', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = render(<Callout {...defaultProps} />);
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   for (const key of Object.keys(Variant)) {
     const variant = Variant[key as keyof typeof Variant];
     const icon = headerIcons[variant];
