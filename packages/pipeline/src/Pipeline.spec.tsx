@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
-
+import { axe } from 'jest-axe';
 import Pipeline from './Pipeline';
 import Stage from './Stage';
 import { Size } from './styles';
@@ -32,10 +32,17 @@ function renderPipeline(props = {}) {
 
 afterAll(() => {
   parentElement.remove();
-  cleanup();
 });
 
 describe('packages/pipeline/Pipeline', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderPipeline();
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   test(`renders "${className}" in the stage's classList`, () => {
     const { element } = renderPipeline({ className });
     expect(element.classList.contains(className)).toBe(true);

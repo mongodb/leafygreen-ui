@@ -6,6 +6,7 @@ import {
   render,
   RenderResult,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
 
@@ -15,6 +16,7 @@ describe('packages/mongo-nav', () => {
   let getByTestId: RenderResult['getByTestId'];
   let findByText: RenderResult['findByText'];
   let getByText: RenderResult['getByText'];
+  let container: RenderResult['container'];
 
   let fetchMock: jest.Mock;
   const originalFetch: (
@@ -40,6 +42,7 @@ describe('packages/mongo-nav', () => {
         queryByTestId,
         queryByText,
         getByText,
+        container,
       } = render(<MongoNav activeProduct="cloud" {...props} />));
     });
   };
@@ -57,6 +60,11 @@ describe('packages/mongo-nav', () => {
       act(() => {
         responseObject.json();
       });
+    });
+
+    test('does not have basic accessibility issues', async () => {
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
     });
 
     test('fetch is called', () => {

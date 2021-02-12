@@ -1,5 +1,6 @@
-import ClipboardJS from 'clipboard';
 import React from 'react';
+import ClipboardJS from 'clipboard';
+import { axe } from 'jest-axe';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
@@ -22,6 +23,13 @@ describe('packages/Code', () => {
       );
     },
   );
+
+  describe('a11y', () => {
+    test('does not have basic accessibility violations', async () => {
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
 
   const codeContainer = (container.firstChild as HTMLElement).lastChild;
   const codeRoot = (codeContainer as HTMLElement).firstChild;
