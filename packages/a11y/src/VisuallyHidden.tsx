@@ -1,5 +1,5 @@
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -12,12 +12,24 @@ const visuallyHidden = css`
   overflow: hidden;
   padding: 0;
   position: absolute;
-`
+`;
 
-function VisuallyHidden({ children, className, ...rest }: HTMLElementProps<'div'>) {
-  return <div {...rest} className={cx(visuallyHidden, className)}>{children}</div>;
+function VisuallyHidden({
+  children,
+  className,
+  ...rest
+}: HTMLElementProps<'div'>) {
+  return (
+    <div {...rest} className={cx(visuallyHidden, className)}>
+      {children}
+    </div>
+  );
 }
 
-VisuallyHidden.displayName = 'VisuallyHidden'
+VisuallyHidden.displayName = 'VisuallyHidden';
 
-export default VisuallyHidden
+VisuallyHidden.propTypes = {
+  children: PropTypes.string,
+};
+
+export default VisuallyHidden;
