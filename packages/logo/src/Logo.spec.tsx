@@ -1,6 +1,6 @@
 import React from 'react';
+import { axe } from 'jest-axe';
 import { render, screen } from '@testing-library/react';
-
 import {
   Logo,
   LogoMark,
@@ -19,7 +19,7 @@ const map = {
 
 const renderProductLogo = (product: keyof typeof map, props = {}) => {
   const Logo = map[product].icon;
-  render(
+  return render(
     <div key={product}>
       <Logo {...props} data-testid="logo-test-id" />
       <div>{product}</div>
@@ -28,6 +28,27 @@ const renderProductLogo = (product: keyof typeof map, props = {}) => {
 };
 
 describe('packages/logo', () => {
+  describe('a11y', () => {
+    test('logomark does not have basic accessibility issues', async () => {
+      const { container } = render(<LogoMark />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
+    test('logo does not have basic accessibility issues', async () => {
+      const { container } = render(<Logo />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
+    Object.keys(map).forEach(product => {
+      test(`for the ${product} logo`, async () => {
+        const { container } = renderProductLogo(product as keyof typeof map);
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+      });
+    });
+  });
   describe('logomark component', () => {
     test('renders full-color logomark by default', () => {
       render(<LogoMark data-testid="default-logomark" />);

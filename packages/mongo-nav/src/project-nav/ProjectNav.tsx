@@ -509,7 +509,7 @@ ProjectNavProps) {
         )}
 
       <ul className={productListStyle}>
-        <li role="none" className={productTabStyle}>
+        <li className={productTabStyle}>
           <a
             href={
               current ? `${hosts.cloud}/v2/${current.projectId}#` : hosts.cloud
@@ -541,7 +541,7 @@ ProjectNavProps) {
 
         {!isGovernment && !isCloudManager && (
           <>
-            <li role="none" className={productTabStyle}>
+            <li className={productTabStyle}>
               <WithTooltipIfCNRegionsOnly
                 tooltipTestid="project-nav-tooltip-realm"
                 projectNavTestid="project-nav-realm"
@@ -562,7 +562,7 @@ ProjectNavProps) {
               </WithTooltipIfCNRegionsOnly>
             </li>
 
-            <li role="none" className={productTabStyle}>
+            <li className={productTabStyle}>
               <WithTooltipIfCNRegionsOnly
                 tooltipTestid="project-nav-tooltip-charts"
                 projectNavTestid="project-nav-charts"

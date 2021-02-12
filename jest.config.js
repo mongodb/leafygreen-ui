@@ -55,5 +55,8 @@ module.exports = {
 
   setupFiles: ['<rootDir>/scripts/jestSetup.js'],
 
-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  setupFilesAfterEnv: [
+    '@testing-library/jest-dom/extend-expect',
+    '<rootDir>/scripts/jestCommon.ts',
+  ],
 };

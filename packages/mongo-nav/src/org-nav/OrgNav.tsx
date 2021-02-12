@@ -48,15 +48,15 @@ const navContainer = css`
 
 const supportContainer = css`
   ${mq({
-    marginRight: ['16px', '16px', '24px'],
-    marginLeft: ['16px', '16px', '24px'],
-  })}
+  marginRight: ['16px', '16px', '24px'],
+  marginLeft: ['16px', '16px', '24px'],
+})}
 `;
 
 const rightLinkMargin = css`
   ${mq({
-    marginRight: ['16px', '16px', '24px'],
-  })}
+  marginRight: ['16px', '16px', '24px'],
+})}
 `;
 
 const paymentStatusMap: {
@@ -236,8 +236,8 @@ function NavLinks({
           {items}
         </MoreDropdownMenu>
       ) : (
-        items
-      )}
+          items
+        )}
     </div>
   );
 }
@@ -387,6 +387,7 @@ function OrgNav({
         data-testid="organization-nav"
       >
         <Tooltip
+          aria-hidden
           align="bottom"
           justify="start"
           darkMode={true}
@@ -400,7 +401,7 @@ function OrgNav({
               onClick={onElementClick(NavElement.OrgNavLeaf)}
               data-testid="org-nav-leaf"
             >
-              <LogoMark height={30} />
+              <LogoMark height={30} aria-label="Go to the Organization Home" />
             </a>
           }
         >

@@ -1,12 +1,21 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { screen, fireEvent, within } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { Table, TableHeader, Row, Cell } from '.';
 import { defaultColumns, renderTable } from './testUtils';
 
 const className = 'test-className';
 
 describe('packages/table', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      renderTable();
+      const results = await axe(screen.getByRole('table'));
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   test('by default, it renders unsorted table data, based on "data" prop', () => {
     renderTable();
     const firstRow = screen.getAllByRole('row')[1];

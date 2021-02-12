@@ -80,11 +80,11 @@ const orgSettingsButtonStyle = css`
   transition: all 150ms ease-in-out;
 
   ${mq({
-    marginRight: ['16px', '16px', '20px'],
-    height: ['30px', '36px', '36px'],
-    paddingRight: ['6px', '8px', '8px'],
-    paddingLeft: ['6px', '8px', '8px'],
-  })}
+  marginRight: ['16px', '16px', '20px'],
+  height: ['30px', '36px', '36px'],
+  paddingRight: ['6px', '8px', '8px'],
+  paddingLeft: ['6px', '8px', '8px'],
+})}
 
   &:hover {
     background-color: ${uiColors.gray.light2};
@@ -324,8 +324,8 @@ function OrgSelect({
               {planType === PlanType.Atlas ? (
                 <AtlasIcon size={10} />
               ) : (
-                <CloudManagerIcon size={10} />
-              )}
+                  <CloudManagerIcon size={10} />
+                )}
               <span className={productStyle}>
                 {formattedPlanTypes[planType]}
               </span>
@@ -469,11 +469,13 @@ function OrgSelect({
           })}
         >
           <SettingsIcon
+            role="presentation"
             className={cx({
               [activeIconStyle]: isActive,
               [iconLoadingStyle]: loading,
             })}
           />
+
         </a>
       )}
     </>
