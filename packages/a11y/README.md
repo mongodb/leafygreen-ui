@@ -46,6 +46,6 @@ const Button = () => {
 
 ### Properties
 
-| Prop       | Type     | Description                                                        | Default |
-| ---------- | -------- | ------------------------------------------------------------------ | ------- |
-| `children` | `string` | Text that appears to screen readers but is hidden from the screen. |         |
+| Prop       | Type     | Description                                                             | Default |
+| ---------- | -------- | ----------------------------------------------------------------------- | ------- |
+| `children` | `string` | Text that is announced to screen readers but is hidden from the screen. |         |
