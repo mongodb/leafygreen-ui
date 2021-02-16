@@ -97,8 +97,8 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
   large: css`
     ${mq({
-      width: ['720px', '720px', '960px'],
-    })}
+    width: ['720px', '720px', '960px'],
+  })}
   `,
 };
 
@@ -193,7 +193,7 @@ interface ModalProps {
 function Modal({
   open = false,
   size = ModalSize.Default,
-  setOpen = () => {},
+  setOpen = () => { },
   shouldClose = () => true,
   closeOnBackdropClick = true,
   children,
@@ -224,16 +224,6 @@ function Modal({
   );
 
   useEscapeKey(handleClose, { enabled: open });
-
-  // return (
-  //   <FocusTrap>
-  //     <div>
-  //       <button>hi</button>
-  //       <button>hi</button>
-
-  //     </div>
-  //   </FocusTrap>
-  // )
 
   return (
     <Transition
