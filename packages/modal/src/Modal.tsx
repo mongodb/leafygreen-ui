@@ -1,5 +1,6 @@
 import React, { SetStateAction, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import FocusTrap from 'focus-trap-react';
 import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
@@ -224,6 +225,16 @@ function Modal({
 
   useEscapeKey(handleClose, { enabled: open });
 
+  // return (
+  //   <FocusTrap>
+  //     <div>
+  //       <button>hi</button>
+  //       <button>hi</button>
+
+  //     </div>
+  //   </FocusTrap>
+  // )
+
   return (
     <Transition
       in={open}
@@ -245,31 +256,33 @@ function Modal({
               [visibleBackdrop]: state === 'entered',
             })}
           >
-            <div className={scrollContainer} ref={setScrollContainerNode}>
-              <div
-                aria-modal="true"
-                role="dialog"
-                tabIndex={-1}
-                className={cx(
-                  modalContentStyle,
-                  modalSizes[size],
-                  {
-                    [visibleModalContentStyle]: state === 'entered',
-                  },
-                  contentClassName,
-                )}
-              >
-                <IconButton
-                  onClick={handleClose}
-                  aria-label="Close modal"
-                  className={closeButton}
+            <FocusTrap>
+              <div className={scrollContainer} ref={setScrollContainerNode}>
+                <div
+                  aria-modal="true"
+                  role="dialog"
+                  tabIndex={-1}
+                  className={cx(
+                    modalContentStyle,
+                    modalSizes[size],
+                    {
+                      [visibleModalContentStyle]: state === 'entered',
+                    },
+                    contentClassName,
+                  )}
                 >
-                  <XIcon />
-                </IconButton>
+                  <IconButton
+                    onClick={handleClose}
+                    aria-label="Close modal"
+                    className={closeButton}
+                  >
+                    <XIcon />
+                  </IconButton>
 
-                {children}
+                  {children}
+                </div>
               </div>
-            </div>
+            </FocusTrap>
           </div>
         </Portal>
       )}
