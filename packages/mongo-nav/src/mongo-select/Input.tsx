@@ -84,7 +84,6 @@ const Input = React.forwardRef(({ variant, ...rest }: InputProps, ref) => {
         className={inputStyle}
         ref={ref as React.RefObject<HTMLInputElement>}
         aria-label={placeholder}
-        role="menuitem"
       />
       <div className={interactionRing} />
       <MagnifyingGlassIcon className={magnifyingGlassStyle} />
