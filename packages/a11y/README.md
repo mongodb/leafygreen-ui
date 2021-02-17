@@ -49,3 +49,13 @@ const Button = () => {
 | Prop       | Type     | Description                                                             | Default |
 | ---------- | -------- | ----------------------------------------------------------------------- | ------- |
 | `children` | `string` | Text that is announced to screen readers but is hidden from the screen. |         |
+
+## useAccessibleFormField
+
+Hook that returns two sets of props that accessibly associate a label and its respective input element
+
+### Properties
+
+| Prop | Type     | Description                          | Default |
+| ---- | -------- | ------------------------------------ | ------- |
+| `id` | `string` | id that describes the input element. |         |
