@@ -261,6 +261,7 @@ function Modal({
                     contentClassName,
                   )}
                 >
+                  {children}
                   <IconButton
                     onClick={handleClose}
                     aria-label="Close modal"
@@ -268,8 +269,6 @@ function Modal({
                   >
                     <XIcon />
                   </IconButton>
-
-                  {children}
                 </div>
               </div>
             </FocusTrap>
