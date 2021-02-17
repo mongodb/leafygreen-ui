@@ -10,6 +10,8 @@ import {
   AtlasLogoMark,
   RealmLogoMark,
   ChartsLogoMark,
+  AtlasLogo,
+  ChartsLogo,
 } from '.';
 
 const containerStyle = css`
@@ -120,5 +122,31 @@ storiesOf('Logo', module)
           renderProductLogo(key as keyof typeof map),
         )}
       </>
+    );
+  })
+  .add('Product Logos', () => {
+    const props = {
+      knockout: boolean('knockout', false),
+      height: number('size', 100),
+      darkMode: boolean('darkMode', false),
+      className: css`
+        margin: 10px;
+      `,
+    };
+
+    return (
+      <div
+        className={cx(
+          css`
+            padding: 20px;
+            background-color: ${props.darkMode
+              ? uiColors.gray.dark3
+              : uiColors.white};
+          `,
+        )}
+      >
+        <AtlasLogo {...props} />
+        <ChartsLogo {...props} />
+      </div>
     );
   });

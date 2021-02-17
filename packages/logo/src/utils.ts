@@ -43,6 +43,7 @@ export type ProductLogoProps = HTMLElementProps<'svg', never> & {
   knockout?: boolean;
   size?: number;
   darkMode?: boolean;
+  height?: number;
 };
 
 export const getAccessibleProps = ({
