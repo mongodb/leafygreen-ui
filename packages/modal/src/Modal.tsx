@@ -163,6 +163,13 @@ interface ModalProps {
    * Disclaimer: This prop may be deprecated in future versions of Modal
    */
   contentClassName?: string;
+
+  /**
+   * By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus.
+   * With this option you can specify a different element to receive that initial focus.
+   * Can be a DOM node, or a selector string (which will be passed to document.querySelector() to find the DOM node), or a function that returns a DOM node.
+   */
+  initialFocus?: string | HTMLElement | (() => HTMLElement);
 }
 
 /**
@@ -188,7 +195,7 @@ interface ModalProps {
  * @param props.className className applied to container div.
  * @param props.contentClassName className applied to overlay div.
  * @param props.closeOnBackdropClick Determines whether or not a Modal should close when a user clicks outside the modal.
- *
+ * @param props.initialFocus By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus. With this option you can specify a different element to receive that initial focus. Can be a DOM node, or a selector string (which will be passed to document.querySelector() to find the DOM node), or a function that returns a DOM node.
  */
 function Modal({
   open = false,
@@ -199,6 +206,7 @@ function Modal({
   children,
   className,
   contentClassName,
+  initialFocus,
   ...rest
 }: ModalProps) {
   const [
@@ -246,7 +254,7 @@ function Modal({
               [visibleBackdrop]: state === 'entered',
             })}
           >
-            <FocusTrap>
+            <FocusTrap focusTrapOptions={{ initialFocus }}>
               <div className={scrollContainer} ref={setScrollContainerNode}>
                 <div
                   aria-modal="true"
