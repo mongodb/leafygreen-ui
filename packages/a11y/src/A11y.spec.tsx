@@ -23,14 +23,13 @@ describe('packages/a11y', () => {
         { initialProps: inputId },
       );
 
-      expect(result.current.inputProps).toEqual({
-        id: inputId,
-        ['aria-labelledby']: 'label-0',
-      });
-      expect(result.current.labelProps).toEqual({
-        id: 'label-0',
-        htmlFor: inputId,
-      });
+      expect(result.current.inputProps.id).toEqual(inputId);
+      expect(result.current.inputProps.id).toEqual(
+        result.current.labelProps.htmlFor,
+      );
+      expect(result.current.inputProps['aria-labelledby']).toEqual(
+        result.current.labelProps.id,
+      );
     });
 
     test('when no id is supplied to hook', () => {
@@ -38,14 +37,36 @@ describe('packages/a11y', () => {
         useAccessibleForm(props),
       );
 
-      expect(result.current.inputProps).toEqual({
-        id: 'input-0',
-        ['aria-labelledby']: 'label-1',
-      });
-      expect(result.current.labelProps).toEqual({
-        id: 'label-1',
-        htmlFor: 'input-0',
-      });
+      expect(result.current.inputProps.id).toEqual(
+        result.current.labelProps.htmlFor,
+      );
+      expect(result.current.inputProps['aria-labelledby']).toEqual(
+        result.current.labelProps.id,
+      );
+    });
+
+    test('updates props correctly when the parameter passed to the hook changes', () => {
+      let inputId = 'text-input-id';
+
+      const { result, rerender } = renderHook(() => useAccessibleForm(inputId));
+
+      expect(result.current.inputProps.id).toEqual(inputId);
+      expect(result.current.inputProps.id).toEqual(
+        result.current.labelProps.htmlFor,
+      );
+      expect(result.current.inputProps['aria-labelledby']).toEqual(
+        result.current.labelProps.id,
+      );
+
+      inputId = 'second-render-id';
+      rerender();
+      expect(result.current.inputProps.id).toEqual(inputId);
+      expect(result.current.inputProps.id).toEqual(
+        result.current.labelProps.htmlFor,
+      );
+      expect(result.current.inputProps['aria-labelledby']).toEqual(
+        result.current.labelProps.id,
+      );
     });
   });
 });

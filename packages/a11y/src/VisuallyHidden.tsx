@@ -30,6 +30,7 @@ VisuallyHidden.displayName = 'VisuallyHidden';
 
 VisuallyHidden.propTypes = {
   children: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default VisuallyHidden;
