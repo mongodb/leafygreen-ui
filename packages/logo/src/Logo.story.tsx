@@ -1,15 +1,15 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { number, boolean } from '@storybook/addon-knobs';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
   Logo,
   LogoMark,
-  CloudManagerLogo,
-  AtlasLogo,
-  RealmLogo,
-  ChartsLogo,
+  CloudManagerLogoMark,
+  AtlasLogoMark,
+  RealmLogoMark,
+  ChartsLogoMark,
 } from '.';
 
 const containerStyle = css`
@@ -33,10 +33,10 @@ const textStyle = css`
 `;
 
 const map = {
-  cloudManager: CloudManagerLogo,
-  atlas: AtlasLogo,
-  realm: RealmLogo,
-  charts: ChartsLogo,
+  cloudManager: CloudManagerLogoMark,
+  atlas: AtlasLogoMark,
+  realm: RealmLogoMark,
+  charts: ChartsLogoMark,
 };
 
 storiesOf('Logo', module)
@@ -80,16 +80,36 @@ storiesOf('Logo', module)
       </div>
     );
   })
-  .add('Product Logos', () => {
+  .add('Product LogoMarks', () => {
     const knockout = boolean('knockout', false);
     const size = number('size', 18);
+    const darkMode = boolean('darkMode', false);
 
     const renderProductLogo = (product: keyof typeof map) => {
       const Logo = map[product];
       return (
-        <div key={product} className={containerStyle}>
-          <Logo knockout={knockout} size={size} />
-          <div className={textStyle}>{product}</div>
+        <div
+          key={product}
+          className={cx(
+            containerStyle,
+            css`
+              background-color: ${darkMode
+                ? uiColors.gray.dark3
+                : uiColors.white};
+            `,
+          )}
+        >
+          <Logo knockout={knockout} size={size} darkMode={darkMode} />
+          <div
+            className={cx(
+              textStyle,
+              css`
+                color: ${darkMode ? uiColors.white : uiColors.gray.dark1};
+              `,
+            )}
+          >
+            {product}
+          </div>
         </div>
       );
     };
