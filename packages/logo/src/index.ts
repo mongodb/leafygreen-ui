@@ -8,3 +8,6 @@ export { default as RealmLogo } from './RealmLogo';
 export { default as RealmLogoMark } from './RealmLogoMark';
 export { default as ChartsLogo } from './ChartsLogo';
 export { default as ChartsLogoMark } from './ChartsLogoMark';
+export { default as ServerLogoMark } from './ServerLogoMark';
+export { default as DriversConnectorsLogoMark } from './DriversConnectorsLogoMark';
+export { default as CompassLogoMark } from './CompassLogoMark';

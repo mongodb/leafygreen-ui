@@ -29,7 +29,10 @@ const Color = {
 
 type Color = typeof Color[keyof typeof Color];
 
-type MapValue = Record<Lockup, { [k in Color]: (props: any) => JSX.Element }>;
+type MapValue = Record<
+  Lockup,
+  { [k in Color]: ((props: any) => JSX.Element) }
+>;
 
 type LogoMapType = Record<Product, MapValue>;
 
@@ -38,10 +41,6 @@ const LogoMap: LogoMapType = {
     [Lockup.Default]: {
       [Color.RGB]: DefaultRGBLogo,
       [Color.Knockout]: DefaultMonochromeLogo,
-    },
-    [Lockup.Stacked]: {
-      [Color.RGB]: '',
-      [Color.Knockout]: '',
     },
   },
   [Product.Atlas]: {
@@ -113,10 +112,11 @@ function Logo({
     height: ${height}px;
   `;
 
-  const normalizedLockup = product === Product.None ? Lockup.Default : lockup
+  const normalizedLockup = product === Product.None ? Lockup.Default : lockup;
   const fill = darkMode ? uiColors.white : uiColors.gray.dark3;
 
-  const Logo = LogoMap[product][normalizedLockup][knockout ? Color.Knockout : Color.RGB];
+  const Logo =
+    LogoMap[product][normalizedLockup][knockout ? Color.Knockout : Color.RGB];
 
   return (
     <Logo

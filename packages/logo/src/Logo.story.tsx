@@ -14,6 +14,9 @@ import {
   ChartsLogo,
   RealmLogo,
   CloudManagerLogo,
+  ServerLogoMark,
+  DriversConnectorsLogoMark,
+  CompassLogoMark,
 } from '.';
 import { Product, Lockup } from './utils';
 
@@ -42,6 +45,9 @@ const map = {
   atlas: AtlasLogoMark,
   realm: RealmLogoMark,
   charts: ChartsLogoMark,
+  server: ServerLogoMark,
+  driversConnectors: DriversConnectorsLogoMark,
+  compass: CompassLogoMark,
 };
 
 storiesOf('Logo', module)
