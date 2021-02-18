@@ -2,9 +2,61 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
-import RGBLogo from './logos/RGBLogo';
-import MonochromeLogo from './logos/MonochromeLogo';
-import { LogoProps } from './utils';
+import DefaultRGBLogo from './logos/DefaultRGBLogo';
+import DefaultMonochromeLogo from './logos/DefaultMonochromeLogo';
+import AtlasDefaultRGBLogo from './logos/AtlasDefaultRGBLogo';
+import AtlasDefaultMonochromeLogo from './logos/AtlasDefaultMonochromeLogo';
+import AtlasStackedRGBLogo from './logos/AtlasStackedRBGLogo';
+import AtlasStackedMonochromeLogo from './logos/AtlasStackedMonochromeLogo';
+import ChartsDefaultRGBLogo from './logos/ChartsDefaultRGBLogo';
+import ChartsDefaultMonochromeLogo from './logos/ChartsDefaultMonochromeLogo';
+import ChartsStackedRGBLogo from './logos/ChartsStackedRGBLogo';
+import ChartsStackedMonochromeLogo from './logos/ChartsStackedMonochromeLogo';
+import { LogoProps, Product, Lockup, getAccessibleProps } from './utils';
+
+const Color = {
+  RGB: 'rgb',
+  Knockout: 'knockout',
+} as const;
+
+type Color = typeof Color[keyof typeof Color];
+
+type MapValue = Record<Lockup, { [k in Color]: (props: any) => JSX.Element }>;
+
+type LogoMapType = Record<Product, MapValue>;
+
+const LogoMap: LogoMapType = {
+  [Product.None]: {
+    [Lockup.Default]: {
+      [Color.RGB]: DefaultRGBLogo,
+      [Color.Knockout]: DefaultMonochromeLogo,
+    },
+    [Lockup.Stacked]: {
+      [Color.RGB]: '',
+      [Color.Knockout]: '',
+    },
+  },
+  [Product.Atlas]: {
+    [Lockup.Default]: {
+      [Color.RGB]: AtlasDefaultRGBLogo,
+      [Color.Knockout]: AtlasDefaultMonochromeLogo,
+    },
+    [Lockup.Stacked]: {
+      [Color.RGB]: AtlasStackedRGBLogo,
+      [Color.Knockout]: AtlasStackedMonochromeLogo,
+    },
+  },
+  [Product.Charts]: {
+    [Lockup.Default]: {
+      [Color.RGB]: ChartsDefaultRGBLogo,
+      [Color.Knockout]: ChartsDefaultMonochromeLogo,
+    },
+    [Lockup.Stacked]: {
+      [Color.RGB]: ChartsStackedRGBLogo,
+      [Color.Knockout]: ChartsStackedMonochromeLogo,
+    },
+  },
+};
 
 /**
  * # Logo
@@ -22,6 +74,10 @@ function Logo({
   darkMode = false,
   knockout = false,
   height = 40,
+  product = Product.None,
+  lockup = Lockup.Default,
+  role = 'img',
+  'aria-label': ariaLabel = 'MongoDB Logo',
   ...rest
 }: LogoProps) {
   const className = css`
@@ -29,10 +85,17 @@ function Logo({
     height: ${height}px;
   `;
 
-  const MarkComponent = knockout ? MonochromeLogo : RGBLogo;
+  const Logo = LogoMap[product][lockup][knockout ? Color.Knockout : Color.RGB];
   const fill = darkMode ? uiColors.white : uiColors.gray.dark3;
 
-  return <MarkComponent {...rest} fill={fill} className={className} />;
+  return (
+    <Logo
+      {...getAccessibleProps({ 'aria-label': ariaLabel, role })}
+      {...rest}
+      fill={fill}
+      className={className}
+    />
+  );
 }
 
 Logo.displayName = 'Logo';
@@ -41,6 +104,8 @@ Logo.propTypes = {
   darkMode: PropTypes.bool,
   knockout: PropTypes.bool,
   height: PropTypes.number,
+  product: PropTypes.oneOf([Object.values(Product)]),
+  lockup: PropTypes.oneOf([Object.values(Lockup)]),
 };
 
 export default Logo;

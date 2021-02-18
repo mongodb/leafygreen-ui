@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { number, boolean } from '@storybook/addon-knobs';
+import { number, boolean, select } from '@storybook/addon-knobs';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
@@ -15,6 +15,7 @@ import {
   RealmLogo,
   CloudManagerLogo,
 } from '.';
+import { Product, Lockup } from './utils';
 
 const containerStyle = css`
   width: 150px;
@@ -80,6 +81,8 @@ storiesOf('Logo', module)
           darkMode={darkMode}
           knockout={boolean('Knockout', false)}
           height={number('Height', 40)}
+          product={select('Product', Object.values(Product), Product.None)}
+          lockup={select('Lockup', Object.values(Lockup), Lockup.Default)}
         />
       </div>
     );

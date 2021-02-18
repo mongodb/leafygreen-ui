@@ -2,7 +2,26 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
 
-export interface LogoProps {
+const Product = {
+  None: 'none',
+  Atlas: 'atlas',
+  Charts: 'charts',
+  CloudManager: 'cloudManager',
+  Realm: 'realm',
+} as const;
+
+type Product = typeof Product[keyof typeof Product];
+
+const Lockup = {
+  Default: 'default',
+  Stacked: 'stacked',
+} as const;
+
+type Lockup = typeof Lockup[keyof typeof Lockup];
+
+export { Product, Lockup };
+
+export interface LogoProps extends HTMLElementProps<'svg'> {
   /**
    * Determines whether or not the component will appear in dark mode.
    *
@@ -23,6 +42,22 @@ export interface LogoProps {
    * @default: 40
    */
   height?: number;
+
+  /**
+   * Determines what product will be rendered with the logomark.
+   * If 'none', MongoDB will appear next to the leaf.
+   *
+   * @default: 'none'
+   */
+  product?: Product;
+
+  /**
+   * Determines orientation of product name as it relates to the logo mark.
+   * By default, will appear on a single line.
+   *
+   * @default: 'default'
+   */
+  lockup?: Lockup;
 }
 
 const Fill = {

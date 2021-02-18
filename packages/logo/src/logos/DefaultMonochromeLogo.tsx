@@ -1,7 +1,7 @@
 import React from 'react';
 import { SVGLogoProps } from '../utils';
 
-export default function MonochromeLogo({
+export default function DefaultMonochromeLogo({
   fill,
   className,
   ...rest
