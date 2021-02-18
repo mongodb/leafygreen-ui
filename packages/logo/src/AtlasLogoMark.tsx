@@ -159,4 +159,6 @@ function AtlasLogoMark({
   );
 }
 
+AtlasLogoMark.displayName = 'AtlasLogoMark';
+
 export default AtlasLogoMark;

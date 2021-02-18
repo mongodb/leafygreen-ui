@@ -27,7 +27,6 @@ function ChartsLogoMark({
         className,
       )}
     >
-      <title>Charts Logo</title>
       <defs>
         <linearGradient
           id="charts-logo-gradient"
@@ -83,5 +82,7 @@ function ChartsLogoMark({
     </svg>
   );
 }
+
+ChartsLogoMark.displayName = 'ChartsLogoMark';
 
 export default ChartsLogoMark;

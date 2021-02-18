@@ -25,7 +25,6 @@ function CloudManagerLogoMark({
         className,
       )}
     >
-      <title>Cloud Manager Logo</title>
       <defs>
         <linearGradient
           id="cloud-manager-linear-gradient"
@@ -119,5 +118,7 @@ function CloudManagerLogoMark({
     </svg>
   );
 }
+
+CloudManagerLogoMark.displayName = 'CloudManagerLogoMark';
 
 export default CloudManagerLogoMark;

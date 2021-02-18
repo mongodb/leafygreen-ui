@@ -27,7 +27,6 @@ function RealmLogoMark({
         className,
       )}
     >
-      <title>Realm Logo</title>
       <defs>
         <linearGradient
           id="realm-path-0001"

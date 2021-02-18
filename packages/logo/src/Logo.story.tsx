@@ -12,6 +12,8 @@ import {
   ChartsLogoMark,
   AtlasLogo,
   ChartsLogo,
+  RealmLogo,
+  CloudManagerLogo,
 } from '.';
 
 const containerStyle = css`
@@ -127,7 +129,7 @@ storiesOf('Logo', module)
   .add('Product Logos', () => {
     const props = {
       knockout: boolean('knockout', false),
-      height: number('size', 100),
+      height: number('size', 78),
       darkMode: boolean('darkMode', false),
       className: css`
         margin: 10px;
@@ -147,6 +149,8 @@ storiesOf('Logo', module)
       >
         <AtlasLogo {...props} />
         <ChartsLogo {...props} />
+        <RealmLogo {...props} />
+        <CloudManagerLogo {...props} />
       </div>
     );
   });
