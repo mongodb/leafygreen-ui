@@ -97,8 +97,8 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
   large: css`
     ${mq({
-      width: ['720px', '720px', '960px'],
-    })}
+    width: ['720px', '720px', '960px'],
+  })}
   `,
 };
 
@@ -167,9 +167,9 @@ interface ModalProps {
   /**
    * By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus.
    * With this option you can specify a different element to receive that initial focus.
-   * Can be a DOM node, or a selector string (which will be passed to document.querySelector() to find the DOM node), or a function that returns a DOM node.
+   * Selector string (which will be passed to document.querySelector() to find the DOM node)
    */
-  initialFocus?: string | HTMLElement | (() => HTMLElement);
+  initialFocus?: string;
 }
 
 /**
@@ -195,12 +195,12 @@ interface ModalProps {
  * @param props.className className applied to container div.
  * @param props.contentClassName className applied to overlay div.
  * @param props.closeOnBackdropClick Determines whether or not a Modal should close when a user clicks outside the modal.
- * @param props.initialFocus By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus. With this option you can specify a different element to receive that initial focus. Can be a DOM node, or a selector string (which will be passed to document.querySelector() to find the DOM node), or a function that returns a DOM node.
+ * @param props.initialFocus By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus. With this option you can specify a different element to receive that initial focus. Selector string (which will be passed to document.querySelector() to find the DOM node).
  */
 function Modal({
   open = false,
   size = ModalSize.Default,
-  setOpen = () => {},
+  setOpen = () => { },
   shouldClose = () => true,
   closeOnBackdropClick = true,
   children,
