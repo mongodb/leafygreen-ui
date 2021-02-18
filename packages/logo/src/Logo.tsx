@@ -16,6 +16,10 @@ import CloudManagerDefaultRGBLogo from './logos/CloudManagerDefaultRGBLogo';
 import CloudManagerDefaultMonochromeLogo from './logos/CloudManagerDefaultMonochromeLogo';
 import CloudManagerStackedRGBLogo from './logos/CloudManagerStackedRGBLogo';
 import CloudManagerStackedMonochromeLogo from './logos/CloudManagerStackedMonochromeLogo';
+import RealmDefaultRGBLogo from './logos/RealmDefaultRGBLogo';
+import RealmDefaultMonochromeLogo from './logos/RealmDefaultMonochromeLogo';
+import RealmStackedRGBLogo from './logos/RealmStackedRGBLogo';
+import RealmStackedMonochromeLogo from './logos/RealmStackedMonochromeLogo';
 import { LogoProps, Product, Lockup, getAccessibleProps } from './utils';
 
 const Color = {
@@ -70,6 +74,16 @@ const LogoMap: LogoMapType = {
       [Color.Knockout]: CloudManagerStackedMonochromeLogo,
     },
   },
+  [Product.Realm]: {
+    [Lockup.Default]: {
+      [Color.RGB]: RealmDefaultRGBLogo,
+      [Color.Knockout]: RealmDefaultMonochromeLogo,
+    },
+    [Lockup.Stacked]: {
+      [Color.RGB]: RealmStackedRGBLogo,
+      [Color.Knockout]: RealmStackedMonochromeLogo,
+    },
+  },
 };
 
 /**
@@ -99,13 +113,15 @@ function Logo({
     height: ${height}px;
   `;
 
-  const Logo = LogoMap[product][lockup][knockout ? Color.Knockout : Color.RGB];
+  const normalizedLockup = product === Product.None ? Lockup.Default : lockup
   const fill = darkMode ? uiColors.white : uiColors.gray.dark3;
+
+  const Logo = LogoMap[product][normalizedLockup][knockout ? Color.Knockout : Color.RGB];
 
   return (
     <Logo
-      {...getAccessibleProps({ 'aria-label': ariaLabel, role })}
       {...rest}
+      {...getAccessibleProps({ 'aria-label': ariaLabel, role })}
       fill={fill}
       className={className}
     />
