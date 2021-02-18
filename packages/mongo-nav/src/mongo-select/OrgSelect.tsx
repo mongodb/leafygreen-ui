@@ -17,6 +17,7 @@ import {
   MenuItem,
   MenuSeparator,
 } from '@leafygreen-ui/menu';
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 
 // mongo-nav
 import { useOnElementClick } from '../on-element-click-provider';
@@ -475,6 +476,7 @@ function OrgSelect({
               [iconLoadingStyle]: loading,
             })}
           />
+          <VisuallyHidden>Settings</VisuallyHidden>
         </a>
       )}
     </>
