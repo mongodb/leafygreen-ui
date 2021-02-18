@@ -3,9 +3,11 @@ import {
   act,
   render,
   fireEvent,
+  screen,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Tooltip, { TooltipProps } from './Tooltip';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
@@ -55,6 +57,20 @@ beforeEach(() => {
 });
 
 describe('packages/tooltip', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderTooltip({ triggerEvent: 'click' });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+
+      let newResults = null as any;
+      act(() => void fireEvent.click(screen.getByText(buttonText)));
+      await act(async () => {
+        newResults = await axe(container);
+      });
+      expect(newResults).toHaveNoViolations();
+    });
+  });
   describe('when uncontrolled', () => {
     test(`renders a button to the DOM with ${buttonText}`, () => {
       const { getByText } = renderTooltip();

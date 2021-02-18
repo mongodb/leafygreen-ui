@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { Radio, RadioGroup } from '.';
 import { RadioGroupProps } from './RadioGroup';
 import { RadioProps } from './Radio';
@@ -44,7 +45,7 @@ const renderControlledRadioGroup = (
 const renderUncontrolledRadioGroup = (
   props: Omit<RadioGroupProps, 'children'> = {},
 ) => {
-  render(
+  return render(
     <RadioGroup {...props}>
       <Radio default value="input-1">
         Input 1
@@ -64,6 +65,14 @@ const renderRadio = (props: RadioProps) => {
 };
 
 describe('packages/radio-group', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderUncontrolledRadioGroup();
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   describe('when the RadioGroup is controlled', () => {
     let onChange: jest.Mock;
 

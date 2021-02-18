@@ -4,6 +4,7 @@ import {
   render,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Modal from './Modal';
 
 const modalContent = 'Modal Content';
@@ -26,6 +27,14 @@ function renderModal(props: Partial<React.ComponentProps<typeof Modal>> = {}) {
 }
 
 describe('packages/modal', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderModal({ open: true });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   describe('when the "open" prop is true', () => {
     test('renders modal to the DOM', () => {
       const { getByRole } = renderModal({ open: true });

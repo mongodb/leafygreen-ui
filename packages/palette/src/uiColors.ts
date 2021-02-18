@@ -5,7 +5,7 @@ export const gray = {
   dark3: '#21313C',
   dark2: '#3D4F58',
   dark1: '#5D6C74',
-  base: '#89989B',
+  base: '#89979B',
   light1: '#B8C4C2',
   light2: '#E7EEEC',
   light3: '#F9FBFA',
