@@ -144,7 +144,7 @@ export type Size = typeof Size[keyof typeof Size];
 
 interface SizeSet {
   height: number;
-  minWidth: number | string;
+  minWidth: number;
   text: number;
   label: {
     text: number;

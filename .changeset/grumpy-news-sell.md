@@ -2,4 +2,4 @@
 '@leafygreen-ui/select': minor
 ---
 
-Adds `fill` option to Size prop, such that trigger can fill the width of its container.
+Consuming applications can now set the width of the select dropdown by passing a value to width through the `className` prop.
