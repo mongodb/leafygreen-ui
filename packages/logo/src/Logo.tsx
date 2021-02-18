@@ -12,6 +12,10 @@ import ChartsDefaultRGBLogo from './logos/ChartsDefaultRGBLogo';
 import ChartsDefaultMonochromeLogo from './logos/ChartsDefaultMonochromeLogo';
 import ChartsStackedRGBLogo from './logos/ChartsStackedRGBLogo';
 import ChartsStackedMonochromeLogo from './logos/ChartsStackedMonochromeLogo';
+import CloudManagerDefaultRGBLogo from './logos/CloudManagerDefaultRGBLogo';
+import CloudManagerDefaultMonochromeLogo from './logos/CloudManagerDefaultMonochromeLogo';
+import CloudManagerStackedRGBLogo from './logos/CloudManagerStackedRGBLogo';
+import CloudManagerStackedMonochromeLogo from './logos/CloudManagerStackedMonochromeLogo';
 import { LogoProps, Product, Lockup, getAccessibleProps } from './utils';
 
 const Color = {
@@ -54,6 +58,16 @@ const LogoMap: LogoMapType = {
     [Lockup.Stacked]: {
       [Color.RGB]: ChartsStackedRGBLogo,
       [Color.Knockout]: ChartsStackedMonochromeLogo,
+    },
+  },
+  [Product.CloudManager]: {
+    [Lockup.Default]: {
+      [Color.RGB]: CloudManagerDefaultRGBLogo,
+      [Color.Knockout]: CloudManagerDefaultMonochromeLogo,
+    },
+    [Lockup.Stacked]: {
+      [Color.RGB]: CloudManagerStackedRGBLogo,
+      [Color.Knockout]: CloudManagerStackedMonochromeLogo,
     },
   },
 };
