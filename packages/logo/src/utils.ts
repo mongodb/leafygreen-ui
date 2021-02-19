@@ -3,7 +3,6 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
 
 const Product = {
-  None: 'none',
   Atlas: 'atlas',
   Charts: 'charts',
   CloudManager: 'cloudManager',
@@ -11,6 +10,12 @@ const Product = {
 } as const;
 
 type Product = typeof Product[keyof typeof Product];
+
+// const None = {
+//   None: 'none'
+// } as const
+
+// type None = typeof None[keyof typeof None]
 
 const Lockup = {
   Default: 'default',
@@ -49,7 +54,7 @@ export interface LogoProps extends HTMLElementProps<'svg'> {
    *
    * @default: 'none'
    */
-  product?: Product;
+  product?: Product | 'none';
 
   /**
    * Determines orientation of product name as it relates to the logo mark.

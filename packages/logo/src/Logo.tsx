@@ -34,10 +34,10 @@ type MapValue = Record<
   { [k in Color]: ((props: any) => JSX.Element) }
 >;
 
-type LogoMapType = Record<Product, MapValue>;
+type LogoMapType = Record<Product, MapValue> & { 'none': { [Lockup.Default]: { [k in Color]: ((props: any) => JSX.Element) } } };
 
 const LogoMap: LogoMapType = {
-  [Product.None]: {
+  'none': {
     [Lockup.Default]: {
       [Color.RGB]: DefaultRGBLogo,
       [Color.Knockout]: DefaultMonochromeLogo,
@@ -101,7 +101,7 @@ function Logo({
   darkMode = false,
   knockout = false,
   height = 40,
-  product = Product.None,
+  product = 'none',
   lockup = Lockup.Default,
   role = 'img',
   'aria-label': ariaLabel = 'MongoDB Logo',
@@ -112,11 +112,11 @@ function Logo({
     height: ${height}px;
   `;
 
-  const normalizedLockup = product === Product.None ? Lockup.Default : lockup;
+  const color = knockout ? Color.Knockout : Color.RGB;
   const fill = darkMode ? uiColors.white : uiColors.gray.dark3;
 
-  const Logo =
-    LogoMap[product][normalizedLockup][knockout ? Color.Knockout : Color.RGB];
+  const Logo = product === 'none' ? LogoMap.none.default[color] : LogoMap[product][lockup][color]
+
 
   return (
     <Logo
