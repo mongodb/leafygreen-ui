@@ -1,14 +1,18 @@
-import React, { SetStateAction, useCallback, useState } from 'react';
+import React, { SetStateAction, useCallback, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import FocusTrap from 'focus-trap-react';
 import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
+
+const idAllocator = IdAllocator.create('modal');
 
 export const ModalSize = {
   Small: 'small',
@@ -162,6 +166,13 @@ interface ModalProps {
    * Disclaimer: This prop may be deprecated in future versions of Modal
    */
   contentClassName?: string;
+
+  /**
+   * By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus.
+   * With this option you can specify a different element to receive that initial focus.
+   * Selector string (which will be passed to document.querySelector() to find the DOM node)
+   */
+  initialFocus?: string;
 }
 
 /**
@@ -187,7 +198,7 @@ interface ModalProps {
  * @param props.className className applied to container div.
  * @param props.contentClassName className applied to overlay div.
  * @param props.closeOnBackdropClick Determines whether or not a Modal should close when a user clicks outside the modal.
- *
+ * @param props.initialFocus By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus. With this option you can specify a different element to receive that initial focus. Selector string (which will be passed to document.querySelector() to find the DOM node).
  */
 function Modal({
   open = false,
@@ -198,6 +209,7 @@ function Modal({
   children,
   className,
   contentClassName,
+  initialFocus,
   ...rest
 }: ModalProps) {
   const [
@@ -222,7 +234,15 @@ function Modal({
     [closeOnBackdropClick, handleClose, scrollContainerNode],
   );
 
+  const id = useMemo(() => idAllocator.generate(), []);
+
   useEscapeKey(handleClose, { enabled: open });
+
+  const focusTrapOptions = initialFocus
+    ? {
+        initialFocus: `#${id} ${initialFocus}`,
+      }
+    : {};
 
   return (
     <Transition
@@ -235,6 +255,7 @@ function Modal({
       {(state: string) => (
         <Portal>
           <div
+            id={id}
             ref={nodeRef}
             {...rest}
             // Setting role to 'none', because elements with a click event should have a specific role
@@ -245,31 +266,32 @@ function Modal({
               [visibleBackdrop]: state === 'entered',
             })}
           >
-            <div className={scrollContainer} ref={setScrollContainerNode}>
-              <div
-                aria-modal="true"
-                role="dialog"
-                tabIndex={-1}
-                className={cx(
-                  modalContentStyle,
-                  modalSizes[size],
-                  {
-                    [visibleModalContentStyle]: state === 'entered',
-                  },
-                  contentClassName,
-                )}
-              >
-                <IconButton
-                  onClick={handleClose}
-                  aria-label="Close modal"
-                  className={closeButton}
+            <FocusTrap focusTrapOptions={focusTrapOptions}>
+              <div className={scrollContainer} ref={setScrollContainerNode}>
+                <div
+                  aria-modal="true"
+                  role="dialog"
+                  tabIndex={-1}
+                  className={cx(
+                    modalContentStyle,
+                    modalSizes[size],
+                    {
+                      [visibleModalContentStyle]: state === 'entered',
+                    },
+                    contentClassName,
+                  )}
                 >
-                  <XIcon />
-                </IconButton>
-
-                {children}
+                  {children}
+                  <IconButton
+                    onClick={handleClose}
+                    aria-label="Close modal"
+                    className={closeButton}
+                  >
+                    <XIcon />
+                  </IconButton>
+                </div>
               </div>
-            </div>
+            </FocusTrap>
           </div>
         </Portal>
       )}

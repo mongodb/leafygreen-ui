@@ -149,6 +149,7 @@ const config = ['esm', 'umd'].flatMap(format => {
         '@testing-library/react',
         'lodash',
         'use-ssr',
+        'focus-trap-react',
         ...getLodashExternals(),
         ...allPackages,
         ...directGlyphImports,
