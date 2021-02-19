@@ -1,15 +1,18 @@
-import React, { SetStateAction, useCallback, useState } from 'react';
+import React, { SetStateAction, useCallback, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import FocusTrap from 'focus-trap-react';
 import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
+
+const idAllocator = IdAllocator.create('modal')
 
 export const ModalSize = {
   Small: 'small',
@@ -97,8 +100,8 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
   large: css`
     ${mq({
-      width: ['720px', '720px', '960px'],
-    })}
+    width: ['720px', '720px', '960px'],
+  })}
   `,
 };
 
@@ -200,7 +203,7 @@ interface ModalProps {
 function Modal({
   open = false,
   size = ModalSize.Default,
-  setOpen = () => {},
+  setOpen = () => { },
   shouldClose = () => true,
   closeOnBackdropClick = true,
   children,
@@ -231,6 +234,8 @@ function Modal({
     [closeOnBackdropClick, handleClose, scrollContainerNode],
   );
 
+  const id = useMemo(() => idAllocator.generate(), [])
+
   useEscapeKey(handleClose, { enabled: open });
 
   return (
@@ -244,6 +249,7 @@ function Modal({
       {(state: string) => (
         <Portal>
           <div
+            id={id}
             ref={nodeRef}
             {...rest}
             // Setting role to 'none', because elements with a click event should have a specific role
@@ -254,7 +260,7 @@ function Modal({
               [visibleBackdrop]: state === 'entered',
             })}
           >
-            <FocusTrap focusTrapOptions={{ initialFocus }}>
+            <FocusTrap focusTrapOptions={{ initialFocus: `#${id} ${initialFocus}` }}>
               <div className={scrollContainer} ref={setScrollContainerNode}>
                 <div
                   aria-modal="true"
