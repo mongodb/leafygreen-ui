@@ -12,7 +12,7 @@ import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
-const idAllocator = IdAllocator.create('modal')
+const idAllocator = IdAllocator.create('modal');
 
 export const ModalSize = {
   Small: 'small',
@@ -100,8 +100,8 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
   large: css`
     ${mq({
-    width: ['720px', '720px', '960px'],
-  })}
+      width: ['720px', '720px', '960px'],
+    })}
   `,
 };
 
@@ -203,7 +203,7 @@ interface ModalProps {
 function Modal({
   open = false,
   size = ModalSize.Default,
-  setOpen = () => { },
+  setOpen = () => {},
   shouldClose = () => true,
   closeOnBackdropClick = true,
   children,
@@ -234,7 +234,7 @@ function Modal({
     [closeOnBackdropClick, handleClose, scrollContainerNode],
   );
 
-  const id = useMemo(() => idAllocator.generate(), [])
+  const id = useMemo(() => idAllocator.generate(), []);
 
   useEscapeKey(handleClose, { enabled: open });
 
@@ -260,7 +260,9 @@ function Modal({
               [visibleBackdrop]: state === 'entered',
             })}
           >
-            <FocusTrap focusTrapOptions={{ initialFocus: `#${id} ${initialFocus}` }}>
+            <FocusTrap
+              focusTrapOptions={{ initialFocus: `#${id} ${initialFocus}` }}
+            >
               <div className={scrollContainer} ref={setScrollContainerNode}>
                 <div
                   aria-modal="true"
