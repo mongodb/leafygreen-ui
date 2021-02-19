@@ -9318,6 +9318,20 @@ focus-lock@^0.8.1:
   dependencies:
     tslib "^1.9.3"
 
+focus-trap-react@8.4.2:
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-8.4.2.tgz#5b313605e0789a7beee1467785e455dc63388a98"
+  integrity sha512-yuItOIwgriOBMrbHDqbWMpQjGVs9SbtugYrT0vs0yPjHiPKja3NZ9dBMxDQrV1JhyojGK5d6j7ayqBS7Kcm9xQ==
+  dependencies:
+    focus-trap "^6.3.0"
+
+focus-trap@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.3.0.tgz#31c08f0b6099705f71f6e0a16d88fbcc4c012586"
+  integrity sha512-BBzvFfkPg5PqrVVCdQ1YOIVNKGvqG9YNVkiAUQFuDM66N8J9uADhs6mlYKrd30ofDJIzEniBnBKM7GO45iCzKQ==
+  dependencies:
+    tabbable "^5.1.5"
+
 for-in@^0.1.3:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.8.tgz#d8773908e31256109952b1fdb9b3fa867d2775e1"
@@ -17019,6 +17033,11 @@ symbol.prototype.description@^1.0.0:
     es-abstract "^1.18.0-next.1"
     has-symbols "^1.0.1"
     object.getownpropertydescriptors "^2.1.0"
+
+tabbable@^5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-5.1.5.tgz#efec48ede268d511c261e3b81facbb4782a35147"
+  integrity sha512-oVAPrWgLLqrbvQE8XqcU7CVBq6SQbaIbHkhOca3u7/jzuQvyZycrUKPCGr04qpEIUslmUlULbSeN+m3QrKEykA==
 
 table@^5.2.3:
   version "5.4.6"
