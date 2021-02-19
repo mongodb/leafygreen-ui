@@ -77,7 +77,7 @@ function DriversConnectorsLogoMark({
         d="M6.9 11.1037C8.7 12.9037 9.6 15.5037 9.3 18.0037C4.3 18.2037 0.2 14.3037 0 9.3037C0 9.1037 0 8.9037 0 8.7037C2.6 8.4037 5.1 9.3037 6.9 11.1037Z"
         className={getColor({
           gradient: 'url(#drivers-connectors-lg-1)',
-          flat: 'pink',
+          flat: 'url(#drivers-connectors-lg-1)',
           knockout,
           size,
           darkMode,
@@ -87,7 +87,7 @@ function DriversConnectorsLogoMark({
         d="M12.6 0.703748L9.29998 4.00375C8.99998 4.30375 8.99998 4.70375 9.29998 4.90375L10.7 6.40375L7.29998 9.80375C5.39998 8.00375 2.79998 7.20375 0.0999756 7.40375C0.499976 5.60375 1.29998 4.00375 2.59998 2.70375C5.19998 0.00374842 9.19998 -0.696252 12.6 0.703748Z"
         className={getColor({
           gradient: 'url(#driver-connectors-lg-2)',
-          flat: 'pink',
+          flat: 'url(#driver-connectors-lg-2)',
           knockout,
           size,
           darkMode,
@@ -97,7 +97,7 @@ function DriversConnectorsLogoMark({
         d="M17.2 5.20374C19.3 9.70374 17.3 15.1037 12.8 17.1037C12.1 17.4037 11.4 17.7037 10.6 17.8037C10.8 15.2037 10 12.6037 8.30005 10.6037L11.7 7.20374L13 8.50374C13.2 8.70374 13.6 8.70374 13.9 8.50374L17.2 5.20374Z"
         className={getColor({
           gradient: 'url(#drivers-connectors-lg-3)',
-          flat: 'pink',
+          flat: 'url(#drivers-connectors-lg-3)',
           knockout,
           size,
           darkMode,
@@ -107,7 +107,7 @@ function DriversConnectorsLogoMark({
         d="M15.4 2.60371C15.8 3.00371 16.2 3.50371 16.6 4.00371L13.5 7.10371L10.7 4.40371L13.8 1.30371C14.3 1.70371 14.9 2.10371 15.4 2.60371Z"
         className={getColor({
           gradient: '#047DAE',
-          flat: 'pink',
+          flat: '#047DAE',
           knockout,
           size,
           darkMode,

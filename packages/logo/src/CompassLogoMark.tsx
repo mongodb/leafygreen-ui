@@ -64,7 +64,7 @@ function Compass({
           knockout,
           darkMode,
           gradient: '#11A750',
-          flat: 'pink',
+          flat: '#11A750',
         })}
       />
       <path
@@ -74,7 +74,7 @@ function Compass({
           knockout,
           darkMode,
           gradient: '#11A750',
-          flat: 'pink',
+          flat: '#11A750',
         })}
       />
       <path
@@ -84,7 +84,7 @@ function Compass({
           knockout,
           darkMode,
           gradient: 'url(#compass-lg-1)',
-          flat: 'pink',
+          flat: 'url(#compass-lg-1)',
         })}
       />
       <path
@@ -94,7 +94,7 @@ function Compass({
           knockout,
           darkMode,
           gradient: '#87CBA0',
-          flat: 'purple',
+          flat: '#87CBA0',
         })}
       />
       <path
@@ -104,7 +104,7 @@ function Compass({
           knockout,
           darkMode,
           gradient: 'url(#compass-lg-2)',
-          flat: 'purple',
+          flat: 'url(#compass-lg-2)',
         })}
       />
     </svg>

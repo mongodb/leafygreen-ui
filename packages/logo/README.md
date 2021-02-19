@@ -25,8 +25,16 @@ import {
   Logo,
   LogoMark,
   AtlasLogo,
-  RealmLogo,
+  AtlasLogoMark,
+  ChartsLogo,
+  ChartsLogoMark,
   CloudManagerLogo,
+  CloudManagerLogoMark,
+  CompassLogoMark,
+  DriversConnectorsLogoMark,
+  RealmLogo,
+  RealmLogoMark,
+  ServerLogoMark,
 } from '@leafygreen-ui/logo';
 
 return <Logo />;
@@ -60,21 +68,24 @@ return <Logo />;
 
 ## Properties
 
-| Prop       | Type                | Description                                                             | Default  |
-| ---------- | ------------------- | ----------------------------------------------------------------------- | -------- |
-| `height`   | `number`            | Height of the `<Logo />` component                                      | `40`     |
-| `knockout` | `boolean`           | Determines whether or not a `knockout` version of the Logo will be used | `false`  |
-| `variant`  | `'light'`, `'dark'` | Determines if `<Logo />` will be white or dark gray                     | `'dark'` |
+| Prop       | Type                                                         | Description                                                                                            | Default     |
+| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ----------- |
+| `height`   | `number`                                                     | Height of the `<Logo />` component                                                                     | `40`        |
+| `knockout` | `boolean`                                                    | Determines whether or not a `knockout` version of the Logo will be used                                | `false`     |
+| `variant`  | `'light'`, `'dark'`                                          | Determines if `<Logo />` will be white or dark gray                                                    | `'dark'`    |
+| `product`  | `'none'`, `'atlas'`, `'charts'`, `'cloudManager'`, `'realm'` | Determines what text will appear next to Logomark. When 'none' it will appear as a MongoDB logo        | `'none'`    |
+| `lockup`   | `'default'`, `'stacked'`                                     | Determines the orientation of the Logo. By default the Logomark and text will appear on the same line. | `'default'` |
+| `darkMode` | `boolean`                                                    | Determines if Logo will appear in darkMode.                                                            | `false`     |
 
 # LogoMark
 
 ## Properties
 
-| Prop       | Type                | Description                                                                                                                         | Default |
-| ---------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `height`   | `number`            | Height of the `<Logo />` component                                                                                                  | `40`    |
-| `knockout` | `boolean`           | Determines whether or not a `knockout` version of the Logo will be used.                                                            | `false` |
-| `variant`  | `'light'`, `'dark'` | Determines if `<Logo />` will be white or dark gray. Do not pass a value to this prop, if you wish to render a full-color logomark. |         |
+| Prop       | Type      | Description                                                              | Default |
+| ---------- | --------- | ------------------------------------------------------------------------ | ------- |
+| `height`   | `number`  | Height of the component                                                  | `40`    |
+| `knockout` | `boolean` | Determines whether or not a `knockout` version of the Logo will be used. | `false` |
+| `darkMode` | `boolean` | Determines if LogoMark will appear in darkMode.                          | `false` |
 
 # Product Logos
 
@@ -84,3 +95,14 @@ return <Logo />;
 | ---------- | --------- | -------------------------------------------------------------------------------- | ------- |
 | `size`     | `number`  | Height of the Product Logo                                                       | `18`    |
 | `knockout` | `boolean` | Determines whether or not a `knockout` version of the Product Logo will be used. |         |
+| `darkMode` | `boolean` | Determines if the logo will appear in darkMode or not.                           | `false` |
+
+# Product LogoMarks
+
+## Properties
+
+| Prop       | Type      | Description                                                                      | Default |
+| ---------- | --------- | -------------------------------------------------------------------------------- | ------- |
+| `size`     | `number`  | Height of the Product Logo                                                       | `18`    |
+| `knockout` | `boolean` | Determines whether or not a `knockout` version of the Product Logo will be used. |         |
+| `darkMode` | `boolean` | Determines if the logo will appear in darkMode or not.                           | `false` |

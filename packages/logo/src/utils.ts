@@ -11,12 +11,6 @@ const Product = {
 
 type Product = typeof Product[keyof typeof Product];
 
-// const None = {
-//   None: 'none'
-// } as const
-
-// type None = typeof None[keyof typeof None]
-
 const Lockup = {
   Default: 'default',
   Stacked: 'stacked',
@@ -135,8 +129,6 @@ export const getColor = ({
       fill = uiColors.gray.dark3;
     }
   }
-
-  console.log({ fill });
 
   return css`
     fill: ${fill};

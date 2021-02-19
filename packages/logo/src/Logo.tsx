@@ -29,15 +29,14 @@ const Color = {
 
 type Color = typeof Color[keyof typeof Color];
 
-type MapValue = Record<
-  Lockup,
-  { [k in Color]: ((props: any) => JSX.Element) }
->;
+type MapValue = Record<Lockup, { [k in Color]: (props: any) => JSX.Element }>;
 
-type LogoMapType = Record<Product, MapValue> & { 'none': { [Lockup.Default]: { [k in Color]: ((props: any) => JSX.Element) } } };
+type LogoMapType = Record<Product, MapValue> & {
+  none: { [Lockup.Default]: { [k in Color]: (props: any) => JSX.Element } };
+};
 
 const LogoMap: LogoMapType = {
-  'none': {
+  none: {
     [Lockup.Default]: {
       [Color.RGB]: DefaultRGBLogo,
       [Color.Knockout]: DefaultMonochromeLogo,
@@ -115,8 +114,10 @@ function Logo({
   const color = knockout ? Color.Knockout : Color.RGB;
   const fill = darkMode ? uiColors.white : uiColors.gray.dark3;
 
-  const Logo = product === 'none' ? LogoMap.none.default[color] : LogoMap[product][lockup][color]
-
+  const Logo =
+    product === 'none'
+      ? LogoMap.none.default[color]
+      : LogoMap[product][lockup][color];
 
   return (
     <Logo

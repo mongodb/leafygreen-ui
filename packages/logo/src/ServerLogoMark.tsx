@@ -64,7 +64,7 @@ function ServerLogoMark({
           knockout,
           size,
           gradient: 'url(#lg-server-logo-lg-1)',
-          flat: 'pink',
+          flat: 'url(#lg-server-logo-lg-1)',
         })}
       />
       <path
@@ -74,7 +74,7 @@ function ServerLogoMark({
           knockout,
           size,
           gradient: 'url(#lg-server-logo-lg-2)',
-          flat: 'pink',
+          flat: 'url(#lg-server-logo-lg-2)',
         })}
       />
       <path
@@ -84,7 +84,7 @@ function ServerLogoMark({
           size,
           knockout,
           gradient: '#11A750',
-          flat: 'purple',
+          flat: '#11A750',
         })}
       />
     </svg>
