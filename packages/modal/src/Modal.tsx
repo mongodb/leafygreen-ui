@@ -238,6 +238,12 @@ function Modal({
 
   useEscapeKey(handleClose, { enabled: open });
 
+  const focusTrapOptions = initialFocus
+    ? {
+        initialFocus: `#${id} ${initialFocus}`,
+      }
+    : {};
+
   return (
     <Transition
       in={open}
@@ -260,9 +266,7 @@ function Modal({
               [visibleBackdrop]: state === 'entered',
             })}
           >
-            <FocusTrap
-              focusTrapOptions={{ initialFocus: `#${id} ${initialFocus}` }}
-            >
+            <FocusTrap focusTrapOptions={focusTrapOptions}>
               <div className={scrollContainer} ref={setScrollContainerNode}>
                 <div
                   aria-modal="true"

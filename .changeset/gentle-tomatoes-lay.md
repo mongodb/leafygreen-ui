@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/modal': patch
+'@leafygreen-ui/modal': major
 ---
 
 Traps focus in Modal component
