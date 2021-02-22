@@ -1,5 +1,12 @@
 # @leafygreen-ui/side-nav
 
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [c8aee7eb]
+  - @leafygreen-ui/palette@3.1.1
+
 ## 5.0.2
 
 ### Patch Changes
