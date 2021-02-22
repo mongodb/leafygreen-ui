@@ -87,7 +87,11 @@ storiesOf('Logo', module)
           darkMode={darkMode}
           knockout={boolean('Knockout', false)}
           height={number('Height', 40)}
-          product={select('Product', [...Object.values(Product), 'none'], 'none')}
+          product={select(
+            'Product',
+            [...Object.values(Product), 'none'],
+            'none',
+          )}
           lockup={select('Lockup', Object.values(Lockup), Lockup.Default)}
         />
       </div>
