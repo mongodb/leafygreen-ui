@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import TextArea, { State } from './TextArea';
 
 const onChange = jest.fn();
@@ -23,6 +24,13 @@ function renderTextArea(props = {}) {
 }
 
 describe('packages/text-area', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = renderTextArea();
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
   test(`renders ${labelProp} as the input label and ${defaultProps.description} as the description`, () => {
     const { label, description } = renderTextArea(defaultProps);
     expect(label?.innerHTML).toContain(labelProp);

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import {
   fireEvent,
   render,
+  act,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import ConfirmationModal from '.';
 
 const WrappedModal = ({
@@ -33,6 +35,21 @@ function renderModal(
 }
 
 describe('packages/confirmation-modal', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container, getByText } = renderModal({ open: true });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+
+      let newResults = null as any;
+      act(() => void fireEvent.click(getByText('Confirm')));
+      await act(async () => {
+        newResults = await axe(container);
+      });
+      expect(newResults).toHaveNoViolations();
+    });
+  });
+
   test('does not render if closed', () => {
     renderModal();
     expect(document.body.innerHTML).toEqual('<div></div>');

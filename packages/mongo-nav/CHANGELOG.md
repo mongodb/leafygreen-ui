@@ -1,5 +1,20 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.2.2
+
+### Patch Changes
+
+- 160bcba5: Removes "role='none'" from product tabs in ProjectNav and adds an accessible name to the Org Home link
+- df1bd222: Marks decorative icons across component with `role='presentation'` so that they are hidden from screen readers.
+- Updated dependencies [c8aee7eb]
+  - @leafygreen-ui/palette@3.1.1
+
+## 5.2.1
+
+### Patch Changes
+
+- 6058739f: Updates University icon in MongoNav
+
 ## 5.2.0
 
 ### Minor Changes

@@ -4,6 +4,7 @@ import fs from 'fs';
 import { createHash } from 'crypto';
 import { toJson } from 'xml2json';
 import { render, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { typeIs } from '@leafygreen-ui/lib';
 import { SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
@@ -31,6 +32,14 @@ fs.readdirSync(generatedFilesDirectory).forEach(filePath => {
 });
 
 describe('packages/Icon/glyphs/', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = render(<EditIcon />);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   test('exported glyphs match files in glyphs directory', () => {
     // Test that any export in the glyphs directory has a corresponding file,
     // and return an array of SVG files not exported.

@@ -1,5 +1,13 @@
 # @leafygreen-ui/tabs
 
+## 5.0.2
+
+### Patch Changes
+
+- eb1caf16: Disables hover state on selected tabs
+- Updated dependencies [c8aee7eb]
+  - @leafygreen-ui/palette@3.1.1
+
 ## 5.0.1
 
 ### Patch Changes

@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, act, fireEvent } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Checkbox from '.';
-
-afterAll(cleanup);
 
 const className = 'test-classname';
 const onChange = jest.fn();
@@ -18,6 +17,21 @@ function renderCheckbox(props = {}) {
 }
 
 describe('packages/checkbox', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility violations', async () => {
+      const { container, checkbox } = renderCheckbox();
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+
+      let newResults = null as any;
+      act(() => void fireEvent.click(checkbox));
+      await act(async () => {
+        newResults = await axe(container);
+      });
+      expect(newResults).toHaveNoViolations();
+    });
+  });
+
   test(`renders ${className} in the Checkbox label's classlist`, () => {
     const { label } = renderCheckbox({ className });
     expect(label?.classList.contains(className)).toBe(true);

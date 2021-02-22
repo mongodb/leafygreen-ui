@@ -1,6 +1,7 @@
 interface TokenObject {
   kind: string;
   children: Array<string | TokenObject>;
+  sublanguage?: boolean;
 }
 
 interface RootNode {

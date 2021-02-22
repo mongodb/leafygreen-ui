@@ -3,9 +3,11 @@ import ClipboardJS from 'clipboard';
 import {
   render,
   fireEvent,
+  act,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import { Context, jest } from '@leafygreen-ui/testing-lib';
 import Copyable from '.';
 
@@ -20,6 +22,33 @@ describe('packages/copyable', () => {
     expect(getByText('Label')).toBeVisible();
     expect(getByText('Description')).toBeVisible();
     expect(getByText('Hello world')).toBeVisible();
+  });
+
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container, getByText } = Context.within(
+        jest.spyContext(ClipboardJS, 'isSupported'),
+        spy => {
+          spy.mockReturnValue(true);
+
+          return render(
+            <Copyable label="Label" description="Description">
+              Hello world
+            </Copyable>,
+          );
+        },
+      );
+
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+
+      let newResults = null as any;
+      act(() => void fireEvent.click(getByText('Copy')));
+      await act(async () => {
+        newResults = await axe(container);
+      });
+      expect(newResults).toHaveNoViolations();
+    });
   });
 
   describe('copy button', () => {
