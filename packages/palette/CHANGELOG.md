@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.1.1
+
+### Patch Changes
+
+- c8aee7eb: Updates `uiColors.gray.base` to #89979B
+
 ## 3.1.0
 
 ### Minor Changes

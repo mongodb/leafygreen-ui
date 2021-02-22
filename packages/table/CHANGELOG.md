@@ -1,5 +1,13 @@
 # @leafygreen-ui/table
 
+## 1.3.5
+
+### Patch Changes
+
+- b1bb95d8: Fixes issue where table body content wasn't being rendered server-side.
+- Updated dependencies [c8aee7eb]
+  - @leafygreen-ui/palette@3.1.1
+
 ## 1.3.4
 
 ### Patch Changes
