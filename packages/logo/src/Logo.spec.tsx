@@ -17,7 +17,22 @@ import {
 } from '.';
 import ServerLogoMark from './ServerLogoMark';
 
-const renderedComponents = {
+type LogoComponents =
+  | 'Logo'
+  | 'LogoMark'
+  | 'AtlasLogo'
+  | 'AtlasLogoMark'
+  | 'ChartsLogo'
+  | 'ChartsLogoMark'
+  | 'CloudManagerLogo'
+  | 'CloudManagerLogoMark'
+  | 'RealmLogo'
+  | 'RealmLogoMark'
+  | 'ServerLogoMark'
+  | 'DriversConnectorsLogoMark'
+  | 'CompassLogoMark';
+
+const renderedComponents: Record<LogoComponents, JSX.Element> = {
   Logo: <Logo />,
   LogoMark: <LogoMark />,
   AtlasLogo: <AtlasLogo />,
@@ -29,15 +44,17 @@ const renderedComponents = {
   RealmLogo: <RealmLogo />,
   RealmLogoMark: <RealmLogoMark />,
   ServerLogoMark: <ServerLogoMark />,
-  Compass: <CompassLogoMark />,
-  DriversConnectors: <DriversConnectorsLogoMark />,
-};
+  CompassLogoMark: <CompassLogoMark />,
+  DriversConnectorsLogoMark: <DriversConnectorsLogoMark />,
+} as const;
 
 describe('packages/logo', () => {
   describe('a11y', () => {
     Object.keys(renderedComponents).map(component => {
       test(`${component} does not have any basic accessibility issues`, async () => {
-        const { container } = render(renderedComponents[component]);
+        const { container } = render(
+          renderedComponents[component as LogoComponents],
+        );
         const results = await axe(container);
         expect(results).toHaveNoViolations();
       });
