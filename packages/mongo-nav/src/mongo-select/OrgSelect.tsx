@@ -57,10 +57,8 @@ import {
 const orgButtonStyle = css`
   justify-content: space-between;
   border-radius: 5px 0 0 5px;
-  border: 1px solid ${uiColors.gray.light2};
   width: 180px;
   height: 30px;
-  padding: 3px 5px;
 `;
 
 const orgStandaloneButtonStyle = css`

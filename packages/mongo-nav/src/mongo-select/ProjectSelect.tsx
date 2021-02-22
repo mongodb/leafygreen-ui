@@ -55,9 +55,7 @@ const projectButtonStyle = css`
 
 const projectTriggerStyle = css`
   justify-content: space-around;
-  border-color: transparent;
   border-radius: 5px;
-  padding: 2px;
   width: 174px;
   height: 28px;
 
