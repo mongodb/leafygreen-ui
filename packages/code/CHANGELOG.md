@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 8.0.6
+
+### Patch Changes
+
+- b905c17d: Fixes issue where sublanguages like JSX would not render.
+
 ## 8.0.5
 
 ### Patch Changes
