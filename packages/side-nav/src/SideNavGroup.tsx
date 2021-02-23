@@ -1,67 +1,67 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
+import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { createDataProp, OneOf } from '@leafygreen-ui/lib';
+import {spacing} from '@leafygreen-ui/tokens';
+import { createDataProp, OneOf, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import CollapsedSideNavItem from './CollapsedSideNavItem'
 import {
   ulStyleOverrides,
   sideNavItemSidePadding,
   sideNavWidth,
 } from './styles';
+import { useSideNavContext } from './SideNavContext';
 
 const button = createDataProp('side-nav-group-button');
 
-const sideNavLabelStyle = css`
+const labelStyle = css`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 12px;
   letter-spacing: 0.3px;
   font-weight: bold;
   text-transform: uppercase;
   color: ${uiColors.green.dark2};
-  margin-top: 12px;
+  min-height: ${spacing[5]}px;
+  margin-top: 0;
   margin-bottom: 0;
   padding: 4px ${sideNavItemSidePadding}px 4px ${sideNavItemSidePadding}px;
   line-height: 1.3em;
-  position: relative;
+
+  &:not(:first-of-type) {
+    margin-top: ${spacing[1]}px;
+  }
 `;
 
-const collapsibleHeaderStyle = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 2px; // padding-bottom is 4px for not collapsible groups, but spec has the border closer to the element
-  margin-bottom: 2px; // adds the remaining 2px of space between group header and subsequent content
+const collapsibleLabelStyle = css`
+  transition: border-color 150ms ease-in-out, color 150ms ease-in-out;
   cursor: pointer;
   width: ${sideNavWidth}px;
+  border-bottom: 1px solid ${uiColors.gray.light2};
 
-  &:before {
-    content: '';
-    position: absolute;
-    height: 2px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: ${uiColors.green.light3};
-    border-radius: 2px;
-    margin-left: 16px;
-    margin-right: 16px;
-    transition: background-color 150ms ease-in-out;
+  &:hover {
+    border-color: ${uiColors.green.base};
   }
+`;
 
-  &:hover:before {
-    background-color: ${uiColors.green.base};
+const headerText = css`
+  line-height: 1em;
+  margin-left: ${spacing[2]}px;
+  
+  &:first-child {
+    margin-left: 0;
   }
 `;
 
 const collapsibleHeaderFocusStyle = css`
   ${button.selector}:focus & {
     color: ${uiColors.blue.base};
-
-    &:before {
-      background-color: ${uiColors.blue.light3};
-    }
+    border-color: ${uiColors.blue.light1};
   }
 `;
 
@@ -82,7 +82,6 @@ const iconStyle = css`
 
 const openIconStyle = css`
   transform: rotate(90deg);
-  transition: 150ms all ease-in-out;
 `;
 
 const defaultStyle = css`
@@ -120,6 +119,11 @@ interface SideNavGroupBaseProps {
    * Content that will be rendered inside the root-level element.
    */
   children?: React.ReactNode;
+
+  /**
+   * Icon that's rendered in the group label.
+   */
+  glyph?: React.ReactNode;
 }
 
 type CollapsedProps = OneOf<
@@ -132,7 +136,7 @@ type CollapsedProps = OneOf<
     collapsible: true;
 
     /**
-     * If collapsible, determines whether or not the group should be XX or collapsed by default.
+     * If collapsible, determines whether or not the group should be expanded or collapsed by default.
      *
      * @defaultValue `true`
      */
@@ -168,12 +172,36 @@ function SideNavGroup({
   children,
   collapsible = false,
   initialCollapsed = true,
+  glyph,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const {currentPath} = useSideNavContext()
+
+  const isActiveGroup: boolean = useMemo(() => {
+    return React.Children.toArray(children).some(child => {
+      return isComponentType(child, 'SideNavItem') && (
+        child.props.active || child.props.href === currentPath
+      );
+    });
+  }, [children, currentPath]);
+
+  const renderedLabel = (
+    <div className={css`display: inline-flex; align-items: center;`}>
+      {glyph && (
+        <>
+          {glyph}
+
+          <CollapsedSideNavItem active={isActiveGroup}>{glyph}</CollapsedSideNavItem>
+        </>
+      )}
+
+      <span className={headerText}>{header}</span>
+    </div>
+  )
 
   if (collapsible) {
     return (
@@ -184,12 +212,13 @@ function SideNavGroup({
           onClick={() => setOpen(curr => !curr)}
         >
           <h4
-            className={cx(sideNavLabelStyle, collapsibleHeaderStyle, {
+            className={cx(labelStyle, collapsibleLabelStyle, {
               [collapsibleHeaderFocusStyle]: showFocus,
             })}
           >
-            {header}
-            <ChevronRightIcon
+            {renderedLabel}
+
+            <ChevronRight
               size={12}
               className={cx(iconStyle, {
                 [openIconStyle]: open,
@@ -198,6 +227,7 @@ function SideNavGroup({
             />
           </h4>
         </button>
+
         <Transition
           in={open}
           appear
@@ -215,12 +245,18 @@ function SideNavGroup({
                   opacity: 1;
                   max-height: ${ulRef?.current?.getBoundingClientRect()
                     .height}px;
+                  border-bottom: 1px solid ${uiColors.gray.light2};
                 `]: state === 'entered',
                 [transitionStyles.exiting]: state === 'exiting',
                 [transitionStyles.exited]: state === 'exited',
               })}
             >
-              <ul ref={ulRef} role="menu" className={ulStyleOverrides}>
+              <ul ref={ulRef} role="menu" className={cx(ulStyleOverrides, css`
+                transition: opacity 150ms ease-in-out;
+                opacity: 0;
+              `, {
+                [css`opacity: 1`]: ['entering', 'entered'].includes(state)
+              })}>
                 {children}
               </ul>
             </div>
@@ -232,7 +268,10 @@ function SideNavGroup({
 
   return (
     <li {...rest}>
-      <h4 className={sideNavLabelStyle}>{header}</h4>
+      <h4 className={labelStyle}>
+        {renderedLabel}
+      </h4>
+
       <ul role="menu" className={ulStyleOverrides}>
         {children}
       </ul>

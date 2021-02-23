@@ -1,67 +1,49 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { transparentize } from 'polished';
 import { AriaCurrentValue, createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { sideNavItemSidePadding } from './styles';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
+import { useSideNavContext } from './SideNavContext';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
 // container styles
 const defaultStyle = css`
-  box-sizing: border-box;
-  position: relative;
-  width: 100%;
-  margin: unset;
-  padding: 8px ${sideNavItemSidePadding}px 8px ${sideNavItemSidePadding}px;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  color: inherit;
-  text-align: left;
-  text-decoration: none;
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  // Unset defaults
+  margin: 0;
   appearance: none;
   background: none;
-  z-index: 0;
+  border: none;
+  cursor: pointer;
 
-  &::-moz-focus-inner {
-    border: 0;
-  }
+  // Layout
+  width: 100%;
+  min-height: 32px;
+  padding: ${spacing[2]}px ${spacing[3]}px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
 
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  // Typography
+  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1em;
+  text-align: left;
+  text-decoration: none;
+  text-transform: capitalize;
+  color: ${uiColors.gray.dark2};
 
-    border-radius: 5px;
-    background-color: transparent;
-    transform: scale(0.9, 0.7);
-    transition: all 150ms ease-in-out;
-  }
-
-  &:hover,
-  &:focus {
-    &:before {
-      transform: scale(1);
-      background-color: ${uiColors.gray.light2};
-    }
-  }
-
-  &:active:before {
-    transform: scale(1);
-  }
+  // Stateful transitions
+  transition: background-color 150ms ease-in-out;
+  background-color: ${transparentize(100, uiColors.gray.light3)};
 
   &:hover {
+    background-color: ${uiColors.gray.light2};
     text-decoration: none;
   }
 
@@ -69,65 +51,48 @@ const defaultStyle = css`
     text-decoration: none;
     outline: none;
   }
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
 `;
 
 const activeStyle = css`
   cursor: default;
+  font-weight: bold;
   text-decoration: none;
 
-  &:before {
-    transform: scale(1);
-    background-color: ${uiColors.green.light3};
-  }
-
+  &,
   &:hover {
     color: ${uiColors.green.dark3};
-
-    &:before {
-      transform: scale(1);
-      background-color: ${uiColors.green.light3};
-    }
+    background-color: ${uiColors.green.light3};
   }
 `;
 
 const disabledStyle = css`
   pointer-events: none;
   background-color: transparent;
+  
+  &,
+  &:hover {
+    color: ${uiColors.gray.light1};
+    background-color: ${transparentize(100, uiColors.gray.light3)};
+  }
 `;
 
 const focusedStyle = css`
   &:focus {
     text-decoration: none;
     color: ${uiColors.blue.dark3};
-
-    &:before {
-      background-color: ${uiColors.blue.light3};
-    }
+    background-color: ${uiColors.blue.light3};
   }
 `;
 
-// text content styles
-const textStyle = css`
-  position: relative;
-  z-index: 1;
-  font-size: 14px;
-  font-weight: normal;
-  text-transform: capitalize;
-  color: ${uiColors.gray.dark2};
-
-  ${sideNavItemContainer.selector}:focus & {
-    color: ${uiColors.blue.dark3};
+const focusedDisabledStyle = css`
+  &:focus {
+    color: ${uiColors.gray.light1};
   }
-`;
-
-const activeTextStyle = css`
-  font-weight: bold;
-  color: ${uiColors.green.dark3};
-`;
-
-const disabledTextStyle = css`
-  color: ${uiColors.gray.light1};
-`;
+`
 
 export interface SideNavItemProps {
   /**
@@ -180,28 +145,22 @@ export interface SideNavItemProps {
  @param props.as When provided, the component will be rendered as the component or html tag indicated
  *  by this prop. Other additional props will be spread on the anchor element.
  */
-
 const SideNavItem: ExtendableBox<
   SideNavItemProps & { ref?: React.Ref<any> },
   'button'
 > = React.forwardRef((props: SideNavItemProps, forwardRef) => {
   const {
-    active = false,
+    active: activeProp,
     disabled = false,
     ariaCurrentValue = AriaCurrentValue.Page,
     className,
     children,
+    ...rest
   } = props;
-
-  const rest = omit(props, [
-    'active',
-    'disabled',
-    'ariaCurrentValue',
-    'className',
-    'children',
-  ]);
-
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
+  const { currentPath } = useSideNavContext();
+  const active = activeProp != null || currentPath === rest.href;
 
   return (
     <li role="none">
@@ -216,22 +175,15 @@ const SideNavItem: ExtendableBox<
             [activeStyle]: active,
             [disabledStyle]: disabled,
             [focusedStyle]: showFocus,
+            [focusedDisabledStyle]: showFocus && disabled,
           },
           className,
         )}
         aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
         aria-disabled={disabled}
-        tabIndex={disabled ? -1 : undefined}
         ref={forwardRef}
       >
-        <div
-          className={cx(textStyle, {
-            [activeTextStyle]: active,
-            [disabledTextStyle]: disabled,
-          })}
-        >
-          {children}
-        </div>
+        {children}
       </Box>
     </li>
   );

@@ -18,6 +18,18 @@
     },
     {
       "path": "../menu"
+    },
+    {
+      "path": "../portal"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }
