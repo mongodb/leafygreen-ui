@@ -67,7 +67,7 @@ function createRippleEffect(event: MouseEvent) {
   ripple.style.top = top + 'px';
   ripple.style.left = left + 'px';
 
-  ripple.style.background = 'green';
+  ripple.style.background = 'green'; // placeholder color until we get more information about how to appropriately style ripple
 
   setTimeout(() => {
     ripple.remove();
