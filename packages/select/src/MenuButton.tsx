@@ -166,7 +166,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         menuButtonStyle,
         css`
           height: ${sizeSet.height}px;
-          min-width: ${sizeSet.minWidth}px;
           width: 100%;
           font-size: ${sizeSet.text}px;
           color: ${deselected ? colorSet.text.deselected : colorSet.text.base};
@@ -176,7 +175,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 
           @media only screen and (max-width: ${breakpoints.Desktop}px) {
             height: ${mobileSizeSet.height}px;
-            min-width: ${mobileSizeSet.minWidth}px;
             font-size: ${mobileSizeSet.text}px;
           }
         `,
