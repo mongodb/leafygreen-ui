@@ -9,6 +9,7 @@ import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
+import {useSideNavContext} from './SideNavContext'
 
 const buttonDataProp = createDataProp('button');
 
@@ -109,17 +110,21 @@ function CollapseToggle({
   ...rest
 }: CollapseToggleProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+	const {navId} = useSideNavContext();
 
   const Chevron = collapsed ? ChevronRight : ChevronLeft;
 
   return (
     <Tooltip
       darkMode
+			aria-hidden
       align="right"
       justify="middle"
 			open={hideTooltip != null ? !hideTooltip : undefined}
       trigger={
         <button
+					aria-label="Collapse navigation"
+					aria-controls={navId}
           className={cx(
             buttonStyles,
             { [buttonFocusStyles]: showFocus },
@@ -130,9 +135,8 @@ function CollapseToggle({
         >
           <div className={cx(iconWrapper, {
 						[iconWrapperCollapsed]: collapsed,
-					})}
-          >
-            <Chevron />
+					})}>
+            <Chevron role="presentation" />
           </div>
         </button>
       }

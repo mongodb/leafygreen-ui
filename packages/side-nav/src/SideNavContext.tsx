@@ -7,6 +7,7 @@ interface SideNavigationContext {
   setCollapsed?: React.Dispatch<React.SetStateAction<boolean>>;
 	portalContainer?: React.RefObject<HTMLUListElement | null>['current'];
 	transitionState?: TransitionStatus;
+	navId?: string;
 }
 
 const SideNavContext = createContext<SideNavigationContext>({ currentPath: '', collapsed: false })

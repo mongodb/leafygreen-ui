@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
@@ -8,10 +8,12 @@ import {useEventListener} from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import {keyMap} from '@leafygreen-ui/lib';
+import {keyMap, IdAllocator} from '@leafygreen-ui/lib';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
+
+const navIdAllocator = IdAllocator.create('input');
 
 const navStyles = css`
   transition: all ${collapseDuration}ms ease-in-out;
@@ -152,11 +154,13 @@ function SideNav({
   className,
   currentPath = '',
   children,
+  id: idProp,
   ...rest
 }: SideNavProps) {
   const { Provider: ContextProvider } = SideNavContext;
   const [collapsed, setCollapsed] = useState(false);
   const [hover, setHover] = useState(false);
+  const navId = useMemo(() => idProp ?? navIdAllocator.generate(), [idProp]);
   const [
     portalContainer,
     setPortalContainer,
@@ -186,6 +190,7 @@ function SideNav({
       {state => (
         <ContextProvider
           value={{
+            navId,
             currentPath,
             collapsed,
             setCollapsed,
@@ -240,6 +245,7 @@ SideNav.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   currentPath: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default SideNav;
