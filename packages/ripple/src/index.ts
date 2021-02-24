@@ -1,12 +1,22 @@
 import { getRippleGlobalNamespace } from './getRippleGlobalNamespace';
+import { Variant, colorMap, Mode } from './utils';
 
 const TRANSITION_TIME = 300;
 const RIPPLE_NAMESPACE = getRippleGlobalNamespace();
 
-export function registerRipple(node: HTMLElement, options: {}) {
+interface Options {
+  variant: Variant;
+  darkMode: boolean;
+}
+
+let globalOptions: Options = { darkMode: false, variant: Variant.Default };
+
+export function registerRipple(node: HTMLElement, options: Options) {
   if (!RIPPLE_NAMESPACE) {
     return;
   }
+
+  globalOptions = options;
 
   // Register Node
   // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
@@ -44,6 +54,9 @@ export function unregisterRipple(node: HTMLElement) {
 }
 
 function createRippleEffect(event: MouseEvent) {
+  const { darkMode, variant } = globalOptions;
+
+  const mode = darkMode ? Mode.Dark : Mode.Light;
   const target = event.target as HTMLElement | null;
 
   if (!event || !target) {
@@ -52,7 +65,6 @@ function createRippleEffect(event: MouseEvent) {
 
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement('span');
-  console.log(ripple);
 
   ripple.className = 'ripple';
   ripple.style.height = ripple.style.width =
@@ -67,7 +79,7 @@ function createRippleEffect(event: MouseEvent) {
   ripple.style.top = top + 'px';
   ripple.style.left = left + 'px';
 
-  ripple.style.background = 'green'; // placeholder color until we get more information about how to appropriately style ripple
+  ripple.style.background = colorMap[mode][variant];
 
   setTimeout(() => {
     ripple.remove();

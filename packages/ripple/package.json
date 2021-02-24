@@ -16,6 +16,10 @@
     "publishConfig": {
       "access": "public"
     },
+    "dependencies": {
+      "polished": "^4.1.1",
+      "@leafygreen-ui/palette": "^3.1.1"
+    },
     "devDependencies": {
       "@leafygreen-ui/lib": "^6.1.0"
     }

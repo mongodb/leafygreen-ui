@@ -2,7 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { registerRipple } from '.';
-import { button } from '@storybook/addon-knobs';
+import { select, boolean } from '@storybook/addon-knobs';
+import { Variant } from './utils';
 
 const buttonClassName = css`
   display: inline-block;
@@ -21,14 +22,20 @@ const buttonClassName = css`
   padding: 7px 12px 8px 12px;
 `;
 
-function ButtonDemo() {
+function ButtonDemo({
+  variant,
+  darkMode,
+}: {
+  variant: Variant;
+  darkMode: boolean;
+}) {
   const ref = useRef(null);
 
   useEffect(() => {
     if (ref.current) {
-      registerRipple(ref.current, {});
+      registerRipple(ref.current, { variant, darkMode });
     }
-  });
+  }, [ref, variant, darkMode]);
 
   return (
     <button ref={ref} className={buttonClassName}>
@@ -37,4 +44,9 @@ function ButtonDemo() {
   );
 }
 
-storiesOf('Ripple', module).add('Default', () => <ButtonDemo />);
+storiesOf('Ripple', module).add('Default', () => {
+  const variant = select('Variant', Object.values(Variant), Variant.Primary);
+  const darkMode = boolean('darkMode', false);
+
+  return <ButtonDemo variant={variant} darkMode={darkMode} />;
+});
