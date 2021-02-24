@@ -9,7 +9,23 @@ interface Options {
   darkMode: boolean;
 }
 
+const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const watchForMotionPreferenceChange = {
+  prev: false,
+  current: mediaQuery.matches,
+};
+let prefersReducedMotion = false;
 let globalOptions: Options = { darkMode: false, variant: Variant.Default };
+
+function rippleEvent(event: MouseEvent) {
+  if (
+    // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
+    RIPPLE_NAMESPACE.registeredRippleElements[event.target] &&
+    !prefersReducedMotion
+  ) {
+    createRippleEffect(event);
+  }
+}
 
 export function registerRipple(node: HTMLElement, options: Options) {
   if (!RIPPLE_NAMESPACE) {
@@ -18,29 +34,35 @@ export function registerRipple(node: HTMLElement, options: Options) {
 
   globalOptions = options;
 
-  // Register Node
   // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
   RIPPLE_NAMESPACE.registeredRippleElements[node] = options;
 
-  // Create Event Listener
-  if (!RIPPLE_NAMESPACE.setRippleListener) {
-    document.addEventListener(
-      'click',
-      event => {
-        // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
-        if (RIPPLE_NAMESPACE.registeredRippleElements[event.target]) {
-          createRippleEffect(event);
-        }
-      },
-      { passive: true },
-    );
+  mediaQuery.addEventListener('change', () => {
+    watchForMotionPreferenceChange.prev = prefersReducedMotion;
+    prefersReducedMotion = mediaQuery.matches;
+    watchForMotionPreferenceChange.current = prefersReducedMotion;
+  });
 
-    // Add Global Ripple Styles
+  if (
+    !RIPPLE_NAMESPACE.setRippleListener ||
+    watchForMotionPreferenceChange.current !==
+      watchForMotionPreferenceChange.prev
+  ) {
+    document.addEventListener('click', rippleEvent, { passive: true });
+
     const styles = document.createElement('style');
     styles.innerHTML = staticRippleStyles;
     document.head.append(styles);
 
     RIPPLE_NAMESPACE.setRippleListener = true;
+  }
+
+  if (
+    watchForMotionPreferenceChange.current ===
+      watchForMotionPreferenceChange.prev &&
+    watchForMotionPreferenceChange.current
+  ) {
+    document.removeEventListener('click', rippleEvent);
   }
 }
 
