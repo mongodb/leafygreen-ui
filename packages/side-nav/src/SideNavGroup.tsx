@@ -1,19 +1,20 @@
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import {spacing} from '@leafygreen-ui/tokens';
 import { createDataProp, OneOf, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
+import {prefersReducedMotion} from '@leafygreen-ui/a11y';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import {spacing} from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem'
+import { useSideNavContext } from './SideNavContext';
 import {
   ulStyleOverrides,
   sideNavItemSidePadding,
   sideNavWidth,
 } from './styles';
-import { useSideNavContext } from './SideNavContext';
 
 const button = createDataProp('side-nav-group-button');
 
@@ -78,6 +79,10 @@ const buttonResetStyles = css`
 
 const iconStyle = css`
   transition: 150ms all ease-in-out;
+
+  ${prefersReducedMotion(`
+    transition: none;
+  `)}
 `;
 
 const openIconStyle = css`
@@ -89,6 +94,10 @@ const defaultStyle = css`
   max-height: 0;
   overflow: hidden;
   opacity: 1;
+
+  ${prefersReducedMotion(`
+    transition: opacity 150ms ease-in-out;
+  `)}
 `;
 
 const transitionStyles = {

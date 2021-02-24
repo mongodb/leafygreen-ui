@@ -1,6 +1,7 @@
 import React from 'react';
 import { transparentize } from 'polished';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import {prefersReducedMotion} from '@leafygreen-ui/a11y';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -59,12 +60,24 @@ const iconWrapper = css`
   ${buttonDataProp.selector}:hover & {
     transform: translate3d(-2px, 0, 0);
   }
+
+	${prefersReducedMotion(`
+		${buttonDataProp.selector}:hover & {
+			transform: translate3d(0, 0, 0);
+		}
+	`)}
 `;
 
 const iconWrapperCollapsed = css`
   ${buttonDataProp.selector}:hover & {
     transform: translate3d(2px, 0, 0);
   }
+
+	${prefersReducedMotion(`
+		${buttonDataProp.selector}:hover & {
+			transform: translate3d(0, 0, 0);
+		}
+	`)}
 `;
 
 const keyboardShortcut = css`

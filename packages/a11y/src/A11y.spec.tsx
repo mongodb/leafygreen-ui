@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { axe } from 'jest-axe';
-import { VisuallyHidden, useAccessibleForm } from '.';
+import { VisuallyHidden, useAccessibleForm, prefersReducedMotion } from '.';
 
 describe('packages/a11y', () => {
   describe('VisuallyHidden', () => {
@@ -69,4 +69,24 @@ describe('packages/a11y', () => {
       );
     });
   });
+
+  describe('prefersReducedMotion', () => {
+    test('when passed a valid input, returns a string with length greater than 0', () => {
+      expect(prefersReducedMotion('color: blue;').length > 0).toBeTruthy();
+      expect(prefersReducedMotion('').length > 0).toBeTruthy();
+    });
+
+    test('when passed an invalid input, returns a string', () => {
+      expect(prefersReducedMotion(null)).toEqual('');
+      expect(prefersReducedMotion(undefined)).toEqual('');
+      // @ts-expect-error
+      expect(prefersReducedMotion(24)).toEqual('');
+
+      // @ts-expect-error
+      expect(prefersReducedMotion([])).toEqual('');
+
+      // @ts-expect-error
+      expect(prefersReducedMotion({})).toEqual('');
+    });
+  })
 });

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import {keyMap} from '@leafygreen-ui/lib';
-import { spacing } from '@leafygreen-ui/tokens';
+import {prefersReducedMotion} from '@leafygreen-ui/a11y';
 import {useEventListener} from '@leafygreen-ui/hooks';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
+import {keyMap} from '@leafygreen-ui/lib';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
-import { transparentize } from 'polished';
 
 const navStyles = css`
   transition: all ${collapseDuration}ms ease-in-out;
@@ -21,6 +22,11 @@ const navStyles = css`
   z-index: 0;
   overflow-y: auto;
   overflow-x: hidden;
+
+
+  ${prefersReducedMotion(`
+    transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
+  `)}
 `;
 
 const collapsedNavStyles = css`
@@ -38,6 +44,10 @@ const listStyles = css`
   left: 0;
   right: 0;
   top: ${spacing[3]}px;
+
+  ${prefersReducedMotion(`
+    transition: opacity ${collapseDuration}ms ease-in-out;
+  `)}
 `;
 
 const expandedListStyle = css`
@@ -56,6 +66,10 @@ const space = css`
   transition: width ${collapseDuration}ms ease-in-out;
   width: ${sideNavWidth}px;
   position: relative;
+
+  ${prefersReducedMotion(`
+    transition: none;
+  `)}
 `;
 
 const collapsedSpace = css`

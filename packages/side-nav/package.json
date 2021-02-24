@@ -28,6 +28,7 @@
     "@leafygreen-ui/box": "^2.1.5",
     "@leafygreen-ui/icon": "^9.0.0",
     "@leafygreen-ui/tooltip": "^6.1.5",
+    "@leafygreen-ui/a11y": "^1.0.0",
     "@leafygreen-ui/hooks": "^6.0.0"
   },
   "peerDependencies": {

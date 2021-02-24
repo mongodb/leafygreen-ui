@@ -29,6 +29,15 @@
       "path": "../hooks"
     },
     {
+      "path": "../tooltip"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../a11y"
+    },
+    {
       "path": "../leafygreen-provider"
     }
   ]
