@@ -29,10 +29,10 @@ function ButtonDemo({
   variant: Variant;
   darkMode: boolean;
 }) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref.current != null) {
       registerRipple(ref.current, { variant, darkMode });
     }
   }, [ref, variant, darkMode]);
