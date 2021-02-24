@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
-import {prefersReducedMotion} from '@leafygreen-ui/a11y';
-import {useEventListener} from '@leafygreen-ui/hooks';
+import { prefersReducedMotion } from '@leafygreen-ui/a11y';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import {keyMap, IdAllocator, validateAriaLabelProps} from '@leafygreen-ui/lib';
-import {useUsingKeyboardContext} from '@leafygreen-ui/leafygreen-provider';
+import {
+  keyMap,
+  IdAllocator,
+  validateAriaLabelProps,
+} from '@leafygreen-ui/lib';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
@@ -23,6 +27,8 @@ const navStyles = css`
   border-right: 1px solid ${uiColors.gray.light2};
   position: relative;
   z-index: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   ${prefersReducedMotion(`
     transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
@@ -39,7 +45,8 @@ const hoverNavStyles = css`
 `;
 
 const listStyles = css`
-  transition: opacity ${collapseDuration}ms ease-in-out, transform ${collapseDuration}ms ease-in-out;
+  transition: opacity ${collapseDuration}ms ease-in-out,
+    transform ${collapseDuration}ms ease-in-out;
   position: absolute;
   left: 0;
   right: 0;
@@ -47,8 +54,6 @@ const listStyles = css`
   bottom: 0;
   padding-top: ${spacing[3]}px;
   padding-bottom: ${spacing[3]}px;
-  overflow-y: auto;
-  overflow-x: hidden;
 
   ${prefersReducedMotion(`
     transition: opacity ${collapseDuration}ms ease-in-out;
@@ -79,7 +84,7 @@ const space = css`
 
 const collapsedSpace = css`
   width: 48px;
-`
+`;
 
 const expandedEnteredStyle = css`
   transform: translate3d(0, ${spacing[2]}px, 0);
@@ -90,7 +95,7 @@ const expandedEnteredStyle = css`
 const expandedExitedStyle = css`
   transform: translate3d(0, 0, 0);
   opacity: 1;
-`
+`;
 
 const expandedStateStyles: Partial<Record<TransitionStatus, string>> = {
   entering: expandedEnteredStyle,
@@ -101,14 +106,14 @@ const expandedStateStyles: Partial<Record<TransitionStatus, string>> = {
 
 const collapsedEnteredStyle = css`
   transform: translate3d(0, 0, 0);
-  opacity: 1;  
+  opacity: 1;
 `;
 
 const collapsedExitedStyle = css`
   transform: translate3d(0, -${spacing[2]}px, 0);
   opacity: 0;
   pointer-events: none;
-`
+`;
 
 const collapsedStateStyles: Partial<Record<TransitionStatus, string>> = {
   entering: collapsedEnteredStyle,
@@ -163,7 +168,7 @@ function SideNav({
   const [collapsed, setCollapsed] = useState(false);
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
-  const {usingKeyboard} = useUsingKeyboardContext();
+  const { usingKeyboard } = useUsingKeyboardContext();
   const navId = useMemo(() => idProp ?? navIdAllocator.generate(), [idProp]);
   const [
     portalContainer,
@@ -175,29 +180,36 @@ function SideNav({
   const focusExpand = usingKeyboard && focus;
 
   // Nav element should have a programmatically-determinable label
-  validateAriaLabelProps(rest, 'SideNav')
+  validateAriaLabelProps(rest, 'SideNav');
 
   // Global event listener for toggling the navigation.
-  useEventListener('keypress', e => {
-    const disabledTagNames = ['INPUT', 'TEXTAREA'] as const;
+  useEventListener(
+    'keypress',
+    e => {
+      const disabledTagNames = ['INPUT', 'TEXTAREA'] as const;
 
-    // Disable toggling the side navigation when a user is typing in an input.
-    // The typing for useEventListener doesn't seem to like using event.target,
-    // so we disable this here.
-    // @ts-expect-error
-    const shouldToggle = disabledTagNames.includes(e.target?.tagName);
+      // Disable toggling the side navigation when a user is typing in an input.
+      // The typing for useEventListener doesn't seem to like using event.target,
+      // so we disable this here.
+      // @ts-expect-error
+      const shouldToggle = disabledTagNames.includes(e.target?.tagName);
 
-    if (e.keyCode === keyMap.BracketLeft && !shouldToggle) {
-      setCollapsed(curr => !curr);
-    }
-  }, {
-    options: {
-      passive: true,
+      if (e.keyCode === keyMap.BracketLeft && !shouldToggle) {
+        setCollapsed(curr => !curr);
+      }
     },
-  })
+    {
+      options: {
+        passive: true,
+      },
+    },
+  );
 
   return (
-    <Transition in={collapsed && !hover && !focusExpand} timeout={collapseDuration}>
+    <Transition
+      in={collapsed && !hover && !focusExpand}
+      timeout={collapseDuration}
+    >
       {state => (
         <ContextProvider
           value={{
@@ -209,40 +221,53 @@ function SideNav({
             transitionState: state,
           }}
         >
-          <div className={cx(space, {[collapsedSpace]: collapsed}, className)}>
-            <div
-              className={wrapper}
-              onMouseLeave={() => setHover(false)}
-            >
+          <div
+            className={cx(space, { [collapsedSpace]: collapsed }, className)}
+          >
+            <div className={wrapper} onMouseLeave={() => setHover(false)}>
               <nav
-                className={cx(
-                  navStyles,
-                  {
-                    [collapsedNavStyles]: ['entering', 'entered'].includes(state),
-                    [hoverNavStyles]: (hover || focusExpand) && collapsed,
-                  },
-                )}
+                id={navId}
+                className={cx(navStyles, {
+                  [collapsedNavStyles]: ['entering', 'entered'].includes(state),
+                  [hoverNavStyles]: (hover || focusExpand) && collapsed,
+                })}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 onMouseEnter={() => setHover(true)}
                 {...rest}
               >
-                <ul className={cx(ulStyleOverrides, listStyles, expandedListStyle, expandedStateStyles[state])}>
+                <ul
+                  className={cx(
+                    ulStyleOverrides,
+                    listStyles,
+                    expandedListStyle,
+                    expandedStateStyles[state],
+                  )}
+                  role="menu"
+                >
                   {children}
                 </ul>
 
                 <ul
-                  className={cx(ulStyleOverrides, listStyles, collapsedStateStyles[state])}
+                  // We hide the duplicate items from screen readers.
+                  aria-hidden
+                  className={cx(
+                    ulStyleOverrides,
+                    listStyles,
+                    collapsedStateStyles[state],
+                  )}
                   ref={setPortalContainer}
                 />
-
-                <CollapseToggle
-                  collapsed={collapsed || (!hover && !focusExpand && collapsed)}
-                  onClick={() => setCollapsed(curr => !curr)}
-                  // This prevents any strange flickering while the navigation is transitioning.
-                  hideTooltip={['entering', 'exiting'].includes(state) || undefined}
-                />
               </nav>
+
+              <CollapseToggle
+                collapsed={collapsed || (!hover && !focusExpand && collapsed)}
+                onClick={() => setCollapsed(curr => !curr)}
+                // This prevents any strange flickering while the navigation is transitioning.
+                hideTooltip={
+                  ['entering', 'exiting'].includes(state) || undefined
+                }
+              />
             </div>
           </div>
         </ContextProvider>

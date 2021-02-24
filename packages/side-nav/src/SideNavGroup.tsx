@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import { createDataProp, OneOf, isComponentType } from '@leafygreen-ui/lib';
+import { createDataProp, IdAllocator, OneOf, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
@@ -15,6 +15,8 @@ import {
   sideNavItemSidePadding,
   sideNavWidth,
 } from './styles';
+
+const menuGroupIdAllocator = IdAllocator.create('menu-group')
 
 const button = createDataProp('side-nav-group-button');
 
@@ -139,6 +141,8 @@ interface SideNavGroupBaseProps {
    * Icon that's rendered in the group label.
    */
   glyph?: React.ReactNode;
+
+  id?: string;
 }
 
 type CollapsedProps = OneOf<
@@ -189,6 +193,7 @@ function SideNavGroup({
   initialCollapsed = true,
   glyph,
   className,
+  id: idProp,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
@@ -196,6 +201,7 @@ function SideNavGroup({
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { currentPath } = useSideNavContext();
+  const menuGroupLabelId = useMemo(() => idProp ?? menuGroupIdAllocator.generate(), [idProp]);
 
   const isActiveGroup: boolean = useMemo(() => {
     return React.Children.toArray(children).some(child => {
@@ -234,13 +240,14 @@ function SideNavGroup({
 
   if (collapsible) {
     return (
-      <li className={cx(listItemStyle, className)} {...rest}>
+      <li role="menuitem" className={cx(listItemStyle, className)} {...rest}>
         <button
           {...button.prop}
           className={buttonResetStyles}
           onClick={() => setOpen(curr => !curr)}
         >
-          <h4
+          <label
+            id="menuGroupLabelId"
             className={cx(labelStyle, collapsibleLabelStyle, {
               [collapsibleHeaderFocusStyle]: showFocus,
             })}
@@ -254,7 +261,7 @@ function SideNavGroup({
               })}
               title={open ? 'Chevron Down Icon' : 'Chevron Right Icon'}
             />
-          </h4>
+          </label>
         </button>
 
         <Transition
@@ -283,6 +290,7 @@ function SideNavGroup({
               <ul
                 ref={ulRef}
                 role="menu"
+                aria-labelledby={menuGroupLabelId}
                 className={cx(
                   ulStyleOverrides,
                   css`
@@ -306,10 +314,10 @@ function SideNavGroup({
   }
 
   return (
-    <li className={cx(listItemStyle, className)} {...rest}>
-      <h4 className={labelStyle}>{renderedLabel}</h4>
+    <li role="menuitem" className={cx(listItemStyle, className)} {...rest}>
+      <h4 id={menuGroupLabelId} className={labelStyle}>{renderedLabel}</h4>
 
-      <ul role="menu" className={ulStyleOverrides}>
+      <ul role="menu" aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
         {children}
       </ul>
     </li>

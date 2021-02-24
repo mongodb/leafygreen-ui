@@ -58,10 +58,10 @@ function RealmSideNav() {
         <SideNav className={sideNavStyles} currentPath='https://google.com/' aria-label="Realm app">
           <SideNavItem active glyph={<Icon glyph="Apps" fill={uiColors.blue.base} />}>Realm Apps</SideNavItem>
 
-          <div className={arbitraryContent}>
+          <li role="none" className={arbitraryContent}>
             <span id="arbitrary-1">App ID</span>
-            <IconButton aria-labelledby="arbitrary-1"><Icon glyph="Copy" /></IconButton>
-          </div>
+            <IconButton role="menuitem" aria-label="copy arbitrary-1"><Icon glyph="Copy" /></IconButton>
+          </li>
 
           <SideNavGroup glyph={<Icon glyph="Cloud" />} header='Data Access'>
             <SideNavItem>Rules</SideNavItem>
