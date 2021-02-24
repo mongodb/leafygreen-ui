@@ -1,5 +1,15 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.2.3
+
+### Patch Changes
+
+- 4b387979: Updates submenus in MongoNav to be more accessible
+- Updated dependencies [4b387979]
+- Updated dependencies [28373d63]
+  - @leafygreen-ui/menu@9.1.3
+  - @leafygreen-ui/logo@5.0.0
+
 ## 5.2.2
 
 ### Patch Changes

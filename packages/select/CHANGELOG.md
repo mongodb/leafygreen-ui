@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 2.0.0
+
+### Major Changes
+
+- cc921a0e: Consuming applications can now set the width of the select dropdown by passing a value to width through the `className` prop.
+
 ## 1.1.4
 
 ### Patch Changes
