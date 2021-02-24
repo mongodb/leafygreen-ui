@@ -8,29 +8,27 @@ import {
   CloudManagerLogo,
   Logo,
   LogoMark,
+  AtlasLogoMark,
+  ChartsLogoMark,
+  CloudManagerLogoMark,
+  DriversConnectorsLogoMark,
+  CompassLogoMark,
+  ServerLogoMark,
+  RealmLogoMark,
 } from '@leafygreen-ui/logo';
-import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
-const flexContainer = css`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  overflow-x: auto;
+const overlineStyle = css`
+  margin-bottom: ${spacing[3]}px;
 `;
 
 const logoContainer = css`
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  margin-right: ${spacing[6]}px;
+  margin-bottom: 36px;
 `;
 
-const productLogoPadding = css`
-  padding: ${spacing[2]}px;
+const leftMargin = css`
+  margin-left: ${spacing[4]}px;
 `;
 
 // When interface is used, ts complains that index signature is missing
@@ -38,8 +36,8 @@ const productLogoPadding = css`
 type LogoProps = {
   knockout: boolean;
   darkMode: boolean;
-  height: number;
-  size: number;
+  product: 'none' | 'atlas' | 'charts' | 'cloudManager' | 'realm';
+  lockup: 'default' | 'stacked';
 };
 
 const knobsConfig: KnobsConfigInterface<LogoProps> = {
@@ -51,90 +49,104 @@ const knobsConfig: KnobsConfigInterface<LogoProps> = {
   darkMode: {
     type: 'boolean',
     default: false,
-    label: 'Dark Mode - Logo and Logo Mark',
+    label: 'Dark Mode',
   },
-  height: {
-    type: 'number',
-    default: 40,
-    label: 'Height - Logo and Logo Mark',
+  product: {
+    type: 'select',
+    default: 'none',
+    options: ['none', 'atlas', 'charts', 'cloudManager', 'realm'],
+    label: 'Product',
   },
-  size: {
-    type: 'number',
-    default: 32,
-    label: 'Size - Product Logo',
+  lockup: {
+    type: 'select',
+    default: 'default',
+    options: ['default', 'stacked'],
+    label: 'Lockup',
   },
 };
 
 export default function LogoLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ darkMode, knockout, height, size }) => (
-        <div className={flexContainer}>
+      {({ darkMode, knockout, product, lockup }) => (
+        <div>
+          <Overline className={overlineStyle}>Product Logos</Overline>
           <div className={logoContainer}>
-            {/* @ts-expect-error */}
-            <Overline
-              className={css`
-                margin-bottom: 10px;
-                color: ${darkMode ? uiColors.white : uiColors.gray.dark1};
-              `}
-              weight="medium"
-            >
-              Logo
-            </Overline>
-            <Logo darkMode={darkMode} knockout={knockout} height={height} />
+            <AtlasLogo height={64} knockout={knockout} darkMode={darkMode} />
+            <ChartsLogo
+              height={64}
+              knockout={knockout}
+              darkMode={darkMode}
+              className={leftMargin}
+            />
+            <CloudManagerLogo
+              height={64}
+              knockout={knockout}
+              darkMode={darkMode}
+              className={leftMargin}
+            />
+            <RealmLogo
+              height={64}
+              knockout={knockout}
+              darkMode={darkMode}
+              className={leftMargin}
+            />
           </div>
+
+          <Overline className={overlineStyle}>Product LogoMarks</Overline>
           <div className={logoContainer}>
-            {/* @ts-expect-error */}
-            <Overline
-              className={css`
-                margin-bottom: 10px;
-                color: ${darkMode ? uiColors.white : uiColors.gray.dark1};
-              `}
-              weight="medium"
-            >
-              Logo Mark
-            </Overline>
-            <LogoMark darkMode={darkMode} knockout={knockout} height={height} />
+            <AtlasLogoMark darkMode={darkMode} knockout={knockout} size={32} />
+            <ChartsLogoMark
+              darkMode={darkMode}
+              knockout={knockout}
+              size={32}
+              className={leftMargin}
+            />
+            <CloudManagerLogoMark
+              darkMode={darkMode}
+              knockout={knockout}
+              size={32}
+              className={leftMargin}
+            />
+            <CompassLogoMark
+              darkMode={darkMode}
+              knockout={knockout}
+              size={32}
+              className={leftMargin}
+            />
+            <DriversConnectorsLogoMark
+              darkMode={darkMode}
+              knockout={knockout}
+              size={32}
+              className={leftMargin}
+            />
+            <RealmLogoMark
+              darkMode={darkMode}
+              knockout={knockout}
+              size={32}
+              className={leftMargin}
+            />
+            <ServerLogoMark
+              darkMode={darkMode}
+              knockout={knockout}
+              size={32}
+              className={leftMargin}
+            />
           </div>
+
+          <Overline className={overlineStyle}>Logo</Overline>
           <div className={logoContainer}>
-            {/* @ts-expect-error */}
-            <Overline
-              className={css`
-                margin-bottom: 10px;
-                color: ${darkMode ? uiColors.white : uiColors.gray.dark1};
-              `}
-              weight="medium"
-            >
-              Product Logos
-            </Overline>
-            <div>
-              <AtlasLogo
-                className={css`
-                  padding: ${spacing[2]}px ${spacing[2]}px ${spacing[2]}px 0;
-                `}
-                knockout={knockout}
-                size={size}
-                color={darkMode ? uiColors.white : uiColors.gray.dark3}
-              />
-              <ChartsLogo
-                className={productLogoPadding}
-                knockout={knockout}
-                size={size}
-                color={darkMode ? uiColors.white : uiColors.gray.dark3}
-              />
-              <RealmLogo
-                className={productLogoPadding}
-                knockout={knockout}
-                size={size}
-                color={darkMode ? uiColors.white : uiColors.gray.dark3}
-              />
-              <CloudManagerLogo
-                className={productLogoPadding}
-                knockout={knockout}
-                size={size}
-                color={darkMode ? uiColors.white : uiColors.gray.dark3}
-              />
-            </div>
+            <Logo
+              darkMode={darkMode}
+              knockout={knockout}
+              product={product}
+              lockup={lockup}
+            />
+          </div>
+
+          <Overline className={overlineStyle}>LogoMark</Overline>
+          <div className={logoContainer}>
+            <LogoMark darkMode={darkMode} knockout={knockout} />
           </div>
         </div>
       )}
