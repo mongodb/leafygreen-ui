@@ -72,7 +72,6 @@ return <Logo />;
 | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ----------- |
 | `height`   | `number`                                                     | Height of the `<Logo />` component                                                                     | `40`        |
 | `knockout` | `boolean`                                                    | Determines whether or not a `knockout` version of the Logo will be used                                | `false`     |
-| `variant`  | `'light'`, `'dark'`                                          | Determines if `<Logo />` will be white or dark gray                                                    | `'dark'`    |
 | `product`  | `'none'`, `'atlas'`, `'charts'`, `'cloudManager'`, `'realm'` | Determines what text will appear next to Logomark. When 'none' it will appear as a MongoDB logo        | `'none'`    |
 | `lockup`   | `'default'`, `'stacked'`                                     | Determines the orientation of the Logo. By default the Logomark and text will appear on the same line. | `'default'` |
 | `darkMode` | `boolean`                                                    | Determines if Logo will appear in darkMode.                                                            | `false`     |
