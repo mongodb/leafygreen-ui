@@ -11,7 +11,7 @@ import { css } from '@leafygreen-ui/emotion';
 export default function prefersReducedMotion(styles: string) {
 	if (styles != null && typeof styles === 'string') {
 		return css`
-			@media (prefers-reduced-motion) {
+			@media (prefers-reduced-motion: reduce) {
 				${styles}
 			}
 		`;
