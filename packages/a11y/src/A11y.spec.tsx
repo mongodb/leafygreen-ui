@@ -88,5 +88,5 @@ describe('packages/a11y', () => {
       // @ts-expect-error
       expect(prefersReducedMotion({})).toEqual('');
     });
-  })
+  });
 });

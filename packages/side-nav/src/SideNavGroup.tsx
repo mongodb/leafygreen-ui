@@ -1,7 +1,12 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import { createDataProp, IdAllocator, OneOf, isComponentType } from '@leafygreen-ui/lib';
+import {
+  createDataProp,
+  IdAllocator,
+  OneOf,
+  isComponentType,
+} from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
@@ -16,7 +21,7 @@ import {
   sideNavWidth,
 } from './styles';
 
-const menuGroupIdAllocator = IdAllocator.create('menu-group')
+const menuGroupIdAllocator = IdAllocator.create('menu-group');
 
 const button = createDataProp('side-nav-group-button');
 
@@ -211,7 +216,7 @@ function SideNavGroup({
   }, [children, currentPath]);
 
   const accessibleGlyph =
-    glyph && isComponentType(glyph, 'Glyph') || isComponentType(glyph, 'Icon')
+    (glyph && isComponentType(glyph, 'Glyph')) || isComponentType(glyph, 'Icon')
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
@@ -316,9 +321,15 @@ function SideNavGroup({
 
   return (
     <li role="menuitem" className={cx(listItemStyle, className)} {...rest}>
-      <label id={menuGroupLabelId} className={labelStyle}>{renderedLabel}</label>
+      <label id={menuGroupLabelId} className={labelStyle}>
+        {renderedLabel}
+      </label>
 
-      <ul role="menu" aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
+      <ul
+        role="menu"
+        aria-labelledby={menuGroupLabelId}
+        className={ulStyleOverrides}
+      >
         {children}
       </ul>
     </li>

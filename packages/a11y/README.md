@@ -57,8 +57,8 @@ Hook that returns two sets of props that accessibly associate a label and its re
 ### Properties
 
 | Parameter | Type     | Description                          | Default |
-| ---- | -------- | ------------------------------------ | ------- |
-| `id` | `string` | id that describes the input element. |         |
+| --------- | -------- | ------------------------------------ | ------- |
+| `id`      | `string` | id that describes the input element. |         |
 
 ## prefersReducedMotion
 
@@ -70,6 +70,6 @@ for users with that preference set.
 
 ### Properties
 
-| Parameter | Type     | Description                          | Default |
-| ---- | -------- | ------------------------------------ | ------- |
-| `styles` | `string` | String of styles to render within preference media query. |         |
+| Parameter | Type     | Description                                               | Default |
+| --------- | -------- | --------------------------------------------------------- | ------- |
+| `styles`  | `string` | String of styles to render within preference media query. |         |

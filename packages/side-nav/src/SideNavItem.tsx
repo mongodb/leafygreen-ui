@@ -1,14 +1,18 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
-import { AriaCurrentValue, createDataProp, isComponentType } from '@leafygreen-ui/lib';
+import {
+  AriaCurrentValue,
+  createDataProp,
+  isComponentType,
+} from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useSideNavContext } from './SideNavContext';
-import CollapsedSideNavItem from './CollapsedSideNavItem'
+import CollapsedSideNavItem from './CollapsedSideNavItem';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -74,7 +78,7 @@ const disabledStyle = css`
   pointer-events: none;
   background-color: transparent;
   font-weight: normal;
-  
+
   &,
   &:hover {
     color: ${uiColors.gray.light1};
@@ -94,7 +98,7 @@ const focusedDisabledStyle = css`
   &:focus {
     color: ${uiColors.gray.light1};
   }
-`
+`;
 
 const glyphWrapper = css`
   margin-right: ${spacing[2]}px;
@@ -179,13 +183,15 @@ const SideNavItem: ExtendableBox<
   const { currentPath } = useSideNavContext();
   const active = activeProp != null || currentPath === rest.href;
 
-  const onClick = disabled ? (e: React.MouseEvent) => {
-    e.nativeEvent.stopImmediatePropagation();
-    e.preventDefault()
-  } : onClickProp;
+  const onClick = disabled
+    ? (e: React.MouseEvent) => {
+        e.nativeEvent.stopImmediatePropagation();
+        e.preventDefault();
+      }
+    : onClickProp;
 
   const accessibleGlyph =
-    glyph && isComponentType(glyph, 'Glyph') || isComponentType(glyph, 'Icon')
+    (glyph && isComponentType(glyph, 'Glyph')) || isComponentType(glyph, 'Icon')
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
@@ -215,7 +221,9 @@ const SideNavItem: ExtendableBox<
           <span className={glyphWrapper}>
             {accessibleGlyph}
 
-            <CollapsedSideNavItem active={active}>{accessibleGlyph}</CollapsedSideNavItem>
+            <CollapsedSideNavItem active={active}>
+              {accessibleGlyph}
+            </CollapsedSideNavItem>
           </span>
         )}
         {children}

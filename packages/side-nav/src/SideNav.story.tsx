@@ -5,8 +5,8 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import MongoNav from '@leafygreen-ui/mongo-nav';
-import {Select, Option} from '@leafygreen-ui/select'
-import {uiColors} from '@leafygreen-ui/palette';
+import { Select, Option } from '@leafygreen-ui/select';
+import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import { SideNav, SideNavItem, SideNavGroup } from '.';
 
@@ -53,45 +53,103 @@ const arbitraryContent = css`
 
 const content = (
   <div className={contentStyles}>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br /><br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br /><br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br /><br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br /><br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br /><br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br /><br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br /><br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+    dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br />
+    <br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+    dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br />
+    <br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+    dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br />
+    <br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+    dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br />
+    <br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+    dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br />
+    <br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+    dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br />
+    <br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+    dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br />
+    <br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+    dolorem distinctio debitis ipsam dolore vel molestiae.
   </div>
-)
+);
 
 function RealmSideNav() {
   return (
     <LeafyGreenProvider>
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
-        <SideNav className={sideNavStyles} currentPath='https://google.com/' aria-label="Realm app">
-          <SideNavItem active glyph={<Icon glyph="Apps" fill={uiColors.blue.base} />}>Realm Apps</SideNavItem>
+        <SideNav
+          className={sideNavStyles}
+          currentPath="https://google.com/"
+          aria-label="Realm app"
+        >
+          <SideNavItem
+            active
+            glyph={<Icon glyph="Apps" fill={uiColors.blue.base} />}
+          >
+            Realm Apps
+          </SideNavItem>
 
           <li role="none" className={arbitraryContent}>
             <span id="arbitrary-1">App ID</span>
-            <IconButton role="menuitem" aria-label="copy arbitrary-1"><Icon glyph="Copy" /></IconButton>
+            <IconButton role="menuitem" aria-label="copy arbitrary-1">
+              <Icon glyph="Copy" />
+            </IconButton>
           </li>
 
-          <SideNavGroup glyph={<Icon glyph="Cloud" />} header='Data Access'>
+          <SideNavGroup glyph={<Icon glyph="Cloud" />} header="Data Access">
             <SideNavItem>Rules</SideNavItem>
             <SideNavItem>Schema</SideNavItem>
             <SideNavItem>App Users</SideNavItem>
             <SideNavItem>Authentication</SideNavItem>
           </SideNavGroup>
 
-          <SideNavGroup glyph={<Icon glyph="Laptop" />} header='Build'>
+          <SideNavGroup glyph={<Icon glyph="Laptop" />} header="Build">
             <SideNavItem>SDKs</SideNavItem>
             <SideNavItem>Sync</SideNavItem>
             <SideNavItem>GraphQL</SideNavItem>
@@ -101,7 +159,7 @@ function RealmSideNav() {
             <SideNavItem>Values & Secrets</SideNavItem>
           </SideNavGroup>
 
-          <SideNavGroup glyph={<Icon glyph="Settings" />} header='Manage'>
+          <SideNavGroup glyph={<Icon glyph="Settings" />} header="Manage">
             <SideNavItem>Linked Data Sources</SideNavItem>
             <SideNavItem>Deploy</SideNavItem>
             <SideNavItem>Hosting</SideNavItem>
@@ -110,7 +168,7 @@ function RealmSideNav() {
             <SideNavItem>Push Notifications</SideNavItem>
           </SideNavGroup>
 
-          <SideNavGroup glyph={<Icon glyph="Support" />} header='Help'>
+          <SideNavGroup glyph={<Icon glyph="Support" />} header="Help">
             <SideNavItem>Documentation</SideNavItem>
             <SideNavItem>Feature Requests</SideNavItem>
           </SideNavGroup>
@@ -119,7 +177,7 @@ function RealmSideNav() {
         {content}
       </div>
     </LeafyGreenProvider>
-  )
+  );
 }
 
 function OrgSettingsSideNav() {
@@ -127,9 +185,19 @@ function OrgSettingsSideNav() {
     <LeafyGreenProvider>
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
-        <SideNav className={sideNavStyles} currentPath='https://google.com/' aria-label="Realm app">
-          <SideNavGroup glyph={<Icon glyph="Cloud" />} header='Context'>
-            <li role="menuitem" className={css`padding: 0 16px; margin-bottom: 16px;`}>
+        <SideNav
+          className={sideNavStyles}
+          currentPath="https://google.com/"
+          aria-label="Realm app"
+        >
+          <SideNavGroup glyph={<Icon glyph="Cloud" />} header="Context">
+            <li
+              role="menuitem"
+              className={css`
+                padding: 0 16px;
+                margin-bottom: 16px;
+              `}
+            >
               <Select label="" size="xsmall" defaultValue="1">
                 <Option value="1">LeafyCorp</Option>
                 <Option value="2">2</Option>
@@ -138,7 +206,7 @@ function OrgSettingsSideNav() {
             </li>
           </SideNavGroup>
 
-          <SideNavGroup glyph={<Icon glyph="Building" />} header='Organization'>
+          <SideNavGroup glyph={<Icon glyph="Building" />} header="Organization">
             <SideNavItem>Projects</SideNavItem>
             <SideNavItem>Activity Feed</SideNavItem>
             <SideNavItem>Access</SideNavItem>
@@ -146,7 +214,7 @@ function OrgSettingsSideNav() {
             <SideNavItem>Settings</SideNavItem>
           </SideNavGroup>
 
-          <SideNavGroup glyph={<Icon glyph="Support" />} header='Help'>
+          <SideNavGroup glyph={<Icon glyph="Support" />} header="Help">
             <SideNavItem>Docs</SideNavItem>
           </SideNavGroup>
         </SideNav>
@@ -154,7 +222,7 @@ function OrgSettingsSideNav() {
         {content}
       </div>
     </LeafyGreenProvider>
-  )
+  );
 }
 
 function MockSideNav() {
@@ -165,13 +233,17 @@ function MockSideNav() {
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
 
-        <SideNav className={sideNavStyles} currentPath='https://google.com/' aria-label="General example">
+        <SideNav
+          className={sideNavStyles}
+          currentPath="https://google.com/"
+          aria-label="General example"
+        >
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
             <SideNavItem active>Active State</SideNavItem>
             <SideNavItem disabled>Disabled State</SideNavItem>
           </SideNavGroup>
 
-          <SideNavGroup header='Test'>
+          <SideNavGroup header="Test">
             <SideNavItem>Default root element</SideNavItem>
             <SideNavItem href="/">Anchor root element</SideNavItem>
             <SideNavItem>Another item</SideNavItem>
@@ -185,7 +257,9 @@ function MockSideNav() {
             <SideNavItem disabled={boolean('Disabled', false)}>
               {text('Nav Item Text', 'Modify Me!')}
             </SideNavItem>
-            <SideNavItem href={text('href', 'https://google.com/')}>Dave</SideNavItem>
+            <SideNavItem href={text('href', 'https://google.com/')}>
+              Dave
+            </SideNavItem>
             <SideNavItem>Brooke</SideNavItem>
             <SideNavItem>Rob</SideNavItem>
             <SideNavItem>Michael</SideNavItem>

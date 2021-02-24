@@ -9,13 +9,13 @@ import { css } from '@leafygreen-ui/emotion';
  * @param styles String of styles to render within media query.
  */
 export default function prefersReducedMotion(styles: string) {
-	if (styles != null && typeof styles === 'string') {
-		return css`
-			@media (prefers-reduced-motion: reduce) {
-				${styles}
-			}
-		`;
-	}
+  if (styles != null && typeof styles === 'string') {
+    return css`
+      @media (prefers-reduced-motion: reduce) {
+        ${styles}
+      }
+    `;
+  }
 
-	return '';
+  return '';
 }
