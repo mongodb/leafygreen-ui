@@ -144,7 +144,6 @@ export type Size = typeof Size[keyof typeof Size];
 
 interface SizeSet {
   height: number;
-  width: number;
   text: number;
   label: {
     text: number;
@@ -162,7 +161,6 @@ interface SizeSet {
 export const sizeSets: Record<Size, SizeSet> = {
   [Size.XSmall]: {
     height: 22,
-    width: 194,
     text: 12,
     label: {
       text: 14,
@@ -178,7 +176,6 @@ export const sizeSets: Record<Size, SizeSet> = {
   },
   [Size.Small]: {
     height: 28,
-    width: 194,
     text: 14,
     label: {
       text: 14,
@@ -194,7 +191,6 @@ export const sizeSets: Record<Size, SizeSet> = {
   },
   [Size.Default]: {
     height: 36,
-    width: 194,
     text: 14,
     label: {
       text: 14,
@@ -210,7 +206,6 @@ export const sizeSets: Record<Size, SizeSet> = {
   },
   [Size.Large]: {
     height: 48,
-    width: 230,
     text: 18,
     label: {
       text: 18,
@@ -228,7 +223,6 @@ export const sizeSets: Record<Size, SizeSet> = {
 
 export const mobileSizeSet: SizeSet = {
   height: 36,
-  width: 194,
   text: 16,
   label: {
     text: 16,
