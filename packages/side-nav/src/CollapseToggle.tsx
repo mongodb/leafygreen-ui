@@ -120,7 +120,7 @@ function CollapseToggle({
       darkMode
       align="right"
       justify="middle"
-      open={hideTooltip != null ? !hideTooltip : undefined}
+      open={typeof hideTooltip === 'boolean' ? !hideTooltip : undefined}
       trigger={
         <button
           aria-label="Collapse navigation"
