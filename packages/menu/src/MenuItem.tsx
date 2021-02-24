@@ -225,7 +225,7 @@ const MenuItem: ExtendableBox<
 
     if (typeof rest.href === 'string') {
       return (
-        <li>
+        <li role="none">
           <Box as="a" {...anchorProps} {...commonProps}>
             {content}
           </Box>
@@ -234,7 +234,7 @@ const MenuItem: ExtendableBox<
     }
 
     return (
-      <li>
+      <li role="none">
         <Box as="button" {...commonProps}>
           {content}
         </Box>

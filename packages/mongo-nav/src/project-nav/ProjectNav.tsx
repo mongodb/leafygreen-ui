@@ -597,7 +597,7 @@ ProjectNavProps) {
             darkMode={true}
             trigger={
               <IconButton
-                aria-label="Invite"
+                aria-label={`Invite to Project: ${current?.projectName}`}
                 href={projectNav.invite as string}
                 className={cx(iconButtonMargin, {
                   [iconButtonStyles]: isProjectInvite,
@@ -649,7 +649,7 @@ ProjectNavProps) {
             darkMode={true}
             trigger={
               <IconButton
-                aria-label="Alerts"
+                aria-label={`Alerts for Project: ${current?.projectName}`}
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
