@@ -28,6 +28,7 @@ storiesOf('Select', module)
           background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
           padding: 20px;
           height: 100%;
+          width: 200px;
         `}
       >
         <Provider>
