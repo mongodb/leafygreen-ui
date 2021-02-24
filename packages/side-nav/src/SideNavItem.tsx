@@ -196,10 +196,9 @@ const SideNavItem: ExtendableBox<
       : null;
 
   return (
-    <li role="none">
+    <li>
       <Box
         as={props.href ? 'a' : 'button'}
-        role="menuitem"
         {...rest}
         {...sideNavItemContainer.prop}
         className={cx(

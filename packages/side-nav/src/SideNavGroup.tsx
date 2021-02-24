@@ -21,7 +21,7 @@ import {
   sideNavWidth,
 } from './styles';
 
-const menuGroupIdAllocator = IdAllocator.create('menu-group');
+const menuGroupIdAllocator = IdAllocator.create('side-nav-group');
 
 const button = createDataProp('side-nav-group-button');
 
@@ -243,7 +243,7 @@ function SideNavGroup({
 
   if (collapsible) {
     return (
-      <li role="menuitem" className={cx(listItemStyle, className)} {...rest}>
+      <li className={cx(listItemStyle, className)} {...rest}>
         <button
           {...button.prop}
           aria-controls={menuId}
@@ -295,7 +295,6 @@ function SideNavGroup({
               <ul
                 ref={ulRef}
                 id={menuId}
-                role="menu"
                 aria-labelledby={menuGroupLabelId}
                 className={cx(
                   ulStyleOverrides,
@@ -320,13 +319,12 @@ function SideNavGroup({
   }
 
   return (
-    <li role="menuitem" className={cx(listItemStyle, className)} {...rest}>
+    <li className={cx(listItemStyle, className)} {...rest}>
       <label id={menuGroupLabelId} className={labelStyle}>
         {renderedLabel}
       </label>
 
       <ul
-        role="menu"
         aria-labelledby={menuGroupLabelId}
         className={ulStyleOverrides}
       >

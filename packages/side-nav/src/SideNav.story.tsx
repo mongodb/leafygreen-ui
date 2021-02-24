@@ -135,18 +135,18 @@ function RealmSideNav() {
             Realm Apps
           </SideNavItem>
 
-          <li role="none" className={arbitraryContent}>
+          <li className={arbitraryContent}>
             <span id="arbitrary-1">App ID</span>
-            <IconButton role="menuitem" aria-label="copy arbitrary-1">
+            <IconButton aria-label="copy arbitrary-1">
               <Icon glyph="Copy" />
             </IconButton>
           </li>
 
           <SideNavGroup glyph={<Icon glyph="Cloud" />} header="Data Access">
-            <SideNavItem>Rules</SideNavItem>
-            <SideNavItem>Schema</SideNavItem>
-            <SideNavItem>App Users</SideNavItem>
-            <SideNavItem>Authentication</SideNavItem>
+            <SideNavItem href="/">Rules</SideNavItem>
+            <SideNavItem href="/">Schema</SideNavItem>
+            <SideNavItem href="/">App Users</SideNavItem>
+            <SideNavItem href="/">Authentication</SideNavItem>
           </SideNavGroup>
 
           <SideNavGroup glyph={<Icon glyph="Laptop" />} header="Build">

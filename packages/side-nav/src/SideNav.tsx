@@ -217,7 +217,7 @@ function SideNav({
             currentPath,
             collapsed,
             setCollapsed,
-            portalContainer: portalContainer,
+            portalContainer,
             transitionState: state,
           }}
         >
@@ -243,7 +243,6 @@ function SideNav({
                     expandedListStyle,
                     expandedStateStyles[state],
                   )}
-                  role="menu"
                 >
                   {children}
                 </ul>
