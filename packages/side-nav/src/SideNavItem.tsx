@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
-import { AriaCurrentValue, createDataProp } from '@leafygreen-ui/lib';
+import { AriaCurrentValue, createDataProp, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -184,6 +184,11 @@ const SideNavItem: ExtendableBox<
     e.preventDefault()
   } : onClickProp;
 
+  const accessibleGlyph =
+    glyph && isComponentType(glyph, 'Glyph') || isComponentType(glyph, 'Icon')
+      ? React.cloneElement(glyph, { 'aria-hidden': true })
+      : null;
+
   return (
     <li role="none">
       <Box
@@ -206,10 +211,11 @@ const SideNavItem: ExtendableBox<
         ref={forwardRef}
         onClick={onClick}
       >
-        {glyph && (
+        {accessibleGlyph && (
           <span className={glyphWrapper}>
-            {glyph}
-            <CollapsedSideNavItem active={active}>{glyph}</CollapsedSideNavItem>
+            {accessibleGlyph}
+
+            <CollapsedSideNavItem active={active}>{accessibleGlyph}</CollapsedSideNavItem>
           </span>
         )}
         {children}

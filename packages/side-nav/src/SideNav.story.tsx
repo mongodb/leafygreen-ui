@@ -52,47 +52,50 @@ const arbitraryContent = css`
 
 function RealmSideNav() {
   return (
-    <div className={gridStyles}>
-      <MongoNav className={topNavStyles} mode="dev" />
-      <SideNav className={sideNavStyles} currentPath='https://google.com/'>
-        <SideNavItem active glyph={<Icon glyph="Apps" fill={uiColors.blue.base} />}>Realm Apps</SideNavItem>
-        <div className={arbitraryContent}>
-          <span id="arbitrary-1">App ID</span>
-          <IconButton aria-labelledby="arbitrary-1"><Icon glyph="Copy" /></IconButton>
-        </div>
+    <LeafyGreenProvider>
+      <div className={gridStyles}>
+        <MongoNav className={topNavStyles} mode="dev" />
+        <SideNav className={sideNavStyles} currentPath='https://google.com/' aria-label="Realm app">
+          <SideNavItem active glyph={<Icon glyph="Apps" fill={uiColors.blue.base} />}>Realm Apps</SideNavItem>
 
-        <SideNavGroup glyph={<Icon glyph="Cloud" />} header='Data Access'>
-          <SideNavItem>Rules</SideNavItem>
-          <SideNavItem>Schema</SideNavItem>
-          <SideNavItem>App Users</SideNavItem>
-          <SideNavItem>Authentication</SideNavItem>
-        </SideNavGroup>
+          <div className={arbitraryContent}>
+            <span id="arbitrary-1">App ID</span>
+            <IconButton aria-labelledby="arbitrary-1"><Icon glyph="Copy" /></IconButton>
+          </div>
 
-        <SideNavGroup glyph={<Icon glyph="Laptop" />} header='Build'>
-          <SideNavItem>SDKs</SideNavItem>
-          <SideNavItem>Sync</SideNavItem>
-          <SideNavItem>GraphQL</SideNavItem>
-          <SideNavItem>Functions</SideNavItem>
-          <SideNavItem>Triggers</SideNavItem>
-          <SideNavItem>3rd Party Services</SideNavItem>
-          <SideNavItem>Values & Secrets</SideNavItem>
-        </SideNavGroup>
+          <SideNavGroup glyph={<Icon glyph="Cloud" />} header='Data Access'>
+            <SideNavItem>Rules</SideNavItem>
+            <SideNavItem>Schema</SideNavItem>
+            <SideNavItem>App Users</SideNavItem>
+            <SideNavItem>Authentication</SideNavItem>
+          </SideNavGroup>
 
-        <SideNavGroup glyph={<Icon glyph="Settings" />} header='Manage'>
-          <SideNavItem>Linked Data Sources</SideNavItem>
-          <SideNavItem>Deploy</SideNavItem>
-          <SideNavItem>Hosting</SideNavItem>
-          <SideNavItem>Logs</SideNavItem>
-          <SideNavItem>App Settings</SideNavItem>
-          <SideNavItem>Push Notifications</SideNavItem>
-        </SideNavGroup>
+          <SideNavGroup glyph={<Icon glyph="Laptop" />} header='Build'>
+            <SideNavItem>SDKs</SideNavItem>
+            <SideNavItem>Sync</SideNavItem>
+            <SideNavItem>GraphQL</SideNavItem>
+            <SideNavItem>Functions</SideNavItem>
+            <SideNavItem>Triggers</SideNavItem>
+            <SideNavItem>3rd Party Services</SideNavItem>
+            <SideNavItem>Values & Secrets</SideNavItem>
+          </SideNavGroup>
 
-        <SideNavGroup glyph={<Icon glyph="Support" />} header='Help'>
-          <SideNavItem>Documentation</SideNavItem>
-          <SideNavItem>Feature Requests</SideNavItem>
-        </SideNavGroup>
-      </SideNav>
-    </div>
+          <SideNavGroup glyph={<Icon glyph="Settings" />} header='Manage'>
+            <SideNavItem>Linked Data Sources</SideNavItem>
+            <SideNavItem>Deploy</SideNavItem>
+            <SideNavItem>Hosting</SideNavItem>
+            <SideNavItem>Logs</SideNavItem>
+            <SideNavItem>App Settings</SideNavItem>
+            <SideNavItem>Push Notifications</SideNavItem>
+          </SideNavGroup>
+
+          <SideNavGroup glyph={<Icon glyph="Support" />} header='Help'>
+            <SideNavItem>Documentation</SideNavItem>
+            <SideNavItem>Feature Requests</SideNavItem>
+          </SideNavGroup>
+        </SideNav>
+      </div>
+    </LeafyGreenProvider>
   )
 }
 
@@ -104,7 +107,7 @@ function MockSideNav() {
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
 
-        <SideNav className={sideNavStyles} currentPath='https://google.com/'>
+        <SideNav className={sideNavStyles} currentPath='https://google.com/' aria-label="General example">
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
             <SideNavItem active>Active State</SideNavItem>
             <SideNavItem disabled>Disabled State</SideNavItem>
@@ -168,7 +171,7 @@ function MockSideNavComplex() {
   return (
     <LeafyGreenProvider>
       <div className={css`display: flex; height: 100vh`}>
-        <SideNav currentPath='https://google.com/'>
+        <SideNav currentPath='https://google.com/' aria-label="Complex example">
           <SideNavGroup header={textHeader}>
             <SideNavItem href='https://google.com/' disabled>Active State</SideNavItem>
             <SideNavItem disabled>Disabled State</SideNavItem>

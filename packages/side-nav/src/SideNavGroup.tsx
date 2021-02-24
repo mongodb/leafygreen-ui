@@ -1,14 +1,14 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { createDataProp, OneOf, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import {prefersReducedMotion} from '@leafygreen-ui/a11y';
+import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {spacing} from '@leafygreen-ui/tokens';
-import CollapsedSideNavItem from './CollapsedSideNavItem'
+import { spacing } from '@leafygreen-ui/tokens';
+import CollapsedSideNavItem from './CollapsedSideNavItem';
 import { useSideNavContext } from './SideNavContext';
 import {
   ulStyleOverrides,
@@ -18,12 +18,11 @@ import {
 
 const button = createDataProp('side-nav-group-button');
 
-
 const listItemStyle = css`
   & + & {
     margin-top: ${spacing[2]}px;
   }
-`
+`;
 
 const labelStyle = css`
   position: relative;
@@ -60,7 +59,7 @@ const collapsibleLabelStyle = css`
 const headerText = css`
   line-height: 1em;
   margin-left: ${spacing[2]}px;
-  
+
   &:first-child {
     margin-left: 0;
   }
@@ -196,29 +195,42 @@ function SideNavGroup({
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const {currentPath} = useSideNavContext()
+  const { currentPath } = useSideNavContext();
 
   const isActiveGroup: boolean = useMemo(() => {
     return React.Children.toArray(children).some(child => {
-      return isComponentType(child, 'SideNavItem') && (
-        child.props.active || child.props.href === currentPath
+      return (
+        isComponentType(child, 'SideNavItem') &&
+        (child.props.active || child.props.href === currentPath)
       );
     });
   }, [children, currentPath]);
 
-  const renderedLabel = (
-    <div className={css`display: inline-flex; align-items: center;`}>
-      {glyph && (
-        <>
-          {glyph}
+  const accessibleGlyph =
+    glyph && isComponentType(glyph, 'Glyph') || isComponentType(glyph, 'Icon')
+      ? React.cloneElement(glyph, { 'aria-hidden': true })
+      : null;
 
-          <CollapsedSideNavItem active={isActiveGroup}>{glyph}</CollapsedSideNavItem>
+  const renderedLabel = (
+    <div
+      className={css`
+        display: inline-flex;
+        align-items: center;
+      `}
+    >
+      {accessibleGlyph && (
+        <>
+          {accessibleGlyph}
+
+          <CollapsedSideNavItem active={isActiveGroup}>
+            {accessibleGlyph}
+          </CollapsedSideNavItem>
         </>
       )}
 
       <span className={headerText}>{header}</span>
     </div>
-  )
+  );
 
   if (collapsible) {
     return (
@@ -268,12 +280,22 @@ function SideNavGroup({
                 [transitionStyles.exited]: state === 'exited',
               })}
             >
-              <ul ref={ulRef} role="menu" className={cx(ulStyleOverrides, css`
-                transition: opacity 150ms ease-in-out;
-                opacity: 0;
-              `, {
-                [css`opacity: 1`]: ['entering', 'entered'].includes(state)
-              })}>
+              <ul
+                ref={ulRef}
+                role="menu"
+                className={cx(
+                  ulStyleOverrides,
+                  css`
+                    transition: opacity 150ms ease-in-out;
+                    opacity: 0;
+                  `,
+                  {
+                    [css`
+                      opacity: 1;
+                    `]: ['entering', 'entered'].includes(state),
+                  },
+                )}
+              >
                 {children}
               </ul>
             </div>
@@ -285,9 +307,7 @@ function SideNavGroup({
 
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
-      <h4 className={labelStyle}>
-        {renderedLabel}
-      </h4>
+      <h4 className={labelStyle}>{renderedLabel}</h4>
 
       <ul role="menu" className={ulStyleOverrides}>
         {children}

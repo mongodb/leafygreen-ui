@@ -8,7 +8,8 @@ import {useEventListener} from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import {keyMap, IdAllocator} from '@leafygreen-ui/lib';
+import {keyMap, IdAllocator, validateAriaLabelProps} from '@leafygreen-ui/lib';
+import {useUsingKeyboardContext} from '@leafygreen-ui/leafygreen-provider';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
@@ -22,7 +23,6 @@ const navStyles = css`
   border-right: 1px solid ${uiColors.gray.light2};
   position: relative;
   z-index: 0;
-  overflow: hidden;
 
   ${prefersReducedMotion(`
     transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
@@ -132,6 +132,8 @@ interface SideNavProps {
    * The currentPath prop is used to set the correct element in the navigation to active.
    */
   currentPath?: string;
+
+  id?: string;
 }
 
 /**
@@ -160,11 +162,20 @@ function SideNav({
   const { Provider: ContextProvider } = SideNavContext;
   const [collapsed, setCollapsed] = useState(false);
   const [hover, setHover] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const {usingKeyboard} = useUsingKeyboardContext();
   const navId = useMemo(() => idProp ?? navIdAllocator.generate(), [idProp]);
   const [
     portalContainer,
     setPortalContainer,
   ] = useState<HTMLUListElement | null>(null);
+
+  // We visually expand the navigation when a user focuses on an element within the navigation
+  // while navigating via keyboard.
+  const focusExpand = usingKeyboard && focus;
+
+  // Nav element should have a programmatically-determinable label
+  validateAriaLabelProps(rest, 'SideNav')
 
   // Global event listener for toggling the navigation.
   useEventListener('keypress', e => {
@@ -186,7 +197,7 @@ function SideNav({
   })
 
   return (
-    <Transition in={collapsed && !hover} timeout={collapseDuration}>
+    <Transition in={collapsed && !hover && !focusExpand} timeout={collapseDuration}>
       {state => (
         <ContextProvider
           value={{
@@ -208,10 +219,11 @@ function SideNav({
                   navStyles,
                   {
                     [collapsedNavStyles]: ['entering', 'entered'].includes(state),
-                    [hoverNavStyles]: hover && collapsed,
+                    [hoverNavStyles]: (hover || focusExpand) && collapsed,
                   },
                 )}
-                aria-label="side-nav"
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
                 onMouseEnter={() => setHover(true)}
                 {...rest}
               >
@@ -223,14 +235,14 @@ function SideNav({
                   className={cx(ulStyleOverrides, listStyles, collapsedStateStyles[state])}
                   ref={setPortalContainer}
                 />
-              </nav>
 
-              <CollapseToggle
-                collapsed={collapsed || (!hover && collapsed)}
-                onClick={() => setCollapsed(curr => !curr)}
-                // This prevents any strange flickering while the navigation is transitioning.
-                hideTooltip={['entering', 'exiting'].includes(state) || undefined}
-              />
+                <CollapseToggle
+                  collapsed={collapsed || (!hover && !focusExpand && collapsed)}
+                  onClick={() => setCollapsed(curr => !curr)}
+                  // This prevents any strange flickering while the navigation is transitioning.
+                  hideTooltip={['entering', 'exiting'].includes(state) || undefined}
+                />
+              </nav>
             </div>
           </div>
         </ContextProvider>

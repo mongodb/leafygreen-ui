@@ -117,7 +117,6 @@ function CollapseToggle({
   return (
     <Tooltip
       darkMode
-			aria-hidden
       align="right"
       justify="middle"
 			open={hideTooltip != null ? !hideTooltip : undefined}
@@ -125,6 +124,7 @@ function CollapseToggle({
         <button
 					aria-label="Collapse navigation"
 					aria-controls={navId}
+					aria-expanded={!collapsed}
           className={cx(
             buttonStyles,
             { [buttonFocusStyles]: showFocus },
@@ -141,9 +141,10 @@ function CollapseToggle({
         </button>
       }
     >
-      {collapsed ? 'Expand' : 'Collapse'}
-
-			<kbd className={keyboardShortcut}>[</kbd>
+      <span aria-hidden>
+				{collapsed ? 'Expand' : 'Collapse'}
+				<kbd className={keyboardShortcut}>[</kbd>
+			</span>
     </Tooltip>
   );
 }
