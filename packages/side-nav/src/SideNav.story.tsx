@@ -5,9 +5,10 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import MongoNav from '@leafygreen-ui/mongo-nav';
+import {Select, Option} from '@leafygreen-ui/select'
 import {uiColors} from '@leafygreen-ui/palette';
-import { SideNav, SideNavItem, SideNavGroup } from '.';
 import IconButton from '@leafygreen-ui/icon-button';
+import { SideNav, SideNavItem, SideNavGroup } from '.';
 
 const gridStyles = css`
   display: grid;
@@ -114,6 +115,43 @@ function RealmSideNav() {
             <SideNavItem>Feature Requests</SideNavItem>
           </SideNavGroup>
         </SideNav>
+
+        {content}
+      </div>
+    </LeafyGreenProvider>
+  )
+}
+
+function OrgSettingsSideNav() {
+  return (
+    <LeafyGreenProvider>
+      <div className={gridStyles}>
+        <MongoNav className={topNavStyles} mode="dev" />
+        <SideNav className={sideNavStyles} currentPath='https://google.com/' aria-label="Realm app">
+          <SideNavGroup glyph={<Icon glyph="Cloud" />} header='Context'>
+            <li role="menuitem" className={css`padding: 0 16px; margin-bottom: 16px;`}>
+              <Select label="" size="xsmall" defaultValue="1">
+                <Option value="1">LeafyCorp</Option>
+                <Option value="2">2</Option>
+                <Option value="3">3</Option>
+              </Select>
+            </li>
+          </SideNavGroup>
+
+          <SideNavGroup glyph={<Icon glyph="Building" />} header='Organization'>
+            <SideNavItem>Projects</SideNavItem>
+            <SideNavItem>Activity Feed</SideNavItem>
+            <SideNavItem>Access</SideNavItem>
+            <SideNavItem>Alerts</SideNavItem>
+            <SideNavItem>Settings</SideNavItem>
+          </SideNavGroup>
+
+          <SideNavGroup glyph={<Icon glyph="Support" />} header='Help'>
+            <SideNavItem>Docs</SideNavItem>
+          </SideNavGroup>
+        </SideNav>
+
+        {content}
       </div>
     </LeafyGreenProvider>
   )
@@ -162,63 +200,7 @@ function MockSideNav() {
   );
 }
 
-function MockSideNavComplex() {
-  const textHeader = 'States (text header)';
-  const contentHeader = (
-    <div>
-      <strong>Polymorphism</strong>
-      <br />
-      <small>(content header)</small>
-    </div>
-  );
-
-  return (
-    <LeafyGreenProvider>
-      <div className={css`display: flex; height: 100vh`}>
-        <SideNav currentPath='https://google.com/' aria-label="Complex example">
-          <SideNavGroup header={textHeader}>
-            <SideNavItem href='https://google.com/' disabled>Active State</SideNavItem>
-            <SideNavItem disabled>Disabled State</SideNavItem>
-          </SideNavGroup>
-
-          <SideNavGroup header={contentHeader}>
-            <SideNavItem>Default root element (button)</SideNavItem>
-            <SideNavItem href="/">Anchor root element</SideNavItem>
-            <SideNavItem as="label" htmlFor="docs-input">
-              <div>Custom root element (label)</div>
-              <input
-                id="docs-input"
-                type="text"
-                placeholder="placeholder text"
-              />
-            </SideNavItem>
-          </SideNavGroup>
-
-          <SideNavGroup
-            header={text('Header Text', 'With Knobs!')}
-            collapsible={boolean('collapsible', true)}
-          >
-            <SideNavItem
-              active={boolean('Active', false)}
-              disabled={boolean('Disabled', false)}
-              href={text('href', '')}
-            >
-              {text('Nav Item Text', 'Modify Me!')}
-            </SideNavItem>
-            <SideNavItem>Dave</SideNavItem>
-            <SideNavItem>Brooke</SideNavItem>
-            <SideNavItem>Rob</SideNavItem>
-            <SideNavItem>Michael</SideNavItem>
-            <SideNavItem>Fred</SideNavItem>
-            <SideNavItem>Harry</SideNavItem>
-          </SideNavGroup>
-        </SideNav>
-      </div>
-    </LeafyGreenProvider>
-  );
-}
-
 storiesOf('SideNav', module)
   .add('Simple Navigation', () => <MockSideNav />)
-  .add('Complex Navigation', () => <MockSideNavComplex />)
-  .add('Realm', () => <RealmSideNav />);
+  .add('Realm', () => <RealmSideNav />)
+  .add('Org Settings', () => <OrgSettingsSideNav />);

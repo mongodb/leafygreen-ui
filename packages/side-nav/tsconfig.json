@@ -38,6 +38,12 @@
       "path": "../a11y"
     },
     {
+      "path": "../select"
+    },
+    {
+      "path": "../mongo-nav"
+    },
+    {
       "path": "../leafygreen-provider"
     }
   ]
