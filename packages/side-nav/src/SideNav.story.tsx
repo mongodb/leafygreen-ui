@@ -5,7 +5,9 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import MongoNav from '@leafygreen-ui/mongo-nav';
+import {uiColors} from '@leafygreen-ui/palette';
 import { SideNav, SideNavItem, SideNavGroup } from '.';
+import IconButton from '@leafygreen-ui/icon-button';
 
 const gridStyles = css`
   display: grid;
@@ -35,6 +37,65 @@ const contentStyles = css`
   overflow-y: auto;
 `;
 
+const arbitraryContent = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: ${uiColors.gray.dark2};
+  margin: 8px 16px;
+  padding: 2px 8px;
+  border: 1px solid ${uiColors.gray.light2};
+  background-color: ${uiColors.white};
+  border-radius: 4px;
+`;
+
+function RealmSideNav() {
+  return (
+    <div className={gridStyles}>
+      <MongoNav className={topNavStyles} mode="dev" />
+      <SideNav className={sideNavStyles} currentPath='https://google.com/'>
+        <SideNavItem active glyph={<Icon glyph="Apps" fill={uiColors.blue.base} />}>Realm Apps</SideNavItem>
+        <div className={arbitraryContent}>
+          <span id="arbitrary-1">App ID</span>
+          <IconButton aria-labelledby="arbitrary-1"><Icon glyph="Copy" /></IconButton>
+        </div>
+
+        <SideNavGroup glyph={<Icon glyph="Cloud" />} header='Data Access'>
+          <SideNavItem>Rules</SideNavItem>
+          <SideNavItem>Schema</SideNavItem>
+          <SideNavItem>App Users</SideNavItem>
+          <SideNavItem>Authentication</SideNavItem>
+        </SideNavGroup>
+
+        <SideNavGroup glyph={<Icon glyph="Laptop" />} header='Build'>
+          <SideNavItem>SDKs</SideNavItem>
+          <SideNavItem>Sync</SideNavItem>
+          <SideNavItem>GraphQL</SideNavItem>
+          <SideNavItem>Functions</SideNavItem>
+          <SideNavItem>Triggers</SideNavItem>
+          <SideNavItem>3rd Party Services</SideNavItem>
+          <SideNavItem>Values & Secrets</SideNavItem>
+        </SideNavGroup>
+
+        <SideNavGroup glyph={<Icon glyph="Settings" />} header='Manage'>
+          <SideNavItem>Linked Data Sources</SideNavItem>
+          <SideNavItem>Deploy</SideNavItem>
+          <SideNavItem>Hosting</SideNavItem>
+          <SideNavItem>Logs</SideNavItem>
+          <SideNavItem>App Settings</SideNavItem>
+          <SideNavItem>Push Notifications</SideNavItem>
+        </SideNavGroup>
+
+        <SideNavGroup glyph={<Icon glyph="Support" />} header='Help'>
+          <SideNavItem>Documentation</SideNavItem>
+          <SideNavItem>Feature Requests</SideNavItem>
+        </SideNavGroup>
+      </SideNav>
+    </div>
+  )
+}
+
 function MockSideNav() {
   const textHeader = 'States';
 
@@ -45,7 +106,7 @@ function MockSideNav() {
 
         <SideNav className={sideNavStyles} currentPath='https://google.com/'>
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
-            <SideNavItem>Active State</SideNavItem>
+            <SideNavItem active>Active State</SideNavItem>
             <SideNavItem disabled>Disabled State</SideNavItem>
           </SideNavGroup>
 
@@ -152,4 +213,5 @@ function MockSideNavComplex() {
 
 storiesOf('SideNav', module)
   .add('Simple Navigation', () => <MockSideNav />)
-  .add('Complex Navigation', () => <MockSideNavComplex />);;
+  .add('Complex Navigation', () => <MockSideNavComplex />)
+  .add('Realm', () => <RealmSideNav />);

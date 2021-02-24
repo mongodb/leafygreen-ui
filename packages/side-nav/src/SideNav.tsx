@@ -20,9 +20,7 @@ const navStyles = css`
   border-right: 1px solid ${uiColors.gray.light2};
   position: relative;
   z-index: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-
+  overflow: hidden;
 
   ${prefersReducedMotion(`
     transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
@@ -43,7 +41,12 @@ const listStyles = css`
   position: absolute;
   left: 0;
   right: 0;
-  top: ${spacing[3]}px;
+  top: 0;
+  bottom: 0;
+  padding-top: ${spacing[3]}px;
+  padding-bottom: ${spacing[3]}px;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   ${prefersReducedMotion(`
     transition: opacity ${collapseDuration}ms ease-in-out;
@@ -75,42 +78,41 @@ const space = css`
 const collapsedSpace = css`
   width: 48px;
 `
+
+const expandedEnteredStyle = css`
+  transform: translate3d(0, ${spacing[2]}px, 0);
+  opacity: 0;
+  pointer-events: none;
+`;
+
+const expandedExitedStyle = css`
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+`
+
 const expandedStateStyles: Partial<Record<TransitionStatus, string>> = {
-  entering: css`
-    transform: translate3d(0, ${spacing[2]}px, 0);
-    opacity: 0;
-  `,
-  entered: css`
-    transform: translate3d(0, ${spacing[2]}px, 0);
-    opacity: 0;
-  `,
-  exiting: css`
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  `,
-  exited: css`
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  `,
+  entering: expandedEnteredStyle,
+  entered: expandedEnteredStyle,
+  exiting: expandedExitedStyle,
+  exited: expandedExitedStyle,
 } as const;
 
+const collapsedEnteredStyle = css`
+  transform: translate3d(0, 0, 0);
+  opacity: 1;  
+`;
+
+const collapsedExitedStyle = css`
+  transform: translate3d(0, -${spacing[2]}px, 0);
+  opacity: 0;
+  pointer-events: none;
+`
+
 const collapsedStateStyles: Partial<Record<TransitionStatus, string>> = {
-  entering: css`
-    transform: translate3d(0, 0, 0);
-    opacity: 1;  
-  `,
-  entered: css`
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  `,
-  exiting: css`
-    transform: translate3d(0, -${spacing[2]}px, 0);
-    opacity: 0;
-  `,
-  exited: css`
-    transform: translate3d(0, -${spacing[2]}px, 0);
-    opacity: 0;
-  `,
+  entering: collapsedEnteredStyle,
+  entered: collapsedEnteredStyle,
+  exiting: collapsedExitedStyle,
+  exited: collapsedExitedStyle,
 } as const;
 
 interface SideNavProps {

@@ -18,6 +18,13 @@ import {
 
 const button = createDataProp('side-nav-group-button');
 
+
+const listItemStyle = css`
+  & + & {
+    margin-top: ${spacing[2]}px;
+  }
+`
+
 const labelStyle = css`
   position: relative;
   display: flex;
@@ -182,6 +189,7 @@ function SideNavGroup({
   collapsible = false,
   initialCollapsed = true,
   glyph,
+  className,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
@@ -214,7 +222,7 @@ function SideNavGroup({
 
   if (collapsible) {
     return (
-      <li {...rest}>
+      <li className={cx(listItemStyle, className)} {...rest}>
         <button
           {...button.prop}
           className={buttonResetStyles}
@@ -276,7 +284,7 @@ function SideNavGroup({
   }
 
   return (
-    <li {...rest}>
+    <li className={cx(listItemStyle, className)} {...rest}>
       <h4 className={labelStyle}>
         {renderedLabel}
       </h4>

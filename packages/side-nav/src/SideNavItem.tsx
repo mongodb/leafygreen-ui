@@ -8,6 +8,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useSideNavContext } from './SideNavContext';
+import CollapsedSideNavItem from './CollapsedSideNavItem'
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -72,6 +73,7 @@ const activeStyle = css`
 const disabledStyle = css`
   pointer-events: none;
   background-color: transparent;
+  font-weight: normal;
   
   &,
   &:hover {
@@ -93,6 +95,12 @@ const focusedDisabledStyle = css`
     color: ${uiColors.gray.light1};
   }
 `
+
+const glyphWrapper = css`
+  margin-right: ${spacing[2]}px;
+  display: inline-flex;
+  align-items: center;
+`;
 
 export interface SideNavItemProps {
   /**
@@ -121,6 +129,13 @@ export interface SideNavItemProps {
   children?: ReactNode;
 
   href?: string;
+
+  onClick?: React.MouseEventHandler;
+
+  /**
+   * Icon that's rendered in the item.
+   */
+  glyph?: React.ReactNode;
 }
 
 /**
@@ -155,12 +170,19 @@ const SideNavItem: ExtendableBox<
     ariaCurrentValue = AriaCurrentValue.Page,
     className,
     children,
+    onClick: onClickProp,
+    glyph,
     ...rest
   } = props;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   const { currentPath } = useSideNavContext();
   const active = activeProp != null || currentPath === rest.href;
+
+  const onClick = disabled ? (e: React.MouseEvent) => {
+    e.nativeEvent.stopImmediatePropagation();
+    e.preventDefault()
+  } : onClickProp;
 
   return (
     <li role="none">
@@ -182,7 +204,14 @@ const SideNavItem: ExtendableBox<
         aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
         aria-disabled={disabled}
         ref={forwardRef}
+        onClick={onClick}
       >
+        {glyph && (
+          <span className={glyphWrapper}>
+            {glyph}
+            <CollapsedSideNavItem active={active}>{glyph}</CollapsedSideNavItem>
+          </span>
+        )}
         {children}
       </Box>
     </li>
