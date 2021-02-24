@@ -387,6 +387,7 @@ function OrgNav({
         data-testid="organization-nav"
       >
         <Tooltip
+          aria-hidden
           align="bottom"
           justify="start"
           darkMode={true}
