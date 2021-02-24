@@ -141,8 +141,6 @@ interface SideNavGroupBaseProps {
    * Icon that's rendered in the group label.
    */
   glyph?: React.ReactNode;
-
-  id?: string;
 }
 
 type CollapsedProps = OneOf<
@@ -193,7 +191,6 @@ function SideNavGroup({
   initialCollapsed = true,
   glyph,
   className,
-  id: idProp,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
@@ -201,7 +198,8 @@ function SideNavGroup({
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { currentPath } = useSideNavContext();
-  const menuGroupLabelId = useMemo(() => idProp ?? menuGroupIdAllocator.generate(), [idProp]);
+  const menuGroupLabelId = useMemo(() => menuGroupIdAllocator.generate(), []);
+  const menuId = useMemo(() => menuGroupIdAllocator.generate(), []);
 
   const isActiveGroup: boolean = useMemo(() => {
     return React.Children.toArray(children).some(child => {
@@ -243,11 +241,13 @@ function SideNavGroup({
       <li role="menuitem" className={cx(listItemStyle, className)} {...rest}>
         <button
           {...button.prop}
+          aria-controls={menuId}
+          aria-expanded={open}
           className={buttonResetStyles}
           onClick={() => setOpen(curr => !curr)}
         >
           <label
-            id="menuGroupLabelId"
+            id={menuGroupLabelId}
             className={cx(labelStyle, collapsibleLabelStyle, {
               [collapsibleHeaderFocusStyle]: showFocus,
             })}
@@ -255,11 +255,11 @@ function SideNavGroup({
             {renderedLabel}
 
             <ChevronRight
+              role="presentation"
               size={12}
               className={cx(iconStyle, {
                 [openIconStyle]: open,
               })}
-              title={open ? 'Chevron Down Icon' : 'Chevron Right Icon'}
             />
           </label>
         </button>
@@ -289,6 +289,7 @@ function SideNavGroup({
             >
               <ul
                 ref={ulRef}
+                id={menuId}
                 role="menu"
                 aria-labelledby={menuGroupLabelId}
                 className={cx(
@@ -315,7 +316,7 @@ function SideNavGroup({
 
   return (
     <li role="menuitem" className={cx(listItemStyle, className)} {...rest}>
-      <h4 id={menuGroupLabelId} className={labelStyle}>{renderedLabel}</h4>
+      <label id={menuGroupLabelId} className={labelStyle}>{renderedLabel}</label>
 
       <ul role="menu" aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
         {children}

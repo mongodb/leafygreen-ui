@@ -50,6 +50,26 @@ const arbitraryContent = css`
   border-radius: 4px;
 `;
 
+const content = (
+  <div className={contentStyles}>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br /><br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br /><br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br /><br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br /><br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br /><br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br /><br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+    <br /><br />
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
+  </div>
+)
+
 function RealmSideNav() {
   return (
     <LeafyGreenProvider>
@@ -136,23 +156,7 @@ function MockSideNav() {
           </SideNavGroup>
         </SideNav>
 
-        <div className={contentStyles}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-          <br /><br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-          <br /><br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-          <br /><br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-          <br /><br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-          <br /><br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-          <br /><br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-          <br /><br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam alias dolorem distinctio debitis ipsam dolore vel molestiae.
-        </div>
+        {content}
       </div>
     </LeafyGreenProvider>
   );
