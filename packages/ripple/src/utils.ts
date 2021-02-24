@@ -3,7 +3,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 
 const buttonOpacity = 0.76;
 
-const visualDesignPallette = {
+const visualDesignPalette = {
   green5: '#0AD05B',
   green3: '#09804C',
   orange4: '#F97216',
@@ -32,20 +32,20 @@ export { Variant };
 
 export const colorMap: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
-    [Variant.Primary]: visualDesignPallette.green5,
-    [Variant.Info]: transparentize(buttonOpacity, visualDesignPallette.green3),
+    [Variant.Primary]: visualDesignPalette.green5,
+    [Variant.Info]: transparentize(buttonOpacity, visualDesignPalette.green3),
     [Variant.Default]: uiColors.gray.light2,
-    [Variant.Danger]: visualDesignPallette.orange4,
+    [Variant.Danger]: visualDesignPalette.orange4,
     [Variant.SecondaryDanger]: transparentize(buttonOpacity, uiColors.red.base),
   },
   [Mode.Dark]: {
-    [Variant.Primary]: visualDesignPallette.green5,
+    [Variant.Primary]: visualDesignPalette.green5,
     [Variant.Info]: transparentize(buttonOpacity, uiColors.green.base),
     [Variant.Default]: uiColors.gray.base,
-    [Variant.Danger]: visualDesignPallette.orange4,
+    [Variant.Danger]: visualDesignPalette.orange4,
     [Variant.SecondaryDanger]: transparentize(
       buttonOpacity,
-      visualDesignPallette.orange4,
+      visualDesignPalette.orange4,
     ),
   },
 };
