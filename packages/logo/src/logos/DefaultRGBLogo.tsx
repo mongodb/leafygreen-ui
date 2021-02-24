@@ -1,10 +1,13 @@
 import React from 'react';
 import { SVGLogoProps } from '../utils';
 
-export default function RGBLogo({ fill, className, ...rest }: SVGLogoProps) {
+export default function DefaultRGBLogo({
+  fill,
+  className,
+  ...rest
+}: SVGLogoProps) {
   return (
     <svg {...rest} viewBox="0 0 1112.61 300" className={className}>
-      <title>MongoDB Logo</title>
       <path
         fill="#10aa50"
         d="M134.44,120.34C119.13,52.8,87.22,34.82,79.08,22.11a144.57,144.57,0,0,1-8.9-17.42c-.43,6-1.22,9.78-6.32,14.33C53.62,28.15,10.13,63.59,6.47,140.33c-3.41,71.55,52.6,115.67,60,120.23,5.69,2.8,12.62.06,16-2.51,27-18.53,63.89-67.93,52-137.71"

@@ -7,7 +7,6 @@ interface RGBLogoMarkProps {
 export default function RGBLogoMark({ className, ...rest }: RGBLogoMarkProps) {
   return (
     <svg {...rest} viewBox="0 0 216.56 448.5" className={className}>
-      <title>MongoDB LogoMark</title>
       <path
         fill="#10aa50"
         d="M202.8,179.68c-23-101.47-71-128.49-83.18-147.59C113,21.7,106.25,5.91,106.25,5.91c-.66,9-1.83,14.7-9.51,21.54C81.36,41.16,16,94.42,10.51,209.72c-5.12,107.5,79,173.8,90.18,180.65,8.54,4.2,19,.08,24-3.77,40.54-27.84,96-102.07,78.06-206.92"
