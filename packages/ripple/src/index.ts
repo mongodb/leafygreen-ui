@@ -9,19 +9,12 @@ interface Options {
   darkMode: boolean;
 }
 
-const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-const watchForMotionPreferenceChange = {
-  prev: false,
-  current: mediaQuery.matches,
-};
-let prefersReducedMotion = false;
 let globalOptions: Options = { darkMode: false, variant: Variant.Default };
 
 function rippleEvent(event: MouseEvent) {
   if (
     // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
-    RIPPLE_NAMESPACE.registeredRippleElements[event.target] &&
-    !prefersReducedMotion
+    RIPPLE_NAMESPACE.registeredRippleElements[event.target]
   ) {
     createRippleEffect(event);
   }
@@ -37,17 +30,7 @@ export function registerRipple(node: HTMLElement, options: Options) {
   // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
   RIPPLE_NAMESPACE.registeredRippleElements[node] = options;
 
-  mediaQuery.addEventListener('change', () => {
-    watchForMotionPreferenceChange.prev = prefersReducedMotion;
-    prefersReducedMotion = mediaQuery.matches;
-    watchForMotionPreferenceChange.current = prefersReducedMotion;
-  });
-
-  if (
-    !RIPPLE_NAMESPACE.setRippleListener ||
-    watchForMotionPreferenceChange.current !==
-      watchForMotionPreferenceChange.prev
-  ) {
+  if (!RIPPLE_NAMESPACE.setRippleListener) {
     document.addEventListener('click', rippleEvent, { passive: true });
 
     const styles = document.createElement('style');
@@ -55,14 +38,6 @@ export function registerRipple(node: HTMLElement, options: Options) {
     document.head.append(styles);
 
     RIPPLE_NAMESPACE.setRippleListener = true;
-  }
-
-  if (
-    watchForMotionPreferenceChange.current ===
-      watchForMotionPreferenceChange.prev &&
-    watchForMotionPreferenceChange.current
-  ) {
-    document.removeEventListener('click', rippleEvent);
   }
 }
 
@@ -148,5 +123,12 @@ const staticRippleStyles = `
     -webkit-animation: ripple .75s ease-out;
     -moz-animation: ripple .75s ease-out;
     animation: ripple .75s ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ripple {
+      animation: none;
+      transform: none;
+    }
   }
 `;
