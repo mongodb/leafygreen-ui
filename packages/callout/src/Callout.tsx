@@ -67,18 +67,14 @@ const bodyStyle = css`
 `;
 
 const fontSet = {
-  [14]: {
-    body: css`
-      font-size: 14px;
-      line-height: 20px;
-    `,
-  },
-  [16]: {
-    body: css`
-      font-size: 16px;
-      line-height: 24px;
-    `,
-  },
+  [14]: css`
+    font-size: 14px;
+    line-height: 20px;
+  `,
+  [16]: css`
+    font-size: 16px;
+    line-height: 24px;
+  `,
 };
 
 export const headerLabels = {
@@ -206,8 +202,10 @@ function Callout({
         {headerLabels[variant]}
       </div>
       <div className={bodyStyle}>
-        {title && <div className={titleStyle}>{title}</div>}
-        <div className={fontSet[fontSize].body}>{contents}</div>
+        {title && (
+          <div className={cx(titleStyle, fontSet[fontSize])}>{title}</div>
+        )}
+        <div className={fontSet[fontSize]}>{contents}</div>
       </div>
     </div>
   );
