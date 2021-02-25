@@ -8,6 +8,7 @@ import {
   isComponentType,
 } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import {isComponentGlyph} from '@leafygreen-ui/icon';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -211,7 +212,7 @@ function SideNavGroup({
   }, [children]);
 
   const accessibleGlyph =
-    (glyph && isComponentType(glyph, 'Glyph')) || isComponentType(glyph, 'Icon')
+    (glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon')))
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 

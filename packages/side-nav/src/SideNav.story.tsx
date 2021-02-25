@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import MongoNav from '@leafygreen-ui/mongo-nav';
 import { Select, Option } from '@leafygreen-ui/select';
@@ -141,7 +142,7 @@ function RealmSideNav() {
             </IconButton>
           </li>
 
-          <SideNavGroup glyph={<Icon glyph="Cloud" />} header="Data Access">
+          <SideNavGroup glyph={<CloudIcon />} header="Data Access">
             <SideNavItem href="/">Rules</SideNavItem>
             <SideNavItem href="/">Schema</SideNavItem>
             <SideNavItem href="/">App Users</SideNavItem>
