@@ -168,7 +168,7 @@ const SideNavItem: ExtendableBox<
   'button'
 > = React.forwardRef((props: SideNavItemProps, forwardRef) => {
   const {
-    active: activeProp,
+    active = false,
     disabled = false,
     ariaCurrentValue = AriaCurrentValue.Page,
     className,
@@ -178,7 +178,6 @@ const SideNavItem: ExtendableBox<
     ...rest
   } = props;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const active = typeof activeProp === 'boolean' && activeProp;
 
   const onClick = disabled
     ? (e: React.MouseEvent) => {
