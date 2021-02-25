@@ -2,7 +2,7 @@ import React from 'react';
 import { transparentize } from 'polished';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
@@ -94,12 +94,7 @@ const keyboardShortcut = css`
   margin-left: ${spacing[2]}px;
 `;
 
-type DetailedElementProps<T> = React.DetailedHTMLProps<
-  React.HTMLAttributes<T>,
-  T
->;
-
-interface CollapseToggleProps extends DetailedElementProps<HTMLButtonElement> {
+interface CollapseToggleProps extends HTMLElementProps<'button'> {
   collapsed?: boolean;
   hideTooltip?: boolean;
 }

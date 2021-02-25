@@ -261,7 +261,10 @@ function SideNav({
 
               <CollapseToggle
                 collapsed={collapsed || (!hover && !focusExpand && collapsed)}
-                onClick={() => setCollapsed(curr => !curr)}
+                onClick={() => {
+                  setCollapsed(curr => !curr);
+                  setHover(false);
+                }}
                 // This prevents any strange flickering while the navigation is transitioning.
                 hideTooltip={
                   ['entering', 'exiting'].includes(state) || undefined
