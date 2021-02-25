@@ -26,16 +26,16 @@ export function getRippleGlobalNamespace() {
       setRippleListener: false,
       registeredRippleElements: {},
     };
+  } else {
+    const rippleModule = {
+      '@leafygreen-ui/ripple': {
+        setRippleListener: false,
+        registeredRippleElements: {},
+      },
+    };
+
+    (window as LGWindow).__LEAFYGREEN_UTILS__ = { modules: rippleModule };
   }
-
-  const rippleModule = {
-    '@leafygreen-ui/ripple': {
-      setRippleListener: false,
-      registeredRippleElements: {},
-    },
-  };
-
-  (window as LGWindow).__LEAFYGREEN_UTILS__ = { modules: rippleModule };
 
   return (window as LGWindow).__LEAFYGREEN_UTILS__.modules[
     '@leafygreen-ui/ripple'
