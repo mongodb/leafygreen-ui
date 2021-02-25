@@ -21,7 +21,7 @@ import {
   sideNavWidth,
 } from './styles';
 
-const menuGroupIdAllocator = IdAllocator.create('side-nav-group');
+const sideNavGroupIdAllocator = IdAllocator.create('side-nav-group');
 
 const button = createDataProp('side-nav-group-button');
 
@@ -202,8 +202,8 @@ function SideNavGroup({
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const menuGroupLabelId = useMemo(() => menuGroupIdAllocator.generate(), []);
-  const menuId = useMemo(() => menuGroupIdAllocator.generate(), []);
+  const menuGroupLabelId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
+  const menuId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
 
   const isActiveGroup: boolean = useMemo(() => {
     return React.Children.toArray(children).some(child => {
