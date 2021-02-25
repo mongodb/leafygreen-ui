@@ -39,9 +39,11 @@ export function registerRipple(node: HTMLElement, options: Options) {
 
     RIPPLE_NAMESPACE.setRippleListener = true;
   }
+
+  return unregisterRipple;
 }
 
-export function unregisterRipple(node: HTMLElement) {
+function unregisterRipple(node: HTMLElement) {
   if (!RIPPLE_NAMESPACE) {
     return;
   }
@@ -63,7 +65,7 @@ function createRippleEffect(event: MouseEvent) {
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement('span');
 
-  ripple.className = 'ripple';
+  ripple.className = 'lg-ui-ripple';
   ripple.style.height = ripple.style.width =
     Math.max(rect.width, rect.height) + 'px';
   target.appendChild(ripple);
@@ -84,7 +86,7 @@ function createRippleEffect(event: MouseEvent) {
 }
 
 const staticRippleStyles = `
-  @-webkit-keyframes ripple {
+  @-webkit-keyframes lg-ui-ripple {
     from {
       opacity:1;
     }
@@ -94,7 +96,7 @@ const staticRippleStyles = `
     }
   }
 
-  @-moz-keyframes ripple {
+  @-moz-keyframes lg-ui-ripple {
     from {
       opacity:1;
     }
@@ -104,7 +106,7 @@ const staticRippleStyles = `
     }
   }
 
-  @keyframes ripple {
+  @keyframes lg-ui-ripple {
     from {
       opacity:1;
     }
@@ -114,19 +116,19 @@ const staticRippleStyles = `
     }
   }
 
-  .ripple {
+  .lg-ui-ripple {
     position: absolute;
     border-radius: 100%;
     transform: scale(0.2);
     opacity:0;
     pointer-events: none;
-    -webkit-animation: ripple .75s ease-out;
-    -moz-animation: ripple .75s ease-out;
-    animation: ripple .75s ease-out;
+    -webkit-animation: lg-ui-ripple .75s ease-out;
+    -moz-animation: lg-ui-ripple .75s ease-out;
+    animation: lg-ui-ripple .75s ease-out;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ripple {
+    .lg-ui-ripple {
       animation: none;
       transform: none;
     }

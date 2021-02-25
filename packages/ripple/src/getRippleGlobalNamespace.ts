@@ -14,7 +14,8 @@ type LGWindow = Window &
   };
 
 export function getRippleGlobalNamespace() {
-  if (!window) {
+  // Handles SSR
+  if (typeof window === 'undefined') {
     return;
   }
 
