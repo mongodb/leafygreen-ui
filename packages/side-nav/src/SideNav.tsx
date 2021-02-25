@@ -133,11 +133,6 @@ interface SideNavProps {
    */
   children?: React.ReactNode;
 
-  /**
-   * The currentPath prop is used to set the correct element in the navigation to active.
-   */
-  currentPath?: string;
-
   id?: string;
 }
 
@@ -159,7 +154,6 @@ interface SideNavProps {
  */
 function SideNav({
   className,
-  currentPath = '',
   children,
   id: idProp,
   ...rest
@@ -214,9 +208,7 @@ function SideNav({
         <ContextProvider
           value={{
             navId,
-            currentPath,
             collapsed,
-            setCollapsed,
             portalContainer,
             transitionState: state,
           }}
@@ -283,7 +275,6 @@ SideNav.displayName = 'SideNav';
 SideNav.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
-  currentPath: PropTypes.string,
   id: PropTypes.string,
 };
 

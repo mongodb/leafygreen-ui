@@ -11,7 +11,6 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import { useSideNavContext } from './SideNavContext';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
@@ -179,9 +178,7 @@ const SideNavItem: ExtendableBox<
     ...rest
   } = props;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
-  const { currentPath } = useSideNavContext();
-  const active = activeProp != null || currentPath === rest.href;
+  const active = typeof activeProp === 'boolean' && activeProp;
 
   const onClick = disabled
     ? (e: React.MouseEvent) => {

@@ -125,7 +125,6 @@ function RealmSideNav() {
         <MongoNav className={topNavStyles} mode="dev" />
         <SideNav
           className={sideNavStyles}
-          currentPath="https://google.com/"
           aria-label="Realm app"
         >
           <SideNavItem
@@ -187,7 +186,6 @@ function OrgSettingsSideNav() {
         <MongoNav className={topNavStyles} mode="dev" />
         <SideNav
           className={sideNavStyles}
-          currentPath="https://google.com/"
           aria-label="Realm app"
         >
           <SideNavGroup glyph={<Icon glyph="Cloud" />} header="Context">
@@ -235,7 +233,6 @@ function MockSideNav() {
 
         <SideNav
           className={sideNavStyles}
-          currentPath="https://google.com/"
           aria-label="General example"
         >
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>

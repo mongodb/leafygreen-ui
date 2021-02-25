@@ -14,7 +14,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
-import { useSideNavContext } from './SideNavContext';
 import {
   ulStyleOverrides,
   sideNavItemSidePadding,
@@ -202,18 +201,14 @@ function SideNavGroup({
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const { currentPath } = useSideNavContext();
   const menuGroupLabelId = useMemo(() => menuGroupIdAllocator.generate(), []);
   const menuId = useMemo(() => menuGroupIdAllocator.generate(), []);
 
   const isActiveGroup: boolean = useMemo(() => {
     return React.Children.toArray(children).some(child => {
-      return (
-        isComponentType(child, 'SideNavItem') &&
-        (child.props.active || child.props.href === currentPath)
-      );
+      return isComponentType(child, 'SideNavItem') && child.props.active;
     });
-  }, [children, currentPath]);
+  }, [children]);
 
   const accessibleGlyph =
     (glyph && isComponentType(glyph, 'Glyph')) || isComponentType(glyph, 'Icon')
