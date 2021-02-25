@@ -19,16 +19,21 @@ export function getRippleGlobalNamespace() {
     return;
   }
 
+  if ((window as LGWindow).__LEAFYGREEN_UTILS__) {
+    (window as LGWindow).__LEAFYGREEN_UTILS__.modules[
+      '@leafygreen-ui/ripple'
+    ] = {
+      setRippleListener: false,
+      registeredRippleElements: {},
+    };
+  }
+
   const rippleModule = {
     '@leafygreen-ui/ripple': {
       setRippleListener: false,
       registeredRippleElements: {},
     },
   };
-
-  if ((window as LGWindow).__LEAFYGREEN_UTILS__) {
-    (window as LGWindow).__LEAFYGREEN_UTILS__.modules = rippleModule;
-  }
 
   (window as LGWindow).__LEAFYGREEN_UTILS__ = { modules: rippleModule };
 
