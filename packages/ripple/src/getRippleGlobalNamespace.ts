@@ -1,7 +1,8 @@
+import { Options } from './utils';
+
 interface ModuleType {
   '@leafygreen-ui/ripple': {
-    // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
-    registeredRippleElements: { [K: HTMLElement]: {} };
+    registeredRippleElements: Map<HTMLElement, Options>;
     setRippleListener: boolean;
   };
 }
@@ -24,13 +25,13 @@ export function getRippleGlobalNamespace() {
       '@leafygreen-ui/ripple'
     ] = {
       setRippleListener: false,
-      registeredRippleElements: {},
+      registeredRippleElements: new Map(),
     };
   } else {
     const rippleModule = {
       '@leafygreen-ui/ripple': {
         setRippleListener: false,
-        registeredRippleElements: {},
+        registeredRippleElements: new Map(),
       },
     };
 

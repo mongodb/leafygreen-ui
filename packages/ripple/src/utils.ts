@@ -30,6 +30,11 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
+export interface Options {
+  variant: Variant;
+  darkMode: boolean;
+}
+
 export const colorMap: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Primary]: visualDesignPalette.green5,

@@ -29,18 +29,30 @@ function ButtonDemo({
   variant: Variant;
   darkMode: boolean;
 }) {
-  const ref = useRef<HTMLButtonElement>(null);
+  const refOne = useRef<HTMLButtonElement>(null);
+  const refTwo = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (ref.current != null) {
-      registerRipple(ref.current, { variant, darkMode });
+    if (refOne.current != null) {
+      registerRipple(refOne.current, { variant, darkMode });
     }
-  }, [ref, variant, darkMode]);
+  }, [refOne, variant, darkMode]);
+
+  useEffect(() => {
+    if (refTwo.current != null) {
+      registerRipple(refTwo.current, { variant: 'danger', darkMode: false });
+    }
+  }, [refTwo]);
 
   return (
-    <button ref={ref} className={buttonClassName}>
-      Click me!!!!
-    </button>
+    <div>
+      <button ref={refOne} className={buttonClassName}>
+        Click me!!!!
+      </button>
+      <button ref={refTwo} className={buttonClassName}>
+        Will always be a danger button! No matter what!
+      </button>
+    </div>
   );
 }
 

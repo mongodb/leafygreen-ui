@@ -1,20 +1,12 @@
 import { getRippleGlobalNamespace } from './getRippleGlobalNamespace';
-import { Variant, colorMap, Mode } from './utils';
+import { Options, colorMap, Mode } from './utils';
 
 const TRANSITION_TIME = 300;
 const RIPPLE_NAMESPACE = getRippleGlobalNamespace();
 
-interface Options {
-  variant: Variant;
-  darkMode: boolean;
-}
-
-let globalOptions: Options = { darkMode: false, variant: Variant.Default };
-
 function rippleEvent(event: MouseEvent) {
   if (
-    // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
-    RIPPLE_NAMESPACE.registeredRippleElements[event.target]
+    RIPPLE_NAMESPACE?.registeredRippleElements.has(event.target as HTMLElement)
   ) {
     createRippleEffect(event);
   }
@@ -25,10 +17,7 @@ export function registerRipple(node: HTMLElement, options: Options) {
     return;
   }
 
-  globalOptions = options;
-
-  // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
-  RIPPLE_NAMESPACE.registeredRippleElements[node] = options;
+  RIPPLE_NAMESPACE.registeredRippleElements.set(node, options);
 
   if (!RIPPLE_NAMESPACE.setRippleListener) {
     document.addEventListener('click', rippleEvent, { passive: true });
@@ -48,19 +37,21 @@ function unregisterRipple(node: HTMLElement) {
     return;
   }
 
-  // @ts-expect-error using HTMLElements to index as it provides a faster lookup when deciding if we should create a ripple effect on a given element
-  delete RIPPLE_NAMESPACE.registeredRippleElements[node];
+  RIPPLE_NAMESPACE.registeredRippleElements.delete(node);
 }
 
 function createRippleEffect(event: MouseEvent) {
-  const { darkMode, variant } = globalOptions;
-
-  const mode = darkMode ? Mode.Dark : Mode.Light;
   const target = event.target as HTMLElement | null;
+  const foundNode = RIPPLE_NAMESPACE?.registeredRippleElements.get(
+    target as HTMLElement,
+  );
 
-  if (!event || !target) {
+  if (!target || !foundNode) {
     return;
   }
+
+  const { darkMode, variant } = foundNode;
+  const mode = darkMode ? Mode.Dark : Mode.Light;
 
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement('span');
