@@ -23,6 +23,16 @@ npm install @leafygreen-ui/ripple
 ```js
 import { registerRipple } from '@leafygreen-ui/ripple';
 
+// JavaScript Example
+const button = document.querySelector('#my-button');
+const buttonOptions = {
+  variant: 'danger',
+  darkMode: false,
+};
+
+registerRipple(button, buttonOptions);
+
+// React Example
 function Button() {
   const ref = React.useRef(null);
   const options = { variant: 'danger' };
