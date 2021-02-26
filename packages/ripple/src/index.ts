@@ -19,6 +19,8 @@ export function registerRipple(node: HTMLElement, options: Options) {
 
   RIPPLE_NAMESPACE.registeredRippleElements.set(node, options);
 
+  console.log(RIPPLE_NAMESPACE);
+
   if (!RIPPLE_NAMESPACE.setRippleListener) {
     document.addEventListener('click', rippleEvent, { passive: true });
 
@@ -29,15 +31,7 @@ export function registerRipple(node: HTMLElement, options: Options) {
     RIPPLE_NAMESPACE.setRippleListener = true;
   }
 
-  return unregisterRipple;
-}
-
-function unregisterRipple(node: HTMLElement) {
-  if (!RIPPLE_NAMESPACE) {
-    return;
-  }
-
-  RIPPLE_NAMESPACE.registeredRippleElements.delete(node);
+  return () => RIPPLE_NAMESPACE.registeredRippleElements.delete(node);
 }
 
 function createRippleEffect(event: MouseEvent) {

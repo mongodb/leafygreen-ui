@@ -7,7 +7,7 @@ interface ModuleType {
   };
 }
 
-type LGWindow = Window &
+export type LGWindow = Window &
   typeof globalThis & {
     __LEAFYGREEN_UTILS__: {
       modules: ModuleType;
