@@ -8,7 +8,7 @@ import {
   isComponentType,
 } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import {isComponentGlyph} from '@leafygreen-ui/icon';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -29,6 +29,10 @@ const listItemStyle = css`
   & + & {
     margin-top: ${spacing[2]}px;
   }
+
+  &:last-of-type {
+    padding-bottom: ${spacing[3]}px;
+  }
 `;
 
 const labelStyle = css`
@@ -45,7 +49,7 @@ const labelStyle = css`
   margin-top: 0;
   margin-bottom: 0;
   padding: 4px ${sideNavItemSidePadding}px 4px ${sideNavItemSidePadding}px;
-  line-height: 1.3em;
+  line-height: 1em;
 
   &:not(:first-of-type) {
     margin-top: ${spacing[1]}px;
@@ -53,6 +57,9 @@ const labelStyle = css`
 `;
 
 const collapsibleLabelStyle = css`
+  background-color: transparent;
+  border: none;
+  margin: 0px;
   transition: border-color 150ms ease-in-out, color 150ms ease-in-out;
   cursor: pointer;
   width: ${sideNavWidth}px;
@@ -61,14 +68,20 @@ const collapsibleLabelStyle = css`
   &:hover {
     border-color: ${uiColors.green.base};
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
-const headerText = css`
-  line-height: 1em;
-  margin-left: ${spacing[2]}px;
+const customIconStyles = css`
+  margin-right: ${spacing[2]}px;
 
-  &:first-child {
-    margin-left: 0;
+  // When the glyph is the last child, we remove the margin
+  // used to space it from the text. This matters in the navigation
+  // collapsed state.
+  &:last-child {
+    margin-right: 0;
   }
 `;
 
@@ -79,26 +92,16 @@ const collapsibleHeaderFocusStyle = css`
   }
 `;
 
-const buttonResetStyles = css`
-  background-color: transparent;
-  border: none;
-  padding: 0px;
-  margin: 0px;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const iconStyle = css`
+const expandIconStyle = css`
   transition: 150ms all ease-in-out;
+  margin-left: ${spacing[2]}px;
 
   ${prefersReducedMotion(`
     transition: none;
   `)}
 `;
 
-const openIconStyle = css`
+const openExpandIconStyle = css`
   transform: rotate(90deg);
 `;
 
@@ -202,7 +205,10 @@ function SideNavGroup({
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const menuGroupLabelId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
+  const menuGroupLabelId = useMemo(
+    () => sideNavGroupIdAllocator.generate(),
+    [],
+  );
   const menuId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
 
   const isActiveGroup: boolean = useMemo(() => {
@@ -212,11 +218,14 @@ function SideNavGroup({
   }, [children]);
 
   const accessibleGlyph =
-    (glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon')))
-      ? React.cloneElement(glyph, { 'aria-hidden': true })
+    glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
+      ? React.cloneElement(glyph, {
+          className: cx(customIconStyles, glyph.props.className),
+          'aria-hidden': true,
+        })
       : null;
 
-  const renderedLabel = (
+  const renderedLabelText = (
     <div
       className={css`
         display: inline-flex;
@@ -233,7 +242,11 @@ function SideNavGroup({
         </>
       )}
 
-      <span className={headerText}>{header}</span>
+      {/** We wrap the text in a span here to allow us to style based
+       * on the glyph being the last child of its parent.
+       * Text nodes aren't considered children.
+       * */}
+      <span>{header}</span>
     </div>
   );
 
@@ -244,25 +257,22 @@ function SideNavGroup({
           {...button.prop}
           aria-controls={menuId}
           aria-expanded={open}
-          className={buttonResetStyles}
+          className={cx(labelStyle, collapsibleLabelStyle, {
+            [collapsibleHeaderFocusStyle]: showFocus,
+          })}
           onClick={() => setOpen(curr => !curr)}
+          id={menuGroupLabelId}
+          data-testid='side-nav-group-header-label'
         >
-          <label
-            id={menuGroupLabelId}
-            className={cx(labelStyle, collapsibleLabelStyle, {
-              [collapsibleHeaderFocusStyle]: showFocus,
-            })}
-          >
-            {renderedLabel}
+          {renderedLabelText}
 
-            <ChevronRight
-              role="presentation"
-              size={12}
-              className={cx(iconStyle, {
-                [openIconStyle]: open,
-              })}
-            />
-          </label>
+          <ChevronRight
+            role="presentation"
+            size={12}
+            className={cx(expandIconStyle, {
+              [openExpandIconStyle]: open,
+            })}
+          />
         </button>
 
         <Transition
@@ -316,14 +326,15 @@ function SideNavGroup({
 
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
-      <label id={menuGroupLabelId} className={labelStyle}>
-        {renderedLabel}
-      </label>
-
-      <ul
-        aria-labelledby={menuGroupLabelId}
-        className={ulStyleOverrides}
+      <div
+        data-testid='side-nav-group-header-label'
+        id={menuGroupLabelId}
+        className={labelStyle}
       >
+        {renderedLabelText}
+      </div>
+
+      <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
         {children}
       </ul>
     </li>

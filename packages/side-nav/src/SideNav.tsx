@@ -27,8 +27,6 @@ const navStyles = css`
   border-right: 1px solid ${uiColors.gray.light2};
   position: relative;
   z-index: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
 
   ${prefersReducedMotion(`
     transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
@@ -44,20 +42,25 @@ const hoverNavStyles = css`
   border-right-color: ${uiColors.gray.light3};
 `;
 
-const listStyles = css`
-  transition: opacity ${collapseDuration}ms ease-in-out,
+const listWrapper = css`
+transition: opacity ${collapseDuration}ms ease-in-out,
   transform ${collapseDuration}ms ease-in-out;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  padding-top: ${spacing[3]}px;
-  padding-bottom: ${spacing[3]}px;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   ${prefersReducedMotion(`
     transition: opacity ${collapseDuration}ms ease-in-out;
   `)}
+`;
+
+const listStyles = css`
+  padding-top: ${spacing[3]}px;
+  padding-bottom: ${spacing[3]}px;
 `;
 
 const expandedListStyle = css`
@@ -214,6 +217,7 @@ function SideNav({
           }}
         >
           <div
+            data-testid='side-nav-container'
             className={cx(space, { [collapsedSpace]: collapsed }, className)}
           >
             <div className={wrapper} onMouseLeave={() => setHover(false)}>
@@ -228,27 +232,29 @@ function SideNav({
                 onMouseEnter={() => setHover(true)}
                 {...rest}
               >
-                <ul
-                  className={cx(
-                    ulStyleOverrides,
-                    listStyles,
-                    expandedListStyle,
-                    expandedStateStyles[state],
-                  )}
-                >
-                  {children}
-                </ul>
+                <div className={cx(listWrapper, expandedStateStyles[state])}>
+                  <ul
+                    className={cx(
+                      ulStyleOverrides,
+                      listStyles,
+                      expandedListStyle,
+                    )}
+                  >
+                    {children}
+                  </ul>
+                </div>
 
-                <ul
-                  // We hide the duplicate items from screen readers.
-                  aria-hidden
-                  className={cx(
-                    ulStyleOverrides,
-                    listStyles,
-                    collapsedStateStyles[state],
-                  )}
-                  ref={setPortalContainer}
-                />
+                <div className={cx(listWrapper, collapsedStateStyles[state])}>
+                  <ul
+                    // We hide the duplicate items from screen readers.
+                    aria-hidden
+                    className={cx(
+                      ulStyleOverrides,
+                      listStyles,
+                    )}
+                    ref={setPortalContainer}
+                  />
+                </div>
               </nav>
 
               <CollapseToggle
