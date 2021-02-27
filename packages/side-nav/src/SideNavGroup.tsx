@@ -29,10 +29,6 @@ const listItemStyle = css`
   & + & {
     margin-top: ${spacing[2]}px;
   }
-
-  &:last-of-type {
-    padding-bottom: ${spacing[3]}px;
-  }
 `;
 
 const labelStyle = css`
