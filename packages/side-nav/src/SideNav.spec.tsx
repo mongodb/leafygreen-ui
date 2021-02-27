@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import { SideNav, SideNavGroup, SideNavItem } from '.';
 
 type renderedElement = HTMLElement | null;
@@ -12,6 +12,7 @@ interface RenderedElements {
   defaultHeaderEl?: renderedElement;
   itemEl?: renderedElement;
   childEl?: renderedElement;
+  collapseToggle?: renderedElement;
 }
 
 describe('packages/side-nav', () => {
@@ -21,6 +22,7 @@ describe('packages/side-nav', () => {
     sideNavHeader: 'side-nav-header',
     sideNavItem: 'side-nav-item',
     sideNavLink: 'side-nav-link',
+    collapseToggle: 'side-nav-collapse-toggle',
   };
 
   const className = 'test-class-name';
@@ -36,7 +38,13 @@ describe('packages/side-nav', () => {
   describe('SideNav', () => {
     describe('when rendered to the dom', () => {
       beforeEach(() => {
-        const { sideNavGroup, sideNavItem, sideNavLink, sideNavContainer } = testIds;
+        const {
+          sideNavGroup,
+          sideNavItem,
+          sideNavLink,
+          sideNavContainer,
+          collapseToggle,
+        } = testIds;
         const { getByTestId, getByRole } = render(
           <SideNav className={className} aria-label="Side Navigation">
             <SideNavGroup data-testid={sideNavGroup}>
@@ -49,11 +57,12 @@ describe('packages/side-nav', () => {
           </SideNav>,
         );
 
-        renderedEls.containerEl = getByTestId(sideNavContainer)
+        renderedEls.containerEl = getByTestId(sideNavContainer);
         renderedEls.navEl = getByRole('navigation');
         renderedEls.groupEl = getByTestId(sideNavGroup);
         renderedEls.itemEl = getByTestId(sideNavItem);
         renderedEls.childEl = getByTestId(sideNavLink);
+        renderedEls.collapseToggle = getByTestId(collapseToggle);
       });
 
       test('renders the side nav to the dom', () => {
@@ -61,13 +70,29 @@ describe('packages/side-nav', () => {
       });
 
       test('renders the children of the side nav', () => {
-        expect(renderedEls.groupEl).toBeInTheDocument();
-        expect(renderedEls.itemEl).toBeInTheDocument();
-        expect(renderedEls.childEl).toBeInTheDocument();
+        const { groupEl, itemEl, childEl } = renderedEls;
+
+        expect(groupEl).toBeInTheDocument();
+        expect(itemEl).toBeInTheDocument();
+        expect(childEl).toBeInTheDocument();
       });
 
       test('it renders with the provided className', () => {
         expect(renderedEls.containerEl).toHaveClass(className);
+      });
+
+      test('when the collapse toggle is clicked', () => {
+        const { collapseToggle } = renderedEls;
+
+        expect(collapseToggle.getAttribute('aria-expanded')).toEqual('true');
+
+        fireEvent.click(collapseToggle);
+
+        expect(collapseToggle.getAttribute('aria-expanded')).toEqual('false');
+
+        fireEvent.click(collapseToggle);
+
+        expect(collapseToggle.getAttribute('aria-expanded')).toEqual('true');
       });
     });
   });

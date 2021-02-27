@@ -118,7 +118,8 @@ function CollapseToggle({
       open={typeof hideTooltip === 'boolean' ? !hideTooltip : undefined}
       trigger={
         <button
-          aria-label="Collapse navigation"
+					data-testid='side-nav-collapse-toggle'
+					aria-label='Collapse navigation'
           aria-controls={navId}
           aria-expanded={!collapsed}
           className={cx(
