@@ -81,7 +81,7 @@ describe('packages/side-nav', () => {
         expect(renderedEls.containerEl).toHaveClass(className);
       });
 
-      test('when the collapse toggle is clicked', () => {
+      test('when the collapse toggle is clicked, the navigation is expanded', () => {
         const { collapseToggle } = renderedEls;
 
         expect(collapseToggle.getAttribute('aria-expanded')).toEqual('true');
