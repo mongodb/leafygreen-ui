@@ -124,10 +124,7 @@ function RealmSideNav() {
     <LeafyGreenProvider>
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
-        <SideNav
-          className={sideNavStyles}
-          aria-label="Realm app"
-        >
+        <SideNav className={sideNavStyles} aria-label="Realm app">
           <SideNavItem
             active
             glyph={<Icon glyph="Apps" fill={uiColors.blue.base} />}
@@ -185,10 +182,7 @@ function OrgSettingsSideNav() {
     <LeafyGreenProvider>
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
-        <SideNav
-          className={sideNavStyles}
-          aria-label="Realm app"
-        >
+        <SideNav className={sideNavStyles} aria-label="Realm app">
           <SideNavGroup glyph={<Icon glyph="Cloud" />} header="Context">
             <li
               role="menuitem"
@@ -232,10 +226,7 @@ function MockSideNav() {
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
 
-        <SideNav
-          className={sideNavStyles}
-          aria-label="General example"
-        >
+        <SideNav className={sideNavStyles} aria-label="General example">
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
             <SideNavItem active>Active State</SideNavItem>
             <SideNavItem disabled>Disabled State</SideNavItem>

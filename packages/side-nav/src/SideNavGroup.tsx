@@ -262,7 +262,7 @@ function SideNavGroup({
           })}
           onClick={() => setOpen(curr => !curr)}
           id={menuGroupLabelId}
-          data-testid='side-nav-group-header-label'
+          data-testid="side-nav-group-header-label"
         >
           {renderedLabelText}
 
@@ -327,7 +327,7 @@ function SideNavGroup({
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
       <div
-        data-testid='side-nav-group-header-label'
+        data-testid="side-nav-group-header-label"
         id={menuGroupLabelId}
         className={labelStyle}
       >

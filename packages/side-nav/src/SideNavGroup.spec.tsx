@@ -10,14 +10,14 @@ describe('packages/side-nav', () => {
     sideNavHeader: 'side-nav-header',
     sideNavItem: 'side-nav-item',
     sideNavLink: 'side-nav-link',
-		sideNavHeaderLabel: 'side-nav-group-header-label',
+    sideNavHeaderLabel: 'side-nav-group-header-label',
   };
 
   const className = 'test-class-name';
   const headerText = 'test-header-text';
   const headerContent = (
-		<div data-testid={testIds.sideNavHeader}>Header As Content</div>
-	);
+    <div data-testid={testIds.sideNavHeader}>Header As Content</div>
+  );
 
   afterEach(() => {
     document.body.innerHTML = '';
@@ -57,7 +57,9 @@ describe('packages/side-nav', () => {
       });
 
       test('it displays the header text in a header', () => {
-				expect(screen.getByTestId(testIds.sideNavHeaderLabel).textContent).toEqual(headerText)
+        expect(
+          screen.getByTestId(testIds.sideNavHeaderLabel).textContent,
+        ).toEqual(headerText);
       });
 
       test('renders the children of the side nav group', () => {

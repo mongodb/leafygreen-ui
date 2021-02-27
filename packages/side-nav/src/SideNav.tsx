@@ -43,15 +43,14 @@ const hoverNavStyles = css`
 `;
 
 const listWrapper = css`
-transition: opacity ${collapseDuration}ms ease-in-out,
+  transition: opacity ${collapseDuration}ms ease-in-out,
   transform ${collapseDuration}ms ease-in-out;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 
   ${prefersReducedMotion(`
     transition: opacity ${collapseDuration}ms ease-in-out;
@@ -61,6 +60,13 @@ transition: opacity ${collapseDuration}ms ease-in-out,
 const listStyles = css`
   padding-top: ${spacing[3]}px;
   padding-bottom: ${spacing[3]}px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 `;
 
 const expandedListStyle = css`
@@ -155,12 +161,7 @@ interface SideNavProps {
  * @param props.className Class name that will be applied to the root-level element.
  * @param props.children Content that will be rendered inside the root-level element.
  */
-function SideNav({
-  className,
-  children,
-  id: idProp,
-  ...rest
-}: SideNavProps) {
+function SideNav({ className, children, id: idProp, ...rest }: SideNavProps) {
   const { Provider: ContextProvider } = SideNavContext;
   const [collapsed, setCollapsed] = useState(false);
   const [hover, setHover] = useState(false);
@@ -217,7 +218,7 @@ function SideNav({
           }}
         >
           <div
-            data-testid='side-nav-container'
+            data-testid="side-nav-container"
             className={cx(space, { [collapsedSpace]: collapsed }, className)}
           >
             <div className={wrapper} onMouseLeave={() => setHover(false)}>
@@ -248,10 +249,7 @@ function SideNav({
                   <ul
                     // We hide the duplicate items from screen readers.
                     aria-hidden
-                    className={cx(
-                      ulStyleOverrides,
-                      listStyles,
-                    )}
+                    className={cx(ulStyleOverrides, listStyles)}
                     ref={setPortalContainer}
                   />
                 </div>

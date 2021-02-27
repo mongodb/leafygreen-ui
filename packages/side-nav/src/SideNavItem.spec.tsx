@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { SideNavItem } from '.';
-import {SideNavItemProps} from './SideNavItem';
+import { SideNavItemProps } from './SideNavItem';
 
 type renderedElement = HTMLElement | null;
 
@@ -23,7 +23,7 @@ describe('packages/side-nav', () => {
     sideNavLink: 'side-nav-link',
   };
 
-	const className = 'test-class-name';
+  const className = 'test-class-name';
 
   let renderedEls: RenderedElements = {};
 
