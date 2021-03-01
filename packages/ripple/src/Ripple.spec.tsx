@@ -2,10 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { registerRipple } from './index';
 import { Options } from './utils';
+import { LGWindow } from './getRippleGlobalNamespace';
 
 const lgNamespace = '__LEAFYGREEN_UTILS__';
 const buttonText = 'click me';
 const buttonOptions: Options = { variant: 'primary', darkMode: false };
+type Global = Omit<LGWindow, 'name'>
 
 function ButtonWrapper() {
   const ref = useRef(null);
@@ -28,12 +30,12 @@ describe('registerRipple', () => {
     const button = screen.getByText(buttonText);
 
     expect(
-      global[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(true);
     expect(
-      global[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.get(button),
     ).toBe(buttonOptions);
@@ -45,7 +47,7 @@ describe('registerRipple', () => {
     fireEvent.click(button);
 
     expect(
-      global[lgNamespace].modules['@leafygreen-ui/ripple'].setRippleListener,
+      (global as unknown as Global)[lgNamespace].modules['@leafygreen-ui/ripple'].setRippleListener,
     ).toBe(true);
   });
 
@@ -53,14 +55,14 @@ describe('registerRipple', () => {
     const { unmount } = render(<ButtonWrapper />);
     const button = screen.getByText(buttonText);
     expect(
-      global[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(true);
 
     unmount();
     expect(
-      global[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(false);
