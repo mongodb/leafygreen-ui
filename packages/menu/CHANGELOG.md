@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 9.1.3
+
+### Patch Changes
+
+- 4b387979: Adds `role="none"` to li element in `MenuItem` component
+
 ## 9.1.2
 
 ### Patch Changes
