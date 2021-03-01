@@ -1,56 +1,68 @@
-import { render } from '@testing-library/react'
-import { registerRipple } from './index'
-import { Options } from './utils'
-import { getRippleGlobalNamespace, LGWindow } from './getRippleGlobalNamespace'
+import React, { useEffect, useRef } from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { registerRipple } from './index';
+import { Options } from './utils';
 
-const lgNamespace = '__LEAFYGREEN_UTILS__'
+const lgNamespace = '__LEAFYGREEN_UTILS__';
+const buttonText = 'click me';
+const buttonOptions: Options = { variant: 'primary', darkMode: false };
 
-describe('packages/ripple', () => {
-  describe('getRippleGlobalNamespace', () => {
-    describe(`when ${lgNamespace} namespace has not yet been defined`, () => {
-      test(`it appends ${lgNamespace} to the window`, () => {
-        getRippleGlobalNamespace();
-        expect(window).toHaveProperty(lgNamespace)
-      })
+function ButtonWrapper() {
+  const ref = useRef(null);
+  const unregisterRipple = useRef(null);
 
-    })
+  useEffect(() => {
+    if (ref.current != null) {
+      unregisterRipple.current = registerRipple(ref.current, buttonOptions);
+    }
 
-    describe(`when ${lgNamespace} is already defined`, () => {
-      beforeEach(() => {
-        window[lgNamespace].modules['@leafygreen-ui/button'] = { present: true }
-      })
+    return unregisterRipple.current;
+  }, [ref]);
 
-      test('it adds the @leafygreen-ui/ripple module to the namespace', () => {
-        getRippleGlobalNamespace();
-        expect((window as LGWindow)[lgNamespace].modules).toHaveProperty('@leafygreen-ui/ripple')
-      })
+  return <button ref={ref}>{buttonText}</button>;
+}
 
-      test('it initializes the @leafygreen-ui/ripple module correctly', () => {
-        const rippleNamespace = getRippleGlobalNamespace();
-        expect(rippleNamespace).toStrictEqual({ setRippleListener: false, registeredRippleElements: new Map() })
+describe('registerRipple', () => {
+  test('it registers a node to the leafygreen namespace, with the associated options', () => {
+    render(<ButtonWrapper />);
+    const button = screen.getByText(buttonText);
 
-      })
+    expect(
+      global[lgNamespace].modules[
+        '@leafygreen-ui/ripple'
+      ].registeredRippleElements.has(button),
+    ).toBe(true);
+    expect(
+      global[lgNamespace].modules[
+        '@leafygreen-ui/ripple'
+      ].registeredRippleElements.get(button),
+    ).toBe(buttonOptions);
+  });
 
-      test('it does not overwrite existing modules', () => {
-        getRippleGlobalNamespace();
-        expect((window as LGWindow)[lgNamespace].modules).toHaveProperty('@leafygreen-ui/button')
-      })
-    })
-  })
-  // console.log('windowis', window)
+  test('it updates the leafygreen namespace when a registered element is clicked', () => {
+    render(<ButtonWrapper />);
+    const button = screen.getByText(buttonText);
+    fireEvent.click(button);
 
-  // test('it registers a node to the leafygreen namespace, with the associated options', () => {
-  //   const button = document.createElement('button')
-  //   const buttonOptions: Options = {
-  //     variant: 'danger',
-  //     darkMode: false
-  //   }
+    expect(
+      global[lgNamespace].modules['@leafygreen-ui/ripple'].setRippleListener,
+    ).toBe(true);
+  });
 
-  //   registerRipple(button, buttonOptions)
+  test('it returns a function that successfully removes a registered element', () => {
+    const { unmount } = render(<ButtonWrapper />);
+    const button = screen.getByText(buttonText);
+    expect(
+      global[lgNamespace].modules[
+        '@leafygreen-ui/ripple'
+      ].registeredRippleElements.has(button),
+    ).toBe(true);
 
-  //   console.log(RIPPLE_NAMESPACE)
-
-  //   expect(RIPPLE_NAMESPACE.registeredRippleElements.has(button)).toBe(true)
-  //   expect(RIPPLE_NAMESPACE.registeredRippleElements.get(button)).toBe(buttonOptions)
-  // })
-})
+    unmount();
+    expect(
+      global[lgNamespace].modules[
+        '@leafygreen-ui/ripple'
+      ].registeredRippleElements.has(button),
+    ).toBe(false);
+  });
+});

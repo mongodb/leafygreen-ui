@@ -19,8 +19,6 @@ export function registerRipple(node: HTMLElement, options: Options) {
 
   RIPPLE_NAMESPACE.registeredRippleElements.set(node, options);
 
-  console.log(RIPPLE_NAMESPACE);
-
   if (!RIPPLE_NAMESPACE.setRippleListener) {
     document.addEventListener('click', rippleEvent, { passive: true });
 
