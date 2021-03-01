@@ -149,11 +149,17 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
-  useEffect(() => {
-    if (isAnyTabFocused && !disabled && selected && titleRef.current) {
-      titleRef.current.focus();
+  const moveFocus = () => {
+    console.log("here")
+    if (!disabled && selected && titleRef.current) {
+      titleRef.current.focus()
     }
-  }, [isAnyTabFocused, disabled, selected, titleRef]);
+  }
+  // useEffect(() => {
+  // if (isAnyTabFocused && !disabled && selected && titleRef.current) {
+  // titleRef.current.focus();
+  // }
+  // }, [isAnyTabFocused, disabled, selected, titleRef]);
 
   useIsomorphicLayoutEffect(() => {
     const titleNode = titleRef.current;
@@ -170,6 +176,18 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   }, [titleRef, setShowEllipsis]);
 
   const sharedTabProps = {
+    onClick: (e) => {
+      console.log('inside event list')
+      rest.onClick?.(e)
+
+      moveFocus()
+    },
+    onKeyDown: (e) => {
+      console.log('inside event list')
+      rest.onKeyDown?.(e)
+
+      moveFocus()
+    },
     className: cx(
       listTitle,
       modeColors[mode].listTitleColor,
