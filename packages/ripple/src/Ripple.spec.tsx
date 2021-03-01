@@ -7,11 +7,11 @@ import { LGWindow } from './getRippleGlobalNamespace';
 const lgNamespace = '__LEAFYGREEN_UTILS__';
 const buttonText = 'click me';
 const buttonOptions: Options = { variant: 'primary', darkMode: false };
-type Global = Omit<LGWindow, 'name'>
+type Global = Omit<LGWindow, 'name'>;
 
 function ButtonWrapper() {
-  const ref = useRef(null);
-  const unregisterRipple = useRef(null);
+  const ref = useRef<HTMLButtonElement>(null);
+  const unregisterRipple = useRef<() => void>(null);
 
   useEffect(() => {
     if (ref.current != null) {
@@ -30,12 +30,12 @@ describe('registerRipple', () => {
     const button = screen.getByText(buttonText);
 
     expect(
-      (global as unknown as Global)[lgNamespace].modules[
+      ((global as unknown) as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(true);
     expect(
-      (global as unknown as Global)[lgNamespace].modules[
+      ((global as unknown) as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.get(button),
     ).toBe(buttonOptions);
@@ -47,7 +47,9 @@ describe('registerRipple', () => {
     fireEvent.click(button);
 
     expect(
-      (global as unknown as Global)[lgNamespace].modules['@leafygreen-ui/ripple'].setRippleListener,
+      ((global as unknown) as Global)[lgNamespace].modules[
+        '@leafygreen-ui/ripple'
+      ].setRippleListener,
     ).toBe(true);
   });
 
@@ -55,14 +57,14 @@ describe('registerRipple', () => {
     const { unmount } = render(<ButtonWrapper />);
     const button = screen.getByText(buttonText);
     expect(
-      (global as unknown as Global)[lgNamespace].modules[
+      ((global as unknown) as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(true);
 
     unmount();
     expect(
-      (global as unknown as Global)[lgNamespace].modules[
+      ((global as unknown) as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(false);

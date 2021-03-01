@@ -1,4 +1,6 @@
-import { getRippleGlobalNamespace } from './getRippleGlobalNamespace';
+import { getRippleGlobalNamespace, LGWindow } from './getRippleGlobalNamespace';
+
+type Global = Omit<LGWindow, 'name'>;
 
 const lgNamespace = '__LEAFYGREEN_UTILS__';
 
@@ -12,18 +14,20 @@ describe('getRippleGlobalNamespace', () => {
 
   describe(`when ${lgNamespace} is already defined`, () => {
     beforeAll(() => {
-      global[lgNamespace].modules['@leafygreen-ui/button'] = { present: true };
+      ((global as unknown) as Global)[lgNamespace].modules[
+        '@leafygreen-ui/button'
+      ] = { present: true };
     });
 
     afterAll(() => {
-      delete global[lgNamespace];
+      delete ((global as unknown) as Global)[lgNamespace];
     });
 
     test('it adds the @leafygreen-ui/ripple module to the namespace', () => {
       getRippleGlobalNamespace();
-      expect(global[lgNamespace].modules).toHaveProperty(
-        '@leafygreen-ui/ripple',
-      );
+      expect(
+        ((global as unknown) as Global)[lgNamespace].modules,
+      ).toHaveProperty('@leafygreen-ui/ripple');
     });
 
     test('it initializes the @leafygreen-ui/ripple module correctly', () => {
@@ -36,9 +40,9 @@ describe('getRippleGlobalNamespace', () => {
 
     test('it does not overwrite existing modules', () => {
       getRippleGlobalNamespace();
-      expect(global[lgNamespace].modules).toHaveProperty(
-        '@leafygreen-ui/button',
-      );
+      expect(
+        ((global as unknown) as Global)[lgNamespace].modules,
+      ).toHaveProperty('@leafygreen-ui/button');
     });
   });
 });
