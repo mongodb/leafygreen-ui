@@ -33,21 +33,22 @@ const buttonOptions = {
 registerRipple(button, buttonOptions);
 
 // React Example
-function Button() {
+function Button({ options }) {
   const ref = React.useRef(null);
-  const options = { variant: 'danger' };
 
   useEffect(() => {
     if (ref.current) {
       registerRipple(ref, options);
     }
-  }, [ref]);
+  }, [ref, options]);
 }
 ```
 
 ## Arguments
 
-| Argument | Type          | Description                                         | Default |
-| -------- | ------------- | --------------------------------------------------- | ------- |
-| ref      | `HTMLElement` | HTMLElement that ripple effect should be applied to |         |
-| options  | {}            | Options that specify coloring and size of ripple    |         |
+| Argument         | Type                                                                | Description                                                   | Default |
+| ---------------- | ------------------------------------------------------------------- | ------------------------------------------------------------- | ------- |
+| ref              | `HTMLElement`                                                       | HTMLElement that ripple effect should be applied to           |         |
+| options          |                                                                     | Options that specify coloring and size of ripple              |         |
+| options.variant  | `'primary'`, `'info'`, `'default'`, `'danger'`, `'secondaryDanger'` | Determines color of ripple effect                             |         |
+| options.darkMode | `boolean`                                                           | Determines if the ripple effect will be rendered in dark mode | `false` |

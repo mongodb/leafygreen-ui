@@ -7,6 +7,13 @@ export interface ModuleType {
   };
 }
 
+type SetWindow = Window &
+  typeof globalThis & {
+    __LEAFYGREEN_UTILS__: {
+      modules: {};
+    };
+  };
+
 export type LGWindow = Window &
   typeof globalThis & {
     __LEAFYGREEN_UTILS__: {
@@ -25,17 +32,11 @@ export function getRippleGlobalNamespace() {
     registeredRippleElements: new Map(),
   };
 
-  if ((window as LGWindow).__LEAFYGREEN_UTILS__) {
-    (window as LGWindow).__LEAFYGREEN_UTILS__.modules[
-      '@leafygreen-ui/ripple'
-    ] = defaultRippleParams;
-  } else {
-    const rippleModule = {
-      '@leafygreen-ui/ripple': defaultRippleParams,
-    };
+  (window as SetWindow).__LEAFYGREEN_UTILS__ ??= { modules: {} };
 
-    (window as LGWindow).__LEAFYGREEN_UTILS__ = { modules: rippleModule };
-  }
+  (window as LGWindow).__LEAFYGREEN_UTILS__.modules[
+    '@leafygreen-ui/ripple'
+  ] = defaultRippleParams;
 
   return (window as LGWindow).__LEAFYGREEN_UTILS__.modules[
     '@leafygreen-ui/ripple'
