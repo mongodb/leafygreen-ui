@@ -25,11 +25,11 @@ const knobContainerStyle = css`
   flex-grow: 1;
 
   ${mq({
-  padding: [
-    `${spacing[3]}px ${spacing[4]}px`,
-    `${spacing[3]}px ${spacing[5]}px`,
-  ],
-})}
+    padding: [
+      `${spacing[3]}px ${spacing[4]}px`,
+      `${spacing[3]}px ${spacing[5]}px`,
+    ],
+  })}
 `;
 
 const knobContainerHeight = css`
@@ -47,17 +47,12 @@ const labelStyle = css`
 const textAreaClassName = css`
   display: flex;
   flex-direction: column;
-  width: ${knobsWidth}px;
-
-  ${mq({
-  width: ['200px', `${knobsWidth}px`],
-})}
 `;
 
-const textClassName = css`
+const inputClassName = css`
   ${mq({
-  width: ['200px', `${knobsWidth}px`],
-})}
+    width: ['200px', `${knobsWidth}px`],
+  })}
 `;
 
 const labelDarkMode = css`
@@ -230,7 +225,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
-        className={textClassName}
+        className={inputClassName}
       />
     </div>
   );
@@ -269,7 +264,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
-        className={textAreaClassName}
+        className={cx(textAreaClassName, inputClassName)}
       />
     </div>
   );
@@ -329,7 +324,7 @@ function Select({
         darkMode={darkMode}
         value={value}
         disabled={disabled}
-        className={css`width: ${knobsWidth}px;`}
+        className={inputClassName}
       >
         {generateOptions()}
       </LGUISelect>
