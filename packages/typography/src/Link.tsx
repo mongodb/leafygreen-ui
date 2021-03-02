@@ -99,7 +99,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     setCurrentHostname(window.location.hostname);
   }, []);
 
-  let target, icon;
+  let target, icon, rel;
 
   if (targetProp) {
     target = targetProp;
@@ -108,6 +108,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
       target = '_self';
     } else {
       target = '_blank';
+      rel = 'noopener noreferrer';
     }
   }
 
@@ -126,7 +127,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   }
 
   const elementProps = href
-    ? ({ as: 'a', href, target } as const)
+    ? ({ as: 'a', href, target, rel } as const)
     : ({ as: 'span' } as const);
 
   return (
