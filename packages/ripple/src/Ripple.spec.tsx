@@ -11,7 +11,7 @@ type Global = Omit<LGWindow, 'name'>;
 
 function ButtonWrapper() {
   const ref = useRef<HTMLButtonElement>(null);
-  const unregisterRipple = useRef<() => void>(null);
+  const unregisterRipple = useRef<() => void>();
 
   useEffect(() => {
     if (ref.current != null) {

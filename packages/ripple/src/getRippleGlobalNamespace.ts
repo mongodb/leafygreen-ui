@@ -1,6 +1,6 @@
 import { Options } from './utils';
 
-interface ModuleType {
+export interface ModuleType {
   '@leafygreen-ui/ripple': {
     registeredRippleElements: Map<HTMLElement, Options>;
     setRippleListener: boolean;
