@@ -27,6 +27,7 @@ import {
 } from '../types';
 import { FullWidthGovBanner, MobileGovTooltip } from './GovBanner';
 import { VersionNumber, Style as VersionNumberStyle } from './VersionNumber';
+import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 
 export const orgNavHeight = 60;
 
@@ -44,13 +45,6 @@ const navContainer = css`
   background-color: white;
   border-bottom: 1px solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark3};
-`;
-
-const supportContainer = css`
-  ${mq({
-    marginRight: ['16px', '16px', '24px'],
-    marginLeft: ['16px', '16px', '24px'],
-  })}
 `;
 
 const rightLinkMargin = css`
@@ -115,31 +109,51 @@ function DropdownMenuIcon({ open }: { open: boolean }) {
   );
 }
 
-function MoreDropdownMenu({
-  children,
-  className,
+// Update to be mobile responsive
+function GetHelpDropdownMenu({
   loading,
+  urls,
+  activeNav,
 }: {
-  children: React.ReactNode;
-  className?: string;
   loading: boolean;
+  urls: URLS['orgNav'];
+  activeNav?: ActiveNavElement;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
   return (
     <OrgNavLink
+      isButton
+      isActive={activeNav === NavElement.OrgNavSupport}
       loading={loading}
-      className={className}
-      onClick={onElementClick(NavElement.OrgNavDropdownMoreMenu, () =>
+      className={rightLinkMargin}
+      onClick={onElementClick(NavElement.OrgNavDropdownGetHelp, () =>
         setIsOpen(open => !open),
       )}
-      isButton={true}
     >
-      More
+      Get Help
       <DropdownMenuIcon open={isOpen} />
-      <Menu open={isOpen} setOpen={setIsOpen} usePortal={false}>
-        {children}
+      <Menu
+        open={isOpen}
+        setOpen={setIsOpen}
+        usePortal={false}
+        className={css`
+          width: 128px;
+        `}
+      >
+        <MenuItem
+          href={urls.support}
+          data-testid="org-nav-support-link"
+          active={activeNav === NavElement.OrgNavSupport}
+        >
+          <div>Support</div>
+        </MenuItem>
+        <MenuItem href={urls.docs} data-testid="org-nav-docs-link">
+          <div>
+            Docs <OpenNewTabIcon role="presentation" />
+          </div>
+        </MenuItem>
       </Menu>
     </OrgNavLink>
   );
@@ -185,29 +199,19 @@ function NavLinks({
     });
   }
 
-  let items: Array<React.ReactNode>;
-
-  if (showMoreDropdownMenu) {
-    items = navLinks.map(({ href, navId, text, testid }) => (
-      <MenuItem size="large" key={navId} href={href} data-testid={testid}>
-        <div className={css(`font-size: 16px;`)}>{text}</div>
-      </MenuItem>
-    ));
-  } else {
-    items = navLinks.map(({ href, navId, text, testid }) => (
-      <OrgNavLink
-        href={href}
-        loading={loading}
-        isActive={activeNav === navId}
-        className={rightLinkMargin}
-        key={navId}
-        onClick={onElementClick(navId)}
-        data-testid={testid}
-      >
-        {text}
-      </OrgNavLink>
-    ));
-  }
+  const items = navLinks.map(({ href, navId, text, testid }) => (
+    <OrgNavLink
+      href={href}
+      loading={loading}
+      isActive={activeNav === navId}
+      className={rightLinkMargin}
+      key={navId}
+      onClick={onElementClick(navId)}
+      data-testid={testid}
+    >
+      {text}
+    </OrgNavLink>
+  ));
 
   if (onPremVersion) {
     if (showMoreDropdownMenu) {
@@ -231,13 +235,7 @@ function NavLinks({
         margin-left: auto;
       `}
     >
-      {showMoreDropdownMenu ? (
-        <MoreDropdownMenu loading={loading} className={rightLinkMargin}>
-          {items}
-        </MoreDropdownMenu>
-      ) : (
-        items
-      )}
+      {items}
     </div>
   );
 }
@@ -495,17 +493,6 @@ function OrgNav({
               )}
             </OrgNavLink>
 
-            <OrgNavLink
-              href={current && orgNav.support}
-              isActive={activeNav === ActiveNavElement.OrgNavSupport}
-              loading={!current}
-              className={supportContainer}
-              data-testid="org-nav-support"
-              onClick={onElementClick(NavElement.OrgNavSupport)}
-            >
-              Support
-            </OrgNavLink>
-
             {!onPremEnabled && (
               <OrgNavLink
                 href={current && orgNav.billing}
@@ -525,6 +512,12 @@ function OrgNav({
           showMoreDropdownMenu={isMobile || isTablet}
           admin={!!admin}
           onPremVersion={onPremEnabled ? onPremVersion : undefined}
+          urls={urls.orgNav}
+          activeNav={activeNav}
+        />
+
+        <GetHelpDropdownMenu
+          loading={!current}
           urls={urls.orgNav}
           activeNav={activeNav}
         />

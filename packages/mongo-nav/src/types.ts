@@ -14,7 +14,7 @@ const NavElement = {
   OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
   OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
   OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
-  OrgNavDropdownMoreMenu: 'orgNavDropdownMoreMenu',
+  OrgNavDropdownGetHelp: 'orgNavDropdownGetHelp',
   ProjectNavProjectSelectTrigger: 'projectNavProjectSelectTrigger',
   ProjectNavProjectSelectSearch: 'projectNavProjectSelectSearch',
   ProjectNavViewAllProjects: 'projectNavViewAllProjects',
@@ -273,6 +273,7 @@ interface OrgNavURLS {
   settings?: string;
   accessManager?: string;
   support?: string;
+  docs?: string;
   billing?: string;
   allClusters?: string;
   admin?: string;
