@@ -6,6 +6,7 @@ const NavElement = {
   OrgNavSupport: 'orgNavSupport',
   OrgNavBilling: 'orgNavBilling',
   OrgNavAdmin: 'orgNavAdmin',
+  OrgNavDocs: 'orgNavDocs',
   OrgNavAllClusters: 'orgNavAllClusters',
   Logout: 'logout',
   OrgNavLeaf: 'leaf',

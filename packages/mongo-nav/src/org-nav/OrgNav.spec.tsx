@@ -18,13 +18,12 @@ import { NavElement, ActiveNavElement } from '../types';
 // data
 const { account, currentOrganization, organizations } = dataFixtures;
 const {
-  orgNav: { support, billing, allClusters, admin },
+  orgNav: { billing, allClusters, admin },
 } = urlFixtures;
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
 const linkNamesToUrls: Record<string, string | undefined> = {
-  support,
   billing,
   allClusters,
   admin,
@@ -33,7 +32,6 @@ const linkNamesToUrls: Record<string, string | undefined> = {
 const linkNamesToText: Record<string, string> = {
   allClusters: 'All Clusters',
   admin: 'Admin',
-  support: 'Support',
   billing: 'Billing',
 };
 
@@ -84,35 +82,33 @@ describe('packages/mongo-nav/src/org-nav', () => {
   };
 
   const testForPaymentStatus = (isVisible = true) => {
-    it(`${
-      isVisible ? 'displays' : 'does not display'
-    } the payment status badge`, () => {
-      const badge = queryByTestId('org-nav-payment-status');
+    it(`${isVisible ? 'displays' : 'does not display'
+      } the payment status badge`, () => {
+        const badge = queryByTestId('org-nav-payment-status');
 
-      if (isVisible) {
-        expect(badge).toBeVisible();
-        expect(badge!.textContent).toEqual(currentOrganization!.paymentStatus);
-      } else {
-        expect(badge).toBeNull();
-      }
-    });
+        if (isVisible) {
+          expect(badge).toBeVisible();
+          expect(badge!.textContent).toEqual(currentOrganization!.paymentStatus);
+        } else {
+          expect(badge).toBeNull();
+        }
+      });
   };
 
   const testForUserMenu = (isVisible = true) => {
-    it(`${isVisible ? 'displays' : 'does not display'} the UserMenu and ${
-      isVisible ? 'does not display' : 'displays'
-    } the onPrem User Menu`, () => {
-      const userMenu = queryByTestId('user-menu-trigger');
-      const onPremUserMenu = queryByTestId('om-user-menu-trigger');
+    it(`${isVisible ? 'displays' : 'does not display'} the UserMenu and ${isVisible ? 'does not display' : 'displays'
+      } the onPrem User Menu`, () => {
+        const userMenu = queryByTestId('user-menu-trigger');
+        const onPremUserMenu = queryByTestId('om-user-menu-trigger');
 
-      if (isVisible) {
-        expect(userMenu).toBeVisible();
-        expect(onPremUserMenu).toBeNull();
-      } else {
-        expect(onPremUserMenu).toBeVisible();
-        expect(userMenu).toBeNull();
-      }
-    });
+        if (isVisible) {
+          expect(userMenu).toBeVisible();
+          expect(onPremUserMenu).toBeNull();
+        } else {
+          expect(onPremUserMenu).toBeVisible();
+          expect(userMenu).toBeNull();
+        }
+      });
   };
 
   const testForMFA = (isVisible = true) => {
@@ -164,6 +160,11 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
     test('it does not render the FedRAMP banner', () => {
       expect(queryByTestId('org-nav-fedramp-banner')).toBeNull();
+    });
+
+    test('it displays a Get Help menu to the nav by default', () => {
+      const getHelp = getByTestId('org-nav-dropdown-get-help');
+      expect(getHelp).toBeInTheDocument();
     });
   });
 
@@ -292,6 +293,24 @@ describe('packages/mongo-nav/src/org-nav', () => {
           testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
         );
       });
+    });
+  });
+
+  describe('the Get Help dropdown displays correctly', () => {
+    beforeEach(() => {
+      renderComponent();
+      const getHelp = getByTestId('org-nav-dropdown-get-help');
+      fireEvent.click(getHelp);
+    });
+
+    test('support link appears in menu', () => {
+      const support = getByTestId('org-nav-support-link');
+      expect(support).toBeInTheDocument();
+    });
+
+    test('docs link appears in menu', () => {
+      const docs = getByTestId('org-nav-docs-link');
+      expect(docs).toBeInTheDocument();
     });
   });
 

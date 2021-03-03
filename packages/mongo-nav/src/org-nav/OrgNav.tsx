@@ -109,15 +109,16 @@ function DropdownMenuIcon({ open }: { open: boolean }) {
   );
 }
 
-// Update to be mobile responsive
 function GetHelpDropdownMenu({
   loading,
   urls,
   activeNav,
+  isTablet,
 }: {
   loading: boolean;
   urls: URLS['orgNav'];
   activeNav?: ActiveNavElement;
+  isTablet?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const onElementClick = useOnElementClick();
@@ -125,6 +126,7 @@ function GetHelpDropdownMenu({
   return (
     <OrgNavLink
       isButton
+      data-testid="org-nav-dropdown-get-help"
       isActive={activeNav === NavElement.OrgNavSupport}
       loading={loading}
       className={rightLinkMargin}
@@ -146,10 +148,17 @@ function GetHelpDropdownMenu({
           href={urls.support}
           data-testid="org-nav-support-link"
           active={activeNav === NavElement.OrgNavSupport}
+          size={isTablet ? 'large' : 'default'}
+          onClick={onElementClick(NavElement.OrgNavSupport)}
         >
           <div>Support</div>
         </MenuItem>
-        <MenuItem href={urls.docs} data-testid="org-nav-docs-link">
+        <MenuItem
+          onClick={onElementClick(NavElement.OrgNavDocs)}
+          href={urls.docs}
+          data-testid="org-nav-docs-link"
+          size={isTablet ? 'large' : 'default'}
+        >
           <div>
             Docs <OpenNewTabIcon role="presentation" />
           </div>
@@ -161,14 +170,12 @@ function GetHelpDropdownMenu({
 
 function NavLinks({
   loading,
-  showMoreDropdownMenu,
   admin,
   onPremVersion,
   urls,
   activeNav,
 }: {
   loading: boolean;
-  showMoreDropdownMenu: boolean;
   admin: boolean;
   onPremVersion?: string;
   urls: URLS['orgNav'];
@@ -214,19 +221,11 @@ function NavLinks({
   ));
 
   if (onPremVersion) {
-    if (showMoreDropdownMenu) {
-      items.push(
-        <VersionNumber style={VersionNumberStyle.Menu}>
-          {onPremVersion}
-        </VersionNumber>,
-      );
-    } else {
-      items.unshift(
-        <VersionNumber style={VersionNumberStyle.Nav}>
-          {onPremVersion}
-        </VersionNumber>,
-      );
-    }
+    items.unshift(
+      <VersionNumber style={VersionNumberStyle.Nav} key={onPremVersion}>
+        {onPremVersion}
+      </VersionNumber>,
+    );
   }
 
   return (
@@ -509,18 +508,20 @@ function OrgNav({
 
         <NavLinks
           loading={!current}
-          showMoreDropdownMenu={isMobile || isTablet}
           admin={!!admin}
           onPremVersion={onPremEnabled ? onPremVersion : undefined}
           urls={urls.orgNav}
           activeNav={activeNav}
         />
 
-        <GetHelpDropdownMenu
-          loading={!current}
-          urls={urls.orgNav}
-          activeNav={activeNav}
-        />
+        {!isMobile && (
+          <GetHelpDropdownMenu
+            loading={!current}
+            urls={urls.orgNav}
+            activeNav={activeNav}
+            isTablet={isTablet}
+          />
+        )}
 
         {renderUserMenu()}
       </nav>
