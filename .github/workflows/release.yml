@@ -13,6 +13,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
+          token: '${{ secrets.PAT }}'
           fetch-depth: 0
 
       - name: Setup Node.js 14.x
@@ -31,4 +32,4 @@ jobs:
         with:
           version: yarn version
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          token: '${{ secrets.PAT }}'
