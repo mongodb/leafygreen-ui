@@ -31,4 +31,4 @@ jobs:
         with:
           version: yarn version
         env:
-          GITHUB_TOKEN: '${{ secrets.REPO_SCOPED_TOKEN }}'
+          GITHUB_TOKEN: '${{ secrets.PAT }}'
