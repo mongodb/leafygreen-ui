@@ -30,6 +30,7 @@ const iconMargin = css`
 const navStyle = css`
   border-right: 1px solid ${borderColor};
   background-color: white;
+  cursor: pointer;
   z-index: 10;
   width: 80%;
   position: absolute;
