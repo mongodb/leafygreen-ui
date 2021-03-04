@@ -79,10 +79,10 @@ describe('packages/a11y', () => {
     test('when passed an invalid input, returns a string', () => {
       // @ts-expect-error
       expect(prefersReducedMotion(null)).toEqual('');
-      
+
       // @ts-expect-error
       expect(prefersReducedMotion(undefined)).toEqual('');
-      
+
       // @ts-expect-error
       expect(prefersReducedMotion(24)).toEqual('');
 
