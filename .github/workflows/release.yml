@@ -30,4 +30,5 @@ jobs:
         uses: changesets/action@master
         with:
           version: yarn version
-          token: ${{ secrets.PAT }}
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
