@@ -84,6 +84,11 @@ describe('packages/side-nav', () => {
       test('when the collapse toggle is clicked, the navigation is expanded', () => {
         const { collapseToggle } = renderedEls;
 
+        if (collapseToggle == null) {
+          // TS was showing that collapseToggle could be null or undefined.
+          throw new ReferenceError('collapseToggle is not defined.');
+        }
+
         expect(collapseToggle.getAttribute('aria-expanded')).toEqual('true');
 
         fireEvent.click(collapseToggle);
