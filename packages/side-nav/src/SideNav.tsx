@@ -44,7 +44,7 @@ const hoverNavStyles = css`
 
 const listWrapper = css`
   transition: opacity ${collapseDuration}ms ease-in-out,
-  transform ${collapseDuration}ms ease-in-out;
+    transform ${collapseDuration}ms ease-in-out;
   position: absolute;
   left: 0;
   right: 0;
