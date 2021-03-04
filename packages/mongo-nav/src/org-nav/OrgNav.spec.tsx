@@ -82,33 +82,35 @@ describe('packages/mongo-nav/src/org-nav', () => {
   };
 
   const testForPaymentStatus = (isVisible = true) => {
-    it(`${isVisible ? 'displays' : 'does not display'
-      } the payment status badge`, () => {
-        const badge = queryByTestId('org-nav-payment-status');
+    it(`${
+      isVisible ? 'displays' : 'does not display'
+    } the payment status badge`, () => {
+      const badge = queryByTestId('org-nav-payment-status');
 
-        if (isVisible) {
-          expect(badge).toBeVisible();
-          expect(badge!.textContent).toEqual(currentOrganization!.paymentStatus);
-        } else {
-          expect(badge).toBeNull();
-        }
-      });
+      if (isVisible) {
+        expect(badge).toBeVisible();
+        expect(badge!.textContent).toEqual(currentOrganization!.paymentStatus);
+      } else {
+        expect(badge).toBeNull();
+      }
+    });
   };
 
   const testForUserMenu = (isVisible = true) => {
-    it(`${isVisible ? 'displays' : 'does not display'} the UserMenu and ${isVisible ? 'does not display' : 'displays'
-      } the onPrem User Menu`, () => {
-        const userMenu = queryByTestId('user-menu-trigger');
-        const onPremUserMenu = queryByTestId('om-user-menu-trigger');
+    it(`${isVisible ? 'displays' : 'does not display'} the UserMenu and ${
+      isVisible ? 'does not display' : 'displays'
+    } the onPrem User Menu`, () => {
+      const userMenu = queryByTestId('user-menu-trigger');
+      const onPremUserMenu = queryByTestId('om-user-menu-trigger');
 
-        if (isVisible) {
-          expect(userMenu).toBeVisible();
-          expect(onPremUserMenu).toBeNull();
-        } else {
-          expect(onPremUserMenu).toBeVisible();
-          expect(userMenu).toBeNull();
-        }
-      });
+      if (isVisible) {
+        expect(userMenu).toBeVisible();
+        expect(onPremUserMenu).toBeNull();
+      } else {
+        expect(onPremUserMenu).toBeVisible();
+        expect(userMenu).toBeNull();
+      }
+    });
   };
 
   const testForMFA = (isVisible = true) => {

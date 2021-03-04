@@ -53,6 +53,14 @@ const rightLinkMargin = css`
   })}
 `;
 
+const externalIconStyles = css`
+  &:hover {
+    & svg {
+      color: ${uiColors.blue.dark2};
+    }
+  }
+`;
+
 const paymentStatusMap: {
   [K in Partial<Variant>]?: ReadonlyArray<OrgPaymentLabel>;
 } = {
@@ -154,13 +162,26 @@ function GetHelpDropdownMenu({
           <div>Support</div>
         </MenuItem>
         <MenuItem
-          onClick={onElementClick(NavElement.OrgNavDocs)}
           href={urls.docs}
           data-testid="org-nav-docs-link"
           size={isTablet ? 'large' : 'default'}
+          className={externalIconStyles}
+          onClick={onElementClick(NavElement.OrgNavDocs)}
         >
-          <div>
-            Docs <OpenNewTabIcon role="presentation" />
+          <div
+            className={css`
+              display: flex;
+              align-items: center;
+            `}
+          >
+            Docs{' '}
+            <OpenNewTabIcon
+              role="presentation"
+              className={css`
+                margin-bottom: 2px;
+                margin-left: 4px;
+              `}
+            />
           </div>
         </MenuItem>
       </Menu>
@@ -506,13 +527,15 @@ function OrgNav({
           </>
         )}
 
-        <NavLinks
-          loading={!current}
-          admin={!!admin}
-          onPremVersion={onPremEnabled ? onPremVersion : undefined}
-          urls={urls.orgNav}
-          activeNav={activeNav}
-        />
+        {!isMobile && (
+          <NavLinks
+            loading={!current}
+            admin={!!admin}
+            onPremVersion={onPremEnabled ? onPremVersion : undefined}
+            urls={urls.orgNav}
+            activeNav={activeNav}
+          />
+        )}
 
         {!isMobile && (
           <GetHelpDropdownMenu
