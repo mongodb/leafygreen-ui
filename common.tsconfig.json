@@ -6,7 +6,6 @@
     "pretty": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
-    "esModuleInterop": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",

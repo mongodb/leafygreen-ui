@@ -87,9 +87,6 @@
       "path": "./packages/radio-group"
     },
     {
-      "path": "./packages/ripple"
-    },
-    {
       "path": "./packages/select"
     },
     {
