@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect, RefObject } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  RefObject,
+} from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
@@ -125,6 +131,23 @@ const textOverflowStyles = css`
   text-overflow: ellipsis;
 `;
 
+function useDocumentActiveElement() {
+  const [activeEl, setActiveEl] = useState<Element | null>(null);
+
+  const handleFocusIn = useCallback(() => {
+    setActiveEl(document.activeElement);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('focusin', handleFocusIn);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, [handleFocusIn]);
+
+  return activeEl;
+}
+
 interface BaseTabTitleProps {
   darkMode?: boolean;
   selected?: boolean;
@@ -133,6 +156,7 @@ interface BaseTabTitleProps {
   className?: string;
   disabled?: boolean;
   isAnyTabFocused?: boolean;
+  parentRef?: HTMLDivElement;
 }
 
 const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
@@ -141,25 +165,32 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   children,
   className,
   darkMode,
-  isAnyTabFocused,
+  parentRef,
   ...rest
 }: BaseTabTitleProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [showEllipsis, setShowEllipsis] = useState(false);
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
+  const activeEl = useDocumentActiveElement();
+
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
-  const moveFocus = () => {
-    console.log("here")
-    if (!disabled && selected && titleRef.current) {
-      titleRef.current.focus()
+  // Checks to see if the current activeElement is a part of the same tab set
+  // as the current TabTitle. If so, and the current TabTitle is not disabled
+  // and is selected, we manually move focus to that TabTitle.
+  useEffect(() => {
+    const tabsList = Array.from(parentRef?.children ?? []);
+
+    if (
+      activeEl &&
+      tabsList.indexOf(activeEl) !== -1 &&
+      !disabled &&
+      selected &&
+      titleRef.current
+    ) {
+      titleRef.current.focus();
     }
-  }
-  // useEffect(() => {
-  // if (isAnyTabFocused && !disabled && selected && titleRef.current) {
-  // titleRef.current.focus();
-  // }
-  // }, [isAnyTabFocused, disabled, selected, titleRef]);
+  }, [parentRef, disabled, selected, titleRef, activeEl]);
 
   useIsomorphicLayoutEffect(() => {
     const titleNode = titleRef.current;
@@ -176,18 +207,6 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   }, [titleRef, setShowEllipsis]);
 
   const sharedTabProps = {
-    onClick: (e) => {
-      console.log('inside event list')
-      rest.onClick?.(e)
-
-      moveFocus()
-    },
-    onKeyDown: (e) => {
-      console.log('inside event list')
-      rest.onKeyDown?.(e)
-
-      moveFocus()
-    },
     className: cx(
       listTitle,
       modeColors[mode].listTitleColor,
