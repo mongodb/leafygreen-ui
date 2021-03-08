@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^6.0.1",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.21"
   }
 }
