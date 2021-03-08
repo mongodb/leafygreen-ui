@@ -78,7 +78,7 @@ describe('packages/text-input', () => {
 
   describe('when the "state" is "valid"', () => {
     test('displays checkmark icon when input is valid', () => {
-      const { container, textInput, getByLabelText } = renderTextInput({
+      const { container, textInput } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         optional: true,
@@ -87,11 +87,10 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(validEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByLabelText('Checkmark Icon')).toBeInTheDocument();
     });
 
     test('displays checkmark icon when input is valid even when input is disabled', () => {
-      const { container, textInput, getByLabelText } = renderTextInput({
+      const { container, textInput } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         disabled: true,
@@ -100,7 +99,6 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(validEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByLabelText('Checkmark Icon')).toBeInTheDocument();
     });
   });
 
