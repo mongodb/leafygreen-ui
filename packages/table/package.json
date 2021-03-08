@@ -28,7 +28,7 @@
     "@leafygreen-ui/icon": "^9.0.0",
     "@leafygreen-ui/icon-button": "^9.1.0",
     "react-transition-group": "^4.4.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "use-ssr": "^1.0.23"
   }
 }

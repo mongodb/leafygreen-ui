@@ -24,7 +24,7 @@
     "@leafygreen-ui/interaction-ring": "^1.0.0",
     "@leafygreen-ui/lib": "^6.1.2",
     "@leafygreen-ui/palette": "^3.1.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "^9.0.0"
