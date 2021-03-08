@@ -58,6 +58,7 @@ const baseIconButtonStyle = css`
     transform: scale(0.8);
   }
 
+  &:active:before,
   &:hover:before,
   &:focus:before {
     opacity: 1;
