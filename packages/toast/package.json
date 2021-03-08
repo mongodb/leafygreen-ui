@@ -28,6 +28,6 @@
     "@leafygreen-ui/icon": "^9.0.0",
     "@leafygreen-ui/icon-button": "^9.0.1",
     "@leafygreen-ui/typography": "^7.3.2",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.21"
   }
 }
