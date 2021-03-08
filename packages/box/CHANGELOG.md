@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 3.0.3
+
+### Patch Changes
+
+- 1ed17f68: Updates lodash to 4.17.21, as there's a vulnerability in 4.17.20 that's been resolved in 4.17.21
+
 ## 3.0.2
 
 ### Patch Changes
