@@ -4,6 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
+import { validateLabelProps } from '@leafygreen-ui/a11y';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
@@ -118,16 +119,11 @@ export default function Select({
     }
   }, [onChange, readOnly, value]);
 
-  if (!label && !ariaLabelledBy) {
-    console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
-    );
-  }
+  validateLabelProps({ label, 'aria-labelledby': ariaLabelledBy }, 'Select');
 
   /**
    * Open / close state
    */
-
   const onOpen = useCallback(() => {
     setOpen(true);
   }, []);

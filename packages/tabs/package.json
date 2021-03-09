@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^6.1.2",
+    "@leafygreen-ui/a11y": "^1.0.0",
     "@leafygreen-ui/palette": "^3.1.1",
     "@leafygreen-ui/tokens": "^0.5.0",
     "@leafygreen-ui/box": "^3.0.1",

@@ -6,6 +6,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
+import { validateLabelProps } from '@leafygreen-ui/a11y';
 
 const idAllocator = IdAllocator.create('textarea');
 
@@ -167,11 +168,7 @@ export default function TextArea({
     }
   };
 
-  if (!label && !ariaLabelledBy) {
-    console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
-    );
-  }
+  validateLabelProps({ label, 'aria-labelledby': ariaLabelledBy }, 'TextArea');
 
   return (
     <div className={cx(containerStyles, className)}>

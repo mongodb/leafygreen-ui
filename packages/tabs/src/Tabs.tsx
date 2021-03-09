@@ -2,12 +2,8 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  keyMap,
-  isComponentType,
-  validateAriaLabelProps,
-  Either,
-} from '@leafygreen-ui/lib';
+import { keyMap, isComponentType, Either } from '@leafygreen-ui/lib';
+import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 
 const Mode = {

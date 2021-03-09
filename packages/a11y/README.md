@@ -59,3 +59,25 @@ Hook that returns two sets of props that accessibly associate a label and its re
 | Prop | Type     | Description                          | Default |
 | ---- | -------- | ------------------------------------ | ------- |
 | `id` | `string` | id that describes the input element. |         |
+
+## validateAriaLabelProps
+
+Function that validates that either aria-label or aria-labelledby are present within props.
+
+### Arguments
+
+| Arguments       | Type                  | Description                                   | Default |
+| --------------- | --------------------- | --------------------------------------------- | ------- |
+| `props`         | `Record<string, any>` | Object of component properties.               |         |
+| `componentName` | `string`              | Name of component with props to be validated. |         |
+
+## validateLabelProps
+
+Function that validates that either label or aria-labelledby are present within props.
+
+### Arguments
+
+| Arguments       | Type                  | Description                                   | Default |
+| --------------- | --------------------- | --------------------------------------------- | ------- |
+| `props`         | `Record<string, any>` | Object of component properties.               |         |
+| `componentName` | `string`              | Name of component with props to be validated. |         |

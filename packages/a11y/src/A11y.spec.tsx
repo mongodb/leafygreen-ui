@@ -2,7 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { axe } from 'jest-axe';
-import { VisuallyHidden, useAccessibleForm } from '.';
+import {
+  VisuallyHidden,
+  useAccessibleForm,
+  validateAriaLabelProps,
+  validateLabelProps,
+} from '.';
 
 describe('packages/a11y', () => {
   describe('VisuallyHidden', () => {
@@ -66,6 +71,27 @@ describe('packages/a11y', () => {
       );
       expect(result.current.inputProps['aria-labelledby']).toEqual(
         result.current.labelProps.id,
+      );
+    });
+  });
+
+  let consoleSpy;
+  describe('validateAriaLabelProps', () => {
+    beforeEach(() => (consoleSpy = jest.spyOn(console, 'error')));
+    afterEach(() => jest.clearAllMocks());
+    test('when prop object does not contain valid props', () => {
+      validateAriaLabelProps({}, 'TestComponent');
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'For screen-reader accessibility, aria-label or aria-labelledby must be provided to TestComponent.',
+      );
+    });
+  });
+
+  describe('validateLabelProps', () => {
+    test('when prop object does not contain valid props', () => {
+      validateLabelProps({}, 'TestComponent');
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'For screen-reader accessibility, label or aria-labelledby must be provided to TestComponent.',
       );
     });
   });
