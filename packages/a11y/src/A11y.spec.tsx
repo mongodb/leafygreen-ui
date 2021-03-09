@@ -75,7 +75,8 @@ describe('packages/a11y', () => {
     });
   });
 
-  let consoleSpy;
+  let consoleSpy: jest.SpyInstance;
+
   describe('validateAriaLabelProps', () => {
     beforeEach(() => (consoleSpy = jest.spyOn(console, 'error')));
     afterEach(() => jest.clearAllMocks());
