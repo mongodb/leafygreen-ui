@@ -8,25 +8,22 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../emotion"
-    },
-    {
-      "path": "../interaction-ring"
-    },
-    {
       "path": "../lib"
+    },
+    {
+      "path": "../tokens"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../icon"
+      "path": "../emotion"
     },
     {
       "path": "../box"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../icon"
     }
   ]
 }

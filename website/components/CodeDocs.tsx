@@ -103,8 +103,8 @@ function VersionCard({
         Version {version}
       </Subtitle>
       <Button
-        size={isMobile ? 'large' : 'normal'}
-        glyph={<ActivityFeedIcon />}
+        size={isMobile ? 'large' : 'default'}
+        leftGlyph={<ActivityFeedIcon />}
         onClick={() => setOpenModal(curr => !curr)}
         className={cx({
           [css`
@@ -223,12 +223,12 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-        <DesktopInstall
-          component={component}
-          version={version}
-          changelog={changelog}
-        />
-      )}
+          <DesktopInstall
+            component={component}
+            version={version}
+            changelog={changelog}
+          />
+        )}
       <GridContainer
         align="flex-start"
         justify="flex-start"

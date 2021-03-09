@@ -42,6 +42,9 @@ storiesOf('Select', module)
             defaultValue="cat"
             disabled={disabled}
             usePortal={usePortal}
+            className={css`
+              min-width: 400px;
+            `}
           >
             <OptionGroup label="Common">
               <Option value="dog" glyph={glyph}>

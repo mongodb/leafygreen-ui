@@ -39,6 +39,7 @@ import { uiColors } from '@leafygreen-ui/palette';
  * uiColors = {
  * 	 black,
  *   white,
+ *   focus,
  *   gray: {
  *     dark3,
  *     dark2,
@@ -51,6 +52,7 @@ import { uiColors } from '@leafygreen-ui/palette';
  *   green: {
  *     dark3,
  *     dark2,
+ *     dark1,
  *     base,
  *     light2,
  *     light3,
@@ -72,6 +74,7 @@ import { uiColors } from '@leafygreen-ui/palette';
  *   red: {
  *     dark3,
  *     dark2,
+ *     dark1,
  *     base,
  *     light2,
  *     light3,

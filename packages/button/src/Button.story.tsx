@@ -1,94 +1,77 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, select, boolean } from '@storybook/addon-knobs';
+import { boolean, select } from '@storybook/addon-knobs';
+import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import Button, { Size, Variant } from '.';
-
-const buttonClass = css`
-  & + & {
-    margin-left: 0.5rem;
-  }
-`;
+import Button, { Variant, Size } from '.';
 
 storiesOf('Button', module)
-  .add('Default', () => (
-    <Button
-      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
-      variant={select(
-        'Variant',
-        Object.values(Variant) as Array<Variant>,
-        Variant.Default,
-      )}
-      darkMode={boolean('Dark mode', false)}
-      forceState={{
-        active: { true: true, false: false, undefined }[
-          select('Active', ['true', 'false', 'undefined'], 'undefined')
-        ],
-        focused: { true: true, false: false, undefined }[
-          select('Focused', ['true', 'false', 'undefined'], 'undefined')
-        ],
-      }}
-      title={text('Title', 'The button title')}
-      disabled={boolean('Disabled', false)}
-      href={
-        /*
-        NOTE(JeT):
-        TS doesn't like string | null here, it wants you to consistently choose one or the other,
-        and tries to derive the other props based on that distinction.
-        In practice, I don't expect people to be switching this prop dynamically very often.
-        */
-        select(
-          'Href',
-          { 'mongodb.design': 'http://mongodb.design', none: null },
-          null,
-        ) as any
-      }
-      glyph={
-        <Icon
-          glyph={select(
-            'Glyph',
-            Object.keys(glyphs) as Array<keyof typeof glyphs>,
-            'Edit',
-          )}
-        />
-      }
-      className={buttonClass}
-    >
-      {text('Children', 'Button')}
-    </Button>
-  ))
-  .add('as custom component', () => {
-    const CustomRoot = select(
-      'div',
-      { div: 'div', span: 'span', button: 'button' },
-      'div',
-    );
-    const selectedGlyph = select(
-      'Glyph',
-      Object.keys(glyphs) as Array<any>,
-      'Edit',
-    );
+  .add('Default', () => {
+    const variant = select('Variant', Object.values(Variant), Variant.Default);
+    const size = select('Size', Object.values(Size), Size.Default);
+    const baseFontSize = select('Base Font Size', [14, 16], 14);
+    const disabled = boolean('Disabled', false);
+    const darkMode = boolean('Dark Mode', false);
+    const leftGlyph = select('Left Glyph', Object.keys(glyphs), 'Laptop');
+    const rightGlyph = select('Right Glyph', Object.keys(glyphs), 'Laptop');
 
-    function CustomElement(props: HTMLAttributes<any>): React.ReactElement {
-      return <CustomRoot {...props} />;
-    }
+    const className = css`
+      background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark2};
+      padding: 40px;
+    `;
 
     return (
-      <Button
-        as={CustomElement}
-        size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
-        variant={select(
-          'Variant',
-          Object.values(Variant) as Array<Variant>,
-          Variant.Default,
-        )}
-        disabled={boolean('Disabled', false)}
-        className={buttonClass}
-        glyph={<Icon glyph={selectedGlyph} />}
-        tabIndex={0}
-      >
-        {text('Children', 'Button')}
-      </Button>
+      <div className={className}>
+        <Button
+          variant={variant}
+          darkMode={darkMode}
+          size={size}
+          disabled={disabled}
+          baseFontSize={baseFontSize}
+          leftGlyph={<Icon glyph={leftGlyph} />}
+          rightGlyph={<Icon glyph={rightGlyph} />}
+        >
+          Button Test Content
+        </Button>
+      </div>
+    );
+  })
+  .add('Icon only', () => {
+    const variant = select('Variant', Object.values(Variant), Variant.Default);
+    const size = select('Size', Object.values(Size), Size.Default);
+    const baseFontSize = select('Base Font Size', [14, 16], 14);
+    const disabled = boolean('Disabled', false);
+    const darkMode = boolean('Dark Mode', false);
+    const leftGlyph = select(
+      'Left Glyph',
+      // @ts-expect-error undefined is a valid option
+      [...Object.keys(glyphs), undefined],
+      'Beaker',
+    );
+    const rightGlyph = select(
+      'Right Glyph',
+      // @ts-expect-error undefined is a valid option
+      [...Object.keys(glyphs), undefined],
+      undefined,
+    );
+
+    const className = css`
+      background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
+      padding: 40px;
+    `;
+
+    return (
+      <div className={className}>
+        <Button
+          variant={variant}
+          darkMode={darkMode}
+          size={size}
+          disabled={disabled}
+          baseFontSize={baseFontSize}
+          leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+          rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
+        ></Button>
+      </div>
     );
   });

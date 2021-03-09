@@ -18,9 +18,9 @@ import metaTagKey from 'utils/metaTagKey';
 
 const layout = css`
   ${mq({
-    marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
-    width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
-  })}
+  marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
+  width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
+})}
 `;
 
 const componentsStyle = css`
@@ -130,7 +130,7 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
 
           {!isMobile && figmaLink && (
             <Button
-              glyph={<FigmaIcon />}
+              leftGlyph={<FigmaIcon />}
               variant="primary"
               href={figmaLink}
               target="_blank"
