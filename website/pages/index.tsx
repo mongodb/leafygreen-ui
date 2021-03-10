@@ -14,18 +14,11 @@ import News from 'components/News';
 
 const landingURL = `${CDN}/images/landing`;
 
-const backdrop = css`
-  background-color: ${uiColors.gray.light3};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-`;
-
 const layoutProperties = css`
+  margin-top: ${spacing[6]}px;
   margin-right: 0;
+  position: relative;
+  z-index: 0;
 
   ${mq({
     width: [
@@ -34,13 +27,12 @@ const layoutProperties = css`
       '100%',
       `${pageContainerWidth.dataGraphic}px`,
     ],
-    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, 0],
     marginLeft: [`-${spacing[4]}px`, '0px', '0px', '0px'],
   })}
 `;
 
 const boxShadow = css`
-  box-shadow: 0 0 0 1px ${uiColors.gray.light1};
+  box-shadow: 0 0 0 1px ${uiColors.gray.light2};
 `;
 
 const container = css`
@@ -58,8 +50,7 @@ const container = css`
 const sharedHoverInteraction = css`
   &:hover {
     background-color: ${uiColors.gray.light3};
-    border: 1px solid ${uiColors.gray.light1};
-    box-shadow: 0 0 0 0px ${uiColors.gray.light1},
+    box-shadow: 0 0 0 1px ${uiColors.gray.light1},
       2px 16px 20px -10px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
     z-index: 99999;
@@ -69,13 +60,12 @@ const sharedHoverInteraction = css`
 const previewWrapper = css`
   ${container}
   overflow: hidden;
-  transition: transform 300ms ease-in-out;
+  transition: all 150ms ease-in-out;
 
-  &:hover {
-    & > div {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
+  &:hover > div {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition-delay: 200ms;
   }
 `;
 
@@ -85,7 +75,7 @@ const overlineContainer = css`
   left: 0;
   padding-left: ${spacing[3]}px;
   padding-bottom: ${spacing[3]}px;
-  transition: all 300ms ease-in-out;
+  transition: all 150ms ease-in-out;
 
   ${mq({
     opacity: [1, 1, 0],
@@ -249,7 +239,6 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
 
   return (
     <>
-      <div className={backdrop} />
       <GridContainer
         role="main"
         wrap="wrap"
@@ -263,6 +252,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             <News updates={updates} />
           </div>
         </GridItem>
+
         <GridItem sm={6} md={6} lg={6}>
           <ComponentPreview
             route="/component/banner/example"

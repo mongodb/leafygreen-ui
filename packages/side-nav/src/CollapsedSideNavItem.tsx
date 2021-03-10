@@ -24,17 +24,26 @@ const collapsedItemActiveStyle = css`
 interface CollapsedSideNavItemProps {
   children: React.ReactNode;
   active: boolean;
+  className: string;
 }
 
-function CollapsedSideNavItem({ children, active }: CollapsedSideNavItemProps) {
+function CollapsedSideNavItem({
+  children,
+  active,
+  className,
+}: CollapsedSideNavItemProps) {
   const { portalContainer } = useSideNavContext();
 
   return (
     <Portal container={portalContainer}>
       <li
-        className={cx(collapsedItemStyles, {
-          [collapsedItemActiveStyle]: active,
-        })}
+        className={cx(
+          collapsedItemStyles,
+          {
+            [collapsedItemActiveStyle]: active,
+          },
+          className,
+        )}
       >
         {children}
       </li>
