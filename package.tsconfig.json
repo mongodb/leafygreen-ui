@@ -7,6 +7,5 @@
     "emitDeclarationOnly": true,
     "importHelpers": false,
     "composite": true
-  },
-  "exclude": ["**/*/*.spec.*", "**/*/*.story.*"]
+  }
 }

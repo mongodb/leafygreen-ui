@@ -2,6 +2,7 @@
   "files": [],
   "include": [],
   "references": [
+    { "path": "./packages/a11y" },
     {
       "path": "./packages/badge"
     },
@@ -51,17 +52,21 @@
       "path": "./packages/interaction-ring"
     },
     {
+      "path": "./packages/leafygreen-provider"
+    },
+    {
       "path": "./packages/lib"
     },
     {
       "path": "./packages/logo"
     },
     {
-      "path": "./packages/menu"
-    },
-    {
       "path": "./packages/marketing-modal"
     },
+    {
+      "path": "./packages/menu"
+    },
+
     {
       "path": "./packages/modal"
     },
@@ -114,6 +119,9 @@
       "path": "./packages/theme"
     },
     {
+      "path": "./packages/toast"
+    },
+    {
       "path": "./packages/toggle"
     },
     {
@@ -124,9 +132,6 @@
     },
     {
       "path": "./packages/typography"
-    },
-    {
-      "path": "./packages/toast"
     },
     {
       "path": "./website"

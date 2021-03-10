@@ -30,6 +30,12 @@
     },
     {
       "path": "../icon"
+    },
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../testing-lib"
     }
   ]
 }

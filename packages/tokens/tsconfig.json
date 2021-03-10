@@ -9,6 +9,9 @@
   "references": [
     {
       "path": "../lib"
+    },
+    {
+      "path": "../emotion"
     }
   ]
 }
