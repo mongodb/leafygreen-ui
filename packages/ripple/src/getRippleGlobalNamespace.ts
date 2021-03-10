@@ -2,7 +2,7 @@ import { Options } from './utils';
 
 export interface ModuleType {
   '@leafygreen-ui/ripple': {
-    registeredRippleElements: Map<HTMLElement, Options>;
+    registeredRippleElements: WeakMap<HTMLElement, Options>;
     setRippleListener: boolean;
   };
 }
@@ -29,7 +29,7 @@ export function getRippleGlobalNamespace() {
 
   const defaultRippleParams = {
     setRippleListener: false,
-    registeredRippleElements: new Map(),
+    registeredRippleElements: new WeakMap(),
   };
 
   (window as SetWindow).__LEAFYGREEN_UTILS__ ??= { modules: {} };
