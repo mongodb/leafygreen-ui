@@ -52,3 +52,5 @@ function Button({ options }) {
 | options          |                                                                     | Options that specify coloring and size of ripple              |         |
 | options.variant  | `'primary'`, `'info'`, `'default'`, `'danger'`, `'secondaryDanger'` | Determines color of ripple effect                             |         |
 | options.darkMode | `boolean`                                                           | Determines if the ripple effect will be rendered in dark mode | `false` |
+
+_NOTE: In order for this to work as expected, the target element must have the property `overflow:hidden` set_
