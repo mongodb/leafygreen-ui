@@ -46,7 +46,7 @@ describe('getRippleGlobalNamespace', () => {
       const rippleNamespace = getRippleGlobalNamespace();
       expect(rippleNamespace).toStrictEqual({
         setRippleListener: false,
-        registeredRippleElements: new Map(),
+        registeredRippleElements: new WeakMap(),
       });
     });
 
