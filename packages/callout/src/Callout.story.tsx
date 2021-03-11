@@ -12,12 +12,14 @@ storiesOf('Callout', module)
       Variant.Note,
     );
     const hasTitle = boolean('With title', true);
+    const baseFontSize = select('baseFontSize', [14, 16], 14);
 
     return (
       <div style={{ width: 700 }}>
         <Callout
           variant={variant}
           title={hasTitle ? text('Title', 'Title') : undefined}
+          baseFontSize={baseFontSize}
         >
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry&#39;s standard dummy text
@@ -34,12 +36,14 @@ storiesOf('Callout', module)
       Variant.Note,
     );
     const hasTitle = boolean('With title', true);
+    const baseFontSize = select('baseFontSize', [14, 16], 14);
 
     return (
       <div style={{ width: 700 }}>
         <Callout
           variant={variant}
           title={hasTitle ? text('Title', 'Title') : undefined}
+          baseFontSize={baseFontSize}
         >
           Shopping items
           <ul>

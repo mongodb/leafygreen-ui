@@ -29,5 +29,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/code": "^8.0.3"
+  }, 
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^2.0.2"
   }
 }
