@@ -217,7 +217,7 @@ function SideNavGroup({
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
       ? React.cloneElement(glyph, {
           className: cx(customIconStyles, glyph.props.className),
-          'aria-hidden': true,
+          role: 'presentation',
         })
       : null;
 

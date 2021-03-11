@@ -11,18 +11,19 @@ const containerStyle = css`
   height: 100vh;
   background-color: ${uiColors.white};
   grid-template-columns: auto 1fr;
+  overflow: hidden;
 
   ${mq({
-    display: ['block', 'block', 'grid', 'grid'],
-    paddingLeft: [`${spacing[4]}px`, `${spacing[4]}px`, '0px', '0px'],
-    paddingRight: [`${spacing[4]}px`, `${spacing[4]}px`, '0px', '0px'],
+    display: ['block', 'block', 'grid'],
+    paddingLeft: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
+    paddingRight: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
   })}
 `;
 
 const layout = css`
   ${mq({
-    overflowX: ['visible', 'visible', 'hidden', 'hidden'],
-    overflowY: ['visible', 'visible', 'auto', 'auto'],
+    overflowX: ['visible', 'visible', 'hidden'],
+    overflowY: ['visible', 'visible', 'auto'],
   })}
 `;
 

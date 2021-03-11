@@ -10,7 +10,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
@@ -33,7 +33,7 @@ const defaultStyle = css`
   align-items: center;
 
   // Typography
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  font-family: ${fontFamilies.default};
   font-size: 14px;
   font-weight: normal;
   line-height: 1em;

@@ -146,14 +146,15 @@ function Navigation() {
 
   return (
     <SideNav
-      className={css`
-        z-index: 1;
-      `}
+      aria-label="LeafyGreen Design System"
+      className={css`z-index: 1`}
     >
       <MDBDesignLogo className={logoStyles} onClick={() => push(HOME_PAGE)} />
       <CollapsedSideNavItem
         className={css`
           background-color: #09804c;
+          // Some CSS trickery to make the item not respect the overall padding in the side navigation.
+          // 1px pixel-pushing for aesthetics.
           margin-top: -${spacing[3] + 1}px;
           height: calc(25px + ${spacing[4] * 2}px + ${spacing[3]}px);
         `}

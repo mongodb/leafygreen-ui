@@ -24,7 +24,7 @@ const collapsedItemActiveStyle = css`
 interface CollapsedSideNavItemProps {
   children: React.ReactNode;
   active: boolean;
-  className: string;
+  className?: string;
 }
 
 function CollapsedSideNavItem({
