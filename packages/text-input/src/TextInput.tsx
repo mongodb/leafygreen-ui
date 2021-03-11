@@ -325,7 +325,7 @@ const TextInput: React.ComponentType<
 
     if (!label && !ariaLabelledBy) {
       console.error(
-        'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
+        'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
       );
     }
 
@@ -400,11 +400,15 @@ const TextInput: React.ComponentType<
 
           <div {...iconSelectorProp.prop} className={inputIconStyle}>
             {state === State.Valid && (
-              <RenderedCheckmarkIcon className={validIconStyle} />
+              <RenderedCheckmarkIcon
+                role="presentation"
+                className={validIconStyle}
+              />
             )}
 
             {state === State.Error && (
               <WarningIcon
+                role="presentation"
                 className={css`
                   color: ${colorSets[mode].errorIconColor};
                 `}
