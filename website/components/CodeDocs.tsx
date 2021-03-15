@@ -223,12 +223,12 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-          <DesktopInstall
-            component={component}
-            version={version}
-            changelog={changelog}
-          />
-        )}
+        <DesktopInstall
+          component={component}
+          version={version}
+          changelog={changelog}
+        />
+      )}
       <GridContainer
         align="flex-start"
         justify="flex-start"

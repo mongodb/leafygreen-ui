@@ -13,6 +13,7 @@ const baseButtonStyles = css`
   text-decoration: none;
   display: block;
   cursor: pointer;
+  overflow: hidden;
 
   &:focus {
     outline: none;

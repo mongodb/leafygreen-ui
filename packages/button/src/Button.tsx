@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
+import { registerRipple } from '@leafygreen-ui/ripple';
 import { Variant, Size, ButtonProps } from './types';
 import { getClassName, getIconStyle } from './styles';
 
@@ -10,6 +11,7 @@ const containerChildStyles = css`
   align-items: center;
   justify-content: center;
   height: 100%;
+  pointer-events: none;
 `;
 
 const iconRightMargin = css`
@@ -36,8 +38,28 @@ const Button: ExtendableBox<
     className,
     ...rest
   }: ButtonProps,
-  ref,
+  forwardRef,
 ) {
+  const localRef = useRef<HTMLButtonElement | HTMLAnchorElement | null>(null);
+
+  const ref = (node: HTMLAnchorElement | HTMLButtonElement) => {
+    localRef.current = node;
+
+    if (typeof forwardRef === 'function') {
+      forwardRef(node);
+    } else if (forwardRef) {
+      (forwardRef as React.MutableRefObject<
+        HTMLButtonElement | HTMLAnchorElement
+      >).current = node;
+    }
+  };
+
+  useEffect(() => {
+    if (localRef.current != null) {
+      registerRipple(localRef.current, { variant, darkMode });
+    }
+  }, [localRef, variant, darkMode]);
+
   const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
 
   const buttonClassName = getClassName({
@@ -97,7 +119,7 @@ const Button: ExtendableBox<
     return (
       <Box
         as="a"
-        ref={ref as React.RefObject<HTMLAnchorElement>}
+        ref={ref as (node: HTMLAnchorElement) => void}
         {...sharedProps}
       >
         {content}
@@ -109,7 +131,7 @@ const Button: ExtendableBox<
     <Box
       as="button"
       type="button"
-      ref={ref as React.RefObject<HTMLButtonElement>}
+      ref={ref as (node: HTMLButtonElement) => void}
       {...sharedProps}
     >
       {content}

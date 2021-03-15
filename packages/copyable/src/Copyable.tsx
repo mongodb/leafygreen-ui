@@ -115,7 +115,7 @@ const copyableButtonWrapperStyle = css`
 
 const buttonStyle = css`
   height: 100%;
-  border-radius: 0 4px 4px 0
+  border-radius: 0 4px 4px 0;
 `;
 
 const iconStyle = css`
@@ -166,8 +166,8 @@ export default function Copyable({
         darkMode={darkMode}
         className={buttonStyle}
         onClick={() => setCopied(true)}
+        leftGlyph={<CopyIcon size="large" className={iconStyle} />}
       >
-        <CopyIcon size="large" className={iconStyle} />
         Copy
       </Button>
     );
