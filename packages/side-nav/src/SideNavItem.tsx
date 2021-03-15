@@ -108,16 +108,22 @@ const glyphWrapper = css`
 export interface SideNavItemProps {
   /**
    * Whether or not the component should be rendered in an active state.
+   *
+   * default: `false`
    */
   active?: boolean;
 
   /**
    * Whether or not the component should be rendered in a disabled state.
+   *
+   * default: `false`
    */
   disabled?: boolean;
 
   /**
    * The aria-current attribute value set when the component is active.
+   *
+   * default: `"page"`
    */
   ariaCurrentValue?: AriaCurrentValue;
 
@@ -131,8 +137,14 @@ export interface SideNavItemProps {
    */
   children?: ReactNode;
 
+  /**
+   * When provided, the component will be rendered as an anchor element with the passed href value.
+   */
   href?: string;
 
+  /**
+   * The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.
+   */
   onClick?: React.MouseEventHandler;
 
   /**
