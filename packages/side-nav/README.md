@@ -43,6 +43,7 @@ return (
       <SideNavItem active>Active State</SideNavItem>
       <SideNavItem disabled>Disabled State</SideNavItem>
     </SideNavGroup>
+
     <SideNavGroup header={header}>
       <SideNavItem>Default root element (button)</SideNavItem>
       <SideNavItem href="/">Anchor root element</SideNavItem>
@@ -161,7 +162,7 @@ return (
 
 _Any other properties will be spread on the root-level element._
 
-# Side Nav Group
+# SideNavGroup
 
 ## Properties
 
@@ -175,7 +176,7 @@ _Any other properties will be spread on the root-level element._
 
 _Any other properties will be spread on the root-level element._
 
-# Side Nav Item
+# SideNavItem
 
 ## Properties
 
@@ -189,3 +190,15 @@ _Any other properties will be spread on the root-level element._
 | `href`             | `string`                                           | When provided, the component will be rendered as an anchor element.                                                                                                                                                                                                                      | `undefined` |
 | `as`               | `React.ElementType`                                | When provided, the component will be rendered as the component or html tag indicated by this prop. Other additional props will be spread on the anchor element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `undefined` |
 | ...                | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                                                                                                                                                                                                                       |             |
+
+# CollapsedSideNavItem
+
+Displays the passed React node within the collapsed state of the navigation.
+
+## Properties
+
+| Prop        | Type      | Description                                                         | Default |
+| ----------- | --------- | ------------------------------------------------------------------- | ------- |
+| `active`    | `boolean` | Whether or not the component should be rendered in an active state. | `false` |
+| `className` | `string`  | Class name that will be applied to the component's header.          |         |
+| `children`  | `node`    | Content that will be rendered inside the collapsed navigation.      |         |

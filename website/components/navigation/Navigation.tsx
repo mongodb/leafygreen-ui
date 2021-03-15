@@ -147,7 +147,9 @@ function Navigation() {
   return (
     <SideNav
       aria-label="LeafyGreen Design System"
-      className={css`z-index: 1`}
+      className={css`
+        z-index: 1;
+      `}
     >
       <MDBDesignLogo className={logoStyles} onClick={() => push(HOME_PAGE)} />
       <CollapsedSideNavItem

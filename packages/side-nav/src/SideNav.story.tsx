@@ -183,7 +183,10 @@ function OrgSettingsSideNav() {
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
         <SideNav className={sideNavStyles} aria-label="Realm app">
-          <SideNavGroup glyph={<Icon glyph="Cloud" />} header="Context">
+          <SideNavGroup
+            glyph={<Icon glyph="Cloud" />}
+            header={<span id="context-label">Context</span>}
+          >
             <li
               role="menuitem"
               className={css`
@@ -191,7 +194,17 @@ function OrgSettingsSideNav() {
                 margin-bottom: 16px;
               `}
             >
-              <Select label="" size="xsmall" defaultValue="1">
+              <Select
+                label=""
+                aria-labelledby="context-label"
+                size="xsmall"
+                defaultValue="1"
+                className={css`
+                  > div {
+                    width: 100%;
+                  }
+                `}
+              >
                 <Option value="1">LeafyCorp</Option>
                 <Option value="2">2</Option>
                 <Option value="3">3</Option>

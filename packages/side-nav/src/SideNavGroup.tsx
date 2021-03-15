@@ -346,6 +346,9 @@ SideNavGroup.propTypes = {
     PropTypes.func,
     PropTypes.node,
   ]),
+  collapsible: PropTypes.bool,
+  initialCollapsed: PropTypes.bool,
+  glyph: PropTypes.node,
   children: PropTypes.node,
 };
 
