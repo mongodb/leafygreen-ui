@@ -65,7 +65,7 @@ function createRippleEffect(event: MouseEvent) {
 
   setTimeout(() => {
     ripple.remove();
-  }, TRANSITION_TIME);
+  }, 750);
 }
 
 const staticRippleStyles = `
@@ -106,7 +106,7 @@ const staticRippleStyles = `
     position: absolute;
     border-radius: 100%;
     transform: scale(0.2);
-    opacity:0;
+    opacity: 0;
     pointer-events: none;
     -webkit-animation: lg-ui-ripple .75s ease-out;
     -moz-animation: lg-ui-ripple .75s ease-out;
