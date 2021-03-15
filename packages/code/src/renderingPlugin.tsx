@@ -346,7 +346,8 @@ export function TableContent({ lines }: TableContentProps) {
       }
 
       if (isArray(def)) {
-        const sortedArr = [...def].sort();
+        const sortedArr = [...def].sort((a, b) => a - b);
+
         return line >= sortedArr[0] && line <= sortedArr[1];
       }
 
