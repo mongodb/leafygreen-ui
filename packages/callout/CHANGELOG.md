@@ -1,5 +1,11 @@
 # @leafygreen-ui/callout
 
+## 2.1.0
+
+### Minor Changes
+
+- e460575e: Adds `baseFontSize` prop, which allows consuming applications to control the size of the body copy in Callout component. If not set, the body copy will appear at `14px`
+
 ## 2.0.4
 
 ### Patch Changes
