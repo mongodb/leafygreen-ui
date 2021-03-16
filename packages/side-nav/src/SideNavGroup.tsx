@@ -218,6 +218,7 @@ function SideNavGroup({
       ? React.cloneElement(glyph, {
           className: cx(customIconStyles, glyph.props.className),
           role: 'presentation',
+          'data-testid': 'side-nav-group-header-icon',
         })
       : null;
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
+import Icon from '@leafygreen-ui/icon';
 import { SideNavGroup, SideNavItem } from '.';
 import { SideNavGroupProps } from './SideNavGroup';
 
@@ -11,6 +12,7 @@ describe('packages/side-nav', () => {
     sideNavItem: 'side-nav-item',
     sideNavLink: 'side-nav-link',
     sideNavHeaderLabel: 'side-nav-group-header-label',
+    sideNavHeaderIcon: 'side-nav-group-header-icon',
   };
 
   const className = 'test-class-name';
@@ -25,13 +27,19 @@ describe('packages/side-nav', () => {
   });
 
   describe('SideNavGroup', () => {
-    const renderGroup = ({ header, ...rest }: SideNavGroupProps = {}) => {
+    const renderGroup = ({
+      header,
+      glyph,
+      ...rest
+    }: SideNavGroupProps = {}) => {
       const { sideNavGroup, sideNavLink } = testIds;
+
       render(
         <SideNavGroup
           className={className}
           header={header}
           data-testid={sideNavGroup}
+          glyph={glyph}
           {...rest}
         >
           <SideNavItem>
@@ -43,7 +51,25 @@ describe('packages/side-nav', () => {
       );
     };
 
-    const { sideNavGroup, sideNavHeader, sideNavLink } = testIds;
+    const {
+      sideNavGroup,
+      sideNavHeader,
+      sideNavLink,
+      sideNavHeaderIcon,
+    } = testIds;
+
+    describe('when the group is passed a glyph', () => {
+      beforeEach(() => {
+        renderGroup({ glyph: <Icon glyph="Calendar" /> });
+      });
+
+      test('a glyph with the presentation role is rendered', () => {
+        expect(screen.getAllByTestId(sideNavHeaderIcon)[0]).toHaveAttribute(
+          'role',
+          'presentation',
+        );
+      });
+    });
 
     describe('when the group includes a string header', () => {
       beforeEach(() => {
