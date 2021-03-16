@@ -21,12 +21,6 @@
     },
     {
       "path": "../box"
-    },
-    {
-      "path": "../hooks"
-    },
-    {
-      "path": "../tokens"
     }
   ]
 }

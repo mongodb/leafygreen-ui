@@ -5,8 +5,6 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { useViewportSize } from '@leafygreen-ui/hooks';
-import { breakpoints } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Light: 'light',
@@ -85,44 +83,39 @@ const iconButtonSizes = {
   `,
 } as const;
 
-const getIconButtonModeStyle = (
-  isTouchDevice: boolean,
-  mode: 'dark' | 'light',
-) => {
-  if (mode === Mode.Light) {
-    return css`
-      &:active,
-      &:hover {
-        color: ${uiColors.gray.dark2};
-
-        &:before {
-          background-color: ${uiColors.gray.light2};
-        }
-      }
-
-      &:focus {
-        color: ${uiColors.blue.base};
-
-        &:before {
-          background-color: ${uiColors.blue.light2};
-        }
-      }
-    `;
-  }
-
-  return css`
+const iconButtonMode = {
+  [Mode.Light]: css`
     &:active,
     &:hover {
+      color: ${uiColors.gray.dark2};
+
+      &:before {
+        background-color: ${uiColors.gray.light2};
+      }
+    }
+
+    &:focus {
+      color: ${uiColors.blue.base};
+
+      &:before {
+        background-color: ${uiColors.blue.light2};
+      }
+    }
+  `,
+  [Mode.Dark]: css`
+    &:active,
+    &:hover {
+      color: ${uiColors.white};
+
       &:before {
         background-color: ${uiColors.gray.dark2};
       }
-      color: ${uiColors.white};
     }
 
     &:focus:before {
       background-color: ${uiColors.blue.dark2};
     }
-  `;
+  `,
 };
 
 const disabledStyle = {
@@ -208,11 +201,6 @@ const IconButton: ExtendableBox<
     }: AccessibleIconButtonProps,
     ref: React.Ref<any>,
   ) => {
-    const viewport = useViewportSize();
-    const isTouchDevice = viewport?.width
-      ? viewport?.width < breakpoints.Tablet
-      : false;
-
     const mode = darkMode ? 'dark' : 'light';
 
     // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
@@ -263,7 +251,7 @@ const IconButton: ExtendableBox<
         removeButtonStyle,
         baseIconButtonStyle,
         iconButtonSizes[size],
-        getIconButtonModeStyle(isTouchDevice, mode),
+        iconButtonMode[mode],
         {
           [disabledStyle[mode]]: disabled,
           [activeStyle[mode]]: active,
