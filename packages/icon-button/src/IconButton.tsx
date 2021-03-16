@@ -91,7 +91,8 @@ const getIconButtonModeStyle = (
 ) => {
   if (mode === Mode.Light) {
     return css`
-      &: ${isTouchDevice ? 'active' : 'hover'} {
+      &:active,
+      &:hover {
         color: ${uiColors.gray.dark2};
 
         &:before {
@@ -110,7 +111,8 @@ const getIconButtonModeStyle = (
   }
 
   return css`
-    &: ${isTouchDevice ? 'active' : 'hover'} {
+    &:active,
+    &:hover {
       &:before {
         background-color: ${uiColors.gray.dark2};
       }
