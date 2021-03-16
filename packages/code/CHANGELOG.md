@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 8.0.7
+
+### Patch Changes
+
+- 16b902b5: Provides callback to sort() function in renderingPlugin to ensure that line numbers are being properly sorted before determining whether or not to highlight a line.
+
 ## 8.0.6
 
 ### Patch Changes

@@ -11,16 +11,7 @@
       "path": "../lib"
     },
     {
-      "path": "../emotion"
-    },
-    {
       "path": "../palette"
-    },
-    {
-      "path": "../icon"
-    },
-    {
-      "path": "../leafygreen-provider"
     }
   ]
 }

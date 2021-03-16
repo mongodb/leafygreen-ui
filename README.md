@@ -32,6 +32,7 @@ A set of CSS styles and React components built with design in mind.
 - [Portal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/portal)
 - [Radio Box Group](https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-box-group)
 - [Radio Group](https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-group)
+- [Ripple](https://github.com/mongodb/leafygreen-ui/tree/main/packages/ripple)
 - [Select](https://github.com/mongodb/leafygreen-ui/tree/main/packages/select)
 - [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav)
 - [Stepper](https://github.com/mongodb/leafygreen-ui/tree/main/packages/stepper)

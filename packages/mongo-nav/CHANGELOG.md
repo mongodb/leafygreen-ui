@@ -1,5 +1,17 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.2.4
+
+### Patch Changes
+
+- 1ed17f68: Updates lodash to 4.17.21, as there's a vulnerability in 4.17.20 that's been resolved in 4.17.21
+- Updated dependencies [1a42c662]
+- Updated dependencies [1ed17f68]
+  - @leafygreen-ui/typography@7.4.0
+  - @leafygreen-ui/button@10.0.2
+  - @leafygreen-ui/hooks@6.0.1
+  - @leafygreen-ui/tooltip@6.1.6
+
 ## 5.2.3
 
 ### Patch Changes

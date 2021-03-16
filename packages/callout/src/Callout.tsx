@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
@@ -65,10 +66,16 @@ const bodyStyle = css`
   padding: 18px 24px 18px 52px;
 `;
 
-const bodyTextStyle = css`
-  font-size: 14px;
-  line-height: 20px;
-`;
+const fontSet = {
+  [14]: css`
+    font-size: 14px;
+    line-height: 20px;
+  `,
+  [16]: css`
+    font-size: 16px;
+    line-height: 24px;
+  `,
+};
 
 export const headerLabels = {
   [Variant.Note]: 'Note',
@@ -149,14 +156,21 @@ interface CalloutProps {
   children: React.ReactNode;
   className?: string;
   variant: Variant;
+  baseFontSize?: 14 | 16;
 }
 
 function Callout({
   variant,
   title,
-  children: contents,
+  baseFontSize,
   className,
+  children: contents,
 }: CalloutProps) {
+  const providerFontSize = useBaseFontSize();
+  const normalizedProviderFontSize =
+    providerFontSize === 14 || providerFontSize === 16 ? providerFontSize : 14;
+  const fontSize = baseFontSize ?? normalizedProviderFontSize;
+
   const colorSet = colorSets[variant];
   const Icon = headerIcons[variant];
 
@@ -188,8 +202,10 @@ function Callout({
         {headerLabels[variant]}
       </div>
       <div className={bodyStyle}>
-        {title && <div className={titleStyle}>{title}</div>}
-        <div className={bodyTextStyle}>{contents}</div>
+        {title && (
+          <div className={cx(titleStyle, fontSet[fontSize])}>{title}</div>
+        )}
+        <div className={fontSet[fontSize]}>{contents}</div>
       </div>
     </div>
   );
