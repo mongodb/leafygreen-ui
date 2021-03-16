@@ -16,7 +16,7 @@ describe('packages/typography', () => {
           arrowAppearance: 'hover',
         });
 
-        const icon = screen.getByLabelText('Open New Tab Icon');
+        const icon = screen.getByRole('presentation', { hidden: true });
         expect(icon).toBeInTheDocument();
       });
 
@@ -24,7 +24,7 @@ describe('packages/typography', () => {
         renderLink({
           href: 'http://mongodb.design',
         });
-        const icon = screen.getByLabelText('Open New Tab Icon');
+        const icon = screen.getByRole('presentation', { hidden: true });
         expect(icon).toBeInTheDocument();
       });
 
@@ -55,7 +55,7 @@ describe('packages/typography', () => {
           arrowAppearance: 'persist',
         });
 
-        const icon = screen.getByLabelText('Arrow Right Icon');
+        const icon = screen.getByRole('presentation', { hidden: true });
         expect(icon).toBeInTheDocument();
       });
 
@@ -78,7 +78,7 @@ describe('packages/typography', () => {
           target: '_blank',
         });
 
-        const icon = screen.getByLabelText('Open New Tab Icon');
+        const icon = screen.getByRole('presentation', { hidden: true });
         expect(icon).toBeInTheDocument();
       });
     });
