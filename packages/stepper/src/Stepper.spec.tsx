@@ -26,7 +26,7 @@ function renderSteps(
     allSteps,
     currentStep,
     maxDisplayedSteps,
-    className = "",
+    className = '',
   }: {
     allSteps: Array<string>;
     currentStep: number;
@@ -37,7 +37,11 @@ function renderSteps(
   renderFunction: typeof render | RenderResult['rerender'],
 ) {
   const result = renderFunction(
-    <Stepper currentStep={currentStep} maxDisplayedSteps={maxDisplayedSteps} className={className}>
+    <Stepper
+      currentStep={currentStep}
+      maxDisplayedSteps={maxDisplayedSteps}
+      className={className}
+    >
       {allSteps.map(step => (
         <Step key={step}>{step}</Step>
       ))}
@@ -99,21 +103,21 @@ describe('packages/stepper', () => {
   test('renders className in components class list', () => {
     const allSteps = ['First step', 'Second step', 'Third step'];
     const maxDisplayedSteps = 3;
-    const className = "className"
+    const className = 'className';
 
     renderSteps(
       {
         allSteps,
         maxDisplayedSteps,
         currentStep: 0,
-        className
+        className,
       },
       render,
     );
 
-    const stepper = screen.getByRole('list')
-    expect(stepper.classList).toContain(className)
-  })
+    const stepper = screen.getByRole('list');
+    expect(stepper.classList).toContain(className);
+  });
 
   // eslint-disable-next-line jest/expect-expect
   test('renders steps with correct current step', () => {

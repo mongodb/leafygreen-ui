@@ -66,8 +66,8 @@ function InternalStep({
           {isCompleted ? (
             <CheckmarkIcon />
           ) : (
-              <div className={stepLabelTextStyle}>{stepLabel}</div>
-            )}
+            <div className={stepLabelTextStyle}>{stepLabel}</div>
+          )}
         </div>
       )}
       <div className={cx(stepTextStyle, { [previewStyle]: isPreview })}>
