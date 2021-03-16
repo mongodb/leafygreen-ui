@@ -195,10 +195,8 @@ function OrgSettingsSideNav() {
               `}
             >
               <Select
-                label=""
-                aria-labelledby="context-label"
-                size="xsmall"
                 defaultValue="1"
+                aria-labelledby="context-label"
                 className={css`
                   > div {
                     width: 100%;
