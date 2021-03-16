@@ -56,6 +56,7 @@ const baseIconButtonStyle = css`
     transform: scale(0.8);
   }
 
+  &:active:before,
   &:hover:before,
   &:focus:before {
     opacity: 1;
@@ -84,6 +85,7 @@ const iconButtonSizes = {
 
 const iconButtonMode = {
   [Mode.Light]: css`
+    &:active,
     &:hover {
       color: ${uiColors.gray.dark2};
 
@@ -100,19 +102,21 @@ const iconButtonMode = {
       }
     }
   `,
-
   [Mode.Dark]: css`
+    &:active,
     &:hover {
+      color: ${uiColors.white};
+
       &:before {
         background-color: ${uiColors.gray.dark2};
       }
-      color: ${uiColors.white};
     }
+
     &:focus:before {
       background-color: ${uiColors.blue.dark2};
     }
   `,
-} as const;
+};
 
 const disabledStyle = {
   [Mode.Light]: css`
