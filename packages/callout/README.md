@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/callout.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/callout--default)
+#### [View on MongoDB.design](https://www.mongodb.design/component/callout/example/)
 
 ## Installation
 
