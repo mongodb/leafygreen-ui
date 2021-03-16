@@ -232,7 +232,7 @@ export default function RadioBox({
           className={interactionContainerStyle}
           disabled={disabled}
           focusTargetElement={inputElement}
-          borderRadius="2px"
+          borderRadius="3px"
           color={{ hovered: checked ? uiColors.green.base : undefined }}
           forceState={{
             hovered: checked ? true : undefined,
