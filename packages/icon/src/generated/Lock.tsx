@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 79474cbd78e000ad7bfef58c9384283d
+ * @checksum 0d0fffa00804d05da25df3724afed548
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,19 +48,12 @@ const Lock = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="Lock-Copy"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <path
-          d="M12,7 L14,7 L14,9 L4,9 L4,13 L12,13 L12,12 L14,12 L14,15 L2,15 L2,7 L4,7 L4,5 C4,2.796875 5.796875,1 8,1 C10.203125,1 12,2.796875 12,5 L12,7 Z M10,7 L10,5 C10,3.8984375 9.1015625,3 8,3 C6.8984375,3 6,3.8984375 6,5 L6,7 L10,7 Z M12,11 L12,10 L14,10 L14,11 L12,11 Z"
-          id="\uE205"
-          fill={'currentColor'}
-        />
-      </g>
+        clipRule="evenodd"
+        d="M4 7V5C4 2.79086 5.79086 1 8 1C10.2091 1 12 2.79086 12 5V7C12.5523 7 13 7.44772 13 8V14C13 14.5523 12.5523 15 12 15H4C3.44772 15 3 14.5523 3 14V8C3 7.44772 3.44772 7 4 7ZM6 5C6 3.89543 6.89543 3 8 3C9.10457 3 10 3.89543 10 5V7H6V5ZM8.58667 10.8099C8.83712 10.6282 9 10.3331 9 10C9 9.44771 8.55228 9 8 9C7.44772 9 7 9.44771 7 10C7 10.3361 7.16577 10.6334 7.42 10.8147V12.6667C7.42 12.9888 7.68117 13.25 8.00333 13.25C8.3255 13.25 8.58667 12.9888 8.58667 12.6667V10.8099Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };

@@ -2,16 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 75a9282b83a69ee376152c4ce67838b3
+ * @checksum da9520e6496247990ccbaba5141cfbcc
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
-export interface ArrowUpProps extends LGGlyph.ComponentProps {}
+export interface UnlockProps extends LGGlyph.ComponentProps {}
 
-const ArrowUp = ({
+const Unlock = ({
   className,
   size = 16,
   title,
@@ -20,14 +20,14 @@ const ArrowUp = ({
   fill,
   role = 'img',
   ...props
-}: ArrowUpProps) => {
+}: UnlockProps) => {
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  const accessibleProps = generateAccessibleProps(role, 'ArrowUp', {
+  const accessibleProps = generateAccessibleProps(role, 'Unlock', {
     title,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
@@ -49,18 +49,20 @@ const ArrowUp = ({
       viewBox="0 0 16 16"
     >
       <path
-        d="M9.16788 13L9.16788 6.05558L10.7029 7.59059C11.0934 7.98112 11.7266 7.98112 12.1171 7.59059L12.356 7.35168C12.7465 6.96115 12.7465 6.32799 12.356 5.93746L8.97339 2.55483C8.96482 2.5456 8.95605 2.5365 8.94707 2.52752L8.70816 2.2886C8.31763 1.89808 7.68447 1.89808 7.29394 2.2886L3.64279 5.93975C3.25227 6.33028 3.25227 6.96344 3.64279 7.35397L3.88171 7.59288C4.27223 7.98341 4.9054 7.98341 5.29592 7.59288L6.83 6.0588L6.83 13C6.83 13.5523 7.27772 14 7.83 14H8.16788C8.72017 14 9.16788 13.5523 9.16788 13Z"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.15738 4.22101C6.46112 3.50344 7.17177 3 8 3C9.10457 3 10 3.89543 10 5V7H4C3.44772 7 3 7.44772 3 8V14C3 14.5523 3.44772 15 4 15H12C12.5523 15 13 14.5523 13 14V8C13 7.44772 12.5523 7 12 7V5C12 2.79086 10.2091 1 8 1C6.20247 1 4.68187 2.18568 4.17763 3.81762C3.98198 4.45082 4.53726 5 5.2 5C5.64183 5 5.98516 4.62789 6.15738 4.22101ZM8.58667 10.8099C8.83712 10.6282 9 10.3331 9 10C9 9.44771 8.55228 9 8 9C7.44772 9 7 9.44771 7 10C7 10.3361 7.16577 10.6334 7.42 10.8147V12.6667C7.42 12.9888 7.68117 13.25 8.00333 13.25C8.3255 13.25 8.58667 12.9888 8.58667 12.6667V10.8099Z"
         fill={'currentColor'}
       />
     </svg>
   );
 };
 
-ArrowUp.displayName = 'ArrowUp';
-ArrowUp.isGlyph = true;
-ArrowUp.propTypes = {
+Unlock.displayName = 'Unlock';
+Unlock.isGlyph = true;
+Unlock.propTypes = {
   fill: PropTypes.string,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
 };
-export default ArrowUp;
+export default Unlock;

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 989522ec1a2399fd16203ae69333164b
+ * @checksum 4b3d2573fba43737702f081f2be9f065
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,19 +48,18 @@ const Menu = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="Menu-Copy"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
-        fillRule="evenodd"
-      >
-        <path
-          d="M15,5 L1,5 L1,3 L15,3 L15,5 Z M15,9 L1,9 L1,7 L15,7 L15,9 Z M15,13 L1,13 L1,11 L15,11 L15,13 Z"
-          id="\uE202"
-          fill={'currentColor'}
-        />
-      </g>
+      <path
+        d="M2 4C2 3.44772 2.44772 3 3 3H13C13.5523 3 14 3.44772 14 4C14 4.55228 13.5523 5 13 5H3C2.44772 5 2 4.55228 2 4Z"
+        fill={'currentColor'}
+      />
+      <path
+        d="M2 8C2 7.44772 2.44772 7 3 7H13C13.5523 7 14 7.44772 14 8C14 8.55228 13.5523 9 13 9H3C2.44772 9 2 8.55228 2 8Z"
+        fill={'currentColor'}
+      />
+      <path
+        d="M3 11C2.44772 11 2 11.4477 2 12C2 12.5523 2.44772 13 3 13H13C13.5523 13 14 12.5523 14 12C14 11.4477 13.5523 11 13 11H3Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };
