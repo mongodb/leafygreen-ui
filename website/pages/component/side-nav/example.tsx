@@ -77,9 +77,15 @@ function DefaultExample({
       `}
     >
       <SideNav>
-        <SideNavItem glyph={<Icon glyph="Calendar" />}>Ungrouped Item</SideNavItem>
+        <SideNavItem glyph={<Icon glyph="Calendar" />}>
+          Ungrouped Item
+        </SideNavItem>
 
-        <SideNavGroup {...collapsibleProps} glyph={glyph ? <Icon glyph="Building" /> : undefined} header={header}>
+        <SideNavGroup
+          {...collapsibleProps}
+          glyph={glyph ? <Icon glyph="Building" /> : undefined}
+          header={header}
+        >
           <SideNavItem active={active}>Projects</SideNavItem>
           <SideNavItem disabled={disabled}>Alerts</SideNavItem>
           <SideNavItem>Activity Feed</SideNavItem>
