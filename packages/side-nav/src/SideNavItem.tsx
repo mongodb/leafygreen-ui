@@ -233,6 +233,7 @@ const SideNavItem: ExtendableBox<
             </CollapsedSideNavItem>
           </span>
         )}
+
         {children}
       </Box>
     </li>
