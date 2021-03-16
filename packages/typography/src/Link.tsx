@@ -113,11 +113,14 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   }
 
   if (target === '_blank' && !hideExternalIcon) {
-    icon = <OpenNewTabIcon className={openInNewTabStyles} />;
+    icon = (
+      <OpenNewTabIcon role="presentation" className={openInNewTabStyles} />
+    );
   } else if (arrowAppearance !== ArrowAppearance.None) {
     icon = (
       <ArrowRightIcon
-        size={10}
+        role="presentation"
+        size={12}
         className={cx({
           [arrowRightIconHover]: arrowAppearance === ArrowAppearance.Hover,
           [arrowRightIconPersist]: arrowAppearance === ArrowAppearance.Persist,
