@@ -2,8 +2,6 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/a11y.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/a11y--default)
-
 ## Installation
 
 ### Yarn
