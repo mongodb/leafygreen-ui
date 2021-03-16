@@ -41,6 +41,12 @@ The following only apply when building a new component
 - [ ] I have added my new package to the global tsconfig
 - [ ] I have added my new package to the Table of Contents on the global README
 
+## 🧪 How to test changes
+
+<!--
+Explain or give steps of how to test your changes manually. Be as specific as you can – this will help the reviewer effectively and efficiently test and approve your changes. For bug fixes, this can often simply be the steps that you used to reproduce the bug.
+-->
+
 ## 💬 Further comments
 
 <!--
