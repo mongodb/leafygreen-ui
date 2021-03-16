@@ -3,6 +3,7 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
 import { getClassName, getIconStyle } from './styles';
 
@@ -14,13 +15,12 @@ const containerChildStyles = css`
   pointer-events: none;
 `;
 
-const iconRightMargin = css`
-  margin-right: ${spacing[2]}px;
-`;
-
-const iconLeftMargin = css`
-  margin-left: ${spacing[2]}px;
-`;
+const iconSpacing = {
+  [Size.XSmall]: 6,
+  [Size.Small]: 6,
+  [Size.Default]: spacing[2],
+  [Size.Large]: spacing[2],
+}
 
 const Button: ExtendableBox<
   ButtonProps & { ref?: React.Ref<any> },
@@ -40,6 +40,7 @@ const Button: ExtendableBox<
   }: ButtonProps,
   forwardRef,
 ) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const localRef = useRef<HTMLButtonElement | HTMLAnchorElement | null>(null);
 
   const ref = (node: HTMLAnchorElement | HTMLButtonElement) => {
@@ -68,6 +69,7 @@ const Button: ExtendableBox<
     darkMode,
     baseFontSize,
     disabled,
+    showFocus,
   });
 
   const sharedProps = {
@@ -88,7 +90,7 @@ const Button: ExtendableBox<
     React.cloneElement(leftGlyph, {
       className: cx(
         {
-          [iconRightMargin]: !isIconOnlyButton || !!rightGlyph,
+          [css`margin-right: ${iconSpacing[size]}px;`]: !isIconOnlyButton || !!rightGlyph,
         },
         getIconStyle({ variant, size, darkMode, disabled, isIconOnlyButton }),
       ),
@@ -100,7 +102,7 @@ const Button: ExtendableBox<
     React.cloneElement(rightGlyph, {
       className: cx(
         {
-          [iconLeftMargin]: !isIconOnlyButton || !!leftGlyph,
+          [css`margin-left: ${iconSpacing[size]}px;`]: !isIconOnlyButton || !!leftGlyph,
         },
         getIconStyle({ variant, size, darkMode, disabled, isIconOnlyButton }),
       ),
@@ -108,7 +110,7 @@ const Button: ExtendableBox<
     });
 
   const content = (
-    <div className={containerChildStyles}>
+    <div className={cx(containerChildStyles, { [css`margin-top: 1px`]: baseFontSize === 14 && size === Size.Small })}>
       {clonedLeftGlyph}
       {children}
       {clonedRightGlyph}

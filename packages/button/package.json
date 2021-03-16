@@ -25,10 +25,14 @@
     "@leafygreen-ui/tokens": "^0.5.0",
     "@leafygreen-ui/palette": "^3.1.1",
     "@leafygreen-ui/emotion": "^3.0.1",
-    "@leafygreen-ui/ripple": "^0.9.0"
+    "@leafygreen-ui/ripple": "^1.0.0"
   }, 
   "devDependencies": {
     "@leafygreen-ui/icon": "^9.0.0"
   },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^2.0.2"
+  }
+  ,
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
 }

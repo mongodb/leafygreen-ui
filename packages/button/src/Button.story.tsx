@@ -4,6 +4,7 @@ import { boolean, select } from '@storybook/addon-knobs';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Button, { Variant, Size } from '.';
 
 storiesOf('Button', module)
@@ -13,28 +14,30 @@ storiesOf('Button', module)
     const baseFontSize = select('Base Font Size', [14, 16], 14);
     const disabled = boolean('Disabled', false);
     const darkMode = boolean('Dark Mode', false);
-    const leftGlyph = select('Left Glyph', Object.keys(glyphs), 'Laptop');
-    const rightGlyph = select('Right Glyph', Object.keys(glyphs), 'Laptop');
+    const leftGlyph = select('Left Glyph', Object.keys(glyphs), 'InviteUser');
+    const rightGlyph = select('Right Glyph', Object.keys(glyphs), 'CaretDown');
 
     const className = css`
-      background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark2};
+      background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
       padding: 40px;
     `;
 
     return (
-      <div className={className}>
-        <Button
-          variant={variant}
-          darkMode={darkMode}
-          size={size}
-          disabled={disabled}
-          baseFontSize={baseFontSize}
-          leftGlyph={<Icon glyph={leftGlyph} />}
-          rightGlyph={<Icon glyph={rightGlyph} />}
-        >
-          Button Test Content
-        </Button>
-      </div>
+      <LeafygreenProvider>
+        <div className={className}>
+          <Button
+            variant={variant}
+            darkMode={darkMode}
+            size={size}
+            disabled={disabled}
+            baseFontSize={baseFontSize}
+            leftGlyph={<Icon glyph={leftGlyph} />}
+            rightGlyph={<Icon glyph={rightGlyph} />}
+          >
+            MongoDB
+          </Button>
+        </div>
+      </LeafygreenProvider>
     );
   })
   .add('Icon only', () => {
@@ -62,16 +65,18 @@ storiesOf('Button', module)
     `;
 
     return (
-      <div className={className}>
-        <Button
-          variant={variant}
-          darkMode={darkMode}
-          size={size}
-          disabled={disabled}
-          baseFontSize={baseFontSize}
-          leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-          rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
-        ></Button>
-      </div>
+      <LeafygreenProvider>
+        <div className={className}>
+          <Button
+            variant={variant}
+            darkMode={darkMode}
+            size={size}
+            disabled={disabled}
+            baseFontSize={baseFontSize}
+            leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+            rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
+          ></Button>
+        </div>
+      </LeafygreenProvider>
     );
   });
