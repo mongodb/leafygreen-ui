@@ -20,6 +20,7 @@ const buttonClassName = css`
   box-shadow: 0px 1px 2px 0px rgba(6, 22, 33, 0.4);
   border: 1px solid #89979b;
   padding: 7px 12px 8px 12px;
+  z-index: 0;
 `;
 
 function ButtonDemo({

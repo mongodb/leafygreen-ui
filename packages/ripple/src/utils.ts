@@ -20,10 +20,10 @@ export { Mode };
 
 const Variant = {
   Primary: 'primary',
-  Info: 'info',
+  PrimaryOutline: 'primaryOutline',
   Default: 'default',
   Danger: 'danger',
-  SecondaryDanger: 'secondaryDanger',
+  DangerOutline: 'dangerOutline',
 } as const;
 
 type Variant = typeof Variant[keyof typeof Variant];
@@ -38,17 +38,23 @@ export interface Options {
 export const colorMap: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Primary]: visualDesignPalette.green5,
-    [Variant.Info]: transparentize(buttonOpacity, visualDesignPalette.green3),
+    [Variant.PrimaryOutline]: transparentize(
+      buttonOpacity,
+      visualDesignPalette.green3,
+    ),
     [Variant.Default]: uiColors.gray.light2,
     [Variant.Danger]: visualDesignPalette.orange4,
-    [Variant.SecondaryDanger]: transparentize(buttonOpacity, uiColors.red.base),
+    [Variant.DangerOutline]: transparentize(buttonOpacity, uiColors.red.base),
   },
   [Mode.Dark]: {
     [Variant.Primary]: visualDesignPalette.green5,
-    [Variant.Info]: transparentize(buttonOpacity, uiColors.green.base),
+    [Variant.PrimaryOutline]: transparentize(
+      buttonOpacity,
+      uiColors.green.base,
+    ),
     [Variant.Default]: uiColors.gray.base,
     [Variant.Danger]: visualDesignPalette.orange4,
-    [Variant.SecondaryDanger]: transparentize(
+    [Variant.DangerOutline]: transparentize(
       buttonOpacity,
       visualDesignPalette.orange4,
     ),

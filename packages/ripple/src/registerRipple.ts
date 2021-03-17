@@ -108,6 +108,7 @@ const staticRippleStyles = `
     transform: scale(0.2);
     opacity: 0;
     pointer-events: none;
+    z-index: -1;
     -webkit-animation: lg-ui-ripple .75s ease-out;
     -moz-animation: lg-ui-ripple .75s ease-out;
     animation: lg-ui-ripple .75s ease-out;

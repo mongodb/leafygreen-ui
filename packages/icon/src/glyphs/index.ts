@@ -27,6 +27,8 @@ import ChevronLeft from './ChevronLeft.svg';
 import Cloud from './Cloud.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
+import CurlyBraces from './CurlyBraces.svg';
+import Database from './Database.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
@@ -58,6 +60,7 @@ import Stitch from './Stitch.svg';
 import Support from './Support.svg';
 import Trash from './Trash.svg';
 import University from './University.svg';
+import Unlock from './Unlock.svg';
 import Unsorted from './Unsorted.svg';
 import UpDownCarets from './UpDownCarets.svg';
 import Upload from './Upload.svg';
@@ -94,6 +97,8 @@ const glyphs = {
   Cloud,
   Copy,
   CreditCard,
+  CurlyBraces,
+  Database,
   Download,
   Edit,
   Ellipsis,
@@ -125,6 +130,7 @@ const glyphs = {
   Support,
   Trash,
   University,
+  Unlock,
   Unsorted,
   UpDownCarets,
   Upload,

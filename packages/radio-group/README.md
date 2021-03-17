@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/radio-group.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/radiogroup--uncontrolled)
+#### [View on MongoDB.design](https://www.mongodb.design/component/radio-group/example/)
 
 ## Installation
 

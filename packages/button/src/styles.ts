@@ -1,19 +1,24 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Size, Variant, Mode, FontSize, ButtonProps } from './types';
+import { Size, Variant, Mode, ButtonProps } from './types';
 
 const baseButtonStyles = css`
+  // unset browser default
+  appearance: none;
+  padding: 0;
+  margin: 0;
   background-color: transparent;
   border: 0px solid transparent;
+
+  display: inline-flex;
+  align-items: stretch;
   border-radius: 4px;
-  margin: 0;
   transition: all 150ms ease-in-out;
   position: relative;
   text-decoration: none;
-  display: block;
   cursor: pointer;
-  overflow: hidden;
+  z-index: 0;
 
   &:focus {
     outline: none;
@@ -34,7 +39,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       }
     `,
 
-    [Variant.Info]: css`
+    [Variant.PrimaryOutline]: css`
       border: 1px solid ${uiColors.green.dark1};
       color: ${uiColors.green.dark2};
 
@@ -74,7 +79,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       }
     `,
 
-    [Variant.SecondaryDanger]: css`
+    [Variant.DangerOutline]: css`
       border: 1px solid ${uiColors.red.base};
       color: ${uiColors.red.dark2};
 
@@ -98,7 +103,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       }
     `,
 
-    [Variant.Info]: css`
+    [Variant.PrimaryOutline]: css`
       border: 1px solid ${uiColors.green.base};
       color: #0ad05b;
 
@@ -133,7 +138,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       }
     `,
 
-    [Variant.SecondaryDanger]: css`
+    [Variant.DangerOutline]: css`
       border: 1px solid #f97216;
       color: #f97216;
 
@@ -154,7 +159,7 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
           0px 0px 0px 3px ${uiColors.focus};
       }
     `,
-    [Variant.Info]: css`
+    [Variant.PrimaryOutline]: css`
       &:focus {
         background-color: rgba(9, 128, 76, 0.04);
         border: 1px solid ${uiColors.green.dark1};
@@ -176,7 +181,7 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
           0px 0px 0px 3px ${uiColors.focus};
       }
     `,
-    [Variant.SecondaryDanger]: css`
+    [Variant.DangerOutline]: css`
       &:focus {
         background: rgba(207, 74, 34, 0.04);
         border: 1px solid ${uiColors.red.dark2};
@@ -192,7 +197,7 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
           0px 0px 0px 3px ${uiColors.focus};
       }
     `,
-    [Variant.Info]: css`
+    [Variant.PrimaryOutline]: css`
       &:focus {
         background: rgba(10, 208, 91, 0.08);
         border: 1px solid ${uiColors.green.dark1};
@@ -211,7 +216,7 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
         box-shadow: 0px 0px 0px 3px ${uiColors.focus};
       }
     `,
-    [Variant.SecondaryDanger]: css`
+    [Variant.DangerOutline]: css`
       &:focus {
         background: rgba(249, 114, 22, 0.08);
         border: 1px solid #f97216;
@@ -243,58 +248,70 @@ const disabledStyle: Record<Mode, string> = {
 const sizeSet: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
-    padding: 3px ${spacing[2]}px;
+    // padding: 3px ${spacing[2]}px;
     text-transform: uppercase;
     font-size: 12px;
-    line-height: 16px;
+    line-height: 1em;
     font-weight: bold;
     letter-spacing: 0.4px;
   `,
 
   [Size.Small]: css`
     height: 28px;
-    padding: ${spacing[1]}px 12px 5px; // Update such that we have 4px 12px on baseFontSize is 16
   `,
 
   [Size.Default]: css`
     height: 36px;
-    padding: ${spacing[2]}px 12px 9px;
   `,
 
   [Size.Large]: css`
     height: 48px;
-    padding: 14px ${spacing[3]}px;
+    // padding: 14px ${spacing[3]}px;
     font-size: 18px;
     line-height: 24px;
   `,
 };
 
-const fontStyles = ({
-  baseFontSize,
-  size,
-}: {
-  baseFontSize: 14 | 16;
-  size: Size;
-}) => {
-  if (baseFontSize === 14) {
-    return css`
-      font-size: 14px;
-      line-height: 20px;
-    `;
-  }
+const padding: Record<Size, string> = {
+  [Size.XSmall]: css`
+    padding-left: ${spacing[2]}px;
+    padding-right: ${spacing[2]}px;
+  `,
 
-  if (size === Size.Small) {
-    return css`
-      font-size: 16px;
-      line-height: 20px;
-    `;
-  }
+  [Size.Small]: css`
+    padding-left: 12px;
+    padding-right: 12px;
+  `,
 
-  return css`
-    font-size: 16px;
-    line-height: 24px;
-  `;
+  [Size.Default]: css`
+    padding-left: 12px;
+    padding-right: 12px;
+  `,
+
+  [Size.Large]: css`
+    padding-left: 14px;
+    padding-right: 14px;
+  `,
 };
+
+const fontStyles = {
+  [14]: css`
+    font-size: 14px;
+  `,
+  [16]: css`
+    font-size: 16px;
+    // Pixel pushing for optical alignment purposes
+    transform: translateY(1px);
+  `,
+};
+
+const rippleStyle = css`
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 3px;
+  flex-grow: 1;
+`;
 
 export function getClassName({
   variant,
@@ -313,7 +330,7 @@ export function getClassName({
   const color = colorSet[mode][variant];
   const focus = focusStyle[mode][variant];
   const size = sizeSet[sizeProp];
-  const fontSize = fontStyles({ baseFontSize, size });
+  const fontSize = fontStyles[baseFontSize];
 
   return cx(
     baseButtonStyles,
@@ -325,12 +342,16 @@ export function getClassName({
   );
 }
 
+export function getRippleClassName(size: Size) {
+  return cx(rippleStyle, padding[size]);
+}
+
 const iconColor: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Primary]: css`
       color: ${uiColors.green.light3};
     `,
-    [Variant.Info]: css`
+    [Variant.PrimaryOutline]: css`
       color: ${uiColors.green.dark1};
     `,
     [Variant.Default]: css`
@@ -339,7 +360,7 @@ const iconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.Danger]: css`
       color: ${uiColors.red.light3};
     `,
-    [Variant.SecondaryDanger]: css`
+    [Variant.DangerOutline]: css`
       color: ${uiColors.red.base};
     `,
   },
@@ -348,7 +369,7 @@ const iconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.Primary]: css`
       color: ${uiColors.green.light2};
     `,
-    [Variant.Info]: css`
+    [Variant.PrimaryOutline]: css`
       color: #13aa52;
     `,
     [Variant.Default]: css`
@@ -357,7 +378,7 @@ const iconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.Danger]: css`
       color: ${uiColors.red.light3};
     `,
-    [Variant.SecondaryDanger]: css`
+    [Variant.DangerOutline]: css`
       color: #f97216;
     `,
   },
@@ -368,7 +389,7 @@ const onlyIconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.Primary]: css`
       color: ${uiColors.white};
     `,
-    [Variant.Info]: css`
+    [Variant.PrimaryOutline]: css`
       color: ${uiColors.green.dark1};
     `,
     [Variant.Default]: css`
@@ -377,7 +398,7 @@ const onlyIconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.Danger]: css`
       color: ${uiColors.white};
     `,
-    [Variant.SecondaryDanger]: css`
+    [Variant.DangerOutline]: css`
       color: #cf4a22;
     `,
   },
@@ -385,7 +406,7 @@ const onlyIconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.Primary]: css`
       color: ${uiColors.white};
     `,
-    [Variant.Info]: css`
+    [Variant.PrimaryOutline]: css`
       color: #0ad05b;
     `,
     [Variant.Default]: css`
@@ -394,7 +415,7 @@ const onlyIconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.Danger]: css`
       color: ${uiColors.white};
     `,
-    [Variant.SecondaryDanger]: css`
+    [Variant.DangerOutline]: css`
       color: #f97216;
     `,
   },

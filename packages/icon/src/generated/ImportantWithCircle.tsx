@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum c445c130a961799e1b47f0e70cc1f7a8
+ * @checksum 51c037e78804477fa446feb8ffeb4c4b
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,19 +48,12 @@ const ImportantWithCircle = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="Glyphs-/-Important-With-Circle"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <path
-          d="M9,8.75 L7,8.75 L6.75,3.75 L9.25,3.75 L9,8.75 Z M8,12.25 C7.31,12.25 6.75,11.69 6.75,11 C6.75,10.31 7.31,9.75 8,9.75 C8.69,9.75 9.25,10.31 9.25,11 C9.25,11.69 8.69,12.25 8,12.25 L8,12.25 Z M8,0.5 C3.857,0.5 0.5,3.857 0.5,8 C0.5,12.142 3.857,15.5 8,15.5 C12.142,15.5 15.5,12.142 15.5,8 C15.5,3.857 12.142,0.5 8,0.5 L8,0.5 Z"
-          id="Shape"
-          fill={'currentColor'}
-        />
-      </g>
+        clipRule="evenodd"
+        d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15ZM7 4.5C7 3.94772 7.44772 3.5 8 3.5C8.55228 3.5 9 3.94772 9 4.5V8.5C9 9.05228 8.55228 9.5 8 9.5C7.44772 9.5 7 9.05228 7 8.5V4.5ZM9 11.5C9 12.0523 8.55228 12.5 8 12.5C7.44772 12.5 7 12.0523 7 11.5C7 10.9477 7.44772 10.5 8 10.5C8.55228 10.5 9 10.9477 9 11.5Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };

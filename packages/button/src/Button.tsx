@@ -5,7 +5,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
-import { getClassName, getIconStyle } from './styles';
+import { getClassName, getRippleClassName, getIconStyle } from './styles';
 
 const containerChildStyles = css`
   display: flex;
@@ -41,19 +41,7 @@ const Button: ExtendableBox<
   forwardRef,
 ) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const localRef = useRef<HTMLButtonElement | HTMLAnchorElement | null>(null);
-
-  const ref = (node: HTMLAnchorElement | HTMLButtonElement) => {
-    localRef.current = node;
-
-    if (typeof forwardRef === 'function') {
-      forwardRef(node);
-    } else if (forwardRef) {
-      (forwardRef as React.MutableRefObject<
-        HTMLButtonElement | HTMLAnchorElement
-      >).current = node;
-    }
-  };
+  const localRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (localRef.current != null) {
@@ -79,6 +67,14 @@ const Button: ExtendableBox<
     'aria-disabled': disabled,
     ...rest,
   };
+
+  const isAnchor = typeof rest.href === 'string'
+  let type;
+
+  // @ts-expect-error rest.as may be defined
+  if ((rest.as && rest.as === 'button') || (!isAnchor && !rest.as)) {
+    type = 'button'
+  }
 
   const accessibleIconProps = !isIconOnlyButton && {
     'aria-hidden': true,
@@ -110,35 +106,29 @@ const Button: ExtendableBox<
     });
 
   const content = (
-    <div className={cx(containerChildStyles, { [css`margin-top: 1px`]: baseFontSize === 14 && size === Size.Small })}>
-      {clonedLeftGlyph}
-      {children}
-      {clonedRightGlyph}
+    <div className={getRippleClassName(size)} ref={localRef}>
+      <div className={containerChildStyles}>
+        {clonedLeftGlyph}
+        {children}
+        {clonedRightGlyph}
+      </div>
     </div>
   );
 
-  if (typeof rest.href === 'string') {
-    return (
-      <Box
-        as="a"
-        ref={ref as (node: HTMLAnchorElement) => void}
-        {...sharedProps}
-      >
-        {content}
-      </Box>
-    );
-  }
-
   return (
     <Box
-      as="button"
-      type="button"
-      ref={ref as (node: HTMLButtonElement) => void}
+      // Provide a default value for the as prop
+      // If consumping application passes a value for as, it will override the default set here
+      as={isAnchor ? 'a' : 'button'}
+      ref={forwardRef}
+      type={type}
       {...sharedProps}
     >
       {content}
     </Box>
-  );
+  )
+
+
 });
 
 Button.displayName = 'Button';
