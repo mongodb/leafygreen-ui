@@ -17,8 +17,6 @@ const landingURL = `${CDN}/images/landing`;
 const layoutProperties = css`
   margin-top: ${spacing[6]}px;
   margin-right: 0;
-  position: relative;
-  z-index: 0;
 
   ${mq({
     width: [
@@ -43,7 +41,6 @@ const container = css`
   border: unset;
   padding: unset;
   cursor: pointer;
-  position: relative;
   color: ${uiColors.gray.dark3};
 `;
 
@@ -54,6 +51,7 @@ const sharedHoverInteraction = css`
       2px 16px 20px -10px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
     z-index: 99999;
+    position: relative;
   }
 `;
 
