@@ -142,6 +142,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     ref.current!.focus();
   }, [onClose, onOpen, open, ref]);
 
+  console.log({ ref });
+
   return (
     <Button
       // eslint-disable-next-line jsx-a11y/role-has-required-aria-props

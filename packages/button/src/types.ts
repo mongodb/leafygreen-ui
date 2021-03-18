@@ -37,15 +37,6 @@ export interface ButtonProps {
   leftGlyph?: React.ReactElement;
   rightGlyph?: React.ReactElement;
   href?: string;
-
-  // Interaction Ring props
-  borderRadius?: string;
-  forceState?: {
-    focused?: boolean;
-    active?: boolean;
-    // Supporting "hovered" requires factoring out all the &:hover
-    // styles from the the base style and each variant's styles
-  };
 }
 
 export { Variant, Size, Mode, FontSize };

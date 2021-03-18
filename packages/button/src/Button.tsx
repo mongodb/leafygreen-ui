@@ -1,26 +1,63 @@
 import React, { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
-import { getClassName, getRippleClassName, getIconStyle } from './styles';
+import { getClassName, getIconStyle } from './styles';
+
+const rippleStyle = css`
+  overflow: hidden;
+  border-radius: 3px;
+  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
 
 const containerChildStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  width: 100%;
   pointer-events: none;
+  z-index: 0;
+  font-family: ${fontFamilies.default};
 `;
+
+const padding: Record<Size, string> = {
+  [Size.XSmall]: css`
+    padding-left: ${spacing[2]}px;
+    padding-right: ${spacing[2]}px;
+  `,
+
+  [Size.Small]: css`
+    padding-left: 12px;
+    padding-right: 12px;
+  `,
+
+  [Size.Default]: css`
+    padding-left: 12px;
+    padding-right: 12px;
+  `,
+
+  [Size.Large]: css`
+    padding-left: 14px;
+    padding-right: 14px;
+  `,
+};
 
 const iconSpacing = {
   [Size.XSmall]: 6,
   [Size.Small]: 6,
   [Size.Default]: spacing[2],
   [Size.Large]: spacing[2],
-}
+};
 
 const Button: ExtendableBox<
   ButtonProps & { ref?: React.Ref<any> },
@@ -68,12 +105,12 @@ const Button: ExtendableBox<
     ...rest,
   };
 
-  const isAnchor = typeof rest.href === 'string'
-  let type;
+  const isAnchor = typeof rest.href === 'string';
+  let type: JSX.IntrinsicElements['button']['type'];
 
   // @ts-expect-error rest.as may be defined
   if ((rest.as && rest.as === 'button') || (!isAnchor && !rest.as)) {
-    type = 'button'
+    type = 'button';
   }
 
   const accessibleIconProps = !isIconOnlyButton && {
@@ -86,7 +123,9 @@ const Button: ExtendableBox<
     React.cloneElement(leftGlyph, {
       className: cx(
         {
-          [css`margin-right: ${iconSpacing[size]}px;`]: !isIconOnlyButton || !!rightGlyph,
+          [css`
+            margin-right: ${iconSpacing[size]}px;
+          `]: !isIconOnlyButton || !!rightGlyph,
         },
         getIconStyle({ variant, size, darkMode, disabled, isIconOnlyButton }),
       ),
@@ -98,7 +137,9 @@ const Button: ExtendableBox<
     React.cloneElement(rightGlyph, {
       className: cx(
         {
-          [css`margin-left: ${iconSpacing[size]}px;`]: !isIconOnlyButton || !!leftGlyph,
+          [css`
+            margin-left: ${iconSpacing[size]}px;
+          `]: !isIconOnlyButton || !!leftGlyph,
         },
         getIconStyle({ variant, size, darkMode, disabled, isIconOnlyButton }),
       ),
@@ -106,14 +147,17 @@ const Button: ExtendableBox<
     });
 
   const content = (
-    <div className={getRippleClassName(size)} ref={localRef}>
-      <div className={containerChildStyles}>
+    <>
+      <div className={cx(rippleStyle)} ref={localRef} />
+      <div className={cx(containerChildStyles, padding[size])}>
         {clonedLeftGlyph}
         {children}
         {clonedRightGlyph}
       </div>
-    </div>
+    </>
   );
+
+  console.log(forwardRef);
 
   return (
     <Box
@@ -126,11 +170,20 @@ const Button: ExtendableBox<
     >
       {content}
     </Box>
-  )
-
-
+  );
 });
 
 Button.displayName = 'Button';
+
+Button.propTypes = {
+  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
+  baseFontSize: PropTypes.oneOf([14, 16]),
+  size: PropTypes.oneOf(Object.values(Size)),
+  disabled: PropTypes.bool,
+  leftGlyph: PropTypes.element,
+  rightGlyph: PropTypes.element,
+  href: PropTypes.string,
+};
 
 export default Button;

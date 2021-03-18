@@ -500,7 +500,7 @@ export default function Select({
             onSelectFocusedOption={onSelectFocusedOption}
             onFocusPreviousOption={onFocusPreviousOption}
             onFocusNextOption={onFocusNextOption}
-            usePortal={true}
+            usePortal={usePortal}
             className={css`
               width: ${menuButtonRef.current?.clientWidth}px;
             `}

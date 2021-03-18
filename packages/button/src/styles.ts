@@ -1,6 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
 import { Size, Variant, Mode, ButtonProps } from './types';
 
 const baseButtonStyles = css`
@@ -248,7 +247,6 @@ const disabledStyle: Record<Mode, string> = {
 const sizeSet: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
-    // padding: 3px ${spacing[2]}px;
     text-transform: uppercase;
     font-size: 12px;
     line-height: 1em;
@@ -266,31 +264,8 @@ const sizeSet: Record<Size, string> = {
 
   [Size.Large]: css`
     height: 48px;
-    // padding: 14px ${spacing[3]}px;
     font-size: 18px;
     line-height: 24px;
-  `,
-};
-
-const padding: Record<Size, string> = {
-  [Size.XSmall]: css`
-    padding-left: ${spacing[2]}px;
-    padding-right: ${spacing[2]}px;
-  `,
-
-  [Size.Small]: css`
-    padding-left: 12px;
-    padding-right: 12px;
-  `,
-
-  [Size.Default]: css`
-    padding-left: 12px;
-    padding-right: 12px;
-  `,
-
-  [Size.Large]: css`
-    padding-left: 14px;
-    padding-right: 14px;
   `,
 };
 
@@ -304,14 +279,6 @@ const fontStyles = {
     transform: translateY(1px);
   `,
 };
-
-const rippleStyle = css`
-  position: relative;
-  z-index: 0;
-  overflow: hidden;
-  border-radius: 3px;
-  flex-grow: 1;
-`;
 
 export function getClassName({
   variant,
@@ -340,10 +307,6 @@ export function getClassName({
     fontSize,
     size,
   );
-}
-
-export function getRippleClassName(size: Size) {
-  return cx(rippleStyle, padding[size]);
 }
 
 const iconColor: Record<Mode, Record<Variant, string>> = {
