@@ -1,5 +1,12 @@
 # @leafygreen-ui/banner
 
+## 3.0.5
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/icon@10.0.0
+
 ## 3.0.4
 
 ### Patch Changes

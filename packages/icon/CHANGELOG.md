@@ -1,5 +1,43 @@
 # @leafygreen-ui/icon
 
+## 10.1.0
+
+### Minor Changes
+
+- 077628e7: Adds missing icons from the batch 2 release, and fixes an issue with an icon update
+
+## 10.0.0
+
+### Major Changes
+
+- ec27f36e: Adds new glyphs:
+
+  - CurlyBraces
+  - Database
+  - Unlock
+
+  Updates existing glyphs:
+
+  - ArrowDown
+  - ArrowLeft
+  - ArrowRight
+  - ArrowUp
+  - Bulb
+  - Checkmark
+  - CheckmarkWithCircle
+  - Cloud
+  - ImportantWithCircle
+  - Lock
+  - Unlock
+  - Menu
+  - OpenNewTab
+  - QuestionMarkWithCircle
+  - Refresh
+  - SortAscending
+  - SortDescending
+  - Unsorted
+  - XWithCircle
+
 ## 9.0.0
 
 ### Major Changes
