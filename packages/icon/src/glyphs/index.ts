@@ -32,6 +32,7 @@ import Database from './Database.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
+import Export from './Export.svg';
 import Favorite from './Favorite.svg';
 import Filter from './Filter.svg';
 import Folder from './Folder.svg';
@@ -102,6 +103,7 @@ const glyphs = {
   Download,
   Edit,
   Ellipsis,
+  Export,
   Favorite,
   Filter,
   Folder,
