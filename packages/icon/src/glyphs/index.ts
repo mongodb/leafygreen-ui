@@ -4,6 +4,7 @@ import { LGGlyph } from '../types';
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
+import Apps from './Apps.svg';
 import ArrowDown from './ArrowDown.svg';
 import ArrowLeft from './ArrowLeft.svg';
 import ArrowRight from './ArrowRight.svg';
@@ -75,6 +76,7 @@ import XWithCircle from './XWithCircle.svg';
 const glyphs = {
   ActivityFeed,
   AddFile,
+  Apps,
   ArrowDown,
   ArrowLeft,
   ArrowRight,

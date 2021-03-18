@@ -10,8 +10,10 @@ import { mq } from 'utils/mediaQuery';
 const newsContainer = css`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-bottom: ${spacing[4]}px;
+  justify-content: top;
+  // Baseline alignment for news header with side navigation header.
+  padding-top: ${spacing[2] - 1}px;
+
   ${mq({
     height: ['auto', '100%'],
     marginTop: ['48px', 'unset'],

@@ -6,13 +6,14 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { mq } from 'utils/mediaQuery';
 
 const footerContainer = css`
-  background-color: ${uiColors.gray.dark3};
+  border-top: 1px solid ${uiColors.gray.light2};
   width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   padding-left: ${spacing[5]}px;
-  padding-top: 36px;
+  padding-right: ${spacing[5]}px;
+  padding-top: ${spacing[4]}px;
 
   ${mq({
     marginTop: ['0px', `${spacing[7]}px`],
@@ -22,12 +23,13 @@ const footerContainer = css`
 const linksContainer = css`
   display: flex;
   flex-direction: column;
-  color: white;
-  margin-top: 2px;
+  color: ${uiColors.gray.dark2};
+  // Pixel-pushed for baseline alignment with logo
+  margin-top: 5px;
 
   ${mq({
-    marginLeft: ['36px', '72px'],
-    marginRight: ['36px', '72px'],
+    marginLeft: [`${spacing[4]}px`, `${spacing[6]}px`],
+    marginRight: [`${spacing[4]}px`, `${spacing[6]}px`],
   })}
 `;
 
@@ -35,16 +37,23 @@ const linkStyle = css`
   margin: 0;
   font-size: 14px;
   line-height: 20px;
-  margin-bottom: ${spacing[4]}px;
   text-decoration: none;
-  color: ${uiColors.white};
+  color: ${uiColors.gray.dark2};
+
+  & + & {
+    margin-top: ${spacing[3]}px;
+  }
+
+  &:hover {
+    color: ${uiColors.gray.dark3};
+  }
 `;
 
 const trademarkStyle = css`
-  margin-top: 72px;
-  margin-bottom: 40px;
-  font-size: 14px;
-  padding-bottom: ${spacing[4]}px;
+  margin-top: ${spacing[6]}px;
+  margin-bottom: ${spacing[4]}px;
+  font-size: 12px;
+  color: ${uiColors.gray.dark1};
 `;
 
 function FooterLink({ href, children }: JSX.IntrinsicElements['a']) {
@@ -64,18 +73,18 @@ function Footer() {
   return (
     <div role="contentinfo" className={footerContainer}>
       <a href="https://mongodb.com" target="_blank" rel="noopener noreferrer">
-        <Logo darkMode knockout height={20} aria-hidden="true" />
+        <Logo height={spacing[4]} aria-hidden="true" />
       </a>
       <div className={linksContainer}>
         <FooterLink href="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1">
-          About Design at MongoDB
+          About design at MongoDB
         </FooterLink>
         <FooterLink href="https://www.mongodb.com/blog">Blog</FooterLink>
         <FooterLink href="https://www.mongodb.com/blog/channel/events">
           Events
         </FooterLink>
         <FooterLink href="https://www.mongodb.com/careers">Careers</FooterLink>
-        <p className={trademarkStyle}>© 2020 MongoDB, Inc.</p>
+        <p className={trademarkStyle}>© 2021 MongoDB, Inc.</p>
       </div>
     </div>
   );
