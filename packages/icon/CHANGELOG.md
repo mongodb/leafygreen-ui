@@ -1,5 +1,16 @@
 # @leafygreen-ui/icon
 
+## 10.2.0
+
+### Minor Changes
+
+- 2f0775ec: Introduces an "Apps" icon to the icon component.
+
+### Patch Changes
+
+- Updated dependencies [2f0775ec]
+  - @leafygreen-ui/lib@6.3.0
+
 ## 10.1.0
 
 ### Minor Changes

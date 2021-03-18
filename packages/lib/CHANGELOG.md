@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 6.3.0
+
+### Minor Changes
+
+- 2f0775ec: Adds value for the left bracket key to enable easier handling of keyboard events for that key.
+
 ## 6.2.0
 
 ### Minor Changes
