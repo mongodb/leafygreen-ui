@@ -20,7 +20,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "10.0.0"
+    "@leafygreen-ui/icon": "10.1.0"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^6.1.2",
