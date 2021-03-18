@@ -1,5 +1,12 @@
 # @leafygreen-ui/select
 
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/icon@10.0.0
+
 ## 2.0.0
 
 ### Major Changes

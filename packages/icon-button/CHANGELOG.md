@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 9.1.2
+
+### Patch Changes
+
+- 99ea9436: Adds styles to the `IconButton` components's active state.
+
 ## 9.1.1
 
 ### Patch Changes

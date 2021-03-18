@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 5.0.2
+
+### Patch Changes
+
+- a5c1328d: Updates border-radius on RadioBox components from 2px to 4px.
+
 ## 5.0.1
 
 ### Patch Changes
