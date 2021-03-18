@@ -1,5 +1,17 @@
 # @leafygreen-ui/typography
 
+## 7.5.0
+
+### Minor Changes
+
+- ec27f36e: - Improves accessibility of link component when rendering an icon.
+  - Renders arrow at 12px instead of 10px to account for the reduced height of the glyph.
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/icon@10.0.0
+
 ## 7.4.0
 
 ### Minor Changes
