@@ -18,6 +18,12 @@ yarn add @leafygreen-ui/button
 npm install @leafygreen-ui/button
 ```
 
+## Peer Dependencies
+
+| Package                              | Version  |
+| ------------------------------------ | -------- |
+| `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
+
 ## Example
 
 ```js

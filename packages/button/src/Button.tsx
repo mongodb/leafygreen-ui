@@ -78,13 +78,13 @@ const Button: ExtendableBox<
   forwardRef,
 ) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const localRef = useRef<HTMLDivElement | null>(null);
+  const rippleRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (localRef.current != null) {
-      registerRipple(localRef.current, { variant, darkMode });
+    if (rippleRef.current != null) {
+      registerRipple(rippleRef.current, { variant, darkMode });
     }
-  }, [localRef, variant, darkMode]);
+  }, [rippleRef, variant, darkMode]);
 
   const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
 
@@ -97,14 +97,6 @@ const Button: ExtendableBox<
     showFocus,
   });
 
-  const sharedProps = {
-    className: cx(buttonClassName, className),
-    // only add a disabled prop if not an anchor
-    ...(typeof rest.href !== 'string' && { disabled }),
-    'aria-disabled': disabled,
-    ...rest,
-  };
-
   const isAnchor = typeof rest.href === 'string';
   let type: JSX.IntrinsicElements['button']['type'];
 
@@ -112,6 +104,19 @@ const Button: ExtendableBox<
   if ((rest.as && rest.as === 'button') || (!isAnchor && !rest.as)) {
     type = 'button';
   }
+
+  const buttonProps = {
+    type,
+    className: cx(buttonClassName, className),
+    ref: forwardRef,
+    // Provide a default value for the as prop
+    // If consumping application passes a value for as, it will override the default set here
+    as: isAnchor ? 'a' : 'button',
+    // only add a disabled prop if not an anchor
+    ...(typeof rest.href !== 'string' && { disabled }),
+    'aria-disabled': disabled,
+    ...rest,
+  } as const;
 
   const accessibleIconProps = !isIconOnlyButton && {
     'aria-hidden': true,
@@ -148,7 +153,8 @@ const Button: ExtendableBox<
 
   const content = (
     <>
-      <div className={cx(rippleStyle)} ref={localRef} />
+      {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
+      <div className={rippleStyle} ref={rippleRef} />
       <div className={cx(containerChildStyles, padding[size])}>
         {clonedLeftGlyph}
         {children}
@@ -157,20 +163,7 @@ const Button: ExtendableBox<
     </>
   );
 
-  console.log(forwardRef);
-
-  return (
-    <Box
-      // Provide a default value for the as prop
-      // If consumping application passes a value for as, it will override the default set here
-      as={isAnchor ? 'a' : 'button'}
-      ref={forwardRef}
-      type={type}
-      {...sharedProps}
-    >
-      {content}
-    </Box>
-  );
+  return <Box {...buttonProps}>{content}</Box>;
 });
 
 Button.displayName = 'Button';
