@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f368f0a03fb094eda3d19ae517d0cd48
+ * @checksum 176acd975ef40536fff14c93ef0f3141
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,18 +48,12 @@ const InfoWithCircle = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="Glyphs-/-Info-With-Circle"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <path
-          d="M8,15.5 C3.85786438,15.5 0.5,12.1421356 0.5,8 C0.5,3.85786438 3.85786438,0.5 8,0.5 C12.1421356,0.5 15.5,3.85786438 15.5,8 C15.5,12.1421356 12.1421356,15.5 8,15.5 Z M9,9 L9,7 L6,7 L6,9 L7,9 L7,11 L6,11 L6,13 L10,13 L10,11 L9,11 L9,9 Z M8,6 C8.82842712,6 9.5,5.32842712 9.5,4.5 C9.5,3.67157288 8.82842712,3 8,3 C7.17157288,3 6.5,3.67157288 6.5,4.5 C6.5,5.32842712 7.17157288,6 8,6 Z"
-          fill={'currentColor'}
-        />
-      </g>
+        clipRule="evenodd"
+        d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15ZM9 4C9 4.55228 8.55228 5 8 5C7.44772 5 7 4.55228 7 4C7 3.44772 7.44772 3 8 3C8.55228 3 9 3.44772 9 4ZM8 6C8.55228 6 9 6.44772 9 7V11H9.5C9.77614 11 10 11.2239 10 11.5C10 11.7761 9.77614 12 9.5 12H6.5C6.22386 12 6 11.7761 6 11.5C6 11.2239 6.22386 11 6.5 11H7V7H6.5C6.22386 7 6 6.77614 6 6.5C6 6.22386 6.22386 6 6.5 6H8Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };
