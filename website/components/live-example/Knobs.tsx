@@ -117,7 +117,7 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
         knobContainerStyle,
         knobContainerHeight,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -163,7 +163,7 @@ function Number({
         knobContainerStyle,
         knobContainerHeight,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -209,7 +209,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         knobContainerStyle,
         knobContainerHeight,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -248,7 +248,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
       className={cx(
         knobContainerStyle,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -307,7 +307,7 @@ function Select({
         knobContainerStyle,
         knobContainerHeight,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -318,6 +318,7 @@ function Select({
       >
         {label}
       </label>
+
       <LGUISelect
         aria-labelledby={labelId}
         onChange={handleChange}

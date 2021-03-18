@@ -99,7 +99,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
     <MobileNavigationProvider open={open} setOpen={setOpen}>
       <div
         className={css`
-          margin-top: ${spacing[5]}px;
+          padding-top: ${spacing[5]}px;
         `}
       >
         <div className={closedContainer}>
