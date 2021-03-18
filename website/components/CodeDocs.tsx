@@ -114,7 +114,13 @@ function VersionCard({
       >
         View Changelog
       </Button>
-      <Modal open={openModal} setOpen={setOpenModal}>
+      <Modal
+        className={css`
+          z-index: 1;
+        `}
+        open={openModal}
+        setOpen={setOpenModal}
+      >
         <div
           className={changelogStyles}
           dangerouslySetInnerHTML={{ __html: changelog }}

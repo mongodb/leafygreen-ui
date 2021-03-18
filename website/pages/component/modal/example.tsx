@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import Modal, { ModalSize } from '@leafygreen-ui/modal';
+import { css } from 'emotion';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 // When interface is used, ts complains that index signature is missing
@@ -30,7 +31,14 @@ function ModalExample(props: ModalKnobs) {
   return (
     <>
       <Button onClick={() => setOpen(!open)}>Open Modal</Button>
-      <Modal open={open} setOpen={setOpen} {...props} />
+      <Modal
+        className={css`
+          z-index: 1;
+        `}
+        open={open}
+        setOpen={setOpen}
+        {...props}
+      />
     </>
   );
 }

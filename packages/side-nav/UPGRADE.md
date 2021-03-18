@@ -77,3 +77,7 @@ We don't recommend using fixed or absolute positioning to position the navigatio
 ## Showing elements when navigation is collapsed
 
 You may have noticed that you're able to display items in the side navigation when it's closed! This is done automatically when supplying a glyph to the side navigation group (`SideNavGroup`) or a side navigation item (`SideNavItem`). You can also do this manually for other items using our `CollapsedSideNavItem` component.
+
+## Z-Index
+
+The navigation is position relative, so it may appear above non-static positioned elements that don't have a z-index applied. Be sure to test that the navigation doesn't appear above elements like modals when in use.
