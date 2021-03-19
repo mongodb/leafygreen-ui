@@ -1,10 +1,12 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { css, cx } from 'emotion';
+import {transparentize} from 'polished';
 import { Overline } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import { mq } from 'utils/mediaQuery';
@@ -35,6 +37,7 @@ const boxShadow = css`
 
 const container = css`
   ${boxShadow}
+  position: relative;
   width: 100%;
   height: 100%;
   background-color: white;
@@ -86,7 +89,8 @@ const overlineContainer = css`
 `;
 
 const overlineColor = css`
-  color: ${uiColors.gray.dark1};
+  color: ${uiColors.gray.dark2};
+  text-shadow: 0 1px 2px white, 0 1px 5px ${uiColors.gray.light3};
 `;
 
 const marketingWrapper = css`
@@ -96,6 +100,8 @@ const marketingWrapper = css`
   overflow: hidden;
   position: relative;
   transition: transform 300ms ease-in-out;
+  color: white;
+  text-shadow: 0 0 10px ${transparentize(0.2, uiColors.green.base)}, 0 2px 2px ${transparentize(0.2, uiColors.green.dark2)};
 `;
 
 const textWrapper = css`
@@ -142,6 +148,14 @@ const secondRowContainer = css`
   flex-wrap: wrap;
 `;
 
+function backgroundImageCSS(backgroundURL): string {
+  return css`
+    background-image: url("${backgroundURL}");
+    background-position: center;
+    background-size: cover;
+  `
+}
+
 interface ComponentPreviewProps {
   route: string;
   backgroundURL: string;
@@ -165,16 +179,11 @@ function ComponentPreview({
       <button
         className={cx(previewWrapper, {
           [sharedHoverInteraction]: !isTouchDevice,
-        })}
+        }, backgroundImageCSS(backgroundURL))}
         onClick={() => push(route)}
       >
-        <img
-          src={backgroundURL}
-          alt={`Learn more about ${content} component`}
-          className={css`
-            width: 100%;
-          `}
-        />
+        <VisuallyHidden>Learn more about {content} component</VisuallyHidden>
+
         <div className={overlineContainer}>
           <Overline className={overlineColor}>{content}</Overline>
         </div>
@@ -182,6 +191,7 @@ function ComponentPreview({
     </div>
   );
 }
+
 interface MarketingPreview {
   marketingURL: string;
   children: string;
@@ -206,17 +216,8 @@ function MarketingPreview({
         <div
           className={cx(marketingWrapper, {
             [sharedHoverInteraction]: !isTouchDevice,
-          })}
+          }, backgroundImageCSS(backgroundURL))}
         >
-          <img
-            src={backgroundURL}
-            alt=""
-            aria-hidden="true"
-            className={css`
-              min-width: 100%;
-              height: 100%;
-            `}
-          />
           <div className={textWrapper}>{children}</div>
         </div>
       </a>
