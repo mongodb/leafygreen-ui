@@ -8,12 +8,12 @@ import Footer from './Footer';
 
 const containerStyle = css`
   width: 100%;
-  height: 100vh;
   background-color: ${uiColors.white};
   grid-template-columns: auto 1fr;
   overflow: hidden;
 
   ${mq({
+    height: ['auto', 'auto', '100vh'],
     display: ['block', 'block', 'grid'],
     paddingLeft: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
     paddingRight: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
