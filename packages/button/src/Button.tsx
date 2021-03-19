@@ -32,8 +32,8 @@ const containerChildStyles = css`
 
 const padding: Record<Size, string> = {
   [Size.XSmall]: css`
-    padding-left: ${spacing[2]}px;
-    padding-right: ${spacing[2]}px;
+    padding-left: 6px;
+    padding-right: 6px;
   `,
 
   [Size.Small]: css`
@@ -47,15 +47,15 @@ const padding: Record<Size, string> = {
   `,
 
   [Size.Large]: css`
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 16px;
+    padding-right: 16px;
   `,
 };
 
 const iconSpacing = {
   [Size.XSmall]: 6,
   [Size.Small]: 6,
-  [Size.Default]: spacing[2],
+  [Size.Default]: 6,
   [Size.Large]: spacing[2],
 };
 

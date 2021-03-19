@@ -109,7 +109,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:hover,
       &:active {
         background-color: rgba(10, 208, 91, 0.08);
-        box-shadow: inset 0px 0px 0px 1px ${uiColors.green.dark1};
+        border: 1px solid ${uiColors.green.base};
       }
     `,
 
@@ -230,17 +230,30 @@ const disabledStyle: Record<Mode, string> = {
     background-color: ${uiColors.gray.light2};
     border: 1px solid ${uiColors.gray.light2};
     box-shadow: 0px 0px 0px 1px ${uiColors.gray.light1};
-    pointer-events: none;
     cursor: not-allowed;
     color: ${uiColors.gray.dark1};
+
+    &:hover {
+      background-color: ${uiColors.gray.light2};
+      border: 1px solid ${uiColors.gray.light2};
+      box-shadow: 0px 0px 0px 1px ${uiColors.gray.light1};
+      cursor: not-allowed;
+      color: ${uiColors.gray.dark1};
+    }
   `,
 
   [Mode.Dark]: css`
     background: rgba(61, 79, 88, 0.3);
     border: 1px solid ${uiColors.gray.dark2};
     color: ${uiColors.gray.base};
-    pointer-events: none;
     cursor: not-allowed;
+
+    &:hover {
+      background: rgba(61, 79, 88, 0.3);
+      border: 1px solid ${uiColors.gray.dark2};
+      color: ${uiColors.gray.base};
+      cursor: not-allowed;
+    }
   `,
 };
 
