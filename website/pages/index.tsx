@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { css, cx } from 'emotion';
-import {transparentize} from 'polished';
+import { transparentize } from 'polished';
 import { Overline } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -101,7 +101,8 @@ const marketingWrapper = css`
   position: relative;
   transition: transform 300ms ease-in-out;
   color: white;
-  text-shadow: 0 0 10px ${transparentize(0.2, uiColors.green.base)}, 0 2px 2px ${transparentize(0.2, uiColors.green.dark2)};
+  text-shadow: 0 0 10px ${transparentize(0.2, uiColors.green.base)},
+    0 2px 2px ${transparentize(0.2, uiColors.green.dark2)};
 `;
 
 const textWrapper = css`
@@ -150,10 +151,10 @@ const secondRowContainer = css`
 
 function backgroundImageCSS(backgroundURL): string {
   return css`
-    background-image: url("${backgroundURL}");
+    background-image: url('${backgroundURL}');
     background-position: center;
     background-size: cover;
-  `
+  `;
 }
 
 interface ComponentPreviewProps {
@@ -177,9 +178,13 @@ function ComponentPreview({
   return (
     <div className={cx(className, boxShadow)}>
       <button
-        className={cx(previewWrapper, {
-          [sharedHoverInteraction]: !isTouchDevice,
-        }, backgroundImageCSS(backgroundURL))}
+        className={cx(
+          previewWrapper,
+          {
+            [sharedHoverInteraction]: !isTouchDevice,
+          },
+          backgroundImageCSS(backgroundURL),
+        )}
         onClick={() => push(route)}
       >
         <VisuallyHidden>Learn more about {content} component</VisuallyHidden>
@@ -214,9 +219,13 @@ function MarketingPreview({
         rel="noopener noreferrer"
       >
         <div
-          className={cx(marketingWrapper, {
-            [sharedHoverInteraction]: !isTouchDevice,
-          }, backgroundImageCSS(backgroundURL))}
+          className={cx(
+            marketingWrapper,
+            {
+              [sharedHoverInteraction]: !isTouchDevice,
+            },
+            backgroundImageCSS(backgroundURL),
+          )}
         >
           <div className={textWrapper}>{children}</div>
         </div>
