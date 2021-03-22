@@ -296,11 +296,22 @@ function Tooltip({
         };
       }
 
+      if (triggerProps && triggerProps.onClick) {
+        return {
+          onClick: (e: MouseEvent) => {
+            // ensure that we don't close the tooltip when content inside tooltip is clicked
+            if (e.target !== tooltipNode) {
+              triggerProps.onClick();
+              setOpen((curr: boolean) => !curr);
+            }
+          },
+        };
+      }
+
       return {
         ref: setTriggerNode,
         onClick: (e: MouseEvent) => {
           if (e.target !== tooltipNode) {
-            triggerProps?.onClick?.();
             setOpen((curr: boolean) => !curr);
           }
         },
@@ -334,8 +345,6 @@ function Tooltip({
     },
     [handleClose, tooltipNode, trigger, triggerNode],
   );
-
-  console.log({ open });
 
   useEventListener('click', handleBackdropClick, {
     enabled: open && triggerEvent === 'click',
