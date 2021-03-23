@@ -1,5 +1,20 @@
 # @leafygreen-ui/side-nav
 
+## 6.0.0
+
+### Major Changes
+
+- 2f0775ec: Redesigns the side navigation, adding the ability for a user to collapse it, and improving accessibility.
+
+### Patch Changes
+
+- Updated dependencies [2f0775ec]
+- Updated dependencies [2f0775ec]
+- Updated dependencies [2f0775ec]
+  - @leafygreen-ui/a11y@1.1.0
+  - @leafygreen-ui/icon@10.2.0
+  - @leafygreen-ui/lib@6.3.0
+
 ## 5.0.4
 
 ### Patch Changes

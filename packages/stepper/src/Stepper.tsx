@@ -100,12 +100,14 @@ interface StepperProps {
   children: StepElements;
   currentStep: number;
   maxDisplayedSteps?: number;
+  className?: string;
 }
 
 export function Stepper({
   children,
   currentStep,
   maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
+  className,
 }: StepperProps) {
   const [visibleLayer, setVisibleLayer] = useState<
     'previous' | 'next' | 'current'
@@ -198,7 +200,7 @@ export function Stepper({
 
   return (
     <ol
-      className={containerStyle}
+      className={cx(containerStyle, className)}
       onMouseLeave={() => setVisibleLayer('current')}
     >
       {Object.entries(layerToLayerSteps).map(([layer, layerSteps]) => (

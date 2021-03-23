@@ -4,6 +4,7 @@ import { LGGlyph } from '../types';
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
+import Apps from './Apps.svg';
 import ArrowDown from './ArrowDown.svg';
 import ArrowLeft from './ArrowLeft.svg';
 import ArrowRight from './ArrowRight.svg';
@@ -32,6 +33,7 @@ import Database from './Database.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
+import Export from './Export.svg';
 import Favorite from './Favorite.svg';
 import Filter from './Filter.svg';
 import Folder from './Folder.svg';
@@ -74,6 +76,7 @@ import XWithCircle from './XWithCircle.svg';
 const glyphs = {
   ActivityFeed,
   AddFile,
+  Apps,
   ArrowDown,
   ArrowLeft,
   ArrowRight,
@@ -102,6 +105,7 @@ const glyphs = {
   Download,
   Edit,
   Ellipsis,
+  Export,
   Favorite,
   Filter,
   Folder,

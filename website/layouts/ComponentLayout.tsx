@@ -18,7 +18,8 @@ import metaTagKey from 'utils/metaTagKey';
 
 const layout = css`
   ${mq({
-    marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
+    // 51px is a magic number for baseline alignment with the first SideNavGroup header
+    marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '51px'],
     width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
   })}
 `;

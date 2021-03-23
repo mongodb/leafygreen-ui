@@ -28,7 +28,7 @@
     "@leafygreen-ui/ripple": "^1.0.0"
   }, 
   "devDependencies": {
-    "@leafygreen-ui/icon": "^9.0.0"
+    "@leafygreen-ui/icon": "^10.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.0.2"

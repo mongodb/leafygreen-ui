@@ -1,5 +1,16 @@
 # @leafygreen-ui/stepper
 
+## 2.1.0
+
+### Minor Changes
+
+- d6f2ffb5: Allows `className` prop to be passed to component
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/icon@10.0.0
+
 ## 2.0.3
 
 ### Patch Changes
