@@ -1,5 +1,22 @@
 # @leafygreen-ui/table
 
+## 1.3.7
+
+### Patch Changes
+
+- Updated dependencies [99ea9436]
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/icon-button@9.1.2
+  - @leafygreen-ui/icon@10.0.0
+
+## 1.3.6
+
+### Patch Changes
+
+- 1ed17f68: Updates lodash to 4.17.21, as there's a vulnerability in 4.17.20 that's been resolved in 4.17.21
+- Updated dependencies [1ed17f68]
+  - @leafygreen-ui/hooks@6.0.1
+
 ## 1.3.5
 
 ### Patch Changes

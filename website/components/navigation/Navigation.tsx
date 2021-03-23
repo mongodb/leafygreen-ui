@@ -2,38 +2,27 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { css } from 'emotion';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
-import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
+import {
+  SideNav,
+  SideNavGroup,
+  SideNavItem,
+  CollapsedSideNavItem,
+} from '@leafygreen-ui/side-nav';
 import { useViewportSize } from '@leafygreen-ui/hooks';
+import Icon from '@leafygreen-ui/icon';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
+import { LogoMark } from '@leafygreen-ui/logo';
 import { HOME_PAGE } from 'utils/routes';
 import { Component } from 'utils/types';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
 
-const navContainer = css`
-  width: 270px;
-  padding-top: 12px;
-  // spacing[3] already built into side nav
-  padding-left: ${spacing[5] - spacing[3]}px;
-  padding-right: 60px;
-  padding-bottom: ${spacing[4]}px;
-`;
-
 const logoStyles = css`
   // adds back spacing that was already built into side nav
   margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
   cursor: pointer;
 `;
-
-const coreGuidelines = [
-  'logos',
-  'user-personas',
-  'tone',
-  'colors',
-  'illustration',
-  'typography',
-];
 
 const components: Array<Component> = [
   'badge',
@@ -86,17 +75,14 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const activePage = router.asPath.split('/')[2];
 
   const renderGroup = (type: GroupType) => {
-    const isGuideline = type === GroupType.Guideline;
-    const items = isGuideline ? coreGuidelines : components;
-
     if (isTouchDevice) {
       return (
         <MobileNavigationGroup
           key={type}
-          header={isGuideline ? 'Core Guidelines' : 'Components'}
+          header="Components"
           initialCollapsed={false} // Always false until we add more sections to navigation
         >
-          {items.map(item => {
+          {components.map(item => {
             const path =
               type === GroupType.Guideline
                 ? `/ ${type} /${item}`
@@ -118,9 +104,10 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     return (
       <SideNavGroup
         key={type}
-        header={isGuideline ? 'Core Guidelines' : 'Components'}
+        header="Components"
+        glyph={<Icon glyph="Apps" />}
       >
-        {items.map(item => {
+        {components.map(item => {
           const path =
             type === GroupType.Guideline
               ? `/${type}/${item}`
@@ -158,16 +145,26 @@ function Navigation() {
   }
 
   return (
-    <nav className={navContainer}>
+    <SideNav
+      aria-label="LeafyGreen Design System"
+      className={css`
+        z-index: 1;
+      `}
+    >
       <MDBDesignLogo className={logoStyles} onClick={() => push(HOME_PAGE)} />
-      <SideNav
+      <CollapsedSideNavItem
         className={css`
-          margin-top: ${spacing[3]}px;
+          background-color: #09804c;
+          // Some CSS trickery to make the item not respect the overall padding in the side navigation.
+          // 1px pixel-pushing for aesthetics.
+          margin-top: -${spacing[3] + 1}px;
+          height: calc(25px + ${spacing[4] * 2}px + ${spacing[3]}px);
         `}
       >
-        <Content />
-      </SideNav>
-    </nav>
+        <LogoMark knockout darkMode height={24} />
+      </CollapsedSideNavItem>
+      <Content />
+    </SideNav>
   );
 }
 

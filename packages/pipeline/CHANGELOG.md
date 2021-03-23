@@ -1,5 +1,14 @@
 # @leafygreen-ui/pipeline
 
+## 2.1.2
+
+### Patch Changes
+
+- 1ed17f68: Updates lodash to 4.17.21, as there's a vulnerability in 4.17.20 that's been resolved in 4.17.21
+- Updated dependencies [1ed17f68]
+  - @leafygreen-ui/hooks@6.0.1
+  - @leafygreen-ui/tooltip@6.1.6
+
 ## 2.1.1
 
 ### Patch Changes

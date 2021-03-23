@@ -1,88 +1,104 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { createDataProp, OneOf } from '@leafygreen-ui/lib';
+import {
+  createDataProp,
+  IdAllocator,
+  OneOf,
+  isComponentType,
+} from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
+import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
+import { prefersReducedMotion } from '@leafygreen-ui/a11y';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
+import CollapsedSideNavItem from './CollapsedSideNavItem';
 import {
   ulStyleOverrides,
   sideNavItemSidePadding,
   sideNavWidth,
 } from './styles';
 
+const sideNavGroupIdAllocator = IdAllocator.create('side-nav-group');
+
 const button = createDataProp('side-nav-group-button');
 
-const sideNavLabelStyle = css`
+const listItemStyle = css`
+  & + & {
+    margin-top: ${spacing[2]}px;
+  }
+`;
+
+const labelStyle = css`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 12px;
   letter-spacing: 0.3px;
   font-weight: bold;
   text-transform: uppercase;
   color: ${uiColors.green.dark2};
-  margin-top: 12px;
+  min-height: ${spacing[5]}px;
+  margin-top: 0;
   margin-bottom: 0;
   padding: 4px ${sideNavItemSidePadding}px 4px ${sideNavItemSidePadding}px;
-  line-height: 1.3em;
-  position: relative;
-`;
+  line-height: 1em;
 
-const collapsibleHeaderStyle = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 2px; // padding-bottom is 4px for not collapsible groups, but spec has the border closer to the element
-  margin-bottom: 2px; // adds the remaining 2px of space between group header and subsequent content
-  cursor: pointer;
-  width: ${sideNavWidth}px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    height: 2px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: ${uiColors.green.light3};
-    border-radius: 2px;
-    margin-left: 16px;
-    margin-right: 16px;
-    transition: background-color 150ms ease-in-out;
-  }
-
-  &:hover:before {
-    background-color: ${uiColors.green.base};
+  &:not(:first-of-type) {
+    margin-top: ${spacing[1]}px;
   }
 `;
 
-const collapsibleHeaderFocusStyle = css`
-  ${button.selector}:focus & {
-    color: ${uiColors.blue.base};
-
-    &:before {
-      background-color: ${uiColors.blue.light3};
-    }
-  }
-`;
-
-const buttonResetStyles = css`
+const collapsibleLabelStyle = css`
   background-color: transparent;
   border: none;
-  padding: 0px;
   margin: 0px;
+  transition: border-color 150ms ease-in-out, color 150ms ease-in-out;
+  cursor: pointer;
+  width: ${sideNavWidth}px;
+  border-bottom: 1px solid ${uiColors.gray.light2};
+
+  &:hover {
+    border-color: ${uiColors.green.base};
+  }
 
   &:focus {
     outline: none;
   }
 `;
 
-const iconStyle = css`
-  transition: 150ms all ease-in-out;
+const customIconStyles = css`
+  margin-right: ${spacing[2]}px;
+
+  // When the glyph is the last child, we remove the margin
+  // used to space it from the text. This matters in the navigation
+  // collapsed state.
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
-const openIconStyle = css`
-  transform: rotate(90deg);
+const collapsibleHeaderFocusStyle = css`
+  ${button.selector}:focus & {
+    color: ${uiColors.blue.base};
+    border-color: ${uiColors.blue.light1};
+  }
+`;
+
+const expandIconStyle = css`
   transition: 150ms all ease-in-out;
+  margin-left: ${spacing[2]}px;
+
+  ${prefersReducedMotion(`
+    transition: none;
+  `)}
+`;
+
+const openExpandIconStyle = css`
+  transform: rotate(90deg);
 `;
 
 const defaultStyle = css`
@@ -90,6 +106,10 @@ const defaultStyle = css`
   max-height: 0;
   overflow: hidden;
   opacity: 1;
+
+  ${prefersReducedMotion(`
+    transition: opacity 150ms ease-in-out;
+  `)}
 `;
 
 const transitionStyles = {
@@ -120,6 +140,11 @@ interface SideNavGroupBaseProps {
    * Content that will be rendered inside the root-level element.
    */
   children?: React.ReactNode;
+
+  /**
+   * Icon that's rendered in the group label.
+   */
+  glyph?: React.ReactNode;
 }
 
 type CollapsedProps = OneOf<
@@ -132,7 +157,7 @@ type CollapsedProps = OneOf<
     collapsible: true;
 
     /**
-     * If collapsible, determines whether or not the group should be XX or collapsed by default.
+     * If collapsible, determines whether or not the group should be expanded or collapsed by default.
      *
      * @defaultValue `true`
      */
@@ -168,36 +193,85 @@ function SideNavGroup({
   children,
   collapsible = false,
   initialCollapsed = true,
+  glyph,
+  className,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const menuGroupLabelId = useMemo(
+    () => sideNavGroupIdAllocator.generate(),
+    [],
+  );
+  const menuId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
+
+  const isActiveGroup: boolean = useMemo(() => {
+    return React.Children.toArray(children).some(child => {
+      return isComponentType(child, 'SideNavItem') && child.props.active;
+    });
+  }, [children]);
+
+  const accessibleGlyph =
+    glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
+      ? React.cloneElement(glyph, {
+          className: cx(customIconStyles, glyph.props.className),
+          role: 'presentation',
+          'data-testid': 'side-nav-group-header-icon',
+        })
+      : null;
+
+  const renderedLabelText = (
+    <div
+      className={css`
+        display: inline-flex;
+        align-items: center;
+      `}
+    >
+      {accessibleGlyph && (
+        <>
+          {accessibleGlyph}
+
+          <CollapsedSideNavItem active={isActiveGroup}>
+            {accessibleGlyph}
+          </CollapsedSideNavItem>
+        </>
+      )}
+
+      {/** We wrap the text in a span here to allow us to style based
+       * on the glyph being the last child of its parent.
+       * Text nodes aren't considered children.
+       * */}
+      <span>{header}</span>
+    </div>
+  );
 
   if (collapsible) {
     return (
-      <li {...rest}>
+      <li className={cx(listItemStyle, className)} {...rest}>
         <button
           {...button.prop}
-          className={buttonResetStyles}
+          aria-controls={menuId}
+          aria-expanded={open}
+          className={cx(labelStyle, collapsibleLabelStyle, {
+            [collapsibleHeaderFocusStyle]: showFocus,
+          })}
           onClick={() => setOpen(curr => !curr)}
+          id={menuGroupLabelId}
+          data-testid="side-nav-group-header-label"
         >
-          <h4
-            className={cx(sideNavLabelStyle, collapsibleHeaderStyle, {
-              [collapsibleHeaderFocusStyle]: showFocus,
+          {renderedLabelText}
+
+          <ChevronRight
+            role="presentation"
+            size={12}
+            className={cx(expandIconStyle, {
+              [openExpandIconStyle]: open,
             })}
-          >
-            {header}
-            <ChevronRightIcon
-              size={12}
-              className={cx(iconStyle, {
-                [openIconStyle]: open,
-              })}
-              title={open ? 'Chevron Down Icon' : 'Chevron Right Icon'}
-            />
-          </h4>
+          />
         </button>
+
         <Transition
           in={open}
           appear
@@ -215,12 +289,29 @@ function SideNavGroup({
                   opacity: 1;
                   max-height: ${ulRef?.current?.getBoundingClientRect()
                     .height}px;
+                  border-bottom: 1px solid ${uiColors.gray.light2};
                 `]: state === 'entered',
                 [transitionStyles.exiting]: state === 'exiting',
                 [transitionStyles.exited]: state === 'exited',
               })}
             >
-              <ul ref={ulRef} role="menu" className={ulStyleOverrides}>
+              <ul
+                ref={ulRef}
+                id={menuId}
+                aria-labelledby={menuGroupLabelId}
+                className={cx(
+                  ulStyleOverrides,
+                  css`
+                    transition: opacity 150ms ease-in-out;
+                    opacity: 0;
+                  `,
+                  {
+                    [css`
+                      opacity: 1;
+                    `]: ['entering', 'entered'].includes(state),
+                  },
+                )}
+              >
                 {children}
               </ul>
             </div>
@@ -231,9 +322,16 @@ function SideNavGroup({
   }
 
   return (
-    <li {...rest}>
-      <h4 className={sideNavLabelStyle}>{header}</h4>
-      <ul role="menu" className={ulStyleOverrides}>
+    <li className={cx(listItemStyle, className)} {...rest}>
+      <div
+        data-testid="side-nav-group-header-label"
+        id={menuGroupLabelId}
+        className={labelStyle}
+      >
+        {renderedLabelText}
+      </div>
+
+      <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
         {children}
       </ul>
     </li>
@@ -249,6 +347,9 @@ SideNavGroup.propTypes = {
     PropTypes.func,
     PropTypes.node,
   ]),
+  collapsible: PropTypes.bool,
+  initialCollapsed: PropTypes.bool,
+  glyph: PropTypes.node,
   children: PropTypes.node,
 };
 

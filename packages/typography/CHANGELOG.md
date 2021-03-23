@@ -1,5 +1,28 @@
 # @leafygreen-ui/typography
 
+## 7.5.0
+
+### Minor Changes
+
+- ec27f36e: - Improves accessibility of link component when rendering an icon.
+  - Renders arrow at 12px instead of 10px to account for the reduced height of the glyph.
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/icon@10.0.0
+
+## 7.4.0
+
+### Minor Changes
+
+- 1a42c662: Adds value to `rel` prop in Link component when href is external
+
+### Patch Changes
+
+- Updated dependencies [1ed17f68]
+  - @leafygreen-ui/box@3.0.3
+
 ## 7.3.2
 
 ### Patch Changes

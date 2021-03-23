@@ -30,6 +30,7 @@ const iconMargin = css`
 const navStyle = css`
   border-right: 1px solid ${borderColor};
   background-color: white;
+  cursor: pointer;
   z-index: 10;
   width: 80%;
   position: absolute;
@@ -98,7 +99,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
     <MobileNavigationProvider open={open} setOpen={setOpen}>
       <div
         className={css`
-          margin-top: ${spacing[5]}px;
+          padding-top: ${spacing[5]}px;
         `}
       >
         <div className={closedContainer}>

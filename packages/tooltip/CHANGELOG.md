@@ -1,5 +1,21 @@
 # @leafygreen-ui/tooltip
 
+## 6.1.7
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/icon@10.0.0
+
+## 6.1.6
+
+### Patch Changes
+
+- 1ed17f68: Updates lodash to 4.17.21, as there's a vulnerability in 4.17.20 that's been resolved in 4.17.21
+- Updated dependencies [1ed17f68]
+  - @leafygreen-ui/hooks@6.0.1
+  - @leafygreen-ui/popover@7.1.3
+
 ## 6.1.5
 
 ### Patch Changes

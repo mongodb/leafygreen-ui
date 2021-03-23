@@ -2,8 +2,6 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/a11y.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/a11y--default)
-
 ## Installation
 
 ### Yarn
@@ -56,6 +54,20 @@ Hook that returns two sets of props that accessibly associate a label and its re
 
 ### Properties
 
-| Prop | Type     | Description                          | Default |
-| ---- | -------- | ------------------------------------ | ------- |
-| `id` | `string` | id that describes the input element. |         |
+| Parameter | Type     | Description                          | Default |
+| --------- | -------- | ------------------------------------ | ------- |
+| `id`      | `string` | id that describes the input element. |         |
+
+## prefersReducedMotion
+
+Returns an emotion CSS instance for rendering styles that respect
+OS-level preferences for reduced motion.
+
+Use this function to remove scale, size, and positional transitions
+for users with that preference set.
+
+### Properties
+
+| Parameter | Type     | Description                                               | Default |
+| --------- | -------- | --------------------------------------------------------- | ------- |
+| `styles`  | `string` | String of styles to render within preference media query. |         |
