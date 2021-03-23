@@ -61,6 +61,12 @@ const externalIconStyles = css`
   }
 `;
 
+const mobileRightNavStyles = css`
+  position: absolute;
+  right: 0;
+  margin-right: 15px;
+`;
+
 const paymentStatusMap: {
   [K in Partial<Variant>]?: ReadonlyArray<OrgPaymentLabel>;
 } = {
@@ -122,11 +128,13 @@ function GetHelpDropdownMenu({
   urls,
   activeNav,
   isTablet,
+  isMobile,
 }: {
   loading: boolean;
   urls: URLS['orgNav'];
   activeNav?: ActiveNavElement;
   isTablet?: boolean;
+  isMobile?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const onElementClick = useOnElementClick();
@@ -142,7 +150,7 @@ function GetHelpDropdownMenu({
         setIsOpen(open => !open),
       )}
     >
-      Get Help
+      {isMobile ? 'Help' : 'Get Help'}
       <DropdownMenuIcon open={isOpen} />
       <Menu
         open={isOpen}
@@ -180,6 +188,7 @@ function GetHelpDropdownMenu({
               className={css`
                 margin-bottom: 2px;
                 margin-left: 4px;
+                color: ${uiColors.gray.base};
               `}
             />
           </div>
@@ -459,6 +468,9 @@ function OrgNav({
               )}
               isButton={true}
               aria-expanded={accessManagerOpen}
+              className={css`
+                margin-right: 20px;
+              `}
             >
               Access Manager
               <DropdownMenuIcon open={accessManagerOpen} />
@@ -537,16 +549,17 @@ function OrgNav({
           />
         )}
 
-        {!isMobile && (
+        <div className={cx({ [mobileRightNavStyles]: isMobile })}>
           <GetHelpDropdownMenu
             loading={!current}
             urls={urls.orgNav}
             activeNav={activeNav}
             isTablet={isTablet}
+            isMobile={isMobile}
           />
-        )}
 
-        {renderUserMenu()}
+          {renderUserMenu()}
+        </div>
       </nav>
     </>
   );
