@@ -180,6 +180,7 @@ function GetHelpDropdownMenu({
             className={css`
               display: flex;
               align-items: center;
+              justify-content: space-between;
             `}
           >
             Docs{' '}
