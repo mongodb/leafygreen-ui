@@ -11,7 +11,6 @@ import { getClassName, getIconStyle } from './styles';
 const rippleStyle = css`
   overflow: hidden;
   border-radius: 3px;
-  flex-grow: 1;
   position: absolute;
   top: 0;
   left: 0;
@@ -26,7 +25,6 @@ const containerChildStyles = css`
   height: 100%;
   width: 100%;
   pointer-events: none;
-  z-index: 0;
   font-family: ${fontFamilies.default};
 `;
 
@@ -81,9 +79,16 @@ const Button: ExtendableBox<
   const rippleRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    let unregisterRipple: (() => void) | undefined;
+
     if (rippleRef.current != null) {
-      registerRipple(rippleRef.current, { variant, darkMode });
+      unregisterRipple = registerRipple(rippleRef.current, {
+        variant,
+        darkMode,
+      });
     }
+
+    return unregisterRipple;
   }, [rippleRef, variant, darkMode]);
 
   const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;

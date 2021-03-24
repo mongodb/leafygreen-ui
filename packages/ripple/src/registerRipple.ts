@@ -29,7 +29,9 @@ export function registerRipple(node: HTMLElement, options: Options) {
     RIPPLE_NAMESPACE.setRippleListener = true;
   }
 
-  return () => RIPPLE_NAMESPACE.registeredRippleElements.delete(node);
+  return () => {
+    RIPPLE_NAMESPACE.registeredRippleElements.delete(node);
+  };
 }
 
 function createRippleEffect(event: MouseEvent) {
@@ -108,6 +110,7 @@ const staticRippleStyles = `
     transform: scale(0.2);
     opacity: 0;
     pointer-events: none;
+    // Ensures that text is shown above ripple effect
     z-index: -1;
     -webkit-animation: lg-ui-ripple .75s ease-out;
     -moz-animation: lg-ui-ripple .75s ease-out;
