@@ -117,11 +117,11 @@ function Popover({
 
   // We don't memoize these values as they're reliant on scroll positioning
   const referenceElViewportPos = useObjectDependency(
-    getElementViewportPosition(referenceElement),
+    getElementViewportPosition(referenceElement, scrollContainer),
   );
 
   const contentElViewportPos = useObjectDependency(
-    getElementViewportPosition(contentNode),
+    getElementViewportPosition(contentNode, scrollContainer),
   );
 
   const referenceElDocumentPos = useObjectDependency(
@@ -198,6 +198,7 @@ function Popover({
     referenceElDocumentPos,
     contentElViewportPos,
     contentElDocumentPos,
+    scrollContainer,
   });
 
   const activeStyle = css`

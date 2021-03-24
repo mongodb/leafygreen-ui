@@ -27,6 +27,7 @@ interface CalculatePosition
   useRelativePositioning: boolean;
   align: Align;
   justify: Justify;
+  scrollContainer?: HTMLElement;
 }
 
 // Returns the style object that is used to position and transition the popover component
@@ -41,6 +42,7 @@ export function calculatePosition({
   contentElDocumentPos = defaultElementPosition,
   windowHeight = window.innerHeight,
   windowWidth = window.innerWidth,
+  scrollContainer,
 }: CalculatePosition): {
   align: Align;
   justify: Justify;
@@ -52,6 +54,7 @@ export function calculatePosition({
     referenceElViewportPos,
     contentElViewportPos,
     spacing,
+    scrollContainer,
   };
 
   const windowSafeAlign = getWindowSafeAlign(align, windowSafeCommonArgs);
@@ -129,8 +132,8 @@ export function getElementDocumentPosition(
   let { scrollX, scrollY } = window;
 
   if (scrollContainer) {
-    scrollY = scrollContainer.scrollTop
-    scrollX = scrollContainer.scrollLeft
+    scrollY = scrollContainer.scrollTop;
+    scrollX = scrollContainer.scrollLeft;
   }
 
   return {
@@ -146,19 +149,22 @@ export function getElementDocumentPosition(
 // Gets top offset, left offset, width and height dimensions for a node
 export function getElementViewportPosition(
   element: HTMLElement | null,
+  scrollContainer?: HTMLElement,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
   }
 
+  const scrollContainerOffset = scrollContainer?.getBoundingClientRect() ?? {top: 0, bottom: 0, left: 0, right: 0}
+
   const { top, bottom, left, right } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth: width } = element;
 
   return {
-    top,
-    bottom,
-    left,
-    right,
+    top: top - scrollContainerOffset.top,
+    bottom: bottom - scrollContainerOffset.bottom,
+    left: left - scrollContainerOffset.left,
+    right: right - scrollContainerOffset.right,
     height,
     width,
   };
@@ -504,6 +510,7 @@ function safelyWithinVerticalWindow({
   top,
   windowHeight,
   contentHeight,
+
 }: {
   top: number;
   windowHeight: number;
