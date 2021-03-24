@@ -1,10 +1,12 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { css, cx } from 'emotion';
+import { transparentize } from 'polished';
 import { Overline } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import { mq } from 'utils/mediaQuery';
@@ -14,17 +16,8 @@ import News from 'components/News';
 
 const landingURL = `${CDN}/images/landing`;
 
-const backdrop = css`
-  background-color: ${uiColors.gray.light3};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-`;
-
 const layoutProperties = css`
+  margin-top: ${spacing[6]}px;
   margin-right: 0;
 
   ${mq({
@@ -34,48 +27,46 @@ const layoutProperties = css`
       '100%',
       `${pageContainerWidth.dataGraphic}px`,
     ],
-    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, 0],
     marginLeft: [`-${spacing[4]}px`, '0px', '0px', '0px'],
   })}
 `;
 
 const boxShadow = css`
-  box-shadow: 0 0 0 1px ${uiColors.gray.light1};
+  box-shadow: 0 0 0 1px ${uiColors.gray.light2};
 `;
 
 const container = css`
   ${boxShadow}
+  position: relative;
   width: 100%;
   height: 100%;
   background-color: white;
   border: unset;
   padding: unset;
   cursor: pointer;
-  position: relative;
   color: ${uiColors.gray.dark3};
 `;
 
 const sharedHoverInteraction = css`
   &:hover {
     background-color: ${uiColors.gray.light3};
-    border: 1px solid ${uiColors.gray.light1};
-    box-shadow: 0 0 0 0px ${uiColors.gray.light1},
+    box-shadow: 0 0 0 1px ${uiColors.gray.light1},
       2px 16px 20px -10px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
     z-index: 99999;
+    position: relative;
   }
 `;
 
 const previewWrapper = css`
   ${container}
   overflow: hidden;
-  transition: transform 300ms ease-in-out;
+  transition: all 150ms ease-in-out;
 
-  &:hover {
-    & > div {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
+  &:hover > div {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition-delay: 200ms;
   }
 `;
 
@@ -85,7 +76,7 @@ const overlineContainer = css`
   left: 0;
   padding-left: ${spacing[3]}px;
   padding-bottom: ${spacing[3]}px;
-  transition: all 300ms ease-in-out;
+  transition: all 150ms ease-in-out;
 
   ${mq({
     opacity: [1, 1, 0],
@@ -98,7 +89,8 @@ const overlineContainer = css`
 `;
 
 const overlineColor = css`
-  color: ${uiColors.gray.dark1};
+  color: ${uiColors.gray.dark2};
+  text-shadow: 0 1px 2px white, 0 1px 5px ${uiColors.gray.light3};
 `;
 
 const marketingWrapper = css`
@@ -108,6 +100,9 @@ const marketingWrapper = css`
   overflow: hidden;
   position: relative;
   transition: transform 300ms ease-in-out;
+  color: white;
+  text-shadow: 0 0 10px ${transparentize(0.2, uiColors.green.base)},
+    0 2px 2px ${transparentize(0.2, uiColors.green.dark2)};
 `;
 
 const textWrapper = css`
@@ -154,6 +149,14 @@ const secondRowContainer = css`
   flex-wrap: wrap;
 `;
 
+function backgroundImageCSS(backgroundURL): string {
+  return css`
+    background-image: url('${backgroundURL}');
+    background-position: center;
+    background-size: cover;
+  `;
+}
+
 interface ComponentPreviewProps {
   route: string;
   backgroundURL: string;
@@ -175,18 +178,17 @@ function ComponentPreview({
   return (
     <div className={cx(className, boxShadow)}>
       <button
-        className={cx(previewWrapper, {
-          [sharedHoverInteraction]: !isTouchDevice,
-        })}
+        className={cx(
+          previewWrapper,
+          {
+            [sharedHoverInteraction]: !isTouchDevice,
+          },
+          backgroundImageCSS(backgroundURL),
+        )}
         onClick={() => push(route)}
       >
-        <img
-          src={backgroundURL}
-          alt={`Learn more about ${content} component`}
-          className={css`
-            width: 100%;
-          `}
-        />
+        <VisuallyHidden>Learn more about {content} component</VisuallyHidden>
+
         <div className={overlineContainer}>
           <Overline className={overlineColor}>{content}</Overline>
         </div>
@@ -194,6 +196,7 @@ function ComponentPreview({
     </div>
   );
 }
+
 interface MarketingPreview {
   marketingURL: string;
   children: string;
@@ -216,19 +219,14 @@ function MarketingPreview({
         rel="noopener noreferrer"
       >
         <div
-          className={cx(marketingWrapper, {
-            [sharedHoverInteraction]: !isTouchDevice,
-          })}
+          className={cx(
+            marketingWrapper,
+            {
+              [sharedHoverInteraction]: !isTouchDevice,
+            },
+            backgroundImageCSS(backgroundURL),
+          )}
         >
-          <img
-            src={backgroundURL}
-            alt=""
-            aria-hidden="true"
-            className={css`
-              min-width: 100%;
-              height: 100%;
-            `}
-          />
           <div className={textWrapper}>{children}</div>
         </div>
       </a>
@@ -249,7 +247,6 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
 
   return (
     <>
-      <div className={backdrop} />
       <GridContainer
         role="main"
         wrap="wrap"
@@ -263,6 +260,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             <News updates={updates} />
           </div>
         </GridItem>
+
         <GridItem sm={6} md={6} lg={6}>
           <ComponentPreview
             route="/component/banner/example"

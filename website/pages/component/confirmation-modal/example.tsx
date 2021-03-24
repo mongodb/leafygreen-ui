@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
 import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
@@ -54,6 +55,9 @@ function Confirm({
         title={title}
         buttonText={buttonText}
         requiredInputText={reqInputText}
+        className={css`
+          z-index: 1;
+        `}
       >
         {children}
       </ConfirmationModal>

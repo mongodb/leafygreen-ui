@@ -109,6 +109,11 @@ async function buildSvgFiles(
                         newValue: "'currentColor'",
                         literal: true,
                       },
+                      {
+                        value: 'black',
+                        newValue: "'currentColor'",
+                        literal: true,
+                      },
                     ],
                   },
                 ],

@@ -18,6 +18,33 @@
     },
     {
       "path": "../menu"
+    },
+    {
+      "path": "../portal"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../tooltip"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../a11y"
+    },
+    {
+      "path": "../select"
+    },
+    {
+      "path": "../mongo-nav"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

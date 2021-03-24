@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
 import MarketingModal, { GraphicStyle } from '@leafygreen-ui/marketing-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
@@ -56,6 +57,9 @@ export default function MarketingModalLiveExample() {
             onLinkClick={() => setOpen(false)}
             onClose={() => setOpen(false)}
             title={title}
+            className={css`
+              z-index: 1;
+            `}
             graphic={
               graphicStyle === GraphicStyle.Center ? (
                 <img

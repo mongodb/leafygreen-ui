@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/callout.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/callout--default)
+#### [View on MongoDB.design](https://www.mongodb.design/component/callout/example/)
 
 ## Installation
 
@@ -66,9 +66,10 @@ npm install @leafygreen-ui/callout
 
 ## Properties
 
-| Prop        | Type                                                       | Description                                       | Default |
-| ----------- | ---------------------------------------------------------- | ------------------------------------------------- | ------- |
-| `variant`   | `'note'`, `'tip'`, `'important'`, `'warning'`, `'example'` | Sets the variant for the Callout                  |         |
-| `children`  | `node`                                                     | The contents to display within the Callout        |         |
-| `title`     | `string`                                                   | Optional title text to display above Callout text |         |
-| `className` | `string`                                                   | Adds a className to the outermost element         |         |
+| Prop           | Type                                                       | Description                                               | Default |
+| -------------- | ---------------------------------------------------------- | --------------------------------------------------------- | ------- |
+| `variant`      | `'note'`, `'tip'`, `'important'`, `'warning'`, `'example'` | Sets the variant for the Callout                          |         |
+| `children`     | `node`                                                     | The contents to display within the Callout                |         |
+| `title`        | `string`                                                   | Optional title text to display above Callout text         |         |
+| `className`    | `string`                                                   | Adds a className to the outermost element                 |         |
+| `baseFontSize` | `14`, `16`                                                 | Determines `font-size` for body copy in Callout component | `14`    |

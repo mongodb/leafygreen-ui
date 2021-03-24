@@ -1,5 +1,24 @@
 # @leafygreen-ui/toast
 
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+- Updated dependencies [99ea9436]
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/typography@7.5.0
+  - @leafygreen-ui/icon-button@9.1.2
+  - @leafygreen-ui/icon@10.0.0
+
+## 0.4.3
+
+### Patch Changes
+
+- 1ed17f68: Updates lodash to 4.17.21, as there's a vulnerability in 4.17.20 that's been resolved in 4.17.21
+- Updated dependencies [1a42c662]
+  - @leafygreen-ui/typography@7.4.0
+
 ## 0.4.2
 
 ### Patch Changes

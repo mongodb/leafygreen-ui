@@ -4,6 +4,7 @@ import { LGGlyph } from '../types';
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
+import Apps from './Apps.svg';
 import ArrowDown from './ArrowDown.svg';
 import ArrowLeft from './ArrowLeft.svg';
 import ArrowRight from './ArrowRight.svg';
@@ -27,9 +28,12 @@ import ChevronLeft from './ChevronLeft.svg';
 import Cloud from './Cloud.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
+import CurlyBraces from './CurlyBraces.svg';
+import Database from './Database.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
+import Export from './Export.svg';
 import Favorite from './Favorite.svg';
 import Filter from './Filter.svg';
 import Folder from './Folder.svg';
@@ -58,6 +62,7 @@ import Stitch from './Stitch.svg';
 import Support from './Support.svg';
 import Trash from './Trash.svg';
 import University from './University.svg';
+import Unlock from './Unlock.svg';
 import Unsorted from './Unsorted.svg';
 import UpDownCarets from './UpDownCarets.svg';
 import Upload from './Upload.svg';
@@ -71,6 +76,7 @@ import XWithCircle from './XWithCircle.svg';
 const glyphs = {
   ActivityFeed,
   AddFile,
+  Apps,
   ArrowDown,
   ArrowLeft,
   ArrowRight,
@@ -94,9 +100,12 @@ const glyphs = {
   Cloud,
   Copy,
   CreditCard,
+  CurlyBraces,
+  Database,
   Download,
   Edit,
   Ellipsis,
+  Export,
   Favorite,
   Filter,
   Folder,
@@ -125,6 +134,7 @@ const glyphs = {
   Support,
   Trash,
   University,
+  Unlock,
   Unsorted,
   UpDownCarets,
   Upload,

@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/stepper.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/stepper--default)
+#### [View on MongoDB.design](https://www.mongodb.design/component/stepper/example/)
 
 ## Installation
 
@@ -68,3 +68,4 @@ npm install @leafygreen-ui/stepper
 | `children`          | `StepElements` | Strings wrapped in `<Step></Step>` to display as each step       |                   |
 | `currentStep`       | `number`       | Starting at 0, index of current step that should be highlighted. |                   |
 | `maxDisplayedSteps` | `number`       | Maximum number of steps displayed a time. The rest are hidden.   | `children.length` |
+| `className`         | `string`       | className applied to the root element                            |                   |

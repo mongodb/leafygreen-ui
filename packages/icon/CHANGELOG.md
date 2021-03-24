@@ -1,5 +1,54 @@
 # @leafygreen-ui/icon
 
+## 10.2.0
+
+### Minor Changes
+
+- 2f0775ec: Introduces an "Apps" icon to the icon component.
+
+### Patch Changes
+
+- Updated dependencies [2f0775ec]
+  - @leafygreen-ui/lib@6.3.0
+
+## 10.1.0
+
+### Minor Changes
+
+- 077628e7: Adds missing icons from the batch 2 release, and fixes an issue with an icon update
+
+## 10.0.0
+
+### Major Changes
+
+- ec27f36e: Adds new glyphs:
+
+  - CurlyBraces
+  - Database
+  - Unlock
+
+  Updates existing glyphs:
+
+  - ArrowDown
+  - ArrowLeft
+  - ArrowRight
+  - ArrowUp
+  - Bulb
+  - Checkmark
+  - CheckmarkWithCircle
+  - Cloud
+  - ImportantWithCircle
+  - Lock
+  - Unlock
+  - Menu
+  - OpenNewTab
+  - QuestionMarkWithCircle
+  - Refresh
+  - SortAscending
+  - SortDescending
+  - Unsorted
+  - XWithCircle
+
 ## 9.0.0
 
 ### Major Changes

@@ -70,7 +70,7 @@ describe('packages/Icon/glyphs/', () => {
           if (typeof currentValue === 'object') {
             validateGlyphObject(currentValue);
           } else if (key === 'fill') {
-            const validFills = ['#000', '#000000', 'none'];
+            const validFills = ['#000', '#000000', 'black', 'none'];
 
             expect(validFills.includes(currentValue)).toBeTruthy();
           }
@@ -78,7 +78,7 @@ describe('packages/Icon/glyphs/', () => {
       }
 
       // eslint-disable-next-line jest/expect-expect
-      test('all fills used in SVG files are "none", "#000", or "#000000"', () => {
+      test('all fills used in SVG files are "none", "black", "#000", or "#000000"', () => {
         validateGlyphObject(rootGlyphObject);
       });
     });

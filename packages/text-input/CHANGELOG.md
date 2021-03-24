@@ -1,5 +1,22 @@
 # @leafygreen-ui/text-input
 
+## 5.0.10
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/typography@7.5.0
+  - @leafygreen-ui/icon@10.0.0
+
+## 5.0.9
+
+### Patch Changes
+
+- c6ae17bd: Updates console warning to be more reflective of error, and adds `role="presentation"` to icons rendered inside of component.
+- Updated dependencies [1a42c662]
+  - @leafygreen-ui/typography@7.4.0
+
 ## 5.0.8
 
 ### Patch Changes

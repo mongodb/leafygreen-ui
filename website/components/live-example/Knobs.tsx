@@ -47,14 +47,9 @@ const labelStyle = css`
 const textAreaClassName = css`
   display: flex;
   flex-direction: column;
-  width: ${knobsWidth}px;
-
-  ${mq({
-    width: ['200px', `${knobsWidth}px`],
-  })}
 `;
 
-const textClassName = css`
+const inputClassName = css`
   ${mq({
     width: ['200px', `${knobsWidth}px`],
   })}
@@ -122,7 +117,7 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
         knobContainerStyle,
         knobContainerHeight,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -168,7 +163,7 @@ function Number({
         knobContainerStyle,
         knobContainerHeight,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -214,7 +209,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         knobContainerStyle,
         knobContainerHeight,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -230,7 +225,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
-        className={textClassName}
+        className={inputClassName}
       />
     </div>
   );
@@ -253,7 +248,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
       className={cx(
         knobContainerStyle,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -269,7 +264,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
-        className={textAreaClassName}
+        className={cx(textAreaClassName, inputClassName)}
       />
     </div>
   );
@@ -312,7 +307,7 @@ function Select({
         knobContainerStyle,
         knobContainerHeight,
         css`
-          border-bottom: 1px solid
+          border-top: 1px solid
             ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
@@ -323,12 +318,14 @@ function Select({
       >
         {label}
       </label>
+
       <LGUISelect
         aria-labelledby={labelId}
         onChange={handleChange}
         darkMode={darkMode}
         value={value}
         disabled={disabled}
+        className={inputClassName}
       >
         {generateOptions()}
       </LGUISelect>
