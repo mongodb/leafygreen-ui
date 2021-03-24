@@ -54,10 +54,8 @@ const rightLinkMargin = css`
 `;
 
 const externalIconStyles = css`
-  &:hover {
-    & svg {
-      color: ${uiColors.blue.dark2};
-    }
+  &:hover svg {
+    color: ${uiColors.blue.dark2};
   }
 `;
 
@@ -167,7 +165,7 @@ function GetHelpDropdownMenu({
           size={isTablet ? 'large' : 'default'}
           onClick={onElementClick(NavElement.OrgNavSupport)}
         >
-          <div>Support</div>
+          Support
         </MenuItem>
         <MenuItem
           href={urls.docs}
@@ -183,7 +181,7 @@ function GetHelpDropdownMenu({
               justify-content: space-between;
             `}
           >
-            Docs{' '}
+            Docs
             <OpenNewTabIcon
               role="presentation"
               className={css`
@@ -251,20 +249,17 @@ function NavLinks({
     </OrgNavLink>
   ));
 
-  if (onPremVersion) {
-    items.unshift(
-      <VersionNumber style={VersionNumberStyle.Nav} key={onPremVersion}>
-        {onPremVersion}
-      </VersionNumber>,
-    );
-  }
-
   return (
     <div
       className={css`
         margin-left: auto;
       `}
     >
+      {onPremVersion && (
+        <VersionNumber style={VersionNumberStyle.Nav} key={onPremVersion}>
+          {onPremVersion}
+        </VersionNumber>
+      )}
       {items}
     </div>
   );
