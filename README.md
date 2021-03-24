@@ -154,24 +154,7 @@ Make sure that the PR includes the changes made by running this command.
 
 1. Merge the automatically generated `Version Packages` PR that will contain appropriate version bumps and changelog documentation.
 
-2. Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
-
-```
-# To transpile and concatenate all files
-yarn build
-# To build TypeScript type definition files
-yarn ts:build
-# To build TypeScript type definition files for older TypeScript versions
-yarn ts:downlevel
-```
-
-3. Publish all packages to NPM using changesets. This can be done from the `main` branch.
-
-```
-yarn release
-```
-
-6. Push the tags from the release up to Github.
+2. Push the tags from the release up to Github.
 
 ```
 git push --follow-tags
