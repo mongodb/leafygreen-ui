@@ -16,6 +16,7 @@ module.exports = {
             values: [
               { value: '#000', newValue: "'currentColor'", literal: true },
               { value: '#000000', newValue: "'currentColor'", literal: true },
+              { value: 'black', newValue: "'currentColor'", literal: true },
             ],
           },
         ],

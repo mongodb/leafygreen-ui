@@ -6,6 +6,7 @@ const knobsConfig: KnobsConfigInterface<{
   variant: Variant;
   children: string;
   title: boolean;
+  baseFontSize: 14 | 16;
 }> = {
   variant: {
     type: 'select',
@@ -23,6 +24,12 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'boolean',
     default: false,
     label: 'Title',
+  },
+  baseFontSize: {
+    type: 'select',
+    default: 14,
+    label: 'Base Font Size',
+    options: [14, 16],
   },
 };
 

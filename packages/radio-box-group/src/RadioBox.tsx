@@ -60,7 +60,7 @@ const getBorderStyles = ({ disabled, size }: StateForStyles) => {
   const baseStyles = cx(
     css`
       border: 1px solid ${uiColors.gray.light1};
-      border-radius: 2px;
+      border-radius: 4px;
       cursor: pointer;
       position: relative;
       pointer-events: none;
@@ -93,7 +93,7 @@ const getRadioDisplayStyles = ({ disabled }: StateForStyles) => {
     vertical-align: top;
     overflow-wrap: break-word;
     background-color: white;
-    border-radius: 2px;
+    border-radius: 4px;
     color: ${uiColors.gray.dark2};
     pointer-events: auto;
     z-index: 2;
@@ -232,7 +232,7 @@ export default function RadioBox({
           className={interactionContainerStyle}
           disabled={disabled}
           focusTargetElement={inputElement}
-          borderRadius="1px"
+          borderRadius="3px"
           color={{ hovered: checked ? uiColors.green.base : undefined }}
           forceState={{
             hovered: checked ? true : undefined,

@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/select.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/select--default)
+#### [View on MongoDB.design](https://www.mongodb.design/component/select/example/)
 
 ## Installation
 
@@ -50,7 +50,6 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
     type="button"
     class="leafygreen-ui-1fdrra0"
     aria-disabled="false"
-    role="combobox"
     aria-labelledby="select-7-label"
     aria-controls="select-7-menu"
     aria-expanded="false"

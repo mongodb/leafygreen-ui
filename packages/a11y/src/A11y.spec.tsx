@@ -7,6 +7,7 @@ import {
   useAccessibleForm,
   validateAriaLabelProps,
   validateLabelProps,
+  prefersReducedMotion,
 } from '.';
 
 describe('packages/a11y', () => {
@@ -94,6 +95,30 @@ describe('packages/a11y', () => {
       expect(consoleSpy).toHaveBeenCalledWith(
         'For screen-reader accessibility, label or aria-labelledby must be provided to TestComponent.',
       );
+    });
+  });
+
+  describe('prefersReducedMotion', () => {
+    test('when passed a valid input, returns a string with length greater than 0', () => {
+      expect(prefersReducedMotion('color: blue;').length > 0).toBeTruthy();
+      expect(prefersReducedMotion('').length > 0).toBeTruthy();
+    });
+
+    test('when passed an invalid input, returns a string', () => {
+      // @ts-expect-error
+      expect(prefersReducedMotion(null)).toEqual('');
+
+      // @ts-expect-error
+      expect(prefersReducedMotion(undefined)).toEqual('');
+
+      // @ts-expect-error
+      expect(prefersReducedMotion(24)).toEqual('');
+
+      // @ts-expect-error
+      expect(prefersReducedMotion([])).toEqual('');
+
+      // @ts-expect-error
+      expect(prefersReducedMotion({})).toEqual('');
     });
   });
 });

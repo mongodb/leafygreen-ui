@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/box.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/box--default)
+#### [View on MongoDB.design](https://www.mongodb.design/component/box/example/)
 
 ## Overview
 

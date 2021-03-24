@@ -1,5 +1,29 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.2.6
+
+### Patch Changes
+
+- 2f0775ec: Fixes an issue where an onKeyDown listener was not properly typed.
+- Updated dependencies [2f0775ec]
+- Updated dependencies [2f0775ec]
+- Updated dependencies [2f0775ec]
+  - @leafygreen-ui/a11y@1.1.0
+  - @leafygreen-ui/icon@10.2.0
+  - @leafygreen-ui/lib@6.3.0
+
+## 5.2.5
+
+### Patch Changes
+
+- Updated dependencies [ec27f36e]
+- Updated dependencies [99ea9436]
+- Updated dependencies [ec27f36e]
+  - @leafygreen-ui/typography@7.5.0
+  - @leafygreen-ui/icon-button@9.1.2
+  - @leafygreen-ui/icon@10.0.0
+  - @leafygreen-ui/tooltip@6.1.7
+
 ## 5.2.4
 
 ### Patch Changes
