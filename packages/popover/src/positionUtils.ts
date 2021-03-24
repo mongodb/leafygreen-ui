@@ -27,7 +27,6 @@ interface CalculatePosition
   useRelativePositioning: boolean;
   align: Align;
   justify: Justify;
-  scrollContainer?: HTMLElement;
 }
 
 // Returns the style object that is used to position and transition the popover component
@@ -42,7 +41,6 @@ export function calculatePosition({
   contentElDocumentPos = defaultElementPosition,
   windowHeight = window.innerHeight,
   windowWidth = window.innerWidth,
-  scrollContainer,
 }: CalculatePosition): {
   align: Align;
   justify: Justify;
@@ -54,7 +52,6 @@ export function calculatePosition({
     referenceElViewportPos,
     contentElViewportPos,
     spacing,
-    scrollContainer,
   };
 
   const windowSafeAlign = getWindowSafeAlign(align, windowSafeCommonArgs);
@@ -125,22 +122,35 @@ export function getElementDocumentPosition(
     return defaultElementPosition;
   }
 
-  const scrollContainerOffset = scrollContainer?.getBoundingClientRect() ?? {top: 0, bottom: 0, left: 0, right: 0}
-
   const { top, bottom, left, right } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth: width } = element;
-  let { scrollX, scrollY } = window;
 
   if (scrollContainer) {
-    scrollY = scrollContainer.scrollTop;
-    scrollX = scrollContainer.scrollLeft;
+    const {scrollTop, scrollLeft} = scrollContainer;
+    const {
+      top: offsetTop,
+      bottom: offsetBottom,
+      left: offsetLeft,
+      right: offsetRight,
+    } = scrollContainer.getBoundingClientRect()
+
+    return {
+      top: top + scrollTop - offsetTop,
+      bottom: bottom + scrollTop - offsetBottom,
+      left: left + scrollLeft - offsetLeft,
+      right: right + scrollLeft - offsetRight,
+      height,
+      width,
+    };
   }
 
+  const { scrollX, scrollY } = window;
+
   return {
-    top: top + scrollY - scrollContainerOffset.top,
-    bottom: bottom + scrollY - scrollContainerOffset.bottom,
-    left: left + scrollX - scrollContainerOffset.left,
-    right: right + scrollX - scrollContainerOffset.right,
+    top: top + scrollY,
+    bottom: bottom + scrollY,
+    left: left + scrollX,
+    right: right + scrollX,
     height,
     width,
   };
@@ -155,16 +165,32 @@ export function getElementViewportPosition(
     return defaultElementPosition;
   }
 
-  const scrollContainerOffset = scrollContainer?.getBoundingClientRect() ?? {top: 0, bottom: 0, left: 0, right: 0}
-
   const { top, bottom, left, right } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth: width } = element;
 
+  if (scrollContainer) {
+    const {
+      top: offsetTop,
+      bottom: offsetBottom,
+      left: offsetLeft,
+      right: offsetRight,
+    } = scrollContainer.getBoundingClientRect()
+
+    return {
+      top: top - offsetTop,
+      bottom: bottom - offsetBottom,
+      left: left - offsetLeft,
+      right: right - offsetRight,
+      height,
+      width,
+    };
+  }
+
   return {
-    top: top - scrollContainerOffset.top,
-    bottom: bottom - scrollContainerOffset.bottom,
-    left: left - scrollContainerOffset.left,
-    right: right - scrollContainerOffset.right,
+    top,
+    bottom,
+    left,
+    right,
     height,
     width,
   };

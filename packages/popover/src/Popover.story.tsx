@@ -3,9 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { select, boolean, number, text } from '@storybook/addon-knobs';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-
 import Popover, { Align, Justify } from '.';
-import { button } from '@leafygreen-ui/lib/dist/typeIs';
 
 const containerStyle = css`
   position: absolute;
@@ -158,8 +156,8 @@ function ScrollExample() {
         justify={select('justify', Object.values(Justify), 'start')}
         spacing={number('spacing', 10)}
         adjustOnMutation={boolean('adjustOnMutation', false)}
-        portalContainer={portalContainer}
-        scrollContainer={portalContainer}
+        portalContainer={portalContainer ?? undefined}
+        scrollContainer={portalContainer ?? undefined}
         active={active}
         refEl={buttonRef}
       >
