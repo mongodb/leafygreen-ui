@@ -196,8 +196,6 @@ const IconButton: ExtendableBox<
       active = false,
       className,
       children,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
       ...rest
     }: AccessibleIconButtonProps,
     ref: React.Ref<any>,
@@ -205,13 +203,7 @@ const IconButton: ExtendableBox<
     const mode = darkMode ? 'dark' : 'light';
 
     // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
-    validateAriaLabelProps(
-      {
-        'aria-label': ariaLabel,
-        'aria-labelledby': ariaLabelledBy,
-      },
-      'IconButton',
-    );
+    validateAriaLabelProps(rest, 'IconButton');
 
     const processedChildren = React.Children.map(children, child => {
       if (!child) {
@@ -240,13 +232,8 @@ const IconButton: ExtendableBox<
       return child;
     });
 
-    const accessibleLabel = ariaLabel
-      ? { ['aria-label']: ariaLabel }
-      : { ['aria-labelledby']: ariaLabelledBy };
-
     const iconButtonProps = {
       ...rest,
-      ...accessibleLabel,
       ref,
       tabIndex: disabled ? -1 : 0,
       ['aria-disabled']: disabled,

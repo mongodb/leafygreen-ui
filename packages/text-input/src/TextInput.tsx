@@ -299,7 +299,6 @@ const TextInput: React.ComponentType<
       state = State.None,
       type = TextInputType.Text,
       id: propsId,
-      'aria-labelledby': ariaLabelledBy,
       value: controlledValue,
       className,
       darkMode = false,
@@ -324,10 +323,7 @@ const TextInput: React.ComponentType<
       }
     }
 
-    validateLabelProps(
-      { label, 'aria-labelledby': ariaLabelledBy },
-      'TextInput',
-    );
+    validateLabelProps({ label, ...rest }, 'TextInput');
 
     const RenderedCheckmarkIcon = darkMode
       ? CheckmarkWithCircleIcon
@@ -351,7 +347,6 @@ const TextInput: React.ComponentType<
           >
             <input
               {...rest}
-              aria-labelledby={ariaLabelledBy}
               type={type}
               className={cx(
                 inputStyle,

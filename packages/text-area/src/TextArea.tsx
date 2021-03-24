@@ -146,7 +146,6 @@ export default function TextArea({
   id: idProp,
   value: controlledValue,
   onChange,
-  'aria-labelledby': ariaLabelledBy,
   ...rest
 }: TextAreaProps) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
@@ -168,7 +167,7 @@ export default function TextArea({
     }
   };
 
-  validateLabelProps({ label, 'aria-labelledby': ariaLabelledBy }, 'TextArea');
+  validateLabelProps({ label, ...rest }, 'TextArea');
 
   return (
     <div className={cx(containerStyles, className)}>
@@ -199,7 +198,6 @@ export default function TextArea({
           disabled={disabled}
           onChange={onValueChange}
           value={value}
-          aria-labelledby={ariaLabelledBy}
         />
       </InteractionRing>
       {!disabled && state === State.Error && errorMessage && (
