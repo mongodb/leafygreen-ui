@@ -131,23 +131,6 @@ const textOverflowStyles = css`
   text-overflow: ellipsis;
 `;
 
-function useDocumentActiveElement() {
-  const [activeEl, setActiveEl] = useState<Element | null>(null);
-
-  const handleFocusIn = useCallback(() => {
-    setActiveEl(document.activeElement);
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener('focusin', handleFocusIn);
-    return () => {
-      document.removeEventListener('focusin', handleFocusIn);
-    };
-  }, [handleFocusIn]);
-
-  return activeEl;
-}
-
 interface BaseTabTitleProps {
   darkMode?: boolean;
   selected?: boolean;
@@ -171,7 +154,6 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [showEllipsis, setShowEllipsis] = useState(false);
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
-  const activeEl = useDocumentActiveElement();
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -180,6 +162,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   // and is selected, we manually move focus to that TabTitle.
   useEffect(() => {
     const tabsList = Array.from(parentRef?.children ?? []);
+    const activeEl = document.activeElement;
 
     if (
       activeEl &&
@@ -190,7 +173,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     ) {
       titleRef.current.focus();
     }
-  }, [parentRef, disabled, selected, titleRef, activeEl]);
+  }, [parentRef, disabled, selected, titleRef]);
 
   useIsomorphicLayoutEffect(() => {
     const titleNode = titleRef.current;
