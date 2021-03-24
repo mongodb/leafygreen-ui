@@ -54,7 +54,10 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   highlightLines?: LineHighlightingDefinition;
 }
 
-export interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
+export type CodeProps = Omit<
+  SyntaxProps,
+  'onCopy' | 'language' | 'onChange'
+> & {
   /**
    * Shows window chrome for code block;
    *
@@ -79,4 +82,23 @@ export interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
    *
    */
   onCopy?: Function;
+} & (
+    | { language: Language; languageOptions?: undefined; onChange?: undefined }
+    | {
+        onChange: (arg0: LanguageOption) => void;
+        language: LanguageOption['displayName'];
+        languageOptions: Array<LanguageOption>;
+      }
+  );
+
+export interface LanguageOption {
+  displayName: string;
+  language: Language;
+  image: React.ReactElement;
+}
+
+export interface LanguageSwitcher {
+  onChange: (arg0: LanguageOption) => void;
+  language: LanguageOption['displayName'];
+  languageOptions: Array<LanguageOption>;
 }
