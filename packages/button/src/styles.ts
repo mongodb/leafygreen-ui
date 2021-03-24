@@ -1,5 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 import { Size, Variant, Mode, ButtonProps } from './types';
 
 const baseButtonStyles = css`
@@ -21,6 +22,10 @@ const baseButtonStyles = css`
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled {
+    pointer-events: none;
   }
 `;
 
@@ -416,6 +421,45 @@ const iconSize: Record<Size, string> = {
   `,
 };
 
+const iconMargin: Record<Size, string> = {
+  [Size.XSmall]: css`
+    &:last-child {
+      margin-left: 6px;
+    }
+
+    &:first-child {
+      margin-right: 6px;
+    }
+  `,
+  [Size.Small]: css`
+    &:last-child {
+      margin-left: 6px;
+    }
+
+    &:first-child {
+      margin-right: 6px;
+    }
+  `,
+  [Size.Default]: css`
+    &:last-child {
+      margin-left: 6px;
+    }
+
+    &:first-child {
+      margin-right: 6px;
+    }
+  `,
+  [Size.Large]: css`
+    &:last-child {
+      margin-left: ${spacing[2]}px;
+    }
+
+    &:first-child {
+      margin-right: ${spacing[2]}px;
+    }
+  `,
+};
+
 const disabledIconStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.gray.light1};
@@ -443,6 +487,17 @@ export function getIconStyle({
     ? onlyIconColor[mode][variant]
     : iconColor[mode][variant];
   const size = iconSize[sizeProp];
+  const margin = iconMargin[sizeProp];
 
-  return cx(color, { [disabledIconStyle[mode]]: disabled }, size);
+  return cx(
+    css`
+      &:first-child:last-child {
+        margin-right: 0;
+        margin-left: 0;
+      }
+    `,
+    color,
+    { [disabledIconStyle[mode]]: disabled, [margin]: !isIconOnlyButton },
+    size,
+  );
 }

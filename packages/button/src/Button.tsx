@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
@@ -25,6 +25,8 @@ const containerChildStyles = css`
   height: 100%;
   width: 100%;
   pointer-events: none;
+  position: relative;
+  z-index: 0;
   font-family: ${fontFamilies.default};
 `;
 
@@ -45,17 +47,38 @@ const padding: Record<Size, string> = {
   `,
 
   [Size.Large]: css`
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: ${spacing[3]}px;
+    padding-right: ${spacing[3]}px;
   `,
 };
 
-const iconSpacing = {
-  [Size.XSmall]: 6,
-  [Size.Small]: 6,
-  [Size.Default]: 6,
-  [Size.Large]: spacing[2],
-};
+function Icon({
+  glyph,
+  variant,
+  size,
+  darkMode,
+  disabled,
+  isIconOnlyButton,
+}: Required<Pick<ButtonProps, 'variant' | 'size' | 'darkMode' | 'disabled'>> & {
+  isIconOnlyButton: boolean;
+  glyph: React.ReactElement;
+}) {
+  const accessibleIconProps = !isIconOnlyButton && {
+    'aria-hidden': true,
+    role: 'presentation',
+  };
+
+  return React.cloneElement(glyph, {
+    className: getIconStyle({
+      variant,
+      size,
+      darkMode,
+      disabled,
+      isIconOnlyButton,
+    }),
+    ...accessibleIconProps,
+  });
+}
 
 const Button: ExtendableBox<
   ButtonProps & { ref?: React.Ref<any> },
@@ -123,47 +146,17 @@ const Button: ExtendableBox<
     ...rest,
   } as const;
 
-  const accessibleIconProps = !isIconOnlyButton && {
-    'aria-hidden': true,
-    role: 'presentation',
-  };
-
-  const clonedLeftGlyph =
-    leftGlyph &&
-    React.cloneElement(leftGlyph, {
-      className: cx(
-        {
-          [css`
-            margin-right: ${iconSpacing[size]}px;
-          `]: !isIconOnlyButton || !!rightGlyph,
-        },
-        getIconStyle({ variant, size, darkMode, disabled, isIconOnlyButton }),
-      ),
-      ...accessibleIconProps,
-    });
-
-  const clonedRightGlyph =
-    rightGlyph &&
-    React.cloneElement(rightGlyph, {
-      className: cx(
-        {
-          [css`
-            margin-left: ${iconSpacing[size]}px;
-          `]: !isIconOnlyButton || !!leftGlyph,
-        },
-        getIconStyle({ variant, size, darkMode, disabled, isIconOnlyButton }),
-      ),
-      ...accessibleIconProps,
-    });
+  const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
 
   const content = (
     <>
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
       <div className={rippleStyle} ref={rippleRef} />
+
       <div className={cx(containerChildStyles, padding[size])}>
-        {clonedLeftGlyph}
-        {children}
-        {clonedRightGlyph}
+        {leftGlyph && <Icon glyph={leftGlyph} {...iconProps} />}
+        <span>{children}</span>
+        {rightGlyph && <Icon glyph={rightGlyph} {...iconProps} />}
       </div>
     </>
   );
