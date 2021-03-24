@@ -5,6 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
 import Popover, { Align, Justify } from '.';
+import { button } from '@leafygreen-ui/lib/dist/typeIs';
 
 const containerStyle = css`
   position: absolute;
@@ -123,6 +124,53 @@ function AdvancedExample() {
   );
 }
 
+function ScrollExample() {
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
+  const [active, setActive] = useState(false);
+  const buttonRef = useRef(null);
+
+  return (
+    <>
+      <div
+        ref={el => setPortalContainer(el)}
+        className={css`margin: 150px; width: 100%; overflow-y: auto; background-color: #EAEAEA; max-height: calc(100vh - 200px); padding: 100px; position: relative;`}>
+        <button
+          ref={buttonRef}
+          onClick={() => setActive(curr => !curr)}
+          className={cx(
+            containerStyle,
+            css`margin-bottom: 200vh;`,
+            referenceElPositions[
+              select(
+                'Reference Element Position',
+                ['centered', 'top', 'right', 'bottom', 'left'],
+                'centered',
+              )
+            ],
+          )}
+        >
+          {text('Button Content', 'Popover')}
+        </button>
+      </div>
+
+      <Popover
+        align={select('Align', Object.values(Align), 'top')}
+        justify={select('justify', Object.values(Justify), 'start')}
+        spacing={number('spacing', 10)}
+        adjustOnMutation={boolean('adjustOnMutation', false)}
+        portalContainer={portalContainer}
+        scrollContainer={portalContainer}
+        active={active}
+        refEl={buttonRef}
+      >
+        <div className={popoverStyle}>Popover content</div>
+      </Popover>
+    </>
+  );
+}
+
 storiesOf('Popover', module)
   .add('Default', () => <DefaultExample />)
-  .add('Advanced', () => <AdvancedExample />);
+  .add('Advanced', () => <AdvancedExample />)
+  .add('Scroll Container', () => <ScrollExample />);
+

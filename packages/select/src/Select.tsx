@@ -29,6 +29,14 @@ const labelStyle = css`
   font-weight: bold;
 `;
 
+type PortalProps = {
+  usePortal?: true;
+  portalContainer?: HTMLElement;
+} | {
+  usePortal: false;
+  portalContainer?: undefined;
+};
+
 export type Props = {
   children: React.ReactNode;
   className?: string;
@@ -38,9 +46,8 @@ export type Props = {
   disabled?: boolean;
   description?: string;
   placeholder?: string;
-  usePortal?: boolean;
   name?: string;
-} & (
+} & PortalProps & (
   | // Uncontrolled
   ({
       defaultValue?: string;
@@ -74,6 +81,7 @@ export default function Select({
   size = Size.Default,
   disabled = false,
   usePortal = true,
+  portalContainer,
   placeholder = 'Select',
   className,
   id: idProp,
@@ -378,6 +386,7 @@ export default function Select({
         (option, group) => {
           const selected = option === selectedOption;
           const disabled = isOptionDisabled(option, group);
+
           return {
             className: option.props.className,
             glyph: option.props.glyph,
@@ -408,6 +417,8 @@ export default function Select({
       selectedOption,
     ],
   );
+
+  const portalProps = { usePortal, portalContainer } as Required<PortalProps>;
 
   return (
     <div
@@ -469,6 +480,7 @@ export default function Select({
           {description}
         </div>
       )}
+
       <SelectContext.Provider value={providerData}>
         <MenuButton
           ref={menuButtonRef}
@@ -500,7 +512,7 @@ export default function Select({
             onSelectFocusedOption={onSelectFocusedOption}
             onFocusPreviousOption={onFocusPreviousOption}
             onFocusNextOption={onFocusNextOption}
-            usePortal={usePortal}
+            {...portalProps}
             className={css`
               width: ${menuButtonRef.current?.clientWidth}px;
             `}

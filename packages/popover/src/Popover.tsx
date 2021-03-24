@@ -52,6 +52,7 @@ const mutationOptions = {
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.portalClassName Classname applied to root element of the portal.
+ * @param props.portalContainer HTML element that the popover is portaled within.
  * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
  */
 function Popover({
@@ -64,6 +65,8 @@ function Popover({
   children,
   className,
   portalClassName,
+  portalContainer,
+  scrollContainer,
   refEl,
   ...rest
 }: PopoverProps) {
@@ -123,10 +126,11 @@ function Popover({
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
-      () => getElementDocumentPosition(referenceElement),
+      () => getElementDocumentPosition(referenceElement, scrollContainer),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
         referenceElement,
+        scrollContainer,
         viewportSize,
         lastTimeRefElMutated,
         active,
@@ -203,7 +207,11 @@ function Popover({
   `;
 
   const Root = usePortal ? Portal : Fragment;
-  const rootProps = usePortal ? { className: portalClassName } : {};
+  const rootProps = usePortal ? (
+    portalContainer ?
+      { container: portalContainer } :
+      { className: portalClassName ?? undefined }
+    ) : {};
 
   let renderedChildren: null | React.ReactNode;
 
@@ -281,16 +289,6 @@ Popover.propTypes = {
   portalClassName: PropTypes.string,
   spacing: PropTypes.number,
   adjustOnMutation: PropTypes.bool,
-};
-
-Popover.defaultProps = {
-  children: undefined,
-  align: Align.Bottom,
-  justify: Justify.Start,
-  active: false,
-  usePortal: true,
-  spacing: 10,
-  adjustOnMutation: false,
 };
 
 export default Popover;

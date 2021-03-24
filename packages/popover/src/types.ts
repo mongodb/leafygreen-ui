@@ -1,4 +1,3 @@
-import { OneOf } from '@leafygreen-ui/lib';
 import React from 'react';
 
 /**
@@ -69,7 +68,7 @@ export type PopoverProps = {
    *
    * default: `false`
    */
-  active: boolean;
+  active?: boolean;
 
   /**
    * Class name applied to popover content container.
@@ -110,7 +109,9 @@ export type PopoverProps = {
   adjustOnMutation?: boolean;
 
   onClick?: React.MouseEventHandler;
-} & OneOf<
+
+  scrollContainer?: HTMLElement;
+} & (
   {
     /**
      * Specifies that the popover content will appear portaled to the end of the DOM,
@@ -126,8 +127,24 @@ export type PopoverProps = {
      * default: undefined
      */
     portalClassName?: string;
-  },
-  {
+
+    /**
+     * If using a portal, specifies the element to portal within.
+     */
+    portalContainer?: HTMLElement;
+  } | {
     usePortal: false;
+
+    /**
+     * If using a portal, specifies a class name to apply to the root element of the portal.
+     *
+     * default: undefined
+     */
+    portalClassName?: undefined;
+
+    /**
+     * If using a portal, specifies the element to portal within.
+     */
+    portalContainer?: undefined;
   }
->;
+);

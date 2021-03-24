@@ -116,20 +116,28 @@ const defaultElementPosition = {
 
 export function getElementDocumentPosition(
   element: HTMLElement | null,
+  scrollContainer?: HTMLElement,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
   }
 
+  const scrollContainerOffset = scrollContainer?.getBoundingClientRect() ?? {top: 0, bottom: 0, left: 0, right: 0}
+
   const { top, bottom, left, right } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth: width } = element;
-  const { scrollX, scrollY } = window;
+  let { scrollX, scrollY } = window;
+
+  if (scrollContainer) {
+    scrollY = scrollContainer.scrollTop
+    scrollX = scrollContainer.scrollLeft
+  }
 
   return {
-    top: top + scrollY,
-    bottom: bottom + scrollY,
-    left: left + scrollX,
-    right: right + scrollX,
+    top: top + scrollY - scrollContainerOffset.top,
+    bottom: bottom + scrollY - scrollContainerOffset.bottom,
+    left: left + scrollX - scrollContainerOffset.left,
+    right: right + scrollX - scrollContainerOffset.right,
     height,
     width,
   };

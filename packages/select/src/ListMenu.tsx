@@ -20,7 +20,15 @@ const menuStyle = css`
   overflow: auto;
 `;
 
-interface ListMenuProps {
+type PortalProps = {
+  usePortal: true;
+  portalContainer?: HTMLElement;
+} | {
+  usePortal: false;
+  portalContainer?: undefined;
+};
+
+type ListMenuProps = {
   children: React.ReactNode;
   id: string;
   referenceElement: React.MutableRefObject<HTMLElement | null>;
@@ -29,9 +37,8 @@ interface ListMenuProps {
   onFocusPreviousOption: () => void;
   onFocusNextOption: () => void;
   className?: string;
-  usePortal?: boolean;
   labelId?: string;
-}
+} & PortalProps;
 
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
   function ListMenu(
@@ -44,8 +51,9 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       onFocusNextOption,
       onSelectFocusedOption,
       className,
-      usePortal,
+      usePortal = true,
       labelId,
+      portalContainer,
     }: ListMenuProps,
     forwardedRef,
   ) {
@@ -116,6 +124,8 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       [ref],
     );
 
+    const popoverProps = { usePortal, portalContainer } as PortalProps;
+
     return (
       <Popover
         active={open && !disabled}
@@ -125,7 +135,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         adjustOnMutation
         className={className}
         refEl={referenceElement}
-        usePortal={usePortal}
+        {...popoverProps}
       >
         <ul
           aria-labelledby={labelId}

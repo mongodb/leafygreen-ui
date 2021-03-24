@@ -29,6 +29,7 @@ function Portal(props: PortalProps) {
     } else {
       const defaultContainer = createPortalContainer();
       setContainer(defaultContainer);
+
       return () => {
         defaultContainer.remove();
       };
