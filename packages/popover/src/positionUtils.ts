@@ -116,7 +116,7 @@ const defaultElementPosition = {
 
 export function getElementDocumentPosition(
   element: HTMLElement | null,
-  scrollContainer?: HTMLElement,
+  scrollContainer?: HTMLElement | null,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
@@ -159,7 +159,7 @@ export function getElementDocumentPosition(
 // Gets top offset, left offset, width and height dimensions for a node
 export function getElementViewportPosition(
   element: HTMLElement | null,
-  scrollContainer?: HTMLElement,
+  scrollContainer?: HTMLElement | null,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;

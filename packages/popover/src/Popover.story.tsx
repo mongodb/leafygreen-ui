@@ -156,8 +156,8 @@ function ScrollExample() {
         justify={select('justify', Object.values(Justify), 'start')}
         spacing={number('spacing', 10)}
         adjustOnMutation={boolean('adjustOnMutation', false)}
-        portalContainer={portalContainer ?? undefined}
-        scrollContainer={portalContainer ?? undefined}
+        portalContainer={portalContainer}
+        scrollContainer={portalContainer}
         active={active}
         refEl={buttonRef}
       >

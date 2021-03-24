@@ -110,7 +110,7 @@ export type PopoverProps = {
 
   onClick?: React.MouseEventHandler;
 
-  scrollContainer?: HTMLElement;
+  scrollContainer?: HTMLElement | null;
 } & (
   {
     /**
@@ -131,7 +131,7 @@ export type PopoverProps = {
     /**
      * If using a portal, specifies the element to portal within.
      */
-    portalContainer?: HTMLElement;
+    portalContainer?: HTMLElement | null;
   } | {
     usePortal: false;
 
@@ -145,6 +145,6 @@ export type PopoverProps = {
     /**
      * If using a portal, specifies the element to portal within.
      */
-    portalContainer?: undefined;
+    portalContainer?: null;
   }
 );

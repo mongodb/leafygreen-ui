@@ -22,10 +22,10 @@ const menuStyle = css`
 
 type PortalProps = {
   usePortal: true;
-  portalContainer?: HTMLElement;
+  portalContainer?: HTMLElement | null;
 } | {
   usePortal: false;
-  portalContainer?: undefined;
+  portalContainer?: null;
 };
 
 type ListMenuProps = {
