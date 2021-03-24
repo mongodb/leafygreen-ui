@@ -15,8 +15,6 @@ Minor Changes to the API:
 
 Breaking Changes to the Design:
 
-The Button has been completely redesigned to be both more modern and more accessible. That being said, there are a few changes to the design in particular that are worth noting as they may have implications in your page layouts:
-
 - Size:
   - Small buttons were 25px, they are now 28px.
   - Default buttons were 32px, they are now 36px.
