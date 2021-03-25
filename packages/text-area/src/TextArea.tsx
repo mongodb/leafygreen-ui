@@ -169,7 +169,7 @@ export default function TextArea({
 
   if (!label && !ariaLabelledBy) {
     console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
+      'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
     );
   }
 
