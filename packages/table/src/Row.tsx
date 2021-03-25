@@ -1,16 +1,13 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useSSR from 'use-ssr';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import {
-  isComponentType,
-  IdAllocator,
-  HTMLElementProps,
-} from '@leafygreen-ui/lib';
+import { isComponentType, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { CellElement, tdInnerDiv } from './Cell';
 
@@ -95,8 +92,6 @@ function getIndentLevelStyle(indentLevel: number) {
   `;
 }
 
-const idAllocator = IdAllocator.create('table-row');
-
 interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
   expanded?: boolean;
   disabled?: boolean;
@@ -128,7 +123,7 @@ const Row = React.forwardRef(
       dispatch: tableDispatch,
     } = useTableContext();
 
-    const indexRef = useRef(idAllocator.generate());
+    const indexRef = useIdAllocator({ prefix: 'table-row' });
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = useRef(null);
 

@@ -1,7 +1,7 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import Option from './Option';
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
@@ -29,8 +29,6 @@ export interface InternalProps {
   children: React.ReactNode;
 }
 
-const idAllocator = IdAllocator.create('select-option-group');
-
 export function InternalOptionGroup({
   className,
   label,
@@ -39,7 +37,7 @@ export function InternalOptionGroup({
   const { mode } = useContext(SelectContext);
   const colorSet = colorSets[mode].option;
 
-  const groupId = useMemo(() => idAllocator.generate(), []);
+  const groupId = useIdAllocator({ prefix: 'select-option-group' });
 
   return (
     <div

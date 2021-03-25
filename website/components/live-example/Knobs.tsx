@@ -1,20 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
-import { IdAllocator } from '@leafygreen-ui/lib';
+import React, { useCallback } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useViewportSize } from '@leafygreen-ui/hooks';
+import { useViewportSize, useIdAllocator } from '@leafygreen-ui/hooks';
 import { Select as LGUISelect, Option } from '@leafygreen-ui/select';
 import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
 import { mq } from 'utils/mediaQuery';
-
-const booleanIdAllocator = IdAllocator.create('boolean');
-const textIdAllocator = IdAllocator.create('text');
-const areaIdAllocator = IdAllocator.create('area');
-const numberIdAllocator = IdAllocator.create('number');
-const selectIdAllocator = IdAllocator.create('select');
 
 const knobsWidth = 326; // totalWidth (700px) - padding on both sides (24px on each side) / 2
 
@@ -109,7 +102,7 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
     onChange(!value, prop);
   };
 
-  const labelId = useMemo(() => booleanIdAllocator.generate(), []);
+  const labelId = useIdAllocator({ prefix: 'boolean' });
 
   return (
     <div
@@ -155,7 +148,7 @@ function Number({
     onChange(parseFloat(target.value), prop);
   };
 
-  const labelId = useMemo(() => numberIdAllocator.generate(), []);
+  const labelId = useIdAllocator({ prefix: 'number' });
 
   return (
     <div
@@ -201,7 +194,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
     [prop, onChange],
   );
 
-  const labelId = useMemo(() => textIdAllocator.generate(), []);
+  const labelId = useIdAllocator({ prefix: 'text' });
 
   return (
     <div
@@ -241,7 +234,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
     [onChange, prop],
   );
 
-  const labelId = useMemo(() => areaIdAllocator.generate(), []);
+  const labelId = useIdAllocator({ prefix: 'area' });
 
   return (
     <div
@@ -281,7 +274,7 @@ function Select({
   darkMode,
   disabled,
 }: SelectInterface) {
-  const labelId = useMemo(() => selectIdAllocator.generate(), []);
+  const labelId = useIdAllocator({ prefix: 'select' });
 
   const handleChange = (value: string) => {
     if (value === '') {

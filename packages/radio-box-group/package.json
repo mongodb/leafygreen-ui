@@ -22,7 +22,8 @@
   "dependencies": {
     "@leafygreen-ui/interaction-ring": "^1.0.0",
     "@leafygreen-ui/lib": "^6.1.2",
-    "@leafygreen-ui/palette": "^3.0.1"
+    "@leafygreen-ui/palette": "^3.0.1", 
+    "@leafygreen-ui/hooks": "^6.0.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.0.1"

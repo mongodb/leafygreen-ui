@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -7,12 +7,8 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  createDataProp,
-  HTMLElementProps,
-  Either,
-  IdAllocator,
-} from '@leafygreen-ui/lib';
+import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 const iconSelectorProp = createDataProp('icon-selector');
@@ -260,8 +256,6 @@ function getStatefulInputStyles({
   }
 }
 
-const idAllocator = IdAllocator.create('text-input');
-
 /**
  * # TextInput
  *
@@ -311,7 +305,7 @@ const TextInput: React.ComponentType<
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
-    const id = useMemo(() => propsId ?? idAllocator.generate(), [propsId]);
+    const id = useIdAllocator({ prefix: 'textinput', id: propsId });
 
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
       if (onChange) {

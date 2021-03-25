@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useViewportSize } from '@leafygreen-ui/hooks';
-import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
+import { useViewportSize, useIdAllocator } from '@leafygreen-ui/hooks';
+import { OneOf } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
 import ListMenu from './ListMenu';
@@ -66,8 +66,6 @@ export type Props = {
 ) &
   OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
-const idAllocator = IdAllocator.create('select');
-
 export default function Select({
   children,
   darkMode = false,
@@ -86,7 +84,7 @@ export default function Select({
   readOnly,
   'aria-labelledby': ariaLabelledBy,
 }: Props) {
-  const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
+  const id = useIdAllocator({ prefix: 'select', id: idProp });
   const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
     ariaLabelledBy,
     id,

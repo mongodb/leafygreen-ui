@@ -6,3 +6,4 @@ export { default as usePoller } from './usePoller';
 export { default as usePrevious } from './usePrevious';
 export { default as useObjectDependency } from './useObjectDependency';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+export { default as useIdAllocator } from './useIdAllocator';

@@ -1,13 +1,12 @@
 import React, { useState, useMemo } from 'react';
-import { Either, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
-
-const idAllocator = IdAllocator.create('textarea');
 
 export const State = {
   None: 'none',
@@ -148,7 +147,7 @@ export default function TextArea({
   'aria-labelledby': ariaLabelledBy,
   ...rest
 }: TextAreaProps) {
-  const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
+  const id = useIdAllocator({ prefix: 'textarea', id: idProp });
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();

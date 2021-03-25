@@ -8,16 +8,15 @@ import Popover, {
   Justify,
   ElementPosition,
 } from '@leafygreen-ui/popover';
-import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
+import {
+  useEventListener,
+  useEscapeKey,
+  useIdAllocator,
+} from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import {
-  OneOf,
-  HTMLElementProps,
-  IdAllocator,
-  isComponentType,
-} from '@leafygreen-ui/lib';
+import { OneOf, HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
@@ -195,8 +194,6 @@ export type TooltipProps = Omit<
     enabled?: boolean;
   } & PortalProps;
 
-const idAllocator = IdAllocator.create('tooltip');
-
 const stopClickPropagation = (evt: React.MouseEvent) => {
   evt.preventDefault();
   evt.stopPropagation();
@@ -259,9 +256,7 @@ function Tooltip({
   const [tooltipNode, setTooltipNode] = useState<HTMLDivElement | null>(null);
 
   const existingId = id ?? tooltipNode?.id;
-  const tooltipId = useMemo(() => existingId ?? idAllocator.generate(), [
-    existingId,
-  ]);
+  const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });
 
   useEffect(() => {
     // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
