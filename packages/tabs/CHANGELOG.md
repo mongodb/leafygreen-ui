@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 5.0.3
+
+### Patch Changes
+
+- b3508a2e: Addresses bug where multiple sets of Tabs on a page, controlled by the same state, would automatically move focus to the last set.
+
 ## 5.0.2
 
 ### Patch Changes
