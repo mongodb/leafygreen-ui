@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 2.0.2
+
+### Patch Changes
+
+- 139694ea: Removes `role="combobox"` from Select dropdown
+
 ## 2.0.1
 
 ### Patch Changes
