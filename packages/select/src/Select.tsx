@@ -32,9 +32,11 @@ const labelStyle = css`
 type PortalProps = {
   usePortal?: true;
   portalContainer?: HTMLElement | null;
+  scrollContainer?: HTMLElement | null;
 } | {
   usePortal: false;
   portalContainer?: null;
+  scrollContainer?: null;
 };
 
 export type Props = {
@@ -82,6 +84,7 @@ export default function Select({
   disabled = false,
   usePortal = true,
   portalContainer,
+  scrollContainer,
   placeholder = 'Select',
   className,
   id: idProp,
@@ -418,7 +421,7 @@ export default function Select({
     ],
   );
 
-  const portalProps = { usePortal, portalContainer } as Required<PortalProps>;
+  const portalProps = { usePortal, portalContainer, scrollContainer } as Required<PortalProps>;
 
   return (
     <div

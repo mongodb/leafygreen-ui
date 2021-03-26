@@ -313,6 +313,7 @@ function Select({
         disabled={disabled}
         className={inputClassName}
         portalContainer={container ?? undefined}
+        scrollContainer={container ?? undefined}
       >
         {generateOptions()}
       </LGUISelect>

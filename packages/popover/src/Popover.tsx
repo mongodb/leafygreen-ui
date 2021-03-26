@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
+import {usePopoverPortalContainer} from '@leafygreen-ui/leafygreen-provider';
 import {
   useViewportSize,
   useMutationObserver,
@@ -65,8 +66,8 @@ function Popover({
   children,
   className,
   portalClassName,
-  portalContainer,
-  scrollContainer,
+  portalContainer: portalContainerProp,
+  scrollContainer: scrollContainerProp,
   refEl,
   ...rest
 }: PopoverProps) {
@@ -75,6 +76,12 @@ function Popover({
   );
   const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
+
+  let {portalContainer, scrollContainer} = usePopoverPortalContainer();
+
+  portalContainer = portalContainerProp || portalContainer
+  scrollContainer = scrollContainerProp || scrollContainer
+
 
   // To remove StrictMode warnings produced by react-transition-group we need
   // to pass in a useRef object to the <Transition> component.
