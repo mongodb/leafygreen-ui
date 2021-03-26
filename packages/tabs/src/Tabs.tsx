@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -74,23 +74,6 @@ const listStyle = css`
 const disabledStyle = css`
   cursor: not-allowed;
 `;
-
-function useDocumentActiveElement() {
-  const [activeEl, setActiveEl] = useState<Element | null>(null);
-
-  const handleFocusIn = useCallback(() => {
-    setActiveEl(document.activeElement);
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener('focusin', handleFocusIn);
-    return () => {
-      document.removeEventListener('focusin', handleFocusIn);
-    };
-  }, [handleFocusIn]);
-
-  return activeEl;
-}
 
 type ReactEmpty = null | undefined | false | '';
 
@@ -173,8 +156,6 @@ function Tabs({
 
   const [tabNode, setTabNode] = useState<HTMLDivElement | null>(null);
   const [panelNode, setPanelNode] = useState<HTMLDivElement | null>(null);
-  const [isAnyTabFocused, setIsAnyTabFocused] = useState(false);
-  const activeEl = useDocumentActiveElement();
 
   const accessibilityProps = {
     ['aria-label']: ariaLabel,
@@ -182,14 +163,6 @@ function Tabs({
   };
 
   validateAriaLabelProps(accessibilityProps, 'Tabs');
-
-  useEffect(() => {
-    const tabsList = Array.from(tabNode?.children ?? []);
-
-    if (activeEl !== null && tabsList.indexOf(activeEl) !== -1) {
-      setIsAnyTabFocused(true);
-    }
-  }, [activeEl, tabNode]);
 
   const childrenArray = useMemo(
     () => React.Children.toArray(children) as Array<React.ReactElement>,
@@ -251,7 +224,7 @@ function Tabs({
       as,
       disabled,
       darkMode,
-      isAnyTabFocused,
+      parentRef: tabNode,
       className: cx(
         {
           [modeColors[mode].activeStyle]: isTabSelected,
