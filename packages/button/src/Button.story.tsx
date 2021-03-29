@@ -14,8 +14,18 @@ storiesOf('Button', module)
     const baseFontSize = select('Base Font Size', [14, 16], 14);
     const disabled = boolean('Disabled', false);
     const darkMode = boolean('Dark Mode', false);
-    const leftGlyph = select('Left Glyph', Object.keys(glyphs), 'InviteUser');
-    const rightGlyph = select('Right Glyph', Object.keys(glyphs), 'CaretDown');
+    const leftGlyph = select(
+      'Left Glyph',
+      // @ts-expect-error undefined is a valid option
+      [...Object.keys(glyphs), undefined],
+      'InviteUser',
+    );
+    const rightGlyph = select(
+      'Right Glyph',
+      // @ts-expect-error undefined is a valid option
+      [...Object.keys(glyphs), undefined],
+      'CaretDown',
+    );
 
     const className = css`
       background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
@@ -31,8 +41,8 @@ storiesOf('Button', module)
             size={size}
             disabled={disabled}
             baseFontSize={baseFontSize}
-            leftGlyph={<Icon glyph={leftGlyph} />}
-            rightGlyph={<Icon glyph={rightGlyph} />}
+            leftGlyph={leftGlyph && <Icon glyph={leftGlyph} />}
+            rightGlyph={rightGlyph && <Icon glyph={rightGlyph} />}
           >
             MongoDB
           </Button>

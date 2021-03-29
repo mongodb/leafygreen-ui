@@ -103,7 +103,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:hover,
       &:active {
         background-color: ${uiColors.green.dark1};
-        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark3};
+        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark2};
       }
     `,
 
@@ -115,7 +115,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:active {
         background-color: rgba(10, 208, 91, 0.08);
         border: 1px solid ${uiColors.green.base};
-        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark3};
+        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark2};
       }
     `,
 
@@ -128,7 +128,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:active {
         background-color: ${uiColors.gray.dark1};
         border: 1px solid ${uiColors.gray.base};
-        box-shadow: 0px 0px 0px 3px #2d3e48;
+        box-shadow: 0px 0px 0px 3px ${uiColors.gray.dark2};
       }
     `,
 
@@ -141,7 +141,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:active {
         background-color: ${uiColors.red.base};
         border: 1px solid #f97216;
-        box-shadow: 0px 0px 0px 3px ${uiColors.red.dark3};
+        box-shadow: 0px 0px 0px 3px ${uiColors.red.dark2};
       }
     `,
 
@@ -152,7 +152,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:hover,
       &:active {
         background: rgba(249, 114, 22, 0.08);
-        box-shadow: 0px 0px 0px 3px ${uiColors.red.dark3};
+        box-shadow: 0px 0px 0px 3px ${uiColors.red.dark2};
       }
     `,
   },

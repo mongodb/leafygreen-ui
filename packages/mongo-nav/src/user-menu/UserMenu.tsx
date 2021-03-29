@@ -397,6 +397,7 @@ function UserMenu({
               href={isAccount ? undefined : userMenu.account.homepage}
               disabled={isAccount}
               data-testid="user-menu-account-button"
+              darkMode
             >
               Manage your MongoDB Account
             </Button>

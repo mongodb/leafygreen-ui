@@ -29,6 +29,8 @@ const containerChildStyles = css`
   position: relative;
   z-index: 0;
   font-family: ${fontFamilies.default};
+  // Pixel pushing for optical alignment
+  padding-top: 1px;
 `;
 
 const padding: Record<Size, string> = {
@@ -129,17 +131,32 @@ const Button: ExtendableBox<
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
       <div className={rippleStyle} ref={rippleRef} />
 
-      <div className={cx(containerChildStyles, padding[size])}>
-        {leftGlyph && (
-          <ButtonIcon
-            glyph={leftGlyph}
-            className={
-              !isIconOnlyButton ? css`margin-right: ${iconSpacing};}` : ''
-            }
-            {...iconProps}
-          />
+      <div
+        className={cx(
+          containerChildStyles,
+          {
+            [css`
+              justify-content: space-between;
+            `]: !!rightGlyph,
+          },
+          padding[size],
         )}
-        {children}
+      >
+        <span>
+          {leftGlyph && (
+            <ButtonIcon
+              glyph={leftGlyph}
+              className={cx(
+                { [css`margin-right: ${iconSpacing};}`]: !isIconOnlyButton },
+                css`
+                  vertical-align: text-top;
+                `,
+              )}
+              {...iconProps}
+            />
+          )}
+          {children}
+        </span>
         {rightGlyph && (
           <ButtonIcon
             glyph={rightGlyph}
