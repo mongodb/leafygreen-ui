@@ -1,5 +1,5 @@
 import { getRippleGlobalNamespace } from './getRippleGlobalNamespace';
-import { Options, colorMap, Mode } from './utils';
+import { Options } from './utils';
 
 const TRANSITION_TIME = 300;
 const RIPPLE_NAMESPACE = getRippleGlobalNamespace();
