@@ -49,13 +49,13 @@ const knobsConfig: KnobsConfigInterface<{
   leftGlyph: {
     type: 'select',
     options: Object.keys(glyphs),
-    default: 'Edit',
+    default: 'InviteUser',
     label: 'Left Glyph',
   },
   rightGlyph: {
     type: 'select',
     options: Object.keys(glyphs),
-    default: 'Edit',
+    default: 'CaretDown',
     label: 'Right Glyph',
   },
   baseFontSize: {

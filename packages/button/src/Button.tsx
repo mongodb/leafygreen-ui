@@ -59,7 +59,10 @@ function Icon({
   darkMode,
   disabled,
   isIconOnlyButton,
-}: Required<Pick<ButtonProps, 'variant' | 'size' | 'darkMode' | 'disabled'>> & {
+  className,
+}: Required<
+  Pick<ButtonProps, 'variant' | 'size' | 'darkMode' | 'disabled' | 'className'>
+> & {
   isIconOnlyButton: boolean;
   glyph: React.ReactElement;
 }) {
@@ -69,13 +72,16 @@ function Icon({
   };
 
   return React.cloneElement(glyph, {
-    className: getIconStyle({
-      variant,
-      size,
-      darkMode,
-      disabled,
-      isIconOnlyButton,
-    }),
+    className: cx(
+      className,
+      getIconStyle({
+        variant,
+        size,
+        darkMode,
+        disabled,
+        isIconOnlyButton,
+      }),
+    ),
     ...accessibleIconProps,
   });
 }
@@ -154,9 +160,31 @@ const Button: ExtendableBox<
       <div className={rippleStyle} ref={rippleRef} />
 
       <div className={cx(containerChildStyles, padding[size])}>
-        {leftGlyph && <Icon glyph={leftGlyph} {...iconProps} />}
-        <span>{children}</span>
-        {rightGlyph && <Icon glyph={rightGlyph} {...iconProps} />}
+        {leftGlyph && (
+          <Icon
+            glyph={leftGlyph}
+            className={cx({
+              [css`
+                margin-right: ${size === Size.Large
+                  ? `${spacing[2]}px`
+                  : '6px'};
+              `]: !isIconOnlyButton,
+            })}
+            {...iconProps}
+          />
+        )}
+        {children}
+        {rightGlyph && (
+          <Icon
+            glyph={rightGlyph}
+            className={cx({
+              [css`
+                margin-left: ${size === Size.Large ? `${spacing[2]}px` : '6px'};
+              `]: !isIconOnlyButton,
+            })}
+            {...iconProps}
+          />
+        )}
       </div>
     </>
   );

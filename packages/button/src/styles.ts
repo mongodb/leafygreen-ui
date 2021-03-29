@@ -1,6 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
 import { Size, Variant, Mode, ButtonProps } from './types';
 
 const baseButtonStyles = css`
@@ -104,6 +103,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:hover,
       &:active {
         background-color: ${uiColors.green.dark1};
+        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark3};
       }
     `,
 
@@ -115,6 +115,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:active {
         background-color: rgba(10, 208, 91, 0.08);
         border: 1px solid ${uiColors.green.base};
+        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark3};
       }
     `,
 
@@ -127,6 +128,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:active {
         background-color: ${uiColors.gray.dark1};
         border: 1px solid ${uiColors.gray.base};
+        box-shadow: 0px 0px 0px 3px #2d3e48;
       }
     `,
 
@@ -139,6 +141,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:active {
         background-color: ${uiColors.red.base};
         border: 1px solid #f97216;
+        box-shadow: 0px 0px 0px 3px ${uiColors.red.dark3};
       }
     `,
 
@@ -149,6 +152,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       &:hover,
       &:active {
         background: rgba(249, 114, 22, 0.08);
+        box-shadow: 0px 0px 0px 3px ${uiColors.red.dark3};
       }
     `,
   },
@@ -421,45 +425,6 @@ const iconSize: Record<Size, string> = {
   `,
 };
 
-const iconMargin: Record<Size, string> = {
-  [Size.XSmall]: css`
-    &:last-child {
-      margin-left: 6px;
-    }
-
-    &:first-child {
-      margin-right: 6px;
-    }
-  `,
-  [Size.Small]: css`
-    &:last-child {
-      margin-left: 6px;
-    }
-
-    &:first-child {
-      margin-right: 6px;
-    }
-  `,
-  [Size.Default]: css`
-    &:last-child {
-      margin-left: 6px;
-    }
-
-    &:first-child {
-      margin-right: 6px;
-    }
-  `,
-  [Size.Large]: css`
-    &:last-child {
-      margin-left: ${spacing[2]}px;
-    }
-
-    &:first-child {
-      margin-right: ${spacing[2]}px;
-    }
-  `,
-};
-
 const disabledIconStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.gray.light1};
@@ -487,17 +452,6 @@ export function getIconStyle({
     ? onlyIconColor[mode][variant]
     : iconColor[mode][variant];
   const size = iconSize[sizeProp];
-  const margin = iconMargin[sizeProp];
 
-  return cx(
-    css`
-      &:first-child:last-child {
-        margin-right: 0;
-        margin-left: 0;
-      }
-    `,
-    color,
-    { [disabledIconStyle[mode]]: disabled, [margin]: !isIconOnlyButton },
-    size,
-  );
+  return cx(color, { [disabledIconStyle[mode]]: disabled }, size);
 }
