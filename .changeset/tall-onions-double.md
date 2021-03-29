@@ -2,4 +2,7 @@
 '@leafygreen-ui/button': major
 ---
 
-Implements complete redesign of button component. For more information on how to upgrade to version 11, see our upgrade guide.
+- Redesign's the button component! 
+- Improves accessibility of buttons for visually-impaired users.
+- Adds support for right-aligned glyphs.
+- Renames glyph prop to `leftGlyph`.

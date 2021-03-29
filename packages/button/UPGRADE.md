@@ -16,5 +16,5 @@ Minor Changes to the API:
 Breaking Changes to the Design:
 
 - Size:
-  - Small buttons were 25px, they are now 28px.
-  - Default buttons were 32px, they are now 36px.
+  - Small buttons were 25px, they are now 28px in height.
+  - Default buttons were 32px, they are now 36px in height.
