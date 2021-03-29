@@ -17,23 +17,10 @@ const menuButtonStyle = css`
   }
 `;
 
-const menuButtonContentsStyle = css`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-`;
-
 const menuButtonTextStyle = css`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-`;
-
-const caretIconStyle = css`
-  min-width: 16px;
 `;
 
 type Props = {
@@ -155,6 +142,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       onKeyDown={onKeyDown}
       variant={Variant.Default}
       darkMode={mode === Mode.Dark}
+      rightGlyph={<CaretDownIcon />}
       className={cx(
         menuButtonStyle,
         css`
@@ -173,14 +161,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         `,
       )}
     >
-      <div className={menuButtonContentsStyle}>
-        <span className={menuButtonTextStyle}>{text}</span>
-        <CaretDownIcon
-          aria-hidden
-          role="presentation"
-          className={caretIconStyle}
-        />
-      </div>
+      <span className={menuButtonTextStyle}>{text}</span>
       {children}
     </Button>
   );
