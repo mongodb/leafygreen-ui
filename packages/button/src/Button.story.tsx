@@ -41,8 +41,8 @@ storiesOf('Button', module)
             size={size}
             disabled={disabled}
             baseFontSize={baseFontSize}
-            leftGlyph={leftGlyph && <Icon glyph={leftGlyph} />}
-            rightGlyph={rightGlyph && <Icon glyph={rightGlyph} />}
+            leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+            rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
           >
             MongoDB
           </Button>
