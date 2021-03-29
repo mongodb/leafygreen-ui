@@ -6,7 +6,8 @@ import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
-import { getClassName, getIconStyle } from './styles';
+import { getClassName } from './styles';
+import ButtonIcon from './ButtonIcon';
 
 const rippleStyle = css`
   overflow: hidden;
@@ -51,40 +52,6 @@ const padding: Record<Size, string> = {
     padding-right: ${spacing[3]}px;
   `,
 };
-
-function Icon({
-  glyph,
-  variant,
-  size,
-  darkMode,
-  disabled,
-  isIconOnlyButton,
-  className,
-}: Required<
-  Pick<ButtonProps, 'variant' | 'size' | 'darkMode' | 'disabled' | 'className'>
-> & {
-  isIconOnlyButton: boolean;
-  glyph: React.ReactElement;
-}) {
-  const accessibleIconProps = !isIconOnlyButton && {
-    'aria-hidden': true,
-    role: 'presentation',
-  };
-
-  return React.cloneElement(glyph, {
-    className: cx(
-      className,
-      getIconStyle({
-        variant,
-        size,
-        darkMode,
-        disabled,
-        isIconOnlyButton,
-      }),
-    ),
-    ...accessibleIconProps,
-  });
-}
 
 const Button: ExtendableBox<
   ButtonProps & { ref?: React.Ref<any> },
@@ -134,6 +101,7 @@ const Button: ExtendableBox<
   const isAnchor = typeof rest.href === 'string';
   let type: JSX.IntrinsicElements['button']['type'];
 
+  // Expecting this error based on typing in Box component
   // @ts-expect-error rest.as may be defined
   if ((rest.as && rest.as === 'button') || (!isAnchor && !rest.as)) {
     type = 'button';
@@ -154,6 +122,8 @@ const Button: ExtendableBox<
 
   const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
 
+  const iconSpacing = size === Size.Large ? '8px' : '6px';
+
   const content = (
     <>
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
@@ -161,27 +131,21 @@ const Button: ExtendableBox<
 
       <div className={cx(containerChildStyles, padding[size])}>
         {leftGlyph && (
-          <Icon
+          <ButtonIcon
             glyph={leftGlyph}
-            className={cx({
-              [css`
-                margin-right: ${size === Size.Large
-                  ? `${spacing[2]}px`
-                  : '6px'};
-              `]: !isIconOnlyButton,
-            })}
+            className={
+              !isIconOnlyButton ? css`margin-right: ${iconSpacing};}` : ''
+            }
             {...iconProps}
           />
         )}
         {children}
         {rightGlyph && (
-          <Icon
+          <ButtonIcon
             glyph={rightGlyph}
-            className={cx({
-              [css`
-                margin-left: ${size === Size.Large ? `${spacing[2]}px` : '6px'};
-              `]: !isIconOnlyButton,
-            })}
+            className={
+              !isIconOnlyButton ? css`margin-left: ${iconSpacing};}` : ''
+            }
             {...iconProps}
           />
         )}
