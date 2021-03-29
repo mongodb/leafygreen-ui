@@ -1,3 +1,4 @@
+import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Size, Variant, Mode, ButtonProps } from './types';
@@ -330,3 +331,37 @@ export function getClassName({
     size,
   );
 }
+
+const buttonOpacity = 0.76;
+
+const visualDesignPalette = {
+  green5: '#0AD05B',
+  green3: '#09804C',
+  orange4: '#F97216',
+};
+
+export const colorMap: Record<Mode, Record<Variant, string>> = {
+  [Mode.Light]: {
+    [Variant.Primary]: visualDesignPalette.green5,
+    [Variant.PrimaryOutline]: transparentize(
+      buttonOpacity,
+      visualDesignPalette.green3,
+    ),
+    [Variant.Default]: uiColors.gray.light2,
+    [Variant.Danger]: visualDesignPalette.orange4,
+    [Variant.DangerOutline]: transparentize(buttonOpacity, uiColors.red.base),
+  },
+  [Mode.Dark]: {
+    [Variant.Primary]: visualDesignPalette.green5,
+    [Variant.PrimaryOutline]: transparentize(
+      buttonOpacity,
+      uiColors.green.base,
+    ),
+    [Variant.Default]: uiColors.gray.base,
+    [Variant.Danger]: visualDesignPalette.orange4,
+    [Variant.DangerOutline]: transparentize(
+      buttonOpacity,
+      visualDesignPalette.orange4,
+    ),
+  },
+};

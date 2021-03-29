@@ -44,8 +44,7 @@ function createRippleEffect(event: MouseEvent) {
     return;
   }
 
-  const { darkMode, variant } = foundNode;
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { backgroundColor } = foundNode;
 
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement('span');
@@ -63,7 +62,7 @@ function createRippleEffect(event: MouseEvent) {
   ripple.style.top = top + 'px';
   ripple.style.left = left + 'px';
 
-  ripple.style.background = colorMap[mode][variant];
+  ripple.style.background = backgroundColor;
 
   setTimeout(() => {
     ripple.remove();

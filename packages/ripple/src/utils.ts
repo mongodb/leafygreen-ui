@@ -31,8 +31,7 @@ type Variant = typeof Variant[keyof typeof Variant];
 export { Variant };
 
 export interface Options {
-  variant: Variant;
-  darkMode: boolean;
+  backgroundColor: string;
 }
 
 export const colorMap: Record<Mode, Record<Variant, string>> = {

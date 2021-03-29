@@ -5,8 +5,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { Variant, Size, ButtonProps } from './types';
-import { getClassName } from './styles';
+import { Variant, Size, ButtonProps, Mode } from './types';
+import { getClassName, colorMap } from './styles';
 import ButtonIcon from './ButtonIcon';
 
 const rippleStyle = css`
@@ -78,11 +78,12 @@ const Button: ExtendableBox<
 
   useEffect(() => {
     let unregisterRipple: (() => void) | undefined;
+    const backgroundColor =
+      colorMap[darkMode ? Mode.Dark : Mode.Light][variant];
 
     if (rippleRef.current != null) {
       unregisterRipple = registerRipple(rippleRef.current, {
-        variant,
-        darkMode,
+        backgroundColor,
       });
     }
 
