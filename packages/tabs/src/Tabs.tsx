@@ -122,7 +122,7 @@ export interface TabsProps {
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
-type AccessibleTabsProps = Either<TabsProps, AriaLabels>;
+export type AccessibleTabsProps = Either<TabsProps, AriaLabels>;
 
 /**
  * # Tabs
