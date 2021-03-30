@@ -248,6 +248,7 @@ const MongoNav = React.forwardRef(
         settings: `${hosts.cloud}/v2#/org/${currentOrgId}/settings/general`,
         accessManager: `${hosts.cloud}/v2#/org/${currentOrgId}/access/users`,
         support: `${hosts.cloud}/v2#/org/${currentOrgId}/support`,
+        docs: 'https://docs.mongodb.com',
         billing: `${hosts.cloud}/v2#/org/${currentOrgId}/billing/overview`,
         allClusters: `${hosts.cloud}/v2#/clusters`,
         admin: `${hosts.cloud}/v2/admin#general/overview/servers`,

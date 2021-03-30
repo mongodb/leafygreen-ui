@@ -27,6 +27,7 @@ import {
 } from '../types';
 import { FullWidthGovBanner, MobileGovTooltip } from './GovBanner';
 import { VersionNumber, Style as VersionNumberStyle } from './VersionNumber';
+import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 
 export const orgNavHeight = 60;
 
@@ -46,17 +47,22 @@ const navContainer = css`
   color: ${uiColors.gray.dark3};
 `;
 
-const supportContainer = css`
-  ${mq({
-    marginRight: ['16px', '16px', '24px'],
-    marginLeft: ['16px', '16px', '24px'],
-  })}
-`;
-
 const rightLinkMargin = css`
   ${mq({
     marginRight: ['16px', '16px', '24px'],
   })}
+`;
+
+const externalIconStyles = css`
+  &:hover svg {
+    color: ${uiColors.blue.dark2};
+  }
+`;
+
+const mobileRightNavStyles = css`
+  position: absolute;
+  right: 0;
+  margin-right: 15px;
 `;
 
 const paymentStatusMap: {
@@ -115,31 +121,77 @@ function DropdownMenuIcon({ open }: { open: boolean }) {
   );
 }
 
-function MoreDropdownMenu({
-  children,
-  className,
+function GetHelpDropdownMenu({
   loading,
+  urls,
+  activeNav,
+  isTablet,
+  isMobile,
 }: {
-  children: React.ReactNode;
-  className?: string;
   loading: boolean;
+  urls: URLS['orgNav'];
+  activeNav?: ActiveNavElement;
+  isTablet?: boolean;
+  isMobile?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
   return (
     <OrgNavLink
+      isButton
+      data-testid="org-nav-dropdown-get-help"
+      isActive={activeNav === NavElement.OrgNavSupport}
       loading={loading}
-      className={className}
-      onClick={onElementClick(NavElement.OrgNavDropdownMoreMenu, () =>
+      className={rightLinkMargin}
+      onClick={onElementClick(NavElement.OrgNavDropdownGetHelp, () =>
         setIsOpen(open => !open),
       )}
-      isButton={true}
     >
-      More
+      {isMobile ? 'Help' : 'Get Help'}
       <DropdownMenuIcon open={isOpen} />
-      <Menu open={isOpen} setOpen={setIsOpen} usePortal={false}>
-        {children}
+      <Menu
+        open={isOpen}
+        setOpen={setIsOpen}
+        usePortal={false}
+        className={css`
+          width: 128px;
+        `}
+      >
+        <MenuItem
+          href={urls.support}
+          data-testid="org-nav-support-link"
+          active={activeNav === NavElement.OrgNavSupport}
+          size={isTablet ? 'large' : 'default'}
+          onClick={onElementClick(NavElement.OrgNavSupport)}
+        >
+          Support
+        </MenuItem>
+        <MenuItem
+          href={urls.docs}
+          data-testid="org-nav-docs-link"
+          size={isTablet ? 'large' : 'default'}
+          className={externalIconStyles}
+          onClick={onElementClick(NavElement.OrgNavDocs)}
+        >
+          <div
+            className={css`
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            `}
+          >
+            Docs
+            <OpenNewTabIcon
+              role="presentation"
+              className={css`
+                margin-bottom: 2px;
+                margin-left: 4px;
+                color: ${uiColors.gray.base};
+              `}
+            />
+          </div>
+        </MenuItem>
       </Menu>
     </OrgNavLink>
   );
@@ -147,14 +199,12 @@ function MoreDropdownMenu({
 
 function NavLinks({
   loading,
-  showMoreDropdownMenu,
   admin,
   onPremVersion,
   urls,
   activeNav,
 }: {
   loading: boolean;
-  showMoreDropdownMenu: boolean;
   admin: boolean;
   onPremVersion?: string;
   urls: URLS['orgNav'];
@@ -185,45 +235,19 @@ function NavLinks({
     });
   }
 
-  let items: Array<React.ReactNode>;
-
-  if (showMoreDropdownMenu) {
-    items = navLinks.map(({ href, navId, text, testid }) => (
-      <MenuItem size="large" key={navId} href={href} data-testid={testid}>
-        <div className={css(`font-size: 16px;`)}>{text}</div>
-      </MenuItem>
-    ));
-  } else {
-    items = navLinks.map(({ href, navId, text, testid }) => (
-      <OrgNavLink
-        href={href}
-        loading={loading}
-        isActive={activeNav === navId}
-        className={rightLinkMargin}
-        key={navId}
-        onClick={onElementClick(navId)}
-        data-testid={testid}
-      >
-        {text}
-      </OrgNavLink>
-    ));
-  }
-
-  if (onPremVersion) {
-    if (showMoreDropdownMenu) {
-      items.push(
-        <VersionNumber style={VersionNumberStyle.Menu}>
-          {onPremVersion}
-        </VersionNumber>,
-      );
-    } else {
-      items.unshift(
-        <VersionNumber style={VersionNumberStyle.Nav}>
-          {onPremVersion}
-        </VersionNumber>,
-      );
-    }
-  }
+  const items = navLinks.map(({ href, navId, text, testid }) => (
+    <OrgNavLink
+      href={href}
+      loading={loading}
+      isActive={activeNav === navId}
+      className={rightLinkMargin}
+      key={navId}
+      onClick={onElementClick(navId)}
+      data-testid={testid}
+    >
+      {text}
+    </OrgNavLink>
+  ));
 
   return (
     <div
@@ -231,13 +255,12 @@ function NavLinks({
         margin-left: auto;
       `}
     >
-      {showMoreDropdownMenu ? (
-        <MoreDropdownMenu loading={loading} className={rightLinkMargin}>
-          {items}
-        </MoreDropdownMenu>
-      ) : (
-        items
+      {onPremVersion && (
+        <VersionNumber style={VersionNumberStyle.Nav} key={onPremVersion}>
+          {onPremVersion}
+        </VersionNumber>
       )}
+      {items}
     </div>
   );
 }
@@ -441,6 +464,9 @@ function OrgNav({
               )}
               isButton={true}
               aria-expanded={accessManagerOpen}
+              className={css`
+                margin-right: 20px;
+              `}
             >
               Access Manager
               <DropdownMenuIcon open={accessManagerOpen} />
@@ -495,17 +521,6 @@ function OrgNav({
               )}
             </OrgNavLink>
 
-            <OrgNavLink
-              href={current && orgNav.support}
-              isActive={activeNav === ActiveNavElement.OrgNavSupport}
-              loading={!current}
-              className={supportContainer}
-              data-testid="org-nav-support"
-              onClick={onElementClick(NavElement.OrgNavSupport)}
-            >
-              Support
-            </OrgNavLink>
-
             {!onPremEnabled && (
               <OrgNavLink
                 href={current && orgNav.billing}
@@ -520,16 +535,27 @@ function OrgNav({
           </>
         )}
 
-        <NavLinks
-          loading={!current}
-          showMoreDropdownMenu={isMobile || isTablet}
-          admin={!!admin}
-          onPremVersion={onPremEnabled ? onPremVersion : undefined}
-          urls={urls.orgNav}
-          activeNav={activeNav}
-        />
+        {!isMobile && (
+          <NavLinks
+            loading={!current}
+            admin={!!admin}
+            onPremVersion={onPremEnabled ? onPremVersion : undefined}
+            urls={urls.orgNav}
+            activeNav={activeNav}
+          />
+        )}
 
-        {renderUserMenu()}
+        <div className={cx({ [mobileRightNavStyles]: isMobile })}>
+          <GetHelpDropdownMenu
+            loading={!current}
+            urls={urls.orgNav}
+            activeNav={activeNav}
+            isTablet={isTablet}
+            isMobile={isMobile}
+          />
+
+          {renderUserMenu()}
+        </div>
       </nav>
     </>
   );

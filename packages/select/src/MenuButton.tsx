@@ -131,8 +131,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 
   return (
     <Button
-      // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
-      role="combobox"
       {...ariaProps}
       ref={ref}
       name={name}
