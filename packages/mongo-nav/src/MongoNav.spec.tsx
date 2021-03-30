@@ -482,9 +482,9 @@ describe('packages/mongo-nav', () => {
           }),
       );
       test('in the org nav', () => {
-        const support = getByTestId('org-nav-support') as HTMLAnchorElement;
-        expect(support.href).toBe(
-          'https://cloud.mongodbgov.com/v2#/org/fakeOrgId1/support',
+        const billing = getByTestId('org-nav-billing') as HTMLAnchorElement;
+        expect(billing.href).toBe(
+          'https://cloud.mongodbgov.com/v2#/org/fakeOrgId1/billing/overview',
         );
       });
 

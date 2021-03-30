@@ -6,7 +6,7 @@ import { LGWindow } from './getRippleGlobalNamespace';
 
 const lgNamespace = '__LEAFYGREEN_UTILS__';
 const buttonText = 'click me';
-const buttonOptions: Options = { variant: 'primary', darkMode: false };
+const buttonOptions: Options = { backgroundColor: 'black' };
 type Global = Omit<LGWindow, 'name'>;
 
 function ButtonWrapper() {

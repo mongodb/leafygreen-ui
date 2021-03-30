@@ -131,7 +131,7 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
 
           {!isMobile && figmaLink && (
             <Button
-              glyph={<FigmaIcon />}
+              leftGlyph={<FigmaIcon />}
               variant="primary"
               href={figmaLink}
               target="_blank"
