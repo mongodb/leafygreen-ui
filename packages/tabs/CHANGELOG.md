@@ -1,5 +1,16 @@
 # @leafygreen-ui/tabs
 
+## 5.1.0
+
+### Minor Changes
+
+- b9a8df1e: Export Props used by Tabs
+
+### Patch Changes
+
+- Updated dependencies [65032024]
+  - @leafygreen-ui/palette@3.2.0
+
 ## 5.0.3
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/table
 
+## 1.3.8
+
+### Patch Changes
+
+- Updated dependencies [65032024]
+  - @leafygreen-ui/palette@3.2.0
+
 ## 1.3.7
 
 ### Patch Changes

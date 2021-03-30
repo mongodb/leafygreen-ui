@@ -1,5 +1,22 @@
 # @leafygreen-ui/mongo-nav
 
+## 6.0.0
+
+### Major Changes
+
+- 670965f1: Makes updates the OrgNav component:
+  - Removes support from main OrgNav component
+  - Adds GetHelp dropdown that includes link to support as well as docs pages
+  - Removes More dropdown that existed previously
+
+### Patch Changes
+
+- 65032024: Makes Button in UserMenu render in dark mode
+- Updated dependencies [65032024]
+- Updated dependencies [65032024]
+  - @leafygreen-ui/palette@3.2.0
+  - @leafygreen-ui/button@11.0.0
+
 ## 5.2.6
 
 ### Patch Changes

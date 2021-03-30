@@ -1,5 +1,15 @@
 # @leafygreen-ui/copyable
 
+## 2.0.5
+
+### Patch Changes
+
+- 65032024: Updates component to Button v11
+- Updated dependencies [65032024]
+- Updated dependencies [65032024]
+  - @leafygreen-ui/palette@3.2.0
+  - @leafygreen-ui/button@11.0.0
+
 ## 2.0.4
 
 ### Patch Changes
