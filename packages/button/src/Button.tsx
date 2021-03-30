@@ -29,8 +29,6 @@ const containerChildStyles = css`
   position: relative;
   z-index: 0;
   font-family: ${fontFamilies.default};
-  // Pixel pushing for optical alignment
-  padding-top: 1px;
 `;
 
 const padding: Record<Size, string> = {
