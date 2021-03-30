@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 11.0.1
+
+### Patch Changes
+
+- e1b1293c: Adjusts padding for content alignment inside of Button
+
 ## 11.0.0
 
 ### Major Changes
