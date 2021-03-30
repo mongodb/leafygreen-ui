@@ -69,24 +69,28 @@ export type Props = {
 
 const idAllocator = IdAllocator.create('select');
 
-export default function Select({
-  children,
-  darkMode = false,
-  size = Size.Default,
-  disabled = false,
-  usePortal = true,
-  placeholder = 'Select',
-  className,
-  id: idProp,
-  label,
-  description,
-  name,
-  defaultValue,
-  value,
-  onChange,
-  readOnly,
-  'aria-labelledby': ariaLabelledBy,
-}: Props) {
+export default function Select(props: Props) {
+  const {
+    children,
+    darkMode = false,
+    size = Size.Default,
+    disabled = false,
+    usePortal = true,
+    placeholder = 'Select',
+    className,
+    id: idProp,
+    label,
+    description,
+    name,
+    defaultValue,
+    value,
+    onChange,
+    readOnly,
+    'aria-labelledby': ariaLabelledBy,
+  } = props;
+
+  validateLabelProps(props, 'Select');
+
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
     ariaLabelledBy,
@@ -118,8 +122,6 @@ export default function Select({
       );
     }
   }, [onChange, readOnly, value]);
-
-  validateLabelProps({ label, 'aria-labelledby': ariaLabelledBy }, 'Select');
 
   /**
    * Open / close state
