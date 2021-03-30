@@ -2007,13 +2007,6 @@
     create-emotion-server "10.0.27"
     emotion "^10.0.7"
 
-"@leafygreen-ui/icon@^9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon/-/icon-9.0.0.tgz#7007ad2f2f68cb9ba044ce325b757eb8a3519afc"
-  integrity sha512-CoFB1Cuunu5uvGiy3FSLKr2Na2suzyZ3uNYuAGXHmqlTOfD62eYODedwmOWeFTTCYJE9AWLZ3BFTxL8rn4OFOA==
-  dependencies:
-    "@leafygreen-ui/lib" "^6.1.2"
-
 "@leafygreen-ui/lib@^5.1.1":
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-5.1.1.tgz#997e80cc7b3918bdaf41fadbe3034147acbac30e"
@@ -2022,23 +2015,6 @@
     "@leafygreen-ui/emotion" "^2.0.2"
     facepaint "^1.2.1"
     polished "^2.3.0"
-
-"@leafygreen-ui/select@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/select/-/select-1.1.4.tgz#05d99411f4c75457d59446f1a5dc9fa6efe7a53b"
-  integrity sha512-bQUkjizYyZvi2cQCl3gByGi0aZARmOih1kbc+xt87cp1jWQtm6TQ7jayfOxBOj7PNy8qEZyciL/1/eZ+uEgsRQ==
-  dependencies:
-    "@leafygreen-ui/button" "^10.0.0"
-    "@leafygreen-ui/emotion" "^3.0.1"
-    "@leafygreen-ui/hooks" "^6.0.0"
-    "@leafygreen-ui/icon" "^9.0.0"
-    "@leafygreen-ui/lib" "^6.1.2"
-    "@leafygreen-ui/palette" "^3.1.0"
-    "@leafygreen-ui/popover" "^7.1.2"
-    "@leafygreen-ui/tokens" "0.5.0"
-    "@types/react-is" "^17.0.0"
-    polished "^4.0.3"
-    react-is "^17.0.1"
 
 "@lerna/add@3.20.0":
   version "3.20.0"
@@ -9688,15 +9664,16 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gh-pages@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/gh-pages/-/gh-pages-2.2.0.tgz#74ebeaca8d2b9a11279dcbd4a39ddfff3e6caa24"
-  integrity sha512-c+yPkNOPMFGNisYg9r4qvsMIjVYikJv7ImFOhPIVPt0+AcRUamZ7zkGRLHz7FKB0xrlZ+ddSOJsZv9XAFVXLmA==
+gh-pages@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/gh-pages/-/gh-pages-3.1.0.tgz#ec3ed0f6a6e3fc3d888758fa018f08191c96bd55"
+  integrity sha512-3b1rly9kuf3/dXsT8+ZxP0UhNLOo1CItj+3e31yUVcaph/yDsJ9RzD7JOw5o5zpBTJVQLlJAASNkUfepi9fe2w==
   dependencies:
     async "^2.6.1"
     commander "^2.18.0"
     email-addresses "^3.0.1"
     filenamify-url "^1.0.0"
+    find-cache-dir "^3.3.1"
     fs-extra "^8.1.0"
     globby "^6.1.0"
 
