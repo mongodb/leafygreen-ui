@@ -8,8 +8,8 @@ import PortalContextProvider, {PortalContextValues} from './PortalContext';
 
 type LeafyGreenProviderProps = {
   children: React.ReactNode;
-  modalPortalContainer: PortalContextValues['modal'];
-  popoverPortalContainer: PortalContextValues['popover'];
+  modalPortalContainer?: PortalContextValues['modal'];
+  popoverPortalContainer?: PortalContextValues['popover'];
 } & TypographyProviderProps;
 
 function LeafyGreenProvider({
