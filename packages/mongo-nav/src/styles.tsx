@@ -22,6 +22,6 @@ export const anchorOverrides = css`
   a:active,
   a:link {
     text-decoration: none;
-    cursor: auto;
+    cursor: pointer;
   }
 `;

@@ -133,6 +133,7 @@ interface BaseTabTitleProps {
   className?: string;
   disabled?: boolean;
   isAnyTabFocused?: boolean;
+  parentRef?: HTMLDivElement;
 }
 
 const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
@@ -141,19 +142,32 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   children,
   className,
   darkMode,
-  isAnyTabFocused,
+  parentRef,
   ...rest
 }: BaseTabTitleProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [showEllipsis, setShowEllipsis] = useState(false);
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
+
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
+  // Checks to see if the current activeElement is a part of the same tab set
+  // as the current TabTitle. If so, and the current TabTitle is not disabled
+  // and is selected, we manually move focus to that TabTitle.
   useEffect(() => {
-    if (isAnyTabFocused && !disabled && selected && titleRef.current) {
+    const tabsList = Array.from(parentRef?.children ?? []);
+    const activeEl = document.activeElement;
+
+    if (
+      activeEl &&
+      tabsList.indexOf(activeEl) !== -1 &&
+      !disabled &&
+      selected &&
+      titleRef.current
+    ) {
       titleRef.current.focus();
     }
-  }, [isAnyTabFocused, disabled, selected, titleRef]);
+  }, [parentRef, disabled, selected, titleRef]);
 
   useIsomorphicLayoutEffect(() => {
     const titleNode = titleRef.current;
