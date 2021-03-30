@@ -1,5 +1,21 @@
 # @leafygreen-ui/button
 
+## 11.0.0
+
+### Major Changes
+
+- 65032024: - Redesign's the button component!
+  - Improves accessibility of buttons for visually-impaired users.
+  - Adds support for right-aligned glyphs.
+  - Renames glyph prop to `leftGlyph`.
+
+### Patch Changes
+
+- Updated dependencies [65032024]
+- Updated dependencies [65032024]
+  - @leafygreen-ui/ripple@1.1.0
+  - @leafygreen-ui/palette@3.2.0
+
 ## 10.0.2
 
 ### Patch Changes
