@@ -7,10 +7,12 @@ const knobsConfig: KnobsConfigInterface<{
   disabled: boolean;
   variant: Variant;
   size: Size;
-  glyph: string;
+  leftGlyph: string;
+  rightGlyph: string;
+  baseFontSize: 14 | 16;
+  darkMode: boolean;
   children: React.ReactNode;
   hasHrefProp: boolean;
-  title: string;
 }> = {
   variant: {
     type: 'select',
@@ -21,7 +23,7 @@ const knobsConfig: KnobsConfigInterface<{
   size: {
     type: 'select',
     options: Object.values(Size),
-    default: Size.Normal,
+    default: Size.Default,
     label: 'Size',
   },
   disabled: {
@@ -29,26 +31,38 @@ const knobsConfig: KnobsConfigInterface<{
     default: false,
     label: 'Disabled',
   },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
   hasHrefProp: {
     type: 'boolean',
     default: false,
     label: 'href',
   },
-  title: {
-    type: 'text',
-    default: 'The button title',
-    label: 'Title',
-  },
-  glyph: {
-    type: 'select',
-    options: Object.keys(glyphs),
-    default: 'Edit',
-    label: 'Glyph',
-  },
   children: {
     type: 'text',
     default: 'Edit',
     label: 'Children',
+  },
+  leftGlyph: {
+    type: 'select',
+    options: Object.keys(glyphs),
+    default: 'InviteUser',
+    label: 'Left Glyph',
+  },
+  rightGlyph: {
+    type: 'select',
+    options: Object.keys(glyphs),
+    default: 'CaretDown',
+    label: 'Right Glyph',
+  },
+  baseFontSize: {
+    type: 'select',
+    options: [14, 16],
+    default: 14,
+    label: 'Base Font Size',
   },
 };
 
@@ -56,10 +70,11 @@ export default function ButtonLiveExample() {
   return (
     <>
       <LiveExample knobsConfig={knobsConfig}>
-        {({ glyph, hasHrefProp, ...props }) => (
+        {({ leftGlyph, rightGlyph, hasHrefProp, ...props }) => (
           <Button
             href={hasHrefProp ? 'https://cloud.mongodb.com' : undefined}
-            glyph={<Icon glyph={glyph} />}
+            leftGlyph={<Icon glyph={leftGlyph} />}
+            rightGlyph={<Icon glyph={rightGlyph} />}
             {...props}
           />
         )}
