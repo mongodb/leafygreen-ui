@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext } from 'react';
 import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
@@ -17,23 +17,10 @@ const menuButtonStyle = css`
   }
 `;
 
-const menuButtonContentsStyle = css`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-`;
-
 const menuButtonTextStyle = css`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-`;
-
-const caretIconStyle = css`
-  min-width: 16px;
 `;
 
 type Props = {
@@ -72,7 +59,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   }: Props,
   forwardedRef,
 ) {
-  const { mode, size, open, disabled } = useContext(SelectContext);
+  const { mode, open, size, disabled } = useContext(SelectContext);
 
   const ref = useForwardedRef(forwardedRef, null);
 
@@ -142,12 +129,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     ref.current!.focus();
   }, [onClose, onOpen, open, ref]);
 
-  const forceState = useMemo(() => {
-    if (open && !disabled) {
-      return { focused: true, active: true };
-    }
-  }, [open, disabled]);
-
   return (
     <Button
       {...ariaProps}
@@ -157,15 +138,15 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       disabled={disabled}
       onClick={onClick}
       onKeyDown={onKeyDown}
-      variant={mode === Mode.Dark ? Variant.Dark : Variant.Default}
+      variant={Variant.Default}
       darkMode={mode === Mode.Dark}
-      forceState={forceState}
+      rightGlyph={<CaretDownIcon />}
       className={cx(
         menuButtonStyle,
         css`
           height: ${sizeSet.height}px;
-          width: 100%;
           font-size: ${sizeSet.text}px;
+          width: 100%;
           color: ${deselected ? colorSet.text.deselected : colorSet.text.base};
           border-color: ${open && !disabled
             ? colorSet.border.open
@@ -176,27 +157,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
             font-size: ${mobileSizeSet.text}px;
           }
         `,
-        {
-          [css`
-            // Displays the active state defined by <Button />
-            &:after {
-              opacity: 1;
-            }
-          `]: open && !disabled,
-          [css`
-            color: ${colorSet.text.disabled};
-          `]: disabled,
-        },
       )}
     >
-      <div className={menuButtonContentsStyle}>
-        <span className={menuButtonTextStyle}>{text}</span>
-        <CaretDownIcon
-          aria-hidden
-          role="presentation"
-          className={caretIconStyle}
-        />
-      </div>
+      <span className={menuButtonTextStyle}>{text}</span>
       {children}
     </Button>
   );

@@ -1,14 +1,17 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
+import { BoxProps } from '@leafygreen-ui/box';
 import Button from './Button';
+import { ButtonProps } from './types';
 
 const onClick = jest.fn();
 const className = 'test-button-class';
 const title = 'Test button title';
 const child = 'Button child';
 
-function renderButton(props = {}) {
+function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
+  // @ts-expect-error
   const utils = render(<Button {...props} data-testid="button-id" />);
   const button = utils.getByTestId('button-id');
   return { ...utils, button };
@@ -96,9 +99,9 @@ describe('packages/button', () => {
     expect(button.tagName.toLowerCase()).toBe('a');
   });
 
-  test(`renders component inside of button tag when "href" prop is set to null`, () => {
+  test(`renders component inside of button tag when "href" prop is undefined`, () => {
     const { button } = renderButton({
-      href: null,
+      href: undefined,
     });
     expect(button.tagName.toLowerCase()).toBe('button');
   });
@@ -117,13 +120,6 @@ describe('packages/button', () => {
       as: 'div',
     });
     expect(button.tagName.toLowerCase()).toBe('div');
-  });
-
-  test(`renders a button with an arbitrary element passed in glyph prop`, () => {
-    const { button } = renderButton({
-      glyph: <svg />,
-    });
-    expect(button.innerHTML).toContain('svg');
   });
 
   // eslint-disable-next-line jest/no-disabled-tests
