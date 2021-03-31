@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.2.0
+
+### Minor Changes
+
+- 65032024: Adds `uiColors.focus`, `uiColors.green.dark1` and `uiColors.red.dark1` to the palette
+
 ## 3.1.1
 
 ### Patch Changes

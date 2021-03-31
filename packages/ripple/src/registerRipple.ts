@@ -1,5 +1,5 @@
 import { getRippleGlobalNamespace } from './getRippleGlobalNamespace';
-import { Options, colorMap, Mode } from './utils';
+import { Options } from './utils';
 
 const TRANSITION_TIME = 300;
 const RIPPLE_NAMESPACE = getRippleGlobalNamespace();
@@ -29,7 +29,9 @@ export function registerRipple(node: HTMLElement, options: Options) {
     RIPPLE_NAMESPACE.setRippleListener = true;
   }
 
-  return () => RIPPLE_NAMESPACE.registeredRippleElements.delete(node);
+  return () => {
+    RIPPLE_NAMESPACE.registeredRippleElements.delete(node);
+  };
 }
 
 function createRippleEffect(event: MouseEvent) {
@@ -42,8 +44,7 @@ function createRippleEffect(event: MouseEvent) {
     return;
   }
 
-  const { darkMode, variant } = foundNode;
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { backgroundColor } = foundNode;
 
   const rect = target.getBoundingClientRect();
   const ripple = document.createElement('span');
@@ -61,7 +62,7 @@ function createRippleEffect(event: MouseEvent) {
   ripple.style.top = top + 'px';
   ripple.style.left = left + 'px';
 
-  ripple.style.background = colorMap[mode][variant];
+  ripple.style.background = backgroundColor;
 
   setTimeout(() => {
     ripple.remove();
@@ -108,6 +109,8 @@ const staticRippleStyles = `
     transform: scale(0.2);
     opacity: 0;
     pointer-events: none;
+    // Ensures that text is shown above ripple effect
+    z-index: -1;
     -webkit-animation: lg-ui-ripple .75s ease-out;
     -moz-animation: lg-ui-ripple .75s ease-out;
     animation: lg-ui-ripple .75s ease-out;
