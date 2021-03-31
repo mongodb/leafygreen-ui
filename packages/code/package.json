@@ -28,6 +28,7 @@
     "@leafygreen-ui/leafygreen-provider": "^2.0.2",
     "@leafygreen-ui/select": "^2.0.1",
     "@leafygreen-ui/tokens": "^0.5.0",
+    "@leafygreen-ui/palette": "^3.2.0",
     "highlight.js": "^10.0.3",
     "highlightjs-line-numbers.js": "^2.7.0",
     "highlightjs-graphql": "^1.0.1",

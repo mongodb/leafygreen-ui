@@ -69,7 +69,7 @@ function CopyButton({
   onCopy,
   contents,
   darkMode,
-  withLanguageSwitcher,
+  withLanguageSwitcher = false,
 }: CopyProps) {
   const [copied, setCopied] = useState(false);
   const [buttonNode, setButtonNode] = useState(null);

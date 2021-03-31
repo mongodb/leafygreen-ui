@@ -1,7 +1,6 @@
 import React from 'react';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import { uiColors } from '@leafygreen-ui/palette';
 import CopyButton from './CopyButton';
 import LanguageSwitcher from './LanguageSwitcher';
 import { variantColors } from './globalStyles';
@@ -59,17 +58,16 @@ function getPanelStyles(
     );
   }
 
+  const colors = variantColors[mode];
+
   return css`
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-left: 12px;
     padding-right: 12px;
-    background-color: ${mode === Mode.Dark
-      ? uiColors.gray.dark2
-      : uiColors.white};
-    border-bottom: 1px solid
-      ${mode === Mode.Dark ? uiColors.gray.dark2 : uiColors.gray.light2};
+    background-color: ${colors[4]};
+    border-bottom: 1px solid ${colors[1]};
   `;
 }
 

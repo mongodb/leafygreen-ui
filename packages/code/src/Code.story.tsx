@@ -3,27 +3,20 @@ import { storiesOf } from '@storybook/react';
 import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import BellIcon from '@leafygreen-ui/icon/dist/Bell';
 import { Language, LanguageOption } from './types';
+import { JavaScriptLogo, PythonLogo } from './Logos';
 import Code from '.';
 
 const languageOptions = [
   {
     displayName: 'JavaScript',
     language: Language.JavaScript,
-    image: <CheckmarkIcon />,
+    image: <JavaScriptLogo />,
   },
   {
     displayName: 'Python',
     language: Language.Python,
-    image: <CopyIcon />,
-  },
-  {
-    displayName: 'Ruby',
-    language: Language.Ruby,
-    image: <BellIcon />,
+    image: <PythonLogo />,
   },
 ];
 
@@ -34,16 +27,6 @@ function greeting(entity) {
 }
 
 console.log(greeting('World'));
-
-`;
-
-const rubySnippet = `
-
-def greeting(entity)
-  'Hello, #{entity}!';
-end
-
-puts greeting('World')
 
 `;
 
@@ -58,7 +41,6 @@ print (greeting("World"))
 
 const snippetMap = {
   [Language.JavaScript]: jsSnippet,
-  [Language.Ruby]: rubySnippet,
   [Language.Python]: pythonSnippet,
 };
 
@@ -78,7 +60,7 @@ function LanguageSwitcher({ darkMode }: { darkMode: boolean }) {
       languageOptions={languageOptions}
       darkMode={darkMode}
     >
-      {snippetMap[languageIndex]}
+      {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
   );
 }

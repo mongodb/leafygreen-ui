@@ -8,7 +8,7 @@ import Button, { ButtonProps } from '@leafygreen-ui/button';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { Select, Option } from '@leafygreen-ui/select';
 import { LanguageOption } from './types';
-import { uiColors } from '@leafygreen-ui/palette/src';
+import { uiColors } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
   display: flex;
