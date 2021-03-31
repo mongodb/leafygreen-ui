@@ -49,7 +49,7 @@ const buttonFocusStyles = css`
     color: ${uiColors.blue.base};
     border-color: transparent;
     box-shadow: 0 3px 4px ${transparentize(0.9, uiColors.black)},
-      0 0 0 3px ${uiColors.blue.light1};
+      0 0 0 3px ${uiColors.focus};
   }
 `;
 
