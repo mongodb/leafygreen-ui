@@ -8,9 +8,15 @@ interface Props {
   language: LanguageOption;
   languageOptions: Array<LanguageOption>;
   onChange: (arg0: LanguageOption) => void;
+  darkMode?: boolean;
 }
 
-function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
+function LanguageSwitcher({
+  language,
+  languageOptions,
+  onChange,
+  darkMode,
+}: Props) {
   const previousLanguage = usePrevious(language);
 
   const handleChange = (val: string) => {
@@ -41,9 +47,10 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
         width: 100%;
       `}
     >
-      {renderedLogo}
+      {/* {renderedLogo} */}
 
       <Select
+        darkMode={darkMode}
         onChange={handleChange}
         aria-labelledby="Language Picker"
         value={language?.displayName}

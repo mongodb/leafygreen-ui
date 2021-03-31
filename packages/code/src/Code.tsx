@@ -281,6 +281,7 @@ function Code({
             onCopy={onCopy}
             showCopyButton={showCopyBar}
             darkMode={darkMode}
+            isMultiline={isMultiline}
           />
         )}
       </div>

@@ -18,7 +18,7 @@ const copyStyle = css`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  padding-top: 6px;
+  // padding-top: 6px;
 `;
 
 const singleLineCopyStyle = css`
@@ -49,7 +49,7 @@ function getSidebarVariantStyle(mode: Mode): string {
     case Mode.Dark:
       return css`
         border-color: ${colors[1]};
-        background-color: ${colors[1]};
+        background-color: ${colors[4]};
       `;
   }
 }
@@ -77,6 +77,7 @@ function Panel({
 
   return (
     <div
+      id="panel"
       className={cx(
         copyStyle,
         { [singleLineCopyStyle]: !isMultiline },
@@ -92,6 +93,7 @@ function Panel({
             onChange={onChange}
             language={language}
             languageOptions={languageOptions}
+            darkMode={darkMode}
           />
         )}
       {showCopyButton && (
