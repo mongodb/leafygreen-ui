@@ -90,7 +90,7 @@ const focusedStyle = css`
 
   &:before {
     transition: all 150ms ease-in-out;
-    content: "";
+    content: '';
     transform: scaleY(0.3);
     position: absolute;
     top: 0;
