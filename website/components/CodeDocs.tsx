@@ -104,8 +104,8 @@ function VersionCard({
         Version {version}
       </Subtitle>
       <Button
-        size={isMobile ? 'large' : 'normal'}
-        glyph={<ActivityFeedIcon />}
+        size={isMobile ? 'large' : 'default'}
+        leftGlyph={<ActivityFeedIcon />}
         onClick={() => setOpenModal(curr => !curr)}
         className={cx({
           [css`

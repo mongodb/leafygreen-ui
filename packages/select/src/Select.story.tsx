@@ -28,7 +28,7 @@ storiesOf('Select', module)
           background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
           padding: 20px;
           height: 100%;
-          width: 200px;
+          width: 400px;
         `}
       >
         <Provider>
@@ -42,6 +42,9 @@ storiesOf('Select', module)
             defaultValue="cat"
             disabled={disabled}
             usePortal={usePortal}
+            className={css`
+              min-width: 200px;
+            `}
           >
             <OptionGroup label="Common">
               <Option value="dog" glyph={glyph}>

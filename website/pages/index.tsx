@@ -187,7 +187,7 @@ function ComponentPreview({
         )}
         onClick={() => push(route)}
       >
-        <VisuallyHidden>Learn more about {content} component</VisuallyHidden>
+        <VisuallyHidden>{`Learn more about ${content} component`}</VisuallyHidden>
 
         <div className={overlineContainer}>
           <Overline className={overlineColor}>{content}</Overline>
