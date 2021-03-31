@@ -4,7 +4,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Navigation from 'components/navigation';
-import {LayoutContext} from 'components/LayoutContext';
+import { LayoutContext } from 'components/LayoutContext';
 import { mq } from 'utils/mediaQuery';
 import Footer from './Footer';
 
@@ -47,10 +47,18 @@ const childrenWrapper = css`
 `;
 
 function BaseLayout({ children }: { children: React.ReactNode }) {
-  const [bodyContainerRef, setBodyContainerRef] = useState<HTMLDivElement | null>(null);
+  const [
+    bodyContainerRef,
+    setBodyContainerRef,
+  ] = useState<HTMLDivElement | null>(null);
 
   return (
-    <LeafyGreenProvider popoverPortalContainer={{ scrollContainer: bodyContainerRef, portalContainer: bodyContainerRef }}>
+    <LeafyGreenProvider
+      popoverPortalContainer={{
+        scrollContainer: bodyContainerRef,
+        portalContainer: bodyContainerRef,
+      }}
+    >
       <LayoutContext.Provider value={bodyContainerRef}>
         <div className={containerStyle}>
           <Navigation />

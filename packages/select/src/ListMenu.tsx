@@ -20,13 +20,15 @@ const menuStyle = css`
   overflow: auto;
 `;
 
-type PortalProps = {
-  usePortal: true;
-  portalContainer?: HTMLElement | null;
-} | {
-  usePortal: false;
-  portalContainer?: null;
-};
+type PortalProps =
+  | {
+      usePortal: true;
+      portalContainer?: HTMLElement | null;
+    }
+  | {
+      usePortal: false;
+      portalContainer?: null;
+    };
 
 type ListMenuProps = {
   children: React.ReactNode;

@@ -9,7 +9,7 @@ import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
 import { mq } from 'utils/mediaQuery';
-import {useBodyContainerRef} from '../LayoutContext'
+import { useBodyContainerRef } from '../LayoutContext';
 
 const booleanIdAllocator = IdAllocator.create('boolean');
 const textIdAllocator = IdAllocator.create('text');
@@ -81,7 +81,7 @@ function KnobRow({ children, className, darkMode = false }: KnobRowProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 const Knob = {

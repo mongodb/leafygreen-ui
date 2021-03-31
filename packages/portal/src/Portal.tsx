@@ -32,11 +32,11 @@ function usePortalContainer(customContainer?: HTMLElement) {
     }
   }, [customContainer]);
 
-  return container
+  return container;
 }
 
 function Portal(props: PortalProps) {
-  const container = usePortalContainer(props.container ?? undefined)
+  const container = usePortalContainer(props.container ?? undefined);
 
   useEffect(() => {
     if (container && !props.container) {

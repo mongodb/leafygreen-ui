@@ -123,7 +123,9 @@ function AdvancedExample() {
 }
 
 function ScrollExample() {
-  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
+    null,
+  );
   const [active, setActive] = useState(false);
   const buttonRef = useRef(null);
 
@@ -131,13 +133,24 @@ function ScrollExample() {
     <>
       <div
         ref={el => setPortalContainer(el)}
-        className={css`margin: 150px; width: 100%; overflow-y: auto; background-color: #EAEAEA; max-height: calc(100vh - 200px); padding: 100px; position: relative;`}>
+        className={css`
+          margin: 150px;
+          width: 100%;
+          overflow-y: auto;
+          background-color: #eaeaea;
+          max-height: calc(100vh - 200px);
+          padding: 100px;
+          position: relative;
+        `}
+      >
         <button
           ref={buttonRef}
           onClick={() => setActive(curr => !curr)}
           className={cx(
             containerStyle,
-            css`margin-bottom: 200vh;`,
+            css`
+              margin-bottom: 200vh;
+            `,
             referenceElPositions[
               select(
                 'Reference Element Position',
@@ -171,4 +184,3 @@ storiesOf('Popover', module)
   .add('Default', () => <DefaultExample />)
   .add('Advanced', () => <AdvancedExample />)
   .add('Scroll Container', () => <ScrollExample />);
-

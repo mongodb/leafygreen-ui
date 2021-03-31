@@ -112,39 +112,40 @@ export type PopoverProps = {
 
   scrollContainer?: HTMLElement | null;
 } & (
-  {
-    /**
-     * Specifies that the popover content will appear portaled to the end of the DOM,
-     * rather than in the DOM tree.
-     *
-     * default: `true`
-     */
-    usePortal?: true;
+  | {
+      /**
+       * Specifies that the popover content will appear portaled to the end of the DOM,
+       * rather than in the DOM tree.
+       *
+       * default: `true`
+       */
+      usePortal?: true;
 
-    /**
-     * If using a portal, specifies a class name to apply to the root element of the portal.
-     *
-     * default: undefined
-     */
-    portalClassName?: string;
+      /**
+       * If using a portal, specifies a class name to apply to the root element of the portal.
+       *
+       * default: undefined
+       */
+      portalClassName?: string;
 
-    /**
-     * If using a portal, specifies the element to portal within.
-     */
-    portalContainer?: HTMLElement | null;
-  } | {
-    usePortal: false;
+      /**
+       * If using a portal, specifies the element to portal within.
+       */
+      portalContainer?: HTMLElement | null;
+    }
+  | {
+      usePortal: false;
 
-    /**
-     * If using a portal, specifies a class name to apply to the root element of the portal.
-     *
-     * default: undefined
-     */
-    portalClassName?: undefined;
+      /**
+       * If using a portal, specifies a class name to apply to the root element of the portal.
+       *
+       * default: undefined
+       */
+      portalClassName?: undefined;
 
-    /**
-     * If using a portal, specifies the element to portal within.
-     */
-    portalContainer?: null;
-  }
+      /**
+       * If using a portal, specifies the element to portal within.
+       */
+      portalContainer?: null;
+    }
 );

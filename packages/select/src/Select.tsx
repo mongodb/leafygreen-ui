@@ -29,15 +29,17 @@ const labelStyle = css`
   font-weight: bold;
 `;
 
-type PortalProps = {
-  usePortal?: true;
-  portalContainer?: HTMLElement | null;
-  scrollContainer?: HTMLElement | null;
-} | {
-  usePortal: false;
-  portalContainer?: null;
-  scrollContainer?: null;
-};
+type PortalProps =
+  | {
+      usePortal?: true;
+      portalContainer?: HTMLElement | null;
+      scrollContainer?: HTMLElement | null;
+    }
+  | {
+      usePortal: false;
+      portalContainer?: null;
+      scrollContainer?: null;
+    };
 
 export type Props = {
   children: React.ReactNode;
@@ -49,30 +51,31 @@ export type Props = {
   description?: string;
   placeholder?: string;
   name?: string;
-} & PortalProps & (
-  | // Uncontrolled
-  ({
-      defaultValue?: string;
-      value?: undefined;
-    } & {
-      onChange?: (
-        value: string,
-        event: React.MouseEvent | React.KeyboardEvent,
-      ) => void;
-      readOnly?: false;
-    })
-  // Controlled
-  | ({ value: string; defaultValue?: undefined } & (
-      | {
-          onChange: (
-            value: string,
-            event: React.MouseEvent | React.KeyboardEvent,
-          ) => void;
-          readOnly?: false;
-        }
-      | { readOnly: true; onChange?: undefined }
-    ))
-) &
+} & PortalProps &
+  (
+    | // Uncontrolled
+    ({
+        defaultValue?: string;
+        value?: undefined;
+      } & {
+        onChange?: (
+          value: string,
+          event: React.MouseEvent | React.KeyboardEvent,
+        ) => void;
+        readOnly?: false;
+      })
+    // Controlled
+    | ({ value: string; defaultValue?: undefined } & (
+        | {
+            onChange: (
+              value: string,
+              event: React.MouseEvent | React.KeyboardEvent,
+            ) => void;
+            readOnly?: false;
+          }
+        | { readOnly: true; onChange?: undefined }
+      ))
+  ) &
   OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
 const idAllocator = IdAllocator.create('select');
@@ -421,7 +424,11 @@ export default function Select({
     ],
   );
 
-  const portalProps = { usePortal, portalContainer, scrollContainer } as Required<PortalProps>;
+  const portalProps = {
+    usePortal,
+    portalContainer,
+    scrollContainer,
+  } as Required<PortalProps>;
 
   return (
     <div

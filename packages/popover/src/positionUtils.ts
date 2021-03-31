@@ -126,13 +126,13 @@ export function getElementDocumentPosition(
   const { offsetHeight: height, offsetWidth: width } = element;
 
   if (scrollContainer) {
-    const {scrollTop, scrollLeft} = scrollContainer;
+    const { scrollTop, scrollLeft } = scrollContainer;
     const {
       top: offsetTop,
       bottom: offsetBottom,
       left: offsetLeft,
       right: offsetRight,
-    } = scrollContainer.getBoundingClientRect()
+    } = scrollContainer.getBoundingClientRect();
 
     return {
       top: top + scrollTop - offsetTop,
@@ -174,7 +174,7 @@ export function getElementViewportPosition(
       bottom: offsetBottom,
       left: offsetLeft,
       right: offsetRight,
-    } = scrollContainer.getBoundingClientRect()
+    } = scrollContainer.getBoundingClientRect();
 
     return {
       top: top - offsetTop,
@@ -536,7 +536,6 @@ function safelyWithinVerticalWindow({
   top,
   windowHeight,
   contentHeight,
-
 }: {
   top: number;
   windowHeight: number;
