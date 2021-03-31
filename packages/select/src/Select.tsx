@@ -40,6 +40,9 @@ export type Props = {
   placeholder?: string;
   usePortal?: boolean;
   name?: string;
+  __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
+    React.RefAttributes<unknown>
+  >;
 } & (
   | // Uncontrolled
   ({
@@ -85,6 +88,7 @@ export default function Select({
   onChange,
   readOnly,
   'aria-labelledby': ariaLabelledBy,
+  __INTERNAL__menuButtonSlot__,
 }: Props) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
@@ -490,6 +494,7 @@ export default function Select({
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
+          __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
         >
           <ListMenu
             labelId={labelId}

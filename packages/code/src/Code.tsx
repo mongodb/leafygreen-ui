@@ -31,7 +31,6 @@ const codeWrapperStyle = css`
   // Many applications have global styles that are adding a border and border radius to this element.
   border-radius: 0;
   border: 0;
-  border-left: 2px solid;
   // We apply left / right padding in Syntax to support line highlighting
   padding-top: ${spacing[2]}px;
   padding-bottom: ${spacing[2]}px;
@@ -187,6 +186,9 @@ function Code({
   }, []);
 
   const wrapperClassName = cx(
+    css`
+      border: ${currentLanguage ? '1px solid;' : '2px solid;'};
+    `,
     codeWrapperStyle,
     getWrapperVariantStyle(mode),
     {
@@ -293,7 +295,10 @@ Code.displayName = 'Code';
 
 Code.propTypes = {
   children: PropTypes.string.isRequired,
-  language: PropTypes.oneOf(Object.values(Language)),
+  language: PropTypes.oneOfType([
+    PropTypes.oneOf(Object.values(Language)),
+    PropTypes.string,
+  ]),
   darkMode: PropTypes.bool,
   className: PropTypes.string,
   showLineNumbers: PropTypes.bool,

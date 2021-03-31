@@ -62,7 +62,7 @@ const snippetMap = {
   [Language.Python]: pythonSnippet,
 };
 
-function LanguageSwitcher() {
+function LanguageSwitcher({ darkMode }: { darkMode: boolean }) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
 
   const handleChange = (languageObject: LanguageOption) => {
@@ -76,7 +76,7 @@ function LanguageSwitcher() {
       language={language?.displayName}
       onChange={handleChange}
       languageOptions={languageOptions}
-      darkMode
+      darkMode={darkMode}
     >
       {snippetMap[languageIndex]}
     </Code>
@@ -135,4 +135,8 @@ storiesOf('Code', module)
       },
     },
   )
-  .add('LanguageSwitcher', () => <LanguageSwitcher />);
+  .add('LanguageSwitcher', () => {
+    const darkMode = boolean('darkMode', false);
+
+    return <LanguageSwitcher darkMode={darkMode} />;
+  });

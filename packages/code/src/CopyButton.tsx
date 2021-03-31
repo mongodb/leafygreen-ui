@@ -7,7 +7,11 @@ import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Mode } from './types';
 
-function getCopyButtonStyle(mode: Mode, copied: boolean): string {
+function getCopyButtonStyle(
+  mode: Mode,
+  copied: boolean,
+  withLanguageSwitcher: boolean,
+): string {
   const baseStyle = css`
     align-self: center;
     color: ${uiColors.gray.base};
@@ -40,12 +44,15 @@ function getCopyButtonStyle(mode: Mode, copied: boolean): string {
   }
 
   if (mode === Mode.Dark) {
-    return cx(
-      baseStyle,
-      css`
+    return cx(baseStyle, {
+      [css`
         background-color: ${uiColors.gray.dark3};
-      `,
-    );
+      `]: !withLanguageSwitcher,
+      [css`
+        background-color: ${uiColors.gray.dark2};
+        color: ${uiColors.gray.light2};
+      `]: withLanguageSwitcher,
+    });
   }
 
   return baseStyle;
@@ -55,9 +62,15 @@ interface CopyProps {
   onCopy?: Function;
   contents: string;
   darkMode?: boolean;
+  withLanguageSwitcher?: boolean;
 }
 
-function CopyButton({ onCopy, contents, darkMode }: CopyProps) {
+function CopyButton({
+  onCopy,
+  contents,
+  darkMode,
+  withLanguageSwitcher,
+}: CopyProps) {
   const [copied, setCopied] = useState(false);
   const [buttonNode, setButtonNode] = useState(null);
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -97,7 +110,7 @@ function CopyButton({ onCopy, contents, darkMode }: CopyProps) {
       ref={setButtonNode}
       darkMode={darkMode}
       aria-label="Copy"
-      className={getCopyButtonStyle(mode, copied)}
+      className={getCopyButtonStyle(mode, copied, withLanguageSwitcher)}
       onClick={handleClick}
     >
       {copied ? <CheckmarkIcon /> : <CopyIcon />}

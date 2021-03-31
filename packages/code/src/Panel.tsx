@@ -1,6 +1,7 @@
 import React from 'react';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
+import { uiColors } from '@leafygreen-ui/palette';
 import CopyButton from './CopyButton';
 import LanguageSwitcher from './LanguageSwitcher';
 import { variantColors } from './globalStyles';
@@ -18,22 +19,12 @@ const copyStyle = css`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  // padding-top: 6px;
+  padding-top: 6px;
 `;
 
 const singleLineCopyStyle = css`
   min-height: ${singleLineComponentHeight}px;
   padding-top: ${spacing[1]}px;
-`;
-
-const languagePickerStyle = css`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-  padding-left: 12px;
-  padding-right: 12px;
 `;
 
 function getSidebarVariantStyle(mode: Mode): string {
@@ -49,9 +40,37 @@ function getSidebarVariantStyle(mode: Mode): string {
     case Mode.Dark:
       return css`
         border-color: ${colors[1]};
-        background-color: ${colors[4]};
+        background-color: ${colors[1]};
       `;
   }
+}
+
+function getPanelStyles(
+  mode: Mode,
+  withLanguageSwitcher: boolean,
+  isMultiline: boolean,
+) {
+  if (!withLanguageSwitcher) {
+    return cx(
+      copyStyle,
+      singleLineCopyStyle,
+      { [singleLineCopyStyle]: !isMultiline },
+      getSidebarVariantStyle(mode),
+    );
+  }
+
+  return css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: ${mode === Mode.Dark
+      ? uiColors.gray.dark2
+      : uiColors.white};
+    border-bottom: 1px solid
+      ${mode === Mode.Dark ? uiColors.gray.dark2 : uiColors.gray.light2};
+  `;
 }
 
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
@@ -71,21 +90,12 @@ function Panel({
   onCopy,
   showCopyButton,
   darkMode,
-  isMultiline,
+  isMultiline = false,
 }: PanelProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
-    <div
-      id="panel"
-      className={cx(
-        copyStyle,
-        { [singleLineCopyStyle]: !isMultiline },
-        { [languagePickerStyle]: !!language },
-        getSidebarVariantStyle(mode),
-      )}
-    >
-      {/* This is an ugly inline but its the only way to prove to typescript that all of the properties are known */}
+    <div className={getPanelStyles(mode, !!language, isMultiline)}>
       {language !== undefined &&
         languageOptions !== undefined &&
         onChange !== undefined && (
@@ -96,8 +106,14 @@ function Panel({
             darkMode={darkMode}
           />
         )}
+
       {showCopyButton && (
-        <CopyButton onCopy={onCopy} darkMode={darkMode} contents={contents} />
+        <CopyButton
+          onCopy={onCopy}
+          darkMode={darkMode}
+          contents={contents}
+          withLanguageSwitcher={!!language}
+        />
       )}
     </div>
   );

@@ -94,7 +94,7 @@ export type CodeProps = Omit<
 export interface LanguageOption {
   displayName: string;
   language: Language;
-  image: React.ReactElement;
+  image?: React.ReactElement;
 }
 
 export interface LanguageSwitcher {
