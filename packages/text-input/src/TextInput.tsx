@@ -325,7 +325,7 @@ const TextInput: React.ComponentType<
 
     if (!label && !ariaLabelledby) {
       console.error(
-        'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
+        'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
       );
     }
 
@@ -351,6 +351,7 @@ const TextInput: React.ComponentType<
           >
             <input
               {...rest}
+              aria-labelledby={ariaLabelledby}
               type={type}
               className={cx(
                 inputStyle,
