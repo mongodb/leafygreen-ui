@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import Code, { Language } from '@leafygreen-ui/code';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
+interface LanguageOption {
+  displayName: string;
+  language: Language;
+}
+
 const languageOptions = [
   {
     displayName: 'JavaScript',
