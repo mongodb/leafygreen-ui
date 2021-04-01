@@ -18,13 +18,12 @@ import { NavElement, ActiveNavElement } from '../types';
 // data
 const { account, currentOrganization, organizations } = dataFixtures;
 const {
-  orgNav: { support, billing, allClusters, admin },
+  orgNav: { billing, allClusters, admin },
 } = urlFixtures;
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
 const linkNamesToUrls: Record<string, string | undefined> = {
-  support,
   billing,
   allClusters,
   admin,
@@ -33,7 +32,6 @@ const linkNamesToUrls: Record<string, string | undefined> = {
 const linkNamesToText: Record<string, string> = {
   allClusters: 'All Clusters',
   admin: 'Admin',
-  support: 'Support',
   billing: 'Billing',
 };
 
@@ -165,6 +163,11 @@ describe('packages/mongo-nav/src/org-nav', () => {
     test('it does not render the FedRAMP banner', () => {
       expect(queryByTestId('org-nav-fedramp-banner')).toBeNull();
     });
+
+    test('it displays a Get Help menu to the nav by default', () => {
+      const getHelp = getByTestId('org-nav-dropdown-get-help');
+      expect(getHelp).toBeInTheDocument();
+    });
   });
 
   describe('when rendered as an admin without an active preferences nav', () => {
@@ -292,6 +295,24 @@ describe('packages/mongo-nav/src/org-nav', () => {
           testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
         );
       });
+    });
+  });
+
+  describe('the Get Help dropdown displays correctly', () => {
+    beforeEach(() => {
+      renderComponent();
+      const getHelp = getByTestId('org-nav-dropdown-get-help');
+      fireEvent.click(getHelp);
+    });
+
+    test('support link appears in menu', () => {
+      const support = getByTestId('org-nav-support-link');
+      expect(support).toBeInTheDocument();
+    });
+
+    test('docs link appears in menu', () => {
+      const docs = getByTestId('org-nav-docs-link');
+      expect(docs).toBeInTheDocument();
     });
   });
 

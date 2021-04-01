@@ -18,7 +18,11 @@ const defaultElements: Array<
     testId: 'org-nav-access-manager-dropdown',
     shouldNavigate: false,
   },
-  { navElement: NavElement.OrgNavSupport, testId: 'org-nav-support' },
+  {
+    navElement: NavElement.OrgNavDropdownGetHelp,
+    testId: 'org-nav-dropdown-get-help',
+    shouldNavigate: false,
+  },
   { navElement: NavElement.OrgNavBilling, testId: 'org-nav-billing' },
   { navElement: NavElement.OrgNavAllClusters, text: 'All Clusters' },
   {
@@ -117,6 +121,20 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
       navElement: NavElement.OrgNavDropdownProjectAccessManager,
       testId: 'org-nav-dropdown-project-access-manager',
       trigger: 'org-nav-access-manager-dropdown',
+    });
+  });
+
+  describe('when the OrgNav Get Help dropdown is open', () => {
+    testForCallback({
+      navElement: NavElement.OrgNavSupport,
+      testId: 'org-nav-support-link',
+      trigger: 'org-nav-dropdown-get-help',
+    });
+
+    testForCallback({
+      navElement: NavElement.OrgNavDocs,
+      testId: 'org-nav-docs-link',
+      trigger: 'org-nav-dropdown-get-help',
     });
   });
 

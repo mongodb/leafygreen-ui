@@ -34,3 +34,7 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
+
+      - name: Publish website with package updates
+        if: steps.changesets.outputs.published == 'true'
+        run: yarn publish:sites

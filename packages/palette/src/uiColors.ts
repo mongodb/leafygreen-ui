@@ -1,5 +1,6 @@
 export const white = '#FFFFFF';
 export const black = '#061621';
+export const focus = '#019EE2';
 
 export const gray = {
   dark3: '#21313C',
@@ -14,6 +15,7 @@ export const gray = {
 export const green = {
   dark3: '#0B3B35',
   dark2: '#116149',
+  dark1: '#09804C',
   base: '#13AA52',
   light2: '#C3E7CA',
   light3: '#E4F4E4',
@@ -39,6 +41,7 @@ export const yellow = {
 export const red = {
   dark3: '#570B08',
   dark2: '#8F221B',
+  dark1: '#B1371F',
   base: '#CF4A22',
   light2: '#F9D3C5',
   light3: '#FCEBE2',

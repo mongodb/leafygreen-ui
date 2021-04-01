@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
 import { transparentize } from 'polished';
-import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
+import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -115,6 +115,7 @@ const copyableButtonWrapperStyle = css`
 
 const buttonStyle = css`
   height: 100%;
+  border-radius: 0 4px 4px 0;
 `;
 
 const iconStyle = css`
@@ -156,30 +157,15 @@ export default function Copyable({
   let copyButton: JSX.Element | undefined;
 
   if (showCopyButton) {
-    let buttonVariant: ButtonVariant;
-
-    switch (mode) {
-      case Mode.Light:
-        buttonVariant = ButtonVariant.Default;
-        break;
-      case Mode.Dark:
-        buttonVariant = ButtonVariant.Dark;
-        break;
-    }
-
-    // Forward darkMode prop for future versions of Button that support it
-    const buttonRestProps = 'darkMode' in Button.propTypes! ? { darkMode } : {};
-
     const trigger = (
       <Button
         ref={setButtonRef}
-        variant={buttonVariant}
+        variant="default"
+        darkMode={darkMode}
         className={buttonStyle}
-        borderRadius="0 4px 4px 0;"
         onClick={() => setCopied(true)}
-        {...buttonRestProps}
+        leftGlyph={<CopyIcon size="large" className={iconStyle} />}
       >
-        <CopyIcon size="large" className={iconStyle} />
         Copy
       </Button>
     );
