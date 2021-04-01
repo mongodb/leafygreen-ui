@@ -40,7 +40,9 @@ export default function ToastLiveExample() {
           <Button onClick={() => setOpen(curr => !curr)}>Trigger toast</Button>
           <Toast
             progress={progress}
-            className={css`z-index: 1;`}
+            className={css`
+              z-index: 1;
+            `}
             close={
               close
                 ? () => {
