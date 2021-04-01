@@ -120,49 +120,6 @@ interface PopoverFunctionParameters {
 
 type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
 
-type PortalProps =
-  | {
-      /**
-       * Specifies that the popover content will appear portaled to the end of the DOM,
-       * rather than in the DOM tree.
-       *
-       * default: `true`
-       */
-      usePortal?: true;
-
-      /**
-       * If using a portal, specifies a class name to apply to the root element of the portal.
-       *
-       * default: undefined
-       */
-      portalClassName?: string;
-
-      /**
-       * If using a portal, specifies the element to portal within.
-       */
-      portalContainer?: HTMLElement | null;
-
-      /**
-       * If using a portal, specifies the element to portal within.
-       */
-      scrollContainer?: HTMLElement | null;
-    }
-  | {
-      usePortal: false;
-
-      /**
-       * If using a portal, specifies a class name to apply to the root element of the portal.
-       *
-       * default: undefined
-       */
-      portalClassName?: undefined;
-
-      /**
-       * If using a portal, specifies the element to portal within.
-       */
-      portalContainer?: null;
-    };
-
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
   keyof ModifiedPopoverProps
@@ -213,7 +170,7 @@ export type TooltipProps = Omit<
      * @default: true
      */
     enabled?: boolean;
-  } & PortalProps;
+  };
 
 const idAllocator = IdAllocator.create('tooltip');
 
