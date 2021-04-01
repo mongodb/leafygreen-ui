@@ -2,7 +2,11 @@ import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Popover, {
+  Align,
+  Justify,
+  PortalControlProps,
+} from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
@@ -20,16 +24,6 @@ const menuStyle = css`
   overflow: auto;
 `;
 
-type PortalProps =
-  | {
-      usePortal: true;
-      portalContainer?: HTMLElement | null;
-    }
-  | {
-      usePortal: false;
-      portalContainer?: null;
-    };
-
 type ListMenuProps = {
   children: React.ReactNode;
   id: string;
@@ -40,7 +34,7 @@ type ListMenuProps = {
   onFocusNextOption: () => void;
   className?: string;
   labelId?: string;
-} & PortalProps;
+} & PortalControlProps;
 
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
   function ListMenu(
@@ -53,9 +47,11 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       onFocusNextOption,
       onSelectFocusedOption,
       className,
-      usePortal = true,
       labelId,
+      usePortal = true,
       portalContainer,
+      scrollContainer,
+      portalClassName,
     }: ListMenuProps,
     forwardedRef,
   ) {
@@ -126,7 +122,12 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       [ref],
     );
 
-    const popoverProps = { usePortal, portalContainer } as PortalProps;
+    const popoverProps = {
+      usePortal,
+      portalContainer,
+      scrollContainer,
+      portalClassName,
+    } as PortalControlProps;
 
     return (
       <Popover

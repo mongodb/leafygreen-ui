@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { PortalControlProps } from '@leafygreen-ui/popover';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
@@ -29,18 +30,6 @@ const labelStyle = css`
   font-weight: bold;
 `;
 
-type PortalProps =
-  | {
-      usePortal?: true;
-      portalContainer?: HTMLElement | null;
-      scrollContainer?: HTMLElement | null;
-    }
-  | {
-      usePortal: false;
-      portalContainer?: null;
-      scrollContainer?: null;
-    };
-
 export type Props = {
   children: React.ReactNode;
   className?: string;
@@ -51,7 +40,7 @@ export type Props = {
   description?: string;
   placeholder?: string;
   name?: string;
-} & PortalProps &
+} & PortalControlProps &
   (
     | // Uncontrolled
     ({
@@ -85,20 +74,21 @@ export default function Select({
   darkMode = false,
   size = Size.Default,
   disabled = false,
-  usePortal = true,
-  portalContainer,
-  scrollContainer,
   placeholder = 'Select',
   className,
   id: idProp,
   label,
+  'aria-labelledby': ariaLabelledBy,
   description,
   name,
   defaultValue,
   value,
   onChange,
   readOnly,
-  'aria-labelledby': ariaLabelledBy,
+  usePortal = true,
+  portalContainer,
+  scrollContainer,
+  portalClassName,
 }: Props) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
@@ -428,7 +418,8 @@ export default function Select({
     usePortal,
     portalContainer,
     scrollContainer,
-  } as Required<PortalProps>;
+    portalClassName,
+  } as PortalControlProps;
 
   return (
     <div
