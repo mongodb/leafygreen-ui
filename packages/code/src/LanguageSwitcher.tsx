@@ -151,6 +151,9 @@ function LanguageSwitcher({
         // Component missing displayName
         // eslint-disable-next-line
         __INTERNAL__menuButtonSlot__={React.forwardRef(
+          // Linter complaining that className and children are missing from props validation
+          // Even though we are validating them with Button props
+          // eslint-disable-next-line
           ({ className, children, ...props }: ButtonProps, ref) => (
             <Button
               {...props}
