@@ -25,7 +25,7 @@ function useIdAllocator({
   id: idProp,
 }: {
   prefix?: string;
-  id?: undefined;
+  id?: string;
 }) {
   const initialId = prefix && (serverHandoffComplete ? genId(prefix) : null);
 

@@ -19,7 +19,7 @@ interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
   /**
    * Callback to be executed when a RadioBox is selected.
    */
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
   /**
    * Name passed to each RadioBox belonging to the RadioGroup.
@@ -34,7 +34,7 @@ interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
   /**
    * Determines size of RadioBox components ['default', 'compact', 'full'].
    */
-  size: Size;
+  size?: Size;
 
   /**
    * className supplied to RadioBoxGroup container.

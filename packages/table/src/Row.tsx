@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import useSSR from 'use-ssr';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -123,7 +123,7 @@ const Row = React.forwardRef(
       dispatch: tableDispatch,
     } = useTableContext();
 
-    const indexRef = useIdAllocator({ prefix: 'table-row' });
+    const indexRef = useRef(useIdAllocator({ prefix: 'row' }));
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = useRef(null);
 
