@@ -58,6 +58,17 @@ Hook that returns two sets of props that accessibly associate a label and its re
 | --------- | -------- | ------------------------------------ | ------- |
 | `id`      | `string` | id that describes the input element. |         |
 
+## validateAriaLabelProps
+
+Function that validates that either aria-label or aria-labelledby are present within props.
+
+### Properties
+
+| Parameter       | Type                  | Description                                   | Default |
+| --------------- | --------------------- | --------------------------------------------- | ------- |
+| `props`         | `Record<string, any>` | Object of component properties.               |         |
+| `componentName` | `string`              | Name of component with props to be validated. |         |
+
 ## prefersReducedMotion
 
 Returns an emotion CSS instance for rendering styles that respect

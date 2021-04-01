@@ -145,7 +145,7 @@ export default function TextArea({
   id: idProp,
   value: controlledValue,
   onChange,
-  'aria-labelledby': ariaLabelledBy,
+  'aria-labelledby': ariaLabelledby,
   ...rest
 }: TextAreaProps) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
@@ -167,9 +167,9 @@ export default function TextArea({
     }
   };
 
-  if (!label && !ariaLabelledBy) {
+  if (!label && !ariaLabelledby) {
     console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
+      'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
     );
   }
 
@@ -202,7 +202,6 @@ export default function TextArea({
           disabled={disabled}
           onChange={onValueChange}
           value={value}
-          aria-labelledby={ariaLabelledBy}
         />
       </InteractionRing>
       {!disabled && state === State.Error && errorMessage && (

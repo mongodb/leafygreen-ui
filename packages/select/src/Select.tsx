@@ -86,6 +86,12 @@ export default function Select({
   readOnly,
   'aria-labelledby': ariaLabelledBy,
 }: Props) {
+  if (!label && !ariaLabelledBy) {
+    console.error(
+      'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
+    );
+  }
+
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
     ariaLabelledBy,
@@ -118,16 +124,9 @@ export default function Select({
     }
   }, [onChange, readOnly, value]);
 
-  if (!label && !ariaLabelledBy) {
-    console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
-    );
-  }
-
   /**
    * Open / close state
    */
-
   const onOpen = useCallback(() => {
     setOpen(true);
   }, []);

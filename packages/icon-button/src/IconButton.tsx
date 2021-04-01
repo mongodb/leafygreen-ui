@@ -5,6 +5,7 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
+import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 
 const Mode = {
   Light: 'light',
@@ -195,8 +196,6 @@ const IconButton: ExtendableBox<
       active = false,
       className,
       children,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
       ...rest
     }: AccessibleIconButtonProps,
     ref: React.Ref<any>,
@@ -204,11 +203,7 @@ const IconButton: ExtendableBox<
     const mode = darkMode ? 'dark' : 'light';
 
     // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
-    if (!ariaLabel && !ariaLabelledBy) {
-      console.error(
-        'For screen-reader accessibility, aria-label or aria-labelledby must be provided to IconButton.',
-      );
-    }
+    validateAriaLabelProps(rest, 'IconButton');
 
     const processedChildren = React.Children.map(children, child => {
       if (!child) {
@@ -237,13 +232,8 @@ const IconButton: ExtendableBox<
       return child;
     });
 
-    const accessibleLabel = ariaLabel
-      ? { ['aria-label']: ariaLabel }
-      : { ['aria-labelledby']: ariaLabelledBy };
-
     const iconButtonProps = {
       ...rest,
-      ...accessibleLabel,
       ref,
       tabIndex: disabled ? -1 : 0,
       ['aria-disabled']: disabled,
