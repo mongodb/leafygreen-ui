@@ -17,8 +17,10 @@ const genId = (prefix: string) => {
 };
 
 /**
- * useIdAllocator generates a unique id based on a prefix
- * or returns an idProp if one is provided.
+ * Generates an SSR-compatible unique id based on a prefix string and an optional idProp parameter.
+ * @param options {prefix: string; id: string;}
+ * @param options.prefix string that prefixes the generated id
+ * @param options.id string that represents an already-created id
  */
 function useIdAllocator({
   prefix,
