@@ -236,6 +236,7 @@ function Tooltip({
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
   const [tooltipNode, setTooltipNode] = useState<HTMLDivElement | null>(null);
+  const [triggerNode, setTriggerNode] = useState<HTMLDivElement | null>(null);
 
   const existingId = id ?? tooltipNode?.id;
   const tooltipId = useMemo(() => existingId ?? idAllocator.generate(), [
@@ -264,6 +265,7 @@ function Tooltip({
     (triggerEvent: TriggerEvent, triggerProps?: any) => {
       if (triggerEvent === TriggerEvent.Hover) {
         return {
+          ref: setTriggerNode,
           onMouseEnter: debounce(() => {
             setOpen(true);
           }, 35),
@@ -286,8 +288,8 @@ function Tooltip({
       }
 
       return {
+        ref: setTriggerNode,
         onClick: (e: MouseEvent) => {
-          // ensure that we don't close the tooltip when content inside tooltip is clicked
           if (e.target !== tooltipNode) {
             setOpen((curr: boolean) => !curr);
           }
@@ -301,11 +303,26 @@ function Tooltip({
 
   const handleBackdropClick = useCallback(
     (e: MouseEvent) => {
-      if (tooltipNode && !tooltipNode.contains(e.target as HTMLElement)) {
-        handleClose();
+      if (!tooltipNode) {
+        return;
+      }
+
+      // If there's a trigger, we check that neither the tooltipNode nor the triggerNode contain the event. target
+      // Otherwise, we only need to check that the tooltipNode does not contain the event.target, as the tooltipNode will contain have the trigger as a child.
+      if (trigger && triggerNode) {
+        if (
+          !tooltipNode.contains(e.target as HTMLElement) &&
+          !triggerNode.contains(e.target as HTMLElement)
+        ) {
+          handleClose();
+        }
+      } else {
+        if (!tooltipNode.contains(e.target as HTMLElement)) {
+          handleClose();
+        }
       }
     },
-    [handleClose, tooltipNode],
+    [handleClose, tooltipNode, trigger, triggerNode],
   );
 
   useEventListener('click', handleBackdropClick, {
