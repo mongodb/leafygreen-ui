@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Code from '.';
+import { Language, LanguageOption } from './types';
 
-function PythonLogo({ className }: { className?: string }) {
+export function PythonLogo({ className }: { className?: string }) {
   return (
     <svg
       width="10"
@@ -85,4 +87,69 @@ function JavaScriptLogo({ className }: { className?: string }) {
   );
 }
 
-export { JavaScriptLogo, PythonLogo };
+const languageOptions = [
+  {
+    displayName: 'JavaScript',
+    language: Language.JavaScript,
+    image: <JavaScriptLogo />,
+  },
+  {
+    displayName: 'Python',
+    language: Language.Python,
+    image: <PythonLogo />,
+  },
+];
+
+const jsSnippet = `
+
+function greeting(entity) {
+  return \`Hello, \${entity}!\`;
+}
+
+console.log(greeting('World'));
+
+`;
+
+const pythonSnippet = `
+
+def greeting(entity):
+    return "Hello {}".format(entity)
+
+print (greeting("World"))
+
+`;
+
+const snippetMap = {
+  [Language.JavaScript]: jsSnippet,
+  [Language.Python]: pythonSnippet,
+};
+
+function LanguageSwitcher({
+  darkMode,
+  onChange,
+}: {
+  darkMode?: boolean;
+  onChange?: Function;
+}) {
+  const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
+
+  const handleChange = (languageObject: LanguageOption) => {
+    setLanguage(languageObject);
+    onChange?.(languageObject);
+  };
+
+  const languageIndex = language.language;
+
+  return (
+    <Code
+      language={language?.displayName}
+      onChange={handleChange}
+      languageOptions={languageOptions}
+      darkMode={darkMode}
+    >
+      {snippetMap[languageIndex as 'javascript' | 'python']}
+    </Code>
+  );
+}
+
+export default LanguageSwitcher;
