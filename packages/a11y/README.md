@@ -69,17 +69,6 @@ Function that validates that either aria-label or aria-labelledby are present wi
 | `props`         | `Record<string, any>` | Object of component properties.               |         |
 | `componentName` | `string`              | Name of component with props to be validated. |         |
 
-## validateLabelProps
-
-Function that validates that either label or aria-labelledby are present within props.
-
-### Properties
-
-| Parameter       | Type                  | Description                                   | Default |
-| --------------- | --------------------- | --------------------------------------------- | ------- |
-| `props`         | `Record<string, any>` | Object of component properties.               |         |
-| `componentName` | `string`              | Name of component with props to be validated. |         |
-
 ## prefersReducedMotion
 
 Returns an emotion CSS instance for rendering styles that respect

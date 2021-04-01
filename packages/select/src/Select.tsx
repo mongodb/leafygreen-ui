@@ -4,7 +4,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
-import { validateLabelProps } from '@leafygreen-ui/a11y';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
@@ -69,27 +68,29 @@ export type Props = {
 
 const idAllocator = IdAllocator.create('select');
 
-export default function Select(props: Props) {
-  const {
-    children,
-    darkMode = false,
-    size = Size.Default,
-    disabled = false,
-    usePortal = true,
-    placeholder = 'Select',
-    className,
-    id: idProp,
-    label,
-    description,
-    name,
-    defaultValue,
-    value,
-    onChange,
-    readOnly,
-    'aria-labelledby': ariaLabelledBy,
-  } = props;
-
-  validateLabelProps(props, 'Select');
+export default function Select({
+  children,
+  darkMode = false,
+  size = Size.Default,
+  disabled = false,
+  usePortal = true,
+  placeholder = 'Select',
+  className,
+  id: idProp,
+  label,
+  description,
+  name,
+  defaultValue,
+  value,
+  onChange,
+  readOnly,
+  'aria-labelledby': ariaLabelledBy,
+}: Props) {
+  if (!label && !ariaLabelledBy) {
+    console.error(
+      'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
+    );
+  }
 
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [

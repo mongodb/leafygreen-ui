@@ -6,7 +6,6 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
-import { validateLabelProps } from '@leafygreen-ui/a11y';
 
 const idAllocator = IdAllocator.create('textarea');
 
@@ -146,6 +145,7 @@ export default function TextArea({
   id: idProp,
   value: controlledValue,
   onChange,
+  'aria-labelledby': ariaLabelledby,
   ...rest
 }: TextAreaProps) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
@@ -167,7 +167,11 @@ export default function TextArea({
     }
   };
 
-  validateLabelProps({ label, ...rest }, 'TextArea');
+  if (!label && !ariaLabelledby) {
+    console.error(
+      'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
+    );
+  }
 
   return (
     <div className={cx(containerStyles, className)}>

@@ -6,7 +6,6 @@ import {
   VisuallyHidden,
   useAccessibleForm,
   validateAriaLabelProps,
-  validateLabelProps,
   prefersReducedMotion,
 } from '.';
 
@@ -85,15 +84,6 @@ describe('packages/a11y', () => {
       validateAriaLabelProps({}, 'TestComponent');
       expect(consoleSpy).toHaveBeenCalledWith(
         'For screen-reader accessibility, aria-label or aria-labelledby must be provided to TestComponent.',
-      );
-    });
-  });
-
-  describe('validateLabelProps', () => {
-    test('when prop object does not contain valid props', () => {
-      validateLabelProps({}, 'TestComponent');
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'For screen-reader accessibility, label or aria-labelledby must be provided to TestComponent.',
       );
     });
   });

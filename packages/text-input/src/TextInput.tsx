@@ -14,7 +14,6 @@ import {
   IdAllocator,
 } from '@leafygreen-ui/lib';
 import { Description, Label } from '@leafygreen-ui/typography';
-import { validateLabelProps } from '@leafygreen-ui/a11y';
 
 const iconSelectorProp = createDataProp('icon-selector');
 
@@ -302,6 +301,7 @@ const TextInput: React.ComponentType<
       value: controlledValue,
       className,
       darkMode = false,
+      'aria-labelledby': ariaLabelledby,
       ...rest
     }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -323,7 +323,11 @@ const TextInput: React.ComponentType<
       }
     }
 
-    validateLabelProps({ label, ...rest }, 'TextInput');
+    if (!label && !ariaLabelledby) {
+      console.error(
+        'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
+      );
+    }
 
     const RenderedCheckmarkIcon = darkMode
       ? CheckmarkWithCircleIcon
