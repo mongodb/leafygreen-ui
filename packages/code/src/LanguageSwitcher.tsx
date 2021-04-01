@@ -87,26 +87,6 @@ function isLeafyGreenIcon(element: React.ReactNode) {
   return false;
 }
 
-const MenuButton = React.forwardRef(function MenuButton(
-  { children, className, darkMode, ...props }: ButtonProps,
-  ref,
-) {
-  const mode = darkMode ? 'dark' : 'light';
-
-  return (
-    <Button
-      {...props}
-      className={cx(className, menuButtonStyle, buttonModeStyle[mode])}
-      darkMode={darkMode}
-      ref={ref}
-    >
-      {children}
-    </Button>
-  );
-});
-
-MenuButton.displayName = 'MenuButton';
-
 interface Props {
   language: LanguageOption;
   languageOptions: Array<LanguageOption>;
@@ -114,13 +94,14 @@ interface Props {
   darkMode?: boolean;
 }
 
-// Add tests
 function LanguageSwitcher({
   language,
   languageOptions,
   onChange,
   darkMode,
 }: Props) {
+  const mode = darkMode ? 'dark' : 'light';
+
   const previousLanguage = usePrevious(language);
 
   const handleChange = (val: string) => {
@@ -169,9 +150,19 @@ function LanguageSwitcher({
         className={selectWidth}
         // Component missing displayName
         // eslint-disable-next-line
-        __INTERNAL__menuButtonSlot__={React.forwardRef((props, ref) => (
-          <MenuButton {...props} ref={ref} leftGlyph={renderedLogo} />
-        ))}
+        __INTERNAL__menuButtonSlot__={React.forwardRef(
+          ({ className, children, ...props }: ButtonProps, ref) => (
+            <Button
+              {...props}
+              className={cx(className, menuButtonStyle, buttonModeStyle[mode])}
+              darkMode={darkMode}
+              ref={ref}
+              leftGlyph={renderedLogo}
+            >
+              {children}
+            </Button>
+          ),
+        )}
       >
         {languageOptions?.map(option => (
           <Option key={option?.displayName} value={option?.displayName}>
