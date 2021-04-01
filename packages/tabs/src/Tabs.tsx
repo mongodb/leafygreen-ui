@@ -2,12 +2,8 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  keyMap,
-  isComponentType,
-  validateAriaLabelProps,
-  Either,
-} from '@leafygreen-ui/lib';
+import { keyMap, isComponentType, Either } from '@leafygreen-ui/lib';
+import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 
 const Mode = {
@@ -141,17 +137,20 @@ export type AccessibleTabsProps = Either<TabsProps, AriaLabels>;
  * @param props.className className applied to Tabs container.
  * @param props.as HTML Element that wraps name in Tab List.
  */
-function Tabs({
-  children,
-  setSelected: setControlledSelected,
-  selected: controlledSelected,
-  className,
-  darkMode = false,
-  as = 'button',
-  'aria-labelledby': ariaLabelledby,
-  'aria-label': ariaLabel,
-  ...rest
-}: AccessibleTabsProps) {
+function Tabs(props: AccessibleTabsProps) {
+  validateAriaLabelProps(props, 'Tabs');
+
+  const {
+    children,
+    setSelected: setControlledSelected,
+    selected: controlledSelected,
+    className,
+    darkMode = false,
+    as = 'button',
+    'aria-labelledby': ariaLabelledby,
+    'aria-label': ariaLabel,
+    ...rest
+  } = props;
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   const [tabNode, setTabNode] = useState<HTMLDivElement | null>(null);
@@ -161,8 +160,6 @@ function Tabs({
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
   };
-
-  validateAriaLabelProps(accessibilityProps, 'Tabs');
 
   const childrenArray = useMemo(
     () => React.Children.toArray(children) as Array<React.ReactElement>,

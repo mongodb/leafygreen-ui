@@ -23,6 +23,7 @@
     "@leafygreen-ui/icon": "10.2.0"
   },
   "dependencies": {
+    "@leafygreen-ui/a11y": "^1.0.0",
     "@leafygreen-ui/lib": "^6.3.0",
     "@leafygreen-ui/emotion": "^3.0.1",
     "@leafygreen-ui/palette": "^3.0.1",
