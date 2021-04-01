@@ -8,22 +8,17 @@ import PortalContextProvider, { PortalContextValues } from './PortalContext';
 
 type LeafyGreenProviderProps = {
   children: React.ReactNode;
-  modalPortalContainer?: PortalContextValues['modal'];
   popoverPortalContainer?: PortalContextValues['popover'];
 } & TypographyProviderProps;
 
 function LeafyGreenProvider({
   children,
   baseFontSize,
-  modalPortalContainer,
   popoverPortalContainer,
 }: LeafyGreenProviderProps) {
   return (
     <UsingKeyboardProvider>
-      <PortalContextProvider
-        modal={modalPortalContainer}
-        popover={popoverPortalContainer}
-      >
+      <PortalContextProvider popover={popoverPortalContainer}>
         <TypographyProvider baseFontSize={baseFontSize}>
           {children}
         </TypographyProvider>
