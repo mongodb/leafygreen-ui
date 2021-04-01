@@ -57,7 +57,7 @@ H2.displayName = 'H2';
 
 const h3 = css`
   font-size: 24px;
-  line-height: 28px;
+  line-height: 32px;
   letter-spacing: 0px;
   font-weight: medium;
 `;
