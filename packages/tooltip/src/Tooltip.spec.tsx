@@ -88,7 +88,8 @@ describe('packages/tooltip', () => {
       const tooltip = getByTestId(tooltipTestId);
 
       // checking that in the Document, because in the document before opacity hits 1
-      expect(tooltip).toBeInTheDocument();
+      await waitFor(() => tooltip);
+      expect(tooltip).toBeVisible();
 
       // checking for visibility, because opacity changes before tooltip transitions out of the DOM
       fireEvent.click(button);
