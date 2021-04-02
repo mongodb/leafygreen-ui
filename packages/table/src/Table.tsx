@@ -8,12 +8,14 @@ import {
   useIsomorphicLayoutEffect,
   useViewportSize,
 } from '@leafygreen-ui/hooks';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { HeaderRowProps } from './HeaderRow';
 import { TableHeaderProps } from './TableHeader';
 import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 import { SortProvider } from './SortContext';
+import { FontSizeProvider } from './FontSizeContext';
 
 const shadowColor = transparentize(0.7, uiColors.black);
 
@@ -93,6 +95,7 @@ export interface TableProps<Shape> extends HTMLElementProps<'table', never> {
     | React.ReactFragment;
 
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
+  baseFontSize?: 14 | 16;
 }
 
 export default function Table<Shape>({
@@ -100,6 +103,7 @@ export default function Table<Shape>({
   data: dataProp = [],
   children,
   className,
+  baseFontSize: baseFontSizeProp,
   ...rest
 }: TableProps<Shape>) {
   const [scrollState, setScrollState] = React.useState<ScrollState>(
@@ -107,6 +111,11 @@ export default function Table<Shape>({
   );
   const divRef = React.useRef<HTMLDivElement>(null);
   const viewportSize = useViewportSize();
+
+  const providerFontSize = useBaseFontSize();
+  const normalizedProviderFontSize =
+    providerFontSize === 14 || providerFontSize === 16 ? providerFontSize : 14;
+  const baseFontSize = baseFontSizeProp ?? normalizedProviderFontSize;
 
   useIsomorphicLayoutEffect(() => {
     const divNode = divRef.current;
@@ -184,8 +193,10 @@ export default function Table<Shape>({
         >
           <TableProvider data={dataProp}>
             <SortProvider>
-              <TableHead columns={columns} />
-              <TableBody>{children}</TableBody>
+              <FontSizeProvider baseFontSize={baseFontSize}>
+                <TableHead columns={columns} />
+                <TableBody>{children}</TableBody>
+              </FontSizeProvider>
             </SortProvider>
           </TableProvider>
         </table>

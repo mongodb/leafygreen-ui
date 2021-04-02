@@ -5,8 +5,9 @@ import UnsortedIcon from '@leafygreen-ui/icon/dist/Unsorted';
 import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { commonCellStyles } from './styles';
+import { getCommonCellStyles } from './styles';
 import { useSortContext } from './SortContext';
+import { useFontSizeContext } from './FontSizeContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { enforceExhaustive } from '@leafygreen-ui/lib';
 
@@ -95,6 +96,7 @@ function TableHeader<Shape>({
 }: TableHeaderProps<Shape>) {
   const { dispatch } = useTableContext();
   const { sort, setSort } = useSortContext();
+  const baseFontSize = useFontSizeContext();
 
   React.useEffect(() => {
     if (typeof index === 'number') {
@@ -152,7 +154,7 @@ function TableHeader<Shape>({
       scope="col"
       aria-sort={ariaSort}
       {...rest}
-      className={cx(thStyle, commonCellStyles, className)}
+      className={cx(thStyle, getCommonCellStyles(baseFontSize), className)}
     >
       <div className={flexDisplay}>
         <span className={labelStyle}>{label}</span>

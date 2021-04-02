@@ -29,6 +29,7 @@ const defaultData = [
 const knobsConfig: KnobsConfigInterface<{
   disabled: boolean;
   sortBy: boolean;
+  baseFontSize: 14 | 16;
 }> = {
   disabled: {
     type: 'boolean',
@@ -40,17 +41,25 @@ const knobsConfig: KnobsConfigInterface<{
     default: true,
     label: 'Sort By',
   },
+  baseFontSize: {
+    type: 'select',
+    default: 14,
+    label: 'Base Font Size',
+    options: [14, 16],
+  },
 };
 
 function DefaultExample({
   disabled,
   sortBy,
+  ...rest
 }: {
   disabled: boolean;
   sortBy: boolean;
 }) {
   return (
     <Table
+      {...rest}
       data={defaultData}
       columns={
         <HeaderRow>
