@@ -162,4 +162,9 @@ export type PopoverProps = {
    * Click event handler passed to the root div element within the portal container.
    */
   onClick?: React.MouseEventHandler;
+
+  /**
+   * Number that controls the z-index of the popover element directly.
+   */
+  popoverZIndex?: number;
 } & PortalControlProps;

@@ -45,30 +45,34 @@ const mutationOptions = {
   <Popover active={true}>Hello world!</Popover>
 </button>
 ```
- * @param props.children Content to appear inside of Popover container.
  * @param props.active Boolean to describe whether or not Popover is active.
- * @param props.className Classname applied to Popover container.
+ * @param props.spacing The spacing (in pixels) between the reference element, and the popover.
  * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`, `center-horizontal`, `center-vertical`.
  * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`, `fit`.
+ * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+ * @param props.children Content to appear inside of Popover container.
+ * @param props.className Classname applied to Popover container.
+ * @param props.popoverZIndex Number that controls the z-index of the popover element directly.
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.portalClassName Classname applied to root element of the portal.
  * @param props.portalContainer HTML element that the popover is portaled within.
- * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+ * @param props.scrollContainer HTML ancestor element that's scrollable to position the popover accurately within scrolling containers.
  */
 function Popover({
   active = false,
-  usePortal = true,
   spacing = 10,
   align = Align.Bottom,
   justify = Justify.Start,
   adjustOnMutation = false,
   children,
   className,
+  popoverZIndex,
+  refEl,
+  usePortal = true,
   portalClassName,
   portalContainer: portalContainerProp,
   scrollContainer: scrollContainerProp,
-  refEl,
   ...rest
 }: PopoverProps) {
   const [placeholderNode, setPlaceholderNode] = useState<HTMLElement | null>(
@@ -260,6 +264,9 @@ function Popover({
                   [css({ transform })]:
                     state === 'entering' || state === 'exiting',
                   [activeStyle]: state === 'entered',
+                  [css`
+                    z-index: ${popoverZIndex};
+                  `]: typeof popoverZIndex === 'number',
                 },
                 className,
               )}

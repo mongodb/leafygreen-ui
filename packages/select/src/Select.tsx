@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { PortalControlProps } from '@leafygreen-ui/popover';
+import { PopoverProps } from '@leafygreen-ui/popover';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
@@ -40,7 +40,7 @@ export type Props = {
   description?: string;
   placeholder?: string;
   name?: string;
-} & PortalControlProps &
+} & Omit<PopoverProps, 'active' | 'spacing'> &
   (
     | // Uncontrolled
     ({
@@ -89,6 +89,7 @@ export default function Select({
   portalContainer,
   scrollContainer,
   portalClassName,
+  popoverZIndex,
 }: Props) {
   if (!label && !ariaLabelledBy) {
     console.error(
@@ -413,12 +414,17 @@ export default function Select({
     ],
   );
 
-  const portalProps = {
-    usePortal,
-    portalContainer,
-    scrollContainer,
-    portalClassName,
-  } as PortalControlProps;
+  const popoverProps = {
+    popoverZIndex,
+    ...(usePortal
+      ? {
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
+      : { usePortal }),
+  };
 
   return (
     <div
@@ -512,10 +518,10 @@ export default function Select({
             onSelectFocusedOption={onSelectFocusedOption}
             onFocusPreviousOption={onFocusPreviousOption}
             onFocusNextOption={onFocusNextOption}
-            {...portalProps}
             className={css`
               width: ${menuButtonRef.current?.clientWidth}px;
             `}
+            {...popoverProps}
           >
             {deselectionOption}
             {renderedChildren}
