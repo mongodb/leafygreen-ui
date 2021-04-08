@@ -126,7 +126,7 @@ const colorSets: Record<Mode, ColorSets> = {
 type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
   id?: string;
   darkMode?: boolean;
-  label: string;
+  label: string | null;
   description?: string;
   state?: State;
   errorMessage?: string;
@@ -135,7 +135,6 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
 type AriaLabels = 'label' | 'aria-labelledby';
 type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
 
-// @ts-expect-error type of propTypes are incompatible
 const TextArea: React.ComponentType<
   React.PropsWithRef<TextAreaProps>
 > = React.forwardRef(function TextArea(
