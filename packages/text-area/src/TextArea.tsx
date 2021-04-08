@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Either, IdAllocator } from '@leafygreen-ui/lib';
+import PropTypes from 'prop-types';
+import { Either, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
@@ -122,7 +123,7 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 };
 
-type BaseTextAreaProps = React.ComponentProps<'textarea'> & {
+type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
   id?: string;
   darkMode?: boolean;
   label: string;
@@ -133,12 +134,11 @@ type BaseTextAreaProps = React.ComponentProps<'textarea'> & {
 
 type AriaLabels = 'label' | 'aria-labelledby';
 type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
-type ForwardRef =
-  | React.RefObject<HTMLTextAreaElement | null>
-  | null
-  | ((instance: HTMLTextAreaElement | null) => void);
 
-const TextArea = React.forwardRef(function TextArea(
+// @ts-expect-error type of propTypes are incompatible
+const TextArea: React.ComponentType<
+  React.PropsWithRef<TextAreaProps>
+> = React.forwardRef(function TextArea(
   {
     label,
     description,
@@ -153,7 +153,7 @@ const TextArea = React.forwardRef(function TextArea(
     'aria-labelledby': ariaLabelledby,
     ...rest
   }: TextAreaProps,
-  forwardedRef: ForwardRef,
+  forwardedRef: React.Ref<HTMLTextAreaElement>,
 ) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -222,5 +222,14 @@ const TextArea = React.forwardRef(function TextArea(
 });
 
 TextArea.displayName = 'TextArea';
+
+TextArea.propTypes = {
+  id: PropTypes.string,
+  darkMode: PropTypes.bool,
+  label: PropTypes.string,
+  description: PropTypes.string,
+  errorMessage: PropTypes.string,
+  state: PropTypes.oneOf(Object.values(State)),
+};
 
 export default TextArea;
