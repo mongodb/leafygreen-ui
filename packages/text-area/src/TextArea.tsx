@@ -193,7 +193,7 @@ const TextArea: React.ComponentType<
       <InteractionRing darkMode={darkMode} disabled={disabled}>
         <textarea
           {...rest}
-          ref={forwardedRef as React.RefObject<HTMLTextAreaElement>}
+          ref={forwardedRef}
           title={label}
           id={id}
           className={cx(textAreaStyle, colorSets[mode].textArea, {
