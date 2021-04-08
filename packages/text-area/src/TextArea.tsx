@@ -193,7 +193,7 @@ const TextArea: React.ComponentType<
         <textarea
           {...rest}
           ref={forwardedRef}
-          title={label}
+          title={label != null ? label : undefined}
           id={id}
           className={cx(textAreaStyle, colorSets[mode].textArea, {
             [colorSets[mode].errorBorder]: state === State.Error,
