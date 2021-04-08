@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Either, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import { Either, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
@@ -122,7 +122,7 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 };
 
-type BaseTextAreaProps = HTMLElementProps<'textarea', never> & {
+type BaseTextAreaProps = React.ComponentProps<'textarea'> & {
   id?: string;
   darkMode?: boolean;
   label: string;
@@ -133,21 +133,28 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', never> & {
 
 type AriaLabels = 'label' | 'aria-labelledby';
 type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
+type ForwardRef =
+  | React.RefObject<HTMLTextAreaElement | null>
+  | null
+  | ((instance: HTMLTextAreaElement | null) => void);
 
-export default function TextArea({
-  label,
-  description,
-  className,
-  errorMessage,
-  darkMode = false,
-  disabled = false,
-  state = State.None,
-  id: idProp,
-  value: controlledValue,
-  onChange,
-  'aria-labelledby': ariaLabelledby,
-  ...rest
-}: TextAreaProps) {
+const TextArea = React.forwardRef(function TextArea(
+  {
+    label,
+    description,
+    className,
+    errorMessage,
+    darkMode = false,
+    disabled = false,
+    state = State.None,
+    id: idProp,
+    value: controlledValue,
+    onChange,
+    'aria-labelledby': ariaLabelledby,
+    ...rest
+  }: TextAreaProps,
+  forwardedRef: ForwardRef,
+) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -186,6 +193,7 @@ export default function TextArea({
       <InteractionRing darkMode={darkMode} disabled={disabled}>
         <textarea
           {...rest}
+          ref={forwardedRef as React.RefObject<HTMLTextAreaElement>}
           title={label}
           id={id}
           className={cx(textAreaStyle, colorSets[mode].textArea, {
@@ -211,4 +219,8 @@ export default function TextArea({
       )}
     </div>
   );
-}
+});
+
+TextArea.displayName = 'TextArea';
+
+export default TextArea;
