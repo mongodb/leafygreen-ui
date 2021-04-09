@@ -5,31 +5,5 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
-  "references": [
-    {
-      "path": "../lib"
-    },
-    {
-      "path": "../tokens"
-    },
-    {
-      "path": "../palette"
-    },
-    {
-      "path": "../emotion"
-    },
-    {
-      "path": "../box"
-    },
-    {
-      "path": "../icon"
-    },
-    {
-      "path": "../ripple"
-    },
-    {
-      "path": "../leafygreen-provider"
-    }
-  ]
+  "include": ["src/**/*"]
 }

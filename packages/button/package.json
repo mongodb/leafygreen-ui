@@ -1,6 +1,6 @@
 {
-  "name": "@leafygreen-ui/button",
-  "version": "11.0.1",
+  "name": "brookescarlett-button",
+  "version": "0.2.0",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
