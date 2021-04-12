@@ -1,5 +1,19 @@
 # @leafygreen-ui/table
 
+## 1.3.9
+
+### Patch Changes
+
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [90321b36]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/icon-button@9.1.3
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/checkbox@6.0.3
+  - @leafygreen-ui/icon@10.2.1
+
 ## 1.3.8
 
 ### Patch Changes

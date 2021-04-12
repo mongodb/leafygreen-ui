@@ -1,5 +1,19 @@
 # @leafygreen-ui/confirmation-modal
 
+## 2.1.5
+
+### Patch Changes
+
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [90321b36]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/text-input@5.0.11
+  - @leafygreen-ui/button@11.0.2
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/modal@6.0.2
+
 ## 2.1.4
 
 ### Patch Changes
