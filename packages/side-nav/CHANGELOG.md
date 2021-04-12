@@ -1,5 +1,23 @@
 # @leafygreen-ui/side-nav
 
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies [90321b36]
+- Updated dependencies [46f5de0b]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/a11y@1.2.0
+  - @leafygreen-ui/tooltip@6.1.8
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/box@3.0.4
+  - @leafygreen-ui/icon@10.2.1
+  - @leafygreen-ui/leafygreen-provider@2.0.3
+  - @leafygreen-ui/menu@9.1.4
+  - @leafygreen-ui/portal@3.1.1
+
 ## 6.0.0
 
 ### Major Changes

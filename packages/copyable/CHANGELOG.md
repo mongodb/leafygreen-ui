@@ -1,5 +1,19 @@
 # @leafygreen-ui/copyable
 
+## 2.0.6
+
+### Patch Changes
+
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [02417199]
+- Updated dependencies [46f5de0b]
+- Updated dependencies [ab581f34]
+  - @leafygreen-ui/typography@7.6.0
+  - @leafygreen-ui/tooltip@6.1.8
+  - @leafygreen-ui/button@11.0.2
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/icon@10.2.1
+
 ## 2.0.5
 
 ### Patch Changes

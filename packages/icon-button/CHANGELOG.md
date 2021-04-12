@@ -1,5 +1,18 @@
 # @leafygreen-ui/icon-button
 
+## 9.1.3
+
+### Patch Changes
+
+- 90321b36: Imports validateProps functions from `@leafygreen-ui/a11y` package.
+- Updated dependencies [90321b36]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/a11y@1.2.0
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/box@3.0.4
+
 ## 9.1.2
 
 ### Patch Changes
