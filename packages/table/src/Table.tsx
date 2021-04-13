@@ -14,8 +14,10 @@ import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 import { SortProvider } from './SortContext';
+import { DarkModeProvider } from './DarkModeContext';
 
-const shadowColor = transparentize(0.7, uiColors.black);
+const lmShadowColor = transparentize(0.7, uiColors.black);
+const dmShadowColor = transparentize(0.2, uiColors.black);
 
 const containerStyle = css`
   position: relative;
@@ -25,7 +27,7 @@ const containerStyle = css`
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
-  border-bottom: 1px solid ${uiColors.gray.light2};
+  // border-bottom: 1px solid ${uiColors.gray.light2};
   width: 100%;
 `;
 
@@ -49,21 +51,21 @@ const shadow = css`
   }
 `;
 
-const leftShadow = css`
+const leftShadow = (darkMode: boolean) => css`
   left: 0;
 
   &:after {
     right: 100%;
-    box-shadow: 4px 0 4px ${shadowColor};
+    box-shadow: 4px 0 4px ${darkMode ? dmShadowColor : lmShadowColor};
   }
 `;
 
-const rightShadow = css`
+const rightShadow = (darkMode: boolean) => css`
   right: 0;
 
   &:after {
     left: 100%;
-    box-shadow: -4px 0 4px ${shadowColor};
+    box-shadow: -4px 0 4px ${darkMode ? dmShadowColor : lmShadowColor};
   }
 `;
 
@@ -93,6 +95,7 @@ export interface TableProps<Shape> extends HTMLElementProps<'table', never> {
     | React.ReactFragment;
 
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
+  darkMode?: boolean;
 }
 
 export default function Table<Shape>({
@@ -100,6 +103,7 @@ export default function Table<Shape>({
   data: dataProp = [],
   children,
   className,
+  darkMode = false,
   ...rest
 }: TableProps<Shape>) {
   const [scrollState, setScrollState] = React.useState<ScrollState>(
@@ -161,11 +165,15 @@ export default function Table<Shape>({
   return (
     <div className={containerStyle}>
       <div
-        className={cx(shadow, leftShadow, {
+        className={cx(shadow, leftShadow(darkMode), {
           [showScroll]: showLeft,
         })}
       />
-      <div className={cx(shadow, rightShadow, { [showScroll]: showRight })} />
+      <div
+        className={cx(shadow, rightShadow(darkMode), {
+          [showScroll]: showRight,
+        })}
+      />
 
       <div
         ref={divRef}
@@ -179,13 +187,22 @@ export default function Table<Shape>({
         <table
           cellSpacing="0"
           cellPadding="0"
-          className={cx(tableStyles, className)}
+          className={cx(
+            tableStyles,
+            css`
+              border-bottom: 1px solid
+                ${darkMode ? uiColors.gray.dark1 : uiColors.gray.light2};
+            `,
+            className,
+          )}
           {...rest}
         >
           <TableProvider data={dataProp}>
             <SortProvider>
-              <TableHead columns={columns} />
-              <TableBody>{children}</TableBody>
+              <DarkModeProvider darkMode={darkMode}>
+                <TableHead columns={columns} />
+                <TableBody>{children}</TableBody>
+              </DarkModeProvider>
             </SortProvider>
           </TableProvider>
         </table>
