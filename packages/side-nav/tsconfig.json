@@ -8,43 +8,43 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../lib"
+      "path": "../../packages/lib"
     },
     {
-      "path": "../emotion"
+      "path": "../../packages/emotion"
     },
     {
-      "path": "../palette"
+      "path": "../../packages/palette"
     },
     {
-      "path": "../menu"
+      "path": "../../packages/menu"
     },
     {
-      "path": "../portal"
+      "path": "../../packages/portal"
     },
     {
-      "path": "../icon"
+      "path": "../../packages/icon"
     },
     {
-      "path": "../hooks"
+      "path": "../../packages/hooks"
     },
     {
-      "path": "../tooltip"
+      "path": "../../packages/tooltip"
     },
     {
-      "path": "../tokens"
+      "path": "../../packages/tokens"
     },
     {
-      "path": "../a11y"
+      "path": "../../packages/a11y"
     },
     {
-      "path": "../select"
+      "path": "../../packages/select"
     },
     {
-      "path": "../mongo-nav"
+      "path": "../../privatePackages/mongo-nav"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../../packages/leafygreen-provider"
     }
   ]
 }

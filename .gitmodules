@@ -1,0 +1,3 @@
+[submodule "privatePackages/mongo-nav"]
+	path = privatePackages/mongo-nav
+	url = https://github.com/10gen/leafygreen-ui-mongo-nav
