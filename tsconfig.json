@@ -1,6 +1,10 @@
 {
   "extends": "./common.tsconfig.json",
-  "include": ["packages/**/src/**/*", "privatePackages/**/src/**/*", "typings/**/*"],
+  "include": [
+    "packages/**/src/**/*",
+    "privatePackages/**/src/**/*",
+    "typings/**/*"
+  ],
   "compilerOptions": {
     "module": "system",
     "noEmit": true,
