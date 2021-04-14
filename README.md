@@ -73,7 +73,7 @@ A set of CSS styles and React components built with design in mind.
    $ git clone --recurse-submodules git@github.com:mongodb/leafygreen-ui.git
    ```
 
-3. Install dependencies and link packages.
+4. Install dependencies and link packages.
 
    `yarn run init`
 
@@ -182,21 +182,30 @@ index d3414189..cd5f0653 160000
 -Subproject commit d3414189c57141e7f7193d7ad214b2a91b0a9db5
 +Subproject commit cd5f06537309dbc6dcc350154d038087a0e381f8
 ```
+
 Once the pointer is updated, you can now commit this change in the main repository! Note that when creating a pull request, it's important that the change has already been merged into the `main` branch of the submodule so that the pointer is referencing a commit that's production-ready.
 
 ### Getting the latest code for all submodules in the repository
 
 The pointer we were talking about earlier is important also for making sure you're working with the latest! To update a submodule's code to reflect the commit being referenced:
+
 ```bash
-# The `update` command updates submodules to match what the parent repo expects by cloning missing submodules, fetching missing commits and updating the working tree.
-# --init initializes all submodules where "git submodule init" has not been run before updating.
-# --recursive make update traverse submodules recursively, bringing submodules of submodules up-to-date. So far, we don't have this case in our repository, so it's not strictly necessary yet.
-# --remote makes update pull from the remote tracking branch instead of what you have locally.
+# For your convenience, we wrapped the recommended update command in a yarn script:
+$ yarn submodules:update
+
+# Under the hood, it runs the following command:
 $ git submodule update --init --recursive --remote
+
+# The `update` command updates submodules to match what the parent repo expects by cloning missing submodules, fetching missing commits and updating the working tree.
+
+# --init initializes all submodules where "git submodule init" has not been run before updating.
+
+# --recursive makes the update command traverse submodules recursively, bringing submodules of submodules up-to-date. So far, we don't have this case in our repository, so it's not strictly necessary yet.
+
+# --remote makes the update command pull from the remote tracking branch instead of what you have locally.
 ```
 
-
-### 
+###
 
 ## Development within an Application
 
