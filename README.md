@@ -55,7 +55,25 @@ A set of CSS styles and React components built with design in mind.
 
    via [nodejs installer](https://nodejs.org/en/)
 
-2. yarn >= 1.16.0 installed.
+2. Install Yarn >= 1.16.0.
+
+   [Yarn Installation documentation](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
+
+3. Clone the repository.
+
+   ```shell
+   # Navigate to the directory you'd like to clone the repository into
+   $ cd ~/my/repositories
+
+   # Clone the repository. Note that we recommend installing using the SSH address rather than the HTTPS one to make authentication easier for you.
+   # To set up SSH authentication with GitHub, see their guide: https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
+   # NOTE: The --recurse-submodules option is important here for initializing private submodules. If you forget to do this, you can run `git submodule update --init` from within the repository's root directory to initialize them instead.
+   $ git clone --recurse-submodules git@github.com:mongodb/leafygreen-ui.git
+
+   # Navigate to within the newly-cloned repository.
+   $ cd leafygreen-ui
+
+   ```
 
 3. Install dependencies and link packages.
 
@@ -66,6 +84,21 @@ A set of CSS styles and React components built with design in mind.
 1. Start up storybook to see all UI components that exist.
 
    `yarn start`
+
+## Working with submodules
+
+Working with Git Submodules is a bit different. Any changes within a submodule will be represented by a change in a pointer to a commit SHA. Running `git status` when a submodule has been updated will look something like this:
+
+```
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+	modified:   README.md
+	modified:   privatePackages/mongo-nav (modified content)
+```
+
+### 
 
 ## Development within an Application
 
