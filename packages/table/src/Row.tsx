@@ -53,7 +53,7 @@ const modeStyles = {
     rowStyle: css`
       background-color: ${uiColors.gray.dark3};
       border-top: 1px solid ${uiColors.gray.dark1};
-      color: ${uiColors.gray.light1};
+      color: ${uiColors.gray.light2};
     `,
 
     altColor: css`

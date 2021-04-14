@@ -37,7 +37,7 @@ const modeStyles = {
       border-color: ${uiColors.gray.dark1};
     `,
     labelStyle: css`
-      color: ${uiColors.gray.light1};
+      color: ${uiColors.gray.light2};
     `,
     glyphColor: css`
       color: ${uiColors.blue.light1};
