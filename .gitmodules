@@ -1,3 +1,4 @@
 [submodule "privatePackages/mongo-nav"]
 	path = privatePackages/mongo-nav
 	url = git@github.com:10gen/leafygreen-ui-mongo-nav.git
+  branch = main
