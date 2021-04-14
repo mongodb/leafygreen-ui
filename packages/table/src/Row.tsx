@@ -53,7 +53,7 @@ const modeStyles = {
     rowStyle: css`
       background-color: ${uiColors.gray.dark3};
       border-top: 1px solid ${uiColors.gray.dark1};
-      color: ${uiColors.gray.light2};
+      color: ${uiColors.gray.light3};
     `,
 
     altColor: css`
@@ -274,7 +274,10 @@ const Row = React.forwardRef(
             className={iconButtonMargin}
             darkMode={darkMode}
           >
-            <Icon aria-hidden color={uiColors.gray.dark2} />
+            <Icon
+              aria-hidden
+              color={darkMode ? uiColors.gray.base : uiColors.gray.dark2}
+            />
           </IconButton>
         );
         renderedChildren[0] = React.cloneElement(renderedChildren[0], {
