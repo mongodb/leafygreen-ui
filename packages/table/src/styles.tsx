@@ -1,9 +1,24 @@
 import { css } from '@leafygreen-ui/emotion';
 
-export const commonCellStyles = css`
+const sharedStyles = css`
   min-width: 40px;
   padding: 8px 8px;
   box-sizing: border-box;
   vertical-align: middle;
-  font-size: 14px;
 `;
+
+export const getCommonCellStyles = (baseFontSize: 14 | 16) => {
+  if (baseFontSize === 14) {
+    return css`
+      ${sharedStyles}
+      font-size: 14px;
+      line-height: 20px;
+    `;
+  }
+
+  return css`
+    ${sharedStyles}
+    font-size: 16px;
+    line-height: 24px;
+  `;
+};

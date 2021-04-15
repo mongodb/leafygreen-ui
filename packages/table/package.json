@@ -30,5 +30,8 @@
     "react-transition-group": "^4.4.1",
     "lodash": "^4.17.21",
     "use-ssr": "^1.0.23"
+  }, 
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^2.0.2"
   }
 }
