@@ -1,5 +1,22 @@
 # @leafygreen-ui/tabs
 
+## 5.1.1
+
+### Patch Changes
+
+- 90321b36: Imports validateProps functions from `@leafygreen-ui/a11y` package.
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [90321b36]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/a11y@1.2.0
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/box@3.0.4
+  - @leafygreen-ui/leafygreen-provider@2.0.3
+  - @leafygreen-ui/portal@3.1.1
+  - @leafygreen-ui/tokens@0.5.1
+
 ## 5.1.0
 
 ### Minor Changes

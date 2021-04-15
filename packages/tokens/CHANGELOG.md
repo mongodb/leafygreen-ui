@@ -1,5 +1,12 @@
 # @leafygreen-ui/tokens
 
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/lib@7.0.0
+
 ## 0.5.0
 
 ### Minor Changes
