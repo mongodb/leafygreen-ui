@@ -1,5 +1,16 @@
 # @leafygreen-ui/radio-box-group
 
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/interaction-ring@1.0.2
+  - @leafygreen-ui/leafygreen-provider@2.0.3
+
 ## 5.0.2
 
 ### Patch Changes

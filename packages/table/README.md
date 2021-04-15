@@ -43,13 +43,14 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 ## Table Properties
 
-| Prop           | Type                                                                                          | Description                                                | Default |
-| -------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------- |
-| `data`         | `Array<unknown>`                                                                              | Data that will be rendered inside of the table             |         |
-| `columns`      | `Array<React.ReactElement<HeaderRowProps`, `TableHeaderProps<Shape>>>`, `React.ReactFragment` | Columns in the Table                                       |         |
-| `children`     | `(datum, string) => JSX.Element`                                                              | Rows of the table                                          |         |
-| ...            | native `table` attributes                                                                     | Any other props will be spread on the root `table` element |         |
-| `baseFontSize` | `14`, `16`                                                                                    | Font-size value that is applied to cell elements           | `14`    |
+| Prop           | Type                                                                                          | Description                                                       | Default |
+| -------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------- |
+| `data`         | `Array<unknown>`                                                                              | Data that will be rendered inside of the table                    |         |
+| `columns`      | `Array<React.ReactElement<HeaderRowProps`, `TableHeaderProps<Shape>>>`, `React.ReactFragment` | Columns in the Table                                              |         |
+| `children`     | `(datum, string) => JSX.Element`                                                              | Rows of the table                                                 |         |
+| `darkMode`     | `boolean`                                                                                     | Determines whether or not the component will appear in dark mode. | `false` |
+| `baseFontSize` | `14`, `16`                                                                                    | Font-size value that is applied to cell elements                  | `14`    |
+| ...            | native `table` attributes                                                                     | Any other props will be spread on the root `table` element        |         |
 
 # HeaderRow
 

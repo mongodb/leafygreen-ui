@@ -30,6 +30,7 @@ const knobsConfig: KnobsConfigInterface<{
   disabled: boolean;
   sortBy: boolean;
   baseFontSize: 14 | 16;
+  darkMode: boolean;
 }> = {
   disabled: {
     type: 'boolean',
@@ -47,19 +48,27 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Base Font Size',
     options: [14, 16],
   },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
 };
 
 function DefaultExample({
   disabled,
   sortBy,
+  darkMode,
   ...rest
 }: {
   disabled: boolean;
   sortBy: boolean;
+  darkMode: boolean;
 }) {
   return (
     <Table
       {...rest}
+      darkMode={darkMode}
       data={defaultData}
       columns={
         <HeaderRow>
