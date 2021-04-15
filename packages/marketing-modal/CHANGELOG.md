@@ -1,5 +1,19 @@
 # @leafygreen-ui/marketing-modal
 
+## 2.0.9
+
+### Patch Changes
+
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [02417199]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/typography@7.6.0
+  - @leafygreen-ui/button@11.0.2
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/modal@6.0.2
+
 ## 2.0.8
 
 ### Patch Changes

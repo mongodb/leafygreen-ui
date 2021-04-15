@@ -19,11 +19,11 @@ interface ColorSet {
 const colorSets: Record<Mode, ColorSet> = {
   [Mode.Light]: {
     interactionRingHover: uiColors.gray.light2,
-    interactionRingFocus: uiColors.blue.light1,
+    interactionRingFocus: uiColors.focus,
   },
   [Mode.Dark]: {
     interactionRingHover: uiColors.gray.dark1,
-    interactionRingFocus: uiColors.blue.base,
+    interactionRingFocus: uiColors.focus,
   },
 };
 

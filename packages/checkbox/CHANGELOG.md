@@ -1,5 +1,12 @@
 # @leafygreen-ui/checkbox
 
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/lib@7.0.0
+
 ## 6.0.2
 
 ### Patch Changes
