@@ -29,6 +29,7 @@ const defaultData = [
 const knobsConfig: KnobsConfigInterface<{
   disabled: boolean;
   sortBy: boolean;
+  darkMode: boolean;
 }> = {
   disabled: {
     type: 'boolean',
@@ -40,17 +41,25 @@ const knobsConfig: KnobsConfigInterface<{
     default: true,
     label: 'Sort By',
   },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
 };
 
 function DefaultExample({
   disabled,
   sortBy,
+  darkMode,
 }: {
   disabled: boolean;
   sortBy: boolean;
+  darkMode: boolean;
 }) {
   return (
     <Table
+      darkMode={darkMode}
       data={defaultData}
       columns={
         <HeaderRow>

@@ -126,7 +126,7 @@ const colorSets: Record<Mode, ColorSets> = {
 type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
   id?: string;
   darkMode?: boolean;
-  label: string | null;
+  label?: string | null;
   description?: string;
   state?: State;
   errorMessage?: string;

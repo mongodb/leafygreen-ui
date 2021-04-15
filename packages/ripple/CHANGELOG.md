@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.1
+
+### Patch Changes
+
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [ab581f34]
+  - @leafygreen-ui/palette@3.2.1
+
 ## 1.1.0
 
 ### Minor Changes

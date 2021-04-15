@@ -9,10 +9,44 @@ import { commonCellStyles } from './styles';
 import { useSortContext } from './SortContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { enforceExhaustive } from '@leafygreen-ui/lib';
+import { useDarkModeContext } from './DarkModeContext';
+
+const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
+
+const modeStyles = {
+  [Mode.Light]: {
+    thStyle: css`
+      border-color: ${uiColors.gray.light2};
+    `,
+    labelStyle: css`
+      color: ${uiColors.gray.dark2};
+    `,
+    glyphColor: css`
+      color: ${uiColors.blue.base};
+    `,
+  },
+
+  [Mode.Dark]: {
+    thStyle: css`
+      background-color: ${uiColors.gray.dark3};
+      border-color: ${uiColors.gray.dark1};
+    `,
+    labelStyle: css`
+      color: ${uiColors.gray.light3};
+    `,
+    glyphColor: css`
+      color: ${uiColors.blue.light1};
+    `,
+  },
+};
 
 const thStyle = css`
   border-width: 0px 1px 3px 1px;
-  border-color: ${uiColors.gray.light2};
   border-style: solid;
 `;
 
@@ -24,12 +58,7 @@ const flexDisplay = css`
 `;
 
 const labelStyle = css`
-  color: ${uiColors.gray.dark2};
   padding-right: 4px;
-`;
-
-const glyphColor = css`
-  color: ${uiColors.blue.base};
 `;
 
 const glyphMap = {
@@ -95,6 +124,9 @@ function TableHeader<Shape>({
 }: TableHeaderProps<Shape>) {
   const { dispatch } = useTableContext();
   const { sort, setSort } = useSortContext();
+  const darkMode = useDarkModeContext();
+
+  const mode = darkMode ? Mode.Dark : Mode.Light;
 
   React.useEffect(() => {
     if (typeof index === 'number') {
@@ -152,17 +184,25 @@ function TableHeader<Shape>({
       scope="col"
       aria-sort={ariaSort}
       {...rest}
-      className={cx(thStyle, commonCellStyles, className)}
+      className={cx(
+        thStyle,
+        modeStyles[mode].thStyle,
+        commonCellStyles,
+        className,
+      )}
     >
       <div className={flexDisplay}>
-        <span className={labelStyle}>{label}</span>
+        <span className={cx(labelStyle, modeStyles[mode].labelStyle)}>
+          {label}
+        </span>
         {sortBy != null && (
-          <IconButton aria-label="sort" onClick={sortRows}>
+          <IconButton aria-label="sort" onClick={sortRows} darkMode={darkMode}>
             <Glyph
               size="small"
               title={`${glyph}-${index}`}
               className={cx({
-                [glyphColor]: glyph === 'asc' || glyph === 'desc',
+                [modeStyles[mode].glyphColor]:
+                  glyph === 'asc' || glyph === 'desc',
               })}
             />
           </IconButton>

@@ -1,5 +1,29 @@
 # @leafygreen-ui/mongo-nav
 
+## 6.0.1
+
+### Patch Changes
+
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [02417199]
+- Updated dependencies [90321b36]
+- Updated dependencies [90321b36]
+- Updated dependencies [46f5de0b]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/typography@7.6.0
+  - @leafygreen-ui/icon-button@9.1.3
+  - @leafygreen-ui/a11y@1.2.0
+  - @leafygreen-ui/tooltip@6.1.8
+  - @leafygreen-ui/button@11.0.2
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/badge@4.0.3
+  - @leafygreen-ui/icon@10.2.1
+  - @leafygreen-ui/interaction-ring@1.0.2
+  - @leafygreen-ui/leafygreen-provider@2.0.3
+  - @leafygreen-ui/menu@9.1.4
+
 ## 6.0.0
 
 ### Major Changes

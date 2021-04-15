@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-area",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "leafyGreen UI Kit Text Area",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,11 +20,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^6.1.2",
+    "@leafygreen-ui/lib": "^7.0.0",
     "@leafygreen-ui/emotion": "^3.0.1",
-    "@leafygreen-ui/interaction-ring": "^1.0.0",
-    "@leafygreen-ui/palette": "^3.1.0",
-    "@leafygreen-ui/tokens": "^0.5.0",
-    "@leafygreen-ui/typography": "^7.3.1"
+    "@leafygreen-ui/interaction-ring": "^1.0.2",
+    "@leafygreen-ui/palette": "^3.2.1",
+    "@leafygreen-ui/tokens": "^0.5.1",
+    "@leafygreen-ui/typography": "^7.6.0"
   }
 }
