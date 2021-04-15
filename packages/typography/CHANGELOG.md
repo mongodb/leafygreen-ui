@@ -1,5 +1,22 @@
 # @leafygreen-ui/typography
 
+## 7.6.0
+
+### Minor Changes
+
+- 02417199: Updates line-height for H3 component from 28px to 32px.
+
+### Patch Changes
+
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/box@3.0.4
+  - @leafygreen-ui/icon@10.2.1
+  - @leafygreen-ui/leafygreen-provider@2.0.3
+  - @leafygreen-ui/tokens@0.5.1
+
 ## 7.5.0
 
 ### Minor Changes
