@@ -7,7 +7,17 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Tooltip from '@leafygreen-ui/tooltip';
-import LiveExample from 'components/live-example';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+const knobsConfig: KnobsConfigInterface<{
+  darkMode: boolean;
+}> = {
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'View in Dark Mode',
+  },
+};
 
 const resetButtonStyles = css`
   display: inline;
@@ -59,9 +69,10 @@ const colorBlockStyles = css`
 interface ColorBlockProps {
   color: string;
   name: string;
+  darkMode: boolean;
 }
 
-function ColorBlock({ color, name }: ColorBlockProps) {
+function ColorBlock({ color, name, darkMode }: ColorBlockProps) {
   return (
     <div
       className={cx(
@@ -79,6 +90,7 @@ function ColorBlock({ color, name }: ColorBlockProps) {
 
           &:after {
             content: '${name}';
+            color: ${darkMode ? uiColors.gray.light3 : uiColors.gray.dark3};
           }
         `,
       )}
@@ -86,7 +98,7 @@ function ColorBlock({ color, name }: ColorBlockProps) {
   );
 }
 
-function WrappedColorBlock({ color, name }: ColorBlockProps) {
+function WrappedColorBlock({ color, name, darkMode }: ColorBlockProps) {
   const [copied, setCopied] = useState(false);
   const [blockRef, setBlockRef] = useState<HTMLButtonElement | null>(null);
 
@@ -122,7 +134,7 @@ function WrappedColorBlock({ color, name }: ColorBlockProps) {
         ref={setBlockRef}
         className={resetButtonStyles}
       >
-        <ColorBlock key={color} color={color} name={name} />
+        <ColorBlock key={color} color={color} name={name} darkMode={darkMode} />
       </button>
     </InteractionRing>
   );
@@ -148,14 +160,21 @@ function WrappedColorBlock({ color, name }: ColorBlockProps) {
   );
 }
 
-function renderColors() {
+function renderColors(darkMode: boolean) {
   const ranges = Object.keys(uiColors) as Array<keyof typeof uiColors>;
 
   const renderedRanges = ranges.map(range => {
     const currentVal = uiColors[range];
 
     if (typeof currentVal === 'string') {
-      return <WrappedColorBlock key={range} color={currentVal} name={range} />;
+      return (
+        <WrappedColorBlock
+          darkMode={darkMode}
+          key={range}
+          color={currentVal}
+          name={range}
+        />
+      );
     }
 
     return (
@@ -166,6 +185,7 @@ function renderColors() {
               key={currentVal[name]}
               color={currentVal[name]}
               name={`${range} ${name}`}
+              darkMode={darkMode}
             />
           ),
         )}
@@ -177,5 +197,9 @@ function renderColors() {
 }
 
 export default function PaletteLiveExample() {
-  return <LiveExample knobsConfig={{}}>{renderColors}</LiveExample>;
+  return (
+    <LiveExample knobsConfig={knobsConfig}>
+      {({ darkMode }) => renderColors(darkMode)}
+    </LiveExample>
+  );
 }
