@@ -36,6 +36,7 @@ const navContainer = css`
   z-index: 1;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   box-sizing: border-box;
   height: ${orgNavHeight}px;
   padding-left: 15px;
@@ -45,6 +46,11 @@ const navContainer = css`
   background-color: white;
   border-bottom: 1px solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark3};
+`;
+
+const flexAlign = css`
+  display: flex;
+  align-items: center;
 `;
 
 const rightLinkMargin = css`
@@ -172,7 +178,11 @@ function GetHelpDropdownMenu({
           data-testid="org-nav-docs-link"
           size={isTablet ? 'large' : 'default'}
           className={externalIconStyles}
-          onClick={onElementClick(NavElement.OrgNavDocs)}
+          onClick={onElementClick(NavElement.OrgNavDocs, () =>
+            setIsOpen(false),
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <div
             className={css`
@@ -409,152 +419,160 @@ function OrgNav({
         aria-label="organization navigation"
         data-testid="organization-nav"
       >
-        <Tooltip
-          aria-hidden
-          align="bottom"
-          justify="start"
-          darkMode={true}
-          className={css`
-            width: 150px;
-          `}
-          usePortal={false}
-          trigger={
-            <a
-              href={orgNav.leaf}
-              onClick={onElementClick(NavElement.OrgNavLeaf)}
-              data-testid="org-nav-leaf"
-            >
-              <LogoMark height={30} aria-label="Go to the Organization Home" />
-            </a>
-          }
-        >
-          View the Organization Home
-        </Tooltip>
-
-        {isMobile && isGovernment && <MobileGovTooltip />}
-
-        <OrgSelect
-          data={data}
-          current={current}
-          mode={mode}
-          constructOrganizationURL={constructOrganizationURL}
-          hosts={hosts}
-          urls={urls.mongoSelect}
-          onChange={onOrganizationChange}
-          isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
-          loading={!current}
-          disabled={disabled}
-          admin={admin}
-          isOnPrem={onPremEnabled}
-        />
-
-        {renderBadgeItem()}
-
-        {!disabled && !isMobile && (
-          <>
-            <OrgNavLink
-              isActive={
-                activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
-              }
-              loading={!current}
-              data-testid="org-nav-access-manager-dropdown"
-              onClick={onElementClick(
-                NavElement.OrgNavAccessManagerDropdown,
-                () => setAccessManagerOpen(curr => !curr),
-              )}
-              isButton={true}
-              aria-expanded={accessManagerOpen}
-              className={css`
-                margin-right: 20px;
-              `}
-            >
-              Access Manager
-              <DropdownMenuIcon open={accessManagerOpen} />
-              {current && (
-                <Menu
-                  open={accessManagerOpen}
-                  setOpen={setAccessManagerOpen}
-                  usePortal={false}
-                >
-                  <MenuItem
-                    as={orgNav.accessManager ? 'a' : 'button'}
-                    href={orgNav.accessManager}
-                    data-testid="org-nav-dropdown-org-access-manager"
-                    description={current.orgName}
-                    size="large"
-                    active={
-                      activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
-                    }
-                    onClick={onElementClick(
-                      NavElement.OrgNavDropdownOrgAccessManager,
-                      () => setAccessManagerOpen(false),
-                    )}
-                  >
-                    Organization Access
-                  </MenuItem>
-
-                  <MenuItem
-                    as={
-                      currentProjectName && urls.projectNav.accessManager
-                        ? 'a'
-                        : 'button'
-                    }
-                    href={currentProjectName && urls.projectNav.accessManager}
-                    data-testid="org-nav-dropdown-project-access-manager"
-                    size="large"
-                    active={
-                      activeNav ===
-                      ActiveNavElement.OrgNavDropdownProjectAccessManager
-                    }
-                    disabled={!displayProjectAccess}
-                    description={
-                      displayProjectAccess ? currentProjectName : 'None'
-                    }
-                    onClick={onElementClick(
-                      NavElement.OrgNavDropdownProjectAccessManager,
-                      () => setAccessManagerOpen(false),
-                    )}
-                  >
-                    Project Access
-                  </MenuItem>
-                </Menu>
-              )}
-            </OrgNavLink>
-
-            {!onPremEnabled && (
-              <OrgNavLink
-                href={current && orgNav.billing}
-                isActive={activeNav === ActiveNavElement.OrgNavBilling}
-                loading={!current}
-                data-testid="org-nav-billing"
-                onClick={onElementClick(NavElement.OrgNavBilling)}
+        <div className={flexAlign}>
+          <Tooltip
+            aria-hidden
+            align="bottom"
+            justify="start"
+            darkMode={true}
+            className={css`
+              width: 150px;
+            `}
+            usePortal={false}
+            trigger={
+              <a
+                href={orgNav.leaf}
+                onClick={onElementClick(NavElement.OrgNavLeaf)}
+                data-testid="org-nav-leaf"
               >
-                Billing
+                <LogoMark
+                  height={30}
+                  aria-label="Go to the Organization Home"
+                />
+              </a>
+            }
+          >
+            View the Organization Home
+          </Tooltip>
+
+          {isMobile && isGovernment && <MobileGovTooltip />}
+
+          <OrgSelect
+            data={data}
+            current={current}
+            mode={mode}
+            constructOrganizationURL={constructOrganizationURL}
+            hosts={hosts}
+            urls={urls.mongoSelect}
+            onChange={onOrganizationChange}
+            isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
+            loading={!current}
+            disabled={disabled}
+            admin={admin}
+            isOnPrem={onPremEnabled}
+          />
+
+          {renderBadgeItem()}
+
+          {!disabled && !isMobile && (
+            <>
+              <OrgNavLink
+                isActive={
+                  activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
+                }
+                loading={!current}
+                data-testid="org-nav-access-manager-dropdown"
+                onClick={onElementClick(
+                  NavElement.OrgNavAccessManagerDropdown,
+                  () => setAccessManagerOpen(curr => !curr),
+                )}
+                isButton={true}
+                aria-expanded={accessManagerOpen}
+                className={css`
+                  margin-right: 20px;
+                `}
+              >
+                Access Manager
+                <DropdownMenuIcon open={accessManagerOpen} />
+                {current && (
+                  <Menu
+                    open={accessManagerOpen}
+                    setOpen={setAccessManagerOpen}
+                    usePortal={false}
+                  >
+                    <MenuItem
+                      as={orgNav.accessManager ? 'a' : 'button'}
+                      href={orgNav.accessManager}
+                      data-testid="org-nav-dropdown-org-access-manager"
+                      description={current.orgName}
+                      size="large"
+                      active={
+                        activeNav ===
+                        ActiveNavElement.OrgNavAccessManagerDropdown
+                      }
+                      onClick={onElementClick(
+                        NavElement.OrgNavDropdownOrgAccessManager,
+                        () => setAccessManagerOpen(false),
+                      )}
+                    >
+                      Organization Access
+                    </MenuItem>
+
+                    <MenuItem
+                      as={
+                        currentProjectName && urls.projectNav.accessManager
+                          ? 'a'
+                          : 'button'
+                      }
+                      href={currentProjectName && urls.projectNav.accessManager}
+                      data-testid="org-nav-dropdown-project-access-manager"
+                      size="large"
+                      active={
+                        activeNav ===
+                        ActiveNavElement.OrgNavDropdownProjectAccessManager
+                      }
+                      disabled={!displayProjectAccess}
+                      description={
+                        displayProjectAccess ? currentProjectName : 'None'
+                      }
+                      onClick={onElementClick(
+                        NavElement.OrgNavDropdownProjectAccessManager,
+                        () => setAccessManagerOpen(false),
+                      )}
+                    >
+                      Project Access
+                    </MenuItem>
+                  </Menu>
+                )}
               </OrgNavLink>
-            )}
-          </>
-        )}
 
-        {!isMobile && (
-          <NavLinks
-            loading={!current}
-            admin={!!admin}
-            onPremVersion={onPremEnabled ? onPremVersion : undefined}
-            urls={urls.orgNav}
-            activeNav={activeNav}
-          />
-        )}
+              {!onPremEnabled && (
+                <OrgNavLink
+                  href={current && orgNav.billing}
+                  isActive={activeNav === ActiveNavElement.OrgNavBilling}
+                  loading={!current}
+                  data-testid="org-nav-billing"
+                  onClick={onElementClick(NavElement.OrgNavBilling)}
+                >
+                  Billing
+                </OrgNavLink>
+              )}
+            </>
+          )}
+        </div>
 
-        <div className={cx({ [mobileRightNavStyles]: isMobile })}>
-          <GetHelpDropdownMenu
-            loading={!current}
-            urls={urls.orgNav}
-            activeNav={activeNav}
-            isTablet={isTablet}
-            isMobile={isMobile}
-          />
+        <div className={flexAlign}>
+          {!isMobile && (
+            <NavLinks
+              loading={!current}
+              admin={!!admin}
+              onPremVersion={onPremEnabled ? onPremVersion : undefined}
+              urls={urls.orgNav}
+              activeNav={activeNav}
+            />
+          )}
 
-          {renderUserMenu()}
+          <div className={cx(flexAlign, { [mobileRightNavStyles]: isMobile })}>
+            <GetHelpDropdownMenu
+              loading={!current}
+              urls={urls.orgNav}
+              activeNav={activeNav}
+              isTablet={isTablet}
+              isMobile={isMobile}
+            />
+
+            {renderUserMenu()}
+          </div>
         </div>
       </nav>
     </>
