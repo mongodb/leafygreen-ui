@@ -178,9 +178,7 @@ function GetHelpDropdownMenu({
           data-testid="org-nav-docs-link"
           size={isTablet ? 'large' : 'default'}
           className={externalIconStyles}
-          onClick={onElementClick(NavElement.OrgNavDocs, () =>
-            setIsOpen(false),
-          )}
+          onClick={onElementClick(NavElement.OrgNavDocs)}
           target="_blank"
           rel="noopener noreferrer"
         >
