@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, testHeavierDataSet, multiRowData } from './fixtures';
@@ -10,6 +10,7 @@ storiesOf('Table', module)
   .add('Default', () => {
     const withHeaders = boolean('Use Headers', false);
     const darkMode = boolean('darkMode', false);
+    const baseFontSize = select('Base Font Size', [14, 16], 14);
 
     return (
       <div
@@ -19,6 +20,7 @@ storiesOf('Table', module)
         `}
       >
         <Table
+          baseFontSize={baseFontSize}
           darkMode={darkMode}
           data={testHeavierDataSet}
           columns={

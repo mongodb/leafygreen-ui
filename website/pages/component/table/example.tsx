@@ -29,6 +29,7 @@ const defaultData = [
 const knobsConfig: KnobsConfigInterface<{
   disabled: boolean;
   sortBy: boolean;
+  baseFontSize: 14 | 16;
   darkMode: boolean;
 }> = {
   disabled: {
@@ -41,6 +42,12 @@ const knobsConfig: KnobsConfigInterface<{
     default: true,
     label: 'Sort By',
   },
+  baseFontSize: {
+    type: 'select',
+    default: 14,
+    label: 'Base Font Size',
+    options: [14, 16],
+  },
   darkMode: {
     type: 'boolean',
     default: false,
@@ -52,6 +59,7 @@ function DefaultExample({
   disabled,
   sortBy,
   darkMode,
+  ...rest
 }: {
   disabled: boolean;
   sortBy: boolean;
@@ -59,6 +67,7 @@ function DefaultExample({
 }) {
   return (
     <Table
+      {...rest}
       darkMode={darkMode}
       data={defaultData}
       columns={
