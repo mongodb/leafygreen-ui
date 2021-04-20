@@ -147,8 +147,19 @@ const map = {
   },
   [Variant.Danger]: { color: uiColors.red.base, icon: WarningIcon },
   [Variant.Success]: {
-    color: uiColors.green.base,
+    color: uiColors.green.dark1,
     icon: CheckmarkWithCircleIcon,
+  },
+};
+
+const dismissibleMap = {
+  [Variant.Info]: { color: uiColors.blue.dark2 },
+  [Variant.Warning]: {
+    color: uiColors.yellow.dark2,
+  },
+  [Variant.Danger]: { color: uiColors.red.dark1 },
+  [Variant.Success]: {
+    color: uiColors.green.dark2,
   },
 };
 
@@ -263,7 +274,7 @@ export default function Banner({
       <div className={getTextStyle(image != null, dismissible)}>{children}</div>
       {dismissible && (
         <XIcon
-          fill={color}
+          fill={dismissibleMap[variant].color}
           onClick={onClose}
           className={cx(flexShrink, cursorPointer)}
         />

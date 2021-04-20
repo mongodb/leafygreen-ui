@@ -45,7 +45,7 @@ const linkText = css`
 
 const activeLink = css`
   font-weight: bold;
-  color: ${uiColors.green.base};
+  color: ${uiColors.green.dark1};
 `;
 
 const navItemFocusStyle = css`

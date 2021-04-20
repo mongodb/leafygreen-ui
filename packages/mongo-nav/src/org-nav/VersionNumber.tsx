@@ -15,7 +15,7 @@ const versionNavStyle = css`
   position: relative;
   display: inline-block;
   font-size: 10px;
-  color: ${uiColors.green.base};
+  color: ${uiColors.green.dark1};
   margin-right: 16px;
 `;
 

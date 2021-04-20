@@ -59,7 +59,7 @@ const getInteractionRingStyles = ({ checked }: StateForStyles) => {
 const getBorderStyles = ({ disabled, size }: StateForStyles) => {
   const baseStyles = cx(
     css`
-      border: 1px solid ${uiColors.gray.light1};
+      border: 1px solid ${uiColors.gray.base};
       border-radius: 4px;
       cursor: pointer;
       position: relative;

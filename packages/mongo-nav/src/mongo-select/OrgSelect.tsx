@@ -108,7 +108,7 @@ const orgOptionContainerStyle = css`
 `;
 
 const viewAllStyle = css`
-  color: ${uiColors.blue.base};
+  color: ${uiColors.blue.dark2};
 `;
 
 const productStyle = css`

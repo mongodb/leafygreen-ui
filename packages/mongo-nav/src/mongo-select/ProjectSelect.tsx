@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import FolderIcon from '@leafygreen-ui/icon/dist/Folder';
 import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
+import PlusIcon from '@leafygreen-ui/icon/dist/Plus';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
@@ -48,7 +49,7 @@ import {
 // styles
 const projectButtonStyle = css`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   padding-top: 16px;
   padding-bottom: 16px;
 `;
@@ -321,27 +322,25 @@ function ProjectSelect({
           <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
             <FocusableMenuItem>
               <Button
+                size="small"
                 href={urls.viewAllProjects as string}
                 data-testid="project-select-view-all-projects"
                 onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
+                className={css`
+                  margin-right: 8px;
+                `}
               >
                 View All Projects
               </Button>
             </FocusableMenuItem>
             <FocusableMenuItem>
               <Button
+                size="small"
                 href={urls.newProject as string}
                 data-testid="project-select-add-new-project"
                 onClick={onElementClick(NavElement.ProjectNavAddProject)}
+                leftGlyph={<PlusIcon />}
               >
-                <span
-                  aria-hidden
-                  className={css`
-                    margin-right: 2px;
-                  `}
-                >
-                  +
-                </span>
                 New Project
               </Button>
             </FocusableMenuItem>

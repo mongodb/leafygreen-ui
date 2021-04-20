@@ -113,13 +113,15 @@ const productLinkStyle = css`
   display: flex;
   align-items: center;
   ${subMenuContainer.selector}:hover &,
-  ${menuItemContainer.selector}:hover & {
+  ${menuItemContainer.selector}:hover &, 
+  ${subMenuContainer.selector}:focus &,
+  ${menuItemContainer.selector}:focus & {
     color: ${uiColors.blue.dark2};
   }
 `;
 
 const activePlatformLinkStyle = css`
-  color: ${uiColors.gray.light1};
+  color: ${uiColors.green.dark2};
 `;
 
 const productLinkIconStyle = css`

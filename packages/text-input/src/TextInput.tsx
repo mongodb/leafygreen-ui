@@ -201,7 +201,7 @@ const colorSets: Record<Mode, ColorSets> = {
     errorMessage: uiColors.red.base,
     errorBorder: uiColors.red.base,
     optional: uiColors.gray.dark1,
-    defaultBorder: uiColors.gray.light1,
+    defaultBorder: uiColors.gray.base,
     validBorder: uiColors.green.base,
   },
   [Mode.Dark]: {
