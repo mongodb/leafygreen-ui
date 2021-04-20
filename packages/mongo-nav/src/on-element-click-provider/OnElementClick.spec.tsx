@@ -91,6 +91,7 @@ function testForCallback({
         : await findByTestId(testId!);
 
       await waitFor(() => expect(link).toBeVisible());
+
       fireEvent.click(link!);
 
       if (shouldNavigate) {
@@ -135,6 +136,7 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
       navElement: NavElement.OrgNavDocs,
       testId: 'org-nav-docs-link',
       trigger: 'org-nav-dropdown-get-help',
+      shouldNavigate: false,
     });
   });
 
