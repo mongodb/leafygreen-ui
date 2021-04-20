@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 1.5.0
+
+### Minor Changes
+
+- de06ae10: Adds `baseFontSize` prop to Table component
+
 ## 1.4.0
 
 ### Minor Changes
