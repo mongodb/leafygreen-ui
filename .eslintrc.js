@@ -112,7 +112,7 @@ module.exports = {
       rules: { 'react/react-in-jsx-scope': 'off' },
     },
     {
-      files: ['packages/**/*.spec.{ts,tsx}'],
+      files: ['{packages,privatePackages}/**/*.spec.{ts,tsx}'],
       globals: {
         expect: true,
         should: true,

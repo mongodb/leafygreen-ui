@@ -16,7 +16,6 @@ export const Component = {
   MarketingModal: 'marketing-modal',
   Menu: 'menu',
   Modal: 'modal',
-  MongoNav: 'mongo-nav',
   Palette: 'palette',
   Pipeline: 'pipeline',
   Popover: 'popover',
