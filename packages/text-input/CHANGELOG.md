@@ -1,5 +1,13 @@
 # @leafygreen-ui/text-input
 
+## 5.0.12
+
+### Patch Changes
+
+- 509e90c3: Checks for existence of either `label` or `aria-labelledby` props, rather than requiring both, before logging a warning to the console
+- Updated dependencies [b1854dd8]
+  - @leafygreen-ui/interaction-ring@1.0.3
+
 ## 5.0.11
 
 ### Patch Changes

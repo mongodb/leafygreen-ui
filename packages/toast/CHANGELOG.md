@@ -1,5 +1,11 @@
 # @leafygreen-ui/toast
 
+## 0.4.6
+
+### Patch Changes
+
+- e7ac7831: Updates icon color in `success` variant so that it meets 3:1 contrast requirements.
+
 ## 0.4.5
 
 ### Patch Changes

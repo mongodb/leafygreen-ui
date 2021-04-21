@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { Overline } from '@leafygreen-ui/typography';
 import {
   AtlasLogo,
@@ -17,6 +17,7 @@ import {
   RealmLogoMark,
 } from '@leafygreen-ui/logo';
 import { spacing } from '@leafygreen-ui/tokens';
+import { uiColors } from '@leafygreen-ui/palette';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const overlineStyle = css`
@@ -70,7 +71,15 @@ export default function LogoLiveExample() {
     <LiveExample knobsConfig={knobsConfig}>
       {({ darkMode, knockout, product, lockup }) => (
         <div>
-          <Overline className={overlineStyle}>Product Logos</Overline>
+          <Overline
+            className={cx(overlineStyle, {
+              [css`
+                color: ${uiColors.gray.light3};
+              `]: darkMode,
+            })}
+          >
+            Product Logos
+          </Overline>
           <div className={logoContainer}>
             <AtlasLogo height={64} knockout={knockout} darkMode={darkMode} />
             <ChartsLogo
@@ -93,7 +102,15 @@ export default function LogoLiveExample() {
             />
           </div>
 
-          <Overline className={overlineStyle}>Product LogoMarks</Overline>
+          <Overline
+            className={cx(overlineStyle, {
+              [css`
+                color: ${uiColors.gray.light3};
+              `]: darkMode,
+            })}
+          >
+            Product LogoMarks
+          </Overline>
           <div className={logoContainer}>
             <AtlasLogoMark darkMode={darkMode} knockout={knockout} size={32} />
             <ChartsLogoMark
@@ -134,7 +151,15 @@ export default function LogoLiveExample() {
             />
           </div>
 
-          <Overline className={overlineStyle}>Logo</Overline>
+          <Overline
+            className={cx(overlineStyle, {
+              [css`
+                color: ${uiColors.gray.light3};
+              `]: darkMode,
+            })}
+          >
+            Logo
+          </Overline>
           <div className={logoContainer}>
             <Logo
               darkMode={darkMode}
@@ -144,7 +169,15 @@ export default function LogoLiveExample() {
             />
           </div>
 
-          <Overline className={overlineStyle}>LogoMark</Overline>
+          <Overline
+            className={cx(overlineStyle, {
+              [css`
+                color: ${uiColors.gray.light3};
+              `]: darkMode,
+            })}
+          >
+            LogoMark
+          </Overline>
           <div className={logoContainer}>
             <LogoMark darkMode={darkMode} knockout={knockout} />
           </div>
