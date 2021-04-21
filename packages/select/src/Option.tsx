@@ -20,6 +20,18 @@ const optionStyle = css`
   outline: none;
   overflow-wrap: anywhere;
   transition: background-color 150ms ease-in-out;
+  position: relative;
+
+  &:focus&:before {
+    content: '';
+    transform: scaleY(0.8);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    border-radius: 0px 4px 4px 0px;
+  }
 `;
 
 const optionTextStyle = css`
@@ -208,7 +220,11 @@ export function InternalOption({
         {
           [css(`
             &:focus {
-              background-color: ${colorSet.background.focused};
+              color: ${colorSet.text.focused};
+              
+              &:before {
+                background-color: ${colorSet.background.focused};
+              }
             }
 
             &:hover {
