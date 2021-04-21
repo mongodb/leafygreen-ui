@@ -2,10 +2,13 @@ import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
+import { createDataProp } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
+
+const option = createDataProp('option');
 
 type GlyphElement = React.ReactElement<LGGlyph.ComponentProps> & {
   type?: { isGlyph?: boolean };
@@ -20,18 +23,6 @@ const optionStyle = css`
   outline: none;
   overflow-wrap: anywhere;
   transition: background-color 150ms ease-in-out;
-  position: relative;
-
-  &:focus&:before {
-    content: '';
-    transform: scaleY(0.8);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 4px;
-    border-radius: 0px 4px 4px 0px;
-  }
 `;
 
 const optionTextStyle = css`
@@ -142,6 +133,10 @@ export function InternalOption({
           iconStyle,
           css`
             color: ${colorSet.icon.base};
+
+            ${option.selector}:focus & {
+              color: currentColor;
+            }
           `,
           {
             [css`
@@ -162,6 +157,9 @@ export function InternalOption({
           iconStyle,
           css`
             color: ${colorSet.icon.selected};
+            ${option.selector}:focus & {
+              color: currentColor;
+            }
           `,
           {
             [css`
@@ -207,6 +205,7 @@ export function InternalOption({
 
   return (
     <li
+      {...option.prop}
       role="option"
       aria-selected={selected}
       tabIndex={-1}
@@ -221,10 +220,7 @@ export function InternalOption({
           [css(`
             &:focus {
               color: ${colorSet.text.focused};
-              
-              &:before {
-                background-color: ${colorSet.background.focused};
-              }
+              background-color: ${colorSet.background.focused};
             }
 
             &:hover {
