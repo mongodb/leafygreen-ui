@@ -50,7 +50,11 @@ jobs:
     name: Run tests with artificial server rendering
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.MONGO_NAV_PULL_KEY }}
+          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -87,7 +91,11 @@ jobs:
     name: Check lints
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.MONGO_NAV_PULL_KEY }}
+          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -114,7 +122,11 @@ jobs:
     name: Check types
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.MONGO_NAV_PULL_KEY }}
+          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -139,7 +151,11 @@ jobs:
     name: Check file size
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.MONGO_NAV_PULL_KEY }}
+          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
