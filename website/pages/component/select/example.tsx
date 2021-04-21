@@ -52,7 +52,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-export default function MongoNavLiveExample() {
+export default function SelectLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({

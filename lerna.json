@@ -1,6 +1,6 @@
 {
   "lerna": "3.4.3",
-  "packages": ["packages/*"],
+  "packages": ["packages/*", "privatePackages/*"],
   "version": "independent",
   "command": {
     "bootstrap": {
