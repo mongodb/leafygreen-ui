@@ -17,6 +17,7 @@ jobs:
           ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
           submodules: 'recursive'
       
+      # The SSH Agent manages the SSH keys used in future steps for authentication.
       - name: Set Up SSH Agent
         uses: webfactory/ssh-agent@v0.5.2
         with:
@@ -47,7 +48,7 @@ jobs:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
 
-      - name: Push to submodules
+      - name: Push Changeset Updates to Submodules
         run: git submodule foreach 'git checkout -B changesets && git add . && git commit -m "changeset update" && git push -f origin changesets'
 
       - name: Publish website with package updates
