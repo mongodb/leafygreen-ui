@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Either, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -122,10 +123,10 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 };
 
-type BaseTextAreaProps = HTMLElementProps<'textarea', never> & {
+type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
   id?: string;
   darkMode?: boolean;
-  label: string;
+  label?: string | null;
   description?: string;
   state?: State;
   errorMessage?: string;
@@ -134,20 +135,25 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', never> & {
 type AriaLabels = 'label' | 'aria-labelledby';
 type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
 
-export default function TextArea({
-  label,
-  description,
-  className,
-  errorMessage,
-  darkMode = false,
-  disabled = false,
-  state = State.None,
-  id: idProp,
-  value: controlledValue,
-  onChange,
-  'aria-labelledby': ariaLabelledBy,
-  ...rest
-}: TextAreaProps) {
+const TextArea: React.ComponentType<
+  React.PropsWithRef<TextAreaProps>
+> = React.forwardRef(function TextArea(
+  {
+    label,
+    description,
+    className,
+    errorMessage,
+    darkMode = false,
+    disabled = false,
+    state = State.None,
+    id: idProp,
+    value: controlledValue,
+    onChange,
+    'aria-labelledby': ariaLabelledby,
+    ...rest
+  }: TextAreaProps,
+  forwardedRef: React.Ref<HTMLTextAreaElement>,
+) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -167,9 +173,9 @@ export default function TextArea({
     }
   };
 
-  if (!label && !ariaLabelledBy) {
+  if (!label && !ariaLabelledby) {
     console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
+      'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
     );
   }
 
@@ -186,7 +192,8 @@ export default function TextArea({
       <InteractionRing darkMode={darkMode} disabled={disabled}>
         <textarea
           {...rest}
-          title={label}
+          ref={forwardedRef}
+          title={label != null ? label : undefined}
           id={id}
           className={cx(textAreaStyle, colorSets[mode].textArea, {
             [colorSets[mode].errorBorder]: state === State.Error,
@@ -202,7 +209,6 @@ export default function TextArea({
           disabled={disabled}
           onChange={onValueChange}
           value={value}
-          aria-labelledby={ariaLabelledBy}
         />
       </InteractionRing>
       {!disabled && state === State.Error && errorMessage && (
@@ -212,4 +218,17 @@ export default function TextArea({
       )}
     </div>
   );
-}
+});
+
+TextArea.displayName = 'TextArea';
+
+TextArea.propTypes = {
+  id: PropTypes.string,
+  darkMode: PropTypes.bool,
+  label: PropTypes.string,
+  description: PropTypes.string,
+  errorMessage: PropTypes.string,
+  state: PropTypes.oneOf(Object.values(State)),
+};
+
+export default TextArea;

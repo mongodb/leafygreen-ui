@@ -26,6 +26,7 @@ A set of CSS styles and React components built with design in mind.
 - [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/marketing-modal)
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
+- [MongoNav](https://github.com/10gen/leafygreen-ui-mongo-nav) (This package is a private submodule of leafygreen-ui)
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
 - [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline)
 - [Popover](https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover)
@@ -54,9 +55,25 @@ A set of CSS styles and React components built with design in mind.
 
    via [nodejs installer](https://nodejs.org/en/)
 
-2. yarn >= 1.16.0 installed.
+2. Install Yarn >= 1.16.0.
 
-3. Install dependencies and link packages.
+   [Yarn Installation documentation](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
+
+3. Clone the repository.
+
+   ```bash
+   # Navigate to the directory you'd like to clone the repository into
+   $ cd ~/my/repositories
+
+   # Clone the repository.
+
+   # We recommend installing using the SSH address rather than the HTTPS one to make authentication easier for you. To set up SSH authentication with GitHub, see their guide: https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
+
+   # NOTE: The `--recurse-submodules` option is important here for initializing private submodules. If you forget to do this, you can run `git submodule update --init` from within the repository's root directory to initialize them instead.
+   $ git clone --recurse-submodules git@github.com:mongodb/leafygreen-ui.git
+   ```
+
+4. Install dependencies and link packages.
 
    `yarn run init`
 
@@ -65,6 +82,130 @@ A set of CSS styles and React components built with design in mind.
 1. Start up storybook to see all UI components that exist.
 
    `yarn start`
+
+## Working with Git Submodules
+
+Working with Git Submodules is a bit different. For a comprehensive overview of the git submodules API, see the [official documentation](https://git-scm.com/docs/git-submodule).
+
+Any changes within a submodule will be represented by a change in a pointer to a commit SHA. Running `git status` when a submodule has been updated will look something like this:
+
+```bash
+$ git status
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+	modified:   privatePackages/mongo-nav (modified content)
+```
+
+Diving in further, running `git diff` when a change has been made will look something like this:
+
+```bash
+$ git diff
+diff --git a/privatePackages/mongo-nav b/privatePackages/mongo-nav
+--- a/privatePackages/mongo-nav
++++ b/privatePackages/mongo-nav
+@@ -1 +1 @@
+-Subproject commit d3414189c57141e7f7193d7ad214b2a91b0a9db5
++Subproject commit d3414189c57141e7f7193d7ad214b2a91b0a9db5-dirty
+```
+
+Note the lack of a description of any changes within the module. The only thing that git sees from outside the module is this pointer change.
+
+### Viewing changes/status of a submodule
+
+Viewing what's changed in a submodule is actually very simple.
+
+```bash
+# First, navigate to within the submodule within the repository
+$ cd ./privatePackages/mongo-nav
+
+# Then, you can run git commands to see the status
+$ git status
+
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Note that it's behaving as its own repository. The branch you're on can be changed within the submodule, and doing so can change the pointer to the commit within the overall leafygreen-ui repository.
+
+### Making a change to a submodule
+
+Let's say you're in a branch of the leafygreen-ui-mongo-nav repository.
+
+```bash
+# From within the submodule directory
+$ git status
+
+On branch my-change
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add .
+$ git commit -m "my change"
+$ git status
+
+$ git status
+On branch my-change
+nothing to commit, working tree clean
+
+# After commiting something, git status shows a clean working tree. So how does this change make it into the repository? Let's see what the parent repository's working tree looks like now.
+
+# Navigate to the main repository's root directory
+$ cd ../..
+$ git status
+On branch PD-1289-private-mongo-nav
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   privatePackages/mongo-nav (new commits)
+
+# We now see that git recognizes the submodule has new commits! What does that look like?
+$ git diff
+
+diff --git a/privatePackages/mongo-nav b/privatePackages/mongo-nav
+index d3414189..cd5f0653 160000
+--- a/privatePackages/mongo-nav
++++ b/privatePackages/mongo-nav
+@@ -1 +1 @@
+-Subproject commit d3414189c57141e7f7193d7ad214b2a91b0a9db5
++Subproject commit cd5f06537309dbc6dcc350154d038087a0e381f8
+```
+
+Once the pointer is updated, you can now commit this change in the main repository! Note that when creating a pull request, it's important that the change has already been merged into the `main` branch of the submodule so that the pointer is referencing a commit that's production-ready.
+
+### Getting the latest code for all submodules in the repository
+
+The pointer we were talking about earlier is important also for making sure you're working with the latest! To update a submodule's code to reflect the commit being referenced:
+
+```bash
+# For your convenience, we wrapped the recommended update command in a yarn script:
+$ yarn submodules:update
+
+# Under the hood, it runs the following command:
+$ git submodule update --init --recursive --remote
+
+# The `update` command updates submodules to match what the parent repo expects by cloning missing submodules, fetching missing commits and updating the working tree.
+
+# --init initializes all submodules where "git submodule init" has not been run before updating.
+
+# --recursive makes the update command traverse submodules recursively, bringing submodules of submodules up-to-date. So far, we don't have this case in our repository, so it's not strictly necessary yet.
+
+# --remote makes the update command pull from the remote tracking branch instead of what you have locally.
+```
+
+###
 
 ## Development within an Application
 

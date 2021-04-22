@@ -1,5 +1,18 @@
 # @leafygreen-ui/toggle
 
+## 7.0.2
+
+### Patch Changes
+
+- 90321b36: Imports validateProps functions from `@leafygreen-ui/a11y` package.
+- Updated dependencies [90321b36]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/a11y@1.2.0
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/interaction-ring@1.0.2
+
 ## 7.0.1
 
 ### Patch Changes

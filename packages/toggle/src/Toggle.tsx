@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState, useCallback } from 'react';
-import {
-  createDataProp,
-  HTMLElementProps,
-  Either,
-  validateAriaLabelProps,
-} from '@leafygreen-ui/lib';
+import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
+import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';

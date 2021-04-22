@@ -1,5 +1,27 @@
 # @leafygreen-ui/select
 
+## 2.0.5
+
+### Patch Changes
+
+- 83fbfa53: Updates styles for a focused Option component to improve the contrast ratio.
+
+## 2.0.4
+
+### Patch Changes
+
+- 90321b36: Imports validateProps functions from `@leafygreen-ui/a11y` package.
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/button@11.0.2
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/icon@10.2.1
+  - @leafygreen-ui/leafygreen-provider@2.0.3
+  - @leafygreen-ui/popover@7.1.4
+  - @leafygreen-ui/tokens@0.5.1
+
 ## 2.0.3
 
 ### Patch Changes
