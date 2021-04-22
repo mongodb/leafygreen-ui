@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
-import { prefersReducedMotion } from '@leafygreen-ui/a11y';
+import {
+  prefersReducedMotion,
+  validateAriaLabelProps,
+} from '@leafygreen-ui/a11y';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import {
-  keyMap,
-  IdAllocator,
-  validateAriaLabelProps,
-} from '@leafygreen-ui/lib';
+import { keyMap, IdAllocator } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';

@@ -83,7 +83,7 @@ const variantStyles: Record<
     `,
 
     icon: css`
-      color: ${uiColors.green.base};
+      color: ${uiColors.green.dark1};
     `,
 
     contentWrapper: css`
@@ -96,7 +96,7 @@ const variantStyles: Record<
     `,
 
     dismissButton: css`
-      color: ${uiColors.green.base};
+      color: ${uiColors.green.dark1};
 
       &:hover {
         color: ${uiColors.green.dark2};

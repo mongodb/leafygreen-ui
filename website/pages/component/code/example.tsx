@@ -67,6 +67,7 @@ const knobsConfig: KnobsConfigInterface<{
   showWindowChrome: boolean;
   copyable: boolean;
   chromeTitle: string;
+  showLineNumbers: boolean;
   darkMode: boolean;
   language: Language;
   children: string;
@@ -86,6 +87,11 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'text',
     default: 'Chrome Title',
     label: 'Chrome Title',
+  },
+  showLineNumbers: {
+    type: 'boolean',
+    default: false,
+    label: 'Show Line Numbers',
   },
   darkMode: {
     type: 'boolean',
