@@ -1,5 +1,11 @@
 # @leafygreen-ui/interaction-ring
 
+## 1.0.3
+
+### Patch Changes
+
+- b1854dd8: InteractionRing now uses focus blue in light and dark modes.
+
 ## 1.0.2
 
 ### Patch Changes
