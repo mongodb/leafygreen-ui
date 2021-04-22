@@ -75,6 +75,7 @@ export default function Select({
   size = Size.Default,
   disabled = false,
   usePortal = true,
+  allowDeselect = true,
   placeholder = 'Select',
   className,
   id: idProp,
@@ -83,7 +84,6 @@ export default function Select({
   name,
   defaultValue,
   value,
-  allowDeselect = true,
   onChange,
   readOnly,
   'aria-labelledby': ariaLabelledBy,
@@ -257,7 +257,7 @@ export default function Select({
     const enabledOptions: Array<OptionElement | null> = [];
 
     if (allowDeselect) {
-      enabledOptions.push(null)
+      enabledOptions.push(null);
     }
 
     traverseSelectChildren(children, (option, group) => {
@@ -282,7 +282,7 @@ export default function Select({
     if (allowDeselect) {
       setFocusedOption(null);
     } else {
-      setFocusedOption(enabledOptions[0])
+      setFocusedOption(enabledOptions[0]);
     }
   }, [allowDeselect, enabledOptions]);
 
@@ -358,7 +358,7 @@ export default function Select({
     const selected = selectedOption === null;
 
     if (!allowDeselect) {
-      return null
+      return null;
     }
 
     return (
