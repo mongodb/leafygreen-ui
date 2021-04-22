@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 7.0.0
+
+### Major Changes
+
+- 90321b36: Removes `validateAriaLabelProps` function from package. This can now be found in `@leafygreen-ui/a11y`
+
 ## 6.3.0
 
 ### Minor Changes

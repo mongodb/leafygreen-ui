@@ -42,7 +42,6 @@ const components: Array<Component> = [
   'marketing-modal',
   'menu',
   'modal',
-  'mongo-nav',
   'palette',
   'pipeline',
   'popover',

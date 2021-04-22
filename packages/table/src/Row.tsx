@@ -13,11 +13,66 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { CellElement, tdInnerDiv } from './Cell';
+import { useDarkModeContext } from './DarkModeContext';
+
+const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
+
+const iconButtonMargin = css`
+  margin-right: 4px;
+  margin-left: -8px;
+`;
+
+const modeStyles = {
+  [Mode.Light]: {
+    rowStyle: css`
+      border-top: 1px solid ${uiColors.gray.light2};
+      color: ${uiColors.gray.dark2};
+    `,
+
+    altColor: css`
+      &:nth-of-type(even) {
+        background-color: ${uiColors.gray.light3};
+      }
+    `,
+
+    disabledStyle: css`
+      background-color: ${uiColors.gray.light2};
+      color: ${uiColors.gray.base};
+      cursor: not-allowed;
+      border-top: 1px solid ${uiColors.gray.light1};
+      border-bottom: 1px solid ${uiColors.gray.light1};
+    `,
+  },
+
+  [Mode.Dark]: {
+    rowStyle: css`
+      background-color: ${uiColors.gray.dark3};
+      border-top: 1px solid ${uiColors.gray.dark1};
+      color: ${uiColors.gray.light3};
+    `,
+
+    altColor: css`
+      &:nth-of-type(even) {
+        background-color: ${uiColors.gray.dark2};
+      }
+    `,
+
+    disabledStyle: css`
+      background-color: ${uiColors.gray.dark1};
+      color: ${uiColors.gray.base};
+      cursor: not-allowed;
+      border-top: 1px solid ${uiColors.gray.base};
+      border-bottom: 1px solid ${uiColors.gray.base};
+    `,
+  },
+};
 
 const rowStyle = css`
-  border-top: 1px solid ${uiColors.gray.light2};
-  color: ${uiColors.gray.dark2};
-
   & > td > ${tdInnerDiv.selector} {
     min-height: 40px;
     transition: all 150ms ease-in-out;
@@ -28,47 +83,32 @@ const hideRow = css`
   opacity: 0;
 `;
 
-const altColor = css`
-  &:nth-of-type(even) {
-    background-color: ${uiColors.gray.light3};
-  }
-`;
+const transitionStyles = (mode: Mode) => {
+  return {
+    default: css`
+      transition: border 150ms ease-in-out;
+      border-top-color: transparent;
 
-const iconButtonMargin = css`
-  margin-right: 4px;
-  margin-left: -8px;
-`;
+      & > td {
+        padding-top: 0px;
+        padding-bottom: 0px;
+      }
 
-const disabledStyle = css`
-  background-color: ${uiColors.gray.light2};
-  color: ${uiColors.gray.base};
-  cursor: not-allowed;
-  border-top: 1px solid ${uiColors.gray.light1};
-  border-bottom: 1px solid ${uiColors.gray.light1};
-`;
+      & > td > ${tdInnerDiv.selector} {
+        max-height: 0;
+      }
+    `,
 
-const transitionStyles = {
-  default: css`
-    transition: border 150ms ease-in-out;
-    border-top-color: transparent;
+    entered: css`
+      border-top-color: ${mode === Mode.Light
+        ? uiColors.gray.light2
+        : uiColors.gray.dark1};
 
-    & > td {
-      padding-top: 0px;
-      padding-bottom: 0px;
-    }
-
-    & > td > ${tdInnerDiv.selector} {
-      max-height: 0;
-    }
-  `,
-
-  entered: css`
-    border-top-color: ${uiColors.gray.light2};
-
-    & > td > ${tdInnerDiv.selector} {
-      min-height: 40px;
-    }
-  `,
+      & > td > ${tdInnerDiv.selector} {
+        min-height: 40px;
+      }
+    `,
+  };
 };
 
 function styleColumn(index: string, dataType?: DataType) {
@@ -127,6 +167,8 @@ const Row = React.forwardRef(
       state: { data, columnInfo, hasNestedRows, hasRowSpan },
       dispatch: tableDispatch,
     } = useTableContext();
+    const darkMode = useDarkModeContext();
+    const mode = darkMode ? Mode.Dark : Mode.Light;
 
     const indexRef = useRef(idAllocator.generate());
     const [isExpanded, setIsExpanded] = useState(expanded);
@@ -230,8 +272,12 @@ const Row = React.forwardRef(
             aria-label={isExpanded ? 'Collapse row' : 'Expand row'}
             aria-expanded={isExpanded}
             className={iconButtonMargin}
+            darkMode={darkMode}
           >
-            <Icon aria-hidden color={uiColors.gray.dark2} />
+            <Icon
+              aria-hidden
+              color={darkMode ? uiColors.gray.base : uiColors.gray.dark2}
+            />
           </IconButton>
         );
         renderedChildren[0] = React.cloneElement(renderedChildren[0], {
@@ -259,13 +305,14 @@ const Row = React.forwardRef(
 
     const rowClassName = cx(
       rowStyle,
+      modeStyles[mode].rowStyle,
       getIndentLevelStyle(indentLevel),
       [...alignmentStyles],
       {
         // Hide the row until we can apply correct alignment to cells.
         [hideRow]: !columnInfo,
-        [altColor]: shouldAltRowColor,
-        [disabledStyle]: disabled,
+        [modeStyles[mode].altColor]: shouldAltRowColor,
+        [modeStyles[mode].disabledStyle]: disabled,
       },
       className,
     );
@@ -282,8 +329,8 @@ const Row = React.forwardRef(
               <>
                 {renderedNestedRows.map(element =>
                   React.cloneElement(element, {
-                    className: cx(transitionStyles.default, {
-                      [transitionStyles.entered]: [
+                    className: cx(transitionStyles(mode).default, {
+                      [transitionStyles(mode).entered]: [
                         'entering',
                         'entered',
                       ].includes(state),
