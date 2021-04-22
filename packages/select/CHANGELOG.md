@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 2.0.5
+
+### Patch Changes
+
+- 83fbfa53: Updates styles for a focused Option component to improve the contrast ratio.
+
 ## 2.0.4
 
 ### Patch Changes
