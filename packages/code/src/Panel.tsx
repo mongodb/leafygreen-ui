@@ -65,7 +65,7 @@ function getPanelStyles(
     flex-direction: row;
     align-items: center;
     padding-left: 12px;
-    padding-right: 12px;
+    padding-right: 8px;
     background-color: ${colors[4]};
     border-bottom: 1px solid ${colors[1]};
   `;

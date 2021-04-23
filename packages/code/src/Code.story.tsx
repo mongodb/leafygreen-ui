@@ -72,5 +72,9 @@ storiesOf('Code', module)
   .add('LanguageSwitcher', () => {
     const darkMode = boolean('darkMode', false);
 
-    return <LanguageSwitcherExample darkMode={darkMode} />;
+    return (
+      <LeafyGreenProvider>
+        <LanguageSwitcherExample darkMode={darkMode} />
+      </LeafyGreenProvider>
+    );
   });
