@@ -235,6 +235,21 @@ describe('packages/select', () => {
   });
 
   describe('list menu', () => {
+    test('allowDeselect prevents placeholder from being rendered', () => {
+      const { getByRole, queryByText } = render(
+        <Select
+          {...defaultProps}
+          defaultValue={Color.Red}
+          allowDeselect={false}
+        >
+          {defaultProps.children}
+        </Select>,
+      );
+
+      userEvent.click(getByRole('button'));
+      expect(queryByText('Select')).not.toBeInTheDocument();
+    });
+
     describe.each([
       ['dark', true],
       ['light', false],
