@@ -110,6 +110,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `onChange`        | `function`                                    | A function that gets called when the selected value changes. Receives the value string as the first argument. | `() => {}`  |
 | `readOnly`        | `boolean`                                     | Disables the console warning when the component is controlled and no `onChange` prop is provided.             | `false`     |
 | `usePortal`       | `boolean`                                     | Determines if Select dropdown will be portaled to the end of the DOM                                          | `true`      |
+| `allowDeselect`   | `boolean`                                     | Enables or disables the option for a user to select a null default value.                                     | `true`      |
 
 # Option
 
