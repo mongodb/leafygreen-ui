@@ -24,6 +24,7 @@
     "@leafygreen-ui/emotion": "^3.0.1",
     "@leafygreen-ui/hooks": "^6.0.0",
     "@leafygreen-ui/icon": "^10.2.1",
+    "@leafygreen-ui/leafygreen-provider": "^2.0.3",
     "@leafygreen-ui/lib": "^7.0.0",
     "@leafygreen-ui/palette": "^3.2.1",
     "@leafygreen-ui/popover": "^7.1.4",
@@ -31,8 +32,5 @@
     "@types/react-is": "^17.0.0",
     "polished": "^4.0.3",
     "react-is": "^17.0.1"
-  },
-  "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.0.3"
   }
 }
