@@ -135,6 +135,9 @@ export function InternalOption({
           iconStyle,
           css`
             color: ${colorSet.icon.base};
+            ${option.selector}:focus & {
+              color: currentColor;
+            }
           `,
           {
             [css`
@@ -207,6 +210,8 @@ export function InternalOption({
       </>
     );
   }
+
+  console.log({ showFocus });
 
   return (
     <li

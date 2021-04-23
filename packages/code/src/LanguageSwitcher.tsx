@@ -4,6 +4,7 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Button, { ButtonProps } from '@leafygreen-ui/button';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { Select, Option } from '@leafygreen-ui/select';
@@ -46,10 +47,6 @@ const buttonModeStyle = {
     &:hover {
       background-color: ${uiColors.gray.light2};
     }
-
-    &:focus {
-      background-color: ${uiColors.blue.light2};
-    }
   `,
   dark: css`
     border-right: 1px solid ${uiColors.gray.dark3};
@@ -64,7 +61,16 @@ const buttonModeStyle = {
     &:active {
       background-color: ${uiColors.gray.dark1};
     }
+  `,
+};
 
+const buttonFocusStyle = {
+  light: css`
+    &:focus {
+      background-color: ${uiColors.blue.light2};
+    }
+  `,
+  dark: css`
     &:focus {
       background-color: ${uiColors.focus};
     }
@@ -100,6 +106,7 @@ function LanguageSwitcher({
   onChange,
   darkMode,
 }: Props) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const mode = darkMode ? 'dark' : 'light';
 
   const previousLanguage = usePrevious(language);
@@ -158,7 +165,9 @@ function LanguageSwitcher({
           ({ className, children, ...props }: ButtonProps, ref) => (
             <Button
               {...props}
-              className={cx(className, menuButtonStyle, buttonModeStyle[mode])}
+              className={cx(className, menuButtonStyle, buttonModeStyle[mode], {
+                [buttonFocusStyle[mode]]: showFocus,
+              })}
               darkMode={darkMode}
               ref={ref}
               leftGlyph={renderedLogo}
