@@ -148,6 +148,7 @@ function LanguageSwitcher({
         aria-labelledby="Language Picker"
         value={language?.displayName}
         className={selectWidth}
+        allowDeselect={false}
         // Component missing displayName
         // eslint-disable-next-line
         __INTERNAL__menuButtonSlot__={React.forwardRef(
