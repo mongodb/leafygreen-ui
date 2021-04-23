@@ -5,6 +5,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import Code, { hasMultipleLines } from './Code';
+import LanguageSwitcherExample, { PythonLogo } from './LanguageSwitcherExample';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
@@ -88,6 +89,81 @@ describe('packages/Code', () => {
     test('when passed multiple lines with preceding and subsequent line breaks, returns "true"', () => {
       const codeExample = `\nExample\nstring\n`;
       expect(hasMultipleLines(codeExample)).toBeTruthy();
+    });
+  });
+
+  describe('when rendered as a language switcher', () => {
+    let offsetParentSpy: jest.SpyInstance;
+    beforeAll(() => {
+      offsetParentSpy = jest.spyOn(
+        HTMLElement.prototype,
+        'offsetParent',
+        'get',
+      );
+
+      // JSDOM doesn't implement `HTMLElement.prototype.offsetParent`, so this
+      // falls back to the parent element since it doesn't matter for these tests.
+      offsetParentSpy.mockImplementation(function (this: HTMLElement) {
+        return this.parentElement;
+      });
+    });
+
+    afterAll(() => {
+      if (offsetParentSpy.mock.calls.length === 0) {
+        // throw Error('`HTMLElement.prototype.offsetParent` was never called');
+      }
+      offsetParentSpy.mockRestore();
+    });
+
+    test('a collapsed select is rendered, with an active state based on the language prop', () => {
+      render(<LanguageSwitcherExample />);
+      expect(
+        screen.getByRole('button', { name: 'JavaScript' }),
+      ).toBeInTheDocument();
+    });
+
+    test('clicking the collapsed select menu button opens a select', () => {
+      render(<LanguageSwitcherExample />);
+      const trigger = screen.getByRole('button', { name: 'JavaScript' });
+      fireEvent.click(trigger);
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+    });
+
+    test('options displayed in select are based on the languageOptions prop', () => {
+      render(<LanguageSwitcherExample />);
+      const trigger = screen.getByRole('button', { name: 'JavaScript' });
+      fireEvent.click(trigger);
+
+      ['Checkmark Icon JavaScript', 'Python'].forEach(lang => {
+        expect(screen.getByRole('option', { name: lang })).toBeInTheDocument();
+      });
+    });
+
+    test('onChange prop gets called when new language is selected', () => {
+      const onChange = jest.fn();
+      render(<LanguageSwitcherExample onChange={onChange} />);
+
+      const trigger = screen.getByRole('button', { name: 'JavaScript' });
+      fireEvent.click(trigger);
+
+      fireEvent.click(screen.getByRole('option', { name: 'Python' }));
+      expect(onChange).toHaveBeenCalled();
+    });
+
+    test('onChange prop is called with an object that represents the newly selected language when called', () => {
+      const onChange = jest.fn();
+      render(<LanguageSwitcherExample onChange={onChange} />);
+
+      const trigger = screen.getByRole('button', { name: 'JavaScript' });
+      fireEvent.click(trigger);
+
+      fireEvent.click(screen.getByRole('option', { name: 'Python' }));
+
+      expect(onChange).toHaveBeenCalledWith({
+        displayName: 'Python',
+        image: <PythonLogo />,
+        language: 'python',
+      });
     });
   });
 });

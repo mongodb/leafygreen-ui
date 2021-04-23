@@ -27,6 +27,12 @@
     },
     {
       "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../select"
+    },
+    {
+      "path": "../palette"
     }
   ]
 }

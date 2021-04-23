@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@leafygreen-ui/hooks": "^6.0.0",
+    "@leafygreen-ui/select": "^2.0.1",
+    "@leafygreen-ui/palette": "^3.2.0",
     "@leafygreen-ui/lib": "^7.0.0",
     "@leafygreen-ui/icon": "^10.2.1",
     "@leafygreen-ui/icon-button": "^9.1.3",

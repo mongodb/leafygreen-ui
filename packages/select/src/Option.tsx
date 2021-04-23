@@ -133,7 +133,6 @@ export function InternalOption({
           iconStyle,
           css`
             color: ${colorSet.icon.base};
-
             ${option.selector}:focus & {
               color: currentColor;
             }
@@ -156,10 +155,10 @@ export function InternalOption({
         className={cx(
           iconStyle,
           css`
-            color: ${colorSet.icon.selected};
             ${option.selector}:focus & {
               color: currentColor;
             }
+            color: ${colorSet.icon.selected};
           `,
           {
             [css`
@@ -217,16 +216,16 @@ export function InternalOption({
           color: ${colorSet.text.base};
         `,
         {
-          [css(`
+          [css`
+            &:hover {
+              background-color: ${colorSet.background.hovered};
+            }
+
             &:focus {
               color: ${colorSet.text.focused};
               background-color: ${colorSet.background.focused};
             }
-
-            &:hover {
-              background-color: ${colorSet.background.hovered};
-            }
-          `)]: !disabled,
+          `]: !disabled,
           [css`
             cursor: not-allowed;
             color: ${colorSet.text.disabled};
