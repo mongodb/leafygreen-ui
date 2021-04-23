@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { screen, fireEvent, within } from '@testing-library/react';
+import { screen, fireEvent, within, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { Table, TableHeader, Row, Cell } from '.';
 import { defaultColumns, renderTable } from './testUtils';
@@ -95,5 +95,43 @@ describe('packages/table', () => {
     const newFirstRow = screen.getAllByRole('row')[1];
     const garry = within(newFirstRow).getByText('Garry');
     expect(garry).toBeVisible();
+  });
+
+  test('when a data value is 0 it still renders in the table', () => {
+    render(
+      <Table
+        data-testid="table"
+        data={[
+          {
+            name: 'Garry',
+            age: 0,
+            color: 'pink',
+            location: 'williamsburg',
+          },
+        ]}
+        columns={defaultColumns}
+      >
+        {({ datum }) => (
+          <Row key={datum.name}>
+            <Cell>{datum.name}</Cell>
+            <Cell>{datum.age}</Cell>
+            <Cell>{datum.color}</Cell>
+            <Cell>{datum.location}</Cell>
+
+            {datum.age > 25 && (
+              <Row>
+                <Cell>hidden: {datum.name}</Cell>
+                <Cell>expanded age: {datum.age}</Cell>
+                <Cell>expanded color: {datum.color}</Cell>
+                <Cell>{datum.location}</Cell>
+              </Row>
+            )}
+          </Row>
+        )}
+      </Table>,
+    );
+
+    const cell0 = screen.getByRole('cell', { name: '0' });
+    expect(cell0).toBeInTheDocument();
   });
 });
