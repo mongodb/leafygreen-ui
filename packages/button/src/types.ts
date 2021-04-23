@@ -26,7 +26,7 @@ type Mode = typeof Mode[keyof typeof Mode];
 
 type FontSize = 14 | 16;
 
-export interface ButtonProps {
+interface ButtonProps {
   variant?: Variant;
   darkMode?: boolean;
   baseFontSize?: FontSize;
@@ -39,4 +39,4 @@ export interface ButtonProps {
   href?: string;
 }
 
-export { Variant, Size, Mode, FontSize };
+export { Variant, Size, Mode, FontSize, ButtonProps };
