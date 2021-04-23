@@ -521,4 +521,26 @@ describe('packages/tooltip', () => {
       });
     });
   });
+
+  describe('when an interactive element is rendered inside of the Tooltip', () => {
+    test('click events fire from inside of the tooltip', () => {
+      const clickHandler = jest.fn();
+
+      render(
+        <Tooltip
+          triggerEvent="click"
+          trigger={<button onClick={onClick}>{buttonText}</button>}
+        >
+          <button onClick={clickHandler}>Button inside of Tooltip</button>
+        </Tooltip>,
+      );
+
+      fireEvent.click(screen.getByText(buttonText));
+
+      const tooltipButton = screen.getByText('Button inside of Tooltip');
+      fireEvent.click(tooltipButton);
+
+      expect(clickHandler).toHaveBeenCalledTimes(1);
+    });
+  });
 });
