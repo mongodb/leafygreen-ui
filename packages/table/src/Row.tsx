@@ -250,6 +250,10 @@ const Row = React.forwardRef(
 
       React.Children.forEach(children, (child, index) => {
         if (isComponentType<CellElement>(child, 'Cell')) {
+          if (child.props.children == null) {
+            return null;
+          }
+
           renderedChildren.push(
             React.cloneElement(child, {
               children: <span>{child.props.children}</span>,
