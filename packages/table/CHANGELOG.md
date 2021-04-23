@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 1.5.1
+
+### Patch Changes
+
+- 8335c09d: Ensures that cells with a value of 0 render properly in the table
+
 ## 1.5.0
 
 ### Minor Changes
