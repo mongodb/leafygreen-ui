@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
@@ -64,7 +63,6 @@ export function InternalOption({
   hasGlyphs,
 }: InternalProps) {
   const { mode } = useContext(SelectContext);
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   const { option: colorSet } = colorSets[mode];
 
@@ -141,11 +139,6 @@ export function InternalOption({
           `,
           {
             [css`
-              ${option.selector}:focus & {
-                color: currentColor;
-              }
-            `]: showFocus,
-            [css`
               color: ${colorSet.icon.disabled};
             `]: disabled,
           },
@@ -162,14 +155,12 @@ export function InternalOption({
         className={cx(
           iconStyle,
           css`
+            ${option.selector}:focus & {
+              color: currentColor;
+            }
             color: ${colorSet.icon.selected};
           `,
           {
-            [css`
-              ${option.selector}:focus & {
-                color: currentColor;
-              }
-            `]: showFocus,
             [css`
               color: ${colorSet.icon.disabled};
             `]: disabled,
@@ -211,8 +202,6 @@ export function InternalOption({
     );
   }
 
-  console.log({ showFocus });
-
   return (
     <li
       {...option.prop}
@@ -231,13 +220,12 @@ export function InternalOption({
             &:hover {
               background-color: ${colorSet.background.hovered};
             }
-          `]: !disabled,
-          [css`
+
             &:focus {
               color: ${colorSet.text.focused};
               background-color: ${colorSet.background.focused};
             }
-          `]: showFocus && !disabled,
+          `]: !disabled,
           [css`
             cursor: not-allowed;
             color: ${colorSet.text.disabled};
