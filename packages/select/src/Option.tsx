@@ -223,16 +223,16 @@ export function InternalOption({
         `,
         {
           [css`
+            &:hover {
+              background-color: ${colorSet.background.hovered};
+            }
+          `]: !disabled,
+          [css`
             &:focus {
               color: ${colorSet.text.focused};
               background-color: ${colorSet.background.focused};
             }
           `]: showFocus && !disabled,
-          [css`
-            &:hover {
-              background-color: ${colorSet.background.hovered};
-            }
-          `]: !disabled,
           [css`
             cursor: not-allowed;
             color: ${colorSet.text.disabled};
