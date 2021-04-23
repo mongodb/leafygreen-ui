@@ -2,7 +2,6 @@ import React from 'react';
 import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
-import { Radio, RadioGroup } from '@leafygreen-ui/radio-group';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
@@ -65,16 +64,6 @@ export default function TooltipLiveExample() {
           }
         >
           Your clusters and data lakes.
-          <Radio
-            value="hi"
-            onChange={() => console.log('hi')}
-            className={css`
-              width: 200px;
-            `}
-          >
-            <RadioGroup value="hi">hi</RadioGroup>
-            <RadioGroup value="hi1">hi</RadioGroup>
-          </Radio>
         </Tooltip>
       )}
     </LiveExample>
