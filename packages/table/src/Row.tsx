@@ -250,7 +250,7 @@ const Row = React.forwardRef(
 
       React.Children.forEach(children, (child, index) => {
         if (isComponentType<CellElement>(child, 'Cell')) {
-          if (child.props?.children == null) {
+          if (child.props.children == null) {
             return null;
           }
 
