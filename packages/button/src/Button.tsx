@@ -29,6 +29,10 @@ const containerChildStyles = css`
   position: relative;
   z-index: 0;
   font-family: ${fontFamilies.default};
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const padding: Record<Size, string> = {
