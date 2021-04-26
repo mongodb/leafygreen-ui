@@ -1,5 +1,11 @@
 # @leafygreen-ui/tooltip
 
+## 6.1.9
+
+### Patch Changes
+
+- f41d6229: Removes `preventDefault` call from inside of Tooltip, such that tooltip components can contain interactive elements
+
 ## 6.1.8
 
 ### Patch Changes
