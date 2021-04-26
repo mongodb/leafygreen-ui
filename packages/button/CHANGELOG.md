@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 11.0.3
+
+### Patch Changes
+
+- e2f7e6a4: Explicitly sets `color` property on focused buttons
+
 ## 11.0.2
 
 ### Patch Changes
