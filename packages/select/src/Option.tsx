@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -35,6 +36,12 @@ const iconStyle = css`
   margin-right: 6px;
 `;
 
+const glyphFocusStyle = css`
+  ${option.selector}:focus & {
+    color: currentColor;
+  }
+`;
+
 export interface InternalProps {
   children: React.ReactNode;
   className: string | undefined;
@@ -63,6 +70,7 @@ export function InternalOption({
   hasGlyphs,
 }: InternalProps) {
   const { mode } = useContext(SelectContext);
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   const { option: colorSet } = colorSets[mode];
 
@@ -133,11 +141,9 @@ export function InternalOption({
           iconStyle,
           css`
             color: ${colorSet.icon.base};
-            ${option.selector}:focus & {
-              color: currentColor;
-            }
           `,
           {
+            [glyphFocusStyle]: showFocus,
             [css`
               color: ${colorSet.icon.disabled};
             `]: disabled,
@@ -155,12 +161,10 @@ export function InternalOption({
         className={cx(
           iconStyle,
           css`
-            ${option.selector}:focus & {
-              color: currentColor;
-            }
             color: ${colorSet.icon.selected};
           `,
           {
+            [glyphFocusStyle]: showFocus,
             [css`
               color: ${colorSet.icon.disabled};
             `]: disabled,
@@ -220,12 +224,13 @@ export function InternalOption({
             &:hover {
               background-color: ${colorSet.background.hovered};
             }
-
+          `]: !disabled,
+          [css`
             &:focus {
               color: ${colorSet.text.focused};
               background-color: ${colorSet.background.focused};
             }
-          `]: !disabled,
+          `]: showFocus && !disabled,
           [css`
             cursor: not-allowed;
             color: ${colorSet.text.disabled};
