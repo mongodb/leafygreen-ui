@@ -141,7 +141,6 @@ const Button: ExtendableBox<
           padding[size],
         )}
       >
-        {/* <span id="test"> */}
         {leftGlyph && (
           <ButtonIcon
             glyph={leftGlyph}
@@ -155,7 +154,7 @@ const Button: ExtendableBox<
           />
         )}
         {children}
-        {/* </span> */}
+
         {rightGlyph && (
           <span
             className={cx(
