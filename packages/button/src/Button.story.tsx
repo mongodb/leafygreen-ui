@@ -85,7 +85,7 @@ storiesOf('Button', module)
             baseFontSize={baseFontSize}
             leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
             rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
-          ></Button>
+          />
         </div>
       </LeafygreenProvider>
     );
