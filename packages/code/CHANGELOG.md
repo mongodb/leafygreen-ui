@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 8.1.1
+
+### Patch Changes
+
+- 909ede70: Removes empty panel rendered when copyable is false
+
 ## 8.1.0
 
 ### Minor Changes
