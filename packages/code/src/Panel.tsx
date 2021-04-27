@@ -92,8 +92,13 @@ function Panel({
 }: PanelProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
+  console.log('inside panel');
+
   return (
-    <div className={getPanelStyles(mode, !!language, isMultiline)}>
+    <div
+      className={getPanelStyles(mode, !!language, isMultiline)}
+      data-testid="leafygreen-code-panel"
+    >
       {language !== undefined &&
         languageOptions !== undefined &&
         onChange !== undefined && (
