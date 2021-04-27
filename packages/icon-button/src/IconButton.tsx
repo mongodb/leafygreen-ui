@@ -37,6 +37,7 @@ const baseIconButtonStyle = css`
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
+  transition: color 150ms ease-in-out;
 
   // Set background to fully-transparent white for cross-browser compatability with Safari
   //
