@@ -92,6 +92,14 @@ describe('packages/Code', () => {
     });
   });
 
+  describe('panel', () => {
+    test('is not rendered when language switcher is not present and when copyable is false', () => {
+      expect(container).not.toContain(
+        screen.queryByTestId('leafygreen-code-panel'),
+      );
+    });
+  });
+
   describe('when rendered as a language switcher', () => {
     let offsetParentSpy: jest.SpyInstance;
     beforeAll(() => {

@@ -274,7 +274,9 @@ function Code({
           {renderedSyntaxComponent}
         </pre>
 
-        {!showWindowChrome && (
+        {/* Can make this a more robust check in the future */}
+        {/* Right now the panel will only be rendered with copyable or a language switcher */}
+        {!showWindowChrome && (copyable || !!currentLanguage) && (
           <Panel
             language={currentLanguage}
             languageOptions={languageOptions}
