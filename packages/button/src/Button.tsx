@@ -29,7 +29,6 @@ const containerChildStyles = css`
   position: relative;
   z-index: 0;
   font-family: ${fontFamilies.default};
-  line-clamp: 1;
 `;
 
 const padding: Record<Size, string> = {
