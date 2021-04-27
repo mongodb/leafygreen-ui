@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 9.1.4
+
+### Patch Changes
+
+- 1503e83a: Transitions color in IconButton component
+
 ## 9.1.3
 
 ### Patch Changes
