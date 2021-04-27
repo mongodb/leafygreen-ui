@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 11.0.4
+
+### Patch Changes
+
+- 7c952eca: Fixes semantic HTML inside of Button to better support being a trigger for portaled components
+
 ## 11.0.3
 
 ### Patch Changes
