@@ -22,7 +22,7 @@ const rippleStyle = css`
 const containerChildStyles = css`
   display: flex;
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
   height: 100%;
   width: 100%;
   pointer-events: none;
@@ -158,20 +158,18 @@ const Button: ExtendableBox<
 
         {rightGlyph && (
           <span
-            className={cx(
-              css`
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              `,
-              !isIconOnlyButton ? css`margin-left: ${iconSpacing};}` : '',
-            )}
+            className={css`
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-left: auto;
+            `}
           >
             <ButtonIcon
               glyph={rightGlyph}
-              className={css`
-                margin-left: auto;
-              `}
+              className={
+                !isIconOnlyButton ? css`margin-left: ${iconSpacing};}` : ''
+              }
               {...iconProps}
             />
           </span>
