@@ -29,9 +29,7 @@ const containerChildStyles = css`
   position: relative;
   z-index: 0;
   font-family: ${fontFamilies.default};
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  line-clamp: 1;
 `;
 
 const padding: Record<Size, string> = {
@@ -156,6 +154,7 @@ const Button: ExtendableBox<
             {...iconProps}
           />
         )}
+
         {children}
 
         {rightGlyph && (
