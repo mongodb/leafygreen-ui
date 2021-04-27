@@ -92,8 +92,6 @@ function Panel({
 }: PanelProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
-  console.log('inside panel');
-
   return (
     <div
       className={getPanelStyles(mode, !!language, isMultiline)}
