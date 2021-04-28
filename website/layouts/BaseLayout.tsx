@@ -63,7 +63,7 @@ function BaseLayout({ children }: { children: React.ReactNode }) {
         <div className={containerStyle}>
           <Navigation />
 
-          <div className={layout} ref={el => setBodyContainerRef(el)}>
+          <div className={layout} ref={setBodyContainerRef}>
             <div className={childrenWrapper}>{children}</div>
 
             <Footer />

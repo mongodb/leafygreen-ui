@@ -68,7 +68,8 @@ export type Props = {
           }
         | { readOnly: true; onChange?: undefined }
       ))
-  ) & OneOf<{ label: string }, { 'aria-labelledby': string }>;
+  ) &
+  OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
 const idAllocator = IdAllocator.create('select');
 

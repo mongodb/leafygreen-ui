@@ -114,7 +114,7 @@ function AdvancedExample() {
         usePortal={boolean('usePortal', true)}
         spacing={number('spacing', 10)}
         adjustOnMutation={boolean('adjustOnMutation', false)}
-        popoverZIndex={number('zIndex', 1)}
+        popoverZIndex={number('popoverZIndex', 1)}
         refEl={refEl}
       >
         <div className={popoverStyle}>Popover content</div>
