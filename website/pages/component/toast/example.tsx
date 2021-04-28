@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
 import Toast, { Variant } from '@leafygreen-ui/toast';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
@@ -39,6 +40,9 @@ export default function ToastLiveExample() {
           <Button onClick={() => setOpen(curr => !curr)}>Trigger toast</Button>
           <Toast
             progress={progress}
+            className={css`
+              z-index: 1;
+            `}
             close={
               close
                 ? () => {

@@ -1,4 +1,3 @@
-import { OneOf } from '@leafygreen-ui/lib';
 import React from 'react';
 
 /**
@@ -56,6 +55,56 @@ interface ChildrenFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
+export type PortalControlProps =
+  | {
+      /**
+       * Specifies that the popover content should be rendered at the end of the DOM,
+       * rather than in the DOM tree.
+       *
+       * default: `true`
+       */
+      usePortal?: true;
+
+      /**
+       * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
+       */
+      portalClassName?: string;
+
+      /**
+       * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
+       */
+      portalContainer?: HTMLElement | null;
+
+      /**
+       * When usePortal is `true`, specifies the scrollable element to position relative to.
+       */
+      scrollContainer?: HTMLElement | null;
+    }
+  | {
+      /**
+       * Specifies that the popover content should be rendered at the end of the DOM,
+       * rather than in the DOM tree.
+       *
+       * default: `true`
+       */
+      usePortal: false;
+
+      /**
+       * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
+       */
+      portalClassName?: undefined;
+
+      /**
+       * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
+       */
+      portalContainer?: null;
+
+      /**
+       * When usePortal is `true`, specifies the scrollable element to position relative to.
+       */
+      scrollContainer?: null;
+    };
+
 export type PopoverProps = {
   /**
    * Content that will appear inside of the popover component.
@@ -69,7 +118,7 @@ export type PopoverProps = {
    *
    * default: `false`
    */
-  active: boolean;
+  active?: boolean;
 
   /**
    * Class name applied to popover content container.
@@ -109,25 +158,13 @@ export type PopoverProps = {
    */
   adjustOnMutation?: boolean;
 
+  /**
+   * Click event handler passed to the root div element within the portal container.
+   */
   onClick?: React.MouseEventHandler;
-} & OneOf<
-  {
-    /**
-     * Specifies that the popover content will appear portaled to the end of the DOM,
-     * rather than in the DOM tree.
-     *
-     * default: `true`
-     */
-    usePortal?: true;
 
-    /**
-     * If using a portal, specifies a class name to apply to the root element of the portal.
-     *
-     * default: undefined
-     */
-    portalClassName?: string;
-  },
-  {
-    usePortal: false;
-  }
->;
+  /**
+   * Number that controls the z-index of the popover element directly.
+   */
+  popoverZIndex?: number;
+} & PortalControlProps;

@@ -20,6 +20,9 @@
       "path": "../portal"
     },
     {
+      "path": "../leafygreen-provider"
+    },
+    {
       "path": "../palette"
     }
   ]
