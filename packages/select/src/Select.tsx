@@ -40,6 +40,10 @@ export type Props = {
   description?: string;
   placeholder?: string;
   name?: string;
+  allowDeselect?: boolean;
+  __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
+    React.RefAttributes<unknown>
+  >;
 } & Omit<PopoverProps, 'active' | 'spacing'> &
   (
     | // Uncontrolled
@@ -64,8 +68,7 @@ export type Props = {
           }
         | { readOnly: true; onChange?: undefined }
       ))
-  ) &
-  OneOf<{ label: string }, { 'aria-labelledby': string }>;
+  ) & OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
 const idAllocator = IdAllocator.create('select');
 
@@ -74,6 +77,7 @@ export default function Select({
   darkMode = false,
   size = Size.Default,
   disabled = false,
+  allowDeselect = true,
   placeholder = 'Select',
   className,
   id: idProp,
@@ -90,6 +94,7 @@ export default function Select({
   scrollContainer,
   portalClassName,
   popoverZIndex,
+  __INTERNAL__menuButtonSlot__,
 }: Props) {
   if (!label && !ariaLabelledBy) {
     console.error(
@@ -257,7 +262,11 @@ export default function Select({
   >();
 
   const enabledOptions = useMemo(() => {
-    const enabledOptions: Array<OptionElement | null> = [null];
+    const enabledOptions: Array<OptionElement | null> = [];
+
+    if (allowDeselect) {
+      enabledOptions.push(null);
+    }
 
     traverseSelectChildren(children, (option, group) => {
       if (!isOptionDisabled(option, group)) {
@@ -266,7 +275,7 @@ export default function Select({
     });
 
     return enabledOptions;
-  }, [children]);
+  }, [children, allowDeselect]);
 
   const onSelectFocusedOption = useCallback(
     (event: React.KeyboardEvent) => {
@@ -278,8 +287,12 @@ export default function Select({
   );
 
   const onFocusFirstOption = useCallback(() => {
-    setFocusedOption(null);
-  }, []);
+    if (allowDeselect) {
+      setFocusedOption(null);
+    } else {
+      setFocusedOption(enabledOptions[0]);
+    }
+  }, [allowDeselect, enabledOptions]);
 
   const onFocusLastOption = useCallback(() => {
     setFocusedOption(enabledOptions[enabledOptions.length - 1]);
@@ -305,6 +318,7 @@ export default function Select({
       onFocusFirstOption();
     } else {
       const index = enabledOptions.indexOf(focusedOption) + 1;
+
       setFocusedOption(enabledOptions[index]);
     }
   }, [enabledOptions, focusedOption, onFocusFirstOption]);
@@ -350,6 +364,11 @@ export default function Select({
 
   const deselectionOption = useMemo(() => {
     const selected = selectedOption === null;
+
+    if (!allowDeselect) {
+      return null;
+    }
+
     return (
       <InternalOption
         className={undefined}
@@ -373,6 +392,7 @@ export default function Select({
     getOptionFocusHandler,
     placeholder,
     selectedOption,
+    allowDeselect,
   ]);
 
   const renderedChildren = useMemo(
@@ -508,6 +528,7 @@ export default function Select({
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
+          __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
         >
           <ListMenu
             labelId={labelId}

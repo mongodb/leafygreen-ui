@@ -35,6 +35,9 @@ type Props = {
   onDeselect: React.KeyboardEventHandler;
   onClose: () => void;
   onOpen: () => void;
+  __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
+    React.RefAttributes<unknown>
+  >;
 } & Required<
   Pick<
     JSX.IntrinsicElements['div'],
@@ -55,6 +58,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     onFocusLastOption,
     onClose,
     onOpen,
+    __INTERNAL__menuButtonSlot__,
     ...ariaProps
   }: Props,
   forwardedRef,
@@ -129,8 +133,12 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     ref.current!.focus();
   }, [onClose, onOpen, open, ref]);
 
+  const Component = __INTERNAL__menuButtonSlot__
+    ? __INTERNAL__menuButtonSlot__
+    : Button;
+
   return (
-    <Button
+    <Component
       {...ariaProps}
       ref={ref}
       name={name}
@@ -161,7 +169,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     >
       <span className={menuButtonTextStyle}>{text}</span>
       {children}
-    </Button>
+    </Component>
   );
 });
 

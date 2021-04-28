@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 2.1.0
+
+### Minor Changes
+
+- 559ceb15: Support a prop to disable the option to deselect
+
 ## 2.0.5
 
 ### Patch Changes

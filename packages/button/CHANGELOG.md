@@ -1,5 +1,17 @@
 # @leafygreen-ui/button
 
+## 11.0.4
+
+### Patch Changes
+
+- 7c952eca: Fixes semantic HTML inside of Button to better support being a trigger for portaled components
+
+## 11.0.3
+
+### Patch Changes
+
+- e2f7e6a4: Explicitly sets `color` property on focused buttons
+
 ## 11.0.2
 
 ### Patch Changes

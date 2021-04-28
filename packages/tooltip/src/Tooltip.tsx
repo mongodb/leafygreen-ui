@@ -175,7 +175,6 @@ export type TooltipProps = Omit<
 const idAllocator = IdAllocator.create('tooltip');
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
-  evt.preventDefault();
   evt.stopPropagation();
 };
 

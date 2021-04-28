@@ -93,7 +93,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 ## Select Properties
 
 | Prop              | Type                                          | Description                                                                                                                                                          | Default     |
-| ----------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | --- |
+| ----------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `children`        | `node`                                        | `<Option />` and `<OptionGroup />` elements.                                                                                                                         |             |
 | `className`       | `string`                                      | Adds a className to the outermost element.                                                                                                                           |             |
 | `darkMode`        | `boolean`                                     | Determines whether or not the component will appear in dark mode.                                                                                                    | `false`     |
@@ -109,11 +109,12 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `defaultValue`    | `string`                                      | Sets the `<Option />` that will appear selected on page load when the component is uncontrolled.                                                                     | `''`        |
 | `onChange`        | `function`                                    | A function that gets called when the selected value changes. Receives the value string as the first argument.                                                        | `() => {}`  |
 | `readOnly`        | `boolean`                                     | Disables the console warning when the component is controlled and no `onChange` prop is provided.                                                                    | `false`     |
+| `allowDeselect`   | `boolean`                                     | Enables or disables the option for a user to select a null default value.                                                                                            | `true`      |
 | `usePortal`       | `boolean`                                     | Determines if Select dropdown will be rendered inside a portal.                                                                                                      | `true`      |
 | `portalContainer` | `HTMLElement` \| `null`                       | Sets the container used for the popover's portal.                                                                                                                    |             |
 | `scrollContainer` | `HTMLElement` \| `null`                       | If the popover portal has a scrollable ancestor other than the window, this prop allows passing a reference to that lement to allow the portal to position properly. |             |
 | `portalClassName` | `string`                                      | Passes the given className to the popover's portal container if the default portal container is being used.                                                          |             |
-| `popoverZIndex`   | `number`                                      | Sets the z-index CSS property for the popover.                                                                                                                       |             |     |
+| `popoverZIndex`   | `number`                                      | Sets the z-index CSS property for the popover.                                                                                                                       |             |
 
 # Option
 

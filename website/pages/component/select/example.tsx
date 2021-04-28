@@ -12,11 +12,17 @@ const knobsConfig: KnobsConfigInterface<{
   description: string;
   placeholder: string;
   size: Size;
+  allowDeselect: boolean;
 }> = {
   darkMode: {
     type: 'boolean',
     default: false,
     label: 'Dark Mode',
+  },
+  allowDeselect: {
+    type: 'boolean',
+    default: false,
+    label: 'Allow Deselect',
   },
   disabled: {
     type: 'boolean',
@@ -63,12 +69,9 @@ export default function SelectLiveExample() {
         placeholder,
         disabled,
         withIcons,
+        allowDeselect,
       }) => (
-        <div
-          className={css`
-            width: 400px;
-          `}
-        >
+        <div>
           <Select
             darkMode={darkMode}
             size={size}
@@ -78,6 +81,10 @@ export default function SelectLiveExample() {
             name="readPreferences"
             defaultValue="primary"
             disabled={disabled}
+            allowDeselect={allowDeselect}
+            className={css`
+              width: 400px;
+            `}
           >
             <OptionGroup label="Primary">
               <Option
