@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
+import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
 import {
   useViewportSize,
   useMutationObserver,
@@ -44,27 +45,34 @@ const mutationOptions = {
   <Popover active={true}>Hello world!</Popover>
 </button>
 ```
- * @param props.children Content to appear inside of Popover container.
  * @param props.active Boolean to describe whether or not Popover is active.
- * @param props.className Classname applied to Popover container.
+ * @param props.spacing The spacing (in pixels) between the reference element, and the popover.
  * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`, `center-horizontal`, `center-vertical`.
  * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`, `fit`.
+ * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+ * @param props.children Content to appear inside of Popover container.
+ * @param props.className Classname applied to Popover container.
+ * @param props.popoverZIndex Number that controls the z-index of the popover element directly.
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.portalClassName Classname applied to root element of the portal.
- * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+ * @param props.portalContainer HTML element that the popover is portaled within.
+ * @param props.scrollContainer HTML ancestor element that's scrollable to position the popover accurately within scrolling containers.
  */
 function Popover({
   active = false,
-  usePortal = true,
   spacing = 10,
   align = Align.Bottom,
   justify = Justify.Start,
   adjustOnMutation = false,
   children,
   className,
-  portalClassName,
+  popoverZIndex,
   refEl,
+  usePortal = true,
+  portalClassName,
+  portalContainer: portalContainerProp,
+  scrollContainer: scrollContainerProp,
   ...rest
 }: PopoverProps) {
   const [placeholderNode, setPlaceholderNode] = useState<HTMLElement | null>(
@@ -72,6 +80,11 @@ function Popover({
   );
   const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
+
+  let { portalContainer, scrollContainer } = usePopoverPortalContainer();
+
+  portalContainer = portalContainerProp || portalContainer;
+  scrollContainer = scrollContainerProp || scrollContainer;
 
   // To remove StrictMode warnings produced by react-transition-group we need
   // to pass in a useRef object to the <Transition> component.
@@ -114,19 +127,20 @@ function Popover({
 
   // We don't memoize these values as they're reliant on scroll positioning
   const referenceElViewportPos = useObjectDependency(
-    getElementViewportPosition(referenceElement),
+    getElementViewportPosition(referenceElement, scrollContainer),
   );
 
   const contentElViewportPos = useObjectDependency(
-    getElementViewportPosition(contentNode),
+    getElementViewportPosition(contentNode, scrollContainer),
   );
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
-      () => getElementDocumentPosition(referenceElement),
+      () => getElementDocumentPosition(referenceElement, scrollContainer),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
         referenceElement,
+        scrollContainer,
         viewportSize,
         lastTimeRefElMutated,
         active,
@@ -203,7 +217,11 @@ function Popover({
   `;
 
   const Root = usePortal ? Portal : Fragment;
-  const rootProps = usePortal ? { className: portalClassName } : {};
+  const rootProps = usePortal
+    ? portalContainer
+      ? { container: portalContainer }
+      : { className: portalClassName ?? undefined }
+    : {};
 
   let renderedChildren: null | React.ReactNode;
 
@@ -246,6 +264,9 @@ function Popover({
                   [css({ transform })]:
                     state === 'entering' || state === 'exiting',
                   [activeStyle]: state === 'entered',
+                  [css`
+                    z-index: ${popoverZIndex};
+                  `]: typeof popoverZIndex === 'number',
                 },
                 className,
               )}
@@ -281,16 +302,6 @@ Popover.propTypes = {
   portalClassName: PropTypes.string,
   spacing: PropTypes.number,
   adjustOnMutation: PropTypes.bool,
-};
-
-Popover.defaultProps = {
-  children: undefined,
-  align: Align.Bottom,
-  justify: Justify.Start,
-  active: false,
-  usePortal: true,
-  spacing: 10,
-  adjustOnMutation: false,
 };
 
 export default Popover;
