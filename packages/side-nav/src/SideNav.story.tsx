@@ -231,6 +231,7 @@ function OrgSettingsSideNav() {
 
 function MockSideNav() {
   const textHeader = 'States';
+  const hasActiveItem = boolean('hasActiveItem', false);
 
   return (
     <LeafyGreenProvider>
@@ -250,6 +251,7 @@ function MockSideNav() {
           </SideNavGroup>
 
           <SideNavGroup
+            hasActiveItem={hasActiveItem}
             glyph={<Icon glyph="Warning" />}
             header={text('Header Text', 'With Knobs!')}
             collapsible={boolean('collapsible', true)}
