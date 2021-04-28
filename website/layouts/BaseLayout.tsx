@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Navigation from 'components/navigation';
+import { LayoutContext } from 'components/LayoutContext';
 import { mq } from 'utils/mediaQuery';
 import Footer from './Footer';
 
@@ -21,6 +23,7 @@ const containerStyle = css`
 `;
 
 const layout = css`
+  position: relative;
   ${mq({
     overflowX: ['visible', 'visible', 'hidden'],
     overflowY: ['visible', 'visible', 'auto'],
@@ -44,16 +47,30 @@ const childrenWrapper = css`
 `;
 
 function BaseLayout({ children }: { children: React.ReactNode }) {
+  const [
+    bodyContainerRef,
+    setBodyContainerRef,
+  ] = useState<HTMLDivElement | null>(null);
+
   return (
-    <div className={containerStyle}>
-      <Navigation />
+    <LeafyGreenProvider
+      popoverPortalContainer={{
+        scrollContainer: bodyContainerRef,
+        portalContainer: bodyContainerRef,
+      }}
+    >
+      <LayoutContext.Provider value={bodyContainerRef}>
+        <div className={containerStyle}>
+          <Navigation />
 
-      <div className={layout}>
-        <div className={childrenWrapper}>{children}</div>
+          <div className={layout} ref={setBodyContainerRef}>
+            <div className={childrenWrapper}>{children}</div>
 
-        <Footer />
-      </div>
-    </div>
+            <Footer />
+          </div>
+        </div>
+      </LayoutContext.Provider>
+    </LeafyGreenProvider>
   );
 }
 
