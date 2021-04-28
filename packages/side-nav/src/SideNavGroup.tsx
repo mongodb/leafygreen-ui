@@ -145,6 +145,12 @@ interface SideNavGroupBaseProps {
    * Icon that's rendered in the group label.
    */
   glyph?: React.ReactNode;
+
+  /**
+   * Manually overrides automatic detection of whether a group contains an active item when the nav is collapsed.
+   * This is useful for cases when an active item might be wrapped with another component like a Tooltip or routing component.
+   */
+  hasActiveItem?: boolean;
 }
 
 type CollapsedProps = OneOf<
@@ -195,6 +201,7 @@ function SideNavGroup({
   initialCollapsed = true,
   glyph,
   className,
+  hasActiveItem,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
@@ -208,10 +215,14 @@ function SideNavGroup({
   const menuId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
 
   const isActiveGroup: boolean = useMemo(() => {
+    if (hasActiveItem != null) {
+      return hasActiveItem;
+    }
+
     return React.Children.toArray(children).some(child => {
       return isComponentType(child, 'SideNavItem') && child.props.active;
     });
-  }, [children]);
+  }, [children, hasActiveItem]);
 
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
