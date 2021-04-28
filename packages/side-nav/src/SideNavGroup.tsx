@@ -147,7 +147,7 @@ interface SideNavGroupBaseProps {
   glyph?: React.ReactNode;
 
   /**
-   * Manually overrides automatic detection of whether a group contains an active item when the nav is collapsed.
+   * Manually overrides automatic detection of whether a group contains an active item.
    * This is useful for cases when an active item might be wrapped with another component like a Tooltip or routing component.
    */
   hasActiveItem?: boolean;
