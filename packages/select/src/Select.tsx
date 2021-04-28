@@ -82,7 +82,7 @@ export default function Select({
   className,
   id: idProp,
   label,
-  'aria-labelledby': ariaLabelledBy,
+  'aria-labelledby': ariaLabelledby,
   description,
   name,
   defaultValue,
@@ -96,15 +96,15 @@ export default function Select({
   popoverZIndex,
   __INTERNAL__menuButtonSlot__,
 }: Props) {
-  if (!label && !ariaLabelledBy) {
+  if (!label && !ariaLabelledby) {
     console.error(
       'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
     );
   }
 
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
-  const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
-    ariaLabelledBy,
+  const labelId = useMemo(() => ariaLabelledby ?? `${id}-label`, [
+    ariaLabelledby,
     id,
   ]);
   const descriptionId = `${id}-description`;
