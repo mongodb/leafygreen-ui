@@ -1,5 +1,31 @@
 # @leafygreen-ui/button
 
+## 11.0.4
+
+### Patch Changes
+
+- 7c952eca: Fixes semantic HTML inside of Button to better support being a trigger for portaled components
+
+## 11.0.3
+
+### Patch Changes
+
+- e2f7e6a4: Explicitly sets `color` property on focused buttons
+
+## 11.0.2
+
+### Patch Changes
+
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/ripple@1.1.1
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/box@3.0.4
+  - @leafygreen-ui/leafygreen-provider@2.0.3
+  - @leafygreen-ui/tokens@0.5.1
+
 ## 11.0.1
 
 ### Patch Changes

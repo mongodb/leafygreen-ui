@@ -1,5 +1,18 @@
 # @leafygreen-ui/inline-definition
 
+## 2.0.3
+
+### Patch Changes
+
+- Updated dependencies [02417199]
+- Updated dependencies [46f5de0b]
+- Updated dependencies [ab581f34]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/typography@7.6.0
+  - @leafygreen-ui/tooltip@6.1.8
+  - @leafygreen-ui/palette@3.2.1
+  - @leafygreen-ui/lib@7.0.0
+
 ## 2.0.2
 
 ### Patch Changes

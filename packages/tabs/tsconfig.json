@@ -29,7 +29,11 @@
       "path": "../portal"
     },
     {
+<<<<<<< HEAD
       "path": "../hooks"
+=======
+      "path": "../a11y"
+>>>>>>> origin
     }
   ]
 }

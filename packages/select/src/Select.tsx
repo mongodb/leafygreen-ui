@@ -40,6 +40,10 @@ export type Props = {
   placeholder?: string;
   usePortal?: boolean;
   name?: string;
+  allowDeselect?: boolean;
+  __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
+    React.RefAttributes<unknown>
+  >;
 } & (
   | // Uncontrolled
   ({
@@ -72,6 +76,7 @@ export default function Select({
   size = Size.Default,
   disabled = false,
   usePortal = true,
+  allowDeselect = true,
   placeholder = 'Select',
   className,
   id: idProp,
@@ -83,8 +88,19 @@ export default function Select({
   onChange,
   readOnly,
   'aria-labelledby': ariaLabelledBy,
+  __INTERNAL__menuButtonSlot__,
 }: Props) {
+<<<<<<< HEAD
   const id = useIdAllocator({ prefix: 'select', id: idProp });
+=======
+  if (!label && !ariaLabelledBy) {
+    console.error(
+      'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
+    );
+  }
+
+  const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
+>>>>>>> origin
   const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
     ariaLabelledBy,
     id,
@@ -116,16 +132,9 @@ export default function Select({
     }
   }, [onChange, readOnly, value]);
 
-  if (!label && !ariaLabelledBy) {
-    console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
-    );
-  }
-
   /**
    * Open / close state
    */
-
   const onOpen = useCallback(() => {
     setOpen(true);
   }, []);
@@ -251,7 +260,11 @@ export default function Select({
   >();
 
   const enabledOptions = useMemo(() => {
-    const enabledOptions: Array<OptionElement | null> = [null];
+    const enabledOptions: Array<OptionElement | null> = [];
+
+    if (allowDeselect) {
+      enabledOptions.push(null);
+    }
 
     traverseSelectChildren(children, (option, group) => {
       if (!isOptionDisabled(option, group)) {
@@ -260,7 +273,7 @@ export default function Select({
     });
 
     return enabledOptions;
-  }, [children]);
+  }, [children, allowDeselect]);
 
   const onSelectFocusedOption = useCallback(
     (event: React.KeyboardEvent) => {
@@ -272,8 +285,12 @@ export default function Select({
   );
 
   const onFocusFirstOption = useCallback(() => {
-    setFocusedOption(null);
-  }, []);
+    if (allowDeselect) {
+      setFocusedOption(null);
+    } else {
+      setFocusedOption(enabledOptions[0]);
+    }
+  }, [allowDeselect, enabledOptions]);
 
   const onFocusLastOption = useCallback(() => {
     setFocusedOption(enabledOptions[enabledOptions.length - 1]);
@@ -299,6 +316,7 @@ export default function Select({
       onFocusFirstOption();
     } else {
       const index = enabledOptions.indexOf(focusedOption) + 1;
+
       setFocusedOption(enabledOptions[index]);
     }
   }, [enabledOptions, focusedOption, onFocusFirstOption]);
@@ -344,6 +362,11 @@ export default function Select({
 
   const deselectionOption = useMemo(() => {
     const selected = selectedOption === null;
+
+    if (!allowDeselect) {
+      return null;
+    }
+
     return (
       <InternalOption
         className={undefined}
@@ -367,6 +390,7 @@ export default function Select({
     getOptionFocusHandler,
     placeholder,
     selectedOption,
+    allowDeselect,
   ]);
 
   const renderedChildren = useMemo(
@@ -488,6 +512,7 @@ export default function Select({
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
+          __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
         >
           <ListMenu
             labelId={labelId}

@@ -195,7 +195,6 @@ export type TooltipProps = Omit<
   } & PortalProps;
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
-  evt.preventDefault();
   evt.stopPropagation();
 };
 

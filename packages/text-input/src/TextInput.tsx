@@ -292,10 +292,10 @@ const TextInput: React.ComponentType<
       state = State.None,
       type = TextInputType.Text,
       id: propsId,
-      'aria-labelledby': ariaLabelledBy,
       value: controlledValue,
       className,
       darkMode = false,
+      'aria-labelledby': ariaLabelledby,
       ...rest
     }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -317,7 +317,7 @@ const TextInput: React.ComponentType<
       }
     }
 
-    if (!label && !ariaLabelledBy) {
+    if (!label || !ariaLabelledby) {
       console.error(
         'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
       );
@@ -345,7 +345,7 @@ const TextInput: React.ComponentType<
           >
             <input
               {...rest}
-              aria-labelledby={ariaLabelledBy}
+              aria-labelledby={ariaLabelledby}
               type={type}
               className={cx(
                 inputStyle,

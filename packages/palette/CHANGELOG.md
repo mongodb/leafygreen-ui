@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.2.1
+
+### Patch Changes
+
+- ab581f34: Re-released components that were erroneously released without `.d.ts` files
+
 ## 3.2.0
 
 ### Minor Changes

@@ -20,6 +20,7 @@ storiesOf('Select', module)
     const useProvider = boolean('Use LeafygreenProvider', false);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
     const usePortal = boolean('usePortal', false);
+    const allowDeselect = boolean('allowDeselect', false);
 
     return (
       <div
@@ -42,6 +43,7 @@ storiesOf('Select', module)
             defaultValue="cat"
             disabled={disabled}
             usePortal={usePortal}
+            allowDeselect={allowDeselect}
             className={css`
               min-width: 200px;
             `}

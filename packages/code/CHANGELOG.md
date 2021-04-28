@@ -1,5 +1,34 @@
 # @leafygreen-ui/code
 
+## 8.1.1
+
+### Patch Changes
+
+- 909ede70: Removes empty panel rendered when copyable is false
+
+## 8.1.0
+
+### Minor Changes
+
+- 55ccd908: Adds ability for Code component to be rendered with a language switcher
+
+### Patch Changes
+
+- Updated dependencies [559ceb15]
+  - @leafygreen-ui/select@2.1.0
+
+## 8.0.9
+
+### Patch Changes
+
+- Updated dependencies [90321b36]
+- Updated dependencies [90321b36]
+  - @leafygreen-ui/icon-button@9.1.3
+  - @leafygreen-ui/lib@7.0.0
+  - @leafygreen-ui/icon@10.2.1
+  - @leafygreen-ui/leafygreen-provider@2.0.3
+  - @leafygreen-ui/tokens@0.5.1
+
 ## 8.0.8
 
 ### Patch Changes

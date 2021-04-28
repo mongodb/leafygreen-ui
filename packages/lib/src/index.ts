@@ -1,7 +1,6 @@
-import { validateAriaLabelProps } from './accessibilityHelpers';
 import * as typeIs from './typeIs';
 
-export { typeIs, validateAriaLabelProps };
+export { typeIs };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<

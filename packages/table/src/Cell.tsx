@@ -1,7 +1,8 @@
 import React from 'react';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { commonCellStyles } from './styles';
+import { getCommonCellStyles } from './styles';
+import { useFontSizeContext } from './FontSizeContext';
 
 export const tdInnerDiv = createDataProp('td-inner-div');
 
@@ -31,7 +32,6 @@ const innerDivStyles = css`
 `;
 
 export type CellElement = React.ReactComponentElement<typeof Cell>;
-
 const Cell = React.forwardRef(
   (
     { children, className, isHeader = false, ...rest }: CellProps,
@@ -39,10 +39,12 @@ const Cell = React.forwardRef(
   ) => {
     const Root = isHeader ? 'th' : 'td';
 
+    const baseFontSize = useFontSizeContext();
+
     const props: Partial<CellProps> = {
       ref,
       className: cx(
-        commonCellStyles,
+        getCommonCellStyles(baseFontSize),
         baseStyles,
         { [thStyles]: isHeader },
         className,
