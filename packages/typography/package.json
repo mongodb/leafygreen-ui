@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "7.6.0",
+  "version": "8.0.0",
   "description": "leafyGreen UI Kit Typography",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -27,6 +27,6 @@
     "@leafygreen-ui/tokens": "^0.5.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.0.3"
+    "@leafygreen-ui/leafygreen-provider": "^2.1.0"
   }
 }

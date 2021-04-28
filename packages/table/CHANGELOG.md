@@ -1,5 +1,12 @@
 # @leafygreen-ui/table
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+
 ## 1.5.1
 
 ### Patch Changes
