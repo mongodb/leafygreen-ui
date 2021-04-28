@@ -82,9 +82,14 @@ const customIconStyles = css`
 `;
 
 const collapsibleHeaderFocusStyle = css`
-  ${button.selector}:focus & {
-    color: ${uiColors.blue.base};
-    border-color: ${uiColors.blue.light1};
+  &:focus {
+    color: ${uiColors.blue.dark3};
+    border-color: ${uiColors.focus};
+    background-color: ${uiColors.blue.light2};
+
+    & svg {
+      color: ${uiColors.blue.base};
+    }
   }
 `;
 

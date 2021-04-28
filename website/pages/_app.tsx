@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Global } from '@emotion/core';
 import { globalStyles } from 'styles/globals';
 import BaseLayout from 'layouts/BaseLayout';
@@ -29,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <LeafyGreenProvider>
+    <>
       <Head>
         <title>Home – LeafyGreen Design System | MongoDB</title>
         <meta
@@ -66,12 +65,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Global styles={globalStyles} />
+
       <BaseLayout>
         <SubLayout>
           <Component {...pageProps} />
         </SubLayout>
       </BaseLayout>
-    </LeafyGreenProvider>
+    </>
   );
 }
 
