@@ -1,5 +1,13 @@
 # @leafygreen-ui/toast
 
+## 0.4.7
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/portal@3.1.2
+  - @leafygreen-ui/typography@8.0.0
+
 ## 0.4.6
 
 ### Patch Changes
