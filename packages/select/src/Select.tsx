@@ -90,17 +90,14 @@ export default function Select({
   'aria-labelledby': ariaLabelledBy,
   __INTERNAL__menuButtonSlot__,
 }: Props) {
-<<<<<<< HEAD
   const id = useIdAllocator({ prefix: 'select', id: idProp });
-=======
+
   if (!label && !ariaLabelledBy) {
     console.error(
       'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
     );
   }
 
-  const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
->>>>>>> origin
   const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
     ariaLabelledBy,
     id,

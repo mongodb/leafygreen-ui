@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
-=======
-import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Either, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
->>>>>>> origin
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
@@ -139,23 +134,6 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
 type AriaLabels = 'label' | 'aria-labelledby';
 type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
 
-<<<<<<< HEAD
-export default function TextArea({
-  label,
-  description,
-  className,
-  errorMessage,
-  darkMode = false,
-  disabled = false,
-  state = State.None,
-  id: idProp,
-  value: controlledValue,
-  onChange,
-  'aria-labelledby': ariaLabelledBy,
-  ...rest
-}: TextAreaProps) {
-  const id = useIdAllocator({ prefix: 'textarea', id: idProp });
-=======
 const TextArea: React.ComponentType<
   React.PropsWithRef<TextAreaProps>
 > = React.forwardRef(function TextArea(
@@ -175,8 +153,7 @@ const TextArea: React.ComponentType<
   }: TextAreaProps,
   forwardedRef: React.Ref<HTMLTextAreaElement>,
 ) {
-  const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
->>>>>>> origin
+  const id = useIdAllocator({ prefix: 'textarea', id: idProp });
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
