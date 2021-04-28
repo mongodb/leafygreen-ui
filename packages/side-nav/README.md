@@ -173,6 +173,7 @@ _Any other properties will be spread on the root-level element._
 | `children`         | `node`           | Content that will be rendered inside the root-level element.                                                                                     | `undefined` |
 | `collapsible`      | `boolean`        | Determines whether or not the Group is collapsible                                                                                               | `false`     |
 | `initialCollapsed` | `boolean`        | Determines whether or not the SideNavGroup should be collapsed on the first render.                                                              | `true`      |
+| `hasActiveItem`    | `boolean`        | Manually overrides automatic detection of whether a group contains an active item when the nav is collapsed.                                     |             |
 
 _Any other properties will be spread on the root-level element._
 
