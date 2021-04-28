@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum a0a254f456e323606d286c4a2db9fa02
+ * @checksum e75f51ae5a101019249603dd1b900d0d
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -50,11 +50,11 @@ const CreditCard = ({
     >
       <path
         d="M3 3C1.89543 3 1 3.89543 1 5L15 5C15 3.89543 14.1046 3 13 3H3Z"
-        fill="currentColor"
+        fill={'currentColor'}
       />
       <path
         d="M15 7L1 7V11C1 12.1046 1.89543 13 3 13H13C14.1046 13 15 12.1046 15 11V7Z"
-        fill="currentColor"
+        fill={'currentColor'}
       />
     </svg>
   );
