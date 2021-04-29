@@ -2,6 +2,8 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/table.svg)
 
+#### [View on MongoDB.design](https://www.mongodb.design/component/table/example/)
+
 ## Installation
 
 ### Yarn
