@@ -83,7 +83,7 @@ export default function SelectLiveExample() {
             disabled={disabled}
             allowDeselect={allowDeselect}
             className={css`
-              width: 400px;
+              width: 200px;
             `}
           >
             <OptionGroup label="Primary">
@@ -91,7 +91,8 @@ export default function SelectLiveExample() {
                 value="primary"
                 glyph={withIcons ? <BeakerIcon /> : undefined}
               >
-                primary
+                primary fadklsfj fsadlkfjasl fdkflsajf dsafasdlkfjsa fas
+                faskfjals; fas
               </Option>
               <Option
                 value="primPreferred"
