@@ -1,5 +1,11 @@
 # @leafygreen-ui/portal
 
+## 3.1.2
+
+### Patch Changes
+
+- 857a680a: Reworks logic for creating a custom portal element to support future reuse of portal root generation.
+
 ## 3.1.1
 
 ### Patch Changes

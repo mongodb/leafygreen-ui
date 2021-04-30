@@ -1,5 +1,12 @@
 # @leafygreen-ui/marketing-modal
 
+## 2.0.10
+
+### Patch Changes
+
+- @leafygreen-ui/button@12.0.0
+- @leafygreen-ui/typography@8.0.0
+
 ## 2.0.9
 
 ### Patch Changes

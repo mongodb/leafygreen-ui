@@ -22,7 +22,6 @@ const rippleStyle = css`
 const containerChildStyles = css`
   display: flex;
   align-items: center;
-  // justify-content: center;
   height: 100%;
   width: 100%;
   pointer-events: none;

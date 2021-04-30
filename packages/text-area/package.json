@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-area",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "leafyGreen UI Kit Text Area",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,6 +25,6 @@
     "@leafygreen-ui/interaction-ring": "^1.0.2",
     "@leafygreen-ui/palette": "^3.2.1",
     "@leafygreen-ui/tokens": "^0.5.1",
-    "@leafygreen-ui/typography": "^7.6.0"
+    "@leafygreen-ui/typography": "^8.0.0"
   }
 }

@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-area
 
+## 4.0.1
+
+### Patch Changes
+
+- @leafygreen-ui/typography@8.0.0
+
 ## 4.0.0
 
 ### Major Changes
