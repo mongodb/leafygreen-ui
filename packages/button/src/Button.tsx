@@ -156,7 +156,7 @@ const Button: ExtendableBox<
         {children}
 
         {rightGlyph && (
-          <div
+          <span
             className={css`
               display: flex;
               align-items: center;
@@ -171,7 +171,7 @@ const Button: ExtendableBox<
               }
               {...iconProps}
             />
-          </div>
+          </span>
         )}
       </div>
     </>
