@@ -1,5 +1,19 @@
 # @leafygreen-ui/menu
 
+## 10.0.0
+
+### Minor Changes
+
+- 857a680a: Adds support for positioning popover elements relative to elements within a scroll container other than the window.
+  Adds support for setting z-index on popover elements with the `zIndex` prop.
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+  - @leafygreen-ui/popover@7.2.0
+
 ## 9.1.4
 
 ### Patch Changes

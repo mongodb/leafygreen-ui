@@ -1,5 +1,14 @@
 # @leafygreen-ui/text-input
 
+## 6.0.0
+
+### Patch Changes
+
+- 801f3221: Fixes check to ensure label or ariaLablledby is provided to component
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+  - @leafygreen-ui/typography@8.0.0
+
 ## 5.0.12
 
 ### Patch Changes
