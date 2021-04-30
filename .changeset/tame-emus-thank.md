@@ -1,5 +1,4 @@
 ---
-'@leafygreen-ui/button': patch
 '@leafygreen-ui/select': patch
 ---
 
