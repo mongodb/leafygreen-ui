@@ -10,7 +10,6 @@ const baseButtonStyles = css`
   margin: 0;
   background-color: transparent;
   border: 0px solid transparent;
-
   display: inline-flex;
   align-items: stretch;
   border-radius: 4px;
@@ -42,6 +41,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       box-shadow: 0px 2px 3px rgba(19, 170, 82, 0.4);
       color: ${uiColors.white};
 
+      &:focus {
+        color: ${uiColors.white};
+      }
+
       &:hover,
       &:active {
         color: ${uiColors.white};
@@ -53,6 +56,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
     [Variant.PrimaryOutline]: css`
       border: 1px solid ${uiColors.green.dark1};
       color: ${uiColors.green.dark2};
+
+      &:focus {
+        color: ${uiColors.green.dark2};
+      }
 
       &:hover,
       &:active {
@@ -69,6 +76,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
       color: ${uiColors.gray.dark2};
 
+      &:focus {
+        color: ${uiColors.gray.dark2};
+      }
+
       &:hover,
       &:active {
         color: ${uiColors.gray.dark2};
@@ -84,6 +95,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       box-shadow: 0px 1px 2px rgba(207, 74, 34, 0.4);
       color: ${uiColors.white};
 
+      &:focus {
+        color: ${uiColors.white};
+      }
+
       &:hover,
       &:active {
         color: ${uiColors.white};
@@ -96,6 +111,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
     [Variant.DangerOutline]: css`
       border: 1px solid ${uiColors.red.base};
       color: ${uiColors.red.dark2};
+
+      &:focus {
+        color: ${uiColors.red.dark2};
+      }
 
       &:hover,
       &:active {
@@ -112,6 +131,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       border: 1px solid ${uiColors.green.base};
       color: ${uiColors.white};
 
+      &:focus {
+        color: ${uiColors.white};
+      }
+
       &:hover,
       &:active {
         color: ${uiColors.white};
@@ -123,6 +146,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
     [Variant.PrimaryOutline]: css`
       border: 1px solid ${uiColors.green.base};
       color: #0ad05b;
+
+      &:focus {
+        color: #0ad05b;
+      }
 
       &:hover,
       &:active {
@@ -138,6 +165,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       border: 1px solid ${uiColors.gray.base};
       color: ${uiColors.white};
 
+      &:focus {
+        color: ${uiColors.white};
+      }
+
       &:hover,
       &:active {
         color: ${uiColors.white};
@@ -152,6 +183,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       border: 1px solid #f97216;
       color: ${uiColors.white};
 
+      &:focus {
+        color: ${uiColors.white};
+      }
+
       &:hover,
       &:active {
         color: ${uiColors.white};
@@ -164,6 +199,10 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
     [Variant.DangerOutline]: css`
       border: 1px solid #f97216;
       color: #f97216;
+
+      &:focus {
+        color: #f97216;
+      }
 
       &:hover,
       &:active {
@@ -179,7 +218,6 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Primary]: css`
       &:focus {
-        color: ${uiColors.white};
         background-color: ${uiColors.green.dark2};
         box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
           0px 0px 0px 3px ${uiColors.focus};
@@ -187,7 +225,6 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
     `,
     [Variant.PrimaryOutline]: css`
       &:focus {
-        color: ${uiColors.green.dark2};
         background-color: rgba(9, 128, 76, 0.04);
         border: 1px solid ${uiColors.green.dark1};
         box-shadow: 0px 0px 0px 3px ${uiColors.focus};
@@ -195,7 +232,6 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
     `,
     [Variant.Default]: css`
       &:focus {
-        color: ${uiColors.gray.dark2};
         background: ${uiColors.white};
         border: 1px solid ${uiColors.gray.dark1};
         box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
@@ -204,7 +240,6 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
     `,
     [Variant.Danger]: css`
       &:focus {
-        color: ${uiColors.white};
         background-color: ${uiColors.red.dark1};
         box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
           0px 0px 0px 3px ${uiColors.focus};
@@ -212,7 +247,6 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
     `,
     [Variant.DangerOutline]: css`
       &:focus {
-        color: ${uiColors.red.dark2};
         background: rgba(207, 74, 34, 0.04);
         border: 1px solid ${uiColors.red.dark2};
         box-shadow: 0px 0px 0px 3px #019ee2;
@@ -222,7 +256,6 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
   [Mode.Dark]: {
     [Variant.Primary]: css`
       &:focus {
-        color: ${uiColors.white};
         background: ${uiColors.green.dark1};
         box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
           0px 0px 0px 3px ${uiColors.focus};
@@ -230,7 +263,6 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
     `,
     [Variant.PrimaryOutline]: css`
       &:focus {
-        color: #0ad05b;
         background: rgba(10, 208, 91, 0.08);
         border: 1px solid ${uiColors.green.dark1};
         box-shadow: 0px 0px 0px 3px #139fd7;
@@ -238,21 +270,18 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
     `,
     [Variant.Default]: css`
       &:focus {
-        color: ${uiColors.white};
         background-color: ${uiColors.gray.dark1};
         box-shadow: 0px 0px 0px 3px #2f9fc5;
       }
     `,
     [Variant.Danger]: css`
       &:focus {
-        color: ${uiColors.white};
         background: ${uiColors.red.base};
         box-shadow: 0px 0px 0px 3px ${uiColors.focus};
       }
     `,
     [Variant.DangerOutline]: css`
       &:focus {
-        color: #f97216;
         background: rgba(249, 114, 22, 0.08);
         border: 1px solid #f97216;
         box-shadow: 0px 0px 0px 3px #019ee2;
