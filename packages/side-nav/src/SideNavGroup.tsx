@@ -37,6 +37,7 @@ const labelStyle = css`
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
+  line-height: 1em;
   letter-spacing: 0.3px;
   font-weight: bold;
   text-transform: uppercase;
@@ -45,7 +46,6 @@ const labelStyle = css`
   margin-top: 0;
   margin-bottom: 0;
   padding: 4px ${sideNavItemSidePadding}px 4px ${sideNavItemSidePadding}px;
-  line-height: 1em;
 
   &:not(:first-of-type) {
     margin-top: ${spacing[1]}px;

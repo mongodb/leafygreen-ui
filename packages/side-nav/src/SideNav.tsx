@@ -7,6 +7,7 @@ import {
   prefersReducedMotion,
   validateAriaLabelProps,
 } from '@leafygreen-ui/a11y';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -142,6 +143,8 @@ interface SideNavProps {
   children?: React.ReactNode;
 
   id?: string;
+
+  baseFontSize?: 14 | 16;
 }
 
 /**
@@ -160,7 +163,13 @@ interface SideNavProps {
  * @param props.className Class name that will be applied to the root-level element.
  * @param props.children Content that will be rendered inside the root-level element.
  */
-function SideNav({ className, children, id: idProp, ...rest }: SideNavProps) {
+function SideNav({
+  className,
+  children,
+  id: idProp,
+  baseFontSize,
+  ...rest
+}: SideNavProps) {
   const { Provider: ContextProvider } = SideNavContext;
   const [collapsed, setCollapsed] = useState(false);
   const [hover, setHover] = useState(false);
@@ -171,6 +180,8 @@ function SideNav({ className, children, id: idProp, ...rest }: SideNavProps) {
     portalContainer,
     setPortalContainer,
   ] = useState<HTMLUListElement | null>(null);
+  const providerFontSize = useBaseFontSize();
+  const fontSize: 14 | 16 = baseFontSize ?? providerFontSize;
 
   // We visually expand the navigation when a user focuses on an element within the navigation
   // while navigating via keyboard.
@@ -214,6 +225,7 @@ function SideNav({ className, children, id: idProp, ...rest }: SideNavProps) {
             collapsed,
             portalContainer,
             transitionState: state,
+            baseFontSize: fontSize,
           }}
         >
           <div

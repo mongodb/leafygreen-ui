@@ -6,6 +6,7 @@ interface SideNavigationContext {
   portalContainer?: React.RefObject<HTMLUListElement | null>['current'];
   transitionState?: TransitionStatus;
   navId?: string;
+  baseFontSize?: 14 | 16;
 }
 
 const SideNavContext = createContext<SideNavigationContext>({

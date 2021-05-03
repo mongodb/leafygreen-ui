@@ -12,6 +12,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
+import { useSideNavContext } from './SideNavContext';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -34,9 +35,7 @@ const defaultStyle = css`
 
   // Typography
   font-family: ${fontFamilies.default};
-  font-size: 14px;
   font-weight: normal;
-  line-height: 1em;
   text-align: left;
   text-decoration: none;
   text-transform: capitalize;
@@ -60,6 +59,17 @@ const defaultStyle = css`
     border: 0;
   }
 `;
+
+const typographyStyle = {
+  [14]: css`
+    font-size: 14px;
+    line-height: 1em;
+  `,
+  [16]: css`
+    font-size: 16px;
+    line-height: 1.5em;
+  `,
+};
 
 const activeStyle = css`
   cursor: default;
@@ -213,6 +223,7 @@ const SideNavItem: ExtendableBox<
     ...rest
   } = props;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { baseFontSize = 14 } = useSideNavContext();
 
   const onClick = disabled
     ? (e: React.MouseEvent) => {
@@ -234,6 +245,7 @@ const SideNavItem: ExtendableBox<
         {...sideNavItemContainer.prop}
         className={cx(
           defaultStyle,
+          typographyStyle[baseFontSize],
           {
             [activeStyle]: active,
             [disabledStyle]: disabled,
