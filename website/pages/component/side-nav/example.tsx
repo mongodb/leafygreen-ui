@@ -15,6 +15,7 @@ type Knobs = {
   children: string;
   glyph: boolean;
   baseFontSize: 14 | 16;
+  widthOverride: number;
 };
 
 const knobsConfig: KnobsConfigInterface<Knobs> = {
@@ -54,6 +55,11 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
     label: 'Base Font Size',
     options: [14, 16],
   },
+  widthOverride: {
+    type: 'number',
+    default: 184,
+    label: 'Width Override',
+  },
 };
 
 function DefaultExample({
@@ -64,6 +70,7 @@ function DefaultExample({
   children,
   glyph,
   baseFontSize,
+  widthOverride,
 }: Knobs) {
   const collapsibleProps = collapsible
     ? ({
@@ -84,7 +91,7 @@ function DefaultExample({
         border: 1px solid ${uiColors.gray.light2};
       `}
     >
-      <SideNav baseFontSize={baseFontSize}>
+      <SideNav baseFontSize={baseFontSize} widthOverride={widthOverride}>
         <SideNavItem glyph={<Icon glyph="Calendar" />}>
           Ungrouped Item
         </SideNavItem>

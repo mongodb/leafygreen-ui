@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, select, text } from '@storybook/addon-knobs';
+import { boolean, select, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
@@ -186,6 +186,7 @@ function OrgSettingsSideNav() {
           className={sideNavStyles}
           aria-label="Realm app"
           baseFontSize={select('baseFontSize', [14, 16], 14)}
+          widthOverride={number('widthOverride', 200)}
         >
           <SideNavGroup
             glyph={<Icon glyph="Cloud" />}

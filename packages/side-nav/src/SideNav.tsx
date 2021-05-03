@@ -22,7 +22,6 @@ const navIdAllocator = IdAllocator.create('input');
 
 const navStyles = css`
   transition: all ${collapseDuration}ms ease-in-out;
-  width: ${sideNavWidth}px;
   background-color: ${uiColors.gray.light3};
   border-right: 1px solid ${uiColors.gray.light2};
   position: relative;
@@ -69,10 +68,6 @@ const listStyles = css`
   bottom: 0;
 `;
 
-const expandedListStyle = css`
-  width: ${sideNavWidth}px;
-`;
-
 const wrapper = css`
   position: absolute;
   top: 0;
@@ -83,7 +78,6 @@ const wrapper = css`
 
 const space = css`
   transition: width ${collapseDuration}ms ease-in-out;
-  width: ${sideNavWidth}px;
   position: relative;
 
   ${prefersReducedMotion(`
@@ -145,6 +139,8 @@ interface SideNavProps {
   id?: string;
 
   baseFontSize?: 14 | 16;
+
+  widthOverride?: number;
 }
 
 /**
@@ -168,6 +164,7 @@ function SideNav({
   children,
   id: idProp,
   baseFontSize,
+  widthOverride,
   ...rest
 }: SideNavProps) {
   const { Provider: ContextProvider } = SideNavContext;
@@ -182,6 +179,8 @@ function SideNav({
   ] = useState<HTMLUListElement | null>(null);
   const providerFontSize = useBaseFontSize();
   const fontSize: 14 | 16 = baseFontSize ?? providerFontSize;
+  const width =
+    typeof widthOverride === 'number' ? widthOverride : sideNavWidth;
 
   // We visually expand the navigation when a user focuses on an element within the navigation
   // while navigating via keyboard.
@@ -224,21 +223,37 @@ function SideNav({
             navId,
             collapsed,
             portalContainer,
+            width,
             transitionState: state,
             baseFontSize: fontSize,
           }}
         >
           <div
             data-testid="side-nav-container"
-            className={cx(space, { [collapsedSpace]: collapsed }, className)}
+            className={cx(
+              space,
+              css`
+                width: ${width}px;
+              `,
+              { [collapsedSpace]: collapsed },
+              className,
+            )}
           >
             <div className={wrapper} onMouseLeave={() => setHover(false)}>
               <nav
                 id={navId}
-                className={cx(navStyles, {
-                  [collapsedNavStyles]: ['entering', 'entered'].includes(state),
-                  [hoverNavStyles]: (hover || focusExpand) && collapsed,
-                })}
+                className={cx(
+                  navStyles,
+                  css`
+                    width: ${width}px;
+                  `,
+                  {
+                    [collapsedNavStyles]: ['entering', 'entered'].includes(
+                      state,
+                    ),
+                    [hoverNavStyles]: (hover || focusExpand) && collapsed,
+                  },
+                )}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 onMouseEnter={() => setHover(true)}
@@ -249,7 +264,9 @@ function SideNav({
                     className={cx(
                       ulStyleOverrides,
                       listStyles,
-                      expandedListStyle,
+                      css`
+                        width: ${width}px;
+                      `,
                     )}
                   >
                     {children}

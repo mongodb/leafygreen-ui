@@ -15,11 +15,8 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
-import {
-  ulStyleOverrides,
-  sideNavItemSidePadding,
-  sideNavWidth,
-} from './styles';
+import { ulStyleOverrides, sideNavItemSidePadding } from './styles';
+import { useSideNavContext } from './SideNavContext';
 
 const sideNavGroupIdAllocator = IdAllocator.create('side-nav-group');
 
@@ -58,7 +55,6 @@ const collapsibleLabelStyle = css`
   margin: 0px;
   transition: border-color 150ms ease-in-out, color 150ms ease-in-out;
   cursor: pointer;
-  width: ${sideNavWidth}px;
   border-bottom: 1px solid ${uiColors.gray.light2};
 
   &:hover {
@@ -218,6 +214,7 @@ function SideNavGroup({
     [],
   );
   const menuId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
+  const { width } = useSideNavContext();
 
   const isActiveGroup: boolean = useMemo(() => {
     if (hasActiveItem != null) {
@@ -270,9 +267,16 @@ function SideNavGroup({
           {...button.prop}
           aria-controls={menuId}
           aria-expanded={open}
-          className={cx(labelStyle, collapsibleLabelStyle, {
-            [collapsibleHeaderFocusStyle]: showFocus,
-          })}
+          className={cx(
+            labelStyle,
+            collapsibleLabelStyle,
+            css`
+              width: ${width}px;
+            `,
+            {
+              [collapsibleHeaderFocusStyle]: showFocus,
+            },
+          )}
           onClick={() => setOpen(curr => !curr)}
           id={menuGroupLabelId}
           data-testid="side-nav-group-header-label"
