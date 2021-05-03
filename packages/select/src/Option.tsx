@@ -24,6 +24,20 @@ const optionStyle = css`
   outline: none;
   overflow-wrap: anywhere;
   transition: background-color 150ms ease-in-out;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    bottom: 7px;
+    left: 0;
+    right: 0;
+    width: 4px;
+    border-radius: 0px 4px 4px 0px;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+  }
 `;
 
 const optionTextStyle = css`
@@ -229,6 +243,11 @@ export function InternalOption({
             &:focus {
               color: ${colorSet.text.focused};
               background-color: ${colorSet.background.focused};
+
+              &:before {
+                opacity: 1;
+                background-color: ${colorSet.indicator.focused};
+              }
             }
           `]: showFocus && !disabled,
           [css`

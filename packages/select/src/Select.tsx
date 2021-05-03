@@ -339,6 +339,7 @@ export default function Select({
       }
 
       switch (event.keyCode) {
+        case keyMap.Tab:
         case keyMap.Escape:
           onClose();
           break;

@@ -9,7 +9,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { enforceExhaustive, keyMap } from '@leafygreen-ui/lib';
+import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Option, OptionGroup, Select } from '.';
@@ -502,33 +502,6 @@ describe('packages/select', () => {
         await waitForElementToBeRemoved(getByRole('listbox'));
       });
 
-      switch (focusedElementRole) {
-        case 'button':
-          // test('by tab key', async () => {
-          //   userEvent.tab();
-
-          //   expect(document.body).toHaveFocus();
-
-          //   await waitForElementToBeRemoved(getByRole('listbox'));
-          // });
-          break;
-        case 'listbox':
-          // test('does not occur by tab key', async () => {
-          //   userEvent.tab();
-
-          //   const listbox = await waitFor(() => {
-          //     const listbox = getByRole('listbox');
-          //     expect(listbox).toBeVisible();
-          //     return listbox;
-          //   });
-
-          //   expect(listbox).toHaveFocus();
-          // });
-          break;
-        default:
-          enforceExhaustive(focusedElementRole);
-      }
-
       test('does not occur by clicking on option group label', async () => {
         userEvent.click(getByText('Enabled group'));
 
@@ -541,21 +514,6 @@ describe('packages/select', () => {
         expect(listbox).toHaveFocus();
       });
     });
-
-    // test('Escape key clears selected option', () => {
-    //   const { getByRole } = render(
-    //     <Select {...defaultProps} defaultValue={Color.Blue} />,
-    //   );
-
-    //   const combobox = getByRole('button');
-    //   expect(getByTextFor(combobox, 'Blue')).toBeVisible();
-
-    //   userEvent.tab();
-
-    //   fireEvent.keyDown(combobox, { keyCode: keyMap.Escape });
-
-    //   expect(getByTextFor(combobox, 'Select')).toBeVisible();
-    // });
 
     describe.each([
       ['uncontrolled', false],
@@ -597,37 +555,39 @@ describe('packages/select', () => {
         ['option', 'Red', Color.Red],
         ['option in group', 'Green', Color.Green],
       ])('%p', (_, optionText, optionValue) => {
-        test.each([
-          // ['tab', keyMap.Tab],
-          ['enter', keyMap.Enter],
-        ])('by %p key', async (_, keyCode) => {
-          userEvent.click(combobox);
+        test.each([['enter', keyMap.Enter]])(
+          'by %p key',
+          async (_, keyCode) => {
+            userEvent.click(combobox);
 
-          const listbox = await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
-            return listbox;
-          });
+            const listbox = await waitFor(() => {
+              const listbox = getByRole('listbox');
+              expect(listbox).toBeVisible();
+              return listbox;
+            });
 
-          const targetOption = getByTextFor(listbox, optionText).closest('li');
-          expect(targetOption).not.toBe(null);
+            const targetOption = getByTextFor(listbox, optionText).closest(
+              'li',
+            );
+            expect(targetOption).not.toBe(null);
 
-          act(() => targetOption!.focus());
+            act(() => targetOption!.focus());
 
-          fireEvent.keyDown(targetOption!, { keyCode });
+            fireEvent.keyDown(targetOption!, { keyCode });
 
-          expect(onChangeSpy).toHaveBeenCalledTimes(1);
-          expect(onChangeSpy).toHaveBeenCalledWith(
-            optionValue,
-            expect.anything(),
-          );
+            expect(onChangeSpy).toHaveBeenCalledTimes(1);
+            expect(onChangeSpy).toHaveBeenCalledWith(
+              optionValue,
+              expect.anything(),
+            );
 
-          await waitForElementToBeRemoved(listbox);
+            await waitForElementToBeRemoved(listbox);
 
-          expect(getByTextFor(combobox, optionText)).toBeVisible();
-          expect(combobox).toHaveFocus();
-          expect(combobox).toHaveValue(optionValue);
-        });
+            expect(getByTextFor(combobox, optionText)).toBeVisible();
+            expect(combobox).toHaveFocus();
+            expect(combobox).toHaveValue(optionValue);
+          },
+        );
 
         test('by clicking', async () => {
           userEvent.click(combobox);
@@ -658,32 +618,34 @@ describe('packages/select', () => {
         ['disabled option', 'Orange'],
         ['option in disabled group', 'Indigo'],
       ])('does not occur for %p', (_, optionText) => {
-        test.each([
-          ['tab', keyMap.Tab],
-          ['enter', keyMap.Enter],
-        ])('by %p key', async (_, keyCode) => {
-          userEvent.click(combobox);
+        test.each([['enter', keyMap.Enter]])(
+          'by %p key',
+          async (_, keyCode) => {
+            userEvent.click(combobox);
 
-          const listbox = await waitFor(() => {
-            const listbox = getByRole('listbox');
+            const listbox = await waitFor(() => {
+              const listbox = getByRole('listbox');
+              expect(listbox).toBeVisible();
+              return listbox;
+            });
+
+            const targetOption = getByTextFor(listbox, optionText).closest(
+              'li',
+            );
+            expect(targetOption).not.toBe(null);
+
+            act(() => targetOption!.focus());
+            fireEvent.keyDown(targetOption!, { keyCode });
+
+            expect(onChangeSpy).not.toHaveBeenCalled();
             expect(listbox).toBeVisible();
-            return listbox;
-          });
 
-          const targetOption = getByTextFor(listbox, optionText).closest('li');
-          expect(targetOption).not.toBe(null);
+            expect(getByTextFor(combobox, 'Select')).toBeVisible();
+            expect(targetOption).toHaveFocus();
 
-          act(() => targetOption!.focus());
-          fireEvent.keyDown(targetOption!, { keyCode });
-
-          expect(onChangeSpy).not.toHaveBeenCalled();
-          expect(listbox).toBeVisible();
-
-          expect(getByTextFor(combobox, 'Select')).toBeVisible();
-          expect(targetOption).toHaveFocus();
-
-          expect(combobox).toHaveValue('');
-        });
+            expect(combobox).toHaveValue('');
+          },
+        );
 
         // eslint-disable-next-line jest/no-identical-title
         test('by clicking', async () => {

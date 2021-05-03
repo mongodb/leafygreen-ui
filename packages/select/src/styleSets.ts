@@ -47,6 +47,9 @@ interface ColorSet {
       selected: string;
       disabled: string;
     };
+    indicator: {
+      focused: string;
+    };
   };
 }
 
@@ -77,18 +80,21 @@ export const colorSets: Record<Mode, ColorSet> = {
       background: {
         base: uiColors.white,
         hovered: uiColors.gray.light2,
-        focused: uiColors.focus,
+        focused: uiColors.blue.light3,
       },
       text: {
         base: uiColors.gray.dark3,
         selected: uiColors.blue.base,
         disabled: uiColors.gray.base,
-        focused: uiColors.white,
+        focused: uiColors.blue.dark2,
       },
       icon: {
         base: uiColors.gray.dark1,
         selected: uiColors.blue.base,
         disabled: uiColors.gray.base,
+      },
+      indicator: {
+        focused: uiColors.blue.base,
       },
     },
   },
@@ -119,18 +125,21 @@ export const colorSets: Record<Mode, ColorSet> = {
       background: {
         base: uiColors.gray.dark2,
         hovered: uiColors.gray.dark1,
-        focused: uiColors.blue.light1,
+        focused: uiColors.blue.base,
       },
       text: {
         base: uiColors.white,
         selected: '#9DD0E7',
         disabled: uiColors.gray.base,
-        focused: uiColors.gray.dark1,
+        focused: uiColors.white,
       },
       icon: {
         base: uiColors.gray.light1,
         selected: '#9DD0E7',
         disabled: uiColors.gray.base,
+      },
+      indicator: {
+        focused: uiColors.white,
       },
     },
   },
