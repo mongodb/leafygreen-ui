@@ -523,7 +523,10 @@ describe('packages/select', () => {
 
       let combobox: HTMLElement;
       let onChangeSpy: jest.MockedFunction<
-        (value: string, event: React.MouseEvent | React.KeyboardEvent) => void
+        (
+          value: string,
+          event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
+        ) => void
       >;
 
       beforeEach(() => {

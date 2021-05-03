@@ -53,7 +53,7 @@ export type Props = {
       } & {
         onChange?: (
           value: string,
-          event: React.MouseEvent | React.KeyboardEvent,
+          event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void;
         readOnly?: false;
       })
@@ -62,7 +62,7 @@ export type Props = {
         | {
             onChange: (
               value: string,
-              event: React.MouseEvent | React.KeyboardEvent,
+              event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
             ) => void;
             readOnly?: false;
           }
@@ -242,13 +242,6 @@ export default function Select({
       };
     },
     [disabled, onClose, onSelect],
-  );
-
-  const onDeselect = useCallback(
-    (event: KeyboardEvent) => {
-      onSelect(null, event);
-    },
-    [onSelect],
   );
 
   /**
