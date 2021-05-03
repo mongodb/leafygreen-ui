@@ -20,6 +20,7 @@ const menuButtonTextStyle = css`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  max-width: 100%;
 `;
 
 type Props = {
@@ -105,7 +106,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         `,
       )}
     >
-      <span className={menuButtonTextStyle}>{text}</span>
+      <div className={menuButtonTextStyle}>{text}</div>
       {children}
     </Component>
   );

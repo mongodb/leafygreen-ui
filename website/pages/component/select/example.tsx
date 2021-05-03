@@ -71,11 +71,7 @@ export default function SelectLiveExample() {
         withIcons,
         allowDeselect,
       }) => (
-        <div
-          className={css`
-            width: 400px;
-          `}
-        >
+        <div>
           <Select
             darkMode={darkMode}
             size={size}
@@ -86,6 +82,9 @@ export default function SelectLiveExample() {
             defaultValue="primary"
             disabled={disabled}
             allowDeselect={allowDeselect}
+            className={css`
+              width: 400px;
+            `}
           >
             <OptionGroup label="Primary">
               <Option

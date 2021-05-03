@@ -9,6 +9,7 @@ import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
 import { mq } from 'utils/mediaQuery';
+import { useBodyContainerRef } from '../LayoutContext';
 
 const booleanIdAllocator = IdAllocator.create('boolean');
 const textIdAllocator = IdAllocator.create('text');
@@ -33,7 +34,7 @@ const knobContainerStyle = css`
 `;
 
 const knobContainerHeight = css`
-  height: 71px;
+  min-height: 70px;
 `;
 
 const labelStyle = css`
@@ -59,6 +60,30 @@ const labelDarkMode = css`
   color: ${uiColors.gray.light1};
 `;
 
+interface KnobRowProps {
+  children: React.ReactNode;
+  darkMode?: boolean;
+  className?: string;
+}
+
+function KnobRow({ children, className, darkMode = false }: KnobRowProps) {
+  return (
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-top: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
 const Knob = {
   Select: 'select',
   Number: 'number',
@@ -80,26 +105,6 @@ export interface BooleanInterface extends KnobInterface {
   value: boolean;
 }
 
-export interface TextInterface extends KnobInterface {
-  onChange: (value: string, prop: string) => void;
-  value: string;
-}
-
-export interface NumberInterface extends KnobInterface {
-  onChange: (value: number, prop: string) => void;
-  value: number;
-  min?: number;
-  max?: number;
-  step?: number;
-}
-
-export interface SelectInterface extends KnobInterface {
-  onChange: (value: string, prop: string) => void;
-  value: string;
-  options: Array<string>;
-  disabled?: boolean;
-}
-
 function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
   const viewport = useViewportSize();
   const isTouchDevice =
@@ -112,22 +117,14 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
   const labelId = useMemo(() => booleanIdAllocator.generate(), []);
 
   return (
-    <div
-      className={cx(
-        knobContainerStyle,
-        knobContainerHeight,
-        css`
-          border-top: 1px solid
-            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
-        `,
-      )}
-    >
+    <KnobRow darkMode={darkMode}>
       <label
         id={labelId}
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
       >
         {label}
       </label>
+
       <Toggle
         onChange={handleChange}
         checked={value}
@@ -135,11 +132,19 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
         darkMode={darkMode}
         aria-labelledby={labelId}
       />
-    </div>
+    </KnobRow>
   );
 }
 
 Boolean.displayName = 'Boolean';
+
+export interface NumberInterface extends KnobInterface {
+  onChange: (value: number, prop: string) => void;
+  value: number;
+  min?: number;
+  max?: number;
+  step?: number;
+}
 
 function Number({
   onChange,
@@ -158,22 +163,14 @@ function Number({
   const labelId = useMemo(() => numberIdAllocator.generate(), []);
 
   return (
-    <div
-      className={cx(
-        knobContainerStyle,
-        knobContainerHeight,
-        css`
-          border-top: 1px solid
-            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
-        `,
-      )}
-    >
+    <KnobRow darkMode={darkMode}>
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
       >
         {label}
       </label>
+
       <TextInput
         type="number"
         onChange={handleChange}
@@ -187,11 +184,16 @@ function Number({
           width: ${knobsWidth}px;
         `}
       />
-    </div>
+    </KnobRow>
   );
 }
 
 Number.displayName = 'Number';
+
+export interface TextInterface extends KnobInterface {
+  onChange: (value: string, prop: string) => void;
+  value: string;
+}
 
 function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
   const handleChange = useCallback(
@@ -204,22 +206,14 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
   const labelId = useMemo(() => textIdAllocator.generate(), []);
 
   return (
-    <div
-      className={cx(
-        knobContainerStyle,
-        knobContainerHeight,
-        css`
-          border-top: 1px solid
-            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
-        `,
-      )}
-    >
+    <KnobRow darkMode={darkMode}>
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
       >
         {label}
       </label>
+
       <TextInput
         onChange={handleChange}
         value={value}
@@ -227,7 +221,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         darkMode={darkMode}
         className={inputClassName}
       />
-    </div>
+    </KnobRow>
   );
 }
 
@@ -244,21 +238,14 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
   const labelId = useMemo(() => areaIdAllocator.generate(), []);
 
   return (
-    <div
-      className={cx(
-        knobContainerStyle,
-        css`
-          border-top: 1px solid
-            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
-        `,
-      )}
-    >
+    <KnobRow darkMode={darkMode}>
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
       >
         {label}
       </label>
+
       <TextArea
         onChange={handleChange}
         value={value}
@@ -266,11 +253,18 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
         darkMode={darkMode}
         className={cx(textAreaClassName, inputClassName)}
       />
-    </div>
+    </KnobRow>
   );
 }
 
 Area.displayName = 'Area';
+
+export interface SelectInterface extends KnobInterface {
+  onChange: (value: string, prop: string) => void;
+  value: string;
+  options: Array<string>;
+  disabled?: boolean;
+}
 
 function Select({
   onChange,
@@ -281,6 +275,7 @@ function Select({
   darkMode,
   disabled,
 }: SelectInterface) {
+  const container = useBodyContainerRef();
   const labelId = useMemo(() => selectIdAllocator.generate(), []);
 
   const handleChange = (value: string) => {
@@ -302,16 +297,7 @@ function Select({
   const generateOptions = React.useCallback(generateOptionsCallback, [options]);
 
   return (
-    <div
-      className={cx(
-        knobContainerStyle,
-        knobContainerHeight,
-        css`
-          border-top: 1px solid
-            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
-        `,
-      )}
-    >
+    <KnobRow darkMode={darkMode}>
       <label
         id={labelId}
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
@@ -326,10 +312,12 @@ function Select({
         value={value}
         disabled={disabled}
         className={inputClassName}
+        portalContainer={container ?? undefined}
+        scrollContainer={container ?? undefined}
       >
         {generateOptions()}
       </LGUISelect>
-    </div>
+    </KnobRow>
   );
 }
 
