@@ -14,6 +14,7 @@ type Knobs = {
   collapsible: boolean;
   children: string;
   glyph: boolean;
+  baseFontSize: 14 | 16;
 };
 
 const knobsConfig: KnobsConfigInterface<Knobs> = {
@@ -47,6 +48,12 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
     default: 'Admin',
     label: 'Item: Text',
   },
+  baseFontSize: {
+    type: 'select',
+    default: 14,
+    label: 'Base Font Size',
+    options: [14, 16],
+  },
 };
 
 function DefaultExample({
@@ -56,6 +63,7 @@ function DefaultExample({
   collapsible,
   children,
   glyph,
+  baseFontSize,
 }: Knobs) {
   const collapsibleProps = collapsible
     ? ({
@@ -72,11 +80,11 @@ function DefaultExample({
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 16px;
-        height: 500px;
+        min-height: 500px;
         border: 1px solid ${uiColors.gray.light2};
       `}
     >
-      <SideNav>
+      <SideNav baseFontSize={baseFontSize}>
         <SideNavItem glyph={<Icon glyph="Calendar" />}>
           Ungrouped Item
         </SideNavItem>

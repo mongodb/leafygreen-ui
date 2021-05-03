@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, text } from '@storybook/addon-knobs';
+import { boolean, select, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
@@ -182,7 +182,11 @@ function OrgSettingsSideNav() {
     <LeafyGreenProvider>
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
-        <SideNav className={sideNavStyles} aria-label="Realm app">
+        <SideNav
+          className={sideNavStyles}
+          aria-label="Realm app"
+          baseFontSize={select('baseFontSize', [14, 16], 14)}
+        >
           <SideNavGroup
             glyph={<Icon glyph="Cloud" />}
             header={<span id="context-label">Context</span>}
