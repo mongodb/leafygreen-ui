@@ -335,6 +335,7 @@ export default function Select({
         case keyMap.Tab:
         case keyMap.Escape:
           onClose();
+          onSelectFocusedOption(event);
           break;
         case keyMap.Enter:
           onSelectFocusedOption(event);
