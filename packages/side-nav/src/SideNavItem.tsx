@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import {
@@ -138,6 +138,12 @@ const glyphWrapper = css`
   align-items: center;
 `;
 
+function getIndentLevelStyle(indentLevel: number) {
+  return css`
+    padding-left: ${8 + indentLevel * 16}px;
+  `;
+}
+
 export interface SideNavItemProps {
   /**
    * Whether or not the component should be rendered in an active state.
@@ -184,6 +190,10 @@ export interface SideNavItemProps {
    * Icon that's rendered in the item.
    */
   glyph?: React.ReactNode;
+
+  indentLevel?: number;
+
+  isAnyAncestorActive?: boolean;
 }
 
 /**
@@ -216,6 +226,8 @@ const SideNavItem: ExtendableBox<
     active = false,
     disabled = false,
     ariaCurrentValue = AriaCurrentValue.Page,
+    indentLevel = 1,
+    isAnyAncestorActive: isAnyAncestorActiveProp = false,
     className,
     children,
     onClick: onClickProp,
@@ -224,6 +236,7 @@ const SideNavItem: ExtendableBox<
   } = props;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { baseFontSize = 14 } = useSideNavContext();
+  const hasNestedChildren = useRef(false);
 
   const onClick = disabled
     ? (e: React.MouseEvent) => {
@@ -237,8 +250,50 @@ const SideNavItem: ExtendableBox<
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
+  const { hasNestedItems, renderedNestedItems } = useMemo(() => {
+    const renderedNestedItems: Array<React.ReactElement> = [];
+    let hasNestedItems = false;
+
+    React.Children.forEach(children, (child, index) => {
+      if (child != null && isComponentType(child, 'SideNavItem')) {
+        hasNestedItems = true;
+
+        if (active || isAnyAncestorActiveProp) {
+          renderedNestedItems.push(
+            React.cloneElement(child, {
+              className: getIndentLevelStyle(indentLevel),
+              indentLevel: indentLevel + 1,
+              isAnyAncestorActive: active || isAnyAncestorActiveProp,
+              key: index,
+            }),
+          );
+        }
+      }
+    });
+
+    return { hasNestedItems, renderedNestedItems };
+  }, [children, active, indentLevel, isAnyAncestorActiveProp]);
+
+  const renderedChildren = useMemo(() => {
+    const renderedChildren: Array<React.ReactElement> = [];
+
+    React.Children.forEach(children, child => {
+      if (isComponentType(child, 'SideNavItem')) {
+        return null;
+      }
+
+      renderedChildren.push(child);
+    });
+
+    return renderedChildren;
+  }, [children]);
+
   return (
-    <li>
+    <li
+      className={css`
+        width: 100%;
+      `}
+    >
       <Box
         as={props.href ? 'a' : 'button'}
         {...rest}
@@ -251,6 +306,15 @@ const SideNavItem: ExtendableBox<
             [disabledStyle]: disabled,
             [focusedStyle]: showFocus,
             [focusedDisabledStyle]: showFocus && disabled,
+            [css`
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+
+              &:hover {
+                // background-color: purple;
+              }
+            `]: hasNestedChildren.current,
           },
           className,
         )}
@@ -269,8 +333,10 @@ const SideNavItem: ExtendableBox<
           </span>
         )}
 
-        {children}
+        {renderedChildren}
       </Box>
+
+      {hasNestedItems && renderedNestedItems}
     </li>
   );
 });

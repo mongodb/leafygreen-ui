@@ -218,7 +218,16 @@ function OrgSettingsSideNav() {
           <SideNavGroup glyph={<Icon glyph="Building" />} header="Organization">
             <SideNavItem>Projects</SideNavItem>
             <SideNavItem>Activity Feed</SideNavItem>
-            <SideNavItem active>Access</SideNavItem>
+
+            <SideNavItem active>
+              Security
+              <SideNavItem>Permissions</SideNavItem>
+              <SideNavItem>
+                Access
+                <SideNavItem>Database Access</SideNavItem>
+                <SideNavItem>Network Access</SideNavItem>
+              </SideNavItem>
+            </SideNavItem>
             <SideNavItem>Alerts</SideNavItem>
             <SideNavItem>Settings</SideNavItem>
           </SideNavGroup>
