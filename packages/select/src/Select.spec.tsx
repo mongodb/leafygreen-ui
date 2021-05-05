@@ -7,6 +7,7 @@ import {
   RenderResult,
   waitForElementToBeRemoved,
   waitFor,
+  getByTestId,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -459,9 +460,12 @@ describe('packages/select', () => {
     ] as const)('closing when %p is focused', (_, focusedElementRole) => {
       let getByRole: RenderResult['getByRole'];
       let getByText: RenderResult['getByText'];
+      let getByTestId: RenderResult['getByTestId'];
 
       beforeEach(async () => {
-        ({ getByRole, getByText } = render(<Select {...defaultProps} />));
+        ({ getByRole, getByText, getByTestId } = render(
+          <Select {...defaultProps} />,
+        ));
 
         userEvent.click(getByRole('button'));
 
@@ -496,7 +500,7 @@ describe('packages/select', () => {
           keyCode: keyMap.Escape,
         });
 
-        const combobox = getByRole('button');
+        const combobox = getByTestId('leafygreen-ui-select-menubutton');
         expect(combobox).toHaveFocus();
 
         await waitForElementToBeRemoved(getByRole('listbox'));
@@ -721,6 +725,24 @@ describe('packages/select', () => {
 
         expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
       });
+
+      // test('moves to MenuButton by escape key', async () => {
+      //   const { getByRole, getByTestId } = render(<Select {...defaultProps} />);
+
+      //   userEvent.click(getByRole('button'));
+
+      //   const listbox = await waitFor(() => {
+      //     const listbox = getByRole('listbox');
+      //     expect(listbox).toBeVisible();
+      //     return listbox;
+      //   });
+
+      //   fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowUp });
+
+      //   fireEvent.keyDown(listbox, { keyCode: keyMap.Escape });
+
+      //   expect(getByTestId('leafygreen-ui-select-menubutton')).toHaveFocus();
+      // });
     });
   });
 

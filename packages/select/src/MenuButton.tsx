@@ -88,6 +88,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       variant={Variant.Default}
       darkMode={mode === Mode.Dark}
       rightGlyph={<CaretDownIcon />}
+      data-testid="leafygreen-ui-select-menubutton"
       className={cx(
         menuButtonStyle,
         css`
