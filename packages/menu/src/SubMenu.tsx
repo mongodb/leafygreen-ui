@@ -346,9 +346,9 @@ const SubMenu: ExtendableBox<
           }}
         >
           {open ? (
-            <CaretUpIcon className={caretIconStyles} />
+            <CaretUpIcon role="presentation" className={caretIconStyles} />
           ) : (
-            <CaretDownIcon className={caretIconStyles} />
+            <CaretDownIcon role="presentation" className={caretIconStyles} />
           )}
         </IconButton>
 
