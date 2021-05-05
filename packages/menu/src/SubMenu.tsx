@@ -109,7 +109,7 @@ const openIconButtonStyle = css`
 `;
 
 const mainIconStyle = css`
-  color: ${uiColors.gray.base};
+  color: ${uiColors.gray.dark1};
   margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
   flex-shrink: 0;
 
