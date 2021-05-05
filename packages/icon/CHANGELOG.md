@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.0.0
+
+### Major Changes
+
+- faeb0ce0: Updates InviteUser, PersonWithLock, Person, University, Support, Beaker, Charts, GovernmentBuilding, Save, NotAllowed, Laptop, and CreditCard Icons.
+
 ## 10.2.1
 
 ### Patch Changes

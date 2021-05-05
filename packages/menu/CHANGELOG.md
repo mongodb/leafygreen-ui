@@ -1,5 +1,12 @@
 # @leafygreen-ui/menu
 
+## 10.0.1
+
+### Patch Changes
+
+- 5bb0e25f: CaretIcons no longer announced to scren readers, since they are not focusable
+- a4d3f000: Updates icons in inactive menu and submenu items to `uiColors.gray.dark1`
+
 ## 10.0.0
 
 ### Minor Changes
