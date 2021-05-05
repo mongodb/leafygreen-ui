@@ -138,6 +138,12 @@ const glyphWrapper = css`
   align-items: center;
 `;
 
+const nestedChildrenStyles = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
 function getIndentLevelStyle(indentLevel: number) {
   return css`
     padding-left: ${8 + indentLevel * 16}px;
@@ -306,15 +312,7 @@ const SideNavItem: ExtendableBox<
             [disabledStyle]: disabled,
             [focusedStyle]: showFocus,
             [focusedDisabledStyle]: showFocus && disabled,
-            [css`
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-
-              &:hover {
-                // background-color: purple;
-              }
-            `]: hasNestedChildren.current,
+            [nestedChildrenStyles]: hasNestedChildren.current,
           },
           className,
         )}
