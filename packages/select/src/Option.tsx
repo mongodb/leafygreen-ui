@@ -29,6 +29,7 @@ const optionStyle = css`
   &:before {
     content: '';
     position: absolute;
+    transform: scaleY(0.3);
     top: 7px;
     bottom: 7px;
     left: 0;
@@ -36,7 +37,7 @@ const optionStyle = css`
     width: 4px;
     border-radius: 0px 4px 4px 0px;
     opacity: 0;
-    transition: opacity 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
   }
 `;
 
@@ -246,6 +247,7 @@ export function InternalOption({
 
               &:before {
                 opacity: 1;
+                transform: scaleY(1);
                 background-color: ${colorSet.indicator.focused};
               }
             }
