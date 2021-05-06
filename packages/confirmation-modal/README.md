@@ -139,3 +139,4 @@ function ExampleComponent() {
 | `requiredInputText` | `string`                | If provided, a text prompt will be displayed and the confirmation button will be disabled until the text prompt is filled out with the required text. |             |
 | `className`         | `string`                | Style to be applied to the container's root node.                                                                                                     |             |
 | `submitDisabled`    | `boolean`               | Determines if the submit button should appear as disabled                                                                                             | `false`     |
+| `darkMode`          | `boolean`               | Determines if the component will appear in dark mode.                                                                                                 | `false`     |
