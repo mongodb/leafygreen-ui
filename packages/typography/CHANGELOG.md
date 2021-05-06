@@ -1,5 +1,12 @@
 # @leafygreen-ui/typography
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+  - @leafygreen-ui/icon@11.0.0
+
 ## 8.0.0
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @leafygreen-ui/select
 
+## 3.0.1
+
+### Patch Changes
+
+- 650f6334: Updates semantic HTML to help define width properties in Button and Select components
+- Updated dependencies [faeb0ce0]
+- Updated dependencies [54daf9a4]
+  - @leafygreen-ui/icon@11.0.0
+  - @leafygreen-ui/button@12.0.1
+
 ## 3.0.0
 
 ### Minor Changes
