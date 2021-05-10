@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 10.0.2
+
+### Patch Changes
+
+- 4b7b7322: Adds `role='presentation'` to glyphs rendered before menu items
+
 ## 10.0.1
 
 ### Patch Changes
