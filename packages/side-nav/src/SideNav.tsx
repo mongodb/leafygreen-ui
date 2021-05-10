@@ -181,7 +181,7 @@ interface SideNavProps {
  * @param props.baseFontSize Determines the base font size for the menu items.
  * @param props.widthOverride Provides an override for the SideNav width.
  * @param props.collapsed Allows consuming applications to control the collapsed state of the navigation.
- * @param props.setCollapsed Consuming application's collapsed-state management controller 
+ * @param props.setCollapsed Consuming application's collapsed-state management controller
  */
 function SideNav({
   className,
