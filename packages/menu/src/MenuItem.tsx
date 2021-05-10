@@ -154,6 +154,7 @@ const MenuItem: ExtendableBox<
     const updatedGlyph =
       glyph &&
       React.cloneElement(glyph, {
+        role: 'presentation',
         className: cx(
           mainIconStyle,
           {
