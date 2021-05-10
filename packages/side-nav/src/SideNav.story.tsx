@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, select, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
@@ -244,6 +244,7 @@ function OrgSettingsSideNav() {
 }
 
 function MockSideNav() {
+  const [collapsed, setCollapsed] = useState(false);
   const textHeader = 'States';
   const hasActiveItem = boolean('hasActiveItem', false);
 
@@ -252,7 +253,12 @@ function MockSideNav() {
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
 
-        <SideNav className={sideNavStyles} aria-label="General example">
+        <SideNav
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          className={sideNavStyles}
+          aria-label="General example"
+        >
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
             <SideNavItem active>Active State</SideNavItem>
             <SideNavItem disabled>Disabled State</SideNavItem>

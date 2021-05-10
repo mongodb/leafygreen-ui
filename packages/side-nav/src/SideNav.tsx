@@ -12,13 +12,17 @@ import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import { keyMap, IdAllocator } from '@leafygreen-ui/lib';
+import { keyMap, IdAllocator, createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
 
 const navIdAllocator = IdAllocator.create('input');
+const dataProp = createDataProp('side-nav');
+const sideNavSelector = dataProp.selector;
+
+export { sideNavSelector };
 
 const navStyles = css`
   transition: all ${collapseDuration}ms ease-in-out;
@@ -138,9 +142,25 @@ interface SideNavProps {
 
   id?: string;
 
+  /**
+   * Determines the base font size for the menu items.
+   */
   baseFontSize?: 14 | 16;
 
+  /**
+   * Provides an override for the SideNav width.
+   */
   widthOverride?: number;
+
+  /**
+   * Allows consuming applications to control the collapsed state of the navigation.
+   */
+  collapsed?: boolean;
+
+  /**
+   * Consuming application's collapsed-state management controller
+   */
+  setCollapsed?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -158,6 +178,10 @@ interface SideNavProps {
  *
  * @param props.className Class name that will be applied to the root-level element.
  * @param props.children Content that will be rendered inside the root-level element.
+ * @param props.baseFontSize Determines the base font size for the menu items.
+ * @param props.widthOverride Provides an override for the SideNav width.
+ * @param props.collapsed Allows consuming applications to control the collapsed state of the navigation.
+ * @param props.setCollapsed Consuming application's collapsed-state management controller 
  */
 function SideNav({
   className,
@@ -165,10 +189,12 @@ function SideNav({
   id: idProp,
   baseFontSize,
   widthOverride,
+  collapsed: controlledCollapsed,
+  setCollapsed: setControlledCollapsed = () => {},
   ...rest
 }: SideNavProps) {
   const { Provider: ContextProvider } = SideNavContext;
-  const [collapsed, setCollapsed] = useState(false);
+  const [uncontrolledCollapsed, uncontrolledSetCollapsed] = useState(false);
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
   const { usingKeyboard } = useUsingKeyboardContext();
@@ -181,6 +207,16 @@ function SideNav({
   const fontSize: 14 | 16 = baseFontSize ?? providerFontSize;
   const width =
     typeof widthOverride === 'number' ? widthOverride : sideNavWidth;
+
+  const collapsed =
+    typeof controlledCollapsed === 'boolean'
+      ? controlledCollapsed
+      : uncontrolledCollapsed;
+
+  const setCollapsed =
+    typeof controlledCollapsed === 'boolean'
+      ? setControlledCollapsed
+      : uncontrolledSetCollapsed;
 
   // We visually expand the navigation when a user focuses on an element within the navigation
   // while navigating via keyboard.
@@ -230,6 +266,7 @@ function SideNav({
         >
           <div
             data-testid="side-nav-container"
+            {...dataProp.prop}
             className={cx(
               space,
               css`

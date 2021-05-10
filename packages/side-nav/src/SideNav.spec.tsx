@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { SideNav, SideNavGroup, SideNavItem } from '.';
 
 type renderedElement = HTMLElement | null;
@@ -98,6 +98,39 @@ describe('packages/side-nav', () => {
         fireEvent.click(collapseToggle);
 
         expect(collapseToggle.getAttribute('aria-expanded')).toEqual('true');
+      });
+    });
+
+    describe('when controlled', () => {
+      const setCollapsed = jest.fn();
+      const collapsed = true;
+
+      beforeEach(() => {
+        render(
+          <SideNav
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+            aria-label="Side Navigation"
+          >
+            <SideNavGroup>
+              <SideNavItem>
+                <a href="#clusters">Clusters</a>
+              </SideNavItem>
+            </SideNavGroup>
+          </SideNav>,
+        );
+      });
+
+      test('renders based on the "collapsed" props when supplied', () => {
+        expect(screen.getByText('Clusters')).toBeInTheDocument();
+      });
+
+      test('setCollapsed function is called when XX is clicked', () => {
+        expect(screen.getByText('Clusters')).toBeInTheDocument();
+        fireEvent.click(screen.getByTestId('side-nav-collapse-toggle'));
+        expect(setCollapsed).toHaveBeenCalled();
+        // it is an empty function so side nav should remain visible in the DOM
+        expect(screen.getByText('Clusters')).toBeInTheDocument();
       });
     });
   });
