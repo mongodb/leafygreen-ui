@@ -112,7 +112,9 @@ interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
 }
 
 type AriaLabels = 'label' | 'aria-labelledby';
-type AccessibleTextInputProps = Either<TextInputProps, AriaLabels>;
+type AccessibleTextInputProps =
+  | Either<TextInputProps, AriaLabels>
+  | (TextInputProps & { type: 'search'; 'aria-label': string });
 
 const interactionRingStyle = css`
   width: 100%;
@@ -334,9 +336,15 @@ const TextInput: React.ComponentType<
       }
     }
 
-    if (!label && !ariaLabelledby) {
+    if (type !== 'search' && !label && !ariaLabelledby) {
       console.error(
         'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
+      );
+    }
+
+    if (type === 'search' && !rest['aria-label']) {
+      console.error(
+        'For screen-reader accessibility, aria-label must be provided to TextInput.',
       );
     }
 
