@@ -317,6 +317,7 @@ function Modal({
                     onClick={handleClose}
                     aria-label="Close modal"
                     className={cx(closeButton, buttonColors[mode])}
+                    darkMode={darkMode}
                   >
                     <XIcon />
                   </IconButton>
