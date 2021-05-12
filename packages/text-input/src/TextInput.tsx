@@ -340,8 +340,6 @@ const TextInput: React.ComponentType<
       );
     }
 
-    // const interactionRingColor = state === State.Error ? 'xx' : state === State.
-
     const RenderedCheckmarkIcon = darkMode
       ? CheckmarkWithCircleIcon
       : CheckmarkIcon;
