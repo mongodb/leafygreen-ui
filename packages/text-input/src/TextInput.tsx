@@ -218,6 +218,17 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 } as const;
 
+const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
+  [Mode.Light]: {
+    [State.Error]: uiColors.red.light3,
+    [State.Valid]: uiColors.green.light3,
+  },
+  [Mode.Dark]: {
+    [State.Error]: uiColors.red.dark2,
+    [State.Valid]: uiColors.gray.dark1,
+  },
+};
+
 function getStatefulInputStyles({
   state,
   optional,
@@ -348,6 +359,13 @@ const TextInput: React.ComponentType<
             className={interactionRingStyle}
             darkMode={darkMode}
             disabled={disabled}
+            color={
+              state === State.Valid || state === State.Error
+                ? {
+                    hovered: interactionRingColor[mode][state],
+                  }
+                : undefined
+            }
           >
             <input
               {...rest}
