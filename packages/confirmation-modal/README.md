@@ -32,7 +32,7 @@ function ExampleComponent() {
       <ConfirmationModal
         open={open}
         onConfirm={() => setOpen(false)}
-        onClose={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
         title="Confirm Title Here"
         buttonText="Confirm"
         requiredInputText="confirm"
