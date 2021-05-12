@@ -243,6 +243,9 @@ const SideNavItem: ExtendableBox<
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { baseFontSize = 14 } = useSideNavContext();
   const hasNestedChildren = useRef(false);
+  const hasActiveChildren = useRef(false);
+  // const [hasActiveChild, setHasActiveChild] = React.useState(false);
+  // let isAnyChildNested = false;
 
   const onClick = disabled
     ? (e: React.MouseEvent) => {
@@ -256,29 +259,42 @@ const SideNavItem: ExtendableBox<
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
-  const { hasNestedItems, renderedNestedItems } = useMemo(() => {
+  const {
+    hasNestedItems,
+    displayNestedItems,
+    renderedNestedItems,
+  } = useMemo(() => {
     const renderedNestedItems: Array<React.ReactElement> = [];
     let hasNestedItems = false;
+    let displayNestedItems = false;
 
     React.Children.forEach(children, (child, index) => {
       if (child != null && isComponentType(child, 'SideNavItem')) {
         hasNestedItems = true;
 
-        if (active || isAnyAncestorActiveProp) {
-          renderedNestedItems.push(
-            React.cloneElement(child, {
-              className: getIndentLevelStyle(indentLevel),
-              indentLevel: indentLevel + 1,
-              isAnyAncestorActive: active || isAnyAncestorActiveProp,
-              key: index,
-            }),
-          );
+        if (active || isAnyAncestorActiveProp || child.props.active) {
+          console.log('here');
+          displayNestedItems = true;
         }
+
+        renderedNestedItems.push(
+          React.cloneElement(child, {
+            className: getIndentLevelStyle(indentLevel),
+            indentLevel: indentLevel + 1,
+            isAnyAncestorActive: active || isAnyAncestorActiveProp,
+            key: index,
+          }),
+        );
+
+        // if (active || isAnyAncestorActiveProp || child.props.active) {
+        // }
       }
     });
 
-    return { hasNestedItems, renderedNestedItems };
+    return { hasNestedItems, renderedNestedItems, displayNestedItems };
   }, [children, active, indentLevel, isAnyAncestorActiveProp]);
+
+  console.log({ displayNestedItems });
 
   const renderedChildren = useMemo(() => {
     const renderedChildren: React.ReactNodeArray = [];
@@ -338,7 +354,7 @@ const SideNavItem: ExtendableBox<
         {renderedChildren}
       </Box>
 
-      {hasNestedItems && renderedNestedItems}
+      {hasNestedItems && hasActiveChildren.current && renderedNestedItems}
     </li>
   );
 });
