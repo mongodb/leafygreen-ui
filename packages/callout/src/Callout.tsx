@@ -198,7 +198,11 @@ function Callout({
           `,
         )}
       >
-        <Icon fill={colorSet.icon} className={headerIconStyle} />
+        <Icon
+          fill={colorSet.icon}
+          className={headerIconStyle}
+          role="presentation"
+        />
         {headerLabels[variant]}
       </div>
       <div className={bodyStyle}>
