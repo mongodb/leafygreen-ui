@@ -1,5 +1,11 @@
 # @leafygreen-ui/callout
 
+## 3.0.2
+
+### Patch Changes
+
+- 6170e8ff: Hides decorative icon from screen reader
+
 ## 3.0.1
 
 ### Patch Changes
