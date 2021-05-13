@@ -338,6 +338,7 @@ export default function Select({
           setFocusedOption(undefined);
           break;
         case keyMap.Enter:
+        case keyMap.Space:
           if (open) {
             event.preventDefault();
           }
