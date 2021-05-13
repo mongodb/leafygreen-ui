@@ -136,6 +136,9 @@ const Button: ExtendableBox<
             [css`
               justify-content: space-between;
             `]: !!rightGlyph,
+            [css`
+              justify-content: center;
+            `]: !rightGlyph,
           },
           padding[size],
         )}
