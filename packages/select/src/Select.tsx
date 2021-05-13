@@ -339,7 +339,8 @@ export default function Select({
           break;
         case keyMap.Enter:
         case keyMap.Space:
-          if (open) {
+          if (open && document.activeElement !== menuButtonRef.current) {
+            // Default behavior is to use these keys to open the dropdown but we handle that manually
             event.preventDefault();
           }
 
