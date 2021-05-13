@@ -79,7 +79,7 @@ const contentColors = {
     color: ${uiColors.gray.dark1};
   `,
   [Mode.Dark]: css`
-    color: ${uiColors.white};
+    color: ${uiColors.gray.light2};
   `,
 };
 

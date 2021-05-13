@@ -32,7 +32,7 @@ const titleColors = {
     color: ${uiColors.gray.dark2};
   `,
   [Mode.Dark]: css`
-    color: ${uiColors.white};
+    color: ${uiColors.gray.light2};
   `,
 };
 
