@@ -19,6 +19,7 @@ function Default() {
         setOpen={setOpen}
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
         closeOnBackdropClick={boolean('closeOnBackdropClick', true)}
+        darkMode={boolean('darkMode', false)}
       >
         Modal Content goes here.
       </Modal>
