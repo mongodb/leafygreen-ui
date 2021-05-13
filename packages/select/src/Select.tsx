@@ -338,6 +338,10 @@ export default function Select({
           setFocusedOption(undefined);
           break;
         case keyMap.Enter:
+          if (open) {
+            event.preventDefault();
+          }
+
           onSelectFocusedOption(event);
           break;
         case keyMap.ArrowUp:
