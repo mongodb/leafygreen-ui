@@ -1,4 +1,11 @@
-import React, { ReactNode, useRef, useMemo } from 'react';
+import React, {
+  ReactNode,
+  useRef,
+  useMemo,
+  createContext,
+  useContext,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import {
@@ -238,12 +245,14 @@ const SideNavItem: ExtendableBox<
     children,
     onClick: onClickProp,
     glyph,
+    isChildActive,
     ...rest
   } = props;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { baseFontSize = 14 } = useSideNavContext();
   const hasNestedChildren = useRef(false);
   const hasActiveChildren = useRef(false);
+  const [tester, setTester] = useState(false);
   // const [hasActiveChild, setHasActiveChild] = React.useState(false);
   // let isAnyChildNested = false;
 
@@ -259,23 +268,68 @@ const SideNavItem: ExtendableBox<
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
-  const {
-    hasNestedItems,
-    displayNestedItems,
-    renderedNestedItems,
-  } = useMemo(() => {
+  // const { hasNestedItems, renderedNestedItems } = useMemo(() => {
+  //   const checkChildren = React.Children.forEach(child => {
+  //     if () {
+
+  //     }
+
+  //     if (child.props.children) {
+  //       return checkChildren(child.props.children)
+  //     }
+  //   })
+
+  // }, []);
+
+  console.log(children, hasNestedChildren.current);
+
+  const checkForActiveChild = useMemo(() => {
+    let checkForActiveChild = false;
+
+    const recursiveChildrenCheck = (children: React.ReactNode) => {
+      React.Children.forEach(children, child => {
+        if (isComponentType(child, 'SideNavItem')) {
+          if (child.props.active) {
+            checkForActiveChild = true;
+          }
+        } else if (child.props.children) {
+          recursiveChildrenCheck(child.props.children);
+        }
+      });
+      // React.Children.forEach((children, child) => {
+      // if (isComponentType(child, 'SideNavItem')) {
+      //   if (child.props.active) {
+      //     checkForActiveChild = true;
+      //   }
+      // } else if (child.props.children) {
+      //   recursiveChildrenCheck(child.props.children);
+      // }
+      // });
+    };
+
+    recursiveChildrenCheck(children);
+
+    return checkForActiveChild;
+  }, [children]);
+
+  const { hasNestedItems, renderedNestedItems } = useMemo(() => {
     const renderedNestedItems: Array<React.ReactElement> = [];
     let hasNestedItems = false;
-    let displayNestedItems = false;
 
     React.Children.forEach(children, (child, index) => {
+      console.log(child);
+
+      if (child?.props?.active) {
+        hasActiveChildren.current = true;
+      }
+
       if (child != null && isComponentType(child, 'SideNavItem')) {
         hasNestedItems = true;
 
-        if (active || isAnyAncestorActiveProp || child.props.active) {
-          console.log('here');
-          displayNestedItems = true;
-        }
+        // if (active || isAnyAncestorActiveProp || child.props.active) {
+        //   // console.log('here', children === '');
+        //   displayNestedItems = true;
+        // }
 
         renderedNestedItems.push(
           React.cloneElement(child, {
@@ -291,10 +345,10 @@ const SideNavItem: ExtendableBox<
       }
     });
 
-    return { hasNestedItems, renderedNestedItems, displayNestedItems };
+    return { hasNestedItems, renderedNestedItems };
   }, [children, active, indentLevel, isAnyAncestorActiveProp]);
 
-  console.log({ displayNestedItems });
+  // console.log({ displayNestedItems });
 
   const renderedChildren = useMemo(() => {
     const renderedChildren: React.ReactNodeArray = [];
@@ -354,7 +408,7 @@ const SideNavItem: ExtendableBox<
         {renderedChildren}
       </Box>
 
-      {hasNestedItems && hasActiveChildren.current && renderedNestedItems}
+      {hasNestedItems && renderedNestedItems}
     </li>
   );
 });
