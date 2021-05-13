@@ -11,6 +11,7 @@ type ConfirmationModalExampleProps = {
   requiredInputText: boolean;
   title: string;
   children: string;
+  darkMode: boolean;
 };
 
 const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
@@ -34,6 +35,11 @@ const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
     default: 'Analyze your data in S3 with MQL.',
     label: 'Children',
   },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
 };
 
 function Confirm({
@@ -41,6 +47,7 @@ function Confirm({
   buttonText = 'Confirm',
   requiredInputText,
   children,
+  darkMode,
 }: ConfirmationModalExampleProps) {
   const [open, setOpen] = useState(false);
   const reqInputText = requiredInputText ? 'Confirmation text' : undefined;
@@ -49,6 +56,7 @@ function Confirm({
     <>
       <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <ConfirmationModal
+        darkMode={darkMode}
         open={open}
         onConfirm={() => setOpen(false)}
         onCancel={() => setOpen(false)}

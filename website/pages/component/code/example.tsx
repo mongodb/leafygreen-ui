@@ -47,7 +47,7 @@ function LanguageSwitcher({
   highlightLines,
 }: {
   darkMode: boolean;
-  highlightLines: Array<number>;
+  highlightLines?: Array<number>;
 }) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
 
