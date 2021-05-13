@@ -43,9 +43,9 @@ const baseModalStyle = css`
 
 const contentStyle = css`
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 20px;
   letter-spacing: 0;
-  line-height: 24px;
   padding: 36px;
 `;
 
