@@ -4,20 +4,25 @@ import UsingKeyboardProvider from './UsingKeyboardContext';
 import TypographyProvider, {
   TypographyProviderProps,
 } from './TypographyContext';
+import PortalContextProvider, { PortalContextValues } from './PortalContext';
 
 type LeafyGreenProviderProps = {
   children: React.ReactNode;
+  popoverPortalContainer?: PortalContextValues['popover'];
 } & TypographyProviderProps;
 
 function LeafyGreenProvider({
   children,
   baseFontSize,
+  popoverPortalContainer,
 }: LeafyGreenProviderProps) {
   return (
     <UsingKeyboardProvider>
-      <TypographyProvider baseFontSize={baseFontSize}>
-        {children}
-      </TypographyProvider>
+      <PortalContextProvider popover={popoverPortalContainer}>
+        <TypographyProvider baseFontSize={baseFontSize}>
+          {children}
+        </TypographyProvider>
+      </PortalContextProvider>
     </UsingKeyboardProvider>
   );
 }

@@ -1,5 +1,23 @@
 # @leafygreen-ui/code
 
+## 8.1.3
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+- Updated dependencies [650f6334]
+  - @leafygreen-ui/icon@11.0.0
+  - @leafygreen-ui/select@3.0.1
+
+## 8.1.2
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+  - @leafygreen-ui/select@3.0.0
+
 ## 8.1.1
 
 ### Patch Changes

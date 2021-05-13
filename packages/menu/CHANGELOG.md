@@ -1,5 +1,32 @@
 # @leafygreen-ui/menu
 
+## 10.0.2
+
+### Patch Changes
+
+- 4b7b7322: Adds `role='presentation'` to glyphs rendered before menu items
+
+## 10.0.1
+
+### Patch Changes
+
+- 5bb0e25f: CaretIcons no longer announced to scren readers, since they are not focusable
+- a4d3f000: Updates icons in inactive menu and submenu items to `uiColors.gray.dark1`
+
+## 10.0.0
+
+### Minor Changes
+
+- 857a680a: Adds support for positioning popover elements relative to elements within a scroll container other than the window.
+  Adds support for setting z-index on popover elements with the `zIndex` prop.
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+  - @leafygreen-ui/popover@7.2.0
+
 ## 9.1.4
 
 ### Patch Changes

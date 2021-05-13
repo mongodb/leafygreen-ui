@@ -109,7 +109,7 @@ const openIconButtonStyle = css`
 `;
 
 const mainIconStyle = css`
-  color: ${uiColors.gray.base};
+  color: ${uiColors.gray.dark1};
   margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
   flex-shrink: 0;
 
@@ -254,6 +254,7 @@ const SubMenu: ExtendableBox<
     const updatedGlyph =
       glyph &&
       React.cloneElement(glyph, {
+        role: 'presentation',
         className: cx(
           mainIconStyle,
           {
@@ -346,9 +347,9 @@ const SubMenu: ExtendableBox<
           }}
         >
           {open ? (
-            <CaretUpIcon className={caretIconStyles} />
+            <CaretUpIcon role="presentation" className={caretIconStyles} />
           ) : (
-            <CaretDownIcon className={caretIconStyles} />
+            <CaretDownIcon role="presentation" className={caretIconStyles} />
           )}
         </IconButton>
 

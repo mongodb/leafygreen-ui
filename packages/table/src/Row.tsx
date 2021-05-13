@@ -287,7 +287,7 @@ const Row = React.forwardRef(
       }
 
       return renderedChildren;
-    }, [children, rowHasNestedRows, isExpanded, setIsExpanded]);
+    }, [children, rowHasNestedRows, isExpanded, setIsExpanded, darkMode]);
 
     const shouldAltRowColor =
       data && data.length >= 10 && hasNestedRows != null && !hasNestedRows;

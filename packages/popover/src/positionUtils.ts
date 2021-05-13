@@ -116,6 +116,7 @@ const defaultElementPosition = {
 
 export function getElementDocumentPosition(
   element: HTMLElement | null,
+  scrollContainer?: HTMLElement | null,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
@@ -123,6 +124,26 @@ export function getElementDocumentPosition(
 
   const { top, bottom, left, right } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth: width } = element;
+
+  if (scrollContainer) {
+    const { scrollTop, scrollLeft } = scrollContainer;
+    const {
+      top: offsetTop,
+      bottom: offsetBottom,
+      left: offsetLeft,
+      right: offsetRight,
+    } = scrollContainer.getBoundingClientRect();
+
+    return {
+      top: top + scrollTop - offsetTop,
+      bottom: bottom + scrollTop - offsetBottom,
+      left: left + scrollLeft - offsetLeft,
+      right: right + scrollLeft - offsetRight,
+      height,
+      width,
+    };
+  }
+
   const { scrollX, scrollY } = window;
 
   return {
@@ -138,6 +159,7 @@ export function getElementDocumentPosition(
 // Gets top offset, left offset, width and height dimensions for a node
 export function getElementViewportPosition(
   element: HTMLElement | null,
+  scrollContainer?: HTMLElement | null,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
@@ -145,6 +167,24 @@ export function getElementViewportPosition(
 
   const { top, bottom, left, right } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth: width } = element;
+
+  if (scrollContainer) {
+    const {
+      top: offsetTop,
+      bottom: offsetBottom,
+      left: offsetLeft,
+      right: offsetRight,
+    } = scrollContainer.getBoundingClientRect();
+
+    return {
+      top: top - offsetTop,
+      bottom: bottom - offsetBottom,
+      left: left - offsetLeft,
+      right: right - offsetRight,
+      height,
+      width,
+    };
+  }
 
   return {
     top,

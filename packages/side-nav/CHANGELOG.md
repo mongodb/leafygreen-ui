@@ -1,5 +1,33 @@
 # @leafygreen-ui/side-nav
 
+## 7.0.1
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+- Updated dependencies [5bb0e25f]
+- Updated dependencies [a4d3f000]
+  - @leafygreen-ui/icon@11.0.0
+  - @leafygreen-ui/menu@10.0.1
+  - @leafygreen-ui/tooltip@6.2.1
+
+## 7.0.0
+
+### Minor Changes
+
+- 842fc55b: Adds `hasActiveItem` prop for manual control over active item in collapsed side navigation.
+- 857a680a: Improves accessibility of focus state for vision-impaired users.
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+- Updated dependencies [857a680a]
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/portal@3.1.2
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+  - @leafygreen-ui/tooltip@6.2.0
+  - @leafygreen-ui/menu@10.0.0
+
 ## 6.0.1
 
 ### Patch Changes

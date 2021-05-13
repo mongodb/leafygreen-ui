@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize, useIdAllocator } from '@leafygreen-ui/hooks';
 import { OneOf } from '@leafygreen-ui/lib';
+import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
 import ListMenu from './ListMenu';
@@ -38,36 +39,36 @@ export type Props = {
   disabled?: boolean;
   description?: string;
   placeholder?: string;
-  usePortal?: boolean;
   name?: string;
   allowDeselect?: boolean;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
-} & (
-  | // Uncontrolled
-  ({
-      defaultValue?: string;
-      value?: undefined;
-    } & {
-      onChange?: (
-        value: string,
-        event: React.MouseEvent | React.KeyboardEvent,
-      ) => void;
-      readOnly?: false;
-    })
-  // Controlled
-  | ({ value: string; defaultValue?: undefined } & (
-      | {
-          onChange: (
-            value: string,
-            event: React.MouseEvent | React.KeyboardEvent,
-          ) => void;
-          readOnly?: false;
-        }
-      | { readOnly: true; onChange?: undefined }
-    ))
-) &
+} & Omit<PopoverProps, 'active' | 'spacing'> &
+  (
+    | // Uncontrolled
+    ({
+        defaultValue?: string;
+        value?: undefined;
+      } & {
+        onChange?: (
+          value: string,
+          event: React.MouseEvent | React.KeyboardEvent,
+        ) => void;
+        readOnly?: false;
+      })
+    // Controlled
+    | ({ value: string; defaultValue?: undefined } & (
+        | {
+            onChange: (
+              value: string,
+              event: React.MouseEvent | React.KeyboardEvent,
+            ) => void;
+            readOnly?: false;
+          }
+        | { readOnly: true; onChange?: undefined }
+      ))
+  ) &
   OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
 export default function Select({
@@ -75,33 +76,37 @@ export default function Select({
   darkMode = false,
   size = Size.Default,
   disabled = false,
-  usePortal = true,
   allowDeselect = true,
   placeholder = 'Select',
   className,
   id: idProp,
   label,
+  'aria-labelledby': ariaLabelledby,
   description,
   name,
   defaultValue,
   value,
   onChange,
   readOnly,
-  'aria-labelledby': ariaLabelledBy,
+  usePortal = true,
+  portalContainer,
+  scrollContainer,
+  portalClassName,
+  popoverZIndex,
   __INTERNAL__menuButtonSlot__,
 }: Props) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
+  const labelId = useMemo(() => ariaLabelledby ?? `${id}-label`, [
+    ariaLabelledby,
+    id,
+  ]);
 
-  if (!label && !ariaLabelledBy) {
+  if (!label && !ariaLabelledby) {
     console.error(
       'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
     );
   }
 
-  const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
-    ariaLabelledBy,
-    id,
-  ]);
   const descriptionId = `${id}-description`;
   const menuId = `${id}-menu`;
 
@@ -397,6 +402,7 @@ export default function Select({
         (option, group) => {
           const selected = option === selectedOption;
           const disabled = isOptionDisabled(option, group);
+
           return {
             className: option.props.className,
             glyph: option.props.glyph,
@@ -427,6 +433,18 @@ export default function Select({
       selectedOption,
     ],
   );
+
+  const popoverProps = {
+    popoverZIndex,
+    ...(usePortal
+      ? {
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
+      : { usePortal }),
+  };
 
   return (
     <div
@@ -488,6 +506,7 @@ export default function Select({
           {description}
         </div>
       )}
+
       <SelectContext.Provider value={providerData}>
         <MenuButton
           ref={menuButtonRef}
@@ -520,10 +539,10 @@ export default function Select({
             onSelectFocusedOption={onSelectFocusedOption}
             onFocusPreviousOption={onFocusPreviousOption}
             onFocusNextOption={onFocusNextOption}
-            usePortal={usePortal}
             className={css`
               width: ${menuButtonRef.current?.clientWidth}px;
             `}
+            {...popoverProps}
           >
             {deselectionOption}
             {renderedChildren}

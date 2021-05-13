@@ -10,13 +10,7 @@ type PortalProps = {
   { className?: string; container?: null }
 >;
 
-function createPortalContainer(): HTMLElement {
-  const el = document.createElement('div');
-  document.body.appendChild(el);
-  return el;
-}
-
-function Portal(props: PortalProps) {
+function usePortalContainer(customContainer?: HTMLElement) {
   // Make container initially undefined so that the portal is not created
   // or rendered on initial render. This allows server-side rendering since:
   //  - ReactDOMServer cannot render portals
@@ -24,16 +18,25 @@ function Portal(props: PortalProps) {
   const [container, setContainer] = useState<HTMLElement | undefined>();
 
   useEffect(() => {
-    if (props.container) {
-      setContainer(props.container);
+    if (customContainer) {
+      setContainer(customContainer);
     } else {
-      const defaultContainer = createPortalContainer();
+      const defaultContainer = document.createElement('div');
+      document.body.appendChild(defaultContainer);
+
       setContainer(defaultContainer);
+
       return () => {
         defaultContainer.remove();
       };
     }
-  }, [props.container]);
+  }, [customContainer]);
+
+  return container;
+}
+
+function Portal(props: PortalProps) {
+  const container = usePortalContainer(props.container ?? undefined);
 
   useEffect(() => {
     if (container && !props.container) {

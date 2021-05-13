@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
@@ -20,7 +20,7 @@ const menuStyle = css`
   overflow: auto;
 `;
 
-interface ListMenuProps {
+type ListMenuProps = {
   children: React.ReactNode;
   id: string;
   referenceElement: React.MutableRefObject<HTMLElement | null>;
@@ -29,9 +29,8 @@ interface ListMenuProps {
   onFocusPreviousOption: () => void;
   onFocusNextOption: () => void;
   className?: string;
-  usePortal?: boolean;
   labelId?: string;
-}
+} & Omit<PopoverProps, 'active' | 'refEl'>;
 
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
   function ListMenu(
@@ -44,8 +43,12 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       onFocusNextOption,
       onSelectFocusedOption,
       className,
-      usePortal,
       labelId,
+      usePortal = true,
+      portalContainer,
+      scrollContainer,
+      portalClassName,
+      popoverZIndex,
     }: ListMenuProps,
     forwardedRef,
   ) {
@@ -116,6 +119,13 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       [ref],
     );
 
+    const popoverProps = {
+      popoverZIndex,
+      ...(usePortal
+        ? { usePortal, portalClassName, portalContainer, scrollContainer }
+        : { usePortal }),
+    };
+
     return (
       <Popover
         active={open && !disabled}
@@ -125,7 +135,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         adjustOnMutation
         className={className}
         refEl={referenceElement}
-        usePortal={usePortal}
+        {...popoverProps}
       >
         <ul
           aria-labelledby={labelId}

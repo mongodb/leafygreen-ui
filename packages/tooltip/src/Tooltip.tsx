@@ -16,7 +16,7 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { OneOf, HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
+import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
@@ -120,28 +120,6 @@ interface PopoverFunctionParameters {
 
 type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
 
-type PortalProps = OneOf<
-  {
-    /**
-     * Specifies that the popover content will appear portaled to the end of the DOM,
-     * rather than in the DOM tree.
-     *
-     * default: `true`
-     */
-    usePortal?: true;
-
-    /**
-     * If using a portal, specifies a class name to apply to the root element of the portal.
-     *
-     * default: undefined
-     */
-    portalClassName?: string;
-  },
-  {
-    usePortal: false;
-  }
->;
-
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
   keyof ModifiedPopoverProps
@@ -192,7 +170,7 @@ export type TooltipProps = Omit<
      * @default: true
      */
     enabled?: boolean;
-  } & PortalProps;
+  };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
   evt.stopPropagation();
@@ -235,13 +213,16 @@ function Tooltip({
   triggerEvent = TriggerEvent.Hover,
   darkMode = false,
   enabled = true,
-  usePortal = true,
   align = 'top',
   justify = 'start',
   spacing = 12,
   id,
   shouldClose,
+  usePortal = true,
   portalClassName,
+  portalContainer,
+  scrollContainer,
+  popoverZIndex,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -344,9 +325,18 @@ function Tooltip({
     enabled: open && triggerEvent === 'click',
   });
 
-  const portalProps = usePortal
-    ? { spacing, usePortal, portalClassName }
-    : { spacing, usePortal };
+  const popoverProps = {
+    popoverZIndex,
+    ...(usePortal
+      ? {
+          spacing,
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
+      : { spacing, usePortal }),
+  };
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -360,7 +350,7 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
-      {...portalProps}
+      {...popoverProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
         const {

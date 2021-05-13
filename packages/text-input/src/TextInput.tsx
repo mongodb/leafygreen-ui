@@ -108,7 +108,9 @@ interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
 }
 
 type AriaLabels = 'label' | 'aria-labelledby';
-type AccessibleTextInputProps = Either<TextInputProps, AriaLabels>;
+type AccessibleTextInputProps =
+  | Either<TextInputProps, AriaLabels>
+  | (TextInputProps & { type: 'search'; 'aria-label': string });
 
 const interactionRingStyle = css`
   width: 100%;
@@ -214,6 +216,17 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 } as const;
 
+const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
+  [Mode.Light]: {
+    [State.Error]: uiColors.red.light3,
+    [State.Valid]: uiColors.green.light3,
+  },
+  [Mode.Dark]: {
+    [State.Error]: uiColors.red.dark2,
+    [State.Valid]: uiColors.gray.dark1,
+  },
+};
+
 function getStatefulInputStyles({
   state,
   optional,
@@ -317,9 +330,15 @@ const TextInput: React.ComponentType<
       }
     }
 
-    if (!label || !ariaLabelledby) {
+    if (type !== 'search' && !label && !ariaLabelledby) {
       console.error(
         'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
+      );
+    }
+
+    if (type === 'search' && !rest['aria-label']) {
+      console.error(
+        'For screen-reader accessibility, aria-label must be provided to TextInput.',
       );
     }
 
@@ -342,6 +361,13 @@ const TextInput: React.ComponentType<
             className={interactionRingStyle}
             darkMode={darkMode}
             disabled={disabled}
+            color={
+              state === State.Valid || state === State.Error
+                ? {
+                    hovered: interactionRingColor[mode][state],
+                  }
+                : undefined
+            }
           >
             <input
               {...rest}

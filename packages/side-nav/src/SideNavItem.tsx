@@ -86,16 +86,39 @@ const disabledStyle = css`
 `;
 
 const focusedStyle = css`
+  position: relative;
+
+  &:before {
+    transition: all 150ms ease-in-out;
+    content: '';
+    transform: scaleY(0.3);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    height: 20px;
+    margin: auto;
+    background-color: ${uiColors.focus};
+    opacity: 0;
+    border-radius: 0 3px 3px 0;
+  }
+
   &:focus {
     text-decoration: none;
     color: ${uiColors.blue.dark3};
-    background-color: ${uiColors.blue.light3};
+    background-color: ${uiColors.blue.light2};
+
+    &:before {
+      opacity: 1;
+      transform: scaleY(1);
+    }
   }
 `;
 
 const focusedDisabledStyle = css`
   &:focus {
-    color: ${uiColors.gray.light1};
+    color: ${uiColors.blue.light1};
   }
 `;
 

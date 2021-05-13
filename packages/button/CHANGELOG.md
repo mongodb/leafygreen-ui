@@ -1,5 +1,18 @@
 # @leafygreen-ui/button
 
+## 12.0.1
+
+### Patch Changes
+
+- 54daf9a4: Add stronger overrides for color and text-decoration for hover and focus states in buttons
+
+## 12.0.0
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+
 ## 11.0.4
 
 ### Patch Changes

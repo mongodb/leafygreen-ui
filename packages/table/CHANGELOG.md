@@ -1,5 +1,25 @@
 # @leafygreen-ui/table
 
+## 2.0.2
+
+### Patch Changes
+
+- 931fde4c: darkMode missing from useMemo dep array in Row component
+
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+  - @leafygreen-ui/icon@11.0.0
+
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+
 ## 1.5.1
 
 ### Patch Changes

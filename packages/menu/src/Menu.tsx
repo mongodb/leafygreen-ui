@@ -27,7 +27,7 @@ const scrollContainerStyle = css`
   padding: 0px;
 `;
 
-interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
+interface MenuProps extends Omit<PopoverProps, 'active'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
@@ -46,12 +46,6 @@ interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
    *
    */
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-
-  /**
-   * Distance between the content rendered inside of the Menu and the trigger
-   *
-   */
-  spacing?: number;
 
   /**
    * Callback to determine whether or not Menu should close when user tries to close it.
@@ -86,7 +80,6 @@ interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
 function Menu({
   align = Align.Bottom,
   justify = Justify.End,
-  usePortal = true,
   adjustOnMutation = false,
   shouldClose = () => true,
   spacing,
@@ -96,6 +89,11 @@ function Menu({
   className,
   refEl,
   trigger,
+  usePortal = true,
+  portalClassName,
+  portalContainer,
+  scrollContainer,
+  popoverZIndex,
   ...rest
 }: MenuProps) {
   const hasSetInitialFocus = useRef(false);
@@ -324,6 +322,19 @@ function Menu({
 
   useEventListener('keydown', handleKeyDown, { enabled: open });
 
+  const popoverProps = {
+    popoverZIndex,
+    ...(usePortal
+      ? {
+          spacing,
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
+      : { spacing, usePortal }),
+  };
+
   const popoverContent = (
     <Popover
       key="popover"
@@ -331,9 +342,8 @@ function Menu({
       align={align}
       justify={justify}
       refEl={refEl}
-      usePortal={usePortal}
-      spacing={spacing}
       adjustOnMutation={adjustOnMutation}
+      {...popoverProps}
     >
       <div className={cx(rootMenuStyle, className)}>
         {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
