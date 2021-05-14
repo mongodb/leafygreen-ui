@@ -101,6 +101,53 @@ describe('packages/side-nav', () => {
       });
     });
 
+    describe('it properly determines what nested elements to render', () => {
+      test('when an active SideNavItem has nested items, they are rendered', () => {
+        render(
+          <SideNav aria-label="test side nav">
+            <SideNavItem active>
+              Parent
+              <SideNavItem>Child</SideNavItem>
+            </SideNavItem>
+          </SideNav>,
+        );
+        expect(screen.getByText('Parent')).toBeInTheDocument();
+        expect(screen.getByText('Child')).toBeInTheDocument();
+      });
+
+      test('when an inactive SideNavItem has nested items, they are not rendered by default', () => {
+        render(
+          <SideNav aria-label="test side nav">
+            <SideNavItem>
+              Parent
+              <SideNavItem>Child</SideNavItem>
+            </SideNavItem>
+          </SideNav>,
+        );
+
+        expect(screen.getByText('Parent')).toBeInTheDocument();
+        expect(screen.queryByText('Children')).not.toBeInTheDocument();
+      });
+
+      test('when a SideNavItem has an active child, it is rendered to the DOM', () => {
+        render(
+          <SideNav aria-label="test side nav">
+            <SideNavItem>
+              Parent
+              <SideNavItem>
+                Child
+                <SideNavItem active>Grandchild</SideNavItem>
+              </SideNavItem>
+            </SideNavItem>
+          </SideNav>,
+        );
+
+        expect(screen.getByText('Parent')).toBeInTheDocument();
+        expect(screen.getByText('Child')).toBeInTheDocument();
+        expect(screen.getByText('Grandchild')).toBeInTheDocument();
+      });
+    });
+
     describe('when controlled', () => {
       const setCollapsed = jest.fn();
       const collapsed = true;

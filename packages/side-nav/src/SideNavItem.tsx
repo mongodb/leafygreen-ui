@@ -355,7 +355,7 @@ const SideNavItem: ExtendableBox<
         {renderedChildren}
       </Box>
 
-      {hasNestedItems && renderedNestedItems}
+      {hasNestedItems && <ul>{renderedNestedItems}</ul>}
     </li>
   );
 });
