@@ -221,9 +221,9 @@ function OrgSettingsSideNav() {
 
             <SideNavItem>
               Security
-              <SideNavItem>
+              <SideNavItem active>
                 Permissions
-                <SideNavItem>I wanna go away</SideNavItem>
+                <SideNavItem>Login</SideNavItem>
               </SideNavItem>
               <SideNavItem>
                 Access

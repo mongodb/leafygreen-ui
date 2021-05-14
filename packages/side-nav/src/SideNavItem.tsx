@@ -281,7 +281,7 @@ const SideNavItem: ExtendableBox<
       if (child != null && isComponentType(child, 'SideNavItem')) {
         hasNestedItems = true;
 
-        if (hasNestedActive) {
+        if (hasNestedActive || active || isAnyAncestorActiveProp) {
           renderedNestedItems.push(
             React.cloneElement(child, {
               className: getIndentLevelStyle(indentLevel),
