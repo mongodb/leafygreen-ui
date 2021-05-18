@@ -115,11 +115,7 @@ function CopyButton({
       onClick={handleClick}
     >
       {copied ? <CheckmarkIcon /> : <CopyIcon />}
-      {copied && (
-        <VisuallyHidden>
-          <div aria-live="assertive">Copied!</div>
-        </VisuallyHidden>
-      )}
+      {copied && <VisuallyHidden role="alert">Copied!</VisuallyHidden>}
     </IconButton>
   );
 }

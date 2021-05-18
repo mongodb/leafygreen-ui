@@ -30,6 +30,22 @@ describe('packages/Code', () => {
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
+
+    test('announces copied to screenreaders when content is copied', () => {
+      Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+        spy.mockReturnValue(true);
+
+        render(
+          <Code copyable={true} language="javascript">
+            {codeSnippet}
+          </Code>,
+        );
+      });
+
+      const copyIcon = screen.getByRole('button');
+      fireEvent.click(copyIcon);
+      expect(screen.getByRole('alert')).toBeInTheDocument();
+    });
   });
 
   const codeContainer = (container.firstChild as HTMLElement).lastChild;
