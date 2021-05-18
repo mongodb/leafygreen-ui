@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -114,6 +115,11 @@ function CopyButton({
       onClick={handleClick}
     >
       {copied ? <CheckmarkIcon /> : <CopyIcon />}
+      {copied && (
+        <VisuallyHidden>
+          <div aria-live="assertive">Copied!</div>
+        </VisuallyHidden>
+      )}
     </IconButton>
   );
 }

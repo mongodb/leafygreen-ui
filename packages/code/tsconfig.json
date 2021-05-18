@@ -8,6 +8,9 @@
   "include": ["src/**/*", "../../typings"],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
       "path": "../emotion"
     },
     {
