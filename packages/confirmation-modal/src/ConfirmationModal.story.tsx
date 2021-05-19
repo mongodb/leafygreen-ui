@@ -7,6 +7,7 @@ function Confirm() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Primary action text', 'Confirm');
   const submitDisabled = boolean('submitDisabled', false);
+  const darkMode = boolean('darkMode', false);
   const requiredInputText = boolean('Require confirmation', false)
     ? text('Confirmation text', 'confirm')
     : undefined;
@@ -22,6 +23,7 @@ function Confirm() {
         buttonText={buttonText}
         requiredInputText={requiredInputText}
         submitDisabled={submitDisabled}
+        darkMode={darkMode}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here. This is some description
@@ -36,6 +38,7 @@ function Delete() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Primary action text', 'Confirm');
   const submitDisabled = boolean('submitDisabled', false);
+  const darkMode = boolean('darkMode', false);
   const requiredInputText = boolean('Require confirmation', false)
     ? text('Confirmation text', 'confirm')
     : undefined;
@@ -52,6 +55,7 @@ function Delete() {
         variant={Variant.Danger}
         requiredInputText={requiredInputText}
         submitDisabled={submitDisabled}
+        darkMode={darkMode}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here. This is some description
