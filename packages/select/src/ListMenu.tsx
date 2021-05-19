@@ -1,7 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import SelectContext from './SelectContext';
@@ -24,10 +23,6 @@ type ListMenuProps = {
   children: React.ReactNode;
   id: string;
   referenceElement: React.MutableRefObject<HTMLElement | null>;
-  onClose: () => void;
-  onSelectFocusedOption: React.KeyboardEventHandler;
-  onFocusPreviousOption: () => void;
-  onFocusNextOption: () => void;
   className?: string;
   labelId?: string;
 } & Omit<PopoverProps, 'active' | 'refEl'>;
@@ -38,10 +33,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       children,
       id,
       referenceElement,
-      onClose,
-      onFocusPreviousOption,
-      onFocusNextOption,
-      onSelectFocusedOption,
       className,
       labelId,
       usePortal = true,
@@ -58,49 +49,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     const sizeSet = sizeSets[size];
 
     const ref = useForwardedRef(forwardedRef, null);
-
-    const onKeyDown = useCallback(
-      (event: React.KeyboardEvent) => {
-        // No support for modifiers yet
-        /* istanbul ignore if */
-        if (event.ctrlKey || event.shiftKey || event.altKey) {
-          return;
-        }
-
-        let bubble = false;
-
-        switch (event.keyCode) {
-          case keyMap.Tab:
-          case keyMap.Enter:
-            onSelectFocusedOption(event);
-            break;
-          case keyMap.Escape:
-            onClose();
-            break;
-          case keyMap.ArrowUp:
-            onFocusPreviousOption();
-            break;
-          case keyMap.ArrowDown:
-            onFocusNextOption();
-            break;
-          /* istanbul ignore next */
-          default:
-            bubble = true;
-        }
-
-        /* istanbul ignore else */
-        if (!bubble) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-      },
-      [
-        onClose,
-        onFocusNextOption,
-        onFocusPreviousOption,
-        onSelectFocusedOption,
-      ],
-    );
 
     const viewportSize = useViewportSize();
 
@@ -137,12 +85,13 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         refEl={referenceElement}
         {...popoverProps}
       >
+        {/* Keyboard events handled in Select component through event listener hook */}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <ul
           aria-labelledby={labelId}
           role="listbox"
           ref={ref}
           tabIndex={-1}
-          onKeyDown={onKeyDown}
           onClick={onClick}
           className={cx(
             menuStyle,
