@@ -9,6 +9,7 @@ import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 type ModalKnobs = {
   children: string;
   size: ModalSize;
+  darkMode?: boolean;
 };
 
 const knobsConfig: KnobsConfigInterface<ModalKnobs> = {
@@ -22,6 +23,11 @@ const knobsConfig: KnobsConfigInterface<ModalKnobs> = {
     options: Object.values(ModalSize),
     default: ModalSize.Default,
     label: 'Size',
+  },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
   },
 };
 

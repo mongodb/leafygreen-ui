@@ -1,5 +1,20 @@
 # @leafygreen-ui/confirmation-modal
 
+## 2.2.0
+
+### Minor Changes
+
+- 04869b3b: Adds support for `darkMode` prop
+
+### Patch Changes
+
+- Updated dependencies [04869b3b]
+- Updated dependencies [dda5c8bb]
+- Updated dependencies [37780eb8]
+  - @leafygreen-ui/modal@6.1.0
+  - @leafygreen-ui/button@12.0.2
+  - @leafygreen-ui/text-input@6.0.2
+
 ## 2.1.6
 
 ### Patch Changes

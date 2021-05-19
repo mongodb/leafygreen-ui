@@ -2,7 +2,6 @@ import React, { useCallback, useContext } from 'react';
 import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
-import { keyMap } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
@@ -31,9 +30,6 @@ type Props = {
   name?: string;
   deselected: boolean;
   readOnly?: boolean;
-  onFocusFirstOption: () => void;
-  onFocusLastOption: () => void;
-  onDeselect: React.KeyboardEventHandler;
   onClose: () => void;
   onOpen: () => void;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
@@ -54,9 +50,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     name,
     deselected,
     readOnly,
-    onDeselect,
-    onFocusFirstOption,
-    onFocusLastOption,
     onClose,
     onOpen,
     __INTERNAL__menuButtonSlot__,
@@ -70,60 +63,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 
   const colorSet = colorSets[mode];
   const sizeSet = sizeSets[size];
-
-  const onKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      if (disabled) {
-        return;
-      }
-
-      /* istanbul ignore if */
-      if (event.ctrlKey || event.shiftKey || event.altKey) {
-        return;
-      }
-
-      let bubble = false;
-
-      switch (event.keyCode) {
-        case keyMap.Tab:
-          onClose();
-          bubble = true;
-          break;
-        case keyMap.Escape:
-          if (open) {
-            onClose();
-          } else {
-            onDeselect(event);
-          }
-          break;
-        case keyMap.ArrowUp:
-          onOpen();
-          onFocusLastOption();
-          break;
-        case keyMap.ArrowDown:
-          onOpen();
-          onFocusFirstOption();
-          break;
-        /* istanbul ignore next */
-        default:
-          bubble = true;
-      }
-
-      if (!bubble) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    },
-    [
-      disabled,
-      onClose,
-      onDeselect,
-      onFocusFirstOption,
-      onFocusLastOption,
-      onOpen,
-      open,
-    ],
-  );
 
   const onClick = useCallback(() => {
     if (open) {
@@ -146,10 +85,10 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       value={value}
       disabled={disabled}
       onClick={onClick}
-      onKeyDown={onKeyDown}
       variant={Variant.Default}
       darkMode={mode === Mode.Dark}
       rightGlyph={<CaretDownIcon />}
+      data-testid="leafygreen-ui-select-menubutton"
       className={cx(
         menuButtonStyle,
         css`

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { radios, text } from '@storybook/addon-knobs';
+import { radios, text, boolean } from '@storybook/addon-knobs';
 import MarketingModal, { GraphicStyle } from '.';
 
 function Default() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Button text', 'Okay');
   const linkText = text('Link text', 'Cancel');
+  const darkMode = boolean('darkMode', false);
 
   const graphicStyle = radios(
     'Graphic style example',
@@ -33,6 +34,7 @@ function Default() {
         graphicStyle={graphicStyle}
         buttonText={buttonText}
         linkText={linkText}
+        darkMode={darkMode}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here.

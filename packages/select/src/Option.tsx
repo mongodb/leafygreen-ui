@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -23,6 +24,21 @@ const optionStyle = css`
   outline: none;
   overflow-wrap: anywhere;
   transition: background-color 150ms ease-in-out;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    transform: scaleY(0.3);
+    top: 7px;
+    bottom: 7px;
+    left: 0;
+    right: 0;
+    width: 4px;
+    border-radius: 0px 4px 4px 0px;
+    opacity: 0;
+    transition: all 150ms ease-in-out;
+  }
 `;
 
 const optionTextStyle = css`
@@ -33,6 +49,12 @@ const optionTextStyle = css`
 const iconStyle = css`
   min-width: 16px;
   margin-right: 6px;
+`;
+
+const glyphFocusStyle = css`
+  ${option.selector}:focus & {
+    color: currentColor;
+  }
 `;
 
 export interface InternalProps {
@@ -63,6 +85,7 @@ export function InternalOption({
   hasGlyphs,
 }: InternalProps) {
   const { mode } = useContext(SelectContext);
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   const { option: colorSet } = colorSets[mode];
 
@@ -133,11 +156,9 @@ export function InternalOption({
           iconStyle,
           css`
             color: ${colorSet.icon.base};
-            ${option.selector}:focus & {
-              color: currentColor;
-            }
           `,
           {
+            [glyphFocusStyle]: showFocus,
             [css`
               color: ${colorSet.icon.disabled};
             `]: disabled,
@@ -155,12 +176,10 @@ export function InternalOption({
         className={cx(
           iconStyle,
           css`
-            ${option.selector}:focus & {
-              color: currentColor;
-            }
             color: ${colorSet.icon.selected};
           `,
           {
+            [glyphFocusStyle]: showFocus,
             [css`
               color: ${colorSet.icon.disabled};
             `]: disabled,
@@ -220,12 +239,19 @@ export function InternalOption({
             &:hover {
               background-color: ${colorSet.background.hovered};
             }
-
+          `]: !disabled,
+          [css`
             &:focus {
               color: ${colorSet.text.focused};
               background-color: ${colorSet.background.focused};
+
+              &:before {
+                opacity: 1;
+                transform: scaleY(1);
+                background-color: ${colorSet.indicator.focused};
+              }
             }
-          `]: !disabled,
+          `]: showFocus && !disabled,
           [css`
             cursor: not-allowed;
             color: ${colorSet.text.disabled};
