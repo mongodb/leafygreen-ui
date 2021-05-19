@@ -11,6 +11,13 @@ import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
+const Mode = {
+  Dark: 'dark',
+  Light: 'light',
+};
+
+type Mode = typeof Mode[keyof typeof Mode];
+
 export const ModalSize = {
   Small: 'small',
   Default: 'default',
@@ -53,10 +60,8 @@ const scrollContainer = css`
   position: absolute;
   min-height: 100%;
   width: 100%;
-
   padding: ${defaultVerticalSpacing}px ${defaultHorizontalSpacing}px;
   overflow-y: auto;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,8 +72,6 @@ const modalContentStyle = css`
   margin: auto;
   max-height: calc(100% - ${defaultVerticalSpacing}px);
   padding: 32px;
-  color: ${uiColors.gray.dark3};
-  background-color: ${uiColors.white};
   border-radius: 7px;
   box-shadow: 0 5px 15px ${transparentize(0.4, uiColors.black)};
   position: relative;
@@ -80,6 +83,17 @@ const modalContentStyle = css`
     outline: none;
   }
 `;
+
+const modeStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${uiColors.gray.dark3};
+    background-color: ${uiColors.white};
+  `,
+  [Mode.Dark]: css`
+    color: ${uiColors.white};
+    background-color: ${uiColors.gray.dark3};
+  `,
+};
 
 const visibleModalContentStyle = css`
   transform: translate3d(0, 0, 0);
@@ -103,18 +117,30 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 };
 
 const closeButton = css`
-  color: ${uiColors.gray.dark1};
   position: absolute;
   cursor: pointer;
   // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
   // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
   right: 10px;
   top: 10px;
-
-  &:hover {
-    color: ${uiColors.gray.dark3};
-  }
 `;
+
+const buttonColors = {
+  [Mode.Light]: css`
+    color: ${uiColors.gray.dark1};
+
+    &:hover {
+      color: ${uiColors.gray.dark3};
+    }
+  `,
+  [Mode.Dark]: css`
+    color: ${uiColors.gray.base};
+
+    &:hover {
+      color: ${uiColors.gray.base};
+    }
+  `,
+};
 
 interface ModalProps {
   /**
@@ -170,6 +196,8 @@ interface ModalProps {
    * Selector string (which will be passed to document.querySelector() to find the DOM node)
    */
   initialFocus?: string;
+
+  darkMode?: boolean;
 }
 
 /**
@@ -203,12 +231,14 @@ function Modal({
   setOpen = () => {},
   shouldClose = () => true,
   closeOnBackdropClick = true,
+  darkMode = false,
   children,
   className,
   contentClassName,
   initialFocus,
   ...rest
 }: ModalProps) {
+  const mode = darkMode ? Mode.Dark : Mode.Light;
   const [
     scrollContainerNode,
     setScrollContainerNode,
@@ -271,6 +301,7 @@ function Modal({
                   tabIndex={-1}
                   className={cx(
                     modalContentStyle,
+                    modeStyles[mode],
                     modalSizes[size],
                     {
                       [visibleModalContentStyle]: state === 'entered',
@@ -282,7 +313,8 @@ function Modal({
                   <IconButton
                     onClick={handleClose}
                     aria-label="Close modal"
-                    className={closeButton}
+                    className={cx(closeButton, buttonColors[mode])}
+                    darkMode={darkMode}
                   >
                     <XIcon />
                   </IconButton>

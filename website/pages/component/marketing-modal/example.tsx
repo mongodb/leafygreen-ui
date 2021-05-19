@@ -14,6 +14,7 @@ const knobsConfig: KnobsConfigInterface<{
   buttonText: string;
   linkText: string;
   children: string;
+  darkMode: boolean;
 }> = {
   title: {
     type: 'text',
@@ -41,6 +42,11 @@ const knobsConfig: KnobsConfigInterface<{
     default: children,
     label: 'Children',
   },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
 };
 
 export default function MarketingModalLiveExample() {
@@ -48,10 +54,11 @@ export default function MarketingModalLiveExample() {
 
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ title, graphicStyle, buttonText, linkText, children }) => (
+      {({ title, graphicStyle, buttonText, linkText, children, darkMode }) => (
         <>
           <Button onClick={() => setOpen(!open)}>Open Modal</Button>
           <MarketingModal
+            darkMode={darkMode}
             open={open}
             onButtonClick={() => setOpen(false)}
             onLinkClick={() => setOpen(false)}
