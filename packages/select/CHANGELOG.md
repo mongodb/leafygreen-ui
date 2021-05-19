@@ -1,5 +1,42 @@
 # @leafygreen-ui/select
 
+## 3.0.1
+
+### Patch Changes
+
+- 650f6334: Updates semantic HTML to help define width properties in Button and Select components
+- Updated dependencies [faeb0ce0]
+- Updated dependencies [54daf9a4]
+  - @leafygreen-ui/icon@11.0.0
+  - @leafygreen-ui/button@12.0.1
+
+## 3.0.0
+
+### Minor Changes
+
+- 857a680a: Adds support for positioning popover elements relative to elements within a scroll container other than the window.
+  Adds support for setting z-index on popover elements with the `zIndex` prop.
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+  - @leafygreen-ui/popover@7.2.0
+  - @leafygreen-ui/button@12.0.0
+
+## 2.1.0
+
+### Minor Changes
+
+- 559ceb15: Support a prop to disable the option to deselect
+
+## 2.0.5
+
+### Patch Changes
+
+- 83fbfa53: Updates styles for a focused Option component to improve the contrast ratio.
+
 ## 2.0.4
 
 ### Patch Changes

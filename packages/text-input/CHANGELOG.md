@@ -1,5 +1,36 @@
 # @leafygreen-ui/text-input
 
+## 6.0.2
+
+### Patch Changes
+
+- 37780eb8: Updates colors of the component's interaction ring on hover, based on the `state` prop on the component.
+
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+  - @leafygreen-ui/icon@11.0.0
+  - @leafygreen-ui/typography@8.0.1
+
+## 6.0.0
+
+### Patch Changes
+
+- 801f3221: Fixes check to ensure label or ariaLablledby is provided to component
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+  - @leafygreen-ui/typography@8.0.0
+
+## 5.0.12
+
+### Patch Changes
+
+- 509e90c3: Checks for existence of either `label` or `aria-labelledby` props, rather than requiring both, before logging a warning to the console
+- Updated dependencies [b1854dd8]
+  - @leafygreen-ui/interaction-ring@1.0.3
+
 ## 5.0.11
 
 ### Patch Changes

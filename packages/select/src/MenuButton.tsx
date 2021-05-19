@@ -21,6 +21,7 @@ const menuButtonTextStyle = css`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  max-width: 100%;
 `;
 
 type Props = {
@@ -35,6 +36,9 @@ type Props = {
   onDeselect: React.KeyboardEventHandler;
   onClose: () => void;
   onOpen: () => void;
+  __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
+    React.RefAttributes<unknown>
+  >;
 } & Required<
   Pick<
     JSX.IntrinsicElements['div'],
@@ -55,6 +59,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     onFocusLastOption,
     onClose,
     onOpen,
+    __INTERNAL__menuButtonSlot__,
     ...ariaProps
   }: Props,
   forwardedRef,
@@ -129,8 +134,12 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     ref.current!.focus();
   }, [onClose, onOpen, open, ref]);
 
+  const Component = __INTERNAL__menuButtonSlot__
+    ? __INTERNAL__menuButtonSlot__
+    : Button;
+
   return (
-    <Button
+    <Component
       {...ariaProps}
       ref={ref}
       name={name}
@@ -159,9 +168,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         `,
       )}
     >
-      <span className={menuButtonTextStyle}>{text}</span>
+      <div className={menuButtonTextStyle}>{text}</div>
       {children}
-    </Button>
+    </Component>
   );
 });
 

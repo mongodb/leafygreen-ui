@@ -1,5 +1,37 @@
 # @leafygreen-ui/table
 
+## 2.0.2
+
+### Patch Changes
+
+- 931fde4c: darkMode missing from useMemo dep array in Row component
+
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+  - @leafygreen-ui/icon@11.0.0
+
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+
+## 1.5.1
+
+### Patch Changes
+
+- 8335c09d: Ensures that cells with a value of 0 render properly in the table
+
+## 1.5.0
+
+### Minor Changes
+
+- de06ae10: Adds `baseFontSize` prop to Table component
+
 ## 1.4.0
 
 ### Minor Changes

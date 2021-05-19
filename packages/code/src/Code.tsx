@@ -5,15 +5,12 @@ import facepaint from 'facepaint';
 import debounce from 'lodash/debounce';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import IconButton from '@leafygreen-ui/icon-button';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { variantColors } from './globalStyles';
 import { Language, CodeProps, Mode } from './types';
 import Syntax from './Syntax';
+import Panel from './Panel';
 import WindowChrome from './WindowChrome';
 
 export function hasMultipleLines(string: string): boolean {
@@ -34,7 +31,6 @@ const codeWrapperStyle = css`
   // Many applications have global styles that are adding a border and border radius to this element.
   border-radius: 0;
   border: 0;
-  border-left: 2px solid;
   // We apply left / right padding in Syntax to support line highlighting
   padding-top: ${spacing[2]}px;
   padding-bottom: ${spacing[2]}px;
@@ -53,20 +49,6 @@ const codeWrapperStyleWithWindowChrome = css`
   border-left: 0;
 `;
 
-const copyStyle = css`
-  width: 38px;
-  border-left: solid 1px;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  padding-top: 6px;
-`;
-
-const singleLineCopyStyle = css`
-  min-height: ${singleLineComponentHeight}px;
-  padding-top: ${spacing[1]}px;
-`;
-
 const singleLineWrapperStyle = css`
   display: flex;
   align-items: center;
@@ -80,6 +62,12 @@ const wrapperFocusStyle = css`
   }
 `;
 
+const languagePickerStyle = css`
+  display: flex;
+  flex-direction: column-reverse;
+  width: 700px;
+`;
+
 function getWrapperVariantStyle(mode: Mode): string {
   const colors = variantColors[mode];
 
@@ -91,68 +79,6 @@ function getWrapperVariantStyle(mode: Mode): string {
     background-color: ${colors[0]};
     color: ${colors[3]};
   `;
-}
-
-function getSidebarVariantStyle(mode: Mode): string {
-  const colors = variantColors[mode];
-
-  switch (mode) {
-    case Mode.Light:
-      return css`
-        border-color: ${colors[1]};
-        background-color: white;
-      `;
-
-    case Mode.Dark:
-      return css`
-        border-color: ${colors[1]};
-        background-color: ${colors[1]};
-      `;
-  }
-}
-
-function getCopyButtonStyle(mode: Mode, copied: boolean): string {
-  const baseStyle = css`
-    align-self: center;
-    color: ${uiColors.gray.base};
-  `;
-
-  if (copied) {
-    return cx(
-      baseStyle,
-      css`
-        color: ${uiColors.white};
-        background-color: ${uiColors.green.base};
-
-        &:focus {
-          color: ${uiColors.white};
-
-          &:before {
-            background-color: ${uiColors.green.base};
-          }
-        }
-
-        &:hover {
-          color: ${uiColors.white};
-
-          &:before {
-            background-color: ${uiColors.green.base};
-          }
-        }
-      `,
-    );
-  }
-
-  if (mode === Mode.Dark) {
-    return cx(
-      baseStyle,
-      css`
-        background-color: ${uiColors.gray.dark3};
-      `,
-    );
-  }
-
-  return baseStyle;
 }
 
 const ScrollState = {
@@ -217,7 +143,7 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
 function Code({
   children = '',
   className,
-  language,
+  language: languageProp,
   darkMode = false,
   showLineNumbers = false,
   showWindowChrome = false,
@@ -225,40 +151,28 @@ function Code({
   copyable = true,
   onCopy,
   highlightLines = [],
+  languageOptions,
+  onChange,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const [buttonNode, setButtonNode] = useState<HTMLButtonElement | null>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
-  const [copied, setCopied] = useState(false);
   const [showCopyBar, setShowCopyBar] = useState(false);
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
 
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === languageProp,
+  );
+
+  const highlightLanguage = currentLanguage
+    ? currentLanguage.language
+    : languageProp;
+
   useEffect(() => {
-    setShowCopyBar(!showWindowChrome && copyable && ClipboardJS.isSupported());
+    setShowCopyBar(copyable && ClipboardJS.isSupported());
   }, [copyable, showWindowChrome]);
-
-  useEffect(() => {
-    if (!buttonNode) {
-      return;
-    }
-
-    const clipboard = new ClipboardJS(buttonNode, {
-      text: () => children,
-    });
-
-    if (copied) {
-      const timeoutId = setTimeout(() => {
-        setCopied(false);
-      }, 1500);
-
-      return () => clearTimeout(timeoutId);
-    }
-
-    return () => clipboard.destroy();
-  }, [buttonNode, children, copied]);
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
@@ -272,6 +186,9 @@ function Code({
   }, []);
 
   const wrapperClassName = cx(
+    css`
+      border: ${currentLanguage ? '1px solid;' : '2px solid;'};
+    `,
     codeWrapperStyle,
     getWrapperVariantStyle(mode),
     {
@@ -287,22 +204,12 @@ function Code({
     <Syntax
       showLineNumbers={showLineNumbers}
       darkMode={darkMode}
-      language={language}
+      language={highlightLanguage as Language}
       highlightLines={highlightLines}
     >
       {children}
     </Syntax>
   );
-
-  function handleClick(e: React.MouseEvent) {
-    e.preventDefault();
-
-    if (onCopy) {
-      onCopy();
-    }
-
-    setCopied(true);
-  }
 
   function handleScroll(e: React.UIEvent) {
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
@@ -339,26 +246,6 @@ function Code({
     overflow: hidden;
   `;
 
-  const copyBar = showCopyBar && (
-    <div
-      className={cx(
-        copyStyle,
-        { [singleLineCopyStyle]: !isMultiline },
-        getSidebarVariantStyle(mode),
-      )}
-    >
-      <IconButton
-        ref={setButtonNode}
-        darkMode={darkMode}
-        aria-label="Copy"
-        className={getCopyButtonStyle(mode, copied)}
-        onClick={handleClick}
-      >
-        {copied ? <CheckmarkIcon /> : <CopyIcon />}
-      </IconButton>
-    </div>
-  );
-
   return (
     <div className={wrapperStyle}>
       {showWindowChrome && (
@@ -366,9 +253,14 @@ function Code({
       )}
 
       <div
-        className={css`
-          display: flex;
-        `}
+        className={cx(
+          css`
+            display: flex;
+          `,
+          {
+            [languagePickerStyle]: !!currentLanguage,
+          },
+        )}
       >
         <pre
           {...(rest as DetailedElementProps<HTMLPreElement>)}
@@ -382,7 +274,20 @@ function Code({
           {renderedSyntaxComponent}
         </pre>
 
-        {copyBar}
+        {/* Can make this a more robust check in the future */}
+        {/* Right now the panel will only be rendered with copyable or a language switcher */}
+        {!showWindowChrome && (copyable || !!currentLanguage) && (
+          <Panel
+            language={currentLanguage}
+            languageOptions={languageOptions}
+            onChange={onChange}
+            contents={children}
+            onCopy={onCopy}
+            showCopyButton={showCopyBar}
+            darkMode={darkMode}
+            isMultiline={isMultiline}
+          />
+        )}
       </div>
     </div>
   );
@@ -392,7 +297,10 @@ Code.displayName = 'Code';
 
 Code.propTypes = {
   children: PropTypes.string.isRequired,
-  language: PropTypes.oneOf(Object.values(Language)),
+  language: PropTypes.oneOfType([
+    PropTypes.oneOf(Object.values(Language)),
+    PropTypes.string,
+  ]),
   darkMode: PropTypes.bool,
   className: PropTypes.string,
   showLineNumbers: PropTypes.bool,

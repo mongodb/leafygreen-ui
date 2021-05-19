@@ -1,5 +1,17 @@
 # @leafygreen-ui/text-area
 
+## 4.0.1
+
+### Patch Changes
+
+- @leafygreen-ui/typography@8.0.0
+
+## 4.0.0
+
+### Major Changes
+
+- dbb07e8b: Textarea component now accepts forwarded refs
+
 ## 3.0.4
 
 ### Patch Changes

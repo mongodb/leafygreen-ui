@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 15cf534e42e0a0b2f99d924df1d9ab4e
+ * @checksum e75f51ae5a101019249603dd1b900d0d
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,19 +48,14 @@ const CreditCard = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="CreditCard-Copy"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
-        fillRule="evenodd"
-      >
-        <path
-          d="M13,3 C14.1015625,3 15,3.8984375 15,5 L15,11 C15,12.1015625 14.1015625,13 13,13 L3,13 C1.8984375,13 1,12.1015625 1,11 L1,5 C1,3.8984375 1.8984375,3 3,3 L13,3 Z M3,6 L13,6 L13,5 L3,5 L3,6 Z M13,11 L13,8 L3,8 L3,11 L13,11 Z M12,10 L9,10 L9,9 L12,9 L12,10 Z"
-          id="\uE214"
-          fill={'currentColor'}
-        />
-      </g>
+      <path
+        d="M3 3C1.89543 3 1 3.89543 1 5L15 5C15 3.89543 14.1046 3 13 3H3Z"
+        fill={'currentColor'}
+      />
+      <path
+        d="M15 7L1 7V11C1 12.1046 1.89543 13 3 13H13C14.1046 13 15 12.1046 15 11V7Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };

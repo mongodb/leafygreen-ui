@@ -1,5 +1,30 @@
 # @leafygreen-ui/tooltip
 
+## 6.2.1
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+  - @leafygreen-ui/icon@11.0.0
+
+## 6.2.0
+
+### Minor Changes
+
+- 857a680a: Adds support for positioning popover elements relative to elements within a scroll container other than the window.
+  Adds support for setting z-index on popover elements with the `zIndex` prop.
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/popover@7.2.0
+
+## 6.1.9
+
+### Patch Changes
+
+- f41d6229: Removes `preventDefault` call from inside of Tooltip, such that tooltip components can contain interactive elements
+
 ## 6.1.8
 
 ### Patch Changes

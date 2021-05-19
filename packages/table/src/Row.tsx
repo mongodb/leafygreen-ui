@@ -250,7 +250,7 @@ const Row = React.forwardRef(
 
       React.Children.forEach(children, (child, index) => {
         if (isComponentType<CellElement>(child, 'Cell')) {
-          if (!child.props.children) {
+          if (child.props.children == null) {
             return null;
           }
 
@@ -292,7 +292,7 @@ const Row = React.forwardRef(
       }
 
       return renderedChildren;
-    }, [children, rowHasNestedRows, isExpanded, setIsExpanded]);
+    }, [children, rowHasNestedRows, isExpanded, setIsExpanded, darkMode]);
 
     const shouldAltRowColor =
       data && data.length >= 10 && hasNestedRows != null && !hasNestedRows;

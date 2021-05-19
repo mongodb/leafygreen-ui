@@ -40,6 +40,7 @@ interface ColorSet {
       base: string;
       selected: string;
       disabled: string;
+      focused: string;
     };
     icon: {
       base: string;
@@ -76,12 +77,13 @@ export const colorSets: Record<Mode, ColorSet> = {
       background: {
         base: uiColors.white,
         hovered: uiColors.gray.light2,
-        focused: uiColors.blue.light3,
+        focused: uiColors.focus,
       },
       text: {
         base: uiColors.gray.dark3,
         selected: uiColors.blue.base,
         disabled: uiColors.gray.base,
+        focused: uiColors.white,
       },
       icon: {
         base: uiColors.gray.dark1,
@@ -117,12 +119,13 @@ export const colorSets: Record<Mode, ColorSet> = {
       background: {
         base: uiColors.gray.dark2,
         hovered: uiColors.gray.dark1,
-        focused: uiColors.blue.base,
+        focused: uiColors.blue.light1,
       },
       text: {
         base: uiColors.white,
         selected: '#9DD0E7',
         disabled: uiColors.gray.base,
+        focused: uiColors.gray.dark1,
       },
       icon: {
         base: uiColors.gray.light1,

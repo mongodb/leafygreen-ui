@@ -1,5 +1,12 @@
 # @leafygreen-ui/stepper
 
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+  - @leafygreen-ui/icon@11.0.0
+
 ## 2.1.1
 
 ### Patch Changes

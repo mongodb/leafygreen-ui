@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { PopoverProps } from '@leafygreen-ui/popover';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
@@ -38,32 +39,36 @@ export type Props = {
   disabled?: boolean;
   description?: string;
   placeholder?: string;
-  usePortal?: boolean;
   name?: string;
-} & (
-  | // Uncontrolled
-  ({
-      defaultValue?: string;
-      value?: undefined;
-    } & {
-      onChange?: (
-        value: string,
-        event: React.MouseEvent | React.KeyboardEvent,
-      ) => void;
-      readOnly?: false;
-    })
-  // Controlled
-  | ({ value: string; defaultValue?: undefined } & (
-      | {
-          onChange: (
-            value: string,
-            event: React.MouseEvent | React.KeyboardEvent,
-          ) => void;
-          readOnly?: false;
-        }
-      | { readOnly: true; onChange?: undefined }
-    ))
-) &
+  allowDeselect?: boolean;
+  __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
+    React.RefAttributes<unknown>
+  >;
+} & Omit<PopoverProps, 'active' | 'spacing'> &
+  (
+    | // Uncontrolled
+    ({
+        defaultValue?: string;
+        value?: undefined;
+      } & {
+        onChange?: (
+          value: string,
+          event: React.MouseEvent | React.KeyboardEvent,
+        ) => void;
+        readOnly?: false;
+      })
+    // Controlled
+    | ({ value: string; defaultValue?: undefined } & (
+        | {
+            onChange: (
+              value: string,
+              event: React.MouseEvent | React.KeyboardEvent,
+            ) => void;
+            readOnly?: false;
+          }
+        | { readOnly: true; onChange?: undefined }
+      ))
+  ) &
   OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
 const idAllocator = IdAllocator.create('select');
@@ -73,28 +78,34 @@ export default function Select({
   darkMode = false,
   size = Size.Default,
   disabled = false,
-  usePortal = true,
+  allowDeselect = true,
   placeholder = 'Select',
   className,
   id: idProp,
   label,
+  'aria-labelledby': ariaLabelledby,
   description,
   name,
   defaultValue,
   value,
   onChange,
   readOnly,
-  'aria-labelledby': ariaLabelledBy,
+  usePortal = true,
+  portalContainer,
+  scrollContainer,
+  portalClassName,
+  popoverZIndex,
+  __INTERNAL__menuButtonSlot__,
 }: Props) {
-  if (!label && !ariaLabelledBy) {
+  if (!label && !ariaLabelledby) {
     console.error(
       'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
     );
   }
 
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
-  const labelId = useMemo(() => ariaLabelledBy ?? `${id}-label`, [
-    ariaLabelledBy,
+  const labelId = useMemo(() => ariaLabelledby ?? `${id}-label`, [
+    ariaLabelledby,
     id,
   ]);
   const descriptionId = `${id}-description`;
@@ -252,7 +263,11 @@ export default function Select({
   >();
 
   const enabledOptions = useMemo(() => {
-    const enabledOptions: Array<OptionElement | null> = [null];
+    const enabledOptions: Array<OptionElement | null> = [];
+
+    if (allowDeselect) {
+      enabledOptions.push(null);
+    }
 
     traverseSelectChildren(children, (option, group) => {
       if (!isOptionDisabled(option, group)) {
@@ -261,7 +276,7 @@ export default function Select({
     });
 
     return enabledOptions;
-  }, [children]);
+  }, [children, allowDeselect]);
 
   const onSelectFocusedOption = useCallback(
     (event: React.KeyboardEvent) => {
@@ -273,8 +288,12 @@ export default function Select({
   );
 
   const onFocusFirstOption = useCallback(() => {
-    setFocusedOption(null);
-  }, []);
+    if (allowDeselect) {
+      setFocusedOption(null);
+    } else {
+      setFocusedOption(enabledOptions[0]);
+    }
+  }, [allowDeselect, enabledOptions]);
 
   const onFocusLastOption = useCallback(() => {
     setFocusedOption(enabledOptions[enabledOptions.length - 1]);
@@ -300,6 +319,7 @@ export default function Select({
       onFocusFirstOption();
     } else {
       const index = enabledOptions.indexOf(focusedOption) + 1;
+
       setFocusedOption(enabledOptions[index]);
     }
   }, [enabledOptions, focusedOption, onFocusFirstOption]);
@@ -345,6 +365,11 @@ export default function Select({
 
   const deselectionOption = useMemo(() => {
     const selected = selectedOption === null;
+
+    if (!allowDeselect) {
+      return null;
+    }
+
     return (
       <InternalOption
         className={undefined}
@@ -368,6 +393,7 @@ export default function Select({
     getOptionFocusHandler,
     placeholder,
     selectedOption,
+    allowDeselect,
   ]);
 
   const renderedChildren = useMemo(
@@ -377,6 +403,7 @@ export default function Select({
         (option, group) => {
           const selected = option === selectedOption;
           const disabled = isOptionDisabled(option, group);
+
           return {
             className: option.props.className,
             glyph: option.props.glyph,
@@ -407,6 +434,18 @@ export default function Select({
       selectedOption,
     ],
   );
+
+  const popoverProps = {
+    popoverZIndex,
+    ...(usePortal
+      ? {
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
+      : { usePortal }),
+  };
 
   return (
     <div
@@ -468,6 +507,7 @@ export default function Select({
           {description}
         </div>
       )}
+
       <SelectContext.Provider value={providerData}>
         <MenuButton
           ref={menuButtonRef}
@@ -489,6 +529,7 @@ export default function Select({
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
+          __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
         >
           <ListMenu
             labelId={labelId}
@@ -499,10 +540,10 @@ export default function Select({
             onSelectFocusedOption={onSelectFocusedOption}
             onFocusPreviousOption={onFocusPreviousOption}
             onFocusNextOption={onFocusNextOption}
-            usePortal={usePortal}
             className={css`
               width: ${menuButtonRef.current?.clientWidth}px;
             `}
+            {...popoverProps}
           >
             {deselectionOption}
             {renderedChildren}

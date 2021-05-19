@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, select, text } from '@storybook/addon-knobs';
+import { boolean, select, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -20,6 +20,7 @@ storiesOf('Select', module)
     const useProvider = boolean('Use LeafygreenProvider', false);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
     const usePortal = boolean('usePortal', false);
+    const allowDeselect = boolean('allowDeselect', false);
 
     return (
       <div
@@ -42,6 +43,8 @@ storiesOf('Select', module)
             defaultValue="cat"
             disabled={disabled}
             usePortal={usePortal}
+            popoverZIndex={number('zIndex', 1)}
+            allowDeselect={allowDeselect}
             className={css`
               min-width: 200px;
             `}

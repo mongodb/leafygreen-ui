@@ -1,5 +1,18 @@
 # @leafygreen-ui/modal
 
+## 6.1.0
+
+### Minor Changes
+
+- 04869b3b: Adds support for `darkMode` prop
+
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+  - @leafygreen-ui/icon@11.0.0
+
 ## 6.0.2
 
 ### Patch Changes

@@ -1,5 +1,27 @@
 # @leafygreen-ui/toast
 
+## 0.4.8
+
+### Patch Changes
+
+- Updated dependencies [faeb0ce0]
+  - @leafygreen-ui/icon@11.0.0
+  - @leafygreen-ui/typography@8.0.1
+
+## 0.4.7
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/portal@3.1.2
+  - @leafygreen-ui/typography@8.0.0
+
+## 0.4.6
+
+### Patch Changes
+
+- e7ac7831: Updates icon color in `success` variant so that it meets 3:1 contrast requirements.
+
 ## 0.4.5
 
 ### Patch Changes

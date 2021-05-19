@@ -1,5 +1,36 @@
 # @leafygreen-ui/button
 
+## 12.0.2
+
+### Patch Changes
+
+- dda5c8bb: Ensures that text is centered in buttons when no right glyph is present
+
+## 12.0.1
+
+### Patch Changes
+
+- 54daf9a4: Add stronger overrides for color and text-decoration for hover and focus states in buttons
+
+## 12.0.0
+
+### Patch Changes
+
+- Updated dependencies [857a680a]
+  - @leafygreen-ui/leafygreen-provider@2.1.0
+
+## 11.0.4
+
+### Patch Changes
+
+- 7c952eca: Fixes semantic HTML inside of Button to better support being a trigger for portaled components
+
+## 11.0.3
+
+### Patch Changes
+
+- e2f7e6a4: Explicitly sets `color` property on focused buttons
+
 ## 11.0.2
 
 ### Patch Changes

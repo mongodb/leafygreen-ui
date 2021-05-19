@@ -2,10 +2,13 @@ import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
+import { createDataProp } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
+
+const option = createDataProp('option');
 
 type GlyphElement = React.ReactElement<LGGlyph.ComponentProps> & {
   type?: { isGlyph?: boolean };
@@ -130,6 +133,9 @@ export function InternalOption({
           iconStyle,
           css`
             color: ${colorSet.icon.base};
+            ${option.selector}:focus & {
+              color: currentColor;
+            }
           `,
           {
             [css`
@@ -149,6 +155,9 @@ export function InternalOption({
         className={cx(
           iconStyle,
           css`
+            ${option.selector}:focus & {
+              color: currentColor;
+            }
             color: ${colorSet.icon.selected};
           `,
           {
@@ -195,6 +204,7 @@ export function InternalOption({
 
   return (
     <li
+      {...option.prop}
       role="option"
       aria-selected={selected}
       tabIndex={-1}
@@ -206,15 +216,16 @@ export function InternalOption({
           color: ${colorSet.text.base};
         `,
         {
-          [css(`
-            &:focus {
-              background-color: ${colorSet.background.focused};
-            }
-
+          [css`
             &:hover {
               background-color: ${colorSet.background.hovered};
             }
-          `)]: !disabled,
+
+            &:focus {
+              color: ${colorSet.text.focused};
+              background-color: ${colorSet.background.focused};
+            }
+          `]: !disabled,
           [css`
             cursor: not-allowed;
             color: ${colorSet.text.disabled};
