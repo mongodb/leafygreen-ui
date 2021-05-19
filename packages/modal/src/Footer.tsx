@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const footerStyle = css`
@@ -7,7 +7,6 @@ const footerStyle = css`
   bottom: 0;
   left: 0;
   width: 100%;
-
   display: flex;
   justify-content: right;
   flex-direction: row-reverse;
@@ -18,10 +17,24 @@ const footerStyle = css`
 interface FooterProps {
   children: React.ReactNode;
   className?: string;
+  darkMode?: boolean;
 }
 
-const Footer = ({ children, className }: FooterProps) => {
-  return <div className={`${footerStyle} ${className}`}>{children}</div>;
+const Footer = ({ children, className, darkMode }: FooterProps) => {
+  return (
+    <div
+      className={cx(
+        footerStyle,
+        css`
+          border-top: 1px solid
+            ${!darkMode ? uiColors.gray.light2 : uiColors.gray.dark2};
+        `,
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
 };
 
 Footer.displayName = 'Footer';

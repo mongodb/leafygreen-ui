@@ -120,3 +120,4 @@ function Example() {
 | `buttonText`    | `string`             | Text content of the confirmation button.                                                                                      |            |
 | `linkText`      | `string`             | Text content of the alternate action link.                                                                                    |            |
 | `className`     | `string`             | Style to be applied to the container's root node.                                                                             |            |
+| `darkMode`      | `boolean`            | Determines if the component will appear in dark mode.                                                                         | `false`    |

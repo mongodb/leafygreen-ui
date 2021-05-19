@@ -1,10 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import Modal, { Footer } from '@leafygreen-ui/modal';
 import { uiColors } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
+
+const Mode = {
+  Dark: 'dark',
+  Light: 'light',
+};
+
+type Mode = typeof Mode[keyof typeof Mode];
 
 export const Variant = {
   Default: ButtonVariant.Primary,
@@ -14,13 +21,20 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 const titleStyle = css`
-  color: ${uiColors.gray.dark2};
   font-size: 24px;
   font-weight: bold;
   line-height: 25px;
-
   margin-bottom: 10px;
 `;
+
+const titleColors = {
+  [Mode.Light]: css`
+    color: ${uiColors.gray.dark2};
+  `,
+  [Mode.Dark]: css`
+    color: ${uiColors.gray.light2};
+  `,
+};
 
 const baseModalStyle = css`
   width: 600px;
@@ -28,14 +42,21 @@ const baseModalStyle = css`
 `;
 
 const contentStyle = css`
-  color: ${uiColors.gray.dark1};
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 20px;
   letter-spacing: 0;
-  line-height: 24px;
-
   padding: 36px;
 `;
+
+const contentColors = {
+  [Mode.Light]: css`
+    color: ${uiColors.gray.dark1};
+  `,
+  [Mode.Dark]: css`
+    color: ${uiColors.white};
+  `,
+};
 
 const textEntryInputStyle = css`
   width: 300px;
@@ -65,6 +86,7 @@ interface ConfirmationModalProps {
   variant?: Variant;
   requiredInputText?: string;
   submitDisabled?: boolean;
+  darkMode?: boolean;
 }
 
 const ConfirmationModal = ({
@@ -76,9 +98,11 @@ const ConfirmationModal = ({
   variant = Variant.Default,
   onConfirm,
   onCancel,
+  darkMode,
   ...modalProps
 }: ConfirmationModalProps) => {
   const [confirmEnabled, setConfirmEnabled] = useState(!requiredInputText);
+  const mode = darkMode ? Mode.Dark : Mode.Light;
 
   const textEntryConfirmation = useMemo(() => {
     setConfirmEnabled(!requiredInputText);
@@ -96,30 +120,37 @@ const ConfirmationModal = ({
           onChange={onInputChange}
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
+          darkMode={darkMode}
         ></TextInput>
       );
     }
 
     return textEntryConfirmation;
-  }, [requiredInputText]);
+  }, [requiredInputText, darkMode]);
 
   return (
-    <Modal {...modalProps} contentClassName={baseModalStyle} setOpen={onCancel}>
-      <div className={contentStyle}>
-        <h1 className={titleStyle}>{title}</h1>
+    <Modal
+      {...modalProps}
+      contentClassName={baseModalStyle}
+      setOpen={onCancel}
+      darkMode={darkMode}
+    >
+      <div className={cx(contentStyle, contentColors[mode])}>
+        <h1 className={cx(titleStyle, titleColors[mode])}>{title}</h1>
         {children}
         {textEntryConfirmation}
       </div>
-      <Footer>
+      <Footer darkMode={darkMode}>
         <Button
           variant={variant}
           disabled={!confirmEnabled || submitDisabled}
           onClick={onConfirm}
           className={buttonStyle}
+          darkMode={darkMode}
         >
           {buttonText}
         </Button>
-        <Button onClick={onCancel} className={buttonStyle}>
+        <Button onClick={onCancel} className={buttonStyle} darkMode={darkMode}>
           Cancel
         </Button>
       </Footer>

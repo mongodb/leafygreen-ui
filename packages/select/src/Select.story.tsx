@@ -17,7 +17,7 @@ storiesOf('Select', module)
     const disabled = boolean('Disabled', false);
     const withIcons = boolean('With icons', false);
     const glyph = withIcons ? <BeakerIcon /> : undefined;
-    const useProvider = boolean('Use LeafygreenProvider', false);
+    const useProvider = boolean('Use LeafygreenProvider', true);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
     const usePortal = boolean('usePortal', false);
     const allowDeselect = boolean('allowDeselect', false);

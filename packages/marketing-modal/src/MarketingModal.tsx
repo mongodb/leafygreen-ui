@@ -6,6 +6,13 @@ import { Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
 import { uiColors } from '@leafygreen-ui/palette';
 
+const Mode = {
+  Dark: 'dark',
+  Light: 'light',
+};
+
+type Mode = typeof Mode[keyof typeof Mode];
+
 export const GraphicStyle = {
   Center: 'center',
   Fill: 'fill',
@@ -14,13 +21,20 @@ export const GraphicStyle = {
 type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
 
 const titleStyle = css`
-  color: ${uiColors.gray.dark2};
   font-size: 24px;
   font-weight: bold;
   line-height: 25px;
-
   margin-bottom: 10px;
 `;
+
+const titleColors = {
+  [Mode.Light]: css`
+    color: ${uiColors.gray.dark2};
+  `,
+  [Mode.Dark]: css`
+    color: ${uiColors.white};
+  `,
+};
 
 const baseModalStyle = css`
   width: 600px;
@@ -51,16 +65,23 @@ const filledGraphicStyle = css`
 `;
 
 const contentStyle = css`
-  color: ${uiColors.gray.dark1};
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 20px;
   letter-spacing: 0;
-  line-height: 24px;
   text-align: center;
-
   padding: 0 92px;
   padding-bottom: 24px;
 `;
+
+const contentColors = {
+  [Mode.Light]: css`
+    color: ${uiColors.gray.dark1};
+  `,
+  [Mode.Dark]: css`
+    color: ${uiColors.gray.light2};
+  `,
+};
 
 const footerContentStyle = css`
   line-height: 24px;
@@ -83,6 +104,7 @@ interface MarketingModalProps {
   className?: string;
   buttonText: string;
   linkText: string;
+  darkMode?: boolean;
 }
 
 const MarketingModal = ({
@@ -95,10 +117,18 @@ const MarketingModal = ({
   onClose,
   buttonText,
   linkText,
+  darkMode,
   ...modalProps
 }: MarketingModalProps) => {
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   return (
-    <Modal {...modalProps} contentClassName={baseModalStyle} setOpen={onClose}>
+    <Modal
+      {...modalProps}
+      contentClassName={baseModalStyle}
+      setOpen={onClose}
+      darkMode={darkMode}
+    >
       <div
         className={cx(baseGraphicContainerStyle, {
           [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
@@ -111,21 +141,28 @@ const MarketingModal = ({
           })}`,
         })}
       </div>
-      <div className={contentStyle}>
-        <div className={titleStyle}>{title}</div>
+      <div className={cx(contentStyle, contentColors[mode])}>
+        <div className={cx(titleStyle, titleColors[mode])}>{title}</div>
         {children}
       </div>
       <div className={footerContentStyle}>
-        <Button variant="primary" onClick={onButtonClick}>
+        <Button variant="primary" onClick={onButtonClick} darkMode={darkMode}>
           {buttonText}
         </Button>
         <Link
           tabIndex={0}
           onClick={onLinkClick}
           hideExternalIcon
-          className={css`
-            margin-top: 24px;
-          `}
+          className={cx(
+            css`
+              margin-top: 24px;
+            `,
+            {
+              [css`
+                color: #41c6ff;
+              `]: darkMode,
+            },
+          )}
         >
           {linkText}
         </Link>

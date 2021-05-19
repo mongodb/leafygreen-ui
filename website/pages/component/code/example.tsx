@@ -42,7 +42,13 @@ const snippetMap = {
   [Language.Python]: pythonSnippet,
 };
 
-function LanguageSwitcher({ darkMode }: { darkMode: boolean }) {
+function LanguageSwitcher({
+  darkMode,
+  highlightLines,
+}: {
+  darkMode: boolean;
+  highlightLines?: Array<number>;
+}) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
 
   const handleChange = (languageObject: LanguageOption) => {
@@ -57,6 +63,7 @@ function LanguageSwitcher({ darkMode }: { darkMode: boolean }) {
       onChange={handleChange}
       languageOptions={languageOptions}
       darkMode={darkMode}
+      highlightLines={highlightLines}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
@@ -72,7 +79,13 @@ const knobsConfig: KnobsConfigInterface<{
   language: Language;
   children: string;
   withLanguageSwitcher: boolean;
+  showSyntaxHighlighting: boolean;
 }> = {
+  showSyntaxHighlighting: {
+    type: 'boolean',
+    default: false,
+    label: 'Show Syntax Highlighting',
+  },
   showWindowChrome: {
     type: 'boolean',
     default: false,
@@ -119,11 +132,17 @@ const knobsConfig: KnobsConfigInterface<{
 export default function CodeLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ withLanguageSwitcher, ...props }) =>
+      {({ withLanguageSwitcher, showSyntaxHighlighting, ...props }) =>
         withLanguageSwitcher ? (
-          <LanguageSwitcher {...props} />
+          <LanguageSwitcher
+            highlightLines={showSyntaxHighlighting ? [2] : undefined}
+            {...props}
+          />
         ) : (
-          <Code {...props} />
+          <Code
+            highlightLines={showSyntaxHighlighting ? [2] : undefined}
+            {...props}
+          />
         )
       }
     </LiveExample>
