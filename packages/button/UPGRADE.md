@@ -16,5 +16,6 @@ Minor Changes to the API:
 Breaking Changes to the Design:
 
 - Size:
+  - XSmall buttons will grow in width. This is because the font-size has changed from `11px` to `12px`, and letter-spacing has been added where there previously was none.
   - Small buttons were 25px, they are now 28px in height.
   - Default buttons were 32px, they are now 36px in height.

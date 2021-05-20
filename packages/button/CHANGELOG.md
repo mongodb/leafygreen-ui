@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 12.0.2
+
+### Patch Changes
+
+- dda5c8bb: Ensures that text is centered in buttons when no right glyph is present
+
 ## 12.0.1
 
 ### Patch Changes

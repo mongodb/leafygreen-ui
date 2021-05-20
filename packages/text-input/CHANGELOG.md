@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 6.0.2
+
+### Patch Changes
+
+- 37780eb8: Updates colors of the component's interaction ring on hover, based on the `state` prop on the component.
+
 ## 6.0.1
 
 ### Patch Changes
