@@ -118,7 +118,7 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
+type ModifiedPopoverProps = Omit<PopoverProps, 'active'>;
 
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
@@ -225,6 +225,7 @@ function Tooltip({
   portalContainer,
   scrollContainer,
   popoverZIndex,
+  refEl,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -330,6 +331,7 @@ function Tooltip({
   });
 
   const popoverProps = {
+    refEl,
     popoverZIndex,
     ...(usePortal
       ? {
