@@ -233,7 +233,6 @@ const SideNavItem: ExtendableBox<
     disabled = false,
     ariaCurrentValue = AriaCurrentValue.Page,
     indentLevel = 1,
-    // isParentActive: isParentActiveProp = false,
     className,
     children,
     onClick: onClickProp,
