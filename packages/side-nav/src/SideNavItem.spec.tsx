@@ -125,7 +125,7 @@ describe('packages/side-nav', () => {
         expect(screen.getByText('Child 1')).toBeInTheDocument();
       });
 
-      test('it renderse nested SideNavItems when any ancestor is active', () => {
+      test('it only renders nested SideNavItems when direct ancestor is active', () => {
         render(
           <SideNavItem active>
             Ancestor
@@ -136,7 +136,7 @@ describe('packages/side-nav', () => {
         );
 
         expect(screen.getByText('Child 1')).toBeInTheDocument();
-        expect(screen.getByText('Child 2')).toBeInTheDocument();
+        expect(screen.queryByText('Child 2')).not.toBeInTheDocument();
       });
 
       test('it does not render nested SideNavItems when parent is not active', () => {

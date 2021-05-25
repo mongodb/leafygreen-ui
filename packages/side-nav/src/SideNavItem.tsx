@@ -199,7 +199,7 @@ export interface SideNavItemProps {
 
   indentLevel?: number;
 
-  isAnyAncestorActive?: boolean;
+  isParentActive?: boolean;
 }
 
 /**
@@ -233,7 +233,7 @@ const SideNavItem: ExtendableBox<
     disabled = false,
     ariaCurrentValue = AriaCurrentValue.Page,
     indentLevel = 1,
-    isAnyAncestorActive: isAnyAncestorActiveProp = false,
+    // isParentActive: isParentActiveProp = false,
     className,
     children,
     onClick: onClickProp,
@@ -281,12 +281,11 @@ const SideNavItem: ExtendableBox<
       if (child != null && isComponentType(child, 'SideNavItem')) {
         hasNestedItems = true;
 
-        if (hasNestedActive || active || isAnyAncestorActiveProp) {
+        if (hasNestedActive || active) {
           renderedNestedItems.push(
             React.cloneElement(child, {
               className: getIndentLevelStyle(indentLevel),
               indentLevel: indentLevel + 1,
-              isAnyAncestorActive: active || isAnyAncestorActiveProp,
               key: index,
             }),
           );
@@ -295,7 +294,7 @@ const SideNavItem: ExtendableBox<
     });
 
     return { hasNestedItems, renderedNestedItems };
-  }, [children, active, indentLevel, hasNestedActive, isAnyAncestorActiveProp]);
+  }, [children, active, indentLevel, hasNestedActive]);
 
   const renderedChildren = useMemo(() => {
     const renderedChildren: React.ReactNodeArray = [];

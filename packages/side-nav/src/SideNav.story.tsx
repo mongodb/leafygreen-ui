@@ -219,19 +219,22 @@ function OrgSettingsSideNav() {
             <SideNavItem>Projects</SideNavItem>
             <SideNavItem>Activity Feed</SideNavItem>
 
-            <SideNavItem>
+            <SideNavItem active>
               Security
-              <SideNavItem active>
+              <SideNavItem>
                 Permissions
                 <SideNavItem>Login</SideNavItem>
               </SideNavItem>
               <SideNavItem>
                 Access
-                <SideNavItem active>Database Access</SideNavItem>
+                <SideNavItem>Database Access</SideNavItem>
                 <SideNavItem>Network Access</SideNavItem>
               </SideNavItem>
             </SideNavItem>
-            <SideNavItem>Alerts</SideNavItem>
+            <SideNavItem>
+              Alerts
+              <SideNavItem>Database Access</SideNavItem>
+            </SideNavItem>
             <SideNavItem>Settings</SideNavItem>
           </SideNavGroup>
 
