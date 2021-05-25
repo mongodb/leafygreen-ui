@@ -64,11 +64,20 @@ describe('packages/RadioBox', () => {
 });
 
 describe('packages/RadioBoxGroup', () => {
+  function WrappedRadioBox({ text }: { text: string }) {
+    return (
+      <div className="wrapped-radio-box">
+        {text} <RadioBox value="option-3">Input 3</RadioBox>
+      </div>
+    );
+  }
+
   const { container } = render(
     <RadioBoxGroup>
       <RadioBox value="option-1">Input 1</RadioBox>
       <h1>Will Remain As Text</h1>
       <RadioBox value="option-2">Input 2</RadioBox>
+      <WrappedRadioBox text="Also still text" />
     </RadioBoxGroup>,
   );
 
@@ -84,6 +93,13 @@ describe('packages/RadioBoxGroup', () => {
     expect(text.tagName.toLowerCase()).toBe('h1');
   });
 
+  const wrapped = radioBoxGroupContainer.children[3];
+
+  test('renders wrapper components as themselves', () => {
+    expect(wrapped.tagName.toLowerCase()).toBe('div');
+    expect(wrapped.className).toBe('wrapped-radio-box');
+  });
+
   describe('when controlled', () => {
     const controlledOnChange = jest.fn();
 
@@ -91,6 +107,7 @@ describe('packages/RadioBoxGroup', () => {
       <RadioBoxGroup value="option-1" onChange={controlledOnChange}>
         <RadioBox value="option-1">Option 1</RadioBox>
         <RadioBox value="option-2">Option 2</RadioBox>
+        <WrappedRadioBox text="text" />
       </RadioBoxGroup>,
       { container },
     );
@@ -130,6 +147,90 @@ describe('packages/RadioBoxGroup', () => {
 
     test('radio input does not become checked when clicked', () => {
       expect(secondRadioBoxInput.checked).toBe(false);
+    });
+  });
+
+  describe('when controlled with a wrapper component', () => {
+    const controlledOnChange = jest.fn();
+
+    const { container } = render(
+      <RadioBoxGroup value="option-1" onChange={controlledOnChange}>
+        <RadioBox value="option-1">Option 1</RadioBox>
+        <RadioBox value="option-2">Option 2</RadioBox>
+        <WrappedRadioBox text="text" />
+      </RadioBoxGroup>,
+    );
+
+    const radioBoxGroup = container.firstChild;
+
+    if (!typeIs.element(radioBoxGroup)) {
+      throw new Error('Could not find radio box group element');
+    }
+
+    const firstRadioBoxLabel = radioBoxGroup.firstChild;
+
+    if (!typeIs.element(firstRadioBoxLabel)) {
+      throw new Error('Could not find label element');
+    }
+
+    const firstRadioBoxInput = firstRadioBoxLabel.firstChild;
+
+    if (!typeIs.input(firstRadioBoxInput)) {
+      throw new Error('Could not find input element');
+    }
+
+    const wrappedRadioBoxInput =
+      radioBoxGroup.children[2].firstElementChild?.firstElementChild;
+
+    if (!typeIs.input(wrappedRadioBoxInput)) {
+      throw new Error('Could not find wrapped input element');
+    }
+
+    fireEvent.click(wrappedRadioBoxInput);
+
+    test('initial value set by radio box group', () => {
+      // .checked prop can be inconsistent in ssr tests,
+      // so while I'd like to do expect(firstRadioBoxInput.checked).toBe(true);
+      // aria-checked should be good enough
+      expect(firstRadioBoxInput.getAttribute('aria-checked')).toBe('true');
+    });
+
+    test('onChange fires when the wrapped label is clicked', () => {
+      expect(controlledOnChange.mock.calls.length).toBe(1);
+    });
+
+    test('wrapped input does not become checked when clicked', () => {
+      expect(wrappedRadioBoxInput.checked).toBe(false);
+    });
+  });
+
+  describe('when controlled with a selected wrapper component', () => {
+    const controlledOnChange = jest.fn();
+
+    const { container } = render(
+      <RadioBoxGroup value="option-3" onChange={controlledOnChange}>
+        <RadioBox value="option-1">Option 1</RadioBox>
+        <RadioBox value="option-2">Option 2</RadioBox>
+        <WrappedRadioBox text="text" />
+      </RadioBoxGroup>,
+    );
+
+    const radioBoxGroup = container.firstChild;
+
+    if (!typeIs.element(radioBoxGroup)) {
+      throw new Error('Could not find radio box group element');
+    }
+
+    const wrappedRadioBoxInput =
+      radioBoxGroup.children[2].firstElementChild?.firstElementChild;
+
+    if (!typeIs.input(wrappedRadioBoxInput)) {
+      throw new Error('Could not find wrapped input element');
+    }
+
+    test('wrapped input is rendered as checked', () => {
+      expect(wrappedRadioBoxInput.checked).toBe(true);
+      expect(wrappedRadioBoxInput.getAttribute('aria-checked')).toBe('true');
     });
   });
 
