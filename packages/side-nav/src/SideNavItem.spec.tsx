@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import { SideNavItem } from '.';
 import { SideNavItemProps } from './SideNavItem';
 
@@ -110,6 +110,44 @@ describe('packages/side-nav', () => {
         expect(renderedEls.childEl).toBeInTheDocument();
         expect(renderedEls.childEl?.tagName).toEqual('A');
         expect(renderedEls.childEl).toHaveAttribute('href', '#clusters');
+      });
+    });
+
+    describe('when rendered with SideNavItems as children', () => {
+      test('it renders nested SideNavItems when immediate parent is active', () => {
+        render(
+          <SideNavItem active>
+            Ancestor
+            <SideNavItem>Child 1</SideNavItem>
+          </SideNavItem>,
+        );
+
+        expect(screen.getByText('Child 1')).toBeInTheDocument();
+      });
+
+      test('it only renders nested SideNavItems when direct ancestor is active', () => {
+        render(
+          <SideNavItem active>
+            Ancestor
+            <SideNavItem>
+              Child 1<SideNavItem>Child 2</SideNavItem>
+            </SideNavItem>
+          </SideNavItem>,
+        );
+
+        expect(screen.getByText('Child 1')).toBeInTheDocument();
+        expect(screen.queryByText('Child 2')).not.toBeInTheDocument();
+      });
+
+      test('it does not render nested SideNavItems when parent is not active', () => {
+        render(
+          <SideNavItem>
+            Ancestor
+            <SideNavItem>Child 1</SideNavItem>
+          </SideNavItem>,
+        );
+
+        expect(screen.queryByText('Child 1')).not.toBeInTheDocument();
       });
     });
 
