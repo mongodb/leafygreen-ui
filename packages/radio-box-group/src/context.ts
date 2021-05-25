@@ -12,7 +12,6 @@ export interface RadioBoxGroupContext {
 const context = createContext<RadioBoxGroupContext | null>(null);
 
 export const Provider = context.Provider;
-export const Consumer = context.Consumer;
 
 export function useRadioBoxGroupContext() {
   return useContext(context);
