@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef, useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import {
@@ -12,6 +12,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
+import { useSideNavContext } from './SideNavContext';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -34,9 +35,7 @@ const defaultStyle = css`
 
   // Typography
   font-family: ${fontFamilies.default};
-  font-size: 14px;
   font-weight: normal;
-  line-height: 1em;
   text-align: left;
   text-decoration: none;
   text-transform: capitalize;
@@ -60,6 +59,17 @@ const defaultStyle = css`
     border: 0;
   }
 `;
+
+const typographyStyle = {
+  [14]: css`
+    font-size: 14px;
+    line-height: 1em;
+  `,
+  [16]: css`
+    font-size: 16px;
+    line-height: 1.5em;
+  `,
+};
 
 const activeStyle = css`
   cursor: default;
@@ -128,6 +138,18 @@ const glyphWrapper = css`
   align-items: center;
 `;
 
+const nestedChildrenStyles = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+function getIndentLevelStyle(indentLevel: number) {
+  return css`
+    padding-left: ${8 + indentLevel * 16}px;
+  `;
+}
+
 export interface SideNavItemProps {
   /**
    * Whether or not the component should be rendered in an active state.
@@ -174,6 +196,10 @@ export interface SideNavItemProps {
    * Icon that's rendered in the item.
    */
   glyph?: React.ReactNode;
+
+  indentLevel?: number;
+
+  isParentActive?: boolean;
 }
 
 /**
@@ -206,6 +232,7 @@ const SideNavItem: ExtendableBox<
     active = false,
     disabled = false,
     ariaCurrentValue = AriaCurrentValue.Page,
+    indentLevel = 1,
     className,
     children,
     onClick: onClickProp,
@@ -213,6 +240,9 @@ const SideNavItem: ExtendableBox<
     ...rest
   } = props;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { baseFontSize = 14 } = useSideNavContext();
+  const hasNestedChildren = useRef(false);
+  const [hasNestedActive, setHasNestedActive] = useState(false);
 
   const onClick = disabled
     ? (e: React.MouseEvent) => {
@@ -226,19 +256,82 @@ const SideNavItem: ExtendableBox<
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
+  useEffect(() => {
+    const checkForActiveNestedItems = (children: React.ReactNode): void => {
+      React.Children.forEach(children, child => {
+        if (isComponentType(child, 'SideNavItem') && child.props.active) {
+          setHasNestedActive(true);
+        } else if ((child as React.ReactElement)?.props?.children) {
+          checkForActiveNestedItems(
+            (child as React.ReactElement).props.children,
+          );
+        }
+      });
+    };
+
+    checkForActiveNestedItems(children);
+  }, [children]);
+
+  const { hasNestedItems, renderedNestedItems } = useMemo(() => {
+    const renderedNestedItems: Array<React.ReactElement> = [];
+    let hasNestedItems = false;
+
+    React.Children.forEach(children, (child, index) => {
+      if (child != null && isComponentType(child, 'SideNavItem')) {
+        hasNestedItems = true;
+
+        if (hasNestedActive || active) {
+          renderedNestedItems.push(
+            React.cloneElement(child, {
+              className: getIndentLevelStyle(indentLevel),
+              indentLevel: indentLevel + 1,
+              key: index,
+            }),
+          );
+        }
+      }
+    });
+
+    return { hasNestedItems, renderedNestedItems };
+  }, [children, active, indentLevel, hasNestedActive]);
+
+  const renderedChildren = useMemo(() => {
+    const renderedChildren: React.ReactNodeArray = [];
+
+    React.Children.forEach(children, child => {
+      if (!child) {
+        return null;
+      }
+
+      if (isComponentType(child, 'SideNavItem')) {
+        return null;
+      }
+
+      renderedChildren.push(child);
+    });
+
+    return renderedChildren;
+  }, [children]);
+
   return (
-    <li>
+    <li
+      className={css`
+        width: 100%;
+      `}
+    >
       <Box
         as={props.href ? 'a' : 'button'}
         {...rest}
         {...sideNavItemContainer.prop}
         className={cx(
           defaultStyle,
+          typographyStyle[baseFontSize],
           {
             [activeStyle]: active,
             [disabledStyle]: disabled,
             [focusedStyle]: showFocus,
             [focusedDisabledStyle]: showFocus && disabled,
+            [nestedChildrenStyles]: hasNestedChildren.current,
           },
           className,
         )}
@@ -257,8 +350,19 @@ const SideNavItem: ExtendableBox<
           </span>
         )}
 
-        {children}
+        {renderedChildren}
       </Box>
+
+      {hasNestedItems && (
+        <ul
+          className={css`
+            list-style: none;
+            padding-inline-start: 0;
+          `}
+        >
+          {renderedNestedItems}
+        </ul>
+      )}
     </li>
   );
 });
