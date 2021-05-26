@@ -94,8 +94,6 @@ function RadioBoxGroup({
     <Provider
       value={{
         value: uncontrolledValue,
-        getNextId: () =>
-          useIdAllocator({ prefix: 'radio-box-group', id: name }),
         name: defaultName,
         size,
         onChange: handleChange,

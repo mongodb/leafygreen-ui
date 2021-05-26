@@ -7,34 +7,22 @@ import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import { keyMap } from '@leafygreen-ui/lib';
+import { keyMap, createDataProp } from '@leafygreen-ui/lib';
 import {
   prefersReducedMotion,
   validateAriaLabelProps,
 } from '@leafygreen-ui/a11y';
-<<<<<<< HEAD
-=======
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { useEventListener } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
-import { keyMap, IdAllocator, createDataProp } from '@leafygreen-ui/lib';
->>>>>>> origin
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
 
-<<<<<<< HEAD
-=======
-const navIdAllocator = IdAllocator.create('input');
 const dataProp = createDataProp('side-nav');
 const sideNavSelector = dataProp.selector;
 
 export { sideNavSelector };
 
->>>>>>> origin
 const navStyles = css`
   transition: all ${collapseDuration}ms ease-in-out;
   background-color: ${uiColors.gray.light3};
