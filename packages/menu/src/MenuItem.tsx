@@ -165,12 +165,6 @@ const MenuItem: ExtendableBox<
         ),
       });
 
-    const textStyles = cx(titleTextStyle, {
-      [activeTitleTextStyle]: active,
-      [disabledTextStyle]: disabled,
-      [focusTitleTextStyle]: showFocus,
-    });
-
     const commonProps = {
       ...rest,
       ...menuItemContainer.prop,
@@ -179,8 +173,11 @@ const MenuItem: ExtendableBox<
         menuItemContainerStyle,
         menuItemHeight[size],
         linkStyle,
-        textStyles,
+        titleTextStyle,
         {
+          [activeTitleTextStyle]: active,
+          [disabledTextStyle]: disabled,
+          [focusTitleTextStyle]: showFocus,
           [activeMenuItemContainerStyle]: active,
           [disabledMenuItemContainerStyle]: disabled,
           [focusedMenuItemContainerStyle]: showFocus,
