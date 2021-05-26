@@ -146,7 +146,7 @@ const nestedChildrenStyles = css`
 
 function getIndentLevelStyle(indentLevel: number) {
   return css`
-    padding-left: ${8 + indentLevel * 16}px;
+    padding-left: ${8 + indentLevel * 8}px;
   `;
 }
 
@@ -249,7 +249,9 @@ const SideNavItem: ExtendableBox<
         e.nativeEvent.stopImmediatePropagation();
         e.preventDefault();
       }
-    : onClickProp;
+    : (e: React.MouseEvent) => {
+        onClickProp?.(e);
+      };
 
   const accessibleGlyph =
     (glyph && isComponentType(glyph, 'Glyph')) || isComponentType(glyph, 'Icon')
@@ -277,8 +279,13 @@ const SideNavItem: ExtendableBox<
     let hasNestedItems = false;
 
     React.Children.forEach(children, (child, index) => {
-      if (child != null && isComponentType(child, 'SideNavItem')) {
+      if (
+        (child != null && isComponentType(child, 'SideNavItem')) ||
+        isComponentType(child, 'SideNavGroup')
+      ) {
         hasNestedItems = true;
+
+        console.log({ indentLevel });
 
         if (hasNestedActive || active) {
           renderedNestedItems.push(
@@ -303,7 +310,10 @@ const SideNavItem: ExtendableBox<
         return null;
       }
 
-      if (isComponentType(child, 'SideNavItem')) {
+      if (
+        isComponentType(child, 'SideNavItem') ||
+        isComponentType(child, 'SideNavGroup')
+      ) {
         return null;
       }
 

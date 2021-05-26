@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import {
@@ -23,6 +23,9 @@ const sideNavGroupIdAllocator = IdAllocator.create('side-nav-group');
 const button = createDataProp('side-nav-group-button');
 
 const listItemStyle = css`
+  display: flex;
+  flex-direction: column;
+
   & + & {
     margin-top: ${spacing[2]}px;
   }
@@ -125,6 +128,12 @@ const transitionStyles = {
   `,
 };
 
+function getIndentLevelStyle(indentLevel: number) {
+  return css`
+    padding-left: ${8 + indentLevel * 8}px;
+  `;
+}
+
 interface SideNavGroupBaseProps {
   /**
    * Class name that will be applied to the root-level element.
@@ -203,6 +212,7 @@ function SideNavGroup({
   glyph,
   className,
   hasActiveItem,
+  indentLevel = -1,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
@@ -216,15 +226,46 @@ function SideNavGroup({
   const menuId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
   const { width } = useSideNavContext();
 
+  const renderedChildren = useMemo(() => {
+    const checkForNestedGroups = (children: React.ReactNode) => {
+      return React.Children.map(children, child => {
+        if (isComponentType(child, 'SideNavGroup')) {
+          return React.cloneElement(child, {
+            indentLevel: indentLevel + 1,
+          });
+        } else if ((child as React.ReactElement)?.props?.children) {
+          checkForNestedGroups((child as React.ReactElement).props.children);
+          return child;
+        } else {
+          return child;
+        }
+      });
+    };
+
+    return checkForNestedGroups(children);
+  }, [children, indentLevel]);
+
   const isActiveGroup: boolean = useMemo(() => {
     if (hasActiveItem != null) {
       return hasActiveItem;
     }
 
-    return React.Children.toArray(children).some(child => {
-      return isComponentType(child, 'SideNavItem') && child.props.active;
-    });
-  }, [children, hasActiveItem]);
+    const checkForActiveNestedItems = (children: React.ReactNode): boolean => {
+      React.Children.forEach(children, child => {
+        if (isComponentType(child, 'SideNavItem') && child.props.active) {
+          return true;
+        } else if ((child as React.ReactElement)?.props?.children) {
+          checkForActiveNestedItems(
+            (child as React.ReactElement).props.children,
+          );
+        }
+      });
+
+      return false;
+    };
+
+    return checkForActiveNestedItems(children);
+  }, [hasActiveItem, children]);
 
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
@@ -262,7 +303,14 @@ function SideNavGroup({
 
   if (collapsible) {
     return (
-      <li className={cx(listItemStyle, className)} {...rest}>
+      <li
+        className={cx(
+          listItemStyle,
+          getIndentLevelStyle(indentLevel),
+          className,
+        )}
+        {...rest}
+      >
         <button
           {...button.prop}
           aria-controls={menuId}
@@ -332,7 +380,7 @@ function SideNavGroup({
                   },
                 )}
               >
-                {children}
+                {renderedChildren}
               </ul>
             </div>
           )}
@@ -342,7 +390,10 @@ function SideNavGroup({
   }
 
   return (
-    <li className={cx(listItemStyle, className)} {...rest}>
+    <li
+      className={cx(listItemStyle, getIndentLevelStyle(indentLevel), className)}
+      {...rest}
+    >
       <div
         data-testid="side-nav-group-header-label"
         id={menuGroupLabelId}
@@ -352,7 +403,7 @@ function SideNavGroup({
       </div>
 
       <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
-        {children}
+        {renderedChildren}
       </ul>
     </li>
   );

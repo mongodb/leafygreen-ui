@@ -302,7 +302,42 @@ function MockSideNav() {
   );
 }
 
+function NestedGroups() {
+  return (
+    <LeafyGreenProvider>
+      <div className={gridStyles}>
+        <MongoNav className={topNavStyles} mode="dev" />
+
+        <SideNav collapsed={false}>
+          <SideNavGroup header="Group 1">
+            <SideNavItem active>Test 1</SideNavItem>
+            <SideNavItem>Test 2</SideNavItem>
+            <SideNavItem>Test 3</SideNavItem>
+          </SideNavGroup>
+
+          <SideNavGroup header="Group 2">
+            <SideNavItem>
+              Test 1
+              <SideNavGroup header="Nested">
+                <SideNavItem active>Doubly Nested</SideNavItem>
+                <SideNavGroup header="Nested Nested">
+                  <SideNavItem active>Tripley Nested</SideNavItem>
+                </SideNavGroup>
+              </SideNavGroup>
+            </SideNavItem>
+            <SideNavItem>Test 2</SideNavItem>
+            <SideNavItem>Test 3</SideNavItem>
+          </SideNavGroup>
+        </SideNav>
+
+        {content}
+      </div>
+    </LeafyGreenProvider>
+  );
+}
+
 storiesOf('SideNav', module)
   .add('Simple Navigation', () => <MockSideNav />)
   .add('Realm', () => <RealmSideNav />)
-  .add('Org Settings', () => <OrgSettingsSideNav />);
+  .add('Org Settings', () => <OrgSettingsSideNav />)
+  .add('NestedGroups', () => <NestedGroups />);
