@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
 import Size from './Size';
+import { useRadioBoxGroupContext, RadioBoxGroupContext } from './context';
 
 const radioBoxWrapper = createDataProp('radio-box-wrapper');
 const radioBoxInput = createDataProp('radio-box-input');
@@ -163,6 +164,26 @@ export interface RadioBoxProps {
   default?: boolean;
 }
 
+function isChecked({
+  checkedProp,
+  defaultProp,
+  radioBoxGroupContext,
+  value,
+}: {
+  checkedProp?: boolean;
+  defaultProp: boolean;
+  radioBoxGroupContext: RadioBoxGroupContext | null;
+  value: string | number;
+}): boolean {
+  const contextValue = radioBoxGroupContext?.value;
+
+  if (contextValue == null) {
+    return checkedProp ?? defaultProp;
+  }
+
+  return contextValue === value;
+}
+
 /**
  * # RadioBox
  *
@@ -180,16 +201,44 @@ export interface RadioBoxProps {
  */
 export default function RadioBox({
   className = '',
-  onChange,
+  onChange: onChangeProp,
   value,
-  checked = false,
+  checked: checkedProp,
+  default: defaultProp = false,
   disabled = false,
-  id,
-  size = Size.Default,
+  id: idProp,
+  size: sizeProp = Size.Default,
   children,
-  name,
+  name: nameProp,
   ...rest
 }: RadioBoxProps & Omit<HTMLElementProps<'input', never>, 'size'>) {
+  const radioBoxGroupContext = useRadioBoxGroupContext();
+  const idRef = useRef<string>();
+
+  const id = idProp ?? idRef.current ?? radioBoxGroupContext?.getNextId();
+
+  if (idProp == null && idRef.current == null && id != null) {
+    // Avoid re-calculating on next render
+    idRef.current = id;
+  }
+
+  const size = radioBoxGroupContext?.size ?? sizeProp;
+  const name = radioBoxGroupContext?.name ?? nameProp;
+  const checked = isChecked({
+    value,
+    checkedProp,
+    defaultProp,
+    radioBoxGroupContext,
+  });
+  const contextOnChange = radioBoxGroupContext?.onChange;
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+    e => {
+      onChangeProp?.(e);
+      contextOnChange?.(e);
+    },
+    [onChangeProp, contextOnChange],
+  );
+
   const radioDisplayStyle = getRadioDisplayStyles({ checked, disabled, size });
   const interactionContainerStyle = getInteractionRingStyles({
     checked,

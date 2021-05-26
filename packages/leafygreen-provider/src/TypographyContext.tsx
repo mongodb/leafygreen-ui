@@ -6,7 +6,7 @@ export interface TypographyProviderProps {
   baseFontSize?: 14 | 16;
 }
 
-const BaseFontSizeContext = createContext<number>(14);
+const BaseFontSizeContext = createContext<14 | 16>(14);
 
 export function useBaseFontSize() {
   return useContext(BaseFontSizeContext);

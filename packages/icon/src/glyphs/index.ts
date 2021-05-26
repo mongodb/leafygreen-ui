@@ -60,6 +60,7 @@ import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import Stitch from './Stitch.svg';
 import Support from './Support.svg';
+import TimeSeries from './TimeSeries.svg';
 import Trash from './Trash.svg';
 import University from './University.svg';
 import Unlock from './Unlock.svg';
@@ -132,6 +133,7 @@ const glyphs = {
   SortDescending,
   Stitch,
   Support,
+  TimeSeries,
   Trash,
   University,
   Unlock,
