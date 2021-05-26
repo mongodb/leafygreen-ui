@@ -23,7 +23,7 @@ addDecorator(withPerformance);
 // Dynamically load all stories found in the packages sub-directories (excluding node_modules) that
 // match the ".stories.js" extension
 const req = require.context(
-  '..',
+  '../packages',
   true,
   /^((?!node_modules).)*[.]story[.](t|j)sx?$/im,
 );

@@ -1,5 +1,18 @@
 # @leafygreen-ui/side-nav
 
+## 7.1.0
+
+### Minor Changes
+
+- 1fe3e1a3: - Adds support for 16px base font size to SideNav.
+  - Exposes a `widthOverride` prop that accepts a number (pixel-value), allowing consuming applications to control the width.
+  - SideNavItems can be nested inside of one and other, and will appear when any ancestor is active.
+
+### Patch Changes
+
+- Updated dependencies [1fe3e1a3]
+  - @leafygreen-ui/leafygreen-provider@2.1.1
+
 ## 7.0.1
 
 ### Patch Changes

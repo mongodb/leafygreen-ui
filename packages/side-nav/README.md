@@ -155,10 +155,14 @@ return (
 
 ## Properties
 
-| Prop        | Type     | Description                                                  | Default     |
-| ----------- | -------- | ------------------------------------------------------------ | ----------- |
-| `className` | `string` | Class name that will be applied to the root-level element.   | `undefined` |
-| `children`  | `node`   | Content that will be rendered inside the root-level element. | `undefined` |
+| Prop            | Type                                            | Description                                                                     | Default     |
+| --------------- | ----------------------------------------------- | ------------------------------------------------------------------------------- | ----------- |
+| `className`     | `string`                                        | Class name that will be applied to the root-level element.                      | `undefined` |
+| `children`      | `node`                                          | Content that will be rendered inside the root-level element.                    | `undefined` |
+| `baseFontSize`  | `14`, `16`                                      | Determines the base font size (in pixels) of the Side Nav                       | `14`        |
+| `widthOverride` | `number`                                        | Width (in pixels) of Side Navigation.                                           | `184`       |
+| `collapsed`     | `boolean`                                       | Allows consuming applications to control the collapsed state of the navigation. |             |
+| `setCollapsed`  | `React.Dispatch<React.SetStateAction<boolean>>` | Consuming application's collapsed-state management controller                   | `() => {}`  |
 
 _Any other properties will be spread on the root-level element._
 

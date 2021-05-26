@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import RadioBox, { RadioBoxProps } from './RadioBox';
 import Size from './Size';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { Provider } from './context';
 
 const baseGroupStyle = css`
   display: flex;
@@ -40,17 +40,6 @@ interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
    * className supplied to RadioBoxGroup container.
    */
   className?: string;
-}
-
-function isRadioBoxElement(
-  element: React.ReactNode,
-): element is React.ReactElement<RadioBoxProps, typeof RadioBox> {
-  return (
-    element != null &&
-    typeof element === 'object' &&
-    'type' in element &&
-    (element.type as any).displayName === 'RadioBox'
-  );
 }
 
 /**
@@ -101,39 +90,26 @@ function RadioBoxGroup({
     }
   };
 
-  const renderedChildren = React.Children.map(children, (child, index) => {
-    if (!isRadioBoxElement(child)) {
-      return child;
-    }
-
-    let checked;
-
-    if (controlledValue) {
-      checked = controlledValue === child.props.value;
-    } else {
-      checked = uncontrolledValue
-        ? uncontrolledValue === child.props.value
-        : child.props.default;
-    }
-
-    return React.cloneElement(child, {
-      onChange: handleChange,
-      id: child.props.id || `${defaultName}-button-${index}`,
-      checked,
-      size,
-      name: defaultName,
-    });
-  });
-
   return (
-    <div
-      {...rest}
-      className={cx(baseGroupStyle, className)}
-      role="group"
-      aria-label={defaultName}
+    <Provider
+      value={{
+        value: uncontrolledValue,
+        getNextId: () =>
+          useIdAllocator({ prefix: 'radio-box-group', id: name }),
+        name: defaultName,
+        size,
+        onChange: handleChange,
+      }}
     >
-      {renderedChildren}
-    </div>
+      <div
+        {...rest}
+        className={cx(baseGroupStyle, className)}
+        role="group"
+        aria-label={name}
+      >
+        {children}
+      </div>
+    </Provider>
   );
 }
 
