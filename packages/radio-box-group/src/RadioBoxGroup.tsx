@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import RadioBox, { RadioBoxProps } from './RadioBox';
 import Size from './Size';
 import { IdAllocator, HTMLElementProps } from '@leafygreen-ui/lib';
+import { Provider } from './context';
 
 const baseGroupStyle = css`
   display: flex;
@@ -42,18 +42,7 @@ interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
 }
 
 interface RadioBoxGroupState {
-  value: string | number;
-}
-
-function isRadioBoxElement(
-  element: React.ReactNode,
-): element is React.ReactElement<RadioBoxProps, typeof RadioBox> {
-  return (
-    element != null &&
-    typeof element === 'object' &&
-    'type' in element &&
-    (element.type as any).displayName === 'RadioBox'
-  );
+  value: string | number | undefined;
 }
 
 /**
@@ -95,7 +84,7 @@ export default class RadioBoxGroup extends PureComponent<
   };
 
   state: RadioBoxGroupState = {
-    value: '',
+    value: undefined,
   };
 
   private static idAllocator = IdAllocator.create('radio-box-group');
@@ -107,6 +96,17 @@ export default class RadioBoxGroup extends PureComponent<
     }
 
     return this._defaultName;
+  }
+
+  private _defaultNameIdAllocator?: IdAllocator;
+  private get defaultNameIdAllocator(): IdAllocator {
+    if (!this._defaultNameIdAllocator) {
+      this._defaultNameIdAllocator = IdAllocator.create(
+        `${this.defaultName}-button`,
+      );
+    }
+
+    return this._defaultNameIdAllocator;
   }
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,34 +133,25 @@ export default class RadioBoxGroup extends PureComponent<
       ...rest
     } = this.props;
 
-    const renderedChildren = React.Children.map(children, (child, index) => {
-      if (!isRadioBoxElement(child)) {
-        return child;
-      }
-
-      const checked =
-        this.props.value === child.props.value || value
-          ? value === child.props.value
-          : child.props.default;
-
-      return React.cloneElement(child, {
-        onChange: this.handleChange,
-        id: child.props.id || `${this.defaultName}-button-${index}`,
-        checked,
-        size,
-        name,
-      });
-    });
-
     return (
-      <div
-        {...rest}
-        className={cx(baseGroupStyle, className)}
-        role="group"
-        aria-label={name}
+      <Provider
+        value={{
+          value,
+          getNextId: () => this.defaultNameIdAllocator.generate(),
+          name,
+          size,
+          onChange: this.handleChange,
+        }}
       >
-        {renderedChildren}
-      </div>
+        <div
+          {...rest}
+          className={cx(baseGroupStyle, className)}
+          role="group"
+          aria-label={name}
+        >
+          {children}
+        </div>
+      </Provider>
     );
   }
 }

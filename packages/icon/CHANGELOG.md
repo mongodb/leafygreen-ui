@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.1.0
+
+### Minor Changes
+
+- 30f5fd75: Adds TimeSeries to glyph set
+
 ## 11.0.0
 
 ### Major Changes
