@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
 import Size from './Size';
@@ -215,7 +216,11 @@ export default function RadioBox({
   const radioBoxGroupContext = useRadioBoxGroupContext();
   const idRef = useRef<string>();
 
-  const id = idProp ?? idRef.current ?? radioBoxGroupContext?.getNextId();
+  const localId = useIdAllocator({
+    prefix: 'radio-box-group',
+  });
+
+  const id = idProp ?? idRef.current ?? localId;
 
   if (idProp == null && idRef.current == null && id != null) {
     // Avoid re-calculating on next render

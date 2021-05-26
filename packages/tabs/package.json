@@ -20,6 +20,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/hooks": "^6.0.1",
     "@leafygreen-ui/lib": "^7.0.0",
     "@leafygreen-ui/a11y": "^1.2.0",
     "@leafygreen-ui/palette": "^3.2.1",
