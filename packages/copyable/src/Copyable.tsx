@@ -5,7 +5,7 @@ import { transparentize } from 'polished';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import { IdAllocator } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
@@ -132,8 +132,6 @@ interface CopyableProps {
   size?: Size;
 }
 
-const idAllocator = IdAllocator.create('copyable');
-
 export default function Copyable({
   darkMode = false,
   children,
@@ -154,7 +152,7 @@ export default function Copyable({
     setShowCopyButton(copyable && ClipboardJS.isSupported());
   }, [copyable]);
 
-  const codeId = React.useMemo(() => idAllocator.generate(), []);
+  const codeId = useIdAllocator({ prefix: 'code' });
 
   let copyButton: JSX.Element | undefined;
 

@@ -20,6 +20,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/hooks": "^6.0.1",
     "@leafygreen-ui/interaction-ring": "^1.0.2",
     "@leafygreen-ui/lib": "^7.0.0",
     "@leafygreen-ui/palette": "^3.2.1"

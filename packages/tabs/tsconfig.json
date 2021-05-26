@@ -29,6 +29,9 @@
       "path": "../portal"
     },
     {
+      "path": "../hooks"
+    },
+    {
       "path": "../a11y"
     }
   ]
