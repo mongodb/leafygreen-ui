@@ -40,6 +40,7 @@ interface StateForStyles {
 const getInteractionRingStyles = ({ checked }: StateForStyles) => {
   const baseStyles = css`
     width: 100%;
+    height: 100%;
     // Display behind border
     z-index: -1;
   `;

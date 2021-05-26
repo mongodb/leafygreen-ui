@@ -65,7 +65,7 @@ storiesOf('RadioBoxGroup', module)
             Option Three
           </RadioBox>
           <RadioBox disabled={boolean('Disabled', true)} value="option-4">
-            Disabled Option
+            Disabled Option Lorem lorelm
           </RadioBox>
         </RadioBoxGroup>
       </div>
