@@ -93,7 +93,6 @@ const getRadioDisplayStyles = ({ disabled }: StateForStyles) => {
     font-size: 14px;
     font-weight: bold;
     text-align: center;
-    // vertical-align: top;
     overflow-wrap: break-word;
     background-color: white;
     border-radius: 4px;
