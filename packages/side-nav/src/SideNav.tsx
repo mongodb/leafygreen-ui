@@ -1,24 +1,23 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
+import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
+import { keyMap, createDataProp } from '@leafygreen-ui/lib';
 import {
   prefersReducedMotion,
   validateAriaLabelProps,
 } from '@leafygreen-ui/a11y';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { useEventListener } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
-import { keyMap, IdAllocator, createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
 
-const navIdAllocator = IdAllocator.create('input');
 const dataProp = createDataProp('side-nav');
 const sideNavSelector = dataProp.selector;
 
@@ -198,7 +197,7 @@ function SideNav({
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
   const { usingKeyboard } = useUsingKeyboardContext();
-  const navId = useMemo(() => idProp ?? navIdAllocator.generate(), [idProp]);
+  const navId = useIdAllocator({ prefix: 'side-nav', id: idProp });
   const [
     portalContainer,
     setPortalContainer,

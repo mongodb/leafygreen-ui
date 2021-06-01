@@ -160,3 +160,15 @@ Drop-in replacement for `useLayoutEffect` that does not produce warnings during 
     ]
   }
 ```
+
+# useIdAllocator
+
+Generates an SSR-compatible unique id based on a prefix string and an optional idProp parameter.
+
+### Example
+
+```js
+import { useIdAllocator } from '@leafygreen-ui/hooks';
+
+useIdAllocator({ prefix: 'select-component', id: idProp });
+```

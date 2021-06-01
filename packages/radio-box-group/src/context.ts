@@ -4,7 +4,6 @@ import Size from './Size';
 export interface RadioBoxGroupContext {
   value: string | number | undefined;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  getNextId: () => string;
   size: Size | undefined;
   name: string | undefined;
 }
