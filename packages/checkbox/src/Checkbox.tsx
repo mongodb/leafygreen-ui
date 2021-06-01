@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  HTMLElementProps,
-  createDataProp,
-  IdAllocator,
-} from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   spritesheetLight,
@@ -141,8 +138,6 @@ interface CheckboxProps extends HTMLElementProps<'input', never> {
   animate?: boolean;
 }
 
-const idAllocator = IdAllocator.create('checkbox');
-
 function Checkbox({
   darkMode = false,
   checked: checkedProp,
@@ -166,9 +161,7 @@ function Checkbox({
   );
 
   const inputRef = React.useRef(null);
-  const checkboxId = React.useMemo(() => idProp ?? idAllocator.generate(), [
-    idProp,
-  ]);
+  const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
   const labelId = `${checkboxId}-label`;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

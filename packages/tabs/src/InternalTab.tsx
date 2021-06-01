@@ -1,11 +1,8 @@
 import React, { useMemo } from 'react';
 import Portal from '@leafygreen-ui/portal';
-import { IdAllocator } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import { TabsProps } from './Tabs';
-
-const tabIdAllocator = IdAllocator.create('tab');
-const tabpanelIdAllocator = IdAllocator.create('tab-panel');
 
 type InternalTabProps = Pick<TabsProps, 'as' | 'darkMode' | 'className'> & {
   child: React.ReactElement;
@@ -21,8 +18,8 @@ const InternalTab = React.memo(
   ({ child, selected, tabRef, panelRef, ...tabProps }: InternalTabProps) => {
     const { id: idProp, name } = child.props;
 
-    const panelId = useMemo(() => tabpanelIdAllocator.generate(), []);
-    const tabId = useMemo(() => idProp ?? tabIdAllocator.generate(), [idProp]);
+    const panelId = useIdAllocator({ prefix: 'tab-panel' });
+    const tabId = useIdAllocator({ prefix: 'tab', id: idProp });
 
     const tab = (
       <TabTitle

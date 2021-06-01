@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 6.1.0
+
+### Minor Changes
+
+- 4b6a2643: Allow for RadioBox elements to be rendered as non-direct descendants of a RadioBoxGroup (either inside another element, or rendered by a wrapper component)
+
 ## 6.0.0
 
 ### Patch Changes

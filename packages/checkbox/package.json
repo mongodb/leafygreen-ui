@@ -20,6 +20,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/hooks": "^6.0.1",
     "@leafygreen-ui/lib": "^7.0.0"
   },
   "devDependencies": {

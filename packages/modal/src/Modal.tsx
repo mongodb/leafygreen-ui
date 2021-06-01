@@ -1,14 +1,13 @@
-import React, { SetStateAction, useCallback, useState, useMemo } from 'react';
+import React, { SetStateAction, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import FocusTrap from 'focus-trap-react';
 import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
-import { IdAllocator } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
-import { useEscapeKey } from '@leafygreen-ui/hooks';
+import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -18,8 +17,6 @@ const Mode = {
 };
 
 type Mode = typeof Mode[keyof typeof Mode];
-
-const idAllocator = IdAllocator.create('modal');
 
 export const ModalSize = {
   Small: 'small',
@@ -264,7 +261,7 @@ function Modal({
     [closeOnBackdropClick, handleClose, scrollContainerNode],
   );
 
-  const id = useMemo(() => idAllocator.generate(), []);
+  const id = useIdAllocator({ prefix: 'modal' });
 
   useEscapeKey(handleClose, { enabled: open });
 
