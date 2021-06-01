@@ -41,6 +41,7 @@ interface StateForStyles {
 const getInteractionRingStyles = ({ checked }: StateForStyles) => {
   const baseStyles = css`
     width: 100%;
+    height: 100%;
     // Display behind border
     z-index: -1;
   `;
@@ -92,13 +93,17 @@ const getRadioDisplayStyles = ({ disabled }: StateForStyles) => {
     font-size: 14px;
     font-weight: bold;
     text-align: center;
-    vertical-align: top;
+    // vertical-align: top;
     overflow-wrap: break-word;
     background-color: white;
     border-radius: 4px;
     color: ${uiColors.gray.dark2};
     pointer-events: auto;
     z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `;
 
   if (disabled) {
@@ -281,7 +286,14 @@ export default function RadioBox({
         className={inputStyles}
       />
 
-      <div className={getBorderStyles({ checked, disabled, size })}>
+      <div
+        className={cx(
+          css`
+            height: 100%;
+          `,
+          getBorderStyles({ checked, disabled, size }),
+        )}
+      >
         <InteractionRing
           className={interactionContainerStyle}
           disabled={disabled}
