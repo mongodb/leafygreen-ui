@@ -142,7 +142,7 @@ function RadioGroup({
 
 RadioGroup.propTypes = {
   darkMode: PropTypes.bool,
-  size: PropTypes.oneOf(['small', 'default']),
+  size: PropTypes.oneOf(['xsmall', 'small', 'default']),
   className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
