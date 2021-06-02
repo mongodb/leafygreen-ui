@@ -81,6 +81,16 @@ const activeStyle = css`
     color: ${uiColors.green.dark3};
     background-color: ${uiColors.green.light3};
   }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    background-color: ${uiColors.green.light3};
+    z-index: -1;
+  }
 `;
 
 const disabledStyle = css`
@@ -290,7 +300,7 @@ const SideNavItem: ExtendableBox<
         if (hasNestedActive || active) {
           renderedNestedItems.push(
             React.cloneElement(child, {
-              className: getIndentLevelStyle(indentLevel),
+              // className: getIndentLevelStyle(indentLevel),
               indentLevel: indentLevel + 1,
               key: index,
             }),
@@ -327,6 +337,7 @@ const SideNavItem: ExtendableBox<
     <li
       className={css`
         width: 100%;
+        position: relative;
       `}
     >
       <Box
@@ -365,10 +376,13 @@ const SideNavItem: ExtendableBox<
 
       {hasNestedItems && (
         <ul
-          className={css`
-            list-style: none;
-            padding-inline-start: 0;
-          `}
+          className={cx(
+            css`
+              list-style: none;
+              padding-inline-start: 0;
+            `,
+            getIndentLevelStyle(indentLevel),
+          )}
         >
           {renderedNestedItems}
         </ul>

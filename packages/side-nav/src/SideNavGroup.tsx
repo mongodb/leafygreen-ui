@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import {
@@ -25,6 +25,7 @@ const button = createDataProp('side-nav-group-button');
 const listItemStyle = css`
   display: flex;
   flex-direction: column;
+  position: relative;
 
   & + & {
     margin-top: ${spacing[2]}px;
@@ -212,7 +213,7 @@ function SideNavGroup({
   glyph,
   className,
   hasActiveItem,
-  indentLevel = -1,
+  indentLevel = -2,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
@@ -307,6 +308,12 @@ function SideNavGroup({
         className={cx(
           listItemStyle,
           getIndentLevelStyle(indentLevel),
+          {
+            [css`
+                border-bottom: 1px solid ${uiColors.green.dark2};
+              }
+            `]: indentLevel > -1,
+          },
           className,
         )}
         {...rest}
@@ -391,18 +398,41 @@ function SideNavGroup({
 
   return (
     <li
-      className={cx(listItemStyle, getIndentLevelStyle(indentLevel), className)}
+      className={cx(
+        listItemStyle,
+        // getIndentLevelStyle(indentLevel),
+        // {
+        //   [css`
+        //     // &:after {
+        //     //   content: '';
+        //     //   position: absolute;
+        //     //   top: 30px;
+        //     //   left: 0vw;
+        //     //   right: 0;
+        //     border-bottom: 1px solid ${uiColors.gray.light1};
+        //     // }
+        //   `]: indentLevel > -2,
+        // },
+        className,
+      )}
       {...rest}
     >
       <div
         data-testid="side-nav-group-header-label"
         id={menuGroupLabelId}
-        className={labelStyle}
+        className={cx(labelStyle, {
+          [css`
+            border-bottom: 1px solid ${uiColors.gray.light1};
+          `]: indentLevel > -2,
+        })}
       >
         {renderedLabelText}
       </div>
 
-      <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
+      <ul
+        aria-labelledby={menuGroupLabelId}
+        className={cx(ulStyleOverrides, getIndentLevelStyle(indentLevel))}
+      >
         {renderedChildren}
       </ul>
     </li>

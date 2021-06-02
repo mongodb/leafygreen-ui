@@ -316,15 +316,14 @@ function NestedGroups() {
           </SideNavGroup>
 
           <SideNavGroup header="Group 2">
-            <SideNavItem>
-              Test 1
-              <SideNavGroup header="Nested">
-                <SideNavItem active>Doubly Nested</SideNavItem>
-                <SideNavGroup header="Nested Nested">
-                  <SideNavItem active>Tripley Nested</SideNavItem>
-                </SideNavGroup>
+            <SideNavItem>Test 1</SideNavItem>
+            <SideNavGroup header="Nested">
+              <SideNavItem active>Doubly Nested</SideNavItem>
+              <SideNavGroup header="Nested Nested">
+                <SideNavItem active>Tripley Nested</SideNavItem>
               </SideNavGroup>
-            </SideNavItem>
+            </SideNavGroup>
+
             <SideNavItem>Test 2</SideNavItem>
             <SideNavItem>Test 3</SideNavItem>
           </SideNavGroup>

@@ -101,7 +101,25 @@ describe('packages/side-nav', () => {
       });
     });
 
-    describe('it properly determines what nested elements to render', () => {
+    describe('it properly handles nested SideNavGroup components', () => {
+      test('when a SideNavGroup has an active SideNavItem, all nested SideNavItems are rendered', () => {
+        render(
+          <SideNav aria-label="test side nav">
+            <SideNavGroup header="Label">
+              <SideNavItem active>Child 1</SideNavItem>
+              <SideNavItem>Child 2</SideNavItem>
+            </SideNavGroup>
+          </SideNav>,
+        );
+
+        expect(screen.getByText('Child 1')).toBeInTheDocument();
+        expect(screen.getByText('Child 2')).toBeInTheDocument();
+      });
+
+      // test('when a nested SideNavGroup has', () => {});
+    });
+
+    describe('it properly handles nested SideNavItem components', () => {
       test('when an active SideNavItem has nested items, they are rendered', () => {
         render(
           <SideNav aria-label="test side nav">
