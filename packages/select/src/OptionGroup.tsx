@@ -16,9 +16,11 @@ const optionGroupLabelStyle = css`
   padding: 0 12px 2px;
   outline: none;
   overflow-wrap: anywhere;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 16px;
   font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 `;
 
 export type ReactEmpty = null | undefined | false | '';
