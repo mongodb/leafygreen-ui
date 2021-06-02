@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 3.0.2
+
+### Patch Changes
+
+- 1ffbb84c: Fixes bug where a ref's clientHeight was being referenced prior to the ref being set.
+
 ## 3.0.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 7.0.3
+
+### Patch Changes
+
+- 73b0ad00: Adds 'xsmall' size variant to valid array of PropType values for `size` prop
+
 ## 7.0.2
 
 ### Patch Changes
