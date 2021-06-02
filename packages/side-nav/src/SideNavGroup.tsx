@@ -1,12 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import {
-  createDataProp,
-  IdAllocator,
-  OneOf,
-  isComponentType,
-} from '@leafygreen-ui/lib';
+import { createDataProp, OneOf, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
@@ -14,14 +9,10 @@ import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
-import {
-  ulStyleOverrides,
-  sideNavItemSidePadding,
-  sideNavWidth,
-} from './styles';
-
-const sideNavGroupIdAllocator = IdAllocator.create('side-nav-group');
+import { ulStyleOverrides, sideNavItemSidePadding } from './styles';
+import { useSideNavContext } from './SideNavContext';
 
 const button = createDataProp('side-nav-group-button');
 
@@ -37,6 +28,7 @@ const labelStyle = css`
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
+  line-height: 1em;
   letter-spacing: 0.3px;
   font-weight: bold;
   text-transform: uppercase;
@@ -45,7 +37,6 @@ const labelStyle = css`
   margin-top: 0;
   margin-bottom: 0;
   padding: 4px ${sideNavItemSidePadding}px 4px ${sideNavItemSidePadding}px;
-  line-height: 1em;
 
   &:not(:first-of-type) {
     margin-top: ${spacing[1]}px;
@@ -58,7 +49,6 @@ const collapsibleLabelStyle = css`
   margin: 0px;
   transition: border-color 150ms ease-in-out, color 150ms ease-in-out;
   cursor: pointer;
-  width: ${sideNavWidth}px;
   border-bottom: 1px solid ${uiColors.gray.light2};
 
   &:hover {
@@ -213,11 +203,10 @@ function SideNavGroup({
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const menuGroupLabelId = useMemo(
-    () => sideNavGroupIdAllocator.generate(),
-    [],
-  );
-  const menuId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
+
+  const menuGroupLabelId = useIdAllocator({ prefix: 'menu-group-label-id' });
+  const menuId = useIdAllocator({ prefix: 'menu' });
+  const { width } = useSideNavContext();
 
   const isActiveGroup: boolean = useMemo(() => {
     if (hasActiveItem != null) {
@@ -270,9 +259,16 @@ function SideNavGroup({
           {...button.prop}
           aria-controls={menuId}
           aria-expanded={open}
-          className={cx(labelStyle, collapsibleLabelStyle, {
-            [collapsibleHeaderFocusStyle]: showFocus,
-          })}
+          className={cx(
+            labelStyle,
+            collapsibleLabelStyle,
+            css`
+              width: ${width}px;
+            `,
+            {
+              [collapsibleHeaderFocusStyle]: showFocus,
+            },
+          )}
           onClick={() => setOpen(curr => !curr)}
           id={menuGroupLabelId}
           data-testid="side-nav-group-header-label"

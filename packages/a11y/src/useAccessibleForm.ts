@@ -1,18 +1,12 @@
-import { useMemo } from 'react';
-import { IdAllocator } from '@leafygreen-ui/lib';
-
-const inputIdAllocator = IdAllocator.create('input');
-const labelIdAllocator = IdAllocator.create('label');
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 /**
  * Hook that returns two sets of props that accessibly associate a label and its respective input element
  * @param id Describes the input element
  */
 const useAccessibleForm = (idProp: string) => {
-  const inputId = useMemo(() => idProp ?? inputIdAllocator.generate(), [
-    idProp,
-  ]);
-  const labelId = useMemo(() => labelIdAllocator.generate(), []);
+  const inputId = useIdAllocator({ prefix: 'lgui-input', id: idProp });
+  const labelId = useIdAllocator({ prefix: 'lgui-label' });
 
   const labelProps = {
     id: labelId,

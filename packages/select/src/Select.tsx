@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import {
+  useViewportSize,
+  useIdAllocator,
+  useEventListener,
+} from '@leafygreen-ui/hooks';
+import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
-import { useViewportSize } from '@leafygreen-ui/hooks';
-import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
 import ListMenu from './ListMenu';
@@ -53,7 +57,7 @@ export type Props = {
       } & {
         onChange?: (
           value: string,
-          event: React.MouseEvent | React.KeyboardEvent,
+          event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void;
         readOnly?: false;
       })
@@ -62,7 +66,7 @@ export type Props = {
         | {
             onChange: (
               value: string,
-              event: React.MouseEvent | React.KeyboardEvent,
+              event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
             ) => void;
             readOnly?: false;
           }
@@ -70,8 +74,6 @@ export type Props = {
       ))
   ) &
   OneOf<{ label: string }, { 'aria-labelledby': string }>;
-
-const idAllocator = IdAllocator.create('select');
 
 export default function Select({
   children,
@@ -97,17 +99,18 @@ export default function Select({
   popoverZIndex,
   __INTERNAL__menuButtonSlot__,
 }: Props) {
+  const id = useIdAllocator({ prefix: 'select', id: idProp });
+  const labelId = useMemo(() => ariaLabelledby ?? `${id}-label`, [
+    ariaLabelledby,
+    id,
+  ]);
+
   if (!label && !ariaLabelledby) {
     console.error(
       'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
     );
   }
 
-  const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
-  const labelId = useMemo(() => ariaLabelledby ?? `${id}-label`, [
-    ariaLabelledby,
-    id,
-  ]);
   const descriptionId = `${id}-description`;
   const menuId = `${id}-menu`;
 
@@ -218,10 +221,7 @@ export default function Select({
   }, [children, uncontrolledSelectedOption, value]);
 
   const onSelect = useCallback(
-    (
-      option: OptionElement | null,
-      event: React.MouseEvent | React.KeyboardEvent,
-    ) => {
+    (option: OptionElement | null, event: React.MouseEvent | KeyboardEvent) => {
       if (value === undefined) {
         setUncontrolledSelectedOption(option);
       }
@@ -245,13 +245,6 @@ export default function Select({
       };
     },
     [disabled, onClose, onSelect],
-  );
-
-  const onDeselect = useCallback(
-    (event: React.KeyboardEvent) => {
-      onSelect(null, event);
-    },
-    [onSelect],
   );
 
   /**
@@ -279,7 +272,7 @@ export default function Select({
   }, [children, allowDeselect]);
 
   const onSelectFocusedOption = useCallback(
-    (event: React.KeyboardEvent) => {
+    (event: KeyboardEvent) => {
       if (focusedOption !== undefined) {
         onSelect(focusedOption, event);
       }
@@ -288,12 +281,8 @@ export default function Select({
   );
 
   const onFocusFirstOption = useCallback(() => {
-    if (allowDeselect) {
-      setFocusedOption(null);
-    } else {
-      setFocusedOption(enabledOptions[0]);
-    }
-  }, [allowDeselect, enabledOptions]);
+    setFocusedOption(enabledOptions[0]);
+  }, [enabledOptions]);
 
   const onFocusLastOption = useCallback(() => {
     setFocusedOption(enabledOptions[enabledOptions.length - 1]);
@@ -338,6 +327,57 @@ export default function Select({
     [disabled],
   );
 
+  const onKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      // No support for modifiers yet
+      if (event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      switch (event.keyCode) {
+        case keyMap.Tab:
+        case keyMap.Escape:
+          onClose();
+          setFocusedOption(undefined);
+          break;
+        case keyMap.Enter:
+        case keyMap.Space:
+          if (open && document.activeElement !== menuButtonRef.current) {
+            // Default behavior is to use these keys to open the dropdown but we handle that manually
+            event.preventDefault();
+          }
+
+          onSelectFocusedOption(event);
+          break;
+        case keyMap.ArrowUp:
+          if (!open && document.activeElement === menuButtonRef.current) {
+            onOpen();
+          }
+
+          onFocusPreviousOption();
+          break;
+        case keyMap.ArrowDown:
+          if (!open && document.activeElement === menuButtonRef.current) {
+            onOpen();
+          }
+
+          onFocusNextOption();
+          break;
+      }
+    },
+    [
+      onClose,
+      onOpen,
+      open,
+      menuButtonRef,
+      onFocusNextOption,
+      onFocusPreviousOption,
+      onSelectFocusedOption,
+    ],
+  );
+
+  useEventListener('keydown', onKeyDown);
+
   /**
    * Rendering
    */
@@ -366,10 +406,6 @@ export default function Select({
   const deselectionOption = useMemo(() => {
     const selected = selectedOption === null;
 
-    if (!allowDeselect) {
-      return null;
-    }
-
     return (
       <InternalOption
         className={undefined}
@@ -393,7 +429,6 @@ export default function Select({
     getOptionFocusHandler,
     placeholder,
     selectedOption,
-    allowDeselect,
   ]);
 
   const renderedChildren = useMemo(
@@ -520,11 +555,8 @@ export default function Select({
               : placeholder
           }
           deselected={selectedOption === null}
-          onDeselect={onDeselect}
           onOpen={onOpen}
           onClose={onClose}
-          onFocusFirstOption={onFocusFirstOption}
-          onFocusLastOption={onFocusLastOption}
           aria-labelledby={labelId}
           aria-controls={menuId}
           aria-expanded={open}
@@ -536,16 +568,12 @@ export default function Select({
             id={menuId}
             referenceElement={menuButtonRef}
             ref={listMenuRef}
-            onClose={onClose}
-            onSelectFocusedOption={onSelectFocusedOption}
-            onFocusPreviousOption={onFocusPreviousOption}
-            onFocusNextOption={onFocusNextOption}
             className={css`
               width: ${menuButtonRef.current?.clientWidth}px;
             `}
             {...popoverProps}
           >
-            {deselectionOption}
+            {allowDeselect && deselectionOption}
             {renderedChildren}
           </ListMenu>
         </MenuButton>

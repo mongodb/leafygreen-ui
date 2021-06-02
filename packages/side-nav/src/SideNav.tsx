@@ -1,27 +1,30 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
+import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
+import { keyMap, createDataProp } from '@leafygreen-ui/lib';
 import {
   prefersReducedMotion,
   validateAriaLabelProps,
 } from '@leafygreen-ui/a11y';
-import { useEventListener } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
-import { keyMap, IdAllocator } from '@leafygreen-ui/lib';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
 
-const navIdAllocator = IdAllocator.create('input');
+const dataProp = createDataProp('side-nav');
+const sideNavSelector = dataProp.selector;
+
+export { sideNavSelector };
 
 const navStyles = css`
   transition: all ${collapseDuration}ms ease-in-out;
-  width: ${sideNavWidth}px;
   background-color: ${uiColors.gray.light3};
   border-right: 1px solid ${uiColors.gray.light2};
   position: relative;
@@ -68,10 +71,6 @@ const listStyles = css`
   bottom: 0;
 `;
 
-const expandedListStyle = css`
-  width: ${sideNavWidth}px;
-`;
-
 const wrapper = css`
   position: absolute;
   top: 0;
@@ -82,7 +81,6 @@ const wrapper = css`
 
 const space = css`
   transition: width ${collapseDuration}ms ease-in-out;
-  width: ${sideNavWidth}px;
   position: relative;
 
   ${prefersReducedMotion(`
@@ -142,6 +140,26 @@ interface SideNavProps {
   children?: React.ReactNode;
 
   id?: string;
+
+  /**
+   * Determines the base font size for the menu items.
+   */
+  baseFontSize?: 14 | 16;
+
+  /**
+   * Provides an override for the SideNav width.
+   */
+  widthOverride?: number;
+
+  /**
+   * Allows consuming applications to control the collapsed state of the navigation.
+   */
+  collapsed?: boolean;
+
+  /**
+   * Consuming application's collapsed-state management controller
+   */
+  setCollapsed?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -159,18 +177,45 @@ interface SideNavProps {
  *
  * @param props.className Class name that will be applied to the root-level element.
  * @param props.children Content that will be rendered inside the root-level element.
+ * @param props.baseFontSize Determines the base font size for the menu items.
+ * @param props.widthOverride Provides an override for the SideNav width.
+ * @param props.collapsed Allows consuming applications to control the collapsed state of the navigation.
+ * @param props.setCollapsed Consuming application's collapsed-state management controller
  */
-function SideNav({ className, children, id: idProp, ...rest }: SideNavProps) {
+function SideNav({
+  className,
+  children,
+  id: idProp,
+  baseFontSize,
+  widthOverride,
+  collapsed: controlledCollapsed,
+  setCollapsed: setControlledCollapsed = () => {},
+  ...rest
+}: SideNavProps) {
   const { Provider: ContextProvider } = SideNavContext;
-  const [collapsed, setCollapsed] = useState(false);
+  const [uncontrolledCollapsed, uncontrolledSetCollapsed] = useState(false);
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
   const { usingKeyboard } = useUsingKeyboardContext();
-  const navId = useMemo(() => idProp ?? navIdAllocator.generate(), [idProp]);
+  const navId = useIdAllocator({ prefix: 'side-nav', id: idProp });
   const [
     portalContainer,
     setPortalContainer,
   ] = useState<HTMLUListElement | null>(null);
+  const providerFontSize = useBaseFontSize();
+  const fontSize: 14 | 16 = baseFontSize ?? providerFontSize;
+  const width =
+    typeof widthOverride === 'number' ? widthOverride : sideNavWidth;
+
+  const collapsed =
+    typeof controlledCollapsed === 'boolean'
+      ? controlledCollapsed
+      : uncontrolledCollapsed;
+
+  const setCollapsed =
+    typeof controlledCollapsed === 'boolean'
+      ? setControlledCollapsed
+      : uncontrolledSetCollapsed;
 
   // We visually expand the navigation when a user focuses on an element within the navigation
   // while navigating via keyboard.
@@ -213,20 +258,38 @@ function SideNav({ className, children, id: idProp, ...rest }: SideNavProps) {
             navId,
             collapsed,
             portalContainer,
+            width,
             transitionState: state,
+            baseFontSize: fontSize,
           }}
         >
           <div
             data-testid="side-nav-container"
-            className={cx(space, { [collapsedSpace]: collapsed }, className)}
+            {...dataProp.prop}
+            className={cx(
+              space,
+              css`
+                width: ${width}px;
+              `,
+              { [collapsedSpace]: collapsed },
+              className,
+            )}
           >
             <div className={wrapper} onMouseLeave={() => setHover(false)}>
               <nav
                 id={navId}
-                className={cx(navStyles, {
-                  [collapsedNavStyles]: ['entering', 'entered'].includes(state),
-                  [hoverNavStyles]: (hover || focusExpand) && collapsed,
-                })}
+                className={cx(
+                  navStyles,
+                  css`
+                    width: ${width}px;
+                  `,
+                  {
+                    [collapsedNavStyles]: ['entering', 'entered'].includes(
+                      state,
+                    ),
+                    [hoverNavStyles]: (hover || focusExpand) && collapsed,
+                  },
+                )}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 onMouseEnter={() => setHover(true)}
@@ -237,7 +300,9 @@ function SideNav({ className, children, id: idProp, ...rest }: SideNavProps) {
                     className={cx(
                       ulStyleOverrides,
                       listStyles,
-                      expandedListStyle,
+                      css`
+                        width: ${width}px;
+                      `,
                     )}
                   >
                     {children}

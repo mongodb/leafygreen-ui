@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import RadioBox, { RadioBoxProps } from './RadioBox';
 import Size from './Size';
-import { IdAllocator, HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { Provider } from './context';
 
 const baseGroupStyle = css`
   display: flex;
@@ -18,7 +19,7 @@ interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
   /**
    * Callback to be executed when a RadioBox is selected.
    */
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
   /**
    * Name passed to each RadioBox belonging to the RadioGroup.
@@ -33,27 +34,12 @@ interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
   /**
    * Determines size of RadioBox components ['default', 'compact', 'full'].
    */
-  size: Size;
+  size?: Size;
 
   /**
    * className supplied to RadioBoxGroup container.
    */
   className?: string;
-}
-
-interface RadioBoxGroupState {
-  value: string | number;
-}
-
-function isRadioBoxElement(
-  element: React.ReactNode,
-): element is React.ReactElement<RadioBoxProps, typeof RadioBox> {
-  return (
-    element != null &&
-    typeof element === 'object' &&
-    'type' in element &&
-    (element.type as any).displayName === 'RadioBox'
-  );
 }
 
 /**
@@ -74,93 +60,66 @@ function isRadioBoxElement(
  * @param props.className classname applied to RadioBoxGroup container.
  * @param props.size Determines size of RadioBox components ['default', 'compact', 'full'].
  */
-export default class RadioBoxGroup extends PureComponent<
-  RadioBoxGroupProps,
-  RadioBoxGroupState
-> {
-  static displayName = 'RadioBoxGroup';
+function RadioBoxGroup({
+  children,
+  className,
+  size = Size.Default,
+  onChange = () => {},
+  name, // = this.defaultName,
+  value: controlledValue,
+  ...rest
+}: RadioBoxGroupProps) {
+  const [uncontrolledValue, setUncontrolledValue] = React.useState<
+    string | number | undefined
+  >();
 
-  static propTypes = {
-    children: PropTypes.node,
-    onChange: PropTypes.func,
-    name: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    size: PropTypes.oneOf(['compact', 'default', 'full']),
-    className: PropTypes.string,
-  };
+  const defaultName = useIdAllocator({
+    prefix: 'radio-box-group',
+    id: name,
+  });
 
-  static defaultProps = {
-    onChange: () => {},
-    size: 'default',
-  };
-
-  state: RadioBoxGroupState = {
-    value: '',
-  };
-
-  private static idAllocator = IdAllocator.create('radio-box-group');
-  private _defaultName?: string;
-
-  private get defaultName(): string {
-    if (!this._defaultName) {
-      this._defaultName = RadioBoxGroup.idAllocator.generate();
-    }
-
-    return this._defaultName;
-  }
-
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { onChange, value } = this.props;
-
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       // Stopped propagation to prevent event from bubbling with new target, and thus value coming back as undefined
       e.stopPropagation();
       onChange(e);
     }
 
-    if (!value) {
-      this.setState({ value: e.target.value });
+    if (!controlledValue) {
+      setUncontrolledValue(e.target.value);
     }
   };
 
-  render() {
-    const {
-      children,
-      className,
-      size,
-      name = this.defaultName,
-      value = this.state.value,
-      ...rest
-    } = this.props;
-
-    const renderedChildren = React.Children.map(children, (child, index) => {
-      if (!isRadioBoxElement(child)) {
-        return child;
-      }
-
-      const checked =
-        this.props.value === child.props.value || value
-          ? value === child.props.value
-          : child.props.default;
-
-      return React.cloneElement(child, {
-        onChange: this.handleChange,
-        id: child.props.id || `${this.defaultName}-button-${index}`,
-        checked,
+  return (
+    <Provider
+      value={{
+        value: controlledValue ?? uncontrolledValue,
+        name: defaultName,
         size,
-        name,
-      });
-    });
-
-    return (
+        onChange: handleChange,
+      }}
+    >
       <div
         {...rest}
         className={cx(baseGroupStyle, className)}
         role="group"
         aria-label={name}
       >
-        {renderedChildren}
+        {children}
       </div>
-    );
-  }
+    </Provider>
+  );
 }
+
+RadioBoxGroup.displayName = 'RadioBoxGroup';
+
+RadioBoxGroup.propTypes = {
+  children: PropTypes.node,
+  onChange: PropTypes.func,
+  name: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  size: PropTypes.oneOf(['compact', 'default', 'full']),
+  className: PropTypes.string,
+};
+
+export default RadioBoxGroup;
