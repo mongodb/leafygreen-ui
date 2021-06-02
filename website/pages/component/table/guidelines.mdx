@@ -1,23 +1,223 @@
-import { H3 } from '@leafygreen-ui/typography';
+import { css } from 'emotion';
+import { Body, Subtitle, Link } from '@leafygreen-ui/typography';
+import GuidelineImage from 'components/GuidelineImage';
+import { CDN } from 'utils/routes';
+import { mq } from 'utils/mediaQuery';
 
-Info tables display static data, and editable tables, are editable (like a spreadsheet).
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
+  Info tables display static data, and editable tables, are editable (like a
+  spreadsheet).
+</Body>
 
-The header of both these types of tables is the same. You can use the sort icons to sort columns in descending or ascending order. By default these columns are unsorted.
+<Body>
+  The header of both these types of tables is the same. You can use the sort
+  icons to sort columns in descending or ascending order. By default these
+  columns are unsorted.
+</Body>
 
-<!-- image -->
+<GuidelineImage
+  width="auto"
+  height="41px"
+  imageURL={`${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-1@3x.png`}
+/>
 
-A menu trigger can be added to each column header, for example to allow the user to delete a column.
+<Body>
+  A menu trigger can be added to each column header, for example to allow the
+  user to delete a column.
+</Body>
 
-<!-- image -->
+<div
+  className={css`
+    margin: 40px 0px;
+    width: auto;
+    height: 87px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-2@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
 
-When your info table spans more than 10 rows you should alternate the background color of each row, so that your table is more scannable.
+<Body>
+  When your info table spans more than 10 rows you should alternate the
+  background color of each row, so that your table is more scannable.
+</Body>
 
-<!-- image -->
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '946px'],
+    })}
+    height: 520px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-3@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
 
-Do not use the alternating background pattern when there are fewer than 10 line items in your table. Otherwise it may look like one of the rows is selected or disabled.
+<Body>
+  Do not use the alternating background pattern when there are fewer than 10
+  line items in your table. Otherwise it may look like one of the rows is
+  selected or disabled.
+</Body>
 
-<!-- image -->
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '1053px'],
+    })}
+    height: 179px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-4@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
 
-<H3>Content alignment</H3>
-Text should be left aligned. Numbers expressing quantity should be right aligned.
-Dates can be either left or right aligned. Learn more about content alignment.{' '}
+<Subtitle>Content alignment</Subtitle>
+
+<Body>
+  Text should be left aligned. Numbers expressing quantity should be right
+  aligned. Dates can be either left or right aligned.{' '}
+  <Link href="https://practicaltypography.com/grids-of-numbers.html">
+    Learn more about content alignment.
+  </Link>
+</Body>
+
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '991px'],
+    })}
+    height: 155px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-5@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
+
+<Subtitle>Disabled Rows</Subtitle>
+<Body>
+  Disabled rows have a darker background and lighter copy and show the disabled
+  cursor on hover. Do not use these cells alongside alternate colored rows as
+  this will make it difficult to distinguish which row is disabled and which is
+  not.
+</Body>
+
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '1098px'],
+    })}
+    height: 265px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-6@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
+
+<Subtitle>Nesting</Subtitle>
+<Body>
+  Avoid nesting tables within other tables or within other elements. These are
+  both challenging to read and build.
+</Body>
+
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '1126px'],
+    })}
+    height: 483px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-7@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
+
+<Subtitle>Expandable Rows</Subtitle>
+
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', '503px'],
+    })}
+    height: 204px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-8@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
+
+<Subtitle>Row Selection</Subtitle>
+<Body>
+  An entire row can also be selected editing, or the entire table can be bulk
+  selected.
+</Body>
+
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '811px'],
+    })}
+    height: 231px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-9@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
+
+<Body>
+  If your info table has clickable rows, use the "Hover Shadow" as a visual
+  affordance.
+</Body>
+
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '1000px'],
+    })}
+    height: 204px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-10@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
+
+<Body>
+  In some use-cases your table might become too big to be viewed all at once on
+  screen. In these scenarios, you can use overflow shadows to indicate
+  scrollable areas within your table.
+</Body>
+
+<div
+  className={css`
+    margin: 40px 0px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '1000px'],
+    })}
+    height: 254px;
+    background-image: url('${CDN}/images/new-guidelines/infoTable/infoTable-guidelines-11@3x.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  `}
+/>
