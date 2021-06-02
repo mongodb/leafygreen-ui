@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 6.1.1
+
+### Patch Changes
+
+- d0a2e4e5: Fixes issue where not all RadioBox components were being properly filled
+
 ## 6.1.0
 
 ### Minor Changes
