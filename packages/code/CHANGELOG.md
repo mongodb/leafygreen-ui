@@ -1,5 +1,13 @@
 # @leafygreen-ui/code
 
+## 8.1.4
+
+### Patch Changes
+
+- 74ffc369: Announces "copied" to screenreaders when text is copied
+- Updated dependencies [1ffbb84c]
+  - @leafygreen-ui/select@3.0.2
+
 ## 8.1.3
 
 ### Patch Changes
