@@ -318,11 +318,11 @@ function NestedGroups() {
           <SideNavGroup header="Group 2">
             <SideNavItem>Indentation is:</SideNavItem>
             <SideNavGroup collapsible header="Indentation is:">
-              <SideNavItem active>Indentation is:</SideNavItem>
-              <SideNavGroup header="Nested Nested">
-                <SideNavItem active>
+              <SideNavItem>Indentation is:</SideNavItem>
+              <SideNavGroup collapsible header="Nested Nested">
+                <SideNavItem>
                   Indentation is:
-                  <SideNavItem>Indentation is:</SideNavItem>
+                  <SideNavItem active>Indentation is:</SideNavItem>
                 </SideNavItem>
               </SideNavGroup>
             </SideNavGroup>

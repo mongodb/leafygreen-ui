@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import {
@@ -129,11 +129,11 @@ const transitionStyles = {
   `,
 };
 
-function getIndentLevelStyle(indentLevel: number) {
-  return css`
-    padding-left: ${8 + indentLevel * 8}px;
-  `;
-}
+// function getIndentLevelStyle(indentLevel: number) {
+//   return css`
+//     padding-left: ${8 + indentLevel * 8}px;
+//   `;
+// }
 
 interface SideNavGroupBaseProps {
   /**
@@ -162,6 +162,8 @@ interface SideNavGroupBaseProps {
    * This is useful for cases when an active item might be wrapped with another component like a Tooltip or routing component.
    */
   hasActiveItem?: boolean;
+
+  indentLevel?: number;
 }
 
 type CollapsedProps = OneOf<
@@ -249,27 +251,28 @@ function SideNavGroup({
     return checkForNestedGroups(children);
   }, [children, indentLevel]);
 
-  const isActiveGroup: boolean = useMemo(() => {
-    if (hasActiveItem != null) {
-      return hasActiveItem;
-    }
+  const isActiveGroup = true;
+  // const isActiveGroup: boolean = useMemo(() => {
+  //   if (hasActiveItem != null) {
+  //     return hasActiveItem;
+  //   }
 
-    const checkForActiveNestedItems = (children: React.ReactNode): boolean => {
-      React.Children.forEach(children, child => {
-        if (isComponentType(child, 'SideNavItem') && child.props.active) {
-          return true;
-        } else if ((child as React.ReactElement)?.props?.children) {
-          checkForActiveNestedItems(
-            (child as React.ReactElement).props.children,
-          );
-        }
-      });
+  //   const checkForActiveNestedItems = (children: React.ReactNode): boolean => {
+  //     React.Children.forEach(children, child => {
+  //       if (isComponentType(child, 'SideNavItem') && child.props.active) {
+  //         return true;
+  //       } else if ((child as React.ReactElement)?.props?.children) {
+  //         checkForActiveNestedItems(
+  //           (child as React.ReactElement).props.children,
+  //         );
+  //       }
+  //     });
 
-      return false;
-    };
+  //     return false;
+  //   };
 
-    return checkForActiveNestedItems(children);
-  }, [hasActiveItem, children]);
+  //   return checkForActiveNestedItems(children);
+  // }, [hasActiveItem, children]);
 
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
@@ -396,18 +399,12 @@ function SideNavGroup({
       <div
         data-testid="side-nav-group-header-label"
         id={menuGroupLabelId}
-        className={cx(
-          labelStyle,
-          css`
-            // padding-left: ${8 + indentLevel * 8}px;
-          `,
-          {
-            [css`
-              padding-left: ${8 + indentLevel * 8}px;
-              border-left: 3px solid ${uiColors.gray.light1};
-            `]: indentLevel > 1,
-          },
-        )}
+        className={cx(labelStyle, {
+          [css`
+            padding-left: ${8 + indentLevel * 8}px;
+            border-left: 3px solid ${uiColors.gray.light1};
+          `]: indentLevel > 1,
+        })}
       >
         {renderedLabelText} {indentLevel}
       </div>
