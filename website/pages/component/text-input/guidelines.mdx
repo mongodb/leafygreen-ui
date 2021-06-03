@@ -100,27 +100,19 @@ import { mq } from 'utils/mediaQuery';
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-6@3x.png`}
 />
 
-<Body>
-  We recommend spacing text inputs by 40px (top and bottom) within a form. This
-  spacing allows for a single line error message to be included under the input.
-  As soon as the error message extends more than a single line, the form will
-  need to shift and animate in order to accommodate the extra error message
-  content.
-</Body>
-
-<GuidelineImage
-  width="auto"
-  height="171px"
-  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-7@3x.png`}
-/>
-
 <Subtitle>Labels</Subtitle>
 <Body>
   Labels should be concise, but more importantly accurate to the desired
   content. They should not be longer than a single line.
 </Body>
 
-<Subtitle>Description</Subtitle>
+<Subtitle
+  className={css`
+    margin-top: 24px;
+  `}
+>
+  Description
+</Subtitle>
 <Body>
   Descriptions are not necessary for all fields. Consider linking to a page that
   contains a more thorough description if the description you’re adding is
@@ -130,8 +122,8 @@ import { mq } from 'utils/mediaQuery';
 
 <GuidelineImage
   width="auto"
-  height="310px"
-  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-8@3x.png`}
+  height="171px"
+  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-7@3x.png`}
 />
 
 <Subtitle>Optional Field State</Subtitle>
@@ -139,8 +131,8 @@ import { mq } from 'utils/mediaQuery';
 
 <GuidelineImage
   width="auto"
-  height="233px"
-  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-9@3x.png`}
+  height="310px"
+  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-8@3x.png`}
 />
 
 <Subtitle>Error Messages</Subtitle>
@@ -169,8 +161,8 @@ import { mq } from 'utils/mediaQuery';
 
 <GuidelineImage
   width="auto"
-  height="112px"
-  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-10@3x.png`}
+  height="233px"
+  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-9@3x.png`}
 />
 
 <Subtitle>Placeholder Text</Subtitle>
@@ -182,8 +174,8 @@ import { mq } from 'utils/mediaQuery';
 
 <GuidelineImage
   width="auto"
-  height="110px"
-  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-11@3x.png`}
+  height="112px"
+  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-10@3x.png`}
 />
 
 <Subtitle>Validation</Subtitle>
@@ -201,7 +193,7 @@ import { mq } from 'utils/mediaQuery';
 <GuidelineImage
   width="auto"
   height="110px"
-  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-12@3x.png`}
+  imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-11@3x.png`}
 />
 
 <Subtitle>Further Reading</Subtitle>
