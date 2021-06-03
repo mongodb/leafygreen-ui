@@ -13,6 +13,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
 import { useSideNavContext } from './SideNavContext';
+import { getIndentLevelStyle } from './styles';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -81,16 +82,6 @@ const activeStyle = css`
     color: ${uiColors.green.dark3};
     background-color: ${uiColors.green.light3};
   }
-
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 100%;
-    background-color: ${uiColors.green.light3};
-    z-index: -1;
-  }
 `;
 
 const disabledStyle = css`
@@ -153,14 +144,6 @@ const nestedChildrenStyles = css`
   flex-direction: column;
   align-items: flex-start;
 `;
-
-function getIndentLevelStyle(indentLevel: number) {
-  return css`
-    & > li {
-      padding-left: ${8 + indentLevel * 8}px;
-    }
-  `;
-}
 
 export interface SideNavItemProps {
   /**
@@ -336,7 +319,6 @@ const SideNavItem: ExtendableBox<
     <li
       className={css`
         width: 100%;
-        position: relative;
       `}
     >
       <Box
@@ -376,12 +358,10 @@ const SideNavItem: ExtendableBox<
 
       {hasNestedItems && (
         <ul
-          className={cx(
-            css`
-              list-style: none;
-              padding-inline-start: 0;
-            `,
-          )}
+          className={css`
+            list-style: none;
+            padding-inline-start: 0;
+          `}
         >
           {renderedNestedItems}
         </ul>
