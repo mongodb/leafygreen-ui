@@ -19,8 +19,10 @@ import { mq } from 'utils/mediaQuery';
 </Body>
 
 <GuidelineImage
-  width="auto"
-  height="492px"
+  className={css`
+    width: auto;
+    height: 492px;
+  `}
   imageURL={`${CDN}/images/new-guidelines/code/code-guidelines-1@3x.png`}
 />
 
@@ -58,10 +60,12 @@ import { mq } from 'utils/mediaQuery';
 </Body>
 
 <GuidelineImage
-  width={`${mq({
-    width: ['auto', 'auto', 'auto', '1050px'],
-  })}`}
-  height="200px"
+  className={css`
+    height: 200px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '1050px'],
+    })}
+  `}
   imageURL={`${CDN}/images/new-guidelines/code/code-guidelines-3@3x.png`}
 />
 
@@ -71,10 +75,12 @@ import { mq } from 'utils/mediaQuery';
 </Body>
 
 <GuidelineImage
-  width={`${mq({
-    width: ['auto', '468px'],
-  })}`}
-  height="200px"
+  className={css`
+    height: 200px;
+    ${mq({
+      width: ['auto', '468px'],
+    })}
+  `}
   imageURL={`${CDN}/images/new-guidelines/code/code-guidelines-4@3x.png`}
 />
 
@@ -84,9 +90,12 @@ import { mq } from 'utils/mediaQuery';
 </Body>
 
 <GuidelineImage
-  width={`${mq({
-    width: ['auto', 'auto', 'auto', '756px'],
-  })}`}
   height="100px"
+  className={css`
+    height: 100px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '756px'],
+    })}
+  `}
   imageURL={`${CDN}/images/new-guidelines/code/code-guidelines-5@3x.png`}
 />
