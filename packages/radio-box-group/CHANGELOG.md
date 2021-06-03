@@ -1,5 +1,17 @@
 # @leafygreen-ui/radio-box-group
 
+## 6.1.2
+
+### Patch Changes
+
+- e1af3278: Updates border-color of RadioBox components.
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/interaction-ring@1.0.4
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+
 ## 6.1.1
 
 ### Patch Changes
