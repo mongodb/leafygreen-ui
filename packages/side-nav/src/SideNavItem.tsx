@@ -156,7 +156,9 @@ const nestedChildrenStyles = css`
 
 function getIndentLevelStyle(indentLevel: number) {
   return css`
-    padding-left: ${8 + indentLevel * 8}px;
+    & > li {
+      padding-left: ${8 + indentLevel * 8}px;
+    }
   `;
 }
 
@@ -353,7 +355,13 @@ const SideNavItem: ExtendableBox<
             [focusedStyle]: showFocus,
             [focusedDisabledStyle]: showFocus && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
+            [css`
+              border-left: 3px solid ${uiColors.gray.light1};
+            `]: indentLevel > 1,
           },
+          css`
+            padding-left: ${8 + indentLevel * 8}px;
+          `,
           className,
         )}
         aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
@@ -381,7 +389,6 @@ const SideNavItem: ExtendableBox<
               list-style: none;
               padding-inline-start: 0;
             `,
-            getIndentLevelStyle(indentLevel),
           )}
         >
           {renderedNestedItems}

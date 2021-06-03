@@ -131,7 +131,9 @@ const transitionStyles = {
 
 function getIndentLevelStyle(indentLevel: number) {
   return css`
-    padding-left: ${8 + indentLevel * 8}px;
+    & > li {
+      padding-left: ${8 + indentLevel * 8}px;
+    }
   `;
 }
 
@@ -213,7 +215,7 @@ function SideNavGroup({
   glyph,
   className,
   hasActiveItem,
-  indentLevel = -2,
+  indentLevel = 0,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
@@ -230,7 +232,10 @@ function SideNavGroup({
   const renderedChildren = useMemo(() => {
     const checkForNestedGroups = (children: React.ReactNode) => {
       return React.Children.map(children, child => {
-        if (isComponentType(child, 'SideNavGroup')) {
+        if (
+          isComponentType(child, 'SideNavGroup') ||
+          isComponentType(child, 'SideNavItem')
+        ) {
           return React.cloneElement(child, {
             indentLevel: indentLevel + 1,
           });
@@ -304,20 +309,7 @@ function SideNavGroup({
 
   if (collapsible) {
     return (
-      <li
-        className={cx(
-          listItemStyle,
-          getIndentLevelStyle(indentLevel),
-          {
-            [css`
-                border-bottom: 1px solid ${uiColors.green.dark2};
-              }
-            `]: indentLevel > -1,
-          },
-          className,
-        )}
-        {...rest}
-      >
+      <li className={cx(listItemStyle, className)} {...rest}>
         <button
           {...button.prop}
           aria-controls={menuId}
@@ -327,9 +319,13 @@ function SideNavGroup({
             collapsibleLabelStyle,
             css`
               width: ${width}px;
+              padding-left: ${8 + indentLevel * 8}px;
             `,
             {
               [collapsibleHeaderFocusStyle]: showFocus,
+              [css`
+                border-left: 3px solid ${uiColors.gray.light1};
+              `]: indentLevel > 1,
             },
           )}
           onClick={() => setOpen(curr => !curr)}
@@ -397,42 +393,26 @@ function SideNavGroup({
   }
 
   return (
-    <li
-      className={cx(
-        listItemStyle,
-        // getIndentLevelStyle(indentLevel),
-        // {
-        //   [css`
-        //     // &:after {
-        //     //   content: '';
-        //     //   position: absolute;
-        //     //   top: 30px;
-        //     //   left: 0vw;
-        //     //   right: 0;
-        //     border-bottom: 1px solid ${uiColors.gray.light1};
-        //     // }
-        //   `]: indentLevel > -2,
-        // },
-        className,
-      )}
-      {...rest}
-    >
+    <li className={cx(listItemStyle, className)} {...rest}>
       <div
         data-testid="side-nav-group-header-label"
         id={menuGroupLabelId}
-        className={cx(labelStyle, {
-          [css`
-            border-bottom: 1px solid ${uiColors.gray.light1};
-          `]: indentLevel > -2,
-        })}
+        className={cx(
+          labelStyle,
+          css`
+            padding-left: ${8 + indentLevel * 8}px;
+          `,
+          {
+            [css`
+              border-left: 3px solid ${uiColors.gray.light1};
+            `]: indentLevel > 1,
+          },
+        )}
       >
         {renderedLabelText}
       </div>
 
-      <ul
-        aria-labelledby={menuGroupLabelId}
-        className={cx(ulStyleOverrides, getIndentLevelStyle(indentLevel))}
-      >
+      <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
         {renderedChildren}
       </ul>
     </li>
