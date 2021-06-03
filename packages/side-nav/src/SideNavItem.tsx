@@ -380,7 +380,6 @@ const SideNavItem: ExtendableBox<
         )}
 
         {renderedChildren}
-        {indentLevel}
       </Box>
 
       {hasNestedItems && (

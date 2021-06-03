@@ -335,7 +335,6 @@ function SideNavGroup({
           data-testid="side-nav-group-header-label"
         >
           {renderedLabelText}
-          {indentLevel}
           <ChevronRight
             role="presentation"
             size={12}
@@ -406,7 +405,7 @@ function SideNavGroup({
           `]: indentLevel > 1,
         })}
       >
-        {renderedLabelText} {indentLevel}
+        {renderedLabelText}
       </div>
 
       <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
