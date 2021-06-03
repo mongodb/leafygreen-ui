@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
 
 export const sideNavItemSidePadding = 16;
 export const sideNavWidth = 184;
@@ -11,3 +12,10 @@ export const ulStyleOverrides = css`
   padding: 0;
   list-style-type: none;
 `;
+
+export function getIndentLevelStyle(indentLevel: number) {
+  return css`
+    border-left: 3px solid ${uiColors.gray.light1};
+    padding-left: ${8 + indentLevel * 8}px;
+  `;
+}

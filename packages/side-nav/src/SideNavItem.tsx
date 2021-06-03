@@ -297,12 +297,9 @@ const SideNavItem: ExtendableBox<
       ) {
         hasNestedItems = true;
 
-        console.log({ indentLevel });
-
         if (hasNestedActive || active) {
           renderedNestedItems.push(
             React.cloneElement(child, {
-              // className: getIndentLevelStyle(indentLevel),
               indentLevel: indentLevel + 1,
               key: index,
             }),
@@ -355,13 +352,8 @@ const SideNavItem: ExtendableBox<
             [focusedStyle]: showFocus,
             [focusedDisabledStyle]: showFocus && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
-            [css`
-              border-left: 3px solid ${uiColors.gray.light1};
-            `]: indentLevel > 1,
+            [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
           },
-          css`
-            padding-left: ${8 + indentLevel * 8}px;
-          `,
           className,
         )}
         aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}

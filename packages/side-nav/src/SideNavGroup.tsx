@@ -11,7 +11,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
-import { ulStyleOverrides, sideNavItemSidePadding } from './styles';
+import {
+  ulStyleOverrides,
+  sideNavItemSidePadding,
+  getIndentLevelStyle,
+} from './styles';
 import { useSideNavContext } from './SideNavContext';
 
 const button = createDataProp('side-nav-group-button');
@@ -122,12 +126,6 @@ const transitionStyles = {
     opacity: 0;
   `,
 };
-
-// function getIndentLevelStyle(indentLevel: number) {
-//   return css`
-//     padding-left: ${8 + indentLevel * 8}px;
-//   `;
-// }
 
 interface SideNavGroupBaseProps {
   /**
@@ -243,28 +241,27 @@ function SideNavGroup({
     return checkForNestedGroups(children);
   }, [children, indentLevel]);
 
-  const isActiveGroup = true;
-  // const isActiveGroup: boolean = useMemo(() => {
-  //   if (hasActiveItem != null) {
-  //     return hasActiveItem;
-  //   }
+  const isActiveGroup: boolean = useMemo(() => {
+    if (hasActiveItem != null) {
+      return hasActiveItem;
+    }
 
-  //   const checkForActiveNestedItems = (children: React.ReactNode): boolean => {
-  //     React.Children.forEach(children, child => {
-  //       if (isComponentType(child, 'SideNavItem') && child.props.active) {
-  //         return true;
-  //       } else if ((child as React.ReactElement)?.props?.children) {
-  //         checkForActiveNestedItems(
-  //           (child as React.ReactElement).props.children,
-  //         );
-  //       }
-  //     });
+    const checkForActiveNestedItems = (children: React.ReactNode): boolean => {
+      React.Children.forEach(children, child => {
+        if (isComponentType(child, 'SideNavItem') && child.props.active) {
+          return true;
+        } else if ((child as React.ReactElement)?.props?.children) {
+          checkForActiveNestedItems(
+            (child as React.ReactElement).props.children,
+          );
+        }
+      });
 
-  //     return false;
-  //   };
+      return false;
+    };
 
-  //   return checkForActiveNestedItems(children);
-  // }, [hasActiveItem, children]);
+    return checkForActiveNestedItems(children);
+  }, [hasActiveItem, children]);
 
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
@@ -312,14 +309,10 @@ function SideNavGroup({
             collapsibleLabelStyle,
             css`
               width: ${width}px;
-              // padding-left: ${8 + indentLevel * 8}px;
             `,
             {
               [collapsibleHeaderFocusStyle]: showFocus,
-              [css`
-                padding-left: ${8 + indentLevel * 8}px;
-                border-left: 3px solid ${uiColors.gray.light1};
-              `]: indentLevel > 1,
+              [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
             },
           )}
           onClick={() => setOpen(curr => !curr)}
@@ -391,10 +384,7 @@ function SideNavGroup({
         data-testid="side-nav-group-header-label"
         id={menuGroupLabelId}
         className={cx(labelStyle, {
-          [css`
-            padding-left: ${8 + indentLevel * 8}px;
-            border-left: 3px solid ${uiColors.gray.light1};
-          `]: indentLevel > 1,
+          [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
         })}
       >
         {renderedLabelText}
