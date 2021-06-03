@@ -97,7 +97,7 @@ const iconButtonMode = {
     }
 
     &:focus {
-      color: ${uiColors.blue.base};
+      color: ${uiColors.blue.dark2};
 
       &:before {
         background-color: ${uiColors.blue.light2};
@@ -114,8 +114,12 @@ const iconButtonMode = {
       }
     }
 
-    &:focus:before {
-      background-color: ${uiColors.blue.dark2};
+    &:focus {
+      color: ${uiColors.blue.light1};
+
+      &:before {
+        background-color: ${uiColors.blue.dark2};
+      }
     }
   `,
 };
