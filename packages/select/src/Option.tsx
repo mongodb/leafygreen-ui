@@ -92,7 +92,11 @@ export function InternalOption({
   const ref = useRef<HTMLLIElement>(null);
 
   const scrollIntoView = useCallback(() => {
-    const element = ref.current!;
+    if (ref.current == null) {
+      return null;
+    }
+
+    const element = ref.current;
     const parent = element.offsetParent!;
     // Can't use Element.scrollIntoView because it might
     // cause scrolling outside the immediate parent.

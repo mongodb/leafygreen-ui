@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { IdAllocator, isComponentType } from '@leafygreen-ui/lib';
+import { isComponentType } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Size } from './types';
 
@@ -44,8 +45,6 @@ export interface RadioGroupProps {
    */
   size?: Size;
 }
-
-const idAllocator = IdAllocator.create('radio-group');
 
 /**
  * # RadioGroup
@@ -94,7 +93,7 @@ function RadioGroup({
     defaultChecked,
   );
 
-  const name = useMemo(() => nameProp ?? idAllocator.generate(), [nameProp]);
+  const name = useIdAllocator({ prefix: 'radio-group', id: nameProp });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -143,7 +142,7 @@ function RadioGroup({
 
 RadioGroup.propTypes = {
   darkMode: PropTypes.bool,
-  size: PropTypes.oneOf(['small', 'default']),
+  size: PropTypes.oneOf(['xsmall', 'small', 'default']),
   className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,

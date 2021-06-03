@@ -1,5 +1,26 @@
 # @leafygreen-ui/select
 
+## 3.0.3
+
+### Patch Changes
+
+- e1af3278: Updates label color and font-size in Select component.
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/button@12.0.3
+  - @leafygreen-ui/icon@11.1.1
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+  - @leafygreen-ui/popover@7.2.1
+  - @leafygreen-ui/tokens@0.5.2
+
+## 3.0.2
+
+### Patch Changes
+
+- 1ffbb84c: Fixes bug where a ref's clientHeight was being referenced prior to the ref being set.
+
 ## 3.0.1
 
 ### Patch Changes

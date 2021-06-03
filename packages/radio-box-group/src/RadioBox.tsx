@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
 import Size from './Size';
@@ -40,6 +41,7 @@ interface StateForStyles {
 const getInteractionRingStyles = ({ checked }: StateForStyles) => {
   const baseStyles = css`
     width: 100%;
+    height: 100%;
     // Display behind border
     z-index: -1;
   `;
@@ -60,7 +62,7 @@ const getInteractionRingStyles = ({ checked }: StateForStyles) => {
 const getBorderStyles = ({ disabled, size }: StateForStyles) => {
   const baseStyles = cx(
     css`
-      border: 1px solid ${uiColors.gray.light1};
+      border: 1px solid ${uiColors.gray.base};
       border-radius: 4px;
       cursor: pointer;
       position: relative;
@@ -91,13 +93,16 @@ const getRadioDisplayStyles = ({ disabled }: StateForStyles) => {
     font-size: 14px;
     font-weight: bold;
     text-align: center;
-    vertical-align: top;
     overflow-wrap: break-word;
     background-color: white;
     border-radius: 4px;
     color: ${uiColors.gray.dark2};
     pointer-events: auto;
     z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `;
 
   if (disabled) {
@@ -215,7 +220,11 @@ export default function RadioBox({
   const radioBoxGroupContext = useRadioBoxGroupContext();
   const idRef = useRef<string>();
 
-  const id = idProp ?? idRef.current ?? radioBoxGroupContext?.getNextId();
+  const localId = useIdAllocator({
+    prefix: 'radio-box-group',
+  });
+
+  const id = idProp ?? idRef.current ?? localId;
 
   if (idProp == null && idRef.current == null && id != null) {
     // Avoid re-calculating on next render
@@ -276,7 +285,14 @@ export default function RadioBox({
         className={inputStyles}
       />
 
-      <div className={getBorderStyles({ checked, disabled, size })}>
+      <div
+        className={cx(
+          css`
+            height: 100%;
+          `,
+          getBorderStyles({ checked, disabled, size }),
+        )}
+      >
         <InteractionRing
           className={interactionContainerStyle}
           disabled={disabled}

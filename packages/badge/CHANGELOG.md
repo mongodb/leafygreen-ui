@@ -1,5 +1,12 @@
 # @leafygreen-ui/badge
 
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+
 ## 4.0.3
 
 ### Patch Changes

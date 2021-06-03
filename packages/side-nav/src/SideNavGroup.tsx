@@ -1,12 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import {
-  createDataProp,
-  IdAllocator,
-  OneOf,
-  isComponentType,
-} from '@leafygreen-ui/lib';
+import { createDataProp, OneOf, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
@@ -14,11 +9,10 @@ import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
 import { ulStyleOverrides, sideNavItemSidePadding } from './styles';
 import { useSideNavContext } from './SideNavContext';
-
-const sideNavGroupIdAllocator = IdAllocator.create('side-nav-group');
 
 const button = createDataProp('side-nav-group-button');
 
@@ -222,11 +216,9 @@ function SideNavGroup({
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const menuGroupLabelId = useMemo(
-    () => sideNavGroupIdAllocator.generate(),
-    [],
-  );
-  const menuId = useMemo(() => sideNavGroupIdAllocator.generate(), []);
+
+  const menuGroupLabelId = useIdAllocator({ prefix: 'menu-group-label-id' });
+  const menuId = useIdAllocator({ prefix: 'menu' });
   const { width } = useSideNavContext();
 
   const renderedChildren = useMemo(() => {

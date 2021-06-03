@@ -2,7 +2,6 @@ const { Script } = require('vm');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const ReactDOMServer = require('react-dom/server');
-const { IdAllocator } = require('@leafygreen-ui/lib');
 const { Context } = require('@leafygreen-ui/testing-lib');
 
 class ArtificialServerContext {
@@ -13,8 +12,6 @@ class ArtificialServerContext {
   });
 
   [Context.enter] = () => {
-    this.idAllocatorSnapshot = IdAllocator.snapshot();
-
     this.Window = Object.getPrototypeOf(global);
     Object.setPrototypeOf(global, null);
 
@@ -38,7 +35,6 @@ class ArtificialServerContext {
   [Context.exit] = () => {
     Object.defineProperties(global, this.jsdomProperties);
     Object.setPrototypeOf(global, this.Window);
-    IdAllocator.restore(this.idAllocatorSnapshot);
   };
 }
 
