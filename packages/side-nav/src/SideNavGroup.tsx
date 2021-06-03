@@ -131,9 +131,7 @@ const transitionStyles = {
 
 function getIndentLevelStyle(indentLevel: number) {
   return css`
-    & > li {
-      padding-left: ${8 + indentLevel * 8}px;
-    }
+    padding-left: ${8 + indentLevel * 8}px;
   `;
 }
 
@@ -319,11 +317,12 @@ function SideNavGroup({
             collapsibleLabelStyle,
             css`
               width: ${width}px;
-              padding-left: ${8 + indentLevel * 8}px;
+              // padding-left: ${8 + indentLevel * 8}px;
             `,
             {
               [collapsibleHeaderFocusStyle]: showFocus,
               [css`
+                padding-left: ${8 + indentLevel * 8}px;
                 border-left: 3px solid ${uiColors.gray.light1};
               `]: indentLevel > 1,
             },
@@ -333,7 +332,7 @@ function SideNavGroup({
           data-testid="side-nav-group-header-label"
         >
           {renderedLabelText}
-
+          {indentLevel}
           <ChevronRight
             role="presentation"
             size={12}
@@ -400,16 +399,17 @@ function SideNavGroup({
         className={cx(
           labelStyle,
           css`
-            padding-left: ${8 + indentLevel * 8}px;
+            // padding-left: ${8 + indentLevel * 8}px;
           `,
           {
             [css`
+              padding-left: ${8 + indentLevel * 8}px;
               border-left: 3px solid ${uiColors.gray.light1};
             `]: indentLevel > 1,
           },
         )}
       >
-        {renderedLabelText}
+        {renderedLabelText} {indentLevel}
       </div>
 
       <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
