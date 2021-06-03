@@ -41,10 +41,12 @@ import { mq } from 'utils/mediaQuery';
 <Body>Only use the Source Code Pro font within the code component.</Body>
 
 <GuidelineImage
-  width={`${mq({
-    width: ['auto', 'auto', 'auto', '756px'],
-  })}`}
-  height="200px"
+  className={css`
+    height: 200px;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '756px'],
+    })}
+  `}
   imageURL={`${CDN}/images/new-guidelines/code/code-guidelines-2@3x.png`}
 />
 
@@ -85,6 +87,6 @@ import { mq } from 'utils/mediaQuery';
   width={`${mq({
     width: ['auto', 'auto', 'auto', '756px'],
   })}`}
-  height="2963px"
+  height="100px"
   imageURL={`${CDN}/images/new-guidelines/code/code-guidelines-5@3x.png`}
 />
