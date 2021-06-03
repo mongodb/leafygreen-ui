@@ -1,5 +1,19 @@
 # @leafygreen-ui/toast
 
+## 0.4.9
+
+### Patch Changes
+
+- e1af3278: Updates dismiss button color.
+- Updated dependencies [e1af3278]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/icon-button@9.1.5
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/icon@11.1.1
+  - @leafygreen-ui/portal@3.1.3
+  - @leafygreen-ui/tokens@0.5.2
+  - @leafygreen-ui/typography@8.0.2
+
 ## 0.4.8
 
 ### Patch Changes
