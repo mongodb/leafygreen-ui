@@ -1,5 +1,13 @@
 # @leafygreen-ui/interaction-ring
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+
 ## 1.0.3
 
 ### Patch Changes

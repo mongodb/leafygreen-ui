@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,13 +20,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/hooks": "^6.0.1",
-    "@leafygreen-ui/lib": "^7.0.0",
-    "@leafygreen-ui/a11y": "^1.2.0",
+    "@leafygreen-ui/hooks": "^7.0.0",
+    "@leafygreen-ui/lib": "^8.0.0",
+    "@leafygreen-ui/a11y": "^1.2.1",
     "@leafygreen-ui/palette": "^3.2.1",
-    "@leafygreen-ui/tokens": "^0.5.1",
-    "@leafygreen-ui/box": "^3.0.4",
-    "@leafygreen-ui/leafygreen-provider": "^2.0.3",
-    "@leafygreen-ui/portal": "^3.1.1"
+    "@leafygreen-ui/tokens": "^0.5.2",
+    "@leafygreen-ui/box": "^3.0.5",
+    "@leafygreen-ui/leafygreen-provider": "^2.1.2",
+    "@leafygreen-ui/portal": "^3.1.3"
   }
 }

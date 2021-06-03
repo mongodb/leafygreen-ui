@@ -1,5 +1,22 @@
 # @leafygreen-ui/code
 
+## 8.1.5
+
+### Patch Changes
+
+- Updated dependencies [e1af3278]
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+- Updated dependencies [e1af3278]
+  - @leafygreen-ui/icon-button@9.1.5
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/select@3.0.3
+  - @leafygreen-ui/a11y@1.2.1
+  - @leafygreen-ui/icon@11.1.1
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+  - @leafygreen-ui/tokens@0.5.2
+
 ## 8.1.4
 
 ### Patch Changes

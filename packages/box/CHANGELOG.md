@@ -1,5 +1,12 @@
 # @leafygreen-ui/box
 
+## 3.0.5
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+
 ## 3.0.4
 
 ### Patch Changes

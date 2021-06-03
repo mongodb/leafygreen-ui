@@ -1,5 +1,21 @@
 # @leafygreen-ui/side-nav
 
+## 7.1.1
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/a11y@1.2.1
+  - @leafygreen-ui/box@3.0.5
+  - @leafygreen-ui/icon@11.1.1
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+  - @leafygreen-ui/menu@10.0.3
+  - @leafygreen-ui/portal@3.1.3
+  - @leafygreen-ui/tooltip@6.2.2
+
 ## 7.1.0
 
 ### Minor Changes
