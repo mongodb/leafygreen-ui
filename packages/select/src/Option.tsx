@@ -97,12 +97,7 @@ export function InternalOption({
     }
 
     const element = ref.current;
-    const parent = element?.offsetParent;
-
-    if (!parent) {
-      return null;
-    }
-
+    const parent = element.offsetParent!;
     // Can't use Element.scrollIntoView because it might
     // cause scrolling outside the immediate parent.
     parent.scrollTop =
