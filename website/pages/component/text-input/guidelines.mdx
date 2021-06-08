@@ -28,7 +28,11 @@ import { mq } from 'utils/mediaQuery';
   next.
 </Body>
 
-<Body>
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
   Since a user's goal on a configuration page is usually to modify specific
   items, having only labels on the left allows them to scan only the labels
   until they find what they want to modify.{' '}
@@ -157,20 +161,36 @@ import { mq } from 'utils/mediaQuery';
   Error messages should be concise, and provide accurate context to the user as
   to why there’s an error.
 </Body>
-<Body>
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
   Try to limit the error message width to the size of the input width.
 </Body>
-<Body>
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
   Aim for inline error messages whenever possible, but don’t prematurely show
   errors to the user. Wait until they’ve clearly finished entering information,
   and have clicked out of the input, prior to showing them an error related to
   said information.
 </Body>
-<Body>
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
   Error messages should be accompanied by an icon so that those who have visual
   impairments can still derive the intent of the message at a glance.
 </Body>
-<Body>
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
   Ideally, error messages for form fields should appear directly under the
   associated field where the problem in the form is.
 </Body>

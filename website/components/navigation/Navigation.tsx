@@ -62,70 +62,82 @@ const components: Array<Component> = [
   'typography',
 ];
 
-const GroupType = {
-  Component: 'component',
-  Guideline: 'guideline',
-} as const;
-
-type GroupType = typeof GroupType[keyof typeof GroupType];
-
 function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
   const activePage = router.asPath.split('/')[2];
 
-  const renderGroup = (type: GroupType) => {
+  const renderGroup = () => {
     if (isTouchDevice) {
       return (
-        <MobileNavigationGroup
-          key={type}
-          header="Components"
-          initialCollapsed={false} // Always false until we add more sections to navigation
-        >
-          {components.map(item => {
-            const path =
-              type === GroupType.Guideline
-                ? `/ ${type} /${item}`
-                : `/${type}/${item}/example`;
-            return (
-              <MobileNavigationItem
-                key={item}
-                onClick={() => router.push(path)}
-                active={item === activePage}
-              >
-                {item.split('-').join(' ')}
-              </MobileNavigationItem>
-            );
-          })}
-        </MobileNavigationGroup>
+        <>
+          <MobileNavigationGroup header="Foundations">
+            <MobileNavigationItem
+              onClick={() => router.push('/foundation/icon-creation')}
+              active={'icon-creation' === activePage}
+            >
+              Icon Creation
+            </MobileNavigationItem>
+            <MobileNavigationItem
+              onClick={() => router.push('/foundation/grid')}
+              active={'grid' === activePage}
+            >
+              Grid
+            </MobileNavigationItem>
+          </MobileNavigationGroup>
+          <MobileNavigationGroup
+            header="Components"
+            initialCollapsed={false} // Always false until we add more sections to navigation
+          >
+            {components.map(item => {
+              return (
+                <MobileNavigationItem
+                  key={item}
+                  onClick={() => router.push(`/component/${item}/example`)}
+                  active={item === activePage}
+                >
+                  {item.split('-').join(' ')}
+                </MobileNavigationItem>
+              );
+            })}
+          </MobileNavigationGroup>
+        </>
       );
     }
 
     return (
-      <SideNavGroup
-        key={type}
-        header="Components"
-        glyph={<Icon glyph="Apps" />}
-      >
-        {components.map(item => {
-          const path =
-            type === GroupType.Guideline
-              ? `/${type}/${item}`
-              : `/${type}/${item}/example`;
-          return (
-            <SideNavItem
-              key={item}
-              onClick={() => router.push(path)}
-              active={item === activePage}
-            >
-              {item.split('-').join(' ')}
-            </SideNavItem>
-          );
-        })}
-      </SideNavGroup>
+      <>
+        <SideNavGroup header="Foundations" glyph={<Icon glyph="University" />}>
+          <SideNavItem
+            onClick={() => router.push('/foundation/icon-creation')}
+            active={'icon-creation' === activePage}
+          >
+            Icon Creation
+          </SideNavItem>
+          <SideNavItem
+            onClick={() => router.push('/foundation/grid')}
+            active={'grid' === activePage}
+          >
+            Grid
+          </SideNavItem>
+        </SideNavGroup>
+        <SideNavGroup header="Components" glyph={<Icon glyph="Apps" />}>
+          {components.map(item => {
+            return (
+              <SideNavItem
+                key={item}
+                onClick={() => router.push(`/component/${item}/example`)}
+                active={item === activePage}
+              >
+                {item.split('-').join(' ')}
+              </SideNavItem>
+            );
+          })}
+        </SideNavGroup>
+      </>
     );
   };
 
-  return renderGroup(GroupType.Component);
+  return renderGroup();
 }
 
 Content.displayName = 'Content';
