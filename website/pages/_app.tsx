@@ -7,6 +7,7 @@ import { globalStyles } from 'styles/globals';
 import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';
 import metaTagKey from 'utils/metaTagKey';
+import FoundationLayout from 'layouts/FoundationLayout';
 
 function DefaultLayout({ children }) {
   return children;
@@ -21,6 +22,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   switch (layout) {
     case 'component':
       SubLayout = ComponentLayout;
+      break;
+
+    case 'foundation':
+      SubLayout = FoundationLayout;
       break;
 
     default:

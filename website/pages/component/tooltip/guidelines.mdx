@@ -1,44 +1,66 @@
 import { css } from 'emotion';
+import { Body, Link } from '@leafygreen-ui/typography';
+import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
 
-Tooltips should be used to show supplementary information only. It can be triggered when the user hovers over an element, say an info sprinkle or button.
-
-<div
+<Body
   className={css`
-    margin: 40px 0px;
+    margin-top: 24px;
+  `}
+>
+  Tooltips should be used to show supplementary information only. They can be
+  triggered when the user hovers over an element, say an info sprinkle or
+  button.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/tooltips/tooltip-guidelines-1@3x.png`}
+  className={css`
     width: auto;
-    height: 131px;
-    background-image: url('${CDN}/images/guidelines/LM-tooltips-1@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    height: 134px;
   `}
 />
 
-Never nest call to actions within tooltips. The behavior of moussing over something and then mousing over a link is unexpected. (You’re hiding the link).
+<Body>
+  For screens, or lists that would require many info sprinkles, consider using
+  the{' '}
+  <Link href="https://www.mongodb.design/component/inline-definition/example/">
+    inline definition pattern.
+  </Link>
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/tooltips/tooltip-guidelines-2@3x.png`}
   className={css`
-    margin: 40px 0px;
-    width: 100%;
-    height: 242px;
-    background-image: url('${CDN}/images/guidelines/LM-tooltips-2@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    width: auto;
+    height: 320px;
   `}
 />
 
-Light mode tooltips are darker in color and dark mode tooltips are lighter in color.
+<Body>
+  Never nest call to actions within tooltips. The behavior of moussing over
+  something and then mousing over a link is unexpected and doesn’t meet
+  accessibility best practices. (You’re hiding the link). Instead, opt for
+  showing the link somewhere else on the UI.
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/tooltips/tooltip-guidelines-3@3x.png`}
   className={css`
-    margin: 40px 0px;
-    width: 100%;
-    height: 242px;
-    background-image: url('${CDN}/images/guidelines/LM-tooltips-3@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    width: auto;
+    height: 232px;
+  `}
+/>
+
+<Body>
+  We currently have 2 color variants for light mode. We do not currently have
+  tooltips for dark mode.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/tooltips/tooltip-guidelines-4@3x.png`}
+  className={css`
+    width: auto;
+    height: 136px;
   `}
 />
