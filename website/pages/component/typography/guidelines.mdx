@@ -1,7 +1,8 @@
 import { css } from 'emotion';
-import { Body, Link } from '@leafygreen-ui/typography';
+import { Body, Subtitle, Link } from '@leafygreen-ui/typography';
 import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
+import { mq } from 'utils/mediaQuery';
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-1@3x.png`}
@@ -134,10 +135,10 @@ import { CDN } from 'utils/routes';
 </Body>
 
 <GuidelineImage
-  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-9@3x.png`}
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-10@3x.png`}
   className={css`
     width: auto;
-    height: 232px;
+    height: 294px;
   `}
 />
 
@@ -148,7 +149,13 @@ import { CDN } from 'utils/routes';
   don’t run on or require a line-break.
 </Body>
 
-<!-- image -->
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-11@3x.png`}
+  className={css`
+    width: auto;
+    height: 308px;
+  `}
+/>
 
 <Body>
   H2 is AG at 32px at medium weight, and is the largest title you can use in
@@ -156,7 +163,13 @@ import { CDN } from 'utils/routes';
   title found on most Atlas pages.
 </Body>
 
-<!-- image -->
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-12@3x.png`}
+  className={css`
+    width: auto;
+    height: 542px;
+  `}
+/>
 
 <Body>
   In some instance providing an even larger title might be useful or necessary,
@@ -165,7 +178,13 @@ import { CDN } from 'utils/routes';
   title which is 60px in size with a regular weight.
 </Body>
 
-<!-- image -->
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-13@3x.png`}
+  className={css`
+    width: auto;
+    height: 422px;
+  `}
+/>
 
 <Body>
   While AG is used in almost all copy throughout our products Source Code Pro is
@@ -177,14 +196,26 @@ import { CDN } from 'utils/routes';
   these will change in production code. (In production we use highlight.js.)
 </Body>
 
-<!-- image -->
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-14@3x.png`}
+  className={css`
+    width: auto;
+    height: 251px;
+  `}
+/>
 
 <Body>
   Source Code Pro can also be used inline with body copy both at 14px and 16px
   to reference code.
 </Body>
 
-<!-- image -->
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-15@3x.png`}
+  className={css`
+    width: auto;
+    height: 374px;
+  `}
+/>
 
 <Subtitle>Links</Subtitle>
 <Body>
@@ -195,7 +226,13 @@ import { CDN } from 'utils/routes';
   no need to append the icon.
 </Body>
 
-<!-- image -->
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-16@3x.png`}
+  className={css`
+    width: auto;
+    height: 349px;
+  `}
+/>
 
 <Body>
   Standalone links can be accompanied with an arrow to give users an extra
@@ -203,12 +240,26 @@ import { CDN } from 'utils/routes';
   then use the “open in new tab” icon.
 </Body>
 
-<!-- image -->
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-17@3x.png`}
+  className={css`
+    width: auto;
+    height: 292px;
+  `}
+/>
 
 <Body>Do not use this arrow on long lists of links.</Body>
-<!-- image -->
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-18@3x.png`}
+  className={css`
+    width: auto;
+    height: 232px;
+  `}
+/>
 
 <Subtitle>Accessibility requirements</Subtitle>
+
 <Body>
   When working with type, make sure that your copy passes accessibility
   standards.{' '}
@@ -217,4 +268,30 @@ import { CDN } from 'utils/routes';
   </Link>
 </Body>
 
-<!-- image -->
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
+  Remember the{' '}
+  <Body
+    className={css`
+      display: inline;
+    `}
+    weight="medium"
+  >
+    4.5:1 contrast rule
+  </Body>
+  . If the contrast between the color of your text and its background is 4.5:1
+  or higher it’s accessible; if it’s lower it’s not.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/type/type-guidelines-19@3x.png`}
+  className={css`
+    ${mq({
+      width: ['auto', 'auto', 'auto', '818px'],
+    })}
+    height: 324px;
+  `}
+/>
