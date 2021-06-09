@@ -2,4 +2,4 @@
 '@leafygreen-ui/icon': minor
 ---
 
-Adds `'FullScreenEnter'`, `'FullScreenExit'`, and `'Code'` glyphs.
+Adds `'FullScreenEnter'`, `'FullScreenExit'`, `'Shell'`, `'PersonGroup'`, `'File'`, `'GlobeAmericas'`, and `'Code'` glyphs.
