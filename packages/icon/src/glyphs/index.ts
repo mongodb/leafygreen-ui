@@ -26,6 +26,7 @@ import ChevronDown from './ChevronDown.svg';
 import ChevronRight from './ChevronRight.svg';
 import ChevronLeft from './ChevronLeft.svg';
 import Cloud from './Cloud.svg';
+import Code from './Code.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
 import CurlyBraces from './CurlyBraces.svg';
@@ -35,8 +36,12 @@ import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
+import File from './File.svg';
 import Filter from './Filter.svg';
+import FullScreenEnter from './FullScreenEnter.svg';
+import FullScreenExit from './FullScreenExit.svg';
 import Folder from './Folder.svg';
+import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
@@ -49,6 +54,7 @@ import Menu from './Menu.svg';
 import NotAllowed from './NotAllowed.svg';
 import OpenNewTab from './OpenNewTab.svg';
 import Person from './Person.svg';
+import PersonGroup from './PersonGroup.svg';
 import PersonWithLock from './PersonWithLock.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
@@ -56,6 +62,7 @@ import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
 import Refresh from './Refresh.svg';
 import Save from './Save.svg';
 import Settings from './Settings.svg';
+import Shell from './Shell.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import Stitch from './Stitch.svg';
@@ -99,6 +106,7 @@ const glyphs = {
   ChevronRight,
   ChevronUp,
   Cloud,
+  Code,
   Copy,
   CreditCard,
   CurlyBraces,
@@ -108,8 +116,12 @@ const glyphs = {
   Ellipsis,
   Export,
   Favorite,
+  File,
   Filter,
+  FullScreenEnter,
+  FullScreenExit,
   Folder,
+  GlobeAmericas,
   GovernmentBuilding,
   ImportantWithCircle,
   InfoWithCircle,
@@ -122,6 +134,7 @@ const glyphs = {
   NotAllowed,
   OpenNewTab,
   Person,
+  PersonGroup,
   PersonWithLock,
   Plus,
   PlusWithCircle,
@@ -129,6 +142,7 @@ const glyphs = {
   Refresh,
   Save,
   Settings,
+  Shell,
   SortAscending,
   SortDescending,
   Stitch,
