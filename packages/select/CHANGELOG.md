@@ -1,5 +1,13 @@
 # @leafygreen-ui/select
 
+## 3.0.4
+
+### Patch Changes
+
+- 60262a25: Removes reference to null element.
+- Updated dependencies [b408e8a7]
+  - @leafygreen-ui/icon@11.2.0
+
 ## 3.0.3
 
 ### Patch Changes
