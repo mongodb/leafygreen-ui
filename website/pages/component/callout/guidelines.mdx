@@ -1,177 +1,84 @@
-import Callout from '@leafygreen-ui/callout';
-import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
-import XWithCircleIcon from '@leafygreen-ui/icon/dist/XWithCircle';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { css } from 'emotion';
-import { InlineCode } from '@leafygreen-ui/typography';
-import { uiColors } from '@leafygreen-ui/palette';
+import { Body, Link } from '@leafygreen-ui/typography';
+import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
 
-Callouts should be used when you want to call out information to the user. Callouts look similar to banners but serve a different use case. Unlike banners, callouts cannot be dismissed. They are optimized for long form copy (banners are optimized to save space and work at different widths). Also, there is no green callout (there is a green banner). Callouts should not have a CTA within them. Banners may sometimes have a button.
-
-Below is the general spacing structure for callouts:
-
-<img
-  src={`${CDN}/images/guidelines/callout-header-guidelines.png`}
-  alt="Callout spacing example"
-  width="100%"
-/>
-
-The type of callout you use, should be used to convey a specific message to your user.
-
-Don’t use colors to signify the intensity, but instead the type of information you’re communicating.
-
-"Note" callouts are used to show something that “may be nice to know”.
-
-<Callout variant="note">
-  You can also create API keys that applications use to connect to your MongoDB
-  Stitch application. While these are not associated to a single user, they are
-  listed in the Users tab. To learn more about API keys, see API Key
-  Authentication.
-</Callout>
-
-<br />
-
-<Callout variant="note">
-  Use <InlineCode>-h</InlineCode> or <InlineCode>--help</InlineCode> to view the
-  command-line help for this command.
-</Callout>
-
-<br />
-
-<Callout variant="note">
-  On some systems, there may be multiple INI files for individual SAPIs (e.g.
-  CLI, FPM). Make sure to enable the extension in all SAPIs that you need.
-</Callout>
-
-<br />
-
-"Important" callouts are yellow and are used to show something that “may be important so pay attention”.
-
-<Callout variant="important">
-  <InlineCode>bsondump</InlineCode> is a diagnostic tool for inspecting{' '}
-  <InlineCode>BSON</InlineCode>, not a tool for data ingestion or other
-  application use.
-</Callout>
-
-<br />
-
-"Warning" callouts are red and are used to show something that could break or go wrong if the user is not aware of the information in the callout.
-
-<Callout variant="warning">
-  If any of those namespaces already exist on your cluster when you attempt to
-  load the sample data, the operation will fail and no sample data will load to
-  your cluster.
-</Callout>
-
-<br />
-
-<div
+<Body
   className={css`
-    display: flex;
+    margin-top: 24px;
+    margin-bottom: 24px;
   `}
 >
-  <div className={css`display: flex; flex-direction: column; align-items: center`}>
-    <Callout
-    variant="important"
-      className={css`
-        margin-right: 10px;
-      `}
-    >
-      Your API keys are like passwords. The configuration file stores <InlineDefinition definition="Application Programming Interface">API</InlineDefinition> keys in plaintext, so ensure that you secure the configuration appropriately.
-    </Callout>
-    <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
-  </div>
+  <Link href="https://www.mongodb.design/component/banner/guidelines/">
+    Banners
+  </Link>{' '}
+  look similar to callouts but serve a different use case. Callouts should be
+  used when you want to call out information to the user. Unlike banners,
+  callouts cannot be dismissed. They’re optimized for long form copy (banners
+  are optimized to save space).
+</Body>
 
-  <div className={css`display: flex; flex-direction: column; align-items: center`}>
-    <Callout
-    variant="important"
-      className={css`
-        margin-left: 10px;
-      `}
-    >
-      Your API keys are like passwords. The configuration file stores <span className={css`cursor: help; text-decoration: underline;`}>API</span> keys in plaintext, so ensure that you secure the configuration appropriately.
-    </Callout>
-    <XWithCircleIcon size="xlarge" fill={uiColors.red.base} className={css`margin-top: 10px`}/>
+<Body>Note callouts show something that “may be nice to know”.</Body>
 
-  </div>
-</div>
-
-There’s now also a purple "tip" callout, which can be used to add a more personal note or suggestion from the Doc writer.
-
-<Callout variant="tip">
-  When possible, use a logical DNS hostname instead of an ip address,
-  particularly when configuring replica set members. The use of logical DNS
-  hostnames avoids configuration changes due to ip address changes.
-</Callout>
-
-<br />
-
-Each callout variant allows for a secondary title.
-
-<Callout variant="note" title="Aggregation pipeline as alternative">
-  <div
-    className={css`
-      margin-bottom: 16px;
-    `}
-  >
-    Aggregation pipeline provides better performance and a more coherent
-    interface than map-reduce.
-  </div>
-  <div
-    className={css`
-      margin-bottom: 16px;
-    `}
-  >
-    Various map-reduce expressions can be rewritten using aggregation pipeline
-    operators, such as <InlineCode>$group</InlineCode>, etc.
-    <InlineCode>$merge</InlineCode>
-  </div>
-  The example below includes aggregation pipeline alternatives.
-</Callout>
-
-<br />
-
-<Callout
-  variant="important"
-  title="When ugprading from MongoDB 4.0.6 or earlier to MongoDB 4.2"
->
-  During the upgrade process, a client may try to resume change streams using
-  the new <InlineCode>v1</InlineCode> resume token when connected to a member
-  that has not updated (i.e. only accepts <InlineCode>v0</InlineCode> token) and
-  fail. In such cases, the client must wait for the 4.2 upgrade to complete
-  before resuming changestreams.
-</Callout>
-
-<br />
-
-<Callout variant="warning" title="Upgrading to version 1.3.0 and newer">
-  Starting in MongoDB Enterprise Kubernetes Operator version 1.3.0, you can only
-  have one MongoDB resource per project. To learn how to migrate your project to
-  a single-cluster configuration see Migrate to One Resource per Project
-  (Required for version 1.3.0).
-</Callout>
-
-We understand that sometimes it may be necessary, but try to avoid nesting callouts in tables and other elements.
-
-<img
-  src={`${CDN}/images/guidelines/callout-table-example-guidelines.png`}
-  alt="Bad example: Do not use Callout in Table component"
-  width="100%"
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/callouts/callout-guidelines-1@3x.png`}
+  className={css`
+    width: auto;
+    height: 154px;
+  `}
 />
 
-Avoid nesting code components within callouts.
+<Body>
+  Important callouts show something that “may be important” so the reader should
+  pay attention.
+</Body>
 
-<img
-  src={`${CDN}/images/guidelines/callout-code-example-guidelines.png`}
-  alt="Example of using code component near callout"
-  width="100%"
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/callouts/callout-guidelines-2@3x.png`}
+  className={css`
+    width: auto;
+    height: 130px;
+  `}
 />
 
-The example callout is now deprecated. Don’t use it. Instead opt for integrating your example within body copy.
+<Body>
+  Warning callouts show something that could break or go wrong if the user is
+  not aware of the information in the callout.
+</Body>
 
-<img
-  src={`${CDN}/images/guidelines/callout-example-example-guidelines.png`}
-  alt="Callout example is now deprecated"
-  width="100%"
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/callouts/callout-guidelines-3@3x.png`}
+  className={css`
+    width: auto;
+    height: 178px;
+  `}
+/>
+
+<Body>
+  Tip callouts can be used to add a more personal note or suggestion from the
+  Doc writer.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/callouts/callout-guidelines-4@3x.png`}
+  className={css`
+    width: auto;
+    height: 130px;
+  `}
+/>
+
+<Body>
+  Use our{' '}
+  <Link href="https://www.mongodb.design/component/tooltip/guidelines/">
+    tooltip
+  </Link>{' '}
+  for context on keywords.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/callouts/callout-guidelines-5@3x.png`}
+  className={css`
+    width: auto;
+    height: 130px;
+  `}
 />

@@ -1,18 +1,35 @@
 import { css } from 'emotion';
 import Card from '@leafygreen-ui/card';
-import Toast from '@leafygreen-ui/toast';
-import { breakpoints } from '@leafygreen-ui/tokens';
-import { uiColors } from '@leafygreen-ui/palette';
+import { Body, Link } from '@leafygreen-ui/typography';
 import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
+import { uiColors } from '@leafygreen-ui/palette';
+import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
+import { mq } from 'utils/mediaQuery';
 
-Toasts are a form of notification. They should be used fairly sparingly, since they animate and can become overwhelming to users if used to confirm every action.
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
+  Toasts are a form of notification. They should be used fairly sparingly, since
+  they animate and can become overwhelming to users if used to confirm every
+  action.
+</Body>
 
-Below is a table to help you choose when to pick which pattern for notifications.
+<Body
+  className={css`
+    margin-top: 24px;
+    margin-bottom: 36px;
+  `}
+>
+  Below is a table to help you choose when to pick which pattern for
+  notifications.
+</Body>
 
 <Card
   className={css`
-    padding: 32px;
+    margin-bottom: 36px;
   `}
 >
   <Table
@@ -26,7 +43,7 @@ Below is a table to help you choose when to pick which pattern for notifications
         component: 'Banner',
         priority: 'Medium priority',
         userAction:
-          'Optional: Banners remain until dismissed by the user, or if the state that caused the banner is resolved',
+          'Optional: Banners remain until dismissed by the user, or if the state, which caused the banner is resolved',
       },
       {
         component: 'Modal',
@@ -37,19 +54,13 @@ Below is a table to help you choose when to pick which pattern for notifications
     ]}
     columns={[
       <TableHeader
+        className={css`
+          min-width: 120px;
+        `}
         key="component"
         label="Component"
-        className={css`
-          width: 100px;
-        `}
       />,
-      <TableHeader
-        key="priority"
-        label="Priority"
-        className={css`
-          width: 100px;
-        `}
-      />,
+      <TableHeader key="priority" label="Priority" />,
       <TableHeader key="userAction" label="User Action" />,
     ]}
   >
@@ -86,144 +97,109 @@ Below is a table to help you choose when to pick which pattern for notifications
   </Table>
 </Card>
 
-Toasts can be used to confirm an action. For example, here’s a confirmation toast that shows up after an email has been sent.
+<Body>Toasts are always placed at the bottom left of a screen.</Body>
 
-<div
+<Body
   className={css`
-    display: flex;
-    justify-content: flex-start;
-    flex-grow: 1;
-    width: 100%;
+    margin-top: 24px;
   `}
 >
-  <img
-    src={`${CDN}/images/guidelines/LM-toasts-1@3x.png`}
-    alt=""
-    width="432px"
-    className={css`
-      margin-left: -16px;
-    `}
-  />
-</div>
+  Toasts can be used to confirm an action. For example, here’s a confirmation
+  toast that shows up after an email has been sent.
+</Body>
 
-They can be used to indicate something destructive is or will be occurring.
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-1@3x.png`}
   className={css`
-    display: flex;
-    justify-content: flex-start;
-    flex-grow: 1;
-    width: 100%;
+    ${mq({
+      width: ['auto', '448px'],
+    })}
+    height: 90px;
   `}
->
-  <img
-    src={`${CDN}/images/guidelines/LM-toasts-2@3x.png`}
-    alt=""
-    className={css`
-      margin-left: -16px;
-      width: 432px;
-    `}
-  />
-</div>
+/>
 
-They can be used to indicate something important may need to be addressed.
+<Body>
+  They can be used to indicate something important may need to be addressed.
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-2@3x.png`}
   className={css`
-    display: flex;
-    justify-content: flex-start;
-    flex-grow: 1;
-    width: 100%;
+    ${mq({
+      width: ['auto', '432px'],
+    })}
+    height: 99px;
   `}
->
-  <img
-    src={`${CDN}/images/guidelines/LM-toasts-3@3x.png`}
-    alt=""
-    className={css`
-      margin-left: -16px;
-      width: 432px;
-    `}
-  />
-</div>
+/>
 
-They can be used to show general information that may be helpful to the user.
+<Body>
+  They can be used to show general information that may be helpful to the user.
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-3@3x.png`}
   className={css`
-    display: flex;
-    justify-content: flex-start;
-    flex-grow: 1;
-    width: 100%;
+    ${mq({
+      width: ['auto', '432px'],
+    })}
+    height: 99px;
   `}
->
-  <img
-    src={`${CDN}/images/guidelines/LM-toasts-4@3x.png`}
-    alt=""
-    className={css`
-      margin-left: -16px;
-      width: 432px;
-    `}
-  />
-</div>
+/>
 
-Toasts can either be dismissable (via the top "X"), or can disappear automatically after a set amount of time — to figure out this time, factor for a reading speed of 150 words per minute, plus allow for another second or so to allow for enough time for the user to read the toast content).
+<Body>
+  Toasts can either be dismissable (via the top "X"), or can disappear
+  automatically after a set amount of time — to figure out this time, factor for
+  a reading speed of 150 words per minute, plus allow for another second or so
+  to allow for enough time for the user to read the toast content).
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-4@3x.png`}
   className={css`
-    display: flex;
-    justify-content: flex-start;
-    flex-grow: 1;
-    width: 824px;
-    @media only screen and (max-width: ${breakpoints.Tablet}px) {
-      width: 100%;
-    }
+    ${mq({
+      width: ['auto', 'auto', 'auto', '898px'],
+    })}
+    height: 90px;
   `}
->
-  <img
-    src={`${CDN}/images/guidelines/LM-toasts-5@3x.png`}
-    alt=""
-    className={css`
-      width: 100%;
-      margin-left: -12px;
-    `}
-  />
-</div>
+/>
 
-Do not use toasts for notifying a user of a local action (like pressing copy on a copyable component). Toasts should remain visible regardless of the page the user is on until they are dismissed.
+<Body>
+  Do not use toasts for components that have notifications integrated into their
+  designs like{' '}
+  <Link href="https://www.mongodb.design/component/copyable/example/">
+    copyable
+  </Link>
+  .
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-5@3x.png`}
   className={css`
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-grow: 1;
-    width: 825px;
-    @media only screen and (max-width: ${breakpoints.Tablet}px){
-      width: 100%;
-    }
-`}>
-
-  <img src={`${CDN}/images/guidelines/LM-toasts-6@3x.png`} alt="" className={css`width: 100%`} />
-</div>
-
-Toasts can also be used to show status of longer ongoing processes (lasting more than 4-5 seconds). When doing so, try to add an estimate of the time the process will take to complete, or where in the process the user is.
-
-<div
-  className={css`
-    display: flex;
-    justify-content: flex-start;
-    flex-grow: 1;
-    width: 100%;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '825px'],
+    })}
+    height: 159px;
   `}
->
-  <img
-    src={`${CDN}/images/guidelines/LM-toasts-7@3x.png`}
-    alt=""
-    className={css`
-      width: 432px;
-      margin-left: -16px;
-    `}
-  />
-</div>
+/>
 
-Do not nest actions within toasts. Our progress toast allows for an action to be contained within it, such as for viewing the current progress of a cluster rebuild or pausing the current process.
+<Body>
+  Toasts can also be used to show status of longer ongoing processes (lasting
+  more than 4-5 seconds). When doing so, try to add an estimate of the time the
+  process will take to complete, or where in the process the user is.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-6@3x.png`}
+  className={css`
+    ${mq({
+      width: ['auto', '431px'],
+    })}
+    height: 105px;
+  `}
+/>
+
+<Body>
+  Do not nest actions within toasts. Our progress toast allows for an action to
+  be contained within it, such as for viewing the current progress of a cluster
+  rebuild or pausing the current process.
+</Body>
