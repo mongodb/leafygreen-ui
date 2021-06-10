@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 11.0.0
+
+### Major Changes
+
+- 8409a9ea: Styles text on the MenuItem container such that styles can be overwritten by consuming applications
+
 ## 10.0.3
 
 ### Patch Changes
