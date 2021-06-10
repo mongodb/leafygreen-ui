@@ -55,10 +55,10 @@ const modeColors = {
     `,
     listTitleFocus: css`
       &:focus {
-        color: #43b1e5;
+        color: ${uiColors.blue.light1};
 
         &:after {
-          background-color: ${uiColors.blue.base};
+          background-color: ${uiColors.focus};
         }
       }
     `,

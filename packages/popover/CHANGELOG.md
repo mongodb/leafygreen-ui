@@ -1,5 +1,16 @@
 # @leafygreen-ui/popover
 
+## 7.2.1
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+  - @leafygreen-ui/portal@3.1.3
+
 ## 7.2.0
 
 ### Minor Changes

@@ -74,7 +74,7 @@ export const colorSets: Record<Mode, ColorSet> = {
     },
     option: {
       group: {
-        label: uiColors.gray.dark3,
+        label: uiColors.gray.dark1,
         border: uiColors.gray.light2,
       },
       background: {
@@ -119,7 +119,7 @@ export const colorSets: Record<Mode, ColorSet> = {
     },
     option: {
       group: {
-        label: uiColors.white,
+        label: uiColors.gray.light1,
         border: uiColors.gray.dark1,
       },
       background: {

@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 8.0.0
+
+### Major Changes
+
+- 047c1930: Removes `IdAllocator` class from package. Moving forward, use the `useIdAllocator` hook from the hooks package instead. This was done to better support server-side rendering.
+
 ## 7.0.0
 
 ### Major Changes

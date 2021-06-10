@@ -1,5 +1,15 @@
 # @leafygreen-ui/button
 
+## 12.0.3
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/box@3.0.5
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+  - @leafygreen-ui/tokens@0.5.2
+
 ## 12.0.2
 
 ### Patch Changes
