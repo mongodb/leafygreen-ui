@@ -178,6 +178,7 @@ export default function Copyable({
         justify={Justify.Middle}
         trigger={trigger}
         triggerEvent={TriggerEvent.Click}
+        usePortal={false}
       >
         Copied!
       </Tooltip>
