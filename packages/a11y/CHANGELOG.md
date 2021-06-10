@@ -1,5 +1,14 @@
 # @leafygreen-ui/a11y
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+
 ## 1.2.0
 
 ### Minor Changes

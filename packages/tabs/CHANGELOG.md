@@ -1,5 +1,20 @@
 # @leafygreen-ui/tabs
 
+## 5.1.2
+
+### Patch Changes
+
+- e1af3278: Updates focus state of Tab component to better comply with a11y contrast ratios.
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/a11y@1.2.1
+  - @leafygreen-ui/box@3.0.5
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+  - @leafygreen-ui/portal@3.1.3
+  - @leafygreen-ui/tokens@0.5.2
+
 ## 5.1.1
 
 ### Patch Changes

@@ -1,0 +1,114 @@
+import { css } from 'emotion';
+import { H2, Body, Subtitle, Link } from '@leafygreen-ui/typography';
+import GuidelineImage from 'components/GuidelineImage';
+import { CDN } from 'utils/routes';
+
+<H2>Icon creation guide</H2>
+
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
+  The LeafyGreen system icons are a clear and concise set of glyphs designed to
+  be minimal in form and express a variety of use-cases for all digital
+  products.{' '}
+  <Link
+    className={css`
+      display: inline;
+    `}
+    href="https://www.mongodb.design/component/icon/guidelines/"
+  >
+    Learn more about how to use Icons in product
+  </Link>
+  .
+</Body>
+
+<Body>
+  <ul>
+    <li>Icons should represent real world things</li>
+    <li>
+      Icons should not represent overly complex things, like
+      CalendarEventJulyFourth.
+    </li>
+    <li>Refer to this guide and existing icons while building your icon.</li>
+  </ul>
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/icon-creation-1@3x.png`}
+  className={css`
+    width: auto;
+    height: 277px;
+  `}
+/>
+
+<Subtitle>How to create an icon</Subtitle>
+<Body>
+  Follow these steps to help maintain a consitent look across new and existing
+  icons
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/icon-creation-2@3x.png`}
+  className={css`
+    width: auto;
+    height: 180px;
+  `}
+/>
+
+<Subtitle>Stroke Weight of Negative Space</Subtitle>
+<Body>
+  Negative space is a defining feature of our icon set. For optimal rendering
+  and legibility, the stroke width should vary to appear better optically. When
+  designing icons, use the following stroke weights:
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/icon-creation-3@3x.png`}
+  className={css`
+    width: auto;
+    height: 177px;
+  `}
+/>
+
+<Subtitle>Corner Radius</Subtitle>
+<Body>
+  The icon set has predominately rounded corners and caps, but it’s important to
+  note that it also allows for sharp corners occasionally
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/icon-creation-4@3x.png`}
+  className={css`
+    width: auto;
+    height: 174px;
+  `}
+/>
+
+<Subtitle>Things to avoid while creating</Subtitle>
+<Body>
+  To ensure consistency and quality for your icon avoid these common mistakes
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/icon-creation-5@3x.png`}
+  className={css`
+    width: auto;
+    height: 173px;
+  `}
+/>
+
+<Subtitle>How to prepare your final icon</Subtitle>
+<Body>
+  Follow these steps to help maintain a consitent look across new and existing
+  icons.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/icon-creation-6@3x.png`}
+  className={css`
+    width: auto;
+    height: 452px;
+  `}
+/>

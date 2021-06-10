@@ -1,5 +1,14 @@
 # @leafygreen-ui/banner
 
+## 3.0.8
+
+### Patch Changes
+
+- e1af3278: Updates text color in `success` Banners, as well as the color of the dismissible `XIcon`.
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/icon@11.1.1
+
 ## 3.0.7
 
 ### Patch Changes

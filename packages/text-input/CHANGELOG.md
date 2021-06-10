@@ -1,5 +1,19 @@
 # @leafygreen-ui/text-input
 
+## 6.0.3
+
+### Patch Changes
+
+- e1af3278: Updates border-color to match TextArea component.
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/icon@11.1.1
+  - @leafygreen-ui/interaction-ring@1.0.4
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+  - @leafygreen-ui/typography@8.0.2
+
 ## 6.0.2
 
 ### Patch Changes

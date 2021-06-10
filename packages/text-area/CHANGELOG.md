@@ -1,5 +1,17 @@
 # @leafygreen-ui/text-area
 
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/interaction-ring@1.0.4
+  - @leafygreen-ui/tokens@0.5.2
+  - @leafygreen-ui/typography@8.0.2
+
 ## 4.0.1
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @leafygreen-ui/tooltip
 
+## 6.2.2
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+  - @leafygreen-ui/icon@11.1.1
+  - @leafygreen-ui/popover@7.2.1
+  - @leafygreen-ui/tokens@0.5.2
+
 ## 6.2.1
 
 ### Patch Changes
