@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 6.0.5
+
+### Patch Changes
+
+- bed50770: Fixes broken Checkbox logic, where any value supplied to the `indeterminate` prop was overwritting `checked` prop
+
 ## 6.0.4
 
 ### Patch Changes
