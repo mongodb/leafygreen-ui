@@ -54,6 +54,7 @@ function BaseLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <LeafyGreenProvider
+      baseFontSize={16}
       popoverPortalContainer={{
         scrollContainer: bodyContainerRef,
         portalContainer: bodyContainerRef,

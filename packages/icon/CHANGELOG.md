@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.2.0
+
+### Minor Changes
+
+- b408e8a7: Adds `'FullScreenEnter'`, `'FullScreenExit'`, `'Shell'`, `'PersonGroup'`, `'File'`, `'GlobeAmericas'`, and `'Code'` glyphs.
+
 ## 11.1.1
 
 ### Patch Changes

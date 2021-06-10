@@ -1,0 +1,73 @@
+import { css } from 'emotion';
+import { Body, Link } from '@leafygreen-ui/typography';
+import GuidelineImage from 'components/GuidelineImage';
+import { CDN } from 'utils/routes';
+
+<Body
+  className={css`
+    margin-top: 24px;
+  `}
+>
+  Our SideNav component should be used for any area of our product that has a
+  navigational structure.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/sideNav/sideNav-guidelines-1@3x.png`}
+  className={css`
+    width: auto;
+    height: 285px;
+  `}
+/>
+
+<Body>
+  In general, we recommend not including decorative or functional icons (that
+  trigger an action) in SideNav items.{' '}
+  <Link href="https://www.mongodb.design/component/icon/guidelines/">
+    Learn more about icons.
+  </Link>
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/sideNav/sideNav-guidelines-2@3x.png`}
+  className={css`
+    width: auto;
+    height: 88px;
+  `}
+/>
+
+<Body>
+  Avoid including cards or marketing content in the SideNav. Opt for more
+  contextual places within the experience to introduce the content.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/sideNav/sideNav-guidelines-3@3x.png`}
+  className={css`
+    width: auto;
+    height: 490px;
+  `}
+/>
+
+<Body>Do not increase the width of the SideNav</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/sideNav/sideNav-guidelines-4@3x.png`}
+  className={css`
+    width: auto;
+    height: 383px;
+  `}
+/>
+
+<Body>
+  SideNav groups should always be accompanied by an icon that’s not already in
+  use in the SideNav. The group icon appears when the SideNav is collapsed.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/sideNav/sideNav-guidelines-5@3x.png`}
+  className={css`
+    width: auto;
+    height: 373px;
+  `}
+/>
