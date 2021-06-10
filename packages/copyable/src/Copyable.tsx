@@ -130,7 +130,7 @@ interface CopyableProps {
   className?: string;
   copyable?: boolean;
   size?: Size;
-  shouldTooltipUsePortal: boolean
+  shouldTooltipUsePortal?: boolean
 }
 
 export default function Copyable({
