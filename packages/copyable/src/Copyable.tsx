@@ -130,6 +130,7 @@ interface CopyableProps {
   className?: string;
   copyable?: boolean;
   size?: Size;
+  shouldTooltipUsePortal?: boolean;
 }
 
 export default function Copyable({
@@ -140,6 +141,7 @@ export default function Copyable({
   className,
   copyable = true,
   size = Size.Default,
+  shouldTooltipUsePortal = true,
 }: CopyableProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const colorSet = colorSets[mode];
@@ -178,6 +180,7 @@ export default function Copyable({
         justify={Justify.Middle}
         trigger={trigger}
         triggerEvent={TriggerEvent.Click}
+        usePortal={shouldTooltipUsePortal}
       >
         Copied!
       </Tooltip>
