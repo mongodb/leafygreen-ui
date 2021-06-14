@@ -96,10 +96,8 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
 
   const hrefHostname = useMemo(() => {
     if (!href) return;
-    const httpRegex = /^http(s)?:\/\//
-    return (httpRegex.test(href))
-      ? new URL(href).hostname
-      : currentHostname
+    const httpRegex = /^http(s)?:\/\//;
+    return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
   }, [href]);
 
   const size = useBaseFontSize();
