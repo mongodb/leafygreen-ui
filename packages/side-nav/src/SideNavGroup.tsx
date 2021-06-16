@@ -252,6 +252,7 @@ function SideNavGroup({
       React.Children.forEach(children, child => {
         if (isComponentType(child, 'SideNavItem') && child.props.active) {
           foundActiveChild = true;
+          setOpen(true);
         } else if ((child as React.ReactElement)?.props?.children) {
           checkForActiveNestedItems(
             (child as React.ReactElement).props.children,
@@ -334,7 +335,7 @@ function SideNavGroup({
         </button>
 
         <Transition
-          in={open || isActiveGroup}
+          in={open}
           appear
           timeout={150}
           nodeRef={nodeRef}
