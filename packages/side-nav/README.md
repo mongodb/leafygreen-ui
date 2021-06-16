@@ -208,3 +208,5 @@ Displays the passed React node within the collapsed state of the navigation.
 | `active`    | `boolean` | Whether or not the component should be rendered in an active state. | `false` |
 | `className` | `string`  | Class name that will be applied to the component's header.          |         |
 | `children`  | `node`    | Content that will be rendered inside the collapsed navigation.      |         |
+
+_NOTE: It is possible to nest SideNavGroup components and SideNavItem components within each other_
