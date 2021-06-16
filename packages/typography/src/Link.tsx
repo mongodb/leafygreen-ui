@@ -98,7 +98,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     if (!href) return;
     const httpRegex = /^http(s)?:\/\//;
     return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
-  }, [href]);
+  }, [href, currentHostname]);
 
   const size = useBaseFontSize();
   const fontSize = size === 16 ? typeScale2 : typeScale1;
