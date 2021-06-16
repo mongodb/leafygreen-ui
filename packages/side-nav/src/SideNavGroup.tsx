@@ -302,10 +302,13 @@ function SideNavGroup({
     </div>
   );
 
-  const intentedStyle = cx(getIndentLevelStyle(indentLevel), css`
-    padding-top: 16px;
-    padding-bottom: 8px;
-  `)
+  const intentedStyle = cx(
+    getIndentLevelStyle(indentLevel),
+    css`
+      padding-top: 16px;
+      padding-bottom: 8px;
+    `,
+  );
 
   if (collapsible) {
     return (
