@@ -13,6 +13,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
 import { useSideNavContext } from './SideNavContext';
+import { getIndentLevelStyle } from './styles';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -28,7 +29,7 @@ const defaultStyle = css`
   // Layout
   width: 100%;
   min-height: 32px;
-  padding: ${spacing[2]}px ${spacing[3]}px;
+  padding: ${spacing[1]}px ${spacing[3]}px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -63,11 +64,11 @@ const defaultStyle = css`
 const typographyStyle = {
   [14]: css`
     font-size: 14px;
-    line-height: 1em;
+    line-height: 20px;
   `,
   [16]: css`
     font-size: 16px;
-    line-height: 1.5em;
+    line-height: 24px;
   `,
 };
 
@@ -143,12 +144,6 @@ const nestedChildrenStyles = css`
   flex-direction: column;
   align-items: flex-start;
 `;
-
-function getIndentLevelStyle(indentLevel: number) {
-  return css`
-    padding-left: ${8 + indentLevel * 16}px;
-  `;
-}
 
 export interface SideNavItemProps {
   /**
@@ -249,7 +244,9 @@ const SideNavItem: ExtendableBox<
         e.nativeEvent.stopImmediatePropagation();
         e.preventDefault();
       }
-    : onClickProp;
+    : (e: React.MouseEvent) => {
+        onClickProp?.(e);
+      };
 
   const accessibleGlyph =
     (glyph && isComponentType(glyph, 'Glyph')) || isComponentType(glyph, 'Icon')
@@ -277,13 +274,15 @@ const SideNavItem: ExtendableBox<
     let hasNestedItems = false;
 
     React.Children.forEach(children, (child, index) => {
-      if (child != null && isComponentType(child, 'SideNavItem')) {
+      if (
+        (child != null && isComponentType(child, 'SideNavItem')) ||
+        isComponentType(child, 'SideNavGroup')
+      ) {
         hasNestedItems = true;
 
         if (hasNestedActive || active) {
           renderedNestedItems.push(
             React.cloneElement(child, {
-              className: getIndentLevelStyle(indentLevel),
               indentLevel: indentLevel + 1,
               key: index,
             }),
@@ -303,7 +302,10 @@ const SideNavItem: ExtendableBox<
         return null;
       }
 
-      if (isComponentType(child, 'SideNavItem')) {
+      if (
+        isComponentType(child, 'SideNavItem') ||
+        isComponentType(child, 'SideNavGroup')
+      ) {
         return null;
       }
 
@@ -332,6 +334,7 @@ const SideNavItem: ExtendableBox<
             [focusedStyle]: showFocus,
             [focusedDisabledStyle]: showFocus && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
+            [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
           },
           className,
         )}

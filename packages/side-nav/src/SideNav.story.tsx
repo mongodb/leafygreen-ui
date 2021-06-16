@@ -302,7 +302,43 @@ function MockSideNav() {
   );
 }
 
+function NestedGroups() {
+  return (
+    <LeafyGreenProvider>
+      <div className={gridStyles}>
+        <MongoNav className={topNavStyles} mode="dev" />
+
+        <SideNav widthOverride={300}>
+          <SideNavItem>Overview</SideNavItem>
+          <SideNavItem>Introduction</SideNavItem>
+          <SideNavItem>
+            Android SDK
+            <SideNavItem>Install MongoDB Community Edition</SideNavItem>
+            <SideNavGroup
+              header="Fundamentals"
+              collapsible
+              glyph={<Icon glyph="Building" />}
+            >
+              <SideNavItem active>
+                Upgrade MongoDB Community to MongoDB Enterprise
+              </SideNavItem>
+              <SideNavItem>Verify Integrity of MongoDB Packages</SideNavItem>
+              <SideNavGroup header="Preferences">
+                <SideNavItem>Privacy</SideNavItem>
+                <SideNavItem>Security</SideNavItem>
+              </SideNavGroup>
+            </SideNavGroup>
+          </SideNavItem>
+        </SideNav>
+
+        {content}
+      </div>
+    </LeafyGreenProvider>
+  );
+}
+
 storiesOf('SideNav', module)
   .add('Simple Navigation', () => <MockSideNav />)
   .add('Realm', () => <RealmSideNav />)
-  .add('Org Settings', () => <OrgSettingsSideNav />);
+  .add('Org Settings', () => <OrgSettingsSideNav />)
+  .add('NestedGroups', () => <NestedGroups />);
