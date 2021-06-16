@@ -24,10 +24,6 @@ const listItemStyle = css`
   display: flex;
   flex-direction: column;
   position: relative;
-
-  & + & {
-    margin-top: ${spacing[2]}px;
-  }
 `;
 
 const labelStyle = css`
