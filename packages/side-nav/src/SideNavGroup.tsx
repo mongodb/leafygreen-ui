@@ -24,6 +24,10 @@ const listItemStyle = css`
   display: flex;
   flex-direction: column;
   position: relative;
+
+  & ~ & > ${button.selector} {
+    padding: 16px ${sideNavItemSidePadding}px 8px ${sideNavItemSidePadding}px;
+  }
 `;
 
 const labelStyle = css`
@@ -40,10 +44,10 @@ const labelStyle = css`
   min-height: ${spacing[5]}px;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 16px 8px;
+  padding: 8px 16px;
 
   &:not(:first-of-type) {
-    padding-top: ${spacing[2]}px;
+    margin-top: ${spacing[1]}px;
   }
 `;
 
@@ -298,6 +302,11 @@ function SideNavGroup({
     </div>
   );
 
+  const intentedStyle = cx(getIndentLevelStyle(indentLevel), css`
+    padding-top: 16px;
+    padding-bottom: 8px;
+  `)
+
   if (collapsible) {
     return (
       <li className={cx(listItemStyle, className)} {...rest}>
@@ -313,7 +322,7 @@ function SideNavGroup({
             `,
             {
               [collapsibleHeaderFocusStyle]: showFocus,
-              [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
+              [intentedStyle]: indentLevel > 1,
             },
           )}
           onClick={() => setOpen(curr => !curr)}
@@ -382,10 +391,11 @@ function SideNavGroup({
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
       <div
+        {...button.prop}
         data-testid="side-nav-group-header-label"
         id={menuGroupLabelId}
         className={cx(labelStyle, {
-          [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
+          [intentedStyle]: indentLevel > 1,
         })}
       >
         {renderedLabelText}
