@@ -1,60 +1,71 @@
 import { css } from 'emotion';
+import { Body, Link } from '@leafygreen-ui/typography';
+import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
 
-Menus are used when a user needs to take an action.
-
-Menus are not select inputs. In a select input a selection is being made. In a menu a user takes an action (like copy/delete a property or navigate to a different section/screen).
-
-<div
+<Body
   className={css`
-    margin: 40px 0px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+  `}
+>
+  Menus are used when a user needs to take an action.
+</Body>
+
+<Body>
+  Menus are not{' '}
+  <Link href="https://www.mongodb.design/component/select/guidelines/">
+    select inputs
+  </Link>
+  . In a select input a selection is being made. In a menu a user takes an
+  action (like copy/delete a property or navigate to a different
+  section/screen).
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/menu/menu-guidelines-1@3x.png`}
+  className={css`
     width: auto;
     height: 390px;
-    background-image: url('${CDN}/images/guidelines/LM-menus-1@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
   `}
 />
 
-Menus can be triggered in many ways, such as via an ellipsis, or with a button. Avoid using plain text or a link as a trigger for a menu.
+<Body>
+  Menus can be triggered in many ways, such as via an ellipsis, or with a
+  button. Avoid using plain text or a link as a trigger for a menu.
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/menu/menu-guidelines-2@3x.png`}
   className={css`
-    margin: 40px 0px;
     width: auto;
-    height: 237px;
-    background-image: url('${CDN}/images/guidelines/LM-menus-2@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    height: 240px;
   `}
 />
 
-Menus come in a default and large size. For menus that have more items use the default size menu. For menus that have nested items use the large size.
+<Body>
+  Menus come default and large size. For menus that have more items use the
+  default size menu. For menus that have nested items use the large size.
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/menu/menu-guidelines-3@3x.png`}
   className={css`
-    margin: 40px 0px;
     width: auto;
     height: 410px;
-    background-image: url('${CDN}/images/guidelines/LM-menus-3@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
   `}
 />
 
-Menus can also act as a buffer to help prevent misclicks, and are often used where a user would expect that action to live, like near a table label for deleting a column.
+<Body>
+  Menus can also act as a buffer to help prevent misclicks, and are often used
+  where a user would expect that action to live, like near a table label for
+  deleting a column.
+</Body>
 
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/menu/menu-guidelines-4@3x.png`}
   className={css`
-    margin: 40px 0px;
     width: auto;
     height: 250px;
-    background-image: url('${CDN}/images/guidelines/LM-menus-4@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
   `}
 />

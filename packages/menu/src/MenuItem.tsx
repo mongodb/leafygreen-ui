@@ -173,7 +173,11 @@ const MenuItem: ExtendableBox<
         menuItemContainerStyle,
         menuItemHeight[size],
         linkStyle,
+        titleTextStyle,
         {
+          [activeTitleTextStyle]: active,
+          [disabledTextStyle]: disabled,
+          [focusTitleTextStyle]: showFocus,
           [activeMenuItemContainerStyle]: active,
           [disabledMenuItemContainerStyle]: disabled,
           [focusedMenuItemContainerStyle]: showFocus,
@@ -200,15 +204,7 @@ const MenuItem: ExtendableBox<
             width: 100%;
           `}
         >
-          <div
-            className={cx(titleTextStyle, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
-              [focusTitleTextStyle]: showFocus,
-            })}
-          >
-            {children}
-          </div>
+          <div>{children}</div>
           {description && (
             <div
               className={cx(descriptionTextStyle, {

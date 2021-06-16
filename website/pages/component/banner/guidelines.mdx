@@ -1,23 +1,39 @@
 import { css } from 'emotion';
-import Banner from '@leafygreen-ui/banner';
-import Button from '@leafygreen-ui/button';
-import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
 import Card from '@leafygreen-ui/card';
-import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
-import XWithCircleIcon from '@leafygreen-ui/icon/dist/XWithCircle';
-import { uiColors } from '@leafygreen-ui/palette';
+import { Body, Link } from '@leafygreen-ui/typography';
 import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
+import { uiColors } from '@leafygreen-ui/palette';
+import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
+import { mq } from 'utils/mediaQuery';
 
-Banners look similar to Call-Outs but serve a different use case. They are usually contextual to the product or task. If you are looking for a way to communicate a global message, like “you are offline” consider using a Toast.
+<Body
+  className={css`
+    margin-top: 24px;
+    margin-bottom: 24px;
+  `}
+>
+  Banners look similar to{' '}
+  <Link href="https://www.mongodb.design/component/callout/guidelines/">
+    Callouts
+  </Link>{' '}
+  but serve a different use case. They are usually contextual to the product or
+  task. If you are looking for a way to communicate a global message, like “you
+  are offline” consider using a{' '}
+  <Link href="https://www.mongodb.design/component/toast/guidelines/">
+    Toast
+  </Link>
+  .
+</Body>
 
-Below is handy table to help you choose when to pick which pattern.
-
-<br />
+<Body>
+  Below is useful table to help you choose when to pick which pattern.
+</Body>
 
 <Card
   className={css`
-    padding: 32px;
+    margin-top: 36px;
+    margin-bottom: 36px;
   `}
 >
   <Table
@@ -31,7 +47,7 @@ Below is handy table to help you choose when to pick which pattern.
         component: 'Banner',
         priority: 'Medium priority',
         userAction:
-          'Optional: Banners remain until dismissed by the user, or if the state that caused the banner is resolved',
+          'Optional: Banners remain until dismissed by the user, or if the state, which caused the banner is resolved',
       },
       {
         component: 'Modal',
@@ -41,7 +57,13 @@ Below is handy table to help you choose when to pick which pattern.
       },
     ]}
     columns={[
-      <TableHeader key="component" label="Component" />,
+      <TableHeader
+        className={css`
+          min-width: 120px;
+        `}
+        key="component"
+        label="Component"
+      />,
       <TableHeader key="priority" label="Priority" />,
       <TableHeader key="userAction" label="User Action" />,
     ]}
@@ -79,201 +101,123 @@ Below is handy table to help you choose when to pick which pattern.
   </Table>
 </Card>
 
-<br />
-
-Don’t use colors to signify the intensity of a communication. Instead use banners to signify type of information being communicated.
-
-Try to limit banner usage so that there’s only 1 banner being displayed at a time on screen.
-
-The blue note banners mean “this is something that may be nice to know”. Banners can be dismiss-able (X on the top right), or they may be persistent (no X on the top right). Consider your use case and whether or not it warrants a dismiss-able banner.
-
-<Banner variant="info" dismissible>
-  This is an example of a note banner. It spans a single line.
-</Banner>
-
-<br />
-
-<Banner variant="info">
-  This is an example of a note banner. It spans a single line.
-</Banner>
-
-The yellow warning banner means “this might be important so pay attention”.
-
-<Banner variant="warning" dismissible>
-  This is an example of a warning banner. It spans a single line.
-</Banner>
-
-The danger red banner mean “something is broken, or actively going wrong”.
-
-<Banner variant="danger" dismissible>
-  We have detected a potential problem while deploying.
-</Banner>
-
-The success green banner should be used sparingly and are used to indicate success, or confirmation. When using a green banner, consider using toasts instead.
-
-<Banner variant="success" dismissible>
-  Your cluster has finished provisioning!
-</Banner>
-
-<br />
-
-This is what a multiline banner looks like.
-
-<div
+<Body
   className={css`
-    display: inline-flex;
-    align-items: center;
+    margin-bottom: 24px;
   `}
 >
-  <img
-    src={`${CDN}/images/guidelines/banner-example.png`}
-    alt="Example of a multiline banner"
-    width="100%"
-  />
-</div>
+  Limit banner usage so that there’s only 1 banner displayed at a time on
+  screen.
+</Body>
 
-<br />
+<Body>
+  The blue note banners means “this is something that may be nice to know.”
+  Banners can be dismiss-able (X on the top right), or they may be persistent
+  (no X on the top right). Consider your use case and whether it needs to be
+  dismissable.
+</Body>
 
-<br />
-
-Links are underlined and set to medium weight to ensure legibility on colored backgrounds.
-
-We recommend not including CTAs within banners. However, if your specific use-case
-calls for it we suggest using the default color button in the extra-small size and
-not having any other buttons in the banner.
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/banner/banner-guidelines-2@3x.png`}
   className={css`
-    display: flex;
+    width: auto;
+    height: 108px;
   `}
->
-  <div className={css`display: flex; flex-direction: column; align-items: center`}>
-    <Banner
-      className={css`
-        margin-right: 10px;
-      `}
-    >
-      This is an example of a banner it only spans a single line.{' '}
-      <Button size="xsmall">Learn How</Button>
-    </Banner>
-    <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
-  </div>
+/>
 
-  <div className={css`display: flex; flex-direction: column; align-items: center`}>
-    <Banner
-      className={css`
-        margin-left: 10px;
-      `}
-    >
-      This is an example of a banner it only spans a single line{' '}
-      <Button
-        size="xsmall"
-        className={css`
-          margin-right: 4px;
-        `}
-      >
-        Cancel
-      </Button>
-      <Button size="xsmall" variant="primary">
-        Learn How
-      </Button>
-    </Banner>
-    <XWithCircleIcon size="xlarge" fill={uiColors.red.base} className={css`margin-top: 10px`}/>
-  </div>
-</div>
+<Body>
+  The yellow warning banner means “this might be important so pay attention.”
+</Body>
 
-Never center content within the banner.
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/banner/banner-guidelines-3@3x.png`}
   className={css`
-    display: flex;
+    width: auto;
+    height: 62px;
   `}
->
-  <div className={css`display: flex; flex-direction: column; align-items: center`}>
-    <Banner
-      variant="warning"
-      className={css`
-        margin-right: 10px;
-      `}
-    >
-      You do not have sufficient priviledges to activate MongoDB Charts for this project. Contact the owner for access.
-    </Banner>
-    <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
-  </div>
+/>
 
-  <div className={css`display: flex; flex-direction: column; align-items: center`}>
-    <Banner
-      variant="warning"
-      className={css`
-        margin-left: 10px;
-        text-align: center;
-      `}
-    >
-      You do not have sufficient priviledges to activate MongoDB Charts for this project. Contact the owner for access.
-    </Banner>
-    <XWithCircleIcon size="xlarge" fill={uiColors.red.base} className={css`margin-top: 10px`}/>
-  </div>
-</div>
+<Body>
+  The danger red banner mean “something is broken, or actively going wrong.”
+</Body>
 
-<br />
-
-Try to restrict the banner max-width to 700px. (It’s okay if this pushes some content below the fold.)
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/banner/banner-guidelines-4@3x.png`}
   className={css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: auto;
+    height: 42px;
   `}
->
-  <Banner
-    dismissible
-    variant="warning"
-    className={css`
-      width: 700px;
-    `}
-  >
-    You do not have sufficient priviledges to activate MongoDB Charts for this
-    project. Contact the owner for access.
-  </Banner>
-  <CheckmarkWithCircleIcon
-    size="xlarge"
-    fill={uiColors.green.base}
-    className={css`
-      margin-top: 10px;
-    `}
-  />
-</div>
+/>
 
-If you want, you can customize your banner and add a 32px by 32px feature icon. Make sure the feature icons ties well with the content it’s supporting.
+<Body>
+  The success green banner should be used sparingly and are used to indicate
+  success, or confirmation. When using a green banner, consider using toasts
+  instead.
+</Body>
 
-<Banner variant="info" image={<BulbIcon />} dismissible>
-  This is an example of a note banner. It spans a single line.
-</Banner>
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/banner/banner-guidelines-5@3x.png`}
+  className={css`
+    width: auto;
+    height: 42px;
+  `}
+/>
 
-<br />
+<Body>
+  Links are underlined and set to medium weight to ensure legibility on colored
+  backgrounds.
+</Body>
 
-<Banner variant="info" image={<BulbIcon />} dismissible>
-  To avoid disrupting majority writes, new members are now added to replica sets
-  as priority=0, votes=0 until they reach secondary state, after which Cloud
-  Manager automatically updates the configuration to match the priority and
-  votes value specified in the deployment.
-</Banner>
+<Body>
+  We recommend avoiding CTAs within banners. However, if your specific use-case
+  calls for it we suggest using the default color button in the extra-small size
+  and not having any other buttons in the banner.
+</Body>
 
-<br />
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/banner/banner-guidelines-6@3x.png`}
+  className={css`
+    width: auto;
+    height: 104px;
+  `}
+/>
 
-<Banner variant="info" image={<BulbIcon />} dismissible>
-  <div
-    className={css`
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    `}
-  >
-    To avoid disrupting majority writes, new members are now added to replica
-    sets as priority=0, votes=0 until they reach secondary state, after which
-    Cloud Manager automatically updates the configuration to match the priority
-    and votes value specified in the deployment.
-    <Button size="xsmall">Learn How</Button>
-  </div>
-</Banner>
+<Body>Never center content, remove, or change the banner’s icon.</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/banner/banner-guidelines-7@3x.png`}
+  className={css`
+    ${mq({
+      width: ['auto', 'auto', 'auto', '1125px'],
+    })}
+    height: 112px;
+  `}
+/>
+
+<Body>
+  Try to restrict the banner max-width to 700px.{' '}
+  <Link href="https://www.nngroup.com/articles/accordions-complex-content/">
+    It’s okay if this pushes some content below the fold
+  </Link>
+  .
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/banner/banner-guidelines-8@3x.png`}
+  className={css`
+    ${mq({
+      width: ['auto', 'auto', 'auto', '1067px'],
+    })}
+    height: 126px;
+  `}
+/>
+
+<Body>Do not change the banner icon.</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/banner/banner-guidelines-9@3x.png`}
+  className={css`
+    width: auto;
+    height: 112px;
+  `}
+/>
