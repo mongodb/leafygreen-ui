@@ -29,7 +29,7 @@ const defaultStyle = css`
   // Layout
   width: 100%;
   min-height: 32px;
-  padding: ${spacing[2]}px ${spacing[3]}px;
+  padding: ${spacing[1]}px ${spacing[3]}px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
