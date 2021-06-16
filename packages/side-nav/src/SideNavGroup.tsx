@@ -247,9 +247,11 @@ function SideNavGroup({
     }
 
     const checkForActiveNestedItems = (children: React.ReactNode): boolean => {
+      let foundActiveChild = false;
+
       React.Children.forEach(children, child => {
         if (isComponentType(child, 'SideNavItem') && child.props.active) {
-          return true;
+          foundActiveChild = true;
         } else if ((child as React.ReactElement)?.props?.children) {
           checkForActiveNestedItems(
             (child as React.ReactElement).props.children,
@@ -257,11 +259,13 @@ function SideNavGroup({
         }
       });
 
-      return false;
+      return foundActiveChild;
     };
 
     return checkForActiveNestedItems(children);
   }, [hasActiveItem, children]);
+
+  console.log({ isActiveGroup, hasActiveItem });
 
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
@@ -330,7 +334,7 @@ function SideNavGroup({
         </button>
 
         <Transition
-          in={open}
+          in={open || isActiveGroup}
           appear
           timeout={150}
           nodeRef={nodeRef}
