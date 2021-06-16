@@ -40,10 +40,10 @@ const labelStyle = css`
   min-height: ${spacing[5]}px;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 12px ${sideNavItemSidePadding}px 4px ${sideNavItemSidePadding}px;
+  padding: 16px 8px;
 
   &:not(:first-of-type) {
-    margin-top: ${spacing[1]}px;
+    padding-top: ${spacing[2]}px;
   }
 `;
 
