@@ -11,14 +11,22 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
-import { ulStyleOverrides, sideNavItemSidePadding } from './styles';
+import {
+  ulStyleOverrides,
+  sideNavItemSidePadding,
+  getIndentLevelStyle,
+} from './styles';
 import { useSideNavContext } from './SideNavContext';
 
 const button = createDataProp('side-nav-group-button');
 
 const listItemStyle = css`
-  & + & {
-    margin-top: ${spacing[2]}px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  & ~ & > ${button.selector} {
+    padding: 16px ${sideNavItemSidePadding}px 8px ${sideNavItemSidePadding}px;
   }
 `;
 
@@ -36,7 +44,7 @@ const labelStyle = css`
   min-height: ${spacing[5]}px;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 4px ${sideNavItemSidePadding}px 4px ${sideNavItemSidePadding}px;
+  padding: 8px 16px;
 
   &:not(:first-of-type) {
     margin-top: ${spacing[1]}px;
@@ -146,6 +154,8 @@ interface SideNavGroupBaseProps {
    * This is useful for cases when an active item might be wrapped with another component like a Tooltip or routing component.
    */
   hasActiveItem?: boolean;
+
+  indentLevel?: number;
 }
 
 type CollapsedProps = OneOf<
@@ -197,6 +207,7 @@ function SideNavGroup({
   glyph,
   className,
   hasActiveItem,
+  indentLevel = 0,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
@@ -208,15 +219,54 @@ function SideNavGroup({
   const menuId = useIdAllocator({ prefix: 'menu' });
   const { width } = useSideNavContext();
 
+  const renderedChildren = useMemo(() => {
+    const checkForNestedGroups = (children: React.ReactNode) => {
+      return React.Children.map(children, child => {
+        if (
+          isComponentType(child, 'SideNavGroup') ||
+          isComponentType(child, 'SideNavItem')
+        ) {
+          return React.cloneElement(child, {
+            indentLevel: indentLevel + 1,
+          });
+        } else if ((child as React.ReactElement)?.props?.children) {
+          checkForNestedGroups((child as React.ReactElement).props.children);
+          return child;
+        } else {
+          return child;
+        }
+      });
+    };
+
+    return checkForNestedGroups(children);
+  }, [children, indentLevel]);
+
   const isActiveGroup: boolean = useMemo(() => {
     if (hasActiveItem != null) {
       return hasActiveItem;
     }
 
-    return React.Children.toArray(children).some(child => {
-      return isComponentType(child, 'SideNavItem') && child.props.active;
-    });
-  }, [children, hasActiveItem]);
+    const checkForActiveNestedItems = (children: React.ReactNode): boolean => {
+      let foundActiveChild = false;
+
+      React.Children.forEach(children, child => {
+        if (isComponentType(child, 'SideNavItem') && child.props.active) {
+          foundActiveChild = true;
+          setOpen(true);
+        } else if ((child as React.ReactElement)?.props?.children) {
+          checkForActiveNestedItems(
+            (child as React.ReactElement).props.children,
+          );
+        }
+      });
+
+      return foundActiveChild;
+    };
+
+    return checkForActiveNestedItems(children);
+  }, [hasActiveItem, children]);
+
+  console.log({ isActiveGroup, hasActiveItem });
 
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
@@ -252,6 +302,14 @@ function SideNavGroup({
     </div>
   );
 
+  const intentedStyle = cx(
+    getIndentLevelStyle(indentLevel),
+    css`
+      padding-top: 16px;
+      padding-bottom: 8px;
+    `,
+  );
+
   if (collapsible) {
     return (
       <li className={cx(listItemStyle, className)} {...rest}>
@@ -267,6 +325,7 @@ function SideNavGroup({
             `,
             {
               [collapsibleHeaderFocusStyle]: showFocus,
+              [intentedStyle]: indentLevel > 1,
             },
           )}
           onClick={() => setOpen(curr => !curr)}
@@ -274,7 +333,6 @@ function SideNavGroup({
           data-testid="side-nav-group-header-label"
         >
           {renderedLabelText}
-
           <ChevronRight
             role="presentation"
             size={12}
@@ -324,7 +382,7 @@ function SideNavGroup({
                   },
                 )}
               >
-                {children}
+                {renderedChildren}
               </ul>
             </div>
           )}
@@ -336,15 +394,18 @@ function SideNavGroup({
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
       <div
+        {...button.prop}
         data-testid="side-nav-group-header-label"
         id={menuGroupLabelId}
-        className={labelStyle}
+        className={cx(labelStyle, {
+          [intentedStyle]: indentLevel > 1,
+        })}
       >
         {renderedLabelText}
       </div>
 
       <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
-        {children}
+        {renderedChildren}
       </ul>
     </li>
   );

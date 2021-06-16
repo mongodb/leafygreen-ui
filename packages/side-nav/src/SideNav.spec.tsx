@@ -101,7 +101,7 @@ describe('packages/side-nav', () => {
       });
     });
 
-    describe('it properly determines what nested elements to render', () => {
+    describe('it properly handles nested SideNavItem components', () => {
       test('when an active SideNavItem has nested items, they are rendered', () => {
         render(
           <SideNav aria-label="test side nav">
