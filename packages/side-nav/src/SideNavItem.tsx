@@ -64,11 +64,11 @@ const defaultStyle = css`
 const typographyStyle = {
   [14]: css`
     font-size: 14px;
-    line-height: 1em;
+    line-height: 20px;
   `,
   [16]: css`
     font-size: 16px;
-    line-height: 1.5em;
+    line-height: 24px;
   `,
 };
 
