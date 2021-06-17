@@ -1,5 +1,11 @@
 # @leafygreen-ui/copyable
 
+## 2.0.10
+
+### Patch Changes
+
+- a03b83d3: Exposes a `shouldTooltipUsePortal` prop on Copyable, to control whether the "Copied!" Tooltip is rendered as a direct DOM child, or within a portal, in order to support usage within a Modal
+
 ## 2.0.9
 
 ### Patch Changes
