@@ -92,22 +92,20 @@ describe('packages/RadioBoxGroup', () => {
   const option2 = radioBoxGroupContainer.children[2];
   const wrapped = radioBoxGroupContainer.children[3];
 
-  test.todo(`correct number of children render`)
+  test.todo(`correct number of children render`);
   // expect(radioBoxGroupContainer.children).toHaveLength(4)
   // radioBoxGroupContainer.children.length returns 1
 
   test(`input ids are all unique`, () => {
-    const radioChildren = [option1, option2, wrapped]
+    const radioChildren = [option1, option2, wrapped];
     const uniqueIDs = new Set();
-    radioChildren.forEach(c => uniqueIDs.add(c.querySelector('input')!.id))
-    expect(radioChildren.length).toEqual(uniqueIDs.size)
-  })
-
+    radioChildren.forEach(c => uniqueIDs.add(c.querySelector('input')!.id));
+    expect(radioChildren.length).toEqual(uniqueIDs.size);
+  });
 
   test('renders children of Radio Box Group, that are not themselves Radio Boxes, as is, without converting them to RadioBoxes', () => {
     expect(text.tagName.toLowerCase()).toBe('h1');
   });
-
 
   test('renders wrapper components as themselves', () => {
     expect(wrapped.tagName.toLowerCase()).toBe('div');
