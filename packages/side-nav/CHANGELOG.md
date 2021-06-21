@@ -1,5 +1,11 @@
 # @leafygreen-ui/side-nav
 
+## 7.2.0
+
+### Minor Changes
+
+- 19369b05: Adds support for nested SideNavGroups
+
 ## 7.1.2
 
 ### Patch Changes
