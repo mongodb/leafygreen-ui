@@ -1990,13 +1990,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@leafygreen-ui/icon@^11.1.0":
-  version "11.1.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon/-/icon-11.1.0.tgz#f0bea7f9013857fd3859e1fa571a429ca3ba160b"
-  integrity sha512-0awjs+l6mr5liR6a0MPydyuTiI7lurk9bQzRl8HlvU8g7j8g7bHftvIwhrGdQKjQ5yi5S5Iv3rkv2f6QiZvZGA==
-  dependencies:
-    "@leafygreen-ui/lib" "^7.0.0"
-
 "@leafygreen-ui/lib@^6.1.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-6.3.0.tgz#7276bf2a5e22dcb18c08bef5a3beb32b921b615c"
@@ -2006,19 +1999,6 @@
     facepaint "^1.2.1"
     polished "^2.3.0"
     prop-types "^15.0.0"
-
-"@leafygreen-ui/menu@^11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/menu/-/menu-11.0.0.tgz#165d0239112d6aeb5eb67b0d2052b9bc10012ca5"
-  integrity sha512-mANZtQsjUtgyTK1ElFbZK/HmVIy5mHsXJeFNFygzbZVkIUwpv/4mEv9k/8b8XnJ54Nm6FnMVsuVXPzjZNYXS6g==
-  dependencies:
-    "@leafygreen-ui/box" "^3.0.5"
-    "@leafygreen-ui/hooks" "^7.0.0"
-    "@leafygreen-ui/icon-button" "^9.1.5"
-    "@leafygreen-ui/lib" "^8.0.0"
-    "@leafygreen-ui/palette" "^3.2.1"
-    "@leafygreen-ui/popover" "^7.2.1"
-    react-transition-group "^4.4.1"
 
 "@lerna/add@3.20.0":
   version "3.20.0"
