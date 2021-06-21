@@ -73,9 +73,9 @@ describe('packages/RadioBoxGroup', () => {
   }
 
   const { container } = render(
-    <RadioBoxGroup>
-      <RadioBox value="option-1">Input 1</RadioBox>
+    <RadioBoxGroup className="test-radio-box-group">
       <h1>Will Remain As Text</h1>
+      <RadioBox value="option-1">Input 1</RadioBox>
       <RadioBox value="option-2">Input 2</RadioBox>
       <WrappedRadioBox text="Also still text" />
     </RadioBoxGroup>,
@@ -87,13 +87,29 @@ describe('packages/RadioBoxGroup', () => {
     throw new Error('Could not find radio box group container element');
   }
 
-  const text = radioBoxGroupContainer.children[1];
+  const text = radioBoxGroupContainer.children[0];
+  const option1 = radioBoxGroupContainer.children[1];
+  const option2 = radioBoxGroupContainer.children[2];
+  const wrapped = radioBoxGroupContainer.children[3];
+
+  // test.todo(`children render properly`, () => {
+  //   expect(radioBoxGroupContainer.children.length).toEqual(4) // ???
+  // })
+
+  test(`input ids are all unique`, () => {
+    // const inputs = Array.from(radioBoxGroupContainer.querySelectorAll('input'))
+    // console.log(inputs.map(({value, id}) => ({value, id})));
+    const children = [option1, option2, wrapped]
+    const uniqueIDs = new Set();
+    children.forEach(c => uniqueIDs.add(c.querySelector('input').id))
+    expect(children.length).toEqual(uniqueIDs.size)
+  })
+
 
   test('renders children of Radio Box Group, that are not themselves Radio Boxes, as is, without converting them to RadioBoxes', () => {
     expect(text.tagName.toLowerCase()).toBe('h1');
   });
 
-  const wrapped = radioBoxGroupContainer.children[3];
 
   test('renders wrapper components as themselves', () => {
     expect(wrapped.tagName.toLowerCase()).toBe('div');
