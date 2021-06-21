@@ -2007,6 +2007,19 @@
     polished "^2.3.0"
     prop-types "^15.0.0"
 
+"@leafygreen-ui/menu@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/menu/-/menu-11.0.0.tgz#165d0239112d6aeb5eb67b0d2052b9bc10012ca5"
+  integrity sha512-mANZtQsjUtgyTK1ElFbZK/HmVIy5mHsXJeFNFygzbZVkIUwpv/4mEv9k/8b8XnJ54Nm6FnMVsuVXPzjZNYXS6g==
+  dependencies:
+    "@leafygreen-ui/box" "^3.0.5"
+    "@leafygreen-ui/hooks" "^7.0.0"
+    "@leafygreen-ui/icon-button" "^9.1.5"
+    "@leafygreen-ui/lib" "^8.0.0"
+    "@leafygreen-ui/palette" "^3.2.1"
+    "@leafygreen-ui/popover" "^7.2.1"
+    react-transition-group "^4.4.1"
+
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"

@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.0.0
+
+### Major Changes
+
+- 047c1930: Adds `useIdAllocator` hook
+
 ## 6.0.1
 
 ### Patch Changes

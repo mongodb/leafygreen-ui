@@ -24,6 +24,6 @@
     "@leafygreen-ui/palette": "^3.2.1"
   },
   "devDependencies": {
-    "@leafygreen-ui/lib": "^7.0.0"
+    "@leafygreen-ui/lib": "^8.0.0"
   }
 }

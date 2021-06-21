@@ -1,5 +1,14 @@
 # @leafygreen-ui/toggle
 
+## 7.0.3
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/a11y@1.2.1
+  - @leafygreen-ui/interaction-ring@1.0.4
+
 ## 7.0.2
 
 ### Patch Changes

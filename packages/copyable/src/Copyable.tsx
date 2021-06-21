@@ -5,7 +5,7 @@ import { transparentize } from 'polished';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import { IdAllocator } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
@@ -130,9 +130,8 @@ interface CopyableProps {
   className?: string;
   copyable?: boolean;
   size?: Size;
+  shouldTooltipUsePortal?: boolean;
 }
-
-const idAllocator = IdAllocator.create('copyable');
 
 export default function Copyable({
   darkMode = false,
@@ -142,6 +141,7 @@ export default function Copyable({
   className,
   copyable = true,
   size = Size.Default,
+  shouldTooltipUsePortal = true,
 }: CopyableProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const colorSet = colorSets[mode];
@@ -154,7 +154,7 @@ export default function Copyable({
     setShowCopyButton(copyable && ClipboardJS.isSupported());
   }, [copyable]);
 
-  const codeId = React.useMemo(() => idAllocator.generate(), []);
+  const codeId = useIdAllocator({ prefix: 'code' });
 
   let copyButton: JSX.Element | undefined;
 
@@ -180,6 +180,7 @@ export default function Copyable({
         justify={Justify.Middle}
         trigger={trigger}
         triggerEvent={TriggerEvent.Click}
+        usePortal={shouldTooltipUsePortal}
       >
         Copied!
       </Tooltip>

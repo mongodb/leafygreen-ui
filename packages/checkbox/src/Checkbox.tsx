@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  HTMLElementProps,
-  createDataProp,
-  IdAllocator,
-} from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   spritesheetLight,
@@ -141,8 +138,6 @@ interface CheckboxProps extends HTMLElementProps<'input', never> {
   animate?: boolean;
 }
 
-const idAllocator = IdAllocator.create('checkbox');
-
 function Checkbox({
   darkMode = false,
   checked: checkedProp,
@@ -164,18 +159,10 @@ function Checkbox({
     () => (checkedProp != null ? checkedProp : checked),
     [checkedProp, checked],
   );
-  const normalizedIndeterminate = React.useRef(indeterminateProp);
-  const inputRef = React.useRef(null);
-  const checkboxId = React.useMemo(() => idProp ?? idAllocator.generate(), [
-    idProp,
-  ]);
-  const labelId = `${checkboxId}-label`;
 
-  React.useEffect(() => {
-    if (indeterminateProp != null) {
-      normalizedIndeterminate.current = indeterminateProp;
-    }
-  }, [indeterminateProp]);
+  const inputRef = React.useRef(null);
+  const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
+  const labelId = `${checkboxId}-label`;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChangeProp) {
@@ -196,7 +183,7 @@ function Checkbox({
 
     // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
     // Explicitly call onChange for this case
-    if (normalizedIndeterminate.current) {
+    if (indeterminateProp) {
       onChange(e);
       e.stopPropagation();
     }
@@ -274,9 +261,7 @@ function Checkbox({
         checked={normalizedChecked}
         aria-label="checkbox"
         aria-disabled={disabled}
-        aria-checked={
-          normalizedIndeterminate.current ? 'mixed' : normalizedChecked
-        }
+        aria-checked={indeterminateProp ? 'mixed' : normalizedChecked}
         aria-labelledby={labelId}
         onClick={onClick}
         onChange={onChange}
@@ -286,19 +271,15 @@ function Checkbox({
         {...checkboxWrapper.prop}
         className={cx(wrapperStyle, {
           [wrapperStyleChecked]:
-            normalizedChecked && !normalizedIndeterminate.current && !disabled,
-          [wrapperStyleAnimated]:
-            animate && !normalizedIndeterminate.current && !disabled,
+            normalizedChecked && indeterminateProp && !disabled,
+          [wrapperStyleAnimated]: animate && !indeterminateProp && !disabled,
         })}
       >
         <div
           className={cx(checkboxStyle, checkboxBackgroundImage, {
             [checkboxStyleChecked]:
-              normalizedChecked &&
-              !normalizedIndeterminate.current &&
-              !disabled,
-            [checkboxStyleAnimated]:
-              animate && !normalizedIndeterminate.current && !disabled,
+              normalizedChecked && !indeterminateProp && !disabled,
+            [checkboxStyleAnimated]: animate && !indeterminateProp && !disabled,
           })}
         />
       </div>

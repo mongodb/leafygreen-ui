@@ -1,5 +1,16 @@
 # @leafygreen-ui/typography
 
+## 8.0.2
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/box@3.0.5
+  - @leafygreen-ui/icon@11.1.1
+  - @leafygreen-ui/leafygreen-provider@2.1.2
+  - @leafygreen-ui/tokens@0.5.2
+
 ## 8.0.1
 
 ### Patch Changes

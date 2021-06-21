@@ -1,5 +1,20 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/hooks@7.0.0
+
+## 2.1.1
+
+### Patch Changes
+
+- 1fe3e1a3: Updates type of useBaseFontSize from number to `14 | 16` specifically.
+
 ## 2.1.0
 
 ### Minor Changes

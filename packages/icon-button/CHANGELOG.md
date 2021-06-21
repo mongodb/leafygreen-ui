@@ -1,5 +1,15 @@
 # @leafygreen-ui/icon-button
 
+## 9.1.5
+
+### Patch Changes
+
+- e1af3278: Updates the focus state of component to meet accessible contrast ratios.
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+  - @leafygreen-ui/a11y@1.2.1
+  - @leafygreen-ui/box@3.0.5
+
 ## 9.1.4
 
 ### Patch Changes

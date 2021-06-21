@@ -1,108 +1,97 @@
 import { css } from 'emotion';
+import { Body, Subtitle, Link } from '@leafygreen-ui/typography';
+import Callout from '@leafygreen-ui/callout';
+import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
+import { mq } from 'utils/mediaQuery';
 
-## Icon creation guide
-
-The LeafyGreen system icons are a clear and concise set of glyphs designed to be minimal in form and express a variety of use-cases for all digital products
-
-<div
+<Body
   className={css`
-    margin: 40px 0px;
+    margin-top: 24px;
+  `}
+>
+  Icons can be used in a variety of settings, as support for text or standalone.
+</Body>
+
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/icons/icon-guidelines-1@3x.png`}
+  className={css`
     width: auto;
-    height: 277px;
-    background-image: url('${CDN}/images/guidelines/icon-creation-1@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    height: 52px;
   `}
 />
 
-### Our icon set is created collaboratively
+<Body>
+  Caret icons are used in select inputs or standalone menu triggers. They always
+  point down, and always open a new dropdown.
+</Body>
 
-We want to build out a universal icon set together. Here are some things to keep in mind.
-
-- Icons should represent real world things.
-- Icons should not represent overly complex things, like CalendarEventJulyFourth.
-- Refer to this guide and existing icons while building your icon.
-
-<br />
-
-### How to create an icon
-
-Follow these steps to help maintain a consitent look across new and existing icons
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/icons/icon-guidelines-2@3x.png`}
   className={css`
-    margin: 40px 0px;
     width: auto;
-    height: 180px;
-    background-image: url('${CDN}/images/guidelines/icon-creation-2@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    height: 70px;
   `}
 />
 
-### Stroke Weight of Negative Space
+<Body>
+  When a menu button is not standalone, like on the cluster card or in a table
+  row, use the ellipsis icon instead of the caret for menu triggers.{' '}
+</Body>
 
-Negative space is a defining feature of our icon set. For optimal rendering and legibility, the stroke width should vary to appear better optically. When designing icons, use the following stroke weights:
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/icons/icon-guidelines-3@3x.png`}
   className={css`
-    margin: 40px 0px;
     width: auto;
-    height: 177px;
-    background-image: url('${CDN}/images/guidelines/icon-creation-3@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    height: 212px;
   `}
 />
 
-### Corner Radius
+<Body>
+  Chevrons are used as an affordance for a collapsible/expandable, accordion,
+  element. They do no open a new dropdown, but resize the existing container.
+  Always point the chevron in the direction of the content when open, and to the
+  opposite of its content when closed.
+</Body>
 
-The icon set has predominately rounded corners and caps, but it’s important to note that it also allows for sharp corners occasionally
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/icons/icon-guidelines-4@3x.png`}
   className={css`
-    margin: 40px 0px;
-    width: auto;
-    height: 174px;
-    background-image: url('${CDN}/images/guidelines/icon-creation-4@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    ${mq({
+      width: ['auto', 'auto', 'auto', '791px'],
+    })}
+    height: 334px;
   `}
 />
 
-### Things to avoid while creating
+<Body>
+  Icons should be contextual to the action or information they support. Don’t
+  use icons next to brand names.
+</Body>
 
-To ensure consistency and quality for your icon avoid these common mistakes
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/icons/icon-guidelines-5@3x.png`}
   className={css`
-    margin: 40px 0px;
     width: auto;
-    height: 173px;
-    background-image: url('${CDN}/images/guidelines/icon-creation-5@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    height: 93px;
   `}
 />
 
-### How to prepare your final icon
+<Subtitle>Accessibility Requirements</Subtitle>
+<Body>
+  Whether working in light or dark mode, ensure your icons are accessible and
+  pass a 3:1 contrast ratio with their background. You can check this contrast
+  ratio by using the{' '}
+  <Link href="https://www.figma.com/community/plugin/732603254453395948/Stark">
+    Stark plugin in Figma
+  </Link>
+  . (Gray Base is the lightest you can go in light mode for our gray palette.)
+</Body>
 
-Follow these steps to help maintain a consitent look across new and existing icons.
-
-<div
+<GuidelineImage
+  imageURL={`${CDN}/images/new-guidelines/icons/icon-guidelines-6@3x.png`}
   className={css`
-    margin: 40px 0px;
     width: auto;
-    height: 452px;
-    background-image: url('${CDN}/images/guidelines/icon-creation-6@3x.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    height: 417px;
   `}
 />

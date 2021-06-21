@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, text } from '@storybook/addon-knobs';
+import { boolean, select, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
@@ -182,7 +182,12 @@ function OrgSettingsSideNav() {
     <LeafyGreenProvider>
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
-        <SideNav className={sideNavStyles} aria-label="Realm app">
+        <SideNav
+          className={sideNavStyles}
+          aria-label="Realm app"
+          baseFontSize={select('baseFontSize', [14, 16], 14)}
+          widthOverride={number('widthOverride', 200)}
+        >
           <SideNavGroup
             glyph={<Icon glyph="Cloud" />}
             header={<span id="context-label">Context</span>}
@@ -213,8 +218,23 @@ function OrgSettingsSideNav() {
           <SideNavGroup glyph={<Icon glyph="Building" />} header="Organization">
             <SideNavItem>Projects</SideNavItem>
             <SideNavItem>Activity Feed</SideNavItem>
-            <SideNavItem active>Access</SideNavItem>
-            <SideNavItem>Alerts</SideNavItem>
+
+            <SideNavItem active>
+              Security
+              <SideNavItem>
+                Permissions
+                <SideNavItem>Login</SideNavItem>
+              </SideNavItem>
+              <SideNavItem>
+                Access
+                <SideNavItem>Database Access</SideNavItem>
+                <SideNavItem>Network Access</SideNavItem>
+              </SideNavItem>
+            </SideNavItem>
+            <SideNavItem>
+              Alerts
+              <SideNavItem>Database Access</SideNavItem>
+            </SideNavItem>
             <SideNavItem>Settings</SideNavItem>
           </SideNavGroup>
 
@@ -230,6 +250,7 @@ function OrgSettingsSideNav() {
 }
 
 function MockSideNav() {
+  const [collapsed, setCollapsed] = useState(false);
   const textHeader = 'States';
   const hasActiveItem = boolean('hasActiveItem', false);
 
@@ -238,7 +259,12 @@ function MockSideNav() {
       <div className={gridStyles}>
         <MongoNav className={topNavStyles} mode="dev" />
 
-        <SideNav className={sideNavStyles} aria-label="General example">
+        <SideNav
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          className={sideNavStyles}
+          aria-label="General example"
+        >
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
             <SideNavItem active>Active State</SideNavItem>
             <SideNavItem disabled>Disabled State</SideNavItem>
@@ -276,7 +302,43 @@ function MockSideNav() {
   );
 }
 
+function NestedGroups() {
+  return (
+    <LeafyGreenProvider>
+      <div className={gridStyles}>
+        <MongoNav className={topNavStyles} mode="dev" />
+
+        <SideNav widthOverride={300}>
+          <SideNavItem>Overview</SideNavItem>
+          <SideNavItem>Introduction</SideNavItem>
+          <SideNavItem>
+            Android SDK
+            <SideNavItem>Install MongoDB Community Edition</SideNavItem>
+            <SideNavGroup
+              header="Fundamentals"
+              collapsible
+              glyph={<Icon glyph="Building" />}
+            >
+              <SideNavItem active>
+                Upgrade MongoDB Community to MongoDB Enterprise
+              </SideNavItem>
+              <SideNavItem>Verify Integrity of MongoDB Packages</SideNavItem>
+              <SideNavGroup header="Preferences">
+                <SideNavItem>Privacy</SideNavItem>
+                <SideNavItem>Security</SideNavItem>
+              </SideNavGroup>
+            </SideNavGroup>
+          </SideNavItem>
+        </SideNav>
+
+        {content}
+      </div>
+    </LeafyGreenProvider>
+  );
+}
+
 storiesOf('SideNav', module)
   .add('Simple Navigation', () => <MockSideNav />)
   .add('Realm', () => <RealmSideNav />)
-  .add('Org Settings', () => <OrgSettingsSideNav />);
+  .add('Org Settings', () => <OrgSettingsSideNav />)
+  .add('NestedGroups', () => <NestedGroups />);

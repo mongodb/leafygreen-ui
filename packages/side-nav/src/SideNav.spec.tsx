@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { SideNav, SideNavGroup, SideNavItem } from '.';
 
 type renderedElement = HTMLElement | null;
@@ -98,6 +98,86 @@ describe('packages/side-nav', () => {
         fireEvent.click(collapseToggle);
 
         expect(collapseToggle.getAttribute('aria-expanded')).toEqual('true');
+      });
+    });
+
+    describe('it properly handles nested SideNavItem components', () => {
+      test('when an active SideNavItem has nested items, they are rendered', () => {
+        render(
+          <SideNav aria-label="test side nav">
+            <SideNavItem active>
+              Parent
+              <SideNavItem>Child</SideNavItem>
+            </SideNavItem>
+          </SideNav>,
+        );
+        expect(screen.getByText('Parent')).toBeInTheDocument();
+        expect(screen.getByText('Child')).toBeInTheDocument();
+      });
+
+      test('when an inactive SideNavItem has nested items, they are not rendered by default', () => {
+        render(
+          <SideNav aria-label="test side nav">
+            <SideNavItem>
+              Parent
+              <SideNavItem>Child</SideNavItem>
+            </SideNavItem>
+          </SideNav>,
+        );
+
+        expect(screen.getByText('Parent')).toBeInTheDocument();
+        expect(screen.queryByText('Children')).not.toBeInTheDocument();
+      });
+
+      test('when a SideNavItem has an active child, it is rendered to the DOM', () => {
+        render(
+          <SideNav aria-label="test side nav">
+            <SideNavItem>
+              Parent
+              <SideNavItem>
+                Child
+                <SideNavItem active>Grandchild</SideNavItem>
+              </SideNavItem>
+            </SideNavItem>
+          </SideNav>,
+        );
+
+        expect(screen.getByText('Parent')).toBeInTheDocument();
+        expect(screen.getByText('Child')).toBeInTheDocument();
+        expect(screen.getByText('Grandchild')).toBeInTheDocument();
+      });
+    });
+
+    describe('when controlled', () => {
+      const setCollapsed = jest.fn();
+      const collapsed = true;
+
+      beforeEach(() => {
+        render(
+          <SideNav
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+            aria-label="Side Navigation"
+          >
+            <SideNavGroup>
+              <SideNavItem>
+                <a href="#clusters">Clusters</a>
+              </SideNavItem>
+            </SideNavGroup>
+          </SideNav>,
+        );
+      });
+
+      test('renders based on the "collapsed" props when supplied', () => {
+        expect(screen.getByText('Clusters')).toBeInTheDocument();
+      });
+
+      test('setCollapsed function is called when XX is clicked', () => {
+        expect(screen.getByText('Clusters')).toBeInTheDocument();
+        fireEvent.click(screen.getByTestId('side-nav-collapse-toggle'));
+        expect(setCollapsed).toHaveBeenCalled();
+        // it is an empty function so side nav should remain visible in the DOM
+        expect(screen.getByText('Clusters')).toBeInTheDocument();
       });
     });
   });

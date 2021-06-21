@@ -24,6 +24,9 @@
     },
     {
       "path": "../typography"
+    },
+    {
+      "path": "../hooks"
     }
   ]
 }

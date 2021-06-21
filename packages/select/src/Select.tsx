@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import {
+  useViewportSize,
+  useIdAllocator,
+  useEventListener,
+} from '@leafygreen-ui/hooks';
+import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
-import { useViewportSize, useEventListener } from '@leafygreen-ui/hooks';
-import { IdAllocator, OneOf, keyMap } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
 import ListMenu from './ListMenu';
@@ -71,8 +75,6 @@ export type Props = {
   ) &
   OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
-const idAllocator = IdAllocator.create('select');
-
 export default function Select({
   children,
   darkMode = false,
@@ -97,17 +99,18 @@ export default function Select({
   popoverZIndex,
   __INTERNAL__menuButtonSlot__,
 }: Props) {
+  const id = useIdAllocator({ prefix: 'select', id: idProp });
+  const labelId = useMemo(() => ariaLabelledby ?? `${id}-label`, [
+    ariaLabelledby,
+    id,
+  ]);
+
   if (!label && !ariaLabelledby) {
     console.error(
       'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
     );
   }
 
-  const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
-  const labelId = useMemo(() => ariaLabelledby ?? `${id}-label`, [
-    ariaLabelledby,
-    id,
-  ]);
   const descriptionId = `${id}-description`;
   const menuId = `${id}-menu`;
 

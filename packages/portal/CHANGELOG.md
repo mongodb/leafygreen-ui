@@ -1,5 +1,12 @@
 # @leafygreen-ui/portal
 
+## 3.1.3
+
+### Patch Changes
+
+- Updated dependencies [047c1930]
+  - @leafygreen-ui/lib@8.0.0
+
 ## 3.1.2
 
 ### Patch Changes
