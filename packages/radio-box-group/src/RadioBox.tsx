@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -218,18 +218,12 @@ export default function RadioBox({
   ...rest
 }: RadioBoxProps & Omit<HTMLElementProps<'input', never>, 'size'>) {
   const radioBoxGroupContext = useRadioBoxGroupContext();
-  const idRef = useRef<string>();
 
   const localId = useIdAllocator({
-    prefix: 'radio-box-group',
+    prefix: 'radio-box',
   });
 
-  const id = idProp ?? idRef.current ?? localId;
-
-  if (idProp == null && idRef.current == null && id != null) {
-    // Avoid re-calculating on next render
-    idRef.current = id;
-  }
+  const id = useMemo(() => idProp ?? localId, [idProp, localId])
 
   const size = radioBoxGroupContext?.size ?? sizeProp;
   const name = radioBoxGroupContext?.name ?? nameProp;

@@ -92,17 +92,15 @@ describe('packages/RadioBoxGroup', () => {
   const option2 = radioBoxGroupContainer.children[2];
   const wrapped = radioBoxGroupContainer.children[3];
 
-  // test.todo(`children render properly`, () => {
-  //   expect(radioBoxGroupContainer.children.length).toEqual(4) // ???
-  // })
+  test.todo(`correct number of children render`)
+  // expect(radioBoxGroupContainer.children).toHaveLength(4)
+  // radioBoxGroupContainer.children.length returns 1
 
   test(`input ids are all unique`, () => {
-    // const inputs = Array.from(radioBoxGroupContainer.querySelectorAll('input'))
-    // console.log(inputs.map(({value, id}) => ({value, id})));
-    const children = [option1, option2, wrapped]
+    const radioChildren = [option1, option2, wrapped]
     const uniqueIDs = new Set();
-    children.forEach(c => uniqueIDs.add(c.querySelector('input').id))
-    expect(children.length).toEqual(uniqueIDs.size)
+    radioChildren.forEach(c => uniqueIDs.add(c.querySelector('input')!.id))
+    expect(radioChildren.length).toEqual(uniqueIDs.size)
   })
 
 
