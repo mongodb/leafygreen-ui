@@ -82,6 +82,51 @@ describe('packages/typography', () => {
         expect(icon).toBeInTheDocument();
       });
     });
+
+    describe('when the destination URL is relative', () => {
+      describe('by default', () => {
+        test('it renders the correct tag to the DOM', () => {
+          renderLink({
+            href: '?path=/story/badge--default',
+          });
+          const anchor = screen.getByText('Link').parentNode;
+          expect((anchor as HTMLElement).tagName.toLowerCase()).toBe('a');
+        });
+      });
+
+      test('and the "arrowAppearance" prop is set to "persist"', () => {
+        renderLink({
+          href: '?path=/story/badge--default',
+          arrowAppearance: 'persist',
+        });
+
+        const icon = screen.getByRole('presentation', { hidden: true });
+        expect(icon).toBeInTheDocument();
+      });
+
+      // Related ticket here: https://jira.mongodb.org/browse/PD-1090
+      test.todo('and the "arrowAppearance" prop is set to "hover"');
+
+      test('and the "arrowAppearance" prop is not specified', () => {
+        renderLink({
+          href: '?path=/story/badge--default',
+        });
+        const anchor = screen.getByText('Link');
+
+        fireEvent.mouseEnter(anchor);
+        expect(screen.queryByRole('img')).not.toBeInTheDocument();
+      });
+
+      test('and the "target" prop is set to "_blank"', () => {
+        renderLink({
+          href: '?path=/story/badge--default',
+          target: '_blank',
+        });
+
+        const icon = screen.getByRole('presentation', { hidden: true });
+        expect(icon).toBeInTheDocument();
+      });
+    });
   });
 
   describe('when no "href" prop is passed and the "as" prop is not supplied', () => {
