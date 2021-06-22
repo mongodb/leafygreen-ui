@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/copyable",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "leafyGreen UI Kit Copyable",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
