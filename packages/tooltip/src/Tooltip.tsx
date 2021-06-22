@@ -262,7 +262,6 @@ function Tooltip({
       switch (triggerEvent) {
         case TriggerEvent.Hover:
           return {
-            ref: setTriggerNode,
             onMouseEnter: debounce((e: MouseEvent) => {
               triggerHandler('onMouseEnter', e);
               setOpen(true);
@@ -283,7 +282,6 @@ function Tooltip({
         case TriggerEvent.Click:
         default:
           return {
-            ref: setTriggerNode,
             onClick: (e: MouseEvent) => {
               // ensure that we don't close the tooltip when content inside tooltip is clicked
               if (e.target !== tooltipNode) {
