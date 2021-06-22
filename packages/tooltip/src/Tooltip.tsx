@@ -296,7 +296,11 @@ function Tooltip({
 
       function triggerHandler(handler: string, e: MouseEvent): void {
         // call any click handlers already on the trigger
-        if (triggerProps[handler] && typeof triggerProps[handler] == 'function')
+        if (
+          triggerProps &&
+          triggerProps[handler] &&
+          typeof triggerProps[handler] == 'function'
+        )
           triggerProps[handler](e);
       }
     },
