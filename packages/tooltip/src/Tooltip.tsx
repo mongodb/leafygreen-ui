@@ -234,7 +234,7 @@ function Tooltip({
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
   const [tooltipNode, setTooltipNode] = useState<HTMLDivElement | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // @ts-expect-error
   const [triggerNode, setTriggerNode] = useState<HTMLDivElement | null>(null);
 
   const existingId = id ?? tooltipNode?.id;
