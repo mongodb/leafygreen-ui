@@ -272,7 +272,7 @@ function Tooltip({
               handleClose();
             }, 35),
             onFocus: (e: MouseEvent) => {
-              triggerHandler('onMouseLeave', e);
+              triggerHandler('onFocus', e);
               setOpen(true);
             },
             onBlur: (e: MouseEvent) => {
