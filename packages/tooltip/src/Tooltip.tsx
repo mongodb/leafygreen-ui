@@ -127,9 +127,8 @@ export type TooltipProps = Omit<
   ModifiedPopoverProps & {
     /**
      * A slot for the element used to trigger the `Tooltip`.
-     * @default: hover
      */
-    trigger: React.ReactElement | Function;
+    trigger?: React.ReactElement | Function;
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
