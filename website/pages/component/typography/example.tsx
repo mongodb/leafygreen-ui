@@ -41,6 +41,7 @@ const knobsConfig: KnobsConfigInterface<{
     options: [
       typeof window !== 'undefined' ? window.location.origin : '',
       'https://cloud.mongodb.com',
+      '/component/typography/guidelines',
     ],
     default: 'http://localhost:3000',
     label: 'href',
