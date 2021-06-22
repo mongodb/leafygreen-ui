@@ -59,6 +59,7 @@ storiesOf('Typography', module).add('Default', () => {
             'select Link href',
             [
               'http://localhost:9001',
+              '?path=/story/button--icon-only',
               'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
             ],
             'http://localhost:9001',

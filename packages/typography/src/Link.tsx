@@ -90,14 +90,18 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   ...rest
 }: LinkProps) => {
   const [currentHostname, setCurrentHostname] = useState('');
-  const hrefHostname = useMemo(() => href && new URL(href).hostname, [href]);
-
-  const size = useBaseFontSize();
-  const fontSize = size === 16 ? typeScale2 : typeScale1;
-
   useEffect(() => {
     setCurrentHostname(window.location.hostname);
   }, []);
+
+  const hrefHostname = useMemo(() => {
+    if (!href) return;
+    const httpRegex = /^http(s)?:\/\//;
+    return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
+  }, [href, currentHostname]);
+
+  const size = useBaseFontSize();
+  const fontSize = size === 16 ? typeScale2 : typeScale1;
 
   let target, icon, rel;
 
