@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
   act,
   render,
@@ -463,10 +463,10 @@ describe('packages/tooltip', () => {
 
   // eslint-disable-next-line jest/expect-expect
   test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
+    // @ts-expect-error
     renderTooltip({
       open: true,
       usePortal: false,
-      // @ts-expect-error
       portalClassName: 'test-classname',
     });
   });
@@ -542,5 +542,39 @@ describe('packages/tooltip', () => {
 
       expect(clickHandler).toHaveBeenCalledTimes(1);
     });
+  });
+
+  describe('when the trigger has an event handler', () => {
+    const renderTooltipWithTrigger = (
+      event: 'hover' | 'click',
+      element: ReactElement,
+    ) => {
+      const result = render(
+        <Tooltip
+          triggerEvent={event}
+          trigger={element}
+          data-testid={tooltipTestId}
+        >
+          <div>Tooltip Contents!</div>
+        </Tooltip>,
+      );
+      const trigger = screen.getByText(buttonText);
+      return { ...result, trigger };
+    };
+
+    test('onClick events should fire', () => {
+      const clickHandler = jest.fn();
+      const { trigger } = renderTooltipWithTrigger(
+        'click',
+        <button onClick={clickHandler}>{buttonText}</button>,
+      );
+      fireEvent.click(trigger);
+      expect(clickHandler).toHaveBeenCalled();
+    });
+
+    test.todo('onMouseEnter events should fire');
+    test.todo('onMouseLeave events should fire');
+    test.todo('onFocus events should fire');
+    test.todo('onBlur events should fire');
   });
 });

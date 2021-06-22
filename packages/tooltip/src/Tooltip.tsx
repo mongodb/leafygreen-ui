@@ -259,38 +259,46 @@ function Tooltip({
 
   const createTriggerProps = useCallback(
     (triggerEvent: TriggerEvent, triggerProps?: any) => {
-      if (triggerEvent === TriggerEvent.Hover) {
-        return {
-          ref: setTriggerNode,
-          onMouseEnter: debounce(() => {
-            setOpen(true);
-          }, 35),
-          onMouseLeave: debounce(handleClose, 35),
-          onFocus: () => setOpen(true),
-          onBlur: handleClose,
-        };
+      switch (triggerEvent) {
+        case TriggerEvent.Hover:
+          return {
+            ref: setTriggerNode,
+            onMouseEnter: debounce((e: MouseEvent) => {
+              triggerHandler('onMouseEnter', e);
+              setOpen(true);
+            }, 35),
+            onMouseLeave: debounce((e: MouseEvent) => {
+              triggerHandler('onMouseLeave', e);
+              handleClose();
+            }, 35),
+            onFocus: (e: MouseEvent) => {
+              triggerHandler('onMouseLeave', e);
+              setOpen(true);
+            },
+            onBlur: (e: MouseEvent) => {
+              triggerHandler('onBlur', e);
+              handleClose();
+            },
+          };
+        case TriggerEvent.Click:
+        default:
+          return {
+            ref: setTriggerNode,
+            onClick: (e: MouseEvent) => {
+              // ensure that we don't close the tooltip when content inside tooltip is clicked
+              if (e.target !== tooltipNode) {
+                triggerHandler('onClick', e);
+                setOpen((curr: boolean) => !curr);
+              }
+            },
+          };
       }
 
-      if (triggerProps && triggerProps.onClick) {
-        return {
-          onClick: (e: MouseEvent) => {
-            // ensure that we don't close the tooltip when content inside tooltip is clicked
-            if (e.target !== tooltipNode) {
-              triggerProps.onClick();
-              setOpen((curr: boolean) => !curr);
-            }
-          },
-        };
+      function triggerHandler(handler: string, e: MouseEvent): void {
+        // call any click handlers already on the trigger
+        if (triggerProps[handler] && typeof triggerProps[handler] == 'function')
+          triggerProps[handler](e);
       }
-
-      return {
-        ref: setTriggerNode,
-        onClick: (e: MouseEvent) => {
-          if (e.target !== tooltipNode) {
-            setOpen((curr: boolean) => !curr);
-          }
-        },
-      };
     },
     [handleClose, setOpen, tooltipNode],
   );
