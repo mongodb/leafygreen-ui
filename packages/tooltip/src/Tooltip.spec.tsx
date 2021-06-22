@@ -463,10 +463,10 @@ describe('packages/tooltip', () => {
 
   // eslint-disable-next-line jest/expect-expect
   test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
-    // @ts-expect-error
     renderTooltip({
       open: true,
       usePortal: false,
+      // @ts-expect-error
       portalClassName: 'test-classname',
     });
   });
