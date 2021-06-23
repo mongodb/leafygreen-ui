@@ -14,6 +14,11 @@ storiesOf('Button', module)
     const baseFontSize = select('Base Font Size', [14, 16], 14);
     const disabled = boolean('Disabled', false);
     const darkMode = boolean('Dark Mode', false);
+    const href = select(
+      'href',
+      [undefined, 'https://mongodb.design'],
+      undefined,
+    );
     const leftGlyph = select(
       'Left Glyph',
       // @ts-expect-error undefined is a valid option
@@ -41,6 +46,7 @@ storiesOf('Button', module)
             size={size}
             disabled={disabled}
             baseFontSize={baseFontSize}
+            href={href}
             leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
             rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
           >
@@ -56,6 +62,11 @@ storiesOf('Button', module)
     const baseFontSize = select('Base Font Size', [14, 16], 14);
     const disabled = boolean('Disabled', false);
     const darkMode = boolean('Dark Mode', false);
+    const href = select(
+      'href',
+      [undefined, 'https://mongodb.design'],
+      undefined,
+    );
     const leftGlyph = select(
       'Left Glyph',
       // @ts-expect-error undefined is a valid option
@@ -83,6 +94,7 @@ storiesOf('Button', module)
             size={size}
             disabled={disabled}
             baseFontSize={baseFontSize}
+            href={href}
             leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
             rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
           />

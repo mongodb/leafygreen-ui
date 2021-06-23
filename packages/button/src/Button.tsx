@@ -107,13 +107,23 @@ const Button: ExtendableBox<
     type = 'button';
   }
 
+  // If the link is disabled, render as a div
+  const getButtonTag = (
+    isAnchor: boolean,
+    disabled: boolean,
+  ): 'a' | 'button' | 'div' => {
+    if (!isAnchor) return 'button';
+    if (disabled) return 'div';
+    return 'a';
+  };
+
   const buttonProps = {
     type,
     className: cx(buttonClassName, className),
     ref: forwardRef,
     // Provide a default value for the as prop
     // If consumping application passes a value for as, it will override the default set here
-    as: isAnchor ? 'a' : 'button',
+    as: getButtonTag(isAnchor, disabled),
     // only add a disabled prop if not an anchor
     ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,

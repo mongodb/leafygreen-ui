@@ -5,7 +5,6 @@ import { BoxProps } from '@leafygreen-ui/box';
 import Button from './Button';
 import { ButtonProps } from './types';
 
-const onClick = jest.fn();
 const className = 'test-button-class';
 const title = 'Test button title';
 const child = 'Button child';
@@ -37,89 +36,120 @@ describe('packages/button', () => {
     });
   });
 
-  test(`renders "${className}" in the component's markup`, () => {
-    const { button } = renderButton({
-      className,
+  describe('rendering', () => {
+    test(`renders "${className}" in the component's markup`, () => {
+      const { button } = renderButton({
+        className,
+      });
+
+      expect(button.closest(`.${className}`)).toBeVisible();
     });
 
-    expect(button.closest(`.${className}`)).toBeVisible();
-  });
-
-  test(`renders "${child}" as the button's textContent`, () => {
-    const { button } = renderButton({
-      children: child,
+    test(`renders "${child}" as the button's textContent`, () => {
+      const { button } = renderButton({
+        children: child,
+      });
+      expect(button.textContent).toBe(child);
     });
-    expect(button.textContent).toBe(child);
-  });
 
-  test(`renders "${title}" as the button title`, () => {
-    const { button } = renderButton({
-      title,
+    test(`renders "${title}" as the button title`, () => {
+      const { button } = renderButton({
+        title,
+      });
+      expect(button.title).toBe(title);
     });
-    expect(button.title).toBe(title);
-  });
 
-  test('fires the onClick handler once when clicked', () => {
-    const { button } = renderButton({
-      onClick,
+    test(`renders the disabled and aria-disabled attributes when disabled is set`, () => {
+      const { button } = renderButton({
+        disabled: true,
+      });
+      expect((button as HTMLButtonElement).disabled).toBe(true);
+      expect(button.getAttribute('aria-disabled')).toBe('true');
     });
-    fireEvent.click(button);
-    expect(onClick.mock.calls.length).toBe(1);
-  });
 
-  test(`renders the disabled and aria-disabled attributes when disabled is set`, () => {
-    const { button } = renderButton({
-      disabled: true,
+    test(`renders a button with the "button" type by default`, () => {
+      const { button } = renderButton();
+      expect((button as HTMLButtonElement).type).toBe('button');
     });
-    expect((button as HTMLButtonElement).disabled).toBe(true);
-    expect(button.getAttribute('aria-disabled')).toBe('true');
-  });
 
-  test(`renders inside of a button tag by default`, () => {
-    const { button } = renderButton();
-    expect(button.tagName.toLowerCase()).toBe('button');
-  });
-
-  test(`renders a button with the "button" type by default`, () => {
-    const { button } = renderButton();
-    expect((button as HTMLButtonElement).type).toBe('button');
-  });
-
-  test(`renders a button with the given type when one is set`, () => {
-    const { button } = renderButton({
-      type: 'submit',
+    test(`renders a button with the given type when one is set`, () => {
+      const { button } = renderButton({
+        type: 'submit',
+      });
+      expect((button as HTMLButtonElement).type).toBe('submit');
     });
-    expect((button as HTMLButtonElement).type).toBe('submit');
+
+    test(`renders inside of a \`button\` tag by default`, () => {
+      const { button } = renderButton();
+      expect(button.tagName.toLowerCase()).toBe('button');
+    });
+
+    test(`renders component inside of an \`a\` tag when "href" prop is set`, () => {
+      const { button } = renderButton({
+        href: 'http://mongodb.design',
+      });
+      expect(button.tagName.toLowerCase()).toBe('a');
+    });
+
+    test(`renders component inside of \`button\` tag when "href" prop is undefined`, () => {
+      const { button } = renderButton({
+        href: undefined,
+      });
+      expect(button.tagName.toLowerCase()).toBe('button');
+    });
+
+    test(`renders component inside of \`div\` tag when "href" prop is set, but "disabled" is true`, () => {
+      const { button } = renderButton({
+        href: 'http://mongodb.design',
+        disabled: true,
+      });
+      expect(button.tagName.toLowerCase()).toBe('div');
+    });
+
+    test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
+      const { button } = renderButton({
+        as: 'div',
+      });
+      expect(button.tagName.toLowerCase()).toBe('div');
+    });
+
+    test(`does not render the disabled attribute for a disabled link`, () => {
+      const { button } = renderButton({
+        href: 'http://mongodb.design',
+        disabled: true,
+      });
+      expect(button.getAttribute('disabled')).toBeNull();
+      expect(button.getAttribute('aria-disabled')).toBe('true');
+    });
   });
 
-  test(`renders component inside of a tag when "href" prop is set`, () => {
-    const { button } = renderButton({
-      href: 'http://mongodb.design',
+  describe('interaction', () => {
+    test('fires the onClick handler once when clicked', () => {
+      const onClick = jest.fn();
+      const { button } = renderButton({
+        onClick,
+      });
+      fireEvent.click(button);
+      expect(onClick.mock.calls.length).toBe(1);
     });
-    expect(button.tagName.toLowerCase()).toBe('a');
-  });
 
-  test(`renders component inside of button tag when "href" prop is undefined`, () => {
-    const { button } = renderButton({
-      href: undefined,
+    test('does not fire onClick handler when disabled', () => {
+      const onClick = jest.fn();
+      const { button } = renderButton({
+        disabled: true,
+        onClick,
+      });
+      fireEvent.click(button);
+      expect(onClick.mock.calls.length).toBe(0);
     });
-    expect(button.tagName.toLowerCase()).toBe('button');
-  });
 
-  test(`does not renders the disabled attributes when disabled is set and it's an anchor`, () => {
-    const { button } = renderButton({
-      href: 'http://mongodb.design',
-      disabled: true,
+    test('href attribute exists on a link', () => {
+      const href = 'https://mongodb.design';
+      const { button } = renderButton({
+        href,
+      });
+      expect(button).toHaveAttribute('href', href);
     });
-    expect(button.getAttribute('disabled')).toBeNull();
-    expect(button.getAttribute('aria-disabled')).toBe('true');
-  });
-
-  test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { button } = renderButton({
-      as: 'div',
-    });
-    expect(button.tagName.toLowerCase()).toBe('div');
   });
 
   // eslint-disable-next-line jest/no-disabled-tests
