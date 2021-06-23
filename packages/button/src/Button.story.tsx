@@ -16,6 +16,7 @@ storiesOf('Button', module)
     const darkMode = boolean('Dark Mode', false);
     const href = select(
       'href',
+      // @ts-expect-error undefined is a valid option
       [undefined, 'https://mongodb.design'],
       undefined,
     );
@@ -64,6 +65,7 @@ storiesOf('Button', module)
     const darkMode = boolean('Dark Mode', false);
     const href = select(
       'href',
+      // @ts-expect-error undefined is a valid option
       [undefined, 'https://mongodb.design'],
       undefined,
     );
