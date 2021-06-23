@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 5.1.3
+
+### Patch Changes
+
+- 14fa2fdb: Removes `href` from being spread on tabpanel div
+
 ## 5.1.2
 
 ### Patch Changes
