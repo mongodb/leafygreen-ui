@@ -118,7 +118,7 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
+type ModifiedPopoverProps = Omit<PopoverProps, 'active'>;
 
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
@@ -127,9 +127,8 @@ export type TooltipProps = Omit<
   ModifiedPopoverProps & {
     /**
      * A slot for the element used to trigger the `Tooltip`.
-     * @default: hover
      */
-    trigger: React.ReactElement | Function;
+    trigger?: React.ReactElement | Function;
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
@@ -223,6 +222,7 @@ function Tooltip({
   portalContainer,
   scrollContainer,
   popoverZIndex,
+  refEl,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -326,6 +326,7 @@ function Tooltip({
   });
 
   const popoverProps = {
+    refEl,
     popoverZIndex,
     ...(usePortal
       ? {
