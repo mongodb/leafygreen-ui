@@ -594,7 +594,6 @@ describe('packages/tooltip', () => {
 
     test('onMouseEnter events should fire', async () => {
       const mouseEnterHandler = jest.fn();
-
       const { trigger } = renderTooltipWithTrigger(
         'hover',
         <button onMouseEnter={mouseEnterHandler}>{buttonText}</button>,
@@ -602,14 +601,13 @@ describe('packages/tooltip', () => {
       act(() => {
         fireEvent.mouseEnter(trigger);
       });
-      waitFor(() => {
+      await waitFor(() => {
         expect(mouseEnterHandler).toHaveBeenCalled();
       });
     });
 
     test('onMouseLeave events should fire', async () => {
       const mouseLeaveHandler = jest.fn();
-
       const { trigger } = renderTooltipWithTrigger(
         'hover',
         <button onMouseLeave={mouseLeaveHandler}>{buttonText}</button>,
@@ -617,7 +615,7 @@ describe('packages/tooltip', () => {
       act(() => {
         fireEvent.mouseLeave(trigger);
       });
-      waitFor(() => {
+      await waitFor(() => {
         expect(mouseLeaveHandler).toHaveBeenCalled();
       });
     });
