@@ -73,9 +73,9 @@ describe('packages/RadioBoxGroup', () => {
   }
 
   const { container } = render(
-    <RadioBoxGroup>
-      <RadioBox value="option-1">Input 1</RadioBox>
+    <RadioBoxGroup className="test-radio-box-group">
       <h1>Will Remain As Text</h1>
+      <RadioBox value="option-1">Input 1</RadioBox>
       <RadioBox value="option-2">Input 2</RadioBox>
       <WrappedRadioBox text="Also still text" />
     </RadioBoxGroup>,
@@ -87,13 +87,25 @@ describe('packages/RadioBoxGroup', () => {
     throw new Error('Could not find radio box group container element');
   }
 
-  const text = radioBoxGroupContainer.children[1];
+  const text = radioBoxGroupContainer.children[0];
+  const option1 = radioBoxGroupContainer.children[1];
+  const option2 = radioBoxGroupContainer.children[2];
+  const wrapped = radioBoxGroupContainer.children[3];
+
+  test.todo(`correct number of children render`);
+  // expect(radioBoxGroupContainer.children).toHaveLength(4)
+  // radioBoxGroupContainer.children.length returns 1
+
+  test(`input ids are all unique`, () => {
+    const radioChildren = [option1, option2, wrapped];
+    const uniqueIDs = new Set();
+    radioChildren.forEach(c => uniqueIDs.add(c.querySelector('input')!.id));
+    expect(uniqueIDs.size).toEqual(radioChildren.length);
+  });
 
   test('renders children of Radio Box Group, that are not themselves Radio Boxes, as is, without converting them to RadioBoxes', () => {
     expect(text.tagName.toLowerCase()).toBe('h1');
   });
-
-  const wrapped = radioBoxGroupContainer.children[3];
 
   test('renders wrapper components as themselves', () => {
     expect(wrapped.tagName.toLowerCase()).toBe('div');
@@ -235,45 +247,100 @@ describe('packages/RadioBoxGroup', () => {
   });
 
   describe('when uncontrolled', () => {
-    const uncontrolledOnChange = jest.fn();
+    const setupUncontrolledTest = () => {
+      const onChange = jest.fn();
+      const { container } = render(
+        <RadioBoxGroup onChange={onChange}>
+          <RadioBox value="option-1">Option 1</RadioBox>
+          <RadioBox value="option-2">Option 2</RadioBox>
+        </RadioBoxGroup>,
+      );
 
-    render(
-      <RadioBoxGroup onChange={uncontrolledOnChange}>
-        <RadioBox value="option-1">Option 1</RadioBox>
-      </RadioBoxGroup>,
-      { container },
-    );
+      const radioBoxGroup = container.firstChild;
 
-    const radioBoxGroup = container.firstChild;
+      if (!typeIs.element(radioBoxGroup)) {
+        throw new Error('Could not find radio box group element');
+      }
 
-    if (!typeIs.element(radioBoxGroup)) {
-      throw new Error('Could not find radio box group element');
-    }
+      const firstLabel = radioBoxGroup.firstChild;
 
-    const radioBoxLabel = radioBoxGroup.firstChild;
+      if (!typeIs.element(firstLabel)) {
+        throw new Error('Could not find first label element');
+      }
 
-    if (!typeIs.element(radioBoxLabel)) {
-      throw new Error('Could not find label element');
-    }
+      const firstInput = firstLabel.firstChild;
 
-    const radioBoxInput = radioBoxLabel.firstChild;
+      if (!typeIs.input(firstInput)) {
+        throw new Error('Could not find first radio box input element');
+      }
 
-    if (!typeIs.input(radioBoxInput)) {
-      throw new Error('Could not find radio box input element');
-    }
+      const secondLabel = radioBoxGroup.children[1];
 
-    fireEvent.click(radioBoxLabel);
+      if (!typeIs.element(secondLabel)) {
+        throw new Error('Could not find second label element');
+      }
+
+      const secondInput = secondLabel.firstChild;
+
+      if (!typeIs.input(secondInput)) {
+        throw new Error('Could not find second radio box input element');
+      }
+
+      return {
+        onChange,
+        container,
+        radioBoxGroup,
+        firstLabel,
+        firstInput,
+        secondLabel,
+        secondInput,
+      };
+    };
 
     test('onChange fires once when the label is clicked', () => {
-      expect(uncontrolledOnChange.mock.calls.length).toBe(1);
+      const { onChange, firstLabel } = setupUncontrolledTest();
+      fireEvent.click(firstLabel);
+      expect(onChange.mock.calls.length).toBe(1);
     });
 
-    test('radio box becomes checked when clicked', () => {
-      expect(radioBoxInput.getAttribute('aria-checked')).toBe('true');
-      expect(radioBoxInput.checked).toBe(true);
+    test('first radio box becomes checked when clicked first', () => {
+      const { firstInput, secondInput, firstLabel } = setupUncontrolledTest();
+      fireEvent.click(firstLabel);
+
+      expect(firstInput.getAttribute('aria-checked')).toBe('true');
+      expect(firstInput.checked).toBe(true);
+      expect(secondInput.getAttribute('aria-checked')).toBe('false');
+      expect(secondInput.checked).toBe(false);
+    });
+
+    test('second radio box becomes checked when clicked first', () => {
+      const { firstInput, secondInput, secondLabel } = setupUncontrolledTest();
+      fireEvent.click(secondLabel);
+
+      expect(firstInput.getAttribute('aria-checked')).toBe('false');
+      expect(firstInput.checked).toBe(false);
+      expect(secondInput.getAttribute('aria-checked')).toBe('true');
+      expect(secondInput.checked).toBe(true);
+    });
+
+    test('first radio box becomes checked when clicked second', () => {
+      const {
+        firstInput,
+        secondInput,
+        secondLabel,
+        firstLabel,
+      } = setupUncontrolledTest();
+      fireEvent.click(secondLabel);
+      fireEvent.click(firstLabel);
+
+      expect(firstInput.getAttribute('aria-checked')).toBe('true');
+      expect(firstInput.checked).toBe(true);
+      expect(secondInput.getAttribute('aria-checked')).toBe('false');
+      expect(secondInput.checked).toBe(false);
     });
 
     describe('and the default prop is set', () => {
+      const uncontrolledOnChange = jest.fn();
       const uncontrolledContainer = render(
         <RadioBoxGroup onChange={uncontrolledOnChange}>
           <RadioBox value="option-1">RadioBox Button 1</RadioBox>
