@@ -1,5 +1,11 @@
 # @leafygreen-ui/tooltip
 
+## 6.3.0
+
+### Minor Changes
+
+- 14fa2fdb: Tooltip accepts `refEl` which is passed to Popover component and helps determine content positioning
+
 ## 6.2.2
 
 ### Patch Changes
