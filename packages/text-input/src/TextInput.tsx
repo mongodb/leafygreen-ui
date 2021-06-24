@@ -5,7 +5,6 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
