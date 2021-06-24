@@ -314,7 +314,6 @@ const TextInput: React.ComponentType<
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
     const mode = darkMode ? Mode.Dark : Mode.Light;
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
@@ -361,6 +360,7 @@ const TextInput: React.ComponentType<
             className={interactionRingStyle}
             darkMode={darkMode}
             disabled={disabled}
+            ignoreKeyboardContext={true}
             color={
               state === State.Valid || state === State.Error
                 ? {
@@ -378,6 +378,10 @@ const TextInput: React.ComponentType<
                 css`
                   color: ${colorSets[mode].inputColor};
                   background-color: ${colorSets[mode].inputBackgroundColor};
+
+                  &:focus {
+                    border: 1px solid ${colorSets[mode].inputBackgroundColor};
+                  }
 
                   &:disabled {
                     color: ${colorSets[mode].disabledColor};
@@ -399,13 +403,6 @@ const TextInput: React.ComponentType<
                   }
                 `,
                 getStatefulInputStyles({ state, optional, mode, disabled }),
-                {
-                  [css`
-                    &:focus {
-                      border: 1px solid ${colorSets[mode].inputBackgroundColor};
-                    }
-                  `]: showFocus,
-                },
               )}
               value={value}
               required={!optional}
