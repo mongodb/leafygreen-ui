@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
