@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 6.1.3
+
+### Patch Changes
+
+- 1e849937: Fixes an issue where the id attribute for all Radio Boxes in a group would be set to 'radio-box-null', resulting in several unselectable radio boxes
+
 ## 6.1.2
 
 ### Patch Changes
