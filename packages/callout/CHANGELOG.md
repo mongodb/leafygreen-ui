@@ -1,5 +1,11 @@
 # @leafygreen-ui/callout
 
+## 3.0.4
+
+### Patch Changes
+
+- 08d938e6: Updates component background color to always be white, not transparent
+
 ## 3.0.3
 
 ### Patch Changes
