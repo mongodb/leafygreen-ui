@@ -21,6 +21,7 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
+  background-color: ${uiColors.white};
   border-radius: 6px;
   box-shadow: 0px 2px 5px 0 ${transparentize(0.9, uiColors.gray.dark3)};
   overflow: hidden;
