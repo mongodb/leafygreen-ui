@@ -107,14 +107,13 @@ const Button: ExtendableBox<
     type = 'button';
   }
 
-  // If the link is disabled, render as a div
+  // Render a disabled link as a button to retain focusability
   const getButtonTag = (
     isAnchor: boolean,
     disabled: boolean,
-  ): 'a' | 'button' | 'div' => {
-    if (!isAnchor) return 'button';
-    if (disabled) return 'div';
-    return 'a';
+  ): 'a' | 'button' => {
+    if (isAnchor && !disabled) return 'a';
+    return 'button';
   };
 
   const buttonProps = {

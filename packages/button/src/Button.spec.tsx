@@ -103,7 +103,7 @@ describe('packages/button', () => {
         href: 'http://mongodb.design',
         disabled: true,
       });
-      expect(button.tagName.toLowerCase()).toBe('div');
+      expect(button.tagName.toLowerCase()).toBe('button');
     });
 
     test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
