@@ -123,6 +123,7 @@ interface InteractionRingProps {
   children: React.ReactElement;
   disabled?: boolean;
   forceState?: State;
+  ignoreKeyboardContext?: boolean;
 }
 
 export default function InteractionRing({
@@ -134,10 +135,12 @@ export default function InteractionRing({
   children,
   disabled = false,
   forceState = {},
+  ignoreKeyboardContext = false,
   ...rest
 }: InteractionRingProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { usingKeyboard } = useUsingKeyboardContext();
+  const showFocus = ignoreKeyboardContext || usingKeyboard;
 
   const [focused, setFocused] = useState<boolean>();
 
