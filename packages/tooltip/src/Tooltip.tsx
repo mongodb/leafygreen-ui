@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
@@ -234,8 +235,6 @@ function Tooltip({
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
   const [tooltipNode, setTooltipNode] = useState<HTMLDivElement | null>(null);
-  // @ts-expect-error
-  const [triggerNode, setTriggerNode] = useState<HTMLDivElement | null>(null);
 
   const existingId = id ?? tooltipNode?.id;
   const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });
@@ -310,26 +309,18 @@ function Tooltip({
 
   const handleBackdropClick = useCallback(
     (e: MouseEvent) => {
-      if (!tooltipNode) {
-        return;
-      }
-
-      // If there's a trigger, we check that neither the tooltipNode nor the triggerNode contain the event. target
-      // Otherwise, we only need to check that the tooltipNode does not contain the event.target, as the tooltipNode will contain have the trigger as a child.
-      if (trigger && triggerNode) {
-        if (
-          !tooltipNode.contains(e.target as HTMLElement) &&
-          !triggerNode.contains(e.target as HTMLElement)
-        ) {
-          handleClose();
-        }
-      } else {
-        if (!tooltipNode.contains(e.target as HTMLElement)) {
-          handleClose();
-        }
+      /**
+       * Close the tooltip iff the clicked target (e.target) is NOT the tooltip element
+       *
+       * This handler is added to the document.
+       * No need to check whether the click target is the trigger node
+       * since clicks on that element are stopped from propogating by the <Popover>
+       */
+      if (tooltipNode && !tooltipNode.contains(e.target as HTMLElement)) {
+        handleClose();
       }
     },
-    [handleClose, tooltipNode, trigger, triggerNode],
+    [handleClose, tooltipNode],
   );
 
   useEventListener('click', handleBackdropClick, {
