@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
@@ -45,6 +45,11 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
   ) {
     const { mode, size, disabled, open } = useContext(SelectContext);
 
+    const { length: optionsCount } = useMemo(
+      () => React.Children.toArray(children),
+      [children],
+    );
+
     const colorSet = colorSets[mode];
     const sizeSet = sizeSets[size];
 
@@ -56,6 +61,8 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       viewportSize === null || ref.current === null
         ? 0
         : viewportSize.height - ref.current.getBoundingClientRect().top - 10;
+
+    const minHeight = sizeSets[size].height * optionsCount;
 
     const onClick = useCallback(
       (event: React.MouseEvent) => {
@@ -98,6 +105,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
             css`
               font-family: ${fontFamilies.default};
               font-size: ${sizeSet.option.text}px;
+              min-height: ${minHeight}px;
               max-height: ${maxHeight}px;
               background-color: ${colorSet.option.background.base};
               box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
