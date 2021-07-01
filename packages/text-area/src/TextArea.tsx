@@ -3,7 +3,6 @@ import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -77,7 +76,7 @@ const colorSets: Record<Mode, ColorSets> = {
       border-color: ${uiColors.gray.light1};
 
       &:focus {
-        border-color: ${uiColors.gray.light1};
+        border-color: ${uiColors.white}; // same as background color
       }
 
       &:disabled {
@@ -103,7 +102,7 @@ const colorSets: Record<Mode, ColorSets> = {
       border-color: #394f5a;
 
       &:focus {
-        border-color: #394f5a;
+        border-color: #394f5a; // same as background color
       }
 
       &:disabled {
@@ -156,8 +155,6 @@ const TextArea: React.ComponentType<
   const id = useIdAllocator({ prefix: 'textarea', id: idProp });
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
   const isControlled = typeof controlledValue === 'string';
   const [uncontrolledValue, setValue] = useState('');
   const value = isControlled ? controlledValue : uncontrolledValue;
@@ -188,7 +185,11 @@ const TextArea: React.ComponentType<
       {description && (
         <Description darkMode={darkMode}>{description}</Description>
       )}
-      <InteractionRing darkMode={darkMode} disabled={disabled}>
+      <InteractionRing
+        darkMode={darkMode}
+        disabled={disabled}
+        ignoreKeyboardContext={true}
+      >
         <textarea
           {...rest}
           ref={forwardedRef}
@@ -199,11 +200,6 @@ const TextArea: React.ComponentType<
             [css`
               background-color: #5a3c3b;
             `]: state === State.Error && darkMode,
-            [css`
-              &:focus {
-                outline: none;
-              }
-            `]: showFocus,
           })}
           disabled={disabled}
           onChange={onValueChange}
