@@ -1,11 +1,12 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useViewportSize } from '@leafygreen-ui/hooks';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
+
+const MAX_MENU_HEIGHT = 274;
 
 const menuStyle = css`
   position: relative;
@@ -44,25 +45,10 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     forwardedRef,
   ) {
     const { mode, size, disabled, open } = useContext(SelectContext);
-
-    const { length: optionsCount } = useMemo(
-      () => React.Children.toArray(children),
-      [children],
-    );
-
     const colorSet = colorSets[mode];
     const sizeSet = sizeSets[size];
 
     const ref = useForwardedRef(forwardedRef, null);
-
-    const viewportSize = useViewportSize();
-
-    const maxHeight =
-      viewportSize === null || ref.current === null
-        ? 0
-        : viewportSize.height - ref.current.getBoundingClientRect().top - 10;
-
-    const minHeight = sizeSets[size].height * optionsCount;
 
     const onClick = useCallback(
       (event: React.MouseEvent) => {
@@ -105,8 +91,8 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
             css`
               font-family: ${fontFamilies.default};
               font-size: ${sizeSet.option.text}px;
-              min-height: ${minHeight}px;
-              max-height: ${maxHeight}px;
+              min-height: ${sizeSet.height}px;
+              max-height: ${MAX_MENU_HEIGHT}px;
               background-color: ${colorSet.option.background.base};
               box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
 
