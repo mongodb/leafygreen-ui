@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import Button from '@leafygreen-ui/button';
 import Toast, { Variant } from '@leafygreen-ui/toast';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';

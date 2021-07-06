@@ -1,5 +1,6 @@
 module.exports = {
   parser: 'babel-eslint',
+  plugins: ['@emotion'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -26,6 +27,8 @@ module.exports = {
     },
   },
   rules: {
+    '@emotion/jsx-import': 'error',
+    '@emotion/pkg-renaming': 'error',
     'jest/no-conditional-expect': 'off',
     'jest/valid-title': 'off', // can't detect titles that are string variables
     'react/jsx-filename-extension': [

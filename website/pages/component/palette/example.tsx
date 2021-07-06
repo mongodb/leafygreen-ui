@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
-import { cx, css } from 'emotion';
+import { cx, css } from '@emotion/css';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import { keyMap } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';

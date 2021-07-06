@@ -1,4 +1,4 @@
-import createEmotion from 'create-emotion';
+import createEmotion from '@emotion/css/create-instance';
 
 interface CreateEmotionConfig {
   key: string;
