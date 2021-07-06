@@ -341,4 +341,91 @@ storiesOf('SideNav', module)
   .add('Simple Navigation', () => <MockSideNav />)
   .add('Realm', () => <RealmSideNav />)
   .add('Org Settings', () => <OrgSettingsSideNav />)
-  .add('NestedGroups', () => <NestedGroups />);
+  .add('NestedGroups', () => <NestedGroups />)
+  .add('Nested Repro', () => {
+    const [active, setActive] = useState('gala');
+
+    return (
+      <LeafyGreenProvider>
+        <div className={gridStyles}>
+          <MongoNav className={topNavStyles} mode="dev" />
+          <SideNav widthOverride={300} aria-label="nav">
+            <SideNavItem
+              onClick={() => setActive('apple')}
+              active={active === 'apple'}
+            >
+              Apple
+              <SideNavItem
+                onClick={() => setActive('mcintosh')}
+                active={active === 'mcintosh'}
+              >
+                McIntosh
+              </SideNavItem>
+              <SideNavItem
+                onClick={() => setActive('reddelicious')}
+                active={active === 'reddelicious'}
+              >
+                Red delicious
+              </SideNavItem>
+              <SideNavItem
+                onClick={() => setActive('gala')}
+                active={active === 'gala'}
+              >
+                Gala
+              </SideNavItem>
+            </SideNavItem>
+            <SideNavItem
+              onClick={() => setActive('banana')}
+              active={active === 'banana'}
+            >
+              Banana
+              <SideNavItem
+                onClick={() => setActive('yellow')}
+                active={active === 'yellow'}
+              >
+                Yellow
+              </SideNavItem>
+              <SideNavItem
+                onClick={() => setActive('green')}
+                active={active === 'green'}
+              >
+                Green
+              </SideNavItem>
+              <SideNavItem
+                onClick={() => setActive('plantain')}
+                active={active === 'plantain'}
+              >
+                Plantain
+              </SideNavItem>
+            </SideNavItem>
+            <SideNavItem
+              onClick={() => setActive('carrot')}
+              active={active === 'carrot'}
+            >
+              Carrot
+              <SideNavItem
+                onClick={() => setActive('orange')}
+                active={active === 'orange'}
+              >
+                Orange
+              </SideNavItem>
+              <SideNavItem
+                onClick={() => setActive('turnip')}
+                active={active === 'turnip'}
+              >
+                Turnip
+              </SideNavItem>
+              <SideNavItem
+                onClick={() => setActive('parsnip')}
+                active={active === 'parsnip'}
+              >
+                Parsnip
+              </SideNavItem>
+            </SideNavItem>
+          </SideNav>
+
+          {content}
+        </div>
+      </LeafyGreenProvider>
+    );
+  });
