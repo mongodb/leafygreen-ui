@@ -254,19 +254,29 @@ const SideNavItem: ExtendableBox<
       : null;
 
   useEffect(() => {
-    const checkForActiveNestedItems = (children: React.ReactNode): void => {
+    const hasActiveNestedItems = (children: React.ReactNode): boolean => {
+      let localHasActiveNested = false;
+      // Loop thru direct children
       React.Children.forEach(children, child => {
-        if (isComponentType(child, 'SideNavItem') && child.props.active) {
-          setHasNestedActive(true);
+        if (localHasActiveNested) return;
+        // If we've already set the flag, then short circuit
+        else if (isComponentType(child, 'SideNavItem') && child.props.active) {
+          // If the child is active, return true
+          localHasActiveNested = true;
         } else if ((child as React.ReactElement)?.props?.children) {
-          checkForActiveNestedItems(
+          // If the child has children check those
+          localHasActiveNested = hasActiveNestedItems(
             (child as React.ReactElement).props.children,
           );
         }
       });
+      return localHasActiveNested;
     };
 
-    checkForActiveNestedItems(children);
+    const hasActiveNested = hasActiveNestedItems(children);
+    console.log(`Setting state`, children, hasActiveNested);
+
+    setHasNestedActive(hasActiveNested);
   }, [children]);
 
   const { hasNestedItems, renderedNestedItems } = useMemo(() => {
