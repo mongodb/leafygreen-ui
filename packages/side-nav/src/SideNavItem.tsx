@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useMemo, useState, useEffect } from 'react';
+import React, { ReactNode, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import {
@@ -253,8 +253,6 @@ const SideNavItem: ExtendableBox<
       : null;
 
   const { hasNestedItems, renderedNestedItems } = useMemo(() => {
-    console.log('Running Memo', children);
-
     const renderedNestedItems: Array<React.ReactElement> = [];
     let hasNestedItems = false; // Whether this item has nested descendants
 
