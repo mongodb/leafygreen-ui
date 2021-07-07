@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, select, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
@@ -345,78 +345,94 @@ storiesOf('SideNav', module)
   .add('Nested Repro', () => {
     const [active, setActive] = useState('gala');
 
+    const onClick = useCallback(e => {
+      setActive(e.target.dataset.id);
+    }, []);
+
     return (
       <LeafyGreenProvider>
         <div className={gridStyles}>
           <MongoNav className={topNavStyles} mode="dev" />
           <SideNav widthOverride={300} aria-label="nav">
             <SideNavItem
-              onClick={() => setActive('apple')}
+              data-id="apple"
+              onClick={onClick}
               active={active === 'apple'}
             >
               Apple
               <SideNavItem
-                onClick={() => setActive('mcintosh')}
+                data-id="mcintosh"
+                onClick={onClick}
                 active={active === 'mcintosh'}
               >
                 McIntosh
               </SideNavItem>
               <SideNavItem
-                onClick={() => setActive('reddelicious')}
+                data-id="reddelicious"
+                onClick={onClick}
                 active={active === 'reddelicious'}
               >
                 Red delicious
               </SideNavItem>
               <SideNavItem
-                onClick={() => setActive('gala')}
+                data-id="gala"
+                onClick={onClick}
                 active={active === 'gala'}
               >
                 Gala
               </SideNavItem>
             </SideNavItem>
             <SideNavItem
-              onClick={() => setActive('banana')}
+              data-id="banana"
+              onClick={onClick}
               active={active === 'banana'}
             >
               Banana
               <SideNavItem
-                onClick={() => setActive('yellow')}
+                data-id="yellow"
+                onClick={onClick}
                 active={active === 'yellow'}
               >
                 Yellow
               </SideNavItem>
               <SideNavItem
-                onClick={() => setActive('green')}
+                data-id="green"
+                onClick={onClick}
                 active={active === 'green'}
               >
                 Green
               </SideNavItem>
               <SideNavItem
-                onClick={() => setActive('plantain')}
+                data-id="plantain"
+                onClick={onClick}
                 active={active === 'plantain'}
               >
                 Plantain
               </SideNavItem>
             </SideNavItem>
             <SideNavItem
-              onClick={() => setActive('carrot')}
+              data-id="carrot"
+              onClick={onClick}
               active={active === 'carrot'}
             >
               Carrot
               <SideNavItem
-                onClick={() => setActive('orange')}
+                data-id="orange"
+                onClick={onClick}
                 active={active === 'orange'}
               >
                 Orange
               </SideNavItem>
               <SideNavItem
-                onClick={() => setActive('turnip')}
+                data-id="turnip"
+                onClick={onClick}
                 active={active === 'turnip'}
               >
                 Turnip
               </SideNavItem>
               <SideNavItem
-                onClick={() => setActive('parsnip')}
+                data-id="parsnip"
+                onClick={onClick}
                 active={active === 'parsnip'}
               >
                 Parsnip
