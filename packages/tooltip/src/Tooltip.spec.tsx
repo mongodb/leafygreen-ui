@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
   act,
   render,
@@ -541,6 +541,83 @@ describe('packages/tooltip', () => {
       fireEvent.click(tooltipButton);
 
       expect(clickHandler).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('when the trigger has an event handler', () => {
+    const renderTooltipWithTrigger = (
+      event: 'hover' | 'click',
+      element: ReactElement,
+    ) => {
+      const result = render(
+        <Tooltip
+          triggerEvent={event}
+          trigger={element}
+          data-testid={tooltipTestId}
+        >
+          <div>Tooltip Contents!</div>
+        </Tooltip>,
+      );
+      const trigger = screen.getByText(buttonText);
+      return { ...result, trigger };
+    };
+
+    test('onClick events should fire', () => {
+      const clickHandler = jest.fn();
+      const { trigger } = renderTooltipWithTrigger(
+        'click',
+        <button onClick={clickHandler}>{buttonText}</button>,
+      );
+      fireEvent.click(trigger);
+      expect(clickHandler).toHaveBeenCalled();
+    });
+
+    test('onFocus events should fire', () => {
+      const focusHandler = jest.fn();
+      const { trigger } = renderTooltipWithTrigger(
+        'hover',
+        <button onFocus={focusHandler}>{buttonText}</button>,
+      );
+      fireEvent.focus(trigger);
+      expect(focusHandler).toHaveBeenCalled();
+    });
+
+    test('onBlur events should fire', () => {
+      const blurHandler = jest.fn();
+      const { trigger } = renderTooltipWithTrigger(
+        'hover',
+        <button onBlur={blurHandler}>{buttonText}</button>,
+      );
+      fireEvent.blur(trigger);
+      expect(blurHandler).toHaveBeenCalled();
+    });
+
+    test('onMouseEnter events should fire', async () => {
+      const mouseEnterHandler = jest.fn();
+      const { trigger } = renderTooltipWithTrigger(
+        'hover',
+        <button onMouseEnter={mouseEnterHandler}>{buttonText}</button>,
+      );
+      act(() => {
+        fireEvent.mouseEnter(trigger);
+      });
+      await waitFor(() => {
+        expect(mouseEnterHandler).toHaveBeenCalled();
+      });
+    });
+
+    test('onMouseLeave events should fire', async () => {
+      const mouseLeaveHandler = jest.fn();
+      const { trigger } = renderTooltipWithTrigger(
+        'hover',
+        <button onMouseLeave={mouseLeaveHandler}>{buttonText}</button>,
+      );
+      act(() => {
+        fireEvent.mouseLeave(trigger);
+      });
+      await waitFor(() => {
+        expect(mouseLeaveHandler).toHaveBeenCalled();
+      });
     });
   });
 });
