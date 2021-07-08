@@ -234,7 +234,6 @@ function Tooltip({
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
   const [tooltipNode, setTooltipNode] = useState<HTMLDivElement | null>(null);
-  const [triggerNode, setTriggerNode] = useState<HTMLDivElement | null>(null);
 
   const existingId = id ?? tooltipNode?.id;
   const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });
@@ -259,38 +258,48 @@ function Tooltip({
 
   const createTriggerProps = useCallback(
     (triggerEvent: TriggerEvent, triggerProps?: any) => {
-      if (triggerEvent === TriggerEvent.Hover) {
-        return {
-          ref: setTriggerNode,
-          onMouseEnter: debounce(() => {
-            setOpen(true);
-          }, 35),
-          onMouseLeave: debounce(handleClose, 35),
-          onFocus: () => setOpen(true),
-          onBlur: handleClose,
-        };
+      switch (triggerEvent) {
+        case TriggerEvent.Hover:
+          return {
+            onMouseEnter: debounce((e: MouseEvent) => {
+              triggerHandler('onMouseEnter', e);
+              setOpen(true);
+            }, 35),
+            onMouseLeave: debounce((e: MouseEvent) => {
+              triggerHandler('onMouseLeave', e);
+              handleClose();
+            }, 35),
+            onFocus: (e: MouseEvent) => {
+              triggerHandler('onFocus', e);
+              setOpen(true);
+            },
+            onBlur: (e: MouseEvent) => {
+              triggerHandler('onBlur', e);
+              handleClose();
+            },
+          };
+        case TriggerEvent.Click:
+        default:
+          return {
+            onClick: (e: MouseEvent) => {
+              // ensure that we don't close the tooltip when content inside tooltip is clicked
+              if (e.target !== tooltipNode) {
+                triggerHandler('onClick', e);
+                setOpen((curr: boolean) => !curr);
+              }
+            },
+          };
       }
 
-      if (triggerProps && triggerProps.onClick) {
-        return {
-          onClick: (e: MouseEvent) => {
-            // ensure that we don't close the tooltip when content inside tooltip is clicked
-            if (e.target !== tooltipNode) {
-              triggerProps.onClick();
-              setOpen((curr: boolean) => !curr);
-            }
-          },
-        };
+      function triggerHandler(handler: string, e: MouseEvent): void {
+        // call any click handlers already on the trigger
+        if (
+          triggerProps &&
+          triggerProps[handler] &&
+          typeof triggerProps[handler] == 'function'
+        )
+          triggerProps[handler](e);
       }
-
-      return {
-        ref: setTriggerNode,
-        onClick: (e: MouseEvent) => {
-          if (e.target !== tooltipNode) {
-            setOpen((curr: boolean) => !curr);
-          }
-        },
-      };
     },
     [handleClose, setOpen, tooltipNode],
   );
@@ -299,26 +308,18 @@ function Tooltip({
 
   const handleBackdropClick = useCallback(
     (e: MouseEvent) => {
-      if (!tooltipNode) {
-        return;
-      }
-
-      // If there's a trigger, we check that neither the tooltipNode nor the triggerNode contain the event. target
-      // Otherwise, we only need to check that the tooltipNode does not contain the event.target, as the tooltipNode will contain have the trigger as a child.
-      if (trigger && triggerNode) {
-        if (
-          !tooltipNode.contains(e.target as HTMLElement) &&
-          !triggerNode.contains(e.target as HTMLElement)
-        ) {
-          handleClose();
-        }
-      } else {
-        if (!tooltipNode.contains(e.target as HTMLElement)) {
-          handleClose();
-        }
+      /**
+       * Close the tooltip iff the clicked target (e.target) is NOT the tooltip element
+       *
+       * This handler is added to the document.
+       * No need to check whether the click target is the trigger node
+       * since clicks on that element are stopped from propogating by the <Popover>
+       */
+      if (tooltipNode && !tooltipNode.contains(e.target as HTMLElement)) {
+        handleClose();
       }
     },
-    [handleClose, tooltipNode, trigger, triggerNode],
+    [handleClose, tooltipNode],
   );
 
   useEventListener('click', handleBackdropClick, {
