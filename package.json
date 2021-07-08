@@ -22,7 +22,7 @@
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
   },
   "scripts": {
-    "build": "yarn pre-build && lerna run --parallel build",
+    "build": "node ./scripts/build.js",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "changeset:version": "yarn fix && yarn changeset version",
     "clean": "rimraf {packages,privatePackages}/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
@@ -48,7 +48,7 @@
     "ts": "tsc --project tsconfig.json",
     "ts:build": "tsc --build build.tsconfig.json",
     "ts:downlevel": "rimraf {packages,privatePackages}/*/dist/ts3.4 && echo {packages,privatePackages}/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
-    "watch": "yarn build -- -- --watch"
+    "watch": "yarn build -- --watch"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
