@@ -25,6 +25,7 @@ import ChevronUp from './ChevronUp.svg';
 import ChevronDown from './ChevronDown.svg';
 import ChevronRight from './ChevronRight.svg';
 import ChevronLeft from './ChevronLeft.svg';
+import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
 import Copy from './Copy.svg';
@@ -105,6 +106,7 @@ const glyphs = {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Clone,
   Cloud,
   Code,
   Copy,
