@@ -21,7 +21,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^17.0.0"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^3.0.1",

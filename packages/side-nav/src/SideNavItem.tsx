@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useMemo, useState, useEffect } from 'react';
+import React, { ReactNode, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import {
@@ -237,7 +237,6 @@ const SideNavItem: ExtendableBox<
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { baseFontSize = 14 } = useSideNavContext();
   const hasNestedChildren = useRef(false);
-  const [hasNestedActive, setHasNestedActive] = useState(false);
 
   const onClick = disabled
     ? (e: React.MouseEvent) => {
@@ -253,25 +252,9 @@ const SideNavItem: ExtendableBox<
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
-  useEffect(() => {
-    const checkForActiveNestedItems = (children: React.ReactNode): void => {
-      React.Children.forEach(children, child => {
-        if (isComponentType(child, 'SideNavItem') && child.props.active) {
-          setHasNestedActive(true);
-        } else if ((child as React.ReactElement)?.props?.children) {
-          checkForActiveNestedItems(
-            (child as React.ReactElement).props.children,
-          );
-        }
-      });
-    };
-
-    checkForActiveNestedItems(children);
-  }, [children]);
-
   const { hasNestedItems, renderedNestedItems } = useMemo(() => {
     const renderedNestedItems: Array<React.ReactElement> = [];
-    let hasNestedItems = false;
+    let hasNestedItems = false; // Whether this item has nested descendants
 
     React.Children.forEach(children, (child, index) => {
       if (
@@ -279,8 +262,7 @@ const SideNavItem: ExtendableBox<
         isComponentType(child, 'SideNavGroup')
       ) {
         hasNestedItems = true;
-
-        if (hasNestedActive || active) {
+        if (active || hasActiveNestedItems(children)) {
           renderedNestedItems.push(
             React.cloneElement(child, {
               indentLevel: indentLevel + 1,
@@ -291,8 +273,28 @@ const SideNavItem: ExtendableBox<
       }
     });
 
+    // Recursive function to determine if a SideNavItem has an active descendant
+    function hasActiveNestedItems(children: React.ReactNode): boolean {
+      let hasActiveDescendant = false;
+
+      React.Children.forEach(children, child => {
+        if (hasActiveDescendant) return;
+        else if (isComponentType(child, 'SideNavItem') && child.props.active) {
+          hasActiveDescendant = true;
+        } else if (
+          (child as React.ReactElement)?.props?.children &&
+          typeof (child as React.ReactElement).props.children == 'object'
+        ) {
+          hasActiveDescendant = hasActiveNestedItems(
+            (child as React.ReactElement).props.children,
+          );
+        }
+      });
+      return hasActiveDescendant;
+    }
+
     return { hasNestedItems, renderedNestedItems };
-  }, [children, active, indentLevel, hasNestedActive]);
+  }, [children, active, indentLevel]);
 
   const renderedChildren = useMemo(() => {
     const renderedChildren: React.ReactNodeArray = [];
