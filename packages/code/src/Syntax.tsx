@@ -84,8 +84,6 @@ function Syntax({
     }) as LeafyGreenHighlightResult;
   }, [language, children]);
 
-  console.dir(highlightedContent);
-
   const content =
     highlightedContent === null ? (
       // We create a similar data structure to the rendering plugin so that we can generate
