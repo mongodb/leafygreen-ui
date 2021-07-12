@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-// Import from core so we can register the appropriate languages ourselves
+import { LeafyGreenHighlightResult } from './highlight';
 import hljs, { HLJSOptions, HLJSPlugin } from 'highlight.js';
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import { Language, SyntaxProps, Mode } from './types';
@@ -10,7 +10,6 @@ import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
-import { LeafyGreenHighlightResult } from './highlight';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
