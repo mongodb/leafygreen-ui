@@ -97,6 +97,7 @@ export interface LeafyGreenHighlightResult extends HighlightResult {
   emitter: TokenTreeEmitter;
   react: React.ReactNode;
 }
+
 export interface LeafyGreenHLJSPlugin
   extends Omit<HLJSPlugin, 'after:highlight'> {
   'after:highlight'?: (result: LeafyGreenHighlightResult) => void;

@@ -4,7 +4,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useSyntaxContext } from './SyntaxContext';
-import { LeafyGreenHighlightResult, TokenObject } from './highlight';
+import {
+  LeafyGreenHighlightResult,
+  LeafyGreenHLJSPlugin,
+  TokenObject,
+} from './highlight';
 import { HLJSPlugin } from 'highlight.js';
 
 interface TokenProps {
@@ -396,15 +400,10 @@ export function TableContent({ lines }: TableContentProps) {
   );
 }
 
-const plugin: HLJSPlugin = {
+const plugin: LeafyGreenHLJSPlugin = {
   'after:highlight': function (result) {
-    const LGresult = result as LeafyGreenHighlightResult;
-    const { rootNode } = LGresult.emitter;
-
-    // debugger
-    console.log('emitter', LGresult.emitter);
-
-    LGresult.react = <TableContent lines={treeToLines(rootNode.children)} />;
+    const { rootNode } = result.emitter;
+    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
 

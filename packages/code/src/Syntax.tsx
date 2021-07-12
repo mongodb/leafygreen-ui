@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 // Import from core so we can register the appropriate languages ourselves
-import hljs, { HLJSOptions } from 'highlight.js';
+import hljs, { HLJSOptions, HLJSPlugin } from 'highlight.js';
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import { Language, SyntaxProps, Mode } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
@@ -51,7 +51,7 @@ function initializeSyntaxHighlighting() {
     tabReplace: '  ',
   } as Partial<HLJSOptions>);
 
-  hljs.addPlugin(renderingPlugin);
+  hljs.addPlugin(renderingPlugin as HLJSPlugin);
 }
 
 const codeStyles = css`
@@ -78,8 +78,6 @@ function Syntax({
     if (language === Language.None) {
       return null;
     }
-
-    debugger;
 
     return hljs.highlight(children, {
       language,
