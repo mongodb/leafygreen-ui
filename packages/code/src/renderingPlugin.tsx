@@ -1,9 +1,11 @@
-import React from 'react';
 import { transparentize } from 'polished';
+import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useSyntaxContext } from './SyntaxContext';
+import { LeafyGreenHighlightResult, TokenObject } from './highlight';
+import { HLJSPlugin } from 'highlight.js';
 
 interface TokenProps {
   kind?: string;
@@ -394,11 +396,15 @@ export function TableContent({ lines }: TableContentProps) {
   );
 }
 
-const plugin: HighlightPluginEventCallbacks = {
+const plugin: HLJSPlugin = {
   'after:highlight': function (result) {
-    const { rootNode } = result.emitter;
+    const LGresult = result as LeafyGreenHighlightResult;
+    const { rootNode } = LGresult.emitter;
 
-    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
+    // debugger
+    console.log('emitter', LGresult.emitter);
+
+    LGresult.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
 

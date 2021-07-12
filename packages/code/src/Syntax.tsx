@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 // Import from core so we can register the appropriate languages ourselves
-import hljs from 'highlight.js/lib/core';
+import hljs, { HLJSOptions } from 'highlight.js';
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import { Language, SyntaxProps, Mode } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
+import { LeafyGreenHighlightResult } from './highlight';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -48,7 +49,7 @@ function initializeSyntaxHighlighting() {
     languages: SupportedLanguagesList,
     classPrefix: 'lg-highlight-',
     tabReplace: '  ',
-  });
+  } as Partial<HLJSOptions>);
 
   hljs.addPlugin(renderingPlugin);
 }
@@ -73,13 +74,20 @@ function Syntax({
     initializeSyntaxHighlighting();
   }
 
-  const highlightedContent = useMemo(() => {
+  const highlightedContent: LeafyGreenHighlightResult | null = useMemo(() => {
     if (language === Language.None) {
       return null;
     }
 
-    return hljs.highlight(language, children, true);
+    debugger;
+
+    return hljs.highlight(children, {
+      language,
+      ignoreIllegals: true,
+    }) as LeafyGreenHighlightResult;
   }, [language, children]);
+
+  console.dir(highlightedContent);
 
   const content =
     highlightedContent === null ? (
