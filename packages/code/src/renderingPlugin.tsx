@@ -4,12 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useSyntaxContext } from './SyntaxContext';
-import {
-  LeafyGreenHighlightResult,
-  LeafyGreenHLJSPlugin,
-  TokenObject,
-} from './highlight';
-import { HLJSPlugin } from 'highlight.js';
+import { LeafyGreenHLJSPlugin, TokenObject } from './highlight';
 
 interface TokenProps {
   kind?: string;
