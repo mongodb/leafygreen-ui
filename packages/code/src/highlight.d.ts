@@ -1,4 +1,4 @@
-import { HighlightResult, HLJSPlugin } from 'highlight.js';
+import hljs, { HighlightResult, HLJSOptions, HLJSPlugin } from 'highlight.js';
 
 export interface TokenObject {
   kind: string;
@@ -86,12 +86,7 @@ declare class TokenTreeEmitter extends TokenTree {
   finalize(): void;
 }
 
-interface HighlightAutoResult {
-  language: string;
-  relevance: number;
-  value: string;
-  second_best?: HighlightAutoResult;
-}
+interface HighlightAutoResult extends HighlightResult {}
 
 export interface LeafyGreenHighlightResult extends HighlightResult {
   emitter: TokenTreeEmitter;
