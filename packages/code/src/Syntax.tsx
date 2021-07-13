@@ -47,7 +47,6 @@ function initializeSyntaxHighlighting() {
 
   hljs.configure({
     languages: SupportedLanguagesList,
-    classPrefix: 'lg-highlight-',
     tabReplace: '  ',
   } as Partial<HLJSOptions>);
 

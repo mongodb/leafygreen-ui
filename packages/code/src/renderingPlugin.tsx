@@ -4,7 +4,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useSyntaxContext } from './SyntaxContext';
-import { LeafyGreenHLJSPlugin, TokenObject } from './highlight';
+import {
+  LeafyGreenHighlightResult,
+  LeafyGreenHLJSPlugin,
+  TokenObject,
+} from './highlight';
 
 interface TokenProps {
   kind?: string;
@@ -12,18 +16,22 @@ interface TokenProps {
 }
 
 export function generateKindClassName(...args: Array<any>): string {
+  const prefix = 'lg-highlight-';
   return args
     .filter((str): str is string => isString(str) && str.length > 0)
     .map(kind => {
-      const prefix = 'lg-highlight-';
-
       // Sometimes, a kind will have run through this function before.
       // This ensures we don't duplicate prefixes.
       if (kind.startsWith(prefix)) {
         return kind;
       }
 
-      return `${prefix}${kind}`;
+      const classes = kind
+        .split('.')
+        .map(k => `${prefix}${k}`)
+        .join(' ');
+
+      return classes;
     })
     .join(' ');
 }
@@ -396,7 +404,7 @@ export function TableContent({ lines }: TableContentProps) {
 }
 
 const plugin: LeafyGreenHLJSPlugin = {
-  'after:highlight': function (result) {
+  'after:highlight': function (result: LeafyGreenHighlightResult) {
     const { rootNode } = result._emitter;
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
