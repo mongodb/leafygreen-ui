@@ -1,4 +1,4 @@
-import hljs, { HighlightResult, HLJSOptions, HLJSPlugin } from 'highlight.js';
+import { HighlightResult, HLJSPlugin } from 'highlight.js';
 
 export interface TokenObject {
   kind: string;
@@ -88,8 +88,9 @@ declare class TokenTreeEmitter extends TokenTree {
 
 interface HighlightAutoResult extends HighlightResult {}
 
-export interface LeafyGreenHighlightResult extends HighlightResult {
-  emitter: TokenTreeEmitter;
+export interface LeafyGreenHighlightResult
+  extends Omit<HighlightResult, '_emitter'> {
+  _emitter: TokenTreeEmitter;
   react: React.ReactNode;
 }
 
