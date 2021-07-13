@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { LeafyGreenHighlightResult } from './highlight';
-import hljs, { HLJSOptions, HLJSPlugin } from 'highlight.js';
+import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
+import { HLJSOptions, HLJSPlugin } from 'highlight.js';
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import { Language, SyntaxProps, Mode } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
