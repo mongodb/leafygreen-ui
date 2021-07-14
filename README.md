@@ -2,6 +2,10 @@
 
 A set of CSS styles and React components built with design in mind.
 
+![Leafy Green Button Demo](https://user-images.githubusercontent.com/2353608/125704789-9b36b339-b478-4ca0-bac3-64f9316901f8.gif)
+
+Checkout all of the components [in action](www.mongodb.design)!
+
 ## Package Table of Contents
 
 - [Badge](https://github.com/mongodb/leafygreen-ui/tree/main/packages/badge)
