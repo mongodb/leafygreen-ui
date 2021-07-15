@@ -2,11 +2,14 @@ import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
+import { useMemo } from 'react';
 
 const MAX_MENU_HEIGHT = 274;
+const MENU_MARGIN = 8;
 
 const menuStyle = css`
   position: relative;
@@ -50,6 +53,29 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
 
     const ref = useForwardedRef(forwardedRef, null);
 
+    const viewportSize = useViewportSize();
+
+    const maxHeight = useMemo(() => {
+      if (viewportSize && ref.current && referenceElement.current) {
+        const {
+          top: triggerTop,
+          bottom: triggerBottom,
+        } = referenceElement.current.getBoundingClientRect();
+
+        // Find out how much space is available above or below the trigger
+        const safeSpace = Math.max(
+          viewportSize.height - triggerBottom,
+          triggerTop,
+        );
+
+        // if there's more than enough space, set to MAX_MENU_HEIGHT
+        // otherwise fill the space available
+        return Math.min(MAX_MENU_HEIGHT, safeSpace - MENU_MARGIN);
+      } else {
+        return MAX_MENU_HEIGHT;
+      }
+    }, [ref, referenceElement, viewportSize]);
+
     const onClick = useCallback(
       (event: React.MouseEvent) => {
         if (ref.current) {
@@ -92,7 +118,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
               font-family: ${fontFamilies.default};
               font-size: ${sizeSet.option.text}px;
               min-height: ${sizeSet.height}px;
-              max-height: ${MAX_MENU_HEIGHT}px;
+              max-height: ${maxHeight}px;
               background-color: ${colorSet.option.background.base};
               box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
 
