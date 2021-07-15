@@ -77,6 +77,13 @@ A set of CSS styles and React components built with design in mind.
 
    `yarn run init`
 
+Use `yarn build` to rebuild all packages.
+Pass in a specific package name to rebuild select packages:
+
+`yarn build button icon`
+
+Additionally, pass in the `--watch` flag to rebuild packages on change.
+
 ## Development
 
 1. Start up storybook to see all UI components that exist.
