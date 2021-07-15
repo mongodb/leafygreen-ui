@@ -26,6 +26,8 @@
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "changeset:version": "yarn fix && yarn changeset version",
     "clean": "rimraf {packages,privatePackages}/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
+    "clean:builds": "rimraf {packages,privatePackages}/*/{dist} **/*.tsbuildinfo",
+    "clean:modules": "rimraf {packages,privatePackages}/*/{node_modules} node_modules",
     "create-package": "node ./scripts/package-builder.js",
     "demo:site": "./scripts/publish-storybook.sh",
     "eslint:check": "eslint \"**/*.{js,ts,tsx}\"",
