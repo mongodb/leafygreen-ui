@@ -1,4 +1,4 @@
-import { addDecorator, addParameters } from '@storybook/react';
+import { addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import { withPerformance } from 'storybook-addon-performance';
