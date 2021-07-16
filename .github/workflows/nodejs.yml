@@ -203,4 +203,4 @@ jobs:
             ${{ runner.os }}-yarn-cache-
       - run: yarn install --frozen-lockfile
       - name: build site
-        run: cd website/ && yarn build
+        run: cd website/ && yarn install && yarn build
