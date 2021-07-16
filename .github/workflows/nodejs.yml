@@ -175,3 +175,32 @@ jobs:
       - uses: preactjs/compressed-size-action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  buildWebsite:
+    name: Build website
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
+          submodules: 'recursive'
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            **/node_modules
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-cache-
+      - run: yarn install --frozen-lockfile
+      - name: build site
+        run: cd website/ && yarn build
