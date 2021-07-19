@@ -1,5 +1,18 @@
 # @leafygreen-ui/icon-button
 
+## 9.1.6
+
+### Patch Changes
+
+- Updated dependencies [f6e5655a]
+- Updated dependencies [f6e5655a]
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/emotion@4.0.0
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/a11y@1.2.2
+  - @leafygreen-ui/box@3.0.6
+
 ## 9.1.5
 
 ### Patch Changes

@@ -1,5 +1,20 @@
 # @leafygreen-ui/button
 
+## 12.0.4
+
+### Patch Changes
+
+- 24930836: Fixes a bug where a disabled button with an `href` would still start navigation.
+- Updated dependencies [f6e5655a]
+- Updated dependencies [f6e5655a]
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/emotion@4.0.0
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/box@3.0.6
+  - @leafygreen-ui/leafygreen-provider@2.1.3
+  - @leafygreen-ui/tokens@0.5.3
+
 ## 12.0.3
 
 ### Patch Changes
