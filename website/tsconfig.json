@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/*": ["../packages/*", "../privatePackages/*"]
+      "@leafygreen-ui/*": ["../packages/*"]
     },
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
