@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-// Import from core so we can register the appropriate languages ourselves
-import hljs from 'highlight.js/lib/core';
+import { LeafyGreenHighlightResult } from './highlight';
+import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
+import { HLJSOptions, HLJSPlugin } from 'highlight.js';
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import { Language, SyntaxProps, Mode } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
@@ -46,11 +47,10 @@ function initializeSyntaxHighlighting() {
 
   hljs.configure({
     languages: SupportedLanguagesList,
-    classPrefix: 'lg-highlight-',
     tabReplace: '  ',
-  });
+  } as Partial<HLJSOptions>);
 
-  hljs.addPlugin(renderingPlugin);
+  hljs.addPlugin(renderingPlugin as HLJSPlugin);
 }
 
 const codeStyles = css`
@@ -73,12 +73,15 @@ function Syntax({
     initializeSyntaxHighlighting();
   }
 
-  const highlightedContent = useMemo(() => {
+  const highlightedContent: LeafyGreenHighlightResult | null = useMemo(() => {
     if (language === Language.None) {
       return null;
     }
 
-    return hljs.highlight(language, children, true);
+    return hljs.highlight(children, {
+      language,
+      ignoreIllegals: true,
+    }) as LeafyGreenHighlightResult;
   }, [language, children]);
 
   const content =
