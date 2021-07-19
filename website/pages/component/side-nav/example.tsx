@@ -2,7 +2,7 @@ import React from 'react';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 import Icon from '@leafygreen-ui/icon';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { uiColors } from '@leafygreen-ui/palette/dist';
 
 // When interface is used, ts complains that index signature is missing

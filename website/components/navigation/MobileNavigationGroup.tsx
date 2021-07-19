@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { css, cx } from 'emotion';
+import { css, cx } from '@emotion/css';
 import { Transition } from 'react-transition-group';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { uiColors } from '@leafygreen-ui/palette';

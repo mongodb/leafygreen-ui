@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';

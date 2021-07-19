@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Select, Option, OptionGroup, Size } from '@leafygreen-ui/select';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';

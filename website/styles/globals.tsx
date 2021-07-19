@@ -1,4 +1,4 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { CDN } from 'utils/routes';
 
 const fontsURL = `${CDN}/fonts`;

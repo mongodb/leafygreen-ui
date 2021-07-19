@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import Modal, { ModalSize } from '@leafygreen-ui/modal';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 // When interface is used, ts complains that index signature is missing

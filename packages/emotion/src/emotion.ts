@@ -1,26 +1,15 @@
-import createEmotion from 'create-emotion';
-
-interface CreateEmotionConfig {
-  key: string;
-  container?: HTMLElement;
-}
+import createEmotion, { Options } from '@emotion/css/create-instance';
 
 // In case the original emotion, and create-emotion packages become unsupported,
 // we should consider implementing our own wrapper around createCache like what's
 // being done here:
 //
-// https://github.com/emotion-js/emotion/blob/master/packages/create-emotion/src/index.js
+// https://github.com/emotion-js/emotion/blob/emotion%4010.0.6/packages/create-emotion/src/index.js
 function createEmotionInstance() {
-  const config: CreateEmotionConfig = {
+  const config: Options = {
     key: 'leafygreen-ui',
+    prepend: true,
   };
-
-  if (typeof window !== 'undefined') {
-    config.container = document.createElement('div');
-
-    const head = document.head;
-    head.insertBefore(config.container, head.firstChild);
-  }
 
   return createEmotion(config);
 }
