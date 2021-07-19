@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 

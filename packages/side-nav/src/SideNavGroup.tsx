@@ -266,8 +266,6 @@ function SideNavGroup({
     return checkForActiveNestedItems(children);
   }, [hasActiveItem, children]);
 
-  console.log({ isActiveGroup, hasActiveItem });
-
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
       ? React.cloneElement(glyph, {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import Card from '@leafygreen-ui/card';
 import { Body } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';

@@ -43,9 +43,11 @@ class ArtificialServerContext {
 Context.within(new ArtificialServerContext(), () => {
   require('@emotion/cache');
   require('use-ssr');
+  require('@emotion/react');
+  require('@leafygreen-ui/emotion');
 });
 
-const { CacheProvider } = require('@emotion/core');
+const { CacheProvider } = require('@emotion/react');
 const { cache, extractCritical } = require('@leafygreen-ui/emotion');
 
 const stylesToCleanup = new Set();

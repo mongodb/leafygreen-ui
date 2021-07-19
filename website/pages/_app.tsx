@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { Global } from '@emotion/core';
+import { Global } from '@emotion/react';
 import { globalStyles } from 'styles/globals';
 import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';

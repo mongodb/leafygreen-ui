@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { Subtitle } from '@leafygreen-ui/typography';
 import LiveExample from 'components/live-example';
