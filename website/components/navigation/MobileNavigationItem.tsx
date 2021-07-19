@@ -1,5 +1,5 @@
 import React from 'react';
-import { css, cx } from 'emotion';
+import { css, cx } from '@emotion/css';
 import { uiColors } from '@leafygreen-ui/palette';
 import { keyMap } from '@leafygreen-ui/lib';
 import { borderColor, leftRightPadding } from './styles';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Pipeline, Stage, Size } from '@leafygreen-ui/pipeline';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
