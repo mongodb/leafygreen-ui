@@ -1,5 +1,26 @@
 # @leafygreen-ui/side-nav
 
+## 7.2.1
+
+### Patch Changes
+
+- dea88e7d: Fixes a bug where nested sidenavs would remain open when selecting a different group
+- Updated dependencies [f6e5655a]
+- Updated dependencies [f6e5655a]
+- Updated dependencies [03388ff2]
+- Updated dependencies [b8f03aa1]
+- Updated dependencies [ddb50977]
+  - @leafygreen-ui/emotion@4.0.0
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/icon@11.3.0
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/portal@4.0.0
+  - @leafygreen-ui/tooltip@6.3.1
+  - @leafygreen-ui/a11y@1.2.2
+  - @leafygreen-ui/box@3.0.6
+  - @leafygreen-ui/leafygreen-provider@2.1.3
+  - @leafygreen-ui/menu@11.0.1
+
 ## 7.2.0
 
 ### Minor Changes
