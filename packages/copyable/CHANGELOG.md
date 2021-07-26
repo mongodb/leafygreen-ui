@@ -1,5 +1,21 @@
 # @leafygreen-ui/copyable
 
+## 2.0.11
+
+### Patch Changes
+
+- Updated dependencies [f6e5655a]
+- Updated dependencies [f6e5655a]
+- Updated dependencies [03388ff2]
+- Updated dependencies [ddb50977]
+- Updated dependencies [24930836]
+  - @leafygreen-ui/emotion@4.0.0
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/icon@11.3.0
+  - @leafygreen-ui/tooltip@6.3.1
+  - @leafygreen-ui/button@12.0.4
+  - @leafygreen-ui/typography@8.0.4
+
 ## 2.0.10
 
 ### Patch Changes
