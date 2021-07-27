@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.0.0
+
+### Major Changes
+
+- f6e5655a: Upgrades to emotion v11. See (Emotion Docs)[https://emotion.sh/docs/emotion-11] for more on this version. Additionally, updates where leafygreen styles are injected into the `head` element.
+
 ## 3.0.1
 
 ### Patch Changes

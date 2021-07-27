@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import {
   SideNav,

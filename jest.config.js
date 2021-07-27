@@ -35,7 +35,7 @@ module.exports = {
   modulePathIgnorePatterns: ['npm-cache', '.npm'],
 
   // The test environment that will be used for testing
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   testPathIgnorePatterns: ['/node_modules/'],

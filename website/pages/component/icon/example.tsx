@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip from '@leafygreen-ui/tooltip';
 import InteractionRing from '@leafygreen-ui/interaction-ring';

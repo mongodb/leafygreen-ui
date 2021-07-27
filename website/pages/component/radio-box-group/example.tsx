@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { RadioBoxGroup, RadioBox, Size } from '@leafygreen-ui/radio-box-group';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
