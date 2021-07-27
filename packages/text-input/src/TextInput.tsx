@@ -27,7 +27,8 @@ export const TextInputType = {
   Text: 'text',
   Url: 'url',
   Tel: 'tel',
-};
+  Number: 'number',
+} as const;
 
 export type TextInputType = typeof TextInputType[keyof typeof TextInputType];
 
