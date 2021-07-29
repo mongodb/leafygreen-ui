@@ -13,6 +13,7 @@ module.exports = function (api) {
         modules: api.env('production') ? false : 'commonjs',
       },
     ],
+    '@emotion/babel-preset-css-prop',
   ];
 
   const plugins = [
@@ -22,7 +23,9 @@ module.exports = function (api) {
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-nullish-coalescing-operator',
     '@babel/plugin-proposal-logical-assignment-operators',
-    'emotion',
+    '@emotion/babel-plugin',
+    '@babel/plugin-proposal-private-methods',
+    '@babel/plugin-proposal-private-property-in-object',
   ];
 
   return { presets, plugins };

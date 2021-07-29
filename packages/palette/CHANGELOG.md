@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.2.2
+
+### Patch Changes
+
+- f6e5655a: Updates devDependencies for palette
+
 ## 3.2.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { css, cx } from 'emotion';
+import { css, cx } from '@emotion/css';
 import { transparentize } from 'polished';
 import { Overline } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';

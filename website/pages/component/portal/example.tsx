@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import Portal from '@leafygreen-ui/portal';
 import LiveExample from 'components/live-example';
 

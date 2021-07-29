@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Label } from '@leafygreen-ui/typography';
 import Toggle, { Size } from '@leafygreen-ui/toggle';
 import { uiColors } from '@leafygreen-ui/palette';
