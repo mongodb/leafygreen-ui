@@ -16,19 +16,16 @@ storiesOf('Button', module)
     const darkMode = boolean('Dark Mode', false);
     const href = select(
       'href',
-      // @ts-expect-error undefined is a valid option
       [undefined, 'https://mongodb.design'],
       undefined,
     );
     const leftGlyph = select(
       'Left Glyph',
-      // @ts-expect-error undefined is a valid option
       [...Object.keys(glyphs), undefined],
       'InviteUser',
     );
     const rightGlyph = select(
       'Right Glyph',
-      // @ts-expect-error undefined is a valid option
       [...Object.keys(glyphs), undefined],
       'CaretDown',
     );
@@ -65,19 +62,16 @@ storiesOf('Button', module)
     const darkMode = boolean('Dark Mode', false);
     const href = select(
       'href',
-      // @ts-expect-error undefined is a valid option
       [undefined, 'https://mongodb.design'],
       undefined,
     );
     const leftGlyph = select(
       'Left Glyph',
-      // @ts-expect-error undefined is a valid option
       [...Object.keys(glyphs), undefined],
       'Beaker',
     );
     const rightGlyph = select(
       'Right Glyph',
-      // @ts-expect-error undefined is a valid option
       [...Object.keys(glyphs), undefined],
       undefined,
     );
