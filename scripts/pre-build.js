@@ -1,6 +1,6 @@
-const { spawn, spawnSync } = require('child_process');
+const { spawn } = require('child_process');
 
-const cmdArgs = ['--parallel', 'build'];
+const cmdArgs = ['--parallel', 'pre-build', '--', '--env', 'production'];
 const args = process.argv.slice(2);
 
 // check if we should be watching
@@ -8,9 +8,6 @@ if (args.includes('--watch')) {
   args.splice(args.indexOf('--watch'), 1);
   cmdArgs.push('--', '--watch');
 }
-
-console.log('Running pre-build...');
-spawnSync('yarn', ['pre-build', ...args], { stdio: 'inherit' });
 
 if (args.length > 0) {
   // Add only the package names passed in
@@ -21,6 +18,6 @@ if (args.length > 0) {
 // Run lerna
 const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
 cmd.on('close', code => {
-  if (code == 0) console.log('✅ Finished building');
+  if (code == 0) console.log('🛠️ Finished pre-build \n');
   else console.log(`Exit code ${code}`);
 });
