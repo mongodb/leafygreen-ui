@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
-import { css, cx } from 'emotion';
+import { css, cx } from '@emotion/css';
 import { Transition } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';

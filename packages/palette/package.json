@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "LeafyGreen UI Palettes",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -18,6 +18,10 @@
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
 }

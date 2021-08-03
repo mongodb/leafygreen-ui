@@ -1,5 +1,23 @@
 # @leafygreen-ui/select
 
+## 3.0.5
+
+### Patch Changes
+
+- Updated dependencies [f6e5655a]
+- Updated dependencies [f6e5655a]
+- Updated dependencies [03388ff2]
+- Updated dependencies [b8f03aa1]
+- Updated dependencies [24930836]
+  - @leafygreen-ui/emotion@4.0.0
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/icon@11.3.0
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/button@12.0.4
+  - @leafygreen-ui/leafygreen-provider@2.1.3
+  - @leafygreen-ui/popover@7.2.2
+  - @leafygreen-ui/tokens@0.5.3
+
 ## 3.0.4
 
 ### Patch Changes

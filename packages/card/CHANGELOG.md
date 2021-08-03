@@ -1,5 +1,15 @@
 # @leafygreen-ui/card
 
+## 5.1.3
+
+### Patch Changes
+
+- Updated dependencies [f6e5655a]
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/box@3.0.6
+
 ## 5.1.2
 
 ### Patch Changes

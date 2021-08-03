@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tokens",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "leafyGreen UI Kit Tokens",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,6 +20,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^8.0.0"
+    "@leafygreen-ui/lib": "^9.0.0"
   }
 }

@@ -68,22 +68,22 @@ return (
 
 ## Properties
 
-| Prop           | Type                                                            | Description                                                                                                               | Default  |
-| -------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `id`           | `string`                                                        | id associated with the TextInput component.                                                                               |          |
-| `label`        | `string`                                                        | Text shown in bold above the input element.                                                                               |          |
-| `description`  | `string`                                                        | Text that gives more detail about the requirements for the input.                                                         |          |
-| `optional`     | `boolean`                                                       | Marks the input as optional                                                                                               | `false`  |
-| `disabled`     | `boolean`                                                       | Disabled the input                                                                                                        | `false`  |
-| `onChange`     | `function`                                                      | The event handler function for the 'onchange' event. Accepts the change event object as its argument and returns nothing. |          |
-| `placeholder`  | `string`                                                        | The placeholder text shown in the input field before the user begins typing.                                              |          |
-| `errorMessage` | `string`                                                        | Text that gives more detail about the requirements for the input.                                                         |          |
-| `state`        | `'none'`, `'valid'`, `'error'`                                  | Describes the state of the TextInput element before and after the input has been validated                                | `'none'` |
-| `value`        | `string`                                                        | Sets the HTML `value` attribute.                                                                                          | `''`     |
-| `className`    | `string`                                                        | Adds a className to the class attribute.                                                                                  | `''`     |
-| `type`         | `'email'`, `'password'`, `'search'`, `'text'`, `'url'`, `'tel'` | Sets type for TextInput                                                                                                   | `'text'` |
-| `darkMode`     | `boolean`                                                       | Determines whether or not the component will appear in dark mode.                                                         | `false`  |
-| ...            | native `input` attributes                                       | Any other props will be spread on the root `input` element                                                                |          |
+| Prop           | Type                                                                        | Description                                                                                                               | Default  |
+| -------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `id`           | `string`                                                                    | id associated with the TextInput component.                                                                               |          |
+| `label`        | `string`                                                                    | Text shown in bold above the input element.                                                                               |          |
+| `description`  | `string`                                                                    | Text that gives more detail about the requirements for the input.                                                         |          |
+| `optional`     | `boolean`                                                                   | Marks the input as optional                                                                                               | `false`  |
+| `disabled`     | `boolean`                                                                   | Disabled the input                                                                                                        | `false`  |
+| `onChange`     | `function`                                                                  | The event handler function for the 'onchange' event. Accepts the change event object as its argument and returns nothing. |          |
+| `placeholder`  | `string`                                                                    | The placeholder text shown in the input field before the user begins typing.                                              |          |
+| `errorMessage` | `string`                                                                    | Text that gives more detail about the requirements for the input.                                                         |          |
+| `state`        | `'none'`, `'valid'`, `'error'`                                              | Describes the state of the TextInput element before and after the input has been validated                                | `'none'` |
+| `value`        | `string`                                                                    | Sets the HTML `value` attribute.                                                                                          | `''`     |
+| `className`    | `string`                                                                    | Adds a className to the class attribute.                                                                                  | `''`     |
+| `type`         | `'email'`, `'password'`, `'search'`, `'text'`, `'url'`, `'tel'`, `'number'` | Sets type for TextInput                                                                                                   | `'text'` |
+| `darkMode`     | `boolean`                                                                   | Determines whether or not the component will appear in dark mode.                                                         | `false`  |
+| ...            | native `input` attributes                                                   | Any other props will be spread on the root `input` element                                                                |          |
 
 ### Special Case: Aria Labels
 

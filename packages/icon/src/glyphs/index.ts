@@ -25,6 +25,7 @@ import ChevronUp from './ChevronUp.svg';
 import ChevronDown from './ChevronDown.svg';
 import ChevronRight from './ChevronRight.svg';
 import ChevronLeft from './ChevronLeft.svg';
+import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
 import Copy from './Copy.svg';
@@ -51,11 +52,14 @@ import Lock from './Lock.svg';
 import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
+import Minus from './Menu.svg';
 import NotAllowed from './NotAllowed.svg';
 import OpenNewTab from './OpenNewTab.svg';
+import Pause from './Pause.svg';
 import Person from './Person.svg';
 import PersonGroup from './PersonGroup.svg';
 import PersonWithLock from './PersonWithLock.svg';
+import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
@@ -105,6 +109,7 @@ const glyphs = {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Clone,
   Cloud,
   Code,
   Copy,
@@ -131,11 +136,14 @@ const glyphs = {
   MagnifyingGlass,
   Megaphone,
   Menu,
+  Minus,
   NotAllowed,
   OpenNewTab,
+  Pause,
   Person,
   PersonGroup,
   PersonWithLock,
+  Play,
   Plus,
   PlusWithCircle,
   QuestionMarkWithCircle,

@@ -1,5 +1,16 @@
 # @leafygreen-ui/lib
 
+## 9.0.0
+
+### Major Changes
+
+- b8f03aa1: Bumps `react` peer dependency to v17
+
+### Patch Changes
+
+- Updated dependencies [f6e5655a]
+  - @leafygreen-ui/emotion@4.0.0
+
 ## 8.0.0
 
 ### Major Changes
