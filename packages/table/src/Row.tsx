@@ -72,41 +72,13 @@ const modeStyles = {
 const rowStyle = css`
   & > td > ${tdInnerDiv.selector} {
     min-height: 40px;
-    transition: all 150ms ease-in-out;
+    max-height: unset;
   }
 `;
 
 const hideRow = css`
   opacity: 0;
 `;
-
-const transitionStyles = (mode: Mode) => {
-  return {
-    default: css`
-      transition: border 150ms ease-in-out;
-      border-top-color: transparent;
-
-      & > td {
-        padding-top: 0px;
-        padding-bottom: 0px;
-      }
-
-      & > td > ${tdInnerDiv.selector} {
-        max-height: 0;
-      }
-    `,
-
-    entered: css`
-      border-top-color: ${mode === Mode.Light
-        ? uiColors.gray.light2
-        : uiColors.gray.dark1};
-
-      & > td > ${tdInnerDiv.selector} {
-        min-height: 40px;
-      }
-    `,
-  };
-};
 
 function styleColumn(index: string, dataType?: DataType) {
   let justify;
@@ -320,18 +292,9 @@ const Row = React.forwardRef(
             timeout={150}
             nodeRef={nodeRef}
           >
-            {state => (
+            {_ => (
               <>
-                {renderedNestedRows.map(element =>
-                  React.cloneElement(element, {
-                    className: cx(transitionStyles(mode).default, {
-                      [transitionStyles(mode).entered]: [
-                        'entering',
-                        'entered',
-                      ].includes(state),
-                    }),
-                  }),
-                )}
+                {renderedNestedRows.map(element => React.cloneElement(element))}
               </>
             )}
           </Transition>

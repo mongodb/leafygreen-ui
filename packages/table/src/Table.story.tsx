@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
-import { defaultData, testHeavierDataSet, multiRowData } from './fixtures';
+import { defaultData, multiRowData } from './fixtures';
 import { uiColors } from '@leafygreen-ui/palette';
 
 storiesOf('Table', module)
@@ -17,12 +17,13 @@ storiesOf('Table', module)
         className={css`
           padding: 20px;
           background-color: ${darkMode ? uiColors.gray.dark3 : 'transparent'};
+          width: 768px;
         `}
       >
         <Table
           baseFontSize={baseFontSize}
           darkMode={darkMode}
-          data={testHeavierDataSet}
+          data={defaultData}
           columns={
             <>
               <TableHeader
@@ -36,35 +37,56 @@ storiesOf('Table', module)
                 dataType={DataType.Number}
                 label="Age"
                 key="age"
-                sortBy={(data: typeof testHeavierDataSet[0]) =>
-                  data.age.toString()
-                }
+                sortBy={(data: typeof defaultData[0]) => data.age.toString()}
               />
 
               <TableHeader
                 dataType={DataType.String}
                 label="Favorite Color"
                 key="color"
-                sortBy={(data: typeof testHeavierDataSet[0]) => data.color}
+                sortBy={(data: typeof defaultData[0]) => data.color}
               />
 
               <TableHeader
                 dataType={DataType.String}
                 label="Location"
                 key="location"
-                sortBy={(data: typeof testHeavierDataSet[0]) => data.location}
+                sortBy={(data: typeof defaultData[0]) => data.location}
               />
             </>
           }
         >
           {({ datum }) => (
-            <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
-              <Cell isHeader={withHeaders}>{datum.name}</Cell>
+            <Row key={datum.name} disabled={datum.disabled}>
+              <Cell isHeader={withHeaders}>
+                {datum.name} {datum.rand}
+              </Cell>
               <Cell>{datum.age}</Cell>
               <Cell>{datum.color}</Cell>
               <Cell>{datum.location}</Cell>
 
-              {datum.age > 21 && (
+              {datum.name === 'Donna' && (
+                <Row>
+                  <Cell isHeader={withHeaders} colSpan={4}>
+                    Nulla vitae elit libero, a pharetra augue. Sed posuere
+                    consectetur est at lobortis. Integer posuere erat a ante
+                    venenatis dapibus posuere velit aliquet. Maecenas faucibus
+                    mollis interdum. Nullam id dolor id nibh ultricies vehicula
+                    ut id elit. Duis mollis, est non commodo luctus, nisi erat
+                    porttitor ligula, eget lacinia odio sem nec elit. Cras justo
+                    odio, dapibus ac facilisis in, egestas eget quam. Donec id
+                    elit non mi porta gravida at eget metus. Donec id elit non
+                    mi porta gravida at eget metus. Aenean lacinia bibendum
+                    nulla sed consectetur. Vestibulum id ligula porta felis
+                    euismod semper. Maecenas sed diam eget risus varius blandit
+                    sit amet non magna. Etiam porta sem malesuada magna mollis
+                    euismod. Donec ullamcorper nulla non metus auctor fringilla.
+                    Donec id elit non mi porta gravida at eget metus.
+                  </Cell>
+                </Row>
+              )}
+
+              {datum.name !== 'Donna' && datum.age > 21 && (
                 <Row>
                   <Cell isHeader={withHeaders}>
                     expanded name: {datum.name}
