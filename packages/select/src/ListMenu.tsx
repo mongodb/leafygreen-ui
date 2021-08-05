@@ -71,9 +71,9 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         // if there's more than enough space, set to MAX_MENU_HEIGHT
         // otherwise fill the space available
         return Math.min(MAX_MENU_HEIGHT, safeSpace - MENU_MARGIN);
-      } else {
-        return MAX_MENU_HEIGHT;
       }
+
+      return MAX_MENU_HEIGHT;
     }, [ref, referenceElement, viewportSize]);
 
     const onClick = useCallback(
