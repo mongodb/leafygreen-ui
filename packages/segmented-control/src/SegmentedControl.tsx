@@ -14,7 +14,7 @@ const wrapperStyle = css`
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  gap: 2px;
+  gap: 5px;
   align-items: center;
   padding: 3px;
   border-radius: 6px;
@@ -106,10 +106,6 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
       ? child.props.value === controlledValue || !!child.props.checked
       : child.props.value === uncontrolledValue;
 
-    const { value } = child.props;
-
-    console.log({ value, _checked, uncontrolledValue });
-
     return React.cloneElement(child, {
       id: child.props.id || `${name}-${index}`,
       darkMode,
@@ -120,17 +116,24 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
     });
   });
 
+  /**
+   * TODO
+   * - put focus ring above shadow
+   * - match focus ring border radius
+   * - remove hover focus ring
+   */
+
   return (
-    <InteractionRing>
-      <div
-        role="group"
-        aria-label={name}
-        ref={forwardedRef}
-        className={cx(wrapperStyle, className)}
-      >
-        {renderedChildren}
-      </div>
-    </InteractionRing>
+    // <InteractionRing>
+    <div
+      role="group"
+      aria-label={name}
+      ref={forwardedRef}
+      className={cx(wrapperStyle, className)}
+    >
+      {renderedChildren}
+    </div>
+    // </InteractionRing>
   );
 });
 
