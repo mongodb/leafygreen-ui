@@ -1,5 +1,5 @@
 import { OneOf } from '@leafygreen-ui/lib';
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
@@ -17,7 +17,7 @@ function usePortalContainer(customContainer?: HTMLElement) {
   //  - A component's initial hydrated render should match the server render
   const [container, setContainer] = useState<HTMLElement | undefined>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (customContainer) {
       setContainer(customContainer);
     } else {
@@ -38,7 +38,7 @@ function usePortalContainer(customContainer?: HTMLElement) {
 function Portal(props: PortalProps) {
   const container = usePortalContainer(props.container ?? undefined);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (container && !props.container) {
       container.className = props.className ?? '';
     }
