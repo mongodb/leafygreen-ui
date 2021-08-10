@@ -227,15 +227,19 @@ export function flattenNestedTree(
   }
 
   // Generate a flat map function with a closure around parent's kind
-  function flatMapTreeWithKind(parentKind?: string) {
+  function flatMapTreeWithKinds(...parentKinds: Array<string | undefined>) {
+    parentKinds = parentKinds.filter(
+      (str): str is string => isString(str) && str.length > 0,
+    );
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
       if (isString(entity)) {
-        return parentKind
+        return parentKinds.length > 0
           ? {
               kind: generateKindClassName(
-                parentKind,
+                kind,
+                ...parentKinds,
                 ...childrenAsKeywords(entity),
               ),
               children: [entity],
@@ -246,14 +250,18 @@ export function flattenNestedTree(
       // If this is a nested entity, then flat map it's children
       if ((entity?.children?.length ?? 0) > 1) {
         // Generate a new flat map function with this entity's kind
-        return flatMap(entity.children, flatMapTreeWithKind(entity.kind));
+        return flatMap(
+          entity.children,
+          flatMapTreeWithKinds(kind, entity.kind, ...parentKinds),
+        );
       }
 
       if (isFlattenedTokenObject(entity)) {
         return {
           kind: generateKindClassName(
+            kind,
             entity.kind,
-            parentKind,
+            ...parentKinds,
             ...childrenAsKeywords(...entity.children),
           ),
           children: entity.children,
@@ -264,7 +272,7 @@ export function flattenNestedTree(
     };
   }
 
-  return flatMap(children, flatMapTreeWithKind(kind));
+  return flatMap(children, flatMapTreeWithKinds(kind));
 }
 
 function containsLineBreak(token: TreeItem): boolean {
@@ -332,7 +340,7 @@ export function treeToLines(
           });
         });
       }
-    } else {
+    } else if (child && (isString(child) || isFlattenedTokenObject(child))) {
       lines[currentLineIndex].push(child);
     }
   });
