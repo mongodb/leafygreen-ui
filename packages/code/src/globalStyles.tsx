@@ -26,8 +26,8 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
     5: '#D83713',
     6: '#EDB210',
     7: '#12824D',
-    8: '#016EE9',
-    9: '#016EE9',
+    8: '#00a1e6',
+    9: '#016ee9',
     10: '#CC3887',
   },
 
@@ -41,7 +41,7 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
     6: '#EDB210',
     7: '#35DE7B',
     8: '#a5e3ff',
-    9: '#2DC4FF',
+    9: '#2dc4ff',
     10: '#FF7DC3',
   },
 };
@@ -59,7 +59,11 @@ const getStyles = (mode: Mode): string => `
       color: ${variantColors[mode][9]};
     }
 
-    .lg-highlight-function.lg-highlight-params {
+    .lg-highlight-title {
+      color: ${variantColors[mode][8]};
+    }
+
+    .lg-highlight-params {
       color: ${variantColors[mode][5]}
     }
 
@@ -69,7 +73,6 @@ const getStyles = (mode: Mode): string => `
     }
   
     .lg-highlight-regexp,
-    .lg-highlight-params,
     .lg-highlight-meta,
     .lg-highlight-meta-string {
       color: ${variantColors[mode][8]};
@@ -93,6 +96,11 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-selector-class {
       color: ${variantColors[mode][10]};
     }
+
+    .lg-highlight-string,
+    .lg-highlight-addition {
+      color: ${variantColors[mode][7]};
+    }
   
     .lg-highlight-variable,
     .lg-highlight-deletion,
@@ -112,12 +120,7 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-string {
       font-weight: 600;
     }
-    .lg-highlight-string,
-    .lg-highlight-addition,
-    .lg-highlight-title {
-      color: ${variantColors[mode][7]};
-    }
-  
+    
     .lg-highlight-emphasis {
       font-style: italic;
     }

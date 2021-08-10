@@ -1,5 +1,6 @@
 import { transparentize } from 'polished';
 import React from 'react';
+import flatMap from 'lodash/flatMap';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -15,9 +16,21 @@ interface TokenProps {
   children: React.ReactNode;
 }
 
-export function generateKindClassName(...args: Array<any>): string {
+export function generateKindClassName({
+  kinds,
+  child,
+}: {
+  kinds: Array<string | undefined>;
+  child?: string;
+}): string {
   const prefix = 'lg-highlight-';
-  return args
+  const keywords = ['function', 'class'];
+
+  if (child && keywords.includes(child)) {
+    kinds.push(child);
+  }
+
+  return kinds
     .filter((str): str is string => isString(str) && str.length > 0)
     .map(kind => {
       // Sometimes, a kind will have run through this function before.
@@ -220,41 +233,44 @@ export function flattenNestedTree(
     return flattenNestedTree(children.children, kind);
   }
 
-  return children.reduce((acc: Array<string | FlatTokenObject>, val) => {
-    if (isString(val)) {
-      // If there's a kind, we construct a custom token object with that kind to preserve highlighting.
-      // Without this, the value will simply render without highlighting.
-      const child = kind
-        ? { kind: generateKindClassName(kind), children: [val] }
-        : val;
+  // Generate a flat map function with a closure around parent's kind
+  function flatMapTreeWithKind(parentKind?: string) {
+    return function (
+      entity: string | TokenObject,
+    ): string | FlatTokenObject | Array<string | FlatTokenObject> {
+      if (isString(entity)) {
+        return parentKind
+          ? {
+              kind: generateKindClassName({
+                kinds: [parentKind],
+                child: entity,
+              }),
+              children: [entity],
+            }
+          : entity; // entity is basic text
+      }
 
-      return [...acc, child];
-    }
+      // If this is a nested entity, then flat map it's children
+      if ((entity?.children?.length ?? 0) > 1) {
+        // Generate a new flat map function with this entity's kind
+        return flatMap(entity.children, flatMapTreeWithKind(entity.kind));
+      }
 
-    if ((val?.children?.length ?? 0) > 1) {
-      // Pass the kind here so that the function can highlight nested tokens if applicable
-      return [
-        ...acc,
-        ...flattenNestedTree(
-          val.children,
-          generateKindClassName(kind, val.kind),
-        ),
-      ];
-    }
+      if (isFlattenedTokenObject(entity)) {
+        return {
+          kind: generateKindClassName({
+            kinds: [entity.kind, parentKind],
+            child: entity.children.join(' '),
+          }),
+          children: entity.children,
+        };
+      }
 
-    if (isFlattenedTokenObject(val)) {
-      return [
-        ...acc,
-        { kind: generateKindClassName(kind, val.kind), children: val.children },
-      ];
-    }
+      return entity as FlatTokenObject;
+    };
+  }
 
-    if (isTokenObject(val)) {
-      return [...acc, ...flattenNestedTree(val)];
-    }
-
-    return acc;
-  }, []);
+  return flatMap(children, flatMapTreeWithKind(kind));
 }
 
 function containsLineBreak(token: TreeItem): boolean {
@@ -293,6 +309,8 @@ export function treeToLines(
     currentLineIndex++;
     lines[currentLineIndex] = [];
   };
+
+  console.log(children);
 
   flattenNestedTree(children).forEach(child => {
     // If the current element includes a line break, we need to handle it differently
@@ -406,6 +424,7 @@ export function TableContent({ lines }: TableContentProps) {
 const plugin: LeafyGreenHLJSPlugin = {
   'after:highlight': function (result: LeafyGreenHighlightResult) {
     const { rootNode } = result._emitter;
+    // console.log(JSON.stringify(rootNode.children, null, 2));
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
