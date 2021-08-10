@@ -16,20 +16,8 @@ interface TokenProps {
   children: React.ReactNode;
 }
 
-export function generateKindClassName({
-  kinds,
-  child,
-}: {
-  kinds: Array<string | undefined>;
-  child?: string;
-}): string {
+export function generateKindClassName(...kinds: Array<any>): string {
   const prefix = 'lg-highlight-';
-  const keywords = ['function', 'class'];
-
-  if (child && keywords.includes(child)) {
-    kinds.push(child);
-  }
-
   return kinds
     .filter((str): str is string => isString(str) && str.length > 0)
     .map(kind => {
@@ -47,6 +35,11 @@ export function generateKindClassName({
       return classes;
     })
     .join(' ');
+}
+
+function childrenAsKeywords(...children: Array<string>) {
+  const keywords = ['function', 'class'];
+  return children.filter(child => keywords.includes(child));
 }
 
 function Token({ kind, children }: TokenProps) {
@@ -241,10 +234,10 @@ export function flattenNestedTree(
       if (isString(entity)) {
         return parentKind
           ? {
-              kind: generateKindClassName({
-                kinds: [parentKind],
-                child: entity,
-              }),
+              kind: generateKindClassName(
+                parentKind,
+                ...childrenAsKeywords(entity),
+              ),
               children: [entity],
             }
           : entity; // entity is basic text
@@ -258,10 +251,11 @@ export function flattenNestedTree(
 
       if (isFlattenedTokenObject(entity)) {
         return {
-          kind: generateKindClassName({
-            kinds: [entity.kind, parentKind],
-            child: entity.children.join(' '),
-          }),
+          kind: generateKindClassName(
+            entity.kind,
+            parentKind,
+            ...childrenAsKeywords(...entity.children),
+          ),
           children: entity.children,
         };
       }
