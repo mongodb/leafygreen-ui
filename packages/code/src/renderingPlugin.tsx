@@ -304,8 +304,6 @@ export function treeToLines(
     lines[currentLineIndex] = [];
   };
 
-  console.log(children);
-
   flattenNestedTree(children).forEach(child => {
     // If the current element includes a line break, we need to handle it differently
     if (containsLineBreak(child)) {
