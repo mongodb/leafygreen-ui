@@ -24,9 +24,9 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
     3: uiColors.black,
     4: uiColors.white,
     5: '#D83713',
-    6: '#EDB210',
+    6: '#956d00',
     7: '#12824D',
-    8: '#00a1e6',
+    8: '#007ab8',
     9: '#016ee9',
     10: '#CC3887',
   },
@@ -48,47 +48,10 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
 
 const getStyles = (mode: Mode): string => `
   .lg-highlight-hljs-${mode} {
-    .lg-highlight-quote,
-    .lg-highlight-literal,
-    .lg-highlight-class,
-    .lg-highlight-section,
-    .lg-highlight-name,
-    .lg-highlight-number,
-    .lg-highlight-class.lg-highlight-keyword,
-    .lg-highlight-function.lg-highlight-keyword {
-      color: ${variantColors[mode][9]};
-    }
-
-    .lg-highlight-title {
-      color: ${variantColors[mode][8]};
-    }
-
-    .lg-highlight-params {
-      color: ${variantColors[mode][5]}
-    }
-
-    .lg-highlight-function.lg-highlight-keyword,
-    .lg-highlight-function.lg-highlight-built_in {
-      color: ${variantColors[mode][9]};
-    }
-  
-    .lg-highlight-regexp,
-    .lg-highlight-meta,
-    .lg-highlight-meta-string {
-      color: ${variantColors[mode][8]};
-    }
-  
-    .lg-highlight-comment {
-      color: ${variantColors[mode][2]};
-      font-style: italic;
-    }
-
-    .lg-highlight-doctag,
-    .lg-highlight-formula {
-      color: ${variantColors[mode][3]};
-    }
-  
+    
     .lg-highlight-keyword,
+    .lg-highlight-class,
+    .lg-highlight-function,
     .lg-highlight-selector-tag,
     .lg-highlight-selector-attr,
     .lg-highlight-selector-pseudo,
@@ -96,12 +59,30 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-selector-class {
       color: ${variantColors[mode][10]};
     }
+    
+    .lg-highlight-title {
+      color: ${variantColors[mode][9]};
+    }
+
+    .lg-highlight-quote,
+    .lg-highlight-literal,
+    .lg-highlight-section,
+    .lg-highlight-name,
+    .lg-highlight-number {
+      color: ${variantColors[mode][8]};
+    }
 
     .lg-highlight-string,
     .lg-highlight-addition {
       color: ${variantColors[mode][7]};
     }
-  
+
+    .lg-highlight-regexp,
+    .lg-highlight-meta,
+    .lg-highlight-meta-string {
+      color: ${variantColors[mode][6]};
+    }
+
     .lg-highlight-variable,
     .lg-highlight-deletion,
     .lg-highlight-symbol,
@@ -111,10 +92,21 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-link,
     .lg-highlight-attr,
     .lg-highlight-attribute,
-    .lg-highlight-built_in,
+    .lg-highlight-language,
     .lg-highlight-template-variable,
-    .lg-highlight-type {
+    .lg-highlight-type,
+    .lg-highlight-params {
       color: ${variantColors[mode][5]}
+    }
+
+    .lg-highlight-doctag,
+    .lg-highlight-formula {
+      color: ${variantColors[mode][3]};
+    }
+  
+    .lg-highlight-comment {
+      color: ${variantColors[mode][2]};
+      font-style: italic;
     }
   
     .lg-highlight-string {
