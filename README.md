@@ -205,8 +205,6 @@ $ git submodule update --init --recursive --remote
 # --remote makes the update command pull from the remote tracking branch instead of what you have locally.
 ```
 
-###
-
 ## Development within an Application
 
 To actively develop `leafygreen-ui` components within an application, the following script will link all `leafygreen-ui` components within your application to the local `leafygreen-ui` repository.
