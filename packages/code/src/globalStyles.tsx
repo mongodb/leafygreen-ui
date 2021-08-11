@@ -50,8 +50,8 @@ const getStyles = (mode: Mode): string => `
   .lg-highlight-hljs-${mode} {
     
     .lg-highlight-keyword,
-    .lg-highlight-class,
-    .lg-highlight-function,
+    .lg-highlight-keyword.lg-highlight-function,
+    .lg-highlight-keyword.lg-highlight-class,
     .lg-highlight-selector-tag,
     .lg-highlight-selector-attr,
     .lg-highlight-selector-pseudo,
@@ -59,16 +59,17 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-selector-class {
       color: ${variantColors[mode][10]};
     }
-    
-    .lg-highlight-title {
+
+    .lg-highlight-regexp,
+    .lg-highlight-number,
+    .lg-highlight-literal,
+    .lg-highlight-function.lg-highlight-title {
       color: ${variantColors[mode][9]};
     }
 
     .lg-highlight-quote,
-    .lg-highlight-literal,
     .lg-highlight-section,
-    .lg-highlight-name,
-    .lg-highlight-number {
+    .lg-highlight-name {
       color: ${variantColors[mode][8]};
     }
 
@@ -77,7 +78,6 @@ const getStyles = (mode: Mode): string => `
       color: ${variantColors[mode][7]};
     }
 
-    .lg-highlight-regexp,
     .lg-highlight-meta,
     .lg-highlight-meta-string {
       color: ${variantColors[mode][6]};
@@ -87,16 +87,21 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-deletion,
     .lg-highlight-symbol,
     .lg-highlight-bullet,
-    .lg-highlight-subst,
     .lg-highlight-meta,
     .lg-highlight-link,
     .lg-highlight-attr,
     .lg-highlight-attribute,
     .lg-highlight-language,
     .lg-highlight-template-variable,
+    .lg-highlight-built_in,
     .lg-highlight-type,
     .lg-highlight-params {
       color: ${variantColors[mode][5]}
+    }
+
+    .lg-highlight-title,
+    .lg-highlight-class.lg-highlight-title {
+      color: ${variantColors[mode][3]};
     }
 
     .lg-highlight-doctag,
