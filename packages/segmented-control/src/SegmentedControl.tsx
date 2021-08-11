@@ -1,42 +1,130 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
+import useDynamicRefs from './useDynamicRefs';
+import { Size, Mode } from './types';
 
 /**
  * Styles
  */
 
-const wrapperStyle = css`
+// The border color is slightly different from the base gray for accessibility reasons
+const selectionBorderColor = '#869499';
+
+const frameStyleBase = css`
   position: relative;
   display: grid;
+  padding: var(--padding);
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  gap: 5px;
+  gap: var(--segment-gap);
   align-items: center;
-  padding: 3px;
-  border-radius: 6px;
-  background-color: ${uiColors.gray.light3};
-  box-shadow: 0px 1px 1px #e7eeec, 0px 1px 2px rgba(0, 0, 0, 0.3) inset;
+  background-color: var(--background-color);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--radius);
+  border-color: var(--border-color);
+
+  &:after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--inner-shadow), var(--outer-shadow);
+    z-index: 2;
+    pointer-events: none;
+  }
 `;
+
+const frameStyleFromSize: {
+  [key in Size]: string;
+} = {
+  small: css`
+    --segment-gap: 1px;
+    --padding: 0px;
+    --radius: 4px;
+  `,
+  default: css`
+    --segment-gap: 5px;
+    --padding: 3px;
+    --radius: 6px;
+  `,
+  large: css`
+    --segment-gap: 5px;
+    --padding: 3px;
+    --radius: 6px;
+  `,
+};
+
+const frameStyleFromMode: {
+  [key in Mode]: string;
+} = {
+  light: css`
+    --background-color: ${uiColors.gray.light3}; // color
+    --border-color: transparent; // color
+    --inner-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3) inset; // color
+    --outer-shadow: 0px 1px 1px #e7eeec;
+  `,
+  dark: css`
+    --background-color: ${uiColors.gray.dark3}; // color
+    --border-color: ${uiColors.gray.dark1}; // color: ;
+    --inner-shadow: unset;
+    --outer-shadow: unset;
+  `,
+};
+
+const selectionIndicatorBase = css`
+  position: absolute;
+  height: var(--indicator-height);
+  /* TODO - fix the shadow overhang over the frame */
+  box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
+  transition: transform 150ms ease-in-out;
+  z-index: 0;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  background-color: var(--indicator-background-color);
+  border-color: var(--indicator-border-color);
+`;
+
+const indicatorStyleFromSize: {
+  [key in Size]: string;
+} = {
+  small: css`
+    --indicator-height: 100%;
+  `,
+  default: css`
+    --indicator-height: calc(100% - 6px); // 2 padding
+  `,
+  large: css`
+    --indicator-height: calc(100% - 6px); // 2 padding
+  `,
+};
+
+const indicatorStyleFromMode: {
+  [key in Mode]: string;
+} = {
+  light: css`
+    --indicator-background-color: ${uiColors.gray.light2}; // color
+    --indicator-border-color: ${selectionBorderColor}; // color
+  `,
+  dark: css`
+    --indicator-background-color: ${uiColors.gray.dark1}; // color
+    --indicator-border-color: ${uiColors.gray.base}; // color
+  `,
+};
 
 /**
  * Types
  */
-
-const Size = {
-  Small: 'small',
-  Default: 'default',
-  Large: 'large',
-} as const;
-
-type Size = typeof Size[keyof typeof Size];
 export interface SegmentedControlProps {
   children: React.ReactNode;
   name?: string;
-  size?: 'default';
+  size?: Size;
   darkMode?: boolean;
   defaultValue?: string;
   value?: string;
@@ -51,7 +139,7 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
   {
     children,
     name: nameProp,
-    size = Size.Default,
+    size = 'default',
     darkMode = false,
     defaultValue = '',
     value: controlledValue,
@@ -60,6 +148,12 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
   }: SegmentedControlProps,
   forwardedRef,
 ) {
+  // TODO log warning if defaultValue is set but does not match any child value
+
+  const [getRef, setRef] = useDynamicRefs<HTMLInputElement>();
+
+  const mode = darkMode ? 'dark' : 'light';
+
   // If a value is given, then it's controlled
   let isControlled = controlledValue != null ? true : false;
 
@@ -74,8 +168,6 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
       if (!defaultValue && i == 0) {
         defaultValue = child.props.value;
       }
-
-      // TODO log warning if defaultValue is set but does not match any child value
     }
   });
 
@@ -86,6 +178,7 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
 
   const name = useIdAllocator({ prefix: 'radio-group', id: nameProp });
 
+  // Change handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(e);
@@ -96,6 +189,7 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
     }
   };
 
+  // Add internal props to children passed in
   const renderedChildren = React.Children.map(children, (child, index) => {
     if (!isComponentType(child, 'SegmentedControlOption')) {
       console.warn(`${child} is not a SegmentedControlOption`);
@@ -113,8 +207,37 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
       _checked,
       _name: name,
       _onChange: handleChange,
+      ref: setRef(`${name}-${index}`),
     });
   });
+
+  const selectedIndex = React.Children.toArray(
+    renderedChildren,
+  ).findIndex(child =>
+    isControlled
+      ? (child as React.ReactElement).props.value === controlledValue
+      : (child as React.ReactElement).props.value === uncontrolledValue,
+  );
+
+  /**
+   * Dynamically set the size & position of the selection indicator
+   */
+  const [selectionStyleDynamic, setSelectionStyleDynamic] = useState<string>();
+
+  // Update dynamic styles of the selection indicator
+  useEffect(() => {
+    const selectedElement = (getRef(
+      `${name}-${selectedIndex}`,
+    ) as React.RefObject<HTMLInputElement>).current;
+
+    if (selectedElement) {
+      const { offsetWidth: width, offsetLeft: left } = selectedElement;
+      setSelectionStyleDynamic(css`
+        width: ${width}px;
+        transform: translateX(${left}px);
+      `);
+    }
+  }, [selectedIndex, getRef, name, renderedChildren]);
 
   /**
    * TODO
@@ -124,16 +247,29 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
    */
 
   return (
-    // <InteractionRing>
-    <div
-      role="group"
-      aria-label={name}
-      ref={forwardedRef}
-      className={cx(wrapperStyle, className)}
-    >
-      {renderedChildren}
-    </div>
-    // </InteractionRing>
+    <InteractionRing borderRadius={size == 'small' ? '4px' : '6px'}>
+      <div
+        role="group"
+        aria-label={name}
+        className={cx(
+          frameStyleBase,
+          frameStyleFromSize[size],
+          frameStyleFromMode[mode],
+          className,
+        )}
+        ref={forwardedRef}
+      >
+        {renderedChildren}
+        <div
+          className={cx(
+            selectionIndicatorBase,
+            indicatorStyleFromSize[size],
+            indicatorStyleFromMode[mode],
+            selectionStyleDynamic,
+          )}
+        />
+      </div>
+    </InteractionRing>
   );
 });
 

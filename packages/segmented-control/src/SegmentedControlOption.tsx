@@ -1,46 +1,124 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { Size, Mode } from './types';
+import { size } from 'polished';
+
 /**
  * Styles
  */
 
 // The border color is slightly different from the base gray for accessibility reasons
-const borderColor = '#869499';
-
 const checkedSelector = '[data-checked="true"]';
 const uncheckedSelector = '[data-checked="false"]';
 
-const wrapperStyle = (checked: boolean) => css`
+const optionStyleFromSize: {
+  [key in Size]: string;
+} = {
+  small: css`
+    --font-size: 12px;
+    --line-height: 16px;
+    --inline-padding: 3px;
+    --text-transform: uppercase;
+    --font-weight: bold;
+    --divider-height: 12px;
+  `,
+  default: css`
+    --font-size: 14px;
+    --line-height: 24px;
+    --inline-padding: 4px;
+    --text-transform: none;
+    --font-weight: normal;
+    --divider-height: 18px;
+  `,
+  large: css`
+    --font-size: 16px;
+    --line-height: 24px;
+    --inline-padding: 4px;
+    --text-transform: none;
+    --font-weight: normal;
+    --divider-height: 18px;
+  `,
+};
+
+const optionStyleFromMode: {
+  [key in Mode]: string;
+} = {
+  light: css`
+    --base-text-color: ${uiColors.gray.dark1};
+    --base-background-color: transparent;
+    --base-border-color: transparent;
+    --base-shadow-color: transparent;
+    --hover-text-color: ${uiColors.gray.dark3};
+    --hover-background-color: ${uiColors.white};
+    --active-text-color: ${uiColors.gray.dark3};
+    --disabled-text-color: ${uiColors.gray.light1};
+  `,
+  dark: css`
+    --base-text-color: ${uiColors.gray.light1};
+    --base-background-color: transparent;
+    --base-border-color: transparent;
+    --base-shadow-color: transparent;
+    --hover-text-color: ${uiColors.gray.light2};
+    --hover-background-color: ${uiColors.gray.dark2};
+    --active-text-color: ${uiColors.white};
+    --disabled-text-color: ${uiColors.gray.dark1};
+  `,
+};
+
+const optionStyle = css`
   position: relative;
   display: inline-block;
-  padding: 4px 12px;
-  line-height: 24px;
+  padding: var(--inline-padding) 12px;
   border-width: 1px;
   border-style: solid;
   border-radius: 4px;
   text-align: center;
-  color: ${checked ? uiColors.gray.dark3 : uiColors.gray.dark1};
-  background-color: ${checked ? uiColors.gray.light2 : 'transparent'};
-  border-color: ${checked ? borderColor : 'transparent'};
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  text-transform: var(--text-transform, none);
+  font-weight: var(--font-weight);
+  color: var(--base-text-color); // color
+  background-color: var(--base-background-color); // color
+  border-color: var(--base-border-color); // color
+  box-shadow: 0px 1px 2px var(--base-shadow-color); // color
   cursor: pointer;
-  box-shadow: 0px 1px 2px ${checked ? 'rgba(6,22,33,0.3)' : 'transparent'};
   transition: all 100ms ease-in-out;
+  z-index: 1;
 
-  // TODO - Make selected pill animate over
+  &:hover {
+    color: var(--hover-text-color); // color
+    background-color: var(--hover-background-color); // color
+
+    &${checkedSelector}, &[data-disabled='true'] {
+      border-color: transparent;
+      background-color: transparent;
+    }
+  }
+
+  &${checkedSelector} {
+    color: var(--active-text-color); // color
+  }
+
+  &[data-disabled='true'] {
+    color: var(--disabled-text-color); // color
+    cursor: not-allowed;
+  }
 
   /* 
    * Adds the divider line to unselected segments 
    */
-
   &:before {
     content: '';
     position: absolute;
-    height: 24px;
+    height: var(--divider-height);
+    top: calc(
+      (var(--line-height) + 2 * var(--inline-padding) - var(--divider-height)) /
+        2
+    );
     width: 1px;
-    left: -4px;
+    left: calc(-1px - (var(--segment-gap, 1px) + 1px) / 2);
     background-color: transparent;
-    font-weight: normal;
     transition: all 100ms ease-in-out;
   }
 
@@ -52,28 +130,11 @@ const wrapperStyle = (checked: boolean) => css`
         /* &:not(:hover + ${uncheckedSelector}) { */
         // no divider to the left of hovered segments
         &:before {
-          background-color: ${uiColors.gray.light1};
+          background-color: ${uiColors.gray.light1}; // color
         }
         /* } */
       }
       /* } */
-    }
-  }
-
-  // TODO Try white highlight on hover, but smaller than selected segment
-
-  &:hover {
-    /* border-color: ${borderColor}; */
-    color: ${uiColors.gray.dark3};
-    background-color: ${uiColors.white};
-  }
-
-  &[data-disabled='true'] {
-    color: ${uiColors.gray.light1};
-    cursor: not-allowed;
-
-    &:hover {
-      border-color: transparent;
     }
   }
 `;
@@ -88,6 +149,7 @@ const radioInputStyle = css`
 
 const labelStyle = css`
   cursor: inherit;
+  z-index: 3;
 `;
 
 /**
@@ -109,6 +171,8 @@ export interface SegmentedControlOptionProps {
   as?: any;
   className?: string;
   id?: string;
+  size?: Size;
+  darkMode?: boolean;
   _name?: string;
   _checked?: boolean;
   _onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -122,21 +186,32 @@ const SegmentedControlOption = React.forwardRef(function SegmentedControlOption(
     value,
     children,
     disabled = false,
-    as,
+    as = 'div',
     className,
     id,
+    size = 'default',
+    darkMode = false,
     _onChange: onChange,
     _name: name,
     _checked: checked,
   }: SegmentedControlOptionProps,
   forwardedRef,
 ) {
+  const mode = darkMode ? 'dark' : 'light';
+
   return (
     <label
       htmlFor={id}
-      className={cx(wrapperStyle(!!checked), className)}
+      as={as}
+      className={cx(
+        optionStyle,
+        optionStyleFromSize[size],
+        optionStyleFromMode[mode],
+        className,
+      )}
       data-disabled={`${disabled}`}
       data-checked={`${checked}`}
+      ref={forwardedRef}
     >
       <input
         type="radio"
@@ -146,10 +221,8 @@ const SegmentedControlOption = React.forwardRef(function SegmentedControlOption(
         disabled={disabled}
         onChange={onChange}
         checked={checked}
-        ref={forwardedRef}
         className={cx(radioInputStyle)}
       ></input>
-
       <span className={cx(labelStyle)}>{children}</span>
     </label>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { SegmentedControl, SegmentedControlOption } from '.';
+import { boolean, select } from '@storybook/addon-knobs';
 
 storiesOf('SegmentedControl', module)
   .add('Default', () => {
@@ -11,8 +12,8 @@ storiesOf('SegmentedControl', module)
       <LeafygreenProvider>
         <SegmentedControl
           name="fruit"
-          size="default"
-          darkMode={false}
+          size={select('Size', ['small', 'default', 'large'], 'default')}
+          darkMode={boolean('darkMode', false)}
           defaultValue="banana"
           value={selectedFruit}
           onChange={e => {
@@ -39,8 +40,8 @@ storiesOf('SegmentedControl', module)
       <LeafygreenProvider>
         <SegmentedControl
           name="fruit"
-          size="default"
-          darkMode={false}
+          size={select('Size', ['small', 'default', 'large'], 'default')}
+          darkMode={boolean('darkMode', false)}
           defaultValue="eggplant"
           onChange={e => {
             console.log(e.target.value);
