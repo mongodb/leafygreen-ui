@@ -6,12 +6,30 @@ import { uiColors } from '@leafygreen-ui/palette';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import useDynamicRefs from './useDynamicRefs';
 import { Size, Mode } from './types';
+import { Overline } from '@leafygreen-ui/typography';
 
 const selectionIndicatorDataAttr = createDataProp('selection-indicator');
 
 /**
  * Styles
  */
+
+const wrapperStyle = css`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
+
+const labelStyle: {
+  [key in Mode]: string;
+} = {
+  light: css`
+    color: ${uiColors.gray.dark1};
+  `,
+  dark: css`
+    color: ${uiColors.gray.light1};
+  `,
+};
 
 // The border color is slightly different from the base gray for accessibility reasons
 const selectionBorderColor = '#869499';
@@ -138,6 +156,7 @@ export interface SegmentedControlProps {
   value?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   className?: string;
+  label?: string;
 }
 
 /**
@@ -153,6 +172,7 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
     value: controlledValue,
     onChange,
     className,
+    label,
   }: SegmentedControlProps,
   forwardedRef,
 ) {
@@ -249,40 +269,42 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
 
   /**
    * TODO
-   * - put focus ring above shadow
-   * - match focus ring border radius
    * - remove hover focus ring
    */
 
   return (
-    <InteractionRing
-      darkMode={darkMode}
-      borderRadius={size == 'small' ? '4px' : '6px'}
-      className={interactionRingStyle}
-    >
-      <div
-        role="group"
-        aria-label={name}
-        className={cx(
-          frameStyleBase,
-          frameStyleFromSize[size],
-          frameStyleFromMode[mode],
-          className,
-        )}
-        ref={forwardedRef}
+    <div className={cx(wrapperStyle)}>
+      <Overline className={cx(labelStyle[mode])}>{label}</Overline>
+
+      <InteractionRing
+        darkMode={darkMode}
+        borderRadius={size == 'small' ? '4px' : '6px'}
+        className={interactionRingStyle}
       >
-        {renderedChildren}
         <div
-          {...selectionIndicatorDataAttr.prop}
+          role="group"
+          aria-label={name}
           className={cx(
-            selectionIndicatorBase,
-            indicatorStyleFromSize[size],
-            indicatorStyleFromMode[mode],
-            selectionStyleDynamic,
+            frameStyleBase,
+            frameStyleFromSize[size],
+            frameStyleFromMode[mode],
+            className,
           )}
-        />
-      </div>
-    </InteractionRing>
+          ref={forwardedRef}
+        >
+          {renderedChildren}
+          <div
+            {...selectionIndicatorDataAttr.prop}
+            className={cx(
+              selectionIndicatorBase,
+              indicatorStyleFromSize[size],
+              indicatorStyleFromMode[mode],
+              selectionStyleDynamic,
+            )}
+          />
+        </div>
+      </InteractionRing>
+    </div>
   );
 });
 
