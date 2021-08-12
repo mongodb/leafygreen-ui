@@ -11,39 +11,43 @@ import { Size, Mode } from './types';
 const checkedSelector = '[data-checked="true"]';
 const uncheckedSelector = '[data-checked="false"]';
 
-const optionStyleFromSize: {
-  [key in Size]: string;
-} = {
-  small: css`
+const optionStyle = ({
+  mode = 'light',
+  size = 'default',
+}: {
+  mode: Mode;
+  size: Size;
+}) => css`
+  ${size === 'small' &&
+  css`
     --font-size: 12px;
     --line-height: 16px;
     --inline-padding: 3px;
     --text-transform: uppercase;
     --font-weight: bold;
     --divider-height: 12px;
-  `,
-  default: css`
+  `}
+  ${size === 'default' &&
+  css`
     --font-size: 14px;
     --line-height: 24px;
     --inline-padding: 3px;
     --text-transform: none;
     --font-weight: normal;
     --divider-height: 18px;
-  `,
-  large: css`
+  `}
+  ${size === 'large' &&
+  css`
     --font-size: 16px;
     --line-height: 28px;
     --inline-padding: 4px;
     --text-transform: none;
     --font-weight: normal;
     --divider-height: 20px;
-  `,
-};
+  `}
 
-const optionStyleFromMode: {
-  [key in Mode]: string;
-} = {
-  light: css`
+  ${mode === 'light' &&
+  css`
     --base-text-color: ${uiColors.gray.dark1};
     --base-background-color: transparent;
     --base-shadow-color: transparent;
@@ -51,8 +55,9 @@ const optionStyleFromMode: {
     --hover-background-color: ${uiColors.white};
     --active-text-color: ${uiColors.gray.dark3};
     --disabled-text-color: ${uiColors.gray.light1};
-  `,
-  dark: css`
+  `}
+  ${mode === 'dark' &&
+  css`
     --base-text-color: ${uiColors.gray.light1};
     --base-background-color: transparent;
     --base-shadow-color: transparent;
@@ -60,10 +65,8 @@ const optionStyleFromMode: {
     --hover-background-color: ${uiColors.gray.dark2};
     --active-text-color: ${uiColors.white};
     --disabled-text-color: ${uiColors.gray.dark1};
-  `,
-};
+  `}
 
-const optionStyle = css`
   position: relative;
   display: inline-block;
   padding: var(--inline-padding) 12px;
@@ -149,6 +152,8 @@ const optionStyle = css`
   }
 `;
 
+const _optionStyle = css``;
+
 const radioInputStyle = css`
   height: 0;
   width: 0;
@@ -214,9 +219,9 @@ const SegmentedControlOption = React.forwardRef(function SegmentedControlOption(
       htmlFor={id}
       as={as}
       className={cx(
-        optionStyle,
-        optionStyleFromSize[size],
-        optionStyleFromMode[mode],
+        optionStyle({ mode, size }),
+        // optionStyleFromSize[size],
+        // optionStyleFromMode[mode],
         className,
       )}
       data-disabled={`${disabled}`}
