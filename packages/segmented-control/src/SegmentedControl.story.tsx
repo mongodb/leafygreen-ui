@@ -17,7 +17,6 @@ storiesOf('SegmentedControl', module)
           defaultValue="banana"
           value={selectedFruit}
           onChange={e => {
-            console.log(e.target.value);
             setSelectedFruit(e.target.value);
           }}
         >

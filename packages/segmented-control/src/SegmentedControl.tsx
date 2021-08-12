@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import useDynamicRefs from './useDynamicRefs';
 import { Size, Mode } from './types';
+
+const selectionIndicatorDataAttr = createDataProp('selection-indicator');
 
 /**
  * Styles
@@ -13,32 +15,6 @@ import { Size, Mode } from './types';
 
 // The border color is slightly different from the base gray for accessibility reasons
 const selectionBorderColor = '#869499';
-
-const frameStyleBase = css`
-  position: relative;
-  display: grid;
-  padding: var(--padding);
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: var(--segment-gap);
-  align-items: center;
-  background-color: var(--background-color);
-  border-width: 1px;
-  border-style: solid;
-  border-radius: var(--radius);
-  border-color: var(--border-color);
-
-  &:after {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-    border-radius: var(--radius);
-    box-shadow: var(--inner-shadow), var(--outer-shadow);
-    z-index: 2;
-    pointer-events: none;
-  }
-`;
 
 const frameStyleFromSize: {
   [key in Size]: string;
@@ -66,14 +42,69 @@ const frameStyleFromMode: {
   light: css`
     --background-color: ${uiColors.gray.light3}; // color
     --border-color: transparent; // color
+    --border-width: 0px;
     --inner-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3) inset; // color
     --outer-shadow: 0px 1px 1px #e7eeec;
   `,
   dark: css`
     --background-color: ${uiColors.gray.dark3}; // color
     --border-color: ${uiColors.gray.dark1}; // color: ;
+    --border-width: 1px;
     --inner-shadow: unset;
     --outer-shadow: unset;
+  `,
+};
+
+const frameStyleBase = css`
+  position: relative;
+  display: grid;
+  padding: var(--padding);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--segment-gap);
+  align-items: center;
+  background-color: var(--background-color);
+  border-width: var(--border-width);
+  border-style: solid;
+  border-radius: var(--radius);
+  border-color: var(--border-color);
+
+  &:after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--inner-shadow), var(--outer-shadow);
+    z-index: 2;
+    pointer-events: none;
+  }
+`;
+
+const indicatorStyleFromSize: {
+  [key in Size]: string;
+} = {
+  small: css`
+    --indicator-height: 100%;
+  `,
+  default: css`
+    --indicator-height: calc(100% - 2 * var(--padding));
+  `,
+  large: css`
+    --indicator-height: calc(100% - 2 * var(--padding));
+  `,
+};
+
+const indicatorStyleFromMode: {
+  [key in Mode]: string;
+} = {
+  light: css`
+    --indicator-background-color: ${uiColors.gray.light2}; // color
+    --indicator-border-color: ${selectionBorderColor}; // color
+  `,
+  dark: css`
+    --indicator-background-color: ${uiColors.gray.dark1}; // color
+    --indicator-border-color: ${uiColors.gray.base}; // color
   `,
 };
 
@@ -91,32 +122,9 @@ const selectionIndicatorBase = css`
   border-color: var(--indicator-border-color);
 `;
 
-const indicatorStyleFromSize: {
-  [key in Size]: string;
-} = {
-  small: css`
-    --indicator-height: 100%;
-  `,
-  default: css`
-    --indicator-height: calc(100% - 6px); // 2 padding
-  `,
-  large: css`
-    --indicator-height: calc(100% - 6px); // 2 padding
-  `,
-};
-
-const indicatorStyleFromMode: {
-  [key in Mode]: string;
-} = {
-  light: css`
-    --indicator-background-color: ${uiColors.gray.light2}; // color
-    --indicator-border-color: ${selectionBorderColor}; // color
-  `,
-  dark: css`
-    --indicator-background-color: ${uiColors.gray.dark1}; // color
-    --indicator-border-color: ${uiColors.gray.base}; // color
-  `,
-};
+const interactionRingStyle = css`
+  z-index: 3;
+`;
 
 /**
  * Types
@@ -247,7 +255,11 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
    */
 
   return (
-    <InteractionRing borderRadius={size == 'small' ? '4px' : '6px'}>
+    <InteractionRing
+      darkMode={darkMode}
+      borderRadius={size == 'small' ? '4px' : '6px'}
+      className={interactionRingStyle}
+    >
       <div
         role="group"
         aria-label={name}
@@ -261,6 +273,7 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
       >
         {renderedChildren}
         <div
+          {...selectionIndicatorDataAttr.prop}
           className={cx(
             selectionIndicatorBase,
             indicatorStyleFromSize[size],

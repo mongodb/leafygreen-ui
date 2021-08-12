@@ -2,7 +2,6 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Size, Mode } from './types';
-import { size } from 'polished';
 
 /**
  * Styles
@@ -26,18 +25,18 @@ const optionStyleFromSize: {
   default: css`
     --font-size: 14px;
     --line-height: 24px;
-    --inline-padding: 4px;
+    --inline-padding: 3px;
     --text-transform: none;
     --font-weight: normal;
     --divider-height: 18px;
   `,
   large: css`
     --font-size: 16px;
-    --line-height: 24px;
+    --line-height: 28px;
     --inline-padding: 4px;
     --text-transform: none;
     --font-weight: normal;
-    --divider-height: 18px;
+    --divider-height: 20px;
   `,
 };
 
@@ -47,7 +46,6 @@ const optionStyleFromMode: {
   light: css`
     --base-text-color: ${uiColors.gray.dark1};
     --base-background-color: transparent;
-    --base-border-color: transparent;
     --base-shadow-color: transparent;
     --hover-text-color: ${uiColors.gray.dark3};
     --hover-background-color: ${uiColors.white};
@@ -57,7 +55,6 @@ const optionStyleFromMode: {
   dark: css`
     --base-text-color: ${uiColors.gray.light1};
     --base-background-color: transparent;
-    --base-border-color: transparent;
     --base-shadow-color: transparent;
     --hover-text-color: ${uiColors.gray.light2};
     --hover-background-color: ${uiColors.gray.dark2};
@@ -70,8 +67,6 @@ const optionStyle = css`
   position: relative;
   display: inline-block;
   padding: var(--inline-padding) 12px;
-  border-width: 1px;
-  border-style: solid;
   border-radius: 4px;
   text-align: center;
   font-size: var(--font-size);
@@ -80,19 +75,25 @@ const optionStyle = css`
   font-weight: var(--font-weight);
   color: var(--base-text-color); // color
   background-color: var(--base-background-color); // color
-  border-color: var(--base-border-color); // color
   box-shadow: 0px 1px 2px var(--base-shadow-color); // color
   cursor: pointer;
   transition: all 100ms ease-in-out;
   z-index: 1;
 
   &:hover {
-    color: var(--hover-text-color); // color
-    background-color: var(--hover-background-color); // color
+    color: var(--hover-text-color);
+
+    &:after {
+      background-color: var(--hover-background-color);
+    }
 
     &${checkedSelector}, &[data-disabled='true'] {
       border-color: transparent;
       background-color: transparent;
+
+      &:after {
+        background-color: transparent;
+      }
     }
   }
 
@@ -103,6 +104,20 @@ const optionStyle = css`
   &[data-disabled='true'] {
     color: var(--disabled-text-color); // color
     cursor: not-allowed;
+  }
+
+  // Hover indicator
+  &:after {
+    content: '';
+    position: absolute;
+    height: calc(100% - 2px);
+    width: 100%;
+    top: 1px;
+    left: 0;
+    background-color: transparent;
+    z-index: -1;
+    border-radius: inherit;
+    transition: all 100ms ease-in-out;
   }
 
   /* 
@@ -117,24 +132,19 @@ const optionStyle = css`
         2
     );
     width: 1px;
-    left: calc(-1px - (var(--segment-gap, 1px) + 1px) / 2);
+    left: calc(0px - (var(--segment-gap, 1px) + 1px) / 2);
     background-color: transparent;
     transition: all 100ms ease-in-out;
   }
 
   &${uncheckedSelector} {
     &:not(:first-child) {
-      /* &:not(:hover) { */
       &:not(${checkedSelector} + ${uncheckedSelector}) {
         // no divider to the left of the checked segment
-        /* &:not(:hover + ${uncheckedSelector}) { */
-        // no divider to the left of hovered segments
         &:before {
           background-color: ${uiColors.gray.light1}; // color
         }
-        /* } */
       }
-      /* } */
     }
   }
 `;
