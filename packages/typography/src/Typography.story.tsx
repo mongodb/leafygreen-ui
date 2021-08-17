@@ -47,9 +47,17 @@ storiesOf('Typography', module).add('Default', () => {
             ['medium', 'regular'],
             'regular',
           )}
-          className={cx(displayBlock, {[darkModeBodyStyles]: darkMode})}
+          className={cx(displayBlock, { [darkModeBodyStyles]: darkMode })}
         >
-          Body text: Lorem ipsum dolor sit amet consectetur <InlineCode darkMode={darkMode}>Inline Code</InlineCode> adipisicing elit. Quia rerum porro non esse quo exercitationem placeat minima dolores animi <InlineCode darkMode={darkMode} href="https://mongodb.design">Linked Inline Code</InlineCode> a corporis, aut optio dolore doloremque consequuntur aliquam est voluptatum vitae!
+          Body text: Lorem ipsum dolor sit amet consectetur{' '}
+          <InlineCode darkMode={darkMode}>Inline Code</InlineCode> adipisicing
+          elit. Quia rerum porro non esse quo exercitationem placeat minima
+          dolores animi{' '}
+          <InlineCode darkMode={darkMode} href="https://mongodb.design">
+            Linked Inline Code
+          </InlineCode>{' '}
+          a corporis, aut optio dolore doloremque consequuntur aliquam est
+          voluptatum vitae!
         </Body>
 
         <div className={displayBlock}>
@@ -79,11 +87,14 @@ storiesOf('Typography', module).add('Default', () => {
           Link
         </Link>
         <div
-          className={cx(displayBlock, css`
-            background-color: ${darkMode
-              ? uiColors.gray.dark3
-              : uiColors.white};
-          `)}
+          className={cx(
+            displayBlock,
+            css`
+              background-color: ${darkMode
+                ? uiColors.gray.dark3
+                : uiColors.white};
+            `,
+          )}
         >
           <Label darkMode={darkMode} htmlFor="id">
             This is a label
