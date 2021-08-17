@@ -1,5 +1,21 @@
 # @leafygreen-ui/interaction-ring
 
+## 1.1.0
+
+### Minor Changes
+
+- fe542c15: Fixes a bug in TextInput & TextArea where the focus ring was not visible when using the mouse. Also adds functionality to InteractioRing to ignore keyboard context and use the default focus behavior.
+
+### Patch Changes
+
+- Updated dependencies [f6e5655a]
+- Updated dependencies [f6e5655a]
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/emotion@4.0.0
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/leafygreen-provider@2.1.3
+
 ## 1.0.4
 
 ### Patch Changes

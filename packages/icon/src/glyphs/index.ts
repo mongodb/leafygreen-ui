@@ -52,11 +52,14 @@ import Lock from './Lock.svg';
 import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
+import Minus from './Minus.svg';
 import NotAllowed from './NotAllowed.svg';
 import OpenNewTab from './OpenNewTab.svg';
+import Pause from './Pause.svg';
 import Person from './Person.svg';
 import PersonGroup from './PersonGroup.svg';
 import PersonWithLock from './PersonWithLock.svg';
+import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
@@ -133,11 +136,14 @@ const glyphs = {
   MagnifyingGlass,
   Megaphone,
   Menu,
+  Minus,
   NotAllowed,
   OpenNewTab,
+  Pause,
   Person,
   PersonGroup,
   PersonWithLock,
+  Play,
   Plus,
   PlusWithCircle,
   QuestionMarkWithCircle,

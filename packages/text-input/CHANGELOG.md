@@ -1,5 +1,29 @@
 # @leafygreen-ui/text-input
 
+## 6.0.5
+
+### Patch Changes
+
+- e87b1cdf: Improves the types for TextInput type attributes.
+- Updated dependencies [e4070f2b]
+  - @leafygreen-ui/icon@11.4.0
+
+## 6.0.4
+
+### Patch Changes
+
+- fe542c15: Fixes a bug in TextInput & TextArea where the focus ring was not visible when using the mouse. Also adds functionality to InteractioRing to ignore keyboard context and use the default focus behavior.
+- Updated dependencies [f6e5655a]
+- Updated dependencies [03388ff2]
+- Updated dependencies [fe542c15]
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/icon@11.3.0
+  - @leafygreen-ui/interaction-ring@1.1.0
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/leafygreen-provider@2.1.3
+  - @leafygreen-ui/typography@8.0.4
+
 ## 6.0.3
 
 ### Patch Changes

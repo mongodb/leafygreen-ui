@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Tab, Tabs } from '@leafygreen-ui/tabs';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 import { uiColors } from '@leafygreen-ui/palette/dist';

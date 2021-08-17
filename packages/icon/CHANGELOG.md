@@ -1,5 +1,22 @@
 # @leafygreen-ui/icon
 
+## 11.4.0
+
+### Minor Changes
+
+- e4070f2b: Adds Play, Pause and Minus icons to icon set
+
+## 11.3.0
+
+### Minor Changes
+
+- 03388ff2: Adds Clone icon
+
+### Patch Changes
+
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/lib@9.0.0
+
 ## 11.2.0
 
 ### Minor Changes
