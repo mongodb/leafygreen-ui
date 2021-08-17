@@ -16,11 +16,18 @@ import {
 } from '.';
 import { Link, ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { css } from '@leafygreen-ui/emotion';
+import { cx, css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const displayBlock = css`
   display: block;
+  max-width: 500px;
+  padding: 8px 16px;
+`;
+
+const darkModeBodyStyles = css`
+  color: ${uiColors.gray.light3};
+  background-color: ${uiColors.gray.dark3};
 `;
 
 storiesOf('Typography', module).add('Default', () => {
@@ -29,32 +36,31 @@ storiesOf('Typography', module).add('Default', () => {
   return (
     <LeafygreenProvider baseFontSize={select('baseFontSize', [14, 16], 14)}>
       <div>
-        <H1>Heading 1</H1>
-        <H2>Heading 2</H2>
-        <H3>Heading 3</H3>
-        <Subtitle>Subtitle</Subtitle>
+        <H1 className={displayBlock}>Heading 1</H1>
+        <H2 className={displayBlock}>Heading 2</H2>
+        <H3 className={displayBlock}>Heading 3</H3>
+        <Subtitle className={displayBlock}>Subtitle</Subtitle>
+
         <Body
           weight={select(
             'select Body weight',
             ['medium', 'regular'],
             'regular',
           )}
-          className={displayBlock}
+          className={cx(displayBlock, {[darkModeBodyStyles]: darkMode})}
         >
-          Body
+          Body text: Lorem ipsum dolor sit amet consectetur <InlineCode darkMode={darkMode}>Inline Code</InlineCode> adipisicing elit. Quia rerum porro non esse quo exercitationem placeat minima dolores animi <InlineCode darkMode={darkMode} href="https://mongodb.design">Linked Inline Code</InlineCode> a corporis, aut optio dolore doloremque consequuntur aliquam est voluptatum vitae!
         </Body>
-        <div className={displayBlock}>
-          <InlineCode>InlineCode</InlineCode> and{' '}
-        </div>
-        <InlineCode href="https://mongodb.design">with link</InlineCode>
+
         <div className={displayBlock}>
           <InlineKeyCode>CTRL</InlineKeyCode>
-          <code>+</code>
+          <code> + </code>
           <InlineKeyCode>C</InlineKeyCode>
         </div>
         <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
-        <Overline>Overline</Overline>
+        <Overline className={displayBlock}>Overline</Overline>
         <Link
+          className={displayBlock}
           href={select(
             'select Link href',
             [
@@ -73,11 +79,11 @@ storiesOf('Typography', module).add('Default', () => {
           Link
         </Link>
         <div
-          className={css`
+          className={cx(displayBlock, css`
             background-color: ${darkMode
               ? uiColors.gray.dark3
               : uiColors.white};
-          `}
+          `)}
         >
           <Label darkMode={darkMode} htmlFor="id">
             This is a label
