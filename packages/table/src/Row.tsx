@@ -11,7 +11,11 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { CellElement, tdInnerDiv } from './Cell';
 import { useDarkModeContext } from './DarkModeContext';
+import { TransitionStatus } from 'react-transition-group/Transition';
 
+/**
+ * Types & Constants
+ */
 const Mode = {
   Light: 'light',
   Dark: 'dark',
@@ -19,6 +23,11 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
+const transitionTime = 150;
+
+/**
+ * Styles
+ */
 const iconButtonMargin = css`
   margin-right: 4px;
   margin-left: -8px;
@@ -27,7 +36,7 @@ const iconButtonMargin = css`
 const modeStyles = {
   [Mode.Light]: {
     rowStyle: css`
-      border-top: 1px solid ${uiColors.gray.light2};
+      --border-color: ${uiColors.gray.light2};
       color: ${uiColors.gray.dark2};
     `,
 
@@ -48,8 +57,8 @@ const modeStyles = {
 
   [Mode.Dark]: {
     rowStyle: css`
+      --border-color: ${uiColors.gray.dark1};
       background-color: ${uiColors.gray.dark3};
-      border-top: 1px solid ${uiColors.gray.dark1};
       color: ${uiColors.gray.light3};
     `,
 
@@ -70,6 +79,13 @@ const modeStyles = {
 };
 
 const rowStyle = css`
+  border-color: var(--border-color);
+  border-top-width: 1px;
+  border-top-style: solid;
+  transition: all ${transitionTime}ms ease-in-out;
+  transition-property: border-color, transform, opacity;
+  transform-origin: 50% 0%;
+
   & > td > ${tdInnerDiv.selector} {
     min-height: 40px;
     max-height: unset;
@@ -79,6 +95,20 @@ const rowStyle = css`
 const hideRow = css`
   opacity: 0;
 `;
+
+const transitionStyles: { [key in TransitionStatus]: string } = {
+  entering: css`
+    opacity: 0;
+    transform: translateY(-10%);
+  `,
+  entered: css`
+    opacity: 1;
+    transform: translateY(0);
+  `,
+  exiting: ``, // N/A
+  exited: ``, // N/A
+  unmounted: ``, // N/A
+};
 
 function styleColumn(index: string, dataType?: DataType) {
   let justify;
@@ -285,21 +315,28 @@ const Row = React.forwardRef(
     );
 
     // We don't need the transition group except on the client here, and rendering this bit on the server breaks rendering these rows.
-    const renderedTransitionGroup = isBrowser
-      ? renderedNestedRows.length > 0 && (
-          <Transition
-            in={isExpanded && !isAnyAncestorCollapsedProp}
-            timeout={150}
-            nodeRef={nodeRef}
-          >
-            {_ => (
-              <>
-                {renderedNestedRows.map(element => React.cloneElement(element))}
-              </>
+    const shouldTransitionGroupBeVisible =
+      isBrowser &&
+      isExpanded &&
+      !isAnyAncestorCollapsedProp &&
+      renderedNestedRows.length > 0;
+    const renderedTransitionGroup = (
+      <Transition
+        in={shouldTransitionGroupBeVisible}
+        timeout={0}
+        nodeRef={nodeRef}
+      >
+        {state => (
+          <>
+            {renderedNestedRows.map(element =>
+              React.cloneElement(element, {
+                className: transitionStyles[state],
+              }),
             )}
-          </Transition>
-        )
-      : renderedNestedRows;
+          </>
+        )}
+      </Transition>
+    );
 
     return (
       <>
