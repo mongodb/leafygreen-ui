@@ -8,8 +8,8 @@ import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
 import { useMemo } from 'react';
 
-const MAX_MENU_HEIGHT = 274;
-const MENU_MARGIN = 8;
+const maxMenuHeight = 274;
+const menuMargin = 8;
 
 const menuStyle = css`
   position: relative;
@@ -68,12 +68,12 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
           triggerTop,
         );
 
-        // if there's more than enough space, set to MAX_MENU_HEIGHT
+        // if there's more than enough space, set to maxMenuHeight
         // otherwise fill the space available
-        return Math.min(MAX_MENU_HEIGHT, safeSpace - MENU_MARGIN);
+        return Math.min(maxMenuHeight, safeSpace - menuMargin);
       }
 
-      return MAX_MENU_HEIGHT;
+      return maxMenuHeight;
     }, [ref, referenceElement, viewportSize]);
 
     const onClick = useCallback(
