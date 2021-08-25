@@ -18,6 +18,5 @@ if (args.length > 0) {
 // Run lerna
 const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
 cmd.on('close', code => {
-  if (code == 0) console.log('🛠️ Finished pre-build \n');
-  else console.log(`Exit code ${code}`);
+  console.log(code === 0 ? '🛠️ Finished pre-build \n' : `Exit code ${code}`);
 });
