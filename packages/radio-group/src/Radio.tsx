@@ -44,7 +44,7 @@ const labelColorSet = {
 
     disabled: css`
       cursor: not-allowed;
-      color ${uiColors.gray.base};
+      color: ${uiColors.gray.base};
     `,
   },
 
@@ -294,7 +294,7 @@ function Radio({
           {...rest}
           {...inputDataProp.prop}
           ref={setInputElement}
-          checked={checked}
+          checked={!!checked}
           id={id}
           name={name}
           type="radio"
