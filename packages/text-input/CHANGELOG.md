@@ -1,5 +1,13 @@
 # @leafygreen-ui/text-input
 
+## 6.0.5
+
+### Patch Changes
+
+- e87b1cdf: Improves the types for TextInput type attributes.
+- Updated dependencies [e4070f2b]
+  - @leafygreen-ui/icon@11.4.0
+
 ## 6.0.4
 
 ### Patch Changes
