@@ -248,7 +248,7 @@ export function flattenNestedTree(
       }
 
       // If this is a nested entity, then flat map it's children
-      if ((entity?.children?.length ?? 0) > 1) {
+      if ((entity?.children?.length ?? 0) >= 1) {
         // Generate a new flat map function with this entity's kind
         return flatMap(
           entity.children,
