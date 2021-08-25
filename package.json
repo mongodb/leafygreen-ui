@@ -98,7 +98,7 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/user-event": "^12.1.8",
     "@types/facepaint": "^1.2.1",
-    "@types/highlight.js": "^9.12.3",
+    "@types/highlight.js": "^10.1.0",
     "@types/jest": "^26.0.0",
     "@types/jest-axe": "^3.5.1",
     "@types/lodash": "^4.14.170",
