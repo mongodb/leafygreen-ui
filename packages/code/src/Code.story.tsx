@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean, text } from '@storybook/addon-knobs';
@@ -9,10 +10,24 @@ import LanguageSwitcherExample from './LanguageSwitcherExample';
 
 const jsSnippet = `
 
+const myVar = 42;
+
+var myObj = {
+  someProp: ['arr', 'ay'],
+  regex: /([A-Z])\w+/
+}
+
+export default class myClass {
+  constructor(){
+    // access properties
+    this.myProp = false
+  }
+}
+
 function greeting(entity) {
   return \`Hello, \${entity}!\`;
 }
-
+ 
 console.log(greeting('World'));
 
 `;
