@@ -231,7 +231,6 @@ const Row = React.forwardRef(
     // Render any nested rows and their transition group
     const { rowHasNestedRows, renderedTransitionGroup } = useMemo(() => {
       const renderedNestedRows: Array<React.ReactElement> = [];
-      // let rowHasNestedRows = false;
       const rowHasNestedRows = React.Children.toArray(children).some(child =>
         isComponentType<RowElement>(child, 'Row'),
       );
@@ -258,11 +257,7 @@ const Row = React.forwardRef(
                     isAnyAncestorCollapsedProp || !isExpanded,
                   indentLevel: indentLevel + 1,
                   key: `${indexRef.current}-${indentLevel}-${index}`,
-                  className: cx(
-                    nestedRowInitialStyle,
-                    transitionStyles[state],
-                    state,
-                  ),
+                  className: cx(nestedRowInitialStyle, transitionStyles[state]),
                 });
               }
             })
