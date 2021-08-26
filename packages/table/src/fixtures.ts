@@ -1,4 +1,14 @@
-export const defaultData = [
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface testTableDataShape {
+  name: string;
+  age: number;
+  color: string;
+  location: string;
+  rand: number;
+  expandable?: boolean;
+}
+
+export const defaultData: Array<testTableDataShape> = [
   {
     name: 'Alice',
     age: 19,
@@ -34,6 +44,7 @@ export const defaultData = [
     color: 'white',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Georgia',
@@ -41,6 +52,7 @@ export const defaultData = [
     color: 'white',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Frannie',
@@ -48,6 +60,7 @@ export const defaultData = [
     color: 'green',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Iman',
@@ -55,6 +68,7 @@ export const defaultData = [
     color: 'white',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Hannah',
@@ -62,6 +76,7 @@ export const defaultData = [
     color: 'green',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Jill',
@@ -69,6 +84,7 @@ export const defaultData = [
     color: 'green',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Karen',
@@ -76,6 +92,7 @@ export const defaultData = [
     color: 'orange',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Lilly',
@@ -83,6 +100,7 @@ export const defaultData = [
     color: 'pink',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Monica',
@@ -90,6 +108,7 @@ export const defaultData = [
     color: 'green',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Nicole',
@@ -97,6 +116,7 @@ export const defaultData = [
     color: 'green',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Ophelia',
@@ -104,6 +124,7 @@ export const defaultData = [
     color: 'lavender',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Penelope',
@@ -111,6 +132,7 @@ export const defaultData = [
     color: 'perrywinkle',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Queen',
@@ -118,6 +140,7 @@ export const defaultData = [
     color: 'gold',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Rachel',
@@ -125,6 +148,7 @@ export const defaultData = [
     color: 'orange',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Sarah',
@@ -132,6 +156,7 @@ export const defaultData = [
     color: 'navy',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Tina',
@@ -139,6 +164,7 @@ export const defaultData = [
     color: 'cyan',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Ursula',
@@ -146,6 +172,7 @@ export const defaultData = [
     color: 'purple',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Violet',
@@ -153,6 +180,7 @@ export const defaultData = [
     color: 'violet',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Wendy',
@@ -160,6 +188,7 @@ export const defaultData = [
     color: 'blue',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Ximena',
@@ -167,6 +196,7 @@ export const defaultData = [
     color: 'green',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Yvonne',
@@ -174,6 +204,7 @@ export const defaultData = [
     color: 'pink',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
   {
     name: 'Zara',
@@ -181,6 +212,7 @@ export const defaultData = [
     color: 'green',
     location: 'bedford',
     rand: Math.random(),
+    expandable: true,
   },
 ];
 

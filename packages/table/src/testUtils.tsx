@@ -2,18 +2,11 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import { Table, TableHeader, Row, Cell } from '.';
-import { defaultData } from './fixtures';
+import { defaultData, testTableDataShape } from './fixtures';
 
 interface Props {
   table?: any;
   row?: any;
-}
-
-interface Shape {
-  name: string;
-  age: number;
-  color: string;
-  location: string;
 }
 
 export const defaultColumns = [
@@ -31,14 +24,14 @@ export function renderTable(props: Props = {}) {
       columns={defaultColumns}
       {...props.table}
     >
-      {({ datum }: { datum: Shape }) => (
+      {({ datum }: { datum: testTableDataShape }) => (
         <Row key={datum.name} {...props.row}>
           <Cell isHeader>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
           <Cell>{datum.color}</Cell>
           <Cell>{datum.location}</Cell>
 
-          {datum.age > 25 && (
+          {datum.expandable && (
             <Row>
               <Cell>hidden: {datum.name}</Cell>
               <Cell>expanded age: {datum.age}</Cell>

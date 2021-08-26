@@ -41,7 +41,7 @@ describe('packages/table', () => {
 
     fireEvent.click(sortButton);
 
-    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Jill');
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Zara');
 
     fireEvent.click(sortButton);
 

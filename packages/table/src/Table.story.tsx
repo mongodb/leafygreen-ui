@@ -86,7 +86,7 @@ storiesOf('Table', module)
                 </Row>
               )}
 
-              {datum.name !== 'Donna' && datum.age > 21 && (
+              {datum.name !== 'Donna' && datum.expandable && (
                 <Row>
                   <Cell isHeader={withHeaders}>
                     expanded name: {datum.name}
@@ -95,7 +95,7 @@ storiesOf('Table', module)
                   <Cell>expanded color: {datum.color}</Cell>
                   <Cell>{datum.location}</Cell>
 
-                  {datum.age > 25 && (
+                  {datum.age > 30 && (
                     <Row>
                       <Cell isHeader={withHeaders}>
                         expanded name: {datum.name}
