@@ -5,6 +5,7 @@ export interface testTableDataShape {
   color: string;
   location: string;
   rand: number;
+  disabled?: boolean;
   expandable?: boolean;
 }
 
