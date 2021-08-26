@@ -23,7 +23,7 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-const transitionTime = 150;
+const transitionTime = 200;
 
 /**
  * Styles
@@ -36,7 +36,7 @@ const iconButtonMargin = css`
 const modeStyles = {
   [Mode.Light]: {
     rowStyle: css`
-      --border-color: ${uiColors.gray.light2};
+      --lg-table-row-border-color: ${uiColors.gray.light2};
       color: ${uiColors.gray.dark2};
     `,
 
@@ -57,7 +57,7 @@ const modeStyles = {
 
   [Mode.Dark]: {
     rowStyle: css`
-      --border-color: ${uiColors.gray.dark1};
+      --lg-table-row-border-color: ${uiColors.gray.dark1};
       background-color: ${uiColors.gray.dark3};
       color: ${uiColors.gray.light3};
     `,
@@ -79,12 +79,9 @@ const modeStyles = {
 };
 
 const rowStyle = css`
-  border-color: var(--border-color);
+  border-color: var(--lg-table-row-border-color);
   border-top-width: 1px;
   border-top-style: solid;
-  transition: all ${transitionTime}ms ease-in-out;
-  transition-property: border-color, transform, opacity;
-  transform-origin: 50% 0%;
 
   & > td > ${tdInnerDiv.selector} {
     min-height: 40px;
@@ -96,17 +93,31 @@ const hideRow = css`
   opacity: 0;
 `;
 
+const nestedRowInitialStyle = css`
+  transition: all ${transitionTime}ms ease-in-out;
+  transition-property: border-color, transform, opacity;
+  transform-origin: 50% 0%;
+  border-color: var(--lg-table-row-border-color);
+  opacity: 0;
+  transform: translateY(-10%);
+`;
+
 const transitionStyles: { [key in TransitionStatus]: string } = {
   entering: css`
     opacity: 0;
-    transform: translateY(-10%);
+    transform: translateY(-10px);
   `,
   entered: css`
     opacity: 1;
     transform: translateY(0);
   `,
-  exiting: ``, // N/A
-  exited: ``, // N/A
+  exiting: css`
+    opacity: 0;
+    transform: translateY(-10px);
+  `,
+  exited: css`
+    display: none;
+  `,
   unmounted: ``, // N/A
 };
 
@@ -217,30 +228,58 @@ const Row = React.forwardRef(
       }
     }, [children, hasNestedRows, hasRowSpan, tableDispatch, data]);
 
-    const { rowHasNestedRows, renderedNestedRows } = useMemo(() => {
+    // Render any nested rows and their transition group
+    const { rowHasNestedRows, renderedTransitionGroup } = useMemo(() => {
       const renderedNestedRows: Array<React.ReactElement> = [];
-      let rowHasNestedRows = false;
+      // let rowHasNestedRows = false;
+      const rowHasNestedRows = React.Children.toArray(children).some(child =>
+        isComponentType<RowElement>(child, 'Row'),
+      );
 
-      React.Children.forEach(children, (child, index) => {
-        if (child != null && isComponentType<RowElement>(child, 'Row')) {
-          rowHasNestedRows = true;
+      const shouldTransitionGroupBeVisible =
+        isExpanded && !isAnyAncestorCollapsedProp;
 
-          if (isExpanded) {
-            renderedNestedRows.push(
-              React.cloneElement(child, {
-                ref: nodeRef,
-                isAnyAncestorCollapsed:
-                  isAnyAncestorCollapsedProp || !isExpanded,
-                indentLevel: indentLevel + 1,
-                key: `${indexRef.current}-${indentLevel}-${index}`,
-              }),
-            );
+      // We don't need the transition group except on the client here, and rendering this bit on the server breaks rendering these rows.
+      const renderedTransitionGroup = isBrowser ? (
+        <Transition
+          in={shouldTransitionGroupBeVisible}
+          timeout={{
+            enter: 0,
+            exit: transitionTime,
+          }}
+          nodeRef={nodeRef}
+        >
+          {state =>
+            React.Children.map(children, (child, index) => {
+              if (child != null && isComponentType<RowElement>(child, 'Row')) {
+                return React.cloneElement(child, {
+                  ref: nodeRef,
+                  isAnyAncestorCollapsed:
+                    isAnyAncestorCollapsedProp || !isExpanded,
+                  indentLevel: indentLevel + 1,
+                  key: `${indexRef.current}-${indentLevel}-${index}`,
+                  className: cx(
+                    nestedRowInitialStyle,
+                    transitionStyles[state],
+                    state,
+                  ),
+                });
+              }
+            })
           }
-        }
-      });
+        </Transition>
+      ) : (
+        renderedNestedRows
+      );
 
-      return { rowHasNestedRows, renderedNestedRows };
-    }, [isAnyAncestorCollapsedProp, isExpanded, indentLevel, children]);
+      return { rowHasNestedRows, renderedNestedRows, renderedTransitionGroup };
+    }, [
+      isExpanded,
+      isAnyAncestorCollapsedProp,
+      isBrowser,
+      children,
+      indentLevel,
+    ]);
 
     const renderedChildren = useMemo(() => {
       const renderedChildren: Array<React.ReactElement> = [];
@@ -312,30 +351,6 @@ const Row = React.forwardRef(
         [modeStyles[mode].disabledStyle]: disabled,
       },
       className,
-    );
-
-    // We don't need the transition group except on the client here, and rendering this bit on the server breaks rendering these rows.
-    const shouldTransitionGroupBeVisible =
-      isBrowser &&
-      isExpanded &&
-      !isAnyAncestorCollapsedProp &&
-      renderedNestedRows.length > 0;
-    const renderedTransitionGroup = (
-      <Transition
-        in={shouldTransitionGroupBeVisible}
-        timeout={0}
-        nodeRef={nodeRef}
-      >
-        {state => (
-          <>
-            {renderedNestedRows.map(element =>
-              React.cloneElement(element, {
-                className: transitionStyles[state],
-              }),
-            )}
-          </>
-        )}
-      </Transition>
     );
 
     return (
