@@ -68,7 +68,9 @@ const optionStyle = ({
   `}
 
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--inline-padding) 12px;
   border-radius: 4px;
   text-align: center;
@@ -130,10 +132,6 @@ const optionStyle = ({
     content: '';
     position: absolute;
     height: var(--divider-height);
-    top: calc(
-      (var(--line-height) + 2 * var(--inline-padding) - var(--divider-height)) /
-        2
-    );
     width: 1px;
     left: calc(0px - (var(--segment-gap, 1px) + 1px) / 2);
     background-color: transparent;
@@ -152,8 +150,6 @@ const optionStyle = ({
   }
 `;
 
-const _optionStyle = css``;
-
 const radioInputStyle = css`
   height: 0;
   width: 0;
@@ -163,6 +159,9 @@ const radioInputStyle = css`
 `;
 
 const labelStyle = css`
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--font-size) / 2);
   cursor: inherit;
   z-index: 3;
 `;
@@ -175,10 +174,6 @@ const labelStyle = css`
 // _name - the name of the segmented control. Used to group the HTML radio inputs
 // _checked - whether the option is checked. Defined by the parent
 // _onChange - the onChange handler passed in from the SegmentedControl
-//
-// ❓ TODO: Decide how darkMode & size are handled internally.
-// Is it handled purely by CSS variables, passed in as a private prop,
-// or a react context? My recommendation is CSS vars.
 export interface SegmentedControlOptionProps {
   value: string;
   children: React.ReactNode;
