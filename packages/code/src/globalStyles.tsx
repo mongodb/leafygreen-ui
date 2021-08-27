@@ -24,10 +24,10 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
     3: uiColors.black,
     4: uiColors.white,
     5: '#D83713',
-    6: '#EDB210',
+    6: '#956d00',
     7: '#12824D',
-    8: '#016EE9',
-    9: '#016EE9',
+    8: '#007ab8',
+    9: '#016ee9',
     10: '#CC3887',
   },
 
@@ -41,51 +41,17 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
     6: '#EDB210',
     7: '#35DE7B',
     8: '#a5e3ff',
-    9: '#2DC4FF',
+    9: '#2dc4ff',
     10: '#FF7DC3',
   },
 };
 
 const getStyles = (mode: Mode): string => `
   .lg-highlight-hljs-${mode} {
-    .lg-highlight-quote,
-    .lg-highlight-literal,
-    .lg-highlight-class,
-    .lg-highlight-section,
-    .lg-highlight-name,
-    .lg-highlight-number,
-    .lg-highlight-class.lg-highlight-keyword,
-    .lg-highlight-function.lg-highlight-keyword {
-      color: ${variantColors[mode][9]};
-    }
-
-    .lg-highlight-function.lg-highlight-params {
-      color: ${variantColors[mode][5]}
-    }
-
-    .lg-highlight-function.lg-highlight-keyword,
-    .lg-highlight-function.lg-highlight-built_in {
-      color: ${variantColors[mode][9]};
-    }
-  
-    .lg-highlight-regexp,
-    .lg-highlight-params,
-    .lg-highlight-meta,
-    .lg-highlight-meta-string {
-      color: ${variantColors[mode][8]};
-    }
-  
-    .lg-highlight-comment {
-      color: ${variantColors[mode][2]};
-      font-style: italic;
-    }
-
-    .lg-highlight-doctag,
-    .lg-highlight-formula {
-      color: ${variantColors[mode][3]};
-    }
-  
+    
     .lg-highlight-keyword,
+    .lg-highlight-keyword.lg-highlight-function,
+    .lg-highlight-keyword.lg-highlight-class,
     .lg-highlight-selector-tag,
     .lg-highlight-selector-attr,
     .lg-highlight-selector-pseudo,
@@ -93,31 +59,65 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-selector-class {
       color: ${variantColors[mode][10]};
     }
-  
+
+    .lg-highlight-regexp,
+    .lg-highlight-number,
+    .lg-highlight-literal,
+    .lg-highlight-function.lg-highlight-title {
+      color: ${variantColors[mode][9]};
+    }
+
+    .lg-highlight-quote,
+    .lg-highlight-section,
+    .lg-highlight-name {
+      color: ${variantColors[mode][8]};
+    }
+
+    .lg-highlight-string,
+    .lg-highlight-addition {
+      color: ${variantColors[mode][7]};
+    }
+
+    .lg-highlight-meta,
+    .lg-highlight-meta-string {
+      color: ${variantColors[mode][6]};
+    }
+
     .lg-highlight-variable,
     .lg-highlight-deletion,
     .lg-highlight-symbol,
     .lg-highlight-bullet,
-    .lg-highlight-subst,
     .lg-highlight-meta,
     .lg-highlight-link,
     .lg-highlight-attr,
     .lg-highlight-attribute,
-    .lg-highlight-built_in,
+    .lg-highlight-language,
     .lg-highlight-template-variable,
-    .lg-highlight-type {
+    .lg-highlight-built_in,
+    .lg-highlight-type,
+    .lg-highlight-params {
       color: ${variantColors[mode][5]}
+    }
+
+    .lg-highlight-title,
+    .lg-highlight-class.lg-highlight-title {
+      color: ${variantColors[mode][3]};
+    }
+
+    .lg-highlight-doctag,
+    .lg-highlight-formula {
+      color: ${variantColors[mode][3]};
+    }
+  
+    .lg-highlight-comment {
+      color: ${variantColors[mode][2]};
+      font-style: italic;
     }
   
     .lg-highlight-string {
       font-weight: 600;
     }
-    .lg-highlight-string,
-    .lg-highlight-addition,
-    .lg-highlight-title {
-      color: ${variantColors[mode][7]};
-    }
-  
+    
     .lg-highlight-emphasis {
       font-style: italic;
     }

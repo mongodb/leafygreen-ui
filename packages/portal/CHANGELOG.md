@@ -1,5 +1,11 @@
 # @leafygreen-ui/portal
 
+## 4.0.1
+
+### Patch Changes
+
+- 8df11bf4: Use useLayoutEffect hook internally to fix tests broken by Portal showing async behavior
+
 ## 4.0.0
 
 ### Major Changes

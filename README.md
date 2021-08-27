@@ -2,6 +2,8 @@
 
 A set of CSS styles and React components built with design in mind.
 
+Check out all of the components [in action](www.mongodb.design)!
+
 ## Package Table of Contents
 
 - [Badge](https://github.com/mongodb/leafygreen-ui/tree/main/packages/badge)
@@ -76,6 +78,13 @@ A set of CSS styles and React components built with design in mind.
 4. Install dependencies and link packages.
 
    `yarn run init`
+
+Use `yarn build` to rebuild all packages.
+Pass in a specific package name to rebuild select packages:
+
+`yarn build button icon`
+
+Additionally, pass in the `--watch` flag to rebuild packages on change.
 
 ## Development
 
@@ -204,8 +213,6 @@ $ git submodule update --init --recursive --remote
 
 # --remote makes the update command pull from the remote tracking branch instead of what you have locally.
 ```
-
-###
 
 ## Development within an Application
 

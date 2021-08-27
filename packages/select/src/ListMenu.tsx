@@ -1,11 +1,15 @@
 import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useViewportSize } from '@leafygreen-ui/hooks';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
+import { useMemo } from 'react';
+
+const maxMenuHeight = 274;
+const menuMargin = 8;
 
 const menuStyle = css`
   position: relative;
@@ -44,7 +48,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     forwardedRef,
   ) {
     const { mode, size, disabled, open } = useContext(SelectContext);
-
     const colorSet = colorSets[mode];
     const sizeSet = sizeSets[size];
 
@@ -52,10 +55,26 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
 
     const viewportSize = useViewportSize();
 
-    const maxHeight =
-      viewportSize === null || ref.current === null
-        ? 0
-        : viewportSize.height - ref.current.getBoundingClientRect().top - 10;
+    const maxHeight = useMemo(() => {
+      if (viewportSize && ref.current && referenceElement.current) {
+        const {
+          top: triggerTop,
+          bottom: triggerBottom,
+        } = referenceElement.current.getBoundingClientRect();
+
+        // Find out how much space is available above or below the trigger
+        const safeSpace = Math.max(
+          viewportSize.height - triggerBottom,
+          triggerTop,
+        );
+
+        // if there's more than enough space, set to maxMenuHeight
+        // otherwise fill the space available
+        return Math.min(maxMenuHeight, safeSpace - menuMargin);
+      }
+
+      return maxMenuHeight;
+    }, [ref, referenceElement, viewportSize]);
 
     const onClick = useCallback(
       (event: React.MouseEvent) => {
@@ -98,6 +117,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
             css`
               font-family: ${fontFamilies.default};
               font-size: ${sizeSet.option.text}px;
+              min-height: ${sizeSet.height}px;
               max-height: ${maxHeight}px;
               background-color: ${colorSet.option.background.base};
               box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};

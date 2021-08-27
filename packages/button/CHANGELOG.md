@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 12.0.5
+
+### Patch Changes
+
+- 539fab10: Fixes a React console error when providing an onChange handler to a Radio Group
+
 ## 12.0.4
 
 ### Patch Changes
