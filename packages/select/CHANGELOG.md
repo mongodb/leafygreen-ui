@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 3.0.6
+
+### Patch Changes
+
+- cd4f9a27: Fixes a bug where the Select menu would not appear in the correct position in the case where there is limited space below the trigger button. Also enforces a max-height of 274px on the Select menu
+
 ## 3.0.5
 
 ### Patch Changes
