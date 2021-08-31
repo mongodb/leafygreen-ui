@@ -21,6 +21,9 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }

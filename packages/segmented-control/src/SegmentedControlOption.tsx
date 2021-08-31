@@ -191,12 +191,15 @@ export interface SegmentedControlOptionProps {
 /**
  * Component
  */
-const SegmentedControlOption = React.forwardRef(function SegmentedControlOption(
+const SegmentedControlOption = React.forwardRef<
+  HTMLLabelElement,
+  SegmentedControlOptionProps
+>(function SegmentedControlOption(
   {
     value,
     children,
     disabled = false,
-    as = 'div',
+    as = 'div', // TODO
     className,
     id,
     size = 'default',
@@ -212,13 +215,7 @@ const SegmentedControlOption = React.forwardRef(function SegmentedControlOption(
   return (
     <label
       htmlFor={id}
-      as={as}
-      className={cx(
-        optionStyle({ mode, size }),
-        // optionStyleFromSize[size],
-        // optionStyleFromMode[mode],
-        className,
-      )}
+      className={cx(optionStyle({ mode, size }), className)}
       data-disabled={`${disabled}`}
       data-checked={`${checked}`}
       ref={forwardedRef}

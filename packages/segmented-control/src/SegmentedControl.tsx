@@ -4,20 +4,20 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
+import { Overline } from '@leafygreen-ui/typography';
 import useDynamicRefs from './useDynamicRefs';
 import { Size, Mode } from './types';
-import { Overline } from '@leafygreen-ui/typography';
 
 const selectionIndicatorDataAttr = createDataProp('selection-indicator');
 
 /**
  * Styles
  */
-
 const wrapperStyle = css`
   display: flex;
   gap: 8px;
   align-items: center;
+  z-index: 0;
 `;
 
 const labelStyle: {
@@ -58,15 +58,15 @@ const frameStyleFromMode: {
   [key in Mode]: string;
 } = {
   light: css`
-    --background-color: ${uiColors.gray.light3}; // color
-    --border-color: transparent; // color
+    --background-color: ${uiColors.gray.light3};
+    --border-color: transparent;
     --border-width: 0px;
-    --inner-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3) inset; // color
+    --inner-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3) inset;
     --outer-shadow: 0px 1px 1px #e7eeec;
   `,
   dark: css`
-    --background-color: ${uiColors.gray.dark3}; // color
-    --border-color: ${uiColors.gray.dark1}; // color: ;
+    --background-color: ${uiColors.gray.dark3};
+    --border-color: ${uiColors.gray.dark1};
     --border-width: 1px;
     --inner-shadow: unset;
     --outer-shadow: unset;
@@ -82,9 +82,9 @@ const frameStyleBase = css`
   gap: var(--segment-gap);
   align-items: center;
   background-color: var(--background-color);
+  border-radius: var(--radius);
   border-width: var(--border-width);
   border-style: solid;
-  border-radius: var(--radius);
   border-color: var(--border-color);
 
   &:after {
@@ -117,12 +117,12 @@ const indicatorStyleFromMode: {
   [key in Mode]: string;
 } = {
   light: css`
-    --indicator-background-color: ${uiColors.gray.light2}; // color
-    --indicator-border-color: ${selectionBorderColor}; // color
+    --indicator-background-color: ${uiColors.gray.light2};
+    --indicator-border-color: ${selectionBorderColor};
   `,
   dark: css`
-    --indicator-background-color: ${uiColors.gray.dark1}; // color
-    --indicator-border-color: ${uiColors.gray.base}; // color
+    --indicator-background-color: ${uiColors.gray.dark1};
+    --indicator-border-color: ${uiColors.gray.base};
   `,
 };
 
@@ -162,7 +162,10 @@ export interface SegmentedControlProps {
 /**
  * Component
  */
-const SegmentedControl = React.forwardRef(function SegmentedControl(
+const SegmentedControl = React.forwardRef<
+  HTMLDivElement,
+  SegmentedControlProps
+>(function SegmentedControl(
   {
     children,
     name: nameProp,
@@ -173,6 +176,7 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
     onChange,
     className,
     label,
+    ...rest
   }: SegmentedControlProps,
   forwardedRef,
 ) {
@@ -273,7 +277,7 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
    */
 
   return (
-    <div className={cx(wrapperStyle)}>
+    <div className={cx(wrapperStyle, className)} {...rest}>
       <Overline className={cx(labelStyle[mode])}>{label}</Overline>
 
       <InteractionRing
@@ -288,7 +292,6 @@ const SegmentedControl = React.forwardRef(function SegmentedControl(
             frameStyleBase,
             frameStyleFromSize[size],
             frameStyleFromMode[mode],
-            className,
           )}
           ref={forwardedRef}
         >
