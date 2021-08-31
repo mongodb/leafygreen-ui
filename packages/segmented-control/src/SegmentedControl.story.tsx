@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import { boolean, select } from '@storybook/addon-knobs';
 import Icon from '@leafygreen-ui/icon';
+import { useRef } from '@storybook/addons';
+import Button from '../../button/dist';
 
 storiesOf('SegmentedControl', module)
   .add('Default', () => {
@@ -36,6 +38,24 @@ storiesOf('SegmentedControl', module)
   })
 
   .add('Uncontrolled', () => {
+    const segCtrlRef = useRef<HTMLDivElement>(null);
+
+    const logSelectedOption = () => {
+      if (segCtrlRef.current) {
+        const options = segCtrlRef.current.getElementsByTagName('input');
+
+        for (const opt of options) {
+          if (opt.checked) {
+            console.log(opt.value);
+          }
+        }
+      }
+    };
+
+    useEffect(() => {
+      logSelectedOption();
+    }, []);
+
     return (
       <LeafygreenProvider>
         <SegmentedControl
@@ -43,10 +63,7 @@ storiesOf('SegmentedControl', module)
           name="fruit"
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
-          defaultValue="eggplant"
-          onChange={e => {
-            console.log(e.target.value);
-          }}
+          ref={segCtrlRef}
         >
           <SegmentedControlOption value="dragonfruit">
             Dragonfruit
@@ -60,6 +77,8 @@ storiesOf('SegmentedControl', module)
 
           <SegmentedControlOption value="grape">Grape</SegmentedControlOption>
         </SegmentedControl>
+        <br />
+        <Button onClick={logSelectedOption}> Log Selected </Button>
       </LeafygreenProvider>
     );
   })

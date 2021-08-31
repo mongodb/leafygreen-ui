@@ -235,4 +235,6 @@ const SegmentedControlOption = React.forwardRef<
   );
 });
 
+SegmentedControlOption.displayName = 'SegmentedControlOption';
+
 export default SegmentedControlOption;

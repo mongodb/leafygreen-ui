@@ -258,11 +258,12 @@ const SegmentedControl = React.forwardRef<
 
   // Update dynamic styles of the selection indicator
   useEffect(() => {
-    const selectedElement = (getRef(
+    const selectedRef = getRef(
       `${name}-${selectedIndex}`,
-    ) as React.RefObject<HTMLInputElement>).current;
+    ) as React.RefObject<HTMLInputElement>;
 
-    if (selectedElement) {
+    if (selectedRef && selectedRef.current) {
+      const selectedElement = selectedRef.current;
       const { offsetWidth: width, offsetLeft: left } = selectedElement;
       setSelectionStyleDynamic(css`
         width: ${width}px;
@@ -310,5 +311,7 @@ const SegmentedControl = React.forwardRef<
     </div>
   );
 });
+
+SegmentedControl.displayName = 'SegmentedControl';
 
 export default SegmentedControl;
