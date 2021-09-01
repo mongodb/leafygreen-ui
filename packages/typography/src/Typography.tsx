@@ -124,23 +124,70 @@ Body.displayName = 'Body';
 const anchorDataProp = createDataProp('anchor-inline-code');
 
 const code = css`
-  background-color: ${uiColors.gray.light3};
-  border: 1px solid ${uiColors.gray.light1};
+  transition: all 0.15s ease-in-out;
   border-radius: 3px;
   font-family: ${fontFamilies.code};
 
   ${anchorDataProp.selector}:hover > & {
-    box-shadow: 0 0 0 3px ${uiColors.gray.light2};
+    text-decoration: none;
   }
 `;
 
-const codeFocus = css`
-  ${anchorDataProp.selector}:focus > & {
-    box-shadow: 0 0 0 3px ${uiColors.blue.light2};
-  }
-`;
+const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
 
-const codeLink = css`
+const codeModes = {
+  [Mode.Light]: css`
+    background-color: ${uiColors.gray.light3};
+    border: 1px solid ${uiColors.gray.light2};
+    color: ${uiColors.gray.dark3};
+
+    ${anchorDataProp.selector}:hover > & {
+      box-shadow: 0 0 0 3px ${uiColors.gray.light2};
+      border: 1px solid ${uiColors.gray.light1};
+    }
+  `,
+
+  [Mode.Dark]: css`
+    background-color: transparent;
+    border: 1px solid ${uiColors.gray.dark1};
+    color: ${uiColors.gray.light3};
+
+    ${anchorDataProp.selector}:hover > & {
+      box-shadow: 0 0 0 3px ${uiColors.gray.dark1};
+      border: 1px solid ${uiColors.gray.base};
+    }
+  `,
+};
+
+const codeFocusModes = {
+  [Mode.Light]: css`
+    ${anchorDataProp.selector}:focus > & {
+      box-shadow: 0 0 0 3px ${uiColors.blue.light2};
+      border: 1px solid ${uiColors.focus};
+    }
+  `,
+
+  [Mode.Dark]: css`
+    ${anchorDataProp.selector}:focus > & {
+      box-shadow: 0 0 0 3px ${uiColors.blue.base};
+      border: 1px solid ${uiColors.focus};
+    }
+  `,
+};
+
+const codeLinkStyleModes = {
+  [Mode.Light]: css`
+    color: ${uiColors.blue.base};
+  `,
+  [Mode.Dark]: css`
+    color: #28bfff;
+  `,
+};
+
+const codeLinkWrapper = css`
   text-decoration: none;
   margin: 0;
   padding: 0;
@@ -158,16 +205,23 @@ const normal = css`
   white-space: normal;
 `;
 
-const colorBlue = css`
-  color: ${uiColors.blue.base};
-`;
+type InlineCodeProps = OneOf<
+  HTMLElementProps<'code'>,
+  HTMLElementProps<'a'>
+> & {
+  darkMode?: boolean;
+};
 
-type InlineCodeProps = OneOf<HTMLElementProps<'code'>, HTMLElementProps<'a'>>;
-
-function InlineCode({ children, className, ...rest }: InlineCodeProps) {
+function InlineCode({
+  children,
+  className,
+  darkMode,
+  ...rest
+}: InlineCodeProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const size = useBaseFontSize();
   const fontSize = size === 16 ? typeScale2 : typeScale1;
+  const mode = darkMode ? Mode.Dark : Mode.Light;
   const whiteSpace =
     ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <= 30
       ? nowrap
@@ -178,9 +232,11 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
     <code
       className={cx(
         code,
+        codeModes[mode],
         fontSize,
         whiteSpace,
-        { [codeFocus]: showFocus },
+        { [codeLinkStyleModes[mode]]: isAnchor },
+        { [codeFocusModes[mode]]: showFocus },
         className,
       )}
     >
@@ -192,7 +248,7 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
     return (
       <a
         {...anchorDataProp.prop}
-        className={cx(codeLink, colorBlue, className)}
+        className={cx(codeLinkWrapper, className)}
         {...rest}
       >
         {renderedInlineCode}
