@@ -17,7 +17,6 @@ storiesOf('SegmentedControl', module)
           name="fruit"
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
-          defaultValue="banana"
           value={selectedFruit}
           onChange={e => {
             setSelectedFruit(e.target.value);
@@ -63,6 +62,7 @@ storiesOf('SegmentedControl', module)
           name="fruit"
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
+          defaultValue="eggplant"
           ref={segCtrlRef}
         >
           <SegmentedControlOption value="dragonfruit">

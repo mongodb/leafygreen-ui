@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
@@ -186,69 +192,94 @@ const SegmentedControl = React.forwardRef<
 
   const mode = darkMode ? 'dark' : 'light';
 
+  const name = useIdAllocator({ prefix: 'radio-group', id: nameProp });
+
   // If a value is given, then it's controlled
-  let isControlled = controlledValue != null ? true : false;
-
-  React.Children.forEach(children, (child, i) => {
-    if (isComponentType(child, 'SegmentedControlOption')) {
-      // If one of the options has been programatically checked, then it's controlled
-      if (child.props.checked != null) {
-        isControlled = true;
-      }
-
-      // If there's no default value given, then we fall back to the first option
-      if (!defaultValue && i == 0) {
-        defaultValue = child.props.value;
-      }
-    }
-  });
+  // let isControlled = controlledValue != null;
+  const isControlled = useRef(controlledValue != null);
 
   // Keep track of the uncontrolled value
   const [uncontrolledValue, setUncontrolledValue] = useState<string>(
     defaultValue,
   );
 
-  const name = useIdAllocator({ prefix: 'radio-group', id: nameProp });
+  // Run through the children and determine whether this is controlled,
+  // and update the default value if needed
+  useEffect(() => {
+    React.Children.forEach(children, (child, index) => {
+      if (isComponentType(child, 'SegmentedControlOption')) {
+        // If one of the options has been programatically checked, then it's controlled
+        if (child.props.checked != null) {
+          isControlled.current = true;
+        }
 
-  // Change handler
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(e);
-    }
+        // If there's no default value given, then we fall back to the first option
+        if (!defaultValue && index === 0) {
+          setUncontrolledValue(child.props.value);
 
-    if (!isControlled) {
-      setUncontrolledValue(e.target.value);
-    }
-  };
+          // TODO Potential bug: if `defaultValue` is changed to be falsy between renders,
+          // then the value of the control will change
+        }
+      }
+    });
+  }, [children, defaultValue]);
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange?.(e);
+      if (!isControlled.current) {
+        setUncontrolledValue(e.target.value);
+      }
+    },
+    [isControlled, onChange],
+  );
 
   // Add internal props to children passed in
-  const renderedChildren = React.Children.map(children, (child, index) => {
-    if (!isComponentType(child, 'SegmentedControlOption')) {
-      console.warn(`${child} is not a SegmentedControlOption`);
-      return child;
-    }
+  const renderedChildren = useMemo(
+    () =>
+      React.Children.map(children, (child, index) => {
+        if (!isComponentType(child, 'SegmentedControlOption')) {
+          console.warn(`${child} is not a SegmentedControlOption`);
+          return child;
+        }
 
-    const _checked: boolean = isControlled
-      ? child.props.value === controlledValue || !!child.props.checked
-      : child.props.value === uncontrolledValue;
+        const _checked: boolean = isControlled.current
+          ? child.props.value === controlledValue || !!child.props.checked
+          : child.props.value === uncontrolledValue;
 
-    return React.cloneElement(child, {
-      id: child.props.id || `${name}-${index}`,
-      darkMode,
+        return React.cloneElement(child, {
+          id: child.props.id || `${name}-${index}`,
+          darkMode,
+          size,
+          _checked,
+          _name: name,
+          _onChange: handleChange,
+          ref: setRef(`${name}-${index}`),
+        });
+      }),
+    [
+      children,
+      setRef,
+      handleChange,
+      isControlled,
+      controlledValue,
+      uncontrolledValue,
+      name,
       size,
-      _checked,
-      _name: name,
-      _onChange: handleChange,
-      ref: setRef(`${name}-${index}`),
-    });
-  });
+      darkMode,
+    ],
+  );
 
-  const selectedIndex = React.Children.toArray(
-    renderedChildren,
-  ).findIndex(child =>
-    isControlled
-      ? (child as React.ReactElement).props.value === controlledValue
-      : (child as React.ReactElement).props.value === uncontrolledValue,
+  const selectedIndex = useMemo(
+    () =>
+      (React.Children.toArray(
+        renderedChildren,
+      ) as Array<React.ReactElement>).findIndex(child =>
+        isControlled.current
+          ? child.props.value === controlledValue
+          : child.props.value === uncontrolledValue,
+      ),
+    [controlledValue, isControlled, renderedChildren, uncontrolledValue],
   );
 
   /**
@@ -258,9 +289,7 @@ const SegmentedControl = React.forwardRef<
 
   // Update dynamic styles of the selection indicator
   useEffect(() => {
-    const selectedRef = getRef(
-      `${name}-${selectedIndex}`,
-    ) as React.RefObject<HTMLInputElement>;
+    const selectedRef = getRef(`${name}-${selectedIndex}`);
 
     if (selectedRef && selectedRef.current) {
       const selectedElement = selectedRef.current;
@@ -279,7 +308,7 @@ const SegmentedControl = React.forwardRef<
 
   return (
     <div className={cx(wrapperStyle, className)} {...rest}>
-      <Overline className={cx(labelStyle[mode])}>{label}</Overline>
+      {label && <Overline className={labelStyle[mode]}>{label}</Overline>}
 
       <InteractionRing
         darkMode={darkMode}
