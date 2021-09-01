@@ -1,11 +1,6 @@
 import React from 'react';
 import { axe } from 'jest-axe';
-import {
-  fireEvent,
-  getByLabelText,
-  render,
-  waitFor,
-} from '@testing-library/react';
+import { getByLabelText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SegmentedControlOption from './SegmentedControlOption';
 import SegmentedControl from './SegmentedControl';
@@ -13,19 +8,32 @@ import { typeIs } from '@leafygreen-ui/lib';
 
 const testClassName = 'test-class-name';
 
-const { container } = render(
-  <SegmentedControl label="testLabel" name="testName" className={testClassName}>
-    <SegmentedControlOption value="a">A</SegmentedControlOption>
-    <SegmentedControlOption value="b">B</SegmentedControlOption>
-  </SegmentedControl>,
-);
+const renderNewContainer = () => {
+  return render(
+    <SegmentedControl
+      label="testLabel"
+      name="testName"
+      className={testClassName}
+    >
+      <SegmentedControlOption value="apple">Apple</SegmentedControlOption>
+      <SegmentedControlOption value="banana">Banana</SegmentedControlOption>
+    </SegmentedControl>,
+  );
+};
 
-describe('packages/segmented-control', () => {
+const getComponentFromContainer = container => {
   const { firstChild: component } = container;
 
   if (!typeIs.element(component)) {
     throw new Error('Could not find segmented control container element');
   }
+
+  return component;
+};
+
+describe('packages/segmented-control', () => {
+  const { container } = renderNewContainer();
+  const component = getComponentFromContainer(container);
 
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
@@ -33,9 +41,31 @@ describe('packages/segmented-control', () => {
       expect(results).toHaveNoViolations();
     });
 
-    test.todo('tab should focus and unfocus the segmented control');
+    test('tab should focus and unfocus the segmented control', () => {
+      const { container } = renderNewContainer();
+      const apple = getByLabelText(container, 'Apple');
+      const banana = getByLabelText(container, 'Banana');
+      expect(apple).not.toHaveFocus();
+      expect(banana).not.toHaveFocus();
+      userEvent.tab();
+      expect(apple).toHaveFocus();
+      expect(banana).not.toHaveFocus();
+      userEvent.tab();
+      expect(apple).not.toHaveFocus();
+      expect(banana).not.toHaveFocus();
+    });
 
-    test.todo('arrow keys should select the next option');
+    test('arrow keys should select the next/previous option', () => {
+      const { container } = renderNewContainer();
+
+      const apple = getByLabelText(container, 'Apple');
+      const banana = getByLabelText(container, 'Banana');
+
+      userEvent.tab();
+      expect(apple).toHaveFocus();
+      userEvent.keyboard('{arrowright}');
+      expect(banana).toHaveFocus();
+    });
   });
 
   describe('render', () => {
@@ -44,22 +74,33 @@ describe('packages/segmented-control', () => {
     });
 
     test('defaults to first option when no default value is provided', () => {
-      const inputs = [...component.querySelectorAll('input')];
-      expect(inputs[0].checked).toBeTruthy();
+      const { container } = renderNewContainer();
+      const apple = getByLabelText(container, 'Apple');
+      expect(apple).toBeChecked();
     });
 
-    test.todo('Sets the clicked option to `checked`');
+    test('Sets the clicked option to `checked`', () => {
+      const { container } = renderNewContainer();
+      const banana = getByLabelText(container, 'Banana');
+      const bananaLabel = banana.parentElement;
+      userEvent.click(bananaLabel);
+      expect(banana).toBeChecked();
+    });
 
-    test('sets default value when provided', () => {
+    test('sets default value when provided', async () => {
       const { container } = render(
-        <SegmentedControl label="testLabel" name="testName" defaultValue={'b'}>
-          <SegmentedControlOption value="a">A</SegmentedControlOption>
-          <SegmentedControlOption value="b">B</SegmentedControlOption>
+        <SegmentedControl
+          label="testLabel"
+          name="testName"
+          defaultValue={'banana'}
+        >
+          <SegmentedControlOption value="apple">Apple</SegmentedControlOption>
+          <SegmentedControlOption value="banana">Banana</SegmentedControlOption>
         </SegmentedControl>,
       );
 
-      const inputs = [...container.querySelectorAll('input')];
-      expect(inputs[1].checked).toBeTruthy();
+      const banana = getByLabelText(container, 'Banana');
+      expect(banana).toBeChecked();
     });
   });
 });
