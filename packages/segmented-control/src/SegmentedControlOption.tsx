@@ -162,7 +162,6 @@ const labelStyle = css`
   display: inline-flex;
   align-items: center;
   gap: calc(var(--font-size) / 2);
-  cursor: inherit;
   z-index: 3;
 `;
 
@@ -228,9 +227,9 @@ const SegmentedControlOption = React.forwardRef<
         disabled={disabled}
         onChange={onChange}
         checked={checked}
-        className={cx(radioInputStyle)}
-      ></input>
-      <span className={cx(labelStyle)}>{children}</span>
+        className={radioInputStyle}
+      />
+      <span className={labelStyle}>{children}</span>
     </label>
   );
 });
