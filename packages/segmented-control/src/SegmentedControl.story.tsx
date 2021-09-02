@@ -4,8 +4,8 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import { boolean, select } from '@storybook/addon-knobs';
 import Icon from '@leafygreen-ui/icon';
+import Button from '@leafygreen-ui/button';
 import { useRef } from '@storybook/addons';
-import Button from '../../button/dist';
 
 storiesOf('SegmentedControl', module)
   .add('Default', () => {
