@@ -21,7 +21,7 @@ const renderNewContainer = () => {
   );
 };
 
-const getComponentFromContainer = container => {
+const getComponentFromContainer = (container: HTMLElement) => {
   const { firstChild: component } = container;
 
   if (!typeIs.element(component)) {
@@ -83,6 +83,11 @@ describe('packages/segmented-control', () => {
       const { container } = renderNewContainer();
       const banana = getByLabelText(container, 'Banana');
       const bananaLabel = banana.parentElement;
+
+      // Needed to satisfy TS type checking
+      if (!bananaLabel) {
+        throw new Error('Label does not exist');
+      }
       userEvent.click(bananaLabel);
       expect(banana).toBeChecked();
     });

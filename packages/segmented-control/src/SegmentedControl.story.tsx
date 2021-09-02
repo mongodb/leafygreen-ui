@@ -37,17 +37,16 @@ storiesOf('SegmentedControl', module)
   })
 
   .add('Uncontrolled', () => {
-    const segCtrlRef = useRef<HTMLDivElement>(null);
+    const segCtrlRef = useRef<HTMLDivElement | null>(null);
 
     const logSelectedOption = () => {
       if (segCtrlRef.current) {
-        const options = segCtrlRef.current.getElementsByTagName('input');
-
-        for (const opt of options) {
+        const options = segCtrlRef.current.querySelectorAll('input');
+        options.forEach(opt => {
           if (opt.checked) {
             console.log(opt.value);
           }
-        }
+        });
       }
     };
 
