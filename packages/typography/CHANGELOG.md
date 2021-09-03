@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 8.1.0
+
+### Minor Changes
+
+- da40935b: Updates appearance of the InlineCode component, and adds dark mode support.
+
 ## 8.0.4
 
 ### Patch Changes
