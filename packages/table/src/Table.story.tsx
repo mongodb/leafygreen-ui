@@ -69,7 +69,6 @@ storiesOf('Table', module)
                 dataType={DataType.String}
                 label="Location"
                 key="location"
-                sortBy={(data: testTableDataShape) => data.location}
               />
             </>
           }

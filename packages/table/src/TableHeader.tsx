@@ -172,6 +172,7 @@ function TableHeader<Shape>({
 
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
   const isSortable = !!sortBy || !!compareFn;
+  console.log(label, sortBy, compareFn);
 
   const sortDirection = sort && sort.columnId === index ? sort.direction : null;
   const glyph: 'unsorted' | 'asc' | 'desc' = sortDirection ?? 'unsorted';
@@ -226,7 +227,7 @@ function TableHeader<Shape>({
         <span className={cx(labelStyle, modeStyles[mode].labelStyle)}>
           {label}
         </span>
-        {isSortable != null && (
+        {isSortable && (
           <IconButton aria-label="sort" onClick={sortRows} darkMode={darkMode}>
             <Glyph
               size="small"
