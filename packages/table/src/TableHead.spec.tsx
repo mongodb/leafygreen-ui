@@ -101,7 +101,7 @@ describe('packages/table/table-head', () => {
           <TableHeader
             key="name"
             label="Name"
-            compareFn={(a, b) => (b > a ? 1 : -1)}
+            compareFn={(a: any, b: any) => (b > a ? 1 : -1)}
           />,
           <TableHeader key="age" label="Age" />,
           <TableHeader key="color" label="Color" />,
