@@ -4,6 +4,7 @@ import { screen, fireEvent, within, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { Table, TableHeader, Row, Cell } from '.';
 import { defaultColumns, renderTable } from './testUtils';
+import { testTableDataShape } from './fixtures';
 
 const className = 'test-className';
 
@@ -28,6 +29,41 @@ describe('packages/table', () => {
       table: {
         columns: [
           <TableHeader key="name" label="Name" sortBy="name" />,
+          <TableHeader key="age" label="Age" />,
+          <TableHeader key="color" label="Color" />,
+          <TableHeader key="location" label="Location" />,
+        ],
+      },
+    });
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
+
+    const sortButton = screen.getAllByRole('button')[0];
+
+    fireEvent.click(sortButton);
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Zara');
+
+    fireEvent.click(sortButton);
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
+  });
+
+  test('it renders the data in descending order when the "compareFn" prop is set, and the icon is clicked', () => {
+    renderTable({
+      table: {
+        columns: [
+          <TableHeader
+            key="name"
+            label="Name"
+            compareFn={(a: testTableDataShape, b: testTableDataShape, dir) => {
+              if (dir == 'desc') {
+                return b.name >= a.name ? 1 : -1;
+              }
+
+              return b.name >= a.name ? -1 : 1;
+            }}
+          />,
           <TableHeader key="age" label="Age" />,
           <TableHeader key="color" label="Color" />,
           <TableHeader key="location" label="Location" />,

@@ -94,6 +94,26 @@ describe('packages/table/table-head', () => {
     expect(sortButton.length).toBe(1);
   });
 
+  test('when the "compareFn" prop is passed to a column, an icon is rendered', () => {
+    renderTable({
+      table: {
+        columns: [
+          <TableHeader
+            key="name"
+            label="Name"
+            compareFn={(a, b) => (b > a ? 1 : -1)}
+          />,
+          <TableHeader key="age" label="Age" />,
+          <TableHeader key="color" label="Color" />,
+          <TableHeader key="location" label="Location" />,
+        ],
+      },
+    });
+
+    const sortButton = screen.getAllByRole('button', { name: 'sort' });
+    expect(sortButton.length).toBe(1);
+  });
+
   test('it renders the correct number of "th" elements based on the "columns" prop', () => {
     renderTable();
     const tableHeaderRow = Array.from(screen.getAllByRole('row')[0].children);

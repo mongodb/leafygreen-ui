@@ -172,7 +172,6 @@ function TableHeader<Shape>({
 
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
   const isSortable = !!sortBy || !!compareFn;
-  console.log(label, sortBy, compareFn);
 
   const sortDirection = sort && sort.columnId === index ? sort.direction : null;
   const glyph: 'unsorted' | 'asc' | 'desc' = sortDirection ?? 'unsorted';
