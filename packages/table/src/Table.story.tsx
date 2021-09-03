@@ -30,10 +30,25 @@ storiesOf('Table', module)
                 dataType={DataType.String}
                 label="Name"
                 key="name"
-                compareFn={(a: testTableDataShape, b: testTableDataShape) =>
-                  // Sort by last letter of first name
-                  a.name.slice(-1) >= b.name.slice(-1) ? 1 : -1
-                }
+                compareFn={(
+                  a: testTableDataShape,
+                  b: testTableDataShape,
+                  dir,
+                ) => {
+                  const reverse = (str: string) =>
+                    str.split('').reverse().join('');
+
+                  // Pin 'Brooke' to the top
+                  if (b.name === 'Brooke') return 1;
+                  else if (a.name === 'Brooke') return -1;
+
+                  // Sort by reversed name
+                  if (dir == 'desc') {
+                    return reverse(b.name) >= reverse(a.name) ? 1 : -1;
+                  }
+
+                  return reverse(b.name) >= reverse(a.name) ? -1 : 1;
+                }}
               />
 
               <TableHeader

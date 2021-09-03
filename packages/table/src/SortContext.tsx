@@ -4,7 +4,7 @@ interface Sort {
   columnId: number;
   direction: 'asc' | 'desc';
   accessorValue?: (data: any) => string;
-  compareFn?: (a: any, b: any, direction?: 'asc' | 'desc') => number;
+  compareFn?: (a: any, b: any, direction: 'asc' | 'desc') => number;
 }
 
 interface ContextInterface {
@@ -45,7 +45,7 @@ export const getDataComparisonFunction = <T extends {}>({
 }: {
   direction: 'asc' | 'desc';
   accessorValue?: (data: T) => string;
-  compareFn?: (a: T, b: T) => number;
+  compareFn?: (a: T, b: T, dir: 'asc' | 'desc') => number;
 }) => {
   if (accessorValue) {
     return (a: T, b: T) => {
@@ -61,13 +61,7 @@ export const getDataComparisonFunction = <T extends {}>({
   }
 
   if (compareFn) {
-    return (a: T, b: T) => {
-      if (direction !== 'desc') {
-        return -1 * compareFn(a, b);
-      }
-
-      return compareFn(a, b);
-    };
+    return (a: T, b: T) => compareFn(a, b, direction);
   }
 
   console.error(

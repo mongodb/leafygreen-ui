@@ -119,9 +119,10 @@ interface TableHeaderInterface<Shape> {
 
   /**
    * A callback to provide more customization in column sorting.
-   * Defines the ascending sort order. Descending will reverse this sort function.
+   * This callback has a similar signature to the Array.sort method,
+   * with the addition of a `direction` parameter.
    */
-  compareFn?: (a: Shape, b: Shape) => number;
+  compareFn?: (a: Shape, b: Shape, direction: 'asc' | 'desc') => number;
 
   /**
    * The type of data as a `DataType`
