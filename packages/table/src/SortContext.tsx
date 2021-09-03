@@ -4,6 +4,7 @@ interface Sort {
   columnId: number;
   direction: 'asc' | 'desc';
   accessorValue?: (data: any) => string;
+  compareFn?: (a: any, b: any, direction?: 'asc' | 'desc') => number;
 }
 
 interface ContextInterface {
@@ -38,20 +39,38 @@ const alphanumericCollator = new Intl.Collator(undefined, {
 });
 
 export const getDataComparisonFunction = <T extends {}>({
-  accessorValue,
   direction,
+  accessorValue,
+  compareFn,
 }: {
-  accessorValue: (data: T) => string;
   direction: 'asc' | 'desc';
+  accessorValue?: (data: T) => string;
+  compareFn?: (a: T, b: T) => number;
 }) => {
-  return (a: T, b: T) => {
-    const aVal = accessorValue(a);
-    const bVal = accessorValue(b);
+  if (accessorValue) {
+    return (a: T, b: T) => {
+      const aVal = accessorValue(a);
+      const bVal = accessorValue(b);
 
-    if (direction !== 'desc') {
-      return alphanumericCollator.compare(aVal, bVal);
-    }
+      if (direction !== 'desc') {
+        return alphanumericCollator.compare(aVal, bVal);
+      }
 
-    return alphanumericCollator.compare(bVal, aVal);
-  };
+      return alphanumericCollator.compare(bVal, aVal);
+    };
+  }
+
+  if (compareFn) {
+    return (a: T, b: T) => {
+      if (direction !== 'desc') {
+        return -1 * compareFn(a, b);
+      }
+
+      return compareFn(a, b);
+    };
+  }
+
+  console.error(
+    'Error getting Table data comparison function. Please supply either an `accessorValue` or `compareFn`',
+  );
 };

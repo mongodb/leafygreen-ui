@@ -94,13 +94,38 @@ export function normalizeAccessor<T extends string | Function>(
 }
 
 interface TableHeaderInterface<Shape> {
+  /**
+   * The label of the column
+   */
   label: React.ReactElement | string;
+
+  /**
+   * The index of the column
+   */
+  index?: number;
+
+  /**
+   * Callback fired when the header is clicked
+   */
   onClick?: (
     colId: number,
     accessorValue: ((data: any) => string) | string,
   ) => void;
-  index?: number;
+
+  /**
+   * A callback to define which property of the data structure to sort on
+   */
   sortBy?: ((data: Shape) => string) | string;
+
+  /**
+   * A callback to provide more customization in column sorting.
+   * Defines the ascending sort order. Descending will reverse this sort function.
+   */
+  compareFn?: (a: Shape, b: Shape) => number;
+
+  /**
+   * The type of data as a `DataType`
+   */
   dataType?: DataType;
 }
 
@@ -121,6 +146,7 @@ function TableHeader<Shape>({
   className,
   dataType,
   sortBy,
+  compareFn,
   ...rest
 }: TableHeaderProps<Shape>) {
   const { dispatch } = useTableContext();
@@ -144,13 +170,14 @@ function TableHeader<Shape>({
   }, [index, dataType, dispatch]);
 
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
+  const isSortable = !!sortBy || !!compareFn;
 
   const sortDirection = sort && sort.columnId === index ? sort.direction : null;
   const glyph: 'unsorted' | 'asc' | 'desc' = sortDirection ?? 'unsorted';
   const Glyph = glyphMap[glyph];
 
   const sortRows = () => {
-    if (typeof index === 'number' && normalizedAccessor) {
+    if (typeof index === 'number' && isSortable) {
       setSort(prevSort => ({
         columnId: index,
         direction:
@@ -159,7 +186,8 @@ function TableHeader<Shape>({
               ? 'desc'
               : 'asc'
             : 'desc',
-        accessorValue: normalizedAccessor,
+        accessorValue: normalizedAccessor || undefined,
+        compareFn,
       }));
     }
   };
@@ -197,7 +225,7 @@ function TableHeader<Shape>({
         <span className={cx(labelStyle, modeStyles[mode].labelStyle)}>
           {label}
         </span>
-        {sortBy != null && (
+        {isSortable != null && (
           <IconButton aria-label="sort" onClick={sortRows} darkMode={darkMode}>
             <Glyph
               size="small"

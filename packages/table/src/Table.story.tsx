@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
-import { defaultData, multiRowData } from './fixtures';
+import { defaultData, multiRowData, testTableDataShape } from './fixtures';
 import { uiColors } from '@leafygreen-ui/palette';
 
 storiesOf('Table', module)
@@ -30,28 +30,31 @@ storiesOf('Table', module)
                 dataType={DataType.String}
                 label="Name"
                 key="name"
-                sortBy="name"
+                compareFn={(a: testTableDataShape, b: testTableDataShape) =>
+                  // Sort by last letter of first name
+                  a.name.slice(-1) >= b.name.slice(-1) ? 1 : -1
+                }
               />
 
               <TableHeader
                 dataType={DataType.Number}
                 label="Age"
                 key="age"
-                sortBy={(data: typeof defaultData[0]) => data.age.toString()}
+                sortBy={(data: testTableDataShape) => data.age.toString()}
               />
 
               <TableHeader
                 dataType={DataType.String}
                 label="Favorite Color"
                 key="color"
-                sortBy={(data: typeof defaultData[0]) => data.color}
+                sortBy={(data: testTableDataShape) => data.color}
               />
 
               <TableHeader
                 dataType={DataType.String}
                 label="Location"
                 key="location"
-                sortBy={(data: typeof defaultData[0]) => data.location}
+                sortBy={(data: testTableDataShape) => data.location}
               />
             </>
           }
