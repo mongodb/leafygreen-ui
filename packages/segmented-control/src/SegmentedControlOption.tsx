@@ -7,6 +7,7 @@ import { Size, Mode } from './types';
  * Styles
  */
 
+// The border color is slightly different from the base gray for accessibility reasons
 const checkedSelector = '[data-checked="true"]';
 const uncheckedSelector = '[data-checked="false"]';
 
@@ -16,138 +17,138 @@ const optionStyle = ({
 }: {
   mode: Mode;
   size: Size;
-}) => {
-  const vars: {
-    [key: string]: string;
-  } = {};
+}) => css`
+  ${size === 'small' &&
+  css`
+    --font-size: 12px;
+    --line-height: 16px;
+    --inline-padding: 3px;
+    --text-transform: uppercase;
+    --font-weight: bold;
+    --divider-height: 12px;
+  `}
+  ${size === 'default' &&
+  css`
+    --font-size: 14px;
+    --line-height: 24px;
+    --inline-padding: 3px;
+    --text-transform: none;
+    --font-weight: normal;
+    --divider-height: 18px;
+  `}
+  ${size === 'large' &&
+  css`
+    --font-size: 16px;
+    --line-height: 28px;
+    --inline-padding: 4px;
+    --text-transform: none;
+    --font-weight: normal;
+    --divider-height: 20px;
+  `}
 
-  if (size == 'small') {
-    vars.fontSize = '12px';
-    vars.lineHeight = '16px';
-    vars.inlinePadding = '3px';
-    vars.textTransform = 'uppercase';
-    vars.fontWeight = 'bold';
-    vars.dividerHeight = '12px';
-  } else if (size == 'large') {
-    vars.fontSize = '16px';
-    vars.lineHeight = '28px';
-    vars.inlinePadding = '4px';
-    vars.textTransform = 'none';
-    vars.fontWeight = 'normal';
-    vars.dividerHeight = '20px';
-  } else {
-    vars.fontSize = '14px';
-    vars.lineHeight = '24px';
-    vars.inlinePadding = '3px';
-    vars.textTransform = 'none';
-    vars.fontWeight = 'normal';
-    vars.dividerHeight = '18px';
-  }
+  ${mode === 'light' &&
+  css`
+    --base-text-color: ${uiColors.gray.dark1};
+    --base-background-color: transparent;
+    --base-shadow-color: transparent;
+    --hover-text-color: ${uiColors.gray.dark3};
+    --hover-background-color: ${uiColors.white};
+    --active-text-color: ${uiColors.gray.dark3};
+    --disabled-text-color: ${uiColors.gray.light1};
+  `}
+  ${mode === 'dark' &&
+  css`
+    --base-text-color: ${uiColors.gray.light1};
+    --base-background-color: transparent;
+    --base-shadow-color: transparent;
+    --hover-text-color: ${uiColors.gray.light2};
+    --hover-background-color: ${uiColors.gray.dark2};
+    --active-text-color: ${uiColors.white};
+    --disabled-text-color: ${uiColors.gray.dark1};
+  `}
 
-  if (mode == 'dark') {
-    vars.baseTextColor = uiColors.gray.light1;
-    vars.baseBackgroundColor = 'transparent';
-    vars.baseShadowColor = 'transparent';
-    vars.hoverTextColor = uiColors.gray.light2;
-    vars.hoverBackgroundColor = uiColors.gray.dark2;
-    vars.activeTextColor = uiColors.white;
-    vars.disabledTextColor = uiColors.gray.dark1;
-  } else {
-    vars.baseTextColor = uiColors.gray.dark1;
-    vars.baseBackgroundColor = 'transparent';
-    vars.baseShadowColor = 'transparent';
-    vars.hoverTextColor = uiColors.gray.dark3;
-    vars.hoverBackgroundColor = uiColors.white;
-    vars.activeTextColor = uiColors.gray.dark3;
-    vars.disabledTextColor = uiColors.gray.light1;
-  }
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--inline-padding) 12px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  text-transform: var(--text-transform, none);
+  font-weight: var(--font-weight);
+  color: var(--base-text-color); // color
+  background-color: var(--base-background-color); // color
+  box-shadow: 0px 1px 2px var(--base-shadow-color); // color
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+  z-index: 1;
 
-  return css`
-    // Variables that are used in child elements get assigned to custom props
-    // Otherwise, we simply assign the property to the interpolated JS variable
-    --font-size: ${vars.fontSize}
+  &:hover {
+    color: var(--hover-text-color);
 
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: ${vars.inlinePadding} 12px;
-    border-radius: 4px;
-    text-align: center;
-    font-size: var(--font-size);
-    line-height: ${vars.lineHeight};
-    text-transform: ${vars.textTransform};
-    font-weight: ${vars.fontWeight};
-    color: ${vars.baseTextColor};
-    background-color: ${vars.baseBackgroundColor};
-    box-shadow: 0px 1px 2px ${vars.baseShadowColor};
-    cursor: pointer;
-    transition: all 100ms ease-in-out;
-    z-index: 1;
+    &:after {
+      background-color: var(--hover-background-color);
+    }
 
-    &:hover {
-      color: ${vars.hoverTextColor};
+    &${checkedSelector}, &[data-disabled='true'] {
+      border-color: transparent;
+      background-color: transparent;
 
       &:after {
-        background-color: ${vars.hoverBackgroundColor};
-      }
-
-      &${checkedSelector}, &[data-disabled='true'] {
-        border-color: transparent;
         background-color: transparent;
+      }
+    }
+  }
 
-        &:after {
-          background-color: transparent;
+  &${checkedSelector} {
+    color: var(--active-text-color); // color
+  }
+
+  &[data-disabled='true'] {
+    color: var(--disabled-text-color); // color
+    cursor: not-allowed;
+  }
+
+  // Hover indicator
+  &:after {
+    content: '';
+    position: absolute;
+    height: calc(100% - 2px);
+    width: 100%;
+    top: 1px;
+    left: 0;
+    background-color: transparent;
+    z-index: -1;
+    border-radius: inherit;
+    transition: all 100ms ease-in-out;
+  }
+
+  /* 
+   * Adds the divider line to unselected segments 
+   */
+  &:before {
+    content: '';
+    position: absolute;
+    height: var(--divider-height);
+    width: 1px;
+    left: calc(0px - (var(--segment-gap, 1px) + 1px) / 2);
+    background-color: transparent;
+    transition: all 100ms ease-in-out;
+  }
+
+  &${uncheckedSelector} {
+    &:not(:first-child) {
+      &:not(${checkedSelector} + ${uncheckedSelector}) {
+        // no divider to the left of the checked segment
+        &:before {
+          background-color: ${uiColors.gray.light1}; // color
         }
       }
     }
-
-    &${checkedSelector} {
-      color: ${vars.activeTextColor};
-    }
-
-    &[data-disabled='true'] {
-      color: ${vars.disabledTextColor};
-      cursor: not-allowed;
-    }
-
-    // Hover indicator
-    &:after {
-      content: '';
-      position: absolute;
-      height: calc(100% - 2px);
-      width: 100%;
-      top: 1px;
-      left: 0;
-      background-color: transparent;
-      z-index: -1;
-      border-radius: inherit;
-      transition: all 100ms ease-in-out;
-    }
-
-    // Adds the divider line to unselected segments 
-    &:before {
-      content: '';
-      position: absolute;
-      height: ${vars.dividerHeight};
-      width: 1px;
-      left: calc(0px - (var(--segment-gap, 1px) + 1px) / 2);
-      background-color: transparent;
-      transition: all 100ms ease-in-out;
-    }
-
-    &${uncheckedSelector} {
-      &:not(:first-child) {
-        &:not(${checkedSelector} + ${uncheckedSelector}) {
-          // no divider to the left of the checked segment
-          &:before {
-            background-color: ${uiColors.gray.light1}; 
-          }
-        }
-      }
-    }
-  `;
-};
+  }
+`;
 
 const radioInputStyle = css`
   height: 0;
@@ -197,7 +198,7 @@ const SegmentedControlOption = React.forwardRef<
     value,
     children,
     disabled = false,
-    as = 'label', // TODO
+    as = 'div', // TODO
     className,
     id,
     size = 'default',

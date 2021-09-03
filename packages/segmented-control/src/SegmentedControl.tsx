@@ -40,117 +40,111 @@ const labelStyle: {
 // The border color is slightly different from the base gray for accessibility reasons
 const selectionBorderColor = '#869499';
 
-const frameStyle = ({
-  mode = 'light',
-  size = 'default',
-}: {
-  mode: Mode;
-  size: Size;
-}) => {
-  const vars: {
-    [key: string]: string;
-  } = {};
-
-  if (size == 'small') {
-    vars.segmentGap = '1px';
-    vars.padding = '0px';
-    vars.radius = '4px';
-  } else if (size == 'large') {
-    vars.segmentGap = '5px';
-    vars.padding = '3px';
-    vars.radius = '6px';
-  } else {
-    vars.segmentGap = '5px';
-    vars.padding = '3px';
-    vars.radius = '6px';
-  }
-
-  if (mode == 'dark') {
-    vars.backgroundColor = uiColors.gray.dark3;
-    vars.borderColor = uiColors.gray.dark1;
-    vars.borderWidth = '1px';
-    vars.innerShadow = 'unset';
-    vars.outerShadow = 'unset';
-  } else {
-    vars.backgroundColor = uiColors.gray.light3;
-    vars.borderColor = 'transparent';
-    vars.borderWidth = '0px';
-    vars.innerShadow = '0px 1px 2px rgba(0, 0, 0, 0.3) inset';
-    vars.outerShadow = '0px 1px 1px #e7eeec';
-  }
-
-  return css`
-    // Variables that are used in child elements get assigned to custom props
-    // Otherwise, we simply assign the property to the interpolated JS variable
-    --segment-gap: ${vars.segmentGap};
-    --padding: ${vars.padding};
-
-    position: relative;
-    display: grid;
-    padding: var(--padding);
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
-    gap: var(--segment-gap);
-    align-items: center;
-    background-color: ${vars.backgroundColor};
-    border-radius: ${vars.radius};
-    border-width: ${vars.borderWidth};
-    border-style: solid;
-    border-color: ${vars.borderColor};
-
-    &:after {
-      position: absolute;
-      content: '';
-      width: 100%;
-      height: 100%;
-      border-radius: ${vars.radius};
-      box-shadow: ${vars.innerShadow}, ${vars.outerShadow};
-      z-index: 2;
-      pointer-events: none;
-    }
-  `;
+const frameStyleFromSize: {
+  [key in Size]: string;
+} = {
+  small: css`
+    --segment-gap: 1px;
+    --padding: 0px;
+    --radius: 4px;
+  `,
+  default: css`
+    --segment-gap: 5px;
+    --padding: 3px;
+    --radius: 6px;
+  `,
+  large: css`
+    --segment-gap: 5px;
+    --padding: 3px;
+    --radius: 6px;
+  `,
 };
 
-const indicatorStyle = ({
-  mode = 'light',
-  size = 'default',
-}: {
-  mode: Mode;
-  size: Size;
-}) => {
-  const vars: {
-    [key: string]: string;
-  } = {};
+const frameStyleFromMode: {
+  [key in Mode]: string;
+} = {
+  light: css`
+    --background-color: ${uiColors.gray.light3};
+    --border-color: transparent;
+    --border-width: 0px;
+    --inner-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3) inset;
+    --outer-shadow: 0px 1px 1px #e7eeec;
+  `,
+  dark: css`
+    --background-color: ${uiColors.gray.dark3};
+    --border-color: ${uiColors.gray.dark1};
+    --border-width: 1px;
+    --inner-shadow: unset;
+    --outer-shadow: unset;
+  `,
+};
 
-  if (size == 'small') {
-    vars.height = '100%';
-  } else if (size == 'large') {
-    vars.height = 'calc(100% - 2 * var(--padding))';
-  } else {
-    vars.height = 'calc(100% - 2 * var(--padding))';
-  }
+const frameStyleBase = css`
+  position: relative;
+  display: grid;
+  padding: var(--padding);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--segment-gap);
+  align-items: center;
+  background-color: var(--background-color);
+  border-radius: var(--radius);
+  border-width: var(--border-width);
+  border-style: solid;
+  border-color: var(--border-color);
 
-  if (mode == 'dark') {
-    vars.backgroundColor = uiColors.gray.dark1;
-    vars.borderColor = uiColors.gray.base;
-  } else {
-    vars.backgroundColor = uiColors.gray.light2;
-    vars.borderColor = selectionBorderColor;
-  }
-
-  return css`
+  &:after {
     position: absolute;
-    height: ${vars.height};
-    box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
-    transition: transform 150ms ease-in-out;
-    z-index: 0;
-    border-radius: 4px;
-    border-width: 1px;
-    border-style: solid;
-    background-color: ${vars.backgroundColor};
-    border-color: ${vars.borderColor};
-  `;
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--inner-shadow), var(--outer-shadow);
+    z-index: 2;
+    pointer-events: none;
+  }
+`;
+
+const indicatorStyleFromSize: {
+  [key in Size]: string;
+} = {
+  small: css`
+    --indicator-height: 100%;
+  `,
+  default: css`
+    --indicator-height: calc(100% - 2 * var(--padding));
+  `,
+  large: css`
+    --indicator-height: calc(100% - 2 * var(--padding));
+  `,
 };
+
+const indicatorStyleFromMode: {
+  [key in Mode]: string;
+} = {
+  light: css`
+    --indicator-background-color: ${uiColors.gray.light2};
+    --indicator-border-color: ${selectionBorderColor};
+  `,
+  dark: css`
+    --indicator-background-color: ${uiColors.gray.dark1};
+    --indicator-border-color: ${uiColors.gray.base};
+  `,
+};
+
+const selectionIndicatorBase = css`
+  position: absolute;
+  height: var(--indicator-height);
+  /* TODO - fix the shadow overhang over the frame */
+  box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
+  transition: transform 150ms ease-in-out;
+  z-index: 0;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  background-color: var(--indicator-background-color);
+  border-color: var(--indicator-border-color);
+`;
 
 const interactionRingStyle = css`
   z-index: 3;
@@ -324,14 +318,20 @@ const SegmentedControl = React.forwardRef<
         <div
           role="group"
           aria-label={name}
-          className={frameStyle({ mode, size })}
+          className={cx(
+            frameStyleBase,
+            frameStyleFromSize[size],
+            frameStyleFromMode[mode],
+          )}
           ref={forwardedRef}
         >
           {renderedChildren}
           <div
             {...selectionIndicatorDataAttr.prop}
             className={cx(
-              indicatorStyle({ mode, size }),
+              selectionIndicatorBase,
+              indicatorStyleFromSize[size],
+              indicatorStyleFromMode[mode],
               selectionStyleDynamic,
             )}
           />
