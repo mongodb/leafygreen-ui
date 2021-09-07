@@ -2,7 +2,7 @@
 
 A set of CSS styles and React components built with design in mind.
 
-Check out all of the components [in action](www.mongodb.design)!
+Check out all of the components [in action](https://www.mongodb.design/)!
 
 ## Package Table of Contents
 
