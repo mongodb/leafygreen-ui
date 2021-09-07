@@ -38,9 +38,9 @@ storiesOf('Table', module)
                   const reverse = (str: string) =>
                     str.split('').reverse().join('');
 
-                  // Pin 'Brooke' to the top
-                  if (b.name === 'Brooke') return 1;
-                  else if (a.name === 'Brooke') return -1;
+                  // Pin 'Yvonne' to the top
+                  if (b.name === 'Yvonne') return 1;
+                  else if (a.name === 'Yvonne') return -1;
 
                   // Sort by reversed name
                   if (dir == 'desc') {

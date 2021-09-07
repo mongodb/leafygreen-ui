@@ -24,6 +24,29 @@ describe('packages/table', () => {
     expect(alice).toBeVisible();
   });
 
+  test('it does not sort if no sortBy or compareFn is provided', () => {
+    renderTable({
+      table: {
+        columns: [
+          <TableHeader key="name" label="Name" />,
+          <TableHeader key="age" label="Age" />,
+          <TableHeader key="color" label="Color" />,
+          <TableHeader key="location" label="Location" />,
+        ],
+      },
+    });
+
+    const sortButton = screen.getAllByRole('button')[0];
+
+    fireEvent.click(sortButton);
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
+
+    fireEvent.click(sortButton);
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
+  });
+
   test('it renders the data in descending order when the "sortBy" prop is set, and the icon is clicked', () => {
     renderTable({
       table: {
@@ -82,6 +105,43 @@ describe('packages/table', () => {
     fireEvent.click(sortButton);
 
     expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
+  });
+
+  test('it pins a row to the top with a `compareFn`', () => {
+    renderTable({
+      table: {
+        columns: [
+          <TableHeader
+            key="name"
+            label="Name"
+            compareFn={(a: testTableDataShape, b: testTableDataShape, dir) => {
+              if (b.name === 'Monica') return 1;
+              if (a.name === 'Monica') return -1;
+
+              if (dir == 'desc') {
+                return b.name >= a.name ? 1 : -1;
+              }
+
+              return b.name >= a.name ? -1 : 1;
+            }}
+          />,
+          <TableHeader key="age" label="Age" />,
+          <TableHeader key="color" label="Color" />,
+          <TableHeader key="location" label="Location" />,
+        ],
+      },
+    });
+
+    const sortButton = screen.getAllByRole('button')[0];
+    fireEvent.click(sortButton);
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Monica');
+    expect(screen.getAllByRole('row')[2].innerHTML).toContain('Zara');
+
+    fireEvent.click(sortButton);
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Monica');
+    expect(screen.getAllByRole('row')[2].innerHTML).toContain('Alice');
   });
 
   test('it adds a className to the Tables classlist when one is supplied', () => {

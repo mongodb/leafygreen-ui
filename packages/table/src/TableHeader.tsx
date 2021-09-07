@@ -120,7 +120,9 @@ interface TableHeaderInterface<Shape> {
   /**
    * A callback to provide more customization in column sorting.
    * This callback has a similar signature to the Array.sort method,
-   * with the addition of a `direction` parameter.
+   * with the addition of a `direction` parameter, which has values `asc` or `desc`.
+   *
+   * Pin a row to the top by returning -1 if `a` matches, and 1 if `b` matches the desired row
    */
   compareFn?: (a: Shape, b: Shape, direction: 'asc' | 'desc') => number;
 
