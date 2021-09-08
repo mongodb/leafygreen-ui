@@ -69,6 +69,9 @@ storiesOf('Table', module)
                 dataType={DataType.String}
                 label="Location"
                 key="location"
+                handleSort={dir => {
+                  console.log(`Sorting location ${dir}`);
+                }}
               />
             </>
           }

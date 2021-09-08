@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
+export type SortDirection = 'asc' | 'desc';
+
 interface Sort {
   columnId: number;
-  direction: 'asc' | 'desc';
+  direction: SortDirection;
   accessorValue?: (data: any) => string;
-  compareFn?: (a: any, b: any, direction: 'asc' | 'desc') => number;
+  compareFn?: (a: any, b: any, direction: SortDirection) => number;
+  handleSort?: (direction: SortDirection) => void;
 }
 
 interface ContextInterface {
@@ -43,9 +46,9 @@ export const getDataComparisonFunction = <T extends {}>({
   accessorValue,
   compareFn,
 }: {
-  direction: 'asc' | 'desc';
+  direction: SortDirection;
   accessorValue?: (data: T) => string;
-  compareFn?: (a: T, b: T, dir: 'asc' | 'desc') => number;
+  compareFn?: (a: T, b: T, dir: SortDirection) => number;
 }) => {
   if (accessorValue) {
     return (a: T, b: T) => {
