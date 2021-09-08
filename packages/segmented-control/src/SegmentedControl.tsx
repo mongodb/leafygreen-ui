@@ -195,10 +195,13 @@ const SegmentedControl = React.forwardRef<
   const name = useIdAllocator({ prefix: 'radio-group', id: nameProp });
 
   // If a value is given, then it's controlled
-  // let isControlled = controlledValue != null;
-  const isControlled = useRef(controlledValue != null);
+  const [isControlled, setIsControlled] = useState(controlledValue != null);
 
-  // Keep track of the uncontrolled value
+  useEffect(() => {
+    setIsControlled(controlledValue != null);
+  }, [controlledValue]);
+
+  // Keep track of the uncontrolled value internally
   const [uncontrolledValue, setUncontrolledValue] = useState<string>(
     defaultValue,
   );
@@ -210,7 +213,7 @@ const SegmentedControl = React.forwardRef<
       if (isComponentType(child, 'SegmentedControlOption')) {
         // If one of the options has been programatically checked, then it's controlled
         if (child.props.checked != null) {
-          isControlled.current = true;
+          setIsControlled(true);
         }
 
         // If there's no default value given, then we fall back to the first option
@@ -227,7 +230,7 @@ const SegmentedControl = React.forwardRef<
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange?.(e);
-      if (!isControlled.current) {
+      if (!isControlled) {
         setUncontrolledValue(e.target.value);
       }
     },
@@ -243,7 +246,7 @@ const SegmentedControl = React.forwardRef<
           return child;
         }
 
-        const _checked: boolean = isControlled.current
+        const _checked: boolean = isControlled
           ? child.props.value === controlledValue || !!child.props.checked
           : child.props.value === uncontrolledValue;
 
@@ -275,7 +278,7 @@ const SegmentedControl = React.forwardRef<
       (React.Children.toArray(
         renderedChildren,
       ) as Array<React.ReactElement>).findIndex(child =>
-        isControlled.current
+        isControlled
           ? child.props.value === controlledValue
           : child.props.value === uncontrolledValue,
       ),

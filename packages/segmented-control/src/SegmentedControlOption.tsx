@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Size, Mode } from './types';
+import Box from '@leafygreen-ui/box';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 /**
  * Styles
@@ -84,6 +86,7 @@ const optionStyle = ({
   cursor: pointer;
   transition: all 100ms ease-in-out;
   z-index: 1;
+  text-decoration: none;
 
   &:hover {
     color: var(--hover-text-color);
@@ -158,6 +161,12 @@ const radioInputStyle = css`
   pointer-events: none;
 `;
 
+const boxStyle = css`
+  color: inherit;
+  cursor: inherit;
+  text-decoration: none;
+`;
+
 const labelStyle = css`
   display: inline-flex;
   align-items: center;
@@ -185,6 +194,7 @@ export interface SegmentedControlOptionProps {
   _name?: string;
   _checked?: boolean;
   _onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  [key: string]: any;
 }
 
 /**
@@ -193,47 +203,83 @@ export interface SegmentedControlOptionProps {
 const SegmentedControlOption = React.forwardRef<
   HTMLLabelElement,
   SegmentedControlOptionProps
->(function SegmentedControlOption(
-  {
-    value,
-    children,
-    disabled = false,
-    as = 'div', // TODO
-    className,
-    id,
-    size = 'default',
-    darkMode = false,
-    _onChange: onChange,
-    _name: name,
-    _checked: checked,
-  }: SegmentedControlOptionProps,
-  forwardedRef,
-) {
-  const mode = darkMode ? 'dark' : 'light';
+>(
+  (
+    {
+      value,
+      children,
+      disabled = false,
+      as = React.Fragment,
+      className,
+      id,
+      size = 'default',
+      darkMode = false,
+      _onChange: onChange,
+      _name: name,
+      _checked: checked,
+      ...rest
+    }: SegmentedControlOptionProps,
+    forwardedRef,
+  ) => {
+    const mode = darkMode ? 'dark' : 'light';
+    const labelId = `${id}-label`;
 
-  return (
-    <label
-      htmlFor={id}
-      className={cx(optionStyle({ mode, size }), className)}
-      data-disabled={`${disabled}`}
-      data-checked={`${checked}`}
-      ref={forwardedRef}
-    >
-      <input
-        type="radio"
-        name={name}
-        value={value}
-        id={id}
-        disabled={disabled}
-        onChange={onChange}
-        checked={checked}
-        className={radioInputStyle}
-      />
-      <span className={labelStyle}>{children}</span>
-    </label>
-  );
-});
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange?.(e);
+
+      // If a user changes the value with the keyboard,
+      // the click event on an anchor wrapper will not fire,
+      // so we programatically navigate here
+      if (as === 'a' && rest.href) {
+        window.location.assign(rest.href);
+      }
+    };
+
+    return (
+      <Box as={as} className={boxStyle} tabIndex="-1" {...rest}>
+        <label
+          htmlFor={id}
+          id={labelId}
+          className={cx(optionStyle({ mode, size }), className)}
+          data-disabled={`${disabled}`}
+          data-checked={`${checked}`}
+          ref={forwardedRef}
+        >
+          <span className={labelStyle}>{children}</span>
+          <input
+            type="radio"
+            name={name}
+            value={value}
+            id={id}
+            disabled={disabled}
+            onChange={handleChange}
+            checked={checked}
+            className={radioInputStyle}
+            aria-labelledby={labelId}
+          />
+        </label>
+      </Box>
+    );
+  },
+);
 
 SegmentedControlOption.displayName = 'SegmentedControlOption';
 
 export default SegmentedControlOption;
+
+/**
+ * Basic:
+ *
+ * label
+ *  input
+ *  span
+ *    text
+ *
+ * Link:
+ *
+ * label
+ *  input
+ *  a/Link
+ *    span
+ *      text
+ */
