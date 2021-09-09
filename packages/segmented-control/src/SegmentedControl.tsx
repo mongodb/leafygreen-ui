@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
@@ -192,7 +186,7 @@ const SegmentedControl = React.forwardRef<
 
   const mode = darkMode ? 'dark' : 'light';
 
-  const name = useIdAllocator({ prefix: 'radio-group', id: nameProp });
+  const name = useIdAllocator({ prefix: 'segmented-control', id: nameProp });
 
   // If a value is given, then it's controlled
   const [isControlled, setIsControlled] = useState(controlledValue != null);

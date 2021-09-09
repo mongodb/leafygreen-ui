@@ -1,9 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Size, Mode } from './types';
 import Box from '@leafygreen-ui/box';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 /**
  * Styles
@@ -209,7 +208,7 @@ const SegmentedControlOption = React.forwardRef<
       value,
       children,
       disabled = false,
-      as = React.Fragment,
+      as,
       className,
       id,
       size = 'default',
@@ -223,17 +222,6 @@ const SegmentedControlOption = React.forwardRef<
   ) => {
     const mode = darkMode ? 'dark' : 'light';
     const labelId = `${id}-label`;
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange?.(e);
-
-      // If a user changes the value with the keyboard,
-      // the click event on an anchor wrapper will not fire,
-      // so we programatically navigate here
-      if (as === 'a' && rest.href) {
-        window.location.assign(rest.href);
-      }
-    };
 
     return (
       <Box as={as} className={boxStyle} tabIndex="-1" {...rest}>
@@ -252,7 +240,7 @@ const SegmentedControlOption = React.forwardRef<
             value={value}
             id={id}
             disabled={disabled}
-            onChange={handleChange}
+            onChange={onChange}
             checked={checked}
             className={radioInputStyle}
             aria-labelledby={labelId}
