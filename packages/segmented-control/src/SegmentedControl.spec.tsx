@@ -63,7 +63,7 @@ describe('packages/segmented-control', () => {
 
       userEvent.tab();
       expect(apple).toHaveFocus();
-      userEvent.keyboard('{arrowright}');
+      userEvent.type(banana, '{arrowright}');
       expect(banana).toHaveFocus();
     });
   });

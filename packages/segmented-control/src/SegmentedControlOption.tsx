@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Size, Mode } from './types';
 import Box from '@leafygreen-ui/box';
+import { useEffect } from 'react';
 
 /**
  * Styles
@@ -70,6 +71,7 @@ const optionStyle = ({
 
   position: relative;
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   padding: var(--inline-padding) 12px;
@@ -79,15 +81,17 @@ const optionStyle = ({
   line-height: var(--line-height);
   text-transform: var(--text-transform, none);
   font-weight: var(--font-weight);
-  color: var(--base-text-color); // color
-  background-color: var(--base-background-color); // color
-  box-shadow: 0px 1px 2px var(--base-shadow-color); // color
+  color: var(--base-text-color);
+  background-color: var(--base-background-color);
+  box-shadow: 0px 1px 2px var(--base-shadow-color);
   cursor: pointer;
   transition: all 100ms ease-in-out;
   z-index: 1;
   text-decoration: none;
+  outline: none;
+  border-color: transparent;
 
-  &:hover {
+  /* &:hover {
     color: var(--hover-text-color);
 
     &:after {
@@ -102,19 +106,19 @@ const optionStyle = ({
         background-color: transparent;
       }
     }
-  }
+  } */
 
   &${checkedSelector} {
-    color: var(--active-text-color); // color
+    color: var(--active-text-color);
   }
 
-  &[data-disabled='true'] {
-    color: var(--disabled-text-color); // color
+  &:disabled {
+    color: var(--disabled-text-color);
     cursor: not-allowed;
   }
 
   // Hover indicator
-  &:after {
+  /* &:after {
     content: '';
     position: absolute;
     height: calc(100% - 2px);
@@ -125,12 +129,12 @@ const optionStyle = ({
     z-index: -1;
     border-radius: inherit;
     transition: all 100ms ease-in-out;
-  }
+  } */
 
   /* 
    * Adds the divider line to unselected segments 
    */
-  &:before {
+  /* &:before {
     content: '';
     position: absolute;
     height: var(--divider-height);
@@ -138,31 +142,31 @@ const optionStyle = ({
     left: calc(0px - (var(--segment-gap, 1px) + 1px) / 2);
     background-color: transparent;
     transition: all 100ms ease-in-out;
-  }
+  } */
 
-  &${uncheckedSelector} {
+  /* &${uncheckedSelector} {
     &:not(:first-child) {
       &:not(${checkedSelector} + ${uncheckedSelector}) {
         // no divider to the left of the checked segment
         &:before {
-          background-color: ${uiColors.gray.light1}; // color
+          background-color: ${uiColors.gray.light1};
         }
       }
     }
-  }
+  } */
 `;
 
-const radioInputStyle = css`
-  height: 0;
-  width: 0;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
-`;
+// const radioInputStyle = css`
+//   height: 0;
+//   width: 0;
+//   margin: 0;
+//   opacity: 0;
+//   pointer-events: none;
+// `;
 
 const boxStyle = css`
-  color: inherit;
-  cursor: inherit;
+  /* color: inherit; */
+  /* cursor: pointer; */
   text-decoration: none;
 `;
 
@@ -192,7 +196,7 @@ export interface SegmentedControlOptionProps {
   darkMode?: boolean;
   _name?: string;
   _checked?: boolean;
-  _onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  _onClick?: (value: string) => void;
   [key: string]: any;
 }
 
@@ -200,7 +204,7 @@ export interface SegmentedControlOptionProps {
  * Component
  */
 const SegmentedControlOption = React.forwardRef<
-  HTMLLabelElement,
+  HTMLButtonElement,
   SegmentedControlOptionProps
 >(
   (
@@ -213,7 +217,7 @@ const SegmentedControlOption = React.forwardRef<
       id,
       size = 'default',
       darkMode = false,
-      _onChange: onChange,
+      _onClick,
       _name: name,
       _checked: checked,
       ...rest
@@ -221,31 +225,25 @@ const SegmentedControlOption = React.forwardRef<
     forwardedRef,
   ) => {
     const mode = darkMode ? 'dark' : 'light';
-    const labelId = `${id}-label`;
+
+    const onClick = () => {
+      _onClick?.(value);
+    };
 
     return (
-      <Box as={as} className={boxStyle} tabIndex="-1" {...rest}>
-        <label
-          htmlFor={id}
-          id={labelId}
+      <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
+        <button
+          role="radio"
+          id={id}
+          tabIndex={-1}
+          onClick={onClick}
           className={cx(optionStyle({ mode, size }), className)}
-          data-disabled={`${disabled}`}
-          data-checked={`${checked}`}
+          disabled={disabled}
+          aria-checked={checked}
           ref={forwardedRef}
         >
           <span className={labelStyle}>{children}</span>
-          <input
-            type="radio"
-            name={name}
-            value={value}
-            id={id}
-            disabled={disabled}
-            onChange={onChange}
-            checked={checked}
-            className={radioInputStyle}
-            aria-labelledby={labelId}
-          />
-        </label>
+        </button>
       </Box>
     );
   },

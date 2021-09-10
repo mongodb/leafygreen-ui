@@ -18,8 +18,8 @@ storiesOf('SegmentedControl', module)
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
           value={selectedFruit}
-          onChange={e => {
-            setSelectedFruit(e.target.value);
+          onChange={(value: string) => {
+            setSelectedFruit(value);
           }}
         >
           <SegmentedControlOption value="apple">Apple</SegmentedControlOption>
@@ -37,23 +37,6 @@ storiesOf('SegmentedControl', module)
   })
 
   .add('Uncontrolled', () => {
-    const segCtrlRef = useRef<HTMLDivElement | null>(null);
-
-    const logSelectedOption = () => {
-      if (segCtrlRef.current) {
-        const options = segCtrlRef.current.querySelectorAll('input');
-        options.forEach(opt => {
-          if (opt.checked) {
-            console.log(opt.value);
-          }
-        });
-      }
-    };
-
-    useEffect(() => {
-      logSelectedOption();
-    }, []);
-
     return (
       <LeafygreenProvider>
         <SegmentedControl
@@ -61,8 +44,8 @@ storiesOf('SegmentedControl', module)
           name="fruit"
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
-          defaultValue="eggplant"
-          ref={segCtrlRef}
+          defaultValue="fig"
+          onChange={val => console.log(val)}
         >
           <SegmentedControlOption value="dragonfruit">
             Dragonfruit
@@ -76,8 +59,6 @@ storiesOf('SegmentedControl', module)
 
           <SegmentedControlOption value="grape">Grape</SegmentedControlOption>
         </SegmentedControl>
-        <br />
-        <Button onClick={logSelectedOption}> Log Selected </Button>
       </LeafygreenProvider>
     );
   })

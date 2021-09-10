@@ -97,6 +97,10 @@ const frameStyleBase = css`
     z-index: 2;
     pointer-events: none;
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const indicatorStyleFromSize: {
@@ -154,7 +158,7 @@ export interface SegmentedControlProps {
   darkMode?: boolean;
   defaultValue?: string;
   value?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: (value: string) => void;
   className?: string;
   label?: string;
 }
@@ -195,10 +199,8 @@ const SegmentedControl = React.forwardRef<
     setIsControlled(controlledValue != null);
   }, [controlledValue]);
 
-  // Keep track of the uncontrolled value internally
-  const [uncontrolledValue, setUncontrolledValue] = useState<string>(
-    defaultValue,
-  );
+  // Keep track of the value internally
+  const [internalValue, setInternalValue] = useState<string>(defaultValue);
 
   // Run through the children and determine whether this is controlled,
   // and update the default value if needed
@@ -212,7 +214,7 @@ const SegmentedControl = React.forwardRef<
 
         // If there's no default value given, then we fall back to the first option
         if (!defaultValue && index === 0) {
-          setUncontrolledValue(child.props.value);
+          setInternalValue(child.props.value);
 
           // TODO Potential bug: if `defaultValue` is changed to be falsy between renders,
           // then the value of the control will change
@@ -221,15 +223,23 @@ const SegmentedControl = React.forwardRef<
     });
   }, [children, defaultValue]);
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange?.(e);
-      if (!isControlled) {
-        setUncontrolledValue(e.target.value);
-      }
+  const updateValue = useCallback(
+    (value: string) => {
+      setInternalValue(value);
+      onChange?.(value);
     },
-    [isControlled, onChange],
+    [onChange],
   );
+
+  // Fires a click event on the selected index
+  // Used to ensure native click default events fire when using keyboard navigation
+  const simulateClickOnIndex = (index: number) => {
+    const ref = getRef(`${name}-${index}`);
+
+    if (ref && ref.current) {
+      ref.current.click();
+    }
+  };
 
   // Add internal props to children passed in
   const renderedChildren = useMemo(
@@ -242,7 +252,7 @@ const SegmentedControl = React.forwardRef<
 
         const _checked: boolean = isControlled
           ? child.props.value === controlledValue || !!child.props.checked
-          : child.props.value === uncontrolledValue;
+          : child.props.value === internalValue;
 
         return React.cloneElement(child, {
           id: child.props.id || `${name}-${index}`,
@@ -250,20 +260,20 @@ const SegmentedControl = React.forwardRef<
           size,
           _checked,
           _name: name,
-          _onChange: handleChange,
+          _onClick: updateValue,
           ref: setRef(`${name}-${index}`),
         });
       }),
     [
       children,
-      setRef,
-      handleChange,
       isControlled,
       controlledValue,
-      uncontrolledValue,
+      internalValue,
       name,
-      size,
       darkMode,
+      size,
+      updateValue,
+      setRef,
     ],
   );
 
@@ -274,10 +284,42 @@ const SegmentedControl = React.forwardRef<
       ) as Array<React.ReactElement>).findIndex(child =>
         isControlled
           ? child.props.value === controlledValue
-          : child.props.value === uncontrolledValue,
+          : child.props.value === internalValue,
       ),
-    [controlledValue, isControlled, renderedChildren, uncontrolledValue],
+    [controlledValue, isControlled, renderedChildren, internalValue],
   );
+
+  const setSelectedIndex = (newIndex: number): void => {
+    const children = React.Children.toArray(renderedChildren);
+    const length = children.length;
+    newIndex =
+      newIndex >= length
+        ? newIndex % length
+        : newIndex < 0
+        ? length + newIndex
+        : newIndex;
+    simulateClickOnIndex(newIndex);
+  };
+
+  /**
+   * Handle keyboard navigation
+   */
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    // Note: Arrow keys don't fire a keyPress event
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        setSelectedIndex(selectedIndex + 1);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        setSelectedIndex(selectedIndex - 1);
+        break;
+      default:
+        break;
+    }
+  };
 
   /**
    * Dynamically set the size & position of the selection indicator
@@ -299,28 +341,28 @@ const SegmentedControl = React.forwardRef<
   }, [selectedIndex, getRef, name, renderedChildren]);
 
   /**
-   * TODO
-   * - remove hover focus ring
+   * Return
    */
 
   return (
     <div className={cx(wrapperStyle, className)} {...rest}>
       {label && <Overline className={labelStyle[mode]}>{label}</Overline>}
-
       <InteractionRing
         darkMode={darkMode}
         borderRadius={size == 'small' ? '4px' : '6px'}
         className={interactionRingStyle}
       >
         <div
-          role="group"
+          role="radiogroup"
           aria-label={name}
+          tabIndex={0}
           className={cx(
             frameStyleBase,
             frameStyleFromSize[size],
             frameStyleFromMode[mode],
           )}
           ref={forwardedRef}
+          onKeyDown={handleKeyDown}
         >
           {renderedChildren}
           <div
