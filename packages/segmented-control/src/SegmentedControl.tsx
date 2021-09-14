@@ -7,6 +7,7 @@ import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { Overline } from '@leafygreen-ui/typography';
 import useDynamicRefs from './useDynamicRefs';
 import { Size, Mode } from './types';
+import { render } from 'react-dom';
 
 const selectionIndicatorDataAttr = createDataProp('selection-indicator');
 
@@ -144,10 +145,6 @@ const selectionIndicatorBase = css`
   border-color: var(--indicator-border-color);
 `;
 
-const interactionRingStyle = css`
-  z-index: 3;
-`;
-
 /**
  * Types
  */
@@ -161,6 +158,21 @@ export interface SegmentedControlProps {
   onChange?: (value: string) => void;
   className?: string;
   label?: string;
+  /**
+   * Defines whether the selection should automatically follow focus.
+   * If set to true, the arrow keys can be used to switch selection,
+   * otherwise a keyboard user will need to press enter to make a selection.
+   *
+   * default: `false`
+   */
+  followFocus?: boolean;
+
+  /**
+   * Identifies the element(s) whose contents/presence is controlled by the segmented control.
+   *
+   * Required as a prop on the control, or on each individual option.
+   */
+  'aria-controls'?: string;
 }
 
 /**
@@ -180,6 +192,8 @@ const SegmentedControl = React.forwardRef<
     onChange,
     className,
     label,
+    followFocus,
+    'aria-controls': ariaControls,
     ...rest
   }: SegmentedControlProps,
   forwardedRef,
@@ -202,6 +216,10 @@ const SegmentedControl = React.forwardRef<
   // Keep track of the value internally
   const [internalValue, setInternalValue] = useState<string>(defaultValue);
 
+  const [focusedOptionValue, setFocusedOptionValue] = useState<string>(
+    defaultValue,
+  );
+
   // Run through the children and determine whether this is controlled,
   // and update the default value if needed
   useEffect(() => {
@@ -215,6 +233,7 @@ const SegmentedControl = React.forwardRef<
         // If there's no default value given, then we fall back to the first option
         if (!defaultValue && index === 0) {
           setInternalValue(child.props.value);
+          setFocusedOptionValue(child.props.value);
 
           // TODO Potential bug: if `defaultValue` is changed to be falsy between renders,
           // then the value of the control will change
@@ -231,35 +250,38 @@ const SegmentedControl = React.forwardRef<
     [onChange],
   );
 
-  // Fires a click event on the selected index
-  // Used to ensure native click default events fire when using keyboard navigation
-  const simulateClickOnIndex = (index: number) => {
-    const ref = getRef(`${name}-${index}`);
-
-    if (ref && ref.current) {
-      ref.current.click();
-    }
-  };
-
   // Add internal props to children passed in
-  const renderedChildren = useMemo(
+  const renderedChildren: React.ReactNode = useMemo(
     () =>
       React.Children.map(children, (child, index) => {
         if (!isComponentType(child, 'SegmentedControlOption')) {
-          console.warn(`${child} is not a SegmentedControlOption`);
+          console.error(`${child} is not a SegmentedControlOption`);
           return child;
+        }
+
+        // Ensure `aria-controls` is set
+        if (!ariaControls && !child.props['aria-controls']) {
+          console.error(
+            `The property \`aria-controls\` is required on each Segmented Control option, or on the Segmented Control parent.`,
+          );
         }
 
         const _checked: boolean = isControlled
           ? child.props.value === controlledValue || !!child.props.checked
           : child.props.value === internalValue;
 
+        const _focused: boolean = child.props.value === focusedOptionValue;
+
         return React.cloneElement(child, {
-          id: child.props.id || `${name}-${index}`,
+          id: child.props.id ?? `${name}-${index}`,
           darkMode,
           size,
           _checked,
+          _focused,
           _name: name,
+          _index: index,
+          _followFocus: followFocus,
+          'aria-controls': child.props['aria-controls'] ?? ariaControls,
           _onClick: updateValue,
           ref: setRef(`${name}-${index}`),
         });
@@ -269,14 +291,31 @@ const SegmentedControl = React.forwardRef<
       isControlled,
       controlledValue,
       internalValue,
+      focusedOptionValue,
       name,
       darkMode,
       size,
+      followFocus,
+      ariaControls,
       updateValue,
       setRef,
     ],
   );
 
+  // Maintain a list of child `id`s to link the `tablist` to individual `tab` elements
+  // See https://www.w3.org/TR/wai-aria-1.1/#tab
+  const childrenIdList: string = useMemo(() => {
+    if (renderedChildren) {
+      return React.Children.map(
+        renderedChildren as React.ReactElement,
+        child => child?.props?.id,
+      ).join(' ');
+    }
+
+    return '';
+  }, [renderedChildren]);
+
+  // Keep track of the index of the selected value
   const selectedIndex = useMemo(
     () =>
       (React.Children.toArray(
@@ -289,8 +328,26 @@ const SegmentedControl = React.forwardRef<
     [controlledValue, isControlled, renderedChildren, internalValue],
   );
 
-  const setSelectedIndex = (newIndex: number): void => {
-    const children = React.Children.toArray(renderedChildren);
+  // When the value changes, update the focus tracker
+  useEffect(() => {
+    setFocusedOptionValue(controlledValue ?? internalValue);
+  }, [controlledValue, internalValue]);
+
+  // Keep track of the index of the focused value
+  const focusedIndex = useMemo(
+    () =>
+      (React.Children.toArray(
+        renderedChildren,
+      ) as Array<React.ReactElement>).findIndex(
+        child => child.props.value === focusedOptionValue,
+      ),
+    [renderedChildren, focusedOptionValue],
+  );
+
+  const updateFocusedIndex = (newIndex: number): void => {
+    const children = (React.Children.toArray(
+      renderedChildren,
+    ) as Array<React.ReactElement>).filter(child => !child.props.disabled);
     const length = children.length;
     newIndex =
       newIndex >= length
@@ -298,32 +355,32 @@ const SegmentedControl = React.forwardRef<
         : newIndex < 0
         ? length + newIndex
         : newIndex;
-    simulateClickOnIndex(newIndex);
+
+    const { value } = children[newIndex].props;
+    setFocusedOptionValue(value);
   };
 
   /**
    * Handle keyboard navigation
    */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // Note: Arrow keys don't fire a keyPress event — need to use keyDown
     e.stopPropagation();
-    // Note: Arrow keys don't fire a keyPress event
+    // We only handle right and left arrow keys
+    // Up & down should be left to control scroll
     switch (e.key) {
       case 'ArrowRight':
-      case 'ArrowDown':
-        setSelectedIndex(selectedIndex + 1);
+        updateFocusedIndex(focusedIndex + 1);
         break;
       case 'ArrowLeft':
-      case 'ArrowUp':
-        setSelectedIndex(selectedIndex - 1);
+        updateFocusedIndex(focusedIndex - 1);
         break;
       default:
         break;
     }
   };
 
-  /**
-   * Dynamically set the size & position of the selection indicator
-   */
+  // Dynamically set the size & position of the selection indicator
   const [selectionStyleDynamic, setSelectionStyleDynamic] = useState<string>();
 
   // Update dynamic styles of the selection indicator
@@ -331,51 +388,49 @@ const SegmentedControl = React.forwardRef<
     const selectedRef = getRef(`${name}-${selectedIndex}`);
 
     if (selectedRef && selectedRef.current) {
+      // The ref refers to the button element
       const selectedElement = selectedRef.current;
-      const { offsetWidth: width, offsetLeft: left } = selectedElement;
-      setSelectionStyleDynamic(css`
-        width: ${width}px;
-        transform: translateX(${left}px);
-      `);
+
+      if (selectedElement) {
+        const { offsetWidth: width, offsetLeft: left } = selectedElement;
+        setSelectionStyleDynamic(css`
+          width: ${width}px;
+          transform: translateX(${left}px);
+        `);
+      }
     }
   }, [selectedIndex, getRef, name, renderedChildren]);
 
   /**
    * Return
    */
-
   return (
     <div className={cx(wrapperStyle, className)} {...rest}>
       {label && <Overline className={labelStyle[mode]}>{label}</Overline>}
-      <InteractionRing
-        darkMode={darkMode}
-        borderRadius={size == 'small' ? '4px' : '6px'}
-        className={interactionRingStyle}
+
+      <div
+        role="tablist"
+        aria-label={name}
+        aria-owns={childrenIdList}
+        className={cx(
+          frameStyleBase,
+          frameStyleFromSize[size],
+          frameStyleFromMode[mode],
+        )}
+        ref={forwardedRef}
+        onKeyDownCapture={handleKeyDown}
       >
+        {renderedChildren}
         <div
-          role="radiogroup"
-          aria-label={name}
-          tabIndex={0}
+          {...selectionIndicatorDataAttr.prop}
           className={cx(
-            frameStyleBase,
-            frameStyleFromSize[size],
-            frameStyleFromMode[mode],
+            selectionIndicatorBase,
+            indicatorStyleFromSize[size],
+            indicatorStyleFromMode[mode],
+            selectionStyleDynamic,
           )}
-          ref={forwardedRef}
-          onKeyDown={handleKeyDown}
-        >
-          {renderedChildren}
-          <div
-            {...selectionIndicatorDataAttr.prop}
-            className={cx(
-              selectionIndicatorBase,
-              indicatorStyleFromSize[size],
-              indicatorStyleFromMode[mode],
-              selectionStyleDynamic,
-            )}
-          />
-        </div>
-      </InteractionRing>
+        />
+      </div>
     </div>
   );
 });

@@ -1,30 +1,29 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Size, Mode } from './types';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Box from '@leafygreen-ui/box';
+import { Size, Mode } from './types';
 import { useEffect } from 'react';
 
 /**
  * Styles
  */
-
-// The border color is slightly different from the base gray for accessibility reasons
-const checkedSelector = '[data-checked="true"]';
-const uncheckedSelector = '[data-checked="false"]';
-
 const optionStyle = ({
   mode = 'light',
   size = 'default',
 }: {
   mode: Mode;
   size: Size;
+  index: number;
 }) => css`
+  --padding-inline: 12px;
+
   ${size === 'small' &&
   css`
     --font-size: 12px;
     --line-height: 16px;
-    --inline-padding: 3px;
+    --padding-block: 3px;
     --text-transform: uppercase;
     --font-weight: bold;
     --divider-height: 12px;
@@ -33,7 +32,7 @@ const optionStyle = ({
   css`
     --font-size: 14px;
     --line-height: 24px;
-    --inline-padding: 3px;
+    --padding-block: 3px;
     --text-transform: none;
     --font-weight: normal;
     --divider-height: 18px;
@@ -42,7 +41,7 @@ const optionStyle = ({
   css`
     --font-size: 16px;
     --line-height: 28px;
-    --inline-padding: 4px;
+    --padding-block: 4px;
     --text-transform: none;
     --font-weight: normal;
     --divider-height: 20px;
@@ -74,7 +73,54 @@ const optionStyle = ({
   width: 100%;
   align-items: center;
   justify-content: center;
-  padding: var(--inline-padding) 12px;
+
+  --divider-background-color: ${uiColors.gray.light1};
+
+  &:first-child,
+  &[data-lg-checked='true'],
+  &[data-lg-checked='true'] + [data-lg-checked='false'] {
+    --divider-background-color: transparent;
+  }
+
+  /* 
+   * Adds the divider line to unselected segments 
+   */
+  &:before {
+    --divider-width: 1px;
+    content: '';
+    position: absolute;
+    height: var(--divider-height);
+    width: var(--divider-width);
+    left: calc(0px - (var(--segment-gap) + var(--divider-width)) / 2);
+    top: calc(
+      (var(--line-height) + var(--padding-block) * 2 - var(--divider-height)) /
+        2
+    );
+    transition: background-color 100ms ease-in-out;
+    background-color: var(--divider-background-color);
+  }
+`;
+
+const interactionRingStyle = css`
+  width: 100%;
+  z-index: 1;
+
+  /* disable the interaction ring hover state */
+  &:hover > [data-leafygreen-ui='interaction-ring'] {
+    box-shadow: none;
+  }
+`;
+
+const boxStyle = css`
+  text-decoration: none;
+`;
+
+const buttonStyle = css`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: var(--padding-block) var(--padding-inline);
+  background-color: var(--base-background-color);
   border-radius: 4px;
   text-align: center;
   font-size: var(--font-size);
@@ -82,33 +128,27 @@ const optionStyle = ({
   text-transform: var(--text-transform, none);
   font-weight: var(--font-weight);
   color: var(--base-text-color);
-  background-color: var(--base-background-color);
   box-shadow: 0px 1px 2px var(--base-shadow-color);
   cursor: pointer;
   transition: all 100ms ease-in-out;
-  z-index: 1;
   text-decoration: none;
   outline: none;
-  border-color: transparent;
+  border: 2px solid transparent;
+  /* margin-inline: -1px; */
 
-  /* &:hover {
+  &:hover {
     color: var(--hover-text-color);
+    background-color: var(--hover-background-color);
+    border-color: var(--background-color);
 
-    &:after {
-      background-color: var(--hover-background-color);
-    }
-
-    &${checkedSelector}, &[data-disabled='true'] {
+    &[aria-selected='true'],
+    &:disabled {
       border-color: transparent;
       background-color: transparent;
-
-      &:after {
-        background-color: transparent;
-      }
     }
-  } */
+  }
 
-  &${checkedSelector} {
+  &[aria-selected='true'] {
     color: var(--active-text-color);
   }
 
@@ -116,65 +156,12 @@ const optionStyle = ({
     color: var(--disabled-text-color);
     cursor: not-allowed;
   }
-
-  // Hover indicator
-  /* &:after {
-    content: '';
-    position: absolute;
-    height: calc(100% - 2px);
-    width: 100%;
-    top: 1px;
-    left: 0;
-    background-color: transparent;
-    z-index: -1;
-    border-radius: inherit;
-    transition: all 100ms ease-in-out;
-  } */
-
-  /* 
-   * Adds the divider line to unselected segments 
-   */
-  /* &:before {
-    content: '';
-    position: absolute;
-    height: var(--divider-height);
-    width: 1px;
-    left: calc(0px - (var(--segment-gap, 1px) + 1px) / 2);
-    background-color: transparent;
-    transition: all 100ms ease-in-out;
-  } */
-
-  /* &${uncheckedSelector} {
-    &:not(:first-child) {
-      &:not(${checkedSelector} + ${uncheckedSelector}) {
-        // no divider to the left of the checked segment
-        &:before {
-          background-color: ${uiColors.gray.light1};
-        }
-      }
-    }
-  } */
-`;
-
-// const radioInputStyle = css`
-//   height: 0;
-//   width: 0;
-//   margin: 0;
-//   opacity: 0;
-//   pointer-events: none;
-// `;
-
-const boxStyle = css`
-  /* color: inherit; */
-  /* cursor: pointer; */
-  text-decoration: none;
 `;
 
 const labelStyle = css`
   display: inline-flex;
   align-items: center;
   gap: calc(var(--font-size) / 2);
-  z-index: 3;
 `;
 
 /**
@@ -196,6 +183,10 @@ export interface SegmentedControlOptionProps {
   darkMode?: boolean;
   _name?: string;
   _checked?: boolean;
+  _focused?: boolean;
+  _index: number;
+  _followFocus?: boolean;
+  'aria-controls'?: string;
   _onClick?: (value: string) => void;
   [key: string]: any;
 }
@@ -204,7 +195,7 @@ export interface SegmentedControlOptionProps {
  * Component
  */
 const SegmentedControlOption = React.forwardRef<
-  HTMLButtonElement,
+  HTMLDivElement,
   SegmentedControlOptionProps
 >(
   (
@@ -220,6 +211,10 @@ const SegmentedControlOption = React.forwardRef<
       _onClick,
       _name: name,
       _checked: checked,
+      _focused: focused,
+      _index: index,
+      _followFocus: followFocus,
+      'aria-controls': ariaControls,
       ...rest
     }: SegmentedControlOptionProps,
     forwardedRef,
@@ -230,21 +225,47 @@ const SegmentedControlOption = React.forwardRef<
       _onClick?.(value);
     };
 
+    const didComponentMount = useRef(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    useEffect(() => {
+      if (didComponentMount.current) {
+        if (focused) {
+          // Respond in the DOM when this option is given focus
+          buttonRef?.current?.focus();
+
+          if (followFocus) {
+            // Used to ensure native click default events fire when using keyboard navigation
+            buttonRef?.current?.click();
+          }
+        }
+      }
+      didComponentMount.current = true;
+    }, [focused, followFocus, forwardedRef]);
+
     return (
-      <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
-        <button
-          role="radio"
-          id={id}
-          tabIndex={-1}
-          onClick={onClick}
-          className={cx(optionStyle({ mode, size }), className)}
-          disabled={disabled}
-          aria-checked={checked}
-          ref={forwardedRef}
-        >
-          <span className={labelStyle}>{children}</span>
-        </button>
-      </Box>
+      <div
+        className={cx(optionStyle({ mode, size, index }), className)}
+        ref={forwardedRef}
+        data-lg-checked={checked}
+      >
+        <InteractionRing darkMode={darkMode} className={interactionRingStyle}>
+          <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
+            <button
+              role="tab"
+              id={id}
+              tabIndex={focused ? 0 : -1}
+              aria-selected={checked}
+              aria-controls={ariaControls}
+              disabled={disabled}
+              className={buttonStyle}
+              ref={buttonRef}
+              onClick={onClick}
+            >
+              <span className={labelStyle}>{children}</span>
+            </button>
+          </Box>
+        </InteractionRing>
+      </div>
     );
   },
 );

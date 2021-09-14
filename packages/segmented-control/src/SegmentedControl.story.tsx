@@ -4,8 +4,6 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import { boolean, select } from '@storybook/addon-knobs';
 import Icon from '@leafygreen-ui/icon';
-import Button from '@leafygreen-ui/button';
-import { useRef } from '@storybook/addons';
 
 storiesOf('SegmentedControl', module)
   .add('Default', () => {
@@ -17,9 +15,11 @@ storiesOf('SegmentedControl', module)
           name="fruit"
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
+          followFocus={boolean('followFocus', false)}
           value={selectedFruit}
           onChange={(value: string) => {
             setSelectedFruit(value);
+            console.log(value);
           }}
         >
           <SegmentedControlOption value="apple">Apple</SegmentedControlOption>
@@ -45,7 +45,9 @@ storiesOf('SegmentedControl', module)
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
           defaultValue="fig"
+          followFocus={boolean('followFocus', false)}
           onChange={val => console.log(val)}
+          aria-controls="tabpanel"
         >
           <SegmentedControlOption value="dragonfruit">
             Dragonfruit
@@ -59,6 +61,10 @@ storiesOf('SegmentedControl', module)
 
           <SegmentedControlOption value="grape">Grape</SegmentedControlOption>
         </SegmentedControl>
+        <br />
+        <div tabIndex={0} id="tabpanel" role="tabpanel">
+          Cum sociis natoque penatibus et magnis dis parturient montes.
+        </div>
       </LeafygreenProvider>
     );
   })
