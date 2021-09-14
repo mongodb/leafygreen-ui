@@ -1,6 +1,6 @@
 import React from 'react';
 import { axe } from 'jest-axe';
-import { getByLabelText, getByText, render } from '@testing-library/react';
+import { getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SegmentedControlOption from './SegmentedControlOption';
 import SegmentedControl from './SegmentedControl';
@@ -24,8 +24,9 @@ const renderNewContainer = () => {
     </SegmentedControl>,
   );
 
-  const apple = getByText(rendered.container, 'Apple').parentElement;
-  const banana = getByText(rendered.container, 'Banana').parentElement;
+  const apple = getByText(rendered.container, 'Apple').parentElement as Element;
+  const banana = getByText(rendered.container, 'Banana')
+    .parentElement as Element;
 
   userEvent.tab();
 
