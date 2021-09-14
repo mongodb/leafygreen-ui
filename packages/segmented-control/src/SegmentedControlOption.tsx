@@ -243,6 +243,11 @@ export interface SegmentedControlOptionProps
    * Internal. Calls the onChange callback
    */
   _onClick?: (value: string) => void;
+
+  /**
+   * Any other props
+   */
+  [key: string]: any;
 }
 
 /**

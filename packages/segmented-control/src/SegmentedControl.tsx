@@ -277,10 +277,12 @@ const SegmentedControl = React.forwardRef<
   }, [controlledValue]);
 
   // Keep track of the value internally
-  const [internalValue, setInternalValue] = useState<string>(defaultValue);
+  const [internalValue, setInternalValue] = useState<string>(
+    defaultValue ?? controlledValue,
+  );
 
   const [focusedOptionValue, setFocusedOptionValue] = useState<string>(
-    defaultValue,
+    defaultValue ?? controlledValue,
   );
 
   // Run through the children and determine whether this is controlled,
@@ -368,7 +370,7 @@ const SegmentedControl = React.forwardRef<
     if (renderedChildren) {
       return React.Children.map(
         renderedChildren as React.ReactElement,
-        child => child?.props?.id,
+        child => child?.props?._id,
       ).join(' ');
     }
 
