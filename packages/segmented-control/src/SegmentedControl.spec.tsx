@@ -71,15 +71,33 @@ describe('packages/segmented-control', () => {
       expect(banana).not.toHaveFocus();
     });
 
-    // eslint-disable-next-line jest/no-commented-out-tests
-    // test('arrow keys should select the next/previous option', () => {
-    //   const { apple, banana } = renderNewContainer();
+    test('arrow keys should set focus on the next/previous option', () => {
+      const { apple, banana } = renderNewContainer();
 
-    //   userEvent.tab();
-    //   expect(apple).toHaveFocus();
-    //   userEvent.type(banana, '{arrowright}');
-    //   expect(banana).toHaveFocus();
-    // });
+      userEvent.tab();
+      expect(apple).toHaveFocus();
+
+      userEvent.type(apple, '{arrowright}');
+      expect(banana).toHaveFocus();
+
+      userEvent.type(banana, '{arrowright}');
+      expect(apple).toHaveFocus();
+
+      userEvent.type(apple, '{arrowleft}');
+      expect(banana).toHaveFocus();
+
+      userEvent.type(banana, '{arrowleft}');
+      expect(apple).toHaveFocus();
+    });
+
+    test('enter key should select an option', () => {
+      const { apple, banana } = renderNewContainer();
+      userEvent.tab();
+      userEvent.type(apple, '{arrowright}');
+      expect(banana).toHaveFocus();
+      userEvent.type(banana, '{enter}');
+      expect(banana).toHaveAttribute('aria-selected', 'true');
+    });
   });
 
   describe('render', () => {
