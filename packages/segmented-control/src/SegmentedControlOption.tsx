@@ -5,6 +5,8 @@ import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Box from '@leafygreen-ui/box';
 import { Size, Mode } from './types';
 import { useEffect } from 'react';
+import { useContext } from 'react';
+import { SegmentedControlContext } from './SegmentedControl';
 
 /**
  * Styles
@@ -132,9 +134,12 @@ const boxStyle = css`
 `;
 
 const buttonStyle = css`
+  display: inline-flex;
   position: relative;
   width: 100%;
   height: 100%;
+  align-items: center;
+  justify-content: center;
   padding: var(--padding-block) var(--padding-inline);
   background-color: var(--base-background-color);
   border-radius: 4px;
@@ -173,6 +178,7 @@ const buttonStyle = css`
 
 const labelStyle = css`
   display: inline-flex;
+  min-height: var(--line-height);
   align-items: center;
   gap: calc(var(--font-size) / 2);
 `;
@@ -180,23 +186,63 @@ const labelStyle = css`
 /**
  * Types
  */
-export interface SegmentedControlOptionProps {
-  value: string;
+export interface SegmentedControlOptionProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
+
+  /**
+   * The value of the option
+   */
+  value: string;
+
+  /**
+   * Toggles whether the option is disabled. Defaults to `false`
+   */
   disabled?: boolean;
+
+  /**
+   * Render the option wrapped in another component. Typically used for router `Link` components.
+   *
+   * Default: `div`
+   */
   as?: any;
-  className?: string;
-  id?: string;
-  size?: Size;
-  darkMode?: boolean;
-  _name?: string;
-  _checked?: boolean;
-  _focused?: boolean;
-  _index: number;
-  _followFocus?: boolean;
+
+  /**
+   * Identifies the element(s) whose contents/presence is controlled by the segmented control.
+   *
+   * Required as a prop on the control, or on each individual option.
+   */
   'aria-controls'?: string;
+
+  /**
+   * Styling prop
+   */
+  className?: string;
+
+  /**
+   * Internal. A unique identifier for the option
+   */
+  _id?: string;
+
+  /**
+   * Internal. Identifies whether the option is checked.
+   */
+  _checked?: boolean;
+
+  /**
+   * Internal. Identifies whether the option has focus
+   */
+  _focused?: boolean;
+
+  /**
+   * Internal. The index of the option
+   */
+  _index?: number;
+
+  /**
+   * Internal. Calls the onChange callback
+   */
   _onClick?: (value: string) => void;
-  [key: string]: any;
 }
 
 /**
@@ -213,21 +259,17 @@ const SegmentedControlOption = React.forwardRef<
       disabled = false,
       as,
       className,
-      id,
-      size = 'default',
-      darkMode = false,
-      _onClick,
-      _name: name,
+      'aria-controls': ariaControls,
+      _id: id,
       _checked: checked,
       _focused: focused,
       _index: index,
-      _followFocus: followFocus,
-      'aria-controls': ariaControls,
+      _onClick,
       ...rest
     }: SegmentedControlOptionProps,
     forwardedRef,
   ) => {
-    const mode = darkMode ? 'dark' : 'light';
+    const { size, mode, followFocus } = useContext(SegmentedControlContext);
 
     const onClick = () => {
       _onClick?.(value);
@@ -256,7 +298,10 @@ const SegmentedControlOption = React.forwardRef<
         ref={forwardedRef}
         data-lg-checked={checked}
       >
-        <InteractionRing darkMode={darkMode} className={interactionRingStyle}>
+        <InteractionRing
+          darkMode={mode === 'dark'}
+          className={interactionRingStyle}
+        >
           <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
             <button
               role="tab"

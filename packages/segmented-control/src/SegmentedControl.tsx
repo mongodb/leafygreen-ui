@@ -3,11 +3,10 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { Overline } from '@leafygreen-ui/typography';
 import useDynamicRefs from './useDynamicRefs';
 import { Size, Mode } from './types';
-import { render } from 'react-dom';
+import { once } from 'lodash';
 
 const selectionIndicatorDataAttr = createDataProp('selection-indicator');
 
@@ -157,22 +156,69 @@ const selectionIndicatorStyle = ({
 /**
  * Types
  */
-export interface SegmentedControlProps {
+
+interface SCContext {
+  size: Size;
+  mode: Mode;
+  name: string;
+  followFocus: boolean;
+}
+export const SegmentedControlContext = React.createContext<SCContext>({
+  size: 'default',
+  mode: 'light',
+  name: '',
+  followFocus: true,
+});
+
+export interface SegmentedControlProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   children: React.ReactNode;
-  name?: string;
+
+  /**
+   * Defines the size of the segmented control. Can be either `small`, `default`, or `large`
+   */
   size?: Size;
+
+  /**
+   * Toggles dark mode
+   */
   darkMode?: boolean;
+
+  /**
+   * Defines the default, or initial value of the component. Ignored if `value` is also provided.
+   */
   defaultValue?: string;
+
+  /**
+   * Controls the value of the component.
+   * If provided, you must update the value in the `onChange` method,
+   * or other user actions (such as routing)
+   */
   value?: string;
-  onChange?: (value: string) => void;
-  className?: string;
+
+  /**
+   * A text label to the left of the segmented control. Sets the `name` prop if none is provided.
+   */
   label?: string;
+
+  /**
+   * Identifies the segmented control group to screen readers. Auto-generated if no `name` or `label` is provided.
+   *
+   * It's recommended for accessability to set this to a meaningful value.
+   */
+  name?: string;
+
+  /**
+   * Callback that gets called when a user makes a new selection.
+   */
+  onChange?: (value: string) => void;
+
   /**
    * Defines whether the selection should automatically follow focus.
    * If set to true, the arrow keys can be used to switch selection,
    * otherwise a keyboard user will need to press enter to make a selection.
    *
-   * default: `false`
+   * Default: `true`
    */
   followFocus?: boolean;
 
@@ -182,6 +228,11 @@ export interface SegmentedControlProps {
    * Required as a prop on the control, or on each individual option.
    */
   'aria-controls'?: string;
+
+  /**
+   * Styling prop
+   */
+  className?: string;
 }
 
 /**
@@ -201,7 +252,7 @@ const SegmentedControl = React.forwardRef<
     onChange,
     className,
     label,
-    followFocus,
+    followFocus = true,
     'aria-controls': ariaControls,
     ...rest
   }: SegmentedControlProps,
@@ -213,7 +264,10 @@ const SegmentedControl = React.forwardRef<
 
   const mode = darkMode ? 'dark' : 'light';
 
-  const name = useIdAllocator({ prefix: 'segmented-control', id: nameProp });
+  const name = useIdAllocator({
+    prefix: 'segmented-control',
+    id: nameProp ?? label,
+  });
 
   // If a value is given, then it's controlled
   const [isControlled, setIsControlled] = useState(controlledValue != null);
@@ -264,16 +318,20 @@ const SegmentedControl = React.forwardRef<
     () =>
       React.Children.map(children, (child, index) => {
         if (!isComponentType(child, 'SegmentedControlOption')) {
-          console.error(`${child} is not a SegmentedControlOption`);
+          errorOnce(
+            `Error in Segmented Control: ${child} is not a SegmentedControlOption`,
+          );
           return child;
         }
 
         // Ensure `aria-controls` is set
         if (!ariaControls && !child.props['aria-controls']) {
-          console.error(
+          warnOnce(
             `The property \`aria-controls\` is required on each Segmented Control option, or on the Segmented Control parent.`,
           );
         }
+
+        const _id = child.props.id ?? `${name}-${index}`;
 
         const _checked: boolean = isControlled
           ? child.props.value === controlledValue || !!child.props.checked
@@ -282,14 +340,10 @@ const SegmentedControl = React.forwardRef<
         const _focused: boolean = child.props.value === focusedOptionValue;
 
         return React.cloneElement(child, {
-          id: child.props.id ?? `${name}-${index}`,
-          darkMode,
-          size,
+          _id,
           _checked,
           _focused,
-          _name: name,
           _index: index,
-          _followFocus: followFocus,
           'aria-controls': child.props['aria-controls'] ?? ariaControls,
           _onClick: updateValue,
           ref: setRef(`${name}-${index}`),
@@ -302,9 +356,6 @@ const SegmentedControl = React.forwardRef<
       internalValue,
       focusedOptionValue,
       name,
-      darkMode,
-      size,
-      followFocus,
       ariaControls,
       updateValue,
       setRef,
@@ -414,30 +465,35 @@ const SegmentedControl = React.forwardRef<
    * Return
    */
   return (
-    <div className={cx(wrapperStyle, className)} {...rest}>
-      {label && <Overline className={labelStyle[mode]}>{label}</Overline>}
+    <SegmentedControlContext.Provider value={{ size, mode, name, followFocus }}>
+      <div className={cx(wrapperStyle, className)} {...rest}>
+        {label && <Overline className={labelStyle[mode]}>{label}</Overline>}
 
-      <div
-        role="tablist"
-        aria-label={name}
-        aria-owns={childrenIdList}
-        className={cx(frameStyle({ mode, size }))}
-        ref={forwardedRef}
-        onKeyDownCapture={handleKeyDown}
-      >
-        {renderedChildren}
         <div
-          {...selectionIndicatorDataAttr.prop}
-          className={cx(
-            selectionIndicatorStyle({ mode, size }),
-            selectionStyleDynamic,
-          )}
-        />
+          role="tablist"
+          aria-label={name}
+          aria-owns={childrenIdList}
+          className={cx(frameStyle({ mode, size }))}
+          ref={forwardedRef}
+          onKeyDownCapture={handleKeyDown}
+        >
+          {renderedChildren}
+          <div
+            {...selectionIndicatorDataAttr.prop}
+            className={cx(
+              selectionIndicatorStyle({ mode, size }),
+              selectionStyleDynamic,
+            )}
+          />
+        </div>
       </div>
-    </div>
+    </SegmentedControlContext.Provider>
   );
 });
 
 SegmentedControl.displayName = 'SegmentedControl';
 
 export default SegmentedControl;
+
+const errorOnce = once(console.error);
+const warnOnce = once(console.warn);

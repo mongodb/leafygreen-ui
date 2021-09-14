@@ -15,7 +15,7 @@ storiesOf('SegmentedControl', module)
           name="fruit"
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
-          followFocus={boolean('followFocus', false)}
+          followFocus={boolean('followFocus', true)}
           value={selectedFruit}
           onChange={(value: string) => {
             setSelectedFruit(value);
@@ -47,7 +47,7 @@ storiesOf('SegmentedControl', module)
           defaultValue="fig"
           followFocus={boolean('followFocus', false)}
           onChange={val => console.log(val)}
-          aria-controls="tabpanel"
+          aria-controls=""
         >
           <SegmentedControlOption value="dragonfruit">
             Dragonfruit
@@ -61,10 +61,6 @@ storiesOf('SegmentedControl', module)
 
           <SegmentedControlOption value="grape">Grape</SegmentedControlOption>
         </SegmentedControl>
-        <br />
-        <div tabIndex={0} id="tabpanel" role="tabpanel">
-          Cum sociis natoque penatibus et magnis dis parturient montes.
-        </div>
       </LeafygreenProvider>
     );
   })
@@ -77,8 +73,8 @@ storiesOf('SegmentedControl', module)
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
           defaultValue="json"
-          onChange={e => {
-            console.log(e.target.value);
+          onChange={value => {
+            console.log(value);
           }}
         >
           <SegmentedControlOption value="json">
@@ -104,8 +100,8 @@ storiesOf('SegmentedControl', module)
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
           defaultValue="cloud"
-          onChange={e => {
-            console.log(e.target.value);
+          onChange={value => {
+            console.log(value);
           }}
         >
           <SegmentedControlOption value="cloud">
