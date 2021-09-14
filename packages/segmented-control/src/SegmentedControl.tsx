@@ -35,7 +35,7 @@ const labelStyle: {
 // The border color is slightly different from the base gray for accessibility reasons
 const selectionBorderColor = '#869499';
 
-const frameStyleFromSize: {
+const frameStyleSize: {
   [key in Size]: string;
 } = {
   small: css`
@@ -55,7 +55,7 @@ const frameStyleFromSize: {
   `,
 };
 
-const frameStyleFromMode: {
+const frameStyleMode: {
   [key in Mode]: string;
 } = {
   light: css`
@@ -74,37 +74,36 @@ const frameStyleFromMode: {
   `,
 };
 
-const frameStyleBase = css`
-  position: relative;
-  display: grid;
-  padding: var(--padding);
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: var(--segment-gap);
-  align-items: center;
-  background-color: var(--background-color);
-  border-radius: var(--radius);
-  border-width: var(--border-width);
-  border-style: solid;
-  border-color: var(--border-color);
+const frameStyle = ({
+  mode = 'light',
+  size = 'default',
+}: {
+  mode: Mode;
+  size: Size;
+}) =>
+  cx(
+    frameStyleSize[size],
+    frameStyleMode[mode],
+    css`
+      position: relative;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: var(--segment-gap);
+      align-items: center;
+      padding: var(--padding);
+      border: var(--border-width) solid var(--border-color);
+      border-radius: var(--radius);
+      background-color: var(--background-color);
+      box-shadow: var(--inner-shadow), var(--outer-shadow);
 
-  &:after {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-    border-radius: var(--radius);
-    box-shadow: var(--inner-shadow), var(--outer-shadow);
-    z-index: 2;
-    pointer-events: none;
-  }
+      &:focus {
+        outline: none;
+      }
+    `,
+  );
 
-  &:focus {
-    outline: none;
-  }
-`;
-
-const indicatorStyleFromSize: {
+const indicatorStyleSize: {
   [key in Size]: string;
 } = {
   small: css`
@@ -118,7 +117,7 @@ const indicatorStyleFromSize: {
   `,
 };
 
-const indicatorStyleFromMode: {
+const indicatorStyleMode: {
   [key in Mode]: string;
 } = {
   light: css`
@@ -131,19 +130,29 @@ const indicatorStyleFromMode: {
   `,
 };
 
-const selectionIndicatorBase = css`
-  position: absolute;
-  height: var(--indicator-height);
-  /* TODO - fix the shadow overhang over the frame */
-  box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
-  transition: transform 150ms ease-in-out;
-  z-index: 0;
-  border-radius: 4px;
-  border-width: 1px;
-  border-style: solid;
-  background-color: var(--indicator-background-color);
-  border-color: var(--indicator-border-color);
-`;
+const selectionIndicatorStyle = ({
+  mode = 'light',
+  size = 'default',
+}: {
+  mode: Mode;
+  size: Size;
+}) =>
+  cx(
+    indicatorStyleSize[size],
+    indicatorStyleMode[mode],
+    css`
+      position: absolute;
+      height: var(--indicator-height);
+      z-index: 0;
+      box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
+      border-radius: 4px;
+      border-width: 1px;
+      border-style: solid;
+      background-color: var(--indicator-background-color);
+      border-color: var(--indicator-border-color);
+      transition: transform 150ms ease-in-out;
+    `,
+  );
 
 /**
  * Types
@@ -412,11 +421,7 @@ const SegmentedControl = React.forwardRef<
         role="tablist"
         aria-label={name}
         aria-owns={childrenIdList}
-        className={cx(
-          frameStyleBase,
-          frameStyleFromSize[size],
-          frameStyleFromMode[mode],
-        )}
+        className={cx(frameStyle({ mode, size }))}
         ref={forwardedRef}
         onKeyDownCapture={handleKeyDown}
       >
@@ -424,9 +429,7 @@ const SegmentedControl = React.forwardRef<
         <div
           {...selectionIndicatorDataAttr.prop}
           className={cx(
-            selectionIndicatorBase,
-            indicatorStyleFromSize[size],
-            indicatorStyleFromMode[mode],
+            selectionIndicatorStyle({ mode, size }),
             selectionStyleDynamic,
           )}
         />

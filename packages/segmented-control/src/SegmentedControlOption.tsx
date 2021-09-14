@@ -9,97 +9,113 @@ import { useEffect } from 'react';
 /**
  * Styles
  */
+
+const optionMode = (mode: Mode) => {
+  switch (mode) {
+    case 'light':
+      return css`
+        --base-text-color: ${uiColors.gray.dark1};
+        --base-background-color: transparent;
+        --base-shadow-color: transparent;
+        --hover-text-color: ${uiColors.gray.dark3};
+        --hover-background-color: ${uiColors.white};
+        --active-text-color: ${uiColors.gray.dark3};
+        --disabled-text-color: ${uiColors.gray.light1};
+      `;
+    case 'dark':
+      return css`
+        --base-text-color: ${uiColors.gray.light1};
+        --base-background-color: transparent;
+        --base-shadow-color: transparent;
+        --hover-text-color: ${uiColors.gray.light2};
+        --hover-background-color: ${uiColors.gray.dark2};
+        --active-text-color: ${uiColors.white};
+        --disabled-text-color: ${uiColors.gray.dark1};
+      `;
+  }
+};
+
+const optionSize = (size: Size) => {
+  switch (size) {
+    case 'small':
+      return css`
+        --font-size: 12px;
+        --line-height: 16px;
+        --padding-block: 3px;
+        --padding-inline: 12px;
+        --text-transform: uppercase;
+        --font-weight: bold;
+        --divider-height: 12px;
+      `;
+    case 'large':
+      return css`
+        --font-size: 16px;
+        --line-height: 28px;
+        --padding-block: 4px;
+        --padding-inline: 12px;
+        --text-transform: none;
+        --font-weight: normal;
+        --divider-height: 20px;
+      `;
+    case 'default':
+      return css`
+        --font-size: 14px;
+        --line-height: 24px;
+        --padding-block: 3px;
+        --padding-inline: 12px;
+        --text-transform: none;
+        --font-weight: normal;
+        --divider-height: 18px;
+      `;
+  }
+};
+
 const optionStyle = ({
   mode = 'light',
   size = 'default',
 }: {
   mode: Mode;
   size: Size;
-  index: number;
-}) => css`
-  --padding-inline: 12px;
+}) =>
+  cx(
+    optionMode(mode),
+    optionSize(size),
+    css`
+      position: relative;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
 
-  ${size === 'small' &&
-  css`
-    --font-size: 12px;
-    --line-height: 16px;
-    --padding-block: 3px;
-    --text-transform: uppercase;
-    --font-weight: bold;
-    --divider-height: 12px;
-  `}
-  ${size === 'default' &&
-  css`
-    --font-size: 14px;
-    --line-height: 24px;
-    --padding-block: 3px;
-    --text-transform: none;
-    --font-weight: normal;
-    --divider-height: 18px;
-  `}
-  ${size === 'large' &&
-  css`
-    --font-size: 16px;
-    --line-height: 28px;
-    --padding-block: 4px;
-    --text-transform: none;
-    --font-weight: normal;
-    --divider-height: 20px;
-  `}
+      --divider-background-color: ${uiColors.gray.light1};
 
-  ${mode === 'light' &&
-  css`
-    --base-text-color: ${uiColors.gray.dark1};
-    --base-background-color: transparent;
-    --base-shadow-color: transparent;
-    --hover-text-color: ${uiColors.gray.dark3};
-    --hover-background-color: ${uiColors.white};
-    --active-text-color: ${uiColors.gray.dark3};
-    --disabled-text-color: ${uiColors.gray.light1};
-  `}
-  ${mode === 'dark' &&
-  css`
-    --base-text-color: ${uiColors.gray.light1};
-    --base-background-color: transparent;
-    --base-shadow-color: transparent;
-    --hover-text-color: ${uiColors.gray.light2};
-    --hover-background-color: ${uiColors.gray.dark2};
-    --active-text-color: ${uiColors.white};
-    --disabled-text-color: ${uiColors.gray.dark1};
-  `}
+      &:first-child,
+      &[data-lg-checked='true'],
+      &[data-lg-checked='true'] + [data-lg-checked='false'] {
+        --divider-background-color: transparent;
+      }
 
-  position: relative;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-
-  --divider-background-color: ${uiColors.gray.light1};
-
-  &:first-child,
-  &[data-lg-checked='true'],
-  &[data-lg-checked='true'] + [data-lg-checked='false'] {
-    --divider-background-color: transparent;
-  }
-
-  /* 
+      /* 
    * Adds the divider line to unselected segments 
    */
-  &:before {
-    --divider-width: 1px;
-    content: '';
-    position: absolute;
-    height: var(--divider-height);
-    width: var(--divider-width);
-    left: calc(0px - (var(--segment-gap) + var(--divider-width)) / 2);
-    top: calc(
-      (var(--line-height) + var(--padding-block) * 2 - var(--divider-height)) /
-        2
-    );
-    transition: background-color 100ms ease-in-out;
-    background-color: var(--divider-background-color);
-  }
-`;
+      &:before {
+        --divider-width: 1px;
+        content: '';
+        position: absolute;
+        height: var(--divider-height);
+        width: var(--divider-width);
+        left: calc(0px - (var(--segment-gap) + var(--divider-width)) / 2);
+        top: calc(
+          (
+              var(--line-height) + var(--padding-block) * 2 -
+                var(--divider-height)
+            ) / 2
+        );
+        transition: background-color 100ms ease-in-out;
+        background-color: var(--divider-background-color);
+      }
+    `,
+  );
 
 const interactionRingStyle = css`
   width: 100%;
@@ -133,17 +149,14 @@ const buttonStyle = css`
   transition: all 100ms ease-in-out;
   text-decoration: none;
   outline: none;
-  border: 2px solid transparent;
-  /* margin-inline: -1px; */
+  border: none;
 
   &:hover {
     color: var(--hover-text-color);
     background-color: var(--hover-background-color);
-    border-color: var(--background-color);
 
     &[aria-selected='true'],
     &:disabled {
-      border-color: transparent;
       background-color: transparent;
     }
   }
@@ -167,11 +180,6 @@ const labelStyle = css`
 /**
  * Types
  */
-
-// Internal “Private” Props
-// _name - the name of the segmented control. Used to group the HTML radio inputs
-// _checked - whether the option is checked. Defined by the parent
-// _onChange - the onChange handler passed in from the SegmentedControl
 export interface SegmentedControlOptionProps {
   value: string;
   children: React.ReactNode;
@@ -244,7 +252,7 @@ const SegmentedControlOption = React.forwardRef<
 
     return (
       <div
-        className={cx(optionStyle({ mode, size, index }), className)}
+        className={cx(optionStyle({ mode, size }), className)}
         ref={forwardedRef}
         data-lg-checked={checked}
       >
@@ -273,20 +281,3 @@ const SegmentedControlOption = React.forwardRef<
 SegmentedControlOption.displayName = 'SegmentedControlOption';
 
 export default SegmentedControlOption;
-
-/**
- * Basic:
- *
- * label
- *  input
- *  span
- *    text
- *
- * Link:
- *
- * label
- *  input
- *  a/Link
- *    span
- *      text
- */
