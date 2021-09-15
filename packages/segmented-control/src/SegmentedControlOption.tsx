@@ -130,6 +130,7 @@ const interactionRingStyle = css`
 `;
 
 const boxStyle = css`
+  width: 100%;
   text-decoration: none;
 `;
 
