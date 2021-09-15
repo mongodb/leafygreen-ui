@@ -79,12 +79,11 @@ const modeStyles = {
 };
 
 const rowStyle = css`
-  border-color: var(--lg-table-row-border-color);
-  border-top-width: 1px;
-  border-top-style: solid;
+  --lg-min-cell-height: 40px;
+  border-top: 1px solid var(--lg-table-row-border-color);
 
   & > td > ${tdInnerDiv.selector} {
-    min-height: 40px;
+    min-height: var(--lg-min-cell-height);
     max-height: unset;
   }
 `;
@@ -94,30 +93,52 @@ const hideRow = css`
 `;
 
 const nestedRowInitialStyle = css`
-  transition: all ${transitionTime}ms ease-in-out;
-  transition-property: border-color, transform, opacity;
   transform-origin: 50% 0%;
   border-color: var(--lg-table-row-border-color);
   opacity: 0;
-  transform: translateY(-10%);
+  transition: ${transitionTime}ms ease-in-out;
+  transition-property: border-color, opacity;
+
+  & > td {
+    transition: ${transitionTime}ms ease-in-out;
+    transition-property: padding-block;
+
+    & > ${tdInnerDiv.selector} {
+      overflow: hidden;
+      transition: ${transitionTime}ms ease-in-out;
+      transition-property: min-height, max-height;
+    }
+  }
+`;
+
+const hiddenRowStyles = css`
+  opacity: 0;
+
+  & > td {
+    padding-block: 0;
+
+    & > ${tdInnerDiv.selector} {
+      min-height: 0px;
+      max-height: 0px;
+    }
+  }
 `;
 
 const transitionStyles: { [key in TransitionStatus]: string } = {
-  entering: css`
-    opacity: 0;
-    transform: translateY(-10px);
-  `,
+  entering: hiddenRowStyles,
   entered: css`
     opacity: 1;
-    transform: translateY(0);
+    & > td {
+      padding-block: 8px;
+
+      & > ${tdInnerDiv.selector} {
+        min-height: var(--lg-min-cell-height);
+        max-height: 1000px; // arbitrary
+      }
+    }
   `,
-  exiting: css`
-    opacity: 0;
-    transform: translateY(-10px);
-  `,
-  exited: css`
-    display: none;
-  `,
+  exiting: hiddenRowStyles,
+  exited: hiddenRowStyles,
   unmounted: ``, // N/A
 };
 
@@ -257,7 +278,11 @@ const Row = React.forwardRef(
                     isAnyAncestorCollapsedProp || !isExpanded,
                   indentLevel: indentLevel + 1,
                   key: `${indexRef.current}-${indentLevel}-${index}`,
-                  className: cx(nestedRowInitialStyle, transitionStyles[state]),
+                  className: cx(
+                    nestedRowInitialStyle,
+                    transitionStyles[state],
+                    `transition-${state}`,
+                  ),
                 });
               }
             })
