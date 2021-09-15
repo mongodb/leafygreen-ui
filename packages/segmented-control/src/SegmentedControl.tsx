@@ -141,6 +141,8 @@ const selectionIndicatorStyle = ({
     indicatorStyleMode[mode],
     css`
       position: absolute;
+      grid-column: 1/2; // position the selector in the grid until it gets positioned
+      width: 100%;
       height: var(--indicator-height);
       z-index: 0;
       box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
@@ -456,6 +458,7 @@ const SegmentedControl = React.forwardRef<
       if (selectedElement) {
         const { offsetWidth: width, offsetLeft: left } = selectedElement;
         setSelectionStyleDynamic(css`
+          grid-column: unset;
           width: ${width}px;
           transform: translateX(${left}px);
         `);
