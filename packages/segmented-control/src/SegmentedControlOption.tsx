@@ -88,6 +88,7 @@ const optionStyle = ({
       width: 100%;
       align-items: center;
       justify-content: center;
+      z-index: 3;
 
       --divider-background-color: ${uiColors.gray.light1};
 
@@ -98,8 +99,8 @@ const optionStyle = ({
       }
 
       /* 
-   * Adds the divider line to unselected segments 
-   */
+      * Adds the divider line to unselected segments 
+      */
       &:before {
         --divider-width: 1px;
         content: '';
@@ -159,12 +160,6 @@ const buttonStyle = css`
 
   &:hover {
     color: var(--hover-text-color);
-    background-color: var(--hover-background-color);
-
-    &[aria-selected='true'],
-    &:disabled {
-      background-color: transparent;
-    }
   }
 
   &[aria-selected='true'] {
@@ -245,6 +240,8 @@ export interface SegmentedControlOptionProps
    */
   _onClick?: (value: string) => void;
 
+  _onHover?: (hovered: boolean) => void;
+
   /**
    * Any other props
    */
@@ -271,6 +268,7 @@ const SegmentedControlOption = React.forwardRef<
       _focused: focused,
       _index: index,
       _onClick,
+      _onHover,
       ...rest
     }: SegmentedControlOptionProps,
     forwardedRef,
@@ -279,6 +277,14 @@ const SegmentedControlOption = React.forwardRef<
 
     const onClick = () => {
       _onClick?.(value);
+    };
+
+    const onMouseEnter = () => {
+      _onHover?.(true);
+    };
+
+    const onMouseLeave = () => {
+      _onHover?.(false);
     };
 
     const didComponentMount = useRef(false);
@@ -319,6 +325,8 @@ const SegmentedControlOption = React.forwardRef<
               className={buttonStyle}
               ref={buttonRef}
               onClick={onClick}
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
             >
               <span className={labelStyle}>{children}</span>
             </button>

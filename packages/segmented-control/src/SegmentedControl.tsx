@@ -9,6 +9,7 @@ import { Size, Mode } from './types';
 import { once } from 'lodash';
 
 const selectionIndicatorDataAttr = createDataProp('selection-indicator');
+const hoverIndicatorDataAttr = createDataProp('hover-indicator');
 
 /**
  * Styles
@@ -39,18 +40,21 @@ const frameStyleSize: {
 } = {
   small: css`
     --segment-gap: 1px;
-    --padding: 0px;
-    --radius: 4px;
+    --frame-padding: 0px;
+    --frame-border-radius: 4px;
+    --indicator-height: 100%;
   `,
   default: css`
     --segment-gap: 5px;
-    --padding: 3px;
-    --radius: 6px;
+    --frame-padding: 3px;
+    --frame-border-radius: 6px;
+    --indicator-height: calc(100% - 2 * var(--frame-padding));
   `,
   large: css`
     --segment-gap: 5px;
-    --padding: 3px;
-    --radius: 6px;
+    --frame-padding: 3px;
+    --frame-border-radius: 6px;
+    --indicator-height: calc(100% - 2 * var(--frame-padding));
   `,
 };
 
@@ -63,6 +67,9 @@ const frameStyleMode: {
     --border-width: 0px;
     --inner-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3) inset;
     --outer-shadow: 0px 1px 1px #e7eeec;
+    --hover-background-color: ${uiColors.white};
+    --indicator-background-color: ${uiColors.gray.light2};
+    --indicator-border-color: ${selectionBorderColor};
   `,
   dark: css`
     --background-color: ${uiColors.gray.dark3};
@@ -70,6 +77,9 @@ const frameStyleMode: {
     --border-width: 1px;
     --inner-shadow: unset;
     --outer-shadow: unset;
+    --hover-background-color: ${uiColors.gray.dark2};
+    --indicator-background-color: ${uiColors.gray.dark1};
+    --indicator-border-color: ${uiColors.gray.base};
   `,
 };
 
@@ -90,70 +100,63 @@ const frameStyle = ({
       grid-auto-columns: 1fr;
       gap: var(--segment-gap);
       align-items: center;
-      padding: var(--padding);
+      padding: var(--frame-padding);
       border: var(--border-width) solid var(--border-color);
-      border-radius: var(--radius);
+      border-radius: var(--frame-border-radius);
       background-color: var(--background-color);
-      box-shadow: var(--inner-shadow), var(--outer-shadow);
 
       &:focus {
         outline: none;
       }
+
+      // Frame shadow
+      &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        box-shadow: var(--inner-shadow), var(--outer-shadow);
+        z-index: 1;
+        pointer-events: none;
+      }
     `,
   );
 
-const indicatorStyleSize: {
-  [key in Size]: string;
-} = {
-  small: css`
-    --indicator-height: 100%;
-  `,
-  default: css`
-    --indicator-height: calc(100% - 2 * var(--padding));
-  `,
-  large: css`
-    --indicator-height: calc(100% - 2 * var(--padding));
-  `,
-};
+const selectionIndicatorStyle = css`
+  position: absolute;
+  grid-column: 1/2; // position the selector in the grid until it gets positioned
+  width: 100%;
+  height: var(--indicator-height);
+  z-index: 2;
+  box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  background-color: var(--indicator-background-color);
+  border-color: var(--indicator-border-color);
+  transition: transform 150ms ease-in-out;
+`;
 
-const indicatorStyleMode: {
-  [key in Mode]: string;
-} = {
-  light: css`
-    --indicator-background-color: ${uiColors.gray.light2};
-    --indicator-border-color: ${selectionBorderColor};
-  `,
-  dark: css`
-    --indicator-background-color: ${uiColors.gray.dark1};
-    --indicator-border-color: ${uiColors.gray.base};
-  `,
-};
+const hoverIndicatorStyle = css`
+  position: absolute;
+  height: var(--indicator-height);
+  width: 100%;
+  grid-column: unset;
+  border-radius: 4px;
+  background-color: var(--hover-background-color);
+  z-index: 0;
+  opacity: 0;
+`;
 
-const selectionIndicatorStyle = ({
-  mode = 'light',
-  size = 'default',
-}: {
-  mode: Mode;
-  size: Size;
-}) =>
-  cx(
-    indicatorStyleSize[size],
-    indicatorStyleMode[mode],
-    css`
-      position: absolute;
-      grid-column: 1/2; // position the selector in the grid until it gets positioned
-      width: 100%;
-      height: var(--indicator-height);
-      z-index: 0;
-      box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
-      border-radius: 4px;
-      border-width: 1px;
-      border-style: solid;
-      background-color: var(--indicator-background-color);
-      border-color: var(--indicator-border-color);
-      transition: transform 150ms ease-in-out;
-    `,
-  );
+const getDynamicHoverStyle = (index: number | null) => {
+  if (index != null) {
+    return css`
+      opacity: 1;
+      grid-column: ${index + 1} / ${index + 2};
+    `;
+  }
+};
 
 /**
  * Types
@@ -350,6 +353,10 @@ const SegmentedControl = React.forwardRef<
           _index: index,
           'aria-controls': child.props['aria-controls'] ?? ariaControls,
           _onClick: updateValue,
+          _onHover: (hovered: boolean) => {
+            if (hovered) setHoveredIndex(index);
+            else setHoveredIndex(null);
+          },
           ref: setRef(`${name}-${index}`),
         });
       }),
@@ -378,6 +385,9 @@ const SegmentedControl = React.forwardRef<
 
     return '';
   }, [renderedChildren]);
+
+  // Keep track of which element is hovered
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   // Keep track of the index of the selected value
   const selectedIndex = useMemo(
@@ -466,6 +476,10 @@ const SegmentedControl = React.forwardRef<
     }
   }, [selectedIndex, getRef, name, renderedChildren]);
 
+  const hoverStyleDynamic = useMemo(() => {
+    return getDynamicHoverStyle(hoveredIndex);
+  }, [hoveredIndex]);
+
   /**
    * Return
    */
@@ -485,10 +499,11 @@ const SegmentedControl = React.forwardRef<
           {renderedChildren}
           <div
             {...selectionIndicatorDataAttr.prop}
-            className={cx(
-              selectionIndicatorStyle({ mode, size }),
-              selectionStyleDynamic,
-            )}
+            className={cx(selectionIndicatorStyle, selectionStyleDynamic)}
+          />
+          <div
+            {...hoverIndicatorDataAttr.prop}
+            className={cx(hoverIndicatorStyle, hoverStyleDynamic)}
           />
         </div>
       </div>
