@@ -5,6 +5,7 @@ import { LGGlyph } from '../types';
 import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
 import Apps from './Apps.svg';
+import Array from './Array.svg';
 import ArrowDown from './ArrowDown.svg';
 import ArrowLeft from './ArrowLeft.svg';
 import ArrowRight from './ArrowRight.svg';
@@ -32,6 +33,7 @@ import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
 import CurlyBraces from './CurlyBraces.svg';
 import Database from './Database.svg';
+import Diagram from './Diagram.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
@@ -44,6 +46,7 @@ import FullScreenExit from './FullScreenExit.svg';
 import Folder from './Folder.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
+import Home from './Home.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
@@ -52,11 +55,14 @@ import Lock from './Lock.svg';
 import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
+import Minus from './Minus.svg';
 import NotAllowed from './NotAllowed.svg';
 import OpenNewTab from './OpenNewTab.svg';
+import Pause from './Pause.svg';
 import Person from './Person.svg';
 import PersonGroup from './PersonGroup.svg';
 import PersonWithLock from './PersonWithLock.svg';
+import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
@@ -68,6 +74,7 @@ import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import Stitch from './Stitch.svg';
 import Support from './Support.svg';
+import Table from './Table.svg';
 import TimeSeries from './TimeSeries.svg';
 import Trash from './Trash.svg';
 import University from './University.svg';
@@ -86,6 +93,7 @@ const glyphs = {
   ActivityFeed,
   AddFile,
   Apps,
+  Array,
   ArrowDown,
   ArrowLeft,
   ArrowRight,
@@ -113,6 +121,7 @@ const glyphs = {
   CreditCard,
   CurlyBraces,
   Database,
+  Diagram,
   Download,
   Edit,
   Ellipsis,
@@ -125,6 +134,7 @@ const glyphs = {
   Folder,
   GlobeAmericas,
   GovernmentBuilding,
+  Home,
   ImportantWithCircle,
   InfoWithCircle,
   InviteUser,
@@ -133,11 +143,14 @@ const glyphs = {
   MagnifyingGlass,
   Megaphone,
   Menu,
+  Minus,
   NotAllowed,
   OpenNewTab,
+  Pause,
   Person,
   PersonGroup,
   PersonWithLock,
+  Play,
   Plus,
   PlusWithCircle,
   QuestionMarkWithCircle,
@@ -149,6 +162,7 @@ const glyphs = {
   SortDescending,
   Stitch,
   Support,
+  Table,
   TimeSeries,
   Trash,
   University,

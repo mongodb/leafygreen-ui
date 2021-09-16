@@ -1,5 +1,19 @@
 # @leafygreen-ui/tooltip
 
+## 6.3.1
+
+### Patch Changes
+
+- ddb50977: Fixes a bug where the event object was not accessible in the scope of a Tooltip triger element's `onClick` handler. Also preemptively ensures the same issue does not occur within other handlers on a Tooltip trigger
+- Updated dependencies [f6e5655a]
+- Updated dependencies [03388ff2]
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/icon@11.3.0
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/popover@7.2.2
+  - @leafygreen-ui/tokens@0.5.3
+
 ## 6.3.0
 
 ### Minor Changes
