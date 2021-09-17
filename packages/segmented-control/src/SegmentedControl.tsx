@@ -177,6 +177,9 @@ export const SegmentedControlContext = React.createContext<SCContext>({
 
 export interface SegmentedControlProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /**
+   * Children must be SegmentedControlOptions
+   */
   children: React.ReactNode;
 
   /**
@@ -214,11 +217,6 @@ export interface SegmentedControlProps
   name?: string;
 
   /**
-   * Callback that gets called when a user makes a new selection.
-   */
-  onChange?: (value: string) => void;
-
-  /**
    * Defines whether the selection should automatically follow focus.
    * If set to true, the arrow keys can be used to switch selection,
    * otherwise a keyboard user will need to press enter to make a selection.
@@ -233,6 +231,11 @@ export interface SegmentedControlProps
    * Required as a prop on the control, or on each individual option.
    */
   'aria-controls'?: string;
+
+  /**
+   * Callback that gets called when a user makes a new selection.
+   */
+  onChange?: (value: string) => void;
 
   /**
    * Styling prop

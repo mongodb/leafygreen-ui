@@ -184,6 +184,9 @@ const labelStyle = css`
  */
 export interface SegmentedControlOptionProps
   extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Can be text and/or an icon element
+   */
   children: React.ReactNode;
 
   /**
