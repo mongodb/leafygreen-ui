@@ -240,6 +240,9 @@ export interface SegmentedControlOptionProps
    */
   _onClick?: (value: string) => void;
 
+  /**
+   * Internal. Fires on mouse in and out
+   */
   _onHover?: (hovered: boolean) => void;
 
   /**
