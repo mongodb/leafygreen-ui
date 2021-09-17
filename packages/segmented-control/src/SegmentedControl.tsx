@@ -293,6 +293,19 @@ const SegmentedControl = React.forwardRef<
     defaultValue ?? controlledValue,
   );
 
+  // When the value changes, update the focus tracker
+  useEffect(() => {
+    setFocusedOptionValue(controlledValue ?? internalValue);
+  }, [controlledValue, internalValue]);
+
+  const updateValue = useCallback(
+    (value: string) => {
+      setInternalValue(value);
+      onChange?.(value);
+    },
+    [onChange],
+  );
+
   // Run through the children and determine whether this is controlled,
   // and update the default value if needed
   useEffect(() => {
@@ -314,14 +327,6 @@ const SegmentedControl = React.forwardRef<
       }
     });
   }, [children, defaultValue]);
-
-  const updateValue = useCallback(
-    (value: string) => {
-      setInternalValue(value);
-      onChange?.(value);
-    },
-    [onChange],
-  );
 
   // Add internal props to children passed in
   const renderedChildren: React.ReactNode = useMemo(
@@ -349,6 +354,11 @@ const SegmentedControl = React.forwardRef<
 
         const _focused: boolean = child.props.value === focusedOptionValue;
 
+        const _onHover = (hovered: boolean) => {
+          if (hovered) setHoveredIndex(index);
+          else setHoveredIndex(null);
+        };
+
         return React.cloneElement(child, {
           _id,
           _checked,
@@ -356,10 +366,7 @@ const SegmentedControl = React.forwardRef<
           _index: index,
           'aria-controls': child.props['aria-controls'] ?? ariaControls,
           _onClick: updateValue,
-          _onHover: (hovered: boolean) => {
-            if (hovered) setHoveredIndex(index);
-            else setHoveredIndex(null);
-          },
+          _onHover,
           ref: setRef(`${name}-${index}`),
         });
       }),
@@ -404,11 +411,6 @@ const SegmentedControl = React.forwardRef<
       ),
     [controlledValue, isControlled, renderedChildren, internalValue],
   );
-
-  // When the value changes, update the focus tracker
-  useEffect(() => {
-    setFocusedOptionValue(controlledValue ?? internalValue);
-  }, [controlledValue, internalValue]);
 
   // Keep track of the index of the focused value
   const focusedIndex = useMemo(
