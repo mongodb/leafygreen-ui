@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box from '@leafygreen-ui/box';
 import { Size, Mode } from './types';
 import { useEffect } from 'react';
@@ -280,6 +281,7 @@ const SegmentedControlOption = React.forwardRef<
     forwardedRef,
   ) => {
     const { size, mode, followFocus } = useContext(SegmentedControlContext);
+    const { usingKeyboard } = useUsingKeyboardContext();
 
     const onClick = () => {
       _onClick?.(value);
@@ -297,8 +299,8 @@ const SegmentedControlOption = React.forwardRef<
     const buttonRef = useRef<HTMLButtonElement>(null);
     useEffect(() => {
       if (didComponentMount.current) {
-        if (focused) {
-          // Respond in the DOM when this option is given focus
+        if (usingKeyboard && focused) {
+          // Respond in the DOM when this option is given focus via keyboard
           buttonRef?.current?.focus();
 
           if (followFocus) {
@@ -308,7 +310,7 @@ const SegmentedControlOption = React.forwardRef<
         }
       }
       didComponentMount.current = true;
-    }, [focused, followFocus, forwardedRef]);
+    }, [focused, followFocus, forwardedRef, usingKeyboard]);
 
     return (
       <div

@@ -18,8 +18,8 @@ storiesOf('SegmentedControl', module)
           followFocus={boolean('followFocus', true)}
           value={selectedFruit}
           onChange={(value: string) => {
+            console.log('Setting value to', value);
             setSelectedFruit(value);
-            console.log(value);
           }}
         >
           <SegmentedControlOption value="apple">Apple</SegmentedControlOption>
