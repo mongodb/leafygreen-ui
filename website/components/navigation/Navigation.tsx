@@ -48,6 +48,7 @@ const components: Array<Component> = [
   'portal',
   'radio-box-group',
   'radio-group',
+  'segmented-control',
   'select',
   'side-nav',
   'stepper',
