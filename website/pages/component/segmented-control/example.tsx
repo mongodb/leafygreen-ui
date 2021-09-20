@@ -49,7 +49,6 @@ export default function SelectLiveExample() {
           name="fruit"
           size={size}
           darkMode={darkMode}
-          defaultValue="fig"
           followFocus={followFocus}
           onChange={val => console.log(val)}
           aria-controls=""
