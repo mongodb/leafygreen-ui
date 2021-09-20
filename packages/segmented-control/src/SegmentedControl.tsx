@@ -4,9 +4,11 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline } from '@leafygreen-ui/typography';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import useDynamicRefs from './useDynamicRefs';
 import { Size, Mode } from './types';
 import { once } from 'lodash';
+import { useEffectOnceOnMount } from './useEffectOnceOnMount';
 
 const selectionIndicatorDataAttr = createDataProp('selection-indicator');
 const hoverIndicatorDataAttr = createDataProp('hover-indicator');
@@ -255,7 +257,7 @@ const SegmentedControl = React.forwardRef<
     name: nameProp,
     size = 'default',
     darkMode = false,
-    defaultValue = '',
+    defaultValue,
     value: controlledValue,
     onChange,
     className,
@@ -267,6 +269,7 @@ const SegmentedControl = React.forwardRef<
   forwardedRef,
 ) {
   // TODO log warning if defaultValue is set but does not match any child value
+  const { usingKeyboard } = useUsingKeyboardContext();
 
   const [getRef, setRef] = useDynamicRefs<HTMLInputElement>();
 
@@ -278,55 +281,48 @@ const SegmentedControl = React.forwardRef<
   });
 
   // If a value is given, then it's controlled
-  const [isControlled, setIsControlled] = useState(controlledValue != null);
-
-  useEffect(() => {
-    setIsControlled(controlledValue != null);
-  }, [controlledValue]);
+  const isControlled = useMemo(() => controlledValue != null, [
+    controlledValue,
+  ]);
 
   // Keep track of the value internally
-  const [internalValue, setInternalValue] = useState<string>(
+  const [internalValue, setInternalValue] = useState<string | undefined>(
     defaultValue ?? controlledValue,
   );
 
-  const [focusedOptionValue, setFocusedOptionValue] = useState<string>(
-    defaultValue ?? controlledValue,
-  );
+  const [focusedOptionValue, setFocusedOptionValue] = useState<
+    string | undefined
+  >(defaultValue ?? controlledValue);
 
-  // When the value changes, update the focus tracker
+  // If no default or controlled value is given, set it to the first option
+  useEffectOnceOnMount(() => {
+    const firstChild = React.Children.toArray(children)[0];
+
+    if (
+      !internalValue &&
+      isComponentType(firstChild, 'SegmentedControlOption')
+    ) {
+      setInternalValue(firstChild.props.value);
+      setFocusedOptionValue(firstChild.props.value);
+    }
+  });
+
+  // When the value changes via click, we update the internal focus tracker so the correct element gets focused on tab press
   useEffect(() => {
-    setFocusedOptionValue(controlledValue ?? internalValue);
-  }, [controlledValue, internalValue]);
+    if (!usingKeyboard) {
+      setFocusedOptionValue(internalValue);
+    }
+  }, [internalValue, usingKeyboard]);
 
   const updateValue = useCallback(
     (value: string) => {
-      setInternalValue(value);
-      onChange?.(value);
-    },
-    [onChange],
-  );
-
-  // Run through the children and determine whether this is controlled,
-  // and update the default value if needed
-  useEffect(() => {
-    React.Children.forEach(children, (child, index) => {
-      if (isComponentType(child, 'SegmentedControlOption')) {
-        // If one of the options has been programatically checked, then it's controlled
-        if (child.props.checked != null) {
-          setIsControlled(true);
-        }
-
-        // If there's no default value given, then we fall back to the first option
-        if (!defaultValue && index === 0) {
-          setInternalValue(child.props.value);
-          setFocusedOptionValue(child.props.value);
-
-          // TODO Potential bug: if `defaultValue` is changed to be falsy between renders,
-          // then the value of the control will change
-        }
+      if (internalValue !== value) {
+        setInternalValue(value);
+        onChange?.(value);
       }
-    });
-  }, [children, defaultValue]);
+    },
+    [internalValue, onChange],
+  );
 
   // Add internal props to children passed in
   const renderedChildren: React.ReactNode = useMemo(
@@ -460,10 +456,7 @@ const SegmentedControl = React.forwardRef<
   };
 
   // Dynamically set the size & position of the selection indicator
-  const [selectionStyleDynamic, setSelectionStyleDynamic] = useState<string>();
-
-  // Update dynamic styles of the selection indicator
-  useEffect(() => {
+  const selectionStyleDynamic = useMemo(() => {
     const selectedRef = getRef(`${name}-${selectedIndex}`);
 
     if (selectedRef && selectedRef.current) {
@@ -472,14 +465,14 @@ const SegmentedControl = React.forwardRef<
 
       if (selectedElement) {
         const { offsetWidth: width, offsetLeft: left } = selectedElement;
-        setSelectionStyleDynamic(css`
+        return css`
           grid-column: unset;
           width: ${width}px;
           transform: translateX(${left}px);
-        `);
+        `;
       }
     }
-  }, [selectedIndex, getRef, name, renderedChildren]);
+  }, [getRef, name, selectedIndex]);
 
   const hoverStyleDynamic = useMemo(() => {
     return getDynamicHoverStyle(hoveredIndex);

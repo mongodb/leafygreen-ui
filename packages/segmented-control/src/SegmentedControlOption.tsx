@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box from '@leafygreen-ui/box';
 import { Size, Mode } from './types';
-import { useEffect } from 'react';
-import { useContext } from 'react';
 import { SegmentedControlContext } from './SegmentedControl';
 
 /**
@@ -310,7 +308,7 @@ const SegmentedControlOption = React.forwardRef<
         }
       }
       didComponentMount.current = true;
-    }, [focused, followFocus, forwardedRef, usingKeyboard]);
+    }, [focused, followFocus, usingKeyboard]);
 
     return (
       <div

@@ -7,7 +7,7 @@ import Icon from '@leafygreen-ui/icon';
 
 storiesOf('SegmentedControl', module)
   .add('Default', () => {
-    const [selectedFruit, setSelectedFruit] = useState('apple');
+    const [selectedFruit, setSelectedFruit] = useState('carrot');
 
     return (
       <LeafygreenProvider>
