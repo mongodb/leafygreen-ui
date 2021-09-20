@@ -1,7 +1,6 @@
 import javascript from 'highlight.js/lib/languages/javascript';
 import typescript from 'highlight.js/lib/languages/typescript';
 import csharp from 'highlight.js/lib/languages/csharp';
-import clike from 'highlight.js/lib/languages/c-like';
 import go from 'highlight.js/lib/languages/go';
 import http from 'highlight.js/lib/languages/http';
 import ini from 'highlight.js/lib/languages/ini';
@@ -27,7 +26,6 @@ export const languageParsers = {
   javascript,
   typescript,
   csharp,
-  clike,
   go,
   http,
   ini,
@@ -57,7 +55,6 @@ export const SupportedLanguages = {
   TS: 'ts', // Typescript alias
   Csharp: 'csharp',
   Cs: 'cs', // C# alias
-  CLike: 'clike',
   Go: 'go',
   Http: 'http',
   Ini: 'ini',
