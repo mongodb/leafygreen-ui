@@ -1,8 +1,22 @@
 import { css } from '@emotion/css';
 import { Body, H2, H3, Link } from '@leafygreen-ui/typography';
 import GuidelineImage from 'components/GuidelineImage';
+import GuidelineImageFrame from 'components/GuidelineImageFrame';
 import { CDN } from 'utils/routes';
 const imagePath = `${CDN}/images/new-guidelines/segmentedController`;
+import IconDo from 'components/icons/IconDo';
+import IconDont from 'components/icons/IconDont';
+const customImageStyle = css`
+  position: relative;
+  width: 700px;
+  height: 333px;
+  margin: 40px 0;
+  background-color: #798c91;
+  border-radius: 10px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+`;
 const usageImageStyle = css`
   width: auto;
   height: 405px;
@@ -10,12 +24,6 @@ const usageImageStyle = css`
 const detailImageStyle = css`
   width: auto;
   height: 110px;
-`;
-const h2 = css`
-  margin: 0.5em 0px;
-`;
-const h3 = css`
-  margin: 0.375em 0px;
 `;
 const h4 = css`
   margin: 0px;
@@ -36,41 +44,21 @@ const ul = css`
   margin: unset;
 `;
 
-<Body>
-  Segmented controls act as a toggle between a current state and related states,
-  often changing the view of information within a single page.{' '}
-</Body>
+Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
 
 <div className={doDontSection}>
-<svg
-  id="check-icon"
-  width="36"
-  height="36"
-  viewBox="0 0 36 36"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    fill-rule="evenodd"
-    clip-rule="evenodd"
-    d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05887 27.9411 0 18 0C8.05887 0 0 8.05887 0 18C0 27.9411 8.05887 36 18 36ZM24.2961 10.0178C25.2707 8.89241 26.9957 8.83057 28.0485 9.88334C28.9997 10.8346 29.0544 12.3591 28.1737 13.3761L16.4151 26.9533C16.2352 27.1899 16.0108 27.3991 15.7451 27.5677C14.5458 28.3283 12.957 27.9726 12.1963 26.7733L7.52014 19.4001C6.75952 18.2008 7.11515 16.612 8.31445 15.8514C9.51375 15.0908 11.1026 15.4464 11.8632 16.6457L14.6925 21.1068L24.2961 10.0178Z"
-    fill="#13AA52"
-  />
-</svg>
+  <IconDo />
+  <div className={listWrapper}>
+    
+    <h4 className={h4}>Segmented controls do</h4>
+    <ul className={ul}>
+      <li>Reduce cognitive load by showing all available options</li>
+      <li>Change states within a page</li>
+      <li>Toggle between two to five options </li>
+    </ul>
+  </div>
 
-<div className={listWrapper}>
-  <h4 className={h4}>Segmented controls do</h4>
-  <ul className={ul}>
-    <li>Reduce cognitive load by showing all available options</li>
-    <li>Change states within a page</li>
-    <li>Toggle between two to five options </li>
-  </ul>
-</div>
-
-  <svg id="cross-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05887 27.9411 0 18 0C8.05888 0 0 8.05887 0 18C0 27.9411 8.05888 36 18 36ZM21.6365 10.7269C22.6408 9.7227 24.2689 9.7227 25.2731 10.7269C26.2773 11.7311 26.2773 13.3592 25.2731 14.3635L21.6365 18L25.2731 21.6365C26.2773 22.6408 26.2773 24.2689 25.2731 25.2731C24.2689 26.2773 22.6408 26.2773 21.6365 25.2731L18 21.6365L14.3635 25.2731C13.3592 26.2773 11.7311 26.2773 10.7269 25.2731C9.7227 24.2689 9.7227 22.6408 10.7269 21.6365L14.3635 18L10.7269 14.3635C9.7227 13.3592 9.7227 11.7311 10.7269 10.7269C11.7311 9.7227 13.3592 9.7227 14.3635 10.7269L18 14.3635L21.6365 10.7269Z" fill="#CF4A22"/>
-  </svg>
-  
+  <IconDont />
   <div className={listWrapper}>
     <h4 className={h4}>Segmented controls don't</h4>
     <ul className={ul}>
@@ -81,102 +69,85 @@ const ul = css`
   </div>
 </div>
 
-<H2 className={h2}>When to use segmented controls</H2>
-<H3 className={h3}>Use segmented controls to toggle views within a page</H3>
-<Body>For example, to switch between code and table views or filter data.</Body>
+# When to use segmented controls
 
-<GuidelineImage
-  imageURL={`${imagePath}/SG-guidelines-1@3x.png`}
-  className={usageImageStyle}
+## Use segmented controls to toggle views within a page
+
+For example, to switch between code and table views or filter data.
+
+<GuidelineImageFrame
+  type="do"
+  imageClassName={css`
+    background-image: url(${imagePath}/SG-guidelines-GIF-1.gif), url(${imagePath}/SG-guidelines-GIF-2.gif);
+    background-position: left center, right center;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 50%, 50%;
+  `}
 />
 
-<H3 className={h3}>Use segmented controls as filter selects</H3>
-<Body>
-  Segmented controls can sometimes act as toggles to encourage comparison
-  between types of options, for example annual and monthly. However, they are
-  not a replacement for radio boxes in other use cases.{' '}
-</Body>
+## Use segmented controls as filter selects
 
-<GuidelineImage
-  imageURL={`${imagePath}/SG-guidelines-2@3x.png`}
-  className={usageImageStyle}
+Segmented controls can sometimes act as toggles to encourage comparison between types of options, for example annual and monthly. However, they are not a replacement for radio boxes in other use cases.{' '}
+
+<GuidelineImageFrame
+  imageUrl={`${imagePath}/SG-guidelines-GIF-3.gif`}
+  type="do"
 />
 
-<H3 className={h3}>Use segmented controls as filter selects</H3>
-<Body>
-  Segmented controls are often used to toggle through view types within a single
-  page. Consider using{' '}
-  <Link href="component/tabs/guidelines/" arrowAppearance="persist">
-    tabs
-  </Link>{' '}
-  to flip between distinct pages.{' '}
-</Body>
+## Use segmented controls as filter selects
 
-<GuidelineImage
-  imageURL={`${imagePath}/SG-guidelines-3@3x.png`}
-  className={usageImageStyle}
+Segmented controls are often used to toggle through view types within a single page. Consider using <Link href="component/tabs/guidelines/" arrowAppearance="persist">tabs</Link> to flip between distinct pages.
+
+<GuidelineImageFrame
+  imageUrl={`${imagePath}/SG-guidelines-GIF-4.gif`}
+  type="dont"
 />
 
-<H3 className={h3}>How to use segmented controls</H3>
-<Body>
-  Segmented controls should contain between two and five equal-width segments.
-  The width of each segment should be equal to the width of the largest segment.
-</Body>
+## How to use segmented controls
+
+Segmented controls should contain between two and five equal-width segments. The width of each segment should be equal to the width of the largest segment.
 
 <GuidelineImage
   imageURL={`${imagePath}/SG-guidelines-4@3x.png`}
   className={detailImageStyle}
 />
 
-<Body>
-  Exactly one segment is always selected. If a state is higher priority,
-  consider making it the default selection.
-</Body>
+Exactly one segment is always selected. If a state is higher priority, consider making it the default selection.
 
 <GuidelineImage
   imageURL={`${imagePath}/SG-guidelines-5@3x.png`}
   className={detailImageStyle}
 />
 
-<Body>
-  Use an external label to avoid including unecessary words into the segments.
-</Body>
+Use an external label to avoid including unecessary words into the segments.
 
 <GuidelineImage
   imageURL={`${imagePath}/SG-guidelines-6@3x.png`}
   className={detailImageStyle}
 />
 
-<Body>
-  Segmented controls shouldn’t be used in place of buttons or radio boxes.
-</Body>
+Segmented controls shouldn’t be used in place of buttons or radio boxes.
 
 <GuidelineImage
   imageURL={`${imagePath}/SG-guidelines-7@3x.png`}
   className={detailImageStyle}
 />
 
-<Body>If using both icons and text, be consistent across each segment.</Body>
+If using both icons and text, be consistent across each segment.
 
 <GuidelineImage
   imageURL={`${imagePath}/SG-guidelines-8@3x.png`}
   className={detailImageStyle}
 />
 
-<Body>
-  Limit copy within the segment to one to two words and prioritize nouns.
-</Body>
+Limit copy within the segment to one to two words and prioritize nouns.
 
 <GuidelineImage
   imageURL={`${imagePath}/SG-guidelines-9@3x.png`}
   className={detailImageStyle}
 />
 
-<Body>
-  Consider discoverability when choosing alignment. Left-aligned components
-  generally more discoverable than right-aligned components, although there may
-  be use cases for each.
-</Body>
+Consider discoverability when choosing alignment. Left-aligned components generally more discoverable than right-aligned components, although there may be use cases for each.
 
 <GuidelineImage
   imageURL={`${imagePath}/SG-guidelines-10@3x.png`}
