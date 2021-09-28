@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  /* @ts-expect-error */
   SegmentedControl,
+  /* @ts-expect-error */
   SegmentedControlOption,
 } from '@leafygreen-ui/segmented-control';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
