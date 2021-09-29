@@ -271,7 +271,7 @@ const SegmentedControl = React.forwardRef<
   // TODO log warning if defaultValue is set but does not match any child value
   const { usingKeyboard } = useUsingKeyboardContext();
 
-  const [getRef, setRef] = useDynamicRefs<HTMLInputElement>();
+  const [getRef, setRef] = useDynamicRefs<HTMLDivElement>();
 
   const mode = darkMode ? 'dark' : 'light';
 
@@ -456,7 +456,8 @@ const SegmentedControl = React.forwardRef<
   };
 
   // Dynamically set the size & position of the selection indicator
-  const selectionStyleDynamic = useMemo(() => {
+  const [selectionStyleDynamic, setSelectionStyle] = useState<string>('');
+  useEffect(() => {
     const selectedRef = getRef(`${name}-${selectedIndex}`);
 
     if (selectedRef && selectedRef.current) {
@@ -465,14 +466,14 @@ const SegmentedControl = React.forwardRef<
 
       if (selectedElement) {
         const { offsetWidth: width, offsetLeft: left } = selectedElement;
-        return css`
+        setSelectionStyle(css`
           grid-column: unset;
           width: ${width}px;
           transform: translateX(${left}px);
-        `;
+        `);
       }
     }
-  }, [getRef, name, selectedIndex]);
+  }, [getRef, name, selectedIndex, renderedChildren]);
 
   const hoverStyleDynamic = useMemo(() => {
     return getDynamicHoverStyle(hoveredIndex);
