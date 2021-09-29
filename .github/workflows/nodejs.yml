@@ -24,10 +24,10 @@ jobs:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-cache-2-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-cache-
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
       - uses: actions/cache@v2
         id: build-cache
         with:
@@ -62,7 +62,7 @@ jobs:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-cache-2-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-cache-
       - run: yarn install --frozen-lockfile
@@ -100,7 +100,7 @@ jobs:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-cache-2-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-cache-
       - run: yarn install --frozen-lockfile
@@ -128,7 +128,7 @@ jobs:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-cache-2-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-cache-
       - run: yarn install --frozen-lockfile
@@ -154,7 +154,7 @@ jobs:
           path: |
             ${{ steps.yarn-cache-dir-path.outputs.dir }}
             **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-cache-2-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-cache-
       - uses: preactjs/compressed-size-action@v1
