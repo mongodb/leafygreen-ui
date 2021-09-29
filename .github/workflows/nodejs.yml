@@ -11,9 +11,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
-          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -52,9 +49,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
-          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -93,9 +87,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
-          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -124,9 +115,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
-          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -153,9 +141,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
-          submodules: 'recursive'
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
