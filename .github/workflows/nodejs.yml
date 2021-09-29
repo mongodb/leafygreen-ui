@@ -27,7 +27,7 @@ jobs:
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-cache-
-      - run: yarn install --frozen-lockfile
+      - run: yarn install
       - uses: actions/cache@v2
         id: build-cache
         with:
