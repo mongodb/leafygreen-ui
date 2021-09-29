@@ -140,6 +140,14 @@ const selectionIndicatorStyle = css`
   transition: transform 150ms ease-in-out;
 `;
 
+const getDynamicSelectionStyle = (width: number, left: number) => {
+  return css`
+    grid-column: unset;
+    width: ${width}px;
+    transform: translateX(${left}px);
+  `;
+};
+
 const hoverIndicatorStyle = css`
   position: absolute;
   height: var(--indicator-height);
@@ -271,7 +279,7 @@ const SegmentedControl = React.forwardRef<
   // TODO log warning if defaultValue is set but does not match any child value
   const { usingKeyboard } = useUsingKeyboardContext();
 
-  const [getRef, setRef] = useDynamicRefs<HTMLInputElement>();
+  const [getRef, setRef] = useDynamicRefs<HTMLDivElement>();
 
   const mode = darkMode ? 'dark' : 'light';
 
@@ -307,13 +315,7 @@ const SegmentedControl = React.forwardRef<
     }
   });
 
-  // When the value changes via click, we update the internal focus tracker so the correct element gets focused on tab press
-  useEffect(() => {
-    if (!usingKeyboard) {
-      setFocusedOptionValue(internalValue);
-    }
-  }, [internalValue, usingKeyboard]);
-
+  // Handle value updates
   const updateValue = useCallback(
     (value: string) => {
       if (internalValue !== value) {
@@ -324,7 +326,10 @@ const SegmentedControl = React.forwardRef<
     [internalValue, onChange],
   );
 
-  // Add internal props to children passed in
+  /**
+   * Main render function.
+   * Add internal props to children passed in
+   */
   const renderedChildren: React.ReactNode = useMemo(
     () =>
       React.Children.map(children, (child, index) => {
@@ -408,6 +413,10 @@ const SegmentedControl = React.forwardRef<
     [controlledValue, isControlled, renderedChildren, internalValue],
   );
 
+  /**
+   * Focus Management
+   */
+
   // Keep track of the index of the focused value
   const focusedIndex = useMemo(
     () =>
@@ -435,9 +444,13 @@ const SegmentedControl = React.forwardRef<
     setFocusedOptionValue(value);
   };
 
-  /**
-   * Handle keyboard navigation
-   */
+  // When the value changes via click, we update the internal focus tracker so the correct element gets focused on tab press
+  useEffect(() => {
+    if (!usingKeyboard) {
+      setFocusedOptionValue(internalValue);
+    }
+  }, [internalValue, usingKeyboard]);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // Note: Arrow keys don't fire a keyPress event — need to use keyDown
     e.stopPropagation();
@@ -455,8 +468,13 @@ const SegmentedControl = React.forwardRef<
     }
   };
 
+  /**
+   * Dynamic Styles
+   */
+
   // Dynamically set the size & position of the selection indicator
-  const selectionStyleDynamic = useMemo(() => {
+  const [selectionStyleDynamic, setSelectionStyle] = useState<string>('');
+  useEffect(() => {
     const selectedRef = getRef(`${name}-${selectedIndex}`);
 
     if (selectedRef && selectedRef.current) {
@@ -465,15 +483,12 @@ const SegmentedControl = React.forwardRef<
 
       if (selectedElement) {
         const { offsetWidth: width, offsetLeft: left } = selectedElement;
-        return css`
-          grid-column: unset;
-          width: ${width}px;
-          transform: translateX(${left}px);
-        `;
+        setSelectionStyle(getDynamicSelectionStyle(width, left));
       }
     }
-  }, [getRef, name, selectedIndex]);
+  }, [getRef, name, selectedIndex, renderedChildren]);
 
+  // Dynamic hover styles
   const hoverStyleDynamic = useMemo(() => {
     return getDynamicHoverStyle(hoveredIndex);
   }, [hoveredIndex]);
