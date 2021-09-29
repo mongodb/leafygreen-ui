@@ -2857,6 +2857,27 @@
     polished "^2.3.0"
     prop-types "^15.0.0"
 
+"@leafygreen-ui/mongo-nav@^7.2.1":
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/mongo-nav/-/mongo-nav-7.2.2.tgz#2fbea6b3424b2dc38d3f59c7582cff2c52bab58a"
+  integrity sha512-0gTPwCm4Q7SWjNRSD0G9PCGLINRTBkUlNhlxTz1S0SwsbZvyQP9t9VJDhIhU5NxXMXdWf1J/CXBeZ3EKZVQw+g==
+  dependencies:
+    "@leafygreen-ui/a11y" "^1.2.2"
+    "@leafygreen-ui/badge" "^4.0.5"
+    "@leafygreen-ui/button" "^12.0.4"
+    "@leafygreen-ui/hooks" "^7.0.0"
+    "@leafygreen-ui/icon" "^11.3.0"
+    "@leafygreen-ui/icon-button" "^9.1.6"
+    "@leafygreen-ui/interaction-ring" "^1.1.0"
+    "@leafygreen-ui/lib" "^9.0.0"
+    "@leafygreen-ui/logo" "^5.0.0"
+    "@leafygreen-ui/menu" "^11.0.1"
+    "@leafygreen-ui/palette" "^3.2.2"
+    "@leafygreen-ui/tabs" "^5.1.4"
+    "@leafygreen-ui/tooltip" "^6.3.1"
+    "@leafygreen-ui/typography" "^8.0.4"
+    lodash "^4.17.21"
+
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"
