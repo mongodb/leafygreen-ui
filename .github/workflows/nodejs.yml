@@ -26,7 +26,7 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-cache-
+            ${{ runner.os }}-yarn-cache-2-
       - run: yarn install --frozen-lockfile
       - uses: actions/cache@v2
         id: build-cache
@@ -64,7 +64,7 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-cache-
+            ${{ runner.os }}-yarn-cache-2-
       - run: yarn install --frozen-lockfile
       - uses: actions/cache@v2
         id: build-cache
@@ -102,7 +102,7 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-cache-
+            ${{ runner.os }}-yarn-cache-2-
       - run: yarn install --frozen-lockfile
       - name: prettier
         run: yarn prettier:check
@@ -130,7 +130,7 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-cache-
+            ${{ runner.os }}-yarn-cache-2-
       - run: yarn install --frozen-lockfile
       - name: types
         run: yarn ts
@@ -156,7 +156,7 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-cache-
+            ${{ runner.os }}-yarn-cache-2-
       - uses: preactjs/compressed-size-action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
