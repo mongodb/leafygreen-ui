@@ -104,9 +104,10 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 
 # InlineCode
 
-| Prop   | Type                  | Description                                                                                                                                              | Default |
-| ------ | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `href` | `string`, `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
+| Prop       | Type                  | Description                                                                                                                                              | Default |
+| ---------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `href`     | `string`, `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
+| `darkMode` | `boolean`             | Determines if the component renders in dark mode                                                                                                         |         |
 
 # Overline
 

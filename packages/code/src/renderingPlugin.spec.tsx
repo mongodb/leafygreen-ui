@@ -259,14 +259,20 @@ describe('flattenNestedTree()', () => {
     expect((obj1 as any).kind).toEqual(generateKindClassName(tokenKind[0]));
 
     expect((obj2 as any).children[0]).toEqual(tokenChildren[1]);
-    expect((obj2 as any).kind).toEqual(
+
+    // order of classes doesn't matter
+    expect([
       generateKindClassName(tokenKind[0], tokenKind[1]),
-    );
+      generateKindClassName(tokenKind[1], tokenKind[0]),
+    ]).toContain((obj2 as any).kind);
 
     expect((obj3 as any).children[0]).toEqual(tokenChildren[2]);
-    expect((obj3 as any).kind).toEqual(
+
+    expect([
       generateKindClassName(tokenKind[0], tokenKind[1], tokenKind[2]),
-    );
+      generateKindClassName(tokenKind[2], tokenKind[1], tokenKind[0]),
+      // add other permutations if this test is failing
+    ]).toContain((obj3 as any).kind);
   });
 });
 
@@ -283,6 +289,9 @@ describe('treeToLines()', () => {
     expect(line).toBeInstanceOf(Array);
 
     line.forEach((el: any) => {
+      expect(el).toBeDefined();
+      expect(el).not.toBeNull();
+
       if (typeof el === 'string') {
         expect(typeof el).toBe('string');
       } else if (isNonArrayObject(el)) {

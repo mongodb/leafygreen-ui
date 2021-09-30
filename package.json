@@ -22,10 +22,12 @@
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
   },
   "scripts": {
-    "build": "yarn pre-build && lerna run --parallel build",
+    "build": "node ./scripts/build.js",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "changeset:version": "yarn fix && yarn changeset version",
-    "clean": "rimraf {packages,privatePackages}/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
+    "clean": "rimraf packages/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
+    "clean:builds": "rimraf packages/*/{dist} **/*.tsbuildinfo",
+    "clean:modules": "rimraf packages/*/{node_modules} node_modules",
     "create-package": "node ./scripts/package-builder.js",
     "demo:site": "./scripts/publish-storybook.sh",
     "eslint:check": "eslint \"**/*.{js,ts,tsx}\"",
@@ -34,7 +36,7 @@
     "init": "yarn submodules:update && yarn && yarn build && yarn ts:build --verbose",
     "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme --ignore @leafygreen-ui/mongo-nav -- yarn link",
     "link": "./scripts/link.sh",
-    "pre-build": "lerna run --parallel pre-build -- --env production",
+    "pre-build": "node ./scripts/pre-build.js",
     "prepublishOnly": "yarn fix && yarn test && yarn build && yarn ts:downlevel",
     "prettier:fix": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "prettier:check": "prettier --check \"**/*.{js,ts,tsx,json,md}\"",
@@ -47,7 +49,7 @@
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
     "ts": "tsc --project tsconfig.json",
     "ts:build": "tsc --build build.tsconfig.json",
-    "ts:downlevel": "rimraf {packages,privatePackages}/*/dist/ts3.4 && echo {packages,privatePackages}/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
+    "ts:downlevel": "rimraf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
     "watch": "yarn build -- -- --watch"
   },
   "devDependencies": {
@@ -96,7 +98,7 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/user-event": "^12.1.8",
     "@types/facepaint": "^1.2.1",
-    "@types/highlight.js": "^9.12.3",
+    "@types/highlight.js": "^10.1.0",
     "@types/jest": "^26.0.0",
     "@types/jest-axe": "^3.5.1",
     "@types/lodash": "^4.14.170",
@@ -125,6 +127,9 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.0.0",
     "gh-pages": "^3.1.0",
+    "highlight.js": "^11.0.0",
+    "highlightjs-line-numbers.js": "^2.7.0",
+    "highlightjs-graphql": "^1.0.1",
     "jest": "^26.0.1",
     "jest-axe": "^4.1.0",
     "jest-junit": "^10.0.0",
@@ -160,7 +165,6 @@
   },
   "workspaces": [
     "packages/*",
-    "privatePackages/*",
     "website"
   ],
   "version": "0.0.0"

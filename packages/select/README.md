@@ -120,7 +120,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 
 | Prop        | Type                 | Description                                                                                           | Default                     |
 | ----------- | -------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------- |
-| `children`  | `node`               | Content to appear inside of the component.                                                            |                             |
+| `children`  | `string`, `number`   | Content to appear inside of the component.                                                            |                             |
 | `className` | `string`             | Adds a className to the outermost element.                                                            |                             |
 | `glyph`     | `React.ReactElement` | Icon to display next to the option text.                                                              |                             |
 | `value`     | `string`             | Corresponds to the value passed into the `onChange` prop of `<Select />` when the option is selected. | text contents of `children` |
