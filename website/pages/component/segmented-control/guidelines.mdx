@@ -6,16 +6,10 @@ import { CDN } from 'utils/routes';
 const imagePath = `${CDN}/images/new-guidelines/segmentedController`;
 import IconDo from 'components/icons/IconDo';
 import IconDont from 'components/icons/IconDont';
-const customImageStyle = css`
-  position: relative;
-  width: 700px;
-  height: 333px;
-  margin: 40px 0;
-  background-color: #798c91;
-  border-radius: 10px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 50%;
+const gifStyle = css`
+  width: 320px;
+  height: 274px;
+  object-fit: cover;
 `;
 const usageImageStyle = css`
   width: auto;
@@ -75,33 +69,39 @@ Segmented controls act as a toggle between a current state and related states, o
 
 For example, to switch between code and table views or filter data.
 
-<GuidelineImageFrame
-  type="do"
-  imageClassName={css`
-    background-image: url(${imagePath}/SC-guidelines-GIF-1.gif), url(${imagePath}/SC-guidelines-GIF-2.gif);
-    background-position: left center, right center;
-    background-repeat: no-repeat, no-repeat;
-    background-size: 50%, 50%;
-  `}
-/>
+<GuidelineImageFrame type="do">
+  <img
+    src={`${imagePath}/SC-guidelines-GIF-1.gif`}
+    className={css`
+      ${gifStyle}
+    `}
+  />
+  <img
+    src={`${imagePath}/SC-guidelines-GIF-2.gif`}
+    className={css`
+      ${gifStyle}
+      margin-top: -18px;
+      width: 314px;
+      height: 270px;
+    `}
+  />
+</GuidelineImageFrame>
 
 ## Use segmented controls as filter selects
 
 Segmented controls can sometimes act as toggles to encourage comparison between types of options, for example annual and monthly. However, they are not a replacement for radio boxes in other use cases.
 
-<GuidelineImageFrame
-  imageUrl={`${imagePath}/SC-guidelines-GIF-3.gif`}
-  type="do"
-/>
+<GuidelineImageFrame type="do">
+  <img src={`${imagePath}/SC-guidelines-GIF-3.gif`} className={gifStyle} />
+</GuidelineImageFrame>
 
 ## Use segmented controls as filter selects
 
 Segmented controls are often used to toggle through view types within a single page. Consider using <Link href="component/tabs/guidelines">tabs</Link> to flip between distinct pages.
 
-<GuidelineImageFrame
-  imageUrl={`${imagePath}/SC-guidelines-GIF-4.gif`}
-  type="dont"
-/>
+<GuidelineImageFrame type="dont">
+  <img src={`${imagePath}/SC-guidelines-GIF-4.gif`} className={gifStyle} />
+</GuidelineImageFrame>
 
 ## How to use segmented controls
 

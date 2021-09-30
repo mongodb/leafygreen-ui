@@ -8,11 +8,13 @@ const GuidelineImageFrame = ({
   imageUrl,
   className,
   imageClassName,
+  children,
 }: {
   type: 'do' | 'dont';
   imageUrl: string;
   className: string;
   imageClassName: string;
+  children: React.ReactNode;
 }) => {
   return (
     <div
@@ -28,6 +30,9 @@ const GuidelineImageFrame = ({
         className={css`
           width: 700px;
           height: 333px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           background-color: #798c91;
           border-radius: 10px;
           background-position: center center;
@@ -36,7 +41,9 @@ const GuidelineImageFrame = ({
           background-image: url(${imageUrl});
           ${imageClassName}
         `}
-      />
+      >
+        {children}
+      </div>
       {type && (
         <>
           <div
