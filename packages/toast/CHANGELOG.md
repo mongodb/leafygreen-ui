@@ -1,5 +1,20 @@
 # @leafygreen-ui/toast
 
+## 0.4.10
+
+### Patch Changes
+
+- Updated dependencies [f6e5655a]
+- Updated dependencies [03388ff2]
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/icon@11.3.0
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/portal@4.0.0
+  - @leafygreen-ui/icon-button@9.1.6
+  - @leafygreen-ui/tokens@0.5.3
+  - @leafygreen-ui/typography@8.0.4
+
 ## 0.4.9
 
 ### Patch Changes

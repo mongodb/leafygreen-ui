@@ -66,9 +66,6 @@
       "path": "./packages/modal"
     },
     {
-      "path": "./privatePackages/mongo-nav"
-    },
-    {
       "path": "./packages/palette"
     },
     {
@@ -88,6 +85,9 @@
     },
     {
       "path": "./packages/ripple"
+    },
+    {
+      "path": "./packages/segmented-control"
     },
     {
       "path": "./packages/select"

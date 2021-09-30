@@ -1,5 +1,32 @@
 # @leafygreen-ui/code
 
+## 9.0.0
+
+### Major Changes
+
+- 3c2fdcde: Upgrades `highlight.js` dependency from v10 to v11. This update will cause some syntax highlighting styles to change from previous versions of the Code component.
+
+### Patch Changes
+
+- Updated dependencies [cd4f9a27]
+  - @leafygreen-ui/select@3.0.6
+
+## 8.1.6
+
+### Patch Changes
+
+- Updated dependencies [f6e5655a]
+- Updated dependencies [03388ff2]
+- Updated dependencies [b8f03aa1]
+  - @leafygreen-ui/palette@3.2.2
+  - @leafygreen-ui/icon@11.3.0
+  - @leafygreen-ui/lib@9.0.0
+  - @leafygreen-ui/a11y@1.2.2
+  - @leafygreen-ui/icon-button@9.1.6
+  - @leafygreen-ui/select@3.0.5
+  - @leafygreen-ui/leafygreen-provider@2.1.3
+  - @leafygreen-ui/tokens@0.5.3
+
 ## 8.1.5
 
 ### Patch Changes

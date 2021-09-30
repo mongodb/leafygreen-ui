@@ -41,9 +41,6 @@
       "path": "../../packages/select"
     },
     {
-      "path": "../../privatePackages/mongo-nav"
-    },
-    {
       "path": "../../packages/leafygreen-provider"
     }
   ]
