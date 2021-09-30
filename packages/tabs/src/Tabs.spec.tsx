@@ -33,7 +33,7 @@ describe('packages/tabs', () => {
       expect(results).toHaveNoViolations();
     });
 
-    test('renders `name` prop accurately', () => {
+    test('renders `name` prop correctly', () => {
       renderTabs();
       const first = screen.getAllByTestId('first-tab')[0];
       const second = screen.getAllByTestId('second-tab')[0];
