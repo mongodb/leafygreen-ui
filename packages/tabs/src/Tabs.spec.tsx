@@ -259,8 +259,8 @@ describe('packages/tabs', () => {
 
 describe('packages/tab', () => {
   test('props are passed to tab element through rest', () => {
-    renderTabs({}, { 'data-testid': 'test-prop' });
-    expect(screen.getAllByRole('tab')[0].getAttribute('data-testid')).toBe(
+    renderTabs({}, { 'data-test-prop': 'test-prop' });
+    expect(screen.getAllByRole('tab')[0].getAttribute('data-test-prop')).toBe(
       'test-prop',
     );
   });
