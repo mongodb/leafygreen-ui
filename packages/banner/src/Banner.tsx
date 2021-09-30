@@ -30,7 +30,6 @@ const baseBannerStyles = css`
   border-style: solid;
   border-radius: 6px;
   font-size: 14px;
-  line-height: 20px;
 
   &:before {
     content: '';
@@ -258,7 +257,7 @@ export default function Banner({
       className={cx(
         flexShrink,
         css`
-          margin-top: 1px;
+          margin-top: 2px;
         `,
       )}
     />
