@@ -4,7 +4,11 @@ import FormFooter from '.';
 import { axe } from 'jest-axe';
 import { FormFooterProps } from './FormFooter';
 
-const renderFooter = (props?: FormFooterProps) => {
+const renderFooter = (
+  props: FormFooterProps = {
+    primaryButton: { text: 'Test button' },
+  },
+) => {
   return render(<FormFooter {...props} />);
 };
 
