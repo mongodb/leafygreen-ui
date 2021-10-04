@@ -47,7 +47,7 @@ const isPrimaryButtonProps = (testObj: any): testObj is PrimaryButtonProps => {
   return testObj.text;
 };
 
-interface FormFooterProps {
+export interface FormFooterProps {
   /**
    * The primary (right-most) button. Defined as a <Button> element, or as an object with the shape:
    *
