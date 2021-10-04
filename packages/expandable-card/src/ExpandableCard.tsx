@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from 'react';
 import Card from '@leafygreen-ui/card';
 import Icon from '@leafygreen-ui/icon';
@@ -110,7 +109,7 @@ interface ExpandableCardProps {
   isOpen?: boolean;
   handleToggle?: (isOpen: boolean) => void;
   className?: string;
-  idProp?: string;
+  id?: string;
 }
 
 /**
