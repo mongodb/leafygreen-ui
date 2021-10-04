@@ -44,7 +44,7 @@ interface PrimaryButtonProps {
 }
 
 const isPrimaryButtonProps = (testObj: any): testObj is PrimaryButtonProps => {
-  return testObj.text;
+  return testObj && testObj.text;
 };
 
 export interface FormFooterProps {
@@ -61,7 +61,7 @@ export interface FormFooterProps {
    * }
    * ```
    */
-  primaryButton: React.ReactChild | PrimaryButtonProps;
+  primaryButton?: React.ReactChild | PrimaryButtonProps;
 
   /**
    * Text for the cancel button. Defaults to 'Cancel'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, getByText } from '@testing-library/react';
 import FormFooter from '.';
 import { axe } from 'jest-axe';
 import { FormFooterProps } from './FormFooter';
@@ -28,6 +28,12 @@ describe('packages/form-footer', () => {
 
     test.todo('Renders back button');
 
-    test.todo('Renders error message');
+    test('Renders error message', () => {
+      const { container } = renderFooter({
+        errorMessage: 'Error',
+      });
+
+      expect(getByText(container, 'Error')).toBeVisible();
+    });
   });
 });
