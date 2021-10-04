@@ -5,6 +5,7 @@ import { H3, Body } from '@leafygreen-ui/typography';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 const transitionDuration = 300;
 
@@ -108,6 +109,7 @@ interface ExpandableCardProps {
   isOpen?: boolean;
   handleToggle?: (isOpen: boolean) => void;
   className?: string;
+  idProp?: string;
 }
 
 /**
@@ -121,11 +123,16 @@ export default function ExpandableCard({
   className,
   isOpen: isControlledOpen,
   handleToggle: handleToggleProp,
+  id: idProp,
 }: ExpandableCardProps) {
   const isControlled = isControlledOpen !== undefined;
 
   // Always start open
   const [isOpen, setIsOpen] = useState(isControlledOpen ?? false);
+
+  const id = useIdAllocator({ prefix: 'expandable-card', id: idProp });
+  const summaryId = useIdAllocator({ prefix: 'expandable-card-summary' });
+  const contentId = useIdAllocator({ prefix: 'expandable-card-content' });
 
   // When the controlled prop changes, update the internal state
   useEffect(() => {
@@ -160,9 +167,16 @@ export default function ExpandableCard({
   );
 
   return (
-    <Card darkMode={darkMode} className={cx(cardStyle(darkMode), className)}>
+    <Card
+      darkMode={darkMode}
+      className={cx(cardStyle(darkMode), className)}
+      id={id}
+    >
       <div
         role="button"
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        id={summaryId}
         className={summaryStyle}
         onClick={handleToggle}
         onKeyPress={handleToggle}
@@ -188,6 +202,9 @@ export default function ExpandableCard({
       >
         {state => (
           <div
+            role="region"
+            id={contentId}
+            aria-labelledby={summaryId}
             ref={childrenWrapperRef}
             className={cx(
               childrenWrapperStyle,
