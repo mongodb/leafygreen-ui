@@ -18,4 +18,16 @@ describe('packages/form-footer', () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+
+  describe('rendering', () => {
+    test.todo('Renders basic primary button');
+
+    test.todo('Renders JSX primary button');
+
+    test.todo('Renders cancel button');
+
+    test.todo('Renders back button');
+
+    test.todo('Renders error message');
+  });
 });
