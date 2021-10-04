@@ -4,6 +4,7 @@ import Icon from '@leafygreen-ui/icon';
 import { H3, Body } from '@leafygreen-ui/typography';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Transition, TransitionStatus } from 'react-transition-group';
+import { uiColors } from '@leafygreen-ui/palette';
 
 const transitionDuration = 300;
 
@@ -11,16 +12,22 @@ const transitionDuration = 300;
  * Styles
  */
 
-const cardStyle = css`
+const cardStyle = (darkMode: boolean) => css`
+  --card-divider-color: ${darkMode ? uiColors.gray.base : uiColors.gray.light2};
   display: block;
   width: 100%;
-  padding: 24px;
 `;
 
 const summaryStyle = css`
   display: grid;
   grid-template-columns: auto 24px;
   cursor: pointer;
+  padding: 24px;
+  color: inherit;
+
+  > * {
+    color: inherit;
+  }
 `;
 
 const iconStyle = css`
@@ -49,8 +56,12 @@ const iconTransitionStyle: { [key in TransitionStatus]: string } = {
 const childrenWrapperStyle = css`
   overflow: hidden;
   transition: ${transitionDuration}ms ease-in-out;
-  transition-property: max-height, height, opacity;
+  transition-property: all;
   transform-origin: top left;
+  padding-inline: 24px;
+  box-sizing: content-box;
+  border-top: 1px solid transparent;
+  visibility: visible;
 `;
 
 const childrenWrapperTransitionStyle = (
@@ -60,19 +71,26 @@ const childrenWrapperTransitionStyle = (
   switch (state) {
     case 'entering':
       return css`
-        max-height: ${height || 1000}px;
+        max-height: ${height || 9999}px;
+        padding-block: 24px;
+        border-color: var(--card-divider-color);
       `;
     case 'entered':
       return css`
-        max-height: ${height || 1000}px;
+        max-height: ${height || 9999}px;
+        padding-block: 24px;
+        border-color: var(--card-divider-color);
       `;
     case 'exiting':
       return css`
         max-height: 0;
+        padding-block: 0;
       `;
     case 'exited':
       return css`
         max-height: 0;
+        padding-block: 0;
+        visibility: hidden;
       `;
     default:
       return ``;
@@ -85,6 +103,7 @@ const childrenWrapperTransitionStyle = (
 interface ExpandableCardProps {
   title: string;
   children?: React.ReactNode;
+  darkMode?: boolean;
   description?: string;
   isOpen?: boolean;
   handleToggle?: (isOpen: boolean) => void;
@@ -95,8 +114,9 @@ interface ExpandableCardProps {
  * Conponent
  */
 export default function ExpandableCard({
-  children,
   title,
+  children,
+  darkMode = false,
   description,
   className,
   isOpen: isControlledOpen,
@@ -123,24 +143,24 @@ export default function ExpandableCard({
   };
 
   // Keep track of the children wrapper
-  const childrenRef = useRef<HTMLDivElement>(null);
+  const childrenInnerRef = useRef<HTMLDivElement>(null);
   const childrenWrapperRef = useRef<HTMLDivElement>(null);
 
   const [childrenHeight, setChildrenHeight] = useState(0);
 
   const updateHeight = () => {
-    if (childrenRef && childrenRef.current) {
-      setChildrenHeight(childrenRef.current.offsetHeight);
+    if (childrenInnerRef && childrenInnerRef.current) {
+      setChildrenHeight(childrenInnerRef.current.offsetHeight);
     }
   };
   useEffect(
     updateHeight,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [children, childrenRef, childrenRef.current],
+    [children, childrenInnerRef, childrenInnerRef.current],
   );
 
   return (
-    <Card className={cx(cardStyle, className)}>
+    <Card darkMode={darkMode} className={cx(cardStyle(darkMode), className)}>
       <div
         role="button"
         className={summaryStyle}
@@ -174,7 +194,7 @@ export default function ExpandableCard({
               childrenWrapperTransitionStyle(state, childrenHeight),
             )}
           >
-            <div ref={childrenRef}>{children}</div>
+            <div ref={childrenInnerRef}>{children}</div>
           </div>
         )}
       </Transition>

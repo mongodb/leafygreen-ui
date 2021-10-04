@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { boolean } from '@storybook/addon-knobs';
 import ExpandableCard from '.';
 
 storiesOf('ExpandableCard', module)
@@ -7,6 +8,7 @@ storiesOf('ExpandableCard', module)
     <ExpandableCard
       title="Lorem Ipsum"
       description="Donec id elit non mi porta gravida at eget metus."
+      darkMode={boolean('Dark Mode', false)}
     >
       Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
       ut fermentum massa justo sit amet risus. Aenean lacinia bibendum nulla sed
@@ -24,8 +26,8 @@ storiesOf('ExpandableCard', module)
         description="Donec id elit non mi porta gravida at eget metus."
         isOpen={isOpen}
         handleToggle={open => {
-          console.log(`Parent controlling isOpen to: ${false}`);
-          setIsOpen(false);
+          console.log(`Parent controlling isOpen to: ${open}`);
+          setIsOpen(open);
         }}
       >
         Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
