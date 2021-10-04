@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import ExpandableCard from '.';
 
 storiesOf('ExpandableCard', module)
@@ -8,6 +8,7 @@ storiesOf('ExpandableCard', module)
     <ExpandableCard
       title="Lorem Ipsum"
       description="Donec id elit non mi porta gravida at eget metus."
+      flagText={text('Flag text', 'optional')}
       darkMode={boolean('Dark Mode', false)}
     >
       Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,

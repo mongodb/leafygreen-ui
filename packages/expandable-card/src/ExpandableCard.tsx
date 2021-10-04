@@ -31,6 +31,19 @@ const summaryStyle = css`
   }
 `;
 
+const flagTextStyle = css`
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+
+  &::before {
+    content: ' (';
+  }
+  &::after {
+    content: ')';
+  }
+`;
+
 const iconStyle = css`
   grid-column: 2;
   grid-row: 1/3;
@@ -110,6 +123,7 @@ interface ExpandableCardProps {
   handleToggle?: (isOpen: boolean) => void;
   className?: string;
   id?: string;
+  flagText?: 'optional' | 'required' | string;
 }
 
 /**
@@ -124,6 +138,7 @@ export default function ExpandableCard({
   isOpen: isControlledOpen,
   handleToggle: handleToggleProp,
   id: idProp,
+  flagText,
 }: ExpandableCardProps) {
   const isControlled = isControlledOpen !== undefined;
 
@@ -182,7 +197,16 @@ export default function ExpandableCard({
         onKeyPress={handleToggle}
         tabIndex={0}
       >
-        <H3>{title}</H3>
+        <span>
+          <H3
+            className={css`
+              display: inline-block;
+            `}
+          >
+            {title}
+          </H3>
+          {flagText && <span className={flagTextStyle}>{flagText}</span>}
+        </span>
         {description && <Body>{description}</Body>}
 
         <Transition in={isOpen} timeout={transitionDuration}>
