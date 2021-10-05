@@ -1,15 +1,11 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import ExpandableCard from '@leafygreen-ui/expandable-card';
-import { Body, Label } from '@leafygreen-ui/typography';
+import { Label } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 import TextInput from '@leafygreen-ui/text-input';
 import Toggle from '@leafygreen-ui/toggle';
-
-const cardPadding = css`
-  padding: 20px;
-`;
 
 const knobsConfig: KnobsConfigInterface<{
   title: string;
