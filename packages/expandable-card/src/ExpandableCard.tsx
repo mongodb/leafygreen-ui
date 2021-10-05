@@ -142,6 +142,11 @@ interface ExpandableCardProps {
   darkMode?: boolean;
 
   /**
+   * Defines the default state of the card
+   */
+  defaultOpen?: boolean;
+
+  /**
    * Forces the card state
    */
   isOpen?: boolean;
@@ -178,6 +183,7 @@ export default function ExpandableCard({
   darkMode = false,
   description,
   className,
+  defaultOpen = false,
   isOpen: isControlledOpen,
   onClick: onClickProp,
   id: idProp,
@@ -186,7 +192,7 @@ export default function ExpandableCard({
   const isControlled = isControlledOpen !== undefined;
 
   // Always start open
-  const [isOpen, setIsOpen] = useState(isControlledOpen ?? false);
+  const [isOpen, setIsOpen] = useState(isControlledOpen ?? defaultOpen);
 
   const id = useIdAllocator({ prefix: 'expandable-card', id: idProp });
   const summaryId = useIdAllocator({ prefix: 'expandable-card-summary' });
@@ -195,9 +201,9 @@ export default function ExpandableCard({
   // When the controlled prop changes, update the internal state
   useEffect(() => {
     if (isControlled) {
-      setIsOpen(isControlledOpen ?? false);
+      setIsOpen(isControlledOpen ?? defaultOpen);
     }
-  }, [isControlled, isControlledOpen]);
+  }, [defaultOpen, isControlled, isControlledOpen]);
 
   // If the component is not controlled, we update the internal state on toggle
   const onClick = (
