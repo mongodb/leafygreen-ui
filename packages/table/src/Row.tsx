@@ -113,6 +113,7 @@ const nestedRowInitialStyle = css`
 
 const hiddenRowStyles = css`
   opacity: 0;
+  border-color: transparent;
 
   & > td {
     padding-block: 0;
@@ -133,7 +134,7 @@ const transitionStyles: { [key in TransitionStatus]: string } = {
 
       & > ${tdInnerDiv.selector} {
         min-height: var(--lg-min-cell-height);
-        max-height: 1000px; // arbitrary
+        max-height: 192px; // arbitrary
       }
     }
   `,
@@ -201,7 +202,7 @@ const Row = React.forwardRef(
 
     const indexRef = useRef(useIdAllocator({ prefix: 'row' }));
     const [isExpanded, setIsExpanded] = useState(expanded);
-    const nodeRef = useRef(null);
+    const nestedRowNodeRef = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
       let shouldDispatchHasNestedRows = false;
@@ -267,13 +268,13 @@ const Row = React.forwardRef(
             enter: 0,
             exit: transitionTime,
           }}
-          nodeRef={nodeRef}
+          nodeRef={nestedRowNodeRef}
         >
           {state =>
             React.Children.map(children, (child, index) => {
               if (child != null && isComponentType<RowElement>(child, 'Row')) {
                 return React.cloneElement(child, {
-                  ref: nodeRef,
+                  ref: nestedRowNodeRef,
                   isAnyAncestorCollapsed:
                     isAnyAncestorCollapsedProp || !isExpanded,
                   indentLevel: indentLevel + 1,
