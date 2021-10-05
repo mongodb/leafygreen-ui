@@ -29,9 +29,9 @@ storiesOf('ExpandableCard', module)
           'Donec id elit non mi porta gravida at eget metus.',
         )}
         isOpen={isOpen}
-        handleToggle={open => {
-          console.log(`Parent controlling isOpen to: ${open}`);
-          setIsOpen(open);
+        onClick={e => {
+          console.log(`Parent controlling isOpen:`, e);
+          setIsOpen(!isOpen);
         }}
       >
         Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,

@@ -149,7 +149,9 @@ interface ExpandableCardProps {
   /**
    * Callback fired when a user clicks the card header
    */
-  handleToggle?: (isOpen: boolean) => void;
+  onClick?: (
+    event: React.SyntheticEvent<HTMLDivElement, MouseEvent | KeyboardEvent>,
+  ) => void;
 
   /**
    * Unique id for the card
@@ -177,7 +179,7 @@ export default function ExpandableCard({
   description,
   className,
   isOpen: isControlledOpen,
-  handleToggle: handleToggleProp,
+  onClick: onClickProp,
   id: idProp,
   flagText,
 }: ExpandableCardProps) {
@@ -193,16 +195,18 @@ export default function ExpandableCard({
   // When the controlled prop changes, update the internal state
   useEffect(() => {
     if (isControlled) {
-      console.log(`Effect setting isOpen to: ${isControlledOpen ?? false} `);
       setIsOpen(isControlledOpen ?? false);
     }
   }, [isControlled, isControlledOpen]);
 
-  const handleToggle = () => {
+  // If the component is not controlled, we update the internal state on toggle
+  const onClick = (
+    e: React.SyntheticEvent<HTMLDivElement, MouseEvent | KeyboardEvent>,
+  ) => {
     if (!isControlled) {
       setIsOpen(!isOpen);
     }
-    handleToggleProp?.(!isOpen);
+    onClickProp?.(e);
   };
 
   // Keep track of the children wrapper
@@ -234,8 +238,8 @@ export default function ExpandableCard({
         aria-controls={contentId}
         id={summaryId}
         className={summaryStyle}
-        onClick={handleToggle}
-        onKeyPress={handleToggle}
+        onClick={onClick}
+        onKeyPress={onClick}
         tabIndex={0}
       >
         <span>
