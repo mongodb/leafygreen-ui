@@ -22,11 +22,12 @@ const cardStyle = (darkMode: boolean) => css`
 const summaryStyle = css`
   display: grid;
   grid-template-columns: auto 24px;
+  column-gap: 8px;
   cursor: pointer;
   padding: 24px;
   color: inherit;
 
-  > * {
+  * {
     color: inherit;
   }
 `;
