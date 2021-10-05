@@ -26,10 +26,15 @@ const summaryStyle = css`
   cursor: pointer;
   padding: 24px;
   color: inherit;
+`;
 
-  * {
-    color: inherit;
-  }
+const summaryHeader = css`
+  display: inline-block;
+  color: inherit;
+`;
+
+const summaryText = css`
+  color: inherit;
 `;
 
 const flagTextStyle = css`
@@ -199,16 +204,10 @@ export default function ExpandableCard({
         tabIndex={0}
       >
         <span>
-          <H3
-            className={css`
-              display: inline-block;
-            `}
-          >
-            {title}
-          </H3>
+          <H3 className={summaryHeader}>{title}</H3>
           {flagText && <span className={flagTextStyle}>{flagText}</span>}
         </span>
-        {description && <Body>{description}</Body>}
+        {description && <Body className={summaryText}>{description}</Body>}
 
         <Transition in={isOpen} timeout={transitionDuration}>
           {state => (
