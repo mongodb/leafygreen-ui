@@ -121,15 +121,50 @@ const childrenWrapperTransitionStyle = (
  * Types
  */
 interface ExpandableCardProps {
+  /**
+   * The title of the card
+   */
   title: string;
-  children?: React.ReactNode;
-  darkMode?: boolean;
+
+  /**
+   * Description text below the title
+   */
   description?: string;
-  isOpen?: boolean;
-  handleToggle?: (isOpen: boolean) => void;
-  className?: string;
-  id?: string;
+
+  /**
+   * Text in parentheses immediately following the title. Typically 'optional' or 'required'
+   */
   flagText?: 'optional' | 'required' | string;
+
+  /**
+   * Toggles dark mode
+   */
+  darkMode?: boolean;
+
+  /**
+   * Forces the card state
+   */
+  isOpen?: boolean;
+
+  /**
+   * Callback fired when a user clicks the card header
+   */
+  handleToggle?: (isOpen: boolean) => void;
+
+  /**
+   * Unique id for the card
+   */
+  id?: string;
+
+  /**
+   * Styling prop
+   */
+  className?: string;
+
+  /**
+   * Component children
+   */
+  children?: React.ReactNode;
 }
 
 /**

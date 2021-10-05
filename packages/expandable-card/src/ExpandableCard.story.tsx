@@ -15,10 +15,7 @@ storiesOf('ExpandableCard', module)
       darkMode={boolean('Dark Mode', false)}
     >
       Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-      ut fermentum massa justo sit amet risus. Aenean lacinia bibendum nulla sed
-      consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor
-      ligula, eget lacinia odio sem nec elit. Aenean eu leo quam. Pellentesque
-      ornare sem lacinia quam venenatis vestibulum.
+      ut fermentum massa justo sit amet risus.
     </ExpandableCard>
   ))
   .add('Controlled', () => {
@@ -38,10 +35,7 @@ storiesOf('ExpandableCard', module)
         }}
       >
         Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-        ut fermentum massa justo sit amet risus. Aenean lacinia bibendum nulla
-        sed consectetur. Duis mollis, est non commodo luctus, nisi erat
-        porttitor ligula, eget lacinia odio sem nec elit. Aenean eu leo quam.
-        Pellentesque ornare sem lacinia quam venenatis vestibulum.
+        ut fermentum massa justo sit amet risus.
       </ExpandableCard>
     );
   });
