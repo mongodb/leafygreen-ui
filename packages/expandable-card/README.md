@@ -20,7 +20,9 @@ npm install @leafygreen-ui/expandable-card
 
 ## Example
 
-```jsx
+```js
+import ExpandableCard from '@leafygreen-ui/expandable-card';
+
 <ExpandableCard
   title="Lorem Ipsum"
   description="Donec id elit non mi porta gravida at eget metus"
@@ -29,7 +31,7 @@ npm install @leafygreen-ui/expandable-card
 >
   Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
   fermentum massa justo sit amet risus.
-</ExpandableCard>
+</ExpandableCard>;
 ```
 
 **Output HTML**
