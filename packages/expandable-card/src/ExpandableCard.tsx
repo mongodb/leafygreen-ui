@@ -213,7 +213,7 @@ export default function ExpandableCard({
           {state => (
             <Icon
               className={cx(iconStyle, iconTransitionStyle[state])}
-              glyph="ChevronDown"
+              glyph="ChevronUp"
             />
           )}
         </Transition>
