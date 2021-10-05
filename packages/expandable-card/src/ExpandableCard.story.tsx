@@ -6,8 +6,11 @@ import ExpandableCard from '.';
 storiesOf('ExpandableCard', module)
   .add('Uncontrolled', () => (
     <ExpandableCard
-      title="Lorem Ipsum"
-      description="Donec id elit non mi porta gravida at eget metus."
+      title={text('Title', 'Lorem Ipsum')}
+      description={text(
+        'Description',
+        'Donec id elit non mi porta gravida at eget metus.',
+      )}
       flagText={text('Flag text', 'optional')}
       darkMode={boolean('Dark Mode', false)}
     >
@@ -23,8 +26,11 @@ storiesOf('ExpandableCard', module)
 
     return (
       <ExpandableCard
-        title="Controlled Ipsum"
-        description="Donec id elit non mi porta gravida at eget metus."
+        title={text('Title', 'Controlled Ipsum')}
+        description={text(
+          'Description',
+          'Donec id elit non mi porta gravida at eget metus.',
+        )}
         isOpen={isOpen}
         handleToggle={open => {
           console.log(`Parent controlling isOpen to: ${open}`);
