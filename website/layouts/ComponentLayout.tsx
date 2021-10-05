@@ -51,8 +51,7 @@ const caps = css`
 const componentGuidelineStyles = css`
   overflow-wrap: anywhere;
   color: ${uiColors.gray.dark3};
-  padding-top: ${spacing[2]}px;
-  padding-bottom: ${spacing[6]}px;
+  margin: ${spacing[4]}px 0px;
   max-width: ${pageContainerWidth.default}px;
 
   & > p {
