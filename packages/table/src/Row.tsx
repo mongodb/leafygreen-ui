@@ -126,8 +126,6 @@ const hiddenRowStyles = css`
 `;
 
 const transitionStyles = (state: TransitionStatus, height?: number): string => {
-  console.log(height);
-
   switch (state) {
     case 'entered':
       return css`
