@@ -125,22 +125,25 @@ const hiddenRowStyles = css`
   }
 `;
 
-const transitionStyles: { [key in TransitionStatus]: string } = {
-  entering: hiddenRowStyles,
-  entered: css`
-    opacity: 1;
-    & > td {
-      padding-block: 8px;
+const transitionStyles = (state: TransitionStatus, height?: number): string => {
+  console.log(height);
 
-      & > ${tdInnerDiv.selector} {
-        min-height: var(--lg-min-cell-height);
-        max-height: 192px; // arbitrary
-      }
-    }
-  `,
-  exiting: hiddenRowStyles,
-  exited: hiddenRowStyles,
-  unmounted: ``, // N/A
+  switch (state) {
+    case 'entered':
+      return css`
+        opacity: 1;
+        & > td {
+          padding-block: 8px;
+
+          & > ${tdInnerDiv.selector} {
+            min-height: var(--lg-min-cell-height);
+            max-height: max(var(--lg-min-cell-height), ${height}px);
+          }
+        }
+      `;
+    default:
+      return hiddenRowStyles;
+  }
 };
 
 function styleColumn(index: string, dataType?: DataType) {
@@ -203,6 +206,20 @@ const Row = React.forwardRef(
     const indexRef = useRef(useIdAllocator({ prefix: 'row' }));
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nestedRowNodeRef = useRef<HTMLTableRowElement>(null);
+
+    const [nestedRowHeight, setNestedRowHeight] = useState(0);
+    useEffect(() => {
+      if (nestedRowNodeRef && nestedRowNodeRef.current) {
+        const innerSpan: HTMLSpanElement | null = nestedRowNodeRef.current.querySelector(
+          `${tdInnerDiv.selector} > span`,
+        );
+
+        if (innerSpan && innerSpan.offsetHeight) {
+          setNestedRowHeight(innerSpan.offsetHeight);
+        }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [nestedRowNodeRef.current, isExpanded]);
 
     useEffect(() => {
       let shouldDispatchHasNestedRows = false;
@@ -281,7 +298,7 @@ const Row = React.forwardRef(
                   key: `${indexRef.current}-${indentLevel}-${index}`,
                   className: cx(
                     nestedRowInitialStyle,
-                    transitionStyles[state],
+                    transitionStyles(state, nestedRowHeight),
                     `transition-${state}`,
                   ),
                 });
@@ -295,11 +312,12 @@ const Row = React.forwardRef(
 
       return { rowHasNestedRows, renderedNestedRows, renderedTransitionGroup };
     }, [
+      children,
       isExpanded,
       isAnyAncestorCollapsedProp,
       isBrowser,
-      children,
       indentLevel,
+      nestedRowHeight,
     ]);
 
     const renderedChildren = useMemo(() => {
