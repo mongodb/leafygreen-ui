@@ -21,7 +21,7 @@ storiesOf('FormFooter', module)
       `}
     />
   ))
-  .add('with icons', () => (
+  .add('with custom button', () => (
     <FormFooter
       sticky={boolean('Sticky', true)}
       primaryButton={
@@ -29,7 +29,7 @@ storiesOf('FormFooter', module)
           leftGlyph={<Icon glyph={'Cloud'} />}
           rightGlyph={<Icon glyph={'Checkmark'} />}
           variant="primary"
-          disabled={boolean('Disabled', false)}
+          disabled={boolean('Primary button disabled', false)}
         >
           Save to cloud
         </Button>

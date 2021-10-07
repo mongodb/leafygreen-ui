@@ -3,6 +3,8 @@ import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { isComponentType } from '@leafygreen-ui/lib';
+import { once } from 'lodash';
 
 const footerStyle = (sticky: boolean) => {
   return css`
@@ -44,10 +46,16 @@ interface PrimaryButtonProps {
 }
 
 const isPrimaryButtonProps = (testObj: any): testObj is PrimaryButtonProps => {
-  return testObj && testObj.text;
+  return testObj && testObj.text != null;
 };
 
 export interface FormFooterProps {
+  /**
+   * Defines whether the footer should be "stuck" to the bottom of the frame.
+   * Can also be customized using `className`
+   */
+  sticky?: boolean;
+
   /**
    * The primary (right-most) button. Defined as a <Button> element, or as an object with the shape:
    *
@@ -89,14 +97,8 @@ export interface FormFooterProps {
   errorMessage?: string;
 
   /**
-   * Defines whether the footer should be stuck to the bottom of the frame.
-   * Can also be achieved using `className`
-   */
-  sticky?: boolean;
-
-  /**
    * Styling prop for the content.
-   * Useful for setting left and right margins, or max-
+   * Useful for setting left and right margins, or max-width
    */
   contentClassName?: string;
 
@@ -121,20 +123,28 @@ export default function FormFooter({
   className,
 }: FormFooterProps) {
   const RenderedPrimaryButton: React.ReactNode = useMemo(() => {
-    if (isPrimaryButtonProps(primaryButton)) {
-      return (
-        <Button
-          variant={primaryButton.variant ?? 'primary'}
-          disabled={primaryButton.disabled}
-          onClick={primaryButton.onClick}
-          type={primaryButton.type}
-        >
-          {primaryButton.text}
-        </Button>
+    if (primaryButton) {
+      if (isPrimaryButtonProps(primaryButton)) {
+        return (
+          <Button
+            variant={primaryButton.variant ?? 'primary'}
+            disabled={primaryButton.disabled}
+            onClick={primaryButton.onClick}
+            type={primaryButton.type}
+          >
+            {primaryButton.text}
+          </Button>
+        );
+      }
+
+      if (isComponentType(primaryButton, 'Button')) {
+        return primaryButton;
+      }
+
+      errorOnce(
+        '`primaryButton` prop in `FormFooter` must be either a `Button` component, or object with at minumum a `text` property',
       );
     }
-
-    return primaryButton;
   }, [primaryButton]);
 
   return (
@@ -158,3 +168,5 @@ export default function FormFooter({
     </footer>
   );
 }
+
+const errorOnce = once(console.error);
