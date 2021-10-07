@@ -1,5 +1,11 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  screen,
+  getByLabelText,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import TextInput, { State } from './TextInput';
 
@@ -173,6 +179,46 @@ describe('packages/text-input', () => {
       renderTextInput();
 
       expect(screen.queryByRole('label')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('validation callback', () => {
+    const setupValidationTest = () => {
+      const handleValidation = jest.fn();
+      const { container } = render(
+        <TextInput label="test" handleValidation={handleValidation} />,
+      );
+      const inputElement = getByLabelText(container, 'test');
+      return { handleValidation, inputElement };
+    };
+
+    test('is not called on focus', () => {
+      const { handleValidation } = setupValidationTest();
+      userEvent.tab(); // focus
+      expect(handleValidation).not.toHaveBeenCalled();
+    });
+
+    test('is not called on keypress before initial blur', () => {
+      const { handleValidation, inputElement } = setupValidationTest();
+      userEvent.tab(); // focus
+      userEvent.type(inputElement, `test`);
+      expect(handleValidation).not.toHaveBeenCalled();
+    });
+
+    test('is called on blur', () => {
+      const { handleValidation } = setupValidationTest();
+      userEvent.tab(); // focus
+      userEvent.tab(); // blur
+      expect(handleValidation).toHaveBeenCalledTimes(1);
+    });
+
+    test('is called on subsequent keypresses', () => {
+      const { handleValidation, inputElement } = setupValidationTest();
+      userEvent.tab(); // focus
+      userEvent.tab(); // blur
+      userEvent.tab(); // focus
+      userEvent.type(inputElement, `test`);
+      expect(handleValidation).toHaveBeenCalledTimes(5); // blur + keypress * 4
     });
   });
 
