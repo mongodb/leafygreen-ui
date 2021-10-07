@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 export const State = {
@@ -128,6 +128,7 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
   description?: string;
   state?: State;
   errorMessage?: string;
+  handleValidation?: (value: string) => void;
 };
 
 type AriaLabels = 'label' | 'aria-labelledby';
@@ -147,6 +148,7 @@ const TextArea: React.ComponentType<
     id: idProp,
     value: controlledValue,
     onChange,
+    handleValidation,
     'aria-labelledby': ariaLabelledby,
     ...rest
   }: TextAreaProps,
@@ -174,6 +176,11 @@ const TextArea: React.ComponentType<
       'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
     );
   }
+
+  // Validation
+  const { handleBlur, handleKeyPress } = useValidation<HTMLTextAreaElement>(
+    handleValidation,
+  );
 
   return (
     <div className={cx(containerStyles, className)}>
@@ -203,6 +210,8 @@ const TextArea: React.ComponentType<
           })}
           disabled={disabled}
           onChange={onValueChange}
+          onBlur={handleBlur}
+          onKeyPress={handleKeyPress}
           value={value}
         />
       </InteractionRing>

@@ -7,7 +7,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 const iconSelectorProp = createDataProp('icon-selector');
@@ -103,6 +103,8 @@ interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   darkMode?: boolean;
 
   type?: TextInputType;
+
+  handleValidation?: (value: string) => void;
 
   ['aria-labelledby']?: string;
 }
@@ -309,6 +311,7 @@ const TextInput: React.ComponentType<
       className,
       darkMode = false,
       'aria-labelledby': ariaLabelledby,
+      handleValidation,
       ...rest
     }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -344,6 +347,11 @@ const TextInput: React.ComponentType<
     const RenderedCheckmarkIcon = darkMode
       ? CheckmarkWithCircleIcon
       : CheckmarkIcon;
+
+    // Validation
+    const { handleBlur, handleKeyPress } = useValidation<HTMLInputElement>(
+      handleValidation,
+    );
 
     return (
       <div className={cx(textInputStyle, className)}>
@@ -409,9 +417,12 @@ const TextInput: React.ComponentType<
               disabled={disabled}
               placeholder={placeholder}
               onChange={onValueChange}
+              onBlur={handleBlur}
+              onKeyPress={handleKeyPress}
               ref={forwardRef}
               id={id}
               autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
+              aria-invalid={state === 'error'}
             />
           </InteractionRing>
 

@@ -43,6 +43,7 @@ storiesOf('TextInput', module).add('Default', () => {
           )}
           errorMessage={text('Error Message', 'This is an error message')}
           darkMode={darkMode}
+          handleValidation={value => console.log(`handleValidation ${value}`)}
         />
       </div>
     </LeafyGreenProvider>
