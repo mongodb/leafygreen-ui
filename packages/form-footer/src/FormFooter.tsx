@@ -10,6 +10,7 @@ const footerStyle = (sticky: boolean) => {
   return css`
     position: ${sticky ? 'fixed' : 'static'};
     bottom: ${sticky ? '0px' : 'unset'};
+    left: ${sticky ? '0px' : 'unset'};
     min-height: 92px;
     width: 100%;
     padding: 24px;
@@ -72,7 +73,7 @@ export interface FormFooterProps {
   primaryButton?: React.ReactChild | PrimaryButtonProps;
 
   /**
-   * Text for the cancel button. Defaults to 'Cancel'
+   * Text for the cancel button. A cancel button will appear regardless of whether text is defined.
    */
   cancelText?: string;
 
@@ -82,7 +83,7 @@ export interface FormFooterProps {
   onCancel?: React.MouseEventHandler<HTMLButtonElement>;
 
   /**
-   * Text for the back button.
+   * Text for the back button. A back button will only appear if text is defined.
    */
   backButtonText?: string;
 
@@ -92,7 +93,7 @@ export interface FormFooterProps {
   onBackClick?: React.MouseEventHandler<HTMLButtonElement>;
 
   /**
-   * Text within the error banner
+   * Text within the error banner. The banner will only appear if an error message is defined.
    */
   errorMessage?: string;
 
