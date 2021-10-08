@@ -7,6 +7,7 @@ import ini from 'highlight.js/lib/languages/ini';
 import java from 'highlight.js/lib/languages/java';
 import perl from 'highlight.js/lib/languages/perl';
 import php from 'highlight.js/lib/languages/php';
+import properties from 'highlight.js/lib/languages/properties';
 import python from 'highlight.js/lib/languages/python';
 import ruby from 'highlight.js/lib/languages/ruby';
 import rust from 'highlight.js/lib/languages/rust';
@@ -32,6 +33,7 @@ export const languageParsers = {
   java,
   perl,
   php,
+  properties,
   python,
   ruby,
   rust,
