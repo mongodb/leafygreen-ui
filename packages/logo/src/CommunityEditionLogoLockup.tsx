@@ -152,6 +152,7 @@ CommunityEditionLogoLockup.displayName = 'CommunityEditionLogoLockup';
 
 CommunityEditionLogoLockup.propTypes = {
   height: PropTypes.number,
+  color: PropTypes.oneOf(Object.values(SupportedColors)),
 };
 
 export default CommunityEditionLogoLockup;

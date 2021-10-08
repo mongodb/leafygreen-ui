@@ -160,6 +160,7 @@ EnterpriseAdvancedLogoLockup.displayName = 'EnterpriseAdvancedLogoLockup';
 
 EnterpriseAdvancedLogoLockup.propTypes = {
   height: PropTypes.number,
+  color: PropTypes.oneOf(Object.values(SupportedColors)),
 };
 
 export default EnterpriseAdvancedLogoLockup;

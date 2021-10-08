@@ -105,6 +105,7 @@ RealmLogoLockup.displayName = 'RealmLogoLockup';
 
 RealmLogoLockup.propTypes = {
   height: PropTypes.number,
+  color: PropTypes.oneOf(Object.values(SupportedColors)),
 };
 
 export default RealmLogoLockup;

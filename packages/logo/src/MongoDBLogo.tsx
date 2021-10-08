@@ -87,8 +87,8 @@ function MongoDBLogo({
 MongoDBLogo.displayName = 'MongoDBLogo';
 
 MongoDBLogo.propTypes = {
-  className: PropTypes.string,
   height: PropTypes.number,
+  color: PropTypes.oneOf(Object.values(SupportedColors)),
 };
 
 export default MongoDBLogo;
