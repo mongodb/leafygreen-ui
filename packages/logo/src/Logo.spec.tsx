@@ -2,50 +2,27 @@ import React from 'react';
 import { axe } from 'jest-axe';
 import { render } from '@testing-library/react';
 import {
-  Logo,
-  LogoMark,
-  CloudManagerLogo,
-  CloudManagerLogoMark,
-  AtlasLogo,
+  MongoDBLogo,
+  MongoDBLogoMark,
+  AtlasLogoLockup,
   AtlasLogoMark,
-  RealmLogo,
+  RealmLogoLockup,
   RealmLogoMark,
-  ChartsLogo,
   ChartsLogoMark,
-  CompassLogoMark,
-  DriversConnectorsLogoMark,
+  EnterpriseAdvancedLogoLockup,
+  CommunityEditionLogoLockup,
 } from '.';
-import ServerLogoMark from './ServerLogoMark';
 
-type LogoComponents =
-  | 'Logo'
-  | 'LogoMark'
-  | 'AtlasLogo'
-  | 'AtlasLogoMark'
-  | 'ChartsLogo'
-  | 'ChartsLogoMark'
-  | 'CloudManagerLogo'
-  | 'CloudManagerLogoMark'
-  | 'RealmLogo'
-  | 'RealmLogoMark'
-  | 'ServerLogoMark'
-  | 'DriversConnectorsLogoMark'
-  | 'CompassLogoMark';
-
-const renderedComponents: Record<LogoComponents, JSX.Element> = {
-  Logo: <Logo />,
-  LogoMark: <LogoMark />,
-  AtlasLogo: <AtlasLogo />,
+const renderedComponents = {
+  MongoDBLogo: <MongoDBLogo />,
+  MongoDBLogoMark: <MongoDBLogoMark />,
+  AtlasLogoLockup: <AtlasLogoLockup />,
   AtlasLogoMark: <AtlasLogoMark />,
-  ChartsLogo: <ChartsLogo />,
   ChartsLogoMark: <ChartsLogoMark />,
-  CloudManagerLogo: <CloudManagerLogo />,
-  CloudManagerLogoMark: <CloudManagerLogoMark />,
-  RealmLogo: <RealmLogo />,
+  RealmLogoLockup: <RealmLogoLockup />,
   RealmLogoMark: <RealmLogoMark />,
-  ServerLogoMark: <ServerLogoMark />,
-  CompassLogoMark: <CompassLogoMark />,
-  DriversConnectorsLogoMark: <DriversConnectorsLogoMark />,
+  EnterpriseAdvancedLogoLockup: <EnterpriseAdvancedLogoLockup />,
+  CommunityEditionLogoLockup: <CommunityEditionLogoLockup />,
 } as const;
 
 describe('packages/logo', () => {
@@ -53,7 +30,7 @@ describe('packages/logo', () => {
     Object.keys(renderedComponents).map(component => {
       test(`${component} does not have any basic accessibility issues`, async () => {
         const { container } = render(
-          renderedComponents[component as LogoComponents],
+          renderedComponents[component as keyof typeof renderedComponents],
         );
         const results = await axe(container);
         expect(results).toHaveNoViolations();
