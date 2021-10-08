@@ -61,6 +61,7 @@ export const SupportedLanguages = {
   Java: 'java',
   Perl: 'perl',
   Php: 'php',
+  Properties: 'properties',
   Python: 'python',
   Ruby: 'ruby',
   Rust: 'rust',
