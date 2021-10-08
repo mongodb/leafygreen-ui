@@ -29,11 +29,13 @@ import ChevronLeft from './ChevronLeft.svg';
 import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
+import Connect from './Connect.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
 import CurlyBraces from './CurlyBraces.svg';
 import Database from './Database.svg';
 import Diagram from './Diagram.svg';
+import Disconnect from './Disconnect.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
@@ -117,11 +119,13 @@ const glyphs = {
   Clone,
   Cloud,
   Code,
+  Connect,
   Copy,
   CreditCard,
   CurlyBraces,
   Database,
   Diagram,
+  Disconnect,
   Download,
   Edit,
   Ellipsis,
