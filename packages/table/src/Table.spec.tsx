@@ -145,12 +145,10 @@ describe('packages/table', () => {
       fireEvent.click(sortButton);
 
       expect(screen.getAllByRole('row')[1].innerHTML).toContain('Monica');
-      expect(screen.getAllByRole('row')[2].innerHTML).toContain('Zara');
 
       fireEvent.click(sortButton);
 
       expect(screen.getAllByRole('row')[1].innerHTML).toContain('Monica');
-      expect(screen.getAllByRole('row')[2].innerHTML).toContain('Alice');
     });
 
     test('it does not sort when `handleSort` is passed in', () => {
