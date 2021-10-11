@@ -2857,6 +2857,11 @@
     polished "^2.3.0"
     prop-types "^15.0.0"
 
+"@leafygreen-ui/logo@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/logo/-/logo-5.0.0.tgz#db4154246c18f62c12e5c664bd12aabe7c2a11a2"
+  integrity sha512-c/2LOEkNpcmW1A/dgfCGiLyDxPeH0GaNcYWgNDBWKa4siUCU5S1DSV0uIIEXRJjMlXsSdYkoP4hadNH6ixrBnA==
+
 "@leafygreen-ui/mongo-nav@^7.2.1":
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/mongo-nav/-/mongo-nav-7.2.2.tgz#2fbea6b3424b2dc38d3f59c7582cff2c52bab58a"
