@@ -2,4 +2,4 @@
 '@leafygreen-ui/code': minor
 ---
 
-Adds support for Jave `.properties` files
+Adds support for Java `.properties` files
