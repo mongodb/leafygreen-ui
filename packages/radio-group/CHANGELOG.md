@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 7.0.6
+
+### Patch Changes
+
+- 6041b89b: Adds @leafygreen-ui/hooks to dependency list
+
 ## 7.0.5
 
 ### Patch Changes
