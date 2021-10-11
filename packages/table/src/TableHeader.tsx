@@ -6,7 +6,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { getCommonCellStyles } from './styles';
-import { useSortContext } from './SortContext';
+import { SortDirection, useSortContext } from './SortContext';
 import { useFontSizeContext } from './FontSizeContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { enforceExhaustive } from '@leafygreen-ui/lib';
@@ -94,13 +94,47 @@ export function normalizeAccessor<T extends string | Function>(
 }
 
 interface TableHeaderInterface<Shape> {
+  /**
+   * The label of the column
+   */
   label: React.ReactElement | string;
+
+  /**
+   * The index of the column
+   */
+  index?: number;
+
+  /**
+   * Callback fired when the header is clicked
+   */
   onClick?: (
     colId: number,
     accessorValue: ((data: any) => string) | string,
   ) => void;
-  index?: number;
+
+  /**
+   * A callback to define which property of the data structure to sort on
+   */
   sortBy?: ((data: Shape) => string) | string;
+
+  /**
+   * A callback to provide more customization in column sorting.
+   * This callback has a similar signature to the Array.sort method,
+   * with the addition of a `direction` parameter, which has values `asc` or `desc`.
+   *
+   * Pin a row to the top by returning -1 if `a` matches, and 1 if `b` matches the desired row
+   */
+  compareFn?: (a: Shape, b: Shape, direction: SortDirection) => number;
+
+  /**
+   * A callback that gets called when a user initiates sort on the column.
+   * Internal sorting is disabled when this callback is provided.
+   */
+  handleSort?: (direction: SortDirection) => void;
+
+  /**
+   * The type of data as a `DataType`
+   */
   dataType?: DataType;
 }
 
@@ -121,6 +155,8 @@ function TableHeader<Shape>({
   className,
   dataType,
   sortBy,
+  compareFn,
+  handleSort,
   ...rest
 }: TableHeaderProps<Shape>) {
   const { dispatch } = useTableContext();
@@ -144,23 +180,31 @@ function TableHeader<Shape>({
   }, [index, dataType, dispatch]);
 
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
+  const isSortable = !!(sortBy || compareFn || handleSort);
 
   const sortDirection = sort && sort.columnId === index ? sort.direction : null;
-  const glyph: 'unsorted' | 'asc' | 'desc' = sortDirection ?? 'unsorted';
+  const glyph: 'unsorted' | SortDirection = sortDirection ?? 'unsorted';
   const Glyph = glyphMap[glyph];
 
   const sortRows = () => {
-    if (typeof index === 'number' && normalizedAccessor) {
-      setSort(prevSort => ({
-        columnId: index,
-        direction:
-          index === prevSort?.columnId
-            ? prevSort.direction === 'asc'
-              ? 'desc'
-              : 'asc'
-            : 'desc',
-        accessorValue: normalizedAccessor,
-      }));
+    if (typeof index === 'number' && isSortable) {
+      const newDirection: SortDirection =
+        index === sort?.columnId
+          ? sort.direction === 'asc'
+            ? 'desc'
+            : 'asc'
+          : 'desc';
+
+      setSort(prevSort => {
+        return {
+          columnId: index,
+          direction: newDirection,
+          accessorValue: normalizedAccessor || undefined,
+          compareFn,
+        };
+      });
+
+      handleSort?.(newDirection);
     }
   };
 
@@ -197,7 +241,7 @@ function TableHeader<Shape>({
         <span className={cx(labelStyle, modeStyles[mode].labelStyle)}>
           {label}
         </span>
-        {sortBy != null && (
+        {isSortable && (
           <IconButton aria-label="sort" onClick={sortRows} darkMode={darkMode}>
             <Glyph
               size="small"
