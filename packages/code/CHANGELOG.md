@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 9.1.0
+
+### Minor Changes
+
+- a30caf8f: Removes `clike` language support in Code component (previously removed by `highlight.js`)
+
 ## 9.0.0
 
 ### Major Changes
