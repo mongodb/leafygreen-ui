@@ -29,7 +29,7 @@
     "@leafygreen-ui/popover": "^7.2.2",
     "@leafygreen-ui/tokens": "0.5.3",
     "@types/react-is": "^17.0.0",
-    "polished": "^4.0.3",
+    "polished": "^4.1.3",
     "react-is": "^17.0.1"
   },
   "peerDependencies": {
