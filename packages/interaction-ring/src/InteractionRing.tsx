@@ -96,16 +96,6 @@ function computeStyles({
   };
 }
 
-const baseContentStyle = css`
-  width: 100%;
-  height: 100%;
-
-  // Form elements don't always inherit these by default
-  // https://developer.mozilla.org/en-US/docs/Learn/Forms/Styling_web_forms#Fonts_and_text
-  font-family: inherit;
-  font-size: 100%;
-`;
-
 interface State {
   hovered?: boolean;
   focused?: boolean;
@@ -200,7 +190,7 @@ export default function InteractionRing({
   const content = useMemo(
     () =>
       React.cloneElement(children, {
-        className: cx(baseContentStyle, contentClassName),
+        className: contentClassName,
         onFocus,
         onBlur,
       }),

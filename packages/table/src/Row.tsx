@@ -79,12 +79,11 @@ const modeStyles = {
 };
 
 const rowStyle = css`
-  border-color: var(--lg-table-row-border-color);
-  border-top-width: 1px;
-  border-top-style: solid;
+  --lg-min-cell-height: 40px;
+  border-top: 1px solid var(--lg-table-row-border-color);
 
   & > td > ${tdInnerDiv.selector} {
-    min-height: 40px;
+    min-height: var(--lg-min-cell-height);
     max-height: unset;
   }
 `;
@@ -94,31 +93,55 @@ const hideRow = css`
 `;
 
 const nestedRowInitialStyle = css`
-  transition: all ${transitionTime}ms ease-in-out;
-  transition-property: border-color, transform, opacity;
   transform-origin: 50% 0%;
   border-color: var(--lg-table-row-border-color);
   opacity: 0;
-  transform: translateY(-10%);
+  transition: ${transitionTime}ms ease-in-out;
+  transition-property: border-color, opacity;
+
+  & > td {
+    transition: ${transitionTime}ms ease-in-out;
+    transition-property: padding-block;
+
+    & > ${tdInnerDiv.selector} {
+      overflow: hidden;
+      transition: ${transitionTime}ms ease-in-out;
+      transition-property: min-height, max-height;
+    }
+  }
 `;
 
-const transitionStyles: { [key in TransitionStatus]: string } = {
-  entering: css`
-    opacity: 0;
-    transform: translateY(-10px);
-  `,
-  entered: css`
-    opacity: 1;
-    transform: translateY(0);
-  `,
-  exiting: css`
-    opacity: 0;
-    transform: translateY(-10px);
-  `,
-  exited: css`
-    display: none;
-  `,
-  unmounted: ``, // N/A
+const hiddenRowStyles = css`
+  opacity: 0;
+  border-color: transparent;
+
+  & > td {
+    padding-block: 0;
+
+    & > ${tdInnerDiv.selector} {
+      min-height: 0px;
+      max-height: 0px;
+    }
+  }
+`;
+
+const transitionStyles = (state: TransitionStatus, height?: number): string => {
+  switch (state) {
+    case 'entered':
+      return css`
+        opacity: 1;
+        & > td {
+          padding-block: 8px;
+
+          & > ${tdInnerDiv.selector} {
+            min-height: var(--lg-min-cell-height);
+            max-height: max(var(--lg-min-cell-height), ${height}px);
+          }
+        }
+      `;
+    default:
+      return hiddenRowStyles;
+  }
 };
 
 function styleColumn(index: string, dataType?: DataType) {
@@ -180,7 +203,21 @@ const Row = React.forwardRef(
 
     const indexRef = useRef(useIdAllocator({ prefix: 'row' }));
     const [isExpanded, setIsExpanded] = useState(expanded);
-    const nodeRef = useRef(null);
+    const nestedRowNodeRef = useRef<HTMLTableRowElement>(null);
+
+    const [nestedRowHeight, setNestedRowHeight] = useState(0);
+    useEffect(() => {
+      if (nestedRowNodeRef && nestedRowNodeRef.current) {
+        const innerSpan: HTMLSpanElement | null = nestedRowNodeRef.current.querySelector(
+          `${tdInnerDiv.selector} > span`,
+        );
+
+        if (innerSpan && innerSpan.offsetHeight) {
+          setNestedRowHeight(innerSpan.offsetHeight);
+        }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [nestedRowNodeRef.current, isExpanded]);
 
     useEffect(() => {
       let shouldDispatchHasNestedRows = false;
@@ -246,18 +283,22 @@ const Row = React.forwardRef(
             enter: 0,
             exit: transitionTime,
           }}
-          nodeRef={nodeRef}
+          nodeRef={nestedRowNodeRef}
         >
           {state =>
             React.Children.map(children, (child, index) => {
               if (child != null && isComponentType<RowElement>(child, 'Row')) {
                 return React.cloneElement(child, {
-                  ref: nodeRef,
+                  ref: nestedRowNodeRef,
                   isAnyAncestorCollapsed:
                     isAnyAncestorCollapsedProp || !isExpanded,
                   indentLevel: indentLevel + 1,
                   key: `${indexRef.current}-${indentLevel}-${index}`,
-                  className: cx(nestedRowInitialStyle, transitionStyles[state]),
+                  className: cx(
+                    nestedRowInitialStyle,
+                    transitionStyles(state, nestedRowHeight),
+                    `transition-${state}`,
+                  ),
                 });
               }
             })
@@ -269,11 +310,12 @@ const Row = React.forwardRef(
 
       return { rowHasNestedRows, renderedNestedRows, renderedTransitionGroup };
     }, [
+      children,
       isExpanded,
       isAnyAncestorCollapsedProp,
       isBrowser,
-      children,
       indentLevel,
+      nestedRowHeight,
     ]);
 
     const renderedChildren = useMemo(() => {

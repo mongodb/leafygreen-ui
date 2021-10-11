@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.5.0
+
+### Minor Changes
+
+- 934515d7: Adds "Array", "Diagram", "Home", and "Table" glyphs to the Icon component.
+
 ## 11.4.0
 
 ### Minor Changes
