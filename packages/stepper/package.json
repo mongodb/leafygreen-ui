@@ -24,6 +24,6 @@
     "@leafygreen-ui/icon": "^11.3.0",
     "@leafygreen-ui/lib": "^9.0.0",
     "@leafygreen-ui/palette": "^3.2.2",
-    "polished": "^3.6.5"
+    "polished": "^4.1.3"
   }
 }
