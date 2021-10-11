@@ -127,8 +127,8 @@ interface TableHeaderInterface<Shape> {
   compareFn?: (a: Shape, b: Shape, direction: SortDirection) => number;
 
   /**
-   * A callback that gets called when a user initiates sort of the column.
-   * Internal sorting is disabled when this method is provided.
+   * A callback that gets called when a user initiates sort on the column.
+   * Internal sorting is disabled when this callback is provided.
    */
   handleSort?: (direction: SortDirection) => void;
 
