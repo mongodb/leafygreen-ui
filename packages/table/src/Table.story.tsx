@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
-import { defaultData, testHeavierDataSet, multiRowData } from './fixtures';
+import { defaultData, multiRowData, testTableDataShape } from './fixtures';
 import { uiColors } from '@leafygreen-ui/palette';
 
 storiesOf('Table', module)
@@ -17,54 +17,96 @@ storiesOf('Table', module)
         className={css`
           padding: 20px;
           background-color: ${darkMode ? uiColors.gray.dark3 : 'transparent'};
+          width: 768px;
         `}
       >
         <Table
           baseFontSize={baseFontSize}
           darkMode={darkMode}
-          data={testHeavierDataSet}
+          data={defaultData}
           columns={
             <>
               <TableHeader
                 dataType={DataType.String}
                 label="Name"
                 key="name"
-                sortBy="name"
+                compareFn={(
+                  a: testTableDataShape,
+                  b: testTableDataShape,
+                  dir,
+                ) => {
+                  const reverse = (str: string) =>
+                    str.split('').reverse().join('');
+
+                  // Pin 'Yvonne' to the top
+                  if (b.name === 'Yvonne') return 1;
+                  else if (a.name === 'Yvonne') return -1;
+
+                  // Sort by reversed name
+                  if (dir == 'desc') {
+                    return reverse(b.name) >= reverse(a.name) ? 1 : -1;
+                  }
+
+                  return reverse(b.name) >= reverse(a.name) ? -1 : 1;
+                }}
               />
 
               <TableHeader
                 dataType={DataType.Number}
                 label="Age"
                 key="age"
-                sortBy={(data: typeof testHeavierDataSet[0]) =>
-                  data.age.toString()
-                }
+                sortBy={(data: testTableDataShape) => data.age.toString()}
               />
 
               <TableHeader
                 dataType={DataType.String}
                 label="Favorite Color"
                 key="color"
-                sortBy={(data: typeof testHeavierDataSet[0]) => data.color}
+                sortBy={(data: testTableDataShape) => data.color}
               />
 
               <TableHeader
                 dataType={DataType.String}
                 label="Location"
                 key="location"
-                sortBy={(data: typeof testHeavierDataSet[0]) => data.location}
+                handleSort={dir => {
+                  console.log(`Sorting location ${dir}`);
+                }}
               />
             </>
           }
         >
           {({ datum }) => (
-            <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
-              <Cell isHeader={withHeaders}>{datum.name}</Cell>
+            <Row key={datum.name} disabled={datum.disabled}>
+              <Cell isHeader={withHeaders}>
+                {datum.name} {datum.rand}
+              </Cell>
               <Cell>{datum.age}</Cell>
               <Cell>{datum.color}</Cell>
               <Cell>{datum.location}</Cell>
 
-              {datum.age > 21 && (
+              {datum.name === 'Donna' && (
+                <Row>
+                  <Cell isHeader={withHeaders} colSpan={4}>
+                    Nulla vitae elit libero, a pharetra augue. Sed posuere
+                    consectetur est at lobortis. Integer posuere erat a ante
+                    venenatis dapibus posuere velit aliquet. Maecenas faucibus
+                    mollis interdum. Nullam id dolor id nibh ultricies vehicula
+                    ut id elit. Duis mollis, est non commodo luctus, nisi erat
+                    porttitor ligula, eget lacinia odio sem nec elit. Cras justo
+                    odio, dapibus ac facilisis in, egestas eget quam. Donec id
+                    elit non mi porta gravida at eget metus. Donec id elit non
+                    mi porta gravida at eget metus. Aenean lacinia bibendum
+                    nulla sed consectetur. Vestibulum id ligula porta felis
+                    euismod semper. Maecenas sed diam eget risus varius blandit
+                    sit amet non magna. Etiam porta sem malesuada magna mollis
+                    euismod. Donec ullamcorper nulla non metus auctor fringilla.
+                    Donec id elit non mi porta gravida at eget metus.
+                  </Cell>
+                </Row>
+              )}
+
+              {datum.name !== 'Donna' && datum.expandable && (
                 <Row>
                   <Cell isHeader={withHeaders}>
                     expanded name: {datum.name}
@@ -73,7 +115,7 @@ storiesOf('Table', module)
                   <Cell>expanded color: {datum.color}</Cell>
                   <Cell>{datum.location}</Cell>
 
-                  {datum.age > 25 && (
+                  {datum.age > 30 && (
                     <Row>
                       <Cell isHeader={withHeaders}>
                         expanded name: {datum.name}
