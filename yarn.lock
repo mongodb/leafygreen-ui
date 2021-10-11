@@ -2857,7 +2857,7 @@
     polished "^2.3.0"
     prop-types "^15.0.0"
 
-"@leafygreen-ui/logo@5.0.0":
+"@leafygreen-ui/logo@5.0.0", "@leafygreen-ui/logo@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/logo/-/logo-5.0.0.tgz#db4154246c18f62c12e5c664bd12aabe7c2a11a2"
   integrity sha512-c/2LOEkNpcmW1A/dgfCGiLyDxPeH0GaNcYWgNDBWKa4siUCU5S1DSV0uIIEXRJjMlXsSdYkoP4hadNH6ixrBnA==
