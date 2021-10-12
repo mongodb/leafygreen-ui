@@ -1,9 +1,13 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
+export type SortDirection = 'asc' | 'desc';
+
 interface Sort {
   columnId: number;
-  direction: 'asc' | 'desc';
+  direction: SortDirection;
   accessorValue?: (data: any) => string;
+  compareFn?: (a: any, b: any, direction: SortDirection) => number;
+  handleSort?: (direction: SortDirection) => void;
 }
 
 interface ContextInterface {
@@ -38,20 +42,32 @@ const alphanumericCollator = new Intl.Collator(undefined, {
 });
 
 export const getDataComparisonFunction = <T extends {}>({
-  accessorValue,
   direction,
+  accessorValue,
+  compareFn,
 }: {
-  accessorValue: (data: T) => string;
-  direction: 'asc' | 'desc';
+  direction: SortDirection;
+  accessorValue?: (data: T) => string;
+  compareFn?: (a: T, b: T, dir: SortDirection) => number;
 }) => {
-  return (a: T, b: T) => {
-    const aVal = accessorValue(a);
-    const bVal = accessorValue(b);
+  if (accessorValue) {
+    return (a: T, b: T) => {
+      const aVal = accessorValue(a);
+      const bVal = accessorValue(b);
 
-    if (direction !== 'desc') {
-      return alphanumericCollator.compare(aVal, bVal);
-    }
+      if (direction !== 'desc') {
+        return alphanumericCollator.compare(aVal, bVal);
+      }
 
-    return alphanumericCollator.compare(bVal, aVal);
-  };
+      return alphanumericCollator.compare(bVal, aVal);
+    };
+  }
+
+  if (compareFn) {
+    return (a: T, b: T) => compareFn(a, b, direction);
+  }
+
+  console.error(
+    'Error getting Table data comparison function. Please supply either an `accessorValue` or `compareFn`',
+  );
 };
