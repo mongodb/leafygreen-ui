@@ -1,5 +1,16 @@
 # @leafygreen-ui/icon
 
+## 11.6.0
+
+### Minor Changes
+
+- d4a46e27: Adds Connect and Disconnect icons
+
+### Patch Changes
+
+- Updated dependencies [cec710ad]
+  - @leafygreen-ui/lib@9.0.1
+
 ## 11.5.0
 
 ### Minor Changes
