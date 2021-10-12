@@ -1,23 +1,28 @@
-import { isEmpty } from 'lodash';
-import { ReactChild, ReactPortal } from 'react';
+import { ReactElement, ReactNode, ReactText } from 'react';
 
 /**
  * Returns the text string of a React node
  */
-export function getNodeTextContent(
-  node?: ReactChild | ReactPortal | string | Array<ReactChild | ReactPortal>,
-): string {
-  if (typeof node === 'string') {
-    return node.trim();
+export function getNodeTextContent(node?: ReactNode): string {
+  if (isText(node)) {
+    return node.toString().trim();
   }
 
   if (Array.isArray(node)) {
     return node.map(getNodeTextContent).join(' ').trim();
   }
 
-  if (node && typeof node === 'object' && !isEmpty(node)) {
+  if (hasChildren(node)) {
     return getNodeTextContent(node.props.children);
   }
 
   return '';
+}
+
+function hasChildren(item?: any): item is ReactElement {
+  return item && typeof item === 'object' && item.props;
+}
+
+function isText(item?: any): item is ReactText {
+  return typeof item === 'string' || typeof item === 'number';
 }
