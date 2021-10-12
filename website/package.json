@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/css": "^11.0.0",
     "@emotion/server": "^11.0.0",
+    "@leafygreen-ui/logo": "5.0.0",
     "clipboard": "^2.0.6",
     "gray-matter": "4.0.2",
     "next": "^10.0.0",

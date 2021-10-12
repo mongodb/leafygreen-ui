@@ -112,6 +112,10 @@ const componentData: Partial<Record<Component, ComponentData>> = {
     figmaLink:
       'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=179%3A17988',
   },
+  [Component.SegmentedControl]: {
+    metaTagDescription: '',
+    figmaLink: '',
+  },
   [Component.Select]: {
     metaTagDescription:
       'Select inputs are a a type of form element used to allow users to make a selection from a list of items.',

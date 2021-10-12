@@ -22,6 +22,7 @@ export const Component = {
   Portal: 'portal',
   RadioBoxGroup: 'radio-box-group',
   RadioGroup: 'radio-group',
+  SegmentedControl: 'segmented-control',
   Select: 'select',
   SideNav: 'side-nav',
   Stepper: 'stepper',
