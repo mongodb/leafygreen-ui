@@ -62,6 +62,9 @@ jobs:
         with:
           # channel-id: 'C01CBLPFD35'  # leafygreen-ui-releases
           channel-id: 'GGGR7AXHP' # design-systems-team
-          slack-message: ":wave: Hey there! Some new LeafyGreen updates: \n${{steps.changesets.outputs.publishedPackages | jq -r 'map(.name + \"@\" + .version) | join(\"/n\")'}}"
+          slack-message: |
+            `:wave: Hey there! Some new LeafyGreen updates: 
+             ${{steps.changesets.outputs.publishedPackages | jq -r  'map("*" + .name + "@" + .version + "*" + "\nhttps://github.com/mongodb/leafygreen-ui/tree/main/packages/" + (.name | split("/") | .[1]) +  "/CHANGELOG.md") | join("\n\n")'}}"
+            `
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
