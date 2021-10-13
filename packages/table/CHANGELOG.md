@@ -1,5 +1,15 @@
 # @leafygreen-ui/table
 
+## 2.0.5
+
+### Patch Changes
+
+- de89c3c7: Updates nested rows to fix animations and enable variable row height
+- Updated dependencies [d4a46e27]
+- Updated dependencies [cec710ad]
+  - @leafygreen-ui/icon@11.6.0
+  - @leafygreen-ui/lib@9.0.1
+
 ## 2.0.4
 
 ### Patch Changes
