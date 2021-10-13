@@ -128,11 +128,13 @@ const disabledStyle = {
   [Mode.Light]: css`
     color: ${uiColors.gray.light2};
     pointer-events: none;
+    background-color: rgba(255, 255, 255, 0);
   `,
 
   [Mode.Dark]: css`
     color: ${uiColors.gray.dark2};
     pointer-events: none;
+    background-color: rgba(255, 255, 255, 0);
   `,
 } as const;
 
@@ -248,8 +250,8 @@ const IconButton: ExtendableBox<
         iconButtonSizes[size],
         iconButtonMode[mode],
         {
-          [disabledStyle[mode]]: disabled,
           [activeStyle[mode]]: active,
+          [disabledStyle[mode]]: disabled,
         },
         className,
       ),
