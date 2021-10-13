@@ -1,5 +1,19 @@
 # @leafygreen-ui/code
 
+## 9.2.0
+
+### Minor Changes
+
+- 2a945c7a: Adds support for Java `.properties` files
+
+### Patch Changes
+
+- Updated dependencies [d4a46e27]
+- Updated dependencies [cec710ad]
+  - @leafygreen-ui/icon@11.6.0
+  - @leafygreen-ui/lib@9.0.1
+  - @leafygreen-ui/select@3.0.7
+
 ## 9.1.0
 
 ### Minor Changes
