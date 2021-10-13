@@ -129,12 +129,27 @@ const disabledStyle = {
     color: ${uiColors.gray.light2};
     pointer-events: none;
     background-color: rgba(255, 255, 255, 0);
+
+    &:focus {
+      color: ${uiColors.gray.light2};
+      &:before {
+        background-color: ${uiColors.gray.light1};
+      }
+    }
   `,
 
   [Mode.Dark]: css`
     color: ${uiColors.gray.dark2};
     pointer-events: none;
     background-color: rgba(255, 255, 255, 0);
+
+    &:focus {
+      color: ${uiColors.gray.dark2};
+
+      &:before {
+        background-color: ${uiColors.gray.dark1};
+      }
+    }
   `,
 } as const;
 
@@ -242,7 +257,7 @@ const IconButton: ExtendableBox<
     const iconButtonProps = {
       ...rest,
       ref,
-      tabIndex: disabled ? -1 : 0,
+      tabIndex: 0,
       ['aria-disabled']: disabled,
       className: cx(
         removeButtonStyle,
