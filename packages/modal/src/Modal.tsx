@@ -174,12 +174,6 @@ interface ModalProps {
   shouldClose?: () => boolean;
 
   /**
-   * Determines whether or not a Modal should close when a user clicks outside the modal.
-   * @default: `true`
-   */
-  closeOnBackdropClick?: boolean;
-
-  /**
    * className applied to root div.
    */
   className?: string;
@@ -230,7 +224,7 @@ function Modal({
   size = ModalSize.Default,
   setOpen = () => {},
   shouldClose = () => true,
-  closeOnBackdropClick = true,
+  // closeOnBackdropClick = true,
   darkMode = false,
   children,
   className,
@@ -239,10 +233,10 @@ function Modal({
   ...rest
 }: ModalProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const [
-    scrollContainerNode,
-    setScrollContainerNode,
-  ] = useState<HTMLDivElement | null>(null);
+  // const [
+  //   scrollContainerNode,
+  //   setScrollContainerNode,
+  // ] = useState<HTMLDivElement | null>(null);
 
   const nodeRef = React.useRef(null);
 
@@ -252,14 +246,14 @@ function Modal({
     }
   }, [setOpen, shouldClose]);
 
-  const handleBackdropClick = useCallback(
-    (e: React.SyntheticEvent) => {
-      if (closeOnBackdropClick && e.target === scrollContainerNode) {
-        handleClose();
-      }
-    },
-    [closeOnBackdropClick, handleClose, scrollContainerNode],
-  );
+  // const handleBackdropClick = useCallback(
+  //   (e: React.SyntheticEvent) => {
+  //     if (closeOnBackdropClick && e.target === scrollContainerNode) {
+  //       handleClose();
+  //     }
+  //   },
+  //   [closeOnBackdropClick, handleClose, scrollContainerNode],
+  // );
 
   const id = useIdAllocator({ prefix: 'modal' });
 
@@ -282,19 +276,18 @@ function Modal({
       {(state: string) => (
         <Portal>
           <div
+            {...rest}
             id={id}
             ref={nodeRef}
-            {...rest}
-            // Setting role to 'none', because elements with a click event should have a specific role
-            // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
-            role="none"
-            onClick={handleBackdropClick}
             className={cx(className, backdrop, {
               [visibleBackdrop]: state === 'entered',
             })}
           >
             <FocusTrap focusTrapOptions={focusTrapOptions}>
-              <div className={scrollContainer} ref={setScrollContainerNode}>
+              <div
+                className={scrollContainer}
+                // ref={setScrollContainerNode}
+              >
                 <div
                   aria-modal="true"
                   role="dialog"
