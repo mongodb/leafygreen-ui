@@ -1,4 +1,4 @@
-import React, { SetStateAction, useCallback, useState } from 'react';
+import React, { SetStateAction, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import FocusTrap from 'focus-trap-react';
 import { Transition } from 'react-transition-group';
