@@ -224,7 +224,6 @@ function Modal({
   size = ModalSize.Default,
   setOpen = () => {},
   shouldClose = () => true,
-  // closeOnBackdropClick = true,
   darkMode = false,
   children,
   className,
@@ -233,10 +232,6 @@ function Modal({
   ...rest
 }: ModalProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  // const [
-  //   scrollContainerNode,
-  //   setScrollContainerNode,
-  // ] = useState<HTMLDivElement | null>(null);
 
   const nodeRef = React.useRef(null);
 
@@ -245,15 +240,6 @@ function Modal({
       setOpen(false);
     }
   }, [setOpen, shouldClose]);
-
-  // const handleBackdropClick = useCallback(
-  //   (e: React.SyntheticEvent) => {
-  //     if (closeOnBackdropClick && e.target === scrollContainerNode) {
-  //       handleClose();
-  //     }
-  //   },
-  //   [closeOnBackdropClick, handleClose, scrollContainerNode],
-  // );
 
   const id = useIdAllocator({ prefix: 'modal' });
 
@@ -284,10 +270,7 @@ function Modal({
             })}
           >
             <FocusTrap focusTrapOptions={focusTrapOptions}>
-              <div
-                className={scrollContainer}
-                // ref={setScrollContainerNode}
-              >
+              <div className={scrollContainer}>
                 <div
                   aria-modal="true"
                   role="dialog"
