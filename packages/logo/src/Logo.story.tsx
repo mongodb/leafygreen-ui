@@ -8,9 +8,11 @@ import {
   MongoDBLogo,
   MongoDBLogoMark,
   AtlasLogoLockup,
+  AtlasForGovernmentLogoLockup,
   RealmLogoLockup,
   EnterpriseAdvancedLogoLockup,
   CommunityEditionLogoLockup,
+  UniversityLogoLockup,
   AtlasLogoMark,
   RealmLogoMark,
   ChartsLogoMark,
@@ -65,6 +67,9 @@ storiesOf('Logo', module)
   .add('MongoDB Logo', () => renderLogoStory(MongoDBLogo))
   .add('MongoDB Logo Mark', () => renderLogoStory(MongoDBLogoMark))
   .add('Atlas Logo Lockup', () => renderLogoStory(AtlasLogoLockup))
+  .add('Atlas For Government Logo Lockup', () =>
+    renderLogoStory(AtlasForGovernmentLogoLockup),
+  )
   .add('Realm Logo Lockup', () => renderLogoStory(RealmLogoLockup))
   .add('Enterprise Advanced Logo Lockup', () =>
     renderLogoStory(EnterpriseAdvancedLogoLockup),
@@ -72,6 +77,7 @@ storiesOf('Logo', module)
   .add('Community Edition Logo Lockup', () =>
     renderLogoStory(CommunityEditionLogoLockup),
   )
+  .add('University Logo Lockup', () => renderLogoStory(UniversityLogoLockup))
   .add('[DEPRECATED] Product Logo Marks', () => {
     const knockout = boolean('knockout', false);
     const size = number('size', 18);
