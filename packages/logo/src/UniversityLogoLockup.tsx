@@ -41,7 +41,7 @@ function UniversityLogoLockup({
         className,
       )}
       height={height}
-      viewBox="0 0 196 48"
+      viewBox="0 0 240 34"
       fill="none"
     >
       <path
