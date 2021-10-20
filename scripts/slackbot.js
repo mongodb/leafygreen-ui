@@ -1,0 +1,91 @@
+require('dotenv').config();
+const { WebClient } = require('@slack/web-api');
+const { sample } = require('lodash');
+
+const updatesArray = JSON.parse(process.argv[2]);
+const channel = 'C02JA6UG886'; // design-system-testing
+// const channel = "GGGR7AXHP"; // design-system-team
+// const channel = "C01CBLPFD35"; // leafygreen-ui-releases
+
+console.log(updatesArray);
+
+try {
+  const botToken = process.env.SLACK_BOT_TOKEN;
+
+  if (exists(botToken) && exists(updatesArray)) {
+    const greeting = getGreeting(updatesArray.length);
+
+    const updatesString = updatesArray
+      .map(({ name, version }) => {
+        const shortName = name.split('/')[1];
+        const changelogUrl = `https://github.com/mongodb/leafygreen-ui/blob/main/packages/${shortName}/CHANGELOG.md`;
+        const fullName = `${name}@${version}`;
+        return `*<${changelogUrl} | ${fullName}>*`;
+      })
+      .join('\n\n');
+    const web = new WebClient(botToken);
+
+    const text = `${greeting}\n\n${updatesString}`;
+    console.log(text);
+
+    if (exists(text)) {
+      // post message
+      web.chat.postMessage({ text, channel });
+      console.log(`Sent message to ${channel}`);
+    } else {
+      console.warn('Missing message text. Did not send message.');
+    }
+  }
+} catch (error) {
+  console.error(`Error:`, error.message);
+}
+
+function exists(arg) {
+  return !!arg && arg.length > 0;
+}
+
+function getGreeting(length) {
+  const EMOJIS = [
+    ':wave:',
+    ':lefty-wave:',
+    ':blob-wave:',
+    ':blob-dance:',
+    ':blob_excited:',
+    ':celebrate:',
+    ':tada:',
+    ':sparkles:',
+    ':rocket:',
+    ':boom:',
+    ':zap:',
+    ':fire:',
+    ':seedling:',
+    ':herb:',
+    ':leaves:',
+    ':leafy_green:',
+  ];
+
+  const NYCTime = new Date().getUTCHours() - 5;
+  let timeOfDay;
+
+  {
+    if (NYCTime <= 12) timeOfDay = 'morning';
+    else if (NYCTime <= 18) timeOfDay = 'afternoon';
+    else timeOfDay = 'evening';
+  }
+
+  const GREETINGS = [
+    'Hey there!',
+    'Hello there!',
+    'Hi there!',
+    `Good ${timeOfDay}!`,
+  ];
+
+  const emoji = sample(EMOJIS);
+  const greeting = sample(GREETINGS);
+  const intro =
+    length > 1
+      ? 'Some new LeafyGreen updates today'
+      : `Just one LeafyGreen update this ${timeOfDay}`;
+
+  return `${emoji} ${greeting} ${intro}`;
+}
