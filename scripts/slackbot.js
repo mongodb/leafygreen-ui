@@ -65,19 +65,12 @@ function getGreeting(length) {
   ];
 
   const NYCTime = new Date().getUTCHours() - 5;
-  let timeOfDay;
-
-  {
-    if (NYCTime <= 12) timeOfDay = 'morning';
-    else if (NYCTime <= 18) timeOfDay = 'afternoon';
-    else timeOfDay = 'evening';
-  }
 
   const GREETINGS = [
     'Hey there!',
     'Hello there!',
     'Hi there!',
-    `Good ${timeOfDay}!`,
+    `Good ${getTimeOfDay(NYCTime)}!`,
   ];
 
   const emoji = sample(EMOJIS);
@@ -88,4 +81,10 @@ function getGreeting(length) {
       : `Just one LeafyGreen update this ${timeOfDay}`;
 
   return `${emoji} ${greeting} ${intro}`;
+}
+
+function getTimeOfDay(time) {
+  if (time <= 12) return 'morning';
+  else if (time <= 18) return 'afternoon';
+  else return 'evening';
 }
