@@ -1,8 +1,8 @@
 node_modules/
 dist/
 package.json
-packages/icon/src/glyphs
-packages/icon/src/generated
+packages/icon/src/glyphs/*.svg
+packages/icon/src/generated/*.tsx
 storybook/public/
 .changeset/
 website/.next/
