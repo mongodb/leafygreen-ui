@@ -1,6 +1,8 @@
 node_modules/
 dist/
 package.json
+packages/icon/src/glyphs
+packages/icon/src/generated
 storybook/public/
 .changeset/
 website/.next/
