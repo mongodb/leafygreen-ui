@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 5.1.5
+
+### Patch Changes
+
+- cd9be9ec: Fixes a bug where Tabs with a non-string `name` prop would not be rendered accessibly
+
 ## 5.1.4
 
 ### Patch Changes
