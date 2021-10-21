@@ -7,8 +7,6 @@ const channel = 'C02JA6UG886'; // design-system-testing
 // const channel = "GGGR7AXHP"; // design-system-team
 // const channel = "C01CBLPFD35"; // leafygreen-ui-releases
 
-console.log(updatesArray);
-
 try {
   const botToken = process.env.SLACK_BOT_TOKEN;
 
@@ -26,7 +24,6 @@ try {
     const web = new WebClient(botToken);
 
     const text = `${greeting}\n\n${updatesString}`;
-    console.log(text);
 
     if (exists(text)) {
       // post message
