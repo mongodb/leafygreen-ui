@@ -44,7 +44,7 @@ function exists(arg) {
 function getGreeting(length) {
   const EMOJIS = [
     ':wave:',
-    ':lefty-wave:',
+    ':lefty_wave:',
     ':blob-wave:',
     ':blob-dance:',
     ':blob_excited:',
