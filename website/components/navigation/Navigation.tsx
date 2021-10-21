@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Key } from 'react';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/css';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
@@ -23,6 +23,13 @@ const logoStyles = css`
   margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
   cursor: pointer;
 `;
+
+const foundations: Array<String> = [
+  'accessibility',
+  'forms',
+  'grid',
+  'icon-creation',
+];
 
 const components: Array<Component> = [
   'badge',
@@ -49,6 +56,7 @@ const components: Array<Component> = [
   'portal',
   'radio-box-group',
   'radio-group',
+  'segmented-control',
   'select',
   'side-nav',
   'stepper',
@@ -72,18 +80,15 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
       return (
         <>
           <MobileNavigationGroup header="Foundations">
-            <MobileNavigationItem
-              onClick={() => router.push('/foundation/icon-creation')}
-              active={'icon-creation' === activePage}
-            >
-              Icon Creation
-            </MobileNavigationItem>
-            <MobileNavigationItem
-              onClick={() => router.push('/foundation/grid')}
-              active={'grid' === activePage}
-            >
-              Grid
-            </MobileNavigationItem>
+            {foundations.map(item => (
+              <MobileNavigationItem
+                key={item as Key}
+                onClick={() => router.push(`/foundation/${item}`)}
+                active={item === activePage}
+              >
+                {item.split('-').join(' ')}
+              </MobileNavigationItem>
+            ))}
           </MobileNavigationGroup>
           <MobileNavigationGroup
             header="Components"
@@ -108,18 +113,15 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     return (
       <>
         <SideNavGroup header="Foundations" glyph={<Icon glyph="University" />}>
-          <SideNavItem
-            onClick={() => router.push('/foundation/icon-creation')}
-            active={'icon-creation' === activePage}
-          >
-            Icon Creation
-          </SideNavItem>
-          <SideNavItem
-            onClick={() => router.push('/foundation/grid')}
-            active={'grid' === activePage}
-          >
-            Grid
-          </SideNavItem>
+          {foundations.map(item => (
+            <SideNavItem
+              key={item as Key}
+              onClick={() => router.push(`/foundation/${item}`)}
+              active={item === activePage}
+            >
+              {item.split('-').join(' ')}
+            </SideNavItem>
+          ))}
         </SideNavGroup>
         <SideNavGroup header="Components" glyph={<Icon glyph="Apps" />}>
           {components.map(item => {

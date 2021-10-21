@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
           ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
           submodules: 'recursive'
-      
+
       # The SSH Agent manages the SSH keys used in future steps for authentication.
       - name: Set Up SSH Agent
         uses: webfactory/ssh-agent@v0.5.2
@@ -54,3 +54,17 @@ jobs:
       - name: Publish website with package updates
         if: steps.changesets.outputs.published == 'true'
         run: yarn publish:sites
+
+      - name: Notify Slack chanel of new releases
+        if: steps.changesets.outputs.published == 'true'
+        id: slack
+        uses: slackapi/slack-github-action@v1.14.0
+        with:
+          # channel-id: 'C01CBLPFD35'  # leafygreen-ui-releases
+          channel-id: 'GGGR7AXHP' # design-systems-team
+          slack-message: |
+            `:wave: Hey there! Some new LeafyGreen updates: 
+             ${{steps.changesets.outputs.publishedPackages | jq -r  'map("*" + .name + "@" + .version + "*" + "\nhttps://github.com/mongodb/leafygreen-ui/tree/main/packages/" + (.name | split("/") | .[1]) +  "/CHANGELOG.md") | join("\n\n")'}}
+            `
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

@@ -6,6 +6,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { Mode } from './Tabs';
+import { getNodeTextContent } from './getNodeTextContent';
 
 const modeColors = {
   light: {
@@ -134,6 +135,7 @@ interface BaseTabTitleProps {
   disabled?: boolean;
   isAnyTabFocused?: boolean;
   parentRef?: HTMLDivElement;
+  [key: string]: any;
 }
 
 const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
@@ -184,6 +186,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   }, [titleRef, setShowEllipsis]);
 
   const sharedTabProps = {
+    ...rest,
     className: cx(
       listTitle,
       modeColors[mode].listTitleColor,
@@ -198,7 +201,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     role: 'tab',
     tabIndex: selected ? 0 : -1,
     ['aria-selected']: selected,
-    ...rest,
+    name: getNodeTextContent(rest.name),
   } as const;
 
   if (typeof rest.href === 'string') {
