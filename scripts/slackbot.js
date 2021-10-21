@@ -32,6 +32,10 @@ try {
     } else {
       console.warn('Missing message text. Did not send message.');
     }
+  } else {
+    console.warn(
+      exists(botToken) ? 'Updates array not found' : 'Bot token not found',
+    );
   }
 } catch (error) {
   console.error(`Error:`, error.message);
