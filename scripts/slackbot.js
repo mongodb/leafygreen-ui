@@ -3,8 +3,8 @@ const { WebClient } = require('@slack/web-api');
 const { sample } = require('lodash');
 
 const updatesArray = JSON.parse(process.argv[2]);
-const channel = 'C02JA6UG886'; // design-system-testing
-// const channel = "GGGR7AXHP"; // design-system-team
+// const channel = 'C02JA6UG886'; // design-system-testing
+const channel = 'GGGR7AXHP'; // design-system-team
 // const channel = "C01CBLPFD35"; // leafygreen-ui-releases
 
 try {
