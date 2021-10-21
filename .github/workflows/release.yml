@@ -43,7 +43,7 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         run: yarn publish:sites
 
-      - name: Notify Slack chanel of new releases
+      - name: Notify Slack channel of new releases
         if: steps.changesets.outputs.published == 'true'
         id: slackbot
         run: yarn slackbot '${{steps.changesets.outputs.publishedPackages}}'

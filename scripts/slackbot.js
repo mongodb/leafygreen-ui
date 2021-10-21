@@ -62,12 +62,12 @@ function getGreeting(length) {
   ];
 
   const NYCTime = new Date().getUTCHours() - 5;
-
+  const timeOfDay = getTimeOfDay(NYCTime);
   const GREETINGS = [
     'Hey there!',
     'Hello there!',
     'Hi there!',
-    `Good ${getTimeOfDay(NYCTime)}!`,
+    `Good ${timeOfDay}!`,
   ];
 
   const emoji = sample(EMOJIS);
