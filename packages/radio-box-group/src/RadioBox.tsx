@@ -38,7 +38,7 @@ interface StateForStyles {
   size: Size;
 }
 
-const getInteractionRingStyles = ({ checked }: StateForStyles) => {
+const getInteractionRingStyles = (_: StateForStyles) => {
   const baseStyles = css`
     width: 100%;
     height: 100%;
