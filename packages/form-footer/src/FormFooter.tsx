@@ -22,7 +22,7 @@ const footerStyle = (sticky: boolean) => {
 const contentStyle = css`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin: 0 auto;
   gap: 8px;
 
@@ -31,8 +31,15 @@ const contentStyle = css`
   }
 `;
 
+const flexSpan = css`
+  display: inline-flex;
+  gap: inherit;
+`;
+
 const bannerStyle = css`
-  flex-grow: 1;
+  flex-grow: 0;
+  min-height: unset;
+  padding-block: 7px;
 `;
 
 /**
@@ -151,20 +158,24 @@ export default function FormFooter({
   return (
     <footer className={cx(footerStyle(sticky), className)}>
       <div className={cx(contentStyle, contentClassName)}>
-        {backButtonText && (
-          <Button variant="default" onClick={onBackClick}>
-            {backButtonText}
+        <span className={flexSpan}>
+          {backButtonText && (
+            <Button variant="default" onClick={onBackClick}>
+              {backButtonText}
+            </Button>
+          )}
+          {errorMessage && (
+            <Banner className={bannerStyle} variant="danger">
+              {errorMessage}
+            </Banner>
+          )}
+        </span>
+        <span className={flexSpan}>
+          <Button variant="default" onClick={onCancel}>
+            {cancelButtonText || 'Cancel'}
           </Button>
-        )}
-        {errorMessage && (
-          <Banner className={bannerStyle} variant="danger">
-            {errorMessage}
-          </Banner>
-        )}
-        <Button variant="default" onClick={onCancel}>
-          {cancelButtonText || 'Cancel'}
-        </Button>
-        {primaryButton && RenderedPrimaryButton}
+          {primaryButton && RenderedPrimaryButton}
+        </span>
       </div>
     </footer>
   );
