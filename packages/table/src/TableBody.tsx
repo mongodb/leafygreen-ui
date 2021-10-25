@@ -43,7 +43,11 @@ function TableBody<Shape>({ children }: TableBodyProps<Shape>) {
 
   const compareFn = useMemo(() => {
     if (sort) {
-      const { direction, accessorValue } = sort;
+      const { direction, accessorValue, compareFn } = sort;
+
+      if (compareFn) {
+        return getDataComparisonFunction({ direction, compareFn });
+      }
 
       if (accessorValue) {
         return getDataComparisonFunction({ direction, accessorValue });

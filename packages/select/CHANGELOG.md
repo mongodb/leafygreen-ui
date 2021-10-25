@@ -1,5 +1,15 @@
 # @leafygreen-ui/select
 
+## 3.0.7
+
+### Patch Changes
+
+- cec710ad: Upgrades Polished to v4.1
+- Updated dependencies [d4a46e27]
+- Updated dependencies [cec710ad]
+  - @leafygreen-ui/icon@11.6.0
+  - @leafygreen-ui/lib@9.0.1
+
 ## 3.0.6
 
 ### Patch Changes

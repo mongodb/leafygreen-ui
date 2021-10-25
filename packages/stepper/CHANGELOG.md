@@ -1,5 +1,15 @@
 # @leafygreen-ui/stepper
 
+## 2.1.5
+
+### Patch Changes
+
+- cec710ad: Upgrades Polished to v4.1
+- Updated dependencies [d4a46e27]
+- Updated dependencies [cec710ad]
+  - @leafygreen-ui/icon@11.6.0
+  - @leafygreen-ui/lib@9.0.1
+
 ## 2.1.4
 
 ### Patch Changes

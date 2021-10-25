@@ -22,86 +22,116 @@ npm install @leafygreen-ui/logo
 
 ```js
 import {
-  Logo,
-  LogoMark,
-  AtlasLogo,
-  AtlasLogoMark,
-  ChartsLogo,
-  ChartsLogoMark,
-  CloudManagerLogo,
-  CloudManagerLogoMark,
-  CompassLogoMark,
-  DriversConnectorsLogoMark,
-  RealmLogo,
-  RealmLogoMark,
-  ServerLogoMark,
+  MongoDBLogo,
+  MongoDBLogoMark,
+  AtlasLogoLockup,
+  RealmLogoLockup,
+  CommunityEditionLogoLockup,
+  EnterpriseAdvancedLogoLockup,
 } from '@leafygreen-ui/logo';
 
-return <Logo />;
+return <MongoDBLogo />;
 ```
 
 **Output HTML**
 
 ```html
-<div>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1112.61 300"
-    height="40"
-    width="100%"
-  >
-    <title>MongoDB Logo</title>
-    <path class="leafygreen-ui-17842x1"></path>
-    <path class="leafygreen-ui-197s9ut"></path>
-    <path class="leafygreen-ui-1wkd47u"></path>
-    <path fill="#21313C"></path>
-    <path fill="#21313C"></path>
-    <path fill="#21313C"></path>
-    <path fill="#21313C"></path>
-    <path fill="#21313C"></path>
-    <path fill="#21313C"></path>
-    <path fill="#21313C"></path>
-    <path fill="#21313C"></path>
-  </svg>
-</div>
+<svg
+  role="img"
+  aria-label="MongoDB Logo"
+  class="leafygreen-ui-6pysb5"
+  height="40"
+  viewBox="0 0 127 32"
+  fill="none"
+>
+  <path d="..." fill="#00684A"></path>
+  <path d="..." fill="#00684A"></path>
+  <path d="..." fill="#00684A"></path>
+  <path d="..." fill="#00684A"></path>
+  <path d="..." fill="#00684A"></path>
+  <path d="..." fill="#00684A"></path>
+  <path d="..." fill="#00684A"></path>
+  <path d="..." fill="#00684A"></path>
+  <path d="..." fill="#00684A"></path>
+</svg>
 ```
 
-## Properties
-
-| Prop       | Type                                                         | Description                                                                                            | Default     |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ----------- |
-| `height`   | `number`                                                     | Height of the `<Logo />` component                                                                     | `40`        |
-| `knockout` | `boolean`                                                    | Determines whether or not a `knockout` version of the Logo will be used                                | `false`     |
-| `product`  | `'none'`, `'atlas'`, `'charts'`, `'cloudManager'`, `'realm'` | Determines what text will appear next to Logomark. When 'none' it will appear as a MongoDB logo        | `'none'`    |
-| `lockup`   | `'default'`, `'stacked'`                                     | Determines the orientation of the Logo. By default the Logomark and text will appear on the same line. | `'default'` |
-| `darkMode` | `boolean`                                                    | Determines if Logo will appear in darkMode.                                                            | `false`     |
-
-# LogoMark
+# MongoDBLogo
 
 ## Properties
 
-| Prop       | Type      | Description                                                              | Default |
-| ---------- | --------- | ------------------------------------------------------------------------ | ------- |
-| `height`   | `number`  | Height of the component                                                  | `40`    |
-| `knockout` | `boolean` | Determines whether or not a `knockout` version of the Logo will be used. | `false` |
-| `darkMode` | `boolean` | Determines if LogoMark will appear in darkMode.                          | `false` |
+| Prop        | Type                                                   | Description                                   | Default          |
+| ----------- | ------------------------------------------------------ | --------------------------------------------- | ---------------- |
+| `height`    | `number`                                               | Sets the height of the component.             | `40`             |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
+| `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
 
-# Product Logos
-
-## Properties
-
-| Prop       | Type      | Description                                                                      | Default |
-| ---------- | --------- | -------------------------------------------------------------------------------- | ------- |
-| `size`     | `number`  | Height of the Product Logo                                                       | `18`    |
-| `knockout` | `boolean` | Determines whether or not a `knockout` version of the Product Logo will be used. |         |
-| `darkMode` | `boolean` | Determines if the logo will appear in darkMode or not.                           | `false` |
-
-# Product LogoMarks
+# MongoDBLogoMark
 
 ## Properties
 
-| Prop       | Type      | Description                                                                      | Default |
-| ---------- | --------- | -------------------------------------------------------------------------------- | ------- |
-| `size`     | `number`  | Height of the Product Logo                                                       | `18`    |
-| `knockout` | `boolean` | Determines whether or not a `knockout` version of the Product Logo will be used. |         |
-| `darkMode` | `boolean` | Determines if the logo will appear in darkMode or not.                           | `false` |
+| Prop        | Type                                                   | Description                                   | Default          |
+| ----------- | ------------------------------------------------------ | --------------------------------------------- | ---------------- |
+| `height`    | `number`                                               | Sets the height of the component.             | `40`             |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
+| `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
+
+# AtlasLogoLockup
+
+## Properties
+
+| Prop        | Type                                                   | Description                                   | Default          |
+| ----------- | ------------------------------------------------------ | --------------------------------------------- | ---------------- |
+| `height`    | `number`                                               | Sets the height of the component.             | `40`             |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
+| `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
+
+# AtlasForGovernmentLogoLockup
+
+## Properties
+
+| Prop        | Type                                                   | Description                                   | Default          |
+| ----------- | ------------------------------------------------------ | --------------------------------------------- | ---------------- |
+| `height`    | `number`                                               | Sets the height of the component.             | `40`             |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
+| `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
+
+# RealmLogoLockup
+
+## Properties
+
+| Prop        | Type                                                   | Description                                   | Default          |
+| ----------- | ------------------------------------------------------ | --------------------------------------------- | ---------------- |
+| `height`    | `number`                                               | Sets the height of the component.             | `40`             |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
+| `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
+
+# CommunityEditionLogoLockup
+
+## Properties
+
+| Prop        | Type                                                   | Description                                   | Default          |
+| ----------- | ------------------------------------------------------ | --------------------------------------------- | ---------------- |
+| `height`    | `number`                                               | Sets the height of the component.             | `40`             |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
+| `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
+
+# EnterpriseAdvancedLogoLockup
+
+## Properties
+
+| Prop        | Type                                                   | Description                                   | Default          |
+| ----------- | ------------------------------------------------------ | --------------------------------------------- | ---------------- |
+| `height`    | `number`                                               | Sets the height of the component.             | `40`             |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
+| `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
+
+# UniversityLogoLockup
+
+## Properties
+
+| Prop        | Type                                                   | Description                       | Default          |
+| ----------- | ------------------------------------------------------ | --------------------------------- | ---------------- |
+| `height`    | `number`                                               | Sets the height of the component. | `40`             |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.  | `'green-dark-2'` |
+| `className` | `string`                                               |
