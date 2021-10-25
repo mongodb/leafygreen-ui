@@ -322,6 +322,9 @@ const TextInput: React.ComponentType<
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
 
+    // Validation
+    const validation = useValidation<HTMLInputElement>(handleValidation);
+
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
       if (onChange) {
         onChange(e);
@@ -330,6 +333,8 @@ const TextInput: React.ComponentType<
       if (!isControlled) {
         setValue(e.target.value);
       }
+
+      validation.onChange(e);
     }
 
     if (type !== 'search' && !label && !ariaLabelledby) {
@@ -347,11 +352,6 @@ const TextInput: React.ComponentType<
     const RenderedCheckmarkIcon = darkMode
       ? CheckmarkWithCircleIcon
       : CheckmarkIcon;
-
-    // Validation
-    const { handleBlur, handleKeyPress } = useValidation<HTMLInputElement>(
-      handleValidation,
-    );
 
     return (
       <div className={cx(textInputStyle, className)}>
@@ -417,8 +417,7 @@ const TextInput: React.ComponentType<
               disabled={disabled}
               placeholder={placeholder}
               onChange={onValueChange}
-              onBlur={handleBlur}
-              onKeyPress={handleKeyPress}
+              onBlur={validation.onBlur}
               ref={forwardRef}
               id={id}
               autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}

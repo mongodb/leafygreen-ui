@@ -1,23 +1,23 @@
 import { useState } from 'react';
 
 export default function useValidation<
-  T extends HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  T extends HTMLInputElement | HTMLTextAreaElement
 >(handleValidation?: (value: string) => void) {
   const [isDirty, setIsDirty] = useState(false);
 
-  const handleBlur = (e: React.FocusEvent<T>) => {
+  const onBlur = (e: React.FocusEvent<T>) => {
     setIsDirty(true);
-    handleValidation?.((e.target as T).value);
+    handleValidation?.(e.target.value);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<T>) => {
+  const onChange = (e: React.ChangeEvent<T>) => {
     if (isDirty) {
-      handleValidation?.((e.target as T).value);
+      handleValidation?.(e.target.value);
     }
   };
 
   return {
-    handleBlur,
-    handleKeyPress,
+    onBlur,
+    onChange,
   };
 }

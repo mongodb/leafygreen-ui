@@ -161,6 +161,9 @@ const TextArea: React.ComponentType<
   const [uncontrolledValue, setValue] = useState('');
   const value = isControlled ? controlledValue : uncontrolledValue;
 
+  // Validation
+  const validation = useValidation<HTMLTextAreaElement>(handleValidation);
+
   const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (onChange) {
       onChange(e);
@@ -169,6 +172,8 @@ const TextArea: React.ComponentType<
     if (!isControlled) {
       setValue(e.target.value);
     }
+
+    validation.onChange(e);
   };
 
   if (!label && !ariaLabelledby) {
@@ -176,11 +181,6 @@ const TextArea: React.ComponentType<
       'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
     );
   }
-
-  // Validation
-  const { handleBlur, handleKeyPress } = useValidation<HTMLTextAreaElement>(
-    handleValidation,
-  );
 
   return (
     <div className={cx(containerStyles, className)}>
@@ -210,8 +210,7 @@ const TextArea: React.ComponentType<
           })}
           disabled={disabled}
           onChange={onValueChange}
-          onBlur={handleBlur}
-          onKeyPress={handleKeyPress}
+          onBlur={validation.onBlur}
           value={value}
         />
       </InteractionRing>
