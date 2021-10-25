@@ -5,6 +5,16 @@ export default function useValidation<
 >(handleValidation?: (value: string) => void) {
   const [isDirty, setIsDirty] = useState(false);
 
+  if (typeof handleValidation !== 'function') {
+    console.error(
+      'Error in `useValidation` hook: `handleValidation` must be a function',
+    );
+    return {
+      onBlur: () => {},
+      onChange: () => {},
+    };
+  }
+
   const onBlur = (e: React.FocusEvent<T>) => {
     setIsDirty(true);
     handleValidation?.(e.target.value);
