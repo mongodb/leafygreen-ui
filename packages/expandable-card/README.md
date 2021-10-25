@@ -77,14 +77,15 @@ import ExpandableCard from '@leafygreen-ui/expandable-card';
 
 ## Properties
 
-| Prop        | Type                                    | Description                                                                             | Default     |
-| ----------- | --------------------------------------- | --------------------------------------------------------------------------------------- | ----------- |
-| title       | `string`                                | The title of the card (Required)                                                        |             |
-| description | `string`                                | Description text below the title                                                        |             |
-| flagText    | `string`                                | Text in parentheses immediately following the title. Typically 'optional' or 'required' |             |
-| darkMode    | `boolean`                               | Toggles dark mode                                                                       | `false`     |
-| defaultOpen | `boolean`                               | Defines the default state of the card                                                   | `false`     |
-| isOpen      | `boolean`                               | Forces the card state                                                                   | `undefined` |
-| onClick     | `(event: React.SyntheticEvent) => void` | Callback fired when a user clicks the card header                                       |             |
-| id          | `string`                                | Unique id for the card                                                                  |             |
-| className   | `string`                                | Styling prop                                                                            |             |
+| Prop             | Type                                    | Description                                                                             | Default     |
+| ---------------- | --------------------------------------- | --------------------------------------------------------------------------------------- | ----------- |
+| title            | `string`                                | The title of the card (Required)                                                        |             |
+| description      | `string`                                | Description text below the title                                                        |             |
+| flagText         | `string`                                | Text in parentheses immediately following the title. Typically 'optional' or 'required' |             |
+| darkMode         | `boolean`                               | Toggles dark mode                                                                       | `false`     |
+| defaultOpen      | `boolean`                               | Defines the default state of the card                                                   | `false`     |
+| isOpen           | `boolean`                               | Forces the card state                                                                   | `undefined` |
+| onClick          | `(event: React.SyntheticEvent) => void` | Callback fired when a user clicks the card header                                       |             |
+| id               | `string`                                | Unique id for the card                                                                  |             |
+| className        | `string`                                | Styling prop                                                                            |             |
+| contentClassName | `string`                                | Styling prop for children                                                               |             |

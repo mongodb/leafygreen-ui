@@ -6,6 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 
 const transitionDuration = 300;
 
@@ -120,7 +121,7 @@ const childrenWrapperTransitionStyle = (
 /**
  * Types
  */
-interface ExpandableCardProps {
+interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * The title of the card
    */
@@ -169,6 +170,11 @@ interface ExpandableCardProps {
   className?: string;
 
   /**
+   * Styling prop for children
+   */
+  contentClassName?: string;
+
+  /**
    * Component children
    */
   children?: React.ReactNode;
@@ -177,7 +183,7 @@ interface ExpandableCardProps {
 /**
  * Conponent
  */
-export default function ExpandableCard({
+const ExpandableCard = ({
   title,
   children,
   darkMode = false,
@@ -188,7 +194,9 @@ export default function ExpandableCard({
   onClick: onClickProp,
   id: idProp,
   flagText,
-}: ExpandableCardProps) {
+  contentClassName,
+  ...rest
+}: ExpandableCardProps) => {
   const isControlled = isControlledOpen !== undefined;
 
   // Always start open
@@ -237,7 +245,9 @@ export default function ExpandableCard({
       darkMode={darkMode}
       className={cx(cardStyle(darkMode), className)}
       id={id}
+      {...rest}
     >
+      {/* HTML `button` elements can't be used as a grid parent */}
       <div
         role="button"
         aria-expanded={isOpen}
@@ -278,6 +288,7 @@ export default function ExpandableCard({
             className={cx(
               childrenWrapperStyle,
               childrenWrapperTransitionStyle(state, childrenHeight),
+              contentClassName,
             )}
           >
             <div ref={childrenInnerRef}>{children}</div>
@@ -286,4 +297,8 @@ export default function ExpandableCard({
       </Transition>
     </Card>
   );
-}
+};
+
+ExpandableCard.displayName = 'ExpandableCard';
+
+export default ExpandableCard;
