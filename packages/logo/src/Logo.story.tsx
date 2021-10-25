@@ -3,29 +3,27 @@ import { storiesOf } from '@storybook/react';
 import { number, boolean, select } from '@storybook/addon-knobs';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { SupportedColors, LogoProps } from './utils';
 import {
-  Logo,
-  LogoMark,
-  CloudManagerLogoMark,
+  MongoDBLogo,
+  MongoDBLogoMark,
+  AtlasLogoLockup,
+  AtlasForGovernmentLogoLockup,
+  RealmLogoLockup,
+  EnterpriseAdvancedLogoLockup,
+  CommunityEditionLogoLockup,
+  UniversityLogoLockup,
   AtlasLogoMark,
   RealmLogoMark,
   ChartsLogoMark,
-  AtlasLogo,
-  ChartsLogo,
-  RealmLogo,
-  CloudManagerLogo,
-  ServerLogoMark,
-  DriversConnectorsLogoMark,
-  CompassLogoMark,
 } from '.';
-import { Product, Lockup } from './utils';
 
 const containerStyle = css`
-  width: 150px;
-  height: 70px;
+  min-width: 150px;
+  min-height: 70px;
+  padding: 24px;
   flex-shrink: 0;
   text-align: center;
-  border: 1px solid #babdbe;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -41,69 +39,53 @@ const textStyle = css`
 `;
 
 const map = {
-  cloudManager: CloudManagerLogoMark,
   atlas: AtlasLogoMark,
   realm: RealmLogoMark,
   charts: ChartsLogoMark,
-  server: ServerLogoMark,
-  driversConnectors: DriversConnectorsLogoMark,
-  compass: CompassLogoMark,
 };
 
+function renderLogoStory(LogoComponent: React.FunctionComponent<LogoProps>) {
+  const color = select('Color', SupportedColors, SupportedColors.GreenDark2);
+  const darkBackground = ([
+    SupportedColors.White,
+    SupportedColors.GreenBase,
+  ] as Array<string>).includes(color);
+
+  const background = css`
+    ${containerStyle};
+    background-color: ${darkBackground ? '#06232E' : 'white'};
+  `;
+
+  return (
+    <div className={background}>
+      <LogoComponent color={color} height={number('Height', 40)} />
+    </div>
+  );
+}
+
 storiesOf('Logo', module)
-  .add('LogoMark', () => {
-    const darkMode = boolean('darkMode', false);
-
-    const background = css`
-      padding: 10px;
-      background-color: ${!darkMode
-        ? uiColors.gray.light3
-        : uiColors.gray.dark3};
-    `;
-
-    return (
-      <div className={background}>
-        <LogoMark
-          darkMode={darkMode}
-          knockout={boolean('Knockout', false)}
-          height={number('Height', 40)}
-        />
-      </div>
-    );
-  })
-  .add('Logo', () => {
-    const darkMode = boolean('darkMode', false);
-
-    const background = css`
-      padding: 10px;
-      background-color: ${!darkMode
-        ? uiColors.gray.light3
-        : uiColors.gray.dark3};
-    `;
-
-    return (
-      <div className={background}>
-        <Logo
-          darkMode={darkMode}
-          knockout={boolean('Knockout', false)}
-          height={number('Height', 40)}
-          product={select(
-            'Product',
-            [...Object.values(Product), 'none'],
-            'none',
-          )}
-          lockup={select('Lockup', Object.values(Lockup), Lockup.Default)}
-        />
-      </div>
-    );
-  })
-  .add('Product LogoMarks', () => {
+  .add('MongoDB Logo', () => renderLogoStory(MongoDBLogo))
+  .add('MongoDB Logo Mark', () => renderLogoStory(MongoDBLogoMark))
+  .add('Atlas Logo Lockup', () => renderLogoStory(AtlasLogoLockup))
+  .add('Atlas For Government Logo Lockup', () =>
+    renderLogoStory(AtlasForGovernmentLogoLockup),
+  )
+  .add('Realm Logo Lockup', () => renderLogoStory(RealmLogoLockup))
+  .add('Enterprise Advanced Logo Lockup', () =>
+    renderLogoStory(EnterpriseAdvancedLogoLockup),
+  )
+  .add('Community Edition Logo Lockup', () =>
+    renderLogoStory(CommunityEditionLogoLockup),
+  )
+  .add('University Logo Lockup', () => renderLogoStory(UniversityLogoLockup))
+  .add('[DEPRECATED] Product Logo Marks', () => {
     const knockout = boolean('knockout', false);
     const size = number('size', 18);
     const darkMode = boolean('darkMode', false);
 
     const renderProductLogo = (product: keyof typeof map) => {
       const Logo = map[product];
+
       return (
         <div
           key={product}
@@ -137,33 +119,5 @@ storiesOf('Logo', module)
           renderProductLogo(key as keyof typeof map),
         )}
       </>
-    );
-  })
-  .add('Product Logos', () => {
-    const props = {
-      knockout: boolean('knockout', false),
-      height: number('size', 78),
-      darkMode: boolean('darkMode', false),
-      className: css`
-        margin: 10px;
-      `,
-    };
-
-    return (
-      <div
-        className={cx(
-          css`
-            padding: 20px;
-            background-color: ${props.darkMode
-              ? uiColors.gray.dark3
-              : uiColors.white};
-          `,
-        )}
-      >
-        <AtlasLogo {...props} />
-        <ChartsLogo {...props} />
-        <RealmLogo {...props} />
-        <CloudManagerLogo {...props} />
-      </div>
     );
   });

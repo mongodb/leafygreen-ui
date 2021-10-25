@@ -11,11 +11,16 @@ const setSelected = jest.fn();
 const renderTabs = (tabsProps = {}, tabProps = {}) => {
   return render(
     <Tabs {...tabsProps} data-testid={tabsTestId} aria-label="Testing tabs">
-      <Tab {...tabProps} name="First">
+      <Tab {...tabProps} name="First" data-testid="first-tab">
         Content 1
       </Tab>
-      <Tab name="Second">Content 2</Tab>
-      <Tab name="Third"> Content 3</Tab>
+      <Tab name="Second" data-testid="second-tab">
+        Content 2
+      </Tab>
+      <Tab name={<div>Third</div>} data-testid="third-tab">
+        {' '}
+        Content 3
+      </Tab>
     </Tabs>,
   );
 };
@@ -26,6 +31,16 @@ describe('packages/tabs', () => {
       const { container } = renderTabs();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
+    });
+
+    test('renders `name` prop correctly', () => {
+      renderTabs();
+      const first = screen.getAllByTestId('first-tab')[0];
+      const second = screen.getAllByTestId('second-tab')[0];
+      const third = screen.getAllByTestId('third-tab')[0];
+      expect(first).toHaveAttribute('name', 'First');
+      expect(second).toHaveAttribute('name', 'Second');
+      expect(third).toHaveAttribute('name', 'Third');
     });
   });
   describe('when controlled', () => {
@@ -244,8 +259,8 @@ describe('packages/tabs', () => {
 
 describe('packages/tab', () => {
   test('props are passed to tab element through rest', () => {
-    renderTabs({}, { 'data-testid': 'test-prop' });
-    expect(screen.getAllByRole('tab')[0].getAttribute('data-testid')).toBe(
+    renderTabs({}, { 'data-test-prop': 'test-prop' });
+    expect(screen.getAllByRole('tab')[0].getAttribute('data-test-prop')).toBe(
       'test-prop',
     );
   });

@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import { screen, fireEvent } from '@testing-library/react';
+import { defaultData } from './fixtures';
 import { renderTable } from './testUtils';
 
 describe('packages/table/row', () => {
@@ -20,7 +21,9 @@ describe('packages/table/row', () => {
   test('it renders an expandable icon, when the row is expandable', () => {
     renderTable();
     const chevrons = screen.getAllByLabelText(/Expand row|Collapse row/);
-    expect(chevrons.length).toBe(4);
+    expect(chevrons.length).toBe(
+      defaultData.filter(data => data.expandable).length,
+    );
   });
 
   test('the expandable icon reveals a hidden row when clicked', () => {
