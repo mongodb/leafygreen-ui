@@ -190,7 +190,8 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: Size | number;
   title?: string | null | boolean;
 }
-interface BaseIconButtonProps {
+interface BaseIconButtonProps
+  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
@@ -200,6 +201,7 @@ interface BaseIconButtonProps {
   href?: string;
   'aria-label'?: string;
   'aria-labelledby'?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
@@ -258,7 +260,11 @@ const IconButton: ExtendableBox<
       ...rest,
       ref,
       tabIndex: 0,
+      // We don't set the `disabled` prop since we want the button to be focusable
       ['aria-disabled']: disabled,
+      // Override any actions if it's disabled
+      href: disabled ? undefined : rest.href,
+      onClick: disabled ? undefined : rest.onClick,
       className: cx(
         removeButtonStyle,
         baseIconButtonStyle,
