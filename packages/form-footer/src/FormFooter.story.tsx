@@ -13,7 +13,7 @@ storiesOf('FormFooter', module)
       primaryButton={{
         text: text('Primary button text', 'Save Draft'),
       }}
-      cancelText={text('Cancel button text', '')}
+      cancelButtonText={text('Cancel button text', '')}
       backButtonText={text('Back button text', '')}
       errorMessage={text('Error message', 'There is an error in this form')}
       contentClassName={css`
@@ -34,7 +34,7 @@ storiesOf('FormFooter', module)
           Save to cloud
         </Button>
       }
-      cancelText={text('Cancel button text', '')}
+      cancelButtonText={text('Cancel button text', '')}
       backButtonText={text('Back button text', 'Go back')}
       errorMessage={text('Error message', 'There is an error in this form')}
     />

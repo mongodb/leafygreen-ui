@@ -75,7 +75,7 @@ export interface FormFooterProps {
   /**
    * Text for the cancel button. A cancel button will appear regardless of whether text is defined.
    */
-  cancelText?: string;
+  cancelButtonText?: string;
 
   /**
    * onClick callback for the cancel button
@@ -116,7 +116,7 @@ export default function FormFooter({
   sticky = false,
   primaryButton,
   onCancel,
-  cancelText = 'Cancel',
+  cancelButtonText = 'Cancel',
   backButtonText,
   onBackClick,
   errorMessage,
@@ -162,7 +162,7 @@ export default function FormFooter({
           </Banner>
         )}
         <Button variant="default" onClick={onCancel}>
-          {cancelText || 'Cancel'}
+          {cancelButtonText || 'Cancel'}
         </Button>
         {primaryButton && RenderedPrimaryButton}
       </div>
