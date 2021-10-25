@@ -6,7 +6,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 
 const transitionDuration = 300;
 
