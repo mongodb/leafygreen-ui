@@ -30,3 +30,6 @@ tsconfig.tsbuildinfo
 
 # Website build files
 website/hosting/
+
+# Environment variables
+.env

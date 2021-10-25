@@ -6,11 +6,13 @@ import {
   MongoDBLogoMark,
   AtlasLogoLockup,
   AtlasLogoMark,
+  AtlasForGovernmentLogoLockup,
   RealmLogoLockup,
   RealmLogoMark,
   ChartsLogoMark,
   EnterpriseAdvancedLogoLockup,
   CommunityEditionLogoLockup,
+  UniversityLogoLockup,
 } from '.';
 
 const renderedComponents = {
@@ -18,11 +20,13 @@ const renderedComponents = {
   MongoDBLogoMark: <MongoDBLogoMark />,
   AtlasLogoLockup: <AtlasLogoLockup />,
   AtlasLogoMark: <AtlasLogoMark />,
+  AtlasForGovernmentLogoLockup: <AtlasForGovernmentLogoLockup />,
   ChartsLogoMark: <ChartsLogoMark />,
   RealmLogoLockup: <RealmLogoLockup />,
   RealmLogoMark: <RealmLogoMark />,
   EnterpriseAdvancedLogoLockup: <EnterpriseAdvancedLogoLockup />,
   CommunityEditionLogoLockup: <CommunityEditionLogoLockup />,
+  UniversityLogoLockup: <UniversityLogoLockup />,
 } as const;
 
 describe('packages/logo', () => {
