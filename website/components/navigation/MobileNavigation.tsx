@@ -111,11 +111,14 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
           >
             <MenuIcon size={20} />
           </IconButton>
-=
-          <a href="/" onClick={e => {
-            e.preventDefault();
-            push(HOME_PAGE);
-          }}>
+          =
+          <a
+            href="/"
+            onClick={e => {
+              e.preventDefault();
+              push(HOME_PAGE);
+            }}
+          >
             <MongoDBLogo />
           </a>
         </div>
@@ -143,11 +146,14 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
                 ref={setScrollContainerNode}
               >
                 <div className={logoContainer}>
-                  <a href="/" onClick={e => {
-                    e.preventDefault();
-                    push(HOME_PAGE);
-                    setOpen(false);
-                  }}>
+                  <a
+                    href="/"
+                    onClick={e => {
+                      e.preventDefault();
+                      push(HOME_PAGE);
+                      setOpen(false);
+                    }}
+                  >
                     <MongoDBLogo />
                   </a>
                 </div>

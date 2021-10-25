@@ -167,10 +167,14 @@ function Navigation() {
         z-index: 1;
       `}
     >
-      <a className={logoLinkStyles} href="/" onClick={e => {
-        e.preventDefault();
-        push(HOME_PAGE);
-      }}>
+      <a
+        className={logoLinkStyles}
+        href="/"
+        onClick={e => {
+          e.preventDefault();
+          push(HOME_PAGE);
+        }}
+      >
         <MongoDBLogo height={32} className={logoStyles} />
       </a>
       <CollapsedSideNavItem

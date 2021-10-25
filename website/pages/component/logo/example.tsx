@@ -38,7 +38,7 @@ const knobsConfig: KnobsConfigInterface<LogoProps> = {
   color: {
     type: 'select',
     default: 'green-dark-2',
-    options: [ 'white', 'black', 'green-dark-2', 'green-base' ],
+    options: ['white', 'black', 'green-dark-2', 'green-base'],
     label: 'Color',
   },
 };
@@ -47,14 +47,19 @@ export default function LogoLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ color }) => (
-        <div className={cx(css`
-          padding: ${spacing[6]}px ${spacing[5]}px ${spacing[4]}px;
-          border-radius: 20px;
-        `, {
-          [css`
-            background-color: #001E2B;
-          `]: ['white', 'green-base'].includes(color),
-        })}>
+        <div
+          className={cx(
+            css`
+              padding: ${spacing[6]}px ${spacing[5]}px ${spacing[4]}px;
+              border-radius: 20px;
+            `,
+            {
+              [css`
+                background-color: #001e2b;
+              `]: ['white', 'green-base'].includes(color),
+            },
+          )}
+        >
           <Overline
             className={cx(overlineStyle, {
               [css`
