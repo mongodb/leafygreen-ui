@@ -151,15 +151,15 @@ export default function FormFooter({
   return (
     <footer className={cx(footerStyle(sticky), className)}>
       <div className={cx(contentStyle, contentClassName)}>
-        {errorMessage && (
-          <Banner className={bannerStyle} variant="danger">
-            {errorMessage}
-          </Banner>
-        )}
         {backButtonText && (
           <Button variant="default" onClick={onBackClick}>
             {backButtonText}
           </Button>
+        )}
+        {errorMessage && (
+          <Banner className={bannerStyle} variant="danger">
+            {errorMessage}
+          </Banner>
         )}
         <Button variant="default" onClick={onCancel}>
           {cancelText || 'Cancel'}
