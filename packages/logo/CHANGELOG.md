@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 6.1.0
+
+### Minor Changes
+
+- 45bf8ca1: Adds MongoDB University and Atlas for Government logo lockups.
+
 ## 6.0.0
 
 ### Major Changes
