@@ -1,5 +1,12 @@
 # @leafygreen-ui/marketing-modal
 
+## 2.1.3
+
+### Patch Changes
+
+- Updated dependencies [b3ea62a]
+  - @leafygreen-ui/modal@7.0.0
+
 ## 2.1.2
 
 ### Patch Changes
