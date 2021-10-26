@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 9.0.1
+
+### Patch Changes
+
+- cec710ad: Upgrades Polished to v4.1
+
 ## 9.0.0
 
 ### Major Changes

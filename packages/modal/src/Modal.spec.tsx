@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import {
-  fireEvent,
-  render,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import Modal from './Modal';
 
@@ -49,13 +46,25 @@ describe('packages/modal', () => {
       expect(content).toBeVisible();
     });
 
+    test('closes modal when button is clicked', async () => {
+      const { getByRole } = renderModal({ open: true });
+      const modal = getByRole('dialog');
+      const button = getByRole('button');
+
+      userEvent.click(button);
+
+      await waitForElementToBeRemoved(modal);
+      expect(modal).not.toBeInTheDocument();
+    });
+
     test('closes modal when escape key is pressed', async () => {
       const { getByRole } = renderModal({ open: true });
 
       const modal = getByRole('dialog');
-      fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
+      userEvent.type(modal, '{esc}');
 
       await waitForElementToBeRemoved(modal);
+      expect(modal).not.toBeInTheDocument();
     });
 
     test('when "shouldClose" prop returns false', async () => {
@@ -65,17 +74,9 @@ describe('packages/modal', () => {
       });
 
       const modal = getByRole('dialog');
-      fireEvent.click(modal.parentElement!);
+      userEvent.type(modal, '{esc}');
 
-      try {
-        await waitForElementToBeRemoved(modal);
-        throw new Error('Expected to catch error.');
-      } catch (error) {
-        // eslint-disable-next-line jest/no-try-expect
-        expect(error.toString()).toMatch(
-          'Timed out in waitForElementToBeRemoved.',
-        );
-      }
+      await expectElementToNotBeRemoved(modal);
 
       expect(modal).toBeVisible();
     });
@@ -87,43 +88,23 @@ describe('packages/modal', () => {
       });
 
       const modal = getByRole('dialog');
-      fireEvent.click(modal.parentElement!);
+      userEvent.type(modal, '{esc}');
 
       await waitForElementToBeRemoved(modal);
+      expect(modal).not.toBeInTheDocument();
     });
 
-    test('when "closeOnBackdropClick" is false', async () => {
+    test('backdrop click should do nothing', async () => {
       const { getByRole } = renderModal({
-        closeOnBackdropClick: false,
         open: true,
       });
 
       const modal = getByRole('dialog');
-      fireEvent.click(modal.parentElement!);
+      userEvent.click(modal.parentElement!);
 
-      try {
-        await waitForElementToBeRemoved(modal);
-        throw new Error('Expected to catch error.');
-      } catch (error) {
-        // eslint-disable-next-line jest/no-try-expect
-        expect(error.toString()).toMatch(
-          'Timed out in waitForElementToBeRemoved.',
-        );
-      }
+      await expectElementToNotBeRemoved(modal);
 
       expect(modal).toBeVisible();
-    });
-
-    test('when "closeOnBackdropClick" is true', async () => {
-      const { getByRole } = renderModal({
-        closeOnBackdropClick: true,
-        open: true,
-      });
-
-      const modal = getByRole('dialog');
-      fireEvent.click(modal.parentElement!);
-
-      await waitForElementToBeRemoved(modal);
     });
   });
 
@@ -135,3 +116,13 @@ describe('packages/modal', () => {
     });
   });
 });
+
+async function expectElementToNotBeRemoved(element: HTMLElement) {
+  try {
+    await waitForElementToBeRemoved(element);
+    throw new Error('Expected to catch error.');
+  } catch (error) {
+    // eslint-disable-next-line jest/no-try-expect
+    expect(error.toString()).toMatch('Timed out in waitForElementToBeRemoved.');
+  }
+}

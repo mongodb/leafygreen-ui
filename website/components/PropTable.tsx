@@ -131,6 +131,7 @@ function getTableData(rows: Table['children']): Array<TableDataInterface> {
         value,
       };
     });
+
     return rowObj;
   });
 
@@ -182,8 +183,6 @@ function PropTable({
   const isTouchDevice =
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
-  let peerDepIndex: number | undefined;
-
   const headers = markdownAst.children
     .filter(
       treeItem =>
@@ -191,6 +190,8 @@ function PropTable({
         treeItem.depth === readmeDepthMap[HeadingType.ComponentName],
     )
     .map((item: Heading) => item?.children?.[0].value);
+
+  let peerDepIndex: number | undefined;
 
   const tableData = markdownAst.children
     .filter((treeItem, index) => {
@@ -215,6 +216,10 @@ function PropTable({
   if (component === 'typography') {
     headers.shift();
     tableData.shift();
+  }
+
+  if (component === 'logo') {
+    headers.shift();
   }
 
   const formatProp = (datum: TableDataInterface) => {

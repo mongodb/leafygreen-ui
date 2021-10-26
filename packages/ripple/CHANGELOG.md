@@ -1,5 +1,11 @@
 # @leafygreen-ui/ripple
 
+## 1.1.2
+
+### Patch Changes
+
+- cec710ad: Upgrades Polished to v4.1
+
 ## 1.1.1
 
 ### Patch Changes

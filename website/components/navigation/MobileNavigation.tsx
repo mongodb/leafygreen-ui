@@ -6,7 +6,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import IconButton from '@leafygreen-ui/icon-button';
 import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
-import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
+import { MongoDBLogo } from '@leafygreen-ui/logo';
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 import MobileNavigationProvider from './NavigationContext';
 import { HOME_PAGE } from 'utils/routes';
@@ -111,7 +111,16 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
           >
             <MenuIcon size={20} />
           </IconButton>
-          <MDBDesignLogo onClick={() => push(HOME_PAGE)} />
+          =
+          <a
+            href="/"
+            onClick={e => {
+              e.preventDefault();
+              push(HOME_PAGE);
+            }}
+          >
+            <MongoDBLogo />
+          </a>
         </div>
 
         <Transition in={open} timeout={300} mountOnEnter unmountOnExit>
@@ -137,13 +146,18 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
                 ref={setScrollContainerNode}
               >
                 <div className={logoContainer}>
-                  <MDBDesignLogo
-                    onClick={() => {
+                  <a
+                    href="/"
+                    onClick={e => {
+                      e.preventDefault();
                       push(HOME_PAGE);
                       setOpen(false);
                     }}
-                  />
+                  >
+                    <MongoDBLogo />
+                  </a>
                 </div>
+
                 <ol className={ulStyleOverrides}>
                   <li>
                     <button
