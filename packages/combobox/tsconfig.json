@@ -8,7 +8,25 @@
   "include": ["src/**/*"],
   "references": [
     {
+      "path": "../emotion"
+    },
+    {
+      "path": "../interaction-ring"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
       "path": "../lib"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../popover"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }
