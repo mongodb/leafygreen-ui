@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { Description, Label } from '@leafygreen-ui/typography';
-import { ComboboxProps, ComboboxSize } from './Combobox.types';
+import { ComboboxProps, ComboboxSize, SelectionType } from './Combobox.types';
 import Popover from '@leafygreen-ui/popover';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -183,6 +183,7 @@ export default function Combobox({
   overflow,
   chipTruncationLocation,
   className,
+  ...rest
 }: ComboboxProps) {
   const inputId = useIdAllocator({ prefix: 'combobox-input' });
   const labelId = useIdAllocator({ prefix: 'combobox-label' });
@@ -205,6 +206,8 @@ export default function Combobox({
       }) ?? []
     );
   }, [children]);
+
+  const [selected, setSelected] = useState<string | Array<string>>();
 
   /**
    * Menu management
@@ -338,8 +341,9 @@ export default function Combobox({
         focusedOption: !isNull(focusedOptionIndex)
           ? options[focusedOptionIndex]
           : undefined,
-        // TODO - figure out typing here
-        selected: '',
+        // TODO - figure out better typing here
+        selected,
+        setSelected,
       }}
     >
       <div className={cx(comboboxStyle({ darkMode, size }), className)}>
@@ -380,7 +384,6 @@ export default function Combobox({
             />
           </div>
         </InteractionRing>
-
         {/**
          * Menu
          */}

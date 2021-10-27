@@ -52,7 +52,9 @@ export default function ComboboxOption({
   glyph,
   className,
 }: ComboboxOptionProps) {
-  const { multiselect, focusedOption, selected } = useContext(ComboboxContext);
+  const { multiselect, focusedOption, selected, setSelected } = useContext(
+    ComboboxContext,
+  );
 
   const optionRef = useRef<HTMLLIElement>(null);
 
@@ -67,6 +69,10 @@ export default function ComboboxOption({
     }
   }, [isFocused]);
 
+  const handleOptionClick = () => {
+    setSelected?.(value);
+  };
+
   return (
     <li
       ref={optionRef}
@@ -74,9 +80,11 @@ export default function ComboboxOption({
       aria-selected={isSelected}
       tabIndex={-1}
       className={cx(comboboxOptionStyle, className)}
+      onClick={handleOptionClick}
+      onKeyPress={handleOptionClick}
     >
       {renderedChildren}
-      {selected ? '✅' : ''}
+      {isSelected ? ' ✅' : ''}
     </li>
   );
 }

@@ -2,7 +2,7 @@ import { Either } from '@leafygreen-ui/lib';
 import { MutableRefObject, ReactNode } from 'react';
 
 interface SingleSelectProps {
-  multiselect?: false;
+  multiselect: false;
   onChange?: (value: string) => void;
   updateValue?: MutableRefObject<(value: string) => void>;
 }
