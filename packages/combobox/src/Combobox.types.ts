@@ -1,3 +1,4 @@
+import { Either } from '@leafygreen-ui/lib';
 import { MutableRefObject, ReactNode } from 'react';
 
 interface SingleSelectProps {
@@ -14,22 +15,12 @@ interface MultiSelectProps {
 
 type VariableSelectProps = SingleSelectProps | MultiSelectProps;
 
-interface LabelProps {
-  label: string;
-  'aria-label'?: string;
-}
-
-interface NoLabelProps {
-  label?: string;
-  'aria-label': string;
-}
-
-type EitherLabelProp = LabelProps | NoLabelProps;
-
 export type ComboboxSize = 'default';
 
-export type ComboboxProps = {
+type BaseComboboxProps = {
   children: ReactNode;
+  label?: string;
+  'aria-label': string;
   description?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -47,5 +38,24 @@ export type ComboboxProps = {
   overflow?: 'expand-y' | 'expand-x' | 'scroll-x';
   chipTruncationLocation?: 'start' | 'middle' | 'end';
   className?: string;
-} & EitherLabelProp &
-  VariableSelectProps;
+} & VariableSelectProps;
+
+export type ComboboxProps = Either<BaseComboboxProps, 'label' | 'aria-label'>;
+
+/**
+ * Combobox Option
+ */
+
+interface BaseComboboxOptionProps {
+  value?: string;
+  displayName?: string;
+  children?: ReactNode;
+  glyph?: ReactNode;
+  // description?: string
+  className?: string;
+}
+
+export type ComboboxOptionProps = Either<
+  BaseComboboxOptionProps,
+  'value' | 'displayName'
+>;
