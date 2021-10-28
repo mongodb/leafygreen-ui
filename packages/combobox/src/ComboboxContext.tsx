@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { ComboboxSize } from './Combobox.types';
 
 // interface SingleSelectData {
 //   multiselect?: false;
@@ -16,6 +17,8 @@ import { createContext } from 'react';
 
 interface ComboboxData {
   multiselect: boolean;
+  darkMode: boolean;
+  size: ComboboxSize;
   // selected?: Array<string> | string;
   // setSelected?: (id: Array<string> | string) => void;
   // focusedOption?: string;
@@ -25,4 +28,6 @@ interface ComboboxData {
 
 export const ComboboxContext = createContext<ComboboxData>({
   multiselect: false,
+  darkMode: false,
+  size: 'default',
 });

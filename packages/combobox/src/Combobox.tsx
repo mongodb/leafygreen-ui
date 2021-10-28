@@ -15,7 +15,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { ComboboxContext } from './ComboboxContext';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { indexOf, isArray, isNull, kebabCase, startCase } from 'lodash';
+import { isArray, isNull, kebabCase, startCase } from 'lodash';
 import { InternalComboboxOption } from './ComboboxOption';
 
 /**
@@ -52,8 +52,6 @@ const comboboxSize = (size: ComboboxSize) => {
       return css`
         --lg-combobox-padding: 9px 12px;
         --lg-combobox-border-radius: 3px;
-
-        --lg-combobox-menu-border-radius: 4px;
       `;
   }
 };
@@ -125,6 +123,7 @@ const menuWrapperStyle = ({
         --lg-combobox-menu-color: ${uiColors.gray.dark3};
         --lg-combobox-menu-background-color: ${uiColors.white};
         --lg-combobox-menu-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+        --lg-combobox-item-hover-color: ${uiColors.gray.light2};
         --lg-combobox-item-active-color: ${uiColors.blue.light3};
         --lg-combobox-item-wedge-color: ${uiColors.blue.base};
       `;
@@ -137,6 +136,7 @@ const menuWrapperStyle = ({
   switch (size) {
     case 'default':
       menuSizeStyle = css`
+        --lg-combobox-menu-border-radius: 4px;
         --lg-combobox-item-height: 36px;
         --lg-combobox-item-padding-y: 8px;
         --lg-combobox-item-padding-x: 12px;
@@ -152,6 +152,11 @@ const menuWrapperStyle = ({
     menuSizeStyle,
     css`
       width: ${width}px;
+      border-radius: var(--lg-combobox-menu-border-radius);
+
+      & > * {
+        border-radius: inherit;
+      }
     `,
   );
 };
@@ -165,7 +170,8 @@ const menuStyle = css`
   color: var(--lg-combobox-menu-color);
   background-color: var(--lg-combobox-menu-background-color);
   box-shadow: var(--lg-combobox-menu-shadow);
-  border-radius: var(--lg-combobox-menu-border-radius);
+  border-radius: inherit;
+  overflow: hidden;
 `;
 
 /**
@@ -241,14 +247,14 @@ export default function Combobox({
         const {
           value: valueProp,
           displayName: nameProp,
-          children: childChildrenProp,
+          // children: childChildrenProp,
+          className,
+          glyph,
         } = child.props;
 
         const value = valueProp ?? kebabCase(nameProp);
         const displayName = nameProp ?? startCase(value);
-        const childChildren = childChildrenProp ?? nameProp ?? startCase(value);
-
-        // TODO - multiselect selection props
+        // const childChildren = childChildrenProp ?? nameProp ?? startCase(value);
 
         const isFocused = focusedOption === index;
         const isSelected =
@@ -264,9 +270,9 @@ export default function Combobox({
             isFocused={isFocused}
             isSelected={isSelected}
             setSelected={setSelected}
-          >
-            {childChildren}
-          </InternalComboboxOption>
+            glyph={glyph}
+            className={className}
+          />
         );
       } else if (isComponentType(child, 'ComboboxGroup')) {
         // TODO - handle nesting
@@ -283,12 +289,14 @@ export default function Combobox({
           ? renderedOptions[selection]
           : undefined;
       inputRef.current.value = selectedOption
-        ? selectedOption.props.children
+        ? selectedOption.props.displayName
         : '';
     } else {
       // Update the chips
     }
   }, [multiselect, renderedOptions, selection]);
+
+  // TODO - useMemo to render Chips
 
   /**
    * Menu management
@@ -418,6 +426,8 @@ export default function Combobox({
     <ComboboxContext.Provider
       value={{
         multiselect,
+        darkMode,
+        size,
         // focusedOption: !isNull(focusedOption)
         //   ? options[focusedOption]
         //   : undefined,

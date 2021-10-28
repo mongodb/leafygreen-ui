@@ -1,5 +1,6 @@
+import { MutableRefObject, ReactElement, ReactNode } from 'react';
 import { Either } from '@leafygreen-ui/lib';
-import { MutableRefObject, ReactNode } from 'react';
+import { glyphs } from '@leafygreen-ui/icon';
 
 interface SingleSelectProps {
   multiselect?: false;
@@ -50,7 +51,7 @@ interface BaseComboboxOptionProps {
   value?: string;
   displayName?: string;
   children?: ReactNode;
-  glyph?: ReactNode;
+  glyph?: ReactElement;
   // description?: string
   className?: string;
 }
@@ -63,10 +64,10 @@ export type ComboboxOptionProps = Either<
 export interface InternalComboboxOptionProps {
   value: string;
   displayName: string;
-  children?: ReactNode;
+  // children?: ReactNode;
   isSelected: boolean;
   isFocused: boolean;
   setSelected: () => void;
-  glyph?: ReactNode;
+  glyph?: ReactElement;
   className?: string;
 }

@@ -1,6 +1,16 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { kebabCase, startCase } from 'lodash';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import { uiColors } from '@leafygreen-ui/palette';
+import { isComponentType } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
+import Checkbox from '@leafygreen-ui/checkbox';
+import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import {
   ComboboxOptionProps,
   InternalComboboxOptionProps,
@@ -11,10 +21,11 @@ import { ComboboxContext } from './ComboboxContext';
  * Styles
  */
 
-const comboboxOptionStyle = css`
+const comboboxOptionStyle = (multiselect: boolean) => css`
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   list-style: none;
   color: inherit;
   cursor: pointer;
@@ -33,7 +44,11 @@ const comboboxOptionStyle = css`
     border-radius: 0 2px 2px 0;
   }
 
-  &:hover,
+  &:hover {
+    outline: none;
+    background-color: var(--lg-combobox-item-hover-color);
+  }
+
   &:focus {
     outline: none;
     background-color: var(--lg-combobox-item-active-color);
@@ -44,28 +59,30 @@ const comboboxOptionStyle = css`
   }
 `;
 
+const flexSpan = css`
+  display: inline-flex;
+  gap: 8px;
+  justify-content: start;
+  align-items: inherit;
+`;
+
 /**
  * Component
  */
 
 export function InternalComboboxOption({
   value,
-  // displayName,
-  children,
+  displayName,
+  // children,
   glyph,
   isSelected,
   isFocused,
   setSelected,
   className,
 }: InternalComboboxOptionProps) {
-  const { multiselect } = useContext(ComboboxContext);
-
+  const { multiselect, darkMode, size } = useContext(ComboboxContext);
+  const childrenWrapperId = useIdAllocator({ prefix: 'checkbox-item-content' });
   const optionRef = useRef<HTMLLIElement>(null);
-
-  // const value = valueProp ?? kebabCase(displayName);
-  // const renderedChildren = children ?? displayName ?? startCase(value);
-  // const isSelected = value === selected;
-  // const isFocused = value === focusedOption;
 
   useEffect(() => {
     if (isFocused) {
@@ -73,9 +90,84 @@ export function InternalComboboxOption({
     }
   }, [isFocused]);
 
-  const handleOptionClick = () => {
+  const handleOptionClick = useCallback(() => {
     setSelected();
-  };
+  }, [setSelected]);
+
+  const renderedIcon = useMemo(() => {
+    if (glyph) {
+      if (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon')) {
+        return glyph;
+      }
+      console.error(
+        '`ComboboxOption` instance did not render icon because it is not a known glyph element.',
+        glyph,
+      );
+    }
+  }, [glyph]);
+
+  const renderedName = useMemo(() => {
+    return isSelected ? (
+      <span
+        className={css`
+          font-weight: bold;
+        `}
+      >
+        {displayName}
+      </span>
+    ) : (
+      <span>{displayName}</span>
+    );
+  }, [displayName, isSelected]);
+
+  const renderedChildren = useMemo(() => {
+    if (multiselect) {
+      // TODO - make checkboxes clickable
+      const checkbox = (
+        <Checkbox
+          label=""
+          aria-label={displayName}
+          checked={isSelected}
+          onChange={handleOptionClick}
+          onClick={handleOptionClick}
+          animate={false}
+        />
+      );
+
+      return (
+        <>
+          <span className={flexSpan}>
+            {renderedIcon ?? checkbox}
+            {renderedName}
+          </span>
+          {renderedIcon && checkbox}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <span className={flexSpan}>
+          {renderedIcon}
+          {renderedName}
+        </span>
+        {isSelected && (
+          <Icon
+            glyph="Checkmark"
+            color={darkMode ? uiColors.blue.light1 : uiColors.blue.base}
+          />
+        )}
+      </>
+    );
+  }, [
+    multiselect,
+    renderedIcon,
+    renderedName,
+    isSelected,
+    darkMode,
+    displayName,
+    handleOptionClick,
+  ]);
 
   return (
     <li
@@ -83,12 +175,12 @@ export function InternalComboboxOption({
       role="option"
       aria-selected={isSelected}
       tabIndex={-1}
-      className={cx(comboboxOptionStyle, className)}
+      className={cx(comboboxOptionStyle(multiselect), className)}
       onClick={handleOptionClick}
       onKeyPress={handleOptionClick}
+      data-value={value}
     >
-      {children}
-      {isSelected ? ' ✅' : ''}
+      {renderedChildren}
     </li>
   );
 }

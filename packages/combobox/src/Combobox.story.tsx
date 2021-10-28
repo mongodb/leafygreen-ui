@@ -2,9 +2,11 @@ import React from 'react';
 import { boolean } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import Icon from '@leafygreen-ui/Icon';
 import Combobox from '.';
 import ComboboxOption from './ComboboxOption';
 import { css } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
 
 storiesOf('Combobox', module)
   .add('Single Select', () => {
@@ -18,7 +20,10 @@ storiesOf('Combobox', module)
         >
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
-          <ComboboxOption value="carrot" />
+          <ComboboxOption
+            value="carrot"
+            glyph={<Icon glyph="Favorite" color={uiColors.yellow.dark2} />}
+          />
           <ComboboxOption value="dragonfruit" />
           <ComboboxOption value="eggplant" />
         </Combobox>
@@ -38,7 +43,10 @@ storiesOf('Combobox', module)
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
           <ComboboxOption value="carrot" />
-          <ComboboxOption value="dragonfruit" />
+          <ComboboxOption
+            value="dragonfruit"
+            glyph={<Icon glyph="Favorite" color={uiColors.yellow.dark2} />}
+          />
           <ComboboxOption value="eggplant" />
           <ComboboxOption value="fig" />
           <ComboboxOption value="grape" />
