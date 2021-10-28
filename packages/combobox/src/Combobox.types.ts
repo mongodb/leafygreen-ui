@@ -19,7 +19,7 @@ type VariableSelectProps = SingleSelectProps | MultiSelectProps;
 export type ComboboxSize = 'default';
 
 type BaseComboboxProps = {
-  children: ReactNode;
+  children?: ReactNode;
   label?: string;
   'aria-label': string;
   description?: string;
@@ -30,6 +30,7 @@ type BaseComboboxProps = {
   state?: 'error' | 'none';
   errorMessage?: string;
   searchState?: 'unset' | 'error' | 'loading';
+  searchEmptyMessage?: string;
   searchErrorMessage?: string;
   searchLoadingMessage?: string;
   multiselect?: boolean;

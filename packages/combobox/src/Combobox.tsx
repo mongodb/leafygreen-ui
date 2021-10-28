@@ -10,6 +10,7 @@ import { ComboboxProps, ComboboxSize } from './Combobox.types';
 import Popover from '@leafygreen-ui/popover';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
+import Icon from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
@@ -121,6 +122,7 @@ const menuWrapperStyle = ({
     case false:
       menuModeStyle = css`
         --lg-combobox-menu-color: ${uiColors.gray.dark3};
+        --lg-combobox-menu-message-color: ${uiColors.gray.dark1};
         --lg-combobox-menu-background-color: ${uiColors.white};
         --lg-combobox-menu-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
         --lg-combobox-item-hover-color: ${uiColors.gray.light2};
@@ -174,6 +176,26 @@ const menuStyle = css`
   overflow: hidden;
 `;
 
+const menuList = css`
+  position: relative;
+  margin: 0;
+  padding: 0;
+`;
+
+const menuMessage = css`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--lg-combobox-item-font-size);
+  color: var(--lg-combobox-menu-message-color);
+  padding: var(--lg-combobox-item-padding-y) var(--lg-combobox-item-padding-x);
+
+  & > svg {
+    width: 1em;
+    height: 1em;
+  }
+`;
+
 /**
  * Component
  */
@@ -189,8 +211,9 @@ export default function Combobox({
   state = 'none',
   errorMessage,
   searchState = 'unset',
-  searchErrorMessage,
-  searchLoadingMessage,
+  searchEmptyMessage = 'No results found',
+  searchErrorMessage = 'Could not get results!',
+  searchLoadingMessage = 'Loading results...',
   multiselect = false,
   onChange,
   onFilter,
@@ -208,7 +231,7 @@ export default function Combobox({
 
   const inputRef = useRef<HTMLInputElement>(null);
   const comboboxRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLUListElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setOpen] = useState(true);
   const [focusedOption, setFocusedOption] = useState<number | null>(null);
@@ -307,6 +330,62 @@ export default function Combobox({
   const menuWidth = useMemo(() => comboboxRef.current?.clientWidth, [
     comboboxRef,
     isOpen,
+  ]);
+
+  const renderedMenuContents = useMemo((): JSX.Element => {
+    switch (searchState) {
+      case 'loading': {
+        return (
+          <span className={menuMessage}>
+            <Icon
+              glyph="Refresh"
+              color={uiColors.blue.base}
+              className={css`
+                animation: rotate 1.5s linear infinite;
+                @keyframes rotate {
+                  0% {
+                    transform: rotate(0deg);
+                  }
+                  100% {
+                    transform: rotate(360deg);
+                  }
+                }
+              `}
+            />
+            {searchLoadingMessage}
+          </span>
+        );
+      }
+
+      case 'error': {
+        return (
+          <span className={menuMessage}>
+            <Icon glyph="Warning" color={uiColors.red.base} />
+            {searchErrorMessage}
+          </span>
+        );
+      }
+
+      case 'unset':
+      default: {
+        if (renderedOptions) {
+          return (
+            <ul role="listbox" aria-labelledby={labelId} className={menuList}>
+              {renderedOptions}
+            </ul>
+          );
+        }
+
+        return <span className={menuMessage}>{searchEmptyMessage}</span>;
+      }
+    }
+  }, [
+    labelId,
+    renderedOptions,
+    searchEmptyMessage,
+    searchErrorMessage,
+    searchLoadingMessage,
+    searchState,
   ]);
 
   /**
@@ -428,12 +507,6 @@ export default function Combobox({
         multiselect,
         darkMode,
         size,
-        // focusedOption: !isNull(focusedOption)
-        //   ? options[focusedOption]
-        //   : undefined,
-        // // TODO - figure out better typing here
-        // selection,
-        // setSelection,
       }}
     >
       <div className={cx(comboboxStyle({ darkMode, size }), className)}>
@@ -486,15 +559,9 @@ export default function Combobox({
           // TODO - set maxHeight
           className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
         >
-          <ul
-            role="listbox"
-            aria-labelledby={labelId}
-            id={menuId}
-            ref={menuRef}
-            className={menuStyle}
-          >
-            {renderedOptions}
-          </ul>
+          <div id={menuId} ref={menuRef} className={menuStyle}>
+            {renderedMenuContents}
+          </div>
         </Popover>
       </div>
     </ComboboxContext.Provider>
