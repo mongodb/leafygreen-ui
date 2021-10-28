@@ -1,6 +1,12 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Description, Label } from '@leafygreen-ui/typography';
-import { ComboboxProps, ComboboxSize, SelectionType } from './Combobox.types';
+import { ComboboxProps, ComboboxSize } from './Combobox.types';
 import Popover from '@leafygreen-ui/popover';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -9,11 +15,14 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { ComboboxContext } from './ComboboxContext';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { isNull } from 'lodash';
+import { indexOf, isArray, isNull, kebabCase, startCase } from 'lodash';
+import { InternalComboboxOption } from './ComboboxOption';
 
 /**
  * Styles
  */
+
+const initialWidth = 256;
 
 const comboboxMode = (darkMode: boolean) => {
   switch (darkMode) {
@@ -60,6 +69,7 @@ const comboboxStyle = ({
 };
 
 const inputWrapper = css`
+  width: ${initialWidth}px;
   display: flex;
   color: var(--lg-combobox-text-color);
   padding: var(--lg-combobox-padding);
@@ -89,9 +99,10 @@ const selectInputElement = css`
   background-color: inherit;
   border: none;
   cursor: inherit;
+  outline: 1px solid red;
 
   &:focus {
-    outline: none;
+    /* outline: none; */
   }
 `;
 
@@ -100,7 +111,7 @@ const selectInputElement = css`
 const menuWrapperStyle = ({
   darkMode,
   size,
-  width = 175,
+  width = initialWidth,
 }: {
   darkMode: boolean;
   size: ComboboxSize;
@@ -193,26 +204,95 @@ export default function Combobox({
   const comboboxRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLUListElement>(null);
 
-  // TODO - handle internal filtering
-  const options = useMemo<Array<string>>(() => {
-    return (
-      React.Children.map(children, child => {
-        if (isComponentType(child, 'ComboboxOption')) {
-          return child.props.value;
-        } else if (isComponentType(child, 'ComboboxGroup')) {
-          // TODO - handle nesting
-          return '';
-        }
-      }) ?? []
-    );
-  }, [children]);
+  const [isOpen, setOpen] = useState(true);
+  const [focusedOption, setFocusedOption] = useState<number | null>(null);
+  const [selection, setSelection] = useState<number | Array<number> | null>(
+    multiselect ? [] : null,
+  );
 
-  const [selected, setSelected] = useState<string | Array<string>>();
+  // Utility function to handle mulit & single select
+  const updateSelection = useCallback(
+    (key: number) => {
+      // MULTISELECT
+      if (multiselect && isArray(selection)) {
+        if (selection.includes(key)) {
+          // remove from array
+          const newSelection = [...selection];
+          newSelection.splice(newSelection.indexOf(key), 1);
+          setSelection(newSelection);
+        } else {
+          // add to array
+          setSelection([...selection, key]);
+        }
+      } else {
+        // SINGLE SELECT
+        setSelection(key);
+        // TODO - update input value
+      }
+    },
+    [multiselect, selection],
+  );
+
+  // TODO - handle internal filtering
+
+  const renderedOptions = useMemo(() => {
+    return React.Children.map(children, (child, index) => {
+      if (isComponentType(child, 'ComboboxOption')) {
+        const {
+          value: valueProp,
+          displayName: nameProp,
+          children: childChildrenProp,
+        } = child.props;
+
+        const value = valueProp ?? kebabCase(nameProp);
+        const displayName = nameProp ?? startCase(value);
+        const childChildren = childChildrenProp ?? nameProp ?? startCase(value);
+
+        // TODO - multiselect selection props
+
+        const isFocused = focusedOption === index;
+        const isSelected =
+          multiselect && isArray(selection)
+            ? selection.includes(index)
+            : selection === index;
+
+        const setSelected = () => updateSelection(index);
+        return (
+          <InternalComboboxOption
+            value={value}
+            displayName={displayName}
+            isFocused={isFocused}
+            isSelected={isSelected}
+            setSelected={setSelected}
+          >
+            {childChildren}
+          </InternalComboboxOption>
+        );
+      } else if (isComponentType(child, 'ComboboxGroup')) {
+        // TODO - handle nesting
+      }
+    });
+  }, [children, focusedOption, multiselect, selection, updateSelection]);
+
+  // When the selection changes...
+  useEffect(() => {
+    // Update the text input
+    if (!multiselect && inputRef.current) {
+      const selectedOption =
+        renderedOptions && !isNull(selection) && !isArray(selection)
+          ? renderedOptions[selection]
+          : undefined;
+      inputRef.current.value = selectedOption
+        ? selectedOption.props.children
+        : '';
+    } else {
+      // Update the chips
+    }
+  }, [multiselect, renderedOptions, selection]);
 
   /**
    * Menu management
    */
-  const [isOpen, setOpen] = useState(true);
   const closeMenu = () => setOpen(false);
   const openMenu = () => setOpen(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -224,41 +304,38 @@ export default function Combobox({
   /**
    * Focus Management
    */
-  const [focusedOptionIndex, setFocusedOptionIndex] = useState<number | null>(
-    null,
-  );
   type Direction = 'next' | 'prev' | 'first' | 'last';
   const updateFocusedOption = (direction: Direction) => {
+    const optionsCount = renderedOptions?.length ?? 0;
+    const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
+
     switch (direction) {
       case 'next': {
-        if (
-          !isNull(focusedOptionIndex) &&
-          focusedOptionIndex + 1 < options.length
-        ) {
-          setFocusedOptionIndex(focusedOptionIndex + 1);
+        if (!isNull(focusedOption) && focusedOption + 1 < optionsCount) {
+          setFocusedOption(focusedOption + 1);
         } else {
-          setFocusedOptionIndex(0);
+          setFocusedOption(0);
         }
         break;
       }
 
       case 'prev': {
-        if (!isNull(focusedOptionIndex) && focusedOptionIndex - 1 >= 0) {
-          setFocusedOptionIndex(focusedOptionIndex - 1);
+        if (!isNull(focusedOption) && focusedOption - 1 >= 0) {
+          setFocusedOption(focusedOption - 1);
         } else {
-          setFocusedOptionIndex(options.length - 1);
+          setFocusedOption(lastIndex);
         }
         break;
       }
 
       case 'last': {
-        setFocusedOptionIndex(options.length - 1);
+        setFocusedOption(lastIndex);
         break;
       }
 
       case 'first':
       default: {
-        setFocusedOptionIndex(0);
+        setFocusedOption(0);
       }
     }
   };
@@ -284,7 +361,7 @@ export default function Combobox({
       comboboxRef.current?.contains(target as Node) ||
       false;
     setOpen(isChildFocused);
-    setFocusedOptionIndex(null);
+    setFocusedOption(null);
   };
   useEventListener('mousedown', handleBackdropClick);
 
@@ -299,7 +376,7 @@ export default function Combobox({
       case 'Tab':
       case 'Escape': {
         closeMenu();
-        setFocusedOptionIndex(null);
+        setFocusedOption(null);
         break;
       }
 
@@ -308,7 +385,10 @@ export default function Combobox({
         if (isOpen) {
           event.preventDefault();
         }
-        // TODO - set selected option
+
+        if (!isNull(focusedOption)) {
+          updateSelection(focusedOption);
+        }
         break;
       }
 
@@ -338,12 +418,12 @@ export default function Combobox({
     <ComboboxContext.Provider
       value={{
         multiselect,
-        focusedOption: !isNull(focusedOptionIndex)
-          ? options[focusedOptionIndex]
-          : undefined,
-        // TODO - figure out better typing here
-        selected,
-        setSelected,
+        // focusedOption: !isNull(focusedOption)
+        //   ? options[focusedOption]
+        //   : undefined,
+        // // TODO - figure out better typing here
+        // selection,
+        // setSelection,
       }}
     >
       <div className={cx(comboboxStyle({ darkMode, size }), className)}>
@@ -384,6 +464,7 @@ export default function Combobox({
             />
           </div>
         </InteractionRing>
+
         {/**
          * Menu
          */}
@@ -402,7 +483,7 @@ export default function Combobox({
             ref={menuRef}
             className={menuStyle}
           >
-            {children}
+            {renderedOptions}
           </ul>
         </Popover>
       </div>

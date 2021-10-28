@@ -1,7 +1,10 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { kebabCase, startCase } from 'lodash';
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { ComboboxOptionProps } from './Combobox.types';
+import {
+  ComboboxOptionProps,
+  InternalComboboxOptionProps,
+} from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 
 /**
@@ -45,23 +48,24 @@ const comboboxOptionStyle = css`
  * Component
  */
 
-export default function ComboboxOption({
-  value: valueProp,
-  displayName,
+export function InternalComboboxOption({
+  value,
+  // displayName,
   children,
   glyph,
+  isSelected,
+  isFocused,
+  setSelected,
   className,
-}: ComboboxOptionProps) {
-  const { multiselect, focusedOption, selected, setSelected } = useContext(
-    ComboboxContext,
-  );
+}: InternalComboboxOptionProps) {
+  const { multiselect } = useContext(ComboboxContext);
 
   const optionRef = useRef<HTMLLIElement>(null);
 
-  const value = valueProp ?? kebabCase(displayName);
-  const renderedChildren = children ?? displayName ?? startCase(value);
-  const isSelected = value === selected;
-  const isFocused = value === focusedOption;
+  // const value = valueProp ?? kebabCase(displayName);
+  // const renderedChildren = children ?? displayName ?? startCase(value);
+  // const isSelected = value === selected;
+  // const isFocused = value === focusedOption;
 
   useEffect(() => {
     if (isFocused) {
@@ -70,7 +74,7 @@ export default function ComboboxOption({
   }, [isFocused]);
 
   const handleOptionClick = () => {
-    setSelected?.(value);
+    setSelected();
   };
 
   return (
@@ -83,8 +87,14 @@ export default function ComboboxOption({
       onClick={handleOptionClick}
       onKeyPress={handleOptionClick}
     >
-      {renderedChildren}
+      {children}
       {isSelected ? ' ✅' : ''}
     </li>
   );
 }
+InternalComboboxOption.displayName = 'ComboboxOption';
+
+export default function ComboboxOption(_: ComboboxOptionProps): JSX.Element {
+  throw Error('`ComboboxOption` must be a child of a `Combobox` instance');
+}
+ComboboxOption.displayName = 'ComboboxOption';

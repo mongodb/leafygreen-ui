@@ -2,7 +2,7 @@ import { Either } from '@leafygreen-ui/lib';
 import { MutableRefObject, ReactNode } from 'react';
 
 interface SingleSelectProps {
-  multiselect: false;
+  multiselect?: false;
   onChange?: (value: string) => void;
   updateValue?: MutableRefObject<(value: string) => void>;
 }
@@ -59,3 +59,14 @@ export type ComboboxOptionProps = Either<
   BaseComboboxOptionProps,
   'value' | 'displayName'
 >;
+
+export interface InternalComboboxOptionProps {
+  value: string;
+  displayName: string;
+  children?: ReactNode;
+  isSelected: boolean;
+  isFocused: boolean;
+  setSelected: () => void;
+  glyph?: ReactNode;
+  className?: string;
+}

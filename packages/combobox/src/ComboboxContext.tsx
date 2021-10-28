@@ -16,9 +16,9 @@ import { createContext } from 'react';
 
 interface ComboboxData {
   multiselect: boolean;
-  selected?: Array<string> | string;
-  setSelected?: (id: Array<string> | string) => void;
-  focusedOption?: string;
+  // selected?: Array<string> | string;
+  // setSelected?: (id: Array<string> | string) => void;
+  // focusedOption?: string;
   // options: Array<string>,
   // displayedOptions: Array<string>
 } // & VariableSelectData;
