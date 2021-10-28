@@ -23,7 +23,7 @@ import { InternalComboboxOption } from './ComboboxOption';
  * Styles
  */
 
-const initialWidth = 256;
+const initialWidth = 384;
 
 const comboboxMode = (darkMode: boolean) => {
   switch (darkMode) {
@@ -319,6 +319,12 @@ export default function Combobox({
     }
   }, [multiselect, renderedOptions, selection]);
 
+  // Do any of the options have an icon?
+  const withIcons = useMemo(
+    () => renderedOptions?.some(child => !!child.props.glyph) ?? false,
+    [renderedOptions],
+  );
+
   // TODO - useMemo to render Chips
 
   /**
@@ -507,9 +513,13 @@ export default function Combobox({
         multiselect,
         darkMode,
         size,
+        withIcons,
       }}
     >
-      <div className={cx(comboboxStyle({ darkMode, size }), className)}>
+      <div
+        className={cx(comboboxStyle({ darkMode, size }), className)}
+        {...rest}
+      >
         <div>
           {label && (
             <Label id={labelId} htmlFor={inputId}>
@@ -531,13 +541,15 @@ export default function Combobox({
             tabIndex={-1}
             className={inputWrapper}
             onClick={setInputFocus}
-            data-disabled={disabled}
             onFocus={openMenu}
+            data-disabled={disabled}
+            data-multiselect={multiselect}
           >
             <input
-              aria-label={ariaLabel}
+              aria-label={ariaLabel ?? label}
               aria-autocomplete="list"
               aria-controls={menuId}
+              aria-labelledby={labelId}
               ref={inputRef}
               id={inputId}
               className={selectInputElement}

@@ -5,13 +5,23 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/Icon';
 import Combobox from '.';
 import ComboboxOption from './ComboboxOption';
-import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { css } from '@leafygreen-ui/emotion';
+
+const Wrapper = ({ children }: any) => (
+  <div
+    className={css`
+      height: 100vh;
+    `}
+  >
+    <LeafygreenProvider>{children}</LeafygreenProvider>
+  </div>
+);
 
 storiesOf('Combobox', module)
   .add('Single Select', () => {
     return (
-      <LeafygreenProvider>
+      <Wrapper>
         <Combobox
           label="Choose a fruit"
           description="Please pick one"
@@ -27,17 +37,20 @@ storiesOf('Combobox', module)
           <ComboboxOption value="banana" />
           <ComboboxOption
             value="carrot"
+            glyph={<Icon glyph="Cloud" color={uiColors.gray.base} />}
+          />
+          <ComboboxOption
+            value="dragonfruit"
             glyph={<Icon glyph="Favorite" color={uiColors.blue.base} />}
           />
-          <ComboboxOption value="dragonfruit" />
           <ComboboxOption value="eggplant" />
         </Combobox>
-      </LeafygreenProvider>
+      </Wrapper>
     );
   })
   .add('Multi Select', () => {
     return (
-      <LeafygreenProvider>
+      <Wrapper>
         <Combobox
           label="Choose some fruit"
           description="Pick as many as you want!"
@@ -47,7 +60,10 @@ storiesOf('Combobox', module)
         >
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
-          <ComboboxOption value="carrot" />
+          <ComboboxOption
+            value="carrot"
+            glyph={<Icon glyph="Cloud" color={uiColors.gray.base} />}
+          />
           <ComboboxOption
             value="dragonfruit"
             glyph={<Icon glyph="Favorite" color={uiColors.blue.base} />}
@@ -59,17 +75,17 @@ storiesOf('Combobox', module)
           <ComboboxOption value="iceberg" />
           <ComboboxOption value="jellybean" />
         </Combobox>
-      </LeafygreenProvider>
+      </Wrapper>
     );
   })
   .add('Empty', () => {
     return (
-      <LeafygreenProvider>
+      <Wrapper>
         <Combobox
           label="Choose a fruit"
           description="Please pick one"
           placeholder="Select fruit"
         ></Combobox>
-      </LeafygreenProvider>
+      </Wrapper>
     );
   });

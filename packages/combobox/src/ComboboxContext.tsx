@@ -19,6 +19,7 @@ interface ComboboxData {
   multiselect: boolean;
   darkMode: boolean;
   size: ComboboxSize;
+  withIcons: boolean;
   // selected?: Array<string> | string;
   // setSelected?: (id: Array<string> | string) => void;
   // focusedOption?: string;
@@ -30,4 +31,5 @@ export const ComboboxContext = createContext<ComboboxData>({
   multiselect: false,
   darkMode: false,
   size: 'default',
+  withIcons: false,
 });

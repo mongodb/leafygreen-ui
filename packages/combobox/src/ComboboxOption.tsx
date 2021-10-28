@@ -80,8 +80,9 @@ export function InternalComboboxOption({
   setSelected,
   className,
 }: InternalComboboxOptionProps) {
-  const { multiselect, darkMode, size } = useContext(ComboboxContext);
-  const childrenWrapperId = useIdAllocator({ prefix: 'checkbox-item-content' });
+  const { multiselect, darkMode, size, withIcons } = useContext(
+    ComboboxContext,
+  );
   const optionRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
@@ -122,12 +123,12 @@ export function InternalComboboxOption({
 
   const renderedChildren = useMemo(() => {
     if (multiselect) {
-      // TODO - make checkboxes clickable
       const checkbox = (
         <Checkbox
           label=""
           aria-label={displayName}
           checked={isSelected}
+          // TODO - make checkboxes clickable
           onChange={handleOptionClick}
           onClick={handleOptionClick}
           animate={false}
@@ -137,10 +138,10 @@ export function InternalComboboxOption({
       return (
         <>
           <span className={flexSpan}>
-            {renderedIcon ?? checkbox}
+            {withIcons ? renderedIcon : checkbox}
             {renderedName}
           </span>
-          {renderedIcon && checkbox}
+          {withIcons && checkbox}
         </>
       );
     }
