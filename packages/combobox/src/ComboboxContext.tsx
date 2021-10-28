@@ -18,7 +18,7 @@ import { ComboboxSize } from './Combobox.types';
 interface ComboboxData {
   multiselect: boolean;
   darkMode: boolean;
-  size: ComboboxSize;
+  size: keyof typeof ComboboxSize;
   withIcons: boolean;
   // selected?: Array<string> | string;
   // setSelected?: (id: Array<string> | string) => void;

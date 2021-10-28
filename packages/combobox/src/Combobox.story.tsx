@@ -3,10 +3,10 @@ import { boolean, select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/Icon';
-import Combobox from '.';
-import ComboboxOption from './ComboboxOption';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
+import { Combobox, ComboboxOption } from '.';
+import Chip from './Chip';
 
 const Wrapper = ({ children }: any) => (
   <div
@@ -88,4 +88,13 @@ storiesOf('Combobox', module)
         ></Combobox>
       </Wrapper>
     );
-  });
+  })
+  .add('Chip', () => (
+    <Chip
+      value="aardvark"
+      displayName="Aardvark"
+      onRemove={value => {
+        console.log(`Removing ${value}`);
+      }}
+    />
+  ));

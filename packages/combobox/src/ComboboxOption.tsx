@@ -168,6 +168,7 @@ export function InternalComboboxOption({
     darkMode,
     displayName,
     handleOptionClick,
+    withIcons,
   ]);
 
   return (

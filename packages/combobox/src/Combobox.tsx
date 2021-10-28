@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { Description, Label } from '@leafygreen-ui/typography';
-import { ComboboxProps, ComboboxSize } from './Combobox.types';
+import { ComboboxProps, ComboboxSizeType } from './Combobox.types';
 import Popover from '@leafygreen-ui/popover';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -47,7 +47,7 @@ const comboboxMode = (darkMode: boolean) => {
   }
 };
 
-const comboboxSize = (size: ComboboxSize) => {
+const comboboxSize = (size: ComboboxSizeType) => {
   switch (size) {
     case 'default':
       return css`
@@ -62,7 +62,7 @@ const comboboxStyle = ({
   size,
 }: {
   darkMode: boolean;
-  size: ComboboxSize;
+  size: ComboboxSizeType;
 }) => {
   return cx(comboboxMode(darkMode), comboboxSize(size), css``);
 };
@@ -113,7 +113,7 @@ const menuWrapperStyle = ({
   width = initialWidth,
 }: {
   darkMode: boolean;
-  size: ComboboxSize;
+  size: ComboboxSizeType;
   width?: number;
 }) => {
   let menuModeStyle, menuSizeStyle;

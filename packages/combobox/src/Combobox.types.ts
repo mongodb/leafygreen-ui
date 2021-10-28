@@ -1,6 +1,5 @@
 import { MutableRefObject, ReactElement, ReactNode } from 'react';
 import { Either } from '@leafygreen-ui/lib';
-import { glyphs } from '@leafygreen-ui/icon';
 
 interface SingleSelectProps {
   multiselect?: false;
@@ -16,7 +15,17 @@ interface MultiSelectProps {
 
 type VariableSelectProps = SingleSelectProps | MultiSelectProps;
 
-export type ComboboxSize = 'default';
+export enum ComboboxSize {
+  default,
+}
+export type ComboboxSizeType = keyof typeof ComboboxSize;
+
+export enum TrunctationLocation {
+  start,
+  middle,
+  end,
+}
+export type TrunctationLocationType = keyof typeof TrunctationLocation;
 
 type BaseComboboxProps = {
   children?: ReactNode;
@@ -25,7 +34,7 @@ type BaseComboboxProps = {
   description?: string;
   placeholder?: string;
   disabled?: boolean;
-  size?: ComboboxSize;
+  size?: ComboboxSizeType;
   darkMode?: boolean;
   state?: 'error' | 'none';
   errorMessage?: string;
@@ -38,7 +47,7 @@ type BaseComboboxProps = {
   clearable?: boolean;
   onClear?: (e: MouseEvent) => void;
   overflow?: 'expand-y' | 'expand-x' | 'scroll-x';
-  chipTruncationLocation?: 'start' | 'middle' | 'end';
+  chipTruncationLocation?: TrunctationLocationType;
   className?: string;
 } & VariableSelectProps;
 
@@ -71,4 +80,15 @@ export interface InternalComboboxOptionProps {
   setSelected: () => void;
   glyph?: ReactElement;
   className?: string;
+}
+
+/**
+ * Combobox Chip
+ */
+
+export interface ChipProps {
+  value: string;
+  displayName: string;
+  onRemove: (value: string) => void;
+  truncation?: TrunctationLocationType;
 }
