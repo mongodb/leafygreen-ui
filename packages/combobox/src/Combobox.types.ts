@@ -27,6 +27,13 @@ export enum TrunctationLocation {
 }
 export type TrunctationLocationType = keyof typeof TrunctationLocation;
 
+export enum Overflow {
+  'expand-y',
+  'expand-x',
+  'scroll-x',
+}
+export type OverflowType = keyof typeof Overflow;
+
 type BaseComboboxProps = {
   children?: ReactNode;
   label?: string;
@@ -46,7 +53,7 @@ type BaseComboboxProps = {
   onFilter?: (value: string) => void;
   clearable?: boolean;
   onClear?: (e: MouseEvent) => void;
-  overflow?: 'expand-y' | 'expand-x' | 'scroll-x';
+  overflow?: OverflowType;
   chipTruncationLocation?: TrunctationLocationType;
   className?: string;
 } & VariableSelectProps;
@@ -89,6 +96,6 @@ export interface InternalComboboxOptionProps {
 export interface ChipProps {
   value: string;
   displayName: string;
-  onRemove: (value: string) => void;
+  onRemove: () => void;
   truncation?: TrunctationLocationType;
 }

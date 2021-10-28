@@ -21,7 +21,7 @@ const chipWrapperStyle = ({
         --lg-combobox-chip-icon-color: ${uiColors.gray.dark2};
         --lg-combobox-chip-background-color: ${uiColors.gray.light2};
         --lg-combobox-chip-hover-color: ${uiColors.gray.light1};
-        --lg-combobox-chip-focus-color: ${uiColors.gray.light3};
+        --lg-combobox-chip-focus-color: ${uiColors.blue.light2};
       `;
       break;
     case true:
@@ -44,21 +44,19 @@ const chipWrapperStyle = ({
     chipModeStyle,
     chipSizeStyle,
     css`
-      display: flex;
+      display: inline-flex;
       align-items: center;
       overflow: hidden;
       height: var(--lg-combobox-chip-height);
       font-size: var(--lg-combobox-chip-font-size);
       line-height: var(--lg-combobox-chip-line-height);
       border-radius: var(--lg-combobox-chip-border-radius);
-      border: 1px solid transparent;
       color: var(--lg-combobox-chip-text-color);
       background-color: var(--lg-combobox-chip-background-color);
 
       // TODO - make these styles better
       &:focus {
         background-color: var(--lg-combobox-chip-focus-color);
-        border-color: var(--lg-combobox-chip-background-color);
       }
     `,
   );
@@ -109,7 +107,11 @@ export default function Chip({
   return (
     <span className={chipWrapperStyle({ darkMode, size })}>
       <span className={chipText}>{displayName}</span>
-      <button className={chipButton}>
+      <button
+        aria-label={`Deselect ${displayName}`}
+        className={chipButton}
+        onClick={onRemove}
+      >
         <Icon glyph="X" />
       </button>
     </span>

@@ -73,7 +73,7 @@ storiesOf('Combobox', module)
           <ComboboxOption value="grape" />
           <ComboboxOption value="honeydew" />
           <ComboboxOption value="iceberg" />
-          <ComboboxOption value="jellybean" />
+          <ComboboxOption value="jalapeño" />
         </Combobox>
       </Wrapper>
     );
@@ -93,8 +93,8 @@ storiesOf('Combobox', module)
     <Chip
       value="aardvark"
       displayName="Aardvark"
-      onRemove={value => {
-        console.log(`Removing ${value}`);
+      onRemove={() => {
+        console.log(`Removing aardvark`);
       }}
     />
   ));

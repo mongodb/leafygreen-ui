@@ -6,7 +6,11 @@ import React, {
   useState,
 } from 'react';
 import { Description, Label } from '@leafygreen-ui/typography';
-import { ComboboxProps, ComboboxSizeType } from './Combobox.types';
+import {
+  ComboboxProps,
+  ComboboxSizeType,
+  OverflowType,
+} from './Combobox.types';
 import Popover from '@leafygreen-ui/popover';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -18,6 +22,7 @@ import { ComboboxContext } from './ComboboxContext';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { isArray, isNull, kebabCase, startCase } from 'lodash';
 import { InternalComboboxOption } from './ComboboxOption';
+import Chip from './Chip';
 
 /**
  * Styles
@@ -51,7 +56,8 @@ const comboboxSize = (size: ComboboxSizeType) => {
   switch (size) {
     case 'default':
       return css`
-        --lg-combobox-padding: 9px 12px;
+        --lg-combobox-padding: 6px 8px;
+        --lg-combobox-line-height: 24px;
         --lg-combobox-border-radius: 3px;
       `;
   }
@@ -69,7 +75,8 @@ const comboboxStyle = ({
 
 const inputWrapper = css`
   width: ${initialWidth}px;
-  display: flex;
+  /* display: flex; */
+  /* gap: 4px; */
   color: var(--lg-combobox-text-color);
   padding: var(--lg-combobox-padding);
   background-color: var(--lg-combobox-background-color);
@@ -94,14 +101,44 @@ const inputWrapper = css`
   }
 `;
 
+const inputOverflowWrapper = (overflow: OverflowType) => {
+  const baseWrapperStyle = css`
+    & > * {
+      margin-inline: 4px;
+    }
+  `;
+
+  switch (overflow) {
+    case 'scroll-x': {
+      return css`
+        overflow-x: scroll;
+        ${baseWrapperStyle}
+      `;
+    }
+
+    case 'expand-x': {
+      return css`
+        ${baseWrapperStyle}
+      `;
+    }
+
+    case 'expand-y': {
+      return css`
+        ${baseWrapperStyle}
+      `;
+    }
+  }
+};
+
 const selectInputElement = css`
-  background-color: inherit;
+  flex-grow: 1;
   border: none;
   cursor: inherit;
-  outline: 1px solid red;
+  background-color: inherit;
+  height: var(--lg-combobox-line-height);
 
   &:focus {
-    /* outline: none; */
+    outline: none;
   }
 `;
 
@@ -220,7 +257,7 @@ export default function Combobox({
   clearable = true,
   onClear,
   updateValue,
-  overflow,
+  overflow = 'scroll-x',
   chipTruncationLocation,
   className,
   ...rest
@@ -239,8 +276,15 @@ export default function Combobox({
     multiselect ? [] : null,
   );
 
+  // Utility to force selection
+  const setInputFocus = useCallback(() => {
+    if (!disabled) {
+      inputRef?.current?.focus();
+    }
+  }, [disabled]);
+
   // Utility function to handle mulit & single select
-  const updateSelection = useCallback(
+  const toggleSelection = useCallback(
     (key: number) => {
       // MULTISELECT
       if (multiselect && isArray(selection)) {
@@ -285,7 +329,7 @@ export default function Combobox({
             ? selection.includes(index)
             : selection === index;
 
-        const setSelected = () => updateSelection(index);
+        const setSelected = () => toggleSelection(index);
         return (
           <InternalComboboxOption
             value={value}
@@ -301,7 +345,7 @@ export default function Combobox({
         // TODO - handle nesting
       }
     });
-  }, [children, focusedOption, multiselect, selection, updateSelection]);
+  }, [children, focusedOption, multiselect, selection, toggleSelection]);
 
   // When the selection changes...
   useEffect(() => {
@@ -315,9 +359,10 @@ export default function Combobox({
         ? selectedOption.props.displayName
         : '';
     } else {
-      // Update the chips
+      // TODO - decide if we focus the text input here ?
+      // setInputFocus()
     }
-  }, [multiselect, renderedOptions, selection]);
+  }, [multiselect, renderedOptions, selection, setInputFocus]);
 
   // Do any of the options have an icon?
   const withIcons = useMemo(
@@ -326,6 +371,22 @@ export default function Combobox({
   );
 
   // TODO - useMemo to render Chips
+  const renderedChips = useMemo(() => {
+    if (multiselect && isArray(selection) && renderedOptions) {
+      return selection.map(index => {
+        const { value, displayName } = renderedOptions[index].props;
+        const onRemove = () => toggleSelection(index);
+        return (
+          <Chip
+            key={value}
+            value={value}
+            displayName={displayName}
+            onRemove={onRemove}
+          />
+        );
+      });
+    }
+  }, [multiselect, renderedOptions, selection, toggleSelection]);
 
   /**
    * Menu management
@@ -433,13 +494,6 @@ export default function Combobox({
     }
   };
 
-  // We force focus onto the input in several cases
-  const setInputFocus = () => {
-    if (!disabled) {
-      inputRef?.current?.focus();
-    }
-  };
-
   // Fired onChange
   const handleInputChange = ({
     target: { value },
@@ -480,7 +534,7 @@ export default function Combobox({
         }
 
         if (!isNull(focusedOption)) {
-          updateSelection(focusedOption);
+          toggleSelection(focusedOption);
         }
         break;
       }
@@ -506,6 +560,11 @@ export default function Combobox({
     }
   };
   useEventListener('keydown', handleKeyDown);
+
+  const placeholderValue =
+    multiselect && isArray(selection) && selection.length > 0
+      ? ''
+      : placeholder;
 
   return (
     <ComboboxContext.Provider
@@ -539,24 +598,27 @@ export default function Combobox({
             aria-controls={menuId}
             aria-owns={menuId}
             tabIndex={-1}
-            className={inputWrapper}
+            className={cx(inputWrapper)}
             onClick={setInputFocus}
             onFocus={openMenu}
             data-disabled={disabled}
             data-multiselect={multiselect}
           >
-            <input
-              aria-label={ariaLabel ?? label}
-              aria-autocomplete="list"
-              aria-controls={menuId}
-              aria-labelledby={labelId}
-              ref={inputRef}
-              id={inputId}
-              className={selectInputElement}
-              placeholder={placeholder}
-              disabled={disabled ?? undefined}
-              onChange={handleInputChange}
-            />
+            <div className={inputOverflowWrapper(overflow)}>
+              {renderedChips}
+              <input
+                aria-label={ariaLabel ?? label}
+                aria-autocomplete="list"
+                aria-controls={menuId}
+                aria-labelledby={labelId}
+                ref={inputRef}
+                id={inputId}
+                className={selectInputElement}
+                placeholder={placeholderValue}
+                disabled={disabled ?? undefined}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
         </InteractionRing>
 
