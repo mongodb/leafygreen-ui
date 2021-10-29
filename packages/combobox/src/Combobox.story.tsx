@@ -56,6 +56,7 @@ storiesOf('Combobox', module)
           description="Pick as many as you want!"
           placeholder="Select fruit"
           multiselect={true}
+          initialValue={['apple', 'banana', 'carrot', 'dragonfruit']}
           // disabled={boolean('Disabled', false)}
         >
           <ComboboxOption value="apple" />
@@ -73,7 +74,7 @@ storiesOf('Combobox', module)
           <ComboboxOption value="grape" />
           <ComboboxOption value="honeydew" />
           <ComboboxOption value="iceberg" />
-          <ComboboxOption value="jalapeño" />
+          <ComboboxOption value="jalapeño" displayName="Jalapeño" />
         </Combobox>
       </Wrapper>
     );

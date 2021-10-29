@@ -56,14 +56,15 @@ const comboboxSize = (size: ComboboxSizeType) => {
   switch (size) {
     case 'default':
       return css`
-        --lg-combobox-padding: 6px 8px;
-        --lg-combobox-line-height: 24px;
+        --lg-combobox-padding: 5px 7px;
+        --lg-combobox-height: 24px;
+        --lg-combobox-line-height: 20px;
         --lg-combobox-border-radius: 3px;
       `;
   }
 };
 
-const comboboxStyle = ({
+const comboboxParentStyle = ({
   darkMode,
   size,
 }: {
@@ -73,12 +74,12 @@ const comboboxStyle = ({
   return cx(comboboxMode(darkMode), comboboxSize(size), css``);
 };
 
-const inputWrapper = css`
+const comboboxStyle = css`
   width: ${initialWidth}px;
   /* display: flex; */
   /* gap: 4px; */
-  color: var(--lg-combobox-text-color);
   padding: var(--lg-combobox-padding);
+  color: var(--lg-combobox-text-color);
   background-color: var(--lg-combobox-background-color);
   box-shadow: var(--lg-combobox-shadow);
   border: 1px solid var(--lg-combobox-border-color);
@@ -101,7 +102,7 @@ const inputWrapper = css`
   }
 `;
 
-const inputOverflowWrapper = (overflow: OverflowType) => {
+const inputWrapper = (overflow: OverflowType) => {
   const baseWrapperStyle = css`
     & > * {
       margin-inline: 4px;
@@ -111,8 +112,17 @@ const inputOverflowWrapper = (overflow: OverflowType) => {
   switch (overflow) {
     case 'scroll-x': {
       return css`
-        overflow-x: scroll;
         ${baseWrapperStyle}
+        height: var(--lg-combobox-height);
+        width: 100%;
+        white-space: nowrap;
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
       `;
     }
 
@@ -135,6 +145,11 @@ const selectInputElement = css`
   border: none;
   cursor: inherit;
   background-color: inherit;
+  box-sizing: content-box;
+  padding: calc(
+      (var(--lg-combobox-height) - var(--lg-combobox-line-height)) / 2
+    )
+    0;
   height: var(--lg-combobox-line-height);
 
   &:focus {
@@ -246,6 +261,7 @@ export default function Combobox({
   size = 'default',
   darkMode = false,
   state = 'none',
+  initialValue,
   errorMessage,
   searchState = 'unset',
   searchEmptyMessage = 'No results found',
@@ -266,8 +282,9 @@ export default function Combobox({
   const labelId = useIdAllocator({ prefix: 'combobox-label' });
   const menuId = useIdAllocator({ prefix: 'combobox-menu' });
 
-  const inputRef = useRef<HTMLInputElement>(null);
   const comboboxRef = useRef<HTMLDivElement>(null);
+  const inputWrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setOpen] = useState(true);
@@ -347,6 +364,21 @@ export default function Combobox({
     });
   }, [children, focusedOption, multiselect, selection, toggleSelection]);
 
+  const getIndexOfOption = (value: string) =>
+    renderedOptions?.findIndex(({ props }) => props.value === value) ?? -1;
+
+  // Set initialValue
+  useEffect(() => {
+    if (initialValue) {
+      if (isArray(initialValue)) {
+        setSelection(initialValue.map(value => getIndexOfOption(value)));
+      } else {
+        setSelection(getIndexOfOption(initialValue));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // When the selection changes...
   useEffect(() => {
     // Update the text input
@@ -361,6 +393,11 @@ export default function Combobox({
     } else {
       // TODO - decide if we focus the text input here ?
       // setInputFocus()
+      // Scroll the wrapper to the end
+      if (inputWrapperRef.current) {
+        inputWrapperRef.current.scrollLeft =
+          inputWrapperRef.current?.scrollWidth;
+      }
     }
   }, [multiselect, renderedOptions, selection, setInputFocus]);
 
@@ -576,7 +613,7 @@ export default function Combobox({
       }}
     >
       <div
-        className={cx(comboboxStyle({ darkMode, size }), className)}
+        className={cx(comboboxParentStyle({ darkMode, size }), className)}
         {...rest}
       >
         <div>
@@ -598,13 +635,13 @@ export default function Combobox({
             aria-controls={menuId}
             aria-owns={menuId}
             tabIndex={-1}
-            className={cx(inputWrapper)}
+            className={cx(comboboxStyle)}
             onClick={setInputFocus}
             onFocus={openMenu}
             data-disabled={disabled}
             data-multiselect={multiselect}
           >
-            <div className={inputOverflowWrapper(overflow)}>
+            <div ref={inputWrapperRef} className={inputWrapper(overflow)}>
               {renderedChips}
               <input
                 aria-label={ariaLabel ?? label}

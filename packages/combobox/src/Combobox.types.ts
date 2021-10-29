@@ -3,12 +3,14 @@ import { Either } from '@leafygreen-ui/lib';
 
 interface SingleSelectProps {
   multiselect?: false;
+  initialValue?: string;
   onChange?: (value: string) => void;
   updateValue?: MutableRefObject<(value: string) => void>;
 }
 
 interface MultiSelectProps {
   multiselect: true;
+  initialValue?: Array<string>;
   onChange?: (value: Array<string>) => void;
   updateValue?: MutableRefObject<(value: Array<string>) => void>;
 }
