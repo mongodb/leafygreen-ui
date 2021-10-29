@@ -28,7 +28,7 @@ import Chip from './Chip';
  * Styles
  */
 
-const initialWidth = 384;
+// const initialWidth = 384;
 
 const comboboxMode = (darkMode: boolean) => {
   switch (darkMode) {
@@ -67,15 +67,23 @@ const comboboxSize = (size: ComboboxSizeType) => {
 const comboboxParentStyle = ({
   darkMode,
   size,
+  overflow,
 }: {
   darkMode: boolean;
   size: ComboboxSizeType;
+  overflow: OverflowType;
 }) => {
-  return cx(comboboxMode(darkMode), comboboxSize(size), css``);
+  return cx(
+    comboboxMode(darkMode),
+    comboboxSize(size),
+    css`
+      --lg-combobox-width: ${overflow === 'expand-x' ? 'unset' : '100%'};
+      width: var(--lg-combobox-width);
+    `,
+  );
 };
 
 const comboboxStyle = css`
-  width: ${initialWidth}px;
   /* display: flex; */
   /* gap: 4px; */
   padding: var(--lg-combobox-padding);
@@ -84,6 +92,7 @@ const comboboxStyle = css`
   box-shadow: var(--lg-combobox-shadow);
   border: 1px solid var(--lg-combobox-border-color);
   border-radius: var(--lg-combobox-border-radius);
+  width: var(--lg-combobox-width);
   cursor: text;
   transition: 150ms ease-in-out;
   transition-property: background-color, box-shadow;
@@ -102,8 +111,13 @@ const comboboxStyle = css`
   }
 `;
 
+const interactionRingStyle = css`
+  width: var(--lg-combobox-width);
+`;
+
 const inputWrapper = (overflow: OverflowType) => {
   const baseWrapperStyle = css`
+    width: var(--lg-combobox-width);
     & > * {
       margin-inline: 4px;
     }
@@ -114,7 +128,7 @@ const inputWrapper = (overflow: OverflowType) => {
       return css`
         ${baseWrapperStyle}
         height: var(--lg-combobox-height);
-        width: 100%;
+        /* width: 100%; */
         white-space: nowrap;
         overflow-x: scroll;
         scroll-behavior: smooth;
@@ -129,6 +143,9 @@ const inputWrapper = (overflow: OverflowType) => {
     case 'expand-x': {
       return css`
         ${baseWrapperStyle}
+        /* width: unset; */
+        white-space: nowrap;
+        overflow-x: visible;
       `;
     }
 
@@ -162,7 +179,7 @@ const selectInputElement = css`
 const menuWrapperStyle = ({
   darkMode,
   size,
-  width = initialWidth,
+  width = 384,
 }: {
   darkMode: boolean;
   size: ComboboxSizeType;
@@ -613,7 +630,10 @@ export default function Combobox({
       }}
     >
       <div
-        className={cx(comboboxParentStyle({ darkMode, size }), className)}
+        className={cx(
+          comboboxParentStyle({ darkMode, size, overflow }),
+          className,
+        )}
         {...rest}
       >
         <div>
@@ -625,7 +645,7 @@ export default function Combobox({
           {description && <Description>{description}</Description>}
         </div>
 
-        <InteractionRing disabled={disabled}>
+        <InteractionRing className={interactionRingStyle} disabled={disabled}>
           {/* Disable eslint: onClick sets focus. Key events would already have focus */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <div

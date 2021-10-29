@@ -11,6 +11,7 @@ import Chip from './Chip';
 const Wrapper = ({ children }: any) => (
   <div
     className={css`
+      width: 384px;
       height: 100vh;
     `}
   >
@@ -57,6 +58,11 @@ storiesOf('Combobox', module)
           placeholder="Select fruit"
           multiselect={true}
           initialValue={['apple', 'banana', 'carrot', 'dragonfruit']}
+          overflow={select(
+            'Overflow',
+            ['expand-y', 'expand-x', 'scroll-x'],
+            'scroll-x',
+          )}
           // disabled={boolean('Disabled', false)}
         >
           <ComboboxOption value="apple" />
