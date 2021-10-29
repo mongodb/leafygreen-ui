@@ -2,7 +2,6 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useReducer,
   useRef,
   useState,
 } from 'react';
@@ -408,7 +407,10 @@ export default function Combobox({
             ? selection.includes(index)
             : selection === index;
 
-        const setSelected = () => toggleSelection(index);
+        const setSelected = () => {
+          toggleSelection(index);
+        };
+
         return (
           <InternalComboboxOption
             value={value}
@@ -624,6 +626,9 @@ export default function Combobox({
       return;
     }
 
+    // TODO - if keydown is a character, (and input is not focused)
+    // then set focus to the input and add that character
+
     switch (event.key) {
       case 'Tab':
       case 'Escape': {
@@ -694,6 +699,7 @@ export default function Combobox({
             </Label>
           )}
           {description && <Description>{description}</Description>}
+          {/* TODO - add error state message */}
         </div>
 
         <InteractionRing className={interactionRingStyle} disabled={disabled}>
@@ -732,6 +738,8 @@ export default function Combobox({
                 onChange={handleInputChange}
               />
             </div>
+
+            {/* TODO - add `clearable` button */}
           </div>
         </InteractionRing>
 

@@ -49,7 +49,8 @@ const comboboxOptionStyle = (multiselect: boolean) => css`
     background-color: var(--lg-combobox-item-hover-color);
   }
 
-  &:focus {
+  &:focus,
+  &[data-focused='true'] {
     outline: none;
     background-color: var(--lg-combobox-item-active-color);
 
@@ -180,7 +181,8 @@ export function InternalComboboxOption({
       className={cx(comboboxOptionStyle(multiselect), className)}
       onClick={handleOptionClick}
       onKeyPress={handleOptionClick}
-      data-value={value}
+      // data-value={value}
+      data-focused={isFocused}
     >
       {renderedChildren}
     </li>
