@@ -61,7 +61,7 @@ storiesOf('Combobox', module)
           overflow={select(
             'Overflow',
             ['expand-y', 'expand-x', 'scroll-x'],
-            'scroll-x',
+            'expand-y',
           )}
           // disabled={boolean('Disabled', false)}
         >

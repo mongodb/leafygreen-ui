@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
 } from 'react';
@@ -60,6 +61,7 @@ const comboboxSize = (size: ComboboxSizeType) => {
         --lg-combobox-height: 24px;
         --lg-combobox-line-height: 20px;
         --lg-combobox-border-radius: 3px;
+        --lg-combobox-input-width: 12ch;
       `;
   }
 };
@@ -118,9 +120,6 @@ const interactionRingStyle = css`
 const inputWrapper = (overflow: OverflowType) => {
   const baseWrapperStyle = css`
     width: var(--lg-combobox-width);
-    & > * {
-      margin-inline: 4px;
-    }
   `;
 
   switch (overflow) {
@@ -128,7 +127,6 @@ const inputWrapper = (overflow: OverflowType) => {
       return css`
         ${baseWrapperStyle}
         height: var(--lg-combobox-height);
-        /* width: 100%; */
         white-space: nowrap;
         overflow-x: scroll;
         scroll-behavior: smooth;
@@ -137,45 +135,61 @@ const inputWrapper = (overflow: OverflowType) => {
         &::-webkit-scrollbar {
           display: none;
         }
+
+        & > * {
+          margin-inline: 4px;
+        }
       `;
     }
 
     case 'expand-x': {
       return css`
         ${baseWrapperStyle}
-        /* width: unset; */
-        white-space: nowrap;
-        overflow-x: visible;
       `;
     }
 
     case 'expand-y': {
       return css`
         ${baseWrapperStyle}
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        overflow-x: visible;
       `;
     }
   }
 };
 
-const selectInputElement = css`
-  flex-grow: 1;
+const inputElementStyle = ({
+  selection,
+  isOpen,
+}: {
+  selection: number | Array<number> | null;
+  isOpen: boolean;
+}) => css`
   border: none;
   cursor: inherit;
   background-color: inherit;
   box-sizing: content-box;
-  padding: calc(
-      (var(--lg-combobox-height) - var(--lg-combobox-line-height)) / 2
-    )
-    0;
+  padding-block: calc(
+    (var(--lg-combobox-height) - var(--lg-combobox-line-height)) / 2
+  );
+  padding-inline: 0;
   height: var(--lg-combobox-line-height);
+
+  // The input should be hidden when there are elements selected in a multiselect
+  // We don't set \`display: none\` since we need to be able to set .focus() on the element
+  width: ${!isOpen && isArray(selection) && selection.length > 0
+    ? '0'
+    : 'var(--lg-combobox-input-width)'};
 
   &:focus {
     outline: none;
+    width: var(--lg-combobox-input-width);
   }
 `;
 
 // Menu Styles
-
 const menuWrapperStyle = ({
   darkMode,
   size,
@@ -304,7 +318,7 @@ export default function Combobox({
   const inputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(false);
   const [focusedOption, setFocusedOption] = useState<number | null>(null);
   const [selection, setSelection] = useState<number | Array<number> | null>(
     multiselect ? [] : null,
@@ -339,6 +353,17 @@ export default function Combobox({
     },
     [multiselect, selection],
   );
+
+  /**
+   * We listen for when `isOpen` changes, and then set a new variable
+   * that triggers the menu to re-render. We need this because
+   * the width of `input` gets updated after the menu is opened.
+   * This change doesn't get caught in the initial render of the menu,
+   * leading to issues when this change pops `input` to a new line.
+   * Note: useMemo is fired too early. Need to use useState & useEffect
+   */
+  const [hasMenuBeenOpened, setHasMenuBeenOpened] = useState(false);
+  useEffect(() => setHasMenuBeenOpened(isOpen), [isOpen]);
 
   // TODO - handle internal filtering
 
@@ -552,6 +577,12 @@ export default function Combobox({
   const handleInputChange = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
+    // adjust the size of the input
+    // if (inputRef.current) {
+    //   inputRef.current.setAttribute('style', `width: calc(${value.length}ch + 1px);`)
+    // }
+
+    // fire any filter function passed in
     onFilter?.(value);
   };
 
@@ -617,7 +648,7 @@ export default function Combobox({
 
   const placeholderValue =
     multiselect && isArray(selection) && selection.length > 0
-      ? ''
+      ? undefined
       : placeholder;
 
   return (
@@ -660,6 +691,8 @@ export default function Combobox({
             onFocus={openMenu}
             data-disabled={disabled}
             data-multiselect={multiselect}
+            // Add/remove this attribute to force the menu to rerender
+            data-is-open={hasMenuBeenOpened || undefined}
           >
             <div ref={inputWrapperRef} className={inputWrapper(overflow)}>
               {renderedChips}
@@ -670,7 +703,7 @@ export default function Combobox({
                 aria-labelledby={labelId}
                 ref={inputRef}
                 id={inputId}
-                className={selectInputElement}
+                className={inputElementStyle({ selection, isOpen })}
                 placeholder={placeholderValue}
                 disabled={disabled ?? undefined}
                 onChange={handleInputChange}
@@ -687,7 +720,8 @@ export default function Combobox({
           spacing={4}
           align="bottom"
           justify="middle"
-          // TODO - set maxHeight
+          refEl={comboboxRef}
+          adjustOnMutation={true}
           className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
         >
           <div id={menuId} ref={menuRef} className={menuStyle}>
