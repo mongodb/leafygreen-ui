@@ -61,7 +61,7 @@ const comboboxSize = (size: ComboboxSizeType) => {
         --lg-combobox-height: 24px;
         --lg-combobox-line-height: 20px;
         --lg-combobox-border-radius: 3px;
-        --lg-combobox-input-width: 12ch;
+        --lg-combobox-input-max-width: 12ch;
       `;
   }
 };
@@ -117,7 +117,15 @@ const interactionRingStyle = css`
   width: var(--lg-combobox-width);
 `;
 
-const inputWrapper = (overflow: OverflowType) => {
+const inputWrapperStyle = ({
+  overflow,
+  isOpen,
+  selection,
+}: {
+  overflow: OverflowType;
+  isOpen: boolean;
+  selection: number | Array<number> | null;
+}) => {
   const baseWrapperStyle = css`
     width: var(--lg-combobox-width);
   `;
@@ -138,6 +146,14 @@ const inputWrapper = (overflow: OverflowType) => {
 
         & > * {
           margin-inline: 4px;
+
+          &:first-child {
+            margin-inline-start: 0;
+          }
+
+          &:last-child {
+            margin-inline-end: 0;
+          }
         }
       `;
     }
@@ -145,6 +161,10 @@ const inputWrapper = (overflow: OverflowType) => {
     case 'expand-x': {
       return css`
         ${baseWrapperStyle}
+        display: flex;
+        gap: 4px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
       `;
     }
 
@@ -155,18 +175,20 @@ const inputWrapper = (overflow: OverflowType) => {
         flex-wrap: wrap;
         gap: 4px;
         overflow-x: visible;
+
+        // The input should be hidden when there are elements selected in a multiselect
+        // We don't set \`display: none\` since we need to be able to set .focus() on the element
+        --lg-combobox-input-width: ${!isOpen &&
+        isArray(selection) &&
+        selection.length > 0
+          ? '0'
+          : 'var(--lg-combobox-input-max-width)'};
       `;
     }
   }
 };
 
-const inputElementStyle = ({
-  selection,
-  isOpen,
-}: {
-  selection: number | Array<number> | null;
-  isOpen: boolean;
-}) => css`
+const inputElementStyle = css`
   border: none;
   cursor: inherit;
   background-color: inherit;
@@ -177,15 +199,13 @@ const inputElementStyle = ({
   padding-inline: 0;
   height: var(--lg-combobox-line-height);
 
-  // The input should be hidden when there are elements selected in a multiselect
-  // We don't set \`display: none\` since we need to be able to set .focus() on the element
-  width: ${!isOpen && isArray(selection) && selection.length > 0
-    ? '0'
-    : 'var(--lg-combobox-input-width)'};
+  width: var(
+    --lg-combobox-input-width,
+    var(--lg-combobox-input-max-width, auto)
+  );
 
   &:focus {
     outline: none;
-    width: var(--lg-combobox-input-width);
   }
 `;
 
@@ -694,7 +714,10 @@ export default function Combobox({
             // Add/remove this attribute to force the menu to rerender
             data-is-open={hasMenuBeenOpened || undefined}
           >
-            <div ref={inputWrapperRef} className={inputWrapper(overflow)}>
+            <div
+              ref={inputWrapperRef}
+              className={inputWrapperStyle({ overflow, isOpen, selection })}
+            >
               {renderedChips}
               <input
                 aria-label={ariaLabel ?? label}
@@ -703,7 +726,7 @@ export default function Combobox({
                 aria-labelledby={labelId}
                 ref={inputRef}
                 id={inputId}
-                className={inputElementStyle({ selection, isOpen })}
+                className={inputElementStyle}
                 placeholder={placeholderValue}
                 disabled={disabled ?? undefined}
                 onChange={handleInputChange}
