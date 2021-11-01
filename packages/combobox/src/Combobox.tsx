@@ -80,6 +80,8 @@ const comboboxParentStyle = ({
     comboboxSize(size),
     css`
       --lg-combobox-width: ${overflow === 'expand-x' ? 'unset' : '100%'};
+      --lg-combobox-padding: var(--lg-combobox-padding-y)
+        ${overflow === 'scroll-x' ? '0' : 'var(--lg-vombobox-padding-x)'};
       width: var(--lg-combobox-width);
     `,
   );
@@ -138,7 +140,6 @@ const inputWrapperStyle = ({
   `;
 
   switch (overflow) {
-    // TODO - chips should go to edge of frame
     case 'scroll-x': {
       return css`
         ${baseWrapperStyle}
@@ -163,11 +164,12 @@ const inputWrapperStyle = ({
           margin-inline: 2px;
 
           &:first-child {
-            margin-inline-start: 0;
+            margin-inline-start: var(--lg-combobox-padding-x);
           }
 
-          &:last-child:not(:focus) {
-            margin-inline: 0;
+          &:last-child {
+            margin-inline-start: 0;
+            margin-inline-end: var(--lg-combobox-padding-x);
           }
         }
       `;
