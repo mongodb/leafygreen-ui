@@ -20,7 +20,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { ComboboxContext } from './ComboboxContext';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { isArray, isNull, kebabCase, startCase } from 'lodash';
+import { isArray, isNull, isUndefined, kebabCase, startCase } from 'lodash';
 import { InternalComboboxOption } from './ComboboxOption';
 import Chip from './Chip';
 
@@ -85,8 +85,6 @@ const comboboxParentStyle = ({
 };
 
 const comboboxStyle = css`
-  /* display: flex; */
-  /* gap: 4px; */
   padding: var(--lg-combobox-padding);
   color: var(--lg-combobox-text-color);
   background-color: var(--lg-combobox-background-color);
@@ -125,14 +123,14 @@ const inputWrapperStyle = ({
   isOpen: boolean;
   selection: number | Array<number> | null;
 }) => {
-  const baseWrapperStyle = css`
-    width: var(--lg-combobox-width);
-  `;
+  const baseWrapperStyle = css``;
 
   switch (overflow) {
+    // TODO - chips should go to edge of frame
     case 'scroll-x': {
       return css`
         ${baseWrapperStyle}
+        width: var(--lg-combobox-width);
         height: var(--lg-combobox-height);
         white-space: nowrap;
         overflow-x: scroll;
@@ -157,9 +155,11 @@ const inputWrapperStyle = ({
       `;
     }
 
+    // TODO - make input take up space when focused only
     case 'expand-x': {
       return css`
         ${baseWrapperStyle}
+        width: var(--lg-combobox-width);
         display: flex;
         gap: 4px;
         flex-wrap: nowrap;
@@ -167,6 +167,7 @@ const inputWrapperStyle = ({
       `;
     }
 
+    // TODO - look into animating input element height on wrap
     case 'expand-y': {
       return css`
         ${baseWrapperStyle}
@@ -428,16 +429,34 @@ export default function Combobox({
     });
   }, [children, focusedOption, multiselect, selection, toggleSelection]);
 
-  const getIndexOfOption = (value: string) =>
-    renderedOptions?.findIndex(({ props }) => props.value === value) ?? -1;
+  const getIndexOfOption = (value: string): number | undefined => {
+    const index =
+      renderedOptions?.findIndex(({ props }) => props.value === value) ?? -1;
+
+    if (index >= 0) {
+      return index;
+    } else {
+      console.error(
+        `Error in Combobox: Could not find value "${value}" in options`,
+      );
+    }
+  };
 
   // Set initialValue
   useEffect(() => {
     if (initialValue) {
       if (isArray(initialValue)) {
-        setSelection(initialValue.map(value => getIndexOfOption(value)));
+        const indexArray = initialValue
+          .map(value => getIndexOfOption(value))
+          .filter(index => !isUndefined(index));
+
+        setSelection(indexArray as Array<number>);
       } else {
-        setSelection(getIndexOfOption(initialValue));
+        const index = getIndexOfOption(initialValue);
+
+        if (!isUndefined(index)) {
+          setSelection(index);
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
