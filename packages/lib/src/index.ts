@@ -181,6 +181,8 @@ export function enforceExhaustive(value: never): never {
   throw Error(`Received unhandled value: ${value}`);
 }
 
-export const errorOnce = once(console.error);
-export const warnOnce = once(console.warn);
-export const logOnce = once(console.log);
+export const consoleOnce = {
+  error: once(console.error),
+  warn: once(console.warn),
+  log: once(console.log),
+};
