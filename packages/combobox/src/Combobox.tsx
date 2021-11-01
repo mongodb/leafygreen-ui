@@ -66,12 +66,13 @@ export default function Combobox({
   const menuId = useIdAllocator({ prefix: 'combobox-menu' });
 
   const comboboxRef = useRef<HTMLDivElement>(null);
+  const clearButtonRef = useRef<HTMLButtonElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setOpen] = useState(false);
-  const [focusedOption, setFocusedOption] = useState<number>(0);
+  const [focusedOption, setFocusedOption] = useState<number | null>(0);
   const [selection, setSelection] = useState<number | Array<number> | null>(
     multiselect ? [] : null,
   );
@@ -345,7 +346,7 @@ export default function Combobox({
 
     switch (direction) {
       case 'next': {
-        if (focusedOption + 1 < optionsCount) {
+        if (!isNull(focusedOption) && focusedOption + 1 < optionsCount) {
           setFocusedOption(focusedOption + 1);
         } else {
           setFocusedOption(0);
@@ -354,7 +355,7 @@ export default function Combobox({
       }
 
       case 'prev': {
-        if (focusedOption - 1 >= 0) {
+        if (!isNull(focusedOption) && focusedOption - 1 >= 0) {
           setFocusedOption(focusedOption - 1);
         } else {
           setFocusedOption(lastIndex);
@@ -384,13 +385,12 @@ export default function Combobox({
   const handleInputChange = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
-    // adjust the size of the input
-    // if (inputRef.current) {
-    //   inputRef.current.setAttribute('style', `width: calc(${value.length}ch + 1px);`)
-    // }
-
     // fire any filter function passed in
     onFilter?.(value);
+  };
+
+  const handleClearButtonFocus = () => {
+    setFocusedOption(null);
   };
 
   // Global backdrop click handler
@@ -414,6 +414,7 @@ export default function Combobox({
       case 'Tab':
       case 'Escape': {
         closeMenu();
+        updateFocusedOption('first');
         break;
       }
 
@@ -422,7 +423,16 @@ export default function Combobox({
         if (isOpen) {
           event.preventDefault();
         }
-        toggleSelection(focusedOption);
+
+        if (
+          document.activeElement === inputRef.current &&
+          !isNull(focusedOption)
+        ) {
+          toggleSelection(focusedOption);
+        } else if (document.activeElement === clearButtonRef.current) {
+          clearSelection();
+          setInputFocus();
+        }
         break;
       }
 
@@ -517,7 +527,12 @@ export default function Combobox({
               />
             </div>
             {clearable && (
-              <IconButton onClick={clearSelection} aria-label="Clear selection">
+              <IconButton
+                ref={clearButtonRef}
+                onClick={clearSelection}
+                aria-label="Clear selection"
+                onFocus={handleClearButtonFocus}
+              >
                 <Icon glyph="XWithCircle" />
               </IconButton>
             )}
