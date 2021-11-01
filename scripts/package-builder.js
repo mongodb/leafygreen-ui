@@ -1,5 +1,9 @@
 const fs = require('fs');
 
+if (process.argv.length <= 2) {
+  throw new Error('No package name found. Please provide a package name');
+}
+
 const PACKAGE = process.argv[process.argv.length - 1];
 const PACKAGE_LC = PACKAGE.toLowerCase();
 const PACKAGE_UC = PACKAGE.split('-')
