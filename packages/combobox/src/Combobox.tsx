@@ -81,7 +81,7 @@ const comboboxParentStyle = ({
     css`
       --lg-combobox-width: ${overflow === 'expand-x' ? 'unset' : '100%'};
       --lg-combobox-padding: var(--lg-combobox-padding-y)
-        ${overflow === 'scroll-x' ? '0' : 'var(--lg-vombobox-padding-x)'};
+        ${overflow === 'scroll-x' ? '0' : 'var(--lg-combobox-padding-x)'};
       width: var(--lg-combobox-width);
     `,
   );
