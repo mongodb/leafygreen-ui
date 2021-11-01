@@ -536,6 +536,7 @@ export default function Combobox({
                 <Icon glyph="XWithCircle" />
               </IconButton>
             )}
+            <Icon glyph="CaretDown" />
           </div>
         </InteractionRing>
 

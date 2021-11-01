@@ -58,6 +58,7 @@ export const comboboxParentStyle = ({
     css`
       --lg-combobox-width: ${overflow === 'expand-x' ? 'unset' : '100%'};
       --lg-combobox-padding: var(--lg-combobox-padding-y)
+        var(--lg-combobox-padding-x) var(--lg-combobox-padding-y)
         ${overflow === 'scroll-x' ? '0' : 'var(--lg-combobox-padding-x)'};
       width: var(--lg-combobox-width);
     `,
@@ -68,7 +69,6 @@ export const comboboxStyle = css`
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-between;
   padding: var(--lg-combobox-padding);
   color: var(--lg-combobox-text-color);
   background-color: var(--lg-combobox-background-color);
@@ -112,6 +112,7 @@ export const inputWrapperStyle = ({
     !isOpen && isArray(selection) && selection.length > 0;
 
   const baseWrapperStyle = css`
+    flex-grow: 1;
     width: var(--lg-combobox-width);
 
     // The input should be hidden when there are elements selected in a multiselect
@@ -150,7 +151,6 @@ export const inputWrapperStyle = ({
           }
 
           &:last-child {
-            margin-inline-start: 0;
             margin-inline-end: var(--lg-combobox-padding-x);
           }
         }
