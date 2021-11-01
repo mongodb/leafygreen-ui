@@ -70,7 +70,7 @@ export default function Combobox({
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setOpen] = useState(false);
-  const [focusedOption, setFocusedOption] = useState<number | null>(null);
+  const [focusedOption, setFocusedOption] = useState<number>(0);
   const [selection, setSelection] = useState<number | Array<number> | null>(
     multiselect ? [] : null,
   );
@@ -82,23 +82,31 @@ export default function Combobox({
     }
   }, [disabled]);
 
+  const setInputValue = (value: string) => {
+    if (inputRef.current) {
+      inputRef.current.value = value;
+    }
+  };
+
   // Utility function to handle mulit & single select
   const toggleSelection = useCallback(
-    (key: number) => {
+    (index: number) => {
       // MULTISELECT
       if (multiselect && isArray(selection)) {
-        if (selection.includes(key)) {
+        if (selection.includes(index)) {
           // remove from array
           const newSelection = [...selection];
-          newSelection.splice(newSelection.indexOf(key), 1);
+          newSelection.splice(newSelection.indexOf(index), 1);
           setSelection(newSelection);
         } else {
           // add to array
-          setSelection([...selection, key]);
+          setSelection([...selection, index]);
+          // clear text
+          setInputValue('');
         }
       } else {
         // SINGLE SELECT
-        setSelection(key);
+        setSelection(index);
         // TODO - update input value
       }
     },
@@ -130,7 +138,6 @@ export default function Combobox({
         const {
           value: valueProp,
           displayName: nameProp,
-          // children: childChildrenProp,
           className,
           glyph,
         } = child.props;
@@ -179,6 +186,19 @@ export default function Combobox({
     }
   };
 
+  const getValueAtIndex = useCallback(
+    (index: number): string | undefined => {
+      const value = renderedOptions?.[index].props.displayName ?? '';
+
+      if (value) {
+        return value;
+      } else {
+        consoleOnce.error(`Error in Combobox: No option at index ${index}`);
+      }
+    },
+    [renderedOptions],
+  );
+
   // Set initialValue
   useEffect(() => {
     if (initialValue) {
@@ -201,22 +221,21 @@ export default function Combobox({
 
   // When the selection changes...
   useEffect(() => {
-    // Update the text input
-    if (!multiselect && inputRef.current) {
-      const selectedOption =
-        renderedOptions && !isNull(selection) && !isArray(selection)
-          ? renderedOptions[selection]
-          : undefined;
-      inputRef.current.value = selectedOption
-        ? selectedOption.props.displayName
-        : '';
+    // Single select
+    if (
+      !multiselect &&
+      inputRef.current &&
+      !isArray(selection) &&
+      !isNull(selection)
+    ) {
+      // Update the text input
+      setInputValue(getValueAtIndex(selection) ?? '');
     } else {
-      // TODO - decide if we focus the text input here ?
-      // setInputFocus()
-      // Scroll the wrapper to the end
+      // Multiselect
+      // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
       scrollToEnd();
     }
-  }, [multiselect, renderedOptions, selection, setInputFocus]);
+  }, [getValueAtIndex, multiselect, selection]);
 
   // Do any of the options have an icon?
   const withIcons = useMemo(
@@ -224,7 +243,6 @@ export default function Combobox({
     [renderedOptions],
   );
 
-  // TODO - useMemo to render Chips
   const renderedChips = useMemo(() => {
     if (multiselect && isArray(selection) && renderedOptions) {
       return selection.map(index => {
@@ -247,10 +265,14 @@ export default function Combobox({
    */
   const closeMenu = () => setOpen(false);
   const openMenu = () => setOpen(true);
+
+  // We want to listen to `isOpen` as well
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const menuWidth = useMemo(() => comboboxRef.current?.clientWidth, [
     comboboxRef,
     isOpen,
+    focusedOption,
+    selection,
   ]);
 
   const renderedMenuContents = useMemo((): JSX.Element => {
@@ -290,18 +312,13 @@ export default function Combobox({
       case 'unset':
       default: {
         if (renderedOptions) {
-          return (
-            <ul role="listbox" aria-labelledby={labelId} className={menuList}>
-              {renderedOptions}
-            </ul>
-          );
+          return <ul className={menuList}>{renderedOptions}</ul>;
         }
 
         return <span className={menuMessage}>{searchEmptyMessage}</span>;
       }
     }
   }, [
-    labelId,
     renderedOptions,
     searchEmptyMessage,
     searchErrorMessage,
@@ -319,7 +336,7 @@ export default function Combobox({
 
     switch (direction) {
       case 'next': {
-        if (!isNull(focusedOption) && focusedOption + 1 < optionsCount) {
+        if (focusedOption + 1 < optionsCount) {
           setFocusedOption(focusedOption + 1);
         } else {
           setFocusedOption(0);
@@ -328,7 +345,7 @@ export default function Combobox({
       }
 
       case 'prev': {
-        if (!isNull(focusedOption) && focusedOption - 1 >= 0) {
+        if (focusedOption - 1 >= 0) {
           setFocusedOption(focusedOption - 1);
         } else {
           setFocusedOption(lastIndex);
@@ -374,7 +391,6 @@ export default function Combobox({
       comboboxRef.current?.contains(target as Node) ||
       false;
     setOpen(isChildFocused);
-    setFocusedOption(null);
   };
   useEventListener('mousedown', handleBackdropClick);
 
@@ -385,14 +401,10 @@ export default function Combobox({
       return;
     }
 
-    // TODO - if keydown is a character, (and input is not focused)
-    // then set focus to the input and add that character
-
     switch (event.key) {
       case 'Tab':
       case 'Escape': {
         closeMenu();
-        setFocusedOption(null);
         break;
       }
 
@@ -401,10 +413,7 @@ export default function Combobox({
         if (isOpen) {
           event.preventDefault();
         }
-
-        if (!isNull(focusedOption)) {
-          toggleSelection(focusedOption);
-        }
+        toggleSelection(focusedOption);
         break;
       }
 
@@ -514,7 +523,14 @@ export default function Combobox({
           adjustOnMutation={true}
           className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
         >
-          <div id={menuId} ref={menuRef} className={menuStyle}>
+          <div
+            role="listbox"
+            aria-labelledby={labelId}
+            aria-expanded={isOpen}
+            id={menuId}
+            ref={menuRef}
+            className={menuStyle}
+          >
             {renderedMenuContents}
           </div>
         </Popover>

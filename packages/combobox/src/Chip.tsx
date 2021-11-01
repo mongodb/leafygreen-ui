@@ -14,18 +14,16 @@ const chipWrapperStyle = ({
 }) => {
   let chipModeStyle, chipSizeStyle;
 
-  switch (darkMode) {
-    case false:
-      chipModeStyle = css`
-        --lg-combobox-chip-text-color: ${uiColors.gray.dark3};
-        --lg-combobox-chip-icon-color: ${uiColors.gray.dark2};
-        --lg-combobox-chip-background-color: ${uiColors.gray.light2};
-        --lg-combobox-chip-hover-color: ${uiColors.gray.light1};
-        --lg-combobox-chip-focus-color: ${uiColors.blue.light2};
-      `;
-      break;
-    case true:
-      chipModeStyle = css``;
+  if (darkMode) {
+    chipModeStyle = css``;
+  } else {
+    chipModeStyle = css`
+      --lg-combobox-chip-text-color: ${uiColors.gray.dark3};
+      --lg-combobox-chip-icon-color: ${uiColors.gray.dark2};
+      --lg-combobox-chip-background-color: ${uiColors.gray.light2};
+      --lg-combobox-chip-hover-color: ${uiColors.gray.light1};
+      --lg-combobox-chip-focus-color: ${uiColors.blue.light2};
+    `;
   }
 
   switch (size) {
@@ -54,7 +52,7 @@ const chipWrapperStyle = ({
       color: var(--lg-combobox-chip-text-color);
       background-color: var(--lg-combobox-chip-background-color);
 
-      // TODO - make these styles better
+      // TODO - refine these styles
       &:focus {
         background-color: var(--lg-combobox-chip-focus-color);
       }

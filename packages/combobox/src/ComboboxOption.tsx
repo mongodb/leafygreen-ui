@@ -49,8 +49,7 @@ const comboboxOptionStyle = (multiselect: boolean) => css`
     background-color: var(--lg-combobox-item-hover-color);
   }
 
-  &:focus,
-  &[data-focused='true'] {
+  &[aria-selected='true'] {
     outline: none;
     background-color: var(--lg-combobox-item-active-color);
 
@@ -86,11 +85,11 @@ export function InternalComboboxOption({
   );
   const optionRef = useRef<HTMLLIElement>(null);
 
-  useEffect(() => {
-    if (isFocused) {
-      optionRef.current?.focus();
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     optionRef.current?.focus();
+  //   }
+  // }, [isFocused]);
 
   const handleOptionClick = useCallback(() => {
     setSelected();
@@ -176,13 +175,11 @@ export function InternalComboboxOption({
     <li
       ref={optionRef}
       role="option"
-      aria-selected={isSelected}
+      aria-selected={isFocused}
       tabIndex={-1}
       className={cx(comboboxOptionStyle(multiselect), className)}
       onClick={handleOptionClick}
       onKeyPress={handleOptionClick}
-      // data-value={value}
-      data-focused={isFocused}
     >
       {renderedChildren}
     </li>
