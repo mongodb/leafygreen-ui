@@ -12,7 +12,7 @@ import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 import { isArray, isNull, isUndefined, kebabCase, startCase } from 'lodash';
 import { ComboboxProps } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
@@ -173,8 +173,7 @@ export default function Combobox({
     if (index >= 0) {
       return index;
     } else {
-      // TODO - errorOnce
-      console.error(
+      consoleOnce.error(
         `Error in Combobox: Could not find value "${value}" in options`,
       );
     }
