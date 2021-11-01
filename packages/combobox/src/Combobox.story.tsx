@@ -57,7 +57,13 @@ storiesOf('Combobox', module)
           description="Pick as many as you want!"
           placeholder="Select fruit"
           multiselect={true}
-          initialValue={['apple', 'carrot', 'banana', 'dragonfruit', 'egg']}
+          initialValue={[
+            'apple',
+            'banana',
+            'carrot',
+            'dragonfruit',
+            'jalapeno',
+          ]}
           overflow={select(
             'Overflow',
             ['expand-y', 'expand-x', 'scroll-x'],
@@ -80,7 +86,7 @@ storiesOf('Combobox', module)
           <ComboboxOption value="grape" />
           <ComboboxOption value="honeydew" />
           <ComboboxOption value="iceberg" />
-          <ComboboxOption value="jalapeño" displayName="Jalapeño" />
+          <ComboboxOption value="jalapeno" displayName="Jalapeño" />
         </Combobox>
       </Wrapper>
     );

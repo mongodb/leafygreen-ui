@@ -56,11 +56,12 @@ const comboboxSize = (size: ComboboxSizeType) => {
   switch (size) {
     case 'default':
       return css`
-        --lg-combobox-padding: 5px 7px;
+        --lg-combobox-padding-y: 5px;
+        --lg-combobox-padding-x: 7px;
         --lg-combobox-height: 24px;
         --lg-combobox-line-height: 20px;
         --lg-combobox-border-radius: 3px;
-        --lg-combobox-input-max-width: 12ch;
+        --lg-combobox-input-max-width: 8ch;
       `;
   }
 };
@@ -123,47 +124,63 @@ const inputWrapperStyle = ({
   isOpen: boolean;
   selection: number | Array<number> | null;
 }) => {
-  const baseWrapperStyle = css``;
+  const isUnfocusedMultiselect =
+    !isOpen && isArray(selection) && selection.length > 0;
+
+  const baseWrapperStyle = css`
+    width: var(--lg-combobox-width);
+
+    // The input should be hidden when there are elements selected in a multiselect
+    // We don't set \`display: none\` since we need to be able to set .focus() on the element
+    --lg-combobox-input-width: ${isUnfocusedMultiselect
+      ? '0'
+      : 'var(--lg-combobox-input-max-width)'};
+  `;
 
   switch (overflow) {
     // TODO - chips should go to edge of frame
     case 'scroll-x': {
       return css`
         ${baseWrapperStyle}
-        width: var(--lg-combobox-width);
+        display: block;
         height: var(--lg-combobox-height);
         white-space: nowrap;
         overflow-x: scroll;
         scroll-behavior: smooth;
         scrollbar-width: none;
+        /*
+         * Immediate transition in, slow transition out. 
+         * '-in' transition is handled by \`scroll-behavior\` 
+         */
+        --lg-combobox-input-transition: width ease-in-out
+          ${isUnfocusedMultiselect ? '100ms' : '0'};
 
         &::-webkit-scrollbar {
           display: none;
         }
 
         & > * {
-          margin-inline: 4px;
+          margin-inline: 2px;
 
           &:first-child {
             margin-inline-start: 0;
           }
 
-          &:last-child {
-            margin-inline-end: 0;
+          &:last-child:not(:focus) {
+            margin-inline: 0;
           }
         }
       `;
     }
 
-    // TODO - make input take up space when focused only
     case 'expand-x': {
       return css`
         ${baseWrapperStyle}
-        width: var(--lg-combobox-width);
         display: flex;
         gap: 4px;
         flex-wrap: nowrap;
         white-space: nowrap;
+        --lg-combobox-input-transition: width 150ms ease-in-out;
       `;
     }
 
@@ -175,14 +192,6 @@ const inputWrapperStyle = ({
         flex-wrap: wrap;
         gap: 4px;
         overflow-x: visible;
-
-        // The input should be hidden when there are elements selected in a multiselect
-        // We don't set \`display: none\` since we need to be able to set .focus() on the element
-        --lg-combobox-input-width: ${!isOpen &&
-        isArray(selection) &&
-        selection.length > 0
-          ? '0'
-          : 'var(--lg-combobox-input-max-width)'};
       `;
     }
   }
@@ -203,6 +212,7 @@ const inputElementStyle = css`
     --lg-combobox-input-width,
     var(--lg-combobox-input-max-width, auto)
   );
+  transition: var(--lg-combobox-input-transition);
 
   &:focus {
     outline: none;
@@ -374,6 +384,12 @@ export default function Combobox({
     [multiselect, selection],
   );
 
+  const scrollToEnd = () => {
+    if (inputWrapperRef.current) {
+      inputWrapperRef.current.scrollLeft = inputWrapperRef.current?.scrollWidth;
+    }
+  };
+
   /**
    * We listen for when `isOpen` changes, and then set a new variable
    * that triggers the menu to re-render. We need this because
@@ -436,6 +452,7 @@ export default function Combobox({
     if (index >= 0) {
       return index;
     } else {
+      // TODO - errorOnce
       console.error(
         `Error in Combobox: Could not find value "${value}" in options`,
       );
@@ -477,10 +494,7 @@ export default function Combobox({
       // TODO - decide if we focus the text input here ?
       // setInputFocus()
       // Scroll the wrapper to the end
-      if (inputWrapperRef.current) {
-        inputWrapperRef.current.scrollLeft =
-          inputWrapperRef.current?.scrollWidth;
-      }
+      scrollToEnd();
     }
   }, [multiselect, renderedOptions, selection, setInputFocus]);
 
@@ -614,6 +628,12 @@ export default function Combobox({
     }
   };
 
+  // Fired when the wrapper gains focus
+  const handleInputFocus = () => {
+    scrollToEnd();
+    openMenu();
+  };
+
   // Fired onChange
   const handleInputChange = ({
     target: { value },
@@ -733,7 +753,7 @@ export default function Combobox({
             tabIndex={-1}
             className={cx(comboboxStyle)}
             onClick={setInputFocus}
-            onFocus={openMenu}
+            onFocus={handleInputFocus}
             data-disabled={disabled}
             data-multiselect={multiselect}
             // Add/remove this attribute to force the menu to rerender
