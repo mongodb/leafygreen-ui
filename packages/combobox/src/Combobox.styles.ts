@@ -65,6 +65,10 @@ export const comboboxParentStyle = ({
 };
 
 export const comboboxStyle = css`
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
   padding: var(--lg-combobox-padding);
   color: var(--lg-combobox-text-color);
   background-color: var(--lg-combobox-background-color);

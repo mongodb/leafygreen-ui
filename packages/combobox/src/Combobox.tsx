@@ -10,6 +10,7 @@ import Popover from '@leafygreen-ui/popover';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
@@ -107,11 +108,19 @@ export default function Combobox({
       } else {
         // SINGLE SELECT
         setSelection(index);
-        // TODO - update input value
       }
+      setInputFocus();
     },
-    [multiselect, selection],
+    [multiselect, selection, setInputFocus],
   );
+
+  const clearSelection = () => {
+    if (multiselect) {
+      setSelection([]);
+    } else {
+      setSelection(null);
+    }
+  };
 
   const scrollToEnd = () => {
     if (inputWrapperRef.current) {
@@ -507,8 +516,11 @@ export default function Combobox({
                 onChange={handleInputChange}
               />
             </div>
-
-            {/* TODO - add `clearable` button */}
+            {clearable && (
+              <IconButton onClick={clearSelection} aria-label="Clear selection">
+                <Icon glyph="XWithCircle" />
+              </IconButton>
+            )}
           </div>
         </InteractionRing>
 
