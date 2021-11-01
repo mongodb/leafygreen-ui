@@ -75,6 +75,7 @@ export const comboboxStyle = css`
   cursor: text;
   transition: 150ms ease-in-out;
   transition-property: background-color, box-shadow;
+  min-width: 256px;
 
   &:focus-within {
     background-color: var(--lg-combobox-background-color-focus);

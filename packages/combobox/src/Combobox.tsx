@@ -266,14 +266,14 @@ export default function Combobox({
   const closeMenu = () => setOpen(false);
   const openMenu = () => setOpen(true);
 
-  // We want to listen to `isOpen` as well
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const menuWidth = useMemo(() => comboboxRef.current?.clientWidth, [
-    comboboxRef,
-    isOpen,
-    focusedOption,
-    selection,
-  ]);
+  const [menuWidth, setMenuWidth] = useState(0);
+  useEffect(() => {
+    setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
+  }, [comboboxRef, isOpen, focusedOption, selection]);
+  const handleTransitionEnd = () => {
+    setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
+  };
 
   const renderedMenuContents = useMemo((): JSX.Element => {
     switch (searchState) {
@@ -483,6 +483,7 @@ export default function Combobox({
             className={cx(comboboxStyle)}
             onClick={setInputFocus}
             onFocus={handleInputFocus}
+            onTransitionEnd={handleTransitionEnd}
             data-disabled={disabled}
             data-multiselect={multiselect}
             // Add/remove this attribute to force the menu to rerender
@@ -518,7 +519,7 @@ export default function Combobox({
           active={isOpen && !disabled}
           spacing={4}
           align="bottom"
-          justify="middle"
+          justify="start"
           refEl={comboboxRef}
           adjustOnMutation={true}
           className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
