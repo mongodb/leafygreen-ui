@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/interaction-ring",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "leafyGreen UI Kit Interaction Ring",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
