@@ -17,6 +17,10 @@ interface MultiSelectProps {
 
 type VariableSelectProps = SingleSelectProps | MultiSelectProps;
 
+/**
+ * Prop Enums & Types
+ */
+
 export enum ComboboxSize {
   default,
 }
@@ -36,6 +40,23 @@ export enum Overflow {
 }
 export type OverflowType = keyof typeof Overflow;
 
+export enum State {
+  error,
+  none,
+}
+export type StateType = keyof typeof State;
+
+export enum SearchState {
+  unset,
+  error,
+  loading,
+}
+export type SearchStateType = keyof typeof SearchState;
+
+/**
+ * Combobox Props
+ */
+
 type BaseComboboxProps = {
   children?: ReactNode;
   label?: string;
@@ -45,9 +66,9 @@ type BaseComboboxProps = {
   disabled?: boolean;
   size?: ComboboxSizeType;
   darkMode?: boolean;
-  state?: 'error' | 'none';
+  state?: StateType;
   errorMessage?: string;
-  searchState?: 'unset' | 'error' | 'loading';
+  searchState?: SearchStateType;
   searchEmptyMessage?: string;
   searchErrorMessage?: string;
   searchLoadingMessage?: string;
@@ -63,15 +84,13 @@ type BaseComboboxProps = {
 export type ComboboxProps = Either<BaseComboboxProps, 'label' | 'aria-label'>;
 
 /**
- * Combobox Option
+ * Combobox Option Props
  */
-
 interface BaseComboboxOptionProps {
   value?: string;
   displayName?: string;
   children?: ReactNode;
   glyph?: ReactElement;
-  // description?: string
   className?: string;
 }
 
@@ -83,7 +102,6 @@ export type ComboboxOptionProps = Either<
 export interface InternalComboboxOptionProps {
   value: string;
   displayName: string;
-  // children?: ReactNode;
   isSelected: boolean;
   isFocused: boolean;
   setSelected: () => void;
