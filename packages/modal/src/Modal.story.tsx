@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
+import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Modal, { ModalSize } from '.';
 
@@ -13,12 +14,11 @@ function Default() {
 
   return (
     <>
-      <button onClick={() => setOpen(!open)}>Open Modal</button>
+      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <Modal
         open={open}
         setOpen={setOpen}
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
-        closeOnBackdropClick={boolean('closeOnBackdropClick', true)}
         darkMode={boolean('darkMode', false)}
       >
         Modal Content goes here.
@@ -32,7 +32,7 @@ function Scroll() {
 
   return (
     <>
-      <button onClick={() => setOpen(!open)}>Open Modal</button>
+      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <Modal
         open={open}
         setOpen={setOpen}
@@ -49,7 +49,7 @@ function Interactive() {
 
   return (
     <>
-      <button onClick={() => setOpen(!open)}>Open Modal</button>
+      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <Modal
         open={open}
         setOpen={setOpen}
@@ -57,7 +57,7 @@ function Interactive() {
       >
         <div>
           <div>Modal Content goes here.</div>
-          <button>Click me, I will not close the modal!</button>
+          <Button>Click me, I will not close the modal!</Button>
         </div>
       </Modal>
     </>

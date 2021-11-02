@@ -2,20 +2,16 @@ import React from 'react';
 import { css, cx } from '@emotion/css';
 import { Overline } from '@leafygreen-ui/typography';
 import {
-  AtlasLogo,
-  ChartsLogo,
-  RealmLogo,
-  CloudManagerLogo,
-  Logo,
-  LogoMark,
-  AtlasLogoMark,
-  ChartsLogoMark,
-  CloudManagerLogoMark,
-  DriversConnectorsLogoMark,
-  CompassLogoMark,
-  ServerLogoMark,
-  RealmLogoMark,
+  MongoDBLogo,
+  MongoDBLogoMark,
+  AtlasLogoLockup,
+  AtlasForGovernmentLogoLockup,
+  RealmLogoLockup,
+  EnterpriseAdvancedLogoLockup,
+  CommunityEditionLogoLockup,
+  UniversityLogoLockup,
 } from '@leafygreen-ui/logo';
+
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
@@ -25,161 +21,89 @@ const overlineStyle = css`
 `;
 
 const logoContainer = css`
-  margin-bottom: 36px;
-`;
-
-const leftMargin = css`
-  margin-left: ${spacing[4]}px;
+  margin-bottom: ${spacing[6]}px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: ${spacing[4]}px;
+  row-gap: ${spacing[6]}px;
 `;
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type LogoProps = {
-  knockout: boolean;
-  darkMode: boolean;
-  product: 'none' | 'atlas' | 'charts' | 'cloudManager' | 'realm';
-  lockup: 'default' | 'stacked';
+  color: 'white' | 'black' | 'green-dark-2' | 'green-base';
 };
 
 const knobsConfig: KnobsConfigInterface<LogoProps> = {
-  knockout: {
-    type: 'boolean',
-    default: false,
-    label: 'Knockout',
-  },
-  darkMode: {
-    type: 'boolean',
-    default: false,
-    label: 'Dark Mode',
-  },
-  product: {
+  color: {
     type: 'select',
-    default: 'none',
-    options: ['none', 'atlas', 'charts', 'cloudManager', 'realm'],
-    label: 'Product',
-  },
-  lockup: {
-    type: 'select',
-    default: 'default',
-    options: ['default', 'stacked'],
-    label: 'Lockup',
+    default: 'green-dark-2',
+    options: ['white', 'black', 'green-dark-2', 'green-base'],
+    label: 'Color',
   },
 };
 
 export default function LogoLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ darkMode, knockout, product, lockup }) => (
-        <div>
+      {({ color }) => (
+        <div
+          className={cx(
+            css`
+              padding: ${spacing[6]}px ${spacing[5]}px ${spacing[4]}px;
+              border-radius: 20px;
+            `,
+            {
+              [css`
+                background-color: #001e2b;
+              `]: ['white', 'green-base'].includes(color),
+            },
+          )}
+        >
           <Overline
             className={cx(overlineStyle, {
               [css`
                 color: ${uiColors.gray.light3};
-              `]: darkMode,
+              `]: ['white', 'green-base'].includes(color),
             })}
           >
-            Product Logos
+            MongoDB Logo
           </Overline>
+
           <div className={logoContainer}>
-            <AtlasLogo height={64} knockout={knockout} darkMode={darkMode} />
-            <ChartsLogo
-              height={64}
-              knockout={knockout}
-              darkMode={darkMode}
-              className={leftMargin}
-            />
-            <CloudManagerLogo
-              height={64}
-              knockout={knockout}
-              darkMode={darkMode}
-              className={leftMargin}
-            />
-            <RealmLogo
-              height={64}
-              knockout={knockout}
-              darkMode={darkMode}
-              className={leftMargin}
-            />
+            <MongoDBLogo color={color} height={54} />
           </div>
 
           <Overline
             className={cx(overlineStyle, {
               [css`
                 color: ${uiColors.gray.light3};
-              `]: darkMode,
+              `]: ['white', 'green-base'].includes(color),
             })}
           >
-            Product LogoMarks
+            MongoDB Logo Mark
           </Overline>
+
           <div className={logoContainer}>
-            <AtlasLogoMark darkMode={darkMode} knockout={knockout} size={32} />
-            <ChartsLogoMark
-              darkMode={darkMode}
-              knockout={knockout}
-              size={32}
-              className={leftMargin}
-            />
-            <CloudManagerLogoMark
-              darkMode={darkMode}
-              knockout={knockout}
-              size={32}
-              className={leftMargin}
-            />
-            <CompassLogoMark
-              darkMode={darkMode}
-              knockout={knockout}
-              size={32}
-              className={leftMargin}
-            />
-            <DriversConnectorsLogoMark
-              darkMode={darkMode}
-              knockout={knockout}
-              size={32}
-              className={leftMargin}
-            />
-            <RealmLogoMark
-              darkMode={darkMode}
-              knockout={knockout}
-              size={32}
-              className={leftMargin}
-            />
-            <ServerLogoMark
-              darkMode={darkMode}
-              knockout={knockout}
-              size={32}
-              className={leftMargin}
-            />
+            <MongoDBLogoMark color={color} height={54} />
           </div>
 
           <Overline
             className={cx(overlineStyle, {
               [css`
                 color: ${uiColors.gray.light3};
-              `]: darkMode,
+              `]: ['white', 'green-base'].includes(color),
             })}
           >
-            Logo
+            Product Logo Lockups
           </Overline>
           <div className={logoContainer}>
-            <Logo
-              darkMode={darkMode}
-              knockout={knockout}
-              product={product}
-              lockup={lockup}
-            />
-          </div>
-
-          <Overline
-            className={cx(overlineStyle, {
-              [css`
-                color: ${uiColors.gray.light3};
-              `]: darkMode,
-            })}
-          >
-            LogoMark
-          </Overline>
-          <div className={logoContainer}>
-            <LogoMark darkMode={darkMode} knockout={knockout} />
+            <AtlasLogoLockup color={color} height={54} />
+            <AtlasForGovernmentLogoLockup color={color} height={54} />
+            <RealmLogoLockup color={color} height={54} />
+            <EnterpriseAdvancedLogoLockup color={color} height={54} />
+            <CommunityEditionLogoLockup color={color} height={54} />
+            <UniversityLogoLockup color={color} height={36} />
           </div>
         </div>
       )}
