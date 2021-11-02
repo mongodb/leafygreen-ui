@@ -7,7 +7,11 @@ import React, {
 } from 'react';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
-import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
+import {
+  useEventListener,
+  useIdAllocator,
+  usePrevious,
+} from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -15,15 +19,22 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 import { isArray, isNull, isUndefined, kebabCase, startCase } from 'lodash';
-import { ComboboxProps } from './Combobox.types';
+import {
+  ComboboxProps,
+  getIsMultiselect,
+  SelectValueType,
+} from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
 import Chip from './Chip';
 import {
   comboboxParentStyle,
   comboboxStyle,
+  endIcon,
+  errorMessageStyle,
   inputElementStyle,
   inputWrapperStyle,
+  interactionRingColor,
   interactionRingStyle,
   menuList,
   menuMessage,
@@ -73,9 +84,13 @@ export default function Combobox({
 
   const [isOpen, setOpen] = useState(false);
   const [focusedOption, setFocusedOption] = useState<number | null>(0);
-  const [selection, setSelection] = useState<number | Array<number> | null>(
-    multiselect ? [] : null,
-  );
+  const [selection, setSelection] = useState<SelectValueType<
+    boolean,
+    number
+  > | null>(multiselect ? [] : null);
+  const prevSelection = usePrevious(selection);
+
+  const isMultiselect = getIsMultiselect(multiselect);
 
   // Utility to force selection
   const setInputFocus = useCallback(() => {
@@ -94,7 +109,7 @@ export default function Combobox({
   const toggleSelection = useCallback(
     (index: number) => {
       // MULTISELECT
-      if (multiselect && isArray(selection)) {
+      if (isMultiselect(selection)) {
         if (selection.includes(index)) {
           // remove from array
           const newSelection = [...selection];
@@ -112,16 +127,16 @@ export default function Combobox({
       }
       setInputFocus();
     },
-    [multiselect, selection, setInputFocus],
+    [isMultiselect, selection, setInputFocus],
   );
 
-  const clearSelection = () => {
+  const clearSelection = useCallback(() => {
     if (multiselect) {
       setSelection([]);
     } else {
       setSelection(null);
     }
-  };
+  }, [multiselect]);
 
   const scrollToEnd = () => {
     if (inputWrapperRef.current) {
@@ -157,10 +172,9 @@ export default function Combobox({
         // const childChildren = childChildrenProp ?? nameProp ?? startCase(value);
 
         const isFocused = focusedOption === index;
-        const isSelected =
-          multiselect && isArray(selection)
-            ? selection.includes(index)
-            : selection === index;
+        const isSelected = isMultiselect(selection)
+          ? selection.includes(index)
+          : selection === index;
 
         const setSelected = () => {
           toggleSelection(index);
@@ -181,7 +195,7 @@ export default function Combobox({
         // TODO - handle nesting
       }
     });
-  }, [children, focusedOption, multiselect, selection, toggleSelection]);
+  }, [children, focusedOption, isMultiselect, selection, toggleSelection]);
 
   const getIndexOfOption = (value: string): number | undefined => {
     const index =
@@ -209,6 +223,19 @@ export default function Combobox({
     [renderedOptions],
   );
 
+  const getValueOfSelection = useCallback(
+    (selection: number | Array<number>): string | Array<string> | undefined => {
+      if (isMultiselect(selection)) {
+        return selection
+          .map(index => getValueAtIndex(index))
+          .filter(value => !isUndefined(value)) as Array<string>;
+      } else if (!isArray(selection)) {
+        return getValueAtIndex(selection);
+      }
+    },
+    [getValueAtIndex, isMultiselect],
+  );
+
   // Set initialValue
   useEffect(() => {
     if (initialValue) {
@@ -231,21 +258,29 @@ export default function Combobox({
 
   // When the selection changes...
   useEffect(() => {
-    // Single select
-    if (
-      !multiselect &&
-      inputRef.current &&
-      !isArray(selection) &&
-      !isNull(selection)
-    ) {
-      // Update the text input
-      setInputValue(getValueAtIndex(selection) ?? '');
-    } else {
-      // Multiselect
-      // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
-      scrollToEnd();
+    if (!isNull(selection) && selection !== prevSelection) {
+      const value = getValueOfSelection(selection);
+
+      if (!isUndefined(value)) {
+        if (isMultiselect(selection)) {
+          // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
+          scrollToEnd();
+        } else if (!isArray(value)) {
+          // Update the text input
+          setInputValue(value ?? '');
+        }
+        // onChange?.(value)
+      }
     }
-  }, [getValueAtIndex, multiselect, selection]);
+  }, [
+    getValueAtIndex,
+    getValueOfSelection,
+    isMultiselect,
+    multiselect,
+    onChange,
+    prevSelection,
+    selection,
+  ]);
 
   // Do any of the options have an icon?
   const withIcons = useMemo(
@@ -269,6 +304,30 @@ export default function Combobox({
       });
     }
   }, [multiselect, renderedOptions, selection, toggleSelection]);
+
+  const renderedInputIcons = useMemo(() => {
+    if (state === 'error') {
+      return (
+        <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
+      );
+    } else {
+      return (
+        <>
+          {clearable && (
+            <IconButton
+              ref={clearButtonRef}
+              onClick={clearSelection}
+              aria-label="Clear selection"
+              onFocus={handleClearButtonFocus}
+            >
+              <Icon glyph="XWithCircle" />
+            </IconButton>
+          )}
+          <Icon glyph="CaretDown" className={endIcon} />
+        </>
+      );
+    }
+  }, [clearSelection, state, clearable]);
 
   /**
    * Menu management
@@ -489,7 +548,11 @@ export default function Combobox({
           {/* TODO - add error state message */}
         </div>
 
-        <InteractionRing className={interactionRingStyle} disabled={disabled}>
+        <InteractionRing
+          className={interactionRingStyle}
+          disabled={disabled}
+          color={interactionRingColor({ state, darkMode })}
+        >
           {/* Disable eslint: onClick sets focus. Key events would already have focus */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <div
@@ -499,11 +562,12 @@ export default function Combobox({
             aria-controls={menuId}
             aria-owns={menuId}
             tabIndex={-1}
-            className={cx(comboboxStyle)}
+            className={comboboxStyle}
             onClick={setInputFocus}
             onFocus={handleInputFocus}
             onTransitionEnd={handleTransitionEnd}
             data-disabled={disabled}
+            data-state={state}
             data-multiselect={multiselect}
             // Add/remove this attribute to force the menu to rerender
             data-is-open={hasMenuBeenOpened || undefined}
@@ -526,19 +590,13 @@ export default function Combobox({
                 onChange={handleInputChange}
               />
             </div>
-            {clearable && (
-              <IconButton
-                ref={clearButtonRef}
-                onClick={clearSelection}
-                aria-label="Clear selection"
-                onFocus={handleClearButtonFocus}
-              >
-                <Icon glyph="XWithCircle" />
-              </IconButton>
-            )}
-            <Icon glyph="CaretDown" />
+            {renderedInputIcons}
           </div>
         </InteractionRing>
+
+        {state === 'error' && errorMessage && (
+          <div className={errorMessageStyle}>{errorMessage}</div>
+        )}
 
         {/**
          * Menu

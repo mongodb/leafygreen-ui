@@ -6,7 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
-import { ComboboxSizeType, OverflowType } from './Combobox.types';
+import { ComboboxSizeType, OverflowType, StateType } from './Combobox.types';
 
 export const comboboxParentStyle = ({
   darkMode,
@@ -22,6 +22,7 @@ export const comboboxParentStyle = ({
       return css``;
     } else {
       return css`
+        --lg-combobox-color-error: ${uiColors.red.base};
         --lg-combobox-text-color: ${uiColors.gray.dark3};
         --lg-combobox-text-color-disabled: ${uiColors.gray.dark1};
 
@@ -31,6 +32,7 @@ export const comboboxParentStyle = ({
 
         --lg-combobox-border-color: ${uiColors.gray.base};
         --lg-combobox-border-color-disabled: ${uiColors.gray.light1};
+        --lg-combobox-border-color-error: ${uiColors.red.base};
 
         --lg-combobox-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
         --lg-combobox-shadow-focus: 0px 4px 4px rgba(6, 22, 33, 0.3);
@@ -45,6 +47,7 @@ export const comboboxParentStyle = ({
           --lg-combobox-padding-y: 5px;
           --lg-combobox-padding-x: 7px;
           --lg-combobox-height: 24px;
+          --lg-combobox-font-size: 14px;
           --lg-combobox-line-height: 20px;
           --lg-combobox-border-radius: 3px;
           --lg-combobox-input-default-width: 12ch;
@@ -93,11 +96,33 @@ export const comboboxStyle = css`
     box-shadow: unset;
     cursor: not-allowed;
   }
+
+  &[data-state='error'] {
+    border-color: var(--lg-combobox-border-color-error);
+  }
 `;
 
 export const interactionRingStyle = css`
   width: var(--lg-combobox-width);
 `;
+
+export const interactionRingColor = ({
+  state,
+  darkMode,
+}: {
+  state: StateType;
+  darkMode: boolean;
+}) => {
+  if (darkMode) {
+    return {
+      hovered: state === 'error' ? uiColors.red.dark2 : undefined,
+    };
+  } else {
+    return {
+      hovered: state === 'error' ? uiColors.red.light3 : undefined,
+    };
+  }
+};
 
 export const inputWrapperStyle = ({
   overflow,
@@ -202,7 +227,20 @@ export const inputElementStyle = css`
   }
 `;
 
-// Menu Styles
+export const errorMessageStyle = css`
+  font-size: var(--lg-combobox-font-size);
+  line-height: var(--lg-combobox-line-height);
+  color: var(--lg-combobox-color-error);
+  padding-top: var(--lg-combobox-padding-y);
+`;
+
+export const endIcon = css`
+  margin-inline-end: calc(var(--lg-combobox-padding-x) / 2);
+`;
+
+/**
+ * Menu styles
+ */
 export const menuWrapperStyle = ({
   darkMode,
   size,
@@ -237,7 +275,6 @@ export const menuWrapperStyle = ({
         --lg-combobox-item-padding-x: 12px;
         --lg-combobox-item-font-size: 14px;
         --lg-combobox-item-line-height: 20px;
-
         --lg-combobox-item-wedge-height: 22px;
       `;
   }

@@ -7,6 +7,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { Combobox, ComboboxOption } from '.';
 import Chip from './Chip';
+import { useState } from '@storybook/client-api';
 
 const Wrapper = ({ children }: any) => (
   <div
@@ -21,6 +22,17 @@ const Wrapper = ({ children }: any) => (
 
 storiesOf('Combobox', module)
   .add('Single Select', () => {
+    const [isError, setIsError] = useState(false);
+
+    const handleChange = (value: string) => {
+      console.log(value);
+      if (value === 'dragonfruit') {
+        setIsError(true);
+      } else {
+        setIsError(false);
+      }
+    };
+
     return (
       <Wrapper>
         <Combobox
@@ -32,6 +44,9 @@ storiesOf('Combobox', module)
             ['unset', 'error', 'loading'],
             'unset',
           )}
+          state={isError ? 'error' : 'none'}
+          errorMessage="Can't pick that one"
+          onChange={handleChange}
           // disabled={boolean('Disabled', false)}
         >
           <ComboboxOption value="apple" />

@@ -1,21 +1,31 @@
 import { MutableRefObject, ReactElement, ReactNode } from 'react';
 import { Either } from '@leafygreen-ui/lib';
+import { isArray, isNull } from 'lodash';
 
-interface SingleSelectProps {
-  multiselect?: false;
-  initialValue?: string;
-  onChange?: (value: string) => void;
-  updateValue?: MutableRefObject<(value: string) => void>;
+export type SingleSelectValue<T extends number | string> = T;
+export type MultiSelectValue<T extends number | string> = Array<T>;
+
+export type SelectValueType<
+  M extends boolean,
+  T extends number | string = string
+> = M extends true ? MultiSelectValue<T> : SingleSelectValue<T>;
+
+export const getIsMultiselect = (multiselect: boolean) => {
+  return (
+    selection: SingleSelectValue<number> | MultiSelectValue<number> | null,
+  ): selection is SelectValueType<true, number> =>
+    multiselect && !isNull(selection) && isArray(selection);
+};
+
+interface ValueProps<M extends boolean> {
+  multiselect: M;
+  value?: SelectValueType<M>;
+  initialValue?: SelectValueType<M>;
+  onChange?: (value: SelectValueType<M>) => void;
+  updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
 }
 
-interface MultiSelectProps {
-  multiselect: true;
-  initialValue?: Array<string>;
-  onChange?: (value: Array<string>) => void;
-  updateValue?: MutableRefObject<(value: Array<string>) => void>;
-}
-
-type VariableSelectProps = SingleSelectProps | MultiSelectProps;
+type VariableSelectProps = ValueProps<true> | ValueProps<false>;
 
 /**
  * Prop Enums & Types
