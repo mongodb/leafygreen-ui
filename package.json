@@ -107,7 +107,7 @@
     "@types/meow": "^5.0.0",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
-    "@types/react-transition-group": "^4.2.4",
+    "@types/react-transition-group": "4.4.1",
     "@types/storybook__react": "^5.2.1",
     "@types/xml2json": "^0.11.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
