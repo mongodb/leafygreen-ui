@@ -51,6 +51,7 @@ export const comboboxParentStyle = ({
           --lg-combobox-line-height: 20px;
           --lg-combobox-border-radius: 3px;
           --lg-combobox-input-default-width: 12ch;
+          --lg-combobox-icon-height: 16px;
         `;
     }
   };
@@ -225,6 +226,11 @@ export const inputElementStyle = css`
   &:focus {
     outline: none;
   }
+`;
+
+export const clearButton = css`
+  // Add a negative margin so the button takes up the same space as the regular icons
+  margin-block: calc(var(--lg-combobox-icon-height) / 2 - 100%);
 `;
 
 export const errorMessageStyle = css`

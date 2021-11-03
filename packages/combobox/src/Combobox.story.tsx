@@ -46,7 +46,7 @@ storiesOf('Combobox', module)
             'unset',
           )}
           state={isError ? 'error' : 'none'}
-          errorMessage="Can't pick that one"
+          errorMessage="No, not that one!"
           onChange={handleChange}
           // disabled={boolean('Disabled', false)}
         >

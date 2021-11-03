@@ -29,15 +29,14 @@ import {
 import {
   ComboboxProps,
   getDefaultIndex,
-  getIsMultiselect,
   onChangeType,
   SelectIndexType,
-  SelectValueType,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
 import Chip from './Chip';
 import {
+  clearButton,
   comboboxParentStyle,
   comboboxStyle,
   endIcon,
@@ -96,8 +95,6 @@ export default function Combobox<M extends boolean = false>({
   const [focusedOption, setFocusedOption] = useState<number | null>(0);
   const [selection, setSelection] = useState<SelectIndexType<M> | null>(null);
   const prevSelection = usePrevious(selection);
-
-  // const isMultiselect = getIsMultiselect(multiselect);
 
   const isMultiselect = useCallback(
     (selection: Array<number> | number | null): selection is Array<number> =>
@@ -223,6 +220,19 @@ export default function Combobox<M extends boolean = false>({
 
   const getValueAtIndex = useCallback(
     (index: number): string | undefined => {
+      const value = renderedOptions?.[index].props.value ?? '';
+
+      if (value) {
+        return value;
+      } else {
+        consoleOnce.error(`Error in Combobox: No option at index ${index}`);
+      }
+    },
+    [renderedOptions],
+  );
+
+  const getDisplayNameAtIndex = useCallback(
+    (index: number): string | undefined => {
       const value = renderedOptions?.[index].props.displayName ?? '';
 
       if (value) {
@@ -274,17 +284,20 @@ export default function Combobox<M extends boolean = false>({
 
       if (!isUndefined(value)) {
         if (isMultiselect(selection) && isArray(value)) {
+          // MULTISELECT
           // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
           scrollToEnd();
           (onChange as onChangeType<true>)?.(value);
-        } else if (!isArray(value)) {
+        } else if (!isArray(selection) && !isArray(value)) {
+          // SINGLE SELECT
           // Update the text input
-          setInputValue(value ?? '');
+          setInputValue(getDisplayNameAtIndex(selection) ?? '');
           (onChange as onChangeType<false>)?.(value);
         }
       }
     }
   }, [
+    getDisplayNameAtIndex,
     getValueAtIndex,
     getValueOfSelection,
     isMultiselect,
@@ -331,6 +344,7 @@ export default function Combobox<M extends boolean = false>({
               onClick={clearSelection}
               aria-label="Clear selection"
               onFocus={handleClearButtonFocus}
+              className={clearButton}
             >
               <Icon glyph="XWithCircle" />
             </IconButton>
