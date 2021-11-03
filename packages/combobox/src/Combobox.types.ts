@@ -1,6 +1,5 @@
 import { MutableRefObject, ReactElement, ReactNode } from 'react';
 import { Either } from '@leafygreen-ui/lib';
-import { isArray, isFunction, isNull } from 'lodash';
 
 /**
  * Prop Enums & Types
@@ -53,15 +52,8 @@ export type onChangeType<M extends boolean> = M extends true
   ? (value: SelectValueType<true>) => void
   : (value: SelectValueType<false>) => void;
 
-export function getIsMultiselect(multiselect: boolean) {
-  return (
-    selection: Array<number> | number | null,
-  ): selection is SelectIndexType<true> =>
-    multiselect && !isNull(selection) && isArray(selection);
-}
-
 // Returns the correct empty state for multiselcect / single select
-export function getDefaultIndex<M extends boolean>(
+export function getNullSelection<M extends boolean>(
   multiselect: M,
 ): SelectIndexType<M> {
   if (multiselect) {
@@ -92,14 +84,14 @@ interface BaseComboboxProps<M extends boolean> {
   onFilter?: (value: string) => void;
   clearable?: boolean;
   onClear?: (e: MouseEvent) => void;
-  overflow?: OverflowType;
-  chipTruncationLocation?: TrunctationLocationType;
   className?: string;
 
   multiselect: M;
   initialValue?: SelectValueType<M>;
   onChange?: onChangeType<M>;
   updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
+  overflow?: M extends true ? OverflowType : undefined;
+  chipTruncationLocation?: M extends true ? TrunctationLocationType : undefined;
 }
 
 export type ComboboxProps<M extends boolean> = Either<

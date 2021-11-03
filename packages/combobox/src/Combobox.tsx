@@ -22,13 +22,14 @@ import {
   clone,
   isArray,
   isNull,
+  isNumber,
   isUndefined,
   kebabCase,
   startCase,
 } from 'lodash';
 import {
   ComboboxProps,
-  getDefaultIndex,
+  getNullSelection,
   onChangeType,
   SelectIndexType,
 } from './Combobox.types';
@@ -54,7 +55,7 @@ import {
 /**
  * Component
  */
-export default function Combobox<M extends boolean = false>({
+export default function Combobox<M extends boolean>({
   children,
   label,
   description,
@@ -96,9 +97,14 @@ export default function Combobox<M extends boolean = false>({
   const [selection, setSelection] = useState<SelectIndexType<M> | null>(null);
   const prevSelection = usePrevious(selection);
 
+  const doesSelectionExist =
+    !isNull(selection) &&
+    ((isArray(selection) && selection.length > 0) || isNumber(selection));
+
+  // Function to tell typescript that selection is multiselect
   const isMultiselect = useCallback(
-    (selection: Array<number> | number | null): selection is Array<number> =>
-      multiselect && !isNull(selection) && isArray(selection),
+    <T extends number | string>(test: Array<T> | T | null): test is Array<T> =>
+      multiselect && isArray(test),
     [multiselect],
   );
 
@@ -116,35 +122,36 @@ export default function Combobox<M extends boolean = false>({
   };
 
   // Utility function to handle mulit & single select
-  const toggleSelection = useCallback(
-    (index: number) => {
-      // MULTISELECT
-      if (isMultiselect(selection)) {
-        if (selection.includes(index)) {
-          // remove from array
-          const newSelection: SelectIndexType<M> = clone(selection);
-          newSelection.splice(newSelection.indexOf(index), 1);
-          setSelection(newSelection);
-        } else {
-          // add to array
-          const newSelection: SelectIndexType<M> = clone(selection);
-          newSelection.push(index);
-          setSelection(newSelection);
-          // clear text
-          setInputValue('');
-        }
-      } else {
-        // SINGLE SELECT
-        setSelection(index as SelectIndexType<M>);
-      }
-      setInputFocus();
-    },
-    [isMultiselect, selection, setInputFocus],
-  );
+  const updateSelection = useCallback(
+    (index: number | null) => {
+      if (isNumber(index)) {
+        let newSelection: SelectIndexType<M>;
 
-  const clearSelection = useCallback(() => {
-    setSelection(getDefaultIndex(multiselect));
-  }, [multiselect]);
+        // MULTISELECT
+        if (isMultiselect(selection)) {
+          newSelection = clone(selection);
+          if (selection.includes(index)) {
+            // remove from array
+            newSelection.splice(newSelection.indexOf(index), 1);
+          } else {
+            // add to array
+            newSelection.push(index);
+            // clear text
+            setInputValue('');
+          }
+        } else {
+          // SINGLE SELECT
+          newSelection = index as SelectIndexType<M>;
+        }
+        setSelection(newSelection);
+        setInputFocus();
+      } else {
+        const newSelection: SelectIndexType<M> = getNullSelection(multiselect);
+        setSelection(newSelection);
+      }
+    },
+    [isMultiselect, multiselect, selection, setInputFocus],
+  );
 
   const scrollToEnd = () => {
     if (inputWrapperRef.current) {
@@ -177,7 +184,6 @@ export default function Combobox<M extends boolean = false>({
 
         const value = valueProp ?? kebabCase(nameProp);
         const displayName = nameProp ?? startCase(value);
-        // const childChildren = childChildrenProp ?? nameProp ?? startCase(value);
 
         const isFocused = focusedOption === index;
         const isSelected = isMultiselect(selection)
@@ -185,7 +191,8 @@ export default function Combobox<M extends boolean = false>({
           : selection === index;
 
         const setSelected = () => {
-          toggleSelection(index);
+          setFocusedOption(index);
+          updateSelection(index);
         };
 
         return (
@@ -203,7 +210,7 @@ export default function Combobox<M extends boolean = false>({
         // TODO - handle nesting
       }
     });
-  }, [children, focusedOption, isMultiselect, selection, toggleSelection]);
+  }, [children, focusedOption, isMultiselect, selection, updateSelection]);
 
   const getIndexOfOption = (value: string): number | undefined => {
     const index =
@@ -277,26 +284,28 @@ export default function Combobox<M extends boolean = false>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // When the selection changes...
+  // onSelect: When the selection changes...
   useEffect(() => {
-    if (!isNull(selection) && selection !== prevSelection) {
-      const value = getValueOfSelection(selection);
+    if (selection !== prevSelection) {
+      if (doesSelectionExist) {
+        const value = getValueOfSelection(selection) ?? '';
 
-      if (!isUndefined(value)) {
-        if (isMultiselect(selection) && isArray(value)) {
-          // MULTISELECT
+        if (isMultiselect(value)) {
           // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
           scrollToEnd();
           (onChange as onChangeType<true>)?.(value);
-        } else if (!isArray(selection) && !isArray(value)) {
-          // SINGLE SELECT
+        } else if (!isMultiselect(value)) {
           // Update the text input
-          setInputValue(getDisplayNameAtIndex(selection) ?? '');
+          setInputValue(getDisplayNameAtIndex(selection as number) ?? '');
           (onChange as onChangeType<false>)?.(value);
+          closeMenu();
         }
+      } else {
+        setInputValue('');
       }
     }
   }, [
+    doesSelectionExist,
     getDisplayNameAtIndex,
     getValueAtIndex,
     getValueOfSelection,
@@ -314,10 +323,10 @@ export default function Combobox<M extends boolean = false>({
   );
 
   const renderedChips = useMemo(() => {
-    if (multiselect && isArray(selection) && renderedOptions) {
+    if (isMultiselect(selection) && renderedOptions) {
       return selection.map(index => {
         const { value, displayName } = renderedOptions[index].props;
-        const onRemove = () => toggleSelection(index);
+        const onRemove = () => updateSelection(index);
         return (
           <Chip
             key={value}
@@ -328,7 +337,7 @@ export default function Combobox<M extends boolean = false>({
         );
       });
     }
-  }, [multiselect, renderedOptions, selection, toggleSelection]);
+  }, [isMultiselect, renderedOptions, selection, updateSelection]);
 
   const renderedInputIcons = useMemo(() => {
     if (state === 'error') {
@@ -338,10 +347,10 @@ export default function Combobox<M extends boolean = false>({
     } else {
       return (
         <>
-          {clearable && (
+          {clearable && doesSelectionExist && (
             <IconButton
               ref={clearButtonRef}
-              onClick={clearSelection}
+              onClick={() => updateSelection(null)}
               aria-label="Clear selection"
               onFocus={handleClearButtonFocus}
               className={clearButton}
@@ -353,7 +362,7 @@ export default function Combobox<M extends boolean = false>({
         </>
       );
     }
-  }, [clearSelection, state, clearable]);
+  }, [state, clearable, doesSelectionExist, updateSelection]);
 
   /**
    * Menu management
@@ -361,7 +370,6 @@ export default function Combobox<M extends boolean = false>({
   const closeMenu = () => setOpen(false);
   const openMenu = () => setOpen(true);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const [menuWidth, setMenuWidth] = useState(0);
   useEffect(() => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
@@ -513,9 +521,9 @@ export default function Combobox<M extends boolean = false>({
           document.activeElement === inputRef.current &&
           !isNull(focusedOption)
         ) {
-          toggleSelection(focusedOption);
+          updateSelection(focusedOption);
         } else if (document.activeElement === clearButtonRef.current) {
-          clearSelection();
+          updateSelection(null);
           setInputFocus();
         }
         break;

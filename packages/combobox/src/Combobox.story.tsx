@@ -36,7 +36,6 @@ storiesOf('Combobox', module)
     return (
       <Wrapper>
         <Combobox
-          multiselect={false}
           label="Choose a fruit"
           description="Please pick one"
           placeholder="Select fruit"
@@ -48,14 +47,10 @@ storiesOf('Combobox', module)
           state={isError ? 'error' : 'none'}
           errorMessage="No, not that one!"
           onChange={handleChange}
-          // disabled={boolean('Disabled', false)}
         >
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
-          <ComboboxOption
-            value="carrot"
-            glyph={<Icon glyph="Cloud" color={uiColors.gray.base} />}
-          />
+          <ComboboxOption value="carrot" />
           <ComboboxOption
             value="dragonfruit"
             glyph={<Icon glyph="Favorite" color={uiColors.blue.base} />}
@@ -66,6 +61,17 @@ storiesOf('Combobox', module)
     );
   })
   .add('Multi Select', () => {
+    const [isError, setIsError] = useState(false);
+
+    const handleChange = (value: Array<string>) => {
+      console.log(value);
+      if (value.includes('dragonfruit')) {
+        setIsError(true);
+      } else {
+        setIsError(false);
+      }
+    };
+
     return (
       <Wrapper>
         <Combobox
@@ -73,26 +79,20 @@ storiesOf('Combobox', module)
           description="Pick as many as you want!"
           placeholder="Select fruit"
           multiselect={true}
-          initialValue={[
-            'apple',
-            'banana',
-            'carrot',
-            'dragonfruit',
-            'jalapeno',
-          ]}
+          initialValue={['apple', 'banana', 'carrot', 'jalapeno']}
           overflow={select(
             'Overflow',
             ['expand-y', 'expand-x', 'scroll-x'],
             'expand-y',
           )}
+          state={isError ? 'error' : 'none'}
+          errorMessage="Can't pick Dragonfruit"
+          onChange={handleChange}
           // disabled={boolean('Disabled', false)}
         >
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
-          <ComboboxOption
-            value="carrot"
-            glyph={<Icon glyph="Cloud" color={uiColors.gray.base} />}
-          />
+          <ComboboxOption value="carrot" />
           <ComboboxOption
             value="dragonfruit"
             glyph={<Icon glyph="Favorite" color={uiColors.blue.base} />}
