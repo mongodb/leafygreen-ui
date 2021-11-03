@@ -18,10 +18,20 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
-import { isArray, isNull, isUndefined, kebabCase, startCase } from 'lodash';
+import {
+  clone,
+  isArray,
+  isNull,
+  isUndefined,
+  kebabCase,
+  startCase,
+} from 'lodash';
 import {
   ComboboxProps,
+  getDefaultIndex,
   getIsMultiselect,
+  onChangeType,
+  SelectIndexType,
   SelectValueType,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
@@ -45,7 +55,7 @@ import {
 /**
  * Component
  */
-export default function Combobox({
+export default function Combobox<M extends boolean = false>({
   children,
   label,
   description,
@@ -55,23 +65,23 @@ export default function Combobox({
   size = 'default',
   darkMode = false,
   state = 'none',
-  initialValue,
   errorMessage,
   searchState = 'unset',
   searchEmptyMessage = 'No results found',
   searchErrorMessage = 'Could not get results!',
   searchLoadingMessage = 'Loading results...',
-  multiselect = false,
-  onChange,
   onFilter,
   clearable = true,
   onClear,
-  updateValue,
   overflow = 'expand-y',
   chipTruncationLocation,
   className,
+  multiselect,
+  initialValue,
+  onChange,
+  updateValue,
   ...rest
-}: ComboboxProps) {
+}: ComboboxProps<M>) {
   const inputId = useIdAllocator({ prefix: 'combobox-input' });
   const labelId = useIdAllocator({ prefix: 'combobox-label' });
   const menuId = useIdAllocator({ prefix: 'combobox-menu' });
@@ -84,13 +94,16 @@ export default function Combobox({
 
   const [isOpen, setOpen] = useState(false);
   const [focusedOption, setFocusedOption] = useState<number | null>(0);
-  const [selection, setSelection] = useState<SelectValueType<
-    boolean,
-    number
-  > | null>(multiselect ? [] : null);
+  const [selection, setSelection] = useState<SelectIndexType<M> | null>(null);
   const prevSelection = usePrevious(selection);
 
-  const isMultiselect = getIsMultiselect(multiselect);
+  // const isMultiselect = getIsMultiselect(multiselect);
+
+  const isMultiselect = useCallback(
+    (selection: Array<number> | number | null): selection is Array<number> =>
+      multiselect && !isNull(selection) && isArray(selection),
+    [multiselect],
+  );
 
   // Utility to force selection
   const setInputFocus = useCallback(() => {
@@ -112,18 +125,20 @@ export default function Combobox({
       if (isMultiselect(selection)) {
         if (selection.includes(index)) {
           // remove from array
-          const newSelection = [...selection];
+          const newSelection: SelectIndexType<M> = clone(selection);
           newSelection.splice(newSelection.indexOf(index), 1);
           setSelection(newSelection);
         } else {
           // add to array
-          setSelection([...selection, index]);
+          const newSelection: SelectIndexType<M> = clone(selection);
+          newSelection.push(index);
+          setSelection(newSelection);
           // clear text
           setInputValue('');
         }
       } else {
         // SINGLE SELECT
-        setSelection(index);
+        setSelection(index as SelectIndexType<M>);
       }
       setInputFocus();
     },
@@ -131,11 +146,7 @@ export default function Combobox({
   );
 
   const clearSelection = useCallback(() => {
-    if (multiselect) {
-      setSelection([]);
-    } else {
-      setSelection(null);
-    }
+    setSelection(getDefaultIndex(multiselect));
   }, [multiselect]);
 
   const scrollToEnd = () => {
@@ -242,14 +253,14 @@ export default function Combobox({
       if (isArray(initialValue)) {
         const indexArray = initialValue
           .map(value => getIndexOfOption(value))
-          .filter(index => !isUndefined(index));
+          .filter((index): index is number => !isUndefined(index));
 
-        setSelection(indexArray as Array<number>);
+        setSelection(indexArray as SelectIndexType<M>);
       } else {
         const index = getIndexOfOption(initialValue);
 
         if (!isUndefined(index)) {
-          setSelection(index);
+          setSelection(index as SelectIndexType<M>);
         }
       }
     }
@@ -262,14 +273,15 @@ export default function Combobox({
       const value = getValueOfSelection(selection);
 
       if (!isUndefined(value)) {
-        if (isMultiselect(selection)) {
+        if (isMultiselect(selection) && isArray(value)) {
           // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
           scrollToEnd();
+          (onChange as onChangeType<true>)?.(value);
         } else if (!isArray(value)) {
           // Update the text input
           setInputValue(value ?? '');
+          (onChange as onChangeType<false>)?.(value);
         }
-        // onChange?.(value)
       }
     }
   }, [

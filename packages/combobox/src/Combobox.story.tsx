@@ -36,6 +36,7 @@ storiesOf('Combobox', module)
     return (
       <Wrapper>
         <Combobox
+          multiselect={false}
           label="Choose a fruit"
           description="Please pick one"
           placeholder="Select fruit"
@@ -110,6 +111,7 @@ storiesOf('Combobox', module)
     return (
       <Wrapper>
         <Combobox
+          multiselect={false}
           label="Choose a fruit"
           description="Please pick one"
           placeholder="Select fruit"

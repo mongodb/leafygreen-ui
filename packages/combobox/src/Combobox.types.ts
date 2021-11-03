@@ -1,31 +1,6 @@
 import { MutableRefObject, ReactElement, ReactNode } from 'react';
 import { Either } from '@leafygreen-ui/lib';
-import { isArray, isNull } from 'lodash';
-
-export type SingleSelectValue<T extends number | string> = T;
-export type MultiSelectValue<T extends number | string> = Array<T>;
-
-export type SelectValueType<
-  M extends boolean,
-  T extends number | string = string
-> = M extends true ? MultiSelectValue<T> : SingleSelectValue<T>;
-
-export const getIsMultiselect = (multiselect: boolean) => {
-  return (
-    selection: SingleSelectValue<number> | MultiSelectValue<number> | null,
-  ): selection is SelectValueType<true, number> =>
-    multiselect && !isNull(selection) && isArray(selection);
-};
-
-interface ValueProps<M extends boolean> {
-  multiselect: M;
-  value?: SelectValueType<M>;
-  initialValue?: SelectValueType<M>;
-  onChange?: (value: SelectValueType<M>) => void;
-  updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
-}
-
-type VariableSelectProps = ValueProps<true> | ValueProps<false>;
+import { isArray, isFunction, isNull } from 'lodash';
 
 /**
  * Prop Enums & Types
@@ -64,10 +39,42 @@ export enum SearchState {
 export type SearchStateType = keyof typeof SearchState;
 
 /**
- * Combobox Props
+ * Generic Typing
  */
 
-type BaseComboboxProps = {
+export type SelectValueType<M extends boolean> = M extends true
+  ? Array<string>
+  : string | null;
+export type SelectIndexType<M extends boolean> = M extends true
+  ? Array<number>
+  : number | null;
+
+export type onChangeType<M extends boolean> = M extends true
+  ? (value: SelectValueType<true>) => void
+  : (value: SelectValueType<false>) => void;
+
+export function getIsMultiselect(multiselect: boolean) {
+  return (
+    selection: Array<number> | number | null,
+  ): selection is SelectIndexType<true> =>
+    multiselect && !isNull(selection) && isArray(selection);
+}
+
+// Returns the correct empty state for multiselcect / single select
+export function getDefaultIndex<M extends boolean>(
+  multiselect: M,
+): SelectIndexType<M> {
+  if (multiselect) {
+    return ([] as Array<number>) as SelectIndexType<M>;
+  } else {
+    return null as SelectIndexType<M>;
+  }
+}
+
+/**
+ * Combobox Props
+ */
+interface BaseComboboxProps<M extends boolean> {
   children?: ReactNode;
   label?: string;
   'aria-label': string;
@@ -82,16 +89,23 @@ type BaseComboboxProps = {
   searchEmptyMessage?: string;
   searchErrorMessage?: string;
   searchLoadingMessage?: string;
-  multiselect?: boolean;
   onFilter?: (value: string) => void;
   clearable?: boolean;
   onClear?: (e: MouseEvent) => void;
   overflow?: OverflowType;
   chipTruncationLocation?: TrunctationLocationType;
   className?: string;
-} & VariableSelectProps;
 
-export type ComboboxProps = Either<BaseComboboxProps, 'label' | 'aria-label'>;
+  multiselect: M;
+  initialValue?: SelectValueType<M>;
+  onChange?: onChangeType<M>;
+  updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
+}
+
+export type ComboboxProps<M extends boolean> = Either<
+  BaseComboboxProps<M>,
+  'label' | 'aria-label'
+>;
 
 /**
  * Combobox Option Props
