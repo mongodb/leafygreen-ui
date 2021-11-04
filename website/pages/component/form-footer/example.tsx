@@ -9,11 +9,6 @@ const knobsConfig: KnobsConfigInterface<{
   backButtonText?: string;
   errorMessage?: string;
 }> = {
-  sticky: {
-    type: 'boolean',
-    default: false,
-    label: 'Sticky',
-  },
   primaryButtonText: {
     type: 'text',
     default: 'Save Draft',
@@ -34,23 +29,12 @@ const knobsConfig: KnobsConfigInterface<{
     default: "There's an error on this page.",
     label: 'Error message',
   },
-  // darkMode: {
-  //   type: 'boolean',
-  //   default: false,
-  //   label: 'Dark Mode',
-  // },
 };
 
 export default function CardLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({
-        sticky,
-        primaryButtonText,
-        cancelText,
-        backButtonText,
-        errorMessage,
-      }) => (
+      {({ primaryButtonText, cancelText, backButtonText, errorMessage }) => (
         <FormFooter
           sticky={sticky}
           primaryButton={{

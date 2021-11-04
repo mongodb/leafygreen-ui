@@ -4,31 +4,27 @@ import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
+import { transparentize } from 'polished';
 import { once } from 'lodash';
 
-const footerStyle = (sticky: boolean) => {
-  return css`
-    position: ${sticky ? 'fixed' : 'static'};
-    bottom: ${sticky ? '0px' : 'unset'};
-    left: ${sticky ? '0px' : 'unset'};
-    min-height: 92px;
-    width: 100%;
-    padding: 24px;
-    border: 1px solid ${uiColors.gray.light2};
-    box-shadow: 0px -4px 4px 0px rgba(6, 22, 33, 0.1);
-  `;
-};
+const footerStyle = css`
+  min-height: 92px;
+  width: 100%;
+  padding: 24px;
+  border: 1px solid ${uiColors.gray.light2};
+  box-shadow: 0px -4px 4px 0px ${transparentize(0.9, uiColors.black)};
+`;
 
 const contentStyle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 auto;
+  margin-inline: auto;
   gap: 8px;
+`;
 
-  > button {
-    white-space: nowrap;
-  }
+const buttonStyle = css`
+  white-space: nowrap;
 `;
 
 const flexSpan = css`
@@ -58,12 +54,6 @@ const isPrimaryButtonProps = (testObj: any): testObj is PrimaryButtonProps => {
 };
 
 export interface FormFooterProps {
-  /**
-   * Defines whether the footer should be "stuck" to the bottom of the frame.
-   * Can also be customized using `className`
-   */
-  sticky?: boolean;
-
   /**
    * The primary (right-most) button. Defined as a <Button> element, or as an object with the shape:
    *
@@ -120,7 +110,6 @@ export interface FormFooterProps {
  * Component
  */
 export default function FormFooter({
-  sticky = false,
   primaryButton,
   onCancel,
   cancelButtonText = 'Cancel',
@@ -139,6 +128,7 @@ export default function FormFooter({
             disabled={primaryButton.disabled}
             onClick={primaryButton.onClick}
             type={primaryButton.type}
+            className={buttonStyle}
           >
             {primaryButton.text}
           </Button>
@@ -156,11 +146,15 @@ export default function FormFooter({
   }, [primaryButton]);
 
   return (
-    <footer className={cx(footerStyle(sticky), className)}>
+    <footer className={cx(footerStyle, className)}>
       <div className={cx(contentStyle, contentClassName)}>
         <span className={flexSpan}>
           {backButtonText && (
-            <Button variant="default" onClick={onBackClick}>
+            <Button
+              variant="default"
+              onClick={onBackClick}
+              className={buttonStyle}
+            >
               {backButtonText}
             </Button>
           )}
@@ -171,7 +165,7 @@ export default function FormFooter({
           )}
         </span>
         <span className={flexSpan}>
-          <Button variant="default" onClick={onCancel}>
+          <Button variant="default" onClick={onCancel} className={buttonStyle}>
             {cancelButtonText || 'Cancel'}
           </Button>
           {primaryButton && RenderedPrimaryButton}

@@ -9,7 +9,11 @@ import FormFooter from '.';
 storiesOf('FormFooter', module)
   .add('Default', () => (
     <FormFooter
-      sticky={boolean('Sticky', true)}
+      className={css`
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      `}
       primaryButton={{
         text: text('Primary button text', 'Save Draft'),
       }}
@@ -21,9 +25,13 @@ storiesOf('FormFooter', module)
       `}
     />
   ))
-  .add('with custom button', () => (
+  .add('with custom primary button', () => (
     <FormFooter
-      sticky={boolean('Sticky', true)}
+      className={css`
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      `}
       primaryButton={
         <Button
           leftGlyph={<Icon glyph={'Cloud'} />}
