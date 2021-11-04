@@ -9,7 +9,6 @@ import {
   waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Option, OptionGroup, Select } from '.';
