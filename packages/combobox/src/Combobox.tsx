@@ -76,7 +76,7 @@ export default function Combobox<M extends boolean>({
   overflow = 'expand-y',
   chipTruncationLocation,
   className,
-  multiselect,
+  multiselect = false as M,
   initialValue,
   onChange,
   updateValue,
