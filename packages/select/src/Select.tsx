@@ -6,7 +6,7 @@ import {
   useIdAllocator,
   useEventListener,
 } from '@leafygreen-ui/hooks';
-import { OneOf, keyMap } from '@leafygreen-ui/lib';
+import { OneOf } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
