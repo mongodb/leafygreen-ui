@@ -66,6 +66,9 @@ const flexSpan = css`
   align-items: inherit;
 `;
 
+const displayNameStyle = (isSelected: boolean) => css`
+  font-weight: ${isSelected ? 'bold' : 'normal'};
+`;
 /**
  * Component
  */
@@ -80,9 +83,7 @@ export function InternalComboboxOption({
   setSelected,
   className,
 }: InternalComboboxOptionProps) {
-  const { multiselect, darkMode, size, withIcons } = useContext(
-    ComboboxContext,
-  );
+  const { multiselect, darkMode, withIcons } = useContext(ComboboxContext);
   const optionRef = useRef<HTMLLIElement>(null);
 
   const handleOptionClick = useCallback(
@@ -112,21 +113,11 @@ export function InternalComboboxOption({
     }
   }, [glyph]);
 
-  const renderedName = useMemo(() => {
-    return isSelected ? (
-      <span
-        className={css`
-          font-weight: bold;
-        `}
-      >
-        {displayName}
-      </span>
-    ) : (
-      <span>{displayName}</span>
-    );
-  }, [displayName, isSelected]);
-
   const renderedChildren = useMemo(() => {
+    const renderedName = (
+      <span className={displayNameStyle(isSelected)}>{displayName}</span>
+    );
+
     // Multiselect
     if (multiselect) {
       const checkbox = (
@@ -165,15 +156,7 @@ export function InternalComboboxOption({
         )}
       </>
     );
-  }, [
-    multiselect,
-    renderedIcon,
-    renderedName,
-    isSelected,
-    darkMode,
-    displayName,
-    withIcons,
-  ]);
+  }, [multiselect, renderedIcon, isSelected, darkMode, displayName, withIcons]);
 
   return (
     <li

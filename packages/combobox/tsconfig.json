@@ -23,6 +23,9 @@
       "path": "../interaction-ring"
     },
     {
+      "path": "../inline-definition"
+    },
+    {
       "path": "../hooks"
     },
     {
@@ -33,6 +36,9 @@
     },
     {
       "path": "../popover"
+    },
+    {
+      "path": "../tooltip"
     },
     {
       "path": "../typography"

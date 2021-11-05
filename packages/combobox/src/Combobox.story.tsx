@@ -1,5 +1,5 @@
 import React from 'react';
-import { boolean, select } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/Icon';
@@ -24,7 +24,7 @@ storiesOf('Combobox', module)
   .add('Single Select', () => {
     const [isError, setIsError] = useState(false);
 
-    const handleChange = (value: string) => {
+    const handleChange = (value: string | null) => {
       console.log(value);
       if (value === 'dragonfruit') {
         setIsError(true);
@@ -79,7 +79,7 @@ storiesOf('Combobox', module)
           description="Pick as many as you want!"
           placeholder="Select fruit"
           multiselect={true}
-          initialValue={['apple', 'banana', 'carrot', 'jalapeno']}
+          initialValue={['apple', 'iceberg-lettuce', 'jalapeno']}
           overflow={select(
             'Overflow',
             ['expand-y', 'expand-x', 'scroll-x'],
@@ -88,6 +88,11 @@ storiesOf('Combobox', module)
           state={isError ? 'error' : 'none'}
           errorMessage="Can't pick Dragonfruit"
           onChange={handleChange}
+          chipTruncationLocation={select(
+            'Chip Truncation Location',
+            ['start', 'middle', 'end', 'none'],
+            'middle',
+          )}
           // disabled={boolean('Disabled', false)}
         >
           <ComboboxOption value="apple" />
@@ -101,7 +106,7 @@ storiesOf('Combobox', module)
           <ComboboxOption value="fig" />
           <ComboboxOption value="grape" />
           <ComboboxOption value="honeydew" />
-          <ComboboxOption value="iceberg" />
+          <ComboboxOption value="iceberg-lettuce" />
           <ComboboxOption value="jalapeno" displayName="Jalapeño" />
         </Combobox>
       </Wrapper>
@@ -121,7 +126,6 @@ storiesOf('Combobox', module)
   })
   .add('Chip', () => (
     <Chip
-      value="aardvark"
       displayName="Aardvark"
       onRemove={() => {
         console.log(`Removing aardvark`);

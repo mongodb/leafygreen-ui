@@ -21,6 +21,7 @@
       "@leafygreen-ui/emotion": "^4.0.0",
       "@leafygreen-ui/icon": "^11.6.1",
       "@leafygreen-ui/icon-button": "^9.1.6",
+      "@leafygreen-ui/inline-definition": "^2.0.6",
       "@leafygreen-ui/interaction-ring": "^1.1.1",
       "@leafygreen-ui/hooks": "^7.0.0",
       "@leafygreen-ui/lib": "^6.1.0",

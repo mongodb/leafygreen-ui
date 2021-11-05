@@ -74,12 +74,13 @@ export default function Combobox<M extends boolean>({
   clearable = true,
   onClear,
   overflow = 'expand-y',
-  chipTruncationLocation,
   className,
   multiselect = false as M,
   initialValue,
   onChange,
   updateValue,
+  chipTruncationLocation,
+  chipCharacterLimit = 12,
   ...rest
 }: ComboboxProps<M>) {
   const inputId = useIdAllocator({ prefix: 'combobox-input' });
@@ -328,12 +329,7 @@ export default function Combobox<M extends boolean>({
         const { value, displayName } = renderedOptions[index].props;
         const onRemove = () => updateSelection(index);
         return (
-          <Chip
-            key={value}
-            value={value}
-            displayName={displayName}
-            onRemove={onRemove}
-          />
+          <Chip key={value} displayName={displayName} onRemove={onRemove} />
         );
       });
     }
@@ -561,6 +557,8 @@ export default function Combobox<M extends boolean>({
         darkMode,
         size,
         withIcons,
+        chipTruncationLocation,
+        chipCharacterLimit,
       }}
     >
       <div

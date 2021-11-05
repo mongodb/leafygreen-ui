@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { ChipProps, ComboboxSizeType } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import InlineDefinition from '@leafygreen-ui/inline-definition';
+
+const ellipsis = '…';
 
 const chipWrapperStyle = ({
   darkMode,
@@ -45,6 +48,7 @@ const chipWrapperStyle = ({
       display: inline-flex;
       align-items: center;
       overflow: hidden;
+      white-space: nowrap;
       height: var(--lg-combobox-chip-height);
       font-size: var(--lg-combobox-chip-font-size);
       line-height: var(--lg-combobox-chip-line-height);
@@ -92,19 +96,62 @@ const chipButton = css`
   }
 `;
 
-export default function Chip({
-  value,
-  displayName,
-  onRemove,
-  truncation = 'end',
-}: ChipProps) {
-  const { darkMode, size } = useContext(ComboboxContext);
+export default function Chip({ displayName, onRemove }: ChipProps) {
+  const {
+    darkMode,
+    size,
+    chipTruncationLocation,
+    chipCharacterLimit,
+  } = useContext(ComboboxContext);
 
-  // TODO - handle truncation
+  const isTruncated =
+    !!chipCharacterLimit &&
+    !!chipTruncationLocation &&
+    chipTruncationLocation !== 'none' &&
+    displayName.length > chipCharacterLimit;
+
+  const truncatedName = useMemo(() => {
+    if (isTruncated) {
+      const chars = chipCharacterLimit - 4;
+
+      switch (chipTruncationLocation) {
+        case 'start': {
+          const end = displayName.substring(displayName.length - chars).trim();
+          return `${ellipsis}${end}`;
+        }
+
+        case 'middle': {
+          const start = displayName.substring(0, chars / 2).trim();
+          const end = displayName
+            .substring(displayName.length - chars / 2)
+            .trim();
+          return `${start}${ellipsis}${end}`;
+        }
+
+        case 'end': {
+          const start = displayName.substring(0, chars).trim();
+          return `${start}${ellipsis}`;
+        }
+
+        default:
+          return displayName;
+      }
+    }
+
+    return displayName;
+  }, [chipCharacterLimit, chipTruncationLocation, displayName, isTruncated]);
 
   return (
     <span className={chipWrapperStyle({ darkMode, size })}>
-      <span className={chipText}>{displayName}</span>
+      <span className={chipText}>
+        {isTruncated ? (
+          <InlineDefinition definition={displayName} align="bottom">
+            {truncatedName}
+          </InlineDefinition>
+        ) : (
+          displayName
+        )}
+      </span>
       <button
         aria-label={`Deselect ${displayName}`}
         className={chipButton}

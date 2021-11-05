@@ -14,6 +14,7 @@ export enum TrunctationLocation {
   start,
   middle,
   end,
+  none,
 }
 export type TrunctationLocationType = keyof typeof TrunctationLocation;
 
@@ -73,7 +74,6 @@ interface ComboboxMultiselectProps<M extends boolean> {
   onChange?: onChangeType<M>;
   updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
   overflow?: M extends true ? OverflowType : undefined;
-  chipTruncationLocation?: M extends true ? TrunctationLocationType : undefined;
 }
 
 type BaseComboboxProps<M extends boolean> = {
@@ -95,6 +95,8 @@ type BaseComboboxProps<M extends boolean> = {
   clearable?: boolean;
   onClear?: (e: MouseEvent) => void;
   className?: string;
+  chipTruncationLocation?: TrunctationLocationType;
+  chipCharacterLimit?: number;
 } & ComboboxMultiselectProps<M>;
 
 export type ComboboxProps<M extends boolean> = Either<
@@ -133,8 +135,6 @@ export interface InternalComboboxOptionProps {
  */
 
 export interface ChipProps {
-  value: string;
   displayName: string;
   onRemove: () => void;
-  truncation?: TrunctationLocationType;
 }

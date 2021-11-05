@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { ComboboxSize } from './Combobox.types';
+import { ComboboxSize, TrunctationLocationType } from './Combobox.types';
 
 // interface SingleSelectData {
 //   multiselect?: false;
@@ -20,12 +20,9 @@ interface ComboboxData {
   darkMode: boolean;
   size: keyof typeof ComboboxSize;
   withIcons: boolean;
-  // selected?: Array<string> | string;
-  // setSelected?: (id: Array<string> | string) => void;
-  // focusedOption?: string;
-  // options: Array<string>,
-  // displayedOptions: Array<string>
-} // & VariableSelectData;
+  chipTruncationLocation?: TrunctationLocationType;
+  chipCharacterLimit?: number;
+}
 
 export const ComboboxContext = createContext<ComboboxData>({
   multiselect: false,
