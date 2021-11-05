@@ -1,14 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { useCallback, useContext, useMemo, useRef } from 'react';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import Checkbox from '@leafygreen-ui/checkbox';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import {

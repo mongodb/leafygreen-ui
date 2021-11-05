@@ -64,7 +64,6 @@ storiesOf('Combobox', module)
     const [isError, setIsError] = useState(false);
 
     const handleChange = (value: Array<string>) => {
-      console.log(value);
       if (value.includes('dragonfruit')) {
         setIsError(true);
       } else {
@@ -79,7 +78,7 @@ storiesOf('Combobox', module)
           description="Pick as many as you want!"
           placeholder="Select fruit"
           multiselect={true}
-          initialValue={['apple', 'iceberg-lettuce', 'jalapeno']}
+          initialValue={['apple', 'iceberg-lettuce', 'jalapeno', 'jelly-bean']}
           overflow={select(
             'Overflow',
             ['expand-y', 'expand-x', 'scroll-x'],

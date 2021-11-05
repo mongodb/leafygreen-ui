@@ -5,6 +5,15 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import {
+  clone,
+  isArray,
+  isNull,
+  isNumber,
+  isUndefined,
+  kebabCase,
+  startCase,
+} from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
 import {
@@ -17,16 +26,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
-import {
-  clone,
-  isArray,
-  isNull,
-  isNumber,
-  isUndefined,
-  kebabCase,
-  startCase,
-} from 'lodash';
+import { isComponentType } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
   getNullSelection,
@@ -220,7 +220,7 @@ export default function Combobox<M extends boolean>({
     if (index >= 0) {
       return index;
     } else {
-      consoleOnce.error(
+      console.error(
         `Error in Combobox: Could not find value "${value}" in options`,
       );
     }
@@ -233,7 +233,7 @@ export default function Combobox<M extends boolean>({
       if (value) {
         return value;
       } else {
-        consoleOnce.error(`Error in Combobox: No option at index ${index}`);
+        console.error(`Error in Combobox: No option at index ${index}`);
       }
     },
     [renderedOptions],
@@ -246,7 +246,7 @@ export default function Combobox<M extends boolean>({
       if (value) {
         return value;
       } else {
-        consoleOnce.error(`Error in Combobox: No option at index ${index}`);
+        console.error(`Error in Combobox: No option at index ${index}`);
       }
     },
     [renderedOptions],
