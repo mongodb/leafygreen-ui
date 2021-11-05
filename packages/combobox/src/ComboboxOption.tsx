@@ -85,15 +85,20 @@ export function InternalComboboxOption({
   );
   const optionRef = useRef<HTMLLIElement>(null);
 
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     optionRef.current?.focus();
-  //   }
-  // }, [isFocused]);
-
-  const handleOptionClick = useCallback(() => {
-    setSelected();
-  }, [setSelected]);
+  const handleOptionClick = useCallback(
+    (e: React.SyntheticEvent) => {
+      e.stopPropagation();
+      // If user clicked on the option, or the checkbox
+      // Ignore extra click events on the checkbox wrapper
+      if (
+        e.target === optionRef.current ||
+        (e.target as Element).tagName === 'INPUT'
+      ) {
+        setSelected();
+      }
+    },
+    [setSelected],
+  );
 
   const renderedIcon = useMemo(() => {
     if (glyph) {
@@ -122,15 +127,14 @@ export function InternalComboboxOption({
   }, [displayName, isSelected]);
 
   const renderedChildren = useMemo(() => {
+    // Multiselect
     if (multiselect) {
       const checkbox = (
         <Checkbox
           label=""
           aria-label={displayName}
           checked={isSelected}
-          // TODO - make checkboxes clickable
-          onChange={handleOptionClick}
-          onClick={handleOptionClick}
+          tabIndex={-1}
           animate={false}
         />
       );
@@ -146,6 +150,7 @@ export function InternalComboboxOption({
       );
     }
 
+    // Single select
     return (
       <>
         <span className={flexSpan}>
@@ -167,7 +172,6 @@ export function InternalComboboxOption({
     isSelected,
     darkMode,
     displayName,
-    handleOptionClick,
     withIcons,
   ]);
 

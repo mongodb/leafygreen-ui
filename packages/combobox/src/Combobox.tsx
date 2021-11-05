@@ -340,28 +340,26 @@ export default function Combobox<M extends boolean>({
   }, [isMultiselect, renderedOptions, selection, updateSelection]);
 
   const renderedInputIcons = useMemo(() => {
-    if (state === 'error') {
-      return (
-        <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
-      );
-    } else {
-      return (
-        <>
-          {clearable && doesSelectionExist && (
-            <IconButton
-              ref={clearButtonRef}
-              onClick={() => updateSelection(null)}
-              aria-label="Clear selection"
-              onFocus={handleClearButtonFocus}
-              className={clearButton}
-            >
-              <Icon glyph="XWithCircle" />
-            </IconButton>
-          )}
+    return (
+      <>
+        {clearable && doesSelectionExist && (
+          <IconButton
+            ref={clearButtonRef}
+            onClick={() => updateSelection(null)}
+            aria-label="Clear selection"
+            onFocus={handleClearButtonFocus}
+            className={clearButton}
+          >
+            <Icon glyph="XWithCircle" />
+          </IconButton>
+        )}
+        {state === 'error' ? (
+          <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
+        ) : (
           <Icon glyph="CaretDown" className={endIcon} />
-        </>
-      );
-    }
+        )}
+      </>
+    );
   }, [state, clearable, doesSelectionExist, updateSelection]);
 
   /**
