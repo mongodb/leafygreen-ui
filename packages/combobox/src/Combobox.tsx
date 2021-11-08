@@ -5,15 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  clone,
-  isArray,
-  isNull,
-  isNumber,
-  isUndefined,
-  kebabCase,
-  startCase,
-} from 'lodash';
+import { clone, isArray, isNull, isString, kebabCase, startCase } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
 import {
@@ -31,7 +23,7 @@ import {
   ComboboxProps,
   getNullSelection,
   onChangeType,
-  SelectIndexType,
+  SelectValueType,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
@@ -51,6 +43,9 @@ import {
   menuStyle,
   menuWrapperStyle,
 } from './Combobox.styles';
+
+// TODO - remove
+const DEFAULT_OPEN = true;
 
 /**
  * Component
@@ -93,14 +88,14 @@ export default function Combobox<M extends boolean>({
   const inputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const [isOpen, setOpen] = useState(false);
-  const [focusedOption, setFocusedOption] = useState<number | null>(0);
-  const [selection, setSelection] = useState<SelectIndexType<M> | null>(null);
+  const [isOpen, setOpen] = useState(DEFAULT_OPEN);
+  const [focusedOption, setFocusedOption] = useState<string | null>(null);
+  const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
 
   const doesSelectionExist =
     !isNull(selection) &&
-    ((isArray(selection) && selection.length > 0) || isNumber(selection));
+    ((isArray(selection) && selection.length > 0) || isString(selection));
 
   // Function to tell typescript that selection is multiselect
   const isMultiselect = useCallback(
@@ -124,30 +119,30 @@ export default function Combobox<M extends boolean>({
 
   // Utility function to handle mulit & single select
   const updateSelection = useCallback(
-    (index: number | null) => {
-      if (isNumber(index)) {
-        let newSelection: SelectIndexType<M>;
+    (value: string | null) => {
+      if (isString(value)) {
+        let newSelection: SelectValueType<M>;
 
         // MULTISELECT
         if (isMultiselect(selection)) {
           newSelection = clone(selection);
-          if (selection.includes(index)) {
+          if (selection.includes(value)) {
             // remove from array
-            newSelection.splice(newSelection.indexOf(index), 1);
+            newSelection.splice(newSelection.indexOf(value), 1);
           } else {
             // add to array
-            newSelection.push(index);
+            newSelection.push(value);
             // clear text
             setInputValue('');
           }
         } else {
           // SINGLE SELECT
-          newSelection = index as SelectIndexType<M>;
+          newSelection = value as SelectValueType<M>;
         }
         setSelection(newSelection);
         setInputFocus();
       } else {
-        const newSelection: SelectIndexType<M> = getNullSelection(multiselect);
+        const newSelection: SelectValueType<M> = getNullSelection(multiselect);
         setSelection(newSelection);
       }
     },
@@ -174,7 +169,7 @@ export default function Combobox<M extends boolean>({
   // TODO - handle internal filtering
 
   const renderedOptions = useMemo(() => {
-    return React.Children.map(children, (child, index) => {
+    return React.Children.map(children, child => {
       if (isComponentType(child, 'ComboboxOption')) {
         const {
           value: valueProp,
@@ -186,14 +181,14 @@ export default function Combobox<M extends boolean>({
         const value = valueProp ?? kebabCase(nameProp);
         const displayName = nameProp ?? startCase(value);
 
-        const isFocused = focusedOption === index;
+        const isFocused = focusedOption === value;
         const isSelected = isMultiselect(selection)
-          ? selection.includes(index)
-          : selection === index;
+          ? selection.includes(value)
+          : selection === value;
 
         const setSelected = () => {
-          setFocusedOption(index);
-          updateSelection(index);
+          setFocusedOption(value);
+          updateSelection(value);
         };
 
         return (
@@ -214,19 +209,6 @@ export default function Combobox<M extends boolean>({
     });
   }, [children, focusedOption, isMultiselect, selection, updateSelection]);
 
-  const getIndexOfOption = (value: string): number | undefined => {
-    const index =
-      renderedOptions?.findIndex(({ props }) => props.value === value) ?? -1;
-
-    if (index >= 0) {
-      return index;
-    } else {
-      console.error(
-        `Error in Combobox: Could not find value "${value}" in options`,
-      );
-    }
-  };
-
   const getValueAtIndex = useCallback(
     (index: number): string | undefined => {
       const value = renderedOptions?.[index].props.value ?? '';
@@ -240,46 +222,41 @@ export default function Combobox<M extends boolean>({
     [renderedOptions],
   );
 
-  const getDisplayNameAtIndex = useCallback(
-    (index: number): string | undefined => {
-      const value = renderedOptions?.[index].props.displayName ?? '';
+  const getOptionByValue = useCallback(
+    (value: string): JSX.Element | undefined => {
+      const option = renderedOptions?.find(
+        option => option.props.value === value,
+      );
 
-      if (value) {
-        return value;
-      } else {
-        console.error(`Error in Combobox: No option at index ${index}`);
+      if (option) {
+        return option;
       }
+
+      console.error(
+        `Error in Combobox. Could not find value ${value} in options`,
+      );
     },
     [renderedOptions],
   );
 
-  const getValueOfSelection = useCallback(
-    (selection: number | Array<number>): string | Array<string> | undefined => {
-      if (isMultiselect(selection)) {
-        return selection
-          .map(index => getValueAtIndex(index))
-          .filter(value => !isUndefined(value)) as Array<string>;
-      } else if (!isArray(selection)) {
-        return getValueAtIndex(selection);
-      }
+  const getDisplayNameForValue = useCallback(
+    (value: string): string => {
+      return getOptionByValue(value)?.props.displayName ?? '';
     },
-    [getValueAtIndex, isMultiselect],
+    [getOptionByValue],
   );
 
   // Set initialValue
   useEffect(() => {
     if (initialValue) {
       if (isArray(initialValue)) {
-        const indexArray = initialValue
-          .map(value => getIndexOfOption(value))
-          .filter((index): index is number => !isUndefined(index));
-
-        setSelection(indexArray as SelectIndexType<M>);
+        // Ensure the values we set are real options
+        const filteredValue =
+          initialValue.filter(value => !!getOptionByValue(value)) ?? [];
+        setSelection(filteredValue as SelectValueType<M>);
       } else {
-        const index = getIndexOfOption(initialValue);
-
-        if (!isUndefined(index)) {
-          setSelection(index as SelectIndexType<M>);
+        if (getOptionByValue(initialValue)) {
+          setSelection(initialValue);
         }
       }
     }
@@ -290,16 +267,14 @@ export default function Combobox<M extends boolean>({
   useEffect(() => {
     if (selection !== prevSelection) {
       if (doesSelectionExist) {
-        const value = getValueOfSelection(selection) ?? '';
-
-        if (isMultiselect(value)) {
+        if (isMultiselect(selection)) {
           // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
           scrollToEnd();
-          (onChange as onChangeType<true>)?.(value);
-        } else if (!isMultiselect(value)) {
+          (onChange as onChangeType<true>)?.(selection);
+        } else if (!isMultiselect(selection)) {
           // Update the text input
-          setInputValue(getDisplayNameAtIndex(selection as number) ?? '');
-          (onChange as onChangeType<false>)?.(value);
+          setInputValue(getDisplayNameForValue(selection) ?? '');
+          (onChange as onChangeType<false>)?.(selection);
           closeMenu();
         }
       } else {
@@ -308,11 +283,8 @@ export default function Combobox<M extends boolean>({
     }
   }, [
     doesSelectionExist,
-    getDisplayNameAtIndex,
-    getValueAtIndex,
-    getValueOfSelection,
+    getDisplayNameForValue,
     isMultiselect,
-    multiselect,
     onChange,
     prevSelection,
     selection,
@@ -326,15 +298,21 @@ export default function Combobox<M extends boolean>({
 
   const renderedChips = useMemo(() => {
     if (isMultiselect(selection) && renderedOptions) {
-      return selection.map(index => {
-        const { value, displayName } = renderedOptions[index].props;
-        const onRemove = () => updateSelection(index);
+      return selection.map(value => {
+        const displayName = getDisplayNameForValue(value);
+        const onRemove = () => updateSelection(value);
         return (
           <Chip key={value} displayName={displayName} onRemove={onRemove} />
         );
       });
     }
-  }, [isMultiselect, renderedOptions, selection, updateSelection]);
+  }, [
+    getDisplayNameForValue,
+    isMultiselect,
+    renderedOptions,
+    selection,
+    updateSelection,
+  ]);
 
   const renderedInputIcons = useMemo(() => {
     return (
@@ -432,33 +410,42 @@ export default function Combobox<M extends boolean>({
     const optionsCount = renderedOptions?.length ?? 0;
     const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
 
+    const indexOfFocus =
+      renderedOptions?.findIndex(
+        option => option.props.value === focusedOption,
+      ) ?? 0;
+
     switch (direction) {
       case 'next': {
-        if (!isNull(focusedOption) && focusedOption + 1 < optionsCount) {
-          setFocusedOption(focusedOption + 1);
-        } else {
-          setFocusedOption(0);
-        }
+        const nextValue =
+          indexOfFocus + 1 < optionsCount
+            ? getValueAtIndex(indexOfFocus + 1)
+            : getValueAtIndex(0);
+
+        setFocusedOption(nextValue ?? null);
         break;
       }
 
       case 'prev': {
-        if (!isNull(focusedOption) && focusedOption - 1 >= 0) {
-          setFocusedOption(focusedOption - 1);
-        } else {
-          setFocusedOption(lastIndex);
-        }
+        const prevValue =
+          indexOfFocus - 1 >= 0
+            ? getValueAtIndex(indexOfFocus - 1)
+            : getValueAtIndex(lastIndex);
+
+        setFocusedOption(prevValue ?? null);
         break;
       }
 
       case 'last': {
-        setFocusedOption(lastIndex);
+        const lastValue = getValueAtIndex(lastIndex);
+        setFocusedOption(lastValue ?? null);
         break;
       }
 
       case 'first':
       default: {
-        setFocusedOption(0);
+        const firstValue = getValueAtIndex(0);
+        setFocusedOption(firstValue ?? null);
       }
     }
   };

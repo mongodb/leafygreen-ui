@@ -132,7 +132,7 @@ export const inputWrapperStyle = ({
 }: {
   overflow: OverflowType;
   isOpen: boolean;
-  selection: number | Array<number> | null;
+  selection: string | Array<string> | null;
 }) => {
   const isUnfocusedMultiselect =
     !isOpen && isArray(selection) && selection.length > 0;
