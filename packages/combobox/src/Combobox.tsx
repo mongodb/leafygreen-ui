@@ -209,6 +209,7 @@ export default function Combobox<M extends boolean>({
         );
       } else if (isComponentType(child, 'ComboboxGroup')) {
         // TODO - handle nesting
+        console.log({ child });
       }
     });
   }, [children, focusedOption, isMultiselect, selection, updateSelection]);

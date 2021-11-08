@@ -5,7 +5,7 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/Icon';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
-import { Combobox, ComboboxOption } from '.';
+import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import Chip from './Chip';
 import { useState } from '@storybook/client-api';
 
@@ -106,7 +106,12 @@ storiesOf('Combobox', module)
           <ComboboxOption value="grape" />
           <ComboboxOption value="honeydew" />
           <ComboboxOption value="iceberg-lettuce" />
-          <ComboboxOption value="jalapeno" displayName="Jalapeño" />
+          <ComboboxGroup>
+            <ComboboxOption value="jalapeno" displayName="Jalapeño" />
+            <ComboboxOption value="habanero" />
+            <ComboboxOption value="ghost-pepper" displayName="Ghost pepper" />
+            <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
+          </ComboboxGroup>
         </Combobox>
       </Wrapper>
     );
