@@ -42,8 +42,9 @@ export function InternalComboboxGroup({
   const { darkMode } = useContext(ComboboxContext);
 
   const groupId = useIdAllocator({ prefix: 'combobox-group' });
+  const childCount = React.Children.count(children);
 
-  return (
+  return childCount > 0 ? (
     <div className={cx(comboboxGroupStyle(darkMode), className)}>
       <div className={comboboxGroupLabel} id={groupId}>
         {label}
@@ -52,6 +53,8 @@ export function InternalComboboxGroup({
         {children}
       </div>
     </div>
+  ) : (
+    <></>
   );
 }
 

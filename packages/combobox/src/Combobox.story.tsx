@@ -90,7 +90,6 @@ storiesOf('Combobox', module)
           description="Pick as many as you want!"
           placeholder="Select fruit"
           multiselect={true}
-          initialValue={['apple', 'iceberg-lettuce', 'jalapeno', 'jelly-bean']}
           overflow={select(
             'Overflow',
             ['expand-y', 'expand-x', 'scroll-x'],
@@ -103,6 +102,11 @@ storiesOf('Combobox', module)
             'Chip Truncation Location',
             ['start', 'middle', 'end', 'none'],
             'middle',
+          )}
+          filter={select(
+            'Filter type',
+            ['starts-with', 'includes', 'none'],
+            'includes',
           )}
           // disabled={boolean('Disabled', false)}
         >

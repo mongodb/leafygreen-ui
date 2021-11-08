@@ -47,7 +47,7 @@ import {
 import { InternalComboboxGroup } from './ComboboxGroup';
 
 // TODO - remove
-const DEFAULT_OPEN = true;
+const DEFAULT_OPEN = false;
 
 /**
  * Component
@@ -78,6 +78,7 @@ export default function Combobox<M extends boolean>({
   updateValue,
   chipTruncationLocation,
   chipCharacterLimit = 12,
+  filter,
   ...rest
 }: ComboboxProps<M>) {
   const inputId = useIdAllocator({ prefix: 'combobox-input' });
@@ -94,6 +95,8 @@ export default function Combobox<M extends boolean>({
   const [focusedOption, setFocusedOption] = useState<string | null>(null);
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
+  const [inputValue, setInputValue] = useState<string>('');
+  const prevValue = usePrevious(inputValue);
 
   const doesSelectionExist =
     !isNull(selection) &&
@@ -112,12 +115,6 @@ export default function Combobox<M extends boolean>({
       inputRef?.current?.focus();
     }
   }, [disabled]);
-
-  const setInputValue = (value: string) => {
-    if (inputRef.current) {
-      inputRef.current.value = value;
-    }
-  };
 
   // Utility function to handle mulit & single select
   const updateSelection = useCallback(
@@ -157,6 +154,22 @@ export default function Combobox<M extends boolean>({
     }
   };
 
+  const isValueVisible = useCallback(
+    (name: string): boolean => {
+      switch (filter) {
+        case 'starts-with':
+          return name.toLowerCase().startsWith(inputValue.toLowerCase());
+
+        case 'includes':
+          return name.toLowerCase().includes(inputValue.toLowerCase());
+
+        default:
+          return true;
+      }
+    },
+    [filter, inputValue],
+  );
+
   /**
    * We listen for when `isOpen` changes, and then set a new variable
    * that triggers the menu to re-render. We need this because
@@ -168,34 +181,43 @@ export default function Combobox<M extends boolean>({
   const [hasMenuBeenOpened, setHasMenuBeenOpened] = useState(false);
   useEffect(() => setHasMenuBeenOpened(isOpen), [isOpen]);
 
-  const getValueFromProps = ({
-    value,
-    displayName,
-  }: ComboboxOptionProps): string => {
-    return value ?? kebabCase(displayName);
+  const getNameAndValue = ({
+    value: valProp,
+    displayName: nameProp,
+  }: ComboboxOptionProps): {
+    value: string;
+    displayName: string;
+  } => {
+    return {
+      value: valProp ?? kebabCase(nameProp),
+      displayName: nameProp ?? startCase(valProp),
+    };
   };
-
-  const getNameFromProps = ({
-    value,
-    displayName,
-  }: ComboboxOptionProps): string => {
-    return displayName ?? startCase(value);
-  };
+  interface OptionObject {
+    value: string;
+    displayName: string;
+  }
 
   const flattenChildren = useCallback(
-    (_children: React.ReactNode): Array<string> => {
+    (_children: React.ReactNode): Array<OptionObject> => {
       // TS doesn't like .reduce
       // @ts-expect-error
       return React.Children.toArray(_children).reduce(
         // @ts-expect-error
         (
-          acc: Array<string>,
+          acc: Array<OptionObject>,
           child: React.ReactNode,
-        ): Array<string> | undefined => {
+        ): Array<OptionObject> | undefined => {
           if (isComponentType(child, 'ComboboxOption')) {
-            const value = getValueFromProps(child.props);
+            const { value, displayName } = getNameAndValue(child.props);
 
-            return [...acc, value];
+            return [
+              ...acc,
+              {
+                value,
+                displayName,
+              },
+            ];
           } else if (isComponentType(child, 'ComboboxGroup')) {
             const { children } = child.props;
 
@@ -204,28 +226,44 @@ export default function Combobox<M extends boolean>({
             }
           }
         },
-        [] as Array<string>,
+        [] as Array<OptionObject>,
       );
     },
     [],
   );
 
-  const allValues = useMemo(() => flattenChildren(children), [
+  const allOptions = useMemo(() => flattenChildren(children), [
     children,
     flattenChildren,
   ]);
 
+  const filteredOptions = allOptions.filter(opt =>
+    isValueVisible(opt.displayName),
+  );
+
+  const getDisplayNameForValue = useCallback(
+    (value: string): string => {
+      return allOptions.find(opt => opt.value === value)?.displayName ?? '';
+    },
+    [allOptions],
+  );
+
+  const valueExists = useCallback(
+    (value: string): boolean => {
+      return !!allOptions.find(opt => opt.value === value);
+    },
+    [allOptions],
+  );
+
   const getValueAtIndex = useCallback(
     (index: number): string | undefined => {
-      const value = allValues[index];
+      const value = filteredOptions[index]?.value;
 
       if (value) {
         return value;
-      } else {
-        console.error(`Error in Combobox: No option at index ${index}`);
       }
     },
-    [allValues],
+    [filteredOptions],
   );
 
   // TODO - handle internal filtering
@@ -233,49 +271,60 @@ export default function Combobox<M extends boolean>({
     (_children: React.ReactNode) => {
       return React.Children.map(_children, child => {
         if (isComponentType(child, 'ComboboxOption')) {
-          const { className, glyph } = child.props;
+          const { value, displayName } = getNameAndValue(child.props);
 
-          const value = getValueFromProps(child.props);
-          const displayName = getNameFromProps(child.props);
-          const index = allValues.indexOf(value);
+          if (isValueVisible(displayName)) {
+            const { className, glyph } = child.props;
+            const index = allOptions.findIndex(opt => opt.value === value);
 
-          const isFocused = focusedOption === value;
-          const isSelected = isMultiselect(selection)
-            ? selection.includes(value)
-            : selection === value;
+            const isFocused = focusedOption === value;
+            const isSelected = isMultiselect(selection)
+              ? selection.includes(value)
+              : selection === value;
 
-          const setSelected = () => {
-            setFocusedOption(value);
-            updateSelection(value);
-          };
+            const setSelected = () => {
+              setFocusedOption(value);
+              updateSelection(value);
+            };
 
-          return (
-            <InternalComboboxOption
-              value={value}
-              displayName={displayName}
-              isFocused={isFocused}
-              isSelected={isSelected}
-              setSelected={setSelected}
-              glyph={glyph}
-              className={className}
-              index={index}
-            />
-          );
+            return (
+              <InternalComboboxOption
+                value={value}
+                displayName={displayName}
+                isFocused={isFocused}
+                isSelected={isSelected}
+                setSelected={setSelected}
+                glyph={glyph}
+                className={className}
+                index={index}
+              />
+            );
+          }
         } else if (isComponentType(child, 'ComboboxGroup')) {
           // TODO - handle nesting
-          const nestedChildren = child.props.children;
-          return (
-            <InternalComboboxGroup
-              label={child.props.label}
-              className={child.props.className}
-            >
-              {renderInternalOptions(nestedChildren)}
-            </InternalComboboxGroup>
-          );
+          const nestedChildren = renderInternalOptions(child.props.children);
+
+          if (nestedChildren && nestedChildren?.length > 0) {
+            return (
+              <InternalComboboxGroup
+                label={child.props.label}
+                className={child.props.className}
+              >
+                {renderInternalOptions(nestedChildren)}
+              </InternalComboboxGroup>
+            );
+          }
         }
       });
     },
-    [allValues, focusedOption, isMultiselect, selection, updateSelection],
+    [
+      allOptions,
+      focusedOption,
+      isMultiselect,
+      isValueVisible,
+      selection,
+      updateSelection,
+    ],
   );
 
   const renderedOptions = useMemo(() => renderInternalOptions(children), [
@@ -283,28 +332,54 @@ export default function Combobox<M extends boolean>({
     renderInternalOptions,
   ]);
 
-  const getOptionByValue = useCallback(
-    (value: string): JSX.Element | undefined => {
-      const option = renderedOptions?.find(
-        option => option.props.value === value,
-      );
+  /**
+   * Focus Management
+   */
+  type Direction = 'next' | 'prev' | 'first' | 'last';
+  const updateFocusedOption = useCallback(
+    (direction: Direction) => {
+      const optionsCount = filteredOptions?.length ?? 0;
+      const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
 
-      if (option) {
-        return option;
+      const indexOfFocus =
+        filteredOptions?.findIndex(option => option.value === focusedOption) ??
+        0;
+
+      switch (direction) {
+        case 'next': {
+          const newValue =
+            indexOfFocus + 1 < optionsCount
+              ? getValueAtIndex(indexOfFocus + 1)
+              : getValueAtIndex(0);
+
+          setFocusedOption(newValue ?? null);
+          break;
+        }
+
+        case 'prev': {
+          const newValue =
+            indexOfFocus - 1 >= 0
+              ? getValueAtIndex(indexOfFocus - 1)
+              : getValueAtIndex(lastIndex);
+
+          setFocusedOption(newValue ?? null);
+          break;
+        }
+
+        case 'last': {
+          const newValue = getValueAtIndex(lastIndex);
+          setFocusedOption(newValue ?? null);
+          break;
+        }
+
+        case 'first':
+        default: {
+          const newValue = getValueAtIndex(0);
+          setFocusedOption(newValue ?? null);
+        }
       }
-
-      console.error(
-        `Error in Combobox. Could not find value ${value} in options`,
-      );
     },
-    [renderedOptions],
-  );
-
-  const getDisplayNameForValue = useCallback(
-    (value: string): string => {
-      return getOptionByValue(value)?.props.displayName ?? '';
-    },
-    [getOptionByValue],
+    [filteredOptions, focusedOption, getValueAtIndex],
   );
 
   // Set initialValue
@@ -313,13 +388,15 @@ export default function Combobox<M extends boolean>({
       if (isArray(initialValue)) {
         // Ensure the values we set are real options
         const filteredValue =
-          initialValue.filter(value => !!getOptionByValue(value)) ?? [];
+          initialValue.filter(value => valueExists(value)) ?? [];
         setSelection(filteredValue as SelectValueType<M>);
       } else {
-        if (getOptionByValue(initialValue)) {
+        if (valueExists(initialValue)) {
           setSelection(initialValue);
         }
       }
+    } else {
+      setSelection(getNullSelection(multiselect));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -350,6 +427,12 @@ export default function Combobox<M extends boolean>({
     prevSelection,
     selection,
   ]);
+
+  useEffect(() => {
+    if (inputValue !== prevValue) {
+      updateFocusedOption('first');
+    }
+  }, [inputValue, prevValue, updateFocusedOption]);
 
   // Do any of the options have an icon?
   const withIcons = useMemo(
@@ -463,54 +546,6 @@ export default function Combobox<M extends boolean>({
     searchState,
   ]);
 
-  /**
-   * Focus Management
-   */
-  type Direction = 'next' | 'prev' | 'first' | 'last';
-  const updateFocusedOption = (direction: Direction) => {
-    const optionsCount = renderedOptions?.length ?? 0;
-    const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
-
-    const indexOfFocus =
-      renderedOptions?.findIndex(
-        option => option.props.value === focusedOption,
-      ) ?? 0;
-
-    switch (direction) {
-      case 'next': {
-        const nextValue =
-          indexOfFocus + 1 < optionsCount
-            ? getValueAtIndex(indexOfFocus + 1)
-            : getValueAtIndex(0);
-
-        setFocusedOption(nextValue ?? null);
-        break;
-      }
-
-      case 'prev': {
-        const prevValue =
-          indexOfFocus - 1 >= 0
-            ? getValueAtIndex(indexOfFocus - 1)
-            : getValueAtIndex(lastIndex);
-
-        setFocusedOption(prevValue ?? null);
-        break;
-      }
-
-      case 'last': {
-        const lastValue = getValueAtIndex(lastIndex);
-        setFocusedOption(lastValue ?? null);
-        break;
-      }
-
-      case 'first':
-      default: {
-        const firstValue = getValueAtIndex(0);
-        setFocusedOption(firstValue ?? null);
-      }
-    }
-  };
-
   // Fired when the wrapper gains focus
   const handleInputFocus = () => {
     scrollToEnd();
@@ -521,6 +556,7 @@ export default function Combobox<M extends boolean>({
   const handleInputChange = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(value);
     // fire any filter function passed in
     onFilter?.(value);
   };
@@ -667,6 +703,7 @@ export default function Combobox<M extends boolean>({
                 placeholder={placeholderValue}
                 disabled={disabled ?? undefined}
                 onChange={handleInputChange}
+                value={inputValue}
               />
             </div>
             {renderedInputIcons}

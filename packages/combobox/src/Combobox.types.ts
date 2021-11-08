@@ -38,6 +38,13 @@ export enum SearchState {
 }
 export type SearchStateType = keyof typeof SearchState;
 
+export enum Filter {
+  'starts-with',
+  'includes',
+  'none',
+}
+export type FilterType = keyof typeof Filter;
+
 /**
  * Generic Typing
  */
@@ -97,6 +104,7 @@ type BaseComboboxProps<M extends boolean> = {
   className?: string;
   chipTruncationLocation?: TrunctationLocationType;
   chipCharacterLimit?: number;
+  filter?: FilterType;
 } & ComboboxMultiselectProps<M>;
 
 export type ComboboxProps<M extends boolean> = Either<
