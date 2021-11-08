@@ -53,9 +53,21 @@ storiesOf('Combobox', module)
           <ComboboxOption value="carrot" />
           <ComboboxOption
             value="dragonfruit"
-            glyph={<Icon glyph="Favorite" color={uiColors.blue.base} />}
+            // glyph={<Icon glyph="Favorite" color={uiColors.blue.base} />}
           />
           <ComboboxOption value="eggplant" />
+          <ComboboxOption value="fig" />
+          <ComboboxOption value="grape" />
+          <ComboboxOption value="honeydew" />
+          <ComboboxOption value="iceberg-lettuce" />
+          <ComboboxGroup label="Peppers">
+            <ComboboxOption value="cayenne" />
+            <ComboboxOption value="ghost-pepper" displayName="Ghost pepper" />
+            <ComboboxOption value="habanero" />
+            <ComboboxOption value="jalapeno" displayName="Jalapeño" />
+            <ComboboxOption value="red-pepper" displayName="Red pepper" />
+            <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
+          </ComboboxGroup>
         </Combobox>
       </Wrapper>
     );
@@ -106,11 +118,15 @@ storiesOf('Combobox', module)
           <ComboboxOption value="grape" />
           <ComboboxOption value="honeydew" />
           <ComboboxOption value="iceberg-lettuce" />
-          <ComboboxGroup>
-            <ComboboxOption value="jalapeno" displayName="Jalapeño" />
-            <ComboboxOption value="habanero" />
+          <ComboboxGroup label="Peppers">
+            <ComboboxOption value="cayenne" />
             <ComboboxOption value="ghost-pepper" displayName="Ghost pepper" />
+            <ComboboxOption value="habanero" />
+            <ComboboxOption value="jalapeno" displayName="Jalapeño" />
             <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
+            <ComboboxGroup label="Sweet Peppers">
+              <ComboboxOption value="red-pepper" displayName="Red pepper" />
+            </ComboboxGroup>
           </ComboboxGroup>
         </Combobox>
       </Wrapper>

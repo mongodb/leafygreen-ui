@@ -21,6 +21,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
+  ComboboxOptionProps,
   getNullSelection,
   onChangeType,
   SelectValueType,
@@ -43,6 +44,7 @@ import {
   menuStyle,
   menuWrapperStyle,
 } from './Combobox.styles';
+import { InternalComboboxGroup } from './ComboboxGroup';
 
 // TODO - remove
 const DEFAULT_OPEN = true;
@@ -166,52 +168,56 @@ export default function Combobox<M extends boolean>({
   const [hasMenuBeenOpened, setHasMenuBeenOpened] = useState(false);
   useEffect(() => setHasMenuBeenOpened(isOpen), [isOpen]);
 
-  // TODO - handle internal filtering
+  const getValueFromProps = ({
+    value,
+    displayName,
+  }: ComboboxOptionProps): string => {
+    return value ?? kebabCase(displayName);
+  };
 
-  const renderedOptions = useMemo(() => {
-    return React.Children.map(children, child => {
-      if (isComponentType(child, 'ComboboxOption')) {
-        const {
-          value: valueProp,
-          displayName: nameProp,
-          className,
-          glyph,
-        } = child.props;
+  const getNameFromProps = ({
+    value,
+    displayName,
+  }: ComboboxOptionProps): string => {
+    return displayName ?? startCase(value);
+  };
 
-        const value = valueProp ?? kebabCase(nameProp);
-        const displayName = nameProp ?? startCase(value);
+  const flattenChildren = useCallback(
+    (_children: React.ReactNode): Array<string> => {
+      // TS doesn't like .reduce
+      // @ts-expect-error
+      return React.Children.toArray(_children).reduce(
+        // @ts-expect-error
+        (
+          acc: Array<string>,
+          child: React.ReactNode,
+        ): Array<string> | undefined => {
+          if (isComponentType(child, 'ComboboxOption')) {
+            const value = getValueFromProps(child.props);
 
-        const isFocused = focusedOption === value;
-        const isSelected = isMultiselect(selection)
-          ? selection.includes(value)
-          : selection === value;
+            return [...acc, value];
+          } else if (isComponentType(child, 'ComboboxGroup')) {
+            const { children } = child.props;
 
-        const setSelected = () => {
-          setFocusedOption(value);
-          updateSelection(value);
-        };
+            if (children) {
+              return [...acc, ...flattenChildren(children)];
+            }
+          }
+        },
+        [] as Array<string>,
+      );
+    },
+    [],
+  );
 
-        return (
-          <InternalComboboxOption
-            value={value}
-            displayName={displayName}
-            isFocused={isFocused}
-            isSelected={isSelected}
-            setSelected={setSelected}
-            glyph={glyph}
-            className={className}
-          />
-        );
-      } else if (isComponentType(child, 'ComboboxGroup')) {
-        // TODO - handle nesting
-        console.log({ child });
-      }
-    });
-  }, [children, focusedOption, isMultiselect, selection, updateSelection]);
+  const allValues = useMemo(() => flattenChildren(children), [
+    children,
+    flattenChildren,
+  ]);
 
   const getValueAtIndex = useCallback(
     (index: number): string | undefined => {
-      const value = renderedOptions?.[index].props.value ?? '';
+      const value = allValues[index];
 
       if (value) {
         return value;
@@ -219,8 +225,63 @@ export default function Combobox<M extends boolean>({
         console.error(`Error in Combobox: No option at index ${index}`);
       }
     },
-    [renderedOptions],
+    [allValues],
   );
+
+  // TODO - handle internal filtering
+  const renderInternalOptions = useCallback(
+    (_children: React.ReactNode) => {
+      return React.Children.map(_children, child => {
+        if (isComponentType(child, 'ComboboxOption')) {
+          const { className, glyph } = child.props;
+
+          const value = getValueFromProps(child.props);
+          const displayName = getNameFromProps(child.props);
+          const index = allValues.indexOf(value);
+
+          const isFocused = focusedOption === value;
+          const isSelected = isMultiselect(selection)
+            ? selection.includes(value)
+            : selection === value;
+
+          const setSelected = () => {
+            setFocusedOption(value);
+            updateSelection(value);
+          };
+
+          return (
+            <InternalComboboxOption
+              value={value}
+              displayName={displayName}
+              isFocused={isFocused}
+              isSelected={isSelected}
+              setSelected={setSelected}
+              glyph={glyph}
+              className={className}
+              index={index}
+            />
+          );
+        } else if (isComponentType(child, 'ComboboxGroup')) {
+          // TODO - handle nesting
+          const nestedChildren = child.props.children;
+          return (
+            <InternalComboboxGroup
+              label={child.props.label}
+              className={child.props.className}
+            >
+              {renderInternalOptions(nestedChildren)}
+            </InternalComboboxGroup>
+          );
+        }
+      });
+    },
+    [allValues, focusedOption, isMultiselect, selection, updateSelection],
+  );
+
+  const renderedOptions = useMemo(() => renderInternalOptions(children), [
+    children,
+    renderInternalOptions,
+  ]);
 
   const getOptionByValue = useCallback(
     (value: string): JSX.Element | undefined => {

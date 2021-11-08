@@ -128,6 +128,7 @@ export interface InternalComboboxOptionProps {
   setSelected: () => void;
   glyph?: ReactElement;
   className?: string;
+  index: number;
 }
 
 /**
