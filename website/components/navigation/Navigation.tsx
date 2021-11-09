@@ -10,8 +10,7 @@ import {
 } from '@leafygreen-ui/side-nav';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
-import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
-import { LogoMark } from '@leafygreen-ui/logo';
+import { MongoDBLogo, MongoDBLogoMark } from '@leafygreen-ui/logo';
 import { HOME_PAGE } from 'utils/routes';
 import { Component } from 'utils/types';
 import MobileNavigationGroup from './MobileNavigationGroup';
@@ -19,9 +18,13 @@ import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
 
 const logoStyles = css`
+  cursor: pointer;
+`;
+
+const logoLinkStyles = css`
+  display: inline-block;
   // adds back spacing that was already built into side nav
   margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
-  cursor: pointer;
 `;
 
 const foundations: Array<String> = [
@@ -42,6 +45,7 @@ const components: Array<Component> = [
   'code',
   'confirmation-modal',
   'copyable',
+  'expandable-card',
   'icon',
   'icon-button',
   'inline-definition',
@@ -164,7 +168,16 @@ function Navigation() {
         z-index: 1;
       `}
     >
-      <MDBDesignLogo className={logoStyles} onClick={() => push(HOME_PAGE)} />
+      <a
+        className={logoLinkStyles}
+        href="/"
+        onClick={e => {
+          e.preventDefault();
+          push(HOME_PAGE);
+        }}
+      >
+        <MongoDBLogo height={32} className={logoStyles} />
+      </a>
       <CollapsedSideNavItem
         className={css`
           background-color: #09804c;
@@ -174,7 +187,7 @@ function Navigation() {
           height: calc(25px + ${spacing[4] * 2}px + ${spacing[3]}px);
         `}
       >
-        <LogoMark knockout darkMode height={24} />
+        <MongoDBLogoMark color="white" height={24} />
       </CollapsedSideNavItem>
       <Content />
     </SideNav>

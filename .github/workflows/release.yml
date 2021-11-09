@@ -12,18 +12,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ssh-key: ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
-          submodules: 'recursive'
-      
-      # The SSH Agent manages the SSH keys used in future steps for authentication.
-      - name: Set Up SSH Agent
-        uses: webfactory/ssh-agent@v0.5.2
-        with:
-          ssh-private-key: |
-            ${{ secrets.LEAFYGREEN_UI_DEPLOY }}
-            ${{ secrets.LEAFYGREEN_UI_MONGO_NAV_DEPLOY }}
 
       - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
@@ -40,6 +28,7 @@ jobs:
         run: yarn ts:build
 
       - name: Create Release Pull Request
+        id: changesets
         uses: changesets/action@master
         with:
           version: yarn changeset:version
@@ -54,3 +43,10 @@ jobs:
       - name: Publish website with package updates
         if: steps.changesets.outputs.published == 'true'
         run: yarn publish:sites
+
+      - name: Notify Slack channel of new releases
+        if: steps.changesets.outputs.published == 'true'
+        id: slackbot
+        run: yarn slackbot '${{steps.changesets.outputs.publishedPackages}}'
+        env:
+          SLACK_BOT_TOKEN: '${{secrets.SLACK_BOT_TOKEN}}'
