@@ -6,7 +6,7 @@ import {
   useIdAllocator,
   useEventListener,
 } from '@leafygreen-ui/hooks';
-import { OneOf } from '@leafygreen-ui/lib';
+import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
@@ -344,14 +344,14 @@ export default function Select({
 
       // We only respond to keypresses if the focus is in the component
       if (isFocusInComponent) {
-        switch (event.key) {
-          case 'Tab':
-          case 'Escape':
+        switch (event.keyCode) {
+          case keyMap.Tab:
+          case keyMap.Escape:
             onClose();
             setFocusedOption(undefined);
             break;
-          case 'Enter':
-          case 'Space':
+          case keyMap.Enter:
+          case keyMap.Space:
             if (open && !isFocusOnButton) {
               // Default behavior is to use these keys to open the dropdown but we handle that manually
               event.preventDefault();
@@ -359,14 +359,14 @@ export default function Select({
 
             onSelectFocusedOption(event);
             break;
-          case 'ArrowUp':
+          case keyMap.ArrowUp:
             if (!open && isFocusOnButton) {
               onOpen();
             }
             event.preventDefault(); // Prevents page scrolling
             onFocusPreviousOption();
             break;
-          case 'ArrowDown':
+          case keyMap.ArrowDown:
             if (!open && isFocusOnButton) {
               onOpen();
             }
