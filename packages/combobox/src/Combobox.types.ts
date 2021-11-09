@@ -41,7 +41,6 @@ export type SearchStateType = keyof typeof SearchState;
 export enum Filter {
   'starts-with',
   'includes',
-  'none',
 }
 export type FilterType = keyof typeof Filter;
 

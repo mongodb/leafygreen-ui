@@ -6,8 +6,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 
-const ellipsis = '…';
-
 const chipWrapperStyle = ({
   darkMode,
   size,
@@ -112,12 +110,13 @@ export default function Chip({ displayName, onRemove }: ChipProps) {
 
   const truncatedName = useMemo(() => {
     if (isTruncated) {
+      const ellipsis = '…';
       const chars = chipCharacterLimit - 4;
 
       switch (chipTruncationLocation) {
         case 'start': {
           const end = displayName.substring(displayName.length - chars).trim();
-          return `${ellipsis}${end}`;
+          return ellipsis + end;
         }
 
         case 'middle': {
@@ -125,26 +124,27 @@ export default function Chip({ displayName, onRemove }: ChipProps) {
           const end = displayName
             .substring(displayName.length - chars / 2)
             .trim();
-          return `${start}${ellipsis}${end}`;
+          return start + ellipsis + end;
         }
 
         case 'end': {
           const start = displayName.substring(0, chars).trim();
-          return `${start}${ellipsis}`;
+          return start + ellipsis;
         }
 
-        default:
+        default: {
           return displayName;
+        }
       }
     }
 
-    return displayName;
+    return false;
   }, [chipCharacterLimit, chipTruncationLocation, displayName, isTruncated]);
 
   return (
     <span className={chipWrapperStyle({ darkMode, size })}>
       <span className={chipText}>
-        {isTruncated ? (
+        {truncatedName ? (
           <InlineDefinition definition={displayName} align="bottom">
             {truncatedName}
           </InlineDefinition>

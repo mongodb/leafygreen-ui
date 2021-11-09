@@ -196,6 +196,7 @@ export default function Combobox<M extends boolean>({
   interface OptionObject {
     value: string;
     displayName: string;
+    hasGlyph?: boolean;
   }
 
   const flattenChildren = useCallback(
@@ -210,12 +211,14 @@ export default function Combobox<M extends boolean>({
         ): Array<OptionObject> | undefined => {
           if (isComponentType(child, 'ComboboxOption')) {
             const { value, displayName } = getNameAndValue(child.props);
+            const { glyph } = child.props;
 
             return [
               ...acc,
               {
                 value,
                 displayName,
+                hasGlyph: !!glyph,
               },
             ];
           } else if (isComponentType(child, 'ComboboxGroup')) {
@@ -435,10 +438,9 @@ export default function Combobox<M extends boolean>({
   }, [inputValue, prevValue, updateFocusedOption]);
 
   // Do any of the options have an icon?
-  const withIcons = useMemo(
-    () => renderedOptions?.some(child => !!child.props.glyph) ?? false,
-    [renderedOptions],
-  );
+  const withIcons = useMemo(() => allOptions.some(opt => opt.hasGlyph), [
+    allOptions,
+  ]);
 
   const renderedChips = useMemo(() => {
     if (isMultiselect(selection) && renderedOptions) {
@@ -644,6 +646,8 @@ export default function Combobox<M extends boolean>({
         withIcons,
         chipTruncationLocation,
         chipCharacterLimit,
+        filter,
+        inputValue,
       }}
     >
       <div

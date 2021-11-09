@@ -47,6 +47,11 @@ storiesOf('Combobox', module)
           state={isError ? 'error' : 'none'}
           errorMessage="No, not that one!"
           onChange={handleChange}
+          filter={select(
+            'Filter type',
+            ['starts-with', 'includes', undefined],
+            'includes',
+          )}
         >
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
@@ -105,7 +110,7 @@ storiesOf('Combobox', module)
           )}
           filter={select(
             'Filter type',
-            ['starts-with', 'includes', 'none'],
+            ['starts-with', 'includes', undefined],
             'includes',
           )}
           // disabled={boolean('Disabled', false)}

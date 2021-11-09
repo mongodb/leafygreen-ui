@@ -9,6 +9,7 @@ import {
   InternalComboboxOptionProps,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
+import { wrapJSX } from './util';
 
 /**
  * Styles
@@ -61,22 +62,27 @@ const flexSpan = css`
 
 const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
+
+  > em {
+    font-weight: bold;
+    font-style: normal;
+  }
 `;
 /**
  * Component
  */
 
 export function InternalComboboxOption({
-  value,
   displayName,
-  // children,
   glyph,
   isSelected,
   isFocused,
   setSelected,
   className,
 }: InternalComboboxOptionProps) {
-  const { multiselect, darkMode, withIcons } = useContext(ComboboxContext);
+  const { multiselect, darkMode, withIcons, filter, inputValue } = useContext(
+    ComboboxContext,
+  );
   const optionRef = useRef<HTMLLIElement>(null);
 
   const handleOptionClick = useCallback(
@@ -108,7 +114,9 @@ export function InternalComboboxOption({
 
   const renderedChildren = useMemo(() => {
     const renderedName = (
-      <span className={displayNameStyle(isSelected)}>{displayName}</span>
+      <span className={displayNameStyle(isSelected)}>
+        {filter ? wrapJSX(displayName, inputValue, 'em') : displayName}
+      </span>
     );
 
     // Multiselect
@@ -149,7 +157,16 @@ export function InternalComboboxOption({
         )}
       </>
     );
-  }, [multiselect, renderedIcon, isSelected, darkMode, displayName, withIcons]);
+  }, [
+    isSelected,
+    filter,
+    displayName,
+    inputValue,
+    multiselect,
+    renderedIcon,
+    darkMode,
+    withIcons,
+  ]);
 
   return (
     <li
