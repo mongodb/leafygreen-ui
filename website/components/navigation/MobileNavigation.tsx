@@ -111,7 +111,6 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
           >
             <MenuIcon size={20} />
           </IconButton>
-          =
           <a
             href="/"
             onClick={e => {
