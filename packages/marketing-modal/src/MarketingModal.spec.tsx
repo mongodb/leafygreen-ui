@@ -109,15 +109,6 @@ describe('packages/confirmation-modal', () => {
   });
 
   describe('closes when', () => {
-    test('backdrop is clicked', async () => {
-      const { getByRole } = renderModal({ open: true });
-      const modal = getByRole('dialog');
-
-      fireEvent.click(modal.parentElement!);
-
-      await waitForElementToBeRemoved(modal);
-    });
-
     test('escape key is pressed', async () => {
       const { getByRole } = renderModal({ open: true });
       const modal = getByRole('dialog');

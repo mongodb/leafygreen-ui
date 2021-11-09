@@ -1,3 +1,4 @@
+import { once } from 'lodash';
 import * as typeIs from './typeIs';
 
 export { typeIs };
@@ -179,3 +180,9 @@ export type RecursivePartial<T> = {
 export function enforceExhaustive(value: never): never {
   throw Error(`Received unhandled value: ${value}`);
 }
+
+export const consoleOnce = {
+  error: once(console.error),
+  warn: once(console.warn),
+  log: once(console.log),
+};

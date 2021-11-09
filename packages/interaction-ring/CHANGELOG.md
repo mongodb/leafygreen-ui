@@ -1,5 +1,11 @@
 # @leafygreen-ui/interaction-ring
 
+## 1.1.1
+
+### Patch Changes
+
+- b3ea62a: Removes problematic default styles from InteractionRing component
+
 ## 1.1.0
 
 ### Minor Changes

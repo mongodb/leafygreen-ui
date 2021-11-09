@@ -1,5 +1,16 @@
 # @leafygreen-ui/modal
 
+## 7.0.0
+
+### Major Changes
+
+- b3ea62a: Removes `closeOnBackdropClick` prop from the modal. Clicking the backdrop when a modal is open should no longer close the modal.
+
+### Patch Changes
+
+- Updated dependencies [b3ea62a]
+  - @leafygreen-ui/icon@11.6.1
+
 ## 6.1.2
 
 ### Patch Changes

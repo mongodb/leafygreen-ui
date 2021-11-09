@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/css';
-import { Logo } from '@leafygreen-ui/logo';
+import { MongoDBLogo } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { mq } from 'utils/mediaQuery';
@@ -73,7 +73,7 @@ function Footer() {
   return (
     <div role="contentinfo" className={footerContainer}>
       <a href="https://mongodb.com" target="_blank" rel="noopener noreferrer">
-        <Logo height={spacing[4]} aria-hidden="true" />
+        <MongoDBLogo height={spacing[4]} aria-hidden="true" />
       </a>
       <div className={linksContainer}>
         <FooterLink href="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1">
