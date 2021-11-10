@@ -12,6 +12,7 @@ import userEvent from '@testing-library/user-event';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Option, OptionGroup, Select } from '.';
+import { keyMap } from '@leafygreen-ui/lib';
 
 const Color = {
   Red: 'Explicit value: Red',
@@ -572,7 +573,10 @@ describe('packages/select', () => {
 
           act(() => targetOption!.focus());
 
-          fireEvent.keyDown(targetOption!, { key: 'Enter' });
+          fireEvent.keyDown(targetOption!, {
+            key: 'Enter',
+            keyCode: keyMap.Enter,
+          });
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(
@@ -630,7 +634,10 @@ describe('packages/select', () => {
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
-          fireEvent.keyDown(targetOption!, { key: 'Enter' });
+          fireEvent.keyDown(targetOption!, {
+            key: 'Enter',
+            keyCode: keyMap.Enter,
+          });
 
           expect(onChangeSpy).not.toHaveBeenCalled();
           expect(listbox).toBeVisible();
