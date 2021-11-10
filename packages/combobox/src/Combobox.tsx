@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { clone, isArray, isNull, isString, kebabCase, startCase } from 'lodash';
+import { clone, isArray, isNull, isString } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
 import {
@@ -16,12 +16,11 @@ import {
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
-  ComboboxOptionProps,
   getNullSelection,
   onChangeType,
   SelectValueType,
@@ -46,6 +45,7 @@ import {
   menuWrapperStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
+import { getNameAndValue } from './util';
 
 // TODO - remove
 const DEFAULT_OPEN = false;
@@ -103,21 +103,21 @@ export default function Combobox<M extends boolean>({
     !isNull(selection) &&
     ((isArray(selection) && selection.length > 0) || isString(selection));
 
-  // Function to tell typescript that selection is multiselect
+  // Tells typescript that selection is multiselect
   const isMultiselect = useCallback(
     <T extends number | string>(test: Array<T> | T | null): test is Array<T> =>
       multiselect && isArray(test),
     [multiselect],
   );
 
-  // Utility to force selection
+  // Force focus of input box
   const setInputFocus = useCallback(() => {
     if (!disabled) {
       inputRef?.current?.focus();
     }
   }, [disabled]);
 
-  // Utility function to handle mulit & single select
+  // Update selection differently in mulit & single select
   const updateSelection = useCallback(
     (value: string | null) => {
       if (isString(value)) {
@@ -149,12 +149,15 @@ export default function Combobox<M extends boolean>({
     [isMultiselect, multiselect, selection, setInputFocus],
   );
 
+  // Scrolls the combobox to the far right
+  // Used when `overflow == 'scroll-x'`
   const scrollToEnd = () => {
     if (inputWrapperRef.current) {
       inputWrapperRef.current.scrollLeft = inputWrapperRef.current?.scrollWidth;
     }
   };
 
+  // Computes whether the option is visible based on the current input
   const isValueVisible = useCallback(
     (name: string): boolean => {
       switch (filter) {
@@ -171,6 +174,11 @@ export default function Combobox<M extends boolean>({
     [filter, inputValue],
   );
 
+  const placeholderValue =
+    multiselect && isArray(selection) && selection.length > 0
+      ? undefined
+      : placeholder;
+
   /**
    * We listen for when `isOpen` changes, and then set a new variable
    * that triggers the menu to re-render. We need this because
@@ -181,19 +189,6 @@ export default function Combobox<M extends boolean>({
    */
   const [hasMenuBeenOpened, setHasMenuBeenOpened] = useState(false);
   useEffect(() => setHasMenuBeenOpened(isOpen), [isOpen]);
-
-  const getNameAndValue = ({
-    value: valProp,
-    displayName: nameProp,
-  }: ComboboxOptionProps): {
-    value: string;
-    displayName: string;
-  } => {
-    return {
-      value: valProp ?? kebabCase(nameProp),
-      displayName: nameProp ?? startCase(valProp),
-    };
-  };
   interface OptionObject {
     value: string;
     displayName: string;
@@ -270,7 +265,11 @@ export default function Combobox<M extends boolean>({
     [filteredOptions],
   );
 
-  // TODO - handle internal filtering
+  /**
+   *
+   * Rendering
+   *
+   */
   const renderInternalOptions = useCallback(
     (_children: React.ReactNode) => {
       return React.Children.map(_children, child => {
@@ -305,10 +304,9 @@ export default function Combobox<M extends boolean>({
             );
           }
         } else if (isComponentType(child, 'ComboboxGroup')) {
-          // TODO - handle nesting
           const nestedChildren = renderInternalOptions(child.props.children);
 
-          if (nestedChildren && nestedChildren?.length > 0) {
+          if (nestedChildren && nestedChildren?.length >= 0) {
             return (
               <InternalComboboxGroup
                 label={child.props.label}
@@ -336,8 +334,51 @@ export default function Combobox<M extends boolean>({
     renderInternalOptions,
   ]);
 
+  const renderedChips = useMemo(() => {
+    if (isMultiselect(selection) && renderedOptions) {
+      return selection.map(value => {
+        const displayName = getDisplayNameForValue(value);
+        const onRemove = () => updateSelection(value);
+        return (
+          <Chip key={value} displayName={displayName} onRemove={onRemove} />
+        );
+      });
+    }
+  }, [
+    getDisplayNameForValue,
+    isMultiselect,
+    renderedOptions,
+    selection,
+    updateSelection,
+  ]);
+
+  const renderedInputIcons = useMemo(() => {
+    return (
+      <>
+        {clearable && doesSelectionExist && (
+          <IconButton
+            ref={clearButtonRef}
+            onClick={() => updateSelection(null)}
+            aria-label="Clear selection"
+            onFocus={handleClearButtonFocus}
+            className={clearButton}
+          >
+            <Icon glyph="XWithCircle" />
+          </IconButton>
+        )}
+        {state === 'error' ? (
+          <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
+        ) : (
+          <Icon glyph="CaretDown" className={endIcon} />
+        )}
+      </>
+    );
+  }, [state, clearable, doesSelectionExist, updateSelection]);
+
   /**
+   *
    * Focus Management
+   *
    */
   type Direction = 'next' | 'prev' | 'first' | 'last';
   const updateFocusedOption = useCallback(
@@ -432,6 +473,7 @@ export default function Combobox<M extends boolean>({
     selection,
   ]);
 
+  // Update the focused option when the inputValue changes
   useEffect(() => {
     if (inputValue !== prevValue) {
       updateFocusedOption('first');
@@ -443,49 +485,10 @@ export default function Combobox<M extends boolean>({
     allOptions,
   ]);
 
-  const renderedChips = useMemo(() => {
-    if (isMultiselect(selection) && renderedOptions) {
-      return selection.map(value => {
-        const displayName = getDisplayNameForValue(value);
-        const onRemove = () => updateSelection(value);
-        return (
-          <Chip key={value} displayName={displayName} onRemove={onRemove} />
-        );
-      });
-    }
-  }, [
-    getDisplayNameForValue,
-    isMultiselect,
-    renderedOptions,
-    selection,
-    updateSelection,
-  ]);
-
-  const renderedInputIcons = useMemo(() => {
-    return (
-      <>
-        {clearable && doesSelectionExist && (
-          <IconButton
-            ref={clearButtonRef}
-            onClick={() => updateSelection(null)}
-            aria-label="Clear selection"
-            onFocus={handleClearButtonFocus}
-            className={clearButton}
-          >
-            <Icon glyph="XWithCircle" />
-          </IconButton>
-        )}
-        {state === 'error' ? (
-          <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
-        ) : (
-          <Icon glyph="CaretDown" className={endIcon} />
-        )}
-      </>
-    );
-  }, [state, clearable, doesSelectionExist, updateSelection]);
-
   /**
+   *
    * Menu management
+   *
    */
   const closeMenu = () => setOpen(false);
   const openMenu = () => setOpen(true);
@@ -539,6 +542,11 @@ export default function Combobox<M extends boolean>({
     searchState,
   ]);
 
+  /**
+   *
+   * Event Handlers
+   *
+   */
   // Fired when the wrapper gains focus
   const handleInputFocus = () => {
     scrollToEnd();
@@ -558,6 +566,11 @@ export default function Combobox<M extends boolean>({
     setFocusedOption(null);
   };
 
+  /**
+   *
+   * Global Event Handlers
+   *
+   */
   // Global backdrop click handler
   const handleBackdropClick = ({ target }: MouseEvent) => {
     const isChildFocused =
@@ -622,11 +635,6 @@ export default function Combobox<M extends boolean>({
     }
   };
   useEventListener('keydown', handleKeyDown);
-
-  const placeholderValue =
-    multiselect && isArray(selection) && selection.length > 0
-      ? undefined
-      : placeholder;
 
   return (
     <ComboboxContext.Provider

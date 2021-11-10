@@ -133,9 +133,6 @@ storiesOf('Combobox', module)
             <ComboboxOption value="habanero" />
             <ComboboxOption value="jalapeno" displayName="Jalapeño" />
             <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
-            <ComboboxGroup label="Sweet Peppers">
-              <ComboboxOption value="red-pepper" displayName="Red pepper" />
-            </ComboboxGroup>
           </ComboboxGroup>
         </Combobox>
       </Wrapper>
