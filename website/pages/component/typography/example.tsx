@@ -49,7 +49,7 @@ const knobsConfig: KnobsConfigInterface<{
   arrowAppearance: {
     type: 'select',
     options: ['hover', 'persist', 'none'],
-    default: 'hover',
+    default: 'none',
     label: 'Arrow Appearance',
   },
 };
