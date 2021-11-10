@@ -3,7 +3,6 @@ import FormFooter from '@leafygreen-ui/form-footer';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
-  sticky?: boolean;
   primaryButtonText: string;
   cancelText?: string;
   backButtonText?: string;
@@ -36,7 +35,6 @@ export default function CardLiveExample() {
     <LiveExample knobsConfig={knobsConfig}>
       {({ primaryButtonText, cancelText, backButtonText, errorMessage }) => (
         <FormFooter
-          sticky={sticky}
           primaryButton={{
             text: primaryButtonText,
           }}

@@ -22,7 +22,6 @@ npm install @leafygreen-ui/form-footer
 
 ```js
 <FormFooter
-  sticky={true}
   primaryButton={{
     text: 'Save Draft',
     onClick: (e) => {...}
