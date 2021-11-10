@@ -18,7 +18,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
   ComboboxOptionProps,
@@ -39,6 +39,7 @@ import {
   inputWrapperStyle,
   interactionRingColor,
   interactionRingStyle,
+  loadingIconStyle,
   menuList,
   menuMessage,
   menuStyle,
@@ -505,17 +506,7 @@ export default function Combobox<M extends boolean>({
             <Icon
               glyph="Refresh"
               color={uiColors.blue.base}
-              className={css`
-                animation: rotate 1.5s linear infinite;
-                @keyframes rotate {
-                  0% {
-                    transform: rotate(0deg);
-                  }
-                  100% {
-                    transform: rotate(360deg);
-                  }
-                }
-              `}
+              className={loadingIconStyle}
             />
             {searchLoadingMessage}
           </span>
@@ -584,16 +575,16 @@ export default function Combobox<M extends boolean>({
       return;
     }
 
-    switch (event.key) {
-      case 'Tab':
-      case 'Escape': {
+    switch (event.keyCode) {
+      case keyMap.Tab:
+      case keyMap.Escape: {
         closeMenu();
         updateFocusedOption('first');
         break;
       }
 
-      case 'Enter':
-      case 'Space': {
+      case keyMap.Enter:
+      case keyMap.Space: {
         if (isOpen) {
           event.preventDefault();
         }
@@ -610,7 +601,7 @@ export default function Combobox<M extends boolean>({
         break;
       }
 
-      case 'ArrowDown': {
+      case keyMap.ArrowDown: {
         if (isOpen) {
           // Prevent the page from scrolling
           event.preventDefault();
@@ -620,7 +611,7 @@ export default function Combobox<M extends boolean>({
         break;
       }
 
-      case 'ArrowUp': {
+      case keyMap.ArrowUp: {
         if (isOpen) {
           // Prevent the page from scrolling
           event.preventDefault();
@@ -718,9 +709,9 @@ export default function Combobox<M extends boolean>({
           <div className={errorMessageStyle}>{errorMessage}</div>
         )}
 
-        {/**
-         * Menu
-         */}
+        {/******* /
+          *  Menu  *
+          / *******/}
         <Popover
           active={isOpen && !disabled}
           spacing={4}

@@ -2,7 +2,7 @@
  * Styles
  */
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
@@ -242,6 +242,18 @@ export const errorMessageStyle = css`
 
 export const endIcon = css`
   margin-inline-end: calc(var(--lg-combobox-padding-x) / 2);
+`;
+
+const loadingIconAnimation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+export const loadingIconStyle = css`
+  animation: ${loadingIconAnimation} 1.5s linear infinite;
 `;
 
 /**
