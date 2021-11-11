@@ -9,9 +9,11 @@ import { clone, isArray, isNull, isString } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
 import {
+  useDynamicRefs,
   useEventListener,
   useIdAllocator,
   usePrevious,
+  useViewportSize,
 } from '@leafygreen-ui/hooks';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon from '@leafygreen-ui/icon';
@@ -82,6 +84,8 @@ export default function Combobox<M extends boolean>({
   filter,
   ...rest
 }: ComboboxProps<M>) {
+  const [getOptionRef, setOptionRef] = useDynamicRefs<HTMLLIElement>();
+
   const inputId = useIdAllocator({ prefix: 'combobox-input' });
   const labelId = useIdAllocator({ prefix: 'combobox-label' });
   const menuId = useIdAllocator({ prefix: 'combobox-menu' });
@@ -153,7 +157,9 @@ export default function Combobox<M extends boolean>({
   // Used when `overflow == 'scroll-x'`
   const scrollToEnd = () => {
     if (inputWrapperRef.current) {
-      inputWrapperRef.current.scrollLeft = inputWrapperRef.current?.scrollWidth;
+      inputWrapperRef.current.scrollTo({
+        left: inputWrapperRef.current?.scrollWidth,
+      });
     }
   };
 
@@ -265,6 +271,13 @@ export default function Combobox<M extends boolean>({
     [filteredOptions],
   );
 
+  // When allOptions changes, update the refs to each option
+  useEffect(() => {
+    allOptions.forEach(option => {
+      setOptionRef(option.value);
+    });
+  }, [allOptions, setOptionRef]);
+
   /**
    *
    * Rendering
@@ -290,6 +303,8 @@ export default function Combobox<M extends boolean>({
               updateSelection(value);
             };
 
+            const optionRef = getOptionRef(value);
+
             return (
               <InternalComboboxOption
                 value={value}
@@ -300,6 +315,7 @@ export default function Combobox<M extends boolean>({
                 glyph={glyph}
                 className={className}
                 index={index}
+                ref={optionRef}
               />
             );
           }
@@ -322,6 +338,7 @@ export default function Combobox<M extends boolean>({
     [
       allOptions,
       focusedOption,
+      getOptionRef,
       isMultiselect,
       isValueVisible,
       selection,
@@ -427,6 +444,38 @@ export default function Combobox<M extends boolean>({
     [filteredOptions, focusedOption, getValueAtIndex],
   );
 
+  // Update the focused option when the inputValue changes
+  useEffect(() => {
+    if (inputValue !== prevValue) {
+      updateFocusedOption('first');
+    }
+  }, [inputValue, prevValue, updateFocusedOption]);
+
+  // When the focused option chenges, update the menu scroll if necessary
+  useEffect(() => {
+    if (focusedOption) {
+      const focusedElementRef = getOptionRef(focusedOption);
+
+      if (focusedElementRef && focusedElementRef.current && menuRef.current) {
+        const { offsetTop: optionTop } = focusedElementRef.current;
+        const {
+          scrollTop: menuScroll,
+          offsetHeight: menuHeight,
+        } = menuRef.current;
+
+        if (optionTop > menuHeight || optionTop < menuScroll) {
+          menuRef.current.scrollTo({ top: optionTop });
+        }
+      }
+    }
+  }, [focusedOption, getOptionRef]);
+
+  /**
+   *
+   * Selection Management
+   *
+   */
+
   // Set initialValue
   useEffect(() => {
     if (initialValue) {
@@ -472,13 +521,6 @@ export default function Combobox<M extends boolean>({
     prevSelection,
     selection,
   ]);
-
-  // Update the focused option when the inputValue changes
-  useEffect(() => {
-    if (inputValue !== prevValue) {
-      updateFocusedOption('first');
-    }
-  }, [inputValue, prevValue, updateFocusedOption]);
 
   // Do any of the options have an icon?
   const withIcons = useMemo(() => allOptions.some(opt => opt.hasGlyph), [
@@ -541,6 +583,39 @@ export default function Combobox<M extends boolean>({
     searchLoadingMessage,
     searchState,
   ]);
+
+  const viewportSize = useViewportSize();
+
+  // Set the max height of the menu
+  const maxHeight = useMemo(() => {
+    // TODO - consolidate this hook with Select/ListMenu
+    const maxMenuHeight = 274;
+    const menuMargin = 8;
+
+    if (viewportSize && comboboxRef.current && menuRef.current) {
+      const {
+        top: triggerTop,
+        bottom: triggerBottom,
+      } = comboboxRef.current.getBoundingClientRect();
+
+      // Find out how much space is available above or below the trigger
+      const safeSpace = Math.max(
+        viewportSize.height - triggerBottom,
+        triggerTop,
+      );
+
+      // if there's more than enough space, set to maxMenuHeight
+      // otherwise fill the space available
+      return Math.min(maxMenuHeight, safeSpace - menuMargin);
+    }
+
+    return maxMenuHeight;
+  }, [viewportSize, comboboxRef, menuRef]);
+
+  // Scroll the menu when the focus changes
+  useEffect(() => {
+    // get the focused option
+  }, [focusedOption]);
 
   /**
    *
@@ -735,7 +810,7 @@ export default function Combobox<M extends boolean>({
             aria-expanded={isOpen}
             id={menuId}
             ref={menuRef}
-            className={menuStyle}
+            className={menuStyle({ maxHeight })}
           >
             {renderedMenuContents}
           </div>

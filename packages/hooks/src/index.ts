@@ -7,3 +7,5 @@ export { default as usePrevious } from './usePrevious';
 export { default as useObjectDependency } from './useObjectDependency';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 export { default as useIdAllocator } from './useIdAllocator';
+export { default as useDynamicRefs } from './useDynamicRefs';
+export { useObservedRef, useForwardedRef } from './useForwardedRef';

@@ -311,7 +311,7 @@ export const menuWrapperStyle = ({
   );
 };
 
-export const menuStyle = css`
+export const menuStyle = ({ maxHeight }: { maxHeight: number }) => css`
   position: relative;
   width: 100%;
   margin: 0;
@@ -321,7 +321,10 @@ export const menuStyle = css`
   background-color: var(--lg-combobox-menu-background-color);
   box-shadow: var(--lg-combobox-menu-shadow);
   border-radius: inherit;
-  overflow: hidden;
+  overflow: auto;
+  min-height: var(--lg-combobox-item-height);
+  max-height: ${maxHeight}px;
+  scroll-behavior: smooth;
 `;
 
 export const menuList = css`
