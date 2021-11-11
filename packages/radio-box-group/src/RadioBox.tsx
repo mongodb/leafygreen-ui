@@ -38,7 +38,7 @@ interface StateForStyles {
   size: Size;
 }
 
-const getInteractionRingStyles = ({ checked }: StateForStyles) => {
+const getInteractionRingStyles = (_: StateForStyles) => {
   const baseStyles = css`
     width: 100%;
     height: 100%;
@@ -46,27 +46,18 @@ const getInteractionRingStyles = ({ checked }: StateForStyles) => {
     z-index: -1;
   `;
 
-  if (checked) {
-    return cx(
-      baseStyles,
-      css`
-        // Bring in front of border (covering it)
-        z-index: 0;
-      `,
-    );
-  }
-
   return baseStyles;
 };
 
-const getBorderStyles = ({ disabled, size }: StateForStyles) => {
+const getBorderStyles = ({ checked, disabled, size }: StateForStyles) => {
   const baseStyles = cx(
     css`
-      border: 1px solid ${uiColors.gray.base};
+      border: 1px solid ${checked ? 'transparent' : uiColors.gray.base};
       border-radius: 4px;
       cursor: pointer;
       position: relative;
       pointer-events: none;
+      transition: border 100ms ease-in-out;
     `,
     {
       [radioBoxSizes[size]]: size === Size.Full,
