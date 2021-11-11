@@ -247,8 +247,10 @@ export default function Combobox<M extends boolean>({
   );
 
   const getDisplayNameForValue = useCallback(
-    (value: string): string => {
-      return allOptions.find(opt => opt.value === value)?.displayName ?? '';
+    (value: string | null): string => {
+      return value
+        ? allOptions.find(opt => opt.value === value)?.displayName ?? ''
+        : '';
     },
     [allOptions],
   );
@@ -392,6 +394,11 @@ export default function Combobox<M extends boolean>({
     );
   }, [state, clearable, doesSelectionExist, updateSelection]);
 
+  // Do any of the options have an icon?
+  const withIcons = useMemo(() => allOptions.some(opt => opt.hasGlyph), [
+    allOptions,
+  ]);
+
   /**
    *
    * Focus Management
@@ -522,10 +529,12 @@ export default function Combobox<M extends boolean>({
     selection,
   ]);
 
-  // Do any of the options have an icon?
-  const withIcons = useMemo(() => allOptions.some(opt => opt.hasGlyph), [
-    allOptions,
-  ]);
+  // when the menu closes, update the value
+  useEffect(() => {
+    if (!isOpen && !isMultiselect(selection) && selection === prevSelection) {
+      setInputValue(getDisplayNameForValue(selection) ?? '');
+    }
+  }, [getDisplayNameForValue, isMultiselect, isOpen, prevSelection, selection]);
 
   /**
    *
