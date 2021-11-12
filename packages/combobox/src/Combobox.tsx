@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { clone, isArray, isNull, isString } from 'lodash';
+import { clone, isArray, isNull, isString, isUndefined } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
 import {
@@ -78,7 +78,8 @@ export default function Combobox<M extends boolean>({
   multiselect = false as M,
   initialValue,
   onChange,
-  updateValue,
+  // updateValue,
+  value,
   chipTruncationLocation,
   chipCharacterLimit = 12,
   filter,
@@ -96,6 +97,8 @@ export default function Combobox<M extends boolean>({
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  const isControlled = !isUndefined(value);
 
   const [isOpen, setOpen] = useState(DEFAULT_OPEN);
   const [focusedOption, setFocusedOption] = useState<string | null>(null);
@@ -592,9 +595,16 @@ export default function Combobox<M extends boolean>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // When value changes, update the selection
+  useEffect(() => {
+    if (!isUndefined(value)) {
+      setSelection(value);
+    }
+  }, [value]);
+
   // onSelect: When the selection changes...
   useEffect(() => {
-    if (selection !== prevSelection) {
+    if (!isControlled && selection !== prevSelection) {
       if (doesSelectionExist) {
         if (isMultiselect(selection)) {
           // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
@@ -613,6 +623,7 @@ export default function Combobox<M extends boolean>({
   }, [
     doesSelectionExist,
     getDisplayNameForValue,
+    isControlled,
     isMultiselect,
     onChange,
     prevSelection,

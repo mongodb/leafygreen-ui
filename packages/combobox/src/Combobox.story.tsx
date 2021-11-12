@@ -3,6 +3,7 @@ import { select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/Icon';
+import Button from '@leafygreen-ui/button';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { Combobox, ComboboxOption, ComboboxGroup } from '.';
@@ -152,12 +153,31 @@ storiesOf('Combobox', module)
       </Wrapper>
     );
   })
-  .add('Chip', () => (
-    <Chip
-      displayName="Aardvark"
-      onRemove={() => {
-        console.log(`Removing aardvark`);
-      }}
-      isFocused={false}
-    />
-  ));
+  .add('Controlled', () => {
+    const [selection, setSelection] = useState([]);
+
+    const handleChange = (value: Array<string>) => {
+      console.log({ value });
+      setSelection(value);
+    };
+
+    return (
+      <Wrapper>
+        <Combobox
+          multiselect={true}
+          label="Choose a fruit"
+          description="Please pick one"
+          placeholder="Select fruit"
+          onChange={handleChange}
+          value={selection}
+        >
+          <ComboboxOption value="apple" />
+          <ComboboxOption value="banana" />
+          <ComboboxOption value="carrot" />
+        </Combobox>
+        <Button onClick={() => setSelection(['apple', 'banana', 'carrot'])}>
+          Select all
+        </Button>
+      </Wrapper>
+    );
+  });
