@@ -5,44 +5,44 @@ import { Either } from '@leafygreen-ui/lib';
  * Prop Enums & Types
  */
 
-export enum ComboboxSize {
-  default,
-}
-export type ComboboxSizeType = keyof typeof ComboboxSize;
+export const ComboboxSize = {
+  default: 'default',
+} as const;
+export type ComboboxSize = typeof ComboboxSize[keyof typeof ComboboxSize];
 
-export enum TrunctationLocation {
-  start,
-  middle,
-  end,
-  none,
-}
-export type TrunctationLocationType = keyof typeof TrunctationLocation;
+export const TrunctationLocation = {
+  start: 'start',
+  middle: 'middle',
+  end: 'end',
+  none: 'none',
+} as const;
+export type TrunctationLocation = typeof TrunctationLocation[keyof typeof TrunctationLocation];
 
-export enum Overflow {
-  'expand-y',
-  'expand-x',
-  'scroll-x',
-}
-export type OverflowType = keyof typeof Overflow;
+export const Overflow = {
+  expandY: 'expand-y',
+  expandX: 'expand-x',
+  scrollY: 'scroll-x',
+} as const;
+export type Overflow = typeof Overflow[keyof typeof Overflow];
 
-export enum State {
-  error,
-  none,
-}
-export type StateType = keyof typeof State;
+export const State = {
+  error: 'error',
+  none: 'none',
+} as const;
+export type State = typeof State[keyof typeof State];
 
-export enum SearchState {
-  unset,
-  error,
-  loading,
-}
-export type SearchStateType = keyof typeof SearchState;
+export const SearchState = {
+  unset: 'unset',
+  error: 'error',
+  loading: 'loading',
+} as const;
+export type SearchState = typeof SearchState[keyof typeof SearchState];
 
-export enum Filter {
-  'starts-with',
-  'includes',
-}
-export type FilterType = keyof typeof Filter;
+export const Filter = {
+  startsWith: 'starts-with',
+  includes: 'includes',
+} as const;
+export type Filter = typeof Filter[keyof typeof Filter];
 
 /**
  * Generic Typing
@@ -79,7 +79,8 @@ interface ComboboxMultiselectProps<M extends boolean> {
   initialValue?: SelectValueType<M>;
   onChange?: onChangeType<M>;
   updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
-  overflow?: M extends true ? OverflowType : undefined;
+  value?: SelectValueType<M>;
+  overflow?: M extends true ? Overflow : undefined;
 }
 
 type BaseComboboxProps<M extends boolean> = {
@@ -89,11 +90,11 @@ type BaseComboboxProps<M extends boolean> = {
   description?: string;
   placeholder?: string;
   disabled?: boolean;
-  size?: ComboboxSizeType;
+  size?: ComboboxSize;
   darkMode?: boolean;
-  state?: StateType;
+  state?: State;
   errorMessage?: string;
-  searchState?: SearchStateType;
+  searchState?: SearchState;
   searchEmptyMessage?: string;
   searchErrorMessage?: string;
   searchLoadingMessage?: string;
@@ -101,9 +102,9 @@ type BaseComboboxProps<M extends boolean> = {
   clearable?: boolean;
   onClear?: (e: MouseEvent) => void;
   className?: string;
-  chipTruncationLocation?: TrunctationLocationType;
+  chipTruncationLocation?: TrunctationLocation;
   chipCharacterLimit?: number;
-  filter?: FilterType;
+  filter?: Filter;
 } & ComboboxMultiselectProps<M>;
 
 export type ComboboxProps<M extends boolean> = Either<
