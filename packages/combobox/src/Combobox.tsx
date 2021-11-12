@@ -29,7 +29,7 @@ import {
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
-import Chip from './Chip';
+import { Chip } from './Chip';
 import {
   clearButton,
   comboboxParentStyle,
@@ -84,7 +84,8 @@ export default function Combobox<M extends boolean>({
   filter,
   ...rest
 }: ComboboxProps<M>) {
-  const [getOptionRef, setOptionRef] = useDynamicRefs<HTMLLIElement>();
+  const [getOptionRef] = useDynamicRefs<HTMLLIElement>();
+  const [getChipRef] = useDynamicRefs<HTMLSpanElement>();
 
   const inputId = useIdAllocator({ prefix: 'combobox-input' });
   const labelId = useIdAllocator({ prefix: 'combobox-label' });
@@ -273,13 +274,6 @@ export default function Combobox<M extends boolean>({
     [filteredOptions],
   );
 
-  // When allOptions changes, update the refs to each option
-  useEffect(() => {
-    allOptions.forEach(option => {
-      setOptionRef(option.value);
-    });
-  }, [allOptions, setOptionRef]);
-
   /**
    *
    * Rendering
@@ -358,8 +352,15 @@ export default function Combobox<M extends boolean>({
       return selection.map(value => {
         const displayName = getDisplayNameForValue(value);
         const onRemove = () => updateSelection(value);
+        const chipRef = getChipRef(value);
+
         return (
-          <Chip key={value} displayName={displayName} onRemove={onRemove} />
+          <Chip
+            key={value}
+            displayName={displayName}
+            onRemove={onRemove}
+            ref={chipRef}
+          />
         );
       });
     }
@@ -368,6 +369,7 @@ export default function Combobox<M extends boolean>({
     isMultiselect,
     renderedOptions,
     selection,
+    getChipRef,
     updateSelection,
   ]);
 
@@ -667,54 +669,121 @@ export default function Combobox<M extends boolean>({
 
   // Global keypress handler
   const handleKeyDown = (event: KeyboardEvent) => {
-    // No support for modifiers yet
-    if (event.ctrlKey || event.shiftKey || event.altKey) {
-      return;
-    }
+    const isFocusInMenu = menuRef.current?.contains(document.activeElement);
+    const isFocusOnCombobox = comboboxRef.current?.contains(
+      document.activeElement,
+    );
+    const isFocusOnChip =
+      isMultiselect(selection) &&
+      selection.some(value =>
+        getChipRef(value)?.current?.contains(document.activeElement),
+      );
+    const isFocusOnInput = inputRef.current?.contains(document.activeElement);
+    const isFocusOnClearButton = clearButtonRef.current?.contains(
+      document.activeElement,
+    );
 
-    switch (event.keyCode) {
-      case keyMap.Tab:
-      case keyMap.Escape: {
-        closeMenu();
-        updateFocusedOption('first');
-        break;
+    const isFocusInComponent = isFocusOnCombobox || isFocusInMenu;
+
+    if (isFocusInComponent) {
+      // No support for modifiers yet
+      if (event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
       }
 
-      case keyMap.Enter:
-      case keyMap.Space: {
-        if (isOpen) {
-          event.preventDefault();
+      switch (event.keyCode) {
+        case keyMap.Tab:
+        case keyMap.Escape: {
+          closeMenu();
+          updateFocusedOption('first');
+          break;
         }
 
-        if (
-          document.activeElement === inputRef.current &&
-          !isNull(focusedOption)
-        ) {
-          updateSelection(focusedOption);
-        } else if (document.activeElement === clearButtonRef.current) {
-          updateSelection(null);
-          setInputFocus();
-        }
-        break;
-      }
+        case keyMap.Enter:
+        case keyMap.Space: {
+          if (isOpen) {
+            event.preventDefault();
+          }
 
-      case keyMap.ArrowDown: {
-        if (isOpen) {
-          // Prevent the page from scrolling
-          event.preventDefault();
+          if (
+            document.activeElement === inputRef.current &&
+            !isNull(focusedOption)
+          ) {
+            updateSelection(focusedOption);
+          } else if (document.activeElement === clearButtonRef.current) {
+            updateSelection(null);
+            setInputFocus();
+          }
+          break;
         }
 
-        updateFocusedOption('next');
-        break;
-      }
+        case keyMap.ArrowDown: {
+          if (isOpen) {
+            // Prevent the page from scrolling
+            event.preventDefault();
+          }
 
-      case keyMap.ArrowUp: {
-        if (isOpen) {
-          // Prevent the page from scrolling
-          event.preventDefault();
+          updateFocusedOption('next');
+          break;
         }
-        updateFocusedOption('prev');
-        break;
+
+        case keyMap.ArrowUp: {
+          if (isOpen) {
+            // Prevent the page from scrolling
+            event.preventDefault();
+          }
+          updateFocusedOption('prev');
+          break;
+        }
+
+        case keyMap.ArrowLeft: {
+          if (isFocusOnClearButton) {
+            // if focus is on clear button, go to input
+            setInputFocus();
+          } else if (isFocusOnInput && isMultiselect(selection)) {
+            // if focus is on input, go to last chip
+            const lastChipValue = selection[selection.length - 1];
+            const lastChipRef = getChipRef(lastChipValue);
+            lastChipRef?.current?.focus();
+          } else if (isFocusOnChip) {
+            // if focus is a chip
+            const activeChipIndex = selection.findIndex(
+              value => getChipRef(value)?.current === document.activeElement,
+            );
+
+            if (activeChipIndex > 0) {
+              // if focus is on first chip, do nothing
+              // if focus is on chip, go to prev chip
+              const prevChipValue = selection[activeChipIndex - 1];
+              const prevChip = getChipRef(prevChipValue);
+              prevChip?.current?.focus();
+            }
+          }
+          break;
+        }
+
+        case keyMap.ArrowRight: {
+          if (isFocusOnInput) {
+            // if focus is on input, go to clear button
+            clearButtonRef.current?.focus();
+          } else if (isFocusOnChip) {
+            const activeChipIndex = selection.findIndex(
+              value => getChipRef(value)?.current === document.activeElement,
+            );
+
+            if (activeChipIndex === selection?.length - 1) {
+              // if focus is on last chip, go to input
+              setInputFocus();
+            } else {
+              // if focus is on chip, go to next chip
+              const nextChipValue = selection[activeChipIndex + 1];
+              const nextChip = getChipRef(nextChipValue);
+              nextChip?.current?.focus();
+            }
+          }
+
+          break;
+        }
       }
     }
   };

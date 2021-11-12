@@ -94,71 +94,76 @@ const chipButton = css`
   }
 `;
 
-export default function Chip({ displayName, onRemove }: ChipProps) {
-  const {
-    darkMode,
-    size,
-    chipTruncationLocation,
-    chipCharacterLimit,
-  } = useContext(ComboboxContext);
+export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
+  ({ displayName, onRemove }: ChipProps, forwardedRef) => {
+    const {
+      darkMode,
+      size,
+      chipTruncationLocation,
+      chipCharacterLimit,
+    } = useContext(ComboboxContext);
 
-  const isTruncated =
-    !!chipCharacterLimit &&
-    !!chipTruncationLocation &&
-    chipTruncationLocation !== 'none' &&
-    displayName.length > chipCharacterLimit;
+    const isTruncated =
+      !!chipCharacterLimit &&
+      !!chipTruncationLocation &&
+      chipTruncationLocation !== 'none' &&
+      displayName.length > chipCharacterLimit;
 
-  const truncatedName = useMemo(() => {
-    if (isTruncated) {
-      const ellipsis = '…';
-      const chars = chipCharacterLimit - 4;
+    const truncatedName = useMemo(() => {
+      if (isTruncated) {
+        const ellipsis = '…';
+        const chars = chipCharacterLimit - 4;
 
-      switch (chipTruncationLocation) {
-        case 'start': {
-          const end = displayName.substring(displayName.length - chars).trim();
-          return ellipsis + end;
-        }
+        switch (chipTruncationLocation) {
+          case 'start': {
+            const end = displayName
+              .substring(displayName.length - chars)
+              .trim();
+            return ellipsis + end;
+          }
 
-        case 'middle': {
-          const start = displayName.substring(0, chars / 2).trim();
-          const end = displayName
-            .substring(displayName.length - chars / 2)
-            .trim();
-          return start + ellipsis + end;
-        }
+          case 'middle': {
+            const start = displayName.substring(0, chars / 2).trim();
+            const end = displayName
+              .substring(displayName.length - chars / 2)
+              .trim();
+            return start + ellipsis + end;
+          }
 
-        case 'end': {
-          const start = displayName.substring(0, chars).trim();
-          return start + ellipsis;
-        }
+          case 'end': {
+            const start = displayName.substring(0, chars).trim();
+            return start + ellipsis;
+          }
 
-        default: {
-          return displayName;
+          default: {
+            return displayName;
+          }
         }
       }
-    }
 
-    return false;
-  }, [chipCharacterLimit, chipTruncationLocation, displayName, isTruncated]);
+      return false;
+    }, [chipCharacterLimit, chipTruncationLocation, displayName, isTruncated]);
 
-  return (
-    <span className={chipWrapperStyle({ darkMode, size })}>
-      <span className={chipText}>
-        {truncatedName ? (
-          <InlineDefinition definition={displayName} align="bottom">
-            {truncatedName}
-          </InlineDefinition>
-        ) : (
-          displayName
-        )}
+    return (
+      <span ref={forwardedRef} className={chipWrapperStyle({ darkMode, size })}>
+        <span className={chipText}>
+          {truncatedName ? (
+            <InlineDefinition definition={displayName} align="bottom">
+              {truncatedName}
+            </InlineDefinition>
+          ) : (
+            displayName
+          )}
+        </span>
+        <button
+          aria-label={`Deselect ${displayName}`}
+          className={chipButton}
+          onClick={onRemove}
+        >
+          <Icon glyph="X" />
+        </button>
       </span>
-      <button
-        aria-label={`Deselect ${displayName}`}
-        className={chipButton}
-        onClick={onRemove}
-      >
-        <Icon glyph="X" />
-      </button>
-    </span>
-  );
-}
+    );
+  },
+);
+Chip.displayName = 'Chip';
