@@ -319,7 +319,7 @@ export default function Combobox<M extends boolean>({
         } else if (isComponentType(child, 'ComboboxGroup')) {
           const nestedChildren = renderInternalOptions(child.props.children);
 
-          if (nestedChildren && nestedChildren?.length >= 0) {
+          if (nestedChildren && nestedChildren?.length > 0) {
             return (
               <InternalComboboxGroup
                 label={child.props.label}
@@ -668,7 +668,7 @@ export default function Combobox<M extends boolean>({
 
       case 'unset':
       default: {
-        if (renderedOptions) {
+        if (renderedOptions && renderedOptions.length > 0) {
           return <ul className={menuList}>{renderedOptions}</ul>;
         }
 

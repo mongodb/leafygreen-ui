@@ -26,7 +26,7 @@ storiesOf('Combobox', module)
 
     const handleChange = (value: string | null) => {
       console.log(value);
-      if (value === 'dragonfruit') {
+      if (value === 'pomegranate') {
         setIsError(true);
       } else {
         setIsError(false);
@@ -45,7 +45,7 @@ storiesOf('Combobox', module)
             'unset',
           )}
           state={isError ? 'error' : 'none'}
-          errorMessage="No, not that one!"
+          errorMessage="No Pomegranates!"
           onChange={handleChange}
           filter={select(
             'Filter type',
@@ -56,15 +56,16 @@ storiesOf('Combobox', module)
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
           <ComboboxOption value="carrot" />
-          <ComboboxOption
-            value="dragonfruit"
-            // glyph={<Icon glyph="Favorite" color={uiColors.blue.base} />}
-          />
+          <ComboboxOption value="dragonfruit" />
           <ComboboxOption value="eggplant" />
           <ComboboxOption value="fig" />
           <ComboboxOption value="grape" />
           <ComboboxOption value="honeydew" />
           <ComboboxOption value="iceberg-lettuce" />
+          <ComboboxOption
+            value="pomegranate"
+            glyph={<Icon glyph="Warning" />}
+          />
           <ComboboxGroup label="Peppers">
             <ComboboxOption value="cayenne" />
             <ComboboxOption value="ghost-pepper" displayName="Ghost pepper" />
