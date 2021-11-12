@@ -10,45 +10,35 @@ import * as React from 'react';
 
 const map = new Map<string, React.RefObject<unknown>>();
 
-function setRef(): undefined;
-function setRef<T>(key: string): React.RefObject<T>;
+function getGetRef<T>(prefix = '') {
+  function getRef(): undefined;
+  function getRef<T>(key: string): React.RefObject<T>;
+  function getRef<T>(key?: string): React.RefObject<T> | undefined {
+    if (!key) {
+      console.error(`useDynamicRefs: Cannot get ref without key`);
+      return;
+    }
 
-function setRef<T>(key?: string): React.RefObject<T> | undefined {
-  if (!key) {
-    console.error(`useDynamicRefs: Cannot set ref without key `);
-    return;
+    const fullKey = prefix + '-' + key;
+
+    if (map.get(fullKey)) {
+      return map.get(fullKey) as React.RefObject<T>;
+    }
+
+    const ref = React.createRef<T>();
+    map.set(fullKey, ref);
+    return ref;
   }
 
-  if (map.get(key)) {
-    return getRef<T>(key);
-  }
-
-  const ref = React.createRef<T>();
-  map.set(key, ref);
-  return ref;
+  return getRef;
 }
 
-function getRef(): undefined;
-function getRef<T>(key: string): React.RefObject<T>;
-
-function getRef<T>(key?: string): React.RefObject<T> | undefined {
-  if (!key) {
-    console.error(`useDynamicRefs: Cannot get ref without key`);
-    return;
-  }
-
-  if (map.get(key)) {
-    return map.get(key) as React.RefObject<T>;
-  }
-
-  return setRef<T>(key);
-}
-
-function useDynamicRefs<T>(): [
-  (key?: string) => undefined | React.RefObject<T>,
-  (key?: string) => undefined | React.RefObject<T>,
-] {
-  return [getRef, setRef];
+function useDynamicRefs<T>({
+  prefix,
+}: {
+  prefix: string;
+}): (key?: string) => undefined | React.RefObject<T> {
+  return getGetRef<T>(prefix);
 }
 
 export default useDynamicRefs;

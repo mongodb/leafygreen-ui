@@ -94,6 +94,7 @@ storiesOf('Combobox', module)
           label="Choose some fruit"
           description="Pick as many as you want!"
           placeholder="Select fruit"
+          initialValue={['apple', 'fig']}
           multiselect={true}
           overflow={select(
             'Overflow',
@@ -156,5 +157,6 @@ storiesOf('Combobox', module)
       onRemove={() => {
         console.log(`Removing aardvark`);
       }}
+      isFocused={false}
     />
   ));

@@ -1,10 +1,11 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { ChipProps, ComboboxSizeType } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
+import { keyMap } from '@leafygreen-ui/lib';
 
 const chipWrapperStyle = ({
   darkMode,
@@ -55,7 +56,8 @@ const chipWrapperStyle = ({
       background-color: var(--lg-combobox-chip-background-color);
 
       // TODO - refine these styles
-      &:focus {
+      /* &:focus, */
+      &:focus-within {
         background-color: var(--lg-combobox-chip-focus-color);
       }
     `,
@@ -95,7 +97,7 @@ const chipButton = css`
 `;
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
-  ({ displayName, onRemove }: ChipProps, forwardedRef) => {
+  ({ displayName, isFocused, onRemove }: ChipProps, forwardedRef) => {
     const {
       darkMode,
       size,
@@ -108,6 +110,8 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       !!chipTruncationLocation &&
       chipTruncationLocation !== 'none' &&
       displayName.length > chipCharacterLimit;
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const truncatedName = useMemo(() => {
       if (isTruncated) {
@@ -144,6 +148,22 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       return false;
     }, [chipCharacterLimit, chipTruncationLocation, displayName, isTruncated]);
 
+    useEffect(() => {
+      if (isFocused) {
+        buttonRef?.current?.focus();
+      }
+    }, [forwardedRef, isFocused]);
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (
+        e.keyCode === 8 ||
+        e.keyCode === keyMap.Enter ||
+        e.keyCode === keyMap.Space
+      ) {
+        onRemove();
+      }
+    };
+
     return (
       <span ref={forwardedRef} className={chipWrapperStyle({ darkMode, size })}>
         <span className={chipText}>
@@ -157,8 +177,10 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         </span>
         <button
           aria-label={`Deselect ${displayName}`}
+          ref={buttonRef}
           className={chipButton}
           onClick={onRemove}
+          onKeyDown={handleKeyDown}
         >
           <Icon glyph="X" />
         </button>
