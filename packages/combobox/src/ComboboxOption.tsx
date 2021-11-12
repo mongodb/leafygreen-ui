@@ -16,7 +16,7 @@ import { wrapJSX } from './util';
  * Styles
  */
 
-const comboboxOptionStyle = (multiselect: boolean) => css`
+const comboboxOptionStyle = () => css`
   position: relative;
   display: flex;
   align-items: center;
@@ -182,7 +182,7 @@ const InternalComboboxOption = React.forwardRef<
         role="option"
         aria-selected={isFocused}
         tabIndex={-1}
-        className={cx(comboboxOptionStyle(multiselect), className)}
+        className={cx(comboboxOptionStyle(), className)}
         onClick={handleOptionClick}
         onKeyPress={handleOptionClick}
       >

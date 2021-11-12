@@ -12,8 +12,8 @@ const map = new Map<string, React.RefObject<unknown>>();
 
 function getGetRef<T>(prefix = '') {
   function getRef(): undefined;
-  function getRef<T>(key: string): React.RefObject<T>;
-  function getRef<T>(key?: string): React.RefObject<T> | undefined {
+  function getRef(key: string): React.RefObject<T>;
+  function getRef(key?: string): React.RefObject<T> | undefined {
     if (!key) {
       console.error(`useDynamicRefs: Cannot get ref without key`);
       return;
