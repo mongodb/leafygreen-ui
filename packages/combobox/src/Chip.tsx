@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { ChipProps, ComboboxSizeType } from './Combobox.types';
+import { ChipProps, ComboboxSize } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -12,7 +12,7 @@ const chipWrapperStyle = ({
   size,
 }: {
   darkMode: boolean;
-  size: ComboboxSizeType;
+  size: ComboboxSize;
 }) => {
   let chipModeStyle, chipSizeStyle;
 
@@ -156,7 +156,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (
-        e.keyCode === 8 ||
+        e.keyCode === 8 || // Delete
         e.keyCode === keyMap.Enter ||
         e.keyCode === keyMap.Space
       ) {

@@ -47,7 +47,7 @@ import {
   menuWrapperStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
-import { flattenChildren, getNameAndValue } from './util';
+import { flattenChildren, getNameAndValue, OptionObject } from './util';
 
 /**
  * Component
@@ -79,7 +79,7 @@ export default function Combobox<M extends boolean>({
   value,
   chipTruncationLocation,
   chipCharacterLimit = 12,
-  filter,
+  filteredOptions,
   ...rest
 }: ComboboxProps<M>) {
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
@@ -165,23 +165,6 @@ export default function Combobox<M extends boolean>({
     }
   };
 
-  // Computes whether the option is visible based on the current input
-  const isValueVisible = useCallback(
-    (name: string): boolean => {
-      switch (filter) {
-        case 'starts-with':
-          return name.toLowerCase().startsWith(inputValue.toLowerCase());
-
-        case 'includes':
-          return name.toLowerCase().includes(inputValue.toLowerCase());
-
-        default:
-          return true;
-      }
-    },
-    [filter, inputValue],
-  );
-
   const placeholderValue =
     multiselect && isArray(selection) && selection.length > 0
       ? undefined
@@ -189,35 +172,64 @@ export default function Combobox<M extends boolean>({
 
   const allOptions = useMemo(() => flattenChildren(children), [children]);
 
-  const filteredOptions = allOptions.filter(opt =>
-    isValueVisible(opt.displayName),
-  );
-
   const getDisplayNameForValue = useCallback(
     (value: string | null): string => {
       return value
-        ? allOptions.find(opt => opt.value === value)?.displayName ?? ''
+        ? allOptions.find(opt => opt.value === value)?.displayName ?? value
         : '';
     },
     [allOptions],
   );
 
-  const valueExists = useCallback(
+  // Computes whether the option is visible based on the current input
+  const isOptionVisible = useCallback(
+    (option: string | OptionObject): boolean => {
+      const value = typeof option === 'string' ? option : option.value;
+
+      // If filtered options are provided
+      if (inputValue && filteredOptions && filteredOptions.length > 0) {
+        return filteredOptions.includes(value);
+      }
+
+      // otherwise, we do our own filtering
+      const displayName =
+        typeof option === 'string'
+          ? getDisplayNameForValue(value)
+          : option.displayName;
+      return displayName.toLowerCase().includes(inputValue.toLowerCase());
+    },
+    [filteredOptions, getDisplayNameForValue, inputValue],
+  );
+
+  const visibleOptions = useMemo(() => allOptions.filter(isOptionVisible), [
+    allOptions,
+    isOptionVisible,
+  ]);
+
+  const isValueValid = useCallback(
     (value: string): boolean => {
       return !!allOptions.find(opt => opt.value === value);
     },
     [allOptions],
   );
 
+  const getIndexOfValue = useCallback(
+    (value: string | null): number => {
+      return visibleOptions
+        ? visibleOptions.findIndex(option => option.value === value)
+        : -1;
+    },
+    [visibleOptions],
+  );
+
   const getValueAtIndex = useCallback(
     (index: number): string | undefined => {
-      const value = filteredOptions[index]?.value;
-
-      if (value) {
-        return value;
+      if (visibleOptions && visibleOptions.length >= index) {
+        const option = visibleOptions[index];
+        return option ? option.value : undefined;
       }
     },
-    [filteredOptions],
+    [visibleOptions],
   );
 
   /**
@@ -231,7 +243,7 @@ export default function Combobox<M extends boolean>({
         if (isComponentType(child, 'ComboboxOption')) {
           const { value, displayName } = getNameAndValue(child.props);
 
-          if (isValueVisible(displayName)) {
+          if (isOptionVisible(value)) {
             const { className, glyph } = child.props;
             const index = allOptions.findIndex(opt => opt.value === value);
 
@@ -282,7 +294,7 @@ export default function Combobox<M extends boolean>({
       focusedOption,
       getOptionRef,
       isMultiselect,
-      isValueVisible,
+      isOptionVisible,
       selection,
       updateSelection,
     ],
@@ -294,12 +306,11 @@ export default function Combobox<M extends boolean>({
   ]);
 
   const renderedChips = useMemo(() => {
-    if (isMultiselect(selection) && renderedOptions) {
-      return selection.map(value => {
+    if (isMultiselect(selection)) {
+      return selection.filter(isValueValid).map(value => {
         const displayName = getDisplayNameForValue(value);
 
         const onRemove = () => {
-          console.log(`Removing ${value}`);
           updateSelection(value);
         };
 
@@ -320,7 +331,7 @@ export default function Combobox<M extends boolean>({
   }, [
     isMultiselect,
     selection,
-    renderedOptions,
+    isValueValid,
     getDisplayNameForValue,
     focusedChip,
     getChipRef,
@@ -363,12 +374,9 @@ export default function Combobox<M extends boolean>({
   type Direction = 'next' | 'prev' | 'first' | 'last';
   const updateFocusedOption = useCallback(
     (direction: Direction) => {
-      const optionsCount = filteredOptions?.length ?? 0;
+      const optionsCount = visibleOptions?.length ?? 0;
       const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
-
-      const indexOfFocus =
-        filteredOptions?.findIndex(option => option.value === focusedOption) ??
-        0;
+      const indexOfFocus = getIndexOfValue(focusedOption);
 
       // Remove focus from chip
       if (direction) {
@@ -410,7 +418,13 @@ export default function Combobox<M extends boolean>({
         }
       }
     },
-    [filteredOptions, focusedOption, getValueAtIndex, setInputFocus],
+    [
+      focusedOption,
+      getIndexOfValue,
+      getValueAtIndex,
+      setInputFocus,
+      visibleOptions?.length,
+    ],
   );
 
   const updateFocusedChip = useCallback(
@@ -524,10 +538,10 @@ export default function Combobox<M extends boolean>({
       if (isArray(initialValue)) {
         // Ensure the values we set are real options
         const filteredValue =
-          initialValue.filter(value => valueExists(value)) ?? [];
+          initialValue.filter(value => isValueValid(value)) ?? [];
         setSelection(filteredValue as SelectValueType<M>);
       } else {
-        if (valueExists(initialValue)) {
+        if (isValueValid(initialValue)) {
           setSelection(initialValue);
         }
       }
@@ -717,6 +731,11 @@ export default function Combobox<M extends boolean>({
 
         case keyMap.Enter:
         case keyMap.Space: {
+          if (isOpen) {
+            // prevent typing the space character
+            event.preventDefault();
+          }
+
           if (
             // Focused on input element
             document.activeElement === inputRef.current &&
@@ -790,7 +809,6 @@ export default function Combobox<M extends boolean>({
         withIcons,
         chipTruncationLocation,
         chipCharacterLimit,
-        filter,
         inputValue,
       }}
     >

@@ -88,7 +88,7 @@ const InternalComboboxOption = React.forwardRef<
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
-    const { multiselect, darkMode, withIcons, filter, inputValue } = useContext(
+    const { multiselect, darkMode, withIcons, inputValue } = useContext(
       ComboboxContext,
     );
     const optionRef = useForwardedRef(forwardedRef, null);
@@ -123,7 +123,7 @@ const InternalComboboxOption = React.forwardRef<
     const renderedChildren = useMemo(() => {
       const renderedName = (
         <span className={displayNameStyle(isSelected)}>
-          {filter ? wrapJSX(displayName, inputValue, 'em') : displayName}
+          {wrapJSX(displayName, inputValue, 'em')}
         </span>
       );
 
@@ -167,7 +167,6 @@ const InternalComboboxOption = React.forwardRef<
       );
     }, [
       isSelected,
-      filter,
       displayName,
       inputValue,
       multiselect,

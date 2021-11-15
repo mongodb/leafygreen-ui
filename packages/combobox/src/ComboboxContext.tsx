@@ -1,18 +1,13 @@
 import { createContext } from 'react';
-import {
-  ComboboxSize,
-  FilterType,
-  TrunctationLocationType,
-} from './Combobox.types';
+import { ComboboxSize, TrunctationLocation } from './Combobox.types';
 
 interface ComboboxData {
   multiselect: boolean;
   darkMode: boolean;
   size: keyof typeof ComboboxSize;
   withIcons: boolean;
-  chipTruncationLocation?: TrunctationLocationType;
+  chipTruncationLocation?: TrunctationLocation;
   chipCharacterLimit?: number;
-  filter?: FilterType;
   inputValue?: string;
 }
 

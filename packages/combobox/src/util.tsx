@@ -61,7 +61,7 @@ export const getNameAndValue = ({
   };
 };
 
-interface OptionObject {
+export interface OptionObject {
   value: string;
   displayName: string;
   hasGlyph?: boolean;

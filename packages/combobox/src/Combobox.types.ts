@@ -44,6 +44,9 @@ export const Filter = {
 } as const;
 export type Filter = typeof Filter[keyof typeof Filter];
 
+// TODO - replace with filteredOptions prop
+// Default behavior is to filter includes & sort
+
 /**
  * Generic Typing
  */
@@ -78,7 +81,7 @@ interface ComboboxMultiselectProps<M extends boolean> {
   multiselect?: M;
   initialValue?: SelectValueType<M>;
   onChange?: onChangeType<M>;
-  updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
+  // updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
   value?: SelectValueType<M>;
   overflow?: M extends true ? Overflow : undefined;
 }
@@ -104,7 +107,7 @@ type BaseComboboxProps<M extends boolean> = {
   className?: string;
   chipTruncationLocation?: TrunctationLocation;
   chipCharacterLimit?: number;
-  filter?: Filter;
+  filteredOptions?: Array<string>;
 } & ComboboxMultiselectProps<M>;
 
 export type ComboboxProps<M extends boolean> = Either<

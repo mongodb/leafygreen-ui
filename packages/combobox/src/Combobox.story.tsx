@@ -47,11 +47,6 @@ storiesOf('Combobox', module)
           state={isError ? 'error' : 'none'}
           errorMessage="No Pomegranates!"
           onChange={handleChange}
-          filter={select(
-            'Filter type',
-            ['starts-with', 'includes', undefined],
-            'includes',
-          )}
         >
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
@@ -110,12 +105,6 @@ storiesOf('Combobox', module)
             ['start', 'middle', 'end', 'none'],
             'middle',
           )}
-          filter={select(
-            'Filter type',
-            ['starts-with', 'includes', undefined],
-            'includes',
-          )}
-          // disabled={boolean('Disabled', false)}
         >
           <ComboboxOption value="apple" />
           <ComboboxOption value="banana" />
@@ -136,6 +125,44 @@ storiesOf('Combobox', module)
             <ComboboxOption value="jalapeno" displayName="Jalapeño" />
             <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
           </ComboboxGroup>
+        </Combobox>
+      </Wrapper>
+    );
+  })
+  .add('External filter', () => {
+    const allOptions = [
+      'apple',
+      'banana',
+      'carrot',
+      'dragonfruit',
+      'eggplant',
+      'fig',
+      'grape',
+      'honeydew',
+      'iceberg-lettuce',
+      'jalapeño',
+    ];
+
+    const [filteredOptions, setOptions] = useState(allOptions);
+
+    const handleFilter = (input: string) => {
+      setOptions(allOptions.filter(option => option.includes(input)));
+    };
+
+    return (
+      <Wrapper>
+        <Combobox
+          label="Choose some fruit"
+          placeholder="Select fruit"
+          initialValue={['apple', 'fig', 'raspberry']}
+          multiselect={true}
+          overflow={'expand-y'}
+          onFilter={handleFilter}
+          filteredOptions={filteredOptions}
+        >
+          {allOptions.map(option => (
+            <ComboboxOption key={option} value={option} />
+          ))}
         </Combobox>
       </Wrapper>
     );
@@ -174,7 +201,11 @@ storiesOf('Combobox', module)
           <ComboboxOption value="banana" />
           <ComboboxOption value="carrot" />
         </Combobox>
-        <Button onClick={() => setSelection(['apple', 'banana', 'carrot'])}>
+        <Button
+          onClick={() =>
+            setSelection(['apple', 'banana', 'carrot', 'raspberry'])
+          }
+        >
           Select all
         </Button>
       </Wrapper>
