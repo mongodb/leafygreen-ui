@@ -717,16 +717,17 @@ export default function Combobox<M extends boolean>({
 
         case keyMap.Enter:
         case keyMap.Space: {
-          // if (isOpen) {
-          //   event.preventDefault();
-          // }
-
           if (
+            // Focused on input element
             document.activeElement === inputRef.current &&
+            isOpen &&
             !isNull(focusedOption)
           ) {
             updateSelection(focusedOption);
-          } else if (document.activeElement === clearButtonRef.current) {
+          } else if (
+            // Focused on clear button
+            document.activeElement === clearButtonRef.current
+          ) {
             updateSelection(null);
             setInputFocus();
           }
@@ -738,7 +739,7 @@ export default function Combobox<M extends boolean>({
             // Prevent the page from scrolling
             event.preventDefault();
           }
-
+          openMenu();
           updateFocusedOption('next');
           break;
         }
