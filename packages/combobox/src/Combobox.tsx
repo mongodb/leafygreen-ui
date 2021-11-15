@@ -704,23 +704,7 @@ export default function Combobox<M extends boolean>({
     setFocusedOption(null);
   };
 
-  /**
-   *
-   * Global Event Handlers
-   *
-   */
-  // Global backdrop click handler
-  const handleBackdropClick = ({ target }: MouseEvent) => {
-    const isChildFocused =
-      menuRef.current?.contains(target as Node) ||
-      comboboxRef.current?.contains(target as Node) ||
-      false;
-    setOpen(isChildFocused);
-  };
-  useEventListener('mousedown', handleBackdropClick);
-
-  // Global keypress handler
-  const handleKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
     const isFocusInMenu = menuRef.current?.contains(document.activeElement);
     const isFocusOnCombobox = comboboxRef.current?.contains(
       document.activeElement,
@@ -791,7 +775,21 @@ export default function Combobox<M extends boolean>({
       }
     }
   };
-  useEventListener('keydown', handleKeyDown);
+
+  /**
+   *
+   * Global Event Handler
+   *
+   */
+  // Global backdrop click handler
+  const handleBackdropClick = ({ target }: MouseEvent) => {
+    const isChildFocused =
+      menuRef.current?.contains(target as Node) ||
+      comboboxRef.current?.contains(target as Node) ||
+      false;
+    setOpen(isChildFocused);
+  };
+  useEventListener('mousedown', handleBackdropClick);
 
   return (
     <ComboboxContext.Provider
@@ -840,6 +838,7 @@ export default function Combobox<M extends boolean>({
             className={comboboxStyle}
             onClick={setInputFocus}
             onFocus={handleInputFocus}
+            onKeyDown={handleKeyDown}
             onTransitionEnd={handleTransitionEnd}
             data-disabled={disabled}
             data-state={state}
@@ -885,6 +884,7 @@ export default function Combobox<M extends boolean>({
           refEl={comboboxRef}
           adjustOnMutation={true}
           className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
+          onKeyDown={handleKeyDown}
         >
           <div
             role="listbox"
