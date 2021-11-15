@@ -6,7 +6,7 @@ import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
-import { ComboboxSizeType, OverflowType, StateType } from './Combobox.types';
+import { ComboboxSize, Overflow, State } from './Combobox.types';
 
 export const comboboxParentStyle = ({
   darkMode,
@@ -14,8 +14,8 @@ export const comboboxParentStyle = ({
   overflow,
 }: {
   darkMode: boolean;
-  size: ComboboxSizeType;
-  overflow: OverflowType;
+  size: ComboboxSize;
+  overflow: Overflow;
 }) => {
   const modeStyle = (darkMode: boolean) => {
     if (darkMode) {
@@ -40,7 +40,7 @@ export const comboboxParentStyle = ({
     }
   };
 
-  const sizeStyle = (size: ComboboxSizeType) => {
+  const sizeStyle = (size: ComboboxSize) => {
     switch (size) {
       case 'default':
         return css`
@@ -111,7 +111,7 @@ export const interactionRingColor = ({
   state,
   darkMode,
 }: {
-  state: StateType;
+  state: State;
   darkMode: boolean;
 }) => {
   if (darkMode) {
@@ -130,7 +130,7 @@ export const inputWrapperStyle = ({
   isOpen,
   selection,
 }: {
-  overflow: OverflowType;
+  overflow: Overflow;
   isOpen: boolean;
   selection: string | Array<string> | null;
 }) => {
@@ -265,7 +265,7 @@ export const menuWrapperStyle = ({
   width = 384,
 }: {
   darkMode: boolean;
-  size: ComboboxSizeType;
+  size: ComboboxSize;
   width?: number;
 }) => {
   let menuModeStyle, menuSizeStyle;
