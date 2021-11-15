@@ -47,10 +47,7 @@ import {
   menuWrapperStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
-import { getNameAndValue } from './util';
-
-// TODO - remove
-const DEFAULT_OPEN = false;
+import { flattenChildren, getNameAndValue } from './util';
 
 /**
  * Component
@@ -100,7 +97,7 @@ export default function Combobox<M extends boolean>({
 
   const isControlled = !isUndefined(value);
 
-  const [isOpen, setOpen] = useState(DEFAULT_OPEN);
+  const [isOpen, setOpen] = useState(false);
   const [focusedOption, setFocusedOption] = useState<string | null>(null);
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
@@ -200,52 +197,8 @@ export default function Combobox<M extends boolean>({
    */
   const [hasMenuBeenOpened, setHasMenuBeenOpened] = useState(false);
   useEffect(() => setHasMenuBeenOpened(isOpen), [isOpen]);
-  interface OptionObject {
-    value: string;
-    displayName: string;
-    hasGlyph?: boolean;
-  }
 
-  const flattenChildren = useCallback(
-    (_children: React.ReactNode): Array<OptionObject> => {
-      // TS doesn't like .reduce
-      // @ts-expect-error
-      return React.Children.toArray(_children).reduce(
-        // @ts-expect-error
-        (
-          acc: Array<OptionObject>,
-          child: React.ReactNode,
-        ): Array<OptionObject> | undefined => {
-          if (isComponentType(child, 'ComboboxOption')) {
-            const { value, displayName } = getNameAndValue(child.props);
-            const { glyph } = child.props;
-
-            return [
-              ...acc,
-              {
-                value,
-                displayName,
-                hasGlyph: !!glyph,
-              },
-            ];
-          } else if (isComponentType(child, 'ComboboxGroup')) {
-            const { children } = child.props;
-
-            if (children) {
-              return [...acc, ...flattenChildren(children)];
-            }
-          }
-        },
-        [] as Array<OptionObject>,
-      );
-    },
-    [],
-  );
-
-  const allOptions = useMemo(() => flattenChildren(children), [
-    children,
-    flattenChildren,
-  ]);
+  const allOptions = useMemo(() => flattenChildren(children), [children]);
 
   const filteredOptions = allOptions.filter(opt =>
     isValueVisible(opt.displayName),

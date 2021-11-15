@@ -54,6 +54,7 @@ describe('packages/combobox', () => {
     test.todo('Menu options list narrows when text is entered');
 
     test.todo('Up & Down arrow keys focus menu options');
+    test.todo('Down arrow key opens menu when its closed');
     test.todo('Tab key closes menu');
     test.todo('Escape key closes menu');
     test.todo('Enter key selects focused option');
