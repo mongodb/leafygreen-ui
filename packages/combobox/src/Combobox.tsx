@@ -187,17 +187,6 @@ export default function Combobox<M extends boolean>({
       ? undefined
       : placeholder;
 
-  /**
-   * We listen for when `isOpen` changes, and then set a new variable
-   * that triggers the menu to re-render. We need this because
-   * the width of `input` gets updated after the menu is opened.
-   * This change doesn't get caught in the initial render of the menu,
-   * leading to issues when this change pops `input` to a new line.
-   * Note: useMemo is fired too early. Need to use useState & useEffect
-   */
-  const [hasMenuBeenOpened, setHasMenuBeenOpened] = useState(false);
-  useEffect(() => setHasMenuBeenOpened(isOpen), [isOpen]);
-
   const allOptions = useMemo(() => flattenChildren(children), [children]);
 
   const filteredOptions = allOptions.filter(opt =>
@@ -842,9 +831,6 @@ export default function Combobox<M extends boolean>({
             onTransitionEnd={handleTransitionEnd}
             data-disabled={disabled}
             data-state={state}
-            data-multiselect={multiselect}
-            // Add/remove this attribute to force the menu to rerender
-            data-is-open={hasMenuBeenOpened || undefined}
           >
             <div
               ref={inputWrapperRef}
