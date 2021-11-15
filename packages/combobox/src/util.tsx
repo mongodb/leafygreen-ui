@@ -1,5 +1,5 @@
 import { isComponentType } from '@leafygreen-ui/lib';
-import { flatMapDeep, kebabCase, startCase } from 'lodash';
+import { kebabCase, startCase } from 'lodash';
 import React from 'react';
 import { ComboboxOptionProps } from './Combobox.types';
 

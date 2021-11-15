@@ -870,7 +870,6 @@ export default function Combobox<M extends boolean>({
           refEl={comboboxRef}
           adjustOnMutation={true}
           className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
-          onKeyDown={handleKeyDown}
         >
           <div
             role="listbox"

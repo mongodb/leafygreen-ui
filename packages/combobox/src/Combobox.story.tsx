@@ -7,7 +7,6 @@ import Button from '@leafygreen-ui/button';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { Combobox, ComboboxOption, ComboboxGroup } from '.';
-import { Chip } from './Chip';
 import { useState } from '@storybook/client-api';
 
 const Wrapper = ({ children }: any) => (
