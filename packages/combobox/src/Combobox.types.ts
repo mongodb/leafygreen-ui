@@ -104,10 +104,10 @@ type BaseComboboxProps<M extends boolean> = {
   onFilter?: (value: string) => void;
   clearable?: boolean;
   onClear?: (e: MouseEvent) => void;
+  filteredOptions?: Array<string>;
   className?: string;
   chipTruncationLocation?: TrunctationLocation;
   chipCharacterLimit?: number;
-  filteredOptions?: Array<string>;
 } & ComboboxMultiselectProps<M>;
 
 export type ComboboxProps<M extends boolean> = Either<

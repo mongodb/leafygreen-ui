@@ -158,10 +158,9 @@ export default function Combobox<M extends boolean>({
   // Scrolls the combobox to the far right
   // Used when `overflow == 'scroll-x'`
   const scrollToEnd = () => {
-    if (inputWrapperRef.current) {
-      inputWrapperRef.current.scrollTo({
-        left: inputWrapperRef.current?.scrollWidth,
-      });
+    if (inputWrapperRef && inputWrapperRef.current) {
+      // TODO - consider converting to .scrollTo(). This is not yet wuppoted in IE or jsdom
+      inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
     }
   };
 
@@ -169,12 +168,6 @@ export default function Combobox<M extends boolean>({
     multiselect && isArray(selection) && selection.length > 0
       ? undefined
       : placeholder;
-
-  console.log({
-    placeholderValue,
-    multiselect,
-    selection,
-  });
 
   const allOptions = useMemo(() => flattenChildren(children), [children]);
 
@@ -526,7 +519,7 @@ export default function Combobox<M extends boolean>({
         } = menuRef.current;
 
         if (optionTop > menuHeight || optionTop < menuScroll) {
-          menuRef.current.scrollTo({ top: optionTop });
+          menuRef.current.scrollTop = optionTop;
         }
       }
     }
@@ -895,26 +888,26 @@ export default function Combobox<M extends boolean>({
         {/******* /
           *  Menu  *
           / *******/}
-        <Popover
-          active={isOpen && !disabled}
-          spacing={4}
-          align="bottom"
-          justify="start"
-          refEl={comboboxRef}
-          adjustOnMutation={true}
-          className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
+        <div
+          id={menuId}
+          role="listbox"
+          aria-labelledby={labelId}
+          aria-expanded={isOpen}
         >
-          <div
-            role="listbox"
-            aria-labelledby={labelId}
-            aria-expanded={isOpen}
-            id={menuId}
-            ref={menuRef}
-            className={menuStyle({ maxHeight })}
+          <Popover
+            active={isOpen && !disabled}
+            spacing={4}
+            align="bottom"
+            justify="start"
+            refEl={comboboxRef}
+            adjustOnMutation={true}
+            className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
           >
-            {renderedMenuContents}
-          </div>
-        </Popover>
+            <div ref={menuRef} className={menuStyle({ maxHeight })}>
+              {renderedMenuContents}
+            </div>
+          </Popover>
+        </div>
       </div>
     </ComboboxContext.Provider>
   );

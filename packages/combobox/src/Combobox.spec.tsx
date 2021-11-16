@@ -2,32 +2,64 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { Combobox, ComboboxOption } from '.';
 import { axe } from 'jest-axe';
+import { ComboboxProps } from './Combobox.types';
+import { OptionObject } from './util';
 
-function renderBasicCheckbox(props = {}) {
-  const utils = render(
-    <Combobox data-testid="combobox" label="Some Label" {...props}>
-      <ComboboxOption value="Apple" />
-      <ComboboxOption value="Banana" />
-      <ComboboxOption value="Carrot" />
+/**
+ * Setup
+ */
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+type renderComboboxProps = {
+  label?: string;
+  options?: Array<string>; // | Array<OptionObject>
+}; // & ComboboxProps<true | false>
+
+function renderCombobox(props: renderComboboxProps) {
+  const labelText = props.label || 'Some label';
+  const options = props.options || ['apple', 'banana', 'carrot'];
+
+  const renderResult = render(
+    <Combobox data-testid="combobox-container" label={labelText} {...props}>
+      {options.map(option => (
+        <ComboboxOption key={option} value={option} />
+      ))}
     </Combobox>,
   );
-  const combobox = utils.getByTestId('combobox');
-  return { ...utils, combobox };
+  const container = renderResult.getByTestId('combobox-container');
+  const label = container.getElementsByTagName('label')[0];
+  const combobox = renderResult.getByRole('combobox');
+  const input = container.getElementsByTagName('input')[0];
+  return {
+    ...renderResult,
+    labelText,
+    options,
+    container,
+    label,
+    combobox,
+    input,
+  };
 }
 
+/**
+ * Tests
+ */
 describe('packages/combobox', () => {
   describe('A11y', () => {
     test('does not have basic accessibility violations', async () => {
-      const { combobox } = renderBasicCheckbox();
-      const results = await axe(combobox);
+      const { container } = renderCombobox();
+      const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
   });
 
-  describe('Rendering', () => {
-    const { combobox } = renderBasicCheckbox();
+  describe.each([['single'], ['multiple']])('%s select', select => {
+    // Rendering
+    test('Label is rendered', () => {
+      const { label } = renderCombobox();
+      expect(label).toBeInTheDocument();
+    });
 
-    test.todo('Label is rendered');
     test.todo('Description is rendered');
 
     describe('on error', () => {
@@ -35,18 +67,30 @@ describe('packages/combobox', () => {
       test.todo('Error Icon is rendered');
     });
 
-    describe('Single select', () => {
+    if (select === 'single') {
       test.todo('Text input renders with initial value');
       test.todo('Menu renders with checkmarks');
-    });
+    }
 
-    describe('Multi select', () => {
+    if (select === 'multiple') {
       test.todo('Chips render with initial value');
       test.todo('Menu renders with checkboxes');
-    });
-  });
+    }
 
-  describe('Interaction', () => {
+    describe('When value is controlled', () => {
+      test.todo('Invalid options passed as value are not selected');
+
+      if (select === 'multiple') {
+        test.todo('Updating `value` updates the chips');
+
+        describe('and invalid options are passed as value', () => {
+          test.todo('Invalid options are not selected');
+          test.todo('Removing all options via chip buttons clears selection');
+        });
+      }
+    });
+
+    // Interaction
     test.todo('Menu appears when box is clicked');
     test.todo('Menu appears when input is focused');
     test.todo('Menu closes on click-away');
@@ -62,14 +106,14 @@ describe('packages/combobox', () => {
 
     test.todo('Clicking an option sets selection');
 
-    describe('Single select', () => {
+    if (select === 'single') {
       test.todo('Input value changes when a selection is made');
       test.todo('Input value is set to selection value when menu closes');
-    });
+    }
 
-    describe('Multi select', () => {
+    if (select === 'multiple') {
       test.todo('Left & Right arrow keys highlight chips');
-    });
+    }
   });
 
   describe('Chips', () => {
