@@ -202,6 +202,7 @@ export const slideOutAnimationStyle = css`
 
 export const containerStyle = css`
   position: relative;
+  z-index: 0;
   height: ${stepperHeight}px;
   width: 100%;
 

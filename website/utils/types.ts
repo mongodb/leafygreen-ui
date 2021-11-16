@@ -9,6 +9,8 @@ export const Component = {
   Code: 'code',
   ConfirmationModal: 'confirmation-modal',
   Copyable: 'copyable',
+  FormFooter: 'form-footer',
+  ExpandableCard: 'expandable-card',
   Icon: 'icon',
   IconButton: 'icon-button',
   InlineDefinition: 'inline-definition',

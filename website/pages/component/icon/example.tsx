@@ -5,6 +5,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip from '@leafygreen-ui/tooltip';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon, { Size, glyphs } from '@leafygreen-ui/icon';
+import { uiColors } from '@leafygreen-ui/palette/';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const resetButtonStyles = css`
@@ -37,7 +38,7 @@ const containerStyle = css`
 
 const textStyle = css`
   font-size: 12px;
-  color: #babdbe;
+  color: ${uiColors.gray.base};
   margin-top: 0.5rem;
 `;
 
