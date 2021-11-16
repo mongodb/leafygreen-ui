@@ -1,5 +1,15 @@
 # @leafygreen-ui/radio-box-group
 
+## 6.1.5
+
+### Patch Changes
+
+- d661688: Removes flicker when clicking on a RadioBox
+- Updated dependencies [d661688]
+- Updated dependencies [d661688]
+  - @leafygreen-ui/lib@9.1.0
+  - @leafygreen-ui/hooks@7.1.0
+
 ## 6.1.4
 
 ### Patch Changes

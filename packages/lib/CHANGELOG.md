@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 9.1.0
+
+### Minor Changes
+
+- d661688: Adds error, warn, and log once functions—console functions wrapped in lodash.once
+
 ## 9.0.1
 
 ### Patch Changes
