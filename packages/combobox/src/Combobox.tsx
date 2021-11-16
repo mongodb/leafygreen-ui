@@ -170,6 +170,12 @@ export default function Combobox<M extends boolean>({
       ? undefined
       : placeholder;
 
+  console.log({
+    placeholderValue,
+    multiselect,
+    selection,
+  });
+
   const allOptions = useMemo(() => flattenChildren(children), [children]);
 
   const getDisplayNameForValue = useCallback(
@@ -554,9 +560,17 @@ export default function Combobox<M extends boolean>({
   // When value changes, update the selection
   useEffect(() => {
     if (!isUndefined(value)) {
-      setSelection(value);
+      if (isNull(value)) {
+        setSelection(null);
+      } else if (isMultiselect(value)) {
+        // Ensure the value(s) passed in are valid options
+        const newSelection = value.filter(isValueValid) as SelectValueType<M>;
+        setSelection(newSelection);
+      } else {
+        setSelection(isValueValid(value) ? value : null);
+      }
     }
-  }, [value]);
+  }, [isMultiselect, isValueValid, value]);
 
   // onSelect: When the selection changes...
   useEffect(() => {
