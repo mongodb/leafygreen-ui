@@ -567,7 +567,7 @@ export default function Combobox<M extends boolean>({
 
   // onSelect: When the selection changes...
   useEffect(() => {
-    if (!isControlled && selection !== prevSelection) {
+    if (selection !== prevSelection) {
       if (doesSelectionExist) {
         if (isMultiselect(selection)) {
           // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`

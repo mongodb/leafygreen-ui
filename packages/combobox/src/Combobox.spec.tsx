@@ -1,45 +1,89 @@
+/* eslint-disable jest/no-standalone-expect, jest/no-disabled-tests, jest/expect-expect */
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, queryByText } from '@testing-library/react';
 import { Combobox, ComboboxOption } from '.';
 import { axe } from 'jest-axe';
-import { ComboboxProps } from './Combobox.types';
+import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
 import { OptionObject } from './util';
+import { isUndefined } from 'lodash';
 
 /**
  * Setup
  */
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+type Select = 'single' | 'multiple';
 type renderComboboxProps = {
-  label?: string;
-  options?: Array<string>; // | Array<OptionObject>
-}; // & ComboboxProps<true | false>
+  options?: Array<string | OptionObject>;
+} & BaseComboboxProps &
+  ComboboxMultiselectProps<boolean>;
 
-function renderCombobox(props: renderComboboxProps) {
-  const labelText = props.label || 'Some label';
-  const options = props.options || ['apple', 'banana', 'carrot'];
+const defaultOptions: Array<OptionObject> = [
+  {
+    value: 'apple',
+    displayName: 'Apple',
+  },
+  {
+    value: 'banana',
+    displayName: 'Banana',
+  },
+  {
+    value: 'carrot',
+    displayName: 'Carrot',
+  },
+];
 
-  const renderResult = render(
-    <Combobox data-testid="combobox-container" label={labelText} {...props}>
-      {options.map(option => (
-        <ComboboxOption key={option} value={option} />
-      ))}
-    </Combobox>,
+const getComboboxJSX = (props?: renderComboboxProps) => {
+  const label = props?.label || 'Some label';
+  return (
+    <Combobox
+      data-testid="combobox-container"
+      label={label}
+      multiselect={props.multiselect}
+      {...props}
+    >
+      {props?.options.map(option => {
+        const value = typeof option === 'string' ? option : option.value;
+        const displayName =
+          typeof option === 'string' ? undefined : option.displayName;
+        return (
+          <ComboboxOption key={value} value={value} displayName={displayName} />
+        );
+      })}
+    </Combobox>
   );
-  const container = renderResult.getByTestId('combobox-container');
-  const label = container.getElementsByTagName('label')[0];
-  const combobox = renderResult.getByRole('combobox');
-  const input = container.getElementsByTagName('input')[0];
+};
+
+function renderCombobox(
+  select: Select = 'single',
+  props?: renderComboboxProps,
+) {
+  const options = props?.options || defaultOptions;
+  const multiselect = select === 'multiple';
+  props = { options, multiselect, ...props };
+  const renderResult = render(getComboboxJSX(props));
+  const containerEl = renderResult.getByTestId('combobox-container');
+  const labelEl = containerEl.getElementsByTagName('label')[0];
+  const comboboxEl = renderResult.getByRole('combobox');
+  const inputEl = containerEl.getElementsByTagName('input')[0];
+
+  const rerenderCombobox = (newProps: renderComboboxProps) =>
+    renderResult.rerender(getComboboxJSX({ ...props, ...newProps }));
+
+  const getChipsByName = (names: Array<string>): Array<HTMLElement> =>
+    names.map(name => queryByText(comboboxEl, name));
+
   return {
     ...renderResult,
-    labelText,
-    options,
-    container,
-    label,
-    combobox,
-    input,
+    rerenderCombobox,
+    getChipsByName,
+    containerEl,
+    labelEl,
+    comboboxEl,
+    inputEl,
   };
 }
+
+const testif = (condition: boolean) => (condition ? test : test.skip);
 
 /**
  * Tests
@@ -53,41 +97,97 @@ describe('packages/combobox', () => {
     });
   });
 
-  describe.each([['single'], ['multiple']])('%s select', select => {
+  const tests = [['single'], ['multiple']] as Array<Array<Select>>;
+
+  describe.each(tests)('%s select', select => {
+    /** Run tests for single select only */
+    const testSingleSelect = (name: string, fn?: jest.ProvidesCallback) =>
+      isUndefined(fn) ? test.todo(name) : testif(select === 'single')(name, fn);
+    /** Run tests for multi-select only */
+    const testMultiSelect = (name: string, fn?: jest.ProvidesCallback) =>
+      isUndefined(fn)
+        ? test.todo(name)
+        : testif(select === 'multiple')(name, fn);
+
     // Rendering
     test('Label is rendered', () => {
-      const { label } = renderCombobox();
-      expect(label).toBeInTheDocument();
+      const { labelEl } = renderCombobox(select);
+      expect(labelEl).toBeInTheDocument();
     });
 
-    test.todo('Description is rendered');
+    test('Description is rendered', () => {
+      const description = 'Lorem ipsum';
+      const { getByText } = renderCombobox(select, { description });
+      const descriptionEl = getByText(description);
+      expect(descriptionEl).toBeInTheDocument();
+    });
 
     describe('on error', () => {
       test.todo('Error message is rendered');
       test.todo('Error Icon is rendered');
     });
 
-    if (select === 'single') {
-      test.todo('Text input renders with initial value');
-      test.todo('Menu renders with checkmarks');
-    }
+    testSingleSelect('Text input renders with initial value', () => {
+      const initialValue = 'apple';
+      const { inputEl } = renderCombobox(select, { initialValue });
+      expect(inputEl.value).toEqual('Apple');
+    });
+    testSingleSelect('Menu renders with checkmarks');
 
-    if (select === 'multiple') {
-      test.todo('Chips render with initial value');
-      test.todo('Menu renders with checkboxes');
-    }
+    testMultiSelect('Chips render with initial value', () => {
+      const initialValue = ['apple', 'banana'];
+      const { getChipsByName } = renderCombobox(select, { initialValue });
+      getChipsByName(['Apple', 'Banana']).forEach(chip =>
+        expect(chip).toBeInTheDocument(),
+      );
+    });
+    testMultiSelect('Menu renders with checkboxes');
 
     describe('When value is controlled', () => {
-      test.todo('Invalid options passed as value are not selected');
-
-      if (select === 'multiple') {
-        test.todo('Updating `value` updates the chips');
-
-        describe('and invalid options are passed as value', () => {
-          test.todo('Invalid options are not selected');
-          test.todo('Removing all options via chip buttons clears selection');
+      testSingleSelect('Text input renders with value update', () => {
+        let value = 'apple';
+        const { inputEl, rerenderCombobox } = renderCombobox(select, {
+          value,
         });
-      }
+        expect(inputEl.value).toEqual('Apple');
+        value = 'banana';
+        rerenderCombobox({ value });
+        expect(inputEl.value).toEqual('Banana');
+      });
+
+      testSingleSelect('Invalid option passed as value is not selected', () => {
+        const value = 'jellybean';
+        const { inputEl } = renderCombobox(select, { value });
+        expect(inputEl.value).toEqual('');
+      });
+
+      testMultiSelect('Updating `value` updates the chips', () => {
+        let value = ['apple', 'banana'];
+        const { getChipsByName, rerenderCombobox } = renderCombobox(select, {
+          value,
+        });
+        getChipsByName(['Apple', 'Banana']).forEach(chip =>
+          expect(chip).toBeInTheDocument(),
+        );
+        value = ['banana', 'carrot'];
+        rerenderCombobox({ value });
+        getChipsByName(['Banana', 'Carrot']).forEach(chip =>
+          expect(chip).toBeInTheDocument(),
+        );
+      });
+
+      testMultiSelect('Invalid options are not selected', () => {
+        const value = ['apple', 'jellybean'];
+        const { getChipsByName } = renderCombobox(select, {
+          value,
+        });
+        const [appleChip, jellybeanChip] = getChipsByName([
+          'Apple',
+          'Jellybean',
+        ]);
+        expect(appleChip).toBeInTheDocument();
+        expect(jellybeanChip).not.toBeInTheDocument();
+      });
     });
 
     // Interaction
@@ -96,7 +196,6 @@ describe('packages/combobox', () => {
     test.todo('Menu closes on click-away');
     test.todo('Menu does not close on interaction with the menu'); // ensure no close-on-blur
     test.todo('Menu options list narrows when text is entered');
-
     test.todo('Up & Down arrow keys focus menu options');
     test.todo('Down arrow key opens menu when its closed');
     test.todo('Tab key closes menu');
@@ -104,16 +203,14 @@ describe('packages/combobox', () => {
     test.todo('Enter key selects focused option');
     test.todo('Space key selects focused option');
 
-    test.todo('Clicking an option sets selection');
+    testSingleSelect('Clicking an option sets selection');
+    testMultiSelect('Clicking an option sets selection');
 
-    if (select === 'single') {
-      test.todo('Input value changes when a selection is made');
-      test.todo('Input value is set to selection value when menu closes');
-    }
+    testSingleSelect('Input value changes when a selection is made');
+    testSingleSelect('Input value is set to selection value when menu closes');
 
-    if (select === 'multiple') {
-      test.todo('Left & Right arrow keys highlight chips');
-    }
+    testMultiSelect('Left & Right arrow keys highlight chips');
+    testMultiSelect('Removing all options via chip buttons clears selection');
   });
 
   describe('Chips', () => {

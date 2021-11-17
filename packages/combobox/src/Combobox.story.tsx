@@ -179,8 +179,34 @@ storiesOf('Combobox', module)
       </Wrapper>
     );
   })
-  .add('Controlled', () => {
-    const [selection, setSelection] = useState([]);
+  .add('Controlled single select', () => {
+    const [selection, setSelection] = useState('apple');
+
+    const handleChange = (value: string) => {
+      console.log({ value });
+      setSelection(value);
+    };
+
+    return (
+      <Wrapper>
+        <Combobox
+          multiselect={false}
+          label="Choose a fruit"
+          description="Please pick one"
+          placeholder="Select fruit"
+          onChange={handleChange}
+          value={selection}
+        >
+          <ComboboxOption value="apple" />
+          <ComboboxOption value="banana" />
+          <ComboboxOption value="carrot" />
+        </Combobox>
+        <Button onClick={() => setSelection('carrot')}>Select Carrot</Button>
+      </Wrapper>
+    );
+  })
+  .add('Controlled multiselect', () => {
+    const [selection, setSelection] = useState(['apple']);
 
     const handleChange = (value: Array<string>) => {
       console.log({ value });

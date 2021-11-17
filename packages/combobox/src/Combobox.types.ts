@@ -77,7 +77,7 @@ export function getNullSelection<M extends boolean>(
  * Combobox Props
  */
 
-interface ComboboxMultiselectProps<M extends boolean> {
+export interface ComboboxMultiselectProps<M extends boolean> {
   multiselect?: M;
   initialValue?: SelectValueType<M>;
   onChange?: onChangeType<M>;
@@ -86,10 +86,10 @@ interface ComboboxMultiselectProps<M extends boolean> {
   overflow?: M extends true ? Overflow : undefined;
 }
 
-type BaseComboboxProps<M extends boolean> = {
+export interface BaseComboboxProps {
   children?: ReactNode;
   label?: string;
-  'aria-label': string;
+  'aria-label'?: string;
   description?: string;
   placeholder?: string;
   disabled?: boolean;
@@ -108,10 +108,10 @@ type BaseComboboxProps<M extends boolean> = {
   className?: string;
   chipTruncationLocation?: TrunctationLocation;
   chipCharacterLimit?: number;
-} & ComboboxMultiselectProps<M>;
+}
 
 export type ComboboxProps<M extends boolean> = Either<
-  BaseComboboxProps<M>,
+  BaseComboboxProps & ComboboxMultiselectProps<M>,
   'label' | 'aria-label'
 >;
 
