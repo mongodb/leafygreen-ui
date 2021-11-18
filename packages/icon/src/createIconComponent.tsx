@@ -14,10 +14,10 @@ type GlyphObject = Record<string, LGGlyph.Component>;
 export default function createIconComponent<
   G extends GlyphObject = GlyphObject
 >(glyphs: G) {
-  const Icon = ({ glyph, ...rest }: IconProps) => {
+  const Icon = ({ glyph, size, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
-
-    return <SVGComponent {...rest} />;
+    const iconSize = typeof size === 'number' ? size : sizeMap[size]
+    return <SVGComponent size={iconSize} {...rest} />;
   };
 
   Icon.displayName = 'Icon';
