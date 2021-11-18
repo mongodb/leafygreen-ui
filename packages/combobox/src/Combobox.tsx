@@ -378,7 +378,7 @@ export default function Combobox<M extends boolean>({
       const indexOfFocus = getIndexOfValue(focusedOption);
 
       // Remove focus from chip
-      if (direction) {
+      if (direction && isOpen) {
         setFocusedChip(null);
         setInputFocus();
       }
@@ -421,6 +421,7 @@ export default function Combobox<M extends boolean>({
       focusedOption,
       getIndexOfValue,
       getValueAtIndex,
+      isOpen,
       setInputFocus,
       visibleOptions?.length,
     ],
@@ -888,26 +889,26 @@ export default function Combobox<M extends boolean>({
         {/******* /
           *  Menu  *
           / *******/}
-        <div
-          id={menuId}
-          role="listbox"
-          aria-labelledby={labelId}
-          aria-expanded={isOpen}
+        <Popover
+          active={isOpen && !disabled}
+          spacing={4}
+          align="bottom"
+          justify="start"
+          refEl={comboboxRef}
+          adjustOnMutation={true}
+          className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
         >
-          <Popover
-            active={isOpen && !disabled}
-            spacing={4}
-            align="bottom"
-            justify="start"
-            refEl={comboboxRef}
-            adjustOnMutation={true}
-            className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
+          <div
+            id={menuId}
+            role="listbox"
+            aria-labelledby={labelId}
+            aria-expanded={isOpen}
+            ref={menuRef}
+            className={menuStyle({ maxHeight })}
           >
-            <div ref={menuRef} className={menuStyle({ maxHeight })}>
-              {renderedMenuContents}
-            </div>
-          </Popover>
-        </div>
+            {renderedMenuContents}
+          </div>
+        </Popover>
       </div>
     </ComboboxContext.Provider>
   );

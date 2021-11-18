@@ -1,11 +1,12 @@
-/* eslint-disable jest/no-standalone-expect, jest/no-disabled-tests, jest/expect-expect */
 import React from 'react';
-import { render, queryByText } from '@testing-library/react';
+import { render, fireEvent, queryByText, act } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxOption } from '.';
 import { axe } from 'jest-axe';
 import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
 import { OptionObject } from './util';
-import { isUndefined } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
+import { keyMap } from '../../typography/node_modules/@leafygreen-ui/lib/dist';
 
 /**
  * Setup
@@ -66,6 +67,26 @@ function renderCombobox(
   const comboboxEl = renderResult.getByRole('combobox');
   const inputEl = containerEl.getElementsByTagName('input')[0];
 
+  // Menu elements won't exist until component is interacted with
+  const getMenuElements = () => {
+    const menuContainerEl = renderResult.queryByRole('listbox');
+    const popoverEl = menuContainerEl?.firstChild;
+    const menuEl = menuContainerEl?.getElementsByTagName('ul')[0];
+    const optionElements = menuContainerEl?.getElementsByTagName('li');
+
+    return {
+      menuContainerEl,
+      popoverEl,
+      menuEl,
+      optionElements,
+    };
+  };
+
+  const openMenu = () => {
+    userEvent.click(comboboxEl);
+    return getMenuElements();
+  };
+
   const rerenderCombobox = (newProps: renderComboboxProps) =>
     renderResult.rerender(getComboboxJSX({ ...props, ...newProps }));
 
@@ -76,6 +97,8 @@ function renderCombobox(
     ...renderResult,
     rerenderCombobox,
     getChipsByName,
+    getMenuElements,
+    openMenu,
     containerEl,
     labelEl,
     comboboxEl,
@@ -91,25 +114,26 @@ const testif = (condition: boolean) => (condition ? test : test.skip);
 describe('packages/combobox', () => {
   describe('A11y', () => {
     test('does not have basic accessibility violations', async () => {
-      const { container } = renderCombobox();
+      const { container, inputEl } = renderCombobox();
+      act(() => inputEl.focus()); // we focus the input to ensure the listbox gets rendered
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
   });
 
   const tests = [['single'], ['multiple']] as Array<Array<Select>>;
-
   describe.each(tests)('%s select', select => {
     /** Run tests for single select only */
     const testSingleSelect = (name: string, fn?: jest.ProvidesCallback) =>
       isUndefined(fn) ? test.todo(name) : testif(select === 'single')(name, fn);
+
     /** Run tests for multi-select only */
     const testMultiSelect = (name: string, fn?: jest.ProvidesCallback) =>
       isUndefined(fn)
         ? test.todo(name)
         : testif(select === 'multiple')(name, fn);
 
-    // Rendering
+    // Basic Rendering
     test('Label is rendered', () => {
       const { labelEl } = renderCombobox(select);
       expect(labelEl).toBeInTheDocument();
@@ -132,7 +156,6 @@ describe('packages/combobox', () => {
       const { inputEl } = renderCombobox(select, { initialValue });
       expect(inputEl.value).toEqual('Apple');
     });
-    testSingleSelect('Menu renders with checkmarks');
 
     testMultiSelect('Chips render with initial value', () => {
       const initialValue = ['apple', 'banana'];
@@ -141,9 +164,9 @@ describe('packages/combobox', () => {
         expect(chip).toBeInTheDocument(),
       );
     });
-    testMultiSelect('Menu renders with checkboxes');
 
     describe('When value is controlled', () => {
+      /* eslint-disable jest/no-standalone-expect */
       testSingleSelect('Text input renders with value update', () => {
         let value = 'apple';
         const { inputEl, rerenderCombobox } = renderCombobox(select, {
@@ -188,20 +211,96 @@ describe('packages/combobox', () => {
         expect(appleChip).toBeInTheDocument();
         expect(jellybeanChip).not.toBeInTheDocument();
       });
+      /*  eslint-enable jest/no-standalone-expect */
     });
 
-    // Interaction
-    test.todo('Menu appears when box is clicked');
-    test.todo('Menu appears when input is focused');
-    test.todo('Menu closes on click-away');
-    test.todo('Menu does not close on interaction with the menu'); // ensure no close-on-blur
-    test.todo('Menu options list narrows when text is entered');
-    test.todo('Up & Down arrow keys focus menu options');
-    test.todo('Down arrow key opens menu when its closed');
-    test.todo('Tab key closes menu');
+    /**
+     * Mouse interaction
+     */
+    test('Clicking the combobox sets focus to the input', () => {
+      const { comboboxEl, inputEl } = renderCombobox(select);
+      userEvent.click(comboboxEl);
+      expect(inputEl).toHaveFocus();
+    });
+
+    test('Menu appears when input is focused', () => {
+      const { inputEl, getMenuElements } = renderCombobox(select);
+      act(() => inputEl.focus());
+      const { menuContainerEl } = getMenuElements();
+      expect(menuContainerEl).toBeInTheDocument();
+    });
+
+    test('Menu appears when box is clicked', () => {
+      const { comboboxEl, getMenuElements } = renderCombobox(select);
+      userEvent.click(comboboxEl);
+      const { menuContainerEl } = getMenuElements();
+      expect(menuContainerEl).not.toBeNull();
+      expect(menuContainerEl).toBeInTheDocument();
+    });
+
+    test(`Menu renders with correct checkmark for ${select} select`, () => {
+      const { openMenu } = renderCombobox(select);
+      const { optionElements } = openMenu();
+      const checkElementTag = select === 'single' ? 'svg' : 'input';
+      const areAllChecksCorrect = Array.from(optionElements).every(
+        element => !isNull(element.querySelector(checkElementTag)),
+      );
+      expect(areAllChecksCorrect).toBeTruthy();
+    });
+
+    test('Menu closes on click-away', () => {
+      const { containerEl, openMenu, getMenuElements } = renderCombobox(select);
+      openMenu();
+      userEvent.click(containerEl.parentElement);
+      const { menuContainerEl } = getMenuElements();
+      expect(menuContainerEl).toBeNull();
+    });
+
+    test('Menu does not close on interaction with the menu', () => {
+      const { getMenuElements, openMenu } = renderCombobox(select);
+      const { optionElements } = openMenu();
+      userEvent.click(optionElements[1]);
+      const { menuContainerEl } = getMenuElements();
+      expect(menuContainerEl).toBeInTheDocument();
+    });
+
+    /**
+     * Keyboard navigation
+     */
+    test('First option is highlighted on menu open', () => {
+      const { openMenu } = renderCombobox(select);
+      const { optionElements } = openMenu();
+      expect(optionElements[0]).toHaveAttribute('aria-selected', 'true');
+    });
+
+    test('Up & Down arrow keys highlight menu options', () => {
+      const { containerEl, openMenu } = renderCombobox(select);
+      const { optionElements, menuContainerEl } = openMenu();
+      // userEvent.type(menuContainerEl, '{arrowdown}')
+      fireEvent.keyDown(containerEl, {
+        keyCode: keyMap.ArrowDown,
+        key: 'ArrowDown',
+      });
+      expect(optionElements[0]).toHaveAttribute('aria-selected', 'false');
+      expect(optionElements[1]).toHaveAttribute('aria-selected', 'true');
+
+      // userEvent.type(menuContainerEl, '{arrowup}')
+      fireEvent.keyDown(containerEl, {
+        keyCode: keyMap.ArrowUp,
+        key: 'ArrowUp',
+      });
+      expect(optionElements[1]).toHaveAttribute('aria-selected', 'false');
+      expect(optionElements[0]).toHaveAttribute('aria-selected', 'true');
+    });
+
     test.todo('Escape key closes menu');
-    test.todo('Enter key selects focused option');
-    test.todo('Space key selects focused option');
+    test.todo('Tab key closes menu');
+    test.todo('Down arrow key opens menu when its closed');
+    test.todo('Enter key selects highlighted option');
+    test.todo('Space key selects highlighted option');
+
+    // Filtering
+    test.todo('Menu options list narrows when text is entered');
 
     testSingleSelect('Clicking an option sets selection');
     testMultiSelect('Clicking an option sets selection');
