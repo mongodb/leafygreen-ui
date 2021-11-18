@@ -1,5 +1,13 @@
+/* eslint-disable jest/no-disabled-tests */
 import React from 'react';
-import { render, fireEvent, queryByText, act } from '@testing-library/react';
+import {
+  waitForElementToBeRemoved,
+  render,
+  fireEvent,
+  findByRole,
+  queryByText,
+  act,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxOption } from '.';
 import { axe } from 'jest-axe';
@@ -90,13 +98,18 @@ function renderCombobox(
   const rerenderCombobox = (newProps: renderComboboxProps) =>
     renderResult.rerender(getComboboxJSX({ ...props, ...newProps }));
 
-  const getChipsByName = (names: Array<string>): Array<HTMLElement> =>
-    names.map(name => queryByText(comboboxEl, name));
+  function queryChipsByName(names: string): HTMLElement;
+  function queryChipsByName(names: Array<string>): Array<HTMLElement>;
+  function queryChipsByName(names) {
+    return typeof names === 'string'
+      ? queryByText(comboboxEl, names)
+      : names.map(name => queryByText(comboboxEl, name));
+  }
 
   return {
     ...renderResult,
     rerenderCombobox,
-    getChipsByName,
+    queryChipsByName,
     getMenuElements,
     openMenu,
     containerEl,
@@ -159,8 +172,8 @@ describe('packages/combobox', () => {
 
     testMultiSelect('Chips render with initial value', () => {
       const initialValue = ['apple', 'banana'];
-      const { getChipsByName } = renderCombobox(select, { initialValue });
-      getChipsByName(['Apple', 'Banana']).forEach(chip =>
+      const { queryChipsByName } = renderCombobox(select, { initialValue });
+      queryChipsByName(['Apple', 'Banana']).forEach(chip =>
         expect(chip).toBeInTheDocument(),
       );
     });
@@ -186,25 +199,25 @@ describe('packages/combobox', () => {
 
       testMultiSelect('Updating `value` updates the chips', () => {
         let value = ['apple', 'banana'];
-        const { getChipsByName, rerenderCombobox } = renderCombobox(select, {
+        const { queryChipsByName, rerenderCombobox } = renderCombobox(select, {
           value,
         });
-        getChipsByName(['Apple', 'Banana']).forEach(chip =>
+        queryChipsByName(['Apple', 'Banana']).forEach(chip =>
           expect(chip).toBeInTheDocument(),
         );
         value = ['banana', 'carrot'];
         rerenderCombobox({ value });
-        getChipsByName(['Banana', 'Carrot']).forEach(chip =>
+        queryChipsByName(['Banana', 'Carrot']).forEach(chip =>
           expect(chip).toBeInTheDocument(),
         );
       });
 
       testMultiSelect('Invalid options are not selected', () => {
         const value = ['apple', 'jellybean'];
-        const { getChipsByName } = renderCombobox(select, {
+        const { queryChipsByName } = renderCombobox(select, {
           value,
         });
-        const [appleChip, jellybeanChip] = getChipsByName([
+        const [appleChip, jellybeanChip] = queryChipsByName([
           'Apple',
           'Jellybean',
         ]);
@@ -248,12 +261,12 @@ describe('packages/combobox', () => {
       expect(areAllChecksCorrect).toBeTruthy();
     });
 
-    test('Menu closes on click-away', () => {
-      const { containerEl, openMenu, getMenuElements } = renderCombobox(select);
-      openMenu();
+    test('Menu closes on click-away', async () => {
+      const { containerEl, openMenu } = renderCombobox(select);
+      const { menuContainerEl } = openMenu();
       userEvent.click(containerEl.parentElement);
-      const { menuContainerEl } = getMenuElements();
-      expect(menuContainerEl).toBeNull();
+      await waitForElementToBeRemoved(menuContainerEl);
+      expect(menuContainerEl).not.toBeInTheDocument();
     });
 
     test('Menu does not close on interaction with the menu', () => {
@@ -273,37 +286,81 @@ describe('packages/combobox', () => {
       expect(optionElements[0]).toHaveAttribute('aria-selected', 'true');
     });
 
-    test('Up & Down arrow keys highlight menu options', () => {
-      const { containerEl, openMenu } = renderCombobox(select);
-      const { optionElements, menuContainerEl } = openMenu();
-      // userEvent.type(menuContainerEl, '{arrowdown}')
-      fireEvent.keyDown(containerEl, {
-        keyCode: keyMap.ArrowDown,
-        key: 'ArrowDown',
-      });
-      expect(optionElements[0]).toHaveAttribute('aria-selected', 'false');
-      expect(optionElements[1]).toHaveAttribute('aria-selected', 'true');
+    test.skip('Down arrow moves highlight down', async () => {
+      const { containerEl, openMenu, findByRole } = renderCombobox(select);
+      openMenu();
+      userEvent.type(containerEl, '{arrowdown}');
 
-      // userEvent.type(menuContainerEl, '{arrowup}')
-      fireEvent.keyDown(containerEl, {
-        keyCode: keyMap.ArrowUp,
-        key: 'ArrowUp',
+      const selectedOption = await findByRole('option', {
+        selected: true,
       });
-      expect(optionElements[1]).toHaveAttribute('aria-selected', 'false');
-      expect(optionElements[0]).toHaveAttribute('aria-selected', 'true');
+      expect(selectedOption).toHaveTextContent('Banana');
     });
 
-    test.todo('Escape key closes menu');
-    test.todo('Tab key closes menu');
-    test.todo('Down arrow key opens menu when its closed');
+    test.skip('Up arrow moves highlight up', async () => {
+      const { containerEl, openMenu, findByRole } = renderCombobox(select);
+      openMenu();
+      userEvent.type(containerEl, '{arrowdown}');
+      userEvent.type(containerEl, '{arrowdown}');
+      userEvent.type(containerEl, '{arrowup}');
+
+      const selectedOption = await findByRole('option', {
+        selected: true,
+      });
+      expect(selectedOption).toHaveTextContent('Banana');
+    });
+
+    test('Escape key closes menu', async () => {
+      const { containerEl, openMenu } = renderCombobox(select);
+      const { menuContainerEl } = openMenu();
+      userEvent.type(containerEl, '{esc}');
+      await waitForElementToBeRemoved(menuContainerEl);
+      expect(menuContainerEl).not.toBeInTheDocument();
+    });
+
+    test('Tab key closes menu', async () => {
+      const { containerEl, openMenu } = renderCombobox(select);
+      const { menuContainerEl } = openMenu();
+      userEvent.type(containerEl, '{tab}');
+      await waitForElementToBeRemoved(menuContainerEl);
+      expect(menuContainerEl).not.toBeInTheDocument();
+    });
+
+    test.skip('Down arrow key opens menu when its closed', async () => {
+      const { containerEl, openMenu, findByRole } = renderCombobox(select);
+      const { menuContainerEl } = openMenu();
+      userEvent.type(containerEl, '{esc}');
+      await waitForElementToBeRemoved(menuContainerEl);
+      expect(menuContainerEl).not.toBeInTheDocument();
+      userEvent.type(containerEl, '{arrowdown}');
+      const reOpenedMenu = await findByRole('listbox');
+      expect(reOpenedMenu).toBeInTheDocument();
+    });
+
     test.todo('Enter key selects highlighted option');
     test.todo('Space key selects highlighted option');
 
     // Filtering
-    test.todo('Menu options list narrows when text is entered');
+    test('Menu options list narrows when text is entered', async () => {
+      const { inputEl, openMenu, findAllByRole } = renderCombobox(select);
+      openMenu();
+      userEvent.type(inputEl, 'c');
+      const optionElements = await findAllByRole('option');
+      expect(optionElements.length).toEqual(1);
+    });
 
-    testSingleSelect('Clicking an option sets selection');
-    testMultiSelect('Clicking an option sets selection');
+    test('Clicking an option sets selection', () => {
+      const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
+      const { optionElements } = openMenu();
+      userEvent.click(optionElements[2]);
+
+      if (select === 'single') {
+        expect(inputEl).toHaveValue('Carrot');
+      } else if (select === 'multiple') {
+        const carrotChip = queryChipsByName('Carrot');
+        expect(carrotChip).toBeInTheDocument();
+      }
+    });
 
     testSingleSelect('Input value changes when a selection is made');
     testSingleSelect('Input value is set to selection value when menu closes');

@@ -121,12 +121,6 @@ const InternalComboboxOption = React.forwardRef<
     }, [glyph]);
 
     const renderedChildren = useMemo(() => {
-      const renderedName = (
-        <span className={displayNameStyle(isSelected)}>
-          {wrapJSX(displayName, inputValue, 'em')}
-        </span>
-      );
-
       // Multiselect
       if (multiselect) {
         const checkbox = (
@@ -143,7 +137,9 @@ const InternalComboboxOption = React.forwardRef<
           <>
             <span className={flexSpan}>
               {withIcons ? renderedIcon : checkbox}
-              {renderedName}
+              <span className={displayNameStyle(isSelected)}>
+                {wrapJSX(displayName, inputValue, 'em')}
+              </span>
             </span>
             {withIcons && checkbox}
           </>
@@ -155,7 +151,9 @@ const InternalComboboxOption = React.forwardRef<
         <>
           <span className={flexSpan}>
             {renderedIcon}
-            {renderedName}
+            <span className={displayNameStyle(isSelected)}>
+              {wrapJSX(displayName, inputValue, 'em')}
+            </span>
           </span>
           {isSelected && (
             <Icon
@@ -180,6 +178,7 @@ const InternalComboboxOption = React.forwardRef<
         ref={optionRef}
         role="option"
         aria-selected={isFocused}
+        aria-label={displayName}
         tabIndex={-1}
         className={cx(comboboxOptionStyle(), className)}
         onClick={handleOptionClick}
