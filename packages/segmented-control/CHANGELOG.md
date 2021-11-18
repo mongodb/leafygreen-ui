@@ -1,6 +1,7 @@
 # @leafygreen-ui/segmented-control
 
 ## 0.9.1
+
 ### Patch Changes
 
 - d661688: Bumps version of lib & typography package deps
