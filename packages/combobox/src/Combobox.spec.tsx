@@ -1,10 +1,9 @@
 /* eslint-disable jest/no-disabled-tests */
+/* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
 import React from 'react';
 import {
   waitForElementToBeRemoved,
   render,
-  fireEvent,
-  findByRole,
   queryByText,
   act,
 } from '@testing-library/react';
@@ -13,8 +12,7 @@ import { Combobox, ComboboxOption } from '.';
 import { axe } from 'jest-axe';
 import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
 import { OptionObject } from './util';
-import { isNull, isUndefined } from 'lodash';
-import { keyMap } from '../../typography/node_modules/@leafygreen-ui/lib/dist';
+import { isArray, isNull, isUndefined } from 'lodash';
 
 /**
  * Setup
@@ -106,12 +104,36 @@ function renderCombobox(
       : names.map(name => queryByText(comboboxEl, name));
   }
 
+  /**
+   * Asserts that options with the provided display name(s) are selected
+   * @param selection
+   * @returns
+   */
+  const expectSelection = (selection: string | Array<string>): void => {
+    if (select === 'single') {
+      if (isArray(selection)) {
+        throw new Error('Selection must be a string for single select');
+      }
+
+      return expect(inputEl).toHaveValue(selection);
+    } else {
+      if (isArray(selection)) {
+        const allChips = queryChipsByName(selection);
+        allChips.forEach(chip => expect(chip).toBeInTheDocument());
+      } else {
+        const selectionChip = queryChipsByName(selection);
+        return expect(selectionChip).toBeInTheDocument();
+      }
+    }
+  };
+
   return {
     ...renderResult,
     rerenderCombobox,
     queryChipsByName,
     getMenuElements,
     openMenu,
+    expectSelection,
     containerEl,
     labelEl,
     comboboxEl,
@@ -166,62 +188,53 @@ describe('packages/combobox', () => {
 
     testSingleSelect('Text input renders with initial value', () => {
       const initialValue = 'apple';
-      const { inputEl } = renderCombobox(select, { initialValue });
-      expect(inputEl.value).toEqual('Apple');
+      const { expectSelection } = renderCombobox(select, { initialValue });
+      expectSelection('Apple');
     });
 
     testMultiSelect('Chips render with initial value', () => {
       const initialValue = ['apple', 'banana'];
-      const { queryChipsByName } = renderCombobox(select, { initialValue });
-      queryChipsByName(['Apple', 'Banana']).forEach(chip =>
-        expect(chip).toBeInTheDocument(),
-      );
+      const { expectSelection } = renderCombobox(select, { initialValue });
+      expectSelection(['Apple', 'Banana']);
     });
 
     describe('When value is controlled', () => {
       /* eslint-disable jest/no-standalone-expect */
       testSingleSelect('Text input renders with value update', () => {
         let value = 'apple';
-        const { inputEl, rerenderCombobox } = renderCombobox(select, {
+        const { expectSelection, rerenderCombobox } = renderCombobox(select, {
           value,
         });
-        expect(inputEl.value).toEqual('Apple');
+        expectSelection('Apple');
         value = 'banana';
         rerenderCombobox({ value });
-        expect(inputEl.value).toEqual('Banana');
+        expectSelection('Banana');
       });
 
       testSingleSelect('Invalid option passed as value is not selected', () => {
         const value = 'jellybean';
-        const { inputEl } = renderCombobox(select, { value });
-        expect(inputEl.value).toEqual('');
+        const { expectSelection } = renderCombobox(select, { value });
+        expectSelection('');
       });
 
       testMultiSelect('Updating `value` updates the chips', () => {
         let value = ['apple', 'banana'];
-        const { queryChipsByName, rerenderCombobox } = renderCombobox(select, {
+        const { expectSelection, rerenderCombobox } = renderCombobox(select, {
           value,
         });
-        queryChipsByName(['Apple', 'Banana']).forEach(chip =>
-          expect(chip).toBeInTheDocument(),
-        );
+        expectSelection(['Apple', 'Banana']);
         value = ['banana', 'carrot'];
         rerenderCombobox({ value });
-        queryChipsByName(['Banana', 'Carrot']).forEach(chip =>
-          expect(chip).toBeInTheDocument(),
-        );
+        expectSelection(['Banana', 'Carrot']);
       });
 
       testMultiSelect('Invalid options are not selected', () => {
         const value = ['apple', 'jellybean'];
-        const { queryChipsByName } = renderCombobox(select, {
+        const { queryChipsByName, expectSelection } = renderCombobox(select, {
           value,
         });
-        const [appleChip, jellybeanChip] = queryChipsByName([
-          'Apple',
-          'Jellybean',
-        ]);
-        expect(appleChip).toBeInTheDocument();
+        expectSelection(['Apple']);
+        const jellybeanChip = queryChipsByName('Jellybean');
         expect(jellybeanChip).not.toBeInTheDocument();
       });
       /*  eslint-enable jest/no-standalone-expect */
@@ -249,16 +262,6 @@ describe('packages/combobox', () => {
       const { menuContainerEl } = getMenuElements();
       expect(menuContainerEl).not.toBeNull();
       expect(menuContainerEl).toBeInTheDocument();
-    });
-
-    test(`Menu renders with correct checkmark for ${select} select`, () => {
-      const { openMenu } = renderCombobox(select);
-      const { optionElements } = openMenu();
-      const checkElementTag = select === 'single' ? 'svg' : 'input';
-      const areAllChecksCorrect = Array.from(optionElements).every(
-        element => !isNull(element.querySelector(checkElementTag)),
-      );
-      expect(areAllChecksCorrect).toBeTruthy();
     });
 
     test('Menu closes on click-away', async () => {
@@ -350,16 +353,10 @@ describe('packages/combobox', () => {
     });
 
     test('Clicking an option sets selection', () => {
-      const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
+      const { openMenu, expectSelection } = renderCombobox(select);
       const { optionElements } = openMenu();
       userEvent.click(optionElements[2]);
-
-      if (select === 'single') {
-        expect(inputEl).toHaveValue('Carrot');
-      } else if (select === 'multiple') {
-        const carrotChip = queryChipsByName('Carrot');
-        expect(carrotChip).toBeInTheDocument();
-      }
+      expectSelection('Carrot');
     });
 
     testSingleSelect('Input value changes when a selection is made');
