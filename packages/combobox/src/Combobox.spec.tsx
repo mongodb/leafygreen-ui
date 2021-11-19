@@ -1,147 +1,10 @@
 /* eslint-disable jest/no-disabled-tests */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import React from 'react';
-import {
-  waitForElementToBeRemoved,
-  render,
-  queryByText,
-  act,
-} from '@testing-library/react';
+import { waitForElementToBeRemoved, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Combobox, ComboboxOption } from '.';
 import { axe } from 'jest-axe';
-import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
-import { OptionObject } from './util';
-import { isArray, isNull, isUndefined } from 'lodash';
-
-/**
- * Setup
- */
-
-type Select = 'single' | 'multiple';
-type renderComboboxProps = {
-  options?: Array<string | OptionObject>;
-} & BaseComboboxProps &
-  ComboboxMultiselectProps<boolean>;
-
-const defaultOptions: Array<OptionObject> = [
-  {
-    value: 'apple',
-    displayName: 'Apple',
-  },
-  {
-    value: 'banana',
-    displayName: 'Banana',
-  },
-  {
-    value: 'carrot',
-    displayName: 'Carrot',
-  },
-];
-
-const getComboboxJSX = (props?: renderComboboxProps) => {
-  const label = props?.label || 'Some label';
-  return (
-    <Combobox
-      data-testid="combobox-container"
-      label={label}
-      multiselect={props.multiselect}
-      {...props}
-    >
-      {props?.options.map(option => {
-        const value = typeof option === 'string' ? option : option.value;
-        const displayName =
-          typeof option === 'string' ? undefined : option.displayName;
-        return (
-          <ComboboxOption key={value} value={value} displayName={displayName} />
-        );
-      })}
-    </Combobox>
-  );
-};
-
-function renderCombobox(
-  select: Select = 'single',
-  props?: renderComboboxProps,
-) {
-  const options = props?.options || defaultOptions;
-  const multiselect = select === 'multiple';
-  props = { options, multiselect, ...props };
-  const renderResult = render(getComboboxJSX(props));
-  const containerEl = renderResult.getByTestId('combobox-container');
-  const labelEl = containerEl.getElementsByTagName('label')[0];
-  const comboboxEl = renderResult.getByRole('combobox');
-  const inputEl = containerEl.getElementsByTagName('input')[0];
-
-  // Menu elements won't exist until component is interacted with
-  const getMenuElements = () => {
-    const menuContainerEl = renderResult.queryByRole('listbox');
-    const popoverEl = menuContainerEl?.firstChild;
-    const menuEl = menuContainerEl?.getElementsByTagName('ul')[0];
-    const optionElements = menuContainerEl?.getElementsByTagName('li');
-
-    return {
-      menuContainerEl,
-      popoverEl,
-      menuEl,
-      optionElements,
-    };
-  };
-
-  const openMenu = () => {
-    userEvent.click(comboboxEl);
-    return getMenuElements();
-  };
-
-  const rerenderCombobox = (newProps: renderComboboxProps) =>
-    renderResult.rerender(getComboboxJSX({ ...props, ...newProps }));
-
-  function queryChipsByName(names: string): HTMLElement;
-  function queryChipsByName(names: Array<string>): Array<HTMLElement>;
-  function queryChipsByName(names) {
-    return typeof names === 'string'
-      ? queryByText(comboboxEl, names)
-      : names.map(name => queryByText(comboboxEl, name));
-  }
-
-  /**
-   * Asserts that options with the provided display name(s) are selected
-   * @param selection
-   * @returns
-   */
-  const expectSelection = (selection: string | Array<string>): void => {
-    if (select === 'single') {
-      if (isArray(selection)) {
-        throw new Error('Selection must be a string for single select');
-      }
-
-      return expect(inputEl).toHaveValue(selection);
-    } else {
-      if (isArray(selection)) {
-        const allChips = queryChipsByName(selection);
-        allChips.forEach(chip => expect(chip).toBeInTheDocument());
-      } else {
-        const selectionChip = queryChipsByName(selection);
-        return expect(selectionChip).toBeInTheDocument();
-      }
-    }
-  };
-
-  return {
-    ...renderResult,
-    rerenderCombobox,
-    queryChipsByName,
-    getMenuElements,
-    openMenu,
-    expectSelection,
-    containerEl,
-    labelEl,
-    comboboxEl,
-    inputEl,
-  };
-}
-
-const testif = (condition: boolean) => (condition ? test : test.skip);
+import { isUndefined } from 'lodash';
+import { renderCombobox, Select, testif } from './ComboboxTestUtils';
 
 /**
  * Tests
@@ -198,6 +61,28 @@ describe('packages/combobox', () => {
       expectSelection(['Apple', 'Banana']);
     });
 
+    testSingleSelect(
+      'Selected single select option renders with a checkmark icon',
+      () => {
+        const initialValue = 'apple';
+        const { openMenu } = renderCombobox('single', { initialValue });
+        const { selectedElements } = openMenu();
+        expect(selectedElements?.querySelector('svg')).not.toBeNull();
+      },
+    );
+
+    testMultiSelect(
+      'Each multiple select option renders with a checkbox input',
+      () => {
+        const initialValue = ['apple', 'banana'];
+        const { openMenu } = renderCombobox('multiple', { initialValue });
+        const { selectedElements } = openMenu();
+        expect(
+          selectedElements?.every(element => element?.querySelector('input')),
+        ).toBeTruthy();
+      },
+    );
+
     describe('When value is controlled', () => {
       /* eslint-disable jest/no-standalone-expect */
       testSingleSelect('Text input renders with value update', () => {
@@ -234,8 +119,7 @@ describe('packages/combobox', () => {
           value,
         });
         expectSelection(['Apple']);
-        const jellybeanChip = queryChipsByName('Jellybean');
-        expect(jellybeanChip).not.toBeInTheDocument();
+        expect(queryChipsByName('Jellybean')).not.toBeInTheDocument();
       });
       /*  eslint-enable jest/no-standalone-expect */
     });
@@ -267,7 +151,7 @@ describe('packages/combobox', () => {
     test('Menu closes on click-away', async () => {
       const { containerEl, openMenu } = renderCombobox(select);
       const { menuContainerEl } = openMenu();
-      userEvent.click(containerEl.parentElement);
+      userEvent.click(containerEl.parentElement!);
       await waitForElementToBeRemoved(menuContainerEl);
       expect(menuContainerEl).not.toBeInTheDocument();
     });
@@ -306,7 +190,6 @@ describe('packages/combobox', () => {
       userEvent.type(containerEl, '{arrowdown}');
       userEvent.type(containerEl, '{arrowdown}');
       userEvent.type(containerEl, '{arrowup}');
-
       const selectedOption = await findByRole('option', {
         selected: true,
       });
