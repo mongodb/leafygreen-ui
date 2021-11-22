@@ -1,9 +1,14 @@
 /* eslint-disable jest/no-disabled-tests */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import { waitForElementToBeRemoved, act } from '@testing-library/react';
+import {
+  waitForElementToBeRemoved,
+  act,
+  fireEvent,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import { isUndefined } from 'lodash';
+import { keyMap } from '../../typography/node_modules/@leafygreen-ui/lib/dist';
 import { renderCombobox, Select, testif } from './ComboboxTestUtils';
 
 /**
@@ -47,6 +52,35 @@ describe('packages/combobox', () => {
     describe('on error', () => {
       test.todo('Error message is rendered');
       test.todo('Error Icon is rendered');
+    });
+
+    describe('Clear button', () => {
+      /* eslint-disable jest/no-standalone-expect */
+      testSingleSelect(
+        'Clear button is rendered when selection is provided',
+        () => {
+          const { clearButtonEl } = renderCombobox(select, {
+            initialValue: 'apple',
+          });
+          expect(clearButtonEl).toBeInTheDocument();
+        },
+      );
+
+      testMultiSelect(
+        'Clear button is rendered when selection is provided',
+        () => {
+          const { clearButtonEl } = renderCombobox(select, {
+            initialValue: ['apple'],
+          });
+          expect(clearButtonEl).toBeInTheDocument();
+        },
+      );
+
+      test('Clear button is not rendered when there is no selection', () => {
+        const { clearButtonEl } = renderCombobox(select);
+        expect(clearButtonEl).not.toBeInTheDocument();
+      });
+      /* eslint-enable jest/no-standalone-expect */
     });
 
     testSingleSelect('Text input renders with initial value', () => {
@@ -164,6 +198,46 @@ describe('packages/combobox', () => {
       expect(menuContainerEl).toBeInTheDocument();
     });
 
+    test('Clicking an option sets selection', () => {
+      const { openMenu, expectSelection } = renderCombobox(select);
+      const { optionElements } = openMenu();
+      userEvent.click(optionElements[2]);
+      expectSelection('Carrot');
+    });
+
+    testSingleSelect(
+      'Input value is set to selection value when menu closes',
+      () => {
+        const initialValue = 'apple';
+        const { expectSelection, inputEl } = renderCombobox(select, {
+          initialValue,
+        });
+        userEvent.type(inputEl, '{backspace}{backspace}{esc}');
+        expectSelection('Apple');
+      },
+    );
+
+    testMultiSelect('Clicking chip button removes option', () => {
+      const initialValue = ['apple', 'banana', 'carrot'];
+      const { queryChipsByName, expectSelection } = renderCombobox(select, {
+        initialValue,
+      });
+      const appleChip = queryChipsByName('Apple');
+      userEvent.click(appleChip.querySelector('button'));
+      expectSelection(['banana', 'carrot'], true);
+    });
+
+    test('Clicking clear all button clears selection', () => {
+      const initialValue =
+        select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
+      const { expectSelection, clearButtonEl } = renderCombobox(select, {
+        initialValue,
+      });
+
+      userEvent.click(clearButtonEl);
+      expectSelection(null);
+    });
+
     /**
      * Keyboard navigation
      */
@@ -187,9 +261,7 @@ describe('packages/combobox', () => {
     test.skip('Up arrow moves highlight up', async () => {
       const { containerEl, openMenu, findByRole } = renderCombobox(select);
       openMenu();
-      userEvent.type(containerEl, '{arrowdown}');
-      userEvent.type(containerEl, '{arrowdown}');
-      userEvent.type(containerEl, '{arrowup}');
+      userEvent.type(containerEl, '{arrowdown}{arrowdown}{arrowup}');
       const selectedOption = await findByRole('option', {
         selected: true,
       });
@@ -226,6 +298,71 @@ describe('packages/combobox', () => {
     test.todo('Enter key selects highlighted option');
     test.todo('Space key selects highlighted option');
 
+    describe('Left & Right arrow keys', () => {
+      /* eslint-disable jest/no-standalone-expect */
+      testMultiSelect(
+        'Left arrow focuses last chip when input has focus',
+        () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { queryChipsByName, comboboxEl } = renderCombobox(select, {
+            initialValue,
+          });
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const carrotChip = queryChipsByName('Carrot');
+          expect(carrotChip.contains(document.activeElement)).toBeTruthy();
+        },
+      );
+
+      testMultiSelect(
+        'Right arrow focuses clear button when input has focus',
+        () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { comboboxEl, clearButtonEl } = renderCombobox(select, {
+            initialValue,
+          });
+          userEvent.type(comboboxEl, '{arrowright}');
+          expect(clearButtonEl).toHaveFocus();
+        },
+      );
+      /* eslint-enable jest/no-standalone-expect */
+    });
+
+    describe('Remove chips with keyboard', () => {
+      /* eslint-disable jest/no-standalone-expect */
+      let comboboxEl: HTMLElement,
+        expectSelection: (
+          expectedSelection: string | Array<string>,
+          exact?: boolean,
+        ) => void,
+        chipButton: HTMLElement;
+
+      beforeEach(() => {
+        const initialValue = ['apple', 'banana', 'carrot'];
+        const combobox = renderCombobox(select, {
+          initialValue,
+        });
+        comboboxEl = combobox.comboboxEl;
+        expectSelection = combobox.expectSelection;
+        userEvent.type(comboboxEl, '{arrowleft}');
+        const chip = combobox.queryChipsByName('Carrot');
+        chipButton = chip.querySelector('button');
+      });
+
+      testMultiSelect('Enter key', () => {
+        userEvent.type(chipButton, '{enter}');
+        expectSelection(['apple', 'banana'], true);
+      });
+      testMultiSelect('Delete key', () => {
+        userEvent.type(chipButton, '{backspace}');
+        expectSelection(['apple', 'banana'], true);
+      });
+      testMultiSelect('Space key', () => {
+        userEvent.type(chipButton, '{space}');
+        expectSelection(['apple', 'banana'], true);
+      });
+      /* eslint-enable jest/no-standalone-expect */
+    });
+
     // Filtering
     test('Menu options list narrows when text is entered', async () => {
       const { inputEl, openMenu, findAllByRole } = renderCombobox(select);
@@ -234,19 +371,6 @@ describe('packages/combobox', () => {
       const optionElements = await findAllByRole('option');
       expect(optionElements.length).toEqual(1);
     });
-
-    test('Clicking an option sets selection', () => {
-      const { openMenu, expectSelection } = renderCombobox(select);
-      const { optionElements } = openMenu();
-      userEvent.click(optionElements[2]);
-      expectSelection('Carrot');
-    });
-
-    testSingleSelect('Input value changes when a selection is made');
-    testSingleSelect('Input value is set to selection value when menu closes');
-
-    testMultiSelect('Left & Right arrow keys highlight chips');
-    testMultiSelect('Removing all options via chip buttons clears selection');
   });
 
   describe('Chips', () => {

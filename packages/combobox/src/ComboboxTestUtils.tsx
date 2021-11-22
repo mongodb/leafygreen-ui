@@ -3,13 +3,14 @@ import {
   render,
   queryByText,
   queryByAttribute,
+  queryAllByTestId,
   queryAllByAttribute,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxOption } from '.';
 import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
 import { OptionObject } from './util';
-import { isArray } from 'lodash';
+import { isArray, isNull } from 'lodash';
 
 export type Select = 'single' | 'multiple';
 type renderComboboxProps = {
@@ -76,6 +77,7 @@ export function renderCombobox<T extends Select>(
   const labelEl = containerEl.getElementsByTagName('label')[0];
   const comboboxEl = renderResult.getByRole('combobox');
   const inputEl = containerEl.getElementsByTagName('input')[0];
+  const clearButtonEl = renderResult.queryByLabelText('Clear selection');
 
   /**
    * Since menu elements won't exist until component is interacted with,
@@ -125,34 +127,79 @@ export function renderCombobox<T extends Select>(
    * @param names: `string` | `Array<string>`
    * @returns A single HTMLElement or array of HTMLElements
    */
-  function queryChipsByName(names: string): HTMLElement;
-  function queryChipsByName(names: Array<string>): Array<HTMLElement>;
-  function queryChipsByName(names: any): any {
-    return typeof names === 'string'
-      ? queryByText(comboboxEl, names)
-      : names.map((name: any) => queryByText(comboboxEl, name));
+  function queryChipsByName(names: string): HTMLElement | null;
+  function queryChipsByName(names: Array<string>): Array<HTMLElement> | null;
+  function queryChipsByName(
+    names: string | Array<string>,
+  ): HTMLElement | Array<HTMLElement> | null {
+    if (typeof names === 'string') {
+      const span = queryByText(comboboxEl, names);
+      return span ? span.parentElement : null;
+    } else {
+      const spans = names
+        .map((name: any) => queryByText(comboboxEl, name))
+        .filter(span => !isNull(span))
+        .map(span => span?.parentElement);
+      return spans.length > 0 ? (spans as Array<HTMLElement>) : null;
+    }
   }
 
   /**
-   * Asserts that options with the provided display name(s) are selected
-   * @param selection
+   * @returns all chip elements
+   */
+  function queryAllChips(): Array<HTMLElement> {
+    return queryAllByAttribute(
+      'data-leafygreen-ui',
+      containerEl,
+      'combobox-chip',
+    );
+  }
+
+  /**
+   * Asserts that option(s) with the provided display name(s) are selected
+   * @param expectedSelection The option(s) expected to be selected
+   * @param exact Is the expected selection the exact selection or just a subset?
    * @returns
    */
-  const expectSelection = (selection: string | Array<string>): void => {
-    if (select === 'single') {
-      if (isArray(selection)) {
-        throw new Error('Selection must be a string for single select');
-      }
+  const expectSelection = (
+    expectedSelection: string | Array<string> | null,
+    exact?: boolean,
+  ): void => {
+    switch (select) {
+      case 'single':
+        {
+          if (isArray(expectedSelection)) {
+            throw new Error('Selection must be a string for single select');
+          }
 
-      return expect(inputEl).toHaveValue(selection);
-    } else {
-      if (isArray(selection)) {
-        const allChips = queryChipsByName(selection);
-        allChips.forEach(chip => expect(chip).toBeInTheDocument());
-      } else {
-        const selectionChip = queryChipsByName(selection);
-        return expect(selectionChip).toBeInTheDocument();
-      }
+          if (expectedSelection) {
+            expect(inputEl).toHaveValue(expectedSelection);
+          } else {
+            expect(inputEl).toHaveValue('');
+          }
+        }
+        break;
+      case 'multiple':
+        {
+          if (isArray(expectedSelection)) {
+            const allChips = queryChipsByName(expectedSelection);
+            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+
+            if (exact) {
+              expect(queryAllChips()).toHaveLength(expectedSelection.length);
+            }
+          } else if (expectedSelection) {
+            const selectionChip = queryChipsByName(expectedSelection);
+            expect(selectionChip).toBeInTheDocument();
+
+            if (exact) {
+              expect(queryAllChips()).toHaveLength(1);
+            }
+          } else {
+            expect(queryAllChips()).toHaveLength(0);
+          }
+        }
+        break;
     }
   };
 
@@ -160,6 +207,7 @@ export function renderCombobox<T extends Select>(
     ...renderResult,
     rerenderCombobox,
     queryChipsByName,
+    queryAllChips,
     getMenuElements,
     openMenu,
     expectSelection,
@@ -167,6 +215,7 @@ export function renderCombobox<T extends Select>(
     labelEl,
     comboboxEl,
     inputEl,
+    clearButtonEl,
   };
 }
 

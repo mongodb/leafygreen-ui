@@ -5,7 +5,7 @@ import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { keyMap } from '@leafygreen-ui/lib';
+import { createDataProp, keyMap } from '@leafygreen-ui/lib';
 
 const chipWrapperStyle = ({
   darkMode,
@@ -164,8 +164,15 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       }
     };
 
+    const dataProp = createDataProp('combobox-chip');
+
     return (
-      <span ref={forwardedRef} className={chipWrapperStyle({ darkMode, size })}>
+      <span
+        data-test-id="lg-combobox-chip"
+        {...dataProp.prop}
+        ref={forwardedRef}
+        className={chipWrapperStyle({ darkMode, size })}
+      >
         <span className={chipText}>
           {truncatedName ? (
             <InlineDefinition definition={displayName} align="bottom">
