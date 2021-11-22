@@ -18,7 +18,7 @@ export default function createIconComponent<
     const SVGComponent = glyphs[glyph];
     let iconSize = sizeMap[Size.Default];
 
-    if(size !== undefined ){
+    if (size !== undefined) {
       iconSize = typeof size === 'number' ? size : sizeMap[size];
     }
 
