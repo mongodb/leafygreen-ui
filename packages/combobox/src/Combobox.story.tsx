@@ -180,9 +180,9 @@ storiesOf('Combobox', module)
     );
   })
   .add('Controlled single select', () => {
-    const [selection, setSelection] = useState('apple');
+    const [selection, setSelection] = useState<string | null>('apple');
 
-    const handleChange = (value: string) => {
+    const handleChange = (value: string | null) => {
       console.log({ value });
       setSelection(value);
     };

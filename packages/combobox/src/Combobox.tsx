@@ -206,8 +206,8 @@ export default function Combobox<M extends boolean>({
   ]);
 
   const isValueValid = useCallback(
-    (value: string): boolean => {
-      return !!allOptions.find(opt => opt.value === value);
+    (value: string | null): boolean => {
+      return value ? !!allOptions.find(opt => opt.value === value) : false;
     },
     [allOptions],
   );
@@ -452,7 +452,7 @@ export default function Combobox<M extends boolean>({
         case 'next':
           if (isFocusOnInput) {
             clearButtonRef.current?.focus();
-          } else if (isFocusOnChip) {
+          } else if (isFocusOnChip && selection) {
             const activeChipIndex = getActiveChipIndex();
 
             if (activeChipIndex === selection?.length - 1) {
@@ -460,7 +460,7 @@ export default function Combobox<M extends boolean>({
               setInputFocus();
             } else {
               // if focus is on chip, go to next chip
-              const nextChipValue = selection[activeChipIndex + 1];
+              const nextChipValue = selection?.[activeChipIndex + 1];
               setFocusedChip(nextChipValue);
               break;
             }
@@ -541,7 +541,7 @@ export default function Combobox<M extends boolean>({
           initialValue.filter(value => isValueValid(value)) ?? [];
         setSelection(filteredValue as SelectValueType<M>);
       } else {
-        if (isValueValid(initialValue)) {
+        if (isValueValid(initialValue as string)) {
           setSelection(initialValue);
         }
       }
@@ -561,7 +561,9 @@ export default function Combobox<M extends boolean>({
         const newSelection = value.filter(isValueValid) as SelectValueType<M>;
         setSelection(newSelection);
       } else {
-        setSelection(isValueValid(value) ? value : null);
+        setSelection(
+          isValueValid(value as SelectValueType<false>) ? value : null,
+        );
       }
     }
   }, [isMultiselect, isValueValid, value]);
@@ -576,8 +578,12 @@ export default function Combobox<M extends boolean>({
           (onChange as onChangeType<true>)?.(selection);
         } else if (!isMultiselect(selection)) {
           // Update the text input
-          setInputValue(getDisplayNameForValue(selection) ?? '');
-          (onChange as onChangeType<false>)?.(selection);
+          setInputValue(
+            getDisplayNameForValue(selection as SelectValueType<false>) ?? '',
+          );
+          (onChange as onChangeType<false>)?.(
+            selection as SelectValueType<false>,
+          );
           closeMenu();
         }
       } else {
@@ -597,7 +603,9 @@ export default function Combobox<M extends boolean>({
   // when the menu closes, update the value
   useEffect(() => {
     if (!isOpen && !isMultiselect(selection) && selection === prevSelection) {
-      setInputValue(getDisplayNameForValue(selection) ?? '');
+      setInputValue(
+        getDisplayNameForValue(selection as SelectValueType<false>) ?? '',
+      );
     }
   }, [getDisplayNameForValue, isMultiselect, isOpen, prevSelection, selection]);
 
