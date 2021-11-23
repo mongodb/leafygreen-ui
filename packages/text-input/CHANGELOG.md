@@ -1,5 +1,18 @@
 # @leafygreen-ui/text-input
 
+## 6.1.0
+
+### Minor Changes
+
+- d661688: Adds validation callback for TextArea and TextInput
+
+### Patch Changes
+
+- Updated dependencies [d661688]
+- Updated dependencies [d661688]
+  - @leafygreen-ui/lib@9.1.0
+  - @leafygreen-ui/hooks@7.1.0
+
 ## 6.0.5
 
 ### Patch Changes
