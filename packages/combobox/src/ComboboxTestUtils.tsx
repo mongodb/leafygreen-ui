@@ -4,6 +4,7 @@ import {
   queryByText,
   queryByAttribute,
   queryAllByAttribute,
+  waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxOption } from '.';
@@ -181,19 +182,24 @@ export function renderCombobox<T extends Select>(
       case 'multiple':
         {
           if (isArray(expectedSelection)) {
-            const allChips = queryChipsByName(expectedSelection);
-            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+            waitFor(() => {
+              const allChips = queryChipsByName(expectedSelection);
+              allChips?.forEach(chip => expect(chip).toBeInTheDocument());
 
-            if (exact) {
-              expect(queryAllChips()).toHaveLength(expectedSelection.length);
-            }
-          } else if (expectedSelection) {
-            const selectionChip = queryChipsByName(expectedSelection);
-            expect(selectionChip).toBeInTheDocument();
+              if (exact) {
+                expect(queryAllChips()).toHaveLength(expectedSelection.length);
+              }
+            });
+          } else if (!isNull(expectedSelection)) {
+            waitFor(() => {
+              const selectionChip = queryChipsByName(expectedSelection);
+              expect(selectionChip).not.toBeNull();
+              expect(selectionChip).toBeInTheDocument();
 
-            if (exact) {
-              expect(queryAllChips()).toHaveLength(1);
-            }
+              if (exact) {
+                expect(queryAllChips()).toHaveLength(1);
+              }
+            });
           } else {
             expect(queryAllChips()).toHaveLength(0);
           }
