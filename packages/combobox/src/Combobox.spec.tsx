@@ -1,14 +1,9 @@
 /* eslint-disable jest/no-disabled-tests */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import {
-  waitForElementToBeRemoved,
-  act,
-  fireEvent,
-} from '@testing-library/react';
+import { waitForElementToBeRemoved, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import { isUndefined } from 'lodash';
-import { keyMap } from '../../typography/node_modules/@leafygreen-ui/lib/dist';
 import { renderCombobox, Select, testif } from './ComboboxTestUtils';
 
 /**
@@ -233,7 +228,6 @@ describe('packages/combobox', () => {
       const { expectSelection, clearButtonEl } = renderCombobox(select, {
         initialValue,
       });
-
       userEvent.click(clearButtonEl);
       expectSelection(null);
     });
@@ -247,25 +241,40 @@ describe('packages/combobox', () => {
       expect(optionElements[0]).toHaveAttribute('aria-selected', 'true');
     });
 
-    test.skip('Down arrow moves highlight down', async () => {
-      const { containerEl, openMenu, findByRole } = renderCombobox(select);
+    test('Down arrow moves highlight down', async () => {
+      const { comboboxEl, openMenu, findByRole } = renderCombobox(select);
       openMenu();
-      userEvent.type(containerEl, '{arrowdown}');
-
-      const selectedOption = await findByRole('option', {
+      userEvent.type(comboboxEl, '{arrowdown}');
+      const highlight = await findByRole('option', {
         selected: true,
       });
-      expect(selectedOption).toHaveTextContent('Banana');
+      expect(highlight).toHaveTextContent('Banana');
     });
 
-    test.skip('Up arrow moves highlight up', async () => {
-      const { containerEl, openMenu, findByRole } = renderCombobox(select);
+    test('Up arrow moves highlight up', async () => {
+      const { comboboxEl, openMenu, findByRole } = renderCombobox(select);
       openMenu();
-      userEvent.type(containerEl, '{arrowdown}{arrowdown}{arrowup}');
-      const selectedOption = await findByRole('option', {
+      userEvent.type(comboboxEl, '{arrowdown}{arrowdown}{arrowup}');
+      const highlight = await findByRole('option', {
         selected: true,
       });
-      expect(selectedOption).toHaveTextContent('Banana');
+      expect(highlight).toHaveTextContent('Banana');
+    });
+
+    test('Enter key selects highlighted option', () => {
+      const { comboboxEl, openMenu, expectSelection } = renderCombobox(select);
+      const { menuContainerEl } = openMenu();
+      userEvent.type(comboboxEl, '{arrowdown}');
+      userEvent.type(menuContainerEl, '{enter}');
+      expectSelection('Banana');
+    });
+
+    test('Space key selects highlighted option', () => {
+      const { comboboxEl, openMenu, expectSelection } = renderCombobox(select);
+      const { menuContainerEl } = openMenu();
+      userEvent.type(comboboxEl, '{arrowdown}');
+      userEvent.type(menuContainerEl, '{space}');
+      expectSelection('Banana');
     });
 
     test('Escape key closes menu', async () => {
@@ -294,9 +303,6 @@ describe('packages/combobox', () => {
       const reOpenedMenu = await findByRole('listbox');
       expect(reOpenedMenu).toBeInTheDocument();
     });
-
-    test.todo('Enter key selects highlighted option');
-    test.todo('Space key selects highlighted option');
 
     describe('Left & Right arrow keys', () => {
       /* eslint-disable jest/no-standalone-expect */
