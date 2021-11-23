@@ -218,7 +218,11 @@ describe('packages/combobox', () => {
         initialValue,
       });
       const appleChip = queryChipsByName('Apple');
-      userEvent.click(appleChip.querySelector('button'));
+      expect(appleChip).not.toBeNull();
+      const appleChipButton = (appleChip as HTMLElement).querySelector(
+        'button',
+      ) as HTMLElement;
+      userEvent.click(appleChipButton);
       expectSelection(['banana', 'carrot'], true);
     });
 
@@ -228,7 +232,8 @@ describe('packages/combobox', () => {
       const { expectSelection, clearButtonEl } = renderCombobox(select, {
         initialValue,
       });
-      userEvent.click(clearButtonEl);
+      expect(clearButtonEl).not.toBeNull();
+      userEvent.click(clearButtonEl as HTMLElement);
       expectSelection(null);
     });
 
@@ -315,7 +320,10 @@ describe('packages/combobox', () => {
           });
           userEvent.type(comboboxEl, '{arrowleft}');
           const carrotChip = queryChipsByName('Carrot');
-          expect(carrotChip.contains(document.activeElement)).toBeTruthy();
+          expect(carrotChip).not.toBeNull();
+          expect(
+            (carrotChip as HTMLElement).contains(document.activeElement),
+          ).toBeTruthy();
         },
       );
 
@@ -351,7 +359,8 @@ describe('packages/combobox', () => {
         expectSelection = combobox.expectSelection;
         userEvent.type(comboboxEl, '{arrowleft}');
         const chip = combobox.queryChipsByName('Carrot');
-        chipButton = chip.querySelector('button');
+        if (!chip) throw new Error('Carrot Chip not found');
+        chipButton = chip.querySelector('button') as HTMLElement;
       });
 
       testMultiSelect('Enter key', () => {

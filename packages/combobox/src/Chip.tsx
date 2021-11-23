@@ -102,7 +102,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       darkMode,
       size,
       chipTruncationLocation,
-      chipCharacterLimit,
+      chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
 
     const isTruncated =
