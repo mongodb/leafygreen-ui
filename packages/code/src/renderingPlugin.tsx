@@ -390,7 +390,7 @@ export function TableContent({ lines }: TableContentProps) {
   return (
     <>
       {trimmedLines.map((line, index) => {
-        const currentLineNumber = lineOffset ? index + lineOffset : index + 1;
+        const currentLineNumber = index + lineOffset || 1;
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
         let displayLineNumber;
