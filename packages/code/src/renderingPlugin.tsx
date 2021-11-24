@@ -353,7 +353,12 @@ interface TableContentProps {
 }
 
 export function TableContent({ lines }: TableContentProps) {
-  const { highlightLines, showLineNumbers, darkMode } = useSyntaxContext();
+  const {
+    highlightLines,
+    showLineNumbers,
+    darkMode,
+    lineOffset,
+  } = useSyntaxContext();
   const trimmedLines = [...lines];
 
   // Strip empty lines from the beginning of code blocks
@@ -385,7 +390,7 @@ export function TableContent({ lines }: TableContentProps) {
   return (
     <>
       {trimmedLines.map((line, index) => {
-        const currentLineNumber = index + 1;
+        const currentLineNumber = lineOffset ? index + lineOffset : index + 1;
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
         let displayLineNumber;

@@ -103,6 +103,7 @@ const knobsConfig: KnobsConfigInterface<{
   copyable: boolean;
   chromeTitle: string;
   showLineNumbers: boolean;
+  lineOffset: number;
   darkMode: boolean;
   language: Language;
   children: string;
@@ -139,6 +140,11 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'boolean',
     default: false,
     label: 'Show Line Numbers',
+  },
+  lineOffset: {
+    type: 'number',
+    default: 1,
+    label: "First row's line number value",
   },
   darkMode: {
     type: 'boolean',

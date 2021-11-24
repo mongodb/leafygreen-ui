@@ -5,6 +5,7 @@ interface SyntaxContext {
   highlightLines: LineHighlightingDefinition;
   showLineNumbers?: boolean;
   darkMode: boolean;
+  lineOffset?: number;
 }
 
 export const SyntaxContext = createContext<SyntaxContext>({

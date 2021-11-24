@@ -49,6 +49,13 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   showLineNumbers?: boolean;
 
   /**
+   * Specifies the number by which to start line numbering.
+   *
+   * default: 0
+   */
+  lineOffset?: number;
+
+  /**
    * An array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);
    */
   highlightLines?: LineHighlightingDefinition;
