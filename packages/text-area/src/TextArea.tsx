@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 export const State = {
@@ -128,6 +128,7 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
   description?: string;
   state?: State;
   errorMessage?: string;
+  handleValidation?: (value: string) => void;
 };
 
 type AriaLabels = 'label' | 'aria-labelledby';
@@ -147,6 +148,7 @@ const TextArea: React.ComponentType<
     id: idProp,
     value: controlledValue,
     onChange,
+    handleValidation,
     'aria-labelledby': ariaLabelledby,
     ...rest
   }: TextAreaProps,
@@ -159,6 +161,9 @@ const TextArea: React.ComponentType<
   const [uncontrolledValue, setValue] = useState('');
   const value = isControlled ? controlledValue : uncontrolledValue;
 
+  // Validation
+  const validation = useValidation<HTMLTextAreaElement>(handleValidation);
+
   const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (onChange) {
       onChange(e);
@@ -167,6 +172,8 @@ const TextArea: React.ComponentType<
     if (!isControlled) {
       setValue(e.target.value);
     }
+
+    validation.onChange(e);
   };
 
   if (!label && !ariaLabelledby) {
@@ -203,6 +210,7 @@ const TextArea: React.ComponentType<
           })}
           disabled={disabled}
           onChange={onValueChange}
+          onBlur={validation.onBlur}
           value={value}
         />
       </InteractionRing>
