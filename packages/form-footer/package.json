@@ -1,0 +1,24 @@
+
+  {
+    "name": "@leafygreen-ui/form-footer",
+    "version": "0.9.0",
+    "description": "leafyGreen UI Kit Form Footer",
+    "main": "./dist/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/index.d.ts",
+    "typesVersions": {
+      "<3.9": { "*": ["ts3.4/*"] }
+    },
+    "scripts": {
+      "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    },
+    "license": "Apache-2.0",
+    "publishConfig": {
+      "access": "public"
+    },
+    "dependencies": {
+      "@leafygreen-ui/lib": "^6.1.0",
+      "@leafygreen-ui/banner": "^3.0.9",
+      "@leafygreen-ui/button": "^12.0.5"
+    }
+  }

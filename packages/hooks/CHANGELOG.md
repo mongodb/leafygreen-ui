@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.1.0
+
+### Minor Changes
+
+- d661688: Adds a useValidation hook, used in TextArea and TextInput
+
 ## 7.0.0
 
 ### Major Changes
