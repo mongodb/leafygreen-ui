@@ -193,6 +193,8 @@ describe('packages/combobox', () => {
       expect(menuContainerEl).toBeInTheDocument();
     });
 
+    testSingleSelect('Clicking selected option closes menu');
+
     test('Clicking an option sets selection', () => {
       const { openMenu, expectSelection } = renderCombobox(select);
       const { optionElements } = openMenu();
@@ -212,7 +214,7 @@ describe('packages/combobox', () => {
       },
     );
 
-    testMultiSelect('Clicking chip button removes option', () => {
+    testMultiSelect('Clicking chip X button removes option', () => {
       const initialValue = ['apple', 'banana', 'carrot'];
       const { queryChipsByName, expectSelection } = renderCombobox(select, {
         initialValue,
@@ -236,6 +238,8 @@ describe('packages/combobox', () => {
       userEvent.click(clearButtonEl as HTMLElement);
       expectSelection(null);
     });
+
+    test.todo('Clearing selection should re-validate');
 
     /**
      * Keyboard navigation
