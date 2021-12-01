@@ -103,7 +103,7 @@ export interface BaseComboboxProps {
   searchLoadingMessage?: string;
   onFilter?: (value: string) => void;
   clearable?: boolean;
-  onClear?: (e: MouseEvent) => void;
+  onClear?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   filteredOptions?: Array<string>;
   className?: string;
   chipTruncationLocation?: TrunctationLocation;

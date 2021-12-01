@@ -253,6 +253,10 @@ export default function Combobox<M extends boolean>({
             const setSelected = () => {
               setFocusedOption(value);
               updateSelection(value);
+
+              if (value === selection) {
+                closeMenu();
+              }
             };
 
             const optionRef = getOptionRef(value);
@@ -337,12 +341,20 @@ export default function Combobox<M extends boolean>({
   ]);
 
   const renderedInputIcons = useMemo(() => {
+    const handleClearButtonClick = (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    ) => {
+      updateSelection(null);
+      onClear?.(e);
+      onFilter?.('');
+    };
+
     return (
       <>
         {clearable && doesSelectionExist && (
           <IconButton
             ref={clearButtonRef}
-            onClick={() => updateSelection(null)}
+            onClick={handleClearButtonClick}
             aria-label="Clear selection"
             onFocus={handleClearButtonFocus}
             className={clearButton}
@@ -357,7 +369,14 @@ export default function Combobox<M extends boolean>({
         )}
       </>
     );
-  }, [state, clearable, doesSelectionExist, updateSelection]);
+  }, [
+    clearable,
+    doesSelectionExist,
+    state,
+    updateSelection,
+    onClear,
+    onFilter,
+  ]);
 
   // Do any of the options have an icon?
   const withIcons = useMemo(() => allOptions.some(opt => opt.hasGlyph), [
