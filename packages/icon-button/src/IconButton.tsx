@@ -128,11 +128,28 @@ const disabledStyle = {
   [Mode.Light]: css`
     color: ${uiColors.gray.light2};
     pointer-events: none;
+    background-color: rgba(255, 255, 255, 0);
+
+    &:focus {
+      color: ${uiColors.gray.light2};
+      &:before {
+        background-color: ${uiColors.gray.light1};
+      }
+    }
   `,
 
   [Mode.Dark]: css`
     color: ${uiColors.gray.dark2};
     pointer-events: none;
+    background-color: rgba(255, 255, 255, 0);
+
+    &:focus {
+      color: ${uiColors.gray.dark2};
+
+      &:before {
+        background-color: ${uiColors.gray.dark1};
+      }
+    }
   `,
 } as const;
 
@@ -173,7 +190,8 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: Size | number;
   title?: string | null | boolean;
 }
-interface BaseIconButtonProps {
+interface BaseIconButtonProps
+  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
@@ -183,6 +201,7 @@ interface BaseIconButtonProps {
   href?: string;
   'aria-label'?: string;
   'aria-labelledby'?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
@@ -240,16 +259,20 @@ const IconButton: ExtendableBox<
     const iconButtonProps = {
       ...rest,
       ref,
-      tabIndex: disabled ? -1 : 0,
+      tabIndex: 0,
+      // We don't set the `disabled` prop since we want the button to be focusable
       ['aria-disabled']: disabled,
+      // Override any actions if it's disabled
+      href: disabled ? undefined : rest.href,
+      onClick: disabled ? undefined : rest.onClick,
       className: cx(
         removeButtonStyle,
         baseIconButtonStyle,
         iconButtonSizes[size],
         iconButtonMode[mode],
         {
-          [disabledStyle[mode]]: disabled,
           [activeStyle[mode]]: active,
+          [disabledStyle[mode]]: disabled,
         },
         className,
       ),
