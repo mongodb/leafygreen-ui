@@ -80,6 +80,7 @@ const chipButton = css`
   background-color: transparent;
   color: var(--lg-combobox-chip-icon-color);
   cursor: pointer;
+  transition: background-color 100ms ease-in-out;
 
   &:before {
     content: '';

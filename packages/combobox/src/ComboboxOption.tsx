@@ -2,7 +2,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import React, { useCallback, useContext, useMemo } from 'react';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { useForwardedRef } from '@leafygreen-ui/hooks';
+import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Checkbox from '@leafygreen-ui/checkbox';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import {
@@ -64,7 +64,7 @@ const flexSpan = css`
 const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
 
-  > em {
+  > strong {
     font-weight: bold;
     font-style: normal;
   }
@@ -91,6 +91,7 @@ const InternalComboboxOption = React.forwardRef<
     const { multiselect, darkMode, withIcons, inputValue } = useContext(
       ComboboxContext,
     );
+    const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
     const optionRef = useForwardedRef(forwardedRef, null);
 
     const handleOptionClick = useCallback(
@@ -125,8 +126,9 @@ const InternalComboboxOption = React.forwardRef<
       if (multiselect) {
         const checkbox = (
           <Checkbox
+            // Using empty label due to this bug: https://jira.mongodb.org/browse/PD-1681
             label=""
-            aria-label={displayName}
+            aria-labelledby={optionTextId}
             checked={isSelected}
             tabIndex={-1}
             animate={false}
@@ -137,8 +139,8 @@ const InternalComboboxOption = React.forwardRef<
           <>
             <span className={flexSpan}>
               {withIcons ? renderedIcon : checkbox}
-              <span className={displayNameStyle(isSelected)}>
-                {wrapJSX(displayName, inputValue, 'em')}
+              <span id={optionTextId} className={displayNameStyle(isSelected)}>
+                {wrapJSX(displayName, inputValue, 'strong')}
               </span>
             </span>
             {withIcons && checkbox}

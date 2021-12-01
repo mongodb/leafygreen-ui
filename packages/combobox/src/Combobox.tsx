@@ -313,6 +313,9 @@ export default function Combobox<M extends boolean>({
         const displayName = getDisplayNameForValue(value);
 
         const onRemove = () => {
+          const index = getIndexOfValue(value);
+          const prevChipValue = getValueAtIndex(index) ?? getValueAtIndex(0);
+          setFocusedChip(prevChipValue ?? '');
           updateSelection(value);
         };
 
@@ -939,6 +942,7 @@ export default function Combobox<M extends boolean>({
             aria-expanded={isOpen}
             ref={menuRef}
             className={menuStyle({ maxHeight })}
+            onMouseDownCapture={e => e.preventDefault()}
           >
             {renderedMenuContents}
           </div>
