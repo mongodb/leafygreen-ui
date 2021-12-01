@@ -15,7 +15,7 @@ import { renderCombobox, Select, testif } from './ComboboxTestUtils';
 
 import { configure } from '@testing-library/react';
 configure({
-  getElementError: () => new Error(''),
+  getElementError: message => new Error(message ?? ''),
 });
 
 /**
@@ -324,9 +324,9 @@ describe('packages/combobox', () => {
       });
 
       test('Down arrow moves highlight down', async () => {
-        const { comboboxEl, openMenu, findByRole } = renderCombobox(select);
+        const { inputEl, openMenu, findByRole } = renderCombobox(select);
         openMenu();
-        userEvent.type(comboboxEl, '{arrowdown}');
+        userEvent.type(inputEl, '{arrowdown}');
         const highlight = await findByRole('option', {
           selected: true,
         });
@@ -334,9 +334,9 @@ describe('packages/combobox', () => {
       });
 
       test('Up arrow moves highlight up', async () => {
-        const { comboboxEl, openMenu, findByRole } = renderCombobox(select);
+        const { inputEl, openMenu, findByRole } = renderCombobox(select);
         openMenu();
-        userEvent.type(comboboxEl, '{arrowdown}{arrowdown}{arrowup}');
+        userEvent.type(inputEl, '{arrowdown}{arrowdown}{arrowup}');
         const highlight = await findByRole('option', {
           selected: true,
         });
@@ -344,29 +344,23 @@ describe('packages/combobox', () => {
       });
 
       test('Enter key selects highlighted option', () => {
-        const { comboboxEl, openMenu, expectSelection } = renderCombobox(
-          select,
-        );
-        const { menuContainerEl } = openMenu();
-        userEvent.type(comboboxEl, '{arrowdown}');
-        userEvent.type(menuContainerEl as HTMLElement, '{enter}');
+        const { inputEl, openMenu, expectSelection } = renderCombobox(select);
+        openMenu();
+        userEvent.type(inputEl as HTMLElement, '{arrowdown}{enter}');
         expectSelection('Banana');
       });
 
       test('Space key selects highlighted option', () => {
-        const { comboboxEl, openMenu, expectSelection } = renderCombobox(
-          select,
-        );
-        const { menuContainerEl } = openMenu();
-        userEvent.type(comboboxEl, '{arrowdown}');
-        userEvent.type(menuContainerEl as HTMLElement, '{space}');
+        const { inputEl, openMenu, expectSelection } = renderCombobox(select);
+        openMenu();
+        userEvent.type(inputEl, '{arrowdown}{space}');
         expectSelection('Banana');
       });
 
       test('Escape key closes menu', async () => {
-        const { containerEl, openMenu } = renderCombobox(select);
+        const { inputEl, openMenu } = renderCombobox(select);
         const { menuContainerEl } = openMenu();
-        userEvent.type(containerEl, '{esc}');
+        userEvent.type(inputEl, '{esc}');
         await waitForElementToBeRemoved(menuContainerEl);
         expect(menuContainerEl).not.toBeInTheDocument();
       });
@@ -380,12 +374,13 @@ describe('packages/combobox', () => {
       });
 
       test('Down arrow key opens menu when its closed', async () => {
-        const { containerEl, openMenu, findByRole } = renderCombobox(select);
+        const { inputEl, openMenu, findByRole } = renderCombobox(select);
         const { menuContainerEl } = openMenu();
-        userEvent.type(containerEl, '{esc}');
+        expect(inputEl).toHaveFocus();
+        userEvent.type(inputEl, '{esc}');
         await waitForElementToBeRemoved(menuContainerEl);
         expect(menuContainerEl).not.toBeInTheDocument();
-        userEvent.type(containerEl, '{arrowdown}');
+        userEvent.type(inputEl, '{arrowdown}');
         const reOpenedMenu = await findByRole('listbox');
         expect(reOpenedMenu).toBeInTheDocument();
       });
@@ -396,10 +391,10 @@ describe('packages/combobox', () => {
           'When cursor is at the beginning of input, Left arrow focuses last chip',
           () => {
             const initialValue = ['apple', 'banana', 'carrot'];
-            const { queryChipsByName, comboboxEl } = renderCombobox(select, {
+            const { queryChipsByName, inputEl } = renderCombobox(select, {
               initialValue,
             });
-            userEvent.type(comboboxEl, '{arrowleft}');
+            userEvent.type(inputEl, '{arrowleft}');
             // fireEvent.keyDown(comboboxEl, {keyCode: keyMap.ArrowLeft, key: 'ArrowLeft'})
             const carrotChip = queryChipsByName('Carrot');
             expect(carrotChip).not.toBeNull();
@@ -411,8 +406,8 @@ describe('packages/combobox', () => {
         testSingleSelect(
           'When cursor is at the beginning of input, Left arrow does nothing',
           () => {
-            const { inputEl, comboboxEl } = renderCombobox();
-            userEvent.type(comboboxEl, '{arrowleft}');
+            const { inputEl } = renderCombobox();
+            userEvent.type(inputEl, '{arrowleft}');
             expect(inputEl).toHaveFocus();
           },
         );

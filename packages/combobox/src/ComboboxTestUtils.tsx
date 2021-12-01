@@ -5,6 +5,7 @@ import {
   queryByAttribute,
   queryAllByAttribute,
   waitFor,
+  act,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxOption } from '.';
@@ -162,10 +163,10 @@ export function renderCombobox<T extends Select>(
    * @param exact Is the expected selection the exact selection or just a subset?
    * @returns
    */
-  const expectSelection = (
+  function expectSelection(
     expectedSelection: string | Array<string> | null,
     exact?: boolean,
-  ): void => {
+  ): void {
     switch (select) {
       case 'single':
         {
@@ -207,7 +208,7 @@ export function renderCombobox<T extends Select>(
         }
         break;
     }
-  };
+  }
 
   return {
     ...renderResult,
