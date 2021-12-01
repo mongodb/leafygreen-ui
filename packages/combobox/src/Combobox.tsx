@@ -722,6 +722,13 @@ export default function Combobox<M extends boolean>({
    * Event Handlers
    *
    */
+
+  // Prevent combobox from gaining focus by default
+  const handleInputMousedown = (e: React.MouseEvent) => e.preventDefault();
+
+  // Set focus to the input element on click
+  const handleInputClick = () => setInputFocus();
+
   // Fired when the wrapper gains focus
   const handleInputFocus = () => {
     scrollToEnd();
@@ -878,7 +885,8 @@ export default function Combobox<M extends boolean>({
             aria-owns={menuId}
             tabIndex={-1}
             className={comboboxStyle}
-            onClick={setInputFocus}
+            onMouseDown={handleInputMousedown}
+            onClick={handleInputClick}
             onFocus={handleInputFocus}
             onKeyDown={handleKeyDown}
             onTransitionEnd={handleTransitionEnd}

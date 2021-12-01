@@ -1,5 +1,5 @@
 import React from 'react';
-import { select } from '@storybook/addon-knobs';
+import { boolean, select } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/Icon';
@@ -45,6 +45,7 @@ storiesOf('Combobox', module)
             'unset',
           )}
           state={isError ? 'error' : 'none'}
+          disabled={boolean('Disabled', false)}
           errorMessage="No Pomegranates!"
           onChange={handleChange}
         >

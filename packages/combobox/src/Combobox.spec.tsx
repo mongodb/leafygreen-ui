@@ -1,16 +1,14 @@
 /* eslint-disable jest/no-disabled-tests */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import { keyMap } from '@leafygreen-ui/lib';
 import {
   waitForElementToBeRemoved,
   act,
-  fireEvent,
   waitFor,
   queryByText,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { initial, isUndefined } from 'lodash';
+import { isUndefined } from 'lodash';
 import { renderCombobox, Select, testif } from './ComboboxTestUtils';
 
 import { configure } from '@testing-library/react';
@@ -30,6 +28,12 @@ describe('packages/combobox', () => {
       expect(results).toHaveNoViolations();
     });
   });
+
+  // DarkMode prop
+  test.todo('Darkmode prop applies the correct styles');
+
+  // size prop
+  test.todo('Size prop applies the correct styles');
 
   const tests = [['single'], ['multiple']] as Array<Array<Select>>;
 
@@ -88,10 +92,17 @@ describe('packages/combobox', () => {
     });
 
     // disabled prop
+    test('Combobox is not clickable when `disabled`', () => {
+      const { comboboxEl } = renderCombobox(select, { disabled: true });
+      userEvent.click(comboboxEl);
+      expect(document.body).toHaveFocus();
+    });
 
-    // DarkMode prop
-
-    // size prop
+    test('Combobox is not focusable when `disabled`', () => {
+      renderCombobox(select, { disabled: true });
+      userEvent.type(document.body, '{tab');
+      expect(document.body).toHaveFocus();
+    });
 
     // Clearable prop
     test('Clear button is rendered when selection is set', () => {
@@ -395,7 +406,6 @@ describe('packages/combobox', () => {
               initialValue,
             });
             userEvent.type(inputEl, '{arrowleft}');
-            // fireEvent.keyDown(comboboxEl, {keyCode: keyMap.ArrowLeft, key: 'ArrowLeft'})
             const carrotChip = queryChipsByName('Carrot');
             expect(carrotChip).not.toBeNull();
             expect(
