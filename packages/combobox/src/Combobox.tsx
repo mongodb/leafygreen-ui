@@ -67,19 +67,18 @@ export default function Combobox<M extends boolean>({
   searchEmptyMessage = 'No results found',
   searchErrorMessage = 'Could not get results!',
   searchLoadingMessage = 'Loading results...',
+  filteredOptions,
   onFilter,
   clearable = true,
   onClear,
   overflow = 'expand-y',
-  className,
   multiselect = false as M,
   initialValue,
   onChange,
-  // updateValue,
   value,
   chipTruncationLocation,
   chipCharacterLimit = 12,
-  filteredOptions,
+  className,
   ...rest
 }: ComboboxProps<M>) {
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
@@ -186,7 +185,7 @@ export default function Combobox<M extends boolean>({
       const value = typeof option === 'string' ? option : option.value;
 
       // If filtered options are provided
-      if (inputValue && filteredOptions && filteredOptions.length > 0) {
+      if (filteredOptions && filteredOptions.length > 0) {
         return filteredOptions.includes(value);
       }
 

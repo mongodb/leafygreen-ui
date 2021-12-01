@@ -143,7 +143,7 @@ storiesOf('Combobox', module)
       'jalapeño',
     ];
 
-    const [filteredOptions, setOptions] = useState(allOptions);
+    const [filteredOptions, setOptions] = useState(['carrot', 'grape']);
 
     const handleFilter = (input: string) => {
       setOptions(allOptions.filter(option => option.includes(input)));

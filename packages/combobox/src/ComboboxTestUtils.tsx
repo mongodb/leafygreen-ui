@@ -85,14 +85,15 @@ export function renderCombobox<T extends Select>(
    * @returns Object of menu elements
    */
   function getMenuElements() {
-    const menuContainerEl = renderResult.getByRole('listbox');
+    const menuContainerEl = renderResult.queryByRole('listbox');
     const popoverEl = menuContainerEl?.firstChild;
     const menuEl = menuContainerEl?.getElementsByTagName('ul')[0];
     const optionElements = menuContainerEl?.getElementsByTagName('li');
-    const selectedElements =
-      select === 'single'
+    const selectedElements = menuEl
+      ? select === 'single'
         ? queryByAttribute('aria-selected', menuEl, 'true')
-        : queryAllByAttribute('aria-selected', menuEl, 'true');
+        : queryAllByAttribute('aria-selected', menuEl, 'true')
+      : undefined;
 
     return {
       menuContainerEl,
