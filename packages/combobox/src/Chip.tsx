@@ -116,7 +116,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
     const truncatedName = useMemo(() => {
       if (isTruncated) {
         const ellipsis = '…';
-        const chars = chipCharacterLimit - 4;
+        const chars = chipCharacterLimit - 3; // ellipsis dots included in the char limit
 
         switch (chipTruncationLocation) {
           case 'start': {
