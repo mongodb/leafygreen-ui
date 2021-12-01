@@ -9,10 +9,10 @@ import {
   waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Option, OptionGroup, Select } from '.';
+import { keyMap } from '@leafygreen-ui/lib';
 
 const Color = {
   Red: 'Explicit value: Red',
@@ -380,7 +380,7 @@ describe('packages/select', () => {
 
         expect(queryByRole('listbox')).not.toBeInTheDocument();
 
-        fireEvent.keyDown(getByRole('button'), { keyCode: keyMap.ArrowDown });
+        userEvent.type(getByRole('button'), '{arrowdown}');
 
         const listbox = await waitFor(() => {
           const listbox = getByRole('listbox');
@@ -403,7 +403,7 @@ describe('packages/select', () => {
         expect(queryByRole('listbox')).not.toBeInTheDocument();
         expect(queryByText('Yellow')).not.toBeInTheDocument();
 
-        fireEvent.keyDown(getByRole('button'), { keyCode: keyMap.ArrowUp });
+        userEvent.type(getByRole('button'), '{arrowup}');
 
         const listbox = await waitFor(() => {
           const listbox = getByRole('listbox');
@@ -435,7 +435,7 @@ describe('packages/select', () => {
           );
 
           const combobox = getByRole('button');
-          fireEvent.keyDown(combobox, { keyCode: keyMap.ArrowDown });
+          userEvent.type(combobox, '{arrowdown}');
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
@@ -446,7 +446,7 @@ describe('packages/select', () => {
           );
 
           const combobox = getByRole('button');
-          fireEvent.keyDown(combobox, { keyCode: keyMap.ArrowUp });
+          userEvent.type(combobox, '{arrowup}');
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
@@ -495,9 +495,7 @@ describe('packages/select', () => {
       });
 
       test('by escape key', async () => {
-        fireEvent.keyDown(getByRole(focusedElementRole), {
-          keyCode: keyMap.Escape,
-        });
+        userEvent.type(getByRole(focusedElementRole), '{esc}');
 
         const combobox = getByTestId('leafygreen-ui-select-menubutton');
         expect(combobox).toHaveFocus();
@@ -561,39 +559,37 @@ describe('packages/select', () => {
         ['option', 'Red', Color.Red],
         ['option in group', 'Green', Color.Green],
       ])('%p', (_, optionText, optionValue) => {
-        test.each([['enter', keyMap.Enter]])(
-          'by %p key',
-          async (_, keyCode) => {
-            userEvent.click(combobox);
+        test('by Enter key', async () => {
+          userEvent.click(combobox);
 
-            const listbox = await waitFor(() => {
-              const listbox = getByRole('listbox');
-              expect(listbox).toBeVisible();
-              return listbox;
-            });
+          const listbox = await waitFor(() => {
+            const listbox = getByRole('listbox');
+            expect(listbox).toBeVisible();
+            return listbox;
+          });
 
-            const targetOption = getByTextFor(listbox, optionText).closest(
-              'li',
-            );
-            expect(targetOption).not.toBe(null);
+          const targetOption = getByTextFor(listbox, optionText).closest('li');
+          expect(targetOption).not.toBe(null);
 
-            act(() => targetOption!.focus());
+          act(() => targetOption!.focus());
 
-            fireEvent.keyDown(targetOption!, { keyCode });
+          fireEvent.keyDown(targetOption!, {
+            key: 'Enter',
+            keyCode: keyMap.Enter,
+          });
 
-            expect(onChangeSpy).toHaveBeenCalledTimes(1);
-            expect(onChangeSpy).toHaveBeenCalledWith(
-              optionValue,
-              expect.anything(),
-            );
+          expect(onChangeSpy).toHaveBeenCalledTimes(1);
+          expect(onChangeSpy).toHaveBeenCalledWith(
+            optionValue,
+            expect.anything(),
+          );
 
-            await waitForElementToBeRemoved(listbox);
+          await waitForElementToBeRemoved(listbox);
 
-            expect(getByTextFor(combobox, optionText)).toBeVisible();
-            expect(combobox).toHaveFocus();
-            expect(combobox).toHaveValue(optionValue);
-          },
-        );
+          expect(getByTextFor(combobox, optionText)).toBeVisible();
+          expect(combobox).toHaveFocus();
+          expect(combobox).toHaveValue(optionValue);
+        });
 
         test('by clicking', async () => {
           userEvent.click(combobox);
@@ -624,34 +620,33 @@ describe('packages/select', () => {
         ['disabled option', 'Orange'],
         ['option in disabled group', 'Indigo'],
       ])('does not occur for %p', (_, optionText) => {
-        test.each([['enter', keyMap.Enter]])(
-          'by %p key',
-          async (_, keyCode) => {
-            userEvent.click(combobox);
+        // eslint-disable-next-line jest/no-identical-title
+        test('by Enter key', async () => {
+          userEvent.click(combobox);
 
-            const listbox = await waitFor(() => {
-              const listbox = getByRole('listbox');
-              expect(listbox).toBeVisible();
-              return listbox;
-            });
-
-            const targetOption = getByTextFor(listbox, optionText).closest(
-              'li',
-            );
-            expect(targetOption).not.toBe(null);
-
-            act(() => targetOption!.focus());
-            fireEvent.keyDown(targetOption!, { keyCode });
-
-            expect(onChangeSpy).not.toHaveBeenCalled();
+          const listbox = await waitFor(() => {
+            const listbox = getByRole('listbox');
             expect(listbox).toBeVisible();
+            return listbox;
+          });
 
-            expect(getByTextFor(combobox, 'Select')).toBeVisible();
-            expect(targetOption).toHaveFocus();
+          const targetOption = getByTextFor(listbox, optionText).closest('li');
+          expect(targetOption).not.toBe(null);
 
-            expect(combobox).toHaveValue('');
-          },
-        );
+          act(() => targetOption!.focus());
+          fireEvent.keyDown(targetOption!, {
+            key: 'Enter',
+            keyCode: keyMap.Enter,
+          });
+
+          expect(onChangeSpy).not.toHaveBeenCalled();
+          expect(listbox).toBeVisible();
+
+          expect(getByTextFor(combobox, 'Select')).toBeVisible();
+          expect(targetOption).toHaveFocus();
+
+          expect(combobox).toHaveValue('');
+        });
 
         // eslint-disable-next-line jest/no-identical-title
         test('by clicking', async () => {
@@ -687,7 +682,7 @@ describe('packages/select', () => {
         });
 
         enabledOptions.forEach(expectedOptionText => {
-          fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowDown });
+          userEvent.type(listbox, '{arrowdown}');
 
           expect(
             getByTextFor(listbox, expectedOptionText).closest('li'),
@@ -695,7 +690,7 @@ describe('packages/select', () => {
         });
 
         // Moves to first option when the end is reached
-        fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowDown });
+        userEvent.type(listbox, '{arrowdown}');
 
         expect(getByTextFor(listbox, 'Select').closest('li')).toHaveFocus();
       });
@@ -712,7 +707,7 @@ describe('packages/select', () => {
         });
 
         [...enabledOptions].reverse().forEach(expectedOptionText => {
-          fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowUp });
+          userEvent.type(listbox, '{arrowup}');
 
           expect(
             getByTextFor(listbox, expectedOptionText).closest('li'),
@@ -720,7 +715,7 @@ describe('packages/select', () => {
         });
 
         // Moves to last option when the top is reached
-        fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowUp });
+        userEvent.type(listbox, '{arrowup}');
 
         expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
       });
