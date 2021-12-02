@@ -232,162 +232,6 @@ export default function Combobox<M extends boolean>({
 
   /**
    *
-   * Rendering
-   *
-   */
-  const renderInternalOptions = useCallback(
-    (_children: React.ReactNode) => {
-      return React.Children.map(_children, child => {
-        if (isComponentType(child, 'ComboboxOption')) {
-          const { value, displayName } = getNameAndValue(child.props);
-
-          if (isOptionVisible(value)) {
-            const { className, glyph } = child.props;
-            const index = allOptions.findIndex(opt => opt.value === value);
-
-            const isFocused = focusedOption === value;
-            const isSelected = isMultiselect(selection)
-              ? selection.includes(value)
-              : selection === value;
-
-            const setSelected = () => {
-              setFocusedOption(value);
-              updateSelection(value);
-
-              if (value === selection) {
-                closeMenu();
-              }
-            };
-
-            const optionRef = getOptionRef(value);
-
-            return (
-              <InternalComboboxOption
-                value={value}
-                displayName={displayName}
-                isFocused={isFocused}
-                isSelected={isSelected}
-                setSelected={setSelected}
-                glyph={glyph}
-                className={className}
-                index={index}
-                ref={optionRef}
-              />
-            );
-          }
-        } else if (isComponentType(child, 'ComboboxGroup')) {
-          const nestedChildren = renderInternalOptions(child.props.children);
-
-          if (nestedChildren && nestedChildren?.length > 0) {
-            return (
-              <InternalComboboxGroup
-                label={child.props.label}
-                className={child.props.className}
-              >
-                {renderInternalOptions(nestedChildren)}
-              </InternalComboboxGroup>
-            );
-          }
-        }
-      });
-    },
-    [
-      allOptions,
-      focusedOption,
-      getOptionRef,
-      isMultiselect,
-      isOptionVisible,
-      selection,
-      updateSelection,
-    ],
-  );
-
-  const renderedOptions = useMemo(() => renderInternalOptions(children), [
-    children,
-    renderInternalOptions,
-  ]);
-
-  const renderedChips = useMemo(() => {
-    if (isMultiselect(selection)) {
-      return selection.filter(isValueValid).map(value => {
-        const displayName = getDisplayNameForValue(value);
-
-        const onRemove = () => {
-          const index = getIndexOfValue(value);
-          const prevChipValue = getValueAtIndex(index) ?? getValueAtIndex(0);
-          setFocusedChip(prevChipValue ?? '');
-          updateSelection(value);
-        };
-
-        const isFocused = focusedChip === value;
-        const chipRef = getChipRef(value);
-
-        return (
-          <Chip
-            key={value}
-            displayName={displayName}
-            onRemove={onRemove}
-            isFocused={isFocused}
-            ref={chipRef}
-          />
-        );
-      });
-    }
-  }, [
-    isMultiselect,
-    selection,
-    isValueValid,
-    getDisplayNameForValue,
-    focusedChip,
-    getChipRef,
-    updateSelection,
-  ]);
-
-  const renderedInputIcons = useMemo(() => {
-    const handleClearButtonClick = (
-      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
-      updateSelection(null);
-      onClear?.(e);
-      onFilter?.('');
-    };
-
-    return (
-      <>
-        {clearable && doesSelectionExist && (
-          <IconButton
-            ref={clearButtonRef}
-            onClick={handleClearButtonClick}
-            aria-label="Clear selection"
-            onFocus={handleClearButtonFocus}
-            className={clearButton}
-          >
-            <Icon glyph="XWithCircle" />
-          </IconButton>
-        )}
-        {state === 'error' ? (
-          <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
-        ) : (
-          <Icon glyph="CaretDown" className={endIcon} />
-        )}
-      </>
-    );
-  }, [
-    clearable,
-    doesSelectionExist,
-    state,
-    updateSelection,
-    onClear,
-    onFilter,
-  ]);
-
-  // Do any of the options have an icon?
-  const withIcons = useMemo(() => allOptions.some(opt => opt.hasGlyph), [
-    allOptions,
-  ]);
-
-  /**
-   *
    * Focus Management
    *
    */
@@ -546,6 +390,161 @@ export default function Combobox<M extends boolean>({
       }
     }
   }, [focusedOption, getOptionRef]);
+
+  /**
+   *
+   * Rendering
+   *
+   */
+  const renderInternalOptions = useCallback(
+    (_children: React.ReactNode) => {
+      return React.Children.map(_children, child => {
+        if (isComponentType(child, 'ComboboxOption')) {
+          const { value, displayName } = getNameAndValue(child.props);
+
+          if (isOptionVisible(value)) {
+            const { className, glyph } = child.props;
+            const index = allOptions.findIndex(opt => opt.value === value);
+
+            const isFocused = focusedOption === value;
+            const isSelected = isMultiselect(selection)
+              ? selection.includes(value)
+              : selection === value;
+
+            const setSelected = () => {
+              setFocusedOption(value);
+              updateSelection(value);
+
+              if (value === selection) {
+                closeMenu();
+              }
+            };
+
+            const optionRef = getOptionRef(value);
+
+            return (
+              <InternalComboboxOption
+                value={value}
+                displayName={displayName}
+                isFocused={isFocused}
+                isSelected={isSelected}
+                setSelected={setSelected}
+                glyph={glyph}
+                className={className}
+                index={index}
+                ref={optionRef}
+              />
+            );
+          }
+        } else if (isComponentType(child, 'ComboboxGroup')) {
+          const nestedChildren = renderInternalOptions(child.props.children);
+
+          if (nestedChildren && nestedChildren?.length > 0) {
+            return (
+              <InternalComboboxGroup
+                label={child.props.label}
+                className={child.props.className}
+              >
+                {renderInternalOptions(nestedChildren)}
+              </InternalComboboxGroup>
+            );
+          }
+        }
+      });
+    },
+    [
+      allOptions,
+      focusedOption,
+      getOptionRef,
+      isMultiselect,
+      isOptionVisible,
+      selection,
+      updateSelection,
+    ],
+  );
+
+  const renderedOptions = useMemo(() => renderInternalOptions(children), [
+    children,
+    renderInternalOptions,
+  ]);
+
+  const renderedChips = useMemo(() => {
+    if (isMultiselect(selection)) {
+      return selection.filter(isValueValid).map(value => {
+        const displayName = getDisplayNameForValue(value);
+
+        const onRemove = () => {
+          updateFocusedChip('prev');
+          updateSelection(value);
+        };
+
+        const isFocused = focusedChip === value;
+        const chipRef = getChipRef(value);
+
+        return (
+          <Chip
+            key={value}
+            displayName={displayName}
+            onRemove={onRemove}
+            isFocused={isFocused}
+            ref={chipRef}
+          />
+        );
+      });
+    }
+  }, [
+    isMultiselect,
+    selection,
+    isValueValid,
+    getDisplayNameForValue,
+    focusedChip,
+    getChipRef,
+    updateFocusedChip,
+    updateSelection,
+  ]);
+
+  const renderedInputIcons = useMemo(() => {
+    const handleClearButtonClick = (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    ) => {
+      updateSelection(null);
+      onClear?.(e);
+      onFilter?.('');
+    };
+
+    return (
+      <>
+        {clearable && doesSelectionExist && (
+          <IconButton
+            ref={clearButtonRef}
+            onClick={handleClearButtonClick}
+            aria-label="Clear selection"
+            onFocus={handleClearButtonFocus}
+            className={clearButton}
+          >
+            <Icon glyph="XWithCircle" />
+          </IconButton>
+        )}
+        {state === 'error' ? (
+          <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
+        ) : (
+          <Icon glyph="CaretDown" className={endIcon} />
+        )}
+      </>
+    );
+  }, [
+    clearable,
+    doesSelectionExist,
+    state,
+    updateSelection,
+    onClear,
+    onFilter,
+  ]);
+
+  // Do any of the options have an icon?
+  const withIcons = useMemo(() => allOptions.some(opt => opt.hasGlyph), [
+    allOptions,
+  ]);
 
   /**
    *
