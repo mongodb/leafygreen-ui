@@ -1,5 +1,12 @@
 # @leafygreen-ui/select
 
+## 3.0.8
+
+### Patch Changes
+
+- 9d0bcd4: - Resolves an issue where a Select component would break keyboard navigation with `Tab` in a form
+  - Prevents page from scrolling when using arrow keys to navigate a Select menu
+
 ## 3.0.7
 
 ### Patch Changes

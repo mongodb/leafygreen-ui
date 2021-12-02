@@ -334,45 +334,57 @@ export default function Select({
         return;
       }
 
-      switch (event.keyCode) {
-        case keyMap.Tab:
-        case keyMap.Escape:
-          onClose();
-          setFocusedOption(undefined);
-          break;
-        case keyMap.Enter:
-        case keyMap.Space:
-          if (open && document.activeElement !== menuButtonRef.current) {
-            // Default behavior is to use these keys to open the dropdown but we handle that manually
-            event.preventDefault();
-          }
+      const isFocusInMenu = listMenuRef.current?.contains(
+        document.activeElement,
+      );
+      const isFocusOnButton = menuButtonRef.current?.contains(
+        document.activeElement,
+      );
+      const isFocusInComponent = isFocusOnButton || isFocusInMenu;
 
-          onSelectFocusedOption(event);
-          break;
-        case keyMap.ArrowUp:
-          if (!open && document.activeElement === menuButtonRef.current) {
-            onOpen();
-          }
+      // We only respond to keypresses if the focus is in the component
+      if (isFocusInComponent) {
+        switch (event.keyCode) {
+          case keyMap.Tab:
+          case keyMap.Escape:
+            onClose();
+            setFocusedOption(undefined);
+            break;
+          case keyMap.Enter:
+          case keyMap.Space:
+            if (open && !isFocusOnButton) {
+              // Default behavior is to use these keys to open the dropdown but we handle that manually
+              event.preventDefault();
+            }
 
-          onFocusPreviousOption();
-          break;
-        case keyMap.ArrowDown:
-          if (!open && document.activeElement === menuButtonRef.current) {
-            onOpen();
-          }
-
-          onFocusNextOption();
-          break;
+            onSelectFocusedOption(event);
+            break;
+          case keyMap.ArrowUp:
+            if (!open && isFocusOnButton) {
+              onOpen();
+            }
+            event.preventDefault(); // Prevents page scrolling
+            onFocusPreviousOption();
+            break;
+          case keyMap.ArrowDown:
+            if (!open && isFocusOnButton) {
+              onOpen();
+            }
+            event.preventDefault(); // Prevents page scrolling
+            onFocusNextOption();
+            break;
+        }
       }
     },
     [
-      onClose,
-      onOpen,
-      open,
+      listMenuRef,
       menuButtonRef,
-      onFocusNextOption,
-      onFocusPreviousOption,
+      onClose,
+      open,
       onSelectFocusedOption,
+      onFocusPreviousOption,
+      onFocusNextOption,
+      onOpen,
     ],
   );
 
