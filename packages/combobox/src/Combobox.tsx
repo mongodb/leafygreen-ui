@@ -125,12 +125,12 @@ export default function Combobox<M extends boolean>({
   // Update selection differently in mulit & single select
   const updateSelection = useCallback(
     (value: string | null) => {
-      if (isString(value)) {
-        let newSelection: SelectValueType<M>;
+      if (isMultiselect(selection)) {
+        const newSelection: SelectValueType<M> = clone(selection);
 
-        // MULTISELECT
-        if (isMultiselect(selection)) {
-          newSelection = clone(selection);
+        if (isNull(value)) {
+          newSelection.length = 0;
+        } else {
           if (selection.includes(value)) {
             // remove from array
             newSelection.splice(newSelection.indexOf(value), 1);
@@ -140,18 +140,19 @@ export default function Combobox<M extends boolean>({
             // clear text
             setInputValue('');
           }
-        } else {
-          // SINGLE SELECT
-          newSelection = value as SelectValueType<M>;
         }
         setSelection(newSelection);
-        setInputFocus();
+        (onChange as onChangeType<true>)?.(newSelection);
       } else {
-        const newSelection: SelectValueType<M> = getNullSelection(multiselect);
+        const newSelection: SelectValueType<M> = value as SelectValueType<M>;
         setSelection(newSelection);
+        (onChange as onChangeType<false>)?.(
+          newSelection as SelectValueType<false>,
+        );
       }
+      setInputFocus();
     },
-    [isMultiselect, multiselect, selection, setInputFocus],
+    [isMultiselect, onChange, selection, setInputFocus],
   );
 
   // Scrolls the combobox to the far right
@@ -589,21 +590,19 @@ export default function Combobox<M extends boolean>({
     }
   }, [isMultiselect, isValueValid, value]);
 
-  // onSelect: When the selection changes...
+  // onSelect
+  // Side effects to run when the selection changes
+  // (regardless of controlled/uncontrolled)
   useEffect(() => {
     if (selection !== prevSelection) {
       if (doesSelectionExist) {
         if (isMultiselect(selection)) {
           // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
           scrollToEnd();
-          (onChange as onChangeType<true>)?.(selection);
         } else if (!isMultiselect(selection)) {
           // Update the text input
           setInputValue(
             getDisplayNameForValue(selection as SelectValueType<false>) ?? '',
-          );
-          (onChange as onChangeType<false>)?.(
-            selection as SelectValueType<false>,
           );
           closeMenu();
         }

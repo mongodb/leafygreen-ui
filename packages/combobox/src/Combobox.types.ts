@@ -54,9 +54,6 @@ export type Filter = typeof Filter[keyof typeof Filter];
 export type SelectValueType<M extends boolean> = M extends true
   ? Array<string>
   : string | null;
-export type SelectIndexType<M extends boolean> = M extends true
-  ? Array<number>
-  : number | null;
 
 export type onChangeType<M extends boolean> = M extends true
   ? (value: SelectValueType<true>) => void
