@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon-button
 
+## 9.1.7
+
+### Patch Changes
+
+- 9d0bcd4: - Ensures IconButton is focusable when disabled
+  - Fixes styling priority of a disabled and active IconButton
+
 ## 9.1.6
 
 ### Patch Changes
