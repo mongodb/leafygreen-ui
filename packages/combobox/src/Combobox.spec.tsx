@@ -342,21 +342,26 @@ describe('packages/combobox', () => {
         });
       });
 
-      // testMultiSelect('Removing an option should set focus to the previous chip', () => {
-      //   const initialValue = ['apple', 'banana', 'carrot'];
-      //   const { queryChipsByName } = renderCombobox(select, {
-      //     initialValue,
-      //   });
-      //   const appleChip = queryChipsByName('Apple');
-      //   const bananaChip = queryChipsByName('Banana');
-      //   const appleChipButton = (appleChip as HTMLElement)
-      //     .querySelector('button') as HTMLElement;
-      //   const bananaChipButton = (bananaChip as HTMLElement)
-      //     .querySelector('button') as HTMLElement;
-      //   userEvent.click(bananaChipButton);
-      //   // eslint-disable-next-line jest/no-standalone-expect
-      //   expect(appleChipButton).toHaveFocus()
-      // })
+      testMultiSelect(
+        'Removing an option should set focus to the previous chip',
+        () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { queryChipsByName } = renderCombobox(select, {
+            initialValue,
+          });
+          const appleChip = queryChipsByName('Apple');
+          const bananaChip = queryChipsByName('Banana');
+          const appleChipButton = (appleChip as HTMLElement).querySelector(
+            'button',
+          ) as HTMLElement;
+          const bananaChipButton = (bananaChip as HTMLElement).querySelector(
+            'button',
+          ) as HTMLElement;
+          userEvent.click(bananaChipButton);
+          // eslint-disable-next-line jest/no-standalone-expect
+          expect(appleChipButton).toHaveFocus();
+        },
+      );
 
       test('Clicking clear all button clears selection', () => {
         const initialValue =

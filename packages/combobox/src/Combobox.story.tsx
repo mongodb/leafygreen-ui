@@ -91,7 +91,7 @@ storiesOf('Combobox', module)
           label="Choose some fruit"
           description="Pick as many as you want!"
           placeholder="Select fruit"
-          initialValue={['apple', 'fig']}
+          initialValue={['apple', 'carrot', 'fig']}
           multiselect={true}
           overflow={select(
             'Overflow',

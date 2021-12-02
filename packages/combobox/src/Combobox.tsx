@@ -470,11 +470,13 @@ export default function Combobox<M extends boolean>({
 
   const renderedChips = useMemo(() => {
     if (isMultiselect(selection)) {
-      return selection.filter(isValueValid).map(value => {
+      return selection.filter(isValueValid).map((value, index) => {
         const displayName = getDisplayNameForValue(value);
 
         const onRemove = () => {
-          updateFocusedChip('prev');
+          const prevIndex = index > 0 ? index - 1 : 0;
+          const prevValue = selection[prevIndex];
+          setFocusedChip(prevValue);
           updateSelection(value);
         };
 
@@ -499,7 +501,6 @@ export default function Combobox<M extends boolean>({
     getDisplayNameForValue,
     focusedChip,
     getChipRef,
-    updateFocusedChip,
     updateSelection,
   ]);
 
