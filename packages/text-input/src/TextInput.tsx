@@ -39,6 +39,16 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
+export const SizeVariant = {
+  XSmall: 'xsmall',
+  Small: 'small',
+  Medium: 'medium',
+  Default: 'default',
+  Large: 'large',
+} as const;
+
+type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
+
 interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   /**
    * id associated with the TextInput component.
@@ -107,6 +117,8 @@ interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   handleValidation?: (value: string) => void;
 
   ['aria-labelledby']?: string;
+
+  sizeVariant?: SizeVariant;
 }
 
 type AriaLabels = 'label' | 'aria-labelledby';
@@ -229,6 +241,40 @@ const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
   },
 };
 
+interface SizeSet {
+  inputHeight: number;
+  text: number;
+  lineHeight: number;
+}
+
+const sizeSets: Record<SizeVariant, SizeSet> = {
+  [SizeVariant.XSmall]: {
+    inputHeight: 22,
+    text: 14,
+    lineHeight: 20,
+  },
+  [SizeVariant.Small]: {
+    inputHeight: 28,
+    text: 14,
+    lineHeight: 20,
+  },
+  [SizeVariant.Default]: {
+    inputHeight: 36,
+    text: 14,
+    lineHeight: 20,
+  },
+  [SizeVariant.Medium]: {
+    inputHeight: 36,
+    text: 16,
+    lineHeight: 20,
+  },
+  [SizeVariant.Large]: {
+    inputHeight: 48,
+    text: 18,
+    lineHeight: 22,
+  },
+};
+
 function getStatefulInputStyles({
   state,
   optional,
@@ -291,6 +337,7 @@ function getStatefulInputStyles({
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
  * @param props.className className supplied to the TextInput container.
  * @param props.darkMode determines whether or not the component appears in dark mode.
+ * @param props.sizeVariant determines the size of the text and the height of the input.
  */
 const TextInput: React.ComponentType<
   React.PropsWithRef<AccessibleTextInputProps>
@@ -310,6 +357,7 @@ const TextInput: React.ComponentType<
       value: controlledValue,
       className,
       darkMode = false,
+      sizeVariant = SizeVariant.Small,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
       ...rest
@@ -321,6 +369,7 @@ const TextInput: React.ComponentType<
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
+    const sizeSet = sizeSets[sizeVariant];
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
@@ -356,12 +405,17 @@ const TextInput: React.ComponentType<
     return (
       <div className={cx(textInputStyle, className)}>
         {label && (
-          <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
+          <Label darkMode={darkMode} htmlFor={id} disabled={disabled} className={cx(css`
+          font-size: ${sizeSet.text}px;
+        `,)}>
             {label}
           </Label>
         )}
         {description && (
-          <Description darkMode={darkMode}>{description}</Description>
+          <Description darkMode={darkMode} className={cx(css`
+          font-size: ${sizeSet.text}px;
+          line-height: ${sizeSet.lineHeight}px;
+        `,)}>{description}</Description>
         )}
         <div className={inputContainerStyle}>
           <InteractionRing
@@ -386,6 +440,8 @@ const TextInput: React.ComponentType<
                 css`
                   color: ${colorSets[mode].inputColor};
                   background-color: ${colorSets[mode].inputBackgroundColor};
+                  font-size: ${sizeSet.text}px;
+                  height: ${sizeSet.inputHeight}px;
 
                   &:focus {
                     border: 1px solid ${colorSets[mode].inputBackgroundColor};
@@ -487,6 +543,7 @@ TextInput.propTypes = {
   state: PropTypes.oneOf(Object.values(State)),
   value: PropTypes.string,
   className: PropTypes.string,
+  sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
 };
 
 export default TextInput;
