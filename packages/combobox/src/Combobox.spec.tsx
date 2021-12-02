@@ -132,14 +132,20 @@ describe('packages/combobox', () => {
      */
     testSingleSelect('Initial value prop renders text input value', () => {
       const initialValue = 'apple';
-      const { expectSelection } = renderCombobox(select, { initialValue });
-      expectSelection('Apple');
+      const { inputEl } = renderCombobox(select, { initialValue });
+      expect(inputEl).toHaveValue('Apple');
     });
 
     testMultiSelect('Initial value prop renders chips', () => {
       const initialValue = ['apple', 'banana'];
-      const { expectSelection } = renderCombobox(select, { initialValue });
-      expectSelection(['Apple', 'Banana']);
+      const { queryChipsByName, queryAllChips } = renderCombobox(select, {
+        initialValue,
+      });
+      waitFor(() => {
+        const allChips = queryChipsByName(['Apple', 'Banana']);
+        allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+        expect(queryAllChips()).toHaveLength(2);
+      });
     });
 
     testSingleSelect(
@@ -176,39 +182,55 @@ describe('packages/combobox', () => {
       /* eslint-disable jest/no-standalone-expect */
       testSingleSelect('Text input renders with value update', () => {
         let value = 'apple';
-        const { expectSelection, rerenderCombobox } = renderCombobox(select, {
+        const { inputEl, rerenderCombobox } = renderCombobox(select, {
           value,
         });
-        expectSelection('Apple');
+        expect(inputEl).toHaveValue('Apple');
         value = 'banana';
         rerenderCombobox({ value });
-        expectSelection('Banana');
+        expect(inputEl).toHaveValue('Banana');
       });
 
       testSingleSelect('Invalid option passed as value is not selected', () => {
         const value = 'jellybean';
-        const { expectSelection } = renderCombobox(select, { value });
-        expectSelection('');
+        const { inputEl } = renderCombobox(select, { value });
+        expect(inputEl).toHaveValue('');
       });
 
       testMultiSelect('Updating `value` updates the chips', () => {
         let value = ['apple', 'banana'];
-        const { expectSelection, rerenderCombobox } = renderCombobox(select, {
+        const {
+          queryChipsByName,
+          queryAllChips,
+          rerenderCombobox,
+        } = renderCombobox(select, {
           value,
         });
-        expectSelection(['Apple', 'Banana']);
-        value = ['banana', 'carrot'];
-        rerenderCombobox({ value });
-        expectSelection(['Banana', 'Carrot']);
+        waitFor(() => {
+          const allChips = queryChipsByName(['Apple', 'Banana']);
+          allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+          expect(queryAllChips()).toHaveLength(2);
+          value = ['banana', 'carrot'];
+          rerenderCombobox({ value });
+          waitFor(() => {
+            const allChips = queryChipsByName(['Carrot', 'Banana']);
+            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+            expect(queryAllChips()).toHaveLength(2);
+          });
+        });
       });
 
       testMultiSelect('Invalid options are not selected', () => {
         const value = ['apple', 'jellybean'];
-        const { queryChipsByName, expectSelection } = renderCombobox(select, {
+        const { queryChipsByName, queryAllChips } = renderCombobox(select, {
           value,
         });
-        expectSelection(['Apple']);
-        expect(queryChipsByName('Jellybean')).not.toBeInTheDocument();
+        waitFor(() => {
+          const allChips = queryChipsByName(['Apple']);
+          allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+          expect(queryChipsByName('Jellybean')).not.toBeInTheDocument();
+          expect(queryAllChips()).toHaveLength(1);
+        });
       });
       /*  eslint-enable jest/no-standalone-expect */
     });
@@ -275,28 +297,33 @@ describe('packages/combobox', () => {
       });
 
       test('Clicking an option sets selection', () => {
-        const { openMenu, expectSelection } = renderCombobox(select);
+        const { openMenu, queryChipsByName, inputEl } = renderCombobox(select);
         const { optionElements } = openMenu();
         expect(optionElements).not.toBeUndefined();
         userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[2]);
-        expectSelection('Carrot');
+        if (select === 'multiple') {
+          expect(queryChipsByName('Carrot')).toBeInTheDocument();
+        } else {
+          expect(inputEl).toHaveValue('Carrot');
+        }
       });
 
       testSingleSelect(
         'Input value is set to selection value when menu closes',
         () => {
           const initialValue = 'apple';
-          const { expectSelection, inputEl } = renderCombobox(select, {
+          const { inputEl } = renderCombobox(select, {
             initialValue,
           });
           userEvent.type(inputEl, '{backspace}{backspace}{esc}');
-          expectSelection('Apple');
+          // eslint-disable-next-line jest/no-standalone-expect
+          expect(inputEl).toHaveValue('Apple');
         },
       );
 
       testMultiSelect('Clicking chip X button removes option', () => {
         const initialValue = ['apple', 'banana', 'carrot'];
-        const { queryChipsByName, expectSelection } = renderCombobox(select, {
+        const { queryChipsByName, queryAllChips } = renderCombobox(select, {
           initialValue,
         });
         const appleChip = queryChipsByName('Apple');
@@ -306,18 +333,47 @@ describe('packages/combobox', () => {
           'button',
         ) as HTMLElement;
         userEvent.click(appleChipButton);
-        expectSelection(['banana', 'carrot'], true);
+        waitFor(() => {
+          const allChips = queryChipsByName(['Banana', 'Carrot']);
+          // eslint-disable-next-line jest/no-standalone-expect
+          allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+          // eslint-disable-next-line jest/no-standalone-expect
+          expect(queryAllChips()).toHaveLength(2);
+        });
       });
+
+      // testMultiSelect('Removing an option should set focus to the previous chip', () => {
+      //   const initialValue = ['apple', 'banana', 'carrot'];
+      //   const { queryChipsByName } = renderCombobox(select, {
+      //     initialValue,
+      //   });
+      //   const appleChip = queryChipsByName('Apple');
+      //   const bananaChip = queryChipsByName('Banana');
+      //   const appleChipButton = (appleChip as HTMLElement)
+      //     .querySelector('button') as HTMLElement;
+      //   const bananaChipButton = (bananaChip as HTMLElement)
+      //     .querySelector('button') as HTMLElement;
+      //   userEvent.click(bananaChipButton);
+      //   // eslint-disable-next-line jest/no-standalone-expect
+      //   expect(appleChipButton).toHaveFocus()
+      // })
 
       test('Clicking clear all button clears selection', () => {
         const initialValue =
           select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
-        const { expectSelection, clearButtonEl } = renderCombobox(select, {
-          initialValue,
-        });
+        const { inputEl, clearButtonEl, queryAllChips } = renderCombobox(
+          select,
+          {
+            initialValue,
+          },
+        );
         expect(clearButtonEl).not.toBeNull();
         userEvent.click(clearButtonEl as HTMLElement);
-        expectSelection(null);
+        if (select === 'multiple') {
+          expect(queryAllChips()).toHaveLength(0);
+        } else {
+          expect(inputEl).toHaveValue('');
+        }
       });
     });
 
@@ -355,17 +411,25 @@ describe('packages/combobox', () => {
       });
 
       test('Enter key selects highlighted option', () => {
-        const { inputEl, openMenu, expectSelection } = renderCombobox(select);
+        const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
         openMenu();
         userEvent.type(inputEl as HTMLElement, '{arrowdown}{enter}');
-        expectSelection('Banana');
+        if (select === 'multiple') {
+          expect(queryChipsByName('Banana')).toBeInTheDocument();
+        } else {
+          expect(inputEl).toHaveValue('Banana');
+        }
       });
 
       test('Space key selects highlighted option', () => {
-        const { inputEl, openMenu, expectSelection } = renderCombobox(select);
+        const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
         openMenu();
         userEvent.type(inputEl, '{arrowdown}{space}');
-        expectSelection('Banana');
+        if (select === 'multiple') {
+          expect(queryChipsByName('Banana')).toBeInTheDocument();
+        } else {
+          expect(inputEl).toHaveValue('Banana');
+        }
       });
 
       test('Escape key closes menu', async () => {
@@ -418,7 +482,7 @@ describe('packages/combobox', () => {
           () => {
             const { inputEl } = renderCombobox();
             userEvent.type(inputEl, '{arrowleft}');
-            expect(inputEl).toHaveFocus();
+            waitFor(() => expect(inputEl).toHaveFocus());
           },
         );
         test.todo(
@@ -459,10 +523,7 @@ describe('packages/combobox', () => {
       describe('Remove chips with keyboard', () => {
         /* eslint-disable jest/no-standalone-expect */
         let comboboxEl: HTMLElement,
-          expectSelection: (
-            expectedSelection: string | Array<string>,
-            exact?: boolean,
-          ) => void,
+          queryAllChips: () => Array<HTMLElement>,
           chipButton: HTMLElement;
 
         beforeEach(() => {
@@ -471,8 +532,8 @@ describe('packages/combobox', () => {
             initialValue,
           });
           comboboxEl = combobox.comboboxEl;
-          expectSelection = combobox.expectSelection;
           userEvent.type(comboboxEl, '{arrowleft}');
+          queryAllChips = combobox.queryAllChips;
           const chip = combobox.queryChipsByName('Carrot');
           if (!chip) throw new Error('Carrot Chip not found');
           chipButton = chip.querySelector('button') as HTMLElement;
@@ -480,15 +541,15 @@ describe('packages/combobox', () => {
 
         testMultiSelect('Enter key', () => {
           userEvent.type(chipButton, '{enter}');
-          expectSelection(['apple', 'banana'], true);
+          waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
         testMultiSelect('Delete key', () => {
           userEvent.type(chipButton, '{backspace}');
-          expectSelection(['apple', 'banana'], true);
+          waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
         testMultiSelect('Space key', () => {
           userEvent.type(chipButton, '{space}');
-          expectSelection(['apple', 'banana'], true);
+          waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
         /* eslint-enable jest/no-standalone-expect */
       });

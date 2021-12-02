@@ -156,59 +156,6 @@ export function renderCombobox<T extends Select>(
     );
   }
 
-  /**
-   * Asserts that option(s) with the provided display name(s) are selected
-   * @param expectedSelection The option(s) expected to be selected
-   * @param exact Is the expected selection the exact selection or just a subset?
-   * @returns
-   */
-  function expectSelection(
-    expectedSelection: string | Array<string> | null,
-    exact?: boolean,
-  ): void {
-    switch (select) {
-      case 'single':
-        {
-          if (isArray(expectedSelection)) {
-            throw new Error('Selection must be a string for single select');
-          }
-
-          if (expectedSelection) {
-            expect(inputEl).toHaveValue(expectedSelection);
-          } else {
-            expect(inputEl).toHaveValue('');
-          }
-        }
-        break;
-      case 'multiple':
-        {
-          if (isArray(expectedSelection)) {
-            waitFor(() => {
-              const allChips = queryChipsByName(expectedSelection);
-              allChips?.forEach(chip => expect(chip).toBeInTheDocument());
-
-              if (exact) {
-                expect(queryAllChips()).toHaveLength(expectedSelection.length);
-              }
-            });
-          } else if (!isNull(expectedSelection)) {
-            waitFor(() => {
-              const selectionChip = queryChipsByName(expectedSelection);
-              expect(selectionChip).not.toBeNull();
-              expect(selectionChip).toBeInTheDocument();
-
-              if (exact) {
-                expect(queryAllChips()).toHaveLength(1);
-              }
-            });
-          } else {
-            expect(queryAllChips()).toHaveLength(0);
-          }
-        }
-        break;
-    }
-  }
-
   return {
     ...renderResult,
     rerenderCombobox,
@@ -216,7 +163,6 @@ export function renderCombobox<T extends Select>(
     queryAllChips,
     getMenuElements,
     openMenu,
-    expectSelection,
     containerEl,
     labelEl,
     comboboxEl,
