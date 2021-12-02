@@ -142,7 +142,9 @@ export default function Combobox<M extends boolean>({
           }
         }
         setSelection(newSelection);
-        (onChange as onChangeType<true>)?.(newSelection);
+        (onChange as onChangeType<true>)?.(
+          newSelection as SelectValueType<true>,
+        );
       } else {
         const newSelection: SelectValueType<M> = value as SelectValueType<M>;
         setSelection(newSelection);
