@@ -405,17 +405,27 @@ const TextInput: React.ComponentType<
     return (
       <div className={cx(textInputStyle, className)}>
         {label && (
-          <Label darkMode={darkMode} htmlFor={id} disabled={disabled} className={cx(css`
-          font-size: ${sizeSet.text}px;
-        `,)}>
+          <Label
+            darkMode={darkMode}
+            htmlFor={id}
+            disabled={disabled}
+            className={cx(css`
+              font-size: ${sizeSet.text}px;
+            `)}
+          >
             {label}
           </Label>
         )}
         {description && (
-          <Description darkMode={darkMode} className={cx(css`
-          font-size: ${sizeSet.text}px;
-          line-height: ${sizeSet.lineHeight}px;
-        `,)}>{description}</Description>
+          <Description
+            darkMode={darkMode}
+            className={cx(css`
+              font-size: ${sizeSet.text}px;
+              line-height: ${sizeSet.lineHeight}px;
+            `)}
+          >
+            {description}
+          </Description>
         )}
         <div className={inputContainerStyle}>
           <InteractionRing

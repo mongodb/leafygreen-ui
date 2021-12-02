@@ -231,7 +231,7 @@ describe('packages/text-input', () => {
         ...defaultProps,
       });
 
-      expect((label)).toHaveStyle({
+      expect(label).toHaveStyle({
         fontSize: '18px',
       });
     });
