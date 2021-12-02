@@ -63,11 +63,6 @@ const flexSpan = css`
 
 const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
-
-  > strong {
-    font-weight: bold;
-    font-style: normal;
-  }
 `;
 /**
  * Component
@@ -166,12 +161,13 @@ const InternalComboboxOption = React.forwardRef<
         </>
       );
     }, [
+      multiselect,
+      renderedIcon,
       isSelected,
       displayName,
       inputValue,
-      multiselect,
-      renderedIcon,
       darkMode,
+      optionTextId,
       withIcons,
     ]);
 

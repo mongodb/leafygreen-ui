@@ -292,7 +292,7 @@ export const menuWrapperStyle = ({
         --lg-combobox-item-padding-y: 8px;
         --lg-combobox-item-padding-x: 12px;
         --lg-combobox-item-font-size: 14px;
-        --lg-combobox-item-line-height: 20px;
+        --lg-combobox-item-line-height: 21px;
         --lg-combobox-item-wedge-height: 22px;
       `;
   }
