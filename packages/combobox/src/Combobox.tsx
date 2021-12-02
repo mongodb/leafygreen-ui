@@ -316,7 +316,10 @@ export default function Combobox<M extends boolean>({
 
       switch (direction) {
         case 'next':
-          if (isFocusOnInput) {
+          if (
+            isFocusOnInput &&
+            inputRef.current?.selectionEnd === inputRef.current?.value.length
+          ) {
             clearButtonRef.current?.focus();
           } else if (isFocusOnChip && selection) {
             const activeChipIndex = getActiveChipIndex();
@@ -344,7 +347,10 @@ export default function Combobox<M extends boolean>({
           ) {
             const activeChipIndex = getActiveChipIndex();
 
-            if (activeChipIndex > 0 || isFocusOnInput) {
+            if (
+              activeChipIndex > 0 ||
+              (isFocusOnInput && inputRef.current?.selectionStart === 0)
+            ) {
               // if focus is on first chip, do nothing
               // if focus is on chip or input, go to prev chip
               const prevChipValue =
