@@ -4,13 +4,12 @@ import {
   queryByText,
   queryByAttribute,
   queryAllByAttribute,
-  waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxOption } from '.';
 import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
 import { OptionObject } from './util';
-import { isArray, isNull } from 'lodash';
+import { isNull } from 'lodash';
 
 export type Select = 'single' | 'multiple';
 type renderComboboxProps = {
