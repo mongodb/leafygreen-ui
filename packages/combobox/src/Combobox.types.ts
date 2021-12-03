@@ -145,6 +145,7 @@ export interface InternalComboboxOptionProps {
 
 export interface ChipProps {
   displayName: string;
-  onRemove: () => void;
   isFocused: boolean;
+  onRemove: () => void;
+  onFocus: () => void;
 }

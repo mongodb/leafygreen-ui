@@ -492,12 +492,17 @@ export default function Combobox<M extends boolean>({
         const isFocused = focusedChip === value;
         const chipRef = getChipRef(value);
 
+        const onFocus = () => {
+          setFocusedChip(value);
+        };
+
         return (
           <Chip
             key={value}
             displayName={displayName}
-            onRemove={onRemove}
             isFocused={isFocused}
+            onRemove={onRemove}
+            onFocus={onFocus}
             ref={chipRef}
           />
         );

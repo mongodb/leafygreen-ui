@@ -343,6 +343,24 @@ describe('packages/combobox', () => {
       });
 
       testMultiSelect(
+        'Clicking chip (outside the button) focuses the chip',
+        () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { queryChipsByName, queryAllChips } = renderCombobox(select, {
+            initialValue,
+          });
+          const appleChip = queryChipsByName('Apple');
+          userEvent.click(appleChip);
+          // eslint-disable-next-line jest/no-standalone-expect
+          expect(
+            (appleChip as HTMLElement).contains(document.activeElement),
+          ).toBeTruthy();
+          // eslint-disable-next-line jest/no-standalone-expect
+          expect(queryAllChips()).toHaveLength(3);
+        },
+      );
+
+      testMultiSelect(
         'Removing an option should set focus to the previous chip',
         () => {
           const initialValue = ['apple', 'banana', 'carrot'];
