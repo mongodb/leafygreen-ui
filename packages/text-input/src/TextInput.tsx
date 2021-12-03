@@ -363,7 +363,7 @@ const TextInput: React.ComponentType<
       value: controlledValue,
       className,
       darkMode = false,
-      sizeVariant = SizeVariantType.Small,
+      sizeVariant = SizeVariantType.Default,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
       ...rest
