@@ -246,6 +246,7 @@ interface SizeSet {
   inputText: number;
   text: number;
   lineHeight: number;
+  padding: number;
 }
 
 const sizeSets: Record<SizeVariantType, SizeSet> = {
@@ -254,30 +255,35 @@ const sizeSets: Record<SizeVariantType, SizeSet> = {
     inputText: 12,
     text: 14,
     lineHeight: 20,
+    padding: 10,
   },
   [SizeVariantType.Small]: {
     inputHeight: 28,
     inputText: 14,
     text: 14,
     lineHeight: 20,
+    padding: 10,
   },
   [SizeVariantType.Default]: {
     inputHeight: 36,
     inputText: 14,
     text: 14,
     lineHeight: 20,
+    padding: 12,
   },
   [SizeVariantType.Medium]: {
     inputHeight: 36,
     inputText: 16,
     text: 16,
     lineHeight: 20,
+    padding: 12,
   },
   [SizeVariantType.Large]: {
     inputHeight: 48,
     inputText: 18,
     text: 18,
     lineHeight: 22,
+    padding: 16,
   },
 };
 
@@ -286,11 +292,13 @@ function getStatefulInputStyles({
   optional,
   mode,
   disabled,
+  sizeSet,
 }: {
   state: State;
   optional: boolean;
   mode: Mode;
   disabled: boolean;
+  sizeSet: SizeSet;
 }) {
   switch (state) {
     case State.Valid: {
@@ -316,7 +324,7 @@ function getStatefulInputStyles({
 
     default: {
       return css`
-        padding-right: ${optional ? 60 : 12}px;
+        padding-right: ${optional ? 60 : sizeSet.padding}px;
         border-color: ${colorSets[mode].defaultBorder};
       `;
     }
@@ -458,6 +466,7 @@ const TextInput: React.ComponentType<
                   background-color: ${colorSets[mode].inputBackgroundColor};
                   font-size: ${sizeSet.inputText}px;
                   height: ${sizeSet.inputHeight}px;
+                  padding-left: ${sizeSet.padding}px;
 
                   &:focus {
                     border: 1px solid ${colorSets[mode].inputBackgroundColor};
@@ -482,7 +491,13 @@ const TextInput: React.ComponentType<
                     }
                   }
                 `,
-                getStatefulInputStyles({ state, optional, mode, disabled }),
+                getStatefulInputStyles({
+                  state,
+                  optional,
+                  mode,
+                  disabled,
+                  sizeSet,
+                }),
               )}
               value={value}
               required={!optional}
