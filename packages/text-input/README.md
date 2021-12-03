@@ -83,7 +83,7 @@ return (
 | `className`    | `string`                                                                    | Adds a className to the class attribute.                                                                                  | `''`      |
 | `type`         | `'email'`, `'password'`, `'search'`, `'text'`, `'url'`, `'tel'`, `'number'` | Sets type for TextInput                                                                                                   | `'text'`  |
 | `darkMode`     | `boolean`                                                                   | Determines whether or not the component will appear in dark mode.                                                         | `false`   |
-| `sizeVariant`  | `'xsmall'`, `'small'`, `'default'`, `'medium'`, `'large'`,                  | Sets the size of the text and input height.                                                                         | `default` |
+| `sizeVariant`  | `'xsmall'`, `'small'`, `'default'`, `'medium'`, `'large'`,                  | Sets the size of the text and input height.                                                                               | `default` |
 | ...            | native `input` attributes                                                   | Any other props will be spread on the root `input` element                                                                |           |
 
 ### Special Case: Aria Labels

@@ -1,5 +1,9 @@
 import React from 'react';
-import TextInput, { State, TextInputType, SizeVariantType } from '@leafygreen-ui/text-input';
+import TextInput, {
+  State,
+  TextInputType,
+  SizeVariantType,
+} from '@leafygreen-ui/text-input';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
