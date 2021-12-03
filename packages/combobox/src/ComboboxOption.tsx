@@ -33,10 +33,13 @@ const comboboxOptionStyle = () => css`
     content: '';
     position: absolute;
     left: 0;
-    width: 4px;
+    width: 3px;
     height: var(--lg-combobox-item-wedge-height);
     background-color: transparent;
     border-radius: 0 2px 2px 0;
+    transform: scaleY(0.3);
+    transition: 150ms ease-in-out;
+    transition-property: transform, background-color;
   }
 
   &:hover {
@@ -50,6 +53,7 @@ const comboboxOptionStyle = () => css`
 
     &:before {
       background-color: var(--lg-combobox-item-wedge-color);
+      transform: scaleY(1);
     }
   }
 `;
