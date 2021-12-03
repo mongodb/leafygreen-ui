@@ -350,7 +350,7 @@ describe('packages/combobox', () => {
             initialValue,
           });
           const appleChip = queryChipsByName('Apple');
-          userEvent.click(appleChip);
+          userEvent.click(appleChip as HTMLElement);
           // eslint-disable-next-line jest/no-standalone-expect
           expect(
             (appleChip as HTMLElement).contains(document.activeElement),
