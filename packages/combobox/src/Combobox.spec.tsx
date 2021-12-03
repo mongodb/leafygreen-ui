@@ -485,21 +485,51 @@ describe('packages/combobox', () => {
         testSingleSelect(
           'When cursor is at the beginning of input, Left arrow does nothing',
           () => {
-            const { inputEl } = renderCombobox();
+            const { inputEl } = renderCombobox(select);
             userEvent.type(inputEl, '{arrowleft}');
             waitFor(() => expect(inputEl).toHaveFocus());
           },
         );
-        test.todo(
-          'If cursor is NOT at the beginning of input, Left arrow key moves cursor',
-        );
-        test.todo(
-          'When focus is on clear button, Left arrow moves focus to input',
-        );
+        test('If cursor is NOT at the beginning of input, Left arrow key moves cursor', () => {
+          const { inputEl } = renderCombobox(select);
+          userEvent.type(inputEl, 'abc{arrowleft}');
+          waitFor(() => expect(inputEl).toHaveFocus());
+        });
+        test('When focus is on clear button, Left arrow moves focus to input', () => {
+          const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+          const { inputEl, clearButtonEl } = renderCombobox(select, {
+            initialValue,
+          });
+          userEvent.click(clearButtonEl);
+          waitFor(() => expect(inputEl).toHaveFocus());
+        });
         testMultiSelect(
           'When focus is on a chip, Left arrow focuses prev chip',
+          () => {
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { queryAllChips, inputEl } = renderCombobox(select, {
+              initialValue,
+            });
+            const chips = queryAllChips();
+            userEvent.type(inputEl, '{arrowleft}{arrowleft}');
+            expect(chips[1].contains(document.activeElement)).toBeTruthy();
+          },
         );
-        testMultiSelect('When focus is on first chip, Left arrow does nothing');
+        testMultiSelect(
+          'When focus is on the first chip, Left arrrow does nothing',
+          () => {
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { queryAllChips, inputEl } = renderCombobox(select, {
+              initialValue,
+            });
+            const chips = queryAllChips();
+            userEvent.type(
+              inputEl,
+              '{arrowleft}{arrowleft}{arrowleft}{arrowleft}',
+            );
+            expect(chips[0].contains(document.activeElement)).toBeTruthy();
+          },
+        );
         /* eslint-enable jest/no-standalone-expect */
       });
 
@@ -507,21 +537,58 @@ describe('packages/combobox', () => {
         test('When cursor is at the end of input, Right arrow focuses clear button', () => {
           const initialValue =
             select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
-          const { comboboxEl, clearButtonEl } = renderCombobox(select, {
+          const { inputEl, clearButtonEl } = renderCombobox(select, {
             initialValue,
           });
-          userEvent.type(comboboxEl, '{arrowright}');
+          userEvent.type(inputEl, '{arrowright}');
           expect(clearButtonEl).toHaveFocus();
         });
-        test.todo(
-          'If cursor is NOT at the end of input, Right arrow key moves cursor',
-        );
-        test.todo('When focus is on clear button, Right arrow does nothing');
-        testMultiSelect(
-          'When focus is on a chip, Right arrow focuses next chip',
-        );
+
+        test('When focus is on clear button, Right arrow does nothing', () => {
+          const initialValue =
+            select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
+          const { inputEl, clearButtonEl } = renderCombobox(select, {
+            initialValue,
+          });
+          userEvent.type(inputEl, '{arrowright}{arrowright}');
+          expect(clearButtonEl).toHaveFocus();
+        });
+
+        test('If cursor is NOT at the end of input, Right arrow key moves cursor', () => {
+          const initialValue =
+            select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
+          const { inputEl } = renderCombobox(select, {
+            initialValue,
+          });
+          userEvent.type(inputEl, 'abc{arrowleft}{arrowright}');
+          expect(inputEl).toHaveFocus();
+        });
+
         testMultiSelect(
           'When focus is on last chip, Right arrow focuses input',
+          () => {
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { inputEl } = renderCombobox(select, {
+              initialValue,
+            });
+            userEvent.type(inputEl, '{arrowleft}{arrowright}');
+            // eslint-disable-next-line jest/no-standalone-expect
+            expect(inputEl).toHaveFocus();
+          },
+        );
+
+        testMultiSelect(
+          'When focus is on a chip, Right arrow focuses next chip',
+          () => {
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { inputEl, queryChipsByName } = renderCombobox(select, {
+              initialValue,
+            });
+            userEvent.type(inputEl, '{arrowleft}{arrowleft}{arrowright}');
+            const carrotChip = queryChipsByName('Carrot');
+            // eslint-disable-next-line jest/no-standalone-expect
+            expect(carrotChip.contains(document.activeElement)).toBeTruthy();
+          },
         );
       });
 
