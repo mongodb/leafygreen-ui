@@ -39,15 +39,15 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-export const SizeVariant = {
+export const SizeVariantType = {
   XSmall: 'xsmall',
   Small: 'small',
-  Medium: 'medium',
   Default: 'default',
+  Medium: 'medium',
   Large: 'large',
 } as const;
 
-type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
+export type SizeVariantType = typeof SizeVariantType[keyof typeof SizeVariantType];
 
 interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   /**
@@ -118,7 +118,7 @@ interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
 
   ['aria-labelledby']?: string;
 
-  sizeVariant?: SizeVariant;
+  sizeVariant?: SizeVariantType;
 }
 
 type AriaLabels = 'label' | 'aria-labelledby';
@@ -247,28 +247,28 @@ interface SizeSet {
   lineHeight: number;
 }
 
-const sizeSets: Record<SizeVariant, SizeSet> = {
-  [SizeVariant.XSmall]: {
+const sizeSets: Record<SizeVariantType, SizeSet> = {
+  [SizeVariantType.XSmall]: {
     inputHeight: 22,
     text: 14,
     lineHeight: 20,
   },
-  [SizeVariant.Small]: {
+  [SizeVariantType.Small]: {
     inputHeight: 28,
     text: 14,
     lineHeight: 20,
   },
-  [SizeVariant.Default]: {
+  [SizeVariantType.Default]: {
     inputHeight: 36,
     text: 14,
     lineHeight: 20,
   },
-  [SizeVariant.Medium]: {
+  [SizeVariantType.Medium]: {
     inputHeight: 36,
     text: 16,
     lineHeight: 20,
   },
-  [SizeVariant.Large]: {
+  [SizeVariantType.Large]: {
     inputHeight: 48,
     text: 18,
     lineHeight: 22,
@@ -357,7 +357,7 @@ const TextInput: React.ComponentType<
       value: controlledValue,
       className,
       darkMode = false,
-      sizeVariant = SizeVariant.Small,
+      sizeVariant = SizeVariantType.Small,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
       ...rest
@@ -553,7 +553,7 @@ TextInput.propTypes = {
   state: PropTypes.oneOf(Object.values(State)),
   value: PropTypes.string,
   className: PropTypes.string,
-  sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
+  sizeVariant: PropTypes.oneOf(Object.values(SizeVariantType)),
 };
 
 export default TextInput;

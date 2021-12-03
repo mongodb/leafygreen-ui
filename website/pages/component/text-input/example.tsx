@@ -1,5 +1,5 @@
 import React from 'react';
-import TextInput, { State, TextInputType } from '@leafygreen-ui/text-input';
+import TextInput, { State, TextInputType, SizeVariantType } from '@leafygreen-ui/text-input';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
@@ -12,6 +12,7 @@ const knobsConfig: KnobsConfigInterface<{
   type: TextInputType;
   darkMode: boolean;
   errorMessage: string;
+  sizeVariant: SizeVariantType;
 }> = {
   label: {
     type: 'text',
@@ -49,6 +50,12 @@ const knobsConfig: KnobsConfigInterface<{
     options: Object.values(TextInputType),
     default: TextInputType.Text,
     label: 'Type',
+  },
+  sizeVariant: {
+    type: 'select',
+    options: Object.values(SizeVariantType),
+    default: 'default',
+    label: 'Size Variant',
   },
   darkMode: {
     type: 'boolean',
