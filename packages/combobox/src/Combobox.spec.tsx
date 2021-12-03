@@ -35,6 +35,13 @@ describe('packages/combobox', () => {
   // size prop
   test.todo('Size prop applies the correct styles');
 
+  /**
+   * Overflow prop
+   */
+  test.todo('expand-y');
+  test.todo('expand-x');
+  test.todo('scroll-x');
+
   const tests = [['single'], ['multiple']] as Array<Array<Select>>;
 
   describe.each(tests)('%s select', select => {
@@ -169,13 +176,6 @@ describe('packages/combobox', () => {
         ).toBeTruthy();
       },
     );
-
-    /**
-     * Overflow prop
-     */
-    test.todo('expand-y');
-    test.todo('expand-x');
-    test.todo('scroll-x');
 
     // value prop
     describe('When value is controlled', () => {
@@ -639,16 +639,6 @@ describe('packages/combobox', () => {
       const { optionElements } = openMenu();
       expect(optionElements?.length).toEqual(1);
     });
-
-    /**
-     * Validation
-     */
-    test.todo('Closing the menu calls validation function');
-    test.todo(
-      'Removing focus from the combobox & menu calls validation function',
-    );
-    test.todo('Making a selection calls validation function');
-    test.todo('Clearing selection calls validation function');
 
     /**
      * onClear
