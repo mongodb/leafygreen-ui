@@ -500,7 +500,7 @@ describe('packages/combobox', () => {
           const { inputEl, clearButtonEl } = renderCombobox(select, {
             initialValue,
           });
-          userEvent.click(clearButtonEl);
+          userEvent.click(clearButtonEl as HTMLElement);
           waitFor(() => expect(inputEl).toHaveFocus());
         });
         testMultiSelect(
@@ -587,7 +587,9 @@ describe('packages/combobox', () => {
             userEvent.type(inputEl, '{arrowleft}{arrowleft}{arrowright}');
             const carrotChip = queryChipsByName('Carrot');
             // eslint-disable-next-line jest/no-standalone-expect
-            expect(carrotChip.contains(document.activeElement)).toBeTruthy();
+            expect(
+              (carrotChip as HTMLElement).contains(document.activeElement),
+            ).toBeTruthy();
           },
         );
       });
