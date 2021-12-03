@@ -243,6 +243,7 @@ const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
 
 interface SizeSet {
   inputHeight: number;
+  inputText: number;
   text: number;
   lineHeight: number;
 }
@@ -250,26 +251,31 @@ interface SizeSet {
 const sizeSets: Record<SizeVariantType, SizeSet> = {
   [SizeVariantType.XSmall]: {
     inputHeight: 22,
+    inputText: 12,
     text: 14,
     lineHeight: 20,
   },
   [SizeVariantType.Small]: {
     inputHeight: 28,
+    inputText: 14,
     text: 14,
     lineHeight: 20,
   },
   [SizeVariantType.Default]: {
     inputHeight: 36,
+    inputText: 14,
     text: 14,
     lineHeight: 20,
   },
   [SizeVariantType.Medium]: {
     inputHeight: 36,
+    inputText: 16,
     text: 16,
     lineHeight: 20,
   },
   [SizeVariantType.Large]: {
     inputHeight: 48,
+    inputText: 18,
     text: 18,
     lineHeight: 22,
   },
@@ -450,7 +456,7 @@ const TextInput: React.ComponentType<
                 css`
                   color: ${colorSets[mode].inputColor};
                   background-color: ${colorSets[mode].inputBackgroundColor};
-                  font-size: ${sizeSet.text}px;
+                  font-size: ${sizeSet.inputText}px;
                   height: ${sizeSet.inputHeight}px;
 
                   &:focus {

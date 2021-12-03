@@ -42,14 +42,14 @@ storiesOf('TextInput', module)
               Object.values(TextInputType),
               TextInputType.Text,
             )}
+            sizeVariant={select(
+              'Size Variant',
+              ['xsmall', 'small', 'default', 'medium', 'large'],
+              'default',
+            )}
             errorMessage={text('Error Message', 'This is an error message')}
             darkMode={darkMode}
             handleValidation={value => console.log(`handleValidation ${value}`)}
-            sizeVariant={select(
-              'Size Variant',
-              ['xsmall', 'small', 'medium', 'default', 'large'],
-              'default',
-            )}
           />
         </div>
       </LeafyGreenProvider>
