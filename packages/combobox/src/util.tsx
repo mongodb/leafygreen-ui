@@ -1,7 +1,14 @@
-import { isComponentType } from '@leafygreen-ui/lib';
+import { isComponentType, keyMap as _keyMap } from '@leafygreen-ui/lib';
 import { kebabCase, startCase } from 'lodash';
 import React from 'react';
 import { ComboboxOptionProps } from './Combobox.types';
+
+// TODO - remove this when lib/keyMap supports Backspace & Delete
+export const keyMap = {
+  ..._keyMap,
+  Backspace: 8,
+  Delete: 46,
+} as const;
 
 /**
  *

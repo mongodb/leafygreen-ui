@@ -20,7 +20,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { isComponentType } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
   getNullSelection,
@@ -47,7 +47,7 @@ import {
   menuWrapperStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
-import { flattenChildren, getNameAndValue, OptionObject } from './util';
+import { flattenChildren, getNameAndValue, OptionObject, keyMap } from './util';
 
 /**
  * Component
@@ -805,6 +805,18 @@ export default function Combobox<M extends boolean>({
           ) {
             updateSelection(null);
             setInputFocus();
+          }
+          break;
+        }
+
+        case keyMap.Backspace: {
+          // Backspace key focuses last chip
+          // Delete key does not
+          if (
+            isMultiselect(selection) &&
+            inputRef.current?.selectionStart == 0
+          ) {
+            setFocusedChip(selection[selection?.length - 1]);
           }
           break;
         }

@@ -5,8 +5,8 @@ import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { createDataProp, keyMap } from '@leafygreen-ui/lib';
-import { useForwardedRef } from '@leafygreen-ui/hooks';
+import { createDataProp } from '@leafygreen-ui/lib';
+import { keyMap } from './util';
 
 const chipWrapperStyle = ({
   darkMode,
@@ -158,7 +158,8 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (
-        e.keyCode === 8 || // Delete
+        e.keyCode === keyMap.Delete ||
+        e.keyCode === keyMap.Backspace ||
         e.keyCode === keyMap.Enter ||
         e.keyCode === keyMap.Space
       ) {

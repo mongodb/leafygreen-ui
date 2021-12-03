@@ -483,6 +483,30 @@ describe('packages/combobox', () => {
         expect(reOpenedMenu).toBeInTheDocument();
       });
 
+      testMultiSelect(
+        'Backspace key focuses last chip when cursor is at beginning of selection',
+        () => {
+          const initialValue = ['apple'];
+          const { inputEl, queryAllChips } = renderCombobox(select, {
+            initialValue,
+          });
+          userEvent.type(inputEl, '{backspace}');
+          // eslint-disable-next-line jest/no-standalone-expect
+          expect(queryAllChips()).toHaveLength(1);
+          // eslint-disable-next-line jest/no-standalone-expect
+          expect(
+            queryAllChips()[0].contains(document.activeElement),
+          ).toBeTruthy();
+        },
+      );
+
+      test('Backspace key deletes text when cursor is NOT at beginning of selection', () => {
+        const { inputEl } = renderCombobox(select);
+        userEvent.type(inputEl, 'app{backspace}');
+        expect(inputEl).toHaveFocus();
+        expect(inputEl).toHaveValue('ap');
+      });
+
       describe('Left arrow keys', () => {
         /* eslint-disable jest/no-standalone-expect */
         testMultiSelect(
@@ -635,7 +659,7 @@ describe('packages/combobox', () => {
           userEvent.type(chipButton, '{enter}');
           waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
-        testMultiSelect('Delete key', () => {
+        testMultiSelect('Backspace key', () => {
           userEvent.type(chipButton, '{backspace}');
           waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
