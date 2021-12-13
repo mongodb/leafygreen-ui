@@ -8,10 +8,18 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { isUndefined } from 'lodash';
-import { renderCombobox, Select, testif } from './ComboboxTestUtils';
+import { flatten, isUndefined } from 'lodash';
+import {
+  defaultOptions,
+  groupedOptions,
+  NestedObject,
+  renderCombobox,
+  Select,
+  testif,
+} from './ComboboxTestUtils';
 
 import { configure } from '@testing-library/react';
+import { OptionObject } from './util';
 configure({
   getElementError: message => new Error(message ?? ''),
 });
@@ -132,6 +140,59 @@ describe('packages/combobox', () => {
         clearable: false,
       });
       expect(clearButtonEl).not.toBeInTheDocument();
+    });
+
+    /**
+     * Option Rendering
+     */
+
+    test('All options render in the menu', () => {
+      const { openMenu } = renderCombobox(select);
+      const { menuContainerEl } = openMenu();
+
+      defaultOptions.forEach(({ displayName }) => {
+        const optionEl = queryByText(
+          menuContainerEl as HTMLElement,
+          displayName,
+        );
+        expect(optionEl).toBeInTheDocument();
+      });
+    });
+
+    // Grouped Options
+    describe('Grouped Options', () => {
+      test('Grouped items should render', () => {
+        const { openMenu } = renderCombobox(select, {
+          options: groupedOptions,
+        });
+        const { menuContainerEl } = openMenu();
+
+        flatten(
+          groupedOptions.map(({ children }: NestedObject) => children),
+        ).forEach((option: OptionObject | string) => {
+          const displayName =
+            typeof option === 'string' ? option : option.displayName;
+          const optionEl = queryByText(
+            menuContainerEl as HTMLElement,
+            displayName,
+          );
+          expect(optionEl).toBeInTheDocument();
+        });
+      });
+
+      test('Grouped item labels should render', () => {
+        const { openMenu } = renderCombobox(select, {
+          options: groupedOptions,
+        });
+        const { menuContainerEl } = openMenu();
+
+        const [fruitLabel, veggieLabel] = [
+          queryByText(menuContainerEl as HTMLElement, 'Fruit'),
+          queryByText(menuContainerEl as HTMLElement, 'Vegetables'),
+        ];
+        expect(fruitLabel).toBeInTheDocument();
+        expect(veggieLabel).toBeInTheDocument();
+      });
     });
 
     /**
@@ -679,7 +740,7 @@ describe('packages/combobox', () => {
         filteredOptions: ['apple'],
       });
       const { optionElements } = openMenu();
-      expect(optionElements?.length).toEqual(1);
+      expect(optionElements!.length).toEqual(1);
     });
 
     /**
@@ -793,6 +854,7 @@ describe('packages/combobox', () => {
         expect(emptyStateTextEl).toBeInTheDocument();
       });
 
+      // Unsure if this is the desired behavior
       test.skip('Menu renders empty state message when filtered options is empty', () => {
         const searchEmptyMessage = 'Empty state message';
         const { openMenu } = renderCombobox(select, {

@@ -38,7 +38,7 @@ export function InternalComboboxGroup({
   label,
   className,
   children,
-}: ComboboxGroupProps) {
+}: ComboboxGroupProps): JSX.Element {
   const { darkMode } = useContext(ComboboxContext);
 
   const groupId = useIdAllocator({ prefix: 'combobox-group' });

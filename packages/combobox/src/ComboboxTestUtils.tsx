@@ -6,18 +6,23 @@ import {
   queryAllByAttribute,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Combobox, ComboboxOption } from '.';
+import { Combobox, ComboboxGroup, ComboboxOption } from '.';
 import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
 import { OptionObject } from './util';
 import { isNull } from 'lodash';
 
+export interface NestedObject {
+  label: string;
+  children: Array<string | OptionObject>;
+}
+
 export type Select = 'single' | 'multiple';
 type renderComboboxProps = {
-  options?: Array<string | OptionObject>;
+  options?: Array<string | OptionObject | NestedObject>;
 } & BaseComboboxProps &
   ComboboxMultiselectProps<boolean>;
 
-const defaultOptions: Array<OptionObject> = [
+export const defaultOptions: Array<OptionObject> = [
   {
     value: 'apple',
     displayName: 'Apple',
@@ -32,11 +37,61 @@ const defaultOptions: Array<OptionObject> = [
   },
 ];
 
+export const groupedOptions: Array<NestedObject> = [
+  {
+    label: 'Fruit',
+    children: [
+      {
+        value: 'apple',
+        displayName: 'Apple',
+      },
+      {
+        value: 'banana',
+        displayName: 'Banana',
+      },
+    ],
+  },
+  {
+    label: 'Vegetables',
+    children: [
+      {
+        value: 'carrot',
+        displayName: 'Carrot',
+      },
+      {
+        value: 'eggplant',
+        displayName: 'Eggplant',
+      },
+    ],
+  },
+];
+
 /**
  * @param props Combobox props
  * @returns Combobox JSX
  */
 export const getComboboxJSX = (props?: renderComboboxProps) => {
+  const isNested = (object: any): object is NestedObject =>
+    object.label && object.children;
+
+  const renderOption = (option: NestedObject | OptionObject | string) => {
+    if (isNested(option)) {
+      return (
+        <ComboboxGroup key={option.label} label={option.label}>
+          {option.children.map(renderOption)}
+        </ComboboxGroup>
+      );
+    } else {
+      const value = typeof option === 'string' ? option : option.value;
+      const displayName =
+        typeof option === 'string' ? undefined : option.displayName;
+
+      return (
+        <ComboboxOption key={value} value={value} displayName={displayName} />
+      );
+    }
+  };
+
   const label = props?.label ?? 'Some label';
   const options = props?.options ?? defaultOptions;
   return (
@@ -46,14 +101,7 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
       multiselect={props?.multiselect ?? false}
       {...props}
     >
-      {options.map(option => {
-        const value = typeof option === 'string' ? option : option.value;
-        const displayName =
-          typeof option === 'string' ? undefined : option.displayName;
-        return (
-          <ComboboxOption key={value} value={value} displayName={displayName} />
-        );
-      })}
+      {options.map(renderOption)}
     </Combobox>
   );
 };
@@ -71,6 +119,7 @@ export function renderCombobox<T extends Select>(
   const multiselect = select === 'multiple';
   const options = props?.options || defaultOptions;
   props = { options, multiselect, ...props };
+
   const renderResult = render(getComboboxJSX(props));
   const containerEl = renderResult.getByTestId('combobox-container');
   const labelEl = containerEl.getElementsByTagName('label')[0];
