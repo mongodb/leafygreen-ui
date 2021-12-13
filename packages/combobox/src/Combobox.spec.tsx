@@ -1,4 +1,5 @@
 /* eslint-disable jest/no-disabled-tests */
+/* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
 import {
   waitForElementToBeRemoved,
@@ -238,9 +239,8 @@ describe('packages/combobox', () => {
       },
     );
 
-    // value prop
+    // `value` prop
     describe('When value is controlled', () => {
-      /* eslint-disable jest/no-standalone-expect */
       testSingleSelect('Text input renders with value update', () => {
         let value = 'apple';
         const { inputEl, rerenderCombobox } = renderCombobox(select, {
@@ -293,7 +293,6 @@ describe('packages/combobox', () => {
           expect(queryAllChips()).toHaveLength(1);
         });
       });
-      /*  eslint-enable jest/no-standalone-expect */
     });
 
     /**
@@ -340,11 +339,9 @@ describe('packages/combobox', () => {
           initialValue: 'apple',
         });
         const { optionElements, menuContainerEl } = openMenu();
-        // eslint-disable-next-line jest/no-standalone-expect
         expect(optionElements).not.toBeUndefined();
         userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[0]);
         await waitForElementToBeRemoved(menuContainerEl);
-        // eslint-disable-next-line jest/no-standalone-expect
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
@@ -377,28 +374,24 @@ describe('packages/combobox', () => {
             initialValue,
           });
           userEvent.type(inputEl, '{backspace}{backspace}{esc}');
-          // eslint-disable-next-line jest/no-standalone-expect
           expect(inputEl).toHaveValue('Apple');
         },
       );
 
-      testMultiSelect('Clicking chip X button removes option', () => {
+      testMultiSelect('Clicking chip X button removes option', async () => {
         const initialValue = ['apple', 'banana', 'carrot'];
         const { queryChipsByName, queryAllChips } = renderCombobox(select, {
           initialValue,
         });
         const appleChip = queryChipsByName('Apple');
-        // eslint-disable-next-line jest/no-standalone-expect
         expect(appleChip).not.toBeNull();
         const appleChipButton = (appleChip as HTMLElement).querySelector(
           'button',
         ) as HTMLElement;
         userEvent.click(appleChipButton);
-        waitFor(() => {
+        await waitFor(() => {
           const allChips = queryChipsByName(['Banana', 'Carrot']);
-          // eslint-disable-next-line jest/no-standalone-expect
           allChips?.forEach(chip => expect(chip).toBeInTheDocument());
-          // eslint-disable-next-line jest/no-standalone-expect
           expect(queryAllChips()).toHaveLength(2);
         });
       });
@@ -412,35 +405,48 @@ describe('packages/combobox', () => {
           });
           const appleChip = queryChipsByName('Apple');
           userEvent.click(appleChip as HTMLElement);
-          // eslint-disable-next-line jest/no-standalone-expect
           expect(
             (appleChip as HTMLElement).contains(document.activeElement),
           ).toBeTruthy();
-          // eslint-disable-next-line jest/no-standalone-expect
           expect(queryAllChips()).toHaveLength(3);
         },
       );
 
       testMultiSelect(
-        'Removing an option should set focus to the previous chip',
-        () => {
+        'Clicking chip X button does nothing when disabled',
+        async () => {
           const initialValue = ['apple', 'banana', 'carrot'];
-          const { queryChipsByName } = renderCombobox(select, {
+          const { queryChipsByName, queryAllChips } = renderCombobox(select, {
             initialValue,
+            disabled: true,
           });
-          const appleChip = queryChipsByName('Apple');
-          const bananaChip = queryChipsByName('Banana');
-          const appleChipButton = (appleChip as HTMLElement).querySelector(
+          const carrotChip = queryChipsByName('Carrot');
+          const carrotChipButton = (carrotChip as HTMLElement).querySelector(
             'button',
           ) as HTMLElement;
-          const bananaChipButton = (bananaChip as HTMLElement).querySelector(
-            'button',
-          ) as HTMLElement;
-          userEvent.click(bananaChipButton);
-          // eslint-disable-next-line jest/no-standalone-expect
-          expect(appleChipButton).toHaveFocus();
+          userEvent.click(carrotChipButton);
+          await waitFor(() => {
+            expect(queryAllChips()).toHaveLength(3);
+          });
         },
       );
+
+      testMultiSelect('Removing a chip sets focus to the previous chip', () => {
+        const initialValue = ['apple', 'banana', 'carrot'];
+        const { queryChipsByName } = renderCombobox(select, {
+          initialValue,
+        });
+        const appleChip = queryChipsByName('Apple');
+        const bananaChip = queryChipsByName('Banana');
+        const appleChipButton = (appleChip as HTMLElement).querySelector(
+          'button',
+        ) as HTMLElement;
+        const bananaChipButton = (bananaChip as HTMLElement).querySelector(
+          'button',
+        ) as HTMLElement;
+        userEvent.click(bananaChipButton);
+        expect(appleChipButton).toHaveFocus();
+      });
 
       test('Clicking clear all button clears selection', () => {
         const initialValue =
@@ -552,9 +558,7 @@ describe('packages/combobox', () => {
             initialValue,
           });
           userEvent.type(inputEl, '{backspace}');
-          // eslint-disable-next-line jest/no-standalone-expect
           expect(queryAllChips()).toHaveLength(1);
-          // eslint-disable-next-line jest/no-standalone-expect
           expect(
             queryAllChips()[0].contains(document.activeElement),
           ).toBeTruthy();
@@ -569,7 +573,6 @@ describe('packages/combobox', () => {
       });
 
       describe('Left arrow keys', () => {
-        /* eslint-disable jest/no-standalone-expect */
         testMultiSelect(
           'When cursor is at the beginning of input, Left arrow focuses last chip',
           () => {
@@ -633,7 +636,6 @@ describe('packages/combobox', () => {
             expect(chips[0].contains(document.activeElement)).toBeTruthy();
           },
         );
-        /* eslint-enable jest/no-standalone-expect */
       });
 
       describe('Right arrow key', () => {
@@ -675,7 +677,6 @@ describe('packages/combobox', () => {
               initialValue,
             });
             userEvent.type(inputEl, '{arrowleft}{arrowright}');
-            // eslint-disable-next-line jest/no-standalone-expect
             expect(inputEl).toHaveFocus();
           },
         );
@@ -689,7 +690,6 @@ describe('packages/combobox', () => {
             });
             userEvent.type(inputEl, '{arrowleft}{arrowleft}{arrowright}');
             const carrotChip = queryChipsByName('Carrot');
-            // eslint-disable-next-line jest/no-standalone-expect
             expect(
               (carrotChip as HTMLElement).contains(document.activeElement),
             ).toBeTruthy();
@@ -698,7 +698,6 @@ describe('packages/combobox', () => {
       });
 
       describe('Remove chips with keyboard', () => {
-        /* eslint-disable jest/no-standalone-expect */
         let comboboxEl: HTMLElement,
           queryAllChips: () => Array<HTMLElement>,
           chipButton: HTMLElement;
@@ -728,7 +727,6 @@ describe('packages/combobox', () => {
           userEvent.type(chipButton, '{space}');
           waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
-        /* eslint-enable jest/no-standalone-expect */
       });
     });
 
