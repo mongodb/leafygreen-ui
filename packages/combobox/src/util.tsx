@@ -64,7 +64,7 @@ export const getNameAndValue = ({
 } => {
   return {
     value: valProp ?? kebabCase(nameProp),
-    displayName: nameProp ?? startCase(valProp),
+    displayName: nameProp ?? valProp ?? '', // TODO consider adding a prop to customize displayName => startCase(valProp),
   };
 };
 
