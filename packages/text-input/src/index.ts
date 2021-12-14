@@ -1,3 +1,3 @@
-import TextInput, { TextInputType, State, SizeVariantType } from './TextInput';
-export { TextInputType, State, SizeVariantType };
+import TextInput, { TextInputType, State, SizeVariant, BaseFontSize } from './TextInput';
+export { TextInputType, State, SizeVariant, BaseFontSize };
 export default TextInput;

@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import TextInput, { State, SizeVariantType } from './TextInput';
+import TextInput, { State, SizeVariant } from './TextInput';
 
 const error = 'This is the error message';
 const validEmail = 'test.email@mongodb.com';
@@ -226,7 +226,7 @@ describe('packages/text-input', () => {
     test('check if font-size is 18px', () => {
       const { label } = renderTextInput({
         value: validEmail,
-        sizeVariant: SizeVariantType.Large,
+        sizeVariant: SizeVariant.Large,
         optional: true,
         ...defaultProps,
       });

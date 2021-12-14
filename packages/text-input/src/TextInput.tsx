@@ -39,15 +39,16 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-export const SizeVariantType = {
+export const SizeVariant = {
   XSmall: 'xsmall',
   Small: 'small',
   Default: 'default',
-  Medium: 'medium',
   Large: 'large',
 } as const;
 
-export type SizeVariantType = typeof SizeVariantType[keyof typeof SizeVariantType];
+export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
+
+export type BaseFontSize = 14 | 16;
 
 interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   /**
@@ -118,7 +119,9 @@ interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
 
   ['aria-labelledby']?: string;
 
-  sizeVariant?: SizeVariantType;
+  sizeVariant?: SizeVariant;
+
+  baseFontSize?: BaseFontSize;
 }
 
 type AriaLabels = 'label' | 'aria-labelledby';
@@ -249,44 +252,6 @@ interface SizeSet {
   padding: number;
 }
 
-const sizeSets: Record<SizeVariantType, SizeSet> = {
-  [SizeVariantType.XSmall]: {
-    inputHeight: 22,
-    inputText: 12,
-    text: 14,
-    lineHeight: 20,
-    padding: 10,
-  },
-  [SizeVariantType.Small]: {
-    inputHeight: 28,
-    inputText: 14,
-    text: 14,
-    lineHeight: 20,
-    padding: 10,
-  },
-  [SizeVariantType.Default]: {
-    inputHeight: 36,
-    inputText: 14,
-    text: 14,
-    lineHeight: 20,
-    padding: 12,
-  },
-  [SizeVariantType.Medium]: {
-    inputHeight: 36,
-    inputText: 16,
-    text: 16,
-    lineHeight: 20,
-    padding: 12,
-  },
-  [SizeVariantType.Large]: {
-    inputHeight: 48,
-    inputText: 18,
-    text: 18,
-    lineHeight: 22,
-    padding: 16,
-  },
-};
-
 function getStatefulInputStyles({
   state,
   optional,
@@ -331,6 +296,40 @@ function getStatefulInputStyles({
   }
 }
 
+function getSizeSets(baseFontSize: BaseFontSize, sizeVariant: SizeVariant) {
+  const sizeSets: Record<SizeVariant, SizeSet> = {
+    [SizeVariant.XSmall]: {
+      inputHeight: 22,
+      inputText: 12,
+      text: 14,
+      lineHeight: 20,
+      padding: 10,
+    },
+    [SizeVariant.Small]: {
+      inputHeight: 28,
+      inputText: 14,
+      text: 14,
+      lineHeight: 20,
+      padding: 10,
+    },
+    [SizeVariant.Default]: {
+      inputHeight: 36,
+      inputText: baseFontSize,
+      text: baseFontSize,
+      lineHeight: 20,
+      padding: 12,
+    },
+    [SizeVariant.Large]: {
+      inputHeight: 48,
+      inputText: 18,
+      text: 18,
+      lineHeight: 22,
+      padding: 16,
+    },
+  };
+  return sizeSets[sizeVariant];
+}
+
 /**
  * # TextInput
  *
@@ -371,9 +370,10 @@ const TextInput: React.ComponentType<
       value: controlledValue,
       className,
       darkMode = false,
-      sizeVariant = SizeVariantType.Default,
+      sizeVariant = SizeVariant.Default,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
+      baseFontSize = 14,
       ...rest
     }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -383,7 +383,9 @@ const TextInput: React.ComponentType<
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-    const sizeSet = sizeSets[sizeVariant];
+    const sizeSet = getSizeSets(baseFontSize, sizeVariant);
+
+    console.log({sizeSet});
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
@@ -574,7 +576,8 @@ TextInput.propTypes = {
   state: PropTypes.oneOf(Object.values(State)),
   value: PropTypes.string,
   className: PropTypes.string,
-  sizeVariant: PropTypes.oneOf(Object.values(SizeVariantType)),
+  sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
+  baseFontSize: PropTypes.oneOf([14, 16]),
 };
 
 export default TextInput;

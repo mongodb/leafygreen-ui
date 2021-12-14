@@ -2,7 +2,8 @@ import React from 'react';
 import TextInput, {
   State,
   TextInputType,
-  SizeVariantType,
+  SizeVariant,
+  BaseFontSize,
 } from '@leafygreen-ui/text-input';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
@@ -16,7 +17,8 @@ const knobsConfig: KnobsConfigInterface<{
   type: TextInputType;
   darkMode: boolean;
   errorMessage: string;
-  sizeVariant: SizeVariantType;
+  sizeVariant: SizeVariant;
+  baseFontSize: BaseFontSize
 }> = {
   label: {
     type: 'text',
@@ -57,9 +59,9 @@ const knobsConfig: KnobsConfigInterface<{
   },
   sizeVariant: {
     type: 'select',
-    options: Object.values(SizeVariantType),
+    options: Object.values(SizeVariant),
     default: 'default',
-    label: 'Size Variant',
+    label: 'Size',
   },
   darkMode: {
     type: 'boolean',
@@ -71,6 +73,12 @@ const knobsConfig: KnobsConfigInterface<{
     default:
       'The team name that you entered is not unique, please pick another',
     label: 'Error Message',
+  },
+  baseFontSize: {
+    type: 'select',
+    options: [14, 16],
+    default: 14,
+    label: 'Base Font Size',
   },
 };
 
