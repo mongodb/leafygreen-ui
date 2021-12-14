@@ -149,15 +149,26 @@ describe('packages/combobox', () => {
 
     test('All options render in the menu', () => {
       const { openMenu } = renderCombobox(select);
-      const { menuContainerEl } = openMenu();
+      const { optionElements } = openMenu();
+      expect(optionElements).toHaveLength(defaultOptions.length);
+    });
 
-      defaultOptions.forEach(({ displayName }) => {
-        const optionEl = queryByText(
-          menuContainerEl as HTMLElement,
-          displayName,
-        );
-        expect(optionEl).toBeInTheDocument();
+    test('Options render with provided displayName', async () => {
+      const { openMenu } = renderCombobox(select);
+      const { optionElements } = openMenu();
+      Array.from(optionElements).forEach((optionEl, index) => {
+        expect(optionEl).toHaveTextContent(defaultOptions[index].displayName);
       });
+    });
+
+    test('Option is rendered with provided value when no displayName is provided', () => {
+      const options = [{ value: 'abc-def' }];
+      // @ts-expect-error `options` will not match the expected type
+      const { openMenu } = renderCombobox(select, { options });
+      const {
+        optionElements: [optionEl],
+      } = openMenu();
+      expect(optionEl).toHaveTextContent('abc-def');
     });
 
     // Grouped Options
@@ -950,7 +961,7 @@ describe('packages/combobox', () => {
         chipTruncationLocation: 'middle',
       });
       const firstChipEl = queryAllChips()[0];
-      expect(firstChipEl).toHaveTextContent('Lore' + ellipsis + 'dolor');
+      expect(firstChipEl).toHaveTextContent('lore' + ellipsis + 'dolor');
     });
     test('Chips truncate at the end', () => {
       const { queryAllChips } = renderCombobox('multiple', {
@@ -959,7 +970,7 @@ describe('packages/combobox', () => {
         chipTruncationLocation: 'end',
       });
       const firstChipEl = queryAllChips()[0];
-      expect(firstChipEl).toHaveTextContent('Loremipsu' + ellipsis);
+      expect(firstChipEl).toHaveTextContent('loremipsu' + ellipsis);
     });
 
     test('Chips truncate to the provided length', () => {
