@@ -875,6 +875,7 @@ export default function Combobox<M extends boolean>({
         darkMode,
         size,
         withIcons,
+        disabled,
         chipTruncationLocation,
         chipCharacterLimit,
         inputValue,

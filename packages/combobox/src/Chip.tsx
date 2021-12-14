@@ -103,6 +103,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
     const {
       darkMode,
       size,
+      disabled,
       chipTruncationLocation,
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
@@ -151,17 +152,18 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
     }, [chipCharacterLimit, chipTruncationLocation, displayName, isTruncated]);
 
     useEffect(() => {
-      if (isFocused) {
+      if (isFocused && !disabled) {
         buttonRef?.current?.focus();
       }
-    }, [forwardedRef, isFocused]);
+    }, [disabled, forwardedRef, isFocused]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (
-        e.keyCode === keyMap.Delete ||
-        e.keyCode === keyMap.Backspace ||
-        e.keyCode === keyMap.Enter ||
-        e.keyCode === keyMap.Space
+        !disabled &&
+        (e.keyCode === keyMap.Delete ||
+          e.keyCode === keyMap.Backspace ||
+          e.keyCode === keyMap.Enter ||
+          e.keyCode === keyMap.Space)
       ) {
         onRemove();
       }
@@ -171,6 +173,12 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       // Did not click button
       if (!buttonRef.current?.contains(e.target as Node)) {
         onFocus();
+      }
+    };
+
+    const handleButtonClick = () => {
+      if (!disabled) {
+        onRemove();
       }
     };
 
@@ -199,9 +207,11 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         </span>
         <button
           aria-label={`Deselect ${displayName}`}
+          aria-disabled={disabled}
+          disabled={disabled}
           ref={buttonRef}
           className={chipButton}
-          onClick={onRemove}
+          onClick={handleButtonClick}
           onKeyDown={handleKeyDown}
         >
           <Icon glyph="X" />

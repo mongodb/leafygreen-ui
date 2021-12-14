@@ -6,6 +6,7 @@ interface ComboboxData {
   darkMode: boolean;
   size: keyof typeof ComboboxSize;
   withIcons: boolean;
+  disabled: boolean;
   chipTruncationLocation?: TrunctationLocation;
   chipCharacterLimit?: number;
   inputValue?: string;
@@ -16,4 +17,5 @@ export const ComboboxContext = createContext<ComboboxData>({
   darkMode: false,
   size: 'default',
   withIcons: false,
+  disabled: false,
 });
