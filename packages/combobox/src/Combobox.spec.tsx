@@ -156,7 +156,7 @@ describe('packages/combobox', () => {
     test('Options render with provided displayName', async () => {
       const { openMenu } = renderCombobox(select);
       const { optionElements } = openMenu();
-      Array.from(optionElements).forEach((optionEl, index) => {
+      Array.from(optionElements!).forEach((optionEl, index) => {
         expect(optionEl).toHaveTextContent(defaultOptions[index].displayName);
       });
     });
@@ -165,9 +165,8 @@ describe('packages/combobox', () => {
       const options = [{ value: 'abc-def' }];
       // @ts-expect-error `options` will not match the expected type
       const { openMenu } = renderCombobox(select, { options });
-      const {
-        optionElements: [optionEl],
-      } = openMenu();
+      const { optionElements } = openMenu();
+      const [optionEl] = Array.from(optionElements!);
       expect(optionEl).toHaveTextContent('abc-def');
     });
 
