@@ -18,7 +18,7 @@ const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;
   errorMessage: string;
   sizeVariant: SizeVariant;
-  baseFontSize: BaseFontSize
+  baseFontSize: BaseFontSize;
 }> = {
   label: {
     type: 'text',
@@ -61,7 +61,7 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'select',
     options: Object.values(SizeVariant),
     default: 'default',
-    label: 'Size',
+    label: 'Size Variant',
   },
   darkMode: {
     type: 'boolean',

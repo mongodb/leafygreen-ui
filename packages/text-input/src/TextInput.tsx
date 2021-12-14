@@ -48,7 +48,9 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export type BaseFontSize = 14 | 16;
+export const BaseFontSize = 14 | 16;
+
+export type BaseFontSize = typeof BaseFontSize;
 
 interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   /**
@@ -119,7 +121,15 @@ interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
 
   ['aria-labelledby']?: string;
 
+  /**
+   *  determines the font size and padding.
+   */
+
   sizeVariant?: SizeVariant;
+
+  /**
+   *  determines the base font size if sizeVariant is set to default.
+   */
 
   baseFontSize?: BaseFontSize;
 }
@@ -384,8 +394,6 @@ const TextInput: React.ComponentType<
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
     const sizeSet = getSizeSets(baseFontSize, sizeVariant);
-
-    console.log({sizeSet});
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);

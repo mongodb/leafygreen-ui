@@ -84,7 +84,7 @@ return (
 | `type`         | `'email'`, `'password'`, `'search'`, `'text'`, `'url'`, `'tel'`, `'number'` | Sets type for TextInput                                                                                                   | `'text'`  |
 | `darkMode`     | `boolean`                                                                   | Determines whether or not the component will appear in dark mode.                                                         | `false`   |
 | `sizeVariant`  | `'xsmall'`, `'small'`, `'default'`, `'large'`,                              | Sets the side padding, text size, and input height.                                                                       | `default` |
-| `baseFontSize` | `14`, `16`                                               | Determines the base font-size of the component if default is selected                                                                      | `14`        |
+| `baseFontSize` | `14`, `16`                                                                  | Determines the base font-size of the component if the sizeVariant prop is set to default                                  | `14`      |
 | ...            | native `input` attributes                                                   | Any other props will be spread on the root `input` element                                                                |           |
 
 ### Special Case: Aria Labels

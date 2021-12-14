@@ -43,7 +43,7 @@ storiesOf('TextInput', module)
               TextInputType.Text,
             )}
             sizeVariant={select(
-              'Size',
+              'Size Variant',
               ['xsmall', 'small', 'default', 'large'],
               'default',
             )}
