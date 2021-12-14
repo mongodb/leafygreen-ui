@@ -38,15 +38,6 @@ export const SearchState = {
 } as const;
 export type SearchState = typeof SearchState[keyof typeof SearchState];
 
-export const Filter = {
-  startsWith: 'starts-with',
-  includes: 'includes',
-} as const;
-export type Filter = typeof Filter[keyof typeof Filter];
-
-// TODO - replace with filteredOptions prop
-// Default behavior is to filter includes & sort
-
 /**
  * Generic Typing
  */
@@ -78,7 +69,6 @@ export interface ComboboxMultiselectProps<M extends boolean> {
   multiselect?: M;
   initialValue?: SelectValueType<M>;
   onChange?: onChangeType<M>;
-  // updateValue?: MutableRefObject<(value: SelectValueType<M>) => void>;
   value?: SelectValueType<M>;
   overflow?: M extends true ? Overflow : undefined;
 }
