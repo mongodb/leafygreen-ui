@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { flatten, isUndefined } from 'lodash';
+import { flatten, isUndefined, startCase } from 'lodash';
 import {
   defaultOptions,
   groupedOptions,
@@ -481,7 +481,7 @@ describe('packages/combobox', () => {
         if (select === 'multiple') {
           expect(queryAllChips()).toHaveLength(initialValue.length);
         } else {
-          expect(inputEl).toHaveValue(initialValue);
+          expect(inputEl).toHaveValue(startCase(initialValue as string));
         }
       });
     });

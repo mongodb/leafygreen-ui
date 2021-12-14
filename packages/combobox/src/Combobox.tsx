@@ -522,18 +522,22 @@ export default function Combobox<M extends boolean>({
     const handleClearButtonClick = (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
-      updateSelection(null);
-      onClear?.(e);
-      onFilter?.('');
+      if (!disabled) {
+        updateSelection(null);
+        onClear?.(e);
+        onFilter?.('');
+      }
     };
 
     return (
       <>
         {clearable && doesSelectionExist && (
           <IconButton
+            aria-label="Clear selection"
+            aria-disabled={disabled}
+            disabled={disabled}
             ref={clearButtonRef}
             onClick={handleClearButtonClick}
-            aria-label="Clear selection"
             onFocus={handleClearButtonFocus}
             className={clearButton}
           >
@@ -550,6 +554,7 @@ export default function Combobox<M extends boolean>({
   }, [
     clearable,
     doesSelectionExist,
+    disabled,
     state,
     updateSelection,
     onClear,
