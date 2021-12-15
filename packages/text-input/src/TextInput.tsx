@@ -559,6 +559,8 @@ const TextInput: React.ComponentType<
               errorMessageStyle,
               css`
                 color: ${colorSets[mode].errorMessage};
+                font-size: ${sizeSet.text}px;
+                line-height: ${sizeSet.lineHeight}px;
               `,
             )}
           >
