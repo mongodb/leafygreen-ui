@@ -497,6 +497,10 @@ describe('packages/combobox', () => {
           expect(inputEl).toHaveValue(startCase(initialValue as string));
         }
       });
+
+      test.todo(
+        'Clicking in the middle of the input text should set the cursor there',
+      );
     });
 
     /**
