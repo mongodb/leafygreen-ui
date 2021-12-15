@@ -2,6 +2,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import React, { useContext } from 'react';
+import { ComboboxGroupProps } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 
 const comboboxGroupStyle = (darkMode: boolean) => css`
@@ -29,11 +30,6 @@ const comboboxGroupLabel = css`
   color: var(--lg-combobox-group-label-color);
 `;
 
-interface ComboboxGroupProps {
-  label: string;
-  className?: string;
-  children: React.ReactNode;
-}
 export function InternalComboboxGroup({
   label,
   className,
