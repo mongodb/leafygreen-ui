@@ -30,6 +30,9 @@
       "path": "./packages/confirmation-modal"
     },
     {
+      "path": "./packages/combobox"
+    },
+    {
       "path": "./packages/copyable"
     },
     {

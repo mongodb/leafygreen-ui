@@ -14,6 +14,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Card](https://github.com/mongodb/leafygreen-ui/tree/main/packages/card)
 - [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/main/packages/checkbox)
 - [Code](https://github.com/mongodb/leafygreen-ui/tree/main/packages/code)
+- [Combobox](https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox)
 - [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/confirmation-modal)
 - [Copyable](https://github.com/mongodb/leafygreen-ui/tree/main/packages/copyable)
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/main/packages/emotion)
