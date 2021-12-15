@@ -670,14 +670,14 @@ describe('packages/combobox', () => {
           userEvent.type(inputEl, 'abc{arrowleft}');
           waitFor(() => expect(inputEl).toHaveFocus());
         });
-        test('When focus is on clear button, Left arrow moves focus to input', () => {
+        test('When focus is on clear button, Left arrow moves focus to input', async () => {
           const initialValue = select === 'multiple' ? ['apple'] : 'apple';
           const { inputEl } = renderCombobox(select, {
             initialValue,
           });
-          userEvent.type(inputEl as HTMLElement, '{arrowright}{arrowleft}');
-          expect(inputEl).toHaveFocus();
-          expect(inputEl.selectionEnd).toEqual(select === 'multiple' ? 0 : 5);
+          userEvent.type(inputEl!, '{arrowright}{arrowleft}');
+          expect(inputEl!).toHaveFocus();
+          expect(inputEl!.selectionEnd).toEqual(select === 'multiple' ? 0 : 5);
         });
         testMultiSelect(
           'When focus is on a chip, Left arrow focuses prev chip',
@@ -741,17 +741,17 @@ describe('packages/combobox', () => {
 
         testMultiSelect(
           'When focus is on last chip, Right arrow focuses input',
-          () => {
+          async () => {
             const initialValue = ['apple', 'banana', 'carrot'];
             const { inputEl } = renderCombobox(select, {
               initialValue,
             });
             userEvent.type(
-              inputEl,
+              inputEl!,
               'abc{arrowleft}{arrowleft}{arrowleft}{arrowleft}{arrowright}',
             );
-            expect(inputEl).toHaveFocus();
-            expect(inputEl.selectionStart).toEqual(0);
+            expect(inputEl!).toHaveFocus();
+            expect(inputEl!.selectionStart).toEqual(0);
           },
         );
 
@@ -762,9 +762,9 @@ describe('packages/combobox', () => {
             const { inputEl, queryAllChips } = renderCombobox(select, {
               initialValue,
             });
-            userEvent.type(inputEl, '{arrowleft}{arrowleft}{arrowright}');
+            userEvent.type(inputEl!, '{arrowleft}{arrowleft}{arrowright}');
             const [_, __, lastChip] = queryAllChips();
-            expect(lastChip).toContainFocus();
+            expect(lastChip!).toContainFocus();
           },
         );
       });
