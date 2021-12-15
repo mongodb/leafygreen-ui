@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   render,
+  configure,
   queryByText,
   queryByAttribute,
   queryAllByAttribute,
@@ -10,6 +11,7 @@ import { Combobox, ComboboxGroup, ComboboxOption } from '.';
 import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
 import { OptionObject } from './util';
 import { isNull } from 'lodash';
+import chalk from '@testing-library/jest-dom/node_modules/chalk';
 
 export interface NestedObject {
   label: string;
@@ -225,3 +227,39 @@ export function renderCombobox<T extends Select>(
  * @returns `test`
  */
 export const testif = (condition: boolean) => (condition ? test : test.skip);
+
+configure({
+  getElementError: message => new Error(message ?? ''),
+});
+
+expect.extend({
+  toContainFocus(recieved: HTMLElement) {
+    return recieved.contains(document.activeElement)
+      ? {
+          pass: true,
+          message: () =>
+            `\t Expected element not to contain focus: \n\t\t ${chalk.red(
+              recieved.outerHTML,
+            )} \n\t Element with focus: \n\t\t ${chalk.blue(
+              document.activeElement?.outerHTML,
+            )}`,
+        }
+      : {
+          pass: false,
+          message: () =>
+            `\t Expected element to contain focus: \n\t\t ${chalk.green(
+              recieved.outerHTML,
+            )} \n\t Element with focus: \n\t\t ${chalk.red(
+              document.activeElement?.outerHTML,
+            )}`,
+        };
+  },
+});
+
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toContainFocus(): R;
+    }
+  }
+}

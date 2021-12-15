@@ -900,7 +900,6 @@ export default function Combobox<M extends boolean>({
             </Label>
           )}
           {description && <Description>{description}</Description>}
-          {/* TODO - add error state message */}
         </div>
 
         <InteractionRing

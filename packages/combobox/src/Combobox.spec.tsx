@@ -18,12 +18,7 @@ import {
   Select,
   testif,
 } from './ComboboxTestUtils';
-
-import { configure } from '@testing-library/react';
 import { OptionObject } from './util';
-configure({
-  getElementError: message => new Error(message ?? ''),
-});
 
 /**
  * Tests
@@ -64,192 +59,201 @@ describe('packages/combobox', () => {
         ? test.todo(name)
         : testif(select === 'multiple')(name, fn);
 
-    // Label prop
-    test('Label is rendered', () => {
-      const { labelEl } = renderCombobox(select, { label: 'Some label' });
-      expect(labelEl).toBeInTheDocument();
-    });
-
-    // Desctiption prop
-    test('Description is rendered', () => {
-      const description = 'Lorem ipsum';
-      const { queryByText } = renderCombobox(select, { description });
-      const descriptionEl = queryByText(description);
-      expect(descriptionEl).not.toBeNull();
-      expect(descriptionEl).toBeInTheDocument();
-    });
-
-    // Placeholder prop
-    test('Placeholder is rendered', () => {
-      const placeholder = 'Placeholder text';
-      const { inputEl } = renderCombobox(select, { placeholder });
-      expect(inputEl.placeholder).toEqual(placeholder);
-    });
-
-    // errorMessage & state prop
-    test('Error message is rendered when state == `error`', () => {
-      const errorMessage = 'Some error message';
-      const { queryByText } = renderCombobox(select, {
-        errorMessage,
-        state: 'error',
+    describe('Basic rendering', () => {
+      // Label prop
+      test('Label is rendered', () => {
+        const { labelEl } = renderCombobox(select, { label: 'Some label' });
+        expect(labelEl).toBeInTheDocument();
       });
-      const errorEl = queryByText(errorMessage);
-      expect(errorEl).not.toBeNull();
-      expect(errorEl).toBeInTheDocument();
-    });
 
-    test('Error message is not rendered when state !== `error`', () => {
-      const errorMessage = 'Some error message';
-      const { queryByText } = renderCombobox(select, {
-        errorMessage,
+      // Desctiption prop
+      test('Description is rendered', () => {
+        const description = 'Lorem ipsum';
+        const { queryByText } = renderCombobox(select, { description });
+        const descriptionEl = queryByText(description);
+        expect(descriptionEl).not.toBeNull();
+        expect(descriptionEl).toBeInTheDocument();
       });
-      const errorEl = queryByText(errorMessage);
-      expect(errorEl).not.toBeInTheDocument();
-    });
 
-    // disabled prop
-    test('Combobox is not clickable when `disabled`', () => {
-      const { comboboxEl } = renderCombobox(select, { disabled: true });
-      userEvent.click(comboboxEl);
-      expect(document.body).toHaveFocus();
-    });
-
-    test('Combobox is not focusable when `disabled`', () => {
-      renderCombobox(select, { disabled: true });
-      userEvent.type(document.body, '{tab');
-      expect(document.body).toHaveFocus();
-    });
-
-    // Clearable prop
-    test('Clear button is rendered when selection is set', () => {
-      const initialValue = select === 'multiple' ? ['apple'] : 'apple';
-      const { clearButtonEl } = renderCombobox(select, {
-        initialValue,
+      // Placeholder prop
+      test('Placeholder is rendered', () => {
+        const placeholder = 'Placeholder text';
+        const { inputEl } = renderCombobox(select, { placeholder });
+        expect(inputEl.placeholder).toEqual(placeholder);
       });
-      expect(clearButtonEl).toBeInTheDocument();
-    });
 
-    test('Clear button is not rendered when there is no selection', () => {
-      const { clearButtonEl } = renderCombobox(select);
-      expect(clearButtonEl).not.toBeInTheDocument();
-    });
-
-    test('Clear button is not rendered when clearable == `false`', () => {
-      const initialValue = select === 'multiple' ? ['apple'] : 'apple';
-      const { clearButtonEl } = renderCombobox(select, {
-        initialValue,
-        clearable: false,
+      // errorMessage & state prop
+      test('Error message is rendered when state == `error`', () => {
+        const errorMessage = 'Some error message';
+        const { queryByText } = renderCombobox(select, {
+          errorMessage,
+          state: 'error',
+        });
+        const errorEl = queryByText(errorMessage);
+        expect(errorEl).not.toBeNull();
+        expect(errorEl).toBeInTheDocument();
       });
-      expect(clearButtonEl).not.toBeInTheDocument();
+
+      test('Error message is not rendered when state !== `error`', () => {
+        const errorMessage = 'Some error message';
+        const { queryByText } = renderCombobox(select, {
+          errorMessage,
+        });
+        const errorEl = queryByText(errorMessage);
+        expect(errorEl).not.toBeInTheDocument();
+      });
+
+      // Clear button
+      test('Clear button is rendered when selection is set', () => {
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const { clearButtonEl } = renderCombobox(select, {
+          initialValue,
+        });
+        expect(clearButtonEl).toBeInTheDocument();
+      });
+
+      test('Clear button is not rendered when there is no selection', () => {
+        const { clearButtonEl } = renderCombobox(select);
+        expect(clearButtonEl).not.toBeInTheDocument();
+      });
+
+      test('Clear button is not rendered when clearable == `false`', () => {
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const { clearButtonEl } = renderCombobox(select, {
+          initialValue,
+          clearable: false,
+        });
+        expect(clearButtonEl).not.toBeInTheDocument();
+      });
     });
 
     /**
      * Option Rendering
      */
-
-    test('All options render in the menu', () => {
-      const { openMenu } = renderCombobox(select);
-      const { optionElements } = openMenu();
-      expect(optionElements).toHaveLength(defaultOptions.length);
-    });
-
-    test('Options render with provided displayName', async () => {
-      const { openMenu } = renderCombobox(select);
-      const { optionElements } = openMenu();
-      Array.from(optionElements!).forEach((optionEl, index) => {
-        expect(optionEl).toHaveTextContent(defaultOptions[index].displayName);
+    describe('Option rendering', () => {
+      test('All options render in the menu', () => {
+        const { openMenu } = renderCombobox(select);
+        const { optionElements } = openMenu();
+        expect(optionElements).toHaveLength(defaultOptions.length);
       });
-    });
 
-    test('Option is rendered with provided value when no displayName is provided', () => {
-      const options = [{ value: 'abc-def' }];
-      // @ts-expect-error `options` will not match the expected type
-      const { openMenu } = renderCombobox(select, { options });
-      const { optionElements } = openMenu();
-      const [optionEl] = Array.from(optionElements!);
-      expect(optionEl).toHaveTextContent('abc-def');
-    });
-
-    // Grouped Options
-    describe('Grouped Options', () => {
-      test('Grouped items should render', () => {
-        const { openMenu } = renderCombobox(select, {
-          options: groupedOptions,
-        });
-        const { menuContainerEl } = openMenu();
-
-        flatten(
-          groupedOptions.map(({ children }: NestedObject) => children),
-        ).forEach((option: OptionObject | string) => {
-          const displayName =
-            typeof option === 'string' ? option : option.displayName;
-          const optionEl = queryByText(
-            menuContainerEl as HTMLElement,
-            displayName,
-          );
-          expect(optionEl).toBeInTheDocument();
+      test('Options render with provided displayName', async () => {
+        const { openMenu } = renderCombobox(select);
+        const { optionElements } = openMenu();
+        Array.from(optionElements!).forEach((optionEl, index) => {
+          expect(optionEl).toHaveTextContent(defaultOptions[index].displayName);
         });
       });
 
-      test('Grouped item labels should render', () => {
-        const { openMenu } = renderCombobox(select, {
-          options: groupedOptions,
-        });
-        const { menuContainerEl } = openMenu();
+      test('Option is rendered with provided value when no displayName is provided', () => {
+        const options = [{ value: 'abc-def' }];
+        // @ts-expect-error `options` will not match the expected type
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        expect(optionEl).toHaveTextContent('abc-def');
+      });
+      // Grouped Options
+      describe('Grouped Options', () => {
+        test('Grouped items should render', () => {
+          const { openMenu } = renderCombobox(select, {
+            options: groupedOptions,
+          });
+          const { menuContainerEl } = openMenu();
 
-        const [fruitLabel, veggieLabel] = [
-          queryByText(menuContainerEl as HTMLElement, 'Fruit'),
-          queryByText(menuContainerEl as HTMLElement, 'Vegetables'),
-        ];
-        expect(fruitLabel).toBeInTheDocument();
-        expect(veggieLabel).toBeInTheDocument();
+          flatten(
+            groupedOptions.map(({ children }: NestedObject) => children),
+          ).forEach((option: OptionObject | string) => {
+            const displayName =
+              typeof option === 'string' ? option : option.displayName;
+            const optionEl = queryByText(
+              menuContainerEl as HTMLElement,
+              displayName,
+            );
+            expect(optionEl).toBeInTheDocument();
+          });
+        });
+
+        test('Grouped item labels should render', () => {
+          const { openMenu } = renderCombobox(select, {
+            options: groupedOptions,
+          });
+          const { menuContainerEl } = openMenu();
+
+          const [fruitLabel, veggieLabel] = [
+            queryByText(menuContainerEl as HTMLElement, 'Fruit'),
+            queryByText(menuContainerEl as HTMLElement, 'Vegetables'),
+          ];
+          expect(fruitLabel).toBeInTheDocument();
+          expect(veggieLabel).toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('When disabled', () => {
+      // disabled prop
+      test('Combobox is not clickable when `disabled`', () => {
+        const { comboboxEl } = renderCombobox(select, { disabled: true });
+        userEvent.click(comboboxEl);
+        expect(document.body).toHaveFocus();
+      });
+
+      test('Combobox is not focusable when `disabled`', () => {
+        renderCombobox(select, { disabled: true });
+        userEvent.type(document.body, '{tab');
+        expect(document.body).toHaveFocus();
       });
     });
 
     /**
      * Initial Value
      */
-    testSingleSelect('Initial value prop renders text input value', () => {
-      const initialValue = 'apple';
-      const { inputEl } = renderCombobox(select, { initialValue });
-      expect(inputEl).toHaveValue('Apple');
-    });
-
-    testMultiSelect('Initial value prop renders chips', () => {
-      const initialValue = ['apple', 'banana'];
-      const { queryChipsByName, queryAllChips } = renderCombobox(select, {
-        initialValue,
-      });
-      waitFor(() => {
-        const allChips = queryChipsByName(['Apple', 'Banana']);
-        allChips?.forEach(chip => expect(chip).toBeInTheDocument());
-        expect(queryAllChips()).toHaveLength(2);
-      });
-    });
-
-    testSingleSelect(
-      'Selected single select option renders with a checkmark icon',
-      () => {
+    describe('`initialValue` prop', () => {
+      testSingleSelect('Initial value prop renders text input value', () => {
         const initialValue = 'apple';
-        const { openMenu } = renderCombobox('single', { initialValue });
-        const { selectedElements } = openMenu();
-        expect(selectedElements?.querySelector('svg')).not.toBeNull();
-      },
-    );
+        const { inputEl } = renderCombobox(select, { initialValue });
+        expect(inputEl).toHaveValue('Apple');
+      });
 
-    testMultiSelect(
-      'Each multiple select option renders with a checkbox input',
-      () => {
+      testMultiSelect('Initial value prop renders chips', () => {
         const initialValue = ['apple', 'banana'];
-        const { openMenu } = renderCombobox('multiple', { initialValue });
-        const { selectedElements } = openMenu();
-        expect(
-          selectedElements?.every(element => element?.querySelector('input')),
-        ).toBeTruthy();
-      },
-    );
+        const { queryChipsByName, queryAllChips } = renderCombobox(select, {
+          initialValue,
+        });
+        waitFor(() => {
+          const allChips = queryChipsByName(['Apple', 'Banana']);
+          allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+          expect(queryAllChips()).toHaveLength(2);
+        });
+      });
 
-    // `value` prop
+      testSingleSelect(
+        'Selected single select option renders with a checkmark icon',
+        () => {
+          const initialValue = 'apple';
+          const { openMenu } = renderCombobox('single', { initialValue });
+          const { selectedElements } = openMenu();
+          expect(selectedElements?.querySelector('svg')).not.toBeNull();
+        },
+      );
+
+      testMultiSelect(
+        'Each multiple select option renders with a checkbox input',
+        () => {
+          const initialValue = ['apple', 'banana'];
+          const { openMenu } = renderCombobox('multiple', { initialValue });
+          const { selectedElements } = openMenu();
+          expect(
+            selectedElements?.every(element => element?.querySelector('input')),
+          ).toBeTruthy();
+        },
+      );
+    });
+
+    /**
+     * Controlled
+     * (i.e. `value` prop)
+     */
     describe('When value is controlled', () => {
       testSingleSelect('Text input renders with value update', () => {
         let value = 'apple';
@@ -342,6 +346,7 @@ describe('packages/combobox', () => {
         userEvent.click(containerEl.parentElement!);
         await waitForElementToBeRemoved(menuContainerEl);
         expect(menuContainerEl).not.toBeInTheDocument();
+        expect(containerEl).not.toContainFocus();
       });
 
       testSingleSelect('Clicking selected option closes menu', async () => {
@@ -415,9 +420,7 @@ describe('packages/combobox', () => {
           });
           const appleChip = queryChipsByName('Apple');
           userEvent.click(appleChip as HTMLElement);
-          expect(
-            (appleChip as HTMLElement).contains(document.activeElement),
-          ).toBeTruthy();
+          expect(appleChip).toContainFocus();
           expect(queryAllChips()).toHaveLength(3);
         },
       );
@@ -509,26 +512,6 @@ describe('packages/combobox', () => {
         ).toHaveAttribute('aria-selected', 'true');
       });
 
-      test('Down arrow moves highlight down', async () => {
-        const { inputEl, openMenu, findByRole } = renderCombobox(select);
-        openMenu();
-        userEvent.type(inputEl, '{arrowdown}');
-        const highlight = await findByRole('option', {
-          selected: true,
-        });
-        expect(highlight).toHaveTextContent('Banana');
-      });
-
-      test('Up arrow moves highlight up', async () => {
-        const { inputEl, openMenu, findByRole } = renderCombobox(select);
-        openMenu();
-        userEvent.type(inputEl, '{arrowdown}{arrowdown}{arrowup}');
-        const highlight = await findByRole('option', {
-          selected: true,
-        });
-        expect(highlight).toHaveTextContent('Banana');
-      });
-
       test('Enter key selects highlighted option', () => {
         const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
         openMenu();
@@ -559,62 +542,119 @@ describe('packages/combobox', () => {
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
-      test('Tab key closes menu', async () => {
-        const { containerEl, openMenu } = renderCombobox(select);
-        const { menuContainerEl } = openMenu();
-        userEvent.type(containerEl, '{tab}');
-        await waitForElementToBeRemoved(menuContainerEl);
-        expect(menuContainerEl).not.toBeInTheDocument();
-      });
+      describe('`Tab` key', () => {
+        test('Closes menu when no selection is made', async () => {
+          const { containerEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(containerEl, '{tab}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
 
-      test('Down arrow key opens menu when its closed', async () => {
-        const { inputEl, openMenu, findByRole } = renderCombobox(select);
-        const { menuContainerEl } = openMenu();
-        expect(inputEl).toHaveFocus();
-        userEvent.type(inputEl, '{esc}');
-        await waitForElementToBeRemoved(menuContainerEl);
-        expect(menuContainerEl).not.toBeInTheDocument();
-        userEvent.type(inputEl, '{arrowdown}');
-        const reOpenedMenu = await findByRole('listbox');
-        expect(reOpenedMenu).toBeInTheDocument();
-      });
+        test('Focuses clear button when it exists', async () => {
+          const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+          const {
+            containerEl,
+            clearButtonEl,
+            openMenu,
+          } = renderCombobox(select, { initialValue });
+          const { menuContainerEl } = openMenu();
+          userEvent.type(containerEl, '{tab}');
 
-      testMultiSelect(
-        'Backspace key focuses last chip when cursor is at beginning of selection',
-        () => {
-          const initialValue = ['apple'];
+          await waitFor(() => {
+            expect(menuContainerEl).toBeInTheDocument();
+            expect(clearButtonEl).toHaveFocus();
+          });
+        });
+
+        testMultiSelect('Focuses next Chip when a Chip is selected', () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { queryAllChips } = renderCombobox(select, { initialValue });
+          const [firstChip, secondChip] = queryAllChips();
+          userEvent.click(firstChip);
+          userEvent.type(firstChip, '{tab}');
+          expect(secondChip).toContainFocus();
+        });
+
+        testMultiSelect('Focuses input when the last Chip is selected', () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
           const { inputEl, queryAllChips } = renderCombobox(select, {
             initialValue,
           });
-          userEvent.type(inputEl, '{backspace}');
-          expect(queryAllChips()).toHaveLength(1);
-          expect(
-            queryAllChips()[0].contains(document.activeElement),
-          ).toBeTruthy();
-        },
-      );
-
-      test('Backspace key deletes text when cursor is NOT at beginning of selection', () => {
-        const { inputEl } = renderCombobox(select);
-        userEvent.type(inputEl, 'app{backspace}');
-        expect(inputEl).toHaveFocus();
-        expect(inputEl).toHaveValue('ap');
+          const [_, __, lastChip] = queryAllChips();
+          userEvent.click(lastChip);
+          userEvent.type(lastChip, '{tab}');
+          expect(inputEl).toHaveFocus();
+        });
       });
 
-      describe('Left arrow keys', () => {
+      describe('`Backspace` key', () => {
+        testMultiSelect(
+          'Backspace key focuses last chip when cursor is at beginning of selection',
+          () => {
+            const initialValue = ['apple'];
+            const { inputEl, queryAllChips } = renderCombobox(select, {
+              initialValue,
+            });
+            userEvent.type(inputEl, '{backspace}');
+            expect(queryAllChips()).toHaveLength(1);
+            expect(queryAllChips()[0]).toContainFocus();
+          },
+        );
+
+        test('Backspace key deletes text when cursor is NOT at beginning of selection', () => {
+          const { inputEl } = renderCombobox(select);
+          userEvent.type(inputEl, 'app{backspace}');
+          expect(inputEl).toHaveFocus();
+          expect(inputEl).toHaveValue('ap');
+        });
+      });
+
+      describe('Up & Down arrow keys', () => {
+        test('Down arrow moves highlight down', async () => {
+          const { inputEl, openMenu, findByRole } = renderCombobox(select);
+          openMenu();
+          userEvent.type(inputEl, '{arrowdown}');
+          const highlight = await findByRole('option', {
+            selected: true,
+          });
+          expect(highlight).toHaveTextContent('Banana');
+        });
+
+        test('Up arrow moves highlight up', async () => {
+          const { inputEl, openMenu, findByRole } = renderCombobox(select);
+          openMenu();
+          userEvent.type(inputEl, '{arrowdown}{arrowdown}{arrowup}');
+          const highlight = await findByRole('option', {
+            selected: true,
+          });
+          expect(highlight).toHaveTextContent('Banana');
+        });
+
+        test('Down arrow key opens menu when its closed', async () => {
+          const { inputEl, openMenu, findByRole } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          expect(inputEl).toHaveFocus();
+          userEvent.type(inputEl, '{esc}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+          userEvent.type(inputEl, '{arrowdown}');
+          const reOpenedMenu = await findByRole('listbox');
+          expect(reOpenedMenu).toBeInTheDocument();
+        });
+      });
+
+      describe('Left arrow key', () => {
         testMultiSelect(
           'When cursor is at the beginning of input, Left arrow focuses last chip',
           () => {
             const initialValue = ['apple', 'banana', 'carrot'];
-            const { queryChipsByName, inputEl } = renderCombobox(select, {
+            const { queryAllChips, inputEl } = renderCombobox(select, {
               initialValue,
             });
             userEvent.type(inputEl, '{arrowleft}');
-            const carrotChip = queryChipsByName('Carrot');
-            expect(carrotChip).not.toBeNull();
-            expect(
-              (carrotChip as HTMLElement).contains(document.activeElement),
-            ).toBeTruthy();
+            const [_, __, lastChip] = queryAllChips();
+            expect(lastChip).toContainFocus();
           },
         );
         testSingleSelect(
@@ -632,11 +672,12 @@ describe('packages/combobox', () => {
         });
         test('When focus is on clear button, Left arrow moves focus to input', () => {
           const initialValue = select === 'multiple' ? ['apple'] : 'apple';
-          const { inputEl, clearButtonEl } = renderCombobox(select, {
+          const { inputEl } = renderCombobox(select, {
             initialValue,
           });
-          userEvent.click(clearButtonEl as HTMLElement);
-          waitFor(() => expect(inputEl).toHaveFocus());
+          userEvent.type(inputEl as HTMLElement, '{arrowright}{arrowleft}');
+          expect(inputEl).toHaveFocus();
+          expect(inputEl.selectionEnd).toEqual(select === 'multiple' ? 0 : 5);
         });
         testMultiSelect(
           'When focus is on a chip, Left arrow focuses prev chip',
@@ -645,9 +686,9 @@ describe('packages/combobox', () => {
             const { queryAllChips, inputEl } = renderCombobox(select, {
               initialValue,
             });
-            const chips = queryAllChips();
+            const [_, secondChip] = queryAllChips();
             userEvent.type(inputEl, '{arrowleft}{arrowleft}');
-            expect(chips[1].contains(document.activeElement)).toBeTruthy();
+            expect(secondChip).toContainFocus();
           },
         );
         testMultiSelect(
@@ -657,27 +698,17 @@ describe('packages/combobox', () => {
             const { queryAllChips, inputEl } = renderCombobox(select, {
               initialValue,
             });
-            const chips = queryAllChips();
+            const [firstChip] = queryAllChips();
             userEvent.type(
               inputEl,
               '{arrowleft}{arrowleft}{arrowleft}{arrowleft}',
             );
-            expect(chips[0].contains(document.activeElement)).toBeTruthy();
+            expect(firstChip).toContainFocus();
           },
         );
       });
 
       describe('Right arrow key', () => {
-        test('When cursor is at the end of input, Right arrow focuses clear button', () => {
-          const initialValue =
-            select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
-          const { inputEl, clearButtonEl } = renderCombobox(select, {
-            initialValue,
-          });
-          userEvent.type(inputEl, '{arrowright}');
-          expect(clearButtonEl).toHaveFocus();
-        });
-
         test('When focus is on clear button, Right arrow does nothing', () => {
           const initialValue =
             select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
@@ -685,6 +716,16 @@ describe('packages/combobox', () => {
             initialValue,
           });
           userEvent.type(inputEl, '{arrowright}{arrowright}');
+          expect(clearButtonEl).toHaveFocus();
+        });
+
+        test('When cursor is at the end of input, Right arrow focuses clear button', () => {
+          const initialValue =
+            select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
+          const { inputEl, clearButtonEl } = renderCombobox(select, {
+            initialValue,
+          });
+          userEvent.type(inputEl, '{arrowright}');
           expect(clearButtonEl).toHaveFocus();
         });
 
@@ -705,8 +746,12 @@ describe('packages/combobox', () => {
             const { inputEl } = renderCombobox(select, {
               initialValue,
             });
-            userEvent.type(inputEl, '{arrowleft}{arrowright}');
+            userEvent.type(
+              inputEl,
+              'abc{arrowleft}{arrowleft}{arrowleft}{arrowleft}{arrowright}',
+            );
             expect(inputEl).toHaveFocus();
+            expect(inputEl.selectionStart).toEqual(0);
           },
         );
 
@@ -714,14 +759,12 @@ describe('packages/combobox', () => {
           'When focus is on a chip, Right arrow focuses next chip',
           () => {
             const initialValue = ['apple', 'banana', 'carrot'];
-            const { inputEl, queryChipsByName } = renderCombobox(select, {
+            const { inputEl, queryAllChips } = renderCombobox(select, {
               initialValue,
             });
             userEvent.type(inputEl, '{arrowleft}{arrowleft}{arrowright}');
-            const carrotChip = queryChipsByName('Carrot');
-            expect(
-              (carrotChip as HTMLElement).contains(document.activeElement),
-            ).toBeTruthy();
+            const [_, __, lastChip] = queryAllChips();
+            expect(lastChip).toContainFocus();
           },
         );
       });
@@ -757,6 +800,45 @@ describe('packages/combobox', () => {
           waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
       });
+
+      testSingleSelect(
+        "Unfocusing the menu should keep text only if it's a valid selection",
+        async () => {
+          const { inputEl, containerEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, 'Apple');
+          userEvent.click(document.body);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(containerEl).not.toContainFocus();
+          expect(inputEl).toHaveValue('apple');
+        },
+      );
+
+      testSingleSelect(
+        'Unfocusing the menu should not keep text if not a valid selection',
+        async () => {
+          const { inputEl, containerEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, 'abc');
+          userEvent.click(document.body);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(containerEl).not.toContainFocus();
+          expect(inputEl).toHaveValue('');
+        },
+      );
+
+      testMultiSelect(
+        'Unfocusing the menu should keep text as typed',
+        async () => {
+          const { inputEl, containerEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, 'abc');
+          userEvent.click(document.body);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(containerEl).not.toContainFocus();
+          expect(inputEl).toHaveValue('abc');
+        },
+      );
     });
 
     /**
@@ -959,7 +1041,7 @@ describe('packages/combobox', () => {
         initialValue: ['loremipsumdolor'],
         chipTruncationLocation: 'middle',
       });
-      const firstChipEl = queryAllChips()[0];
+      const [firstChipEl] = queryAllChips();
       expect(firstChipEl).toHaveTextContent('lore' + ellipsis + 'dolor');
     });
     test('Chips truncate at the end', () => {
@@ -968,7 +1050,7 @@ describe('packages/combobox', () => {
         initialValue: ['loremipsumdolor'],
         chipTruncationLocation: 'end',
       });
-      const firstChipEl = queryAllChips()[0];
+      const [firstChipEl] = queryAllChips();
       expect(firstChipEl).toHaveTextContent('loremipsu' + ellipsis);
     });
 
@@ -979,7 +1061,7 @@ describe('packages/combobox', () => {
         chipTruncationLocation: 'start',
         chipCharacterLimit: 8,
       });
-      const firstChipEl = queryAllChips()[0];
+      const [firstChipEl] = queryAllChips();
       expect(firstChipEl).toHaveTextContent(ellipsis + 'dolor');
     });
   });
