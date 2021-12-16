@@ -3,9 +3,12 @@ import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { breakpoints } from '@leafygreen-ui/tokens';
+import { uiColors } from '@leafygreen-ui/palette';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
+
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 const menuButtonStyle = css`
   margin-top: 2px;
@@ -23,6 +26,13 @@ const menuButtonTextStyle = css`
   max-width: 100%;
 `;
 
+export const State = {
+  None: 'none',
+  Error: 'error',
+} as const;
+
+export type State = typeof State[keyof typeof State];
+
 type Props = {
   children: React.ReactNode;
   value: string;
@@ -32,6 +42,8 @@ type Props = {
   readOnly?: boolean;
   onClose: () => void;
   onOpen: () => void;
+  errorMessage?: string;
+  state: State;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
@@ -52,6 +64,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     readOnly,
     onClose,
     onOpen,
+    errorMessage,
+    state,
     __INTERNAL__menuButtonSlot__,
     ...ariaProps
   }: Props,
@@ -105,9 +119,31 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
             font-size: ${mobileSizeSet.text}px;
           }
         `,
-      )}
+        { [css`
+            border-color: ${uiColors.red.base};
+            box-shadow: ${'0px 4px 4px rgba(87, 11, 8, 0.3), 0px 0px 0px 3px #FCEBE2'};
+
+            &:hover {
+              border-color: ${uiColors.red.base};
+            }
+        `]: (state === State.Error && !!errorMessage) }
+        )}
     >
-      <div className={menuButtonTextStyle}>{text}</div>
+      <div className={css`
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  flex-grow: 1;
+                  width: 90%;
+                `}>
+        <div className={menuButtonTextStyle}>{text}</div>
+        {state === State.Error && errorMessage && <WarningIcon
+                role="presentation"
+                className={css`
+                  color: ${uiColors.red.base};
+                `}
+              />}
+              </div>
       {children}
     </Component>
   );
