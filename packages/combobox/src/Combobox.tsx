@@ -249,6 +249,12 @@ export default function Combobox<M extends boolean>({
     [getChipRef, isMultiselect, selection],
   );
 
+  /**
+   *
+   * Focus Management
+   *
+   */
+
   const getFocusedElementName = useCallback(() => {
     const isFocusOn = {
       Input: inputRef.current?.contains(document.activeElement),
@@ -283,11 +289,6 @@ export default function Combobox<M extends boolean>({
     }
   }, [getChipRef, isMultiselect, selection]);
 
-  /**
-   *
-   * Focus Management
-   *
-   */
   type Direction = 'next' | 'prev' | 'first' | 'last';
   const updateFocusedOption = useCallback(
     (direction: Direction) => {
@@ -345,6 +346,55 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
+  const updateFocusedChip = useCallback(
+    (direction: Direction | null, relativeToIndex?: number) => {
+      if (isMultiselect(selection)) {
+        switch (direction) {
+          case 'next': {
+            const referenceChipIndex = relativeToIndex ?? getActiveChipIndex();
+            const nextChipIndex =
+              referenceChipIndex + 1 < selection.length
+                ? referenceChipIndex + 1
+                : selection.length - 1;
+            const nextChipValue = selection[nextChipIndex];
+            setFocusedChip(nextChipValue);
+            break;
+          }
+
+          case 'prev': {
+            const referenceChipIndex = relativeToIndex ?? getActiveChipIndex();
+            const prevChipIndex =
+              referenceChipIndex > 0
+                ? referenceChipIndex - 1
+                : referenceChipIndex < 0
+                ? selection.length - 1
+                : 0;
+            const prevChipValue = selection[prevChipIndex];
+            setFocusedChip(prevChipValue);
+            break;
+          }
+
+          case 'first': {
+            const firstChipValue = selection[0];
+            setFocusedChip(firstChipValue);
+            break;
+          }
+
+          case 'last': {
+            const lastChipValue = selection[selection.length - 1];
+            setFocusedChip(lastChipValue);
+            break;
+          }
+
+          default:
+            setFocusedChip(null);
+            break;
+        }
+      }
+    },
+    [getActiveChipIndex, isMultiselect, selection],
+  );
+
   const handleArrowKey = useCallback(
     (direction: 'left' | 'right', event: React.KeyboardEvent<Element>) => {
       // Remove focus from menu
@@ -370,16 +420,13 @@ export default function Combobox<M extends boolean>({
               // if focus is on last chip, go to input
               event.preventDefault();
               setInputFocus(0);
-              setFocusedChip(null);
+              updateFocusedChip(null);
               break;
             }
 
             case 'FirstChip':
             case 'MiddleChip': {
-              if (isMultiselect(selection)) {
-                const nextChipValue = selection?.[getActiveChipIndex() + 1];
-                setFocusedChip(nextChipValue);
-              }
+              updateFocusedChip('next');
               break;
             }
 
@@ -409,12 +456,7 @@ export default function Combobox<M extends boolean>({
                   break;
                 }
 
-                const prevChipValue =
-                  getActiveChipIndex() > 0
-                    ? selection[getActiveChipIndex() - 1]
-                    : selection[selection.length - 1];
-
-                setFocusedChip(prevChipValue);
+                updateFocusedChip('prev');
               }
               break;
             }
@@ -425,16 +467,16 @@ export default function Combobox<M extends boolean>({
           }
           break;
         default:
-          setFocusedChip(null);
+          updateFocusedChip(null);
           break;
       }
     },
     [
-      getActiveChipIndex,
       getFocusedElementName,
       isMultiselect,
       selection,
       setInputFocus,
+      updateFocusedChip,
     ],
   );
 
@@ -547,9 +589,7 @@ export default function Combobox<M extends boolean>({
         const displayName = getDisplayNameForValue(value);
 
         const onRemove = () => {
-          const prevIndex = index > 0 ? index - 1 : 0;
-          const prevValue = selection[prevIndex];
-          setFocusedChip(prevValue);
+          updateFocusedChip('next', index);
           updateSelection(value);
         };
 
@@ -579,6 +619,7 @@ export default function Combobox<M extends boolean>({
     getDisplayNameForValue,
     focusedChip,
     getChipRef,
+    updateFocusedChip,
     updateSelection,
   ]);
 
@@ -683,9 +724,9 @@ export default function Combobox<M extends boolean>({
           scrollToEnd();
         } else if (!isMultiselect(selection)) {
           // Update the text input
-          setInputValue(
-            getDisplayNameForValue(selection as SelectValueType<false>) ?? '',
-          );
+          const displayName =
+            getDisplayNameForValue(selection as SelectValueType<false>) ?? '';
+          setInputValue(displayName);
           closeMenu();
         }
       } else {
@@ -702,14 +743,35 @@ export default function Combobox<M extends boolean>({
     selection,
   ]);
 
-  // when the menu closes, update the value
+  // when the menu closes, update the value if needed
   useEffect(() => {
     if (!isOpen && !isMultiselect(selection) && selection === prevSelection) {
-      setInputValue(
-        getDisplayNameForValue(selection as SelectValueType<false>) ?? '',
+      const exactMatchedOption = visibleOptions.find(
+        option =>
+          option.displayName === inputValue || option.value === inputValue,
       );
+
+      // check if inputValue is matches a valid option
+      // Set the selection to that value if the component is not controlled
+      if (exactMatchedOption && !value) {
+        setSelection(exactMatchedOption.value as SelectValueType<M>);
+      } else {
+        // Revert the value to the previous selection
+        const displayName =
+          getDisplayNameForValue(selection as SelectValueType<false>) ?? '';
+        setInputValue(displayName);
+      }
     }
-  }, [getDisplayNameForValue, isMultiselect, isOpen, prevSelection, selection]);
+  }, [
+    getDisplayNameForValue,
+    inputValue,
+    isMultiselect,
+    isOpen,
+    prevSelection,
+    selection,
+    value,
+    visibleOptions,
+  ]);
 
   /**
    *
@@ -846,8 +908,41 @@ export default function Combobox<M extends boolean>({
         return;
       }
 
+      const focusedElement = getFocusedElementName();
+
       switch (event.keyCode) {
-        case keyMap.Tab:
+        case keyMap.Tab: {
+          switch (focusedElement) {
+            case 'Input': {
+              if (!doesSelectionExist) {
+                closeMenu();
+                updateFocusedOption('first');
+                updateFocusedChip(null);
+              }
+              // else use default behavior
+              break;
+            }
+
+            case 'LastChip': {
+              // use default behavior
+              updateFocusedChip(null);
+              break;
+            }
+
+            case 'FirstChip':
+            case 'MiddleChip': {
+              // use default behavior
+              break;
+            }
+
+            case 'ClearButton':
+            default:
+              break;
+          }
+
+          break;
+        }
+
         case keyMap.Escape: {
           closeMenu();
           updateFocusedOption('first');
@@ -885,7 +980,7 @@ export default function Combobox<M extends boolean>({
             isMultiselect(selection) &&
             inputRef.current?.selectionStart === 0
           ) {
-            setFocusedChip(selection[selection?.length - 1]);
+            updateFocusedChip('last');
           }
           break;
         }
@@ -991,7 +1086,12 @@ export default function Combobox<M extends boolean>({
           >
             <div
               ref={inputWrapperRef}
-              className={inputWrapperStyle({ overflow, isOpen, selection })}
+              className={inputWrapperStyle({
+                overflow,
+                isOpen,
+                selection,
+                value: inputValue,
+              })}
             >
               {renderedChips}
               <input

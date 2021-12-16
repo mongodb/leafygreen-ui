@@ -129,23 +129,29 @@ export const inputWrapperStyle = ({
   overflow,
   isOpen,
   selection,
+  value,
 }: {
   overflow: Overflow;
   isOpen: boolean;
   selection: string | Array<string> | null;
+  value?: string;
 }) => {
-  const isUnfocusedMultiselect =
-    !isOpen && isArray(selection) && selection.length > 0;
+  const isMultiselect = isArray(selection) && selection.length > 0;
+  const inputLength = value?.length ?? 0;
+
+  // The input should be hidden when there are elements selected in a multiselect
+  // We don't set \`display: none\` since we need to be able to set .focus() on the element
+  const inputWidth = isMultiselect
+    ? isOpen || inputLength > 0
+      ? `${inputLength + 1}ch`
+      : '0'
+    : 'var(--lg-combobox-input-default-width)';
 
   const baseWrapperStyle = css`
     flex-grow: 1;
     width: var(--lg-combobox-width);
 
-    // The input should be hidden when there are elements selected in a multiselect
-    // We don't set \`display: none\` since we need to be able to set .focus() on the element
-    --lg-combobox-input-width: ${isUnfocusedMultiselect
-      ? '0'
-      : 'var(--lg-combobox-input-default-width)'};
+    --lg-combobox-input-width: ${inputWidth};
   `;
 
   switch (overflow) {
@@ -163,7 +169,7 @@ export const inputWrapperStyle = ({
          * '-in' transition is handled by \`scroll-behavior\` 
          */
         --lg-combobox-input-transition: width ease-in-out
-          ${isUnfocusedMultiselect ? '100ms' : '0'};
+          ${isOpen ? '0' : '100ms'};
 
         &::-webkit-scrollbar {
           display: none;

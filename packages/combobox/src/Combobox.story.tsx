@@ -49,23 +49,27 @@ storiesOf('Combobox', module)
           errorMessage="No Pomegranates!"
           onChange={handleChange}
         >
-          <ComboboxOption value="apple" />
-          <ComboboxOption value="banana" />
-          <ComboboxOption value="carrot" />
-          <ComboboxOption value="dragonfruit" />
-          <ComboboxOption value="eggplant" />
-          <ComboboxOption value="fig" />
-          <ComboboxOption value="grape" />
-          <ComboboxOption value="honeydew" />
-          <ComboboxOption value="iceberg-lettuce" />
+          <ComboboxOption value="apple" displayName="Apple" />
+          <ComboboxOption value="banana" displayName="Banana" />
+          <ComboboxOption value="carrot" displayName="Carrot" />
+          <ComboboxOption value="dragonfruit" displayName="Dragonfruit" />
+          <ComboboxOption value="eggplant" displayName="Eggplant" />
+          <ComboboxOption value="fig" displayName="Fig" />
+          <ComboboxOption value="grape" displayName="Grape" />
+          <ComboboxOption value="honeydew" displayName="Honeydew" />
+          <ComboboxOption
+            value="iceberg-lettuce"
+            displayName="Iceberg lettuce"
+          />
           <ComboboxOption
             value="pomegranate"
+            displayName="Pomegranate"
             glyph={<Icon glyph="Warning" />}
           />
           <ComboboxGroup label="Peppers">
-            <ComboboxOption value="cayenne" />
+            <ComboboxOption value="cayenne" displayName="Cayenne" />
             <ComboboxOption value="ghost-pepper" displayName="Ghost pepper" />
-            <ComboboxOption value="habanero" />
+            <ComboboxOption value="habanero" displayName="Habanero" />
             <ComboboxOption value="jalapeno" displayName="Jalapeño" />
             <ComboboxOption value="red-pepper" displayName="Red pepper" />
             <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
@@ -78,7 +82,7 @@ storiesOf('Combobox', module)
     const [isError, setIsError] = useState(false);
 
     const handleChange = (value: Array<string>) => {
-      if (value.includes('dragonfruit')) {
+      if (value.includes('pomegranate')) {
         setIsError(true);
       } else {
         setIsError(false);
@@ -99,7 +103,7 @@ storiesOf('Combobox', module)
             'expand-y',
           )}
           state={isError ? 'error' : 'none'}
-          errorMessage="Can't pick Dragonfruit"
+          errorMessage="No Pomegranates!"
           onChange={handleChange}
           chipTruncationLocation={select(
             'Chip Truncation Location',
@@ -107,23 +111,29 @@ storiesOf('Combobox', module)
             'middle',
           )}
         >
-          <ComboboxOption value="apple" />
-          <ComboboxOption value="banana" />
-          <ComboboxOption value="carrot" />
+          <ComboboxOption value="apple" displayName="Apple" />
+          <ComboboxOption value="banana" displayName="Banana" />
+          <ComboboxOption value="carrot" displayName="Carrot" />
+          <ComboboxOption value="dragonfruit" displayName="Dragonfruit" />
+          <ComboboxOption value="eggplant" displayName="Eggplant" />
+          <ComboboxOption value="fig" displayName="Fig" />
+          <ComboboxOption value="grape" displayName="Grape" />
+          <ComboboxOption value="honeydew" displayName="Honeydew" />
           <ComboboxOption
-            value="dragonfruit"
-            glyph={<Icon glyph="Favorite" color={uiColors.blue.base} />}
+            value="iceberg-lettuce"
+            displayName="Iceberg lettuce"
           />
-          <ComboboxOption value="eggplant" />
-          <ComboboxOption value="fig" />
-          <ComboboxOption value="grape" />
-          <ComboboxOption value="honeydew" />
-          <ComboboxOption value="iceberg-lettuce" />
+          <ComboboxOption
+            value="pomegranate"
+            displayName="Pomegranate"
+            glyph={<Icon glyph="Warning" />}
+          />
           <ComboboxGroup label="Peppers">
-            <ComboboxOption value="cayenne" />
+            <ComboboxOption value="cayenne" displayName="Cayenne" />
             <ComboboxOption value="ghost-pepper" displayName="Ghost pepper" />
-            <ComboboxOption value="habanero" />
+            <ComboboxOption value="habanero" displayName="Habanero" />
             <ComboboxOption value="jalapeno" displayName="Jalapeño" />
+            <ComboboxOption value="red-pepper" displayName="Red pepper" />
             <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
           </ComboboxGroup>
         </Combobox>

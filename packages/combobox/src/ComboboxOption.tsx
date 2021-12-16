@@ -153,7 +153,7 @@ const InternalComboboxOption = React.forwardRef<
           <span className={flexSpan}>
             {renderedIcon}
             <span className={displayNameStyle(isSelected)}>
-              {wrapJSX(displayName, inputValue, 'em')}
+              {wrapJSX(displayName, inputValue, 'strong')}
             </span>
           </span>
           {isSelected && (
