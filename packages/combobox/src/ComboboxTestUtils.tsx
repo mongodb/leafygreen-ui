@@ -10,7 +10,7 @@ import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxGroup, ComboboxOption } from '.';
 import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
 import { OptionObject } from './util';
-import { isNull } from 'lodash';
+import { isArray, isNull } from 'lodash';
 import chalk from '@testing-library/jest-dom/node_modules/chalk';
 
 export interface NestedObject {
@@ -174,6 +174,17 @@ export function renderCombobox<T extends Select>(
     renderResult.rerender(getComboboxJSX({ ...props, ...newProps }));
 
   /**
+   * @returns all chip elements
+   */
+  function queryAllChips(): Array<HTMLElement> {
+    return queryAllByAttribute(
+      'data-leafygreen-ui',
+      containerEl,
+      'combobox-chip',
+    );
+  }
+
+  /**
    * Get the chip(s) with the provided display name(s)
    * @param names: `string` | `Array<string>`
    * @returns A single HTMLElement or array of HTMLElements
@@ -195,21 +206,32 @@ export function renderCombobox<T extends Select>(
     }
   }
 
-  /**
-   * @returns all chip elements
-   */
-  function queryAllChips(): Array<HTMLElement> {
-    return queryAllByAttribute(
-      'data-leafygreen-ui',
-      containerEl,
-      'combobox-chip',
-    );
+  function queryChipsByIndex(index: number): HTMLElement | null;
+  function queryChipsByIndex(index: 'first' | 'last'): HTMLElement | null;
+  function queryChipsByIndex(index: Array<number>): Array<HTMLElement> | null;
+  function queryChipsByIndex(
+    index: 'first' | 'last' | number | Array<number>,
+  ): HTMLElement | Array<HTMLElement> | null {
+    const allChips = queryAllChips();
+
+    if (allChips.length > 0) {
+      if (typeof index === 'number' && index <= allChips.length) {
+        return allChips[index];
+      } else if (typeof index === 'string') {
+        return index === 'first' ? allChips[0] : allChips[allChips.length - 1];
+      } else if (isArray(index) && index.every(i => i <= allChips.length)) {
+        return index.map(i => allChips[i]);
+      }
+    }
+
+    return null;
   }
 
   return {
     ...renderResult,
     rerenderCombobox,
     queryChipsByName,
+    queryChipsByIndex,
     queryAllChips,
     getMenuElements,
     openMenu,

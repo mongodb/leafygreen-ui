@@ -352,8 +352,6 @@ export default function Combobox<M extends boolean>({
 
       const focusedElementName = getFocusedElementName();
 
-      console.log(focusedElementName);
-
       switch (direction) {
         case 'right':
           switch (focusedElementName) {
@@ -415,8 +413,6 @@ export default function Combobox<M extends boolean>({
                   getActiveChipIndex() > 0
                     ? selection[getActiveChipIndex() - 1]
                     : selection[selection.length - 1];
-
-                console.log(`Setting chip to ${prevChipValue}`);
 
                 setFocusedChip(prevChipValue);
               }
