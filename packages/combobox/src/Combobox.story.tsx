@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
-import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import { useState } from '@storybook/client-api';
