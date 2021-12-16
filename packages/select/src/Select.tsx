@@ -54,7 +54,7 @@ export type Props = {
   name?: string;
   allowDeselect?: boolean;
   errorMessage?: string;
-  state: State;
+  state?: State;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;

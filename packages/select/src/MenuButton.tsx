@@ -37,7 +37,7 @@ type Props = {
   onClose: () => void;
   onOpen: () => void;
   errorMessage?: string;
-  state: State;
+  state?: State;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
