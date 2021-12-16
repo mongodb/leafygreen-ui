@@ -9,8 +9,15 @@ import {
 import { uiColors } from '@leafygreen-ui/palette';
 import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
-import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
-import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
+import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
+import {
+  colorSets,
+  mobileSizeSet,
+  Mode,
+  Size,
+  sizeSets,
+  State,
+} from './styleSets';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
 import SelectContext from './SelectContext';
@@ -34,13 +41,6 @@ const labelStyle = css`
   margin-bottom: 2px;
   font-weight: bold;
 `;
-
-export const State = {
-  None: 'none',
-  Error: 'error',
-} as const;
-
-export type State = typeof State[keyof typeof State];
 
 export type Props = {
   children: React.ReactNode;
@@ -585,6 +585,7 @@ export default function Select({
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
+          aria-invalid={state === State.Error}
           errorMessage={errorMessage}
           state={state}
           __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
@@ -604,21 +605,27 @@ export default function Select({
           </ListMenu>
         </MenuButton>
       </SelectContext.Provider>
-      {state === State.Error && errorMessage && <span className={cx(
+      {state === State.Error && errorMessage && (
+        <span
+          className={cx(
             sharedTextStyles,
             css`
               color: ${uiColors.red.base};
               font-size: ${sizeSet.description.text}px;
               line-height: ${sizeSet.description.lineHeight}px;
-              margin-top: 4px;
+              margin-top: ${spacing[1]}px;
               padding-left: 2px;
 
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
-            `
-          )}>{errorMessage}</span>}
+            `,
+          )}
+        >
+          {errorMessage}
+        </span>
+      )}
     </div>
   );
 }

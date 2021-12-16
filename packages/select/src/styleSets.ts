@@ -248,3 +248,10 @@ export const mobileSizeSet: SizeSet = {
     text: 16,
   },
 };
+
+export const State = {
+  None: 'none',
+  Error: 'error',
+} as const;
+
+export type State = typeof State[keyof typeof State];

@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Option, OptionGroup, Select, Size } from '.';
+import { Option, OptionGroup, Select, Size, State } from '.';
 
 storiesOf('Select', module)
   .add('Uncontrolled', () => {
@@ -21,6 +21,8 @@ storiesOf('Select', module)
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
     const usePortal = boolean('usePortal', false);
     const allowDeselect = boolean('allowDeselect', false);
+    const errorMessage = text('errorMessage', 'This is the error message');
+    const state = select('State', Object.values(State), State.None);
 
     return (
       <div
@@ -48,6 +50,8 @@ storiesOf('Select', module)
             className={css`
               min-width: 200px;
             `}
+            state={state}
+            errorMessage={errorMessage}
           >
             <OptionGroup label="Common">
               <Option value="dog" glyph={glyph}>
@@ -84,6 +88,8 @@ storiesOf('Select', module)
     const usePortal = boolean('usePortal', false);
     const useProvider = boolean('Use LeafygreenProvider', false);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
+    const errorMessage = text('errorMessage', 'This is the error message');
+    const state = select('State', Object.values(State), State.None);
 
     const [value, setValue] = useState('cat');
 
@@ -108,6 +114,8 @@ storiesOf('Select', module)
             onChange={setValue}
             disabled={disabled}
             usePortal={usePortal}
+            state={state}
+            errorMessage={errorMessage}
           >
             <OptionGroup label="Common">
               <Option value="dog" glyph={glyph}>

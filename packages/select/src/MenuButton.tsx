@@ -7,6 +7,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
+import { State } from '.';
 
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
@@ -25,13 +26,6 @@ const menuButtonTextStyle = css`
   text-overflow: ellipsis;
   max-width: 100%;
 `;
-
-export const State = {
-  None: 'none',
-  Error: 'error',
-} as const;
-
-export type State = typeof State[keyof typeof State];
 
 type Props = {
   children: React.ReactNode;
@@ -119,31 +113,37 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
             font-size: ${mobileSizeSet.text}px;
           }
         `,
-        { [css`
+        {
+          [css`
             border-color: ${uiColors.red.base};
             box-shadow: ${'0px 4px 4px rgba(87, 11, 8, 0.3), 0px 0px 0px 3px #FCEBE2'};
 
             &:hover {
               border-color: ${uiColors.red.base};
             }
-        `]: (state === State.Error && !!errorMessage) }
-        )}
+          `]: state === State.Error && !!errorMessage,
+        },
+      )}
     >
-      <div className={css`
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  flex-grow: 1;
-                  width: 90%;
-                `}>
+      <div
+        className={css`
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-grow: 1;
+          width: 90%;
+        `}
+      >
         <div className={menuButtonTextStyle}>{text}</div>
-        {state === State.Error && errorMessage && <WarningIcon
-                role="presentation"
-                className={css`
-                  color: ${uiColors.red.base};
-                `}
-              />}
-              </div>
+        {state === State.Error && errorMessage && (
+          <WarningIcon
+            role="presentation"
+            className={css`
+              color: ${uiColors.red.base};
+            `}
+          />
+        )}
+      </div>
       {children}
     </Component>
   );
