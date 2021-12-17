@@ -116,7 +116,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         {
           [css`
             border-color: ${uiColors.red.base};
-            box-shadow: ${'0px 4px 4px rgba(87, 11, 8, 0.3), 0px 0px 0px 3px #FCEBE2'};
+            box-shadow: 0px 4px 4px rgba(87, 11, 8, 0.3),
+              0px 0px 0px 3px ${uiColors.red.light3};
 
             &:hover {
               border-color: ${uiColors.red.base};
