@@ -4,12 +4,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
 import { State } from '.';
-
-import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 const menuButtonStyle = css`
   margin-top: 2px;
@@ -161,8 +160,3 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 MenuButton.displayName = 'MenuButton';
 
 export default MenuButton;
-
-// box-shadow: ${mode === Mode.Light
-//   ? `0px 4px 4px rgba(87, 11, 8, 0.3),
-// 0px 0px 0px 3px ${uiColors.red.light3}`
-//   : `0px 4px 4px rgba(87, 11, 8, 0.3), 0px 0px 0px 3px ${uiColors.red.dark2}`};
