@@ -72,6 +72,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   const colorSet = colorSets[mode];
   const sizeSet = sizeSets[size];
 
+  const errorColor = mode === Mode.Light ? uiColors.red.base : '#F97216';
+
   const onClick = useCallback(() => {
     if (open) {
       onClose();
@@ -115,12 +117,16 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         `,
         {
           [css`
-            border-color: ${uiColors.red.base};
-            box-shadow: 0px 4px 4px rgba(87, 11, 8, 0.3),
-              0px 0px 0px 3px ${uiColors.red.light3};
+            border-color: ${errorColor};
+            box-shadow: 0px 1px 2px rgba(87, 11, 8, 0.3);
 
-            &:hover {
-              border-color: ${uiColors.red.base};
+            &:hover,
+            &:active {
+              border-color: ${errorColor};
+              box-shadow: ${mode === Mode.Light
+                ? `0px 4px 4px rgba(87, 11, 8, 0.3),
+              0px 0px 0px 3px ${uiColors.red.light3}`
+                : `0px 4px 4px rgba(87, 11, 8, 0.3), 0px 0px 0px 3px ${uiColors.red.dark2}`};
             }
           `]: state === State.Error && !!errorMessage,
         },
@@ -140,7 +146,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           <WarningIcon
             role="presentation"
             className={css`
-              color: ${uiColors.red.base};
+              color: ${errorColor};
               margin-left: ${spacing[1]}px;
             `}
             size={sizeSet.warningIcon}
@@ -155,3 +161,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 MenuButton.displayName = 'MenuButton';
 
 export default MenuButton;
+
+// box-shadow: ${mode === Mode.Light
+//   ? `0px 4px 4px rgba(87, 11, 8, 0.3),
+// 0px 0px 0px 3px ${uiColors.red.light3}`
+//   : `0px 4px 4px rgba(87, 11, 8, 0.3), 0px 0px 0px 3px ${uiColors.red.dark2}`};

@@ -184,9 +184,9 @@ export const sizeSets: Record<Size, SizeSet> = {
       lineHeight: 16,
     },
     option: {
-      text: 12,
+      text: 14,
     },
-    warningIcon: 14,
+    warningIcon: 12,
   },
   [Size.Small]: {
     height: 28,

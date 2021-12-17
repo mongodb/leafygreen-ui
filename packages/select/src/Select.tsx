@@ -610,7 +610,7 @@ export default function Select({
           className={cx(
             sharedTextStyles,
             css`
-              color: ${uiColors.red.base};
+              color: ${darkMode ? '#F97216' : uiColors.red.base};
               font-size: ${sizeSet.description.text}px;
               line-height: ${sizeSet.description.lineHeight}px;
               margin-top: ${spacing[1]}px;
