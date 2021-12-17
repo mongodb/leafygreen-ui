@@ -7,7 +7,6 @@ import {
   RenderResult,
   waitForElementToBeRemoved,
   waitFor,
-  screen,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';

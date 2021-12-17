@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
-import { breakpoints } from '@leafygreen-ui/tokens';
+import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
@@ -141,7 +141,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
             role="presentation"
             className={css`
               color: ${uiColors.red.base};
+              margin-left: ${spacing[1]}px;
             `}
+            size={sizeSet.warningIcon}
           />
         )}
       </div>

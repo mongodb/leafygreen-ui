@@ -168,6 +168,7 @@ interface SizeSet {
   option: {
     text: number;
   };
+  warningIcon: number;
 }
 
 export const sizeSets: Record<Size, SizeSet> = {
@@ -183,8 +184,9 @@ export const sizeSets: Record<Size, SizeSet> = {
       lineHeight: 16,
     },
     option: {
-      text: 14,
+      text: 12,
     },
+    warningIcon: 14,
   },
   [Size.Small]: {
     height: 28,
@@ -200,6 +202,7 @@ export const sizeSets: Record<Size, SizeSet> = {
     option: {
       text: 14,
     },
+    warningIcon: 14,
   },
   [Size.Default]: {
     height: 36,
@@ -215,6 +218,7 @@ export const sizeSets: Record<Size, SizeSet> = {
     option: {
       text: 14,
     },
+    warningIcon: 14,
   },
   [Size.Large]: {
     height: 48,
@@ -230,6 +234,7 @@ export const sizeSets: Record<Size, SizeSet> = {
     option: {
       text: 16,
     },
+    warningIcon: 17.5,
   },
 };
 
@@ -247,6 +252,7 @@ export const mobileSizeSet: SizeSet = {
   option: {
     text: 16,
   },
+  warningIcon: 14,
 };
 
 export const State = {
