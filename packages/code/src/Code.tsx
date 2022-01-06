@@ -130,21 +130,21 @@ const demoHandleClick = () => console.log('hello');
 const actionData = [
   <IconButton
     onClick={demoHandleClick}
-    aria-label='label'
+    aria-label="label"
     darkMode={false}
-    key='1'
+    key="1"
   >
     <Icon glyph="Cloud" />
   </IconButton>,
   <IconButton
-    href='https://www.google.com/'
-    aria-label='label2'
+    href="https://www.google.com/"
+    aria-label="label2"
     darkMode={true}
-    key='2'
+    key="2"
     target="_blank"
-    >
+  >
     <Icon glyph="Code" size={30} />
-  </IconButton>
+  </IconButton>,
 ];
 
 /**
@@ -177,7 +177,6 @@ function Code({
   highlightLines = [],
   languageOptions,
   onChange,
-  // actionButtons = [{glyph: <Icon glyph="Cloud" />, href: "www.google.com", ariaLabel: "cloud"}, {glyph: <Icon glyph="Shell" />, href: "www.google.com", ariaLabel: "shell", onClick: ()=>{} }],
   actionButtons = actionData,
   showActionButtons = true,
   ...rest
@@ -305,20 +304,21 @@ function Code({
 
         {/* Can make this a more robust check in the future */}
         {/* Right now the panel will only be rendered with copyable or a language switcher */}
-        {!showWindowChrome && (copyable || !!currentLanguage || showActionsInPanel) && (
-          <Panel
-            language={currentLanguage}
-            languageOptions={languageOptions}
-            onChange={onChange}
-            contents={children}
-            onCopy={onCopy}
-            showCopyButton={showCopyBar}
-            darkMode={darkMode}
-            isMultiline={isMultiline}
-            actionButtons={actionButtons}
-            showActionButtons={showActionsInPanel}
-          />
-        )}
+        {!showWindowChrome &&
+          (copyable || !!currentLanguage || showActionsInPanel) && (
+            <Panel
+              language={currentLanguage}
+              languageOptions={languageOptions}
+              onChange={onChange}
+              contents={children}
+              onCopy={onCopy}
+              showCopyButton={showCopyBar}
+              darkMode={darkMode}
+              isMultiline={isMultiline}
+              actionButtons={actionButtons}
+              showActionButtons={showActionsInPanel}
+            />
+          )}
       </div>
     </div>
   );

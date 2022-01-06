@@ -83,7 +83,7 @@ function getPanelStyles(
 
     > * {
       & + * {
-        margin-right: ${spacing[1]}px;
+        margin-left: ${spacing[1]}px;
       }
     }
 
@@ -145,9 +145,7 @@ function Panel({
         />
       )}
       {showActionButtons && (
-        <>
-        {actionButtons?.map((action:React.ReactNode) => (action))}
-        </>
+        <>{actionButtons?.map((action: React.ReactNode) => action)}</>
       )}
     </div>
   );

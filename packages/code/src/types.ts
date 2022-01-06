@@ -25,7 +25,6 @@ export interface Actions {
   ariaLabel: string;
 }
 
-
 export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
@@ -96,9 +95,9 @@ export type CodeProps = Omit<
    *
    */
   //  actionButtons?: Array<Actions>;
-  actionButtons?: Array<React.ReactNode>
+  actionButtons?: Array<React.ReactNode>;
 
-   /**
+  /**
    * Custom action buttons.
    *
    */
