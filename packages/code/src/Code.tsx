@@ -12,6 +12,8 @@ import { Language, CodeProps, Mode } from './types';
 import Syntax from './Syntax';
 import Panel from './Panel';
 import WindowChrome from './WindowChrome';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -123,6 +125,28 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
   T
 >;
 
+const demoHandleClick = () => console.log('hello');
+
+const actionData = [
+  <IconButton
+    onClick={demoHandleClick}
+    aria-label='label'
+    darkMode={false}
+    key='1'
+  >
+    <Icon glyph="Cloud" />
+  </IconButton>,
+  <IconButton
+    href='https://www.google.com/'
+    aria-label='label2'
+    darkMode={true}
+    key='2'
+    target="_blank"
+    >
+    <Icon glyph="Code" size={30} />
+  </IconButton>
+];
+
 /**
  * # Code
  *
@@ -153,6 +177,9 @@ function Code({
   highlightLines = [],
   languageOptions,
   onChange,
+  // actionButtons = [{glyph: <Icon glyph="Cloud" />, href: "www.google.com", ariaLabel: "cloud"}, {glyph: <Icon glyph="Shell" />, href: "www.google.com", ariaLabel: "shell", onClick: ()=>{} }],
+  actionButtons = actionData,
+  showActionButtons = true,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -161,6 +188,8 @@ function Code({
   const [showCopyBar, setShowCopyBar] = useState(false);
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
+
+  const showActionsInPanel = showActionButtons && !!actionButtons.length;
 
   const currentLanguage = languageOptions?.find(
     option => option.displayName === languageProp,
@@ -276,7 +305,7 @@ function Code({
 
         {/* Can make this a more robust check in the future */}
         {/* Right now the panel will only be rendered with copyable or a language switcher */}
-        {!showWindowChrome && (copyable || !!currentLanguage) && (
+        {!showWindowChrome && (copyable || !!currentLanguage || showActionsInPanel) && (
           <Panel
             language={currentLanguage}
             languageOptions={languageOptions}
@@ -286,6 +315,8 @@ function Code({
             showCopyButton={showCopyBar}
             darkMode={darkMode}
             isMultiline={isMultiline}
+            actionButtons={actionButtons}
+            showActionButtons={showActionsInPanel}
           />
         )}
       </div>

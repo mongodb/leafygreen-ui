@@ -18,6 +18,14 @@ export type LineHighlightingDefinition = ReadonlyArray<
   number | readonly [number, number]
 >;
 
+export interface Actions {
+  glyph: React.ReactNode;
+  onClick?: Function;
+  href?: string;
+  ariaLabel: string;
+}
+
+
 export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
@@ -82,6 +90,19 @@ export type CodeProps = Omit<
    *
    */
   onCopy?: Function;
+
+  /**
+   * Custom action buttons.
+   *
+   */
+  //  actionButtons?: Array<Actions>;
+  actionButtons?: Array<React.ReactNode>
+
+   /**
+   * Custom action buttons.
+   *
+   */
+  showActionButtons?: boolean;
 } & (
     | { language: Language; languageOptions?: undefined; onChange?: undefined }
     | {

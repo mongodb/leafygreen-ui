@@ -19,6 +19,18 @@ const copyStyle = css`
   flex-direction: column;
   flex-shrink: 0;
   padding-top: 6px;
+  align-items: center;
+
+  > * {
+    & + * {
+      margin-top: ${spacing[1]}px;
+    }
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const singleLineCopyStyle = css`
@@ -68,6 +80,17 @@ function getPanelStyles(
     padding-right: 8px;
     background-color: ${colors[4]};
     border-bottom: 1px solid ${colors[1]};
+
+    > * {
+      & + * {
+        margin-right: ${spacing[1]}px;
+      }
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   `;
 }
 
@@ -78,6 +101,9 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   showCopyButton?: boolean;
   language?: LanguageOption;
   isMultiline?: boolean;
+  // actionButtons?: Array<Actions>;
+  actionButtons?: Array<React.ReactNode>;
+  showActionButtons?: boolean;
 };
 
 function Panel({
@@ -89,6 +115,8 @@ function Panel({
   showCopyButton,
   darkMode,
   isMultiline = false,
+  actionButtons,
+  showActionButtons,
 }: PanelProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -115,6 +143,11 @@ function Panel({
           contents={contents}
           withLanguageSwitcher={!!language}
         />
+      )}
+      {showActionButtons && (
+        <>
+        {actionButtons?.map((action:React.ReactNode) => (action))}
+        </>
       )}
     </div>
   );
