@@ -164,7 +164,7 @@ function Code({
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
 
-  const showActionsInPanel =
+  const showCustomActionsInPanel =
     showCustomActionButtons && !!customActionButtons.length;
 
   const currentLanguage = languageOptions?.find(
@@ -282,7 +282,7 @@ function Code({
         {/* Can make this a more robust check in the future */}
         {/* Right now the panel will only be rendered with copyable or a language switcher */}
         {!showWindowChrome &&
-          (copyable || !!currentLanguage || showActionsInPanel) && (
+          (copyable || !!currentLanguage || showCustomActionsInPanel) && (
             <Panel
               language={currentLanguage}
               languageOptions={languageOptions}
@@ -293,7 +293,7 @@ function Code({
               darkMode={darkMode}
               isMultiline={isMultiline}
               customActionButtons={customActionButtons}
-              showCustomActionButtons={showActionsInPanel}
+              showCustomActionButtons={showCustomActionsInPanel}
             />
           )}
       </div>
