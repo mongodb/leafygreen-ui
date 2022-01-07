@@ -1,5 +1,16 @@
 # @leafygreen-ui/text-input
 
+## 6.2.0
+
+### Minor Changes
+
+- ded2831: Add sizeVariant prop
+
+### Patch Changes
+
+- Updated dependencies [ded2831]
+  - @leafygreen-ui/palette@3.3.0
+
 ## 6.1.0
 
 ### Minor Changes
