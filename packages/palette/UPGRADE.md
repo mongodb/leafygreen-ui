@@ -49,7 +49,7 @@ There's a number of notable changes to the Less variables that are available.
 
 Nearly every color in the palette has been changed to some extent. You'll notice colors are more vibrant all around, though many are compatible with the usage of the previous colors. Here are the most notable changes:
 
-- Base Green is lighter, and more vibrant than the previous Base Green. For a 1:1 update, we recommend changing instances of that green to Green: Dark 1.
+- Base Green is lighter, and more vibrant than the previous Base Green. For a 1:1 update, we recommend changing instances of that green to `palette.green.base`/`@palette__green--base`.
 - The range of blues available are much more vibrant. While the color contrast should remain largely compatible with the previous blues, we recommend checking instances of Base Blue in particular for any visual oddities.
 
 We recommend visually checking that the new colors make sense in all cases when upgrading, regardless of similarity to the previous palette. For any questions about the color update, please reach out to a product designer working with your team.
