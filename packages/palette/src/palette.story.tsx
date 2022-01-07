@@ -4,13 +4,12 @@ import { css } from '@leafygreen-ui/emotion';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import * as palette from './palette';
 
-
 interface ColorBlockProps {
   color: string;
   name: string;
 }
 
-function ColorBlock({color, name}: ColorBlockProps) {
+function ColorBlock({ color, name }: ColorBlockProps) {
   const styles = css`
     border-top-color: transparent;
     display: inline-block;
@@ -21,13 +20,11 @@ function ColorBlock({color, name}: ColorBlockProps) {
     margin: 10px;
     margin-bottom: 20px;
     background-color: ${color};
-    box-shadow:
-      0 8px 6px -8px ${transparentize(0.7, darken(0.2, color))},
+    box-shadow: 0 8px 6px -8px ${transparentize(0.7, darken(0.2, color))},
       0 2px 3px ${transparentize(0.8, darken(0.5, color))};
-    
 
     &:before {
-      content: "${color}";
+      content: '${color}';
       position: absolute;
       bottom: 0.3rem;
       left: 0.3rem;
@@ -41,7 +38,7 @@ function ColorBlock({color, name}: ColorBlockProps) {
     }
 
     &:after {
-      content: "${name}";
+      content: '${name}';
       position: absolute;
       top: calc(100% + 8px);
       font-size: 12px;
@@ -51,9 +48,9 @@ function ColorBlock({color, name}: ColorBlockProps) {
       left: -10px;
       right: -10px;
     }
-  `
+  `;
 
-  return <div className={styles} />
+  return <div className={styles} />;
 }
 
 function renderColors() {

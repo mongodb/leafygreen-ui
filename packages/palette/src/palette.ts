@@ -16,23 +16,23 @@ export const green = {
   dark2: '#00684A',
   dark1: '#00A35C',
   base: '#00ED64',
-	light1: '#71F6BA',
+  light1: '#71F6BA',
   light2: '#C0FAE6',
   light3: '#E3FCF7',
 } as const;
 
 export const purple = {
-	dark3: '#2D0B59',
-	dark2: '#5E0C9E',
-	base: '#B45AF2',
-	light2: '#F1D4FD',
-	light3: '#F9EBFF',
+  dark3: '#2D0B59',
+  dark2: '#5E0C9E',
+  base: '#B45AF2',
+  light2: '#F1D4FD',
+  light3: '#F9EBFF',
 } as const;
 
 export const blue = {
   dark3: '#0C2657',
   dark2: '#083C90',
-	dark1: '#1254B7',
+  dark1: '#1254B7',
   base: '#016BF8',
   light1: '#0498EC',
   light2: '#C3E7FE',
