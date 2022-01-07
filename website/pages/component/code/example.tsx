@@ -55,7 +55,7 @@ function CustomActions(darkMode: boolean) {
       <Icon glyph="Cloud" />
     </IconButton>,
     <IconButton
-      href="https://www.google.com/"
+      href="https://mongodb.design"
       aria-label="label2"
       darkMode={darkMode}
       key="2"

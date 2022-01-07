@@ -15,8 +15,8 @@ const onCopy = jest.fn();
 
 const actionData = [
   <IconButton
-    href="https://www.google.com/"
-    aria-label="label2"
+    href="https://mongodb.design"
+    aria-label="label"
     darkMode={true}
     key="1"
     target="_blank"
