@@ -90,7 +90,7 @@ export type CodeProps = Omit<
   customActionButtons?: Array<React.ReactNode>;
 
   /**
-   * Custom action buttons.
+   * When true, custom action buttons will be shown.
    *
    */
   showCustomActionButtons?: boolean;

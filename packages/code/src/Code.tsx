@@ -12,8 +12,6 @@ import { Language, CodeProps, Mode } from './types';
 import Syntax from './Syntax';
 import Panel from './Panel';
 import WindowChrome from './WindowChrome';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
