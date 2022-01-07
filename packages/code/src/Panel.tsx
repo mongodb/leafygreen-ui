@@ -101,9 +101,8 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   showCopyButton?: boolean;
   language?: LanguageOption;
   isMultiline?: boolean;
-  // actionButtons?: Array<Actions>;
-  actionButtons?: Array<React.ReactNode>;
-  showActionButtons?: boolean;
+  customActionButtons?: Array<React.ReactNode>;
+  showCustomActionButtons?: boolean;
 };
 
 function Panel({
@@ -115,8 +114,8 @@ function Panel({
   showCopyButton,
   darkMode,
   isMultiline = false,
-  actionButtons,
-  showActionButtons,
+  customActionButtons,
+  showCustomActionButtons,
 }: PanelProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -144,8 +143,8 @@ function Panel({
           withLanguageSwitcher={!!language}
         />
       )}
-      {showActionButtons && (
-        <>{actionButtons?.map((action: React.ReactNode) => action)}</>
+      {showCustomActionButtons && (
+        <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
       )}
     </div>
   );

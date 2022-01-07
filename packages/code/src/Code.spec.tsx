@@ -123,18 +123,18 @@ describe('packages/Code', () => {
   });
 
   describe('panel', () => {
-    test('is not rendered when language switcher is not present and when copyable is false and showActionButtons is false', () => {
+    test('is not rendered when language switcher is not present and when copyable is false and showCustomActionButtons is false', () => {
       expect(container).not.toContain(
         screen.queryByTestId('leafygreen-code-panel'),
       );
     });
 
-    test('is rendered when language switcher is not present, when copyable is false, showActionButtons is true, and actionsButtons has items', () => {
+    test('is rendered when language switcher is not present, when copyable is false, showCustomActionButtons is true, and actionsButtons has items', () => {
       render(
         <Code
           language="javascript"
-          showActionButtons
-          actionButtons={actionData}
+          showCustomActionButtons
+          customActionButtons={actionData}
         >
           {codeSnippet}
         </Code>,
@@ -142,9 +142,13 @@ describe('packages/Code', () => {
       expect(screen.queryByTestId('leafygreen-code-panel')).toBeDefined();
     });
 
-    test('is not rendered when language switcher is not present, when copyable is false, when showActionButtons is true, and actionsButtons has no items', () => {
+    test('is not rendered when language switcher is not present, when copyable is false, when showCustomActionButtons is true, and actionsButtons has no items', () => {
       const { container } = render(
-        <Code language="javascript" showActionButtons actionButtons={[]}>
+        <Code
+          language="javascript"
+          showCustomActionButtons
+          customActionButtons={[]}
+        >
           {codeSnippet}
         </Code>,
       );

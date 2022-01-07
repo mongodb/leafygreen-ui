@@ -125,28 +125,6 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
   T
 >;
 
-const demoHandleClick = () => console.log('hello');
-
-const actionData = [
-  <IconButton
-    onClick={demoHandleClick}
-    aria-label="label"
-    darkMode={false}
-    key="1"
-  >
-    <Icon glyph="Cloud" />
-  </IconButton>,
-  <IconButton
-    href="https://www.google.com/"
-    aria-label="label2"
-    darkMode={true}
-    key="2"
-    target="_blank"
-  >
-    <Icon glyph="Code" size={30} />
-  </IconButton>,
-];
-
 /**
  * # Code
  *
@@ -177,8 +155,8 @@ function Code({
   highlightLines = [],
   languageOptions,
   onChange,
-  actionButtons = actionData,
-  showActionButtons = false,
+  customActionButtons = [],
+  showCustomActionButtons = false,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -188,7 +166,8 @@ function Code({
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
 
-  const showActionsInPanel = showActionButtons && !!actionButtons.length;
+  const showActionsInPanel =
+    showCustomActionButtons && !!customActionButtons.length;
 
   const currentLanguage = languageOptions?.find(
     option => option.displayName === languageProp,
@@ -315,8 +294,8 @@ function Code({
               showCopyButton={showCopyBar}
               darkMode={darkMode}
               isMultiline={isMultiline}
-              actionButtons={actionButtons}
-              showActionButtons={showActionsInPanel}
+              customActionButtons={customActionButtons}
+              showCustomActionButtons={showActionsInPanel}
             />
           )}
       </div>
