@@ -1,6 +1,6 @@
 # v3 to v4
 
-v3.3 and above of the palette package contains the updated palette for the brand refresh. In v4, the old colors are removed entirely from this package.
+v3.3 and above of the palette package contains the updated palette for the brand refresh. In v4, the old palette is removed entirely from this package.
 
 ## Imports
 
