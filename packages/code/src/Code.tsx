@@ -178,7 +178,7 @@ function Code({
   languageOptions,
   onChange,
   actionButtons = actionData,
-  showActionButtons = true,
+  showActionButtons = false,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
