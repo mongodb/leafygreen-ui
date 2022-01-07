@@ -1,62 +1,63 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { styled } from '@storybook/theming';
+import { css } from '@leafygreen-ui/emotion';
 import { lighten, darken, readableColor, transparentize } from 'polished';
-import * as uiColors from './uiColors';
+import * as palette from './palette';
 
 interface ColorBlockProps {
   color: string;
   name: string;
 }
 
-const ColorBlock = styled<'div', ColorBlockProps>('div')`
-  background-color: ${props => props.color};
-  border-top-color: transparent;
-  display: inline-block;
-  position: relative;
-  height: 80px;
-  width: 80px;
-  border-radius: 8px;
-  margin: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 6px -8px ${props => transparentize(0.7, darken(0.2, props.color))},
-    0 2px 3px ${props => transparentize(0.8, darken(0.5, props.color))};
+function ColorBlock({ color, name }: ColorBlockProps) {
+  const styles = css`
+    border-top-color: transparent;
+    display: inline-block;
+    position: relative;
+    height: 80px;
+    width: 80px;
+    border-radius: 8px;
+    margin: 10px;
+    margin-bottom: 20px;
+    background-color: ${color};
+    box-shadow: 0 8px 6px -8px ${transparentize(0.7, darken(0.2, color))},
+      0 2px 3px ${transparentize(0.8, darken(0.5, color))};
 
-  &:before {
-    content: attr(color);
-    position: absolute;
-    bottom: 0.3rem;
-    left: 0.3rem;
-    right: 0.3rem;
-    font-size: 12px;
-    text-align: center;
-    padding: 3px 0.3rem;
-    color: ${props => readableColor(lighten(0.2, props.color))};
-    background-color: ${props => lighten(0.2, props.color)};
-    border-radius: 4px;
-  }
+    &:before {
+      content: '${color}';
+      position: absolute;
+      bottom: 0.3rem;
+      left: 0.3rem;
+      right: 0.3rem;
+      font-size: 12px;
+      text-align: center;
+      padding: 3px 0.3rem;
+      border-radius: 4px;
+      color: ${readableColor(lighten(0.2, color))};
+      background-color: ${lighten(0.2, color)};
+    }
 
-  &:after {
-    content: attr(name);
-    position: absolute;
-    top: calc(100% + 8px);
-    font-size: 12px;
-    text-align: center;
-    color: ${uiColors.gray.dark1};
-    margin: auto;
-    left: -10px;
-    right: -10px;
-  }
-`;
-/**
- *
- */
+    &:after {
+      content: '${name}';
+      position: absolute;
+      top: calc(100% + 8px);
+      font-size: 12px;
+      text-align: center;
+      color: ${palette.gray.dark1};
+      margin: auto;
+      left: -10px;
+      right: -10px;
+    }
+  `;
+
+  return <div className={styles} />;
+}
 
 function renderColors() {
-  const ranges = Object.keys(uiColors) as Array<keyof typeof uiColors>;
+  const ranges = Object.keys(palette) as Array<keyof typeof palette>;
 
   const renderedRanges = ranges.map(range => {
-    const currentVal = uiColors[range];
+    const currentVal = palette[range];
 
     if (typeof currentVal === 'string') {
       return <ColorBlock key={range} color={currentVal} name={range} />;
@@ -76,8 +77,9 @@ function renderColors() {
       </div>
     );
   });
+  // const renderedRanges = 'hello world'
 
   return <div>{renderedRanges}</div>;
 }
 
-storiesOf('Palette', module).add('UI', renderColors);
+storiesOf('Palette', module).add('Default', renderColors);

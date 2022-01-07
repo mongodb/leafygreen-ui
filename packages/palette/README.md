@@ -18,11 +18,7 @@ yarn add @leafygreen-ui/palette
 npm install @leafygreen-ui/palette
 ```
 
-This package contains the colors for the following palettes
-
-- **UI**: MongoDB-branded, general-use UI palette.
-- _Chart (coming soon)_: Color palette for accessible charting colors.
-- _Syntax (coming soon)_: Color palette for accessible syntax-highlighting themes.
+This package contains the brand-supported MongoDB UI color palette.
 
 ## UI Palette
 
@@ -33,13 +29,12 @@ npm install @leafygreen-ui/palette
 ```
 
 ```js
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 
 /**
- * uiColors = {
+ * palette = {
  * 	 black,
  *   white,
- *   focus,
  *   gray: {
  *     dark3,
  *     dark2,
@@ -54,13 +49,16 @@ import { uiColors } from '@leafygreen-ui/palette';
  *     dark2,
  *     dark1,
  *     base,
+ *     light1,
  *     light2,
  *     light3,
  *   },
  *   blue: {
  *     dark3,
  *     dark2,
+ *     dark1,
  *     base,
+ *     light1,
  *     light2,
  *     light3,
  *   },
@@ -74,8 +72,8 @@ import { uiColors } from '@leafygreen-ui/palette';
  *   red: {
  *     dark3,
  *     dark2,
- *     dark1,
  *     base,
+ *     light1,
  *     light2,
  *     light3,
  *   },
@@ -83,10 +81,10 @@ import { uiColors } from '@leafygreen-ui/palette';
  */
 
 const example = () => (
-  <span style={{ color: uiColors.gray.dark1 }}>Hello World</span>
+  <span style={{ color: palette.gray.dark1 }}>Hello World</span>
 );
 ```
 
 ```less
-@import '<path to node_modules>/@leafygreen-ui/palette/dist/ui-colors.less';
+@import '<path to node_modules>/@leafygreen-ui/palette/dist/palette.less';
 ```
