@@ -1150,7 +1150,7 @@ export default function Combobox<M extends boolean>({
           active={isOpen && !disabled}
           spacing={4}
           align="bottom"
-          justify="start"
+          justify="middle"
           refEl={comboboxRef}
           adjustOnMutation={true}
           className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
