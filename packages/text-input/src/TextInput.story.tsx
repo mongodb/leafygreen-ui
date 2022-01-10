@@ -49,7 +49,6 @@ storiesOf('TextInput', module)
             )}
             errorMessage={text('Error Message', 'This is an error message')}
             darkMode={darkMode}
-            handleValidation={value => console.log(`handleValidation ${value}`)}
             baseFontSize={select('Base Font Size', [14, 16], 14)}
           />
         </div>

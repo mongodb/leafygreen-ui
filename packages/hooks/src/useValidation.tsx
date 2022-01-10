@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash';
 import { useState } from 'react';
 
 export default function useValidation<
@@ -5,10 +6,7 @@ export default function useValidation<
 >(handleValidation?: (value: string) => void) {
   const [isDirty, setIsDirty] = useState(false);
 
-  if (typeof handleValidation !== 'function') {
-    console.error(
-      'Error in `useValidation` hook: `handleValidation` must be a function',
-    );
+  if (isUndefined(handleValidation) || typeof handleValidation !== 'function') {
     return {
       onBlur: () => {},
       onChange: () => {},
