@@ -3,7 +3,7 @@ import ClipboardJS from 'clipboard';
 import { cx, css } from '@emotion/css';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import { keyMap } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Tooltip from '@leafygreen-ui/tooltip';
@@ -37,8 +37,8 @@ const colorBlockStyles = css`
   border-top-color: transparent;
   display: inline-block;
   position: relative;
-  height: 60px;
-  width: 60px;
+  height: 68px;
+  width: 80px;
   border-radius: 8px;
 
   &:before {
@@ -47,7 +47,7 @@ const colorBlockStyles = css`
     bottom: 0.3rem;
     left: 0.3rem;
     right: 0.3rem;
-    font-size: 9px;
+    font-size: 12px;
     text-align: center;
     padding: 3px 0.3rem;
     border-radius: 4px;
@@ -59,7 +59,7 @@ const colorBlockStyles = css`
     top: calc(100% + ${spacing[2]}px);
     font-size: 12px;
     text-align: center;
-    color: ${uiColors.gray.dark1};
+    color: ${palette.gray.dark1};
     margin: auto;
     left: -10px;
     right: -10px;
@@ -90,7 +90,7 @@ function ColorBlock({ color, name, darkMode }: ColorBlockProps) {
 
           &:after {
             content: '${name}';
-            color: ${darkMode ? uiColors.gray.light3 : uiColors.gray.dark3};
+            color: ${darkMode ? palette.gray.light3 : palette.gray.dark3};
           }
         `,
       )}
@@ -142,7 +142,7 @@ function WrappedColorBlock({ color, name, darkMode }: ColorBlockProps) {
   return (
     <div
       className={css`
-        margin: 10px;
+        margin: 16px 12px;
         margin-bottom: 20px;
         display: inline-block;
       `}
@@ -161,10 +161,10 @@ function WrappedColorBlock({ color, name, darkMode }: ColorBlockProps) {
 }
 
 function renderColors(darkMode: boolean) {
-  const ranges = Object.keys(uiColors) as Array<keyof typeof uiColors>;
+  const ranges = Object.keys(palette) as Array<keyof typeof palette>;
 
   const renderedRanges = ranges.map(range => {
-    const currentVal = uiColors[range];
+    const currentVal = palette[range];
 
     if (typeof currentVal === 'string') {
       return (
