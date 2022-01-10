@@ -94,8 +94,6 @@ export default function Combobox<M extends boolean>({
   const inputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const isControlled = !isUndefined(value);
-
   const [isOpen, setOpen] = useState(false);
   const prevOpenState = usePrevious(isOpen);
   const [focusedOption, setFocusedOption] = useState<string | null>(null);
