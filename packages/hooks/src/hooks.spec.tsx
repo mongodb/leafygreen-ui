@@ -7,6 +7,7 @@ import {
   useObjectDependency,
   useIdAllocator,
 } from './index';
+import useValidation from './useValidation';
 
 describe('packages/hooks', () => {
   describe('useEventListener', () => {
@@ -345,6 +346,24 @@ describe('packages/hooks', () => {
     test('when a fallback id is provided, hook returns that id', () => {
       const { result } = renderHook(() => useIdAllocator({ id: 'id' }));
       expect(result.current).toBe('id');
+    });
+  });
+
+  describe('useValidation', () => {
+    it('Returns validation functions when callback is defined', () => {
+      const { result } = renderHook(() =>
+        useValidation(value => console.log(value)),
+      );
+      expect(result.current.onBlur).toBeDefined();
+      expect(result.current.onChange).toBeDefined();
+    });
+
+    it('Returns validation functions when callback is undefined', () => {
+      const { result } = renderHook(() =>
+        useValidation(value => console.log(value)),
+      );
+      expect(result.current.onBlur).toBeDefined();
+      expect(result.current.onChange).toBeDefined();
     });
   });
 });
