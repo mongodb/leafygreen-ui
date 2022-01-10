@@ -619,9 +619,30 @@ describe('packages/combobox', () => {
         });
       });
 
-      describe('`Backspace` key', () => {
+      describe('Backspace key', () => {
+        test('Deletes text when cursor is NOT at beginning of selection', () => {
+          const { inputEl } = renderCombobox(select);
+          userEvent.type(inputEl, 'app{backspace}');
+          expect(inputEl).toHaveFocus();
+          expect(inputEl).toHaveValue('ap');
+        });
+
+        testSingleSelect(
+          'Deletes text after making a single selection',
+          async () => {
+            const { inputEl, openMenu } = renderCombobox('single');
+            const { optionElements, menuContainerEl } = openMenu();
+            const firstOption = optionElements[0];
+            userEvent.click(firstOption);
+            await waitForElementToBeRemoved(menuContainerEl);
+            userEvent.type(inputEl, '{backspace}');
+            expect(inputEl).toHaveFocus();
+            expect(inputEl).toHaveValue('Appl');
+          },
+        );
+
         testMultiSelect(
-          'Backspace key focuses last chip when cursor is at beginning of selection',
+          'Focuses last chip when cursor is at beginning of selection',
           () => {
             const initialValue = ['apple'];
             const { inputEl, queryAllChips } = renderCombobox(select, {
@@ -633,11 +654,14 @@ describe('packages/combobox', () => {
           },
         );
 
-        test('Backspace key deletes text when cursor is NOT at beginning of selection', () => {
-          const { inputEl } = renderCombobox(select);
-          userEvent.type(inputEl, 'app{backspace}');
-          expect(inputEl).toHaveFocus();
-          expect(inputEl).toHaveValue('ap');
+        testMultiSelect('Focuses last Chip after making a selection', () => {
+          const { inputEl, openMenu, queryAllChips } = renderCombobox(select);
+          const { optionElements } = openMenu();
+          const firstOption = optionElements[0];
+          userEvent.click(firstOption);
+          userEvent.type(inputEl, '{backspace}');
+          expect(queryAllChips()).toHaveLength(1);
+          expect(queryAllChips()[0]).toContainFocus();
         });
       });
 

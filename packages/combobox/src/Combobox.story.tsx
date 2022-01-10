@@ -24,7 +24,6 @@ storiesOf('Combobox', module)
     const [isError, setIsError] = useState(false);
 
     const handleChange = (value: string | null) => {
-      console.log(value);
       if (value === 'pomegranate') {
         setIsError(true);
       } else {

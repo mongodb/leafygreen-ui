@@ -97,6 +97,7 @@ export default function Combobox<M extends boolean>({
   const isControlled = !isUndefined(value);
 
   const [isOpen, setOpen] = useState(false);
+  const prevOpenState = usePrevious(isOpen);
   const [focusedOption, setFocusedOption] = useState<string | null>(null);
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
@@ -158,9 +159,8 @@ export default function Combobox<M extends boolean>({
           newSelection as SelectValueType<false>,
         );
       }
-      setInputFocus();
     },
-    [isMultiselect, onChange, selection, setInputFocus],
+    [isMultiselect, onChange, selection],
   );
 
   // Scrolls the combobox to the far right
@@ -529,6 +529,7 @@ export default function Combobox<M extends boolean>({
             const setSelected = () => {
               setFocusedOption(value);
               updateSelection(value);
+              setInputFocus();
 
               if (value === selection) {
                 closeMenu();
@@ -574,6 +575,7 @@ export default function Combobox<M extends boolean>({
       isMultiselect,
       isOptionVisible,
       selection,
+      setInputFocus,
       updateSelection,
     ],
   );
@@ -631,6 +633,9 @@ export default function Combobox<M extends boolean>({
         updateSelection(null);
         onClear?.(e);
         onFilter?.('');
+        if (!isOpen) {
+          openMenu();
+        }
       }
     };
 
@@ -664,6 +669,7 @@ export default function Combobox<M extends boolean>({
     updateSelection,
     onClear,
     onFilter,
+    isOpen,
   ]);
 
   // Do any of the options have an icon?
@@ -677,75 +683,8 @@ export default function Combobox<M extends boolean>({
    *
    */
 
-  // Set initialValue
-  useEffect(() => {
-    if (initialValue) {
-      if (isArray(initialValue)) {
-        // Ensure the values we set are real options
-        const filteredValue =
-          initialValue.filter(value => isValueValid(value)) ?? [];
-        setSelection(filteredValue as SelectValueType<M>);
-      } else {
-        if (isValueValid(initialValue as string)) {
-          setSelection(initialValue);
-        }
-      }
-    } else {
-      setSelection(getNullSelection(multiselect));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // When value changes, update the selection
-  useEffect(() => {
-    if (!isUndefined(value)) {
-      if (isNull(value)) {
-        setSelection(null);
-      } else if (isMultiselect(value)) {
-        // Ensure the value(s) passed in are valid options
-        const newSelection = value.filter(isValueValid) as SelectValueType<M>;
-        setSelection(newSelection);
-      } else {
-        setSelection(
-          isValueValid(value as SelectValueType<false>) ? value : null,
-        );
-      }
-    }
-  }, [isMultiselect, isValueValid, value]);
-
-  // onSelect
-  // Side effects to run when the selection changes
-  // (regardless of controlled/uncontrolled)
-  useEffect(() => {
-    if (selection !== prevSelection) {
-      if (doesSelectionExist) {
-        if (isMultiselect(selection)) {
-          // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
-          scrollToEnd();
-        } else if (!isMultiselect(selection)) {
-          // Update the text input
-          const displayName =
-            getDisplayNameForValue(selection as SelectValueType<false>) ?? '';
-          setInputValue(displayName);
-          closeMenu();
-        }
-      } else {
-        setInputValue('');
-      }
-    }
-  }, [
-    doesSelectionExist,
-    getDisplayNameForValue,
-    isControlled,
-    isMultiselect,
-    onChange,
-    prevSelection,
-    selection,
-  ]);
-
-  // when the menu closes, update the value if needed
-  useEffect(() => {
-    if (!isOpen && !isMultiselect(selection) && selection === prevSelection) {
+  const onCloseMenu = useCallback(() => {
+    if (!isMultiselect(selection) && selection === prevSelection) {
       const exactMatchedOption = visibleOptions.find(
         option =>
           option.displayName === inputValue || option.value === inputValue,
@@ -766,12 +705,79 @@ export default function Combobox<M extends boolean>({
     getDisplayNameForValue,
     inputValue,
     isMultiselect,
-    isOpen,
     prevSelection,
     selection,
     value,
     visibleOptions,
   ]);
+
+  const onSelect = useCallback(() => {
+    if (doesSelectionExist) {
+      if (isMultiselect(selection)) {
+        // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
+        scrollToEnd();
+      } else if (!isMultiselect(selection)) {
+        // Update the text input
+        const displayName =
+          getDisplayNameForValue(selection as SelectValueType<false>) ?? '';
+        setInputValue(displayName);
+        closeMenu();
+      }
+    } else {
+      setInputValue('');
+    }
+  }, [doesSelectionExist, getDisplayNameForValue, isMultiselect, selection]);
+
+  // Set initialValue
+  useEffect(() => {
+    if (initialValue) {
+      if (isArray(initialValue)) {
+        // Ensure the values we set are real options
+        const filteredValue =
+          initialValue.filter(value => isValueValid(value)) ?? [];
+        setSelection(filteredValue as SelectValueType<M>);
+      } else {
+        if (isValueValid(initialValue as string)) {
+          setSelection(initialValue);
+        }
+      }
+    } else {
+      setSelection(getNullSelection(multiselect));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // When controlled value changes, update the selection
+  useEffect(() => {
+    if (!isUndefined(value) && value !== prevValue) {
+      if (isNull(value)) {
+        setSelection(null);
+      } else if (isMultiselect(value)) {
+        // Ensure the value(s) passed in are valid options
+        const newSelection = value.filter(isValueValid) as SelectValueType<M>;
+        setSelection(newSelection);
+      } else {
+        setSelection(
+          isValueValid(value as SelectValueType<false>) ? value : null,
+        );
+      }
+    }
+  }, [isMultiselect, isValueValid, prevValue, value]);
+
+  // onSelect
+  // Side effects to run when the selection changes
+  useEffect(() => {
+    if (selection !== prevSelection) {
+      onSelect();
+    }
+  }, [onSelect, prevSelection, selection]);
+
+  // when the menu closes, update the value if needed
+  useEffect(() => {
+    if (!isOpen && prevOpenState !== isOpen) {
+      onCloseMenu();
+    }
+  }, [isOpen, prevOpenState, onCloseMenu]);
 
   /**
    *
@@ -870,13 +876,30 @@ export default function Combobox<M extends boolean>({
    */
 
   // Prevent combobox from gaining focus by default
-  const handleInputMousedown = (e: React.MouseEvent) => e.preventDefault();
+  const handleInputWrapperMousedown = (e: React.MouseEvent) => {
+    if (e.target !== inputRef.current) {
+      e.preventDefault();
+    }
+  };
 
   // Set focus to the input element on click
-  const handleInputClick = () => setInputFocus();
+  const handleInputWrapperClick = (e: React.MouseEvent) => {
+    if (e.target !== inputRef.current) {
+      let cursorPos = 0;
+
+      if (inputRef.current) {
+        const mouseX = e.nativeEvent.offsetX;
+        const inputRight =
+          inputRef.current.offsetLeft + inputRef.current.clientWidth;
+        cursorPos = mouseX > inputRight ? inputValue.length : 0;
+      }
+
+      setInputFocus(cursorPos);
+    }
+  };
 
   // Fired when the wrapper gains focus
-  const handleInputFocus = () => {
+  const handleInputWrapperFocus = () => {
     scrollToEnd();
     openMenu();
   };
@@ -1028,7 +1051,10 @@ export default function Combobox<M extends boolean>({
       menuRef.current?.contains(target as Node) ||
       comboboxRef.current?.contains(target as Node) ||
       false;
-    setOpen(isChildFocused);
+
+    if (!isChildFocused) {
+      setOpen(false);
+    }
   };
   useEventListener('mousedown', handleBackdropClick);
 
@@ -1076,9 +1102,9 @@ export default function Combobox<M extends boolean>({
             aria-owns={menuId}
             tabIndex={-1}
             className={comboboxStyle}
-            onMouseDown={handleInputMousedown}
-            onClick={handleInputClick}
-            onFocus={handleInputFocus}
+            onMouseDown={handleInputWrapperMousedown}
+            onClick={handleInputWrapperClick}
+            onFocus={handleInputWrapperFocus}
             onKeyDown={handleKeyDown}
             onTransitionEnd={handleTransitionEnd}
             data-disabled={disabled}
@@ -1106,6 +1132,7 @@ export default function Combobox<M extends boolean>({
                 disabled={disabled ?? undefined}
                 onChange={handleInputChange}
                 value={inputValue}
+                autoComplete="off"
               />
             </div>
             {renderedInputIcons}
