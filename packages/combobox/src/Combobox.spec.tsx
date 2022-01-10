@@ -632,7 +632,7 @@ describe('packages/combobox', () => {
           async () => {
             const { inputEl, openMenu } = renderCombobox('single');
             const { optionElements, menuContainerEl } = openMenu();
-            const firstOption = optionElements[0];
+            const firstOption = optionElements![0];
             userEvent.click(firstOption);
             await waitForElementToBeRemoved(menuContainerEl);
             userEvent.type(inputEl, '{backspace}');
@@ -657,7 +657,7 @@ describe('packages/combobox', () => {
         testMultiSelect('Focuses last Chip after making a selection', () => {
           const { inputEl, openMenu, queryAllChips } = renderCombobox(select);
           const { optionElements } = openMenu();
-          const firstOption = optionElements[0];
+          const firstOption = optionElements![0];
           userEvent.click(firstOption);
           userEvent.type(inputEl, '{backspace}');
           expect(queryAllChips()).toHaveLength(1);
