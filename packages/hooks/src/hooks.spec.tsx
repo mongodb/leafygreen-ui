@@ -359,9 +359,7 @@ describe('packages/hooks', () => {
     });
 
     it('Returns validation functions when callback is undefined', () => {
-      const { result } = renderHook(() =>
-        useValidation(value => console.log(value)),
-      );
+      const { result } = renderHook(() => useValidation());
       expect(result.current.onBlur).toBeDefined();
       expect(result.current.onChange).toBeDefined();
     });
