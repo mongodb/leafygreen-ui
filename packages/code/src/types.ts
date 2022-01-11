@@ -82,6 +82,18 @@ export type CodeProps = Omit<
    *
    */
   onCopy?: Function;
+
+  /**
+   * Custom action buttons.
+   *
+   */
+  customActionButtons?: Array<React.ReactNode>;
+
+  /**
+   * When true, custom action buttons will be shown.
+   *
+   */
+  showCustomActionButtons?: boolean;
 } & (
     | { language: Language; languageOptions?: undefined; onChange?: undefined }
     | {

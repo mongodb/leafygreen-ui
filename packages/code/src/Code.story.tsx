@@ -7,6 +7,8 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Language } from './types';
 import Code from '.';
 import LanguageSwitcherExample from './LanguageSwitcherExample';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 
 const jsSnippet = `
 
@@ -48,15 +50,43 @@ storiesOf('Code', module)
         multiple: [[2, 4], 6],
       } as const;
 
+      const darkMode = boolean('darkMode', false);
+
+      const actionData = [
+        <IconButton
+          onClick={() => {}}
+          aria-label="label"
+          darkMode={darkMode}
+          key="1"
+        >
+          <Icon glyph="Cloud" />
+        </IconButton>,
+        <Icon glyph="Shell" size={30} key="3" />,
+        <IconButton
+          href="https://mongodb.design"
+          aria-label="label2"
+          darkMode={darkMode}
+          key="2"
+          target="_blank"
+        >
+          <Icon glyph="Code" size={30} />
+        </IconButton>,
+      ];
+
       return (
         <LeafyGreenProvider>
           <div className={wrapperStyle}>
             <Code
               showLineNumbers={boolean('Show line numbers', false)}
               showWindowChrome={boolean('Show window chrome', false)}
+              showCustomActionButtons={boolean(
+                'Show custom action buttons',
+                false,
+              )}
+              customActionButtons={actionData}
               copyable={boolean('Copyable', true)}
               chromeTitle={text('Chrome label', 'directory/fileName.js')}
-              darkMode={boolean('darkMode', false)}
+              darkMode={darkMode}
               language={select(
                 'Language',
                 Object.values(Language),
@@ -87,9 +117,34 @@ storiesOf('Code', module)
   .add('LanguageSwitcher', () => {
     const darkMode = boolean('darkMode', false);
 
+    const actionData = [
+      <IconButton
+        onClick={() => {}}
+        aria-label="label"
+        darkMode={darkMode}
+        key="1"
+      >
+        <Icon glyph="Cloud" />
+      </IconButton>,
+      <Icon glyph="Shell" size={30} key="3" />,
+      <IconButton
+        href="https://mongodb.design"
+        aria-label="label2"
+        darkMode={darkMode}
+        key="2"
+        target="_blank"
+      >
+        <Icon glyph="Code" size={30} />
+      </IconButton>,
+    ];
+
     return (
       <LeafyGreenProvider>
-        <LanguageSwitcherExample darkMode={darkMode} />
+        <LanguageSwitcherExample
+          darkMode={darkMode}
+          showCustomActionButtons={boolean('Show custom action buttons', false)}
+          customActionButtons={actionData}
+        />
       </LeafyGreenProvider>
     );
   });
