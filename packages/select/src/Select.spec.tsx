@@ -815,7 +815,7 @@ describe('packages/select', () => {
     });
 
     describe('when the "state" is "error"', () => {
-      test('displays error message when input is invalid', () => {
+      test('error message is present', () => {
         const { container } = render(
           <Select
             {...defaultProps}
@@ -826,7 +826,7 @@ describe('packages/select', () => {
         expect(container.innerHTML).toContain(errorMessage);
       });
 
-      test('error message is not present if errorMessage is empty', () => {
+      test('error message is not present if "errorMessage" is empty', () => {
         const { container } = render(
           <Select {...defaultProps} state={State.Error} />,
         );
