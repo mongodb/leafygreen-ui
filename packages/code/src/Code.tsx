@@ -12,6 +12,7 @@ import { Language, CodeProps, Mode } from './types';
 import Syntax from './Syntax';
 import Panel from './Panel';
 import WindowChrome from './WindowChrome';
+import { isComponentType } from '@leafygreen-ui/lib';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -164,8 +165,12 @@ function Code({
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
 
+  const filteredCustomActionIconButtons = customActionButtons.filter(
+    (item: React.ReactNode) => isComponentType(item, 'IconButton') === true,
+  );
+
   const showCustomActionsInPanel =
-    showCustomActionButtons && !!customActionButtons.length;
+    showCustomActionButtons && !!filteredCustomActionIconButtons.length;
 
   const currentLanguage = languageOptions?.find(
     option => option.displayName === languageProp,
@@ -292,7 +297,7 @@ function Code({
               showCopyButton={showCopyBar}
               darkMode={darkMode}
               isMultiline={isMultiline}
-              customActionButtons={customActionButtons}
+              customActionButtons={filteredCustomActionIconButtons}
               showCustomActionButtons={showCustomActionsInPanel}
             />
           )}

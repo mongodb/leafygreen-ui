@@ -20,12 +20,7 @@ const copyStyle = css`
   flex-shrink: 0;
   padding-top: 6px;
   align-items: center;
-
-  > * {
-    & + * {
-      margin-top: ${spacing[1]}px;
-    }
-  }
+  gap: ${spacing[1]}px;
 
   svg {
     width: 16px;
@@ -80,12 +75,7 @@ function getPanelStyles(
     padding-right: 8px;
     background-color: ${colors[4]};
     border-bottom: 1px solid ${colors[1]};
-
-    > * {
-      & + * {
-        margin-left: ${spacing[1]}px;
-      }
-    }
+    gap: ${spacing[1]}px;
 
     svg {
       width: 16px;
