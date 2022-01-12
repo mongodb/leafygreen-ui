@@ -78,7 +78,7 @@ storiesOf('Code', module)
           <div className={wrapperStyle}>
             <Code
               showLineNumbers={boolean('Show line numbers', false)}
-              lineOffset={number("First row's line number", 1)}
+              lineNumberStart={number("First row's line number", 1)}
               showWindowChrome={boolean('Show window chrome', false)}
               showCustomActionButtons={boolean(
                 'Show custom action buttons',

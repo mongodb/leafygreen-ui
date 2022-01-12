@@ -357,7 +357,7 @@ export function TableContent({ lines }: TableContentProps) {
     highlightLines,
     showLineNumbers,
     darkMode,
-    lineOffset,
+    lineNumberStart,
   } = useSyntaxContext();
   const trimmedLines = [...lines];
 
@@ -390,7 +390,7 @@ export function TableContent({ lines }: TableContentProps) {
   return (
     <>
       {trimmedLines.map((line, index) => {
-        const currentLineNumber = index + lineOffset || 1;
+        const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
         let displayLineNumber;
