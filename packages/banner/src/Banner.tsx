@@ -5,7 +5,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const Variant = {
@@ -28,8 +28,8 @@ const baseBannerStyles = css`
   padding: 9px 12px 9px 20px;
   border-width: 1px 1px 1px 0px;
   border-style: solid;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 12px;
+  font-size: 13px;
   line-height: 20px;
 
   &:before {
@@ -39,7 +39,7 @@ const baseBannerStyles = css`
     top: -1px;
     bottom: -1px;
     left: 0px;
-    border-radius: 6px 0px 0px 6px;
+    border-radius: 12px 0px 0px 12px;
   }
 
   &:after {
@@ -48,7 +48,7 @@ const baseBannerStyles = css`
     left: 4px;
     top: -1px;
     bottom: -1px;
-    width: 2px;
+    width: 7px;
     border-top: 1px solid;
     border-bottom: 1px solid;
     border-radius: 0.5px 0px 0px 0.5px;
@@ -75,42 +75,42 @@ const renderedImageStyles = css`
 
 const bannerVariantStyles: Record<Variant, string> = {
   [Variant.Info]: css`
-    color: ${uiColors.blue.dark2};
-    border-color: ${uiColors.blue.light2};
-    border-left-color: ${uiColors.blue.base};
-    background-color: ${uiColors.blue.light3};
+    color: ${palette.blue.dark2};
+    border-color: ${palette.blue.light2};
+    border-left-color: ${palette.blue.base};
+    background-color: ${palette.blue.light3};
 
     &:before {
-      background-color: ${uiColors.blue.base};
+      background-color: ${palette.blue.base};
     }
 
     &:after {
-      border-color: ${uiColors.blue.light2};
-      background-color: ${uiColors.blue.light3};
+      border-color: ${palette.blue.light2};
+      background-color: ${palette.blue.light3};
     }
   `,
 
   [Variant.Warning]: css`
-    color: ${uiColors.yellow.dark2};
-    border-color: ${uiColors.yellow.light2};
-    border-left-color: ${uiColors.yellow.base};
-    background-color: ${uiColors.yellow.light3};
+    color: ${palette.yellow.dark2};
+    border-color: ${palette.yellow.light2};
+    border-left-color: ${palette.yellow.base};
+    background-color: ${palette.yellow.light3};
 
     &:before {
-      background-color: ${uiColors.yellow.base};
+      background-color: ${palette.yellow.base};
     }
 
     &:after {
-      border-color: ${uiColors.yellow.light2};
-      background-color: ${uiColors.yellow.light3};
+      border-color: ${palette.yellow.light2};
+      background-color: ${palette.yellow.light3};
     }
   `,
 
   [Variant.Danger]: css`
-    color: ${uiColors.red.dark2};
-    border-color: ${uiColors.red.light2};
-    border-left-color: ${uiColors.red.base};
-    background-color: ${uiColors.red.light3};
+    color: ${palette.red.dark2};
+    border-color: ${palette.red.light2};
+    border-left-color: ${palette.red.base};
+    background-color: ${palette.red.light3};
 
     &:before {
       background-color: ${uiColors.red.base};
@@ -123,10 +123,10 @@ const bannerVariantStyles: Record<Variant, string> = {
   `,
 
   [Variant.Success]: css`
-    color: ${uiColors.green.dark2};
-    border-color: ${uiColors.green.light2};
-    border-left-color: ${uiColors.green.base};
-    background-color: ${uiColors.green.light3};
+    color: ${palette.green.dark2};
+    border-color: ${palette.green.light2};
+    border-left-color: ${palette.green.base};
+    background-color: ${palette.green.light3};
 
     &:before {
       background-color: ${uiColors.green.base};
@@ -140,26 +140,26 @@ const bannerVariantStyles: Record<Variant, string> = {
 } as const;
 
 const map = {
-  [Variant.Info]: { color: uiColors.blue.base, icon: InfoWithCircleIcon },
+  [Variant.Info]: { color: palette.blue.base, icon: InfoWithCircleIcon },
   [Variant.Warning]: {
-    color: uiColors.yellow.dark2,
+    color: palette.yellow.dark2,
     icon: ImportantWithCircleIcon,
   },
-  [Variant.Danger]: { color: uiColors.red.base, icon: WarningIcon },
+  [Variant.Danger]: { color: palette.red.base, icon: WarningIcon },
   [Variant.Success]: {
-    color: uiColors.green.dark1,
+    color: palette.green.dark1,
     icon: CheckmarkWithCircleIcon,
   },
 };
 
 const dismissibleMap = {
-  [Variant.Info]: { color: uiColors.blue.dark2 },
+  [Variant.Info]: { color: palette.blue.dark2 },
   [Variant.Warning]: {
-    color: uiColors.yellow.dark2,
+    color: palette.yellow.dark2,
   },
-  [Variant.Danger]: { color: uiColors.red.dark1 },
+  [Variant.Danger]: { color: palette.red.dark2 },
   [Variant.Success]: {
-    color: uiColors.green.dark2,
+    color: palette.green.dark2,
   },
 };
 
