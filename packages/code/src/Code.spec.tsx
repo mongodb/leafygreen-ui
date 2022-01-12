@@ -6,10 +6,24 @@ import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import Code, { hasMultipleLines } from './Code';
 import LanguageSwitcherExample, { PythonLogo } from './LanguageSwitcherExample';
+import IconButton from '@leafygreen-ui/icon-button';
+import Icon from '@leafygreen-ui/icon';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
 const onCopy = jest.fn();
+
+const actionData = [
+  <IconButton
+    href="https://mongodb.design"
+    aria-label="label"
+    darkMode={true}
+    key="1"
+    target="_blank"
+  >
+    <Icon glyph="Code" />
+  </IconButton>,
+];
 
 describe('packages/Code', () => {
   const { container } = Context.within(
@@ -109,7 +123,35 @@ describe('packages/Code', () => {
   });
 
   describe('panel', () => {
-    test('is not rendered when language switcher is not present and when copyable is false', () => {
+    test('is not rendered when language switcher is not present and when copyable is false and showCustomActionButtons is false', () => {
+      expect(container).not.toContain(
+        screen.queryByTestId('leafygreen-code-panel'),
+      );
+    });
+
+    test('is rendered when language switcher is not present, when copyable is false, showCustomActionButtons is true, and actionsButtons has items', () => {
+      render(
+        <Code
+          language="javascript"
+          showCustomActionButtons
+          customActionButtons={actionData}
+        >
+          {codeSnippet}
+        </Code>,
+      );
+      expect(screen.queryByTestId('leafygreen-code-panel')).toBeDefined();
+    });
+
+    test('is not rendered when language switcher is not present, when copyable is false, when showCustomActionButtons is true, and actionsButtons has no items', () => {
+      const { container } = render(
+        <Code
+          language="javascript"
+          showCustomActionButtons
+          customActionButtons={[]}
+        >
+          {codeSnippet}
+        </Code>,
+      );
       expect(container).not.toContain(
         screen.queryByTestId('leafygreen-code-panel'),
       );

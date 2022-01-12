@@ -127,9 +127,13 @@ const snippetMap = {
 function LanguageSwitcher({
   darkMode,
   onChange,
+  customActionButtons = [],
+  showCustomActionButtons = false,
 }: {
   darkMode?: boolean;
   onChange?: Function;
+  customActionButtons?: Array<React.ReactNode>;
+  showCustomActionButtons?: boolean;
 }) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
 
@@ -146,6 +150,8 @@ function LanguageSwitcher({
       onChange={handleChange}
       languageOptions={languageOptions}
       darkMode={darkMode}
+      customActionButtons={customActionButtons}
+      showCustomActionButtons={showCustomActionButtons}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>

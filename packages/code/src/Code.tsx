@@ -12,6 +12,7 @@ import { Language, CodeProps, Mode } from './types';
 import Syntax from './Syntax';
 import Panel from './Panel';
 import WindowChrome from './WindowChrome';
+import { isComponentType } from '@leafygreen-ui/lib';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -153,6 +154,8 @@ function Code({
   highlightLines = [],
   languageOptions,
   onChange,
+  customActionButtons = [],
+  showCustomActionButtons = false,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -161,6 +164,13 @@ function Code({
   const [showCopyBar, setShowCopyBar] = useState(false);
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
+
+  const filteredCustomActionIconButtons = customActionButtons.filter(
+    (item: React.ReactNode) => isComponentType(item, 'IconButton') === true,
+  );
+
+  const showCustomActionsInPanel =
+    showCustomActionButtons && !!filteredCustomActionIconButtons.length;
 
   const currentLanguage = languageOptions?.find(
     option => option.displayName === languageProp,
@@ -276,18 +286,21 @@ function Code({
 
         {/* Can make this a more robust check in the future */}
         {/* Right now the panel will only be rendered with copyable or a language switcher */}
-        {!showWindowChrome && (copyable || !!currentLanguage) && (
-          <Panel
-            language={currentLanguage}
-            languageOptions={languageOptions}
-            onChange={onChange}
-            contents={children}
-            onCopy={onCopy}
-            showCopyButton={showCopyBar}
-            darkMode={darkMode}
-            isMultiline={isMultiline}
-          />
-        )}
+        {!showWindowChrome &&
+          (copyable || !!currentLanguage || showCustomActionsInPanel) && (
+            <Panel
+              language={currentLanguage}
+              languageOptions={languageOptions}
+              onChange={onChange}
+              contents={children}
+              onCopy={onCopy}
+              showCopyButton={showCopyBar}
+              darkMode={darkMode}
+              isMultiline={isMultiline}
+              customActionButtons={filteredCustomActionIconButtons}
+              showCustomActionButtons={showCustomActionsInPanel}
+            />
+          )}
       </div>
     </div>
   );

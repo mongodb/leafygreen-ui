@@ -24,16 +24,9 @@ module.exports = ({ config }) => {
         limit: 50000,
       },
     },
-    {
-      test: /\.less(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]',
-      },
-    },
   ];
 
-  config.resolve.extensions = ['.js', '.json', '.less', '.css', '.tsx', '.ts'];
+  config.resolve.extensions = ['.js', '.json', '.tsx', '.ts'];
 
   return config;
 };
