@@ -36,6 +36,12 @@
       "path": "./packages/emotion"
     },
     {
+      "path": "./packages/expandable-card"
+    },
+    {
+      "path": "./packages/form-footer"
+    },
+    {
       "path": "./packages/hooks"
     },
     {
@@ -51,16 +57,19 @@
       "path": "./packages/interaction-ring"
     },
     {
+      "path": "./packages/leafygreen-provider"
+    },
+    {
       "path": "./packages/lib"
     },
     {
       "path": "./packages/logo"
     },
     {
-      "path": "./packages/menu"
+      "path": "./packages/marketing-modal"
     },
     {
-      "path": "./packages/marketing-modal"
+      "path": "./packages/menu"
     },
     {
       "path": "./packages/modal"
@@ -117,19 +126,16 @@
       "path": "./packages/theme"
     },
     {
+      "path": "./packages/toast"
+    },
+    {
       "path": "./packages/toggle"
     },
     {
       "path": "./packages/tooltip"
     },
     {
-      "path": "./packages/leafygreen-provider"
-    },
-    {
       "path": "./packages/typography"
-    },
-    {
-      "path": "./packages/toast"
     },
     {
       "path": "./website"

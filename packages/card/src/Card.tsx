@@ -34,8 +34,7 @@ const lightHoverBoxShadow = `0 2px 6px -2px ${transparentize(
   uiColors.black,
 )}`;
 const darkHoverBoxShadow = `0 2px 12px -2px ${transparentize(0.1, '#000')}`;
-const lightFocusBoxShadow = `0 0 0 3px ${uiColors.blue.light1}`;
-const darkFocusBoxShadow = `0 0 0 3px ${uiColors.blue.base}`;
+const focusBoxShadow = `0 0 0 3px ${uiColors.focus}`;
 
 const colorSet: Record<Mode, ColorSet> = {
   [Mode.Light]: {
@@ -50,7 +49,7 @@ const colorSet: Record<Mode, ColorSet> = {
 
       &:focus {
         outline: none;
-        box-shadow: ${lightBaseBoxShadow}, ${lightFocusBoxShadow};
+        box-shadow: ${lightBaseBoxShadow}, ${focusBoxShadow};
       }
 
       &:hover {
@@ -58,7 +57,7 @@ const colorSet: Record<Mode, ColorSet> = {
         box-shadow: ${lightHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${lightHoverBoxShadow}, ${lightFocusBoxShadow};
+          box-shadow: ${lightHoverBoxShadow}, ${focusBoxShadow};
         }
       }
     `,
@@ -75,14 +74,14 @@ const colorSet: Record<Mode, ColorSet> = {
 
       &:focus {
         outline: none;
-        box-shadow: ${darkBaseBoxShadow}, ${darkFocusBoxShadow};
+        box-shadow: ${darkBaseBoxShadow}, ${focusBoxShadow};
       }
 
       &:hover {
         box-shadow: ${darkHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${darkHoverBoxShadow}, ${darkFocusBoxShadow};
+          box-shadow: ${darkHoverBoxShadow}, ${focusBoxShadow};
         }
       }
     `,
@@ -92,7 +91,7 @@ const colorSet: Record<Mode, ColorSet> = {
 const containerStyle = css`
   position: relative;
   border-radius: 7px;
-  transition: border 300ms ease-in-out, box-shadow 300ms ease-in-out;
+  transition: border 150ms ease-in-out, box-shadow 150ms ease-in-out;
 `;
 
 interface CardProps {

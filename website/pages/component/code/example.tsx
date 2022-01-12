@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Code, { Language } from '@leafygreen-ui/code';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 
 interface LanguageOption {
   displayName: string;
@@ -42,12 +44,36 @@ const snippetMap = {
   [Language.Python]: pythonSnippet,
 };
 
+function CustomActions(darkMode: boolean) {
+  return [
+    <IconButton
+      onClick={() => {}}
+      aria-label="label"
+      darkMode={darkMode}
+      key="1"
+    >
+      <Icon glyph="Cloud" />
+    </IconButton>,
+    <IconButton
+      href="https://mongodb.design"
+      aria-label="label2"
+      darkMode={darkMode}
+      key="2"
+      target="_blank"
+    >
+      <Icon glyph="Code" />
+    </IconButton>,
+  ];
+}
+
 function LanguageSwitcher({
   darkMode,
   highlightLines,
+  showCustomActionButtons,
 }: {
   darkMode: boolean;
   highlightLines?: Array<number>;
+  showCustomActionButtons: boolean;
 }) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
 
@@ -64,6 +90,8 @@ function LanguageSwitcher({
       languageOptions={languageOptions}
       darkMode={darkMode}
       highlightLines={highlightLines}
+      customActionButtons={CustomActions(darkMode)}
+      showCustomActionButtons={showCustomActionButtons}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
@@ -80,6 +108,7 @@ const knobsConfig: KnobsConfigInterface<{
   children: string;
   withLanguageSwitcher: boolean;
   showSyntaxHighlighting: boolean;
+  showCustomActionButtons: boolean;
 }> = {
   showSyntaxHighlighting: {
     type: 'boolean',
@@ -90,6 +119,11 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'boolean',
     default: false,
     label: 'Show Window Chrome',
+  },
+  showCustomActionButtons: {
+    type: 'boolean',
+    default: false,
+    label: 'Show Custom Action Buttons',
   },
   copyable: {
     type: 'boolean',
@@ -141,6 +175,7 @@ export default function CodeLiveExample() {
         ) : (
           <Code
             highlightLines={showSyntaxHighlighting ? [2] : undefined}
+            customActionButtons={CustomActions(props.darkMode)}
             {...props}
           />
         )
