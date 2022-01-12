@@ -56,11 +56,11 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Euclid';
     font-weight: 400, normal;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Regular-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-Regular-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Regular-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Regular-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Regular.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Regular.ttf')
         format('truetype');
   }
 
@@ -68,11 +68,11 @@ export const globalStyles = css`
     font-family: 'Euclid';
     font-weight: 400, normal;
     font-style: italic, oblique;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-RegularItalic-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-RegularItalic-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-RegularItalic-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-RegularItalic-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-RegularItalic.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-RegularItalic.ttf')
         format('truetype');
   }
 
@@ -80,11 +80,11 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Euclid';
     font-weight: 700, bold;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-Bold-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Bold-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Bold.ttf')
         format('truetype');
   }
 
@@ -92,11 +92,11 @@ export const globalStyles = css`
     font-family: 'Euclid';
     font-weight: 700, bold;
     font-style: italic, oblique;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-BoldItalic.ttf')
         format('truetype');
   }
 
@@ -104,11 +104,11 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Euclid';
     font-weight: 100, 200, 300;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-Bold-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Bold-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Bold.ttf')
         format('truetype');
   }
 
@@ -116,11 +116,11 @@ export const globalStyles = css`
     font-family: 'Euclid';
     font-weight: 100, 200, 300;
     font-style: italic, oblique;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-BoldItalic.ttf')
         format('truetype');
   }
 
@@ -128,11 +128,11 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Euclid';
     font-weight: 500, medium;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Medium-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-Medium-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Medium-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Medium-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Medium.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Medium.ttf')
         format('truetype');
   }
 
@@ -140,11 +140,11 @@ export const globalStyles = css`
     font-family: 'Euclid';
     font-weight: 500, medium;
     font-style: italic, oblique;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-MediumItalic-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-MediumItalic-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-MediumItalic-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-MediumItalic-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-MediumItalic.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-MediumItalic.ttf')
         format('truetype');
   }
 
@@ -152,11 +152,11 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Euclid';
     font-weight: 600;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Semibold-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-Semibold-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Semibold-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Semibold-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Semibold.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-Semibold.ttf')
         format('truetype');
   }
 
@@ -164,11 +164,11 @@ export const globalStyles = css`
     font-family: 'Euclid';
     font-weight: 600;
     font-style: italic, oblique;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-SemiboldItalic-WebXL.woff')
+    src: url('${fontsURL}/euclid-circular/EuclidCircularA-SemiboldItalic-WebXL.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-SemiboldItalic-WebXL.woff2')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-SemiboldItalic-WebXL.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-SemiboldItalic.ttf')
+      url('${fontsURL}/euclid-circular/EuclidCircularA-SemiboldItalic.ttf')
         format('truetype');
   }
 
@@ -180,11 +180,11 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Value Serif';
     font-weight: 400, normal;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Regular.woff')
+    src: url('${fontsURL}/value-serif/MongoDBValueSerif-Regular.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Regular.woff2')
+      url('${fontsURL}/value-serif/MongoDBValueSerif-Regular.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Regular.ttf')
+      url('${fontsURL}/value-serif/MongoDBValueSerif-Regular.ttf')
         format('truetype');
   }
 
@@ -192,11 +192,11 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Value Serif';
     font-weight: 500;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Medium.woff')
+    src: url('${fontsURL}/value-serif/MongoDBValueSerif-Medium.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Medium.woff2')
+      url('${fontsURL}/value-serif/MongoDBValueSerif-Medium.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Medium.ttf')
+      url('${fontsURL}/value-serif/MongoDBValueSerif-Medium.ttf')
         format('truetype');
   }
 
@@ -204,11 +204,11 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Value Serif';
     font-weight: 700, bold;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Bold.woff')
+    src: url('${fontsURL}/value-serif/MongoDBValueSerif-Bold.woff')
         format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Bold.woff2')
+      url('${fontsURL}/value-serif/MongoDBValueSerif-Bold.woff2')
         format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Bold.ttf')
+      url('${fontsURL}/value-serif/MongoDBValueSerif-Bold.ttf')
         format('truetype');
   }
 
