@@ -5,7 +5,7 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
 import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
@@ -48,7 +48,7 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export const BaseFontSize = 14 | 16;
+export const BaseFontSize = 13 | 14 | 16; // TODO - remove 14 when new dark mode is added
 
 export type BaseFontSize = typeof BaseFontSize;
 
@@ -158,19 +158,11 @@ const inputContainerStyle = css`
 const inputStyle = css`
   width: 100%;
   height: 36px;
-  border-radius: 4px;
-  padding-left: 12px;
-  font-size: 14px;
   font-weight: normal;
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   border: 1px solid;
   transition: border-color 150ms ease-in-out;
   z-index: 1;
   outline: none;
-
-  &::placeholder {
-    color: ${uiColors.gray.base};
-  }
 
   &:disabled {
     cursor: not-allowed;
@@ -185,19 +177,14 @@ const inputIconStyle = css`
   z-index: 1;
 `;
 
-const validIconStyle = css`
-  color: ${uiColors.green.base};
-`;
-
 const optionalStyle = css`
-  color: ${uiColors.gray.dark1};
   font-size: 12px;
   font-style: italic;
   font-weight: normal;
 `;
 
 const errorMessageStyle = css`
-  font-size: 14px;
+  font-size: 13px;
   min-height: 20px;
   padding-top: 4px;
   font-weight: normal;
@@ -214,20 +201,22 @@ interface ColorSets {
   optional: string;
   defaultBorder: string;
   validBorder: string;
+  validIconColor: string;
 }
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    inputColor: uiColors.gray.dark3,
-    inputBackgroundColor: uiColors.white,
-    disabledColor: uiColors.gray.base,
-    disabledBackgroundColor: uiColors.gray.light2,
-    errorIconColor: uiColors.red.base,
-    errorMessage: uiColors.red.base,
-    errorBorder: uiColors.red.base,
-    optional: uiColors.gray.dark1,
-    defaultBorder: uiColors.gray.base,
-    validBorder: uiColors.green.base,
+    inputColor: palette.gray.dark3,
+    inputBackgroundColor: palette.white,
+    disabledColor: palette.gray.base,
+    disabledBackgroundColor: palette.gray.light2,
+    errorIconColor: palette.red.base,
+    errorMessage: palette.red.base,
+    errorBorder: palette.red.base,
+    optional: palette.gray.dark1,
+    defaultBorder: palette.gray.base,
+    validBorder: palette.green.dark1,
+    validIconColor: palette.green.dark1,
   },
   [Mode.Dark]: {
     inputColor: uiColors.white,
@@ -240,13 +229,14 @@ const colorSets: Record<Mode, ColorSets> = {
     optional: uiColors.gray.light1,
     defaultBorder: '#394F5A',
     validBorder: '#394F5A',
+    validIconColor: uiColors.green.base,
   },
 } as const;
 
 const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
   [Mode.Light]: {
-    [State.Error]: uiColors.red.light3,
-    [State.Valid]: uiColors.green.light3,
+    [State.Error]: palette.red.light3,
+    [State.Valid]: palette.green.light3,
   },
   [Mode.Dark]: {
     [State.Error]: uiColors.red.dark2,
@@ -256,8 +246,8 @@ const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
 
 interface SizeSet {
   inputHeight: number;
-  inputText: number;
-  text: number;
+  inputText: BaseFontSize;
+  text: BaseFontSize;
   lineHeight: number;
   padding: number;
 }
@@ -278,7 +268,8 @@ function getStatefulInputStyles({
   switch (state) {
     case State.Valid: {
       return css`
-        padding-right: 30px;
+        // TODO - remove mode === 'dark' toggle when new dark mode is added
+        padding-right: ${mode === 'dark' ? 30 : 36}px;
         border-color: ${!disabled ? colorSets[mode].validBorder : 'inherit'};
       `;
     }
@@ -286,7 +277,8 @@ function getStatefulInputStyles({
     case State.Error: {
       return cx(
         css`
-          padding-right: 30px;
+          // TODO - remove mode === 'dark' toggle when new dark mode is added
+          padding-right: ${mode === 'dark' ? 30 : 36}px;
           border-color: ${!disabled ? colorSets[mode].errorBorder : 'inherit'};
         `,
         {
@@ -306,26 +298,30 @@ function getStatefulInputStyles({
   }
 }
 
-function getSizeSets(baseFontSize: BaseFontSize, sizeVariant: SizeVariant) {
+function getSizeSets(
+  baseFontSize: BaseFontSize,
+  sizeVariant: SizeVariant,
+  mode: Mode,
+) {
   const sizeSets: Record<SizeVariant, SizeSet> = {
     [SizeVariant.XSmall]: {
       inputHeight: 22,
-      inputText: 12,
-      text: 14,
+      inputText: 13,
+      text: 13,
       lineHeight: 20,
       padding: 10,
     },
     [SizeVariant.Small]: {
       inputHeight: 28,
-      inputText: 14,
-      text: 14,
+      inputText: 13,
+      text: 13,
       lineHeight: 20,
       padding: 10,
     },
     [SizeVariant.Default]: {
       inputHeight: 36,
-      inputText: baseFontSize,
-      text: baseFontSize,
+      inputText: mode == 'dark' && baseFontSize === 13 ? 14 : baseFontSize,
+      text: mode == 'dark' && baseFontSize === 13 ? 14 : baseFontSize,
       lineHeight: 20,
       padding: 12,
     },
@@ -383,7 +379,7 @@ const TextInput: React.ComponentType<
       sizeVariant = SizeVariant.Default,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
-      baseFontSize = 14,
+      baseFontSize = 13,
       ...rest
     }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -393,7 +389,7 @@ const TextInput: React.ComponentType<
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-    const sizeSet = getSizeSets(baseFontSize, sizeVariant);
+    const sizeSet = getSizeSets(baseFontSize, sizeVariant, mode); // TODO - remove `mode` arg when dark mode is added
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
@@ -427,7 +423,17 @@ const TextInput: React.ComponentType<
       : CheckmarkIcon;
 
     return (
-      <div className={cx(textInputStyle, className)}>
+      <div
+        className={cx(
+          textInputStyle,
+          className,
+          css`
+            // TODO - remove mode === 'dark' toggles when new dark mode is added
+            font-family: ${mode === 'dark' ? 'Akzidenz' : 'Euclid'},
+              ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+          `,
+        )}
+      >
         {label && (
           <Label
             darkMode={darkMode}
@@ -478,6 +484,17 @@ const TextInput: React.ComponentType<
                   height: ${sizeSet.inputHeight}px;
                   padding-left: ${sizeSet.padding}px;
 
+                  // TODO - remove mode === 'dark' toggles when new dark mode is added
+                  font-family: ${mode === 'dark' ? 'Akzidenz' : 'Euclid'},
+                    ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+                  border-radius: ${mode === 'dark' ? 4 : 6}px;
+                  &::placeholder {
+                    color: ${mode === 'dark'
+                      ? uiColors.gray.base
+                      : palette.gray.light1};
+                    font-weight: normal;
+                  }
+
                   &:focus {
                     border: 1px solid ${colorSets[mode].inputBackgroundColor};
                   }
@@ -526,7 +543,9 @@ const TextInput: React.ComponentType<
             {state === State.Valid && (
               <RenderedCheckmarkIcon
                 role="presentation"
-                className={validIconStyle}
+                className={css`
+                  color: ${colorSets[mode].validIconColor};
+                `}
               />
             )}
 
