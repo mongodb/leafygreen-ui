@@ -641,6 +641,22 @@ describe('packages/combobox', () => {
           },
         );
 
+        testSingleSelect('Re-opens menu after making a selection', async () => {
+          const { inputEl, openMenu, getMenuElements } = renderCombobox(
+            'single',
+          );
+          const { optionElements, menuContainerEl } = openMenu();
+          const firstOption = optionElements![0];
+          userEvent.click(firstOption);
+          await waitForElementToBeRemoved(menuContainerEl);
+          userEvent.type(inputEl, '{backspace}');
+          await waitFor(() => {
+            const { menuContainerEl: newMenuContainerEl } = getMenuElements();
+            expect(newMenuContainerEl).not.toBeNull();
+            expect(newMenuContainerEl).toBeInTheDocument();
+          });
+        });
+
         testMultiSelect(
           'Focuses last chip when cursor is at beginning of selection',
           () => {
@@ -851,6 +867,45 @@ describe('packages/combobox', () => {
           userEvent.type(chipButton, '{space}');
           waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
+      });
+
+      describe('Any other key', () => {
+        test('Updates the value of the input', () => {
+          const { inputEl } = renderCombobox(select);
+          userEvent.type(inputEl, 'a');
+          expect(inputEl).toHaveValue('a');
+        });
+
+        test("Opens the menu if it's closed", async () => {
+          const { inputEl, openMenu, getMenuElements } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, '{esc}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+          userEvent.type(inputEl, 'a');
+          await waitFor(() => {
+            const { menuContainerEl: newMenuContainerEl } = getMenuElements();
+            expect(newMenuContainerEl).toBeInTheDocument();
+          });
+        });
+
+        testSingleSelect(
+          'Opens the menu after making a selection',
+          async () => {
+            const { inputEl, openMenu, getMenuElements } = renderCombobox(
+              select,
+            );
+            const { optionElements, menuContainerEl } = openMenu();
+            const firstOption = optionElements![0];
+            userEvent.click(firstOption);
+            await waitForElementToBeRemoved(menuContainerEl);
+            userEvent.type(inputEl, 'a');
+            await waitFor(() => {
+              const { menuContainerEl: newMenuContainerEl } = getMenuElements();
+              expect(newMenuContainerEl).toBeInTheDocument();
+            });
+          },
+        );
       });
     });
 

@@ -483,7 +483,7 @@ export default function Combobox<M extends boolean>({
     if (inputValue !== prevValue) {
       updateFocusedOption('first');
     }
-  }, [inputValue, prevValue, updateFocusedOption]);
+  }, [inputValue, isOpen, prevValue, updateFocusedOption]);
 
   // When the focused option chenges, update the menu scroll if necessary
   useEffect(() => {
@@ -925,6 +925,7 @@ export default function Combobox<M extends boolean>({
 
     if (isFocusInComponent) {
       // No support for modifiers yet
+      // TODO - Handle support for multiple chip selection
       if (event.ctrlKey || event.shiftKey || event.altKey) {
         return;
       }
@@ -1002,6 +1003,8 @@ export default function Combobox<M extends boolean>({
             inputRef.current?.selectionStart === 0
           ) {
             updateFocusedChip('last');
+          } else {
+            openMenu();
           }
           break;
         }
@@ -1033,6 +1036,12 @@ export default function Combobox<M extends boolean>({
         case keyMap.ArrowLeft: {
           handleArrowKey('left', event);
           break;
+        }
+
+        default: {
+          if (!isOpen) {
+            openMenu();
+          }
         }
       }
     }
