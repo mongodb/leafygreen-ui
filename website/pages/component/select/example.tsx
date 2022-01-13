@@ -1,7 +1,13 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { Select, Option, OptionGroup, Size } from '@leafygreen-ui/select';
+import {
+  Select,
+  Option,
+  OptionGroup,
+  Size,
+  State,
+} from '@leafygreen-ui/select';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
@@ -13,6 +19,8 @@ const knobsConfig: KnobsConfigInterface<{
   placeholder: string;
   size: Size;
   allowDeselect: boolean;
+  state: State;
+  errorMessage: string;
 }> = {
   darkMode: {
     type: 'boolean',
@@ -56,6 +64,17 @@ const knobsConfig: KnobsConfigInterface<{
     default: Size.Default,
     label: 'Size',
   },
+  state: {
+    type: 'select',
+    options: Object.values(State),
+    default: State.None,
+    label: 'State',
+  },
+  errorMessage: {
+    type: 'text',
+    default: 'This is the error message',
+    label: 'Error message',
+  },
 };
 
 export default function SelectLiveExample() {
@@ -70,6 +89,8 @@ export default function SelectLiveExample() {
         disabled,
         withIcons,
         allowDeselect,
+        errorMessage,
+        state,
       }) => (
         <div>
           <Select
@@ -85,6 +106,8 @@ export default function SelectLiveExample() {
             className={css`
               width: 400px;
             `}
+            state={state}
+            errorMessage={errorMessage}
           >
             <OptionGroup label="Primary">
               <Option
