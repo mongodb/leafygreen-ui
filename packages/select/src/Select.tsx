@@ -6,10 +6,18 @@ import {
   useIdAllocator,
   useEventListener,
 } from '@leafygreen-ui/hooks';
+import { uiColors } from '@leafygreen-ui/palette';
 import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
-import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
-import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
+import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
+import {
+  colorSets,
+  mobileSizeSet,
+  Mode,
+  Size,
+  sizeSets,
+  State,
+} from './styleSets';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
 import SelectContext from './SelectContext';
@@ -45,6 +53,8 @@ export type Props = {
   placeholder?: string;
   name?: string;
   allowDeselect?: boolean;
+  errorMessage?: string;
+  state?: State;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
@@ -97,6 +107,8 @@ export default function Select({
   scrollContainer,
   portalClassName,
   popoverZIndex,
+  errorMessage = 'error message right here',
+  state = State.None,
   __INTERNAL__menuButtonSlot__,
 }: Props) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
@@ -573,6 +585,9 @@ export default function Select({
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
+          aria-invalid={state === State.Error}
+          errorMessage={errorMessage}
+          state={state}
           __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
         >
           <ListMenu
@@ -590,6 +605,27 @@ export default function Select({
           </ListMenu>
         </MenuButton>
       </SelectContext.Provider>
+      {state === State.Error && errorMessage && (
+        <span
+          className={cx(
+            sharedTextStyles,
+            css`
+              color: ${darkMode ? '#F97216' : uiColors.red.base};
+              font-size: ${sizeSet.description.text}px;
+              line-height: ${sizeSet.description.lineHeight}px;
+              margin-top: ${spacing[1]}px;
+              padding-left: 2px;
+
+              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+                font-size: ${mobileSizeSet.description.text}px;
+                line-height: ${mobileSizeSet.description.lineHeight}px;
+              }
+            `,
+          )}
+        >
+          {errorMessage}
+        </span>
+      )}
     </div>
   );
 }
@@ -610,4 +646,6 @@ Select.propTypes = {
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
   readOnly: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  state: PropTypes.oneOf(Object.values(State)),
 };
