@@ -5,7 +5,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const Variant = {
@@ -35,23 +35,11 @@ const baseBannerStyles = css`
   &:before {
     content: '';
     position: absolute;
-    width: 6px;
+    width: 13px;
     top: -1px;
     bottom: -1px;
     left: 0px;
     border-radius: 12px 0px 0px 12px;
-  }
-
-  &:after {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: -1px;
-    bottom: -1px;
-    width: 7px;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-radius: 0.5px 0px 0px 0.5px;
   }
 `;
 
@@ -82,11 +70,11 @@ const bannerVariantStyles: Record<Variant, string> = {
 
     &:before {
       background-color: ${palette.blue.base};
-    }
-
-    &:after {
-      border-color: ${palette.blue.light2};
-      background-color: ${palette.blue.light3};
+      background: linear-gradient(
+        to left,
+        transparent 5px,
+        ${palette.blue.base} 6px
+      );
     }
   `,
 
@@ -98,11 +86,11 @@ const bannerVariantStyles: Record<Variant, string> = {
 
     &:before {
       background-color: ${palette.yellow.base};
-    }
-
-    &:after {
-      border-color: ${palette.yellow.light2};
-      background-color: ${palette.yellow.light3};
+      background: linear-gradient(
+        to left,
+        transparent 5px,
+        ${palette.yellow.base} 6px
+      );
     }
   `,
 
@@ -113,12 +101,12 @@ const bannerVariantStyles: Record<Variant, string> = {
     background-color: ${palette.red.light3};
 
     &:before {
-      background-color: ${uiColors.red.base};
-    }
-
-    &:after {
-      border-color: ${uiColors.red.light2};
-      background-color: ${uiColors.red.light3};
+      background-color: ${palette.red.base};
+      background: linear-gradient(
+        to left,
+        transparent 5px,
+        ${palette.red.base} 6px
+      );
     }
   `,
 
@@ -129,12 +117,12 @@ const bannerVariantStyles: Record<Variant, string> = {
     background-color: ${palette.green.light3};
 
     &:before {
-      background-color: ${uiColors.green.base};
-    }
-
-    &:after {
-      border-color: ${uiColors.green.light2};
-      background-color: ${uiColors.green.light3};
+      background-color: ${palette.green.dark1};
+      background: linear-gradient(
+        to left,
+        transparent 5px,
+        ${palette.green.dark1} 6px
+      );
     }
   `,
 } as const;
