@@ -2,10 +2,13 @@ import React, { useCallback, useContext } from 'react';
 import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
-import { breakpoints } from '@leafygreen-ui/tokens';
+import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { uiColors } from '@leafygreen-ui/palette';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
+import { State } from '.';
 
 const menuButtonStyle = css`
   margin-top: 2px;
@@ -32,6 +35,8 @@ type Props = {
   readOnly?: boolean;
   onClose: () => void;
   onOpen: () => void;
+  errorMessage?: string;
+  state?: State;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
@@ -52,6 +57,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     readOnly,
     onClose,
     onOpen,
+    errorMessage,
+    state,
     __INTERNAL__menuButtonSlot__,
     ...ariaProps
   }: Props,
@@ -63,6 +70,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 
   const colorSet = colorSets[mode];
   const sizeSet = sizeSets[size];
+
+  const errorColor = mode === Mode.Light ? uiColors.red.base : '#F97216';
 
   const onClick = useCallback(() => {
     if (open) {
@@ -105,9 +114,44 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
             font-size: ${mobileSizeSet.text}px;
           }
         `,
+        {
+          [css`
+            border-color: ${errorColor};
+            box-shadow: 0px 1px 2px rgba(87, 11, 8, 0.3);
+
+            &:hover,
+            &:active {
+              border-color: ${errorColor};
+              box-shadow: ${mode === Mode.Light
+                ? `0px 4px 4px rgba(87, 11, 8, 0.3),
+              0px 0px 0px 3px ${uiColors.red.light3}`
+                : `0px 4px 4px rgba(87, 11, 8, 0.3), 0px 0px 0px 3px ${uiColors.red.dark2}`};
+            }
+          `]: state === State.Error && !!errorMessage,
+        },
       )}
     >
-      <div className={menuButtonTextStyle}>{text}</div>
+      <div
+        className={css`
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-grow: 1;
+          width: 90%;
+        `}
+      >
+        <div className={menuButtonTextStyle}>{text}</div>
+        {state === State.Error && errorMessage && (
+          <WarningIcon
+            role="presentation"
+            className={css`
+              color: ${errorColor};
+              margin-left: ${spacing[1]}px;
+            `}
+            size={sizeSet.warningIcon}
+          />
+        )}
+      </div>
       {children}
     </Component>
   );

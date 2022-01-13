@@ -4,7 +4,7 @@ import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   primaryButtonText: string;
-  cancelText?: string;
+  cancelButtonText?: string;
   backButtonText?: string;
   errorMessage?: string;
 }> = {
@@ -13,7 +13,7 @@ const knobsConfig: KnobsConfigInterface<{
     default: 'Save Draft',
     label: 'Primary button text',
   },
-  cancelText: {
+  cancelButtonText: {
     type: 'text',
     default: 'Cancel',
     label: 'Cancel button text',
@@ -33,12 +33,17 @@ const knobsConfig: KnobsConfigInterface<{
 export default function CardLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ primaryButtonText, cancelText, backButtonText, errorMessage }) => (
+      {({
+        primaryButtonText,
+        cancelButtonText,
+        backButtonText,
+        errorMessage,
+      }) => (
         <FormFooter
           primaryButton={{
             text: primaryButtonText,
           }}
-          cancelText={cancelText}
+          cancelButtonText={cancelButtonText}
           backButtonText={backButtonText}
           errorMessage={errorMessage}
         />
