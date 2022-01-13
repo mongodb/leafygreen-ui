@@ -3,7 +3,7 @@ import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
@@ -31,7 +31,7 @@ const textAreaStyle = css`
   width: 100%;
   min-height: ${spacing[6]}px;
   resize: none;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   margin: 0;
   padding: 10px 12px 1px 12px;
   font-size: 14px;
@@ -59,7 +59,6 @@ const errorMessageStyle = css`
 `;
 
 interface ColorSets {
-  defaultBorder: string;
   textArea: string;
   errorBorder: string;
   errorMessage: string;
@@ -67,39 +66,34 @@ interface ColorSets {
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    defaultBorder: css`
-      border-color: ${uiColors.gray.light1};
-    `,
     textArea: css`
-      color: ${uiColors.gray.dark3};
-      background-color: ${uiColors.white};
-      border-color: ${uiColors.gray.light1};
+      color: ${palette.gray.dark3};
+      background-color: ${palette.white};
+      border-color: ${palette.gray.light1};
+      border-radius: 6px;
 
       &:focus {
-        border-color: ${uiColors.white}; // same as background color
+        border-color: ${palette.white}; // same as background color
       }
 
       &:disabled {
-        color: ${uiColors.gray.base};
-        background-color: ${uiColors.gray.light2};
+        color: ${palette.gray.base};
+        background-color: ${palette.gray.light2};
       }
     `,
     errorBorder: css`
-      border-color: ${uiColors.red.base};
+      border-color: ${palette.red.base};
     `,
     errorMessage: css`
-      color: ${uiColors.red.base};
+      color: ${palette.red.base};
     `,
   },
   [Mode.Dark]: {
-    defaultBorder: css`
-      border-color: #394f5a;
-    `,
-
     textArea: css`
       color: ${uiColors.white};
       background-color: #394f5a;
       border-color: #394f5a;
+      border-radius: 4px; // TODO - remove this when darkMode is updated
 
       &:focus {
         border-color: #394f5a; // same as background color
