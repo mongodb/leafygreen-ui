@@ -191,45 +191,73 @@ const errorMessageStyle = css`
 `;
 
 interface ColorSets {
+  labelColor: string;
+  descriptionColor: string;
   inputColor: string;
+  defaultBorder: string;
   inputBackgroundColor: string;
+  placeholderColor: string;
+
   disabledColor: string;
+  disabledBorderColor: string;
   disabledBackgroundColor: string;
+  disabledLabelColor: string;
+  disabledDescriptionColor: string;
+
   errorIconColor: string;
   errorBorder: string;
   errorMessage: string;
-  optional: string;
-  defaultBorder: string;
+
   validBorder: string;
   validIconColor: string;
+
+  optional: string;
 }
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    inputColor: palette.gray.dark3,
+    labelColor: palette.black,
+    descriptionColor: palette.gray.dark1,
+    inputColor: palette.black,
     inputBackgroundColor: palette.white,
-    disabledColor: palette.gray.base,
-    disabledBackgroundColor: palette.gray.light2,
+    defaultBorder: palette.gray.base,
+    placeholderColor: palette.gray.light1,
+
+    disabledColor: palette.gray.light1,
+    disabledBorderColor: palette.gray.light2,
+    disabledBackgroundColor: palette.gray.light3,
+    disabledLabelColor: palette.gray.base,
+    disabledDescriptionColor: palette.gray.base,
+
     errorIconColor: palette.red.base,
     errorMessage: palette.red.base,
     errorBorder: palette.red.base,
-    optional: palette.gray.dark1,
-    defaultBorder: palette.gray.base,
+
     validBorder: palette.green.dark1,
     validIconColor: palette.green.dark1,
+    optional: palette.gray.dark1,
   },
   [Mode.Dark]: {
+    labelColor: uiColors.white,
+    descriptionColor: uiColors.gray.light1,
     inputColor: uiColors.white,
     inputBackgroundColor: '#394F5A',
+    defaultBorder: '#394F5A',
+    placeholderColor: uiColors.gray.dark1,
+
     disabledColor: uiColors.gray.dark1,
+    disabledBorderColor: '#394F5A',
     disabledBackgroundColor: '#263843',
+    disabledLabelColor: uiColors.gray.base,
+    disabledDescriptionColor: uiColors.gray.base,
+
     errorIconColor: '#EF8D6F',
     errorMessage: '#EF8D6F',
     errorBorder: '#5a3c3b',
-    optional: uiColors.gray.light1,
-    defaultBorder: '#394F5A',
+
     validBorder: '#394F5A',
     validIconColor: uiColors.green.base,
+    optional: uiColors.gray.light1,
   },
 } as const;
 
@@ -292,7 +320,9 @@ function getStatefulInputStyles({
     default: {
       return css`
         padding-right: ${optional ? 60 : sizeSet.padding}px;
-        border-color: ${colorSets[mode].defaultBorder};
+        border-color: ${disabled
+          ? colorSets[mode].disabledBorderColor
+          : colorSets[mode].defaultBorder};
       `;
     }
   }
@@ -439,9 +469,17 @@ const TextInput: React.ComponentType<
             darkMode={darkMode}
             htmlFor={id}
             disabled={disabled}
-            className={cx(css`
-              font-size: ${sizeSet.text}px;
-            `)}
+            className={cx(
+              css`
+                font-size: ${sizeSet.text}px;
+                color: ${colorSets[mode].labelColor};
+              `,
+              {
+                [css`
+                  color: ${colorSets[mode].disabledLabelColor};
+                `]: disabled,
+              },
+            )}
           >
             {label}
           </Label>
@@ -449,10 +487,18 @@ const TextInput: React.ComponentType<
         {description && (
           <Description
             darkMode={darkMode}
-            className={cx(css`
-              font-size: ${sizeSet.text}px;
-              line-height: ${sizeSet.lineHeight}px;
-            `)}
+            className={cx(
+              css`
+                font-size: ${sizeSet.text}px;
+                line-height: ${sizeSet.lineHeight}px;
+                color: ${colorSets[mode].descriptionColor};
+              `,
+              {
+                [css`
+                  color: ${colorSets[mode].disabledDescriptionColor};
+                `]: disabled,
+              },
+            )}
           >
             {description}
           </Description>
@@ -488,10 +534,9 @@ const TextInput: React.ComponentType<
                   font-family: ${mode === 'dark' ? 'Akzidenz' : 'Euclid'},
                     ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
                   border-radius: ${mode === 'dark' ? 4 : 6}px;
+
                   &::placeholder {
-                    color: ${mode === 'dark'
-                      ? uiColors.gray.base
-                      : palette.gray.light1};
+                    color: ${colorSets[mode].placeholderColor};
                     font-weight: normal;
                   }
 
@@ -503,6 +548,7 @@ const TextInput: React.ComponentType<
                     color: ${colorSets[mode].disabledColor};
                     background-color: ${colorSets[mode]
                       .disabledBackgroundColor};
+                    border-color: ${colorSets[mode].disabledBorderColor};
 
                     &:-webkit-autofill {
                       &,
@@ -558,7 +604,7 @@ const TextInput: React.ComponentType<
               />
             )}
 
-            {state === State.None && optional && (
+            {state === State.None && !disabled && optional && (
               <div
                 className={cx(
                   optionalStyle,
