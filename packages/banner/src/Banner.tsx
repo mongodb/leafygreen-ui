@@ -31,6 +31,7 @@ const baseBannerStyles = css`
   border-radius: 12px;
   font-size: 13px;
   line-height: 20px;
+  font-family: 'Euclid', Helvetica, Arial, sans-serif;
 
   &:before {
     content: '';
@@ -69,7 +70,6 @@ const bannerVariantStyles: Record<Variant, string> = {
     background-color: ${palette.blue.light3};
 
     &:before {
-      background-color: ${palette.blue.base};
       background: linear-gradient(
         to left,
         transparent 5px,
@@ -85,7 +85,6 @@ const bannerVariantStyles: Record<Variant, string> = {
     background-color: ${palette.yellow.light3};
 
     &:before {
-      background-color: ${palette.yellow.base};
       background: linear-gradient(
         to left,
         transparent 5px,
@@ -101,7 +100,6 @@ const bannerVariantStyles: Record<Variant, string> = {
     background-color: ${palette.red.light3};
 
     &:before {
-      background-color: ${palette.red.base};
       background: linear-gradient(
         to left,
         transparent 5px,
@@ -117,7 +115,6 @@ const bannerVariantStyles: Record<Variant, string> = {
     background-color: ${palette.green.light3};
 
     &:before {
-      background-color: ${palette.green.dark1};
       background: linear-gradient(
         to left,
         transparent 5px,
@@ -246,7 +243,7 @@ export default function Banner({
       className={cx(
         flexShrink,
         css`
-          margin-top: 1px;
+          margin-top: 3px;
         `,
       )}
     />
