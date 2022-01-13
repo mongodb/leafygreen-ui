@@ -213,8 +213,7 @@ export const globalStyles = css`
   }
 
   html {
-    font-family: 'Euclid', 'Akzidenz', 'Helvetica Neue', Helvetica, Arial,
-      sans-serif;
+    font-family: 'Akzidenz', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: normal;
     font-style: normal;
   }
