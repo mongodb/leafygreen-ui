@@ -160,13 +160,13 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   };
 
   if (image) {
-    styleObj.marginLeft = '15px';
+    styleObj.marginLeft = '17px';
     styleObj.marginRight = '4px';
     if (dismissible) {
       styleObj.marginRight = `${defaultIconSize + defaultBorderSpacing}px`;
     }
   } else {
-    styleObj.marginLeft = `${15}px`;
+    styleObj.marginLeft = `${17}px`;
     styleObj.marginRight = '10px';
     if (dismissible) {
       styleObj.marginRight = `${defaultIconSize + 16}px`;
