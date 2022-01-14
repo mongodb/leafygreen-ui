@@ -115,6 +115,8 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `scrollContainer` | `HTMLElement` \| `null`                       | If the popover portal has a scrollable ancestor other than the window, this prop allows passing a reference to that lement to allow the portal to position properly. |             |
 | `portalClassName` | `string`                                      | Passes the given className to the popover's portal container if the default portal container is being used.                                                          |             |
 | `popoverZIndex`   | `number`                                      | Sets the z-index CSS property for the popover.                                                                                                                       |             |
+| `state`           | `'none'`, `'error'`                           | Determines the state of the `<select>`                                                                                                                               | `'none'`    |
+| `errorMessage`    | `string`                                      | Text that shows when the `state` is set to `error`.                                                                                                                  |             |
 
 # Option
 
