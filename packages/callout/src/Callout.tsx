@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
@@ -166,15 +165,10 @@ interface CalloutProps {
 function Callout({
   variant,
   title,
-  baseFontSize,
+  baseFontSize = 13,
   className,
   children: contents,
 }: CalloutProps) {
-  const providerFontSize = useBaseFontSize();
-  const normalizedProviderFontSize =
-    providerFontSize === 13 || providerFontSize === 16 ? providerFontSize : 13;
-  const fontSize = baseFontSize ?? normalizedProviderFontSize;
-
   const colorSet = colorSets[variant];
   const Icon = headerIcons[variant];
 
@@ -216,9 +210,9 @@ function Callout({
       </div>
       <div className={bodyStyle}>
         {title && (
-          <div className={cx(titleStyle, fontSet[fontSize])}>{title}</div>
+          <div className={cx(titleStyle, fontSet[baseFontSize])}>{title}</div>
         )}
-        <div className={fontSet[fontSize]}>{contents}</div>
+        <div className={fontSet[baseFontSize]}>{contents}</div>
       </div>
     </div>
   );

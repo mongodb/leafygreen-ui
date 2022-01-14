@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 export interface TypographyProviderProps {
   children: React.ReactNode;
-  baseFontSize?: 13 | 14 | 16;
+  baseFontSize?: 14 | 16;
 }
 
-const BaseFontSizeContext = createContext<13 | 14 | 16>(14);
+const BaseFontSizeContext = createContext<14 | 16>(14);
 
 export function useBaseFontSize() {
   return useContext(BaseFontSizeContext);
