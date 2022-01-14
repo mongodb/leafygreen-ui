@@ -19,7 +19,7 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
-  font-family: Euclid, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   background-color: ${palette.white};
   border-radius: 12px;
   position: relative;
@@ -37,7 +37,7 @@ const baseStyle = css`
 
 const headerStyle = css`
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 1px;
   line-height: 16px;
   padding: 12px 24px 12px 54px;
@@ -54,7 +54,7 @@ const headerIconStyle = css`
 `;
 
 const titleStyle = css`
-  font-weight: bold;
+  font-weight: 700;
 `;
 
 const bodyStyle = css`
