@@ -11,7 +11,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { Option, OptionGroup, Select } from '.';
+import { Option, OptionGroup, Select, State } from '.';
 import { keyMap } from '@leafygreen-ui/lib';
 
 const Color = {
@@ -23,6 +23,8 @@ const Color = {
   Indigo: 'Indigo',
   Violet: 'Violet',
 } as const;
+
+const errorMessage = 'This is the error message';
 
 const enabledOptions = ['Select', 'Red', 'Blue', 'Green', 'Yellow'] as const;
 
@@ -809,6 +811,33 @@ describe('packages/select', () => {
         );
 
         expect(getByTextFor(combobox, 'selected')).toBeVisible();
+      });
+    });
+
+    describe('when the "state" is "error"', () => {
+      test('error message is present', () => {
+        const { container } = render(
+          <Select
+            {...defaultProps}
+            state={State.Error}
+            errorMessage={errorMessage}
+          />,
+        );
+        expect(container.innerHTML).toContain(errorMessage);
+      });
+
+      test('error message is not present if "errorMessage" is empty', () => {
+        const { container } = render(
+          <Select {...defaultProps} state={State.Error} />,
+        );
+        expect(container.innerHTML).not.toContain(errorMessage);
+      });
+    });
+
+    describe('when the "state" is "none"', () => {
+      test('error message is not present', () => {
+        const { container } = render(<Select {...defaultProps} />);
+        expect(container.innerHTML).not.toContain(errorMessage);
       });
     });
   });
