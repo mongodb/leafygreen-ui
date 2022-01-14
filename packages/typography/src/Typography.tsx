@@ -162,13 +162,13 @@ const Mode = {
 
 const codeModes = {
   [Mode.Light]: css`
-    background-color: ${uiColors.gray.light3};
-    border: 1px solid ${uiColors.gray.light2};
-    color: ${uiColors.gray.dark3};
+    background-color: ${palette.gray.light3};
+    border: 1px solid ${palette.gray.light2};
+    color: ${palette.gray.dark3};
 
     ${anchorDataProp.selector}:hover > & {
-      box-shadow: 0 0 0 3px ${uiColors.gray.light2};
-      border: 1px solid ${uiColors.gray.light1};
+      box-shadow: 0 0 0 3px ${palette.gray.light2};
+      border: 1px solid ${palette.gray.light1};
     }
   `,
 
@@ -187,8 +187,8 @@ const codeModes = {
 const codeFocusModes = {
   [Mode.Light]: css`
     ${anchorDataProp.selector}:focus > & {
-      box-shadow: 0 0 0 3px ${uiColors.blue.light2};
-      border: 1px solid ${uiColors.focus};
+      box-shadow: 0 0 0 3px ${palette.blue.light2};
+      border: 1px solid ${palette.blue.base};
     }
   `,
 
@@ -202,7 +202,7 @@ const codeFocusModes = {
 
 const codeLinkStyleModes = {
   [Mode.Light]: css`
-    color: ${uiColors.blue.base};
+    color: ${palette.blue.base};
   `,
   [Mode.Dark]: css`
     color: #28bfff;

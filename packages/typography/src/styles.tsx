@@ -1,5 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 
+// TODO - Update this when DarkMode is designed
 export const typeScale1 = css`
   font-size: 14px;
   line-height: 20px;
