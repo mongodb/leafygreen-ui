@@ -296,8 +296,8 @@ InlineCode.displayName = 'InlineCode';
  */
 const inlineKeyCode = css`
   font-family: ${fontFamilies.code};
-  color: ${uiColors.gray.dark3};
-  border: 1px solid ${uiColors.gray.dark3};
+  color: ${palette.gray.dark3};
+  border: 1px solid ${palette.gray.dark3};
   border-radius: 3px;
   padding-left: 4px;
   padding-right: 4px;
