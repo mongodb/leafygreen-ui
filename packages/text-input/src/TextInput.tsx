@@ -459,7 +459,7 @@ const TextInput: React.ComponentType<
           className,
           css`
             // TODO - remove mode === 'dark' toggles when new dark mode is added
-            font-family: ${mode === 'dark' ? 'Akzidenz' : 'Euclid'},
+            font-family: ${mode === 'dark' ? 'Akzidenz' : 'Euclid Circular A'},
               ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
           `,
         )}
@@ -531,7 +531,9 @@ const TextInput: React.ComponentType<
                   padding-left: ${sizeSet.padding}px;
 
                   // TODO - remove mode === 'dark' toggles when new dark mode is added
-                  font-family: ${mode === 'dark' ? 'Akzidenz' : 'Euclid'},
+                  font-family: ${mode === 'dark'
+                      ? 'Akzidenz'
+                      : 'Euclid Circular A'},
                     ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
                   border-radius: ${mode === 'dark' ? 4 : 6}px;
 
