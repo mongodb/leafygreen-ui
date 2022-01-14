@@ -33,8 +33,24 @@ const darkModeBodyStyles = css`
 storiesOf('Typography', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
 
+  const href = select(
+    'select Link href',
+    [
+      'http://localhost:9001',
+      '?path=/story/button--icon-only',
+      'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
+    ],
+    'http://localhost:9001',
+  );
+
+  const linkArrowAppearance = select(
+    'select Link arrowAppearance',
+    Object.values(ArrowAppearance),
+    ArrowAppearance.Hover,
+  );
+
   return (
-    <LeafygreenProvider baseFontSize={select('baseFontSize', [14, 16], 14)}>
+    <LeafygreenProvider baseFontSize={select('baseFontSize', [13, 16], 13)}>
       <div>
         <H1 className={displayBlock}>Heading 1</H1>
         <H2 className={displayBlock}>Heading 2</H2>
@@ -49,49 +65,68 @@ storiesOf('Typography', module).add('Default', () => {
           )}
           className={cx(displayBlock, { [darkModeBodyStyles]: darkMode })}
         >
-          Body text: Lorem ipsum dolor sit amet consectetur{' '}
-          <InlineCode darkMode={darkMode}>Inline Code</InlineCode> adipisicing
-          elit. Quia rerum porro non esse quo exercitationem placeat minima
-          dolores animi{' '}
-          <InlineCode darkMode={darkMode} href="https://mongodb.design">
-            Linked Inline Code
-          </InlineCode>{' '}
-          a corporis, aut optio dolore doloremque consequuntur aliquam est
-          voluptatum vitae! <em>Something in italics</em> nullam id dolor
-          vehicula ut id elit. <strong>Something bold</strong> donec sed odio
-          dui.{' '}
-          <strong>
-            <em>Something bold and italic</em>
-          </strong>{' '}
-          risus varius blandit sit amet non magna.
+          <div>Body</div>
+          <div>
+            <strong>Body (Strong)</strong>
+          </div>
+          <div>
+            <em>Body (Italic)</em>
+          </div>
+          <div>
+            <strong>
+              <em>Body (Strong Italic)</em>
+            </strong>
+          </div>
         </Body>
+
+        <Body
+          className={cx(
+            displayBlock,
+            css`
+              display: flex;
+              gap: 8px;
+            `,
+            { [darkModeBodyStyles]: darkMode },
+          )}
+        >
+          <InlineCode darkMode={darkMode}>Inline Code</InlineCode>
+          <InlineCode darkMode={darkMode} href={href}>
+            Inline Code Link
+          </InlineCode>
+        </Body>
+
+        <div
+          className={cx(
+            displayBlock,
+            css`
+              display: flex;
+              gap: 8px;
+            `,
+          )}
+        >
+          <Link href={href} arrowAppearance={linkArrowAppearance}>
+            Link
+          </Link>
+          <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
+            Internal
+          </Link>
+          <Link
+            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
+            arrowAppearance="persist"
+          >
+            External
+          </Link>
+        </div>
 
         <div className={displayBlock}>
           <InlineKeyCode>CTRL</InlineKeyCode>
           <code> + </code>
           <InlineKeyCode>C</InlineKeyCode>
         </div>
-        <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
+
         <Overline className={displayBlock}>Overline</Overline>
-        <Link
-          className={displayBlock}
-          href={select(
-            'select Link href',
-            [
-              'http://localhost:9001',
-              '?path=/story/button--icon-only',
-              'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
-            ],
-            'http://localhost:9001',
-          )}
-          arrowAppearance={select(
-            'select Link arrowAppearance',
-            Object.values(ArrowAppearance),
-            ArrowAppearance.Hover,
-          )}
-        >
-          Link
-        </Link>
+        <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
+
         <div
           className={cx(
             displayBlock,

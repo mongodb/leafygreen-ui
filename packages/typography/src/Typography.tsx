@@ -21,10 +21,11 @@ const sharedStyles = css`
  */
 const h1 = css`
   font-weight: 400;
-  font-size: 60px;
-  line-height: 68px;
+  font-size: 48px;
+  line-height: 62px;
   letter-spacing: -0.3px;
   font-family: ${fontFamilies.serif};
+  color: ${palette.green.dark2};
 `;
 
 type H1Props = HTMLElementProps<'h1'>;
@@ -49,6 +50,7 @@ const h2 = css`
   letter-spacing: -0.3px;
   font-weight: 400;
   font-family: ${fontFamilies.serif};
+  color: ${palette.green.dark2};
 `;
 
 type H2Props = HTMLElementProps<'h2'>;
@@ -71,7 +73,7 @@ const h3 = css`
   font-size: 24px;
   line-height: 32px;
   letter-spacing: -0.3px;
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 type H3Props = HTMLElementProps<'h3'>;
@@ -192,7 +194,8 @@ const codeModes = {
 const codeFocusModes = {
   [Mode.Light]: css`
     ${anchorDataProp.selector}:focus > & {
-      box-shadow: 0 0 0 3px ${palette.blue.light2};
+      box-shadow: 0 0 0 3px ${palette.gray.light3},
+        0 0 0 6px ${palette.blue.light1};
       border: 1px solid ${palette.blue.base};
     }
   `,
