@@ -57,7 +57,13 @@ storiesOf('Typography', module).add('Default', () => {
             Linked Inline Code
           </InlineCode>{' '}
           a corporis, aut optio dolore doloremque consequuntur aliquam est
-          voluptatum vitae!
+          voluptatum vitae! <em>Something in italics</em> nullam id dolor
+          vehicula ut id elit. <strong>Something bold</strong> donec sed odio
+          dui.{' '}
+          <strong>
+            <em>Something bold and italic</em>
+          </strong>{' '}
+          risus varius blandit sit amet non magna.
         </Body>
 
         <div className={displayBlock}>

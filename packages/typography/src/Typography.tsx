@@ -129,6 +129,11 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
 
   const fontWeight = css`
     font-weight: ${weight === 'regular' ? 400 : 500};
+
+    strong,
+    b {
+      font-weight: ${weight === 'regular' ? 700 : 800};
+    }
   `;
 
   return (
