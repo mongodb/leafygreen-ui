@@ -31,7 +31,7 @@ const baseBannerStyles = css`
   border-radius: 12px;
   font-size: 13px;
   line-height: 20px;
-  font-family: 'Euclid', Helvetica, Arial, sans-serif;
+  font-family: 'Euclid Circular A', Helvetica, Arial, sans-serif;
 
   &:before {
     content: '';
