@@ -6,21 +6,25 @@ import {
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { typeScale1, typeScale2 } from './styles';
 
 const sharedStyles = css`
   margin: unset;
   font-family: ${fontFamilies.default};
-  color: ${uiColors.gray.dark3};
+  color: ${palette.black};
 `;
 
+/**
+ * H1
+ */
 const h1 = css`
-  font-weight: 500;
+  font-weight: 400;
   font-size: 60px;
   line-height: 68px;
   letter-spacing: -0.3px;
+  font-family: ${fontFamilies.serif};
 `;
 
 type H1Props = HTMLElementProps<'h1'>;
@@ -36,10 +40,15 @@ const H1: ExtendableBox<H1Props, 'h1'> = ({
 
 H1.displayName = 'H1';
 
+/**
+ * H2
+ */
 const h2 = css`
   font-size: 32px;
   line-height: 40px;
-  letter-spacing: 0px;
+  letter-spacing: -0.3px;
+  font-weight: 400;
+  font-family: ${fontFamilies.serif};
 `;
 
 type H2Props = HTMLElementProps<'h2'>;
@@ -55,11 +64,14 @@ const H2: ExtendableBox<H2Props, 'h2'> = ({
 
 H2.displayName = 'H2';
 
+/**
+ * H3
+ */
 const h3 = css`
   font-size: 24px;
   line-height: 32px;
-  letter-spacing: 0px;
-  font-weight: medium;
+  letter-spacing: -0.3px;
+  font-weight: 700;
 `;
 
 type H3Props = HTMLElementProps<'h3'>;
@@ -75,10 +87,14 @@ const H3: ExtendableBox<H3Props, 'h3'> = ({
 
 H3.displayName = 'H3';
 
+/**
+ * Subtitle
+ */
 const subtitle = css`
   font-size: 18px;
   line-height: 24px;
-  letter-spacing: 0px;
+  letter-spacing: -0.3px;
+  font-weight: 700;
 `;
 
 type SubtitleProps = HTMLElementProps<'h6'>;
@@ -96,6 +112,9 @@ const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
 
 Subtitle.displayName = 'Subtitle';
 
+/**
+ * Body
+ */
 type BodyProps = HTMLElementProps<'div'> & {
   /**
    * font-weight applied to typography element
@@ -109,7 +128,7 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
   const body = size === 16 ? typeScale2 : typeScale1;
 
   const fontWeight = css`
-    font-weight: ${weight !== 'regular' ? 600 : 400};
+    font-weight: ${weight === 'regular' ? 400 : 500};
   `;
 
   return (
@@ -123,6 +142,9 @@ Body.displayName = 'Body';
 
 const anchorDataProp = createDataProp('anchor-inline-code');
 
+/**
+ * Code
+ */
 const code = css`
   transition: all 0.15s ease-in-out;
   border-radius: 3px;
@@ -205,6 +227,9 @@ const normal = css`
   white-space: normal;
 `;
 
+/**
+ * Inline Code
+ */
 type InlineCodeProps = OneOf<
   HTMLElementProps<'code'>,
   HTMLElementProps<'a'>
@@ -261,6 +286,9 @@ function InlineCode({
 
 InlineCode.displayName = 'InlineCode';
 
+/**
+ * Inline Key Code
+ */
 const inlineKeyCode = css`
   font-family: ${fontFamilies.code};
   color: ${uiColors.gray.dark3};
@@ -283,11 +311,14 @@ function InlineKeyCode({ children, className, ...rest }: InlineCodeProps) {
 
 InlineKeyCode.displayName = 'InlineKeyCode';
 
+/**
+ * Disclaimer
+ */
 const disclaimer = css`
   display: block;
   font-size: 12px;
   line-height: 20px;
-  letter-spacing: 0.2px;
+  letter-spacing: 0px;
 `;
 
 type DisclaimerProps = HTMLElementProps<'small'>;
@@ -302,12 +333,15 @@ function Disclaimer({ children, className, ...rest }: DisclaimerProps) {
 
 Disclaimer.displayName = 'Disclaimer';
 
+/**
+ * Overline
+ */
 const overline = css`
   font-size: 12px;
-  font-weight: 600;
+  font-weight: bold;
   text-transform: uppercase;
   line-height: 16px;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.3px;
 `;
 
 const Overline: ExtendableBox<{
