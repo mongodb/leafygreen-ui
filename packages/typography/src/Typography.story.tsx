@@ -117,7 +117,6 @@ storiesOf('Typography', module).add('Default', () => {
             External
           </Link>
         </div>
-
         <div className={displayBlock}>
           <InlineKeyCode>CTRL</InlineKeyCode>
           <code> + </code>
