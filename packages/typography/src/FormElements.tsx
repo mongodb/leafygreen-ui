@@ -19,7 +19,7 @@ interface ColorSets {
   disabledDescriptionStyle: string;
 }
 
-// TODO - move font-size & line-height back to common styles when darkMode gets redesigned
+// TODO: Refresh - move font-size & line-height back to common styles when darkMode gets redesigned
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
     labelStyle: css`
