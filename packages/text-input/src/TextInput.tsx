@@ -9,6 +9,7 @@ import { uiColors, palette } from '@leafygreen-ui/palette';
 import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const iconSelectorProp = createDataProp('icon-selector');
 
@@ -48,7 +49,7 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export const BaseFontSize = 13 | 14 | 16; // TODO - remove 14 when new dark mode is added
+export const BaseFontSize = 14 | 16; // TODO: Refresh  - remove 14 when new dark mode is added
 
 export type BaseFontSize = typeof BaseFontSize;
 
@@ -191,8 +192,6 @@ const errorMessageStyle = css`
 `;
 
 interface ColorSets {
-  labelColor: string;
-  descriptionColor: string;
   inputColor: string;
   defaultBorder: string;
   inputBackgroundColor: string;
@@ -216,8 +215,6 @@ interface ColorSets {
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    labelColor: palette.black,
-    descriptionColor: palette.gray.dark1,
     inputColor: palette.black,
     inputBackgroundColor: palette.white,
     defaultBorder: palette.gray.base,
@@ -238,8 +235,6 @@ const colorSets: Record<Mode, ColorSets> = {
     optional: palette.gray.dark1,
   },
   [Mode.Dark]: {
-    labelColor: uiColors.white,
-    descriptionColor: uiColors.gray.light1,
     inputColor: uiColors.white,
     inputBackgroundColor: '#394F5A',
     defaultBorder: '#394F5A',
@@ -296,7 +291,7 @@ function getStatefulInputStyles({
   switch (state) {
     case State.Valid: {
       return css`
-        // TODO - remove mode === 'dark' toggle when new dark mode is added
+        // TODO: Refresh - remove mode === 'dark' toggle when new dark mode is added
         padding-right: ${mode === 'dark' ? 30 : 36}px;
         border-color: ${!disabled ? colorSets[mode].validBorder : 'inherit'};
       `;
@@ -305,7 +300,7 @@ function getStatefulInputStyles({
     case State.Error: {
       return cx(
         css`
-          // TODO - remove mode === 'dark' toggle when new dark mode is added
+          // TODO: Refresh - remove mode === 'dark' toggle when new dark mode is added
           padding-right: ${mode === 'dark' ? 30 : 36}px;
           border-color: ${!disabled ? colorSets[mode].errorBorder : 'inherit'};
         `,
@@ -350,8 +345,11 @@ function getSizeSets(
     },
     [SizeVariant.Default]: {
       inputHeight: 36,
-      inputText: mode == 'dark' && baseFontSize === 13 ? 14 : baseFontSize,
-      text: mode == 'dark' && baseFontSize === 13 ? 14 : baseFontSize,
+      // TODO: Refresh - simplify this logic
+      inputText:
+        mode == 'dark' ? baseFontSize : baseFontSize === 14 ? 13 : baseFontSize,
+      text:
+        mode == 'dark' ? baseFontSize : baseFontSize === 14 ? 13 : baseFontSize,
       lineHeight: 20,
       padding: 12,
     },
@@ -409,7 +407,7 @@ const TextInput: React.ComponentType<
       sizeVariant = SizeVariant.Default,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
-      baseFontSize = 13,
+      baseFontSize = 14,
       ...rest
     }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -419,7 +417,7 @@ const TextInput: React.ComponentType<
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-    const sizeSet = getSizeSets(baseFontSize, sizeVariant, mode); // TODO - remove `mode` arg when dark mode is added
+    const sizeSet = getSizeSets(baseFontSize, sizeVariant, mode); // TODO: Refresh - remove `mode` arg when dark mode is added
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
@@ -458,9 +456,10 @@ const TextInput: React.ComponentType<
           textInputStyle,
           className,
           css`
-            // TODO - remove mode === 'dark' toggles when new dark mode is added
-            font-family: ${mode === 'dark' ? 'Akzidenz' : 'Euclid Circular A'},
-              ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+            // TODO: Refresh - remove mode === 'dark' toggles when new dark mode is added
+            font-family: ${mode === 'dark'
+              ? fontFamilies.legacy
+              : fontFamilies.default};
           `,
         )}
       >
@@ -472,7 +471,6 @@ const TextInput: React.ComponentType<
             className={cx(
               css`
                 font-size: ${sizeSet.text}px;
-                color: ${colorSets[mode].labelColor};
               `,
               {
                 [css`
@@ -491,7 +489,6 @@ const TextInput: React.ComponentType<
               css`
                 font-size: ${sizeSet.text}px;
                 line-height: ${sizeSet.lineHeight}px;
-                color: ${colorSets[mode].descriptionColor};
               `,
               {
                 [css`
@@ -530,11 +527,10 @@ const TextInput: React.ComponentType<
                   height: ${sizeSet.inputHeight}px;
                   padding-left: ${sizeSet.padding}px;
 
-                  // TODO - remove mode === 'dark' toggles when new dark mode is added
+                  // TODO: Refresh - remove mode === 'dark' toggles when new dark mode is added
                   font-family: ${mode === 'dark'
-                      ? 'Akzidenz'
-                      : 'Euclid Circular A'},
-                    ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+                    ? fontFamilies.legacy
+                    : fontFamilies.default};
                   border-radius: ${mode === 'dark' ? 4 : 6}px;
 
                   &::placeholder {
