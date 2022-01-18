@@ -31,12 +31,10 @@ const textAreaStyle = css`
   width: 100%;
   min-height: ${spacing[6]}px;
   resize: none;
-  /* border-radius: 4px; */
   margin: 0;
   padding: 10px 12px 1px 12px;
   font-size: 14px;
   font-weight: normal;
-  font-family: ${fontFamilies.default};
   line-height: 16px;
   z-index: 1;
   border: 1px solid;
@@ -62,14 +60,18 @@ interface ColorSets {
   textArea: string;
   errorBorder: string;
   errorMessage: string;
+  disabledText: string;
 }
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
     textArea: css`
+      // TODO: Refresh - set one font family & size
+      font-family: ${fontFamilies.default};
+      font-size: 13px;
       color: ${palette.gray.dark3};
       background-color: ${palette.white};
-      border-color: ${palette.gray.light1};
+      border-color: ${palette.gray.base};
       border-radius: 6px;
 
       &:focus {
@@ -77,8 +79,9 @@ const colorSets: Record<Mode, ColorSets> = {
       }
 
       &:disabled {
-        color: ${palette.gray.base};
-        background-color: ${palette.gray.light2};
+        color: ${palette.gray.light1};
+        background-color: ${palette.gray.light3};
+        border-color: ${palette.gray.light2};
       }
     `,
     errorBorder: css`
@@ -87,13 +90,19 @@ const colorSets: Record<Mode, ColorSets> = {
     errorMessage: css`
       color: ${palette.red.base};
     `,
+    disabledText: css`
+      color: ${palette.gray.base};
+    `,
   },
   [Mode.Dark]: {
     textArea: css`
+      // TODO: Refresh - set one font family & size
+      font-family: ${fontFamilies.legacy};
+      font-size: 14px;
       color: ${uiColors.white};
       background-color: #394f5a;
       border-color: #394f5a;
-      border-radius: 4px; // TODO - remove this when darkMode is updated
+      border-radius: 4px; // TODO: Refresh - remove this when darkMode is updated
 
       &:focus {
         border-color: #394f5a; // same as background color
@@ -111,6 +120,9 @@ const colorSets: Record<Mode, ColorSets> = {
 
     errorMessage: css`
       color: #ef8d6f;
+    `,
+    disabledText: css`
+      color: ${uiColors.gray.dark1};
     `,
   },
 };
@@ -179,12 +191,21 @@ const TextArea: React.ComponentType<
   return (
     <div className={cx(containerStyles, className)}>
       {label && (
-        <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
+        <Label
+          darkMode={darkMode}
+          htmlFor={id}
+          disabled={disabled}
+          // className={cx({
+          //   [colorSets[mode].disabledText] : disabled
+          // })}
+        >
           {label}
         </Label>
       )}
       {description && (
-        <Description darkMode={darkMode}>{description}</Description>
+        <Description darkMode={darkMode} disabled={disabled}>
+          {description}
+        </Description>
       )}
       <InteractionRing
         darkMode={darkMode}
