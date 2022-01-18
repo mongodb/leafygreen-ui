@@ -26,7 +26,7 @@ const displayBlock = css`
 `;
 
 const darkModeBodyStyles = css`
-  color: ${uiColors.gray.light3};
+  /* color: ${uiColors.gray.light3}; */
   background-color: ${uiColors.gray.dark3};
 `;
 
@@ -50,7 +50,7 @@ storiesOf('Typography', module).add('Default', () => {
   );
 
   return (
-    <LeafygreenProvider baseFontSize={select('baseFontSize', [13, 16], 13)}>
+    <LeafygreenProvider baseFontSize={select('baseFontSize', [14, 16], 14)}>
       <div>
         <H1 className={displayBlock}>Heading 1</H1>
         <H2 className={displayBlock}>Heading 2</H2>
@@ -63,7 +63,7 @@ storiesOf('Typography', module).add('Default', () => {
             ['medium', 'regular'],
             'regular',
           )}
-          className={cx(displayBlock, { [darkModeBodyStyles]: darkMode })}
+          className={cx(displayBlock)}
         >
           <div>Body</div>
           <div>
@@ -127,14 +127,11 @@ storiesOf('Typography', module).add('Default', () => {
         <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
 
         <div
-          className={cx(
-            displayBlock,
-            css`
-              background-color: ${darkMode
-                ? uiColors.gray.dark3
-                : uiColors.white};
-            `,
-          )}
+          className={cx(displayBlock, {
+            [css`
+              background-color: ${uiColors.gray.dark3};
+            `]: darkMode,
+          })}
         >
           <Label darkMode={darkMode} htmlFor="id">
             This is a label
