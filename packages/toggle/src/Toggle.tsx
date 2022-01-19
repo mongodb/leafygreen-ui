@@ -417,6 +417,7 @@ function Toggle({
     >
       <button
         role="switch"
+        type="button"
         onClick={onClick}
         aria-checked={normalizedChecked}
         disabled={disabled}
