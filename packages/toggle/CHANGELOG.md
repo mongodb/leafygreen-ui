@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 7.0.5
+
+### Patch Changes
+
+- 70f3c2c: Add type="button" to Toggle button element
+
 ## 7.0.4
 
 ### Patch Changes

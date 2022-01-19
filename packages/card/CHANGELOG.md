@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 5.1.4
+
+### Patch Changes
+
+- 70f3c2c: Update focus ring color and animation timing to match other leafygreen components
+
 ## 5.1.3
 
 ### Patch Changes
