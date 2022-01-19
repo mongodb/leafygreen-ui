@@ -4,7 +4,7 @@ import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
 import { FocusableMenuItemElement } from './FocusableMenuItem';
 import { MenuItemElement } from './MenuItem';
@@ -14,8 +14,8 @@ const rootMenuStyle = css`
   width: 200px;
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 2px 6px ${transparentize(0.8, uiColors.black)};
-  background-color: ${uiColors.white};
+  box-shadow: 0 2px 6px ${transparentize(0.8, palette.black)};
+  background-color: ${palette.gray.dark3};
 `;
 
 const scrollContainerStyle = css`

@@ -41,7 +41,7 @@ function Uncontrolled() {
 }
 
 function Controlled() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
     <LeafyGreenProvider>
       <button onClick={() => setOpen(!open)}>
@@ -53,6 +53,7 @@ function Controlled() {
           setOpen={setOpen}
         >
           <MenuItem
+            active
             size={select('Size', ['default', 'large'], 'large')}
             glyph={<LaptopIcon size="xlarge" />}
           >
@@ -61,7 +62,7 @@ function Controlled() {
           <MenuItem disabled={boolean('Disable item', true)} size="large">
             Disabled Menu Item
           </MenuItem>
-          <MenuItem active description="I am a description" size="large">
+          <MenuItem description="I am a description" size="large">
             Menu Item With Description
           </MenuItem>
           <MenuItem href="http://mongodb.design" size="large">

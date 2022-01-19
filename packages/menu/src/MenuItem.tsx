@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
@@ -21,58 +21,59 @@ const menuItemContainer = createDataProp('menu-item-container');
 
 const titleTextStyle = css`
   width: 100%;
-  font-size: 14px;
-  font-weight: normal;
-  color: ${uiColors.gray.dark2};
+  font-size: 13px;
+  font-weight: bold;
+  color: ${palette.white};
 `;
 
 const focusTitleTextStyle = css`
   ${menuItemContainer.selector}:focus & {
-    color: ${uiColors.blue.dark3};
+    color: ${palette.blue.dark3};
   }
 `;
 
 const activeTitleTextStyle = css`
   font-weight: bold;
-  color: ${uiColors.green.dark3};
+  color: ${palette.green.base};
 `;
 
 const activeDescriptionTextStyle = css`
-  color: ${uiColors.green.dark2};
+  /* color: ${palette.green.dark2}; */
 `;
 
 const descriptionTextStyle = css`
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
-  color: ${uiColors.gray.dark1};
+  line-height: 16px;
+  color: ${palette.gray.light1};
 `;
 
 const focusDescriptionTextStyle = css`
   ${menuItemContainer.selector}:focus & {
-    color: ${uiColors.blue.dark2};
+    color: ${palette.blue.light3};
   }
 `;
 
 const mainIconStyle = css`
-  color: ${uiColors.gray.dark1};
+  color: ${palette.gray.dark1};
   margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
   flex-shrink: 0;
 
   ${menuItemContainer.selector}:hover > & {
-    color: ${uiColors.gray.dark1};
+    color: ${palette.gray.dark1};
   }
 `;
 
 const mainIconFocusedStyle = css`
   ${menuItemContainer.selector}:focus > & {
-    color: ${uiColors.blue.base};
+    color: ${palette.white};
   }
 `;
 
 const activeIconStyle = css`
-  color: ${uiColors.green.base};
+  color: ${palette.green.base};
   ${menuItemContainer.selector}:hover > & {
-    color: ${uiColors.green.base};
+    color: ${palette.green.base};
   }
 `;
 

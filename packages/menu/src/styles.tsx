@@ -1,5 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+import { palette } from '@leafygreen-ui/palette';
 
 const indentation = 15;
 const leftBar = 5;
@@ -7,6 +8,7 @@ export const svgWidth = 24;
 export const menuItemPadding = 15;
 export const paddingLeft = 52;
 
+// TODO: Refresh - Note - no dark mode
 export const menuItemContainerStyle = css`
   display: flex;
   flex-direction: row;
@@ -21,10 +23,12 @@ export const menuItemContainerStyle = css`
   border: none;
   margin: unset;
   width: 100%;
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  font-family: ${fontFamilies.default};
+  font-size: 13px;
   box-sizing: border-box;
-  background: ${uiColors.white};
+  background-color: ${palette.black};
   text-align: left;
+  color: ${palette.white};
 
   &:focus {
     outline: none;
@@ -44,30 +48,32 @@ export const menuItemContainerStyle = css`
 
   &:hover {
     text-decoration: none;
-    background-color: ${uiColors.gray.light2};
+    background-color: ${palette.gray.dark3};
     &:before {
-      background-color: ${uiColors.gray.light1};
+      /* background-color: ${palette.gray.light1}; */
     }
   }
 
   &:active {
-    background-color: ${uiColors.gray.light2};
+    background-color: ${palette.black};
     &:before {
-      background-color: ${uiColors.gray.light1};
+      background-color: ${palette.green.base};
     }
   }
 `;
 
 export const activeMenuItemContainerStyle = css`
+  background-color: ${palette.black};
+
   &:before {
-    background-color: ${uiColors.green.base};
+    background-color: ${palette.green.base};
   }
 
   &:hover {
-    background-color: ${uiColors.gray.light3};
-    color: ${uiColors.green.dark3};
+    /* background-color: ${palette.gray.dark3}; */
+    color: ${palette.green.base};
     &:before {
-      background-color: ${uiColors.green.base};
+      background-color: ${palette.green.base};
     }
   }
 `;
@@ -75,7 +81,6 @@ export const activeMenuItemContainerStyle = css`
 export const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
   pointer-events: none;
-  background-color: ${uiColors.gray.light3};
 
   &:hover:before {
     background-color: unset;
@@ -85,11 +90,11 @@ export const disabledMenuItemContainerStyle = css`
 export const focusedMenuItemContainerStyle = css`
   &:focus {
     text-decoration: none;
-    background-color: ${uiColors.blue.light3};
-    color: ${uiColors.blue.dark3};
+    background-color: ${palette.blue.dark3};
+    color: ${palette.white};
 
     &:before {
-      background-color: #63b0d0;
+      background-color: ${palette.blue.light1};
     }
   }
 
@@ -104,5 +109,5 @@ export const linkStyle = css`
 `;
 
 export const disabledTextStyle = css`
-  color: ${uiColors.gray.light1};
+  color: ${palette.gray.dark2};
 `;
