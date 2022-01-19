@@ -86,6 +86,9 @@ const colorSets: Record<Mode, ColorSets> = {
     `,
     errorBorder: css`
       border-color: ${palette.red.base};
+      &:disabled {
+        border-color: ${palette.red.base};
+      }
     `,
     errorMessage: css`
       color: ${palette.red.base};
