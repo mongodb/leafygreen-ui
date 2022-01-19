@@ -25,13 +25,13 @@ const baseBannerStyles = css`
   position: relative;
   display: flex;
   min-height: 40px;
-  padding: 9px 12px 9px 20px;
+  padding: 10px 15px 10px 20px;
   border-width: 1px 1px 1px 0px;
   border-style: solid;
   border-radius: 12px;
   font-size: 13px;
   line-height: 20px;
-  font-family: 'Euclid Circular A', Helvetica, Arial, sans-serif;
+  font-family: 'Euclid Circular A', Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
 
   &:before {
     content: '';
@@ -166,7 +166,7 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
       styleObj.marginRight = `${defaultIconSize + defaultBorderSpacing}px`;
     }
   } else {
-    styleObj.marginLeft = `${17}px`;
+    styleObj.marginLeft = `13px`;
     styleObj.marginRight = '10px';
     if (dismissible) {
       styleObj.marginRight = `${defaultIconSize + 16}px`;
@@ -261,7 +261,13 @@ export default function Banner({
         <XIcon
           fill={dismissibleMap[variant].color}
           onClick={onClose}
-          className={cx(flexShrink, cursorPointer)}
+          className={cx(
+            flexShrink,
+            cursorPointer,
+            css`
+              margin-top: 3px;
+            `,
+          )}
         />
       )}
     </div>
