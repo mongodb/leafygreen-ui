@@ -43,6 +43,7 @@ const components: Array<Component> = [
   'card',
   'checkbox',
   'code',
+  'combobox',
   'confirmation-modal',
   'copyable',
   'form-footer',
