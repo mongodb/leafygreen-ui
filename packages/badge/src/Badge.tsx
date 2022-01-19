@@ -23,7 +23,7 @@ export const baseStyle = css`
   font-size: 12px;
   line-height: 16px;
   border-radius: 5px;
-  height: 20px;
+  height: 18px;
   padding-left: 6px;
   padding-right: 6px;
   text-transform: uppercase;
