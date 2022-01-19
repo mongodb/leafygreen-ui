@@ -1,7 +1,9 @@
 import React from 'react';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Light: 'light',
@@ -11,40 +13,58 @@ const Mode = {
 type Mode = typeof Mode[keyof typeof Mode];
 
 interface ColorSets {
-  labelColor: string;
-  disabledLabelColor: string;
-  descriptionColor: string;
+  labelStyle: string;
+  disabledLabelStyle: string;
+  descriptionStyle: string;
+  disabledDescriptionStyle: string;
 }
 
+// TODO: Refresh - move font-size & line-height back to common styles when darkMode gets redesigned
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    labelColor: css`
-      color: ${uiColors.gray.dark2};
+    labelStyle: css`
+      font-family: ${fontFamilies.default};
+      color: ${palette.black};
+      font-size: 13px;
+      line-height: 20px;
     `,
-    disabledLabelColor: css`
-      color: ${uiColors.gray.dark1};
+    disabledLabelStyle: css`
+      color: ${uiColors.gray.base};
     `,
-    descriptionColor: css`
-      color: ${uiColors.gray.dark1};
+    descriptionStyle: css`
+      font-family: ${fontFamilies.default};
+      color: ${palette.gray.base};
+      font-size: 13px;
+      line-height: 20px;
+    `,
+    disabledDescriptionStyle: css`
+      color: ${palette.gray.base};
     `,
   },
   [Mode.Dark]: {
-    labelColor: css`
+    labelStyle: css`
+      font-family: ${fontFamilies.legacy};
       color: ${uiColors.white};
+      font-size: 14px;
+      line-height: 16px;
     `,
-    disabledLabelColor: css`
+    disabledLabelStyle: css`
       color: ${uiColors.gray.light1};
     `,
-    descriptionColor: css`
+    descriptionStyle: css`
+      font-family: ${fontFamilies.legacy};
+      color: ${uiColors.gray.light1};
+      font-size: 14px;
+      line-height: 16px;
+    `,
+    disabledDescriptionStyle: css`
       color: ${uiColors.gray.light1};
     `,
   },
 };
 
 const labelStyle = css`
-  font-size: 14px;
   font-weight: bold;
-  line-height: 16px;
   padding-bottom: 4px;
 `;
 
@@ -67,8 +87,8 @@ const Label = ({
     <label
       className={cx(
         labelStyle,
-        colorSets[mode].labelColor,
-        { [colorSets[mode].disabledLabelColor]: disabled },
+        colorSets[mode].labelStyle,
+        { [colorSets[mode].disabledLabelStyle]: disabled },
         className,
       )}
       {...rest}
@@ -81,8 +101,6 @@ const Label = ({
 Label.displayName = 'Label';
 
 const descriptionStyle = css`
-  font-size: 14px;
-  line-height: 16px;
   font-weight: normal;
   padding-bottom: 4px;
   margin-top: 0;
@@ -91,10 +109,12 @@ const descriptionStyle = css`
 
 type DescriptionProps = HTMLElementProps<'p', never> & {
   darkMode?: boolean;
+  disabled?: boolean;
 };
 
 const Description = ({
   darkMode = false,
+  disabled = false,
   children,
   className,
   ...rest
@@ -105,7 +125,10 @@ const Description = ({
     <p
       className={cx(
         descriptionStyle,
-        colorSets[mode].descriptionColor,
+        colorSets[mode].descriptionStyle,
+        {
+          [colorSets[mode].disabledDescriptionStyle]: disabled,
+        },
         className,
       )}
       {...rest}
