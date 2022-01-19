@@ -29,11 +29,11 @@ const colorSets: Record<Mode, ColorSets> = {
       line-height: 20px;
     `,
     disabledLabelStyle: css`
-      color: ${uiColors.gray.base};
+      color: ${palette.gray.base};
     `,
     descriptionStyle: css`
       font-family: ${fontFamilies.default};
-      color: ${palette.gray.base};
+      color: ${palette.gray.dark1};
       font-size: 13px;
       line-height: 20px;
     `,
