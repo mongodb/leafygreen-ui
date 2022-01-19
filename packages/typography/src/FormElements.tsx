@@ -29,7 +29,7 @@ const colorSets: Record<Mode, ColorSets> = {
       line-height: 20px;
     `,
     disabledLabelStyle: css`
-      color: ${uiColors.gray.dark1};
+      color: ${palette.gray.base};
     `,
     descriptionStyle: css`
       font-family: ${fontFamilies.default};
