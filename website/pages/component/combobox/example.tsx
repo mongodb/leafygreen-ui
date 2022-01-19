@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/icon';
 import {
@@ -11,7 +11,6 @@ import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   multiselect: boolean;
-  darkMode: boolean;
   disabled: boolean;
   label: string;
   description: string;
@@ -21,11 +20,6 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'boolean',
     default: false,
     label: 'Multiselect',
-  },
-  darkMode: {
-    type: 'boolean',
-    default: false,
-    label: 'Dark Mode',
   },
   disabled: {
     type: 'boolean',
@@ -44,19 +38,14 @@ const knobsConfig: KnobsConfigInterface<{
   },
   description: {
     type: 'text',
-    default: '',
+    default: 'This is a description',
     label: 'Description',
   },
 };
 
 export default function SelectLiveExample() {
   return (
-    <div
-      className={css`
-        width: 384px;
-        height: 100vh;
-      `}
-    >
+    <div>
       <LeafygreenProvider>
         <LiveExample knobsConfig={knobsConfig}>
           {knobs =>
@@ -73,7 +62,7 @@ export default function SelectLiveExample() {
 }
 
 function SingleSelect({
-  knobs: { darkMode, label, description, placeholder, disabled },
+  knobs: { label, description, placeholder, disabled },
 }: any) {
   const [isError, setIsError] = useState(false);
 
@@ -87,52 +76,68 @@ function SingleSelect({
   };
 
   return (
-    <Combobox
-      multiselect={false}
-      label={label}
-      description={description}
-      placeholder={placeholder}
-      darkMode={darkMode}
-      disabled={disabled}
-      state={isError ? 'error' : 'none'}
-      errorMessage="No Pomegranates!"
-      onChange={handleChange}
+    <div
+      className={css`
+        width: 384px;
+      `}
     >
-      <ComboboxOption value="apple" />
-      <ComboboxOption value="banana" />
-      <ComboboxOption value="carrot" />
-      <ComboboxOption value="dragonfruit" />
-      <ComboboxOption value="eggplant" />
-      <ComboboxOption value="pomegranate" glyph={<Icon glyph="Warning" />} />
-    </Combobox>
+      <Combobox
+        multiselect={false}
+        label={label}
+        description={description}
+        placeholder={placeholder}
+        disabled={disabled}
+        state={isError ? 'error' : 'none'}
+        errorMessage="No Pomegranates!"
+        onChange={handleChange}
+      >
+        <ComboboxOption value="apple" displayName="Apple" />
+        <ComboboxOption value="banana" displayName="Banana" />
+        <ComboboxOption value="carrot" displayName="Carrot" />
+        <ComboboxOption value="dragonfruit" displayName="Dragon fruit" />
+        <ComboboxOption value="eggplant" displayName="Eggplant" />
+        <ComboboxOption
+          value="pomegranate"
+          displayName="Pomegranate"
+          glyph={<Icon glyph="Warning" />}
+        />
+      </Combobox>
+    </div>
   );
 }
 
 function MultiSelect({
-  knobs: { darkMode, label, description, placeholder, disabled },
+  knobs: { label, description, placeholder, disabled },
 }: any) {
   return (
-    <Combobox
-      multiselect={true}
-      label={label}
-      description={description}
-      placeholder={placeholder}
-      darkMode={darkMode}
-      disabled={disabled}
+    <div
+      className={cx(
+        css`
+          width: 384px;
+        `,
+      )}
     >
-      <ComboboxOption value="apple" />
-      <ComboboxOption value="banana" />
-      <ComboboxOption value="carrot" />
-      <ComboboxOption value="dragonfruit" />
-      <ComboboxOption value="eggplant" />
-      <ComboboxGroup label="Peppers">
-        <ComboboxOption value="cayenne" />
-        <ComboboxOption value="ghost-pepper" displayName="Ghost pepper" />
-        <ComboboxOption value="habanero" />
-        <ComboboxOption value="jalapeno" displayName="Jalapeño" />
-        <ComboboxOption value="red-pepper" displayName="Red pepper" />
-        <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
-      </ComboboxGroup>
-    </Combobox>
+      <Combobox
+        multiselect={true}
+        label={label}
+        description={description}
+        placeholder={placeholder}
+        disabled={disabled}
+      >
+        <ComboboxOption value="apple" displayName="Apple" />
+        <ComboboxOption value="banana" displayName="Banana" />
+        <ComboboxOption value="carrot" displayName="Carrot" />
+        <ComboboxOption value="dragonfruit" displayName="Dragon fruit" />
+        <ComboboxOption value="eggplant" displayName="Eggplant" />
+        <ComboboxGroup label="Peppers">
+          <ComboboxOption value="cayenne" displayName="Cayenne" />
+          <ComboboxOption value="ghost-pepper" displayName="Ghost pepper" />
+          <ComboboxOption value="habanero" displayName="Habanero" />
+          <ComboboxOption value="jalapeno" displayName="Jalapeño" />
+          <ComboboxOption value="red-pepper" displayName="Red pepper" />
+          <ComboboxOption value="scotch-bonnet" displayName="Scotch bonnet" />
+        </ComboboxGroup>
+      </Combobox>
+    </div>
   );
 }
