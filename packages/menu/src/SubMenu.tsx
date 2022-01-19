@@ -18,6 +18,7 @@ import {
   disabledTextStyle,
   paddingLeft,
   descriptionTextStyle,
+  linkDescriptionTextStyle,
   titleTextStyle,
   activeTitleTextStyle,
   activeDescriptionTextStyle,
@@ -331,6 +332,7 @@ const SubMenu: ExtendableBox<
             className={cx(descriptionTextStyle, {
               [activeDescriptionTextStyle]: active,
               [disabledTextStyle]: disabled,
+              [linkDescriptionTextStyle]: typeof rest.href === 'string',
             })}
           >
             {description}

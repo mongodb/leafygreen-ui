@@ -68,6 +68,7 @@ export const menuItemContainerStyle = css`
 export const textContainer = css`
   width: 100%;
   overflow: hidden;
+  padding: 2px 0;
 `;
 
 export const mainIconStyle = css`
@@ -88,6 +89,9 @@ export const descriptionTextStyle = css`
   font-weight: normal;
   line-height: 16px;
   color: ${palette.gray.light1};
+`;
+
+export const linkDescriptionTextStyle = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -116,9 +120,7 @@ export const activeTitleTextStyle = css`
   font-weight: bold;
   color: ${palette.green.base};
 `;
-export const activeDescriptionTextStyle = css`
-  /* color: ${palette.green.dark2}; */
-`;
+export const activeDescriptionTextStyle = css``;
 export const activeIconStyle = css`
   color: ${palette.green.base};
 `;

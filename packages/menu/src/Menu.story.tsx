@@ -92,7 +92,7 @@ function SubMenuExample() {
         </SubMenu>
         <SubMenu
           title="Menu Item 2"
-          description="https://google.com"
+          description="Sed posuere consectetur est at lobortis. Nulla vitae elit libero, a pharetra augue."
           glyph={<LaptopIcon size="xlarge" />}
         >
           <MenuItem>Support 1</MenuItem>

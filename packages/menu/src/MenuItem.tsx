@@ -17,6 +17,7 @@ import {
   titleTextStyle,
   activeTitleTextStyle,
   descriptionTextStyle,
+  linkDescriptionTextStyle,
   activeDescriptionTextStyle,
   textContainer,
 } from './styles';
@@ -172,8 +173,10 @@ const MenuItem: ExtendableBox<
                 [activeDescriptionTextStyle]: active,
                 [disabledTextStyle]: disabled,
                 [focusDescriptionTextStyle]: showFocus,
+                [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
             >
+              {rest.href}
               {description}
             </div>
           )}
