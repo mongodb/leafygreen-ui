@@ -502,6 +502,7 @@ const TextInput: React.ComponentType<
         )}
         <div className={inputContainerStyle}>
           <InteractionRing
+            borderRadius={mode === 'dark' ? '4px' : '6px'}
             className={interactionRingStyle}
             darkMode={darkMode}
             disabled={disabled}
