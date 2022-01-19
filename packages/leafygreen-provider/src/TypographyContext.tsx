@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
+// TODO: Refresh - update to 13 | 16
 type FontSize = 14 | 16;
 export interface TypographyProviderProps {
   children: React.ReactNode;
