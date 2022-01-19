@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clamp from 'lodash/clamp';
 import { cx, css, keyframes } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
 
 const progressBackgroundBase = '#22B7EB';
 const progressBackgroundSecondary = '#1FACE5'
@@ -13,6 +14,7 @@ const progressBarBackgroundStyle = css`
   left: 0;
   right: 0;
   height: 6px;
+  background-color: ${palette.gray.light2};
 `;
 
 const backgroundShimmer = keyframes`
