@@ -19,7 +19,7 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
-  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
   background-color: ${palette.white};
   border-radius: 12px;
   position: relative;
@@ -61,6 +61,7 @@ const bodyStyle = css`
   display: flex;
   flex-direction: column;
   padding: 16px 24px 16px 54px;
+  font-weight: 300;
 `;
 
 const fontSet = {
