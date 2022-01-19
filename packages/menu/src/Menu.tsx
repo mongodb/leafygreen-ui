@@ -5,17 +5,16 @@ import { useEventListener } from '@leafygreen-ui/hooks';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { transparentize } from 'polished';
 import { FocusableMenuItemElement } from './FocusableMenuItem';
 import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
 
 const rootMenuStyle = css`
   width: 200px;
-  border-radius: 4px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 6px ${transparentize(0.8, palette.black)};
-  background-color: ${palette.gray.dark3};
+  padding: 14px 0;
+  background-color: ${palette.black};
 `;
 
 const scrollContainerStyle = css`

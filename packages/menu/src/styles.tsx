@@ -2,33 +2,34 @@ import { css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 
-const indentation = 15;
-const leftBar = 5;
+const indentation = 16;
+const leftBar = 4; // 4 + 1
 export const svgWidth = 24;
 export const menuItemPadding = 15;
 export const paddingLeft = 52;
 
-// TODO: Refresh - Note - no dark mode
+/**
+ * Base styles
+ */
 export const menuItemContainerStyle = css`
   display: flex;
+  position: relative;
+  box-sizing: border-box;
   flex-direction: row;
   align-items: center;
+  width: 100%;
+  margin: unset;
   padding-left: ${indentation}px;
   padding-right: ${indentation}px;
-  text-decoration: none;
-  cursor: pointer;
-  text-decoration: none;
-  position: relative;
-  transition: background-color 150ms ease-in-out;
-  border: none;
-  margin: unset;
-  width: 100%;
   font-family: ${fontFamilies.default};
   font-size: 13px;
-  box-sizing: border-box;
-  background-color: ${palette.black};
   text-align: left;
+  text-decoration: none;
   color: ${palette.white};
+  cursor: pointer;
+  border: none;
+  background-color: ${palette.black};
+  transition: background-color 150ms ease-in-out;
 
   &:focus {
     outline: none;
@@ -39,9 +40,11 @@ export const menuItemContainerStyle = css`
     content: '';
     position: absolute;
     width: ${leftBar}px;
-    top: 0;
-    bottom: 0;
-    left: -1px;
+    /* top: 0;
+    bottom: 0; */
+    height: 22px;
+    left: 0px;
+    border-radius: 0 ${leftBar}px ${leftBar}px 0;
     background-color: transparent;
     transition: background-color 150ms ease-in-out;
   }
@@ -62,6 +65,37 @@ export const menuItemContainerStyle = css`
   }
 `;
 
+export const textContainer = css`
+  width: 100%;
+  overflow: hidden;
+`;
+
+export const mainIconStyle = css`
+  color: ${palette.gray.dark1};
+  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
+  flex-shrink: 0;
+`;
+
+export const titleTextStyle = css`
+  width: 100%;
+  font-size: 13px;
+  font-weight: bold;
+  color: ${palette.white};
+`;
+
+export const descriptionTextStyle = css`
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 16px;
+  color: ${palette.gray.light1};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+/**
+ * Active styles
+ */
 export const activeMenuItemContainerStyle = css`
   background-color: ${palette.black};
 
@@ -78,6 +112,20 @@ export const activeMenuItemContainerStyle = css`
   }
 `;
 
+export const activeTitleTextStyle = css`
+  font-weight: bold;
+  color: ${palette.green.base};
+`;
+export const activeDescriptionTextStyle = css`
+  /* color: ${palette.green.dark2}; */
+`;
+export const activeIconStyle = css`
+  color: ${palette.green.base};
+`;
+
+/**
+ * Disabled styles
+ */
 export const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
   pointer-events: none;
@@ -87,6 +135,9 @@ export const disabledMenuItemContainerStyle = css`
   }
 `;
 
+/**
+ * Focused styles
+ */
 export const focusedMenuItemContainerStyle = css`
   &:focus {
     text-decoration: none;

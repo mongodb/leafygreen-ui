@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
-import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
-import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
+import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
+import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
@@ -17,8 +17,13 @@ import {
   linkStyle,
   disabledTextStyle,
   paddingLeft,
-  menuItemPadding,
-  svgWidth,
+  descriptionTextStyle,
+  titleTextStyle,
+  activeTitleTextStyle,
+  activeDescriptionTextStyle,
+  mainIconStyle,
+  activeIconStyle,
+  textContainer,
 } from './styles';
 import { ExitHandler } from 'react-transition-group/Transition';
 
@@ -26,7 +31,7 @@ const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
 
 const subMenuContainerHeight = 56;
-const iconButtonContainerHeight = 28;
+const iconButtonContainerSize = 28;
 
 const liStyle = css`
   position: relative;
@@ -35,8 +40,8 @@ const liStyle = css`
 
 const subMenuStyle = css`
   min-height: 56px;
-  border-top: 1px solid ${uiColors.gray.light2};
-  background-color: ${uiColors.gray.light3};
+  background-color: ${palette.black};
+  padding-right: ${iconButtonContainerSize + 16}px;
   align-items: center;
   justify-content: flex-start;
 `;
@@ -45,78 +50,77 @@ const subMenuOpenStyle = css`
   background-color: transparent;
 
   &:hover {
-    background-color: ${uiColors.gray.light2};
+    background-color: ${palette.gray.dark3};
   }
 `;
 
 const focusedIconStyle = css`
   ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
-    color: ${uiColors.blue.dark2};
+    color: ${palette.white};
   }
 `;
 
 const closedIconStyle = css`
   transition: color 200ms ease-in-out;
-  color: ${uiColors.gray.base};
+  color: ${palette.gray.light1};
 `;
 
 const openIconStyle = css`
-  color: ${uiColors.gray.dark2};
+  color: ${palette.gray.light1};
 `;
 
-const mainTextStyle = css`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 14px;
-  color: ${uiColors.gray.dark3};
-  ${subMenuContainer.selector}:focus & {
-    color: ${uiColors.blue.dark3};
-  }
-`;
-
-const activeMainTextStyle = css`
-  font-weight: bolder;
-  color: ${uiColors.green.dark3};
-`;
+// const mainTextStyle = css`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   font-size: 14px;
+//   color: ${palette.white};
+//   ${subMenuContainer.selector}:focus & {
+//     color: ${palette.white};
+//   }
+// `;
 
 const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
   right: 8px;
-  top: ${subMenuContainerHeight / 2 - iconButtonContainerHeight / 2}px;
+  top: ${subMenuContainerHeight / 2 - iconButtonContainerSize / 2}px;
   margin: auto;
-  background-color: ${uiColors.gray.light3};
+  background-color: ${palette.black};
   transition: background-color 150ms ease-in-out;
 
+  &:hover {
+    background-color: ${palette.gray.dark2};
+  }
+
   ${subMenuContainer.selector}:hover + & {
-    background-color: ${uiColors.gray.light2};
+    background-color: ${palette.gray.dark3};
   }
 `;
 
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
-    background-color: ${uiColors.blue.light3};
+    background-color: ${uiColors.blue.dark2};
 
     &:hover:before {
-      background-color: ${uiColors.blue.light2};
+      background-color: ${uiColors.blue.dark2};
     }
   }
 `;
 
 const openIconButtonStyle = css`
-  background-color: ${uiColors.white};
+  background-color: ${palette.black};
 `;
 
-const mainIconStyle = css`
-  color: ${uiColors.gray.dark1};
-  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
-  flex-shrink: 0;
+// const mainIconStyle = css`
+//   color: ${uiColors.gray.dark1};
+//   margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
+//   flex-shrink: 0;
 
-  ${subMenuContainer.selector}:hover > & {
-    color: ${uiColors.gray.dark1};
-  }
-`;
+//   ${subMenuContainer.selector}:hover > & {
+//     color: ${uiColors.gray.dark1};
+//   }
+// `;
 
 const mainIconFocusedStyle = css`
   ${subMenuContainer.selector}:focus > & {
@@ -124,16 +128,12 @@ const mainIconFocusedStyle = css`
   }
 `;
 
-const activeIconStyle = css`
-  color: ${uiColors.green.base};
-  ${subMenuContainer.selector}:hover > & {
-    color: ${uiColors.green.base};
-  }
-`;
-
-const descriptionTextStyle = css`
-  font-size: 11px;
-`;
+// const activeIconStyle = css`
+//   color: ${uiColors.green.base};
+//   ${subMenuContainer.selector}:hover > & {
+//     color: ${uiColors.green.base};
+//   }
+// `;
 
 const ulStyle = css`
   list-style: none;
@@ -143,13 +143,42 @@ const ulStyle = css`
   transition: height 150ms ease-in-out;
 `;
 
-const menuItemBorder = css`
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background: ${uiColors.gray.light2};
-  top: 0;
+const subItemStyle = css`
+  position: relative;
+  color: ${palette.gray.light1};
 `;
+
+const subItemOverlineStyle = css`
+  :before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 0px;
+    height: 1px;
+    background-color: ${palette.gray.dark2};
+  }
+`;
+
+const subItemUnderlineStyle = css`
+  :after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    bottom: 0px;
+    height: 1px;
+    background-color: ${palette.gray.dark2};
+  }
+`;
+
+// const menuItemBorder = css`
+//   position: absolute;
+//   width: 100%;
+//   height: 1px;
+//   /* background: ${uiColors.gray.dark2}; */
+//   top: 0;
+// `;
 
 const subMenuItemHeight = 36;
 
@@ -289,10 +318,10 @@ const SubMenu: ExtendableBox<
     const boxContent = (
       <>
         {updatedGlyph}
-        <div>
+        <div className={textContainer}>
           <div
-            className={cx(mainTextStyle, {
-              [activeMainTextStyle]: active,
+            className={cx(titleTextStyle, {
+              [activeTitleTextStyle]: active,
             })}
           >
             {title}
@@ -300,6 +329,7 @@ const SubMenu: ExtendableBox<
 
           <div
             className={cx(descriptionTextStyle, {
+              [activeDescriptionTextStyle]: active,
               [disabledTextStyle]: disabled,
             })}
           >
@@ -322,7 +352,7 @@ const SubMenu: ExtendableBox<
 
     const openCloseiconStyle = open ? openIconStyle : closedIconStyle;
 
-    const caretIconStyles = cx(openCloseiconStyle, {
+    const ChevronIconStyles = cx(openCloseiconStyle, {
       [focusedIconStyle]: showFocus,
     });
 
@@ -331,6 +361,7 @@ const SubMenu: ExtendableBox<
         {renderBox}
         <IconButton
           {...iconButton.prop}
+          darkMode={true}
           ref={setIconButtonElement}
           aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
           className={cx(iconButtonStyle, {
@@ -347,9 +378,12 @@ const SubMenu: ExtendableBox<
           }}
         >
           {open ? (
-            <CaretUpIcon role="presentation" className={caretIconStyles} />
+            <ChevronDownIcon
+              role="presentation"
+              className={ChevronIconStyles}
+            />
           ) : (
-            <CaretDownIcon role="presentation" className={caretIconStyles} />
+            <ChevronUpIcon role="presentation" className={ChevronIconStyles} />
           )}
         </IconButton>
 
@@ -367,41 +401,48 @@ const SubMenu: ExtendableBox<
           {(state: string) => (
             <ul
               ref={nodeRef}
-              className={cx(ulStyle, {
-                [css`
-                  height: ${subMenuItemHeight * numberOfMenuItems}px;
-                `]: state === 'entered',
-              })}
+              className={cx(
+                ulStyle,
+                {
+                  [css`
+                    height: ${subMenuItemHeight * numberOfMenuItems}px;
+                  `]: state === 'entered',
+                },
+                css`
+                  > li {
+                    margin-left: ${glyph ? paddingLeft : 28}px;
+                  }
+                `,
+              )}
               role="menu"
               aria-label={title}
             >
-              {React.Children.map(children as React.ReactElement, child => {
-                return React.cloneElement(child, {
-                  children: (
-                    <>
-                      <div className={menuItemBorder} />
-                      {child.props.children}
-                    </>
-                  ),
-                  className: cx(
-                    // SubMenuItem indentation based on how indented the title of a SubMenuItem is
-                    // glyphs push title further in, therefore their children should have a thicker padding-left
-                    css`
-                      padding-left: ${glyph ? paddingLeft : 28}px;
-                    `,
-                    child.props.className,
-                  ),
-                  onClick: (
-                    e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
-                      React.MouseEvent<HTMLButtonElement, MouseEvent>,
-                  ) => {
-                    child.props?.onClick?.(e);
-                    if (onClick) {
-                      onClick(e);
-                    }
-                  },
-                });
-              })}
+              {React.Children.map(
+                children as React.ReactElement,
+                (child, index) => {
+                  return React.cloneElement(child, {
+                    children: <>{child.props.children}</>,
+                    className: cx(
+                      subItemStyle,
+                      subItemOverlineStyle,
+                      {
+                        [subItemUnderlineStyle]:
+                          index === numberOfMenuItems - 1,
+                      },
+                      child.props.className,
+                    ),
+                    onClick: (
+                      e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
+                        React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                    ) => {
+                      child.props?.onClick?.(e);
+                      if (onClick) {
+                        onClick(e);
+                      }
+                    },
+                  });
+                },
+              )}
             </ul>
           )}
         </Transition>

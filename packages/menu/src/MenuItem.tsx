@@ -12,40 +12,21 @@ import {
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
-  svgWidth,
-  paddingLeft,
-  menuItemPadding,
+  mainIconStyle,
+  activeIconStyle,
+  titleTextStyle,
+  activeTitleTextStyle,
+  descriptionTextStyle,
+  activeDescriptionTextStyle,
+  textContainer,
 } from './styles';
 
 const menuItemContainer = createDataProp('menu-item-container');
-
-const titleTextStyle = css`
-  width: 100%;
-  font-size: 13px;
-  font-weight: bold;
-  color: ${palette.white};
-`;
 
 const focusTitleTextStyle = css`
   ${menuItemContainer.selector}:focus & {
     color: ${palette.blue.dark3};
   }
-`;
-
-const activeTitleTextStyle = css`
-  font-weight: bold;
-  color: ${palette.green.base};
-`;
-
-const activeDescriptionTextStyle = css`
-  /* color: ${palette.green.dark2}; */
-`;
-
-const descriptionTextStyle = css`
-  font-size: 13px;
-  font-weight: normal;
-  line-height: 16px;
-  color: ${palette.gray.light1};
 `;
 
 const focusDescriptionTextStyle = css`
@@ -54,26 +35,9 @@ const focusDescriptionTextStyle = css`
   }
 `;
 
-const mainIconStyle = css`
-  color: ${palette.gray.dark1};
-  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
-  flex-shrink: 0;
-
-  ${menuItemContainer.selector}:hover > & {
-    color: ${palette.gray.dark1};
-  }
-`;
-
 const mainIconFocusedStyle = css`
   ${menuItemContainer.selector}:focus > & {
     color: ${palette.white};
-  }
-`;
-
-const activeIconStyle = css`
-  color: ${palette.green.base};
-  ${menuItemContainer.selector}:hover > & {
-    color: ${palette.green.base};
   }
 `;
 
@@ -200,11 +164,7 @@ const MenuItem: ExtendableBox<
     const content = (
       <>
         {updatedGlyph}
-        <div
-          className={css`
-            width: 100%;
-          `}
-        >
+        <div className={textContainer}>
           <div>{children}</div>
           {description && (
             <div
