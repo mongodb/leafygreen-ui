@@ -5,7 +5,7 @@ import { cx, css, keyframes } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
 const progressBackgroundBase = '#22B7EB';
-const progressBackgroundSecondary = '#1FACE5'
+const progressBackgroundSecondary = '#1FACE5';
 const toastWidth = 400;
 
 const progressBarBackgroundStyle = css`

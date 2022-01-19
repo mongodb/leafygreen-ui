@@ -40,7 +40,8 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
     transform-origin: bottom center;
     opacity: 0;
     transition: all ${transitionDuration}ms ease-in-out;
-    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
+      sans-serif; // TODO: Refresh – remove when fonts are updated
   `,
 
   icon: css`
@@ -218,7 +219,6 @@ const variantStyles: Record<
     `,
 
     body: css`
-    
       color: ${palette.gray.dark2};
     `,
   },
@@ -354,7 +354,8 @@ function Toast({
                       className={cx(
                         currentVariantStyles.body,
                         css`
-                          font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+                          font-family: Euclid Circular A, ‘Helvetica Neue’,
+                            Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
                           font-weight: 700;
                         `,
                       )}
@@ -363,12 +364,17 @@ function Toast({
                     </Body>
                   )}
 
-                  <Body className={cx(
-                    currentVariantStyles.body,
-                    css`
-                    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
-                    `,
-                    )}>{body}</Body>
+                  <Body
+                    className={cx(
+                      currentVariantStyles.body,
+                      css`
+                        font-family: Euclid Circular A, ‘Helvetica Neue’,
+                          Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+                      `,
+                    )}
+                  >
+                    {body}
+                  </Body>
                 </div>
               </div>
 
