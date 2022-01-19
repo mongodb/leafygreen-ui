@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clamp from 'lodash/clamp';
 import { cx, css, keyframes } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
 
 const progressBackgroundBase = '#22B7EB';
+const progressBackgroundSecondary = '#1FACE5'
 const toastWidth = 400;
 
 const progressBarBackgroundStyle = css`
@@ -13,9 +13,6 @@ const progressBarBackgroundStyle = css`
   left: 0;
   right: 0;
   height: 6px;
-  background-color: ${uiColors.gray.light2};
-  border-radius: 0 0 4px 4px;
-  overflow: hidden;
 `;
 
 const backgroundShimmer = keyframes`
@@ -40,7 +37,7 @@ const progressBarStyle = css`
     90deg,
     ${progressBackgroundBase} 0px,
     #cce8f4 ${toastWidth / 2}px,
-    ${progressBackgroundBase} ${toastWidth}px
+    ${progressBackgroundSecondary} ${toastWidth}px
   );
   background-size: 600px;
   animation: ${backgroundShimmer} 4s infinite linear;

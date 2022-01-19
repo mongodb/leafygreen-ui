@@ -4,12 +4,12 @@ import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import { cx, css } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 import IconButton from '@leafygreen-ui/icon-button';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
-import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import InfoWithCircle from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
@@ -33,8 +33,8 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
     left: ${spacing[4]}px;
     width: ${toastWidth}px;
     max-width: calc(100vw - ${spacing[4] * 2}px);
-    border-radius: 4px;
-    box-shadow: 0 18px 18px -15px ${transparentize(0.7, uiColors.black)};
+    border-radius: 12px;
+    box-shadow: 0 18px 18px -15px ${transparentize(0.7, palette.black)};
     overflow: hidden;
     transform: translate3d(0, ${spacing[3]}px, 0) scale(0.95);
     transform-origin: bottom center;
@@ -79,30 +79,30 @@ const variantStyles: Record<
 > = {
   [Variant.Success]: {
     toast: css`
-      background-color: ${uiColors.green.light3};
+      background-color: ${palette.green.light3};
     `,
 
     icon: css`
-      color: ${uiColors.green.dark1};
+      color: ${palette.green.dark1};
     `,
 
     contentWrapper: css`
-      border-radius: 4px;
-      border: 1px solid ${uiColors.green.light2};
+      border-radius: 12px;
+      border: 1px solid ${palette.green.light2};
     `,
 
     body: css`
-      color: ${uiColors.green.dark2};
+      color: ${palette.green.dark2};
     `,
 
     dismissButton: css`
-      color: ${uiColors.green.dark2};
+      color: ${palette.green.dark2};
 
       &:hover {
-        color: ${uiColors.green.dark2};
+        color: ${palette.green.dark2};
 
         &:before {
-          background-color: ${uiColors.green.light2};
+          background-color: ${palette.green.light2};
         }
       }
     `,
@@ -110,30 +110,30 @@ const variantStyles: Record<
 
   [Variant.Note]: {
     toast: css`
-      background-color: ${uiColors.blue.light3};
+      background-color: ${palette.blue.light3};
     `,
 
     icon: css`
-      color: ${uiColors.blue.dark2};
+      color: ${palette.blue.base};
     `,
 
     contentWrapper: css`
-      border-radius: 4px;
-      border: 1px solid ${uiColors.blue.light2};
+      border-radius: 12px;
+      border: 1px solid ${palette.blue.light2};
     `,
 
     body: css`
-      color: ${uiColors.blue.dark2};
+      color: ${palette.blue.dark2};
     `,
 
     dismissButton: css`
-      color: ${uiColors.blue.dark2};
+      color: ${palette.blue.dark2};
 
       &:hover {
-        color: ${uiColors.blue.dark3};
+        color: ${palette.blue.dark3};
 
         &:before {
-          background-color: ${uiColors.blue.light2};
+          background-color: ${palette.blue.light2};
         }
       }
     `,
@@ -141,30 +141,30 @@ const variantStyles: Record<
 
   [Variant.Warning]: {
     toast: css`
-      background-color: ${uiColors.red.light3};
+      background-color: ${palette.red.light3};
     `,
 
     icon: css`
-      color: ${uiColors.red.base};
+      color: ${palette.red.base};
     `,
 
     contentWrapper: css`
-      border-radius: 4px;
-      border: 1px solid ${uiColors.red.light2};
+      border-radius: 12px;
+      border: 1px solid ${palette.red.light2};
     `,
 
     body: css`
-      color: ${uiColors.red.dark2};
+      color: ${palette.red.dark2};
     `,
 
     dismissButton: css`
-      color: ${uiColors.red.dark1};
+      color: ${palette.red.dark2};
 
       &:hover {
-        color: ${uiColors.green.dark3};
+        color: ${palette.red.dark3};
 
         &:before {
-          background-color: ${uiColors.red.light2};
+          background-color: ${palette.red.light2};
         }
       }
     `,
@@ -172,30 +172,30 @@ const variantStyles: Record<
 
   [Variant.Important]: {
     toast: css`
-      background-color: ${uiColors.yellow.light3};
+      background-color: ${palette.yellow.light3};
     `,
 
     icon: css`
-      color: ${uiColors.yellow.dark2};
+      color: ${palette.yellow.dark2};
     `,
 
     contentWrapper: css`
-      border-radius: 4px;
-      border: 1px solid ${uiColors.yellow.light2};
+      border-radius: 12px;
+      border: 1px solid ${palette.yellow.light2};
     `,
 
     body: css`
-      color: ${uiColors.yellow.dark2};
+      color: ${palette.yellow.dark2};
     `,
 
     dismissButton: css`
-      color: ${uiColors.yellow.dark2};
+      color: ${palette.yellow.dark2};
 
       &:hover {
-        color: ${uiColors.yellow.dark3};
+        color: ${palette.yellow.dark3};
 
         &:before {
-          background-color: ${uiColors.yellow.light2};
+          background-color: ${palette.yellow.light2};
         }
       }
     `,
@@ -203,29 +203,28 @@ const variantStyles: Record<
 
   [Variant.Progress]: {
     toast: css`
-      background-color: ${uiColors.white};
-      padding-bottom: 6px;
+      background-color: ${palette.white};
     `,
 
     icon: css`
-      color: ${uiColors.gray.dark2};
+      color: ${palette.gray.dark2};
     `,
 
     contentWrapper: css`
-      border-radius: 4px 4px 0 0;
-      border: 1px solid ${uiColors.blue.light2};
-      border-bottom: 0;
+      border: 1px solid ${palette.blue.light2};
+      border-radius: 12px;
+      padding-bottom: 22px;
     `,
 
     body: css`
-      color: ${uiColors.gray.dark2};
+      color: ${palette.gray.dark2};
     `,
   },
 };
 
 const variantIcons: Record<Variant, React.ComponentType<any>> = {
   [Variant.Success]: CheckmarkWithCircleIcon,
-  [Variant.Note]: CloudIcon,
+  [Variant.Note]: InfoWithCircle,
   [Variant.Warning]: WarningIcon,
   [Variant.Important]: ImportantWithCircleIcon,
   [Variant.Progress]: RefreshIcon,
