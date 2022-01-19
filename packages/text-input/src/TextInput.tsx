@@ -238,7 +238,7 @@ const colorSets: Record<Mode, ColorSets> = {
     inputColor: uiColors.white,
     inputBackgroundColor: '#394F5A',
     defaultBorder: '#394F5A',
-    placeholderColor: uiColors.gray.dark1,
+    placeholderColor: uiColors.gray.base,
 
     disabledColor: uiColors.gray.dark1,
     disabledBorderColor: '#394F5A',
@@ -350,7 +350,7 @@ function getSizeSets(
         mode == 'dark' ? baseFontSize : baseFontSize === 14 ? 13 : baseFontSize,
       text:
         mode == 'dark' ? baseFontSize : baseFontSize === 14 ? 13 : baseFontSize,
-      lineHeight: 20,
+      lineHeight: mode == 'dark' ? (baseFontSize === 14 ? 16 : 20) : 20,
       padding: 12,
     },
     [SizeVariant.Large]: {
