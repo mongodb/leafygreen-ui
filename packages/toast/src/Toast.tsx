@@ -356,6 +356,7 @@ function Toast({
                         css`
                           font-family: Euclid Circular A, ‘Helvetica Neue’,
                             Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+                          font-size: 13px; // TODO: Refresh – remove when fonts are updated
                           font-weight: 700;
                         `,
                       )}
@@ -370,6 +371,7 @@ function Toast({
                       css`
                         font-family: Euclid Circular A, ‘Helvetica Neue’,
                           Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+                        font-size: 13px; // TODO: Refresh – remove when fonts are updated
                       `,
                     )}
                   >
