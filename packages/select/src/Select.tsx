@@ -10,6 +10,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { Label, Description } from '@leafygreen-ui/typography';
 import {
   colorSets,
   mobileSizeSet,
@@ -31,16 +32,6 @@ import {
   traverseSelectChildren,
   useStateRef,
 } from './utils';
-
-const sharedTextStyles = css`
-  font-family: ${fontFamilies.default};
-  display: block;
-`;
-
-const labelStyle = css`
-  margin-bottom: 2px;
-  font-weight: bold;
-`;
 
 export type Props = {
   children: React.ReactNode;
@@ -129,6 +120,7 @@ export default function Select({
   const [open, setOpen] = useState(false);
 
   const menuButtonRef = useStateRef<HTMLDivElement | null>(null);
+  const menuButtonId = useIdAllocator({ prefix: 'select' });
   const listMenuRef = useStateRef<HTMLUListElement | null>(null);
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -507,55 +499,33 @@ export default function Select({
   };
 
   return (
-    <div
-      className={cx(
-        {
-          [css`
-            cursor: not-allowed;
-          `]: disabled,
-        },
-        className,
-      )}
-    >
+    <div className={cx(className)}>
       {label && (
-        <label
+        <Label
+          htmlFor={menuButtonId}
           id={labelId}
+          darkMode={darkMode}
+          disabled={disabled}
           className={cx(
-            sharedTextStyles,
-            labelStyle,
             css`
-              color: ${disabled
-                ? colorSet.label.disabled
-                : colorSet.label.base};
-              font-size: ${sizeSet.label.text}px;
-              line-height: ${sizeSet.label.lineHeight}px;
-
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.label.text}px;
                 line-height: ${mobileSizeSet.label.lineHeight}px;
               }
             `,
-            {
-              [css`
-                cursor: not-allowed;
-              `]: disabled,
-            },
           )}
         >
           {label}
-        </label>
+        </Label>
       )}
 
       {description && (
-        <div
+        <Description
           id={descriptionId}
+          darkMode={darkMode}
+          disabled={disabled}
           className={cx(
-            sharedTextStyles,
             css`
-              color: ${colorSet.description};
-              font-size: ${sizeSet.description.text}px;
-              line-height: ${sizeSet.description.lineHeight}px;
-
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
@@ -564,11 +534,12 @@ export default function Select({
           )}
         >
           {description}
-        </div>
+        </Description>
       )}
 
       <SelectContext.Provider value={providerData}>
         <MenuButton
+          id={menuButtonId}
           ref={menuButtonRef}
           name={name}
           readOnly={readOnly}
@@ -608,7 +579,6 @@ export default function Select({
       {state === State.Error && errorMessage && (
         <span
           className={cx(
-            sharedTextStyles,
             css`
               color: ${darkMode ? '#F97216' : uiColors.red.base};
               font-size: ${sizeSet.description.text}px;
