@@ -122,7 +122,7 @@ const variantStyles: Record<
       color: ${palette.blue.dark2};
 
       &:hover {
-        color: ${palette.blue.dark3};
+        color: ${palette.blue.dark2};
 
         &:before {
           background-color: ${palette.blue.light2};
@@ -149,7 +149,7 @@ const variantStyles: Record<
       color: ${palette.red.dark2};
 
       &:hover {
-        color: ${palette.red.dark3};
+        color: ${palette.red.dark2};
 
         &:before {
           background-color: ${palette.red.light2};
@@ -176,7 +176,7 @@ const variantStyles: Record<
       color: ${palette.yellow.dark2};
 
       &:hover {
-        color: ${palette.yellow.dark3};
+        color: ${palette.yellow.dark2};
 
         &:before {
           background-color: ${palette.yellow.light2};
