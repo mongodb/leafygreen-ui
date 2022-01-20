@@ -7,6 +7,7 @@ export const Component = {
   Card: 'card',
   Checkbox: 'checkbox',
   Code: 'code',
+  Combobox: 'combobox',
   ConfirmationModal: 'confirmation-modal',
   Copyable: 'copyable',
   FormFooter: 'form-footer',
