@@ -34,14 +34,12 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
     width: ${toastWidth}px;
     max-width: calc(100vw - ${spacing[4] * 2}px);
     border-radius: 12px;
-    box-shadow: 0 18px 18px -15px ${transparentize(0.7, palette.black)};
+    box-shadow: 0 16px 32px -14px ${transparentize(0.8, palette.black)};
     overflow: hidden;
     transform: translate3d(0, ${spacing[3]}px, 0) scale(0.95);
     transform-origin: bottom center;
     opacity: 0;
     transition: all ${transitionDuration}ms ease-in-out;
-    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
-      sans-serif; // TODO: Refresh – remove when fonts are updated
   `,
 
   icon: css`
@@ -52,13 +50,13 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
   contentWrapper: css`
     display: flex;
     align-items: center;
-    padding: ${spacing[3]}px;
+    padding: 12px 12px 12px 18px;
   `,
 
   dismissButton: css`
     position: absolute;
-    top: ${spacing[2]}px;
-    right: ${spacing[2]}px;
+    top: 7px;
+    right: 9px;
     transition: color 0.15s ease-in-out;
   `,
 };
@@ -82,15 +80,11 @@ const variantStyles: Record<
   [Variant.Success]: {
     toast: css`
       background-color: ${palette.green.light3};
+      border: 1px solid ${palette.green.light2};
     `,
 
     icon: css`
       color: ${palette.green.dark1};
-    `,
-
-    contentWrapper: css`
-      border-radius: 12px;
-      border: 1px solid ${palette.green.light2};
     `,
 
     body: css`
@@ -113,15 +107,11 @@ const variantStyles: Record<
   [Variant.Note]: {
     toast: css`
       background-color: ${palette.blue.light3};
+      border: 1px solid ${palette.blue.light2};
     `,
 
     icon: css`
       color: ${palette.blue.base};
-    `,
-
-    contentWrapper: css`
-      border-radius: 12px;
-      border: 1px solid ${palette.blue.light2};
     `,
 
     body: css`
@@ -144,15 +134,11 @@ const variantStyles: Record<
   [Variant.Warning]: {
     toast: css`
       background-color: ${palette.red.light3};
+      border: 1px solid ${palette.red.light2};
     `,
 
     icon: css`
       color: ${palette.red.base};
-    `,
-
-    contentWrapper: css`
-      border-radius: 12px;
-      border: 1px solid ${palette.red.light2};
     `,
 
     body: css`
@@ -175,15 +161,11 @@ const variantStyles: Record<
   [Variant.Important]: {
     toast: css`
       background-color: ${palette.yellow.light3};
+      border: 1px solid ${palette.yellow.light2};
     `,
 
     icon: css`
       color: ${palette.yellow.dark2};
-    `,
-
-    contentWrapper: css`
-      border-radius: 12px;
-      border: 1px solid ${palette.yellow.light2};
     `,
 
     body: css`
@@ -206,6 +188,7 @@ const variantStyles: Record<
   [Variant.Progress]: {
     toast: css`
       background-color: ${palette.white};
+      border: 1px solid ${palette.blue.light2};
     `,
 
     icon: css`
@@ -213,13 +196,23 @@ const variantStyles: Record<
     `,
 
     contentWrapper: css`
-      border: 1px solid ${palette.blue.light2};
-      border-radius: 12px;
-      padding-bottom: 22px;
+      padding-bottom: 19px;
     `,
 
     body: css`
       color: ${palette.gray.dark2};
+    `,
+
+    dismissButton: css`
+      color: ${palette.gray.dark1};
+
+      &:hover {
+        color: ${palette.gray.dark1};
+
+        &:before {
+          background-color: ${palette.gray.light2};
+        }
+      }
     `,
   },
 };
