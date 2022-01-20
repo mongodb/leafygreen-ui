@@ -6,7 +6,7 @@ import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors, palette } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
@@ -91,10 +91,10 @@ const iconButtonStyle = css`
 
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
-    background-color: ${uiColors.blue.dark2};
+    background-color: ${palette.blue.dark2};
 
     &:hover:before {
-      background-color: ${uiColors.blue.dark2};
+      background-color: ${palette.blue.dark2};
     }
   }
 `;
