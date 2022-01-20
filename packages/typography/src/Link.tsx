@@ -4,17 +4,19 @@ import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { typeScale1, typeScale2 } from './styles';
 
 const anchorDataProp = createDataProp('anchor-container');
 
 const linkStyles = css`
+  font-family: ${fontFamilies.default};
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  color: ${uiColors.blue.base};
+  color: ${palette.blue.base};
   cursor: pointer;
 
   &:focus {
@@ -29,16 +31,16 @@ const underline = css`
 
   ${anchorDataProp.selector}:hover & {
     background-image: linear-gradient(
-      ${uiColors.gray.light2} 100%,
-      ${uiColors.gray.light2} 0
+      ${palette.gray.light2} 100%,
+      ${palette.gray.light2} 0
     );
   }
 
   ${anchorDataProp.selector}:focus & {
     background-image: linear-gradient(
       to right,
-      ${uiColors.blue.light1} 100%,
-      ${uiColors.blue.light1} 0
+      ${palette.blue.light1} 100%,
+      ${palette.blue.light1} 0
     );
   }
 `;
