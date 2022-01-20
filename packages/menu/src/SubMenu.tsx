@@ -103,12 +103,6 @@ const openIconButtonStyle = css`
   background-color: ${palette.black};
 `;
 
-// const mainIconFocusedStyle = css`
-//   ${subMenuContainer.selector}:focus > & {
-//     color: ${uiColors.blue.base};
-//   }
-// `;
-
 const ulStyle = css`
   list-style: none;
   padding: 0;

@@ -3,7 +3,7 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 
 const indentation = 16;
-const leftBar = 4; // 4 + 1
+const leftBar = 4;
 export const svgWidth = 24;
 export const menuItemPadding = 15;
 export const paddingLeft = 52;
@@ -117,7 +117,9 @@ export const activeTitleTextStyle = css`
   font-weight: bold;
   color: ${palette.green.base};
 `;
-export const activeDescriptionTextStyle = css``;
+export const activeDescriptionTextStyle = css`
+  color: ${palette.gray.light1};
+`;
 export const activeIconStyle = css`
   color: ${palette.green.base};
 `;
@@ -153,13 +155,7 @@ export const focusedMenuItemContainerStyle = css`
   }
 `;
 
-export const getFocusedStyles = (
-  selector: string,
-): {
-  textStyle: string;
-  descriptionStyle: string;
-  iconStyle: string;
-} => {
+export const getFocusedStyles = (selector: string) => {
   return {
     textStyle: css`
       ${selector}:focus & {

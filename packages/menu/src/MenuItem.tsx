@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
@@ -24,25 +23,6 @@ import {
 } from './styles';
 
 const menuItemContainer = createDataProp('menu-item-container');
-
-// const focusTitleTextStyle = css`
-//   color: ${palette.white};
-//   ${menuItemContainer.selector}:focus & {
-//     color: ${palette.blue.dark3};
-//   }
-// `;
-
-// const focusDescriptionTextStyle = css`
-//   ${menuItemContainer.selector}:focus & {
-//     color: ${palette.blue.light3};
-//   }
-// `;
-
-// const mainIconFocusedStyle = css`
-//   ${menuItemContainer.selector}:focus > & {
-//     color: ${palette.white};
-//   }
-// `;
 
 const Size = {
   Default: 'default',
