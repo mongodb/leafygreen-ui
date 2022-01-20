@@ -20,27 +20,29 @@ import {
   linkDescriptionTextStyle,
   activeDescriptionTextStyle,
   textContainer,
+  getFocusedStyles,
 } from './styles';
 
 const menuItemContainer = createDataProp('menu-item-container');
 
-const focusTitleTextStyle = css`
-  ${menuItemContainer.selector}:focus & {
-    color: ${palette.blue.dark3};
-  }
-`;
+// const focusTitleTextStyle = css`
+//   color: ${palette.white};
+//   ${menuItemContainer.selector}:focus & {
+//     color: ${palette.blue.dark3};
+//   }
+// `;
 
-const focusDescriptionTextStyle = css`
-  ${menuItemContainer.selector}:focus & {
-    color: ${palette.blue.light3};
-  }
-`;
+// const focusDescriptionTextStyle = css`
+//   ${menuItemContainer.selector}:focus & {
+//     color: ${palette.blue.light3};
+//   }
+// `;
 
-const mainIconFocusedStyle = css`
-  ${menuItemContainer.selector}:focus > & {
-    color: ${palette.white};
-  }
-`;
+// const mainIconFocusedStyle = css`
+//   ${menuItemContainer.selector}:focus > & {
+//     color: ${palette.white};
+//   }
+// `;
 
 const Size = {
   Default: 'default',
@@ -116,6 +118,7 @@ const MenuItem: ExtendableBox<
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const focusStyles = getFocusedStyles(menuItemContainer.selector);
 
     const updatedGlyph =
       glyph &&
@@ -125,7 +128,7 @@ const MenuItem: ExtendableBox<
           mainIconStyle,
           {
             [activeIconStyle]: active,
-            [mainIconFocusedStyle]: showFocus,
+            [focusStyles.iconStyle]: showFocus,
           },
           glyph.props?.className,
         ),
@@ -136,17 +139,18 @@ const MenuItem: ExtendableBox<
       ...menuItemContainer.prop,
       ref,
       className: cx(
+        'qwerqwerty',
         menuItemContainerStyle,
         menuItemHeight[size],
         linkStyle,
         titleTextStyle,
         {
-          [activeTitleTextStyle]: active,
-          [disabledTextStyle]: disabled,
-          [focusTitleTextStyle]: showFocus,
           [activeMenuItemContainerStyle]: active,
           [disabledMenuItemContainerStyle]: disabled,
           [focusedMenuItemContainerStyle]: showFocus,
+          [activeTitleTextStyle]: active,
+          [disabledTextStyle]: disabled,
+          [focusStyles.textStyle]: showFocus,
         },
         className,
       ),
@@ -172,7 +176,7 @@ const MenuItem: ExtendableBox<
               className={cx(descriptionTextStyle, {
                 [activeDescriptionTextStyle]: active,
                 [disabledTextStyle]: disabled,
-                [focusDescriptionTextStyle]: showFocus,
+                [focusStyles.descriptionStyle]: showFocus,
                 [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
             >

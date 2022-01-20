@@ -25,6 +25,7 @@ import {
   mainIconStyle,
   activeIconStyle,
   textContainer,
+  getFocusedStyles,
 } from './styles';
 import { ExitHandler } from 'react-transition-group/Transition';
 
@@ -70,17 +71,6 @@ const openIconStyle = css`
   color: ${palette.gray.light1};
 `;
 
-// const mainTextStyle = css`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-//   font-size: 14px;
-//   color: ${palette.white};
-//   ${subMenuContainer.selector}:focus & {
-//     color: ${palette.white};
-//   }
-// `;
-
 const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
@@ -113,26 +103,9 @@ const openIconButtonStyle = css`
   background-color: ${palette.black};
 `;
 
-// const mainIconStyle = css`
-//   color: ${uiColors.gray.dark1};
-//   margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
-//   flex-shrink: 0;
-
-//   ${subMenuContainer.selector}:hover > & {
-//     color: ${uiColors.gray.dark1};
-//   }
-// `;
-
-const mainIconFocusedStyle = css`
-  ${subMenuContainer.selector}:focus > & {
-    color: ${uiColors.blue.base};
-  }
-`;
-
-// const activeIconStyle = css`
-//   color: ${uiColors.green.base};
-//   ${subMenuContainer.selector}:hover > & {
-//     color: ${uiColors.green.base};
+// const mainIconFocusedStyle = css`
+//   ${subMenuContainer.selector}:focus > & {
+//     color: ${uiColors.blue.base};
 //   }
 // `;
 
@@ -144,42 +117,24 @@ const ulStyle = css`
   transition: height 150ms ease-in-out;
 `;
 
+const menuItemBorder = css`
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: ${palette.gray.dark2};
+  top: 0;
+`;
+
+const menuItemBorderBottom = css`
+  ${menuItemBorder};
+  top: unset;
+  bottom: 0;
+`;
+
 const subItemStyle = css`
   position: relative;
   color: ${palette.gray.light1};
 `;
-
-const subItemOverlineStyle = css`
-  :before {
-    content: '';
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    top: 0px;
-    height: 1px;
-    background-color: ${palette.gray.dark2};
-  }
-`;
-
-const subItemUnderlineStyle = css`
-  :after {
-    content: '';
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    bottom: 0px;
-    height: 1px;
-    background-color: ${palette.gray.dark2};
-  }
-`;
-
-// const menuItemBorder = css`
-//   position: absolute;
-//   width: 100%;
-//   height: 1px;
-//   /* background: ${uiColors.gray.dark2}; */
-//   top: 0;
-// `;
 
 const subMenuItemHeight = 36;
 
@@ -259,6 +214,7 @@ const SubMenu: ExtendableBox<
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const nodeRef = React.useRef(null);
+    const focusStyles = getFocusedStyles(subMenuContainer.selector);
 
     const [
       iconButtonElement,
@@ -289,7 +245,7 @@ const SubMenu: ExtendableBox<
           mainIconStyle,
           {
             [activeIconStyle]: active,
-            [mainIconFocusedStyle]: showFocus,
+            [focusStyles.iconStyle]: showFocus,
           },
           glyph.props?.className,
         ),
@@ -323,6 +279,8 @@ const SubMenu: ExtendableBox<
           <div
             className={cx(titleTextStyle, {
               [activeTitleTextStyle]: active,
+              [disabledTextStyle]: disabled,
+              [focusStyles.textStyle]: showFocus,
             })}
           >
             {title}
@@ -332,6 +290,7 @@ const SubMenu: ExtendableBox<
             className={cx(descriptionTextStyle, {
               [activeDescriptionTextStyle]: active,
               [disabledTextStyle]: disabled,
+              [focusStyles.descriptionStyle]: showFocus,
               [linkDescriptionTextStyle]: typeof rest.href === 'string',
             })}
           >
@@ -403,19 +362,11 @@ const SubMenu: ExtendableBox<
           {(state: string) => (
             <ul
               ref={nodeRef}
-              className={cx(
-                ulStyle,
-                {
-                  [css`
-                    height: ${subMenuItemHeight * numberOfMenuItems}px;
-                  `]: state === 'entered',
-                },
-                css`
-                  > li {
-                    margin-left: ${glyph ? paddingLeft : 28}px;
-                  }
-                `,
-              )}
+              className={cx(ulStyle, {
+                [css`
+                  height: ${subMenuItemHeight * numberOfMenuItems}px;
+                `]: state === 'entered',
+              })}
               role="menu"
               aria-label={title}
             >
@@ -423,14 +374,21 @@ const SubMenu: ExtendableBox<
                 children as React.ReactElement,
                 (child, index) => {
                   return React.cloneElement(child, {
-                    children: <>{child.props.children}</>,
+                    children: (
+                      <>
+                        <div className={menuItemBorder} />
+                        {child.props.children}
+                        {index === numberOfMenuItems - 1 && (
+                          <div className={menuItemBorderBottom} />
+                        )}
+                      </>
+                    ),
                     className: cx(
                       subItemStyle,
-                      subItemOverlineStyle,
-                      {
-                        [subItemUnderlineStyle]:
-                          index === numberOfMenuItems - 1,
-                      },
+                      css`
+                        padding-left: ${glyph ? paddingLeft : 28}px;
+                      `,
+                      // getSubItemStyle(!!glyph, index === numberOfMenuItems - 1),
                       child.props.className,
                     ),
                     onClick: (

@@ -40,8 +40,6 @@ export const menuItemContainerStyle = css`
     content: '';
     position: absolute;
     width: ${leftBar}px;
-    /* top: 0;
-    bottom: 0; */
     height: 22px;
     left: 0px;
     border-radius: 0 ${leftBar}px ${leftBar}px 0;
@@ -53,7 +51,6 @@ export const menuItemContainerStyle = css`
     text-decoration: none;
     background-color: ${palette.gray.dark3};
     &:before {
-      /* background-color: ${palette.gray.light1}; */
     }
   }
 
@@ -155,6 +152,32 @@ export const focusedMenuItemContainerStyle = css`
     border: 0;
   }
 `;
+
+export const getFocusedStyles = (
+  selector: string,
+): {
+  textStyle: string;
+  descriptionStyle: string;
+  iconStyle: string;
+} => {
+  return {
+    textStyle: css`
+      ${selector}:focus & {
+        color: ${palette.white};
+      }
+    `,
+    descriptionStyle: css`
+      ${selector}:focus & {
+        color: ${palette.blue.light3};
+      }
+    `,
+    iconStyle: css`
+      ${selector}:focus > & {
+        color: ${palette.blue.light3};
+      }
+    `,
+  };
+};
 
 export const linkStyle = css`
   text-decoration: none;
