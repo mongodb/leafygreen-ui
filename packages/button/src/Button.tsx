@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps, Mode } from './types';
@@ -27,7 +27,6 @@ const containerChildStyles = css`
   pointer-events: none;
   position: relative;
   z-index: 0;
-  font-family: ${fontFamilies.default};
 `;
 
 const padding: Record<Size, string> = {

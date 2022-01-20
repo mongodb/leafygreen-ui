@@ -1,7 +1,13 @@
 import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { Size, Variant, Mode, ButtonProps } from './types';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+
+const focusBoxShadow = (color: string) => `
+    0 0 0 3px ${color}, 
+    0 0 0 5px ${palette.blue.light1};
+`;
 
 const baseButtonStyles = css`
   // unset browser default
@@ -12,7 +18,6 @@ const baseButtonStyles = css`
   border: 0px solid transparent;
   display: inline-flex;
   align-items: stretch;
-  border-radius: 4px;
   transition: all 150ms ease-in-out;
   position: relative;
   text-decoration: none;
@@ -36,92 +41,73 @@ const baseButtonStyles = css`
 
 const colorSet: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
-    [Variant.Primary]: css`
-      background-color: ${uiColors.green.dark1};
-      box-shadow: 0px 2px 3px rgba(19, 170, 82, 0.4);
-      color: ${uiColors.white};
-
-      &:focus {
-        color: ${uiColors.white};
-      }
+    [Variant.Default]: css`
+      background-color: ${palette.gray.light3};
+      border: 1px solid ${palette.gray.base};
+      color: ${palette.gray.dark3};
 
       &:hover,
       &:active {
-        color: ${uiColors.white};
-        background-color: ${uiColors.green.dark2};
-        box-shadow: 0px 2px 3px rgba(19, 170, 82, 0.4), 0px 0px 0px 3px #c3e7ca;
+        background-color: ${palette.white};
+        box-shadow: 0 0 0 3px ${palette.gray.light2};
+      }
+    `,
+
+    [Variant.Primary]: css`
+      background-color: ${palette.green.dark2};
+      color: ${palette.white};
+
+      &:hover,
+      &:active {
+        color: ${palette.white};
+        background-color: #00593f; // Not quite dark3
+        box-shadow: 0 0 0 3px ${palette.green.light2};
       }
     `,
 
     [Variant.PrimaryOutline]: css`
-      border: 1px solid ${uiColors.green.dark1};
-      color: ${uiColors.green.dark2};
-
-      &:focus {
-        color: ${uiColors.green.dark2};
-      }
+      border: 1px solid ${palette.green.dark2};
+      color: ${palette.green.dark2};
 
       &:hover,
       &:active {
-        color: ${uiColors.green.dark2};
-        background-color: rgba(9, 128, 76, 0.04); // green dark 1
-        border: 1px solid ${uiColors.green.dark1};
-        box-shadow: 0px 0px 0px 3px ${uiColors.green.light2};
-      }
-    `,
-
-    [Variant.Default]: css`
-      background-color: ${uiColors.gray.light3};
-      border: 1px solid ${uiColors.gray.base};
-      box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
-      color: ${uiColors.gray.dark2};
-
-      &:focus {
-        color: ${uiColors.gray.dark2};
-      }
-
-      &:hover,
-      &:active {
-        color: ${uiColors.gray.dark2};
-        background-color: ${uiColors.white};
-        border: 1px solid ${uiColors.gray.dark1};
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3),
-          0px 0px 0px 3px ${uiColors.gray.light2};
+        box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
     `,
 
     [Variant.Danger]: css`
-      background-color: ${uiColors.red.base};
-      box-shadow: 0px 1px 2px rgba(207, 74, 34, 0.4);
-      color: ${uiColors.white};
-
-      &:focus {
-        color: ${uiColors.white};
-      }
+      background-color: ${palette.red.base};
+      color: ${palette.white};
 
       &:hover,
       &:active {
-        color: ${uiColors.white};
-        background-color: ${uiColors.red.dark1};
-        box-shadow: 0px 4px 4px rgba(207, 74, 34, 0.25),
-          0px 0px 0px 3px ${uiColors.red.light2};
+        color: ${palette.white};
+        background-color: #c82222; // not quite dark1
+        box-shadow: 0px 0px 0px 3px ${palette.red.light3};
       }
     `,
 
     [Variant.DangerOutline]: css`
-      border: 1px solid ${uiColors.red.base};
-      color: ${uiColors.red.dark2};
-
-      &:focus {
-        color: ${uiColors.red.dark2};
-      }
+      border: 1px solid ${palette.red.light1};
+      color: ${palette.red.base};
 
       &:hover,
       &:active {
-        color: ${uiColors.red.dark2};
-        background: rgba(207, 74, 34, 0.04);
-        border: 1px solid ${uiColors.red.base};
-        box-shadow: 0px 0px 0px 4px ${uiColors.red.light2};
+        color: ${palette.red.dark2};
+        background-color: ${transparentize(0.96, palette.red.base)};
+        border: 1px solid ${palette.red.base};
+        box-shadow: 0px 0px 0px 3px ${uiColors.red.light3};
+      }
+    `,
+
+    [Variant.BaseGreen]: css`
+      border: 1px solid ${palette.green.dark2};
+      color: ${palette.green.dark3};
+      background-color: ${palette.green.base};
+
+      &:hover,
+      &:active {
+        box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
     `,
   },
@@ -211,45 +197,64 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
         box-shadow: 0px 0px 0px 3px ${uiColors.red.dark2};
       }
     `,
+
+    // TODO: Refresh - Dark mode doesn't have a Base Green variant. This just duplicates `Primary`
+    [Variant.BaseGreen]: css`
+      background-color: ${uiColors.green.dark2};
+      border: 1px solid ${uiColors.green.base};
+      color: ${uiColors.white};
+
+      &:focus {
+        color: ${uiColors.white};
+      }
+
+      &:hover,
+      &:active {
+        color: ${uiColors.white};
+        background-color: ${uiColors.green.dark1};
+        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark2};
+      }
+    `,
   },
 };
 
 const focusStyle: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
+    [Variant.Default]: css`
+      &:focus {
+        background-color: ${palette.white};
+        box-shadow: ${focusBoxShadow(palette.white)};
+      }
+    `,
     [Variant.Primary]: css`
       &:focus {
-        background-color: ${uiColors.green.dark2};
-        box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
-          0px 0px 0px 3px ${uiColors.focus};
+        color: ${palette.white};
+        background-color: #00593f; // Not quite dark3
+        box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.PrimaryOutline]: css`
       &:focus {
-        background-color: rgba(9, 128, 76, 0.04);
-        border: 1px solid ${uiColors.green.dark1};
-        box-shadow: 0px 0px 0px 3px ${uiColors.focus};
-      }
-    `,
-    [Variant.Default]: css`
-      &:focus {
-        background: ${uiColors.white};
-        border: 1px solid ${uiColors.gray.dark1};
-        box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
-          0px 0px 0px 3px ${uiColors.focus};
+        background-color: ${transparentize(0.96, palette.green.base)};
+        box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.Danger]: css`
       &:focus {
-        background-color: ${uiColors.red.dark1};
-        box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
-          0px 0px 0px 3px ${uiColors.focus};
+        color: ${palette.white};
+        background-color: #c82222; // not quite dark1
+        box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.DangerOutline]: css`
       &:focus {
-        background: rgba(207, 74, 34, 0.04);
-        border: 1px solid ${uiColors.red.dark2};
-        box-shadow: 0px 0px 0px 3px #019ee2;
+        color: ${uiColors.red.dark2};
+        box-shadow: ${focusBoxShadow(palette.white)};
+      }
+    `,
+    [Variant.BaseGreen]: css`
+      &:focus {
+        box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
   },
@@ -287,23 +292,28 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
         box-shadow: 0px 0px 0px 3px #019ee2;
       }
     `,
+    [Variant.BaseGreen]: css`
+      &:focus {
+        background: ${uiColors.green.dark1};
+        box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
+          0px 0px 0px 3px ${uiColors.focus};
+      }
+    `,
   },
 };
 
 const disabledStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    background-color: ${uiColors.gray.light2};
-    border: 1px solid ${uiColors.gray.light2};
-    box-shadow: 0px 0px 0px 1px ${uiColors.gray.light1};
+    background-color: ${palette.gray.light3};
+    border: 1px solid ${palette.gray.light2};
     cursor: not-allowed;
-    color: ${uiColors.gray.dark1};
+    color: ${palette.gray.light1};
 
     &:hover {
-      background-color: ${uiColors.gray.light2};
-      border: 1px solid ${uiColors.gray.light2};
-      box-shadow: 0px 0px 0px 1px ${uiColors.gray.light1};
+      background-color: ${palette.gray.light3};
+      border: 1px solid ${palette.gray.light2};
       cursor: not-allowed;
-      color: ${uiColors.gray.dark1};
+      color: ${palette.gray.light1};
     }
   `,
 
@@ -348,14 +358,28 @@ const sizeSet: Record<Size, string> = {
 };
 
 const fontStyles = {
-  [14]: css`
-    font-size: 14px;
-  `,
-  [16]: css`
-    font-size: 16px;
-    // Pixel pushing for optical alignment purposes
-    transform: translateY(1px);
-  `,
+  [Mode.Light]: {
+    [14]: css`
+      font-size: 13px;
+      font-weight: 500;
+    `,
+    [16]: css`
+      font-size: 16px;
+      // Pixel pushing for optical alignment purposes
+      transform: translateY(1px);
+      font-weight: 500;
+    `,
+  },
+  [Mode.Dark]: {
+    [14]: css`
+      font-size: 14px;
+    `,
+    [16]: css`
+      font-size: 16px;
+      // Pixel pushing for optical alignment purposes
+      transform: translateY(1px);
+    `,
+  },
 };
 
 export function getClassName({
@@ -375,7 +399,7 @@ export function getClassName({
   const color = colorSet[mode][variant];
   const focus = focusStyle[mode][variant];
   const size = sizeSet[sizeProp];
-  const fontSize = fontStyles[baseFontSize];
+  const fontSize = fontStyles[mode][baseFontSize];
 
   return cx(
     baseButtonStyles,
@@ -384,6 +408,13 @@ export function getClassName({
     { [disabledStyle[mode]]: disabled },
     fontSize,
     size,
+    css`
+      // TODO: Refresh - remove this logic
+      font-family: ${mode === 'dark'
+        ? fontFamilies.legacy
+        : fontFamilies.default};
+      border-radius: ${mode === 'dark' ? 4 : 6}px;
+    `,
   );
 }
 
@@ -391,20 +422,17 @@ const buttonOpacity = 0.76;
 
 const visualDesignPalette = {
   green5: '#0AD05B',
-  green3: '#09804C',
   orange4: '#F97216',
 };
 
 export const colorMap: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
-    [Variant.Primary]: visualDesignPalette.green5,
-    [Variant.PrimaryOutline]: transparentize(
-      buttonOpacity,
-      visualDesignPalette.green3,
-    ),
-    [Variant.Default]: uiColors.gray.light2,
-    [Variant.Danger]: visualDesignPalette.orange4,
-    [Variant.DangerOutline]: transparentize(buttonOpacity, uiColors.red.base),
+    [Variant.Primary]: palette.green.base,
+    [Variant.PrimaryOutline]: transparentize(buttonOpacity, palette.green.base),
+    [Variant.Default]: palette.gray.light2,
+    [Variant.Danger]: palette.red.light1,
+    [Variant.DangerOutline]: transparentize(buttonOpacity, palette.red.base),
+    [Variant.BaseGreen]: palette.green.light1,
   },
   [Mode.Dark]: {
     [Variant.Primary]: visualDesignPalette.green5,
@@ -418,5 +446,6 @@ export const colorMap: Record<Mode, Record<Variant, string>> = {
       buttonOpacity,
       visualDesignPalette.orange4,
     ),
+    [Variant.BaseGreen]: visualDesignPalette.green5,
   },
 };
