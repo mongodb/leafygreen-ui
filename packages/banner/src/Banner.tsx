@@ -7,6 +7,7 @@ import XIcon from '@leafygreen-ui/icon/dist/X';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import IconButton from '@leafygreen-ui/icon-button';
 
 const Variant = {
   Info: 'info',
@@ -62,66 +63,120 @@ const renderedImageStyles = css`
   flex-shrink: 0;
 `;
 
-const bannerVariantStyles: Record<Variant, string> = {
-  [Variant.Info]: css`
-    color: ${palette.blue.dark2};
-    border-color: ${palette.blue.light2};
-    border-left-color: ${palette.blue.base};
-    background-color: ${palette.blue.light3};
+type StyledElements = 'body' | 'dismissButton';
 
-    &:before {
-      background: linear-gradient(
-        to left,
-        transparent 5px,
-        ${palette.blue.base} 6px
-      );
-    }
-  `,
+const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
+  [Variant.Info]: {
+    body: css`
+      color: ${palette.blue.dark2};
+      border-color: ${palette.blue.light2};
+      border-left-color: ${palette.blue.base};
+      background-color: ${palette.blue.light3};
 
-  [Variant.Warning]: css`
-    color: ${palette.yellow.dark2};
-    border-color: ${palette.yellow.light2};
-    border-left-color: ${palette.yellow.base};
-    background-color: ${palette.yellow.light3};
+      &:before {
+        background: linear-gradient(
+          to left,
+          transparent 5px,
+          ${palette.blue.base} 6px
+        );
+      }
+    `,
+    dismissButton: css`
+      color: ${palette.blue.dark2};
 
-    &:before {
-      background: linear-gradient(
-        to left,
-        transparent 5px,
-        ${palette.yellow.base} 6px
-      );
-    }
-  `,
+      &:hover {
+        color: ${palette.blue.dark2};
 
-  [Variant.Danger]: css`
-    color: ${palette.red.dark2};
-    border-color: ${palette.red.light2};
-    border-left-color: ${palette.red.base};
-    background-color: ${palette.red.light3};
+        &:before {
+          background-color: ${palette.blue.light2};
+        }
+      }
+    `,
+  },
 
-    &:before {
-      background: linear-gradient(
-        to left,
-        transparent 5px,
-        ${palette.red.base} 6px
-      );
-    }
-  `,
+  [Variant.Warning]: {
+    body: css`
+      color: ${palette.yellow.dark2};
+      border-color: ${palette.yellow.light2};
+      border-left-color: ${palette.yellow.base};
+      background-color: ${palette.yellow.light3};
 
-  [Variant.Success]: css`
-    color: ${palette.green.dark2};
-    border-color: ${palette.green.light2};
-    border-left-color: ${palette.green.base};
-    background-color: ${palette.green.light3};
+      &:before {
+        background: linear-gradient(
+          to left,
+          transparent 5px,
+          ${palette.yellow.base} 6px
+        );
+      }
+    `,
+    dismissButton: css`
+      color: ${palette.yellow.dark2};
 
-    &:before {
-      background: linear-gradient(
-        to left,
-        transparent 5px,
-        ${palette.green.dark1} 6px
-      );
-    }
-  `,
+      &:hover {
+        color: ${palette.yellow.dark2};
+
+        &:before {
+          background-color: ${palette.yellow.light2};
+        }
+      }
+    `,
+  },
+
+  [Variant.Danger]: {
+    body: css`
+      color: ${palette.red.dark2};
+      border-color: ${palette.red.light2};
+      border-left-color: ${palette.red.base};
+      background-color: ${palette.red.light3};
+
+      &:before {
+        background: linear-gradient(
+          to left,
+          transparent 5px,
+          ${palette.red.base} 6px
+        );
+      }
+    `,
+    dismissButton: css`
+      color: ${palette.red.dark2};
+
+      &:hover {
+        color: ${palette.red.dark2};
+
+        &:before {
+          background-color: ${palette.red.light2};
+        }
+      }
+    `,
+  },
+
+  [Variant.Success]: {
+    body: css`
+      color: ${palette.green.dark2};
+      border-color: ${palette.green.light2};
+      border-left-color: ${palette.green.base};
+      background-color: ${palette.green.light3};
+
+      &:before {
+        background: linear-gradient(
+          to left,
+          transparent 5px,
+          ${palette.green.dark1} 6px
+        );
+      }
+    `,
+    dismissButton: css`
+      color: ${palette.green.dark2};
+
+      &:hover {
+        color: ${palette.green.dark2};
+
+        &:before {
+          background-color: ${palette.green.light2};
+        }
+      }
+    `,
+  },
 } as const;
 
 const map = {
@@ -134,17 +189,6 @@ const map = {
   [Variant.Success]: {
     color: palette.green.dark1,
     icon: CheckmarkWithCircleIcon,
-  },
-};
-
-const dismissibleMap = {
-  [Variant.Info]: { color: palette.blue.dark2 },
-  [Variant.Warning]: {
-    color: palette.yellow.dark2,
-  },
-  [Variant.Danger]: { color: palette.red.dark2 },
-  [Variant.Success]: {
-    color: palette.green.dark2,
   },
 };
 
@@ -252,23 +296,31 @@ export default function Banner({
   return (
     <div
       role="alert"
-      className={cx(baseBannerStyles, bannerVariantStyles[variant], className)}
+      className={cx(
+        baseBannerStyles,
+        bannerVariantStyles[variant].body,
+        className,
+      )}
       {...rest}
     >
       {renderIcon}
       <div className={getTextStyle(image != null, dismissible)}>{children}</div>
       {dismissible && (
-        <XIcon
-          fill={dismissibleMap[variant].color}
-          onClick={onClose}
+        <IconButton
           className={cx(
             flexShrink,
             cursorPointer,
             css`
-              margin-top: 3px;
+              margin-top: -3px;
+              left: 8px;
             `,
+            bannerVariantStyles[variant].dismissButton,
           )}
-        />
+          aria-label="Close Message"
+          onClick={onClose}
+        >
+          <XIcon />
+        </IconButton>
       )}
     </div>
   );
