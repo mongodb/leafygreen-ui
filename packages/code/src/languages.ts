@@ -15,6 +15,7 @@ import scala from 'highlight.js/lib/languages/scala';
 import swift from 'highlight.js/lib/languages/swift';
 import kotlin from 'highlight.js/lib/languages/kotlin';
 import objectivec from 'highlight.js/lib/languages/objectivec';
+import dart from 'highlight.js/lib/languages/dart';
 import bash from 'highlight.js/lib/languages/bash';
 import shell from 'highlight.js/lib/languages/shell';
 import sql from 'highlight.js/lib/languages/sql';
@@ -41,6 +42,7 @@ export const languageParsers = {
   swift,
   kotlin,
   objectivec,
+  dart,
   bash,
   shell,
   sql,
@@ -71,6 +73,7 @@ export const SupportedLanguages = {
   Swift: 'swift',
   Kotlin: 'kotlin',
   ObjectiveC: 'objectivec',
+  Dart: 'dart',
   Bash: 'bash',
   Shell: 'shell',
   Sql: 'sql',
