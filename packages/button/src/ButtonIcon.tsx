@@ -1,24 +1,27 @@
 import React from 'react';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ButtonProps, Variant, Size, Mode } from './types';
 
 const iconColor: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
+    [Variant.Default]: css`
+      color: ${palette.gray.base};
+    `,
     [Variant.Primary]: css`
-      color: ${uiColors.green.light3};
+      color: ${palette.green.light2};
     `,
     [Variant.PrimaryOutline]: css`
-      color: ${uiColors.green.dark1};
-    `,
-    [Variant.Default]: css`
-      color: ${uiColors.gray.dark1};
+      color: ${palette.green.dark2};
     `,
     [Variant.Danger]: css`
-      color: ${uiColors.red.light3};
+      color: ${palette.red.light3};
     `,
     [Variant.DangerOutline]: css`
-      color: ${uiColors.red.base};
+      color: ${palette.red.light1};
+    `,
+    [Variant.BaseGreen]: css`
+      color: ${palette.green.dark2};
     `,
   },
 
@@ -38,25 +41,31 @@ const iconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.DangerOutline]: css`
       color: #f97216;
     `,
+    [Variant.BaseGreen]: css`
+      color: ${uiColors.gray.light1};
+    `,
   },
 };
 
 const onlyIconColor: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
+    [Variant.Default]: css`
+      color: ${palette.gray.dark1};
+    `,
     [Variant.Primary]: css`
-      color: ${uiColors.white};
+      color: ${palette.green.light3};
     `,
     [Variant.PrimaryOutline]: css`
-      color: ${uiColors.green.dark1};
-    `,
-    [Variant.Default]: css`
-      color: ${uiColors.gray.dark2};
+      color: ${palette.green.dark2};
     `,
     [Variant.Danger]: css`
-      color: ${uiColors.white};
+      color: ${palette.red.light3};
     `,
     [Variant.DangerOutline]: css`
-      color: #cf4a22;
+      color: ${palette.red.light1};
+    `,
+    [Variant.BaseGreen]: css`
+      color: ${palette.green.dark2};
     `,
   },
   [Mode.Dark]: {
@@ -74,6 +83,9 @@ const onlyIconColor: Record<Mode, Record<Variant, string>> = {
     `,
     [Variant.DangerOutline]: css`
       color: #f97216;
+    `,
+    [Variant.BaseGreen]: css`
+      color: ${uiColors.gray.light1};
     `,
   },
 };
@@ -99,7 +111,7 @@ const iconSize: Record<Size, string> = {
 
 const disabledIconStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.light1};
+    color: ${palette.gray.light2};
   `,
   [Mode.Dark]: css`
     color: ${uiColors.gray.dark1};
