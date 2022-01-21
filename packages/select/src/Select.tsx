@@ -6,13 +6,14 @@ import {
   useIdAllocator,
   useEventListener,
 } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
 import {
   colorSets,
+  legacySizeSets,
   mobileSizeSet,
   Mode,
   Size,
@@ -124,8 +125,7 @@ export default function Select({
   const listMenuRef = useStateRef<HTMLUListElement | null>(null);
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const colorSet = colorSets[mode];
-  const sizeSet = sizeSets[size];
+  const sizeSet = darkMode ? legacySizeSets[size] : sizeSets[size];
 
   const providerData = useMemo(() => {
     return { mode, size, open, disabled };
@@ -580,9 +580,11 @@ export default function Select({
         <span
           className={cx(
             css`
-              color: ${darkMode ? '#F97216' : uiColors.red.base};
-              font-size: ${sizeSet.description.text}px;
-              line-height: ${sizeSet.description.lineHeight}px;
+              font-family: ${darkMode
+                ? fontFamilies.legacy
+                : fontFamilies.default};
+              color: ${darkMode ? '#F97216' : palette.red.base};
+              font-size: ${sizeSet.text}px;
               margin-top: ${spacing[1]}px;
               padding-left: 2px;
 

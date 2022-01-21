@@ -4,24 +4,50 @@ import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import SelectContext from './SelectContext';
-import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
+import {
+  colorSets,
+  legacySizeSets,
+  mobileSizeSet,
+  Mode,
+  sizeSets,
+} from './styleSets';
 import { useForwardedRef } from './utils';
 import { useMemo } from 'react';
+import { Size } from '.';
 
 const maxMenuHeight = 274;
 const menuMargin = 8;
 
-const menuStyle = css`
+const baseMenuStyle = css`
   position: relative;
   text-align: left;
   width: 100%;
-  border-radius: 3px;
+  border-radius: 3px; //
   line-height: 16px;
   list-style: none;
   margin: 0;
   padding: 0;
   overflow: auto;
 `;
+
+const getMenuStyles = (mode: Mode, size: Size) => {
+  const sizeSet = mode === Mode.Dark ? legacySizeSets[size] : sizeSets[size];
+
+  const colorSet = colorSets[mode];
+
+  return css`
+    font-size: ${sizeSet.option.text}px;
+    min-height: ${sizeSet.height}px;
+    background-color: ${colorSet.option.background.base};
+    border-radius: ${mode === 'dark' ? 3 : 12}px;
+    font-family: ${mode === 'dark'
+      ? fontFamilies.legacy
+      : fontFamilies.default};
+    box-shadow: ${mode === 'dark'
+      ? `0 3px 7px 0 ${colorSets[mode].menu.shadow};`
+      : `0 4px 7px 0 ${colorSets[mode].menu.shadow};`};
+  `;
+};
 
 type ListMenuProps = {
   children: React.ReactNode;
@@ -48,8 +74,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     forwardedRef,
   ) {
     const { mode, size, disabled, open } = useContext(SelectContext);
-    const colorSet = colorSets[mode];
-    const sizeSet = sizeSets[size];
 
     const ref = useForwardedRef(forwardedRef, null);
 
@@ -96,7 +120,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     return (
       <Popover
         active={open && !disabled}
-        spacing={4}
+        spacing={mode === 'dark' ? 4 : 8}
         align={Align.Bottom}
         justify={Justify.Middle}
         adjustOnMutation
@@ -113,15 +137,10 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
           tabIndex={-1}
           onClick={onClick}
           className={cx(
-            menuStyle,
+            baseMenuStyle,
+            getMenuStyles(mode, size),
             css`
-              font-family: ${fontFamilies.default};
-              font-size: ${sizeSet.option.text}px;
-              min-height: ${sizeSet.height}px;
               max-height: ${maxHeight}px;
-              background-color: ${colorSet.option.background.base};
-              box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
-
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.option.text}px;
               }

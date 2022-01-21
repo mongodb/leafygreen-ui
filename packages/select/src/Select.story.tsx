@@ -4,8 +4,23 @@ import { boolean, select, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { Option, OptionGroup, Select, Size, State } from '.';
+
+// eslint-disable-next-line react/prop-types
+const Wrapper = ({ darkMode, children }) => (
+  <div
+    className={css`
+      position: absolute;
+      background-color: ${darkMode ? palette.gray.dark3 : uiColors.white};
+      padding: 20px;
+      height: 100%;
+      width: 400px;
+    `}
+  >
+    {children}
+  </div>
+);
 
 storiesOf('Select', module)
   .add('Uncontrolled', () => {
@@ -25,15 +40,7 @@ storiesOf('Select', module)
     const state = select('State', Object.values(State), State.None);
 
     return (
-      <div
-        className={css`
-          position: absolute;
-          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
-          padding: 20px;
-          height: 100%;
-          width: 400px;
-        `}
-      >
+      <Wrapper darkMode={darkMode}>
         <Provider>
           <Select
             darkMode={darkMode}
@@ -73,7 +80,7 @@ storiesOf('Select', module)
             </Option>
           </Select>
         </Provider>
-      </div>
+      </Wrapper>
     );
   })
   .add('Controlled', () => {
@@ -94,14 +101,7 @@ storiesOf('Select', module)
     const [value, setValue] = useState('cat');
 
     return (
-      <div
-        className={css`
-          position: absolute;
-          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
-          padding: 20px;
-          height: 100%;
-        `}
-      >
+      <Wrapper darkMode={darkMode}>
         <Provider>
           <Select
             darkMode={darkMode}
@@ -139,6 +139,6 @@ storiesOf('Select', module)
             </Option>
           </Select>
         </Provider>
-      </div>
+      </Wrapper>
     );
   });
