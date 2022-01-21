@@ -11,7 +11,6 @@ import ButtonIcon from './ButtonIcon';
 
 const rippleStyle = css`
   overflow: hidden;
-  border-radius: 3px;
   position: absolute;
   top: 0;
   left: 0;
@@ -135,7 +134,16 @@ const Button: ExtendableBox<
   const content = (
     <>
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
-      <div className={rippleStyle} ref={rippleRef} />
+      <div
+        className={cx(
+          rippleStyle,
+          css`
+            // TODO: Refresh - remove darkMode logic
+            border-radius: ${darkMode ? 3 : 6}px;
+          `,
+        )}
+        ref={rippleRef}
+      />
 
       <div
         className={cx(
