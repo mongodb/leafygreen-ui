@@ -6,13 +6,12 @@ import {
   useIdAllocator,
   useEventListener,
 } from '@leafygreen-ui/hooks';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
 import {
-  colorSets,
   legacySizeSets,
   mobileSizeSet,
   Mode,
@@ -33,6 +32,11 @@ import {
   traverseSelectChildren,
   useStateRef,
 } from './utils';
+
+const wrapperStyle = css`
+  display: flex;
+  flex-direction: column;
+`;
 
 export type Props = {
   children: React.ReactNode;
@@ -499,7 +503,7 @@ export default function Select({
   };
 
   return (
-    <div className={cx(className)}>
+    <div className={cx(wrapperStyle, className)}>
       {label && (
         <Label
           htmlFor={menuButtonId}

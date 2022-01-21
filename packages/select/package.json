@@ -24,6 +24,7 @@
     "@leafygreen-ui/emotion": "^4.0.0",
     "@leafygreen-ui/hooks": "^7.1.1",
     "@leafygreen-ui/icon": "^11.6.0",
+    "@leafygreen-ui/interaction-ring": "^1.1.1",
     "@leafygreen-ui/lib": "^9.0.1",
     "@leafygreen-ui/palette": "^3.2.2",
     "@leafygreen-ui/popover": "^7.2.2",
