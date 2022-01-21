@@ -11,7 +11,6 @@ import ButtonIcon from './ButtonIcon';
 
 const rippleStyle = css`
   overflow: hidden;
-  /* border-radius: 3px; */
   position: absolute;
   top: 0;
   left: 0;
