@@ -111,6 +111,10 @@ const ulStyle = css`
   transition: height 150ms ease-in-out;
 `;
 
+const menuItemText = css`
+  padding-left: 16px;
+`;
+
 const menuItemBorder = css`
   position: absolute;
   width: 100%;
@@ -128,6 +132,7 @@ const menuItemBorderBottom = css`
 const subItemStyle = css`
   position: relative;
   color: ${palette.gray.light1};
+  font-weight: 400;
 `;
 
 const subMenuItemHeight = 36;
@@ -371,7 +376,9 @@ const SubMenu: ExtendableBox<
                     children: (
                       <>
                         <div className={menuItemBorder} />
-                        {child.props.children}
+                        <span className={menuItemText}>
+                          {child.props.children}
+                        </span>
                         {index === numberOfMenuItems - 1 && (
                           <div className={menuItemBorderBottom} />
                         )}
@@ -382,7 +389,6 @@ const SubMenu: ExtendableBox<
                       css`
                         padding-left: ${glyph ? paddingLeft : 28}px;
                       `,
-                      // getSubItemStyle(!!glyph, index === numberOfMenuItems - 1),
                       child.props.className,
                     ),
                     onClick: (
