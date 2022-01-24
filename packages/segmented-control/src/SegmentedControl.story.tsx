@@ -18,6 +18,7 @@ storiesOf('SegmentedControl', module)
           followFocus={boolean('followFocus', true)}
           value={selectedFruit}
           onChange={(value: string) => {
+            // eslint-disable-next-line no-console
             console.log('Setting value to', value);
             setSelectedFruit(value);
           }}
@@ -46,6 +47,7 @@ storiesOf('SegmentedControl', module)
           darkMode={boolean('darkMode', false)}
           defaultValue="fig"
           followFocus={boolean('followFocus', false)}
+          // eslint-disable-next-line no-console
           onChange={val => console.log(val)}
           aria-controls=""
         >
@@ -74,6 +76,7 @@ storiesOf('SegmentedControl', module)
           darkMode={boolean('darkMode', false)}
           defaultValue="json"
           onChange={value => {
+            // eslint-disable-next-line no-console
             console.log(value);
           }}
         >
@@ -101,6 +104,7 @@ storiesOf('SegmentedControl', module)
           darkMode={boolean('darkMode', false)}
           defaultValue="cloud"
           onChange={value => {
+            // eslint-disable-next-line no-console
             console.log(value);
           }}
         >

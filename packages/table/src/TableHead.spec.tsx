@@ -122,6 +122,7 @@ describe('packages/table/table-head', () => {
             key="name"
             label="Name"
             handleSort={dir => {
+              // eslint-disable-next-line no-console
               console.log(dir);
             }}
           />,
