@@ -192,7 +192,6 @@ storiesOf('Combobox', module)
     const [selection, setSelection] = useState<string | null>('apple');
 
     const handleChange = (value: string | null) => {
-      console.log({ value });
       setSelection(value);
     };
 
@@ -218,7 +217,6 @@ storiesOf('Combobox', module)
     const [selection, setSelection] = useState(['apple']);
 
     const handleChange = (value: Array<string>) => {
-      console.log({ value });
       setSelection(value);
     };
 
