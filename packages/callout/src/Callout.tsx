@@ -19,19 +19,19 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
-  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – update to fontFamilies.default
   background-color: ${palette.white};
-  border-radius: 12px;
+  border-radius: 16px;
   position: relative;
 
   &:after {
     content: '';
     position: absolute;
-    width: 13px;
-    left: -1px;
-    top: -1px;
-    bottom: -1px;
-    border-radius: 12px 0px 0px 12px;
+    width: 16px;
+    left: -2px;
+    top: -2px;
+    bottom: -2px;
+    border-radius: 16px 0px 0px 16px;
   }
 `;
 
@@ -40,12 +40,12 @@ const headerStyle = css`
   font-weight: 700;
   letter-spacing: 1px;
   line-height: 16px;
-  padding: 12px 24px 12px 54px;
+  padding: 12px 24px 12px 52px;
   position: relative;
   text-transform: uppercase;
   width: 100%;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 11px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
 `;
 
 const headerIconStyle = css`
@@ -60,8 +60,8 @@ const titleStyle = css`
 const bodyStyle = css`
   display: flex;
   flex-direction: column;
-  padding: 16px 24px 16px 54px;
-  font-weight: 300;
+  padding: 16px 24px 16px 52px;
+  font-weight: 400;
 `;
 
 const fontSet = {
@@ -180,13 +180,13 @@ function Callout({
         baseStyle,
         css`
           color: ${colorSet.text};
-          border: 1px solid ${colorSet.border};
+          border: 2px solid ${colorSet.border};
 
           &:after {
             background: linear-gradient(
               to left,
-              transparent 5px,
-              ${colorSet.bar} 6px
+              transparent 9px,
+              ${colorSet.bar} 10px
             );
           }
         `,
