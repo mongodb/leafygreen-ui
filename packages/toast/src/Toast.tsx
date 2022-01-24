@@ -40,6 +40,7 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
     transform-origin: bottom center;
     opacity: 0;
     transition: all ${transitionDuration}ms ease-in-out;
+    border: 1px solid;
   `,
 
   icon: css`
@@ -80,7 +81,7 @@ const variantStyles: Record<
   [Variant.Success]: {
     toast: css`
       background-color: ${palette.green.light3};
-      border: 1px solid ${palette.green.light2};
+      border-color: ${palette.green.light2};
     `,
 
     icon: css`
@@ -107,7 +108,7 @@ const variantStyles: Record<
   [Variant.Note]: {
     toast: css`
       background-color: ${palette.blue.light3};
-      border: 1px solid ${palette.blue.light2};
+      border-color: ${palette.blue.light2};
     `,
 
     icon: css`
@@ -134,7 +135,7 @@ const variantStyles: Record<
   [Variant.Warning]: {
     toast: css`
       background-color: ${palette.red.light3};
-      border: 1px solid ${palette.red.light2};
+      border-color: ${palette.red.light2};
     `,
 
     icon: css`
@@ -161,7 +162,7 @@ const variantStyles: Record<
   [Variant.Important]: {
     toast: css`
       background-color: ${palette.yellow.light3};
-      border: 1px solid ${palette.yellow.light2};
+      border-color: ${palette.yellow.light2};
     `,
 
     icon: css`
@@ -188,7 +189,7 @@ const variantStyles: Record<
   [Variant.Progress]: {
     toast: css`
       background-color: ${palette.white};
-      border: 1px solid ${palette.blue.light2};
+      border-color: ${palette.blue.light2};
     `,
 
     icon: css`
@@ -337,7 +338,7 @@ function Toast({
                     baseElementStyles.icon,
                     currentVariantStyles.icon,
                   )}
-                  size={30}
+                  size={28}
                 />
 
                 <div>
