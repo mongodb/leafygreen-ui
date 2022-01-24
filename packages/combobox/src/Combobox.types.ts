@@ -233,6 +233,11 @@ export interface BaseComboboxProps {
    * When usePortal is `true`, specifies the scrollable element to position relative to.
    */
   scrollContainer?: null;
+
+  /**
+   * Number that controls the z-index of the popover element directly.
+   */
+  popoverZIndex?: number;
 }
 
 export type ComboboxProps<M extends boolean> = Either<

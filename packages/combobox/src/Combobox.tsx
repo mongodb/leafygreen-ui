@@ -83,6 +83,7 @@ export default function Combobox<M extends boolean>({
   portalClassName,
   portalContainer,
   scrollContainer,
+  popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
@@ -1070,14 +1071,17 @@ export default function Combobox<M extends boolean>({
 
   useEventListener('mousedown', handleBackdropClick);
 
-  const popoverProps = usePortal
-    ? ({
-        usePortal,
-        portalClassName,
-        portalContainer,
-        scrollContainer,
-      } as const)
-    : ({ usePortal } as const);
+  const popoverProps = {
+    popoverZIndex,
+    ...(usePortal
+      ? {
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
+      : { usePortal }),
+  } as const;
 
   return (
     <ComboboxContext.Provider
