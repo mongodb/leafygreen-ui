@@ -20,6 +20,7 @@ import {
   activeDescriptionTextStyle,
   textContainer,
   getFocusedStyles,
+  getHoverStyles,
 } from './styles';
 
 const menuItemContainer = createDataProp('menu-item-container');
@@ -98,6 +99,7 @@ const MenuItem: ExtendableBox<
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const hoverStyles = getHoverStyles(menuItemContainer.selector);
     const focusStyles = getFocusedStyles(menuItemContainer.selector);
 
     const updatedGlyph =
@@ -119,18 +121,13 @@ const MenuItem: ExtendableBox<
       ...menuItemContainer.prop,
       ref,
       className: cx(
-        'qwerqwerty',
         menuItemContainerStyle,
         menuItemHeight[size],
         linkStyle,
-        titleTextStyle,
         {
           [activeMenuItemContainerStyle]: active,
           [disabledMenuItemContainerStyle]: disabled,
           [focusedMenuItemContainerStyle]: showFocus,
-          [activeTitleTextStyle]: active,
-          [disabledTextStyle]: disabled,
-          [focusStyles.textStyle]: showFocus,
         },
         className,
       ),
@@ -150,7 +147,15 @@ const MenuItem: ExtendableBox<
       <>
         {updatedGlyph}
         <div className={textContainer}>
-          <div>{children}</div>
+          <div
+            className={cx(titleTextStyle, hoverStyles.text, {
+              [activeTitleTextStyle]: active,
+              [disabledTextStyle]: disabled,
+              [focusStyles.textStyle]: showFocus,
+            })}
+          >
+            {children}
+          </div>
           {description && (
             <div
               className={cx(descriptionTextStyle, {

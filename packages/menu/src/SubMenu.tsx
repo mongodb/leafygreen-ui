@@ -26,6 +26,7 @@ import {
   activeIconStyle,
   textContainer,
   getFocusedStyles,
+  getHoverStyles,
 } from './styles';
 import { ExitHandler } from 'react-transition-group/Transition';
 
@@ -112,6 +113,9 @@ const ulStyle = css`
 `;
 
 const menuItemText = css`
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
   padding-left: 16px;
 `;
 
@@ -130,9 +134,9 @@ const menuItemBorderBottom = css`
 `;
 
 const subItemStyle = css`
+  // Reassign the variable for specificity
+  --lg-menu-item-text-color: ${palette.gray.light1};
   position: relative;
-  color: ${palette.gray.light1};
-  font-weight: 400;
 `;
 
 const subMenuItemHeight = 36;
@@ -213,6 +217,8 @@ const SubMenu: ExtendableBox<
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const nodeRef = React.useRef(null);
+    const hoverStyles = getHoverStyles(subMenuContainer.selector);
+    console.log(subMenuContainer.selector);
     const focusStyles = getFocusedStyles(subMenuContainer.selector);
 
     const [
@@ -276,7 +282,7 @@ const SubMenu: ExtendableBox<
         {updatedGlyph}
         <div className={textContainer}>
           <div
-            className={cx(titleTextStyle, {
+            className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle]: active,
               [disabledTextStyle]: disabled,
               [focusStyles.textStyle]: showFocus,

@@ -12,6 +12,8 @@ export const paddingLeft = 52;
  * Base styles
  */
 export const menuItemContainerStyle = css`
+  // Using vars to maintain proper specificity for sub-items
+  --lg-menu-item-text-color: ${palette.white};
   display: flex;
   position: relative;
   box-sizing: border-box;
@@ -77,8 +79,8 @@ export const mainIconStyle = css`
 export const titleTextStyle = css`
   width: 100%;
   font-size: 13px;
-  font-weight: bold;
-  color: ${palette.white};
+  font-weight: 500;
+  color: var(--lg-menu-item-text-color, ${palette.white});
 `;
 
 export const descriptionTextStyle = css`
@@ -93,6 +95,20 @@ export const linkDescriptionTextStyle = css`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
+/**
+ * Hover Styles
+ */
+
+export const getHoverStyles = (container: string) => ({
+  text: css`
+    ${container}:hover & {
+      --lg-menu-item-text-color: ${palette.green.base};
+      /* color: ${palette.green.base}; */
+      font-weight: 700;
+    }
+  `,
+});
 
 /**
  * Active styles
@@ -115,7 +131,7 @@ export const activeMenuItemContainerStyle = css`
 
 export const activeTitleTextStyle = css`
   font-weight: bold;
-  color: ${palette.green.base};
+  color: ${palette.white};
 `;
 export const activeDescriptionTextStyle = css`
   color: ${palette.gray.light1};
@@ -134,6 +150,10 @@ export const disabledMenuItemContainerStyle = css`
   &:hover:before {
     background-color: unset;
   }
+`;
+
+export const disabledTextStyle = css`
+  color: ${palette.gray.dark2};
 `;
 
 /**
@@ -178,8 +198,4 @@ export const getFocusedStyles = (selector: string) => {
 export const linkStyle = css`
   text-decoration: none;
   color: inherit;
-`;
-
-export const disabledTextStyle = css`
-  color: ${palette.gray.dark2};
 `;
