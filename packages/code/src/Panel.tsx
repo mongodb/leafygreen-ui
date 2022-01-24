@@ -4,6 +4,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import CopyButton from './CopyButton';
 import LanguageSwitcher from './LanguageSwitcher';
 import { variantColors } from './globalStyles';
+import { PopoverProps } from './types';
 import {
   Mode,
   LanguageOption,
@@ -93,7 +94,7 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   isMultiline?: boolean;
   customActionButtons?: Array<React.ReactNode>;
   showCustomActionButtons?: boolean;
-};
+} & PopoverProps;
 
 function Panel({
   language,
@@ -106,8 +107,21 @@ function Panel({
   isMultiline = false,
   customActionButtons,
   showCustomActionButtons,
+  usePortal,
+  portalClassName,
+  portalContainer,
+  scrollContainer,
+  popoverZIndex,
 }: PanelProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
+
+  const popoverProps = {
+    popoverZIndex,
+    usePortal,
+    portalClassName,
+    portalContainer,
+    scrollContainer,
+  } as const;
 
   return (
     <div
@@ -122,6 +136,7 @@ function Panel({
             language={language}
             languageOptions={languageOptions}
             darkMode={darkMode}
+            {...popoverProps}
           />
         )}
 
