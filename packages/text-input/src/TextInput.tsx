@@ -494,6 +494,9 @@ const TextInput: React.ComponentType<
                 [css`
                   color: ${colorSets[mode].disabledDescriptionColor};
                 `]: disabled,
+                [css`
+                  padding-bottom: 4px;
+                `]: !darkMode,
               },
             )}
           >
