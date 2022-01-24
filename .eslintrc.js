@@ -64,6 +64,7 @@ module.exports = {
     'no-undef': 'off', // covered by TypeScript
     'no-var': 'warn',
     'prefer-const': 'warn',
+    'no-console': ['error', { allow: ['warn', 'error'] }],
   },
   overrides: [
     {

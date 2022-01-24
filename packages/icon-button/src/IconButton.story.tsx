@@ -28,6 +28,7 @@ function getCommonProps() {
     disabled: boolean('disabled', false),
     darkMode: boolean('darkMode', false),
     size: select('Size', Object.values(Size) as Array<Size>, Size.Default),
+    // eslint-disable-next-line no-console
     onClick: () => console.log('Click'),
   };
 }

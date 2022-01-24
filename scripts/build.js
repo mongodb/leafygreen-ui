@@ -9,6 +9,7 @@ if (args.includes('--watch')) {
   cmdArgs.push('--', '--watch');
 }
 
+// eslint-disable-next-line no-console
 console.log('Running pre-build...');
 spawnSync('yarn', ['pre-build', ...args], { stdio: 'inherit' });
 
@@ -21,5 +22,6 @@ if (args.length > 0) {
 // Run lerna
 const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
 cmd.on('close', code => {
+  // eslint-disable-next-line no-console
   console.log(code === 0 ? '✅ Finished building \n' : `Exit code ${code}`);
 });
