@@ -7,6 +7,7 @@ import { palette, uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
+import Warning from '@leafygreen-ui/icon/dist/Warning';
 
 export const State = {
   None: 'none',
@@ -50,12 +51,15 @@ const textAreaStyle = css`
 `;
 
 const errorMessageStyle = css`
-  font-size: 14px;
+  display: flex;
   height: 20px;
   padding-top: 4px;
   font-weight: normal;
 `;
 
+const errorIconStyle = css`
+  margin-right: 3px;
+`;
 interface ColorSets {
   textArea: string;
   errorBorder: string;
@@ -92,6 +96,8 @@ const colorSets: Record<Mode, ColorSets> = {
     `,
     errorMessage: css`
       color: ${palette.red.base};
+      font-family: ${fontFamilies.default};
+      font-size: 13px;
     `,
     disabledText: css`
       color: ${palette.gray.base};
@@ -123,6 +129,8 @@ const colorSets: Record<Mode, ColorSets> = {
 
     errorMessage: css`
       color: #ef8d6f;
+      font-family: ${fontFamilies.legacy};
+      font-size: 14px;
     `,
     disabledText: css`
       color: ${uiColors.gray.dark1};
@@ -234,6 +242,10 @@ const TextArea: React.ComponentType<
       </InteractionRing>
       {!disabled && state === State.Error && errorMessage && (
         <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
+          {
+            // TODO: Refresh - remove conditional logic
+            !darkMode && <Warning className={errorIconStyle} />
+          }
           <label>{errorMessage}</label>
         </div>
       )}
