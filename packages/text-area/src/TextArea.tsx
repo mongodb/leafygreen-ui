@@ -214,7 +214,15 @@ const TextArea: React.ComponentType<
         </Label>
       )}
       {description && (
-        <Description darkMode={darkMode} disabled={disabled}>
+        <Description
+          darkMode={darkMode}
+          disabled={disabled}
+          className={cx({
+            [css`
+              padding-bottom: 4px;
+            `]: !darkMode,
+          })}
+        >
           {description}
         </Description>
       )}
@@ -222,6 +230,7 @@ const TextArea: React.ComponentType<
         darkMode={darkMode}
         disabled={disabled}
         ignoreKeyboardContext={true}
+        borderRadius={darkMode ? '4px' : '6px'} // TODO: Refresh - remove after darkmode is redesigned
       >
         <textarea
           {...rest}
