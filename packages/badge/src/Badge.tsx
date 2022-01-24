@@ -19,7 +19,7 @@ export const baseStyle = css`
   font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
   display: inline-flex;
   align-items: center;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
   line-height: 16px;
   border-radius: 5px;
