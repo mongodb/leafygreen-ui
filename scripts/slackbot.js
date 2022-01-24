@@ -28,6 +28,7 @@ try {
     if (exists(text)) {
       // post message
       web.chat.postMessage({ text, channel });
+      // eslint-disable-next-line no-console
       console.log(`Sent message to ${channel}`);
     } else {
       console.warn('Missing message text. Did not send message.');
