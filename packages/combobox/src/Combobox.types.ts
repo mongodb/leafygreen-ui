@@ -210,6 +210,29 @@ export interface BaseComboboxProps {
    * Styling prop
    */
   className?: string;
+
+  /**
+   * Specifies that the popover content should be rendered at the end of the DOM,
+   * rather than in the DOM tree.
+   *
+   * default: `true`
+   */
+  usePortal?: boolean;
+
+  /**
+   * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
+   */
+  portalClassName?: undefined;
+
+  /**
+   * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
+   */
+  portalContainer?: null;
+
+  /**
+   * When usePortal is `true`, specifies the scrollable element to position relative to.
+   */
+  scrollContainer?: null;
 }
 
 export type ComboboxProps<M extends boolean> = Either<

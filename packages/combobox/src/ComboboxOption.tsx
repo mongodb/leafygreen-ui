@@ -67,7 +67,7 @@ const flexSpan = css`
 
 const disallowPointer = css`
   pointer-events: none;
-`
+`;
 
 const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
@@ -100,6 +100,7 @@ const InternalComboboxOption = React.forwardRef<
     const handleOptionClick = useCallback(
       (e: React.SyntheticEvent) => {
         e.stopPropagation();
+
         // If user clicked on the option, or the checkbox
         // Ignore extra click events on the checkbox wrapper
         if (
