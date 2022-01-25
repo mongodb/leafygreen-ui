@@ -70,6 +70,7 @@ storiesOf('Table', module)
                 label="Location"
                 key="location"
                 handleSort={dir => {
+                  // eslint-disable-next-line no-console
                   console.log(`Sorting location ${dir}`);
                 }}
               />

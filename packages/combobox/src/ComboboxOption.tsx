@@ -65,6 +65,10 @@ const flexSpan = css`
   align-items: inherit;
 `;
 
+const disallowPointer = css`
+  pointer-events: none;
+`;
+
 const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
 `;
@@ -96,6 +100,7 @@ const InternalComboboxOption = React.forwardRef<
     const handleOptionClick = useCallback(
       (e: React.SyntheticEvent) => {
         e.stopPropagation();
+
         // If user clicked on the option, or the checkbox
         // Ignore extra click events on the checkbox wrapper
         if (
@@ -136,7 +141,7 @@ const InternalComboboxOption = React.forwardRef<
 
         return (
           <>
-            <span className={flexSpan}>
+            <span className={cx(flexSpan, disallowPointer)}>
               {withIcons ? renderedIcon : checkbox}
               <span id={optionTextId} className={displayNameStyle(isSelected)}>
                 {wrapJSX(displayName, inputValue, 'strong')}
@@ -150,7 +155,7 @@ const InternalComboboxOption = React.forwardRef<
       // Single select
       return (
         <>
-          <span className={flexSpan}>
+          <span className={cx(flexSpan, disallowPointer)}>
             {renderedIcon}
             <span className={displayNameStyle(isSelected)}>
               {wrapJSX(displayName, inputValue, 'strong')}

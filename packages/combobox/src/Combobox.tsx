@@ -79,6 +79,11 @@ export default function Combobox<M extends boolean>({
   chipTruncationLocation,
   chipCharacterLimit = 12,
   className,
+  usePortal = true,
+  portalClassName,
+  portalContainer,
+  scrollContainer,
+  popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
@@ -1063,7 +1068,20 @@ export default function Combobox<M extends boolean>({
       setOpen(false);
     }
   };
+
   useEventListener('mousedown', handleBackdropClick);
+
+  const popoverProps = {
+    popoverZIndex,
+    ...(usePortal
+      ? {
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
+      : { usePortal }),
+  } as const;
 
   return (
     <ComboboxContext.Provider
@@ -1161,6 +1179,7 @@ export default function Combobox<M extends boolean>({
           refEl={comboboxRef}
           adjustOnMutation={true}
           className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
+          {...popoverProps}
         >
           <div
             id={menuId}
