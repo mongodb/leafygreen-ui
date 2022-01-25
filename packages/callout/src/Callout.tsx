@@ -37,7 +37,7 @@ const baseStyle = css`
 
 const headerStyle = css`
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 1px;
   line-height: 16px;
   padding: 12px 24px 12px 52px;
@@ -54,7 +54,7 @@ const headerIconStyle = css`
 `;
 
 const titleStyle = css`
-  font-weight: 700;
+  font-weight: 500;
 `;
 
 const bodyStyle = css`
