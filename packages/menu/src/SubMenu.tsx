@@ -218,7 +218,6 @@ const SubMenu: ExtendableBox<
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const nodeRef = React.useRef(null);
     const hoverStyles = getHoverStyles(subMenuContainer.selector);
-    console.log(subMenuContainer.selector);
     const focusStyles = getFocusedStyles(subMenuContainer.selector);
 
     const [
