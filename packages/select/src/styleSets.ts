@@ -124,6 +124,7 @@ export type Size = typeof Size[keyof typeof Size];
 interface SizeSet {
   height: number;
   text: number;
+  lineHeight?: number;
   option: {
     text: number;
   };
@@ -134,6 +135,7 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.XSmall]: {
     height: 22,
     text: 13,
+    lineHeight: 20,
     option: {
       text: 13,
     },
@@ -142,6 +144,7 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.Small]: {
     height: 28,
     text: 13,
+    lineHeight: 20,
     option: {
       text: 13,
     },
@@ -150,6 +153,7 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.Default]: {
     height: 36,
     text: 13,
+    lineHeight: 20,
     option: {
       text: 13,
     },
@@ -158,6 +162,7 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.Large]: {
     height: 48,
     text: 18,
+    lineHeight: 22,
     option: {
       text: 16,
     },

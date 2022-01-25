@@ -512,6 +512,9 @@ export default function Select({
           disabled={disabled}
           className={cx(
             css`
+              font-size: ${sizeSet.text}px;
+            `,
+            css`
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.label.text}px;
                 line-height: ${mobileSizeSet.label.lineHeight}px;
@@ -529,6 +532,10 @@ export default function Select({
           darkMode={darkMode}
           disabled={disabled}
           className={cx(
+            css`
+              font-size: ${sizeSet.text}px;
+              line-height: ${sizeSet.lineHeight}px;
+            `,
             css`
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;

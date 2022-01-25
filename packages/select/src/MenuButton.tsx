@@ -12,12 +12,31 @@ import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
 import { State } from '.';
 
-const menuButtonStyle = css`
-  // reset default Button padding
-  > span {
-    padding: 0;
+const menuButtonStyleOverrides = css`
+  text-transform: unset;
+  font-weight: 400;
+  // Override button defaults
+  > *:last-child {
+    grid-template-columns: 1fr 16px;
+    > svg {
+      justify-self: right;
+    }
   }
 `;
+
+const menuButtonStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+    // Override button default color
+    > *:last-child {
+      > svg {
+        color: ${palette.gray.dark2};
+      }
+    }
+  `,
+  [Mode.Dark]: css`
+    border-color: transparent;
+  `,
+};
 
 const menuButtonTextStyle = css`
   overflow: hidden;
@@ -134,9 +153,11 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       variant={Variant.Default}
       darkMode={mode === Mode.Dark}
       rightGlyph={<CaretDownIcon />}
+      size={size}
       data-testid="leafygreen-ui-select-menubutton"
       className={cx(
-        menuButtonStyle,
+        menuButtonStyleOverrides,
+        menuButtonStyles[mode],
         css`
           width: 100%;
           @media only screen and (max-width: ${breakpoints.Desktop}px) {
@@ -145,9 +166,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           }
         `,
         {
-          [css`
-            border-color: transparent;
-          `]: mode === Mode.Dark,
           [css`
             color: ${colorSet.text.deselected};
           `]: deselected,
