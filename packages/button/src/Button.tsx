@@ -20,6 +20,7 @@ const rippleStyle = css`
 const containerChildStyles = css`
   display: grid;
   grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   align-items: center;
   height: 100%;
   width: 100%;
@@ -154,7 +155,9 @@ const Button: ExtendableBox<
         {leftGlyph && (
           <ButtonIcon
             glyph={leftGlyph}
-            className={''} // Prevents TS error
+            className={css`
+              justify-self: right;
+            `}
             {...iconProps}
           />
         )}
@@ -164,7 +167,9 @@ const Button: ExtendableBox<
         {rightGlyph && (
           <ButtonIcon
             glyph={rightGlyph}
-            className={''} // Prevents TS error
+            className={css`
+              justify-self: left;
+            `}
             {...iconProps}
           />
         )}
