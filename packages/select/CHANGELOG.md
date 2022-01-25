@@ -1,5 +1,16 @@
 # @leafygreen-ui/select
 
+## 3.1.0
+
+### Minor Changes
+
+- 70f3c2c: Added error state to select component
+
+### Patch Changes
+
+- Updated dependencies [70f3c2c]
+  - @leafygreen-ui/hooks@7.1.1
+
 ## 3.0.8
 
 ### Patch Changes

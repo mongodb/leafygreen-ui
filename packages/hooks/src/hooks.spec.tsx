@@ -352,6 +352,7 @@ describe('packages/hooks', () => {
   describe('useValidation', () => {
     it('Returns validation functions when callback is defined', () => {
       const { result } = renderHook(() =>
+        // eslint-disable-next-line no-console
         useValidation(value => console.log(value)),
       );
       expect(result.current.onBlur).toBeDefined();
