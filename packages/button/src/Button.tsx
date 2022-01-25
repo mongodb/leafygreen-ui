@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps, Mode } from './types';
-import { getClassName, colorMap } from './styles';
+import { getClassName, colorMap, ButtonDataProp } from './styles';
 import ButtonIcon from './ButtonIcon';
 
 const rippleStyle = css`
@@ -120,6 +120,7 @@ const Button: ExtendableBox<
     // only add a disabled prop if not an anchor
     ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,
+    ...ButtonDataProp.prop,
     ...rest,
   } as const;
 
