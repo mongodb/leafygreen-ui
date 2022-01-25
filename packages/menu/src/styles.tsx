@@ -125,7 +125,6 @@ export const activeMenuItemContainerStyle = css`
   }
 
   &:hover {
-    /* background-color: ${palette.gray.dark3}; */
     color: ${palette.green.base};
     &:before {
       background-color: ${palette.green.base};
