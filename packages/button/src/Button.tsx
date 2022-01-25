@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps, Mode } from './types';
@@ -19,7 +18,8 @@ const rippleStyle = css`
 `;
 
 const containerChildStyles = css`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   height: 100%;
   width: 100%;
@@ -30,23 +30,19 @@ const containerChildStyles = css`
 
 const padding: Record<Size, string> = {
   [Size.XSmall]: css`
-    padding-left: 6px;
-    padding-right: 6px;
+    padding: 0 6px; // 8px - 2px (border)
   `,
 
   [Size.Small]: css`
-    padding-left: 12px;
-    padding-right: 12px;
+    padding: 0 10px; // 12px - 2px (border)
   `,
 
   [Size.Default]: css`
-    padding-left: 12px;
-    padding-right: 12px;
+    padding: 0 10px; // 12px - 2px (border)
   `,
 
   [Size.Large]: css`
-    padding-left: ${spacing[3]}px;
-    padding-right: ${spacing[3]}px;
+    padding: 0 14px; // 16px - 2px (border)
   `,
 };
 
@@ -148,26 +144,16 @@ const Button: ExtendableBox<
       <div
         className={cx(
           containerChildStyles,
-          {
-            [css`
-              justify-content: space-between;
-            `]: !!rightGlyph,
-            [css`
-              justify-content: center;
-            `]: !rightGlyph,
-          },
           padding[size],
+          css`
+            gap: ${iconSpacing};
+          `,
         )}
       >
         {leftGlyph && (
           <ButtonIcon
             glyph={leftGlyph}
-            className={cx(
-              { [css`margin-right: ${iconSpacing};}`]: !isIconOnlyButton },
-              css`
-                vertical-align: text-top;
-              `,
-            )}
+            className={''} // Prevents TS error
             {...iconProps}
           />
         )}
@@ -175,22 +161,11 @@ const Button: ExtendableBox<
         {children}
 
         {rightGlyph && (
-          <span
-            className={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-left: auto;
-            `}
-          >
-            <ButtonIcon
-              glyph={rightGlyph}
-              className={
-                !isIconOnlyButton ? css`margin-left: ${iconSpacing};}` : ''
-              }
-              {...iconProps}
-            />
-          </span>
+          <ButtonIcon
+            glyph={rightGlyph}
+            className={''} // Prevents TS error
+            {...iconProps}
+          />
         )}
       </div>
     </>
