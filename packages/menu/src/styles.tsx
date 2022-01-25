@@ -103,9 +103,13 @@ export const linkDescriptionTextStyle = css`
 export const getHoverStyles = (container: string) => ({
   text: css`
     ${container}:hover & {
+      // Using vars to maintain proper specificity for sub-items
       --lg-menu-item-text-color: ${palette.green.base};
-      /* color: ${palette.green.base}; */
-      font-weight: 700;
+      // Pseudo-bold so the text doesn't overflow on hover
+      text-shadow: 0.125px 0 var(--lg-menu-item-text-color),
+        -0.125px 0 var(--lg-menu-item-text-color),
+        0 0.125px var(--lg-menu-item-text-color),
+        0 -0.125px var(--lg-menu-item-text-color);
     }
   `,
 });

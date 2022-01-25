@@ -34,11 +34,11 @@ type Size = typeof Size[keyof typeof Size];
 
 const menuItemHeight: Record<Size, string> = {
   [Size.Default]: css`
-    min-height: 36px;
+    min-height: 34px;
   `,
 
   [Size.Large]: css`
-    min-height: 56px;
+    min-height: 46px;
   `,
 };
 
