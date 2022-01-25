@@ -8,7 +8,7 @@ import { palette, uiColors } from '@leafygreen-ui/palette';
 import { Option, OptionGroup, Select, Size, State } from '.';
 
 // eslint-disable-next-line react/prop-types
-const Wrapper = ({ darkMode, children }) => (
+const Wrapper = ({ darkMode, children }: any) => (
   <div
     className={css`
       position: absolute;
