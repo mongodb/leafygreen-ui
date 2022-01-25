@@ -126,6 +126,7 @@ export const activeMenuItemContainerStyle = css`
 
   &:hover {
     color: ${palette.green.base};
+
     &:before {
       background-color: ${palette.green.base};
     }
@@ -135,6 +136,7 @@ export const activeMenuItemContainerStyle = css`
 export const activeTitleTextStyle = css`
   font-weight: bold;
   color: ${palette.white};
+  text-shadow: unset !important; // no pseudo bold text when active
 `;
 export const activeDescriptionTextStyle = css`
   color: ${palette.gray.light1};
