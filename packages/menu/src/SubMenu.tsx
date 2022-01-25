@@ -117,6 +117,7 @@ const menuItemText = css`
   font-size: 13px;
   line-height: 16px;
   padding-left: 16px;
+  text-shadow: none;
 `;
 
 const menuItemBorder = css`
