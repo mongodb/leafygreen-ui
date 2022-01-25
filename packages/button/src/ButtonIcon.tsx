@@ -95,7 +95,7 @@ const onlyIconStyleHover = css`
   ${ButtonDataProp.selector}:hover &,
   ${ButtonDataProp.selector}:active & {
     color: currentColor;
-  }
+  } ;
 `;
 
 const iconSize: Record<Size, string> = {
@@ -126,14 +126,9 @@ const disabledIconStyle: Record<Mode, string> = {
   `,
 };
 
-const disabledIconOnlyStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.gray.light1};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.gray.dark1};
-  `,
-};
+const disabledIconOnlyStyle = css`
+  color: ${palette.gray.light1};
+`;
 
 function ButtonIcon({
   glyph,
@@ -164,7 +159,7 @@ function ButtonIcon({
       {
         [disabledIconStyle[mode]]: disabled,
         [onlyIconStyleHover]: isIconOnlyButton,
-        [disabledIconOnlyStyle[mode]]: disabled && isIconOnlyButton,
+        [disabledIconOnlyStyle]: !darkMode && disabled && isIconOnlyButton,
       },
       className,
     ),
