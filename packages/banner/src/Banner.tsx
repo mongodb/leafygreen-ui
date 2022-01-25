@@ -45,6 +45,19 @@ const baseBannerStyles = css`
   }
 `;
 
+//TODO: refresh - remove when IconButton focus styles are updated
+const baseDismissButtonStyles = css`
+  &:focus {
+    color: ${palette.gray.dark3};
+    outline: 2px solid ${palette.blue.light1};
+    border: 2px solid ${palette.white};
+
+    &:before {
+      background-color: ${palette.gray.light2};
+    }
+  }
+`;
+
 const flexShrink = css`
   flex-shrink: 0;
 `;
@@ -315,6 +328,7 @@ export default function Banner({
               left: 8px;
             `,
             bannerVariantStyles[variant].dismissButton,
+            baseDismissButtonStyles,
           )}
           aria-label="Close Message"
           onClick={onClose}
