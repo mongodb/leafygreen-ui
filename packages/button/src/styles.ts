@@ -71,6 +71,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        background-color: ${transparentize(0.96, palette.green.base)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
     `,
