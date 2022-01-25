@@ -50,6 +50,7 @@ export default function SelectLiveExample() {
           size={size}
           darkMode={darkMode}
           followFocus={followFocus}
+          // eslint-disable-next-line no-console
           onChange={val => console.log(val)}
           aria-controls=""
         >

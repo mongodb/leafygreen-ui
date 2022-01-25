@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { Size, Variant, Mode, ButtonProps } from './types';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { createDataProp } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 3px ${color}, 
@@ -71,6 +72,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        background-color: ${transparentize(0.96, palette.green.base)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
     `,
@@ -381,6 +383,8 @@ const fontStyles = {
     `,
   },
 };
+
+export const ButtonDataProp = createDataProp('button');
 
 export function getClassName({
   variant,

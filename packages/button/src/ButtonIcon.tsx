@@ -2,8 +2,9 @@ import React from 'react';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ButtonProps, Variant, Size, Mode } from './types';
+import { ButtonDataProp } from './styles';
 
-const iconColor: Record<Mode, Record<Variant, string>> = {
+const baseIconStyle: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Default]: css`
       color: ${palette.gray.base};
@@ -47,7 +48,7 @@ const iconColor: Record<Mode, Record<Variant, string>> = {
   },
 };
 
-const onlyIconColor: Record<Mode, Record<Variant, string>> = {
+const onlyIconStyle: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Default]: css`
       color: ${palette.gray.dark1};
@@ -90,6 +91,13 @@ const onlyIconColor: Record<Mode, Record<Variant, string>> = {
   },
 };
 
+const onlyIconStyleHover = css`
+  ${ButtonDataProp.selector}:hover &,
+  ${ButtonDataProp.selector}:active & {
+    color: currentColor;
+  } ;
+`;
+
 const iconSize: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 14px;
@@ -118,6 +126,10 @@ const disabledIconStyle: Record<Mode, string> = {
   `,
 };
 
+const disabledIconOnlyStyle = css`
+  color: ${palette.gray.light1};
+`;
+
 function ButtonIcon({
   glyph,
   variant,
@@ -138,15 +150,17 @@ function ButtonIcon({
   };
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const color = isIconOnlyButton
-    ? onlyIconColor[mode][variant]
-    : iconColor[mode][variant];
+  const iconStyle = isIconOnlyButton ? onlyIconStyle : baseIconStyle;
 
   return React.cloneElement(glyph, {
     className: cx(
-      color,
-      { [disabledIconStyle[mode]]: disabled },
+      iconStyle[mode][variant],
       iconSize[size],
+      {
+        [disabledIconStyle[mode]]: disabled,
+        [onlyIconStyleHover]: isIconOnlyButton,
+        [disabledIconOnlyStyle]: !darkMode && disabled && isIconOnlyButton,
+      },
       className,
     ),
     ...accessibleIconProps,

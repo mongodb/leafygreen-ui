@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/icon';
 import {
   Combobox,
@@ -45,19 +44,15 @@ const knobsConfig: KnobsConfigInterface<{
 
 export default function SelectLiveExample() {
   return (
-    <div>
-      <LeafygreenProvider>
-        <LiveExample knobsConfig={knobsConfig}>
-          {knobs =>
-            knobs.multiselect ? (
-              <MultiSelect knobs={knobs} />
-            ) : (
-              <SingleSelect knobs={knobs} />
-            )
-          }
-        </LiveExample>
-      </LeafygreenProvider>
-    </div>
+    <LiveExample knobsConfig={knobsConfig}>
+      {knobs =>
+        knobs.multiselect ? (
+          <MultiSelect knobs={knobs} />
+        ) : (
+          <SingleSelect knobs={knobs} />
+        )
+      }
+    </LiveExample>
   );
 }
 
@@ -67,7 +62,6 @@ function SingleSelect({
   const [isError, setIsError] = useState(false);
 
   const handleChange = (value: string | null) => {
-    console.log(value);
     if (value === 'pomegranate') {
       setIsError(true);
     } else {
