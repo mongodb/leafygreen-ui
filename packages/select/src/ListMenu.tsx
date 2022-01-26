@@ -35,18 +35,28 @@ const getMenuStyles = (mode: Mode, size: Size) => {
 
   const colorSet = colorSets[mode];
 
-  return css`
-    font-size: ${sizeSet.option.text}px;
-    min-height: ${sizeSet.height}px;
-    background-color: ${colorSet.option.background.base};
-    border-radius: ${mode === 'dark' ? 3 : 12}px;
-    font-family: ${mode === 'dark'
-      ? fontFamilies.legacy
-      : fontFamilies.default};
-    box-shadow: ${mode === 'dark'
-      ? `0 3px 7px 0 ${colorSets[mode].menu.shadow};`
-      : `0 4px 7px 0 ${colorSets[mode].menu.shadow};`};
-  `;
+  return cx(
+    css`
+      font-size: ${sizeSet.option.text}px;
+      min-height: ${sizeSet.height}px;
+      background-color: ${colorSet.option.background.base};
+    `,
+    {
+      // TODO: Refresh - remove dark mode logic
+      [css`
+        font-family: ${fontFamilies.default};
+        border: 1px solid ${colorSet.menu.border};
+        border-radius: 12px;
+        box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
+        padding: 8px 0;
+      `]: mode === Mode.Light,
+      [css`
+        font-family: ${fontFamilies.legacy};
+        border-radius: 3px;
+        box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
+      `]: mode === Mode.Dark,
+    },
+  );
 };
 
 type ListMenuProps = {

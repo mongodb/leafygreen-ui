@@ -29,6 +29,7 @@ const menuButtonStyleOverrides = css`
 
 const menuButtonModeOverrides: Record<Mode, string> = {
   [Mode.Light]: css`
+    background-color: ${palette.white};
     // Override button default color
     > *:last-child {
       > svg {

@@ -20,7 +20,6 @@ export type ReactEmpty = null | undefined | false | '';
 const optionStyle = css`
   display: flex;
   width: 100%;
-  padding: 10px 12px;
   outline: none;
   overflow-wrap: anywhere;
   transition: background-color 150ms ease-in-out;
@@ -244,6 +243,10 @@ export function InternalOption({
         css`
           cursor: pointer;
           color: ${colorSet.text.base};
+        `,
+        // TODO: Refresh - remove dark mode conditional styles
+        css`
+          padding: ${mode === Mode.Dark ? 10 : 8}px 12px;
         `,
         {
           [css`

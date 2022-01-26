@@ -14,6 +14,7 @@ interface ColorSet {
   };
   menu: {
     shadow: string;
+    border?: string;
   };
   option: {
     group: {
@@ -48,6 +49,7 @@ export const colorSets: Record<Mode, ColorSet> = {
       deselected: palette.gray.dark1,
     },
     menu: {
+      border: palette.gray.light2,
       shadow: transparentize(0.75, palette.black),
     },
     option: {
