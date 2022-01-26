@@ -8,40 +8,41 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
 
 function Uncontrolled() {
+  const size = select('Size', ['default', 'large'], 'default');
+
   return (
     <LeafyGreenProvider>
       <Menu
         align={select('Align', Object.values(Align), Align.Bottom)}
         justify={select('Justify', Object.values(Justify), Justify.Start)}
         trigger={<button>trigger</button>}
-        spacing={number('spacing', 15)}
         popoverZIndex={number('zIndex', 1)}
       >
-        <MenuItem
-          active
-          size={select('Size', ['default', 'large'], 'default')}
-          glyph={<CloudIcon />}
-        >
+        <MenuItem active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description">
+        <MenuItem description="I am also a description" size={size}>
           Menu Item With Description
         </MenuItem>
         <MenuItem
           disabled={boolean('Disable item', true)}
           description="I am a description"
+          size={size}
         >
           Disabled Menu Item
         </MenuItem>
-
-        <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
+        <MenuItem size={size} href="http://mongodb.design">
+          I am a link!
+        </MenuItem>
       </Menu>
     </LeafyGreenProvider>
   );
 }
 
 function Controlled() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+  const size = select('Size', ['default', 'large'], 'default');
+
   return (
     <LeafyGreenProvider>
       <button onClick={() => setOpen(!open)}>
@@ -52,23 +53,20 @@ function Controlled() {
           open={open}
           setOpen={setOpen}
         >
-          <MenuItem
-            size={select('Size', ['default', 'large'], 'large')}
-            glyph={<LaptopIcon size="xlarge" />}
-          >
+          <MenuItem active size={size} glyph={<LaptopIcon size="large" />}>
             Active Menu Item
           </MenuItem>
-          <MenuItem disabled={boolean('Disable item', true)} size="large">
+          <MenuItem disabled={boolean('Disable item', true)} size={size}>
             Disabled Menu Item
           </MenuItem>
-          <MenuItem active description="I am a description" size="large">
+          <MenuItem description="I am a description" size={size}>
             Menu Item With Description
           </MenuItem>
-          <MenuItem href="http://mongodb.design" size="large">
+          <MenuItem href="http://mongodb.design" size={size}>
             I am a link!
           </MenuItem>
           <MenuSeparator />
-          <MenuItem size="large">Left out of the MenuGroup</MenuItem>
+          <MenuItem size={size}>Left out of the MenuGroup</MenuItem>
         </Menu>
       </button>
     </LeafyGreenProvider>
@@ -82,7 +80,7 @@ function SubMenuExample() {
         <SubMenu
           title="Menu Item 1"
           description="https://google.com"
-          glyph={<CloudIcon size="xlarge" />}
+          glyph={<CloudIcon size="large" />}
           active={true}
           href="http://mongodb.design"
         >
@@ -91,8 +89,8 @@ function SubMenuExample() {
         </SubMenu>
         <SubMenu
           title="Menu Item 2"
-          description="https://google.com"
-          glyph={<LaptopIcon size="xlarge" />}
+          description="Sed posuere consectetur"
+          glyph={<LaptopIcon size="large" />}
         >
           <MenuItem>Support 1</MenuItem>
         </SubMenu>
