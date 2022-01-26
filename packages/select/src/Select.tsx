@@ -512,7 +512,6 @@ export default function Select({
           disabled={disabled}
           className={cx(
             css`
-              font-size: ${sizeSet.text}px;
               // Prevent hover state from showing when hovering label
               pointer-events: none;
             `,
@@ -522,6 +521,17 @@ export default function Select({
                 line-height: ${mobileSizeSet.label.lineHeight}px;
               }
             `,
+            {
+              [css`
+                font-size: ${sizeSet.text}px;
+              `]: mode === Mode.Light, // TODO: Refresh - remove conditional logic
+              [css`
+                font-size: ${legacySizeSets[size].label!.text}px;
+                line-height: ${legacySizeSets[size].label!.lineHeight}px;
+                padding-bottom: 0;
+                margin-bottom: 2px;
+              `]: mode === Mode.Dark, // TODO: Refresh - remove conditional logic
+            },
           )}
         >
           {label}
@@ -535,15 +545,23 @@ export default function Select({
           disabled={disabled}
           className={cx(
             css`
-              font-size: ${sizeSet.text}px;
-              line-height: ${sizeSet.lineHeight}px;
-            `,
-            css`
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
             `,
+            {
+              [css`
+                font-size: ${sizeSets[size].text}px;
+                line-height: ${sizeSets[size].lineHeight}px;
+              `]: mode === Mode.Light, // TODO: Refresh - remove conditional logic
+              [css`
+                font-size: ${legacySizeSets[size].description!.text}px;
+                line-height: ${legacySizeSets[size].description!.lineHeight}px;
+                padding-bottom: 0;
+                margin-bottom: 2px;
+              `]: mode === Mode.Dark, // TODO: Refresh - remove conditional logic
+            },
           )}
         >
           {description}

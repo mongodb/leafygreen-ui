@@ -129,6 +129,14 @@ interface SizeSet {
     text: number;
   };
   warningIcon: number;
+  label?: {
+    text: number;
+    lineHeight: number;
+  };
+  description?: {
+    text: number;
+    lineHeight: number;
+  };
 }
 
 export const sizeSets: Record<Size, SizeSet> = {
@@ -179,6 +187,14 @@ export const legacySizeSets: Record<Size, SizeSet> = {
       text: 14,
     },
     warningIcon: 12,
+    label: {
+      text: 14,
+      lineHeight: 16,
+    },
+    description: {
+      text: 14,
+      lineHeight: 16,
+    },
   },
   [Size.Small]: {
     height: 28,
@@ -187,6 +203,14 @@ export const legacySizeSets: Record<Size, SizeSet> = {
       text: 14,
     },
     warningIcon: 14,
+    label: {
+      text: 14,
+      lineHeight: 16,
+    },
+    description: {
+      text: 14,
+      lineHeight: 16,
+    },
   },
   [Size.Default]: {
     height: 36,
@@ -195,6 +219,14 @@ export const legacySizeSets: Record<Size, SizeSet> = {
       text: 14,
     },
     warningIcon: 14,
+    label: {
+      text: 14,
+      lineHeight: 16,
+    },
+    description: {
+      text: 14,
+      lineHeight: 20,
+    },
   },
   [Size.Large]: {
     height: 48,
@@ -203,6 +235,14 @@ export const legacySizeSets: Record<Size, SizeSet> = {
       text: 16,
     },
     warningIcon: 17.5,
+    label: {
+      text: 18,
+      lineHeight: 21,
+    },
+    description: {
+      text: 18,
+      lineHeight: 24,
+    },
   },
 };
 

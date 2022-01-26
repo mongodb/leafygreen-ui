@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import Button, { Variant } from '@leafygreen-ui/button';
+import Button, { Size, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
@@ -18,13 +18,16 @@ const menuButtonStyleOverrides = css`
   // Override button defaults
   > *:last-child {
     grid-template-columns: 1fr 16px;
+    padding: 0 12px;
     > svg {
       justify-self: right;
+      width: 16px;
+      height: 16px;
     }
   }
 `;
 
-const menuButtonStyles: Record<Mode, string> = {
+const menuButtonModeOverrides: Record<Mode, string> = {
   [Mode.Light]: css`
     // Override button default color
     > *:last-child {
@@ -156,8 +159,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       size={size}
       data-testid="leafygreen-ui-select-menubutton"
       className={cx(
-        menuButtonStyleOverrides,
-        menuButtonStyles[mode],
+        menuButtonStyleOverrides, // TODO: Refresh - remove overrides
+        menuButtonModeOverrides[mode], // TODO: Refresh - remove overrides
         css`
           width: 100%;
           @media only screen and (max-width: ${breakpoints.Desktop}px) {
@@ -171,6 +174,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           `]: deselected,
           [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,
           [menuButtonFocusStyle[mode]]: showFocus,
+          [css`
+            letter-spacing: initial;
+          `]: size === Size.XSmall,
         },
       )}
     >
