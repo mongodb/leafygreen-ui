@@ -1,24 +1,28 @@
 import React from 'react';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ButtonProps, Variant, Size, Mode } from './types';
+import { ButtonDataProp } from './styles';
 
-const iconColor: Record<Mode, Record<Variant, string>> = {
+const baseIconStyle: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
+    [Variant.Default]: css`
+      color: ${palette.gray.base};
+    `,
     [Variant.Primary]: css`
-      color: ${uiColors.green.light3};
+      color: ${palette.green.light2};
     `,
     [Variant.PrimaryOutline]: css`
-      color: ${uiColors.green.dark1};
-    `,
-    [Variant.Default]: css`
-      color: ${uiColors.gray.dark1};
+      color: ${palette.green.dark2};
     `,
     [Variant.Danger]: css`
-      color: ${uiColors.red.light3};
+      color: ${palette.red.light3};
     `,
     [Variant.DangerOutline]: css`
-      color: ${uiColors.red.base};
+      color: ${palette.red.light1};
+    `,
+    [Variant.BaseGreen]: css`
+      color: ${palette.green.dark2};
     `,
   },
 
@@ -38,25 +42,31 @@ const iconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.DangerOutline]: css`
       color: #f97216;
     `,
+    [Variant.BaseGreen]: css`
+      color: ${uiColors.gray.light1};
+    `,
   },
 };
 
-const onlyIconColor: Record<Mode, Record<Variant, string>> = {
+const onlyIconStyle: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
+    [Variant.Default]: css`
+      color: ${palette.gray.dark1};
+    `,
     [Variant.Primary]: css`
-      color: ${uiColors.white};
+      color: ${palette.green.light3};
     `,
     [Variant.PrimaryOutline]: css`
-      color: ${uiColors.green.dark1};
-    `,
-    [Variant.Default]: css`
-      color: ${uiColors.gray.dark2};
+      color: ${palette.green.dark2};
     `,
     [Variant.Danger]: css`
-      color: ${uiColors.white};
+      color: ${palette.red.light3};
     `,
     [Variant.DangerOutline]: css`
-      color: #cf4a22;
+      color: ${palette.red.light1};
+    `,
+    [Variant.BaseGreen]: css`
+      color: ${palette.green.dark2};
     `,
   },
   [Mode.Dark]: {
@@ -75,8 +85,18 @@ const onlyIconColor: Record<Mode, Record<Variant, string>> = {
     [Variant.DangerOutline]: css`
       color: #f97216;
     `,
+    [Variant.BaseGreen]: css`
+      color: ${uiColors.gray.light1};
+    `,
   },
 };
+
+const onlyIconStyleHover = css`
+  ${ButtonDataProp.selector}:hover &,
+  ${ButtonDataProp.selector}:active & {
+    color: currentColor;
+  } ;
+`;
 
 const iconSize: Record<Size, string> = {
   [Size.XSmall]: css`
@@ -99,12 +119,16 @@ const iconSize: Record<Size, string> = {
 
 const disabledIconStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.light1};
+    color: ${palette.gray.light2};
   `,
   [Mode.Dark]: css`
     color: ${uiColors.gray.dark1};
   `,
 };
+
+const disabledIconOnlyStyle = css`
+  color: ${palette.gray.light1};
+`;
 
 function ButtonIcon({
   glyph,
@@ -126,15 +150,17 @@ function ButtonIcon({
   };
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const color = isIconOnlyButton
-    ? onlyIconColor[mode][variant]
-    : iconColor[mode][variant];
+  const iconStyle = isIconOnlyButton ? onlyIconStyle : baseIconStyle;
 
   return React.cloneElement(glyph, {
     className: cx(
-      color,
-      { [disabledIconStyle[mode]]: disabled },
+      iconStyle[mode][variant],
       iconSize[size],
+      {
+        [disabledIconStyle[mode]]: disabled,
+        [onlyIconStyleHover]: isIconOnlyButton,
+        [disabledIconOnlyStyle]: !darkMode && disabled && isIconOnlyButton,
+      },
       className,
     ),
     ...accessibleIconProps,
