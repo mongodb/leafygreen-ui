@@ -28,6 +28,7 @@
     "@leafygreen-ui/lib": "^9.0.0",
     "@leafygreen-ui/popover": "^7.2.2",
     "@leafygreen-ui/palette": "^3.2.2",
+    "@leafygreen-ui/tokens": "^0.5.3",
     "@leafygreen-ui/box": "^3.0.6",
     "@leafygreen-ui/icon-button": "^9.1.6"
   },
