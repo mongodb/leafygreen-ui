@@ -97,6 +97,7 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
     dismissButton: css`
       color: ${palette.blue.dark2};
 
+      &:active,
       &:hover {
         color: ${palette.blue.dark2};
 
@@ -125,6 +126,7 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
     dismissButton: css`
       color: ${palette.yellow.dark2};
 
+      &:active,
       &:hover {
         color: ${palette.yellow.dark2};
 
@@ -153,6 +155,7 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
     dismissButton: css`
       color: ${palette.red.dark2};
 
+      &:active,
       &:hover {
         color: ${palette.red.dark2};
 
@@ -181,6 +184,7 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
     dismissButton: css`
       color: ${palette.green.dark2};
 
+      &:active,
       &:hover {
         color: ${palette.green.dark2};
 
