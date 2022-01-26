@@ -436,7 +436,7 @@ export default function Select({
         onClick={getOptionClickHandler(null, false)}
         onFocus={getOptionFocusHandler(null, false)}
         isDeselection
-        hasGlyphs
+        hasGlyphs={false}
         triggerScrollIntoView={selected && canTriggerScrollIntoView}
       >
         {placeholder}
@@ -513,6 +513,8 @@ export default function Select({
           className={cx(
             css`
               font-size: ${sizeSet.text}px;
+              // Prevent hover state from showing when hovering label
+              pointer-events: none;
             `,
             css`
               @media only screen and (max-width: ${breakpoints.Desktop}px) {

@@ -6,7 +6,7 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 import { createDataProp } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
-import { colorSets } from './styleSets';
+import { colorSets, Mode } from './styleSets';
 import SelectContext from './SelectContext';
 
 const option = createDataProp('option');
@@ -91,6 +91,9 @@ export function InternalOption({
 
   const ref = useRef<HTMLLIElement>(null);
 
+  const showDeselectionStyle =
+    selected && (mode === Mode.Light || !isDeselection);
+
   const scrollIntoView = useCallback(() => {
     if (ref.current == null) {
       return null;
@@ -133,7 +136,7 @@ export function InternalOption({
       className={cx(optionTextStyle, {
         [css`
           font-weight: bold;
-        `]: selected && !isDeselection,
+        `]: showDeselectionStyle,
       })}
     >
       {children}
@@ -178,26 +181,25 @@ export function InternalOption({
     }
   }
 
-  const checkmark =
-    selected && !isDeselection ? (
-      <CheckmarkIcon
-        key="checkmark"
-        className={cx(
-          iconStyle,
-          css`
-            color: ${colorSet.icon.selected};
-          `,
-          {
-            [glyphFocusStyle]: showFocus,
-            [css`
-              color: ${colorSet.icon.disabled};
-            `]: disabled,
-          },
-        )}
-      />
-    ) : (
-      iconPlaceholder
-    );
+  const checkmark = showDeselectionStyle ? (
+    <CheckmarkIcon
+      key="checkmark"
+      className={cx(
+        iconStyle,
+        css`
+          color: ${colorSet.icon.selected};
+        `,
+        {
+          [glyphFocusStyle]: showFocus,
+          [css`
+            color: ${colorSet.icon.disabled};
+          `]: disabled,
+        },
+      )}
+    />
+  ) : (
+    iconPlaceholder
+  );
 
   let renderedChildren: React.ReactNode;
 
