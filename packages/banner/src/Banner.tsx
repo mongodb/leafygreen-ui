@@ -51,10 +51,6 @@ const baseDismissButtonStyles = css`
     color: ${palette.gray.dark3};
     outline: 2px solid ${palette.blue.light1};
     border: 2px solid ${palette.white};
-
-    &:before {
-      background-color: ${palette.gray.light2};
-    }
   }
 `;
 
@@ -105,6 +101,12 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
           background-color: ${palette.blue.light2};
         }
       }
+
+      &:focus {
+        &:before {
+          background-color: ${palette.blue.light2};
+        }
+      }
     `,
   },
 
@@ -130,6 +132,12 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
       &:hover {
         color: ${palette.yellow.dark2};
 
+        &:before {
+          background-color: ${palette.yellow.light2};
+        }
+      }
+
+      &:focus {
         &:before {
           background-color: ${palette.yellow.light2};
         }
@@ -163,6 +171,12 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
           background-color: ${palette.red.light2};
         }
       }
+
+      &:focus {
+        &:before {
+          background-color: ${palette.red.light2};
+        }
+      }
     `,
   },
 
@@ -188,6 +202,12 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
       &:hover {
         color: ${palette.green.dark2};
 
+        &:before {
+          background-color: ${palette.green.light2};
+        }
+      }
+
+      &:focus {
         &:before {
           background-color: ${palette.green.light2};
         }
