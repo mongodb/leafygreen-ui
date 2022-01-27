@@ -77,6 +77,11 @@ const menuButtonErrorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     border-color: ${errorColor[Mode.Light]};
     background-color: ${palette.white};
+
+    &:hover,
+    &:active {
+      box-shadow: 0 0 0 3px #f9d5c5; // Between light2 & light3
+    }
   `,
   [Mode.Dark]: css`
     border-color: ${errorColor[Mode.Dark]}; // off palette
