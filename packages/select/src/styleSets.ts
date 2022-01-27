@@ -123,7 +123,7 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-interface SizeSet {
+export interface SizeSet {
   height: number;
   text: number;
   lineHeight?: number;

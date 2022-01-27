@@ -14,10 +14,11 @@ import { Label, Description } from '@leafygreen-ui/typography';
 import {
   legacySizeSets,
   mobileSizeSet,
+  sizeSets,
   Mode,
   Size,
-  sizeSets,
   State,
+  SizeSet,
 } from './styleSets';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
@@ -36,6 +37,22 @@ import {
 const wrapperStyle = css`
   display: flex;
   flex-direction: column;
+`;
+
+const errorTextStyle = ({
+  darkMode,
+  sizeSet,
+}: {
+  darkMode: boolean;
+  sizeSet: SizeSet;
+}) => css`
+  font-family: ${darkMode ? fontFamilies.legacy : fontFamilies.default};
+  color: ${darkMode ? '#F97216' : palette.red.base};
+  font-size: ${sizeSet.text}px;
+  margin-top: ${spacing[1]}px;
+  padding-left: 2px;
+  transition: color 100ms ease-in-out;
+  transition-delay: 100ms;
 `;
 
 export type Props = {
@@ -610,20 +627,20 @@ export default function Select({
       {state === State.Error && errorMessage && (
         <span
           className={cx(
+            errorTextStyle({ darkMode, sizeSet }),
             css`
-              font-family: ${darkMode
-                ? fontFamilies.legacy
-                : fontFamilies.default};
-              color: ${darkMode ? '#F97216' : palette.red.base};
-              font-size: ${sizeSet.text}px;
-              margin-top: ${spacing[1]}px;
-              padding-left: 2px;
-
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
             `,
+            {
+              [css`
+                // Hide error text when menu is open,
+                // so it doesn't peek around the menu corner
+                color: transparent;
+              `]: open,
+            },
           )}
         >
           {errorMessage}
