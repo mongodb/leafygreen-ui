@@ -40,7 +40,7 @@ function Uncontrolled() {
 }
 
 function Controlled() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const size = select('Size', ['default', 'large'], 'default');
 
   return (

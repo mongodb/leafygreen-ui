@@ -162,7 +162,8 @@ export const disabledMenuItemContainerStyle = css`
 `;
 
 export const disabledTextStyle = css`
-  color: ${palette.gray.dark2};
+  color: ${palette.gray.dark1};
+  font-weight: 400;
 `;
 
 /**
