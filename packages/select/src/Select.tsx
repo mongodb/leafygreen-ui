@@ -6,17 +6,19 @@ import {
   useIdAllocator,
   useEventListener,
 } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { Label, Description } from '@leafygreen-ui/typography';
 import {
-  colorSets,
+  legacySizeSets,
   mobileSizeSet,
+  sizeSets,
   Mode,
   Size,
-  sizeSets,
   State,
+  SizeSet,
 } from './styleSets';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
@@ -32,14 +34,25 @@ import {
   useStateRef,
 } from './utils';
 
-const sharedTextStyles = css`
-  font-family: ${fontFamilies.default};
-  display: block;
+const wrapperStyle = css`
+  display: flex;
+  flex-direction: column;
 `;
 
-const labelStyle = css`
-  margin-bottom: 2px;
-  font-weight: bold;
+const errorTextStyle = ({
+  darkMode,
+  sizeSet,
+}: {
+  darkMode: boolean;
+  sizeSet: SizeSet;
+}) => css`
+  font-family: ${darkMode ? fontFamilies.legacy : fontFamilies.default};
+  color: ${darkMode ? '#F97216' : palette.red.base};
+  font-size: ${sizeSet.text}px;
+  margin-top: ${spacing[1]}px;
+  padding-left: 2px;
+  transition: color 100ms ease-in-out;
+  transition-delay: 100ms;
 `;
 
 export type Props = {
@@ -129,11 +142,11 @@ export default function Select({
   const [open, setOpen] = useState(false);
 
   const menuButtonRef = useStateRef<HTMLDivElement | null>(null);
+  const menuButtonId = useIdAllocator({ prefix: 'select' });
   const listMenuRef = useStateRef<HTMLUListElement | null>(null);
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const colorSet = colorSets[mode];
-  const sizeSet = sizeSets[size];
+  const sizeSet = darkMode ? legacySizeSets[size] : sizeSets[size];
 
   const providerData = useMemo(() => {
     return { mode, size, open, disabled };
@@ -440,7 +453,7 @@ export default function Select({
         onClick={getOptionClickHandler(null, false)}
         onFocus={getOptionFocusHandler(null, false)}
         isDeselection
-        hasGlyphs
+        hasGlyphs={false}
         triggerScrollIntoView={selected && canTriggerScrollIntoView}
       >
         {placeholder}
@@ -507,29 +520,19 @@ export default function Select({
   };
 
   return (
-    <div
-      className={cx(
-        {
-          [css`
-            cursor: not-allowed;
-          `]: disabled,
-        },
-        className,
-      )}
-    >
+    <div className={cx(wrapperStyle, className)}>
       {label && (
-        <label
+        <Label
+          htmlFor={menuButtonId}
           id={labelId}
+          darkMode={darkMode}
+          disabled={disabled}
           className={cx(
-            sharedTextStyles,
-            labelStyle,
             css`
-              color: ${disabled
-                ? colorSet.label.disabled
-                : colorSet.label.base};
-              font-size: ${sizeSet.label.text}px;
-              line-height: ${sizeSet.label.lineHeight}px;
-
+              // Prevent hover state from showing when hovering label
+              pointer-events: none;
+            `,
+            css`
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.label.text}px;
                 line-height: ${mobileSizeSet.label.lineHeight}px;
@@ -537,38 +540,54 @@ export default function Select({
             `,
             {
               [css`
-                cursor: not-allowed;
-              `]: disabled,
+                font-size: ${sizeSet.text}px;
+              `]: mode === Mode.Light, // TODO: Refresh - remove conditional logic
+              [css`
+                font-size: ${legacySizeSets[size].label!.text}px;
+                line-height: ${legacySizeSets[size].label!.lineHeight}px;
+                padding-bottom: 0;
+                margin-bottom: 2px;
+              `]: mode === Mode.Dark, // TODO: Refresh - remove conditional logic
             },
           )}
         >
           {label}
-        </label>
+        </Label>
       )}
 
       {description && (
-        <div
+        <Description
           id={descriptionId}
+          darkMode={darkMode}
+          disabled={disabled}
           className={cx(
-            sharedTextStyles,
             css`
-              color: ${colorSet.description};
-              font-size: ${sizeSet.description.text}px;
-              line-height: ${sizeSet.description.lineHeight}px;
-
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
             `,
+            {
+              [css`
+                font-size: ${sizeSets[size].text}px;
+                line-height: ${sizeSets[size].lineHeight}px;
+              `]: mode === Mode.Light, // TODO: Refresh - remove conditional logic
+              [css`
+                font-size: ${legacySizeSets[size].description!.text}px;
+                line-height: ${legacySizeSets[size].description!.lineHeight}px;
+                padding-bottom: 0;
+                margin-bottom: 2px;
+              `]: mode === Mode.Dark, // TODO: Refresh - remove conditional logic
+            },
           )}
         >
           {description}
-        </div>
+        </Description>
       )}
 
       <SelectContext.Provider value={providerData}>
         <MenuButton
+          id={menuButtonId}
           ref={menuButtonRef}
           name={name}
           readOnly={readOnly}
@@ -608,19 +627,20 @@ export default function Select({
       {state === State.Error && errorMessage && (
         <span
           className={cx(
-            sharedTextStyles,
+            errorTextStyle({ darkMode, sizeSet }),
             css`
-              color: ${darkMode ? '#F97216' : uiColors.red.base};
-              font-size: ${sizeSet.description.text}px;
-              line-height: ${sizeSet.description.lineHeight}px;
-              margin-top: ${spacing[1]}px;
-              padding-left: 2px;
-
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
             `,
+            {
+              [css`
+                // Hide error text when menu is open,
+                // so it doesn't peek around the menu corner
+                color: transparent;
+              `]: open,
+            },
           )}
         >
           {errorMessage}
