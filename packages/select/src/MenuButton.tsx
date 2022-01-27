@@ -42,6 +42,14 @@ const menuButtonModeOverrides: Record<Mode, string> = {
   `,
 };
 
+const menuButtonTextWrapperStyle = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  gap: ${spacing[1]}px;
+`;
+
 const menuButtonTextStyle = css`
   overflow: hidden;
   white-space: nowrap;
@@ -181,22 +189,13 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         },
       )}
     >
-      <div
-        className={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          flex-grow: 1;
-          width: 90%;
-        `}
-      >
+      <div className={menuButtonTextWrapperStyle}>
         <div className={menuButtonTextStyle}>{text}</div>
         {state === State.Error && errorMessage && (
           <WarningIcon
             role="presentation"
             className={css`
               color: ${errorColor[mode]};
-              margin-left: ${spacing[1]}px;
             `}
             size={sizeSet.warningIcon}
           />
