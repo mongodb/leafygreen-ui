@@ -51,7 +51,7 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
   contentWrapper: css`
     display: flex;
     align-items: center;
-    padding: 12px 12px 12px 18px;
+    padding: 12px 12px 12px 16px;
   `,
 
   dismissButton: css`
@@ -59,6 +59,12 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
     top: 7px;
     right: 9px;
     transition: color 0.15s ease-in-out;
+
+    &:focus {
+      color: ${palette.gray.dark3};
+      outline: 2px solid ${palette.blue.light1};
+      border: 2px solid ${palette.white};
+    }
   `,
 };
 
@@ -102,6 +108,12 @@ const variantStyles: Record<
           background-color: ${palette.green.light2};
         }
       }
+
+      &:focus {
+        &:before {
+          background-color: ${palette.green.light2};
+        }
+      }
     `,
   },
 
@@ -125,6 +137,12 @@ const variantStyles: Record<
       &:hover {
         color: ${palette.blue.dark2};
 
+        &:before {
+          background-color: ${palette.blue.light2};
+        }
+      }
+
+      &:focus {
         &:before {
           background-color: ${palette.blue.light2};
         }
@@ -156,6 +174,12 @@ const variantStyles: Record<
           background-color: ${palette.red.light2};
         }
       }
+
+      &:focus {
+        &:before {
+          background-color: ${palette.red.light2};
+        }
+      }
     `,
   },
 
@@ -179,6 +203,12 @@ const variantStyles: Record<
       &:hover {
         color: ${palette.yellow.dark2};
 
+        &:before {
+          background-color: ${palette.yellow.light2};
+        }
+      }
+
+      &:focus {
         &:before {
           background-color: ${palette.yellow.light2};
         }
@@ -210,6 +240,12 @@ const variantStyles: Record<
       &:hover {
         color: ${palette.gray.dark1};
 
+        &:before {
+          background-color: ${palette.gray.light2};
+        }
+      }
+
+      &:focus {
         &:before {
           background-color: ${palette.gray.light2};
         }
@@ -338,7 +374,7 @@ function Toast({
                     baseElementStyles.icon,
                     currentVariantStyles.icon,
                   )}
-                  size={28}
+                  size={32}
                 />
 
                 <div>
