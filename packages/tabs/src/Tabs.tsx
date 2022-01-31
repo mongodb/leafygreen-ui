@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { keyMap, isComponentType, Either } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
@@ -18,17 +18,18 @@ export { Mode };
 const modeColors = {
   [Mode.Light]: {
     activeStyle: css`
-      color: ${uiColors.green.dark2};
+      color: ${palette.green.dark2};
+      font-weight: 700;
 
       &:hover:not(:focus) {
-        color: ${uiColors.green.dark2};
+        color: ${palette.gray.dark3};
       }
     `,
     disabledColor: css`
-      color: ${uiColors.gray.light1};
+      color: ${palette.gray.light1};
     `,
     underlineColor: css`
-      border-bottom: 1px solid ${uiColors.gray.light2};
+      border-bottom: 1px solid ${palette.gray.light2};
     `,
   },
 
