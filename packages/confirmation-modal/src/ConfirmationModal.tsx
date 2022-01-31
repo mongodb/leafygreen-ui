@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import Modal, { Footer } from '@leafygreen-ui/modal';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 
 const Mode = {
@@ -20,16 +20,25 @@ export const Variant = {
 
 export type Variant = typeof Variant[keyof typeof Variant];
 
-const titleStyle = css`
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 25px;
-  margin-bottom: 10px;
-`;
+const titleStyle = {
+  [Mode.Light]: css`
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 25px;
+    margin-bottom: 10px;
+    margin-top: 0;
+  `,
+  [Mode.Dark]: css`
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 25px;
+    margin-bottom: 10px;
+  `,
+};
 
 const titleColors = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.dark2};
+    color: ${palette.black};
   `,
   [Mode.Dark]: css`
     color: ${uiColors.gray.light2};
@@ -41,17 +50,26 @@ const baseModalStyle = css`
   padding: initial;
 `;
 
-const contentStyle = css`
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0;
-  padding: 36px;
-`;
+const contentStyle = {
+  [Mode.Light]: css`
+    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: 0;
+    padding: 35px 40px 0px;
+  `,
+  [Mode.Dark]: css`
+    font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    padding: 36px;
+  `,
+};
 
 const contentColors = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.dark1};
+    color: ${palette.black};
   `,
   [Mode.Dark]: css`
     color: ${uiColors.white};
@@ -135,8 +153,8 @@ const ConfirmationModal = ({
       setOpen={onCancel}
       darkMode={darkMode}
     >
-      <div className={cx(contentStyle, contentColors[mode])}>
-        <h1 className={cx(titleStyle, titleColors[mode])}>{title}</h1>
+      <div className={cx(contentStyle[mode], contentColors[mode])}>
+        <h1 className={cx(titleStyle[mode], titleColors[mode])}>{title}</h1>
         {children}
         {textEntryConfirmation}
       </div>

@@ -71,8 +71,6 @@ const modalContentStyle = css`
   transition: all 150ms ease-in-out;
   margin: auto;
   max-height: calc(100% - ${defaultVerticalSpacing}px);
-  padding: 32px;
-  border-radius: 7px;
   box-shadow: 0 5px 15px ${transparentize(0.4, uiColors.black)};
   position: relative;
   pointer-events: all;
@@ -86,12 +84,18 @@ const modalContentStyle = css`
 
 const modeStyles: Record<Mode, string> = {
   [Mode.Light]: css`
+    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
     color: ${uiColors.gray.dark3};
     background-color: ${uiColors.white};
+    border-radius: 24px; // TODO: refresh - remove when dark mode is updated
+    padding: 35px 40px; // TODO: refresh - remove when dark mode is updated
   `,
   [Mode.Dark]: css`
+    font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
     color: ${uiColors.white};
     background-color: ${uiColors.gray.dark3};
+    border-radius: 7px; // TODO: refresh - remove when dark mode is updated
+    padding: 32px; // TODO: refresh - remove when dark mode is updated
   `,
 };
 
@@ -116,14 +120,25 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
   `,
 };
 
-const closeButton = css`
+const closeButton = {
+  [Mode.Light]: css`
+  position: absolute;
+  cursor: pointer;
+  // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
+  // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
+  right: 18px;
+  top: 18px;
+    
+  `,
+  [Mode.Dark]: css`
   position: absolute;
   cursor: pointer;
   // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
   // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
   right: 10px;
   top: 10px;
-`;
+  `,
+};
 
 const buttonColors = {
   [Mode.Light]: css`
@@ -289,7 +304,7 @@ function Modal({
                   <IconButton
                     onClick={handleClose}
                     aria-label="Close modal"
-                    className={cx(closeButton, buttonColors[mode])}
+                    className={cx(closeButton[mode], buttonColors[mode])}
                     darkMode={darkMode}
                   >
                     <XIcon />
