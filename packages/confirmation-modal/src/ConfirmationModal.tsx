@@ -5,6 +5,7 @@ import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import Modal, { Footer } from '@leafygreen-ui/modal';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 const Mode = {
   Dark: 'dark',
@@ -24,7 +25,7 @@ const titleStyle = {
   [Mode.Light]: css`
     font-size: 24px;
     font-weight: bold;
-    line-height: 25px;
+    line-height: 32px;
     margin-bottom: 10px;
     margin-top: 0;
   `,
@@ -67,6 +68,22 @@ const contentStyle = {
   `,
 };
 
+
+const modeAndVariantStyles: Record<Mode, Record<Variant, string>> = {
+  [Mode.Light]: {
+    [Variant.Default] : css`
+    padding: 35px 40px 0px;
+    `,
+    [Variant.Danger] : css`
+    padding: 35px 40px 0px 72px;
+    `,
+  },
+  [Mode.Dark]: {
+    [Variant.Default] : css``,
+    [Variant.Danger] : css``,
+  },
+}
+
 const contentColors = {
   [Mode.Light]: css`
     color: ${palette.black};
@@ -79,6 +96,11 @@ const contentColors = {
 const textEntryInputStyle = css`
   width: 300px;
   margin-top: 14px;
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;
 
 const buttonStyle = css`
@@ -90,6 +112,23 @@ const buttonStyle = css`
 
   &:last-of-type {
     margin: 0 4px 0 0;
+  }
+`;
+
+const warningIconStyles = css`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: ${palette.red.light3};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 30px;
+  top: 35px;
+
+  svg {
+    margin-top: -3px;
   }
 `;
 
@@ -153,7 +192,8 @@ const ConfirmationModal = ({
       setOpen={onCancel}
       darkMode={darkMode}
     >
-      <div className={cx(contentStyle[mode], contentColors[mode])}>
+      <div className={cx(contentStyle[mode], contentColors[mode], modeAndVariantStyles[mode][variant])}>
+        {variant === Variant.Danger && mode === Mode.Light && <div className={cx(warningIconStyles)}><WarningIcon fill={palette.red.base} role="presentation"/></div>}
         <h1 className={cx(titleStyle[mode], titleColors[mode])}>{title}</h1>
         {children}
         {textEntryConfirmation}

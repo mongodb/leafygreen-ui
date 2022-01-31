@@ -8,7 +8,7 @@ import Portal from '@leafygreen-ui/portal';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 const Mode = {
@@ -71,7 +71,6 @@ const modalContentStyle = css`
   transition: all 150ms ease-in-out;
   margin: auto;
   max-height: calc(100% - ${defaultVerticalSpacing}px);
-  box-shadow: 0 5px 15px ${transparentize(0.4, uiColors.black)};
   position: relative;
   pointer-events: all;
   transform: translate3d(0, -16px, 0);
@@ -89,6 +88,7 @@ const modeStyles: Record<Mode, string> = {
     background-color: ${uiColors.white};
     border-radius: 24px; // TODO: refresh - remove when dark mode is updated
     padding: 35px 40px; // TODO: refresh - remove when dark mode is updated
+    box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
   `,
   [Mode.Dark]: css`
     font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
@@ -96,6 +96,7 @@ const modeStyles: Record<Mode, string> = {
     background-color: ${uiColors.gray.dark3};
     border-radius: 7px; // TODO: refresh - remove when dark mode is updated
     padding: 32px; // TODO: refresh - remove when dark mode is updated
+    box-shadow: 0 5px 15px ${transparentize(0.4, uiColors.black)};
   `,
 };
 
@@ -128,6 +129,12 @@ const closeButton = {
   // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
   right: 18px;
   top: 18px;
+
+  &:focus {
+    color: ${palette.gray.dark3};
+    outline: 2px solid ${palette.blue.light1};
+    border: 2px solid ${palette.white};
+  }
     
   `,
   [Mode.Dark]: css`
