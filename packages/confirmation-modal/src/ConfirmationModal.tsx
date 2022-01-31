@@ -96,22 +96,17 @@ const contentColors = {
 const textEntryInputStyle = css`
   width: 300px;
   margin-top: 14px;
-
-  label {
-    font-size: 14px;
-    font-weight: 500;
-  }
 `;
 
 const buttonStyle = css`
   margin: 0 2px;
 
   &:first-of-type {
-    margin: 0 0 0 4px;
+    margin: 0 0 0 5px;
   }
 
   &:last-of-type {
-    margin: 0 4px 0 0;
+    margin: 0 5px 0 0;
   }
 `;
 
