@@ -93,8 +93,7 @@ type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
 function getScrollShadowStyle(scrollState: ScrollState, mode: Mode): string {
   const colors = variantColors[mode];
-  const shadowColor =
-    mode === Mode.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
+  const shadowColor = mode === Mode.Light ? 'unset' : 'rgba(0,0,0,0.35)';
 
   if (scrollState === ScrollState.Both) {
     return css`
@@ -252,12 +251,17 @@ function Code({
   };
 
   const borderStyle = darkMode
-    ? `border: 0`
-    : `border: 1px solid ${variantColors[mode][1]}`;
+    ? css`
+        border: 0;
+        border-radius: 6px;
+      `
+    : css`
+        border: 1px solid ${variantColors[mode][1]};
+        border-radius: 12px;
+      `;
 
   const wrapperStyle = css`
     ${borderStyle};
-    border-radius: 4px;
     overflow: hidden;
   `;
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { variantColors } from './globalStyles';
 import { darken } from 'polished';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Light: 'light',
@@ -24,6 +25,7 @@ const windowChromeStyle = css`
   padding-left: ${controlSize}px;
   padding-right: ${controlSize}px;
   border-radius: ${borderRadius}px ${borderRadius}px 0 0;
+  font-family: ${fontFamilies.default};
 `;
 
 const windowControlsStyle = css`
@@ -77,6 +79,12 @@ function WindowChrome({
           background-color: ${colors[1]};
           color: ${colors[2]};
         `,
+        {
+          // TODO: Refresh - remove darkModee logic
+          [css`
+            font-family: ${fontFamilies.legacy};
+          `]: darkMode,
+        },
       )}
     >
       <div className={windowControlsStyle}>

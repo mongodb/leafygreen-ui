@@ -1,6 +1,6 @@
 import { Mode } from './types';
 import { injectGlobal } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 
 interface Base16Palette {
   0: string; // Background
@@ -18,11 +18,11 @@ interface Base16Palette {
 
 export const variantColors: { readonly [K in Mode]: Base16Palette } = {
   [Mode.Light]: {
-    0: uiColors.gray.light3,
-    1: uiColors.gray.light2,
-    2: uiColors.gray.dark1,
-    3: uiColors.black,
-    4: uiColors.white,
+    0: palette.gray.light3,
+    1: palette.gray.light2,
+    2: palette.gray.dark2,
+    3: palette.black,
+    4: palette.white,
     5: '#D83713',
     6: '#956d00',
     7: '#12824D',

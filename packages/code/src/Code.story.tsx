@@ -38,10 +38,8 @@ storiesOf('Code', module)
   .add(
     'Multiline',
     () => {
-      const margin = 50;
       const wrapperStyle = css`
-        margin: ${margin}px;
-        max-width: calc(100% - ${margin * 2}px);
+        width: 512px;
       `;
 
       const lineHighlightOptions = {
