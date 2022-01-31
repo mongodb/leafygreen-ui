@@ -2,8 +2,9 @@ import React from 'react';
 import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 export const ContentStyle = {
   None: 'none',
@@ -24,25 +25,27 @@ interface ColorSet {
   clickableStyle: string;
 }
 
-const lightBaseBoxShadow = `0 4px 10px -4px ${transparentize(
-  0.7,
-  uiColors.black,
-)}`;
+// prettier-ignore
+const lightBaseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, '#000')}`;
 const darkBaseBoxShadow = `0 4px 20px -4px  ${transparentize(0.3, '#000')}`;
-const lightHoverBoxShadow = `0 2px 6px -2px ${transparentize(
-  0.4,
-  uiColors.black,
-)}`;
+// prettier-ignore
+const lightHoverBoxShadow = `0 2px 6px -2px ${transparentize(0.4, '#000')}`;
 const darkHoverBoxShadow = `0 2px 12px -2px ${transparentize(0.1, '#000')}`;
 const focusBoxShadow = `0 0 0 3px ${uiColors.focus}`;
 
 const colorSet: Record<Mode, ColorSet> = {
   [Mode.Light]: {
     containerStyle: css`
-      border: 1px solid ${uiColors.gray.light2};
-      box-shadow: 0 4px 10px -4px ${transparentize(0.7, uiColors.black)};
+      border: 1px solid ${palette.gray.light2};
+      box-shadow: ${lightBaseBoxShadow};
       background-color: white;
-      color: ${uiColors.gray.dark3};
+      color: ${palette.gray.dark3};
+      // TODO: Refresh - remove properties from dark mode logic
+      border-radius: 24px;
+      font-family: ${fontFamilies.default};
+      font-size: 13px;
+      padding: 24px;
+      min-height: calc(48px + 1em);
     `,
     clickableStyle: css`
       cursor: pointer;
@@ -53,7 +56,7 @@ const colorSet: Record<Mode, ColorSet> = {
       }
 
       &:hover {
-        border: 1px solid ${uiColors.gray.light2};
+        border: 1px solid ${palette.gray.light2};
         box-shadow: ${lightHoverBoxShadow};
 
         &:focus {
@@ -68,6 +71,10 @@ const colorSet: Record<Mode, ColorSet> = {
       box-shadow: ${darkBaseBoxShadow};
       background-color: ${uiColors.gray.dark2};
       color: ${uiColors.white};
+      // TODO: Refresh - remove properties from dark mode logic
+      border-radius: 7px;
+      font-family: ${fontFamilies.legacy};
+      padding: 16px;
     `,
     clickableStyle: css`
       cursor: pointer;
@@ -90,8 +97,8 @@ const colorSet: Record<Mode, ColorSet> = {
 
 const containerStyle = css`
   position: relative;
-  border-radius: 7px;
-  transition: border 150ms ease-in-out, box-shadow 150ms ease-in-out;
+  transition: 150ms ease-in-out;
+  transition-property: border, box-shadow;
 `;
 
 interface CardProps {
