@@ -20,6 +20,7 @@ const modeColors: Record<Mode, ModeColors> = {
       color: ${palette.gray.dark1};
       font-weight: 500;
       font-family: ${fontFamilies.default};
+      font-size: 13px;
     `,
     listTitleHover: css`
       &:hover {
@@ -68,6 +69,7 @@ const modeColors: Record<Mode, ModeColors> = {
       color: ${uiColors.gray.light1};
       font-weight: 600;
       font-family: ${fontFamilies.legacy};
+      font-size: 16px;
     `,
     listTitleHover: css`
       &:hover {
@@ -113,7 +115,6 @@ const listTitle = css`
   max-width: 300px;
   white-space: nowrap;
   transition: 150ms color ease-in-out;
-  font-size: 16px;
   position: relative;
 
   &:focus {
