@@ -1,24 +1,25 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import Size from './Size';
 import { useRadioBoxGroupContext, RadioBoxGroupContext } from './context';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const radioBoxWrapper = createDataProp('radio-box-wrapper');
 const radioBoxInput = createDataProp('radio-box-input');
 
 export const radioBoxSizes: { [K in Size]: string } = {
   [Size.Default]: css`
-    width: 169px;
+    width: 110px;
   `,
 
   [Size.Compact]: css`
-    padding-right: 4px;
-    padding-left: 4px;
+    padding-right: 6px;
+    padding-left: 6px;
   `,
 
   [Size.Full]: css`
@@ -36,80 +37,77 @@ interface StateForStyles {
   checked: boolean;
   disabled: boolean;
   size: Size;
+  showFocus: boolean;
 }
 
-const getInteractionRingStyles = (_: StateForStyles) => {
-  const baseStyles = css`
-    width: 100%;
-    height: 100%;
-    // Display behind border
-    z-index: -1;
-  `;
-
-  return baseStyles;
-};
-
-const getBorderStyles = ({ checked, disabled, size }: StateForStyles) => {
-  const baseStyles = cx(
+const getRadioDisplayStyles = ({
+  checked,
+  disabled,
+  size,
+  showFocus,
+}: StateForStyles) => {
+  return cx(
     css`
-      border: 1px solid ${checked ? 'transparent' : uiColors.gray.base};
-      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+
+      padding: 16px 24px;
+
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      overflow-wrap: break-word;
+      background-color: ${palette.white};
+      border-radius: 6px;
+      color: ${palette.black};
+      border: 1px solid ${palette.gray.base};
+
       cursor: pointer;
-      position: relative;
-      pointer-events: none;
-      transition: border 100ms ease-in-out;
+      pointer-events: auto;
+      transition: 150ms ease-in-out;
+      transition-property: border-color, box-shadow;
+
+      &:hover,
+      &:active {
+        box-shadow: 0 0 0 3px ${palette.gray.light2};
+      }
     `,
     {
-      [radioBoxSizes[size]]: size === Size.Full,
-    },
-  );
-
-  if (disabled) {
-    return cx(
-      baseStyles,
-      css`
-        border-color: ${uiColors.gray.light2};
+      [css`
+        border-color: transparent;
+        box-shadow: 0 0 0 3px ${palette.green.dark1};
+        &:hover,
+        &:active {
+          box-shadow: 0 0 0 3px ${palette.green.dark1};
+        }
+      `]: checked,
+      [css`
+        color: ${palette.gray.light1};
+        background: ${palette.gray.light3};
+        font-weight: 400;
+        border-color: ${palette.gray.light2};
         cursor: not-allowed;
-      `,
-    );
-  }
-
-  return baseStyles;
-};
-
-const getRadioDisplayStyles = ({ disabled }: StateForStyles) => {
-  const baseStyles = css`
-    transition: box-shadow 150ms ease-in-out;
-    padding: 15px;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    overflow-wrap: break-word;
-    background-color: white;
-    border-radius: 4px;
-    color: ${uiColors.gray.dark2};
-    pointer-events: auto;
-    z-index: 2;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  `;
-
-  if (disabled) {
-    return cx(
-      baseStyles,
-      css`
-        color: ${uiColors.gray.light1};
-        background: ${uiColors.gray.light3};
-      `,
-    );
-  }
-
-  return baseStyles;
+        &:hover,
+        &:active {
+          box-shadow: unset;
+        }
+      `]: disabled,
+      [css`
+        input:focus + & {
+          border-color: ${palette.gray.base};
+          box-shadow: 0 0 0 2px ${palette.white},
+            0 0 0 4px ${palette.blue.light1};
+        }
+      `]: showFocus,
+    },
+    radioBoxSizes[size],
+  );
 };
 
 export const radioWrapper = css`
+  font-family: ${fontFamilies.default};
   display: flex;
   position: relative;
 
@@ -209,6 +207,7 @@ export default function RadioBox({
   ...rest
 }: RadioBoxProps & Omit<HTMLElementProps<'input', never>, 'size'>) {
   const radioBoxGroupContext = useRadioBoxGroupContext();
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   const localId = useIdAllocator({
     prefix: 'radio-box',
@@ -233,14 +232,12 @@ export default function RadioBox({
     [onChangeProp, contextOnChange],
   );
 
-  const radioDisplayStyle = getRadioDisplayStyles({ checked, disabled, size });
-  const interactionContainerStyle = getInteractionRingStyles({
+  const radioDisplayStyle = getRadioDisplayStyles({
     checked,
     disabled,
     size,
+    showFocus,
   });
-
-  const [inputElement, setInputElement] = useState<HTMLElement | null>(null);
 
   return (
     <label
@@ -249,7 +246,7 @@ export default function RadioBox({
       className={cx(
         radioWrapper,
         {
-          [radioBoxSizes['full']]: size === 'full',
+          [radioBoxSizes['full']]: size === Size.Full,
         },
         className,
       )}
@@ -257,7 +254,6 @@ export default function RadioBox({
       <input
         {...rest}
         {...radioBoxInput.prop}
-        ref={setInputElement}
         type="radio"
         id={id}
         name={name}
@@ -270,29 +266,7 @@ export default function RadioBox({
         className={inputStyles}
       />
 
-      <div
-        className={cx(
-          css`
-            height: 100%;
-          `,
-          getBorderStyles({ checked, disabled, size }),
-        )}
-      >
-        <InteractionRing
-          className={interactionContainerStyle}
-          disabled={disabled}
-          focusTargetElement={inputElement}
-          borderRadius="3px"
-          color={{ hovered: checked ? uiColors.green.base : undefined }}
-          forceState={{
-            hovered: checked ? true : undefined,
-          }}
-        >
-          <div className={cx(radioDisplayStyle, radioBoxSizes[size])}>
-            {children}
-          </div>
-        </InteractionRing>
-      </div>
+      <div className={radioDisplayStyle}>{children}</div>
     </label>
   );
 }
