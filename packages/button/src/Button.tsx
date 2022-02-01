@@ -7,6 +7,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps, Mode } from './types';
 import { getClassName, colorMap, ButtonDataProp } from './styles';
 import ButtonIcon from './ButtonIcon';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const rippleStyle = css`
   overflow: hidden;
@@ -146,6 +147,18 @@ const Button: ExtendableBox<
       <div
         className={cx(
           containerChildStyles,
+          rightGlyph
+            ? css`
+                justify-content: space-between;
+              `
+            : css`
+                justify-content: center;
+              `,
+          {
+            [css`
+              font-family: ${fontFamilies.legacy};
+            `]: darkMode,
+          },
           padding[size],
           css`
             gap: ${iconSpacing};
