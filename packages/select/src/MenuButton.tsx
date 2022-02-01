@@ -159,20 +159,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     ? __INTERNAL__menuButtonSlot__
     : Button;
 
-  return (
-    <Component
-      {...rest}
-      ref={ref}
-      name={name}
-      value={value}
-      disabled={disabled}
-      onClick={onClick}
-      variant={Variant.Default}
-      darkMode={mode === Mode.Dark}
-      rightGlyph={<CaretDownIcon />}
-      size={size}
-      data-testid="leafygreen-ui-select-menubutton"
-      className={cx(
+  const buttonClassName = __INTERNAL__menuButtonSlot__
+    ? ''
+    : cx(
         menuButtonStyleOverrides, // TODO: Refresh - remove overrides
         menuButtonModeOverrides[mode], // TODO: Refresh - remove overrides
         css`
@@ -192,7 +181,22 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
             letter-spacing: initial;
           `]: size === Size.XSmall,
         },
-      )}
+      );
+
+  return (
+    <Component
+      {...rest}
+      ref={ref}
+      name={name}
+      value={value}
+      disabled={disabled}
+      onClick={onClick}
+      variant={Variant.Default}
+      darkMode={mode === Mode.Dark}
+      rightGlyph={<CaretDownIcon />}
+      size={size}
+      data-testid="leafygreen-ui-select-menubutton"
+      className={buttonClassName}
     >
       <div className={menuButtonTextWrapperStyle}>
         <div className={menuButtonTextStyle}>{text}</div>
