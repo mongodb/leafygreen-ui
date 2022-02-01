@@ -1,6 +1,7 @@
 # @leafygreen-ui/combobox
 
 ## 1.0.0
+
 ### Major Changes
 
 - 548ca2c: - Release Combobox as v1
