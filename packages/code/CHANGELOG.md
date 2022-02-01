@@ -1,5 +1,12 @@
 # @leafygreen-ui/code
 
+## 9.4.0
+
+### Minor Changes
+
+- 548ca2c: Adds support for controlling the language switcher popover characteristics with `usePortal`, `portalClassName`, `portalContainer`, `scrollContainer`, and `popoverZIndex` props.
+- 548ca2c: Add support for Dart language
+
 ## 9.3.0
 
 ### Minor Changes
