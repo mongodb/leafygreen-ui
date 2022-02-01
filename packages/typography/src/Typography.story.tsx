@@ -26,7 +26,6 @@ const displayBlock = css`
 `;
 
 const darkModeBodyStyles = css`
-  /* color: ${uiColors.gray.light3}; */
   background-color: ${uiColors.gray.dark3};
 `;
 
