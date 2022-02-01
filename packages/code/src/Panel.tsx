@@ -32,12 +32,13 @@ function getSidebarVariantStyle(mode: Mode): string {
 function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
   const basePanelStyle = css`
     display: flex;
-    border-left: solid 1px;
+    align-items: center;
+    justify-content: space-between;
     flex-direction: column;
     flex-shrink: 0;
-    align-items: center;
     gap: ${spacing[1]}px;
     padding: 6px;
+    border-left: solid 1px;
 
     svg {
       width: 16px;
@@ -45,19 +46,22 @@ function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
     }
   `;
 
-  const colors = variantColors[mode];
-
   const languageSwitcherPanelStyle = css`
     flex-direction: row;
-    background-color: ${colors[4]};
-    border-bottom: 1px solid ${colors[1]};
-    padding: 0 8px 0 12px;
-    min-height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
+    border-left: unset;
+    border-bottom: 1px solid;
+    padding: 0;
+    padding-right: 8px;
+    height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
   `;
 
-  return cx(basePanelStyle, getSidebarVariantStyle(mode), {
-    [languageSwitcherPanelStyle]: withLanguageSwitcher,
-  });
+  return cx(
+    basePanelStyle,
+    {
+      [languageSwitcherPanelStyle]: withLanguageSwitcher,
+    },
+    getSidebarVariantStyle(mode),
+  );
 }
 
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {

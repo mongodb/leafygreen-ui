@@ -3,25 +3,27 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Button, { ButtonProps } from '@leafygreen-ui/button';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { Select, Option } from '@leafygreen-ui/select';
 import { LanguageOption, PopoverProps } from './types';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
   display: flex;
   align-items: center;
   width: 100%;
-  margin-top: -2px;
-  margin-left: -1px;
+  height: 100%;
 `;
 
 const menuButtonStyle = css`
-  border-radius: 4px 0px 0px 0px;
-  margin-left: -12px;
+  // Override default menuButton styles
+  margin-top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
   border: 0;
 
   &:hover,
@@ -34,22 +36,24 @@ const menuButtonStyle = css`
 
 const buttonModeStyle = {
   light: css`
-    background-color: ${uiColors.white};
-    border-right: 1px solid ${uiColors.gray.light2};
+    background-color: ${palette.white};
+    border-right: 1px solid ${palette.gray.light2};
     box-shadow: 0 0 0 0;
+    font-family: ${fontFamilies.default};
 
     &:hover,
     &:active,
     &:focus {
-      border-right: 1px solid ${uiColors.gray.light2};
+      border-right: 1px solid ${palette.gray.light2};
     }
 
     &:hover {
-      background-color: ${uiColors.gray.light2};
+      background-color: ${palette.gray.light2};
     }
   `,
   dark: css`
     border-right: 1px solid ${uiColors.gray.dark3};
+    font-family: ${fontFamilies.legacy};
 
     &:hover,
     &:focus,
@@ -67,7 +71,7 @@ const buttonModeStyle = {
 const buttonFocusStyle = {
   light: css`
     &:focus {
-      background-color: ${uiColors.blue.light2};
+      background-color: ${palette.blue.light2};
     }
   `,
   dark: css`
@@ -77,8 +81,9 @@ const buttonFocusStyle = {
   `,
 };
 
-const selectWidth = css`
-  width: 144px;
+const selectStyle = css`
+  min-width: 144px;
+  height: 100%;s
 `;
 
 const iconMargin = css`
@@ -152,6 +157,23 @@ function LanguageSwitcher({
     }
   }
 
+  // eslint-disable-next-line react/display-name
+  const LanguageSwitcherButton = React.forwardRef(
+    ({ className, children, ...props }: ButtonProps, ref) => (
+      <Button
+        {...props}
+        className={cx(className, menuButtonStyle, buttonModeStyle[mode], {
+          [buttonFocusStyle[mode]]: showFocus,
+        })}
+        darkMode={darkMode}
+        ref={ref}
+        leftGlyph={renderedLogo}
+      >
+        {children}
+      </Button>
+    ),
+  );
+
   const popoverProps = {
     popoverZIndex,
     usePortal,
@@ -167,29 +189,12 @@ function LanguageSwitcher({
         onChange={handleChange}
         aria-labelledby="Language Picker"
         value={language?.displayName}
-        className={selectWidth}
+        className={selectStyle}
         allowDeselect={false}
         {...popoverProps}
         // Component missing displayName
         // eslint-disable-next-line
-        __INTERNAL__menuButtonSlot__={React.forwardRef(
-          // Linter complaining that className and children are missing from props validation
-          // Even though we are validating them with Button props
-          // eslint-disable-next-line
-          ({ className, children, ...props }: ButtonProps, ref) => (
-            <Button
-              {...props}
-              className={cx(className, menuButtonStyle, buttonModeStyle[mode], {
-                [buttonFocusStyle[mode]]: showFocus,
-              })}
-              darkMode={darkMode}
-              ref={ref}
-              leftGlyph={renderedLogo}
-            >
-              {children}
-            </Button>
-          ),
-        )}
+        __INTERNAL__menuButtonSlot__={LanguageSwitcherButton}
       >
         {languageOptions?.map(option => (
           <Option key={option?.displayName} value={option?.displayName}>
