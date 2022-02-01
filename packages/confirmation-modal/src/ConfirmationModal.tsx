@@ -21,7 +21,7 @@ export const Variant = {
 
 export type Variant = typeof Variant[keyof typeof Variant];
 
-const titleStyle = {
+const titleStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     font-size: 24px;
     font-weight: bold;
@@ -37,7 +37,7 @@ const titleStyle = {
   `,
 };
 
-const titleColors = {
+const titleColors: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${palette.black};
   `,
@@ -51,9 +51,10 @@ const baseModalStyle = css`
   padding: initial;
 `;
 
-const contentStyle = {
+const contentStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
+      sans-serif; // TODO: Refresh – remove when fonts are updated
     font-size: 13px;
     line-height: 20px;
     letter-spacing: 0;
@@ -68,21 +69,20 @@ const contentStyle = {
   `,
 };
 
-
 const modeAndVariantStyles: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
-    [Variant.Default] : css`
-    padding: 35px 40px 0px;
+    [Variant.Default]: css`
+      padding: 35px 40px 0px;
     `,
-    [Variant.Danger] : css`
-    padding: 35px 40px 0px 72px;
+    [Variant.Danger]: css`
+      padding: 35px 40px 0px 72px;
     `,
   },
   [Mode.Dark]: {
-    [Variant.Default] : css``,
-    [Variant.Danger] : css``,
+    [Variant.Default]: css``,
+    [Variant.Danger]: css``,
   },
-}
+};
 
 const contentColors = {
   [Mode.Light]: css`
@@ -187,8 +187,18 @@ const ConfirmationModal = ({
       setOpen={onCancel}
       darkMode={darkMode}
     >
-      <div className={cx(contentStyle[mode], contentColors[mode], modeAndVariantStyles[mode][variant])}>
-        {variant === Variant.Danger && mode === Mode.Light && <div className={cx(warningIconStyles)}><WarningIcon fill={palette.red.base} role="presentation"/></div>}
+      <div
+        className={cx(
+          contentStyle[mode],
+          contentColors[mode],
+          modeAndVariantStyles[mode][variant],
+        )}
+      >
+        {variant === Variant.Danger && mode === Mode.Light && (
+          <div className={cx(warningIconStyles)}>
+            <WarningIcon fill={palette.red.base} role="presentation" />
+          </div>
+        )}
         <h1 className={cx(titleStyle[mode], titleColors[mode])}>{title}</h1>
         {children}
         {textEntryConfirmation}

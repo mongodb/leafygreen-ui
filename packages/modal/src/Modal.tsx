@@ -83,7 +83,8 @@ const modalContentStyle = css`
 
 const modeStyles: Record<Mode, string> = {
   [Mode.Light]: css`
-    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
+      sans-serif; // TODO: Refresh – remove when fonts are updated
     color: ${uiColors.gray.dark3};
     background-color: ${uiColors.white};
     border-radius: 24px; // TODO: refresh - remove when dark mode is updated
@@ -123,27 +124,26 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
 const closeButton = {
   [Mode.Light]: css`
-  position: absolute;
-  cursor: pointer;
-  // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
-  // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
-  right: 18px;
-  top: 18px;
+    position: absolute;
+    cursor: pointer;
+    // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
+    // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
+    right: 18px;
+    top: 18px;
 
-  &:focus {
-    color: ${palette.gray.dark3};
-    outline: 2px solid ${palette.blue.light1};
-    border: 2px solid ${palette.white};
-  }
-    
+    &:focus {
+      color: ${palette.gray.dark3};
+      outline: 2px solid ${palette.blue.light1};
+      border: 2px solid ${palette.white};
+    }
   `,
   [Mode.Dark]: css`
-  position: absolute;
-  cursor: pointer;
-  // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
-  // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
-  right: 10px;
-  top: 10px;
+    position: absolute;
+    cursor: pointer;
+    // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
+    // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
+    right: 10px;
+    top: 10px;
   `,
 };
 

@@ -22,18 +22,20 @@ type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
 
 const titleStyle = css`
   font-size: 24px;
-  margin-bottom: 10px;
 `;
 
-const titleColors = {
+const titleColors: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.black};
     font-weight: 700;
+    line-height: 32px;
+    margin-bottom: 4px;
   `,
   [Mode.Dark]: css`
     color: ${uiColors.white};
     font-weight: bold;
     line-height: 25px;
+    margin-bottom: 10px;
   `,
 };
 
@@ -57,19 +59,19 @@ const centeredGraphicContainerStyle = css`
   padding-bottom: 8px;
 `;
 
-const filledGraphicContainerStyle = {
+const filledGraphicContainerStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     padding-bottom: 24px;
     position: relative;
 
     &::before {
       content: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 49' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z' fill='white'/%3E%3C/svg%3E");
-      display:block;
+      display: block;
       width: 100%;
       position: absolute;
       bottom: 20px;
     }
-    `,
+  `,
   [Mode.Dark]: css`
     padding-bottom: 24px;
   `,
@@ -79,29 +81,30 @@ const filledGraphicStyle = css`
   width: 100%;
 `;
 
-const contentStyle = {
+const contentStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: 0;
-  text-align: center;
-  padding: 0 20px 24px;
-  max-width: 476px;
-  margin: 0 auto;
+    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
+      sans-serif; // TODO: Refresh – remove when fonts are updated
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: 0;
+    text-align: center;
+    padding: 0 20px 32px;
+    max-width: 476px;
+    margin: 0 auto;
   `,
   [Mode.Dark]: css`
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0;
-  text-align: center;
-  padding: 0 92px;
-  padding-bottom: 24px;
+    font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    text-align: center;
+    padding: 0 92px;
+    padding-bottom: 24px;
   `,
 };
 
-const contentColors = {
+const contentColors: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.black};
   `,
@@ -159,7 +162,8 @@ const MarketingModal = ({
       <div
         className={cx(baseGraphicContainerStyle, {
           [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
-          [filledGraphicContainerStyle[mode]]: graphicStyle === GraphicStyle.Fill,
+          [filledGraphicContainerStyle[mode]]:
+            graphicStyle === GraphicStyle.Fill,
         })}
       >
         {React.cloneElement(graphic, {
@@ -181,16 +185,15 @@ const MarketingModal = ({
           tabIndex={0}
           onClick={onLinkClick}
           hideExternalIcon
-          className={cx(
-            css`
+          className={cx({
+            [css`
+              margin-top: 16px;
+            `]: !darkMode,
+            [css`
+              color: #41c6ff;
               margin-top: 24px;
-            `,
-            {
-              [css`
-                color: #41c6ff;
-              `]: darkMode,
-            },
-          )}
+            `]: darkMode,
+          })}
         >
           {linkText}
         </Link>

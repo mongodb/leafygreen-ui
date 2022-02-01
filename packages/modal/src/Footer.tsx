@@ -24,9 +24,10 @@ const Footer = ({ children, className, darkMode }: FooterProps) => {
     <div
       className={cx(
         footerStyle,
-        {[css`
-          padding: 16px 24px;
-          border-top: 1px solid ${uiColors.gray.dark2};
+        {
+          [css`
+            padding: 16px 24px;
+            border-top: 1px solid ${uiColors.gray.dark2};
           `]: darkMode,
         },
         className,
