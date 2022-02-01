@@ -405,7 +405,7 @@ const TextInput: React.ComponentType<
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
 
-    function onBlurHandler(e: React.FocusEvent<HTMLInputElement>) {
+    const onBlurHandler: React.FocusEventHandler<HTMLInputElement> = e => {
       if (onBlur) {
         onBlur(e);
       }
@@ -413,7 +413,7 @@ const TextInput: React.ComponentType<
       validation.onBlur(e);
     }
 
-    function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
       if (onChange) {
         onChange(e);
       }

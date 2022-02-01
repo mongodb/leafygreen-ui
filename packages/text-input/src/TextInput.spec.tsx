@@ -176,10 +176,12 @@ describe('packages/text-input', () => {
 
     test('onBlur is invoked when focus leaves the input', () => {
       renderTextInput(defaultProps);
+
       userEvent.tab(); // focus
       userEvent.tab(); // blur
+
       expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
-    })
+    });
   });
 
   describe('when no label is supplied', () => {
