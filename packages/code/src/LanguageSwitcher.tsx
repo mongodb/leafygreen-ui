@@ -25,6 +25,7 @@ const menuButtonStyle = css`
   height: 100%;
   border-radius: 0px;
   border: 0;
+  font-size: 12px;
 
   &:hover,
   &:focus,
@@ -165,6 +166,11 @@ function LanguageSwitcher({
         {...props}
         className={cx(className, menuButtonStyle, buttonModeStyle[mode], {
           [buttonFocusStyle[mode]]: showFocus,
+          // TODO: Refresh - remove darkMode logic
+          [css`
+            font-family: ${fontFamilies.legacy};
+            font-size: 14px;
+          `]: darkMode,
         })}
         darkMode={darkMode}
         ref={ref}

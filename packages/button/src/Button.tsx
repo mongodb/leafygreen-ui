@@ -8,7 +8,6 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps, Mode } from './types';
 import { getClassName, colorMap } from './styles';
 import ButtonIcon from './ButtonIcon';
-import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const rippleStyle = css`
   overflow: hidden;
