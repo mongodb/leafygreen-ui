@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 6.2.1
+
+### Patch Changes
+
+- 548ca2c: Restores the ability to pass onBlur handlers while using the useValidation hook.
+
 ## 6.2.0
 
 ### Minor Changes
