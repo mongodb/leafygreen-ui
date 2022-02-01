@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -15,48 +15,43 @@ function getCopyButtonStyle(
 ): string {
   const baseStyle = css`
     align-self: center;
-    color: ${uiColors.gray.base};
+    color: ${palette.gray.base};
   `;
 
-  if (copied) {
-    return cx(
-      baseStyle,
-      css`
-        color: ${uiColors.white};
-        background-color: ${uiColors.green.base};
+  const copiedStyle = css`
+    color: ${palette.white};
+    background-color: ${palette.green.dark1};
 
-        &:focus {
-          color: ${uiColors.white};
+    &:focus {
+      color: ${palette.white};
 
-          &:before {
-            background-color: ${uiColors.green.base};
-          }
-        }
+      &:before {
+        background-color: ${palette.green.dark1};
+      }
+    }
 
-        &:hover {
-          color: ${uiColors.white};
+    &:hover {
+      color: ${palette.white};
 
-          &:before {
-            background-color: ${uiColors.green.base};
-          }
-        }
-      `,
-    );
-  }
+      &:before {
+        background-color: ${palette.green.dark1};
+      }
+    }
+  `;
 
-  if (mode === Mode.Dark) {
-    return cx(baseStyle, {
-      [css`
-        background-color: ${uiColors.gray.dark3};
-      `]: !withLanguageSwitcher,
-      [css`
+  const darkModeStyle = withLanguageSwitcher
+    ? css`
         background-color: ${uiColors.gray.dark2};
         color: ${uiColors.gray.light2};
-      `]: withLanguageSwitcher,
-    });
-  }
+      `
+    : css`
+        background-color: ${uiColors.gray.dark3};
+      `;
 
-  return baseStyle;
+  return cx(baseStyle, {
+    [copiedStyle]: copied,
+    [darkModeStyle]: mode === Mode.Dark,
+  });
 }
 
 interface CopyProps {
