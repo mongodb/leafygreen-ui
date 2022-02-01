@@ -180,7 +180,7 @@ const TextArea: React.ComponentType<
     }
 
     validation.onBlur(e);
-  }
+  };
 
   const onValueChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
     if (onChange) {

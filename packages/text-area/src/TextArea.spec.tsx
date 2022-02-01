@@ -75,13 +75,13 @@ describe('packages/text-area', () => {
   test('onBlur is invoked when focus leaves the textarea', () => {
     const onBlur = jest.fn();
 
-    renderTextArea({onBlur, ...defaultProps});
+    renderTextArea({ onBlur, ...defaultProps });
 
     userEvent.tab(); // focus
     userEvent.tab(); // blur
 
     expect(onBlur).toHaveBeenCalledTimes(1);
-  })
+  });
 
   describe('when no label is supplied', () => {
     test('no label tag renders to the DOM', () => {

@@ -411,7 +411,7 @@ const TextInput: React.ComponentType<
       }
 
       validation.onBlur(e);
-    }
+    };
 
     const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
       if (onChange) {
@@ -423,7 +423,7 @@ const TextInput: React.ComponentType<
       }
 
       validation.onChange(e);
-    }
+    };
 
     if (type !== 'search' && !label && !ariaLabelledby) {
       console.error(
