@@ -18,6 +18,7 @@ const defaultProps = {
   description: 'This is the description',
   placeholder: 'This is some placeholder text',
   onChange: jest.fn(),
+  onBlur: jest.fn(),
 };
 
 function renderTextInput(props = {}) {
@@ -172,6 +173,13 @@ describe('packages/text-input', () => {
       expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
       expect(defaultProps.onChange).toHaveReturnedWith('none');
     });
+
+    test('onBlur is invoked when focus leaves the input', () => {
+      renderTextInput(defaultProps);
+      userEvent.tab(); // focus
+      userEvent.tab(); // blur
+      expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
+    })
   });
 
   describe('when no label is supplied', () => {

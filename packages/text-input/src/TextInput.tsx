@@ -81,9 +81,14 @@ interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   disabled?: boolean;
 
   /**
+   * Callback to be executed when the input stops being focused.
+   */
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+
+  /**
    * Callback to be executed when the value of the input field changes.
    */
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
   /**
    * The placeholder text shown in the input field before the user begins typing.
@@ -354,6 +359,7 @@ function getSizeSets(baseFontSize: BaseFontSize, sizeVariant: SizeVariant) {
  * @param props.optional Whether or not the field is optional.
  * @param props.disabled Whether or not the field is currently disabled.
  * @param props.onChange Callback to be executed when the value of the input field changes.
+ * @param props.onBlur Callback to be executed when the input stops being focused.
  * @param props.placeholder The placeholder text shown in the input field before the user begins typing.
  * @param props.errorMessage The message shown below the input field if the value is invalid.
  * @param props.state The current state of the TextInput. This can be none, valid, or error.
@@ -370,6 +376,7 @@ const TextInput: React.ComponentType<
       label,
       description,
       onChange,
+      onBlur,
       placeholder,
       errorMessage,
       optional = false,
@@ -397,6 +404,14 @@ const TextInput: React.ComponentType<
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
+
+    function onBlurHandler(e: React.FocusEvent<HTMLInputElement>) {
+      if (onBlur) {
+        onBlur(e);
+      }
+
+      validation.onBlur(e);
+    }
 
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
       if (onChange) {
@@ -514,7 +529,7 @@ const TextInput: React.ComponentType<
               disabled={disabled}
               placeholder={placeholder}
               onChange={onValueChange}
-              onBlur={validation.onBlur}
+              onBlur={onBlurHandler}
               ref={forwardRef}
               id={id}
               autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
