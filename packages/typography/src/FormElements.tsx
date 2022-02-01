@@ -29,11 +29,11 @@ const colorSets: Record<Mode, ColorSets> = {
       line-height: 20px;
     `,
     disabledLabelStyle: css`
-      color: ${uiColors.gray.base};
+      color: ${palette.gray.base};
     `,
     descriptionStyle: css`
       font-family: ${fontFamilies.default};
-      color: ${palette.gray.base};
+      color: ${palette.gray.dark1};
       font-size: 13px;
       line-height: 20px;
     `,
@@ -47,6 +47,7 @@ const colorSets: Record<Mode, ColorSets> = {
       color: ${uiColors.white};
       font-size: 14px;
       line-height: 16px;
+      padding-bottom: 4px;
     `,
     disabledLabelStyle: css`
       color: ${uiColors.gray.light1};
@@ -56,6 +57,7 @@ const colorSets: Record<Mode, ColorSets> = {
       color: ${uiColors.gray.light1};
       font-size: 14px;
       line-height: 16px;
+      padding-bottom: 4px;
     `,
     disabledDescriptionStyle: css`
       color: ${uiColors.gray.light1};
@@ -65,7 +67,6 @@ const colorSets: Record<Mode, ColorSets> = {
 
 const labelStyle = css`
   font-weight: bold;
-  padding-bottom: 4px;
 `;
 
 type LabelProps = HTMLElementProps<'label', never> & {
@@ -102,7 +103,6 @@ Label.displayName = 'Label';
 
 const descriptionStyle = css`
   font-weight: normal;
-  padding-bottom: 4px;
   margin-top: 0;
   margin-bottom: 0;
 `;

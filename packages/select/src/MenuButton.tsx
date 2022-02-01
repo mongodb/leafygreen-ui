@@ -1,22 +1,53 @@
 import React, { useCallback, useContext } from 'react';
-import Button, { Variant } from '@leafygreen-ui/button';
+import Button, { Size, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
 import { State } from '.';
 
-const menuButtonStyle = css`
-  margin-top: 2px;
-
-  // reset default Button padding
-  > span {
-    padding: 0;
+const menuButtonStyleOverrides = css`
+  text-transform: unset;
+  font-weight: 400;
+  // Override button defaults
+  > *:last-child {
+    grid-template-columns: 1fr 16px;
+    padding: 0 12px;
+    > svg {
+      justify-self: right;
+      width: 16px;
+      height: 16px;
+    }
   }
+`;
+
+const menuButtonModeOverrides: Record<Mode, string> = {
+  [Mode.Light]: css`
+    background-color: ${palette.white};
+    // Override button default color
+    > *:last-child {
+      > svg {
+        color: ${palette.gray.dark2};
+      }
+    }
+  `,
+  [Mode.Dark]: css`
+    border-color: transparent;
+  `,
+};
+
+const menuButtonTextWrapperStyle = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  gap: ${spacing[1]}px;
 `;
 
 const menuButtonTextStyle = css`
@@ -26,7 +57,47 @@ const menuButtonTextStyle = css`
   max-width: 100%;
 `;
 
-type Props = {
+const errorColor: Record<Mode, string> = {
+  [Mode.Light]: palette.red.base,
+  [Mode.Dark]: '#F97216',
+};
+
+const menuButtonFocusStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    &:focus {
+      border-color: transparent;
+      background-color: ${palette.white};
+      box-shadow: 0 0 0 3px ${palette.blue.light1};
+    }
+  `,
+  [Mode.Dark]: css``,
+};
+
+const menuButtonErrorStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    border-color: ${errorColor[Mode.Light]};
+    background-color: ${palette.white};
+
+    &:hover,
+    &:active {
+      box-shadow: 0 0 0 3px #f9d5c5; // Between light2 & light3
+    }
+  `,
+  [Mode.Dark]: css`
+    border-color: ${errorColor[Mode.Dark]}; // off palette
+    box-shadow: 0px 1px 2px rgba(87, 11, 8, 0.3);
+
+    &:hover,
+    &:active {
+      border-color: ${errorColor[Mode.Dark]}; // off palette
+      box-shadow: 0px 4px 4px rgba(87, 11, 8, 0.3),
+        0px 0px 0px 3px ${uiColors.red.light3};
+    }
+  `,
+};
+
+interface MenuButtonProps
+  extends HTMLElementProps<'button', HTMLButtonElement> {
   children: React.ReactNode;
   value: string;
   text: React.ReactNode;
@@ -40,12 +111,15 @@ type Props = {
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
-} & Required<
-  Pick<
-    JSX.IntrinsicElements['div'],
-    'aria-labelledby' | 'aria-controls' | 'aria-expanded' | 'aria-describedby'
-  >
->;
+}
+
+type Props = MenuButtonProps &
+  Required<
+    Pick<
+      JSX.IntrinsicElements['div'],
+      'aria-labelledby' | 'aria-controls' | 'aria-expanded' | 'aria-describedby'
+    >
+  >;
 
 const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   {
@@ -60,18 +134,17 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     errorMessage,
     state,
     __INTERNAL__menuButtonSlot__,
-    ...ariaProps
+    ...rest
   }: Props,
   forwardedRef,
 ) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { mode, open, size, disabled } = useContext(SelectContext);
 
   const ref = useForwardedRef(forwardedRef, null);
 
   const colorSet = colorSets[mode];
   const sizeSet = sizeSets[size];
-
-  const errorColor = mode === Mode.Light ? uiColors.red.base : '#F97216';
 
   const onClick = useCallback(() => {
     if (open) {
@@ -88,7 +161,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 
   return (
     <Component
-      {...ariaProps}
+      {...rest}
       ref={ref}
       name={name}
       value={value}
@@ -97,18 +170,13 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       variant={Variant.Default}
       darkMode={mode === Mode.Dark}
       rightGlyph={<CaretDownIcon />}
+      size={size}
       data-testid="leafygreen-ui-select-menubutton"
       className={cx(
-        menuButtonStyle,
+        menuButtonStyleOverrides, // TODO: Refresh - remove overrides
+        menuButtonModeOverrides[mode], // TODO: Refresh - remove overrides
         css`
-          height: ${sizeSet.height}px;
-          font-size: ${sizeSet.text}px;
           width: 100%;
-          color: ${deselected ? colorSet.text.deselected : colorSet.text.base};
-          border-color: ${open && !disabled
-            ? colorSet.border.open
-            : colorSet.border.base};
-
           @media only screen and (max-width: ${breakpoints.Desktop}px) {
             height: ${mobileSizeSet.height}px;
             font-size: ${mobileSizeSet.text}px;
@@ -116,37 +184,23 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         `,
         {
           [css`
-            border-color: ${errorColor};
-            box-shadow: 0px 1px 2px rgba(87, 11, 8, 0.3);
-
-            &:hover,
-            &:active {
-              border-color: ${errorColor};
-              box-shadow: ${mode === Mode.Light
-                ? `0px 4px 4px rgba(87, 11, 8, 0.3),
-              0px 0px 0px 3px ${uiColors.red.light3}`
-                : `0px 4px 4px rgba(87, 11, 8, 0.3), 0px 0px 0px 3px ${uiColors.red.dark2}`};
-            }
-          `]: state === State.Error && !!errorMessage,
+            color: ${colorSet.text.deselected};
+          `]: deselected,
+          [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,
+          [menuButtonFocusStyle[mode]]: showFocus,
+          [css`
+            letter-spacing: initial;
+          `]: size === Size.XSmall,
         },
       )}
     >
-      <div
-        className={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          flex-grow: 1;
-          width: 90%;
-        `}
-      >
+      <div className={menuButtonTextWrapperStyle}>
         <div className={menuButtonTextStyle}>{text}</div>
         {state === State.Error && errorMessage && (
           <WarningIcon
             role="presentation"
             className={css`
-              color: ${errorColor};
-              margin-left: ${spacing[1]}px;
+              color: ${errorColor[mode]};
             `}
             size={sizeSet.warningIcon}
           />
