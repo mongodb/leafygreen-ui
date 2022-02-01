@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { Either, isComponentType } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 
@@ -33,11 +33,11 @@ const removeButtonStyle = css`
 const baseIconButtonStyle = css`
   display: inline-block;
   border-radius: 100px;
-  color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
-  transition: color 150ms ease-in-out;
+  transition: 150ms ease-in-out;
+  transition-property: color, box-shadow;
 
   // Set background to fully-transparent white for cross-browser compatability with Safari
   //
@@ -87,24 +87,29 @@ const iconButtonSizes = {
 
 const iconButtonMode = {
   [Mode.Light]: css`
+    color: ${palette.gray.base};
+
     &:active,
     &:hover {
-      color: ${uiColors.gray.dark2};
+      color: ${palette.gray.dark3};
 
       &:before {
-        background-color: ${uiColors.gray.light2};
+        background-color: ${palette.gray.light2};
       }
     }
 
     &:focus {
-      color: ${uiColors.blue.dark2};
+      color: ${palette.gray.dark3};
+      box-shadow: 0 0 0 3px ${palette.white}, 0 0 0 5px ${palette.blue.light1};
 
       &:before {
-        background-color: ${uiColors.blue.light2};
+        background-color: ${palette.gray.light2};
       }
     }
   `,
   [Mode.Dark]: css`
+    color: ${uiColors.gray.base};
+
     &:active,
     &:hover {
       color: ${uiColors.white};
@@ -126,14 +131,14 @@ const iconButtonMode = {
 
 const disabledStyle = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.light2};
+    color: ${palette.gray.light1};
     pointer-events: none;
     background-color: rgba(255, 255, 255, 0);
 
     &:focus {
-      color: ${uiColors.gray.light2};
+      color: ${palette.gray.light1};
       &:before {
-        background-color: ${uiColors.gray.light1};
+        background-color: ${palette.gray.light3};
       }
     }
   `,
