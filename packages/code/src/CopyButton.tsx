@@ -39,18 +39,8 @@ function getCopyButtonStyle(
     }
   `;
 
-  const darkModeStyle = withLanguageSwitcher
-    ? css`
-        background-color: ${uiColors.gray.dark2};
-        color: ${uiColors.gray.light2};
-      `
-    : css`
-        background-color: ${uiColors.gray.dark3};
-      `;
-
   return cx(baseStyle, {
     [copiedStyle]: copied,
-    [darkModeStyle]: mode === Mode.Dark,
   });
 }
 

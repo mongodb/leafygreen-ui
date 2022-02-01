@@ -52,13 +52,14 @@ const buttonModeStyle = {
     }
   `,
   dark: css`
-    border-right: 1px solid ${uiColors.gray.dark3};
+    background-color: ${uiColors.gray.dark3};
+    border-right: 1px solid ${uiColors.gray.dark2};
     font-family: ${fontFamilies.legacy};
 
     &:hover,
     &:focus,
     &:active {
-      border-right: 1px solid ${uiColors.gray.dark3};
+      border-right: 1px solid ${uiColors.gray.dark2};
     }
 
     &:hover,
