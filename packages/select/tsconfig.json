@@ -20,6 +20,9 @@
       "path": "../icon"
     },
     {
+      "path": "../interaction-ring"
+    },
+    {
       "path": "../leafygreen-provider"
     },
     {
@@ -33,6 +36,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }
