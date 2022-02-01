@@ -8,6 +8,7 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets, Mode } from './styleSets';
 import SelectContext from './SelectContext';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const option = createDataProp('option');
 
@@ -24,6 +25,7 @@ const optionStyle = css`
   overflow-wrap: anywhere;
   transition: background-color 150ms ease-in-out;
   position: relative;
+  padding: 8px 12px;
 
   &:before {
     content: '';
@@ -43,6 +45,7 @@ const optionStyle = css`
 const optionTextStyle = css`
   display: flex;
   align-items: center;
+  font-family: ${fontFamilies.default};
 `;
 
 const iconStyle = css`
@@ -136,6 +139,10 @@ export function InternalOption({
         [css`
           font-weight: bold;
         `]: showDeselectionStyle,
+        // TODO: Refresh - remove darkMode logic
+        [css`
+          font-family: ${fontFamilies.legacy};
+        `]: mode === Mode.Dark,
       })}
     >
       {children}
@@ -244,11 +251,11 @@ export function InternalOption({
           cursor: pointer;
           color: ${colorSet.text.base};
         `,
-        // TODO: Refresh - remove dark mode conditional styles
-        css`
-          padding: ${mode === Mode.Dark ? 10 : 8}px 12px;
-        `,
         {
+          // TODO: Refresh - remove dark mode conditional styles
+          [css`
+            padding: 10px 12px;
+          `]: mode === Mode.Dark,
           [css`
             &:hover {
               background-color: ${colorSet.background.hovered};
