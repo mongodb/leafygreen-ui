@@ -22,17 +22,18 @@ type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
 
 const titleStyle = css`
   font-size: 24px;
-  font-weight: bold;
-  line-height: 25px;
   margin-bottom: 10px;
 `;
 
 const titleColors = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.dark2};
+    color: ${uiColors.black};
+    font-weight: 700;
   `,
   [Mode.Dark]: css`
     color: ${uiColors.white};
+    font-weight: bold;
+    line-height: 25px;
   `,
 };
 
@@ -56,15 +57,40 @@ const centeredGraphicContainerStyle = css`
   padding-bottom: 8px;
 `;
 
-const filledGraphicContainerStyle = css`
-  padding-bottom: 24px;
-`;
+const filledGraphicContainerStyle = {
+  [Mode.Light]: css`
+    padding-bottom: 24px;
+    position: relative;
+
+    &::before {
+      content: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 49' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z' fill='white'/%3E%3C/svg%3E");
+      display:block;
+      width: 100%;
+      position: absolute;
+      bottom: 20px;
+    }
+    `,
+  [Mode.Dark]: css`
+    padding-bottom: 24px;
+  `,
+};
 
 const filledGraphicStyle = css`
   width: 100%;
 `;
 
-const contentStyle = css`
+const contentStyle = {
+  [Mode.Light]: css`
+  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-align: center;
+  padding: 0 20px 24px;
+  max-width: 476px;
+  margin: 0 auto;
+  `,
+  [Mode.Dark]: css`
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -72,11 +98,12 @@ const contentStyle = css`
   text-align: center;
   padding: 0 92px;
   padding-bottom: 24px;
-`;
+  `,
+};
 
 const contentColors = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.dark1};
+    color: ${uiColors.black};
   `,
   [Mode.Dark]: css`
     color: ${uiColors.gray.light2};
@@ -132,7 +159,7 @@ const MarketingModal = ({
       <div
         className={cx(baseGraphicContainerStyle, {
           [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
-          [filledGraphicContainerStyle]: graphicStyle === GraphicStyle.Fill,
+          [filledGraphicContainerStyle[mode]]: graphicStyle === GraphicStyle.Fill,
         })}
       >
         {React.cloneElement(graphic, {
@@ -141,11 +168,12 @@ const MarketingModal = ({
           })}`,
         })}
       </div>
-      <div className={cx(contentStyle, contentColors[mode])}>
+      <div className={cx(contentStyle[mode], contentColors[mode])}>
         <div className={cx(titleStyle, titleColors[mode])}>{title}</div>
         {children}
       </div>
       <div className={footerContentStyle}>
+        {/* TODO: switch to new green variant */}
         <Button variant="primary" onClick={onButtonClick} darkMode={darkMode}>
           {buttonText}
         </Button>
