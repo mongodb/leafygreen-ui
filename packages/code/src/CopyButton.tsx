@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Mode } from './types';
 
-function getCopyButtonStyle(
-  mode: Mode,
-  copied: boolean,
-  withLanguageSwitcher: boolean,
-): string {
+function getCopyButtonStyle(mode: Mode, copied: boolean): string {
   const baseStyle = css`
     align-self: center;
     color: ${palette.gray.base};
@@ -96,7 +92,7 @@ function CopyButton({
       ref={setButtonNode}
       darkMode={darkMode}
       aria-label="Copy"
-      className={getCopyButtonStyle(mode, copied, withLanguageSwitcher)}
+      className={getCopyButtonStyle(mode, copied)}
       onClick={handleClick}
     >
       {copied ? <CheckmarkIcon /> : <CopyIcon />}
