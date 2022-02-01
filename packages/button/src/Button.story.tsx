@@ -1,14 +1,15 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, select } from '@storybook/addon-knobs';
+import { boolean, select, text } from '@storybook/addon-knobs';
 import { uiColors } from '@leafygreen-ui/palette';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Button, { Variant, Size } from '.';
 
 storiesOf('Button', module)
   .add('Default', () => {
+    const buttonText = text('Text', 'MongoDB');
     const variant = select('Variant', Object.values(Variant), Variant.Default);
     const size = select('Size', Object.values(Size), Size.Default);
     const baseFontSize = select('Base Font Size', [14, 16], 14);
@@ -30,14 +31,23 @@ storiesOf('Button', module)
       'CaretDown',
     );
 
-    const className = css`
-      background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
-      padding: 40px;
-    `;
+    const stretch = boolean('Stretch', false);
+
+    const wrapperStyle = cx(
+      css`
+        background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
+        padding: 40px;
+      `,
+      {
+        [css`
+          width: 256px;
+        `]: stretch,
+      },
+    );
 
     return (
       <LeafygreenProvider>
-        <div className={className}>
+        <div className={wrapperStyle}>
           <Button
             variant={variant}
             darkMode={darkMode}
@@ -47,8 +57,11 @@ storiesOf('Button', module)
             href={href}
             leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
             rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
+            className={css`
+              width: 100%;
+            `}
           >
-            MongoDB
+            {buttonText}
           </Button>
         </div>
       </LeafygreenProvider>

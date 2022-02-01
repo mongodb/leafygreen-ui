@@ -21,7 +21,7 @@ const rippleStyle = css`
 const containerChildStyles = css`
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   height: 100%;
   width: 100%;
@@ -32,19 +32,19 @@ const containerChildStyles = css`
 
 const padding: Record<Size, string> = {
   [Size.XSmall]: css`
-    padding: 0 6px; // 8px - 2px (border)
+    padding: 0 8px;
   `,
 
   [Size.Small]: css`
-    padding: 0 10px; // 12px - 2px (border)
+    padding: 0 12px;
   `,
 
   [Size.Default]: css`
-    padding: 0 10px; // 12px - 2px (border)
+    padding: 0 12px;
   `,
 
   [Size.Large]: css`
-    padding: 0 14px; // 16px - 2px (border)
+    padding: 0 16px;
   `,
 };
 
