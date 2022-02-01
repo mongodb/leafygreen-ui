@@ -27,7 +27,7 @@ export default class myClass {
 }
 
 function greeting(entity) {
-  return \`Hello, \${entity}!\`;
+  return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
  
 console.log(greeting('World'));
