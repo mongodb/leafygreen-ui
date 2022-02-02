@@ -59,23 +59,10 @@ const centeredGraphicContainerStyle = css`
   padding-bottom: 8px;
 `;
 
-const filledGraphicContainerStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    padding-bottom: 24px;
-    position: relative;
-
-    &::before {
-      content: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 49' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z' fill='white'/%3E%3C/svg%3E");
-      display: block;
-      width: 100%;
-      position: absolute;
-      bottom: 20px;
-    }
-  `,
-  [Mode.Dark]: css`
-    padding-bottom: 24px;
-  `,
-};
+const filledGraphicContainerStyle = css`
+  padding-bottom: 24px;
+  position: relative;
+`;
 
 const filledGraphicStyle = css`
   width: 100%;
@@ -112,6 +99,26 @@ const contentColors: Record<Mode, string> = {
     color: ${uiColors.gray.light2};
   `,
 };
+
+const curvedSVGStyles = css`
+  position: absolute;
+  left: 0;
+  bottom: 24px;
+`;
+
+const renderCurvedSVG = () => (
+  <svg
+    className={cx(curvedSVGStyles)}
+    viewBox="0 0 600 49"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z"
+      fill="#ffffff"
+    />
+  </svg>
+);
 
 const footerContentStyle = css`
   line-height: 24px;
@@ -162,8 +169,7 @@ const MarketingModal = ({
       <div
         className={cx(baseGraphicContainerStyle, {
           [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
-          [filledGraphicContainerStyle[mode]]:
-            graphicStyle === GraphicStyle.Fill,
+          [filledGraphicContainerStyle]: graphicStyle === GraphicStyle.Fill,
         })}
       >
         {React.cloneElement(graphic, {
@@ -171,13 +177,14 @@ const MarketingModal = ({
             [filledGraphicStyle]: graphicStyle === GraphicStyle.Fill,
           })}`,
         })}
+        {!darkMode && renderCurvedSVG()}
       </div>
       <div className={cx(contentStyle[mode], contentColors[mode])}>
         <div className={cx(titleStyle, titleColors[mode])}>{title}</div>
         {children}
       </div>
       <div className={footerContentStyle}>
-        {/* TODO: switch to new green variant */}
+        {/* TODO: Refresh - switch to new green variant */}
         <Button variant="primary" onClick={onButtonClick} darkMode={darkMode}>
           {buttonText}
         </Button>
