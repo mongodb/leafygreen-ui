@@ -25,13 +25,21 @@ interface ColorSet {
   clickableStyle: string;
 }
 
-// prettier-ignore
-const lightBaseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, '#000')}`;
+const lightBaseBoxShadow = `0 4px 10px -4px ${transparentize(
+  0.7,
+  palette.black,
+)}`;
+const lightHoverBoxShadow = `0 4px 20px -4px ${transparentize(
+  0.8,
+  palette.black,
+)}`;
+const lightFocusBoxShadow = `
+0 0 0 3px ${palette.white},
+0 0 0 5px ${palette.blue.base}
+`;
 const darkBaseBoxShadow = `0 4px 20px -4px  ${transparentize(0.3, '#000')}`;
-// prettier-ignore
-const lightHoverBoxShadow = `0 2px 6px -2px ${transparentize(0.4, '#000')}`;
 const darkHoverBoxShadow = `0 2px 12px -2px ${transparentize(0.1, '#000')}`;
-const focusBoxShadow = `0 0 0 3px ${uiColors.focus}`;
+const darkFocusBoxShadow = `0 0 0 3px ${uiColors.focus}`;
 
 const colorSet: Record<Mode, ColorSet> = {
   [Mode.Light]: {
@@ -40,27 +48,29 @@ const colorSet: Record<Mode, ColorSet> = {
       box-shadow: ${lightBaseBoxShadow};
       background-color: white;
       color: ${palette.gray.dark3};
-      // TODO: Refresh - remove properties from dark mode logic
+      // TODO: Refresh - remove properties from mode logic
       border-radius: 24px;
       font-family: ${fontFamilies.default};
       font-size: 13px;
+      line-height: 20px;
       padding: 24px;
-      min-height: calc(48px + 1em);
+      min-height: 68px; // 48px + 20px (padding + line-height)
     `,
     clickableStyle: css`
       cursor: pointer;
 
       &:focus {
         outline: none;
-        box-shadow: ${lightBaseBoxShadow}, ${focusBoxShadow};
+        box-shadow: ${lightFocusBoxShadow}, ${lightBaseBoxShadow};
       }
 
-      &:hover {
+      &:hover,
+      &:active {
         border: 1px solid ${palette.gray.light2};
         box-shadow: ${lightHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${lightHoverBoxShadow}, ${focusBoxShadow};
+          box-shadow: ${lightFocusBoxShadow}, ${lightHoverBoxShadow};
         }
       }
     `,
@@ -81,14 +91,14 @@ const colorSet: Record<Mode, ColorSet> = {
 
       &:focus {
         outline: none;
-        box-shadow: ${darkBaseBoxShadow}, ${focusBoxShadow};
+        box-shadow: ${darkBaseBoxShadow}, ${darkFocusBoxShadow};
       }
 
       &:hover {
         box-shadow: ${darkHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${darkHoverBoxShadow}, ${focusBoxShadow};
+          box-shadow: ${darkHoverBoxShadow}, ${darkFocusBoxShadow};
         }
       }
     `,
