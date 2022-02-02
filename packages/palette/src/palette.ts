@@ -2,7 +2,7 @@ export const white = '#FFFFFF';
 export const black = '#001E2B';
 
 export const gray = {
-  dark3: '#21313C',
+  dark3: '#1C2D38',
   dark2: '#3D4F58',
   dark1: '#5C6C75',
   base: '#889397',
