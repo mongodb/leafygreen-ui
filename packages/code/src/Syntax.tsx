@@ -100,17 +100,10 @@ function Syntax({
 
   const baseFontSize = useBaseFontSize();
   // TODO: Refresh - remove darkMode logic
-  const codeFontSize = darkMode
-    ? baseFontSize === 14
-      ? 14
-      : 16
-    : baseFontSize === 14
-    ? 13
-    : 15;
+  const codeFontSize = baseFontSize === 14 ? 13 : darkMode ? 16 : 15;
 
   const codeFontStyles = css`
     font-size: ${codeFontSize}px;
-    line-height: 1.6em;
   `;
 
   return (
