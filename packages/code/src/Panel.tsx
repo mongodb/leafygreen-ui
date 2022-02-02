@@ -3,7 +3,6 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import CopyButton from './CopyButton';
 import LanguageSwitcher from './LanguageSwitcher';
-import { variantColors } from './globalStyles';
 import { PopoverProps } from './types';
 import {
   Mode,
@@ -13,19 +12,18 @@ import {
 import { palette, uiColors } from '@leafygreen-ui/palette';
 
 function getSidebarVariantStyle(mode: Mode): string {
-  const colors = variantColors[mode];
-
   switch (mode) {
     case Mode.Light:
       return css`
         background-color: ${palette.white};
-        border-color: ${colors[1]};
+        border-color: ${palette.gray.light2};
       `;
 
     case Mode.Dark:
       return css`
-        background-color: ${colors[1]};
-        border-color: ${uiColors.gray.dark2};
+        // TODO: Refresh - update these colors
+        background-color: ${uiColors.gray.dark2};
+        border-color: ${uiColors.gray.dark3};
       `;
   }
 }

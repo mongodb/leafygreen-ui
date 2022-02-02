@@ -2,41 +2,54 @@ import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Mode } from './types';
 
-function getCopyButtonStyle(mode: Mode, copied: boolean): string {
+const copiedStyle = css`
+  color: ${palette.white};
+  background-color: ${palette.green.dark1};
+
+  &:focus {
+    color: ${palette.white};
+
+    &:before {
+      background-color: ${palette.green.dark1};
+    }
+  }
+
+  &:hover {
+    color: ${palette.white};
+
+    &:before {
+      background-color: ${palette.green.dark1};
+    }
+  }
+`;
+
+function getCopyButtonStyle(mode: Mode): string {
   const baseStyle = css`
     align-self: center;
     color: ${palette.gray.base};
   `;
 
-  const copiedStyle = css`
-    color: ${palette.white};
-    background-color: ${palette.green.dark1};
-
-    &:focus {
-      color: ${palette.white};
-
-      &:before {
-        background-color: ${palette.green.dark1};
-      }
-    }
+  // TODO: Refresh - Update these styles
+  const darkModeStyles = css`
+    color: ${uiColors.gray.light2};
 
     &:hover {
-      color: ${palette.white};
+      color: ${uiColors.gray.light3};
 
       &:before {
-        background-color: ${palette.green.dark1};
+        background-color: ${uiColors.gray.dark3};
       }
     }
   `;
 
   return cx(baseStyle, {
-    [copiedStyle]: copied,
+    [darkModeStyles]: mode === Mode.Dark,
   });
 }
 
@@ -92,7 +105,9 @@ function CopyButton({
       ref={setButtonNode}
       darkMode={darkMode}
       aria-label="Copy"
-      className={getCopyButtonStyle(mode, copied)}
+      className={cx(getCopyButtonStyle(mode), {
+        [copiedStyle]: copied,
+      })}
       onClick={handleClick}
     >
       {copied ? <CheckmarkIcon /> : <CopyIcon />}

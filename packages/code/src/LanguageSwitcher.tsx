@@ -53,8 +53,8 @@ const buttonModeStyle = {
     }
   `,
   dark: css`
-    background-color: ${uiColors.gray.dark3};
-    border-right: 1px solid ${uiColors.gray.dark2};
+    background-color: ${uiColors.gray.dark2};
+    border-right: 1px solid ${uiColors.gray.dark3};
     font-family: ${fontFamilies.legacy};
 
     &:hover,
