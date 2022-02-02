@@ -21,28 +21,6 @@ import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
 
-// The typographic styles below are largely copied from the Body component.
-// We can't use the Body component here due to it rendering a paragraph tag,
-// Which would conflict with any children passed to it containing a div.
-const baseTypeStyle = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${uiColors.gray.dark3};
-  font-weight: 400;
-`;
-
-const typeScale1 = css`
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0px;
-`;
-
-const typeScale2 = css`
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0px;
-`;
-
 export const TriggerEvent = {
   Hover: 'hover',
   Click: 'click',
@@ -67,6 +45,28 @@ export const Align = {
 export type Align = typeof Align[keyof typeof Align];
 
 export { Justify };
+
+// The typographic styles below are largely copied from the Body component.
+// We can't use the Body component here due to it rendering a paragraph tag,
+// Which would conflict with any children passed to it containing a div.
+const baseTypeStyle = css`
+  margin: unset;
+  font-family: ${fontFamilies.default};
+  color: ${uiColors.gray.dark3};
+  font-weight: 400;
+`;
+
+const typeScale1 = css`
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+`;
+
+const typeScale2 = css`
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+`;
 
 const baseStyles = css`
   padding: 14px 16px;

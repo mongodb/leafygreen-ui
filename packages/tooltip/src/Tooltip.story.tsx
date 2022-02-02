@@ -3,9 +3,11 @@ import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import Tooltip, { TriggerEvent, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
+import Icon from '@leafygreen-ui/icon';
+import { css } from '@leafygreen-ui/emotion';
 
 function ControlledTooltip() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <Tooltip
@@ -46,4 +48,35 @@ storiesOf('Tooltip', module)
       I am an uncontrolled Tooltip!
     </Tooltip>
   ))
-  .add('Controlled', () => <ControlledTooltip />);
+  .add('Controlled', () => <ControlledTooltip />)
+  .add('Test', () => {
+    return (
+      <div
+        className={css`
+          display: grid;
+          grid-template-columns: repeat(4, 64px);
+          grid-template-rows: repeat(4, 64px);
+          width: 100%;
+          gap: 96px;
+          align-items: center;
+          justify-items: center;
+          justify-content: center;
+        `}
+      >
+        {Object.values(Align).map(a =>
+          Object.values(Justify).map(j => (
+            <Tooltip
+              key={a + j}
+              // open={true}
+              align={a}
+              justify={j}
+              triggerEvent="hover"
+              trigger={<Button rightGlyph={<Icon glyph="InfoWithCircle" />} />}
+            >
+              Align {a}, Justify {j}
+            </Tooltip>
+          )),
+        )}
+      </div>
+    );
+  });
