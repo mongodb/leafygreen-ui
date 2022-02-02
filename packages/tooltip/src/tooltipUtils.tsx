@@ -1,11 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Align, Justify } from '@leafygreen-ui/popover';
+import { Align, ElementPosition, Justify } from '@leafygreen-ui/popover';
 import clamp from 'lodash/clamp';
 
 export function notchPositionStyles(
   align: Align,
   justify: Justify,
-  triggerRect: DOMRect | ClientRect | null,
+  triggerRect: ElementPosition | DOMRect | ClientRect | null,
 ) {
   if (!align || !justify || !triggerRect) {
     return {
