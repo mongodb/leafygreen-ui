@@ -16,12 +16,13 @@ const rippleStyle = css`
   left: 0;
   right: 0;
   bottom: 0;
+  border-radius: 6px;
 `;
 
 const containerChildStyles = css`
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: auto 1fr auto;
+  justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
@@ -30,21 +31,25 @@ const containerChildStyles = css`
   z-index: 0;
 `;
 
-const padding: Record<Size, string> = {
+const containerChildSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     padding: 0 8px;
+    gap: 6px;
   `,
 
   [Size.Small]: css`
     padding: 0 12px;
+    gap: 6px;
   `,
 
   [Size.Default]: css`
     padding: 0 12px;
+    gap: 6px;
   `,
 
   [Size.Large]: css`
     padding: 0 16px;
+    gap: 8px;
   `,
 };
 
@@ -128,42 +133,29 @@ const Button: ExtendableBox<
 
   const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
 
-  const iconSpacing = size === Size.Large ? '8px' : '6px';
-
   const content = (
     <>
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
       <div
-        className={cx(
-          rippleStyle,
-          css`
-            // TODO: Refresh - remove darkMode logic
-            border-radius: ${darkMode ? 3 : 6}px;
-          `,
-        )}
+        className={cx(rippleStyle, {
+          // TODO: Refresh - remove darkMode logic
+          [css`
+            border-radius: 3px;
+          `]: darkMode,
+        })}
         ref={rippleRef}
       />
 
       <div
-        className={cx(
-          containerChildStyles,
-          rightGlyph
-            ? css`
-                justify-content: space-between;
-              `
-            : css`
-                justify-content: center;
-              `,
-          {
-            [css`
-              font-family: ${fontFamilies.legacy};
-            `]: darkMode,
-          },
-          padding[size],
-          css`
-            gap: ${iconSpacing};
-          `,
-        )}
+        className={cx(containerChildStyles, containerChildSizeStyles[size], {
+          // TODO: Refresh - remove darkMode logic
+          [css`
+            justify-content: space-between;
+          `]: !!rightGlyph && darkMode,
+          [css`
+            font-family: ${fontFamilies.legacy};
+          `]: darkMode,
+        })}
       >
         {leftGlyph && (
           <ButtonIcon

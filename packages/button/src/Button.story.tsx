@@ -23,12 +23,12 @@ storiesOf('Button', module)
     const leftGlyph = select(
       'Left Glyph',
       [...Object.keys(glyphs), undefined],
-      'InviteUser',
+      undefined,
     );
     const rightGlyph = select(
       'Right Glyph',
       [...Object.keys(glyphs), undefined],
-      'CaretDown',
+      undefined,
     );
 
     const stretch = boolean('Stretch', false);
