@@ -49,22 +49,21 @@ const titleColors: Record<Mode, string> = {
 const baseModalStyle = css`
   width: 600px;
   padding: initial;
+  letter-spacing: 0;
 `;
 
+// TODO: Refresh – remove darkmode logic
 const contentStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
-      sans-serif; // TODO: Refresh – remove when fonts are updated
+      sans-serif;
     font-size: 13px;
     line-height: 20px;
-    letter-spacing: 0;
-    padding: 35px 40px 0px;
   `,
   [Mode.Dark]: css`
     font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 20px;
-    letter-spacing: 0;
     padding: 36px;
   `,
 };
@@ -72,10 +71,10 @@ const contentStyle: Record<Mode, string> = {
 const modeAndVariantStyles: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Default]: css`
-      padding: 35px 40px 0px;
+      padding: 36px 40px 0px;
     `,
     [Variant.Danger]: css`
-      padding: 35px 40px 0px 72px;
+      padding: 36px 40px 0px 78px;
     `,
   },
   [Mode.Dark]: {
@@ -98,17 +97,31 @@ const textEntryInputStyle = css`
   margin-top: 14px;
 `;
 
-const buttonStyle = css`
-  margin: 0 2px;
+// TODO: Refresh - remove darkmode logic
+const buttonStyle = {
+  [Mode.Light]: css`
+    margin: 0 2px;
 
-  &:first-of-type {
-    margin: 0 0 0 5px;
-  }
+    &:first-of-type {
+      margin: 0 0 0 5px;
+    }
 
-  &:last-of-type {
-    margin: 0 5px 0 0;
-  }
-`;
+    &:last-of-type {
+      margin: 0 5px 0 0;
+    }
+  `,
+  [Mode.Dark]: css`
+    margin: 0 2px;
+
+    &:first-of-type {
+      margin: 0 0 0 4px;
+    }
+
+    &:last-of-type {
+      margin: 0 4px 0 0;
+    }
+  `,
+};
 
 const warningIconStyles = css`
   width: 32px;
@@ -119,7 +132,7 @@ const warningIconStyles = css`
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 30px;
+  left: 36px;
   top: 35px;
 
   svg {
@@ -194,6 +207,7 @@ const ConfirmationModal = ({
           modeAndVariantStyles[mode][variant],
         )}
       >
+        {/* TODO: Refresh - remove mode logic when darkmode is updated */}
         {variant === Variant.Danger && mode === Mode.Light && (
           <div className={cx(warningIconStyles)}>
             <WarningIcon fill={palette.red.base} role="presentation" />
@@ -208,12 +222,16 @@ const ConfirmationModal = ({
           variant={variant}
           disabled={!confirmEnabled || submitDisabled}
           onClick={onConfirm}
-          className={buttonStyle}
+          className={buttonStyle[mode]}
           darkMode={darkMode}
         >
           {buttonText}
         </Button>
-        <Button onClick={onCancel} className={buttonStyle} darkMode={darkMode}>
+        <Button
+          onClick={onCancel}
+          className={buttonStyle[mode]}
+          darkMode={darkMode}
+        >
           Cancel
         </Button>
       </Footer>

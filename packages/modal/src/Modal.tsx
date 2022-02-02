@@ -41,7 +41,6 @@ const defaultHorizontalSpacing = 18;
 const defaultVerticalSpacing = 64;
 
 const backdrop = css`
-  background-color: ${transparentize(0.4, uiColors.black)};
   overflow-y: auto;
   position: fixed;
   top: 0;
@@ -83,20 +82,22 @@ const modalContentStyle = css`
 
 const modeStyles: Record<Mode, string> = {
   [Mode.Light]: css`
-    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
-      sans-serif; // TODO: Refresh – remove when fonts are updated
     color: ${uiColors.gray.dark3};
     background-color: ${uiColors.white};
-    border-radius: 24px; // TODO: refresh - remove when dark mode is updated
-    padding: 35px 40px; // TODO: refresh - remove when dark mode is updated
+    // TODO: Refresh – remove once darkmode is updated
+    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
+      sans-serif;
+    border-radius: 24px;
+    padding: 35px 40px;
     box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
   `,
   [Mode.Dark]: css`
-    font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
     color: ${uiColors.white};
     background-color: ${uiColors.gray.dark3};
-    border-radius: 7px; // TODO: refresh - remove when dark mode is updated
-    padding: 32px; // TODO: refresh - remove when dark mode is updated
+    // TODO: Refresh – remove once darkmode is updated
+    font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+    border-radius: 7px;
+    padding: 32px;
     box-shadow: 0 5px 15px ${transparentize(0.4, uiColors.black)};
   `,
 };
@@ -122,15 +123,19 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
   `,
 };
 
-const closeButton = {
+const baseCloseButtonStyles = css`
+  position: absolute;
+  cursor: pointer;
+`;
+
+const closeButton: Record<Mode, string> = {
   [Mode.Light]: css`
-    position: absolute;
-    cursor: pointer;
     // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
     // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
     right: 18px;
     top: 18px;
 
+    // TODO: Refresh – remove when IconButton is updated
     &:focus {
       color: ${palette.gray.dark3};
       outline: 2px solid ${palette.blue.light1};
@@ -138,8 +143,6 @@ const closeButton = {
     }
   `,
   [Mode.Dark]: css`
-    position: absolute;
-    cursor: pointer;
     // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
     // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
     right: 10px;
@@ -147,7 +150,7 @@ const closeButton = {
   `,
 };
 
-const buttonColors = {
+const buttonColors: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.gray.dark1};
 
@@ -289,6 +292,13 @@ function Modal({
             ref={nodeRef}
             className={cx(className, backdrop, {
               [visibleBackdrop]: state === 'entered',
+              // TODO: Refresh – remove darkmode logic for background color
+              [css`
+                background-color: ${transparentize(0.4, palette.black)};
+              `]: !darkMode,
+              [css`
+                background-color: ${transparentize(0.4, uiColors.black)};
+              `]: darkMode,
             })}
           >
             <FocusTrap focusTrapOptions={focusTrapOptions}>
@@ -311,7 +321,11 @@ function Modal({
                   <IconButton
                     onClick={handleClose}
                     aria-label="Close modal"
-                    className={cx(closeButton[mode], buttonColors[mode])}
+                    className={cx(
+                      baseCloseButtonStyles,
+                      closeButton[mode],
+                      buttonColors[mode],
+                    )}
                     darkMode={darkMode}
                   >
                     <XIcon />
