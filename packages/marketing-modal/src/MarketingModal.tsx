@@ -5,6 +5,7 @@ import Button from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
 import { uiColors } from '@leafygreen-ui/palette';
+import { CloseIconColor } from '@leafygreen-ui/modal';
 
 const Mode = {
   Dark: 'dark',
@@ -142,6 +143,7 @@ interface MarketingModalProps {
   buttonText: string;
   linkText: string;
   darkMode?: boolean;
+  closeIconColor?: CloseIconColor;
 }
 
 const MarketingModal = ({
@@ -155,6 +157,7 @@ const MarketingModal = ({
   buttonText,
   linkText,
   darkMode,
+  closeIconColor = CloseIconColor.Dark,
   ...modalProps
 }: MarketingModalProps) => {
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -165,6 +168,7 @@ const MarketingModal = ({
       contentClassName={baseModalStyle}
       setOpen={onClose}
       darkMode={darkMode}
+      closeIconColor={closeIconColor}
     >
       <div
         className={cx(baseGraphicContainerStyle, {

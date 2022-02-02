@@ -18,6 +18,13 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
+export const CloseIconColor = {
+  Dark: 'dark',
+  Light: 'light',
+};
+
+export type CloseIconColor = typeof CloseIconColor[keyof typeof CloseIconColor];
+
 export const ModalSize = {
   Small: 'small',
   Default: 'default',
@@ -150,21 +157,40 @@ const closeButton: Record<Mode, string> = {
   `,
 };
 
-const buttonColors: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${uiColors.gray.dark1};
+// TODO: remove mode logic
+const buttonColors: Record<Mode, Record<CloseIconColor, string>> = {
+  [Mode.Light]: {
+    [CloseIconColor.Dark]: css`
+      color: ${palette.gray.dark1};
 
-    &:hover {
-      color: ${uiColors.gray.dark3};
-    }
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.gray.base};
+      &:hover {
+        color: ${palette.gray.dark3};
+      }
+    `,
+    [CloseIconColor.Light]: css`
+      color: ${palette.white};
 
-    &:hover {
+      &:hover {
+        color: ${palette.gray.dark3};
+      }
+    `,
+  },
+  [Mode.Dark]: {
+    [CloseIconColor.Dark]: css`
       color: ${uiColors.gray.base};
-    }
-  `,
+
+      &:hover {
+        color: ${uiColors.gray.base};
+      }
+    `,
+    [CloseIconColor.Light]: css`
+      color: ${uiColors.gray.base};
+
+      &:hover {
+        color: ${uiColors.gray.base};
+      }
+    `,
+  },
 };
 
 interface ModalProps {
@@ -217,6 +243,8 @@ interface ModalProps {
   initialFocus?: string;
 
   darkMode?: boolean;
+
+  closeIconColor?: CloseIconColor;
 }
 
 /**
@@ -243,6 +271,7 @@ interface ModalProps {
  * @param props.contentClassName className applied to overlay div.
  * @param props.closeOnBackdropClick Determines whether or not a Modal should close when a user clicks outside the modal.
  * @param props.initialFocus By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus. With this option you can specify a different element to receive that initial focus. Selector string (which will be passed to document.querySelector() to find the DOM node).
+ * @param props.closeIconColor Choose between dark or light close icon. Default is dark.
  */
 function Modal({
   open = false,
@@ -254,6 +283,7 @@ function Modal({
   className,
   contentClassName,
   initialFocus,
+  closeIconColor = CloseIconColor.Dark,
   ...rest
 }: ModalProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -324,7 +354,7 @@ function Modal({
                     className={cx(
                       baseCloseButtonStyles,
                       closeButton[mode],
-                      buttonColors[mode],
+                      buttonColors[mode][closeIconColor],
                     )}
                     darkMode={darkMode}
                   >

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { radios, text, boolean } from '@storybook/addon-knobs';
+import { radios, text, boolean, select } from '@storybook/addon-knobs';
 import MarketingModal, { GraphicStyle } from '.';
+import { CloseIconColor } from '@leafygreen-ui/modal';
 
 function Default() {
   const [open, setOpen] = useState(false);
@@ -35,6 +36,11 @@ function Default() {
         buttonText={buttonText}
         linkText={linkText}
         darkMode={darkMode}
+        closeIconColor={select(
+          'Close icon color',
+          Object.values(CloseIconColor),
+          'info',
+        )}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here.
