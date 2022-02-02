@@ -76,8 +76,8 @@ const iconButtonSizes = {
     width: 28px;
   `,
   [Size.Large]: css`
-    height: 35px;
-    width: 35px;
+    height: 36px;
+    width: 36px;
   `,
   [Size.XLarge]: css`
     height: 42px;
