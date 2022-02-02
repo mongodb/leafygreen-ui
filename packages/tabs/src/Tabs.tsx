@@ -17,33 +17,18 @@ export { Mode };
 
 const modeColors = {
   [Mode.Light]: {
-    activeStyle: css`
-      color: ${palette.green.dark2};
-      font-weight: 700;
-
-      &:hover:not(:focus) {
-        color: ${palette.gray.dark3};
-      }
-    `,
-    disabledColor: css`
-      color: ${palette.gray.light1};
-    `,
+    // disabledColor: css`
+    //   color: ${palette.gray.light1};
+    // `,
     underlineColor: css`
       border-bottom: 1px solid ${palette.gray.light2};
     `,
   },
 
   [Mode.Dark]: {
-    activeStyle: css`
-      color: ${uiColors.green.light2};
-
-      &:hover:not(:focus) {
-        color: ${uiColors.green.light2};
-      }
-    `,
-    disabledColor: css`
-      color: ${uiColors.gray.dark1};
-    `,
+    // disabledColor: css`
+    //   color: ${uiColors.gray.dark1};
+    // `,
     underlineColor: css`
       border-bottom: 1px solid ${uiColors.gray.dark2};
     `,
@@ -68,9 +53,9 @@ const listStyle = css`
   scrollbar-width: none; /* Firefox */
 `;
 
-const disabledStyle = css`
-  cursor: not-allowed;
-`;
+// const disabledStyle = css`
+//   cursor: not-allowed;
+// `;
 
 type ReactEmpty = null | undefined | false | '';
 
@@ -223,13 +208,7 @@ function Tabs(props: AccessibleTabsProps) {
       disabled,
       darkMode,
       parentRef: tabNode,
-      className: cx(
-        {
-          [modeColors[mode].activeStyle]: isTabSelected,
-          [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
-        },
-        className,
-      ),
+      className,
       onKeyDown: (event: KeyboardEvent) => {
         onKeyDown?.(event);
         handleArrowKeyPress(event);
