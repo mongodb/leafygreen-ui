@@ -1,1 +1,1 @@
-export { default, GraphicStyle } from './MarketingModal';
+export { default, GraphicStyle, BlobPosition } from './MarketingModal';
