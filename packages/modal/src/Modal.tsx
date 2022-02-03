@@ -135,30 +135,11 @@ const baseCloseButtonStyles = css`
   cursor: pointer;
 `;
 
-const closeButton: Record<Mode, string> = {
-  [Mode.Light]: css`
-    // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
-    // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
-    right: 18px;
-    top: 18px;
-
-    // TODO: Refresh – remove when IconButton is updated
-    &:focus {
-      color: ${palette.gray.dark3};
-      outline: 2px solid ${palette.blue.light1};
-      border: 2px solid ${palette.white};
-    }
-  `,
-  [Mode.Dark]: css`
-    // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
-    // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
-    right: 10px;
-    top: 10px;
-  `,
-};
-
 // TODO: remove mode logic
-const buttonColors: Record<Mode, Record<CloseIconColor, string>> = {
+const closeButton: Record<
+  Mode,
+  Record<CloseIconColor, string> & Record<'position', string>
+> = {
   [Mode.Light]: {
     [CloseIconColor.Dark]: css`
       color: ${palette.gray.dark1};
@@ -172,6 +153,19 @@ const buttonColors: Record<Mode, Record<CloseIconColor, string>> = {
 
       &:hover {
         color: ${palette.gray.dark3};
+      }
+    `,
+    position: css`
+      // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
+      // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
+      right: 18px;
+      top: 18px;
+
+      // TODO: Refresh – remove when IconButton is updated
+      &:focus {
+        color: ${palette.gray.dark3};
+        outline: 2px solid ${palette.blue.light1};
+        border: 2px solid ${palette.white};
       }
     `,
   },
@@ -189,6 +183,12 @@ const buttonColors: Record<Mode, Record<CloseIconColor, string>> = {
       &:hover {
         color: ${uiColors.gray.base};
       }
+    `,
+    position: css`
+      // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
+      // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
+      right: 10px;
+      top: 10px;
     `,
   },
 };
@@ -353,8 +353,8 @@ function Modal({
                     aria-label="Close modal"
                     className={cx(
                       baseCloseButtonStyles,
-                      closeButton[mode],
-                      buttonColors[mode][closeIconColor],
+                      closeButton[mode].position,
+                      closeButton[mode][closeIconColor],
                     )}
                     darkMode={darkMode}
                   >
