@@ -67,10 +67,15 @@ storiesOf('Tooltip', module)
           Object.values(Justify).map(j => (
             <Tooltip
               key={a + j}
+              open={['middle', 'fit'].includes(j)}
               align={a}
               justify={j}
               triggerEvent="hover"
-              trigger={<Button rightGlyph={<Icon glyph="InfoWithCircle" />} />}
+              trigger={
+                <Button leftGlyph={<Icon glyph="InfoWithCircle" />}>
+                  Trigger
+                </Button>
+              }
             >
               Align {a}, Justify {j}
             </Tooltip>

@@ -3,11 +3,17 @@ import { Align, ElementPosition, Justify } from '@leafygreen-ui/popover';
 import clamp from 'lodash/clamp';
 import { borderRadius, notchHeight, notchWidth } from './tooltipConstants';
 
-export function notchPositionStyles(
-  align: Align,
-  justify: Justify,
-  triggerRect: ElementPosition | DOMRect | ClientRect | null,
-) {
+interface NotchPositionStylesArgs {
+  align: Align;
+  justify: Justify;
+  triggerRect: ElementPosition | DOMRect | ClientRect | null;
+}
+
+export function notchPositionStyles({
+  align,
+  justify,
+  triggerRect,
+}: NotchPositionStylesArgs) {
   if (!align || !justify || !triggerRect) {
     return {
       notchContainer: '',
@@ -52,7 +58,7 @@ export function notchPositionStyles(
    * Boolean derived from the notchOffsetActual and notchOffsetLowerBound that determines if the trigger
    * is small enough to make a transformation of the tooltip itself necessary.
    */
-  let transformPosition: boolean;
+  let shouldTransformPosition: boolean;
 
   /**
    * When the trigger is smaller than the minimum offset we require to position the notch over the trigger,
@@ -72,10 +78,10 @@ export function notchPositionStyles(
         notchOffsetLowerBound,
         notchOffsetUpperBound,
       );
-      transformPosition = notchOffsetActual <= notchOffsetLowerBound;
+      shouldTransformPosition = notchOffsetActual <= notchOffsetLowerBound;
 
-      notchStyleObj.left = '0px';
-      notchStyleObj.right = '0px';
+      // notchStyleObj.left = '0px';
+      // notchStyleObj.right = '0px';
 
       if (align === 'top') {
         containerStyleObj.top = 'calc(100% - 1px)';
@@ -90,7 +96,7 @@ export function notchPositionStyles(
         case Justify.Start:
           containerStyleObj.left = `${notchOffset}px`;
 
-          if (transformPosition) {
+          if (shouldTransformPosition) {
             tooltipOffsetTransform = `translateX(-${
               notchOffsetLowerBound - notchOffsetActual
             }px)`;
@@ -99,15 +105,26 @@ export function notchPositionStyles(
           break;
 
         case Justify.Middle:
-        case Justify.Fit:
           containerStyleObj.left = '0px';
           containerStyleObj.right = '0px';
+
+          break;
+
+        case Justify.Fit:
+          containerStyleObj.left = `${notchOffset}px`;
+
+          if (shouldTransformPosition) {
+            tooltipOffsetTransform = `translateX(-${
+              notchOffsetLowerBound - notchOffsetActual
+            }px)`;
+          }
+
           break;
 
         case Justify.End:
           containerStyleObj.right = `${notchOffset}px`;
 
-          if (transformPosition) {
+          if (shouldTransformPosition) {
             tooltipOffsetTransform = `translateX(${
               notchOffsetLowerBound - notchOffsetActual
             }px)`;
@@ -127,10 +144,10 @@ export function notchPositionStyles(
         notchOffsetLowerBound,
         notchOffsetUpperBound,
       );
-      transformPosition = notchOffsetActual <= notchOffsetLowerBound;
+      shouldTransformPosition = notchOffsetActual <= notchOffsetLowerBound;
 
-      notchStyleObj.top = '0px';
-      notchStyleObj.bottom = '0px';
+      // notchStyleObj.top = '0px';
+      // notchStyleObj.bottom = '0px';
 
       if (align === 'left') {
         containerStyleObj.left = 'calc(100% - 1px)';
@@ -146,7 +163,7 @@ export function notchPositionStyles(
         case Justify.Start:
           containerStyleObj.top = `${notchOffset}px`;
 
-          if (transformPosition) {
+          if (shouldTransformPosition) {
             tooltipOffsetTransform = `translateY(-${
               notchOffsetLowerBound - notchOffsetActual
             }px)`;
@@ -155,15 +172,24 @@ export function notchPositionStyles(
           break;
 
         case Justify.Middle:
-        case Justify.Fit:
           containerStyleObj.top = '0px';
           containerStyleObj.bottom = '0px';
+          break;
+
+        case Justify.Fit:
+          containerStyleObj.top = `${notchOffset}px`;
+
+          if (shouldTransformPosition) {
+            tooltipOffsetTransform = `translateY(-${
+              notchOffsetLowerBound - notchOffsetActual
+            }px)`;
+          }
           break;
 
         case Justify.End:
           containerStyleObj.bottom = `${notchOffset}px`;
 
-          if (transformPosition) {
+          if (shouldTransformPosition) {
             tooltipOffsetTransform = `translateY(${
               notchOffsetLowerBound - notchOffsetActual
             }px)`;
