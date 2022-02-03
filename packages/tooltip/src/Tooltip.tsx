@@ -14,7 +14,7 @@ import {
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
@@ -52,12 +52,12 @@ export { Justify };
 const baseTypeStyle = css`
   margin: unset;
   font-family: ${fontFamilies.default};
-  color: ${uiColors.gray.dark3};
+  color: ${palette.gray.light1};
   font-weight: 400;
 `;
 
 const typeScale1 = css`
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   letter-spacing: 0px;
 `;
@@ -69,9 +69,12 @@ const typeScale2 = css`
 `;
 
 const baseStyles = css`
-  padding: 14px 16px;
-  border-radius: 3px;
-  box-shadow: 0px 2px 4px -1px ${transparentize(0.8, uiColors.black)};
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  /* min-height: calc(26px + 32px); */
+  box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
   cursor: default;
   overflow-wrap: break-word;
 `;
@@ -81,32 +84,32 @@ const positionRelative = css`
 `;
 
 const colorSet = {
+  [Mode.Light]: {
+    tooltip: css`
+      background-color: ${palette.black};
+      color: ${palette.gray.light1};
+    `,
+    children: css`
+      color: inherit;
+    `,
+    notch: css`
+      background-color: ${palette.black};
+      box-shadow: 2px 2px 4px ${transparentize(0.9, palette.black)};
+    `,
+  },
   [Mode.Dark]: {
     tooltip: css`
       background-color: ${uiColors.gray.dark3};
       color: ${uiColors.gray.light1};
+      // TODO: Refresh - remove dark mode size logic
+      border-radius: 3px;
+      font-size: 14px;
     `,
     children: css`
       color: ${uiColors.gray.light1};
     `,
     notch: css`
       background-color: ${uiColors.gray.dark3};
-      box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)};
-    `,
-  },
-
-  [Mode.Light]: {
-    tooltip: css`
-      background-color: ${uiColors.gray.light3};
-      color: ${uiColors.gray.dark2};
-      border: 1px solid ${uiColors.gray.light2};
-    `,
-    children: css`
-      color: ${uiColors.gray.dark2};
-    `,
-    notch: css`
-      background-color: ${uiColors.gray.light3};
-      border: 1px solid ${uiColors.gray.light2};
       box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)};
     `,
   },
