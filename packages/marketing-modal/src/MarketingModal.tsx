@@ -111,25 +111,27 @@ const contentColors: Record<Mode, string> = {
   `,
 };
 
-const curvedSVGStyles = css`
-  position: absolute;
-  left: 0;
-  bottom: 24px;
-`;
+const renderCurvedSVG = () => {
+  const curvedSVGStyles = css`
+    position: absolute;
+    left: 0;
+    bottom: 24px;
+  `;
 
-const renderCurvedSVG = () => (
-  <svg
-    className={cx(curvedSVGStyles)}
-    viewBox="0 0 600 49"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z"
-      fill="#ffffff"
-    />
-  </svg>
-);
+  return (
+    <svg
+      className={cx(curvedSVGStyles)}
+      viewBox="0 0 600 49"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z"
+        fill="#ffffff"
+      />
+    </svg>
+  );
+};
 
 const blobPaths: Record<BlobPosition, Record<BlobSVGProperties, string>> = {
   [BlobPosition.TopLeft]: {
@@ -222,7 +224,7 @@ const MarketingModal = ({
   children,
   title,
   graphic,
-  graphicStyle = 'center',
+  graphicStyle = GraphicStyle.Center,
   onButtonClick,
   onLinkClick,
   onClose,
@@ -256,7 +258,7 @@ const MarketingModal = ({
             [filledGraphicStyle]: graphicStyle === GraphicStyle.Fill,
           })}`,
         })}
-        {!darkMode && graphicStyle === 'fill' && renderCurvedSVG()}
+        {!darkMode && graphicStyle === GraphicStyle.Fill && renderCurvedSVG()}
       </div>
       <div className={cx(contentStyle[mode], contentColors[mode])}>
         <div className={cx(titleStyle, titleColors[mode])}>{title}</div>

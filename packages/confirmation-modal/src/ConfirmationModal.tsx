@@ -24,7 +24,7 @@ export type Variant = typeof Variant[keyof typeof Variant];
 const titleStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 700;
     line-height: 32px;
     margin-bottom: 10px;
     margin-top: 0;
@@ -52,7 +52,7 @@ const baseModalStyle = css`
   letter-spacing: 0;
 `;
 
-// TODO: Refresh – remove darkmode logic
+// TODO: Refresh – remove mode logic
 const contentStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
@@ -68,7 +68,8 @@ const contentStyle: Record<Mode, string> = {
   `,
 };
 
-const modeAndVariantStyles: Record<Mode, Record<Variant, string>> = {
+// TODO: Refresh – remove mode logic
+const modeAndVariantContentStyles: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Default]: css`
       padding: 36px 40px 0px;
@@ -97,7 +98,7 @@ const textEntryInputStyle = css`
   margin-top: 14px;
 `;
 
-// TODO: Refresh - remove darkmode logic
+// TODO: Refresh - remove mode logic
 const buttonStyle = {
   [Mode.Light]: css`
     margin: 0 2px;
@@ -204,7 +205,7 @@ const ConfirmationModal = ({
         className={cx(
           contentStyle[mode],
           contentColors[mode],
-          modeAndVariantStyles[mode][variant],
+          modeAndVariantContentStyles[mode][variant],
         )}
       >
         {/* TODO: Refresh - remove mode logic when darkmode is updated */}
