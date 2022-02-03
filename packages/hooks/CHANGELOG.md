@@ -1,5 +1,12 @@
 # @leafygreen-ui/hooks
 
+## 7.2.0
+
+### Minor Changes
+
+- 63ddf39: - Adds useForwardedRef hook
+  - Adds useDynamicRefs hook
+
 ## 7.1.1
 
 ### Patch Changes
