@@ -1,6 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Align, ElementPosition, Justify } from '@leafygreen-ui/popover';
 import clamp from 'lodash/clamp';
+import { borderRadius, notchHeight, notchWidth } from './tooltipConstants';
 
 export function notchPositionStyles(
   align: Align,
@@ -15,18 +16,18 @@ export function notchPositionStyles(
     };
   }
 
-  const containerSize = 20;
-  const notchSize = 10;
-  const notchOverlap = -notchSize / 2;
+  const containerSize = notchWidth;
+  const notchOverlap = -(containerSize - notchHeight) / 2;
 
-  type Styles = 'left' | 'right' | 'top' | 'bottom' | 'margin';
+  type Styles = 'left' | 'right' | 'top' | 'bottom' | 'margin' | 'transform';
   const notchStyleObj: Partial<Record<Styles, string>> = {};
   const containerStyleObj: Partial<Record<Styles, string>> = {};
 
   /**
-   * The bounds used to clamp the notchOffset value
+   * The bounds used to clamp the notchOffset value.
+   * Should match the border-radius of the tooltip
    */
-  const notchOffsetLowerBound = 5;
+  const notchOffsetLowerBound = borderRadius;
 
   /**
    * This number is somewhat "magical", but adjusted for the Tooltip alignment.
@@ -82,6 +83,7 @@ export function notchPositionStyles(
       } else {
         containerStyleObj.bottom = 'calc(100% - 1px)';
         notchStyleObj.bottom = `${notchOverlap}px`;
+        notchStyleObj.transform = `rotate(180deg)`;
       }
 
       switch (justify) {
@@ -131,11 +133,13 @@ export function notchPositionStyles(
       notchStyleObj.bottom = '0px';
 
       if (align === 'left') {
+        containerStyleObj.left = 'calc(100% - 1px)';
         notchStyleObj.left = `${notchOverlap}px`;
-        containerStyleObj.left = '100%';
+        notchStyleObj.transform = `rotate(-90deg)`;
       } else {
+        containerStyleObj.right = 'calc(100% - 1px)';
         notchStyleObj.right = `${notchOverlap}px`;
-        containerStyleObj.right = '100%';
+        notchStyleObj.transform = `rotate(90deg)`;
       }
 
       switch (justify) {
@@ -184,10 +188,9 @@ export function notchPositionStyles(
     notch: css`
       ${css(notchStyleObj)};
       position: absolute;
-      transform: rotate(45deg);
-      width: ${notchSize}px;
-      height: ${notchSize}px;
-      margin: auto;
+      width: ${notchWidth}px;
+      height: ${notchWidth}px; // Keep it square. Rotating is simpler
+      margin: 0;
     `,
     tooltip: css`
       min-width: ${notchOffset * 2 + containerSize}px;

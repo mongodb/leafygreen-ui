@@ -57,7 +57,7 @@ storiesOf('Tooltip', module)
           grid-template-columns: repeat(4, 64px);
           grid-template-rows: repeat(4, 64px);
           width: 100%;
-          gap: 96px;
+          gap: 64px;
           align-items: center;
           justify-items: center;
           justify-content: center;
@@ -67,7 +67,6 @@ storiesOf('Tooltip', module)
           Object.values(Justify).map(j => (
             <Tooltip
               key={a + j}
-              // open={true}
               align={a}
               justify={j}
               triggerEvent="hover"

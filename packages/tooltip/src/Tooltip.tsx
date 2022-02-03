@@ -20,6 +20,8 @@ import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
+import SvgNotch from './Notch';
+import { borderRadius, notchWidth } from './tooltipConstants';
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -71,9 +73,8 @@ const typeScale2 = css`
 const baseStyles = css`
   display: flex;
   align-items: center;
-  padding: 16px;
-  border-radius: 16px;
-  /* min-height: calc(26px + 32px); */
+  border-radius: ${borderRadius}px;
+  padding: ${borderRadius}px;
   box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
   cursor: default;
   overflow-wrap: break-word;
@@ -93,8 +94,8 @@ const colorSet = {
       color: inherit;
     `,
     notch: css`
-      background-color: ${palette.black};
-      box-shadow: 2px 2px 4px ${transparentize(0.9, palette.black)};
+      /* background-color: ${palette.black};
+      box-shadow: 2px 2px 4px ${transparentize(0.9, palette.black)}; */
     `,
   },
   [Mode.Dark]: {
@@ -109,8 +110,8 @@ const colorSet = {
       color: ${uiColors.gray.light1};
     `,
     notch: css`
-      background-color: ${uiColors.gray.dark3};
-      box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)};
+      /* background-color: ${uiColors.gray.dark3};
+      box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)}; */
     `,
   },
 };
@@ -374,6 +375,11 @@ function Tooltip({
               tooltipNotchStyle,
               colorSet[mode].tooltip,
               className,
+              {
+                [css`
+                  min-height: ${notchWidth + 2 * borderRadius}px;
+                `]: ['left', 'right'].includes(align),
+              },
             )}
             ref={setTooltipNode}
           >
@@ -388,7 +394,7 @@ function Tooltip({
             </div>
 
             <div className={notchContainerStyle}>
-              <div className={cx(notchStyle, colorSet[mode].notch)} />
+              <SvgNotch className={cx(notchStyle, colorSet[mode].notch)} />
             </div>
           </div>
         );
