@@ -39,7 +39,7 @@ function Default() {
         closeIconColor={select(
           'Close icon color',
           Object.values(CloseIconColor),
-          'info',
+          'default',
         )}
       >
         This is some description text, and it is extra long so it fills up this
