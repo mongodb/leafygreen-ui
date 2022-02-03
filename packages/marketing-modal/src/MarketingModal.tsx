@@ -246,7 +246,7 @@ const MarketingModal = ({
       darkMode={darkMode}
       closeIconColor={closeIconColor}
     >
-      {!darkMode && showBlob && renderBlobs(blobPosition)}
+      {!darkMode && showBlob && graphicStyle === GraphicStyle.Center && renderBlobs(blobPosition)}
       <div
         className={cx(baseGraphicContainerStyle, {
           [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,

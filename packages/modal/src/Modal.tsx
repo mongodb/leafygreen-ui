@@ -19,6 +19,7 @@ const Mode = {
 type Mode = typeof Mode[keyof typeof Mode];
 
 export const CloseIconColor = {
+  Default: 'default',
   Dark: 'dark',
   Light: 'light',
 };
@@ -141,6 +142,13 @@ const closeButton: Record<
   Record<CloseIconColor, string> & Record<'position', string>
 > = {
   [Mode.Light]: {
+    [CloseIconColor.Default]: css`
+      color: ${palette.gray.base};
+
+      &:hover {
+        color: ${palette.gray.dark3};
+      }
+    `,
     [CloseIconColor.Dark]: css`
       color: ${palette.gray.dark1};
 
@@ -170,6 +178,13 @@ const closeButton: Record<
     `,
   },
   [Mode.Dark]: {
+    [CloseIconColor.Default]: css`
+      color: ${uiColors.gray.base};
+
+      &:hover {
+        color: ${uiColors.gray.base};
+      }
+    `,
     [CloseIconColor.Dark]: css`
       color: ${uiColors.gray.base};
 
