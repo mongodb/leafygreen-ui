@@ -94,10 +94,6 @@ const colorSet = {
     children: css`
       color: inherit;
     `,
-    notch: css`
-      /* background-color: ${palette.black};
-      box-shadow: 2px 2px 4px ${transparentize(0.9, palette.black)}; */
-    `,
   },
   [Mode.Dark]: {
     tooltip: css`
@@ -109,10 +105,6 @@ const colorSet = {
     `,
     children: css`
       color: ${uiColors.gray.light1};
-    `,
-    notch: css`
-      /* background-color: ${uiColors.gray.dark3};
-      box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)}; */
     `,
   },
 };
@@ -401,7 +393,7 @@ function Tooltip({
             </div>
 
             <div className={notchContainerStyle}>
-              <SvgNotch className={cx(notchStyle, colorSet[mode].notch)} />
+              <SvgNotch className={cx(notchStyle)} />
             </div>
           </div>
         );
