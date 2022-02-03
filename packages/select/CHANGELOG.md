@@ -1,5 +1,23 @@
 # @leafygreen-ui/select
 
+## 3.1.0
+
+### Minor Changes
+
+- 70f3c2c: Added error state to select component
+
+### Patch Changes
+
+- Updated dependencies [70f3c2c]
+  - @leafygreen-ui/hooks@7.1.1
+
+## 3.0.8
+
+### Patch Changes
+
+- 9d0bcd4: - Resolves an issue where a Select component would break keyboard navigation with `Tab` in a form
+  - Prevents page from scrolling when using arrow keys to navigate a Select menu
+
 ## 3.0.7
 
 ### Patch Changes

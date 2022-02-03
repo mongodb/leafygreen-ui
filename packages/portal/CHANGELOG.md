@@ -1,5 +1,11 @@
 # @leafygreen-ui/portal
 
+## 4.0.2
+
+### Patch Changes
+
+- 548ca2c: Replace useLayoutEffect with useIsomorphicLayoutEffect hook
+
 ## 4.0.1
 
 ### Patch Changes

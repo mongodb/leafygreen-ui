@@ -1,7 +1,8 @@
 import { OneOf } from '@leafygreen-ui/lib';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
+import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 
 type PortalProps = {
   children?: React.ReactNode;
@@ -17,7 +18,7 @@ function usePortalContainer(customContainer?: HTMLElement) {
   //  - A component's initial hydrated render should match the server render
   const [container, setContainer] = useState<HTMLElement | undefined>();
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (customContainer) {
       setContainer(customContainer);
     } else {
@@ -38,7 +39,7 @@ function usePortalContainer(customContainer?: HTMLElement) {
 function Portal(props: PortalProps) {
   const container = usePortalContainer(props.container ?? undefined);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (container && !props.container) {
       container.className = props.className ?? '';
     }

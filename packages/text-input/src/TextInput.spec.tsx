@@ -1,7 +1,13 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  screen,
+  getByLabelText,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import TextInput, { State } from './TextInput';
+import TextInput, { State, SizeVariant } from './TextInput';
 
 const error = 'This is the error message';
 const validEmail = 'test.email@mongodb.com';
@@ -12,6 +18,7 @@ const defaultProps = {
   description: 'This is the description',
   placeholder: 'This is some placeholder text',
   onChange: jest.fn(),
+  onBlur: jest.fn(),
 };
 
 function renderTextInput(props = {}) {
@@ -166,6 +173,15 @@ describe('packages/text-input', () => {
       expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
       expect(defaultProps.onChange).toHaveReturnedWith('none');
     });
+
+    test('onBlur is invoked when focus leaves the input', () => {
+      renderTextInput(defaultProps);
+
+      userEvent.tab(); // focus
+      userEvent.tab(); // blur
+
+      expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('when no label is supplied', () => {
@@ -173,6 +189,61 @@ describe('packages/text-input', () => {
       renderTextInput();
 
       expect(screen.queryByRole('label')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('validation callback', () => {
+    const setupValidationTest = () => {
+      const handleValidation = jest.fn();
+      const { container } = render(
+        <TextInput label="test" handleValidation={handleValidation} />,
+      );
+      const inputElement = getByLabelText(container, 'test');
+      return { handleValidation, inputElement };
+    };
+
+    test('is not called on focus', () => {
+      const { handleValidation } = setupValidationTest();
+      userEvent.tab(); // focus
+      expect(handleValidation).not.toHaveBeenCalled();
+    });
+
+    test('is not called on keypress before initial blur', () => {
+      const { handleValidation, inputElement } = setupValidationTest();
+      userEvent.tab(); // focus
+      userEvent.type(inputElement, `test`);
+      expect(handleValidation).not.toHaveBeenCalled();
+    });
+
+    test('is called on blur', () => {
+      const { handleValidation } = setupValidationTest();
+      userEvent.tab(); // focus
+      userEvent.tab(); // blur
+      expect(handleValidation).toHaveBeenCalledTimes(1);
+    });
+
+    test('is called on subsequent keypresses', () => {
+      const { handleValidation, inputElement } = setupValidationTest();
+      userEvent.tab(); // focus
+      userEvent.tab(); // blur
+      userEvent.tab(); // focus
+      userEvent.type(inputElement, `test`);
+      expect(handleValidation).toHaveBeenCalledTimes(5); // blur + keypress * 4
+    });
+  });
+
+  describe('when the "sizeVariant" is "large"', () => {
+    test('check if font-size is 18px', () => {
+      const { label } = renderTextInput({
+        value: validEmail,
+        sizeVariant: SizeVariant.Large,
+        optional: true,
+        ...defaultProps,
+      });
+
+      expect(label).toHaveStyle({
+        fontSize: '18px',
+      });
     });
   });
 

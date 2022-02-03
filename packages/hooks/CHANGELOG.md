@@ -1,5 +1,24 @@
 # @leafygreen-ui/hooks
 
+## 7.2.0
+
+### Minor Changes
+
+- 63ddf39: - Adds useForwardedRef hook
+  - Adds useDynamicRefs hook
+
+## 7.1.1
+
+### Patch Changes
+
+- 70f3c2c: Removes error message in useValidation when no prop is passed in
+
+## 7.1.0
+
+### Minor Changes
+
+- d661688: Adds a useValidation hook, used in TextArea and TextInput
+
 ## 7.0.0
 
 ### Major Changes

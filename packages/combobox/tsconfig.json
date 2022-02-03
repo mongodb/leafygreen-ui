@@ -1,0 +1,47 @@
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../checkbox"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../interaction-ring"
+    },
+    {
+      "path": "../inline-definition"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../popover"
+    },
+    {
+      "path": "../tooltip"
+    },
+    {
+      "path": "../typography"
+    }
+  ]
+}

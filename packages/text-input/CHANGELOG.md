@@ -1,5 +1,35 @@
 # @leafygreen-ui/text-input
 
+## 6.2.1
+
+### Patch Changes
+
+- 548ca2c: Restores the ability to pass onBlur handlers while using the useValidation hook.
+
+## 6.2.0
+
+### Minor Changes
+
+- ded2831: Add sizeVariant prop
+
+### Patch Changes
+
+- Updated dependencies [ded2831]
+  - @leafygreen-ui/palette@3.3.0
+
+## 6.1.0
+
+### Minor Changes
+
+- d661688: Adds validation callback for TextArea and TextInput
+
+### Patch Changes
+
+- Updated dependencies [d661688]
+- Updated dependencies [d661688]
+  - @leafygreen-ui/lib@9.1.0
+  - @leafygreen-ui/hooks@7.1.0
+
 ## 6.0.5
 
 ### Patch Changes

@@ -54,6 +54,36 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   highlightLines?: LineHighlightingDefinition;
 }
 
+export interface PopoverProps {
+  /**
+   * Specifies that the popover content should be rendered at the end of the DOM,
+   * rather than in the DOM tree.
+   *
+   * default: `true`
+   */
+  usePortal?: boolean;
+
+  /**
+   * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
+   */
+  portalClassName?: string;
+
+  /**
+   * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
+   */
+  portalContainer?: HTMLElement | null;
+
+  /**
+   * When usePortal is `true`, specifies the scrollable element to position relative to.
+   */
+  scrollContainer?: HTMLElement | null;
+
+  /**
+   * Number that controls the z-index of the popover element directly.
+   */
+  popoverZIndex?: number;
+}
+
 export type CodeProps = Omit<
   SyntaxProps,
   'onCopy' | 'language' | 'onChange'
@@ -82,6 +112,18 @@ export type CodeProps = Omit<
    *
    */
   onCopy?: Function;
+
+  /**
+   * Custom action buttons.
+   *
+   */
+  customActionButtons?: Array<React.ReactNode>;
+
+  /**
+   * When true, custom action buttons will be shown.
+   *
+   */
+  showCustomActionButtons?: boolean;
 } & (
     | { language: Language; languageOptions?: undefined; onChange?: undefined }
     | {
@@ -89,7 +131,8 @@ export type CodeProps = Omit<
         language: LanguageOption['displayName'];
         languageOptions: Array<LanguageOption>;
       }
-  );
+  ) &
+  PopoverProps;
 
 export interface LanguageOption {
   displayName: string;
@@ -97,7 +140,7 @@ export interface LanguageOption {
   image?: React.ReactElement;
 }
 
-export interface LanguageSwitcher {
+export interface LanguageSwitcher extends PopoverProps {
   onChange: (arg0: LanguageOption) => void;
   language: LanguageOption['displayName'];
   languageOptions: Array<LanguageOption>;

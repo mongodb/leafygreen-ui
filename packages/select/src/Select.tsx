@@ -6,10 +6,18 @@ import {
   useIdAllocator,
   useEventListener,
 } from '@leafygreen-ui/hooks';
+import { uiColors } from '@leafygreen-ui/palette';
 import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
-import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
-import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
+import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
+import {
+  colorSets,
+  mobileSizeSet,
+  Mode,
+  Size,
+  sizeSets,
+  State,
+} from './styleSets';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
 import SelectContext from './SelectContext';
@@ -45,6 +53,8 @@ export type Props = {
   placeholder?: string;
   name?: string;
   allowDeselect?: boolean;
+  errorMessage?: string;
+  state?: State;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
@@ -97,6 +107,8 @@ export default function Select({
   scrollContainer,
   portalClassName,
   popoverZIndex,
+  errorMessage = 'error message right here',
+  state = State.None,
   __INTERNAL__menuButtonSlot__,
 }: Props) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
@@ -334,45 +346,57 @@ export default function Select({
         return;
       }
 
-      switch (event.keyCode) {
-        case keyMap.Tab:
-        case keyMap.Escape:
-          onClose();
-          setFocusedOption(undefined);
-          break;
-        case keyMap.Enter:
-        case keyMap.Space:
-          if (open && document.activeElement !== menuButtonRef.current) {
-            // Default behavior is to use these keys to open the dropdown but we handle that manually
-            event.preventDefault();
-          }
+      const isFocusInMenu = listMenuRef.current?.contains(
+        document.activeElement,
+      );
+      const isFocusOnButton = menuButtonRef.current?.contains(
+        document.activeElement,
+      );
+      const isFocusInComponent = isFocusOnButton || isFocusInMenu;
 
-          onSelectFocusedOption(event);
-          break;
-        case keyMap.ArrowUp:
-          if (!open && document.activeElement === menuButtonRef.current) {
-            onOpen();
-          }
+      // We only respond to keypresses if the focus is in the component
+      if (isFocusInComponent) {
+        switch (event.keyCode) {
+          case keyMap.Tab:
+          case keyMap.Escape:
+            onClose();
+            setFocusedOption(undefined);
+            break;
+          case keyMap.Enter:
+          case keyMap.Space:
+            if (open && !isFocusOnButton) {
+              // Default behavior is to use these keys to open the dropdown but we handle that manually
+              event.preventDefault();
+            }
 
-          onFocusPreviousOption();
-          break;
-        case keyMap.ArrowDown:
-          if (!open && document.activeElement === menuButtonRef.current) {
-            onOpen();
-          }
-
-          onFocusNextOption();
-          break;
+            onSelectFocusedOption(event);
+            break;
+          case keyMap.ArrowUp:
+            if (!open && isFocusOnButton) {
+              onOpen();
+            }
+            event.preventDefault(); // Prevents page scrolling
+            onFocusPreviousOption();
+            break;
+          case keyMap.ArrowDown:
+            if (!open && isFocusOnButton) {
+              onOpen();
+            }
+            event.preventDefault(); // Prevents page scrolling
+            onFocusNextOption();
+            break;
+        }
       }
     },
     [
-      onClose,
-      onOpen,
-      open,
+      listMenuRef,
       menuButtonRef,
-      onFocusNextOption,
-      onFocusPreviousOption,
+      onClose,
+      open,
       onSelectFocusedOption,
+      onFocusPreviousOption,
+      onFocusNextOption,
+      onOpen,
     ],
   );
 
@@ -561,6 +585,9 @@ export default function Select({
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
+          aria-invalid={state === State.Error}
+          errorMessage={errorMessage}
+          state={state}
           __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
         >
           <ListMenu
@@ -578,6 +605,27 @@ export default function Select({
           </ListMenu>
         </MenuButton>
       </SelectContext.Provider>
+      {state === State.Error && errorMessage && (
+        <span
+          className={cx(
+            sharedTextStyles,
+            css`
+              color: ${darkMode ? '#F97216' : uiColors.red.base};
+              font-size: ${sizeSet.description.text}px;
+              line-height: ${sizeSet.description.lineHeight}px;
+              margin-top: ${spacing[1]}px;
+              padding-left: 2px;
+
+              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+                font-size: ${mobileSizeSet.description.text}px;
+                line-height: ${mobileSizeSet.description.lineHeight}px;
+              }
+            `,
+          )}
+        >
+          {errorMessage}
+        </span>
+      )}
     </div>
   );
 }
@@ -598,4 +646,6 @@ Select.propTypes = {
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
   readOnly: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  state: PropTypes.oneOf(Object.values(State)),
 };

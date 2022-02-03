@@ -8,7 +8,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Button, { ButtonProps } from '@leafygreen-ui/button';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { Select, Option } from '@leafygreen-ui/select';
-import { LanguageOption } from './types';
+import { LanguageOption, PopoverProps } from './types';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
@@ -93,7 +93,7 @@ function isLeafyGreenIcon(element: React.ReactNode) {
   return false;
 }
 
-interface Props {
+interface Props extends PopoverProps {
   language: LanguageOption;
   languageOptions: Array<LanguageOption>;
   onChange: (arg0: LanguageOption) => void;
@@ -105,6 +105,11 @@ function LanguageSwitcher({
   languageOptions,
   onChange,
   darkMode,
+  usePortal,
+  portalClassName,
+  portalContainer,
+  scrollContainer,
+  popoverZIndex,
 }: Props) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const mode = darkMode ? 'dark' : 'light';
@@ -147,6 +152,14 @@ function LanguageSwitcher({
     }
   }
 
+  const popoverProps = {
+    popoverZIndex,
+    usePortal,
+    portalClassName,
+    portalContainer,
+    scrollContainer,
+  } as const;
+
   return (
     <div className={containerStyle}>
       <Select
@@ -156,6 +169,7 @@ function LanguageSwitcher({
         value={language?.displayName}
         className={selectWidth}
         allowDeselect={false}
+        {...popoverProps}
         // Component missing displayName
         // eslint-disable-next-line
         __INTERNAL__menuButtonSlot__={React.forwardRef(

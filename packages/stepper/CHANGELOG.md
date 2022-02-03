@@ -1,5 +1,13 @@
 # @leafygreen-ui/stepper
 
+## 2.1.6
+
+### Patch Changes
+
+- d661688: Ensures the Stepper sets its own stacking context (i.e. sets `z-index: 0`)
+- Updated dependencies [d661688]
+  - @leafygreen-ui/lib@9.1.0
+
 ## 2.1.5
 
 ### Patch Changes

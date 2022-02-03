@@ -1,4 +1,4 @@
-import { uiColors } from '.';
+import { palette } from '.';
 
 interface HueRange {
   dark3: string;
@@ -10,10 +10,11 @@ interface HueRange {
   light3: string;
 }
 
-const requiredKeys = new Set(['dark3', 'base', 'light3']);
-const optionalKeys = new Set(['dark2', 'dark1', 'light1', 'light2']);
+const requiredKeys = new Set(['dark3', 'dark2', 'base', 'light2', 'light3']);
+const optionalKeys = new Set(['dark1', 'light1']);
 
-const allColors: Array<string | HueRange> = Object.values(uiColors);
+const allColors: Array<string | HueRange> = Object.values(palette);
+
 describe('packages/palette', function () {
   test('all colors have only expected hues', () => {
     allColors.forEach(color => {
