@@ -5,6 +5,7 @@ import Tooltip, { TriggerEvent, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { css } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
 
 function ControlledTooltip() {
   const [open, setOpen] = useState(true);
@@ -50,6 +51,8 @@ storiesOf('Tooltip', module)
   ))
   .add('Controlled', () => <ControlledTooltip />)
   .add('Test', () => {
+    const darkMode = boolean('darkMode', false);
+
     return (
       <div
         className={css`
@@ -61,6 +64,8 @@ storiesOf('Tooltip', module)
           align-items: center;
           justify-items: center;
           justify-content: center;
+          padding: 96px;
+          background-color: ${darkMode ? palette.black : palette.white};
         `}
       >
         {Object.values(Align).map(a =>
@@ -68,6 +73,7 @@ storiesOf('Tooltip', module)
             <Tooltip
               key={a + j}
               // open={true}
+              darkMode={darkMode}
               align={a}
               justify={j}
               triggerEvent="hover"
