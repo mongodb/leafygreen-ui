@@ -306,16 +306,16 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
 
 const disabledStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    background-color: ${palette.gray.light3};
-    border: 1px solid ${palette.gray.light2};
+    background-color: ${palette.gray.light2};
+    border: 1px solid ${palette.gray.light1};
     cursor: not-allowed;
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
 
     &:hover {
-      background-color: ${palette.gray.light3};
-      border: 1px solid ${palette.gray.light2};
+      background-color: ${palette.gray.light2};
+      border: 1px solid ${palette.gray.light1};
       cursor: not-allowed;
-      color: ${palette.gray.light1};
+      color: ${palette.gray.base};
     }
   `,
 
