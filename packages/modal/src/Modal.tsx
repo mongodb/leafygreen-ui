@@ -298,7 +298,7 @@ function Modal({
   className,
   contentClassName,
   initialFocus,
-  closeIconColor = CloseIconColor.Dark,
+  closeIconColor = CloseIconColor.Default,
   ...rest
 }: ModalProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
