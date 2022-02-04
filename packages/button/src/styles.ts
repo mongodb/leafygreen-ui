@@ -16,7 +16,7 @@ const baseButtonStyles = css`
   padding: 0;
   margin: 0;
   background-color: transparent;
-  border: 0px solid transparent;
+  border: 1px solid transparent;
   display: inline-flex;
   align-items: stretch;
   transition: all 150ms ease-in-out;
@@ -44,7 +44,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Default]: css`
       background-color: ${palette.gray.light3};
-      border: 1px solid ${palette.gray.base};
+      border-color: ${palette.gray.base};
       color: ${palette.gray.dark3};
 
       &:hover,
@@ -56,18 +56,21 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
     [Variant.Primary]: css`
       background-color: ${palette.green.dark2};
+      border-color: ${palette.green.dark2};
       color: ${palette.white};
 
       &:hover,
       &:active {
         color: ${palette.white};
         background-color: #00593f; // Not quite dark3
+        border-color: #00593f; // Not quite dark3
         box-shadow: 0 0 0 3px ${palette.green.light2};
       }
     `,
 
     [Variant.PrimaryOutline]: css`
-      border: 1px solid ${palette.green.dark2};
+      background-color: transparent;
+      border-color: ${palette.green.dark2};
       color: ${palette.green.dark2};
 
       &:hover,
@@ -79,33 +82,36 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
     [Variant.Danger]: css`
       background-color: ${palette.red.base};
+      border-color: ${palette.red.base};
       color: ${palette.white};
 
       &:hover,
       &:active {
         color: ${palette.white};
         background-color: #c82222; // not quite dark1
+        border-color: #c82222; // not quite dark1
         box-shadow: 0px 0px 0px 3px ${palette.red.light3};
       }
     `,
 
     [Variant.DangerOutline]: css`
-      border: 1px solid ${palette.red.light1};
+      background-color: transparent;
+      border-color: ${palette.red.light1};
       color: ${palette.red.base};
 
       &:hover,
       &:active {
         color: ${palette.red.dark2};
         background-color: ${transparentize(0.96, palette.red.base)};
-        border: 1px solid ${palette.red.base};
+        border-color: ${palette.red.base};
         box-shadow: 0px 0px 0px 3px ${uiColors.red.light3};
       }
     `,
 
     [Variant.BaseGreen]: css`
-      border: 1px solid ${palette.green.dark2};
-      color: ${palette.green.dark3};
       background-color: ${palette.green.base};
+      border-color: ${palette.green.dark2};
+      color: ${palette.green.dark3};
 
       &:hover,
       &:active {
