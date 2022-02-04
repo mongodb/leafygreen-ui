@@ -121,3 +121,4 @@ function Example() {
 | `linkText`      | `string`             | Text content of the alternate action link.                                                                                    |            |
 | `className`     | `string`             | Style to be applied to the container's root node.                                                                             |            |
 | `darkMode`      | `boolean`            | Determines if the component will appear in dark mode.                                                                         | `false`    |
+| `closeIconColor`             | `'default'`, `'dark'`, `'light'`                        | Determines the color of the close icon. Currently will only work if `darkMode` is set to false.                                                                                                 | `default`      |
