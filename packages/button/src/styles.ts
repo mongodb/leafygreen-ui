@@ -6,8 +6,8 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 import { createDataProp } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
-    0 0 0 3px ${color}, 
-    0 0 0 5px ${palette.blue.light1};
+    0 0 0 2px ${color}, 
+    0 0 0 4px ${palette.blue.light1};
 `;
 
 const baseButtonStyles = css`
