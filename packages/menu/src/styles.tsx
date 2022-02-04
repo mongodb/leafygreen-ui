@@ -82,10 +82,10 @@ export const titleTextStyle = css`
   font-weight: 500;
   color: var(--lg-menu-item-text-color, ${palette.white});
   // Define the default pseudo-bold styles
-  --lg-menu-pseudo-bold: 0.125px 0 var(--lg-menu-item-text-color),
-    -0.125px 0 var(--lg-menu-item-text-color),
-    0 0.125px var(--lg-menu-item-text-color),
-    0 -0.125px var(--lg-menu-item-text-color);
+  --lg-menu-pseudo-bold: 0.0625px 0 var(--lg-menu-item-text-color),
+    -0.0625px 0 var(--lg-menu-item-text-color),
+    0 0.0625px var(--lg-menu-item-text-color),
+    0 -0.0625px var(--lg-menu-item-text-color);
 `;
 
 export const descriptionTextStyle = css`
@@ -109,7 +109,7 @@ export const getHoverStyles = (container: string) => ({
   text: css`
     ${container}:hover & {
       // Using vars to maintain proper specificity for sub-items
-      --lg-menu-item-text-color: ${palette.green.base};
+      --lg-menu-item-text-color: ${palette.white};
       // Pseudo-bold so the text doesn't overflow on hover
       // var is defined in \`*TextStyles\` for specificity
       text-shadow: var(--lg-menu-pseudo-bold);
@@ -138,7 +138,7 @@ export const activeMenuItemContainerStyle = css`
 
 export const activeTitleTextStyle = css`
   font-weight: bold;
-  color: ${palette.white};
+  color: ${palette.green.base};
   // no pseudo bold text when active */
   --lg-menu-pseudo-bold: unset;
 `;
