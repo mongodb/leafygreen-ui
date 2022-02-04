@@ -62,7 +62,15 @@ export default function MarketingModalLiveExample() {
 
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ title, graphicStyle, buttonText, linkText, children, darkMode, closeIconColor }) => (
+      {({
+        title,
+        graphicStyle,
+        buttonText,
+        linkText,
+        children,
+        darkMode,
+        closeIconColor,
+      }) => (
         <>
           <Button onClick={() => setOpen(!open)}>Open Modal</Button>
           <MarketingModal

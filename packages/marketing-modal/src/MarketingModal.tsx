@@ -55,10 +55,16 @@ const baseGraphicStyle = css`
   display: block;
 `;
 
-const centeredGraphicContainerStyle = css`
-  padding-top: 20px;
-  padding-bottom: 8px;
-`;
+const centeredGraphicContainerStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    padding-top: 48px;
+    padding-bottom: 24px;
+  `,
+  [Mode.Dark]: css`
+    padding-top: 20px;
+    padding-bottom: 8px;
+  `,
+};
 
 const filledGraphicContainerStyle = css`
   padding-bottom: 24px;
@@ -174,7 +180,8 @@ const MarketingModal = ({
     >
       <div
         className={cx(baseGraphicContainerStyle, {
-          [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
+          [centeredGraphicContainerStyle[mode]]:
+            graphicStyle === GraphicStyle.Center,
           [filledGraphicContainerStyle]: graphicStyle === GraphicStyle.Fill,
         })}
       >
