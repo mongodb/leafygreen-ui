@@ -365,6 +365,12 @@ function Tooltip({
           triggerRect: referenceElPos,
         });
 
+        console.log({
+          notchContainerStyle,
+          notchStyle,
+          tooltipNotchStyle,
+        });
+
         return (
           <div
             {...rest}

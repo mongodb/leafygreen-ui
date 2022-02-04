@@ -52,6 +52,7 @@ storiesOf('Tooltip', module)
   .add('Controlled', () => <ControlledTooltip />)
   .add('Test', () => {
     const darkMode = boolean('darkMode', false);
+    const open = boolean('Open', false);
 
     return (
       <div
@@ -72,11 +73,12 @@ storiesOf('Tooltip', module)
           Object.values(Justify).map(j => (
             <Tooltip
               key={a + j}
-              // open={true}
+              open={open || undefined}
               darkMode={darkMode}
               align={a}
               justify={j}
-              triggerEvent="hover"
+              triggerEvent="click"
+              usePortal={boolean('Use Portal', false)}
               trigger={
                 <Button leftGlyph={<Icon glyph="InfoWithCircle" />}>
                   Trigger
