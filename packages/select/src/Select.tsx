@@ -540,9 +540,6 @@ export default function Select({
             `,
             {
               [css`
-                font-size: ${sizeSet.text}px;
-              `]: mode === Mode.Light, // TODO: Refresh - remove conditional logic
-              [css`
                 font-size: ${legacySizeSets[size].label!.text}px;
                 line-height: ${legacySizeSets[size].label!.lineHeight}px;
                 padding-bottom: 0;
@@ -568,10 +565,6 @@ export default function Select({
               }
             `,
             {
-              [css`
-                font-size: ${sizeSets[size].text}px;
-                line-height: ${sizeSets[size].lineHeight}px;
-              `]: mode === Mode.Light, // TODO: Refresh - remove conditional logic
               [css`
                 font-size: ${legacySizeSets[size].description!.text}px;
                 line-height: ${legacySizeSets[size].description!.lineHeight}px;

@@ -168,15 +168,45 @@ const inputStyle = css`
   &:disabled {
     cursor: not-allowed;
   }
+
+  /* clears the ‘X’ from Internet Explorer & Chrome */
+  &[type='search'] {
+    &::-ms-clear,
+    &::-ms-reveal {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      display: none;
+    }
+  }
 `;
 
 const inputIconStyle = css`
   position: absolute;
   display: flex;
   align-items: center;
-  right: 12px;
   z-index: 1;
 `;
+
+const inputIconStyleSize: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    right: 10px;
+  `,
+  [SizeVariant.Small]: css`
+    right: 10px;
+  `,
+  [SizeVariant.Default]: css`
+    right: 12px;
+  `,
+  [SizeVariant.Large]: css`
+    right: 16px;
+  `,
+};
 
 const optionalStyle = css`
   font-size: 12px;
@@ -200,8 +230,6 @@ interface ColorSets {
   disabledColor: string;
   disabledBorderColor: string;
   disabledBackgroundColor: string;
-  disabledLabelColor: string;
-  disabledDescriptionColor: string;
 
   errorIconColor: string;
   errorBorder: string;
@@ -220,11 +248,9 @@ const colorSets: Record<Mode, ColorSets> = {
     defaultBorder: palette.gray.base,
     placeholderColor: palette.gray.light1,
 
-    disabledColor: palette.gray.light1,
-    disabledBorderColor: palette.gray.light2,
-    disabledBackgroundColor: palette.gray.light3,
-    disabledLabelColor: palette.gray.base,
-    disabledDescriptionColor: palette.gray.base,
+    disabledColor: palette.gray.base,
+    disabledBorderColor: palette.gray.light1,
+    disabledBackgroundColor: palette.gray.light2,
 
     errorIconColor: palette.red.base,
     errorMessage: palette.red.base,
@@ -243,8 +269,6 @@ const colorSets: Record<Mode, ColorSets> = {
     disabledColor: uiColors.gray.dark1,
     disabledBorderColor: '#394F5A',
     disabledBackgroundColor: '#263843',
-    disabledLabelColor: uiColors.gray.base,
-    disabledDescriptionColor: uiColors.gray.base,
 
     errorIconColor: '#EF8D6F',
     errorMessage: '#EF8D6F',
@@ -468,16 +492,7 @@ const TextInput: React.ComponentType<
             darkMode={darkMode}
             htmlFor={id}
             disabled={disabled}
-            className={cx(
-              css`
-                font-size: ${sizeSet.text}px;
-              `,
-              {
-                [css`
-                  color: ${colorSets[mode].disabledLabelColor};
-                `]: disabled,
-              },
-            )}
+            className={cx()}
           >
             {label}
           </Label>
@@ -485,20 +500,12 @@ const TextInput: React.ComponentType<
         {description && (
           <Description
             darkMode={darkMode}
-            className={cx(
-              css`
-                font-size: ${sizeSet.text}px;
-                line-height: ${sizeSet.lineHeight}px;
-              `,
-              {
-                [css`
-                  color: ${colorSets[mode].disabledDescriptionColor};
-                `]: disabled,
-                [css`
-                  padding-bottom: 4px;
-                `]: !darkMode,
-              },
-            )}
+            disabled={disabled}
+            className={cx({
+              [css`
+                padding-bottom: 4px;
+              `]: !darkMode,
+            })}
           >
             {description}
           </Description>
@@ -552,6 +559,10 @@ const TextInput: React.ComponentType<
                       .disabledBackgroundColor};
                     border-color: ${colorSets[mode].disabledBorderColor};
 
+                    &::placeholder {
+                      color: ${colorSets[mode].disabledColor};
+                    }
+
                     &:-webkit-autofill {
                       &,
                       &:hover,
@@ -587,7 +598,10 @@ const TextInput: React.ComponentType<
             />
           </InteractionRing>
 
-          <div {...iconSelectorProp.prop} className={inputIconStyle}>
+          <div
+            {...iconSelectorProp.prop}
+            className={cx(inputIconStyle, inputIconStyleSize[sizeVariant])}
+          >
             {state === State.Valid && (
               <RenderedCheckmarkIcon
                 role="presentation"

@@ -316,9 +316,10 @@ const SubMenu: ExtendableBox<
         </Box>
       );
 
-    const openCloseiconStyle = open ? openIconStyle : closedIconStyle;
-
-    const ChevronIconStyles = cx(openCloseiconStyle, {
+    const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
+    const chevronIconStyles = cx({
+      [openIconStyle]: open,
+      [closedIconStyle]: !open,
       [focusedIconStyle]: showFocus,
     });
 
@@ -343,14 +344,11 @@ const SubMenu: ExtendableBox<
             }
           }}
         >
-          {open ? (
-            <ChevronDownIcon
-              role="presentation"
-              className={ChevronIconStyles}
-            />
-          ) : (
-            <ChevronUpIcon role="presentation" className={ChevronIconStyles} />
-          )}
+          <ChevronIcon
+            role="presentation"
+            className={chevronIconStyles}
+            size={14}
+          />
         </IconButton>
 
         <Transition
