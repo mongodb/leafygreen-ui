@@ -18,8 +18,8 @@ export const radioBoxSizes: { [K in Size]: string } = {
   `,
 
   [Size.Compact]: css`
-    padding-right: 6px;
-    padding-left: 6px;
+    padding-right: 12px;
+    padding-left: 12px;
   `,
 
   [Size.Full]: css`
