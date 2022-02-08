@@ -190,9 +190,23 @@ const inputIconStyle = css`
   position: absolute;
   display: flex;
   align-items: center;
-  right: 12px;
   z-index: 1;
 `;
+
+const inputIconStyleSize: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    right: 10px;
+  `,
+  [SizeVariant.Small]: css`
+    right: 10px;
+  `,
+  [SizeVariant.Default]: css`
+    right: 12px;
+  `,
+  [SizeVariant.Large]: css`
+    right: 16px;
+  `,
+};
 
 const optionalStyle = css`
   font-size: 12px;
@@ -584,7 +598,10 @@ const TextInput: React.ComponentType<
             />
           </InteractionRing>
 
-          <div {...iconSelectorProp.prop} className={inputIconStyle}>
+          <div
+            {...iconSelectorProp.prop}
+            className={cx(inputIconStyle, inputIconStyleSize[sizeVariant])}
+          >
             {state === State.Valid && (
               <RenderedCheckmarkIcon
                 role="presentation"
