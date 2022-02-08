@@ -507,7 +507,9 @@ const TextInput: React.ComponentType<
             darkMode={darkMode}
             htmlFor={id}
             disabled={disabled}
-            className={cx()}
+            className={css`
+              font-size: ${sizeSet.text}px;
+            `}
           >
             {label}
           </Label>
@@ -516,11 +518,17 @@ const TextInput: React.ComponentType<
           <Description
             darkMode={darkMode}
             disabled={disabled}
-            className={cx({
-              [css`
-                padding-bottom: 4px;
-              `]: !darkMode,
-            })}
+            className={cx(
+              css`
+                font-size: ${sizeSet.text}px;
+                line-height: ${sizeSet.lineHeight}px;
+              `,
+              {
+                [css`
+                  padding-bottom: 4px;
+                `]: !darkMode,
+              },
+            )}
           >
             {description}
           </Description>
