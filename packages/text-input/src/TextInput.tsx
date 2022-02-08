@@ -200,8 +200,6 @@ interface ColorSets {
   disabledColor: string;
   disabledBorderColor: string;
   disabledBackgroundColor: string;
-  disabledLabelColor: string;
-  disabledDescriptionColor: string;
 
   errorIconColor: string;
   errorBorder: string;
@@ -220,11 +218,9 @@ const colorSets: Record<Mode, ColorSets> = {
     defaultBorder: palette.gray.base,
     placeholderColor: palette.gray.light1,
 
-    disabledColor: palette.gray.light1,
-    disabledBorderColor: palette.gray.light2,
-    disabledBackgroundColor: palette.gray.light3,
-    disabledLabelColor: palette.gray.base,
-    disabledDescriptionColor: palette.gray.base,
+    disabledColor: palette.gray.base,
+    disabledBorderColor: palette.gray.light1,
+    disabledBackgroundColor: palette.gray.light2,
 
     errorIconColor: palette.red.base,
     errorMessage: palette.red.base,
@@ -243,8 +239,6 @@ const colorSets: Record<Mode, ColorSets> = {
     disabledColor: uiColors.gray.dark1,
     disabledBorderColor: '#394F5A',
     disabledBackgroundColor: '#263843',
-    disabledLabelColor: uiColors.gray.base,
-    disabledDescriptionColor: uiColors.gray.base,
 
     errorIconColor: '#EF8D6F',
     errorMessage: '#EF8D6F',
@@ -468,16 +462,7 @@ const TextInput: React.ComponentType<
             darkMode={darkMode}
             htmlFor={id}
             disabled={disabled}
-            className={cx(
-              css`
-                font-size: ${sizeSet.text}px;
-              `,
-              {
-                [css`
-                  color: ${colorSets[mode].disabledLabelColor};
-                `]: disabled,
-              },
-            )}
+            className={cx()}
           >
             {label}
           </Label>
@@ -485,20 +470,12 @@ const TextInput: React.ComponentType<
         {description && (
           <Description
             darkMode={darkMode}
-            className={cx(
-              css`
-                font-size: ${sizeSet.text}px;
-                line-height: ${sizeSet.lineHeight}px;
-              `,
-              {
-                [css`
-                  color: ${colorSets[mode].disabledDescriptionColor};
-                `]: disabled,
-                [css`
-                  padding-bottom: 4px;
-                `]: !darkMode,
-              },
-            )}
+            disabled={disabled}
+            className={cx({
+              [css`
+                padding-bottom: 4px;
+              `]: !darkMode,
+            })}
           >
             {description}
           </Description>
@@ -551,6 +528,10 @@ const TextInput: React.ComponentType<
                     background-color: ${colorSets[mode]
                       .disabledBackgroundColor};
                     border-color: ${colorSets[mode].disabledBorderColor};
+
+                    &::placeholder {
+                      color: ${colorSets[mode].disabledColor};
+                    }
 
                     &:-webkit-autofill {
                       &,
