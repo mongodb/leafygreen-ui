@@ -41,9 +41,9 @@ export const menuItemContainerStyle = css`
     content: '';
     position: absolute;
     width: ${leftBar}px;
-    top: 4px;
-    bottom: 4px;
     left: 0px;
+    height: calc(100% - 8px);
+    max-height: 32px;
     border-radius: 0 ${leftBar}px ${leftBar}px 0;
     background-color: transparent;
     transition: background-color 150ms ease-in-out;
