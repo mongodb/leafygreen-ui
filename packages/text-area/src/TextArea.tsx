@@ -230,6 +230,11 @@ const TextArea: React.ComponentType<
         darkMode={darkMode}
         disabled={disabled}
         ignoreKeyboardContext={true}
+        color={
+          state === State.Error
+            ? { hovered: darkMode ? uiColors.red.dark3 : palette.red.light3 }
+            : undefined
+        }
         borderRadius={darkMode ? '4px' : '6px'} // TODO: Refresh - remove after darkmode is redesigned
       >
         <textarea
