@@ -86,17 +86,6 @@ const errorColor: Record<Mode, string> = {
   [Mode.Dark]: '#F97216',
 };
 
-const menuButtonFocusStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    &:focus {
-      border-color: transparent;
-      background-color: ${palette.white};
-      box-shadow: 0 0 0 3px ${palette.blue.light1};
-    }
-  `,
-  [Mode.Dark]: css``,
-};
-
 const menuButtonErrorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     border-color: ${errorColor[Mode.Light]};
@@ -191,7 +180,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           [menuButtonDeselectedStyles[mode]]: deselected,
           [menuButtonDisabledStyles[mode]]: disabled,
           [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,
-          [menuButtonFocusStyle[mode]]: showFocus,
           [css`
             letter-spacing: initial;
           `]: size === Size.XSmall,
