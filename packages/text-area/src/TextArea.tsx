@@ -146,6 +146,15 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
   state?: State;
   errorMessage?: string;
   handleValidation?: (value: string) => void;
+  /**
+   * Callback to be executed when the input stops being focused.
+   */
+  onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
+
+  /**
+   * Callback to be executed when the value of the input field changes.
+   */
+  onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 };
 
 type AriaLabels = 'label' | 'aria-labelledby';
@@ -165,6 +174,7 @@ const TextArea: React.ComponentType<
     id: idProp,
     value: controlledValue,
     onChange,
+    onBlur,
     handleValidation,
     'aria-labelledby': ariaLabelledby,
     ...rest
@@ -181,7 +191,15 @@ const TextArea: React.ComponentType<
   // Validation
   const validation = useValidation<HTMLTextAreaElement>(handleValidation);
 
-  const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onBlurHandler: React.FocusEventHandler<HTMLTextAreaElement> = e => {
+    if (onBlur) {
+      onBlur(e);
+    }
+
+    validation.onBlur(e);
+  };
+
+  const onValueChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
     if (onChange) {
       onChange(e);
     }
@@ -250,7 +268,7 @@ const TextArea: React.ComponentType<
           })}
           disabled={disabled}
           onChange={onValueChange}
-          onBlur={validation.onBlur}
+          onBlur={onBlurHandler}
           value={value}
         />
       </InteractionRing>
