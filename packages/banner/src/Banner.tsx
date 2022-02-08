@@ -26,7 +26,7 @@ const baseBannerStyles = css`
   position: relative;
   display: flex;
   min-height: 40px;
-  padding: 10px 15px 10px 20px;
+  padding: 10px 12px 10px 20px;
   border-width: 1px 1px 1px 0px;
   border-style: solid;
   border-radius: 12px;
