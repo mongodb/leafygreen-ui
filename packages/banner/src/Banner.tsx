@@ -85,7 +85,7 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
       &:before {
         background: linear-gradient(
           to left,
-          transparent 5px,
+          transparent 6px,
           ${palette.blue.base} 6px
         );
       }
@@ -120,7 +120,7 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
       &:before {
         background: linear-gradient(
           to left,
-          transparent 5px,
+          transparent 6px,
           ${palette.yellow.base} 6px
         );
       }
@@ -155,7 +155,7 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
       &:before {
         background: linear-gradient(
           to left,
-          transparent 5px,
+          transparent 6px,
           ${palette.red.base} 6px
         );
       }
@@ -190,7 +190,7 @@ const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
       &:before {
         background: linear-gradient(
           to left,
-          transparent 5px,
+          transparent 6px,
           ${palette.green.dark1} 6px
         );
       }

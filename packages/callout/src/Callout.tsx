@@ -181,11 +181,12 @@ function Callout({
         css`
           color: ${colorSet.text};
           border: 2px solid ${colorSet.border};
+          box-shadow: inset 0px 2px 0px 0px ${colorSet.header.background}; // hides gap between the border and the header div when zoomed in.
 
           &:after {
             background: linear-gradient(
               to left,
-              transparent 9px,
+              transparent 10px,
               ${colorSet.bar} 10px
             );
           }
