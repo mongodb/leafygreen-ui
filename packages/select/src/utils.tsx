@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 import {
   InternalOption,
   InternalProps as InternalOptionProps,
@@ -40,6 +40,21 @@ export function convertToInternalElements(
   ) => InternalOptionProps,
   fallbackFn?: (child: React.ReactNode) => void,
 ): React.ReactNode {
+  if (
+    !(
+      React.Children.toArray(children).every(child =>
+        isComponentType<OptionElement>(child, 'Option'),
+      ) ||
+      React.Children.toArray(children).every(child =>
+        isComponentType<OptionGroupElement>(child, 'OptionGroup'),
+      )
+    )
+  ) {
+    consoleOnce.warn(
+      `LeafyGreen Select: Combining grouped and ungrouped Select Options can cause styling issues`,
+    );
+  }
+
   return React.Children.map(children, child => {
     if (isComponentType<OptionElement>(child, 'Option')) {
       return <InternalOption {...optionFn(child)} />;
