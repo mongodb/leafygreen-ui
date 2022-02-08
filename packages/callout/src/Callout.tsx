@@ -186,8 +186,8 @@ function Callout({
           &:after {
             background: linear-gradient(
               to left,
-              transparent 10px,
-              ${colorSet.bar} 10px
+              transparent 9px,
+              ${colorSet.bar} 9px
             );
           }
         `,
