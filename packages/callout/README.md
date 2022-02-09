@@ -72,4 +72,4 @@ npm install @leafygreen-ui/callout
 | `children`     | `node`                                                     | The contents to display within the Callout                |         |
 | `title`        | `string`                                                   | Optional title text to display above Callout text         |         |
 | `className`    | `string`                                                   | Adds a className to the outermost element                 |         |
-| `baseFontSize` | `14`, `16`                                                 | Determines `font-size` for body copy in Callout component | `14`    |
+| `baseFontSize` | `13`, `16`                                                 | Determines `font-size` for body copy in Callout component | `13`    |
