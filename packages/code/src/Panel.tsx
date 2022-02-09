@@ -32,7 +32,6 @@ function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
   const basePanelStyle = css`
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-direction: column;
     flex-shrink: 0;
     gap: ${spacing[1]}px;
@@ -49,6 +48,7 @@ function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
     flex-direction: row;
     border-left: unset;
     border-bottom: 1px solid;
+    justify-content: space-between;
     padding: 0;
     padding-right: 8px;
     height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
