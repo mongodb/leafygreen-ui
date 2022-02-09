@@ -14,7 +14,7 @@ const radioBoxInput = createDataProp('radio-box-input');
 
 export const radioBoxSizes: { [K in Size]: string } = {
   [Size.Default]: css`
-    width: 110px;
+    width: 169px;
   `,
 
   [Size.Compact]: css`
