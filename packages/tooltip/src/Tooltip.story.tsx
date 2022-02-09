@@ -88,8 +88,7 @@ storiesOf('Tooltip', module)
                   </Button>
                 }
               >
-                Align {a}, Justify {j}. Donec id elit non mi porta gravida at
-                eget metus.
+                Align {a}, Justify {j}.
               </Tooltip>
             )),
           )}

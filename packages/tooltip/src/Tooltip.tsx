@@ -353,6 +353,11 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
+      className={cx({
+        [css`
+          width: max-content;
+        `]: !usePortal || justify === Justify.Fit,
+      })}
       {...popoverProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
