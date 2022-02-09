@@ -103,7 +103,7 @@ const languageOptions = [
 const jsSnippet = `
 
 function greeting(entity) {
-  return \`Hello, \${entity}!\`;
+  return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
 
 console.log(greeting('World'));
@@ -113,7 +113,7 @@ console.log(greeting('World'));
 const pythonSnippet = `
 
 def greeting(entity):
-    return "Hello {}".format(entity)
+    return "Hello {} Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.".format(entity)
 
 print (greeting("World"))
 

@@ -72,6 +72,7 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   isMultiline?: boolean;
   customActionButtons?: Array<React.ReactNode>;
   showCustomActionButtons?: boolean;
+  className?: string;
 } & PopoverProps;
 
 function Panel({
@@ -82,8 +83,6 @@ function Panel({
   onCopy,
   showCopyButton,
   darkMode,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  isMultiline = false,
   customActionButtons,
   showCustomActionButtons,
   usePortal,
@@ -91,6 +90,7 @@ function Panel({
   portalContainer,
   scrollContainer,
   popoverZIndex,
+  className,
 }: PanelProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -104,7 +104,7 @@ function Panel({
 
   return (
     <div
-      className={getPanelStyles(mode, !!language)}
+      className={cx(getPanelStyles(mode, !!language), className)}
       data-testid="leafygreen-code-panel"
     >
       {language !== undefined &&
