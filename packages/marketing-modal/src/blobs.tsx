@@ -59,6 +59,7 @@ function svgBlobs(blobPosition: BlobPosition) {
         xmlns="http://www.w3.org/2000/svg"
         className={cx(blobStyles, styles)}
         aria-hidden="true"
+        data-testid="svg-blob"
     >
         <path opacity="0.6" d={path} fill={fill} />
     </svg>
