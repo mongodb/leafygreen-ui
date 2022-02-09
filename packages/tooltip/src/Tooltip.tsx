@@ -79,7 +79,7 @@ const baseStyles = css`
   cursor: default;
   overflow-wrap: break-word;
   width: fit-content;
-  max-width: 256;
+  max-width: 256px;
 `;
 
 const positionRelative = css`
