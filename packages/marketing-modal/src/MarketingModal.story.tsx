@@ -45,7 +45,7 @@ function Default() {
         closeIconColor={select(
           'Close icon color',
           Object.values(CloseIconColor),
-          'info',
+          'default',
         )}
         showBlob={showBlob}
         blobPosition={blobPosition}

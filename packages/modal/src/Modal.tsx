@@ -146,6 +146,9 @@ const closeButton: Record<
       color: ${palette.gray.base};
 
       &:hover {
+        &:before {
+          background-color: ${palette.gray.light2};
+        }
         color: ${palette.gray.dark3};
       }
     `,
@@ -153,6 +156,9 @@ const closeButton: Record<
       color: ${palette.gray.dark1};
 
       &:hover {
+        &:before {
+          background-color: ${palette.gray.light2};
+        }
         color: ${palette.gray.dark3};
       }
     `,
@@ -160,6 +166,9 @@ const closeButton: Record<
       color: ${palette.white};
 
       &:hover {
+        &:before {
+          background-color: ${palette.gray.light2};
+        }
         color: ${palette.gray.dark3};
       }
     `,
@@ -174,6 +183,10 @@ const closeButton: Record<
         color: ${palette.gray.dark3};
         outline: 2px solid ${palette.blue.light1};
         border: 2px solid ${palette.white};
+
+        &:before {
+          background-color: ${palette.gray.light2};
+        }
       }
     `,
   },
@@ -298,7 +311,7 @@ function Modal({
   className,
   contentClassName,
   initialFocus,
-  closeIconColor = CloseIconColor.Dark,
+  closeIconColor = CloseIconColor.Default,
   ...rest
 }: ModalProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -368,8 +381,8 @@ function Modal({
                     aria-label="Close modal"
                     className={cx(
                       baseCloseButtonStyles,
-                      closeButton[mode].position,
                       closeButton[mode][closeIconColor],
+                      closeButton[mode].position,
                     )}
                     darkMode={darkMode}
                   >
