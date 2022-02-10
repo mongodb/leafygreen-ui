@@ -6,7 +6,7 @@ import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
 
@@ -25,8 +25,6 @@ export const Size = {
 export type Size = typeof Size[keyof typeof Size];
 
 interface ColorSet {
-  label: string;
-  description: string;
   code: {
     text: string;
     background: string;
@@ -36,17 +34,13 @@ interface ColorSet {
 
 const colorSets: Record<Mode, ColorSet> = {
   [Mode.Light]: {
-    label: uiColors.gray.dark3,
-    description: uiColors.gray.dark1,
     code: {
-      text: uiColors.gray.dark3,
-      background: uiColors.gray.light3,
-      border: uiColors.gray.light2,
+      text: palette.gray.dark3,
+      background: palette.gray.light3,
+      border: palette.gray.light2,
     },
   },
   [Mode.Dark]: {
-    label: uiColors.gray.light1,
-    description: uiColors.gray.light1,
     code: {
       text: uiColors.white,
       background: uiColors.black,
@@ -57,9 +51,12 @@ const colorSets: Record<Mode, ColorSet> = {
 
 const containerStyle = css`
   position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr auto;
   height: 48px;
   width: 400px;
-  margin: 1px 0;
+  margin: 2px 0;
 `;
 
 const copyableContainerStyle = css`
@@ -73,22 +70,24 @@ const codeStyle = css`
   width: 100%;
   padding-left: 12px;
   border: 1px solid;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 6px;
+  font-size: 13px;
   white-space: nowrap;
   overflow: hidden;
+  grid-column: 1/-1;
+  grid-row: 1/2;
 `;
 
 const largeCodeStyle = css`
-  font-size: 16px;
+  font-size: 15px;
 `;
 
 const buttonWrapperStyle = css`
+  position: relative;
   display: inline-block;
   height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
+  grid-column: 2/-1;
+  grid-row: 1/2;
 `;
 
 const copyableButtonWrapperStyle = css`
@@ -98,24 +97,25 @@ const copyableButtonWrapperStyle = css`
   // able to overflow.
   &:before {
     content: '';
-    display: inline-block;
+    display: block;
     position: absolute;
-    height: calc(100% - 2px);
-    width: 8px;
-    left: -8px;
-    top: 1px;
+    height: 100%;
+    width: 24px;
+    left: 0px;
+    top: 0px;
+    border-radius: 100%;
+    box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
+    transition: box-shadow 100ms ease-in-out;
+  }
 
-    background: linear-gradient(
-      to right,
-      ${transparentize(1, uiColors.gray.dark1)} 0%,
-      ${transparentize(0.9, uiColors.gray.dark1)} 100%
-    );
+  &:hover:before {
+    box-shadow: 0 0 12px 0 ${transparentize(0.65, palette.gray.dark1)};
   }
 `;
 
 const buttonStyle = css`
   height: 100%;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 6px 6px 0;
 `;
 
 const iconStyle = css`
@@ -175,7 +175,7 @@ export default function Copyable({
     copyButton = (
       <Tooltip
         open={copied}
-        darkMode={!darkMode}
+        darkMode={darkMode}
         align={Align.Top}
         justify={Justify.Middle}
         trigger={trigger}
@@ -214,10 +214,13 @@ export default function Copyable({
           {label}
         </Label>
       )}
-      {description && <Description>{description}</Description>}
+      {description && (
+        <Description darkMode={darkMode}>{description}</Description>
+      )}
 
       <div
         className={cx(
+          'container',
           containerStyle,
           {
             [copyableContainerStyle]: showCopyButton,
@@ -234,7 +237,16 @@ export default function Copyable({
               background-color: ${colorSet.code.background};
               border-color: ${colorSet.code.border};
             `,
-            { [largeCodeStyle]: size === Size.Large },
+            {
+              [largeCodeStyle]: size === Size.Large,
+              // TODO: Refresh - remove dark mode logic
+              [css`
+                font-size: 14px;
+              `]: darkMode,
+              [css`
+                font-size: 16px;
+              `]: darkMode && size === Size.Large,
+            },
           )}
         >
           {children}

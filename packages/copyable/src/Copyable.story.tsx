@@ -10,7 +10,7 @@ function renderCopyable(
   > = {},
 ) {
   const label = text('Label', 'Label');
-  const description = text('Description', '') || undefined;
+  const description = text('Description', 'Description') || undefined;
   const children = text('Text', 'npm install @leafygreen-ui/copyable');
   const darkMode = boolean('Dark mode', false);
   return (
