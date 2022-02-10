@@ -81,6 +81,16 @@ const largeCodeStyle = css`
   font-size: 15px;
 `;
 
+const noButtonCodeStyle = css`
+  overflow: hidden;
+`;
+
+const codeStyleColor = (mode: Mode) => css`
+  color: ${colorSets[mode].code.text};
+  background-color: ${colorSets[mode].code.background};
+  border-color: ${colorSets[mode].code.border};
+`;
+
 const buttonWrapperStyle = css`
   position: relative;
   display: inline-block;
@@ -89,26 +99,22 @@ const buttonWrapperStyle = css`
   grid-row: 1/2;
 `;
 
-const copyableButtonWrapperStyle = css`
-  // Pseudo-element that gives the illusion of the button casting a shadow
-  // that doesn't overflow the container. We can't set "overflow: hidden" on
-  // on the container because the interaction rings of the button need to be
-  // able to overflow.
+const copyableButtonShadowStyle = css`
   &:before {
     content: '';
     display: block;
     position: absolute;
-    height: 100%;
-    width: 24px;
+    height: calc(100% - 6px);
+    width: 16px;
     left: 0px;
-    top: 0px;
+    top: 3px;
     border-radius: 100%;
     box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
     transition: box-shadow 100ms ease-in-out;
   }
 
   &:hover:before {
-    box-shadow: 0 0 12px 0 ${transparentize(0.65, palette.gray.dark1)};
+    box-shadow: 0 0 12px 0 ${transparentize(0.6, palette.gray.dark1)};
   }
 `;
 
@@ -219,40 +225,33 @@ export default function Copyable({
 
       <div
         className={cx(
-          'container',
           containerStyle,
           {
             [copyableContainerStyle]: showCopyButton,
+            [noButtonCodeStyle]: !showCopyButton,
           },
           className,
         )}
       >
         <InlineCode
           id={codeId}
-          className={cx(
-            codeStyle,
-            css`
-              color: ${colorSet.code.text};
-              background-color: ${colorSet.code.background};
-              border-color: ${colorSet.code.border};
-            `,
-            {
-              [largeCodeStyle]: size === Size.Large,
-              // TODO: Refresh - remove dark mode logic
-              [css`
-                font-size: 14px;
-              `]: darkMode,
-              [css`
-                font-size: 16px;
-              `]: darkMode && size === Size.Large,
-            },
-          )}
+          className={cx(codeStyle, codeStyleColor(mode), {
+            [largeCodeStyle]: size === Size.Large,
+            // TODO: Refresh - remove dark mode logic
+            [css`
+              font-size: 14px;
+            `]: darkMode,
+            [css`
+              font-size: 16px;
+            `]: darkMode && size === Size.Large,
+          })}
         >
           {children}
         </InlineCode>
         <span
           className={cx(buttonWrapperStyle, {
-            [copyableButtonWrapperStyle]: showCopyButton,
+            // TODO: Toggle these styles on only when the content extends beyond the edge of the container
+            [copyableButtonShadowStyle]: true,
           })}
         >
           {copyButton}
