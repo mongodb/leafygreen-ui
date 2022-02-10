@@ -6,6 +6,7 @@ import Modal, { Footer } from '@leafygreen-ui/modal';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Dark: 'dark',
@@ -55,13 +56,12 @@ const baseModalStyle = css`
 // TODO: Refresh – remove mode logic
 const contentStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
-      sans-serif;
+    font-family: ${fontFamilies.default};
     font-size: 13px;
     line-height: 20px;
   `,
   [Mode.Dark]: css`
-    font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+    font-family: ${fontFamilies.legacy};
     font-size: 14px;
     line-height: 20px;
     padding: 36px;

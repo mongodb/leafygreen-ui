@@ -6,7 +6,11 @@ import { Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { CloseIconColor } from '@leafygreen-ui/modal';
+<<<<<<< HEAD
 import { svgBlobs } from '.';
+=======
+import { fontFamilies } from '@leafygreen-ui/tokens';
+>>>>>>> 6158cd84965883c3c596b376273dc03ddff331ba
 
 const Mode = {
   Dark: 'dark',
@@ -86,8 +90,7 @@ const filledGraphicStyle = css`
 
 const contentStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
-      sans-serif; // TODO: Refresh – remove when fonts are updated
+    font-family: ${fontFamilies.default};
     font-size: 13px;
     line-height: 20px;
     letter-spacing: 0;
@@ -97,7 +100,7 @@ const contentStyle: Record<Mode, string> = {
     margin: 0 auto;
   `,
   [Mode.Dark]: css`
-    font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+    font-family: ${fontFamilies.legacy}; // TODO: Refresh – remove when fonts are updated
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0;
@@ -211,8 +214,16 @@ const MarketingModal = ({
         {children}
       </div>
       <div className={footerContentStyle}>
-        {/* TODO: Refresh - switch to new green variant */}
-        <Button variant="primary" onClick={onButtonClick} darkMode={darkMode}>
+        <Button
+          variant="baseGreen"
+          onClick={onButtonClick}
+          darkMode={darkMode}
+          className={cx({
+            [css`
+              min-width: 200px;
+            `]: !darkMode,
+          })}
+        >
           {buttonText}
         </Button>
         <Link

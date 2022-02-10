@@ -7,7 +7,7 @@ import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
 
 const optionGroupStyle = css`
-  padding-top: 8px;
+  padding: 8px 0;
 `;
 
 const optionGroupLabelStyle = css`

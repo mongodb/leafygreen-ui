@@ -1,9 +1,10 @@
 const Variant = {
+  Default: 'default',
   Primary: 'primary',
   PrimaryOutline: 'primaryOutline',
-  Default: 'default',
   Danger: 'danger',
   DangerOutline: 'dangerOutline',
+  BaseGreen: 'baseGreen',
 } as const;
 
 type Variant = typeof Variant[keyof typeof Variant];
