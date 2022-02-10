@@ -6,7 +6,6 @@ import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
@@ -42,6 +41,30 @@ const menuButtonModeOverrides: Record<Mode, string> = {
   `,
 };
 
+const menuButtonDeselectedStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${colorSets['light'].text.deselected};
+  `,
+  [Mode.Dark]: css`
+    color: ${colorSets['dark'].text.deselected};
+  `,
+};
+
+const menuButtonDisabledStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+    background-color: ${palette.gray.light2};
+    color: ${palette.gray.base};
+    cursor: not-allowed;
+
+    > *:last-child {
+      > svg {
+        color: ${palette.gray.base};
+      }
+    }
+  `,
+  [Mode.Dark]: css``,
+};
+
 const menuButtonTextWrapperStyle = css`
   display: flex;
   justify-content: space-between;
@@ -60,17 +83,6 @@ const menuButtonTextStyle = css`
 const errorColor: Record<Mode, string> = {
   [Mode.Light]: palette.red.base,
   [Mode.Dark]: '#F97216',
-};
-
-const menuButtonFocusStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    &:focus {
-      border-color: transparent;
-      background-color: ${palette.white};
-      box-shadow: 0 0 0 3px ${palette.blue.light1};
-    }
-  `,
-  [Mode.Dark]: css``,
 };
 
 const menuButtonErrorStyle: Record<Mode, string> = {
@@ -138,12 +150,10 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   }: Props,
   forwardedRef,
 ) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { mode, open, size, disabled } = useContext(SelectContext);
 
   const ref = useForwardedRef(forwardedRef, null);
 
-  const colorSet = colorSets[mode];
   const sizeSet = sizeSets[size];
 
   const onClick = useCallback(() => {
@@ -164,6 +174,14 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     : cx(
         menuButtonStyleOverrides, // TODO: Refresh - remove overrides
         menuButtonModeOverrides[mode], // TODO: Refresh - remove overrides
+        {
+          [menuButtonDeselectedStyles[mode]]: deselected,
+          [menuButtonDisabledStyles[mode]]: disabled,
+          [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,
+          [css`
+            letter-spacing: initial;
+          `]: size === Size.XSmall,
+        },
         css`
           width: 100%;
           @media only screen and (max-width: ${breakpoints.Desktop}px) {
@@ -171,16 +189,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
             font-size: ${mobileSizeSet.text}px;
           }
         `,
-        {
-          [css`
-            color: ${colorSet.text.deselected};
-          `]: deselected,
-          [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,
-          [menuButtonFocusStyle[mode]]: showFocus,
-          [css`
-            letter-spacing: initial;
-          `]: size === Size.XSmall,
-        },
       );
 
   return (

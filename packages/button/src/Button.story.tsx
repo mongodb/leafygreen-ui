@@ -31,18 +31,11 @@ storiesOf('Button', module)
       undefined,
     );
 
-    const stretch = boolean('Stretch', false);
-
     const wrapperStyle = cx(
       css`
         background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
         padding: 40px;
       `,
-      {
-        [css`
-          width: 256px;
-        `]: stretch,
-      },
     );
 
     return (
@@ -57,9 +50,6 @@ storiesOf('Button', module)
             href={href}
             leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
             rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
-            className={css`
-              width: 100%;
-            `}
           >
             {buttonText}
           </Button>

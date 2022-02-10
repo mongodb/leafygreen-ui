@@ -1,6 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
+import { transparentize } from 'polished';
 
 const indentation = 16;
 const leftBar = 4;
@@ -12,8 +13,6 @@ export const paddingLeft = 52;
  * Base styles
  */
 export const menuItemContainerStyle = css`
-  // Using vars to maintain proper specificity for sub-items
-  --lg-menu-item-text-color: ${palette.white};
   display: flex;
   position: relative;
   box-sizing: border-box;
@@ -42,8 +41,9 @@ export const menuItemContainerStyle = css`
     content: '';
     position: absolute;
     width: ${leftBar}px;
-    height: 22px;
     left: 0px;
+    height: calc(100% - 8px);
+    max-height: 32px;
     border-radius: 0 ${leftBar}px ${leftBar}px 0;
     background-color: transparent;
     transition: background-color 150ms ease-in-out;
@@ -52,8 +52,6 @@ export const menuItemContainerStyle = css`
   &:hover {
     text-decoration: none;
     background-color: ${palette.gray.dark3};
-    &:before {
-    }
   }
 
   &:active {
@@ -76,16 +74,19 @@ export const mainIconStyle = css`
   flex-shrink: 0;
 `;
 
+const pseudoBoldWeight = 0.125;
+const pseudoBoldColor = transparentize(0.4, palette.white);
+
 export const titleTextStyle = css`
   width: 100%;
   font-size: 13px;
   font-weight: 500;
-  color: var(--lg-menu-item-text-color, ${palette.white});
+  color: ${palette.white};
   // Define the default pseudo-bold styles
-  --lg-menu-pseudo-bold: 0.125px 0 var(--lg-menu-item-text-color),
-    -0.125px 0 var(--lg-menu-item-text-color),
-    0 0.125px var(--lg-menu-item-text-color),
-    0 -0.125px var(--lg-menu-item-text-color);
+  --lg-menu-pseudo-bold: ${pseudoBoldWeight}px 0 ${pseudoBoldColor},
+    ${-pseudoBoldWeight}px 0 ${pseudoBoldColor},
+    0 ${pseudoBoldWeight}px ${pseudoBoldColor},
+    0 ${-pseudoBoldWeight}px ${pseudoBoldColor};
 `;
 
 export const descriptionTextStyle = css`
@@ -108,8 +109,6 @@ export const linkDescriptionTextStyle = css`
 export const getHoverStyles = (container: string) => ({
   text: css`
     ${container}:hover & {
-      // Using vars to maintain proper specificity for sub-items
-      --lg-menu-item-text-color: ${palette.green.base};
       // Pseudo-bold so the text doesn't overflow on hover
       // var is defined in \`*TextStyles\` for specificity
       text-shadow: var(--lg-menu-pseudo-bold);
@@ -138,7 +137,7 @@ export const activeMenuItemContainerStyle = css`
 
 export const activeTitleTextStyle = css`
   font-weight: bold;
-  color: ${palette.white};
+  color: ${palette.green.base};
   // no pseudo bold text when active */
   --lg-menu-pseudo-bold: unset;
 `;

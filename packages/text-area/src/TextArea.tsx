@@ -83,9 +83,9 @@ const colorSets: Record<Mode, ColorSets> = {
       }
 
       &:disabled {
-        color: ${palette.gray.light1};
-        background-color: ${palette.gray.light3};
-        border-color: ${palette.gray.light2};
+        color: ${palette.gray.base};
+        background-color: ${palette.gray.light2};
+        border-color: ${palette.gray.light1};
       }
     `,
     errorBorder: css`
@@ -248,6 +248,11 @@ const TextArea: React.ComponentType<
         darkMode={darkMode}
         disabled={disabled}
         ignoreKeyboardContext={true}
+        color={
+          state === State.Error
+            ? { hovered: darkMode ? uiColors.red.dark3 : palette.red.light3 }
+            : undefined
+        }
         borderRadius={darkMode ? '4px' : '6px'} // TODO: Refresh - remove after darkmode is redesigned
       >
         <textarea
@@ -256,7 +261,7 @@ const TextArea: React.ComponentType<
           title={label != null ? label : undefined}
           id={id}
           className={cx(textAreaStyle, colorSets[mode].textArea, {
-            [colorSets[mode].errorBorder]: state === State.Error,
+            [colorSets[mode].errorBorder]: state === State.Error && !disabled,
             [css`
               background-color: #5a3c3b;
             `]: state === State.Error && darkMode,
