@@ -138,10 +138,6 @@ const footerContentStyle = css`
   justify-content: center;
 `;
 
-const buttonWrapper = css`
-  min-width: 200px;
-`;
-
 interface MarketingModalProps {
   title: string;
   graphic: React.ReactElement;
@@ -201,12 +197,16 @@ const MarketingModal = ({
         {children}
       </div>
       <div className={footerContentStyle}>
-        <Button variant="baseGreen" onClick={onButtonClick} darkMode={darkMode}
+        <Button
+          variant="baseGreen"
+          onClick={onButtonClick}
+          darkMode={darkMode}
           className={cx({
             [css`
-            min-width: 200px;
+              min-width: 200px;
             `]: !darkMode,
-          })}>
+          })}
+        >
           {buttonText}
         </Button>
         <Link
