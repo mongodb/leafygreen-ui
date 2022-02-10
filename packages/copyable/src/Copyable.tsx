@@ -149,7 +149,6 @@ export default function Copyable({
   shouldTooltipUsePortal = true,
 }: CopyableProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const colorSet = colorSets[mode];
 
   const [copied, setCopied] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
