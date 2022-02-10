@@ -71,7 +71,6 @@ const codeStyle = css`
   padding-left: 12px;
   border: 1px solid;
   border-radius: 6px;
-  font-size: 13px;
   white-space: nowrap;
   overflow: hidden;
   grid-column: 1/-1;
