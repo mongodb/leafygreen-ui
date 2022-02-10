@@ -435,9 +435,9 @@ const visualDesignPalette = {
   orange4: '#F97216',
 };
 
-export const colorMap: Record<Mode, Record<Variant, string>> = {
+export const rippleColors: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
-    [Variant.Primary]: palette.green.base,
+    [Variant.Primary]: palette.green.dark1,
     [Variant.PrimaryOutline]: transparentize(buttonOpacity, palette.green.base),
     [Variant.Default]: palette.gray.light2,
     [Variant.Danger]: palette.red.light1,
