@@ -10,6 +10,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Dark: 'dark',
@@ -92,9 +93,7 @@ const modeStyles: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.gray.dark3};
     background-color: ${uiColors.white};
-    // TODO: Refresh – remove once darkmode is updated
-    font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial,
-      sans-serif;
+    font-family: ${fontFamilies.default};
     border-radius: 24px;
     padding: 35px 40px;
     box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
@@ -103,7 +102,7 @@ const modeStyles: Record<Mode, string> = {
     color: ${uiColors.white};
     background-color: ${uiColors.gray.dark3};
     // TODO: Refresh – remove once darkmode is updated
-    font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+    font-family: ${fontFamilies.legacy};
     border-radius: 7px;
     padding: 32px;
     box-shadow: 0 5px 15px ${transparentize(0.4, uiColors.black)};
