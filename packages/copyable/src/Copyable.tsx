@@ -79,7 +79,7 @@ const codeStyle = css`
 `;
 
 const largeCodeStyle = css`
-  font-size: 16px;
+  font-size: 15px;
 `;
 
 const buttonWrapperStyle = css`
@@ -236,7 +236,16 @@ export default function Copyable({
               background-color: ${colorSet.code.background};
               border-color: ${colorSet.code.border};
             `,
-            { [largeCodeStyle]: size === Size.Large },
+            {
+              [largeCodeStyle]: size === Size.Large,
+              // TODO: Refresh - remove dark mode logic
+              [css`
+                font-size: 14px;
+              `]: darkMode,
+              [css`
+                font-size: 16px;
+              `]: darkMode && size === Size.Large,
+            },
           )}
         >
           {children}
