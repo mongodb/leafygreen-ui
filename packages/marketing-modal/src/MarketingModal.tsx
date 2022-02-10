@@ -6,8 +6,8 @@ import { Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { svgBlobs } from '.';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { svgBlobs } from '.';
 
 const Mode = {
   Dark: 'dark',
@@ -191,7 +191,10 @@ const MarketingModal = ({
       darkMode={darkMode}
       closeIconColor={closeIconColor}
     >
-      {!darkMode && showBlob && graphicStyle === GraphicStyle.Center && svgBlobs(blobPosition)}
+      {!darkMode &&
+        showBlob &&
+        graphicStyle === GraphicStyle.Center &&
+        svgBlobs(blobPosition)}
       <div
         className={cx(baseGraphicContainerStyle, {
           [centeredGraphicContainerStyle[mode]]:
