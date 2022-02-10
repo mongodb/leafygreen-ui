@@ -74,11 +74,12 @@ const baseStyles = css`
   display: flex;
   align-items: center;
   border-radius: ${borderRadius}px;
-  padding: ${borderRadius}px;
+  padding: 12px ${borderRadius}px;
   box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
   cursor: default;
   overflow-wrap: break-word;
   width: fit-content;
+  max-width: 256px;
 `;
 
 const positionRelative = css`
@@ -342,7 +343,7 @@ function Tooltip({
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const active = enabled && open;
-  const shouldApplyMinHeight = ['left', 'right'].includes(align);
+  const isLeftOrRightAligned = ['left', 'right'].includes(align);
 
   const tooltip = (
     <Popover
@@ -352,6 +353,11 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
+      className={cx({
+        [css`
+          width: max-content;
+        `]: !usePortal || justify === Justify.Fit,
+      })}
       {...popoverProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
@@ -374,10 +380,10 @@ function Tooltip({
               baseStyles,
               tooltipNotchStyle,
               colorSet[mode].tooltip,
-              className,
               {
-                [minHeightStyle]: shouldApplyMinHeight,
+                [minHeightStyle]: isLeftOrRightAligned,
               },
+              className,
             )}
             ref={setTooltipNode}
           >

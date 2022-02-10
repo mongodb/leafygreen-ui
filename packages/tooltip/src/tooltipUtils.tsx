@@ -80,8 +80,8 @@ export function notchPositionStyles({
       );
       shouldTransformPosition = notchOffsetActual <= notchOffsetLowerBound;
 
-      // notchStyleObj.left = '0px';
-      // notchStyleObj.right = '0px';
+      notchStyleObj.left = `0px`;
+      notchStyleObj.right = `0px`;
 
       if (align === 'top') {
         containerStyleObj.top = 'calc(100% - 1px)';
@@ -146,8 +146,8 @@ export function notchPositionStyles({
       );
       shouldTransformPosition = notchOffsetActual <= notchOffsetLowerBound;
 
-      // notchStyleObj.top = '0px';
-      // notchStyleObj.bottom = '0px';
+      notchStyleObj.top = `0px`;
+      notchStyleObj.bottom = `0px`;
 
       if (align === 'left') {
         containerStyleObj.left = 'calc(100% - 1px)';
