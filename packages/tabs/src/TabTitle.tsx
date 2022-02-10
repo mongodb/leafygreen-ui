@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, RefObject } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { fontFamilies } from '@leafygreen-ui/tokens';
@@ -8,40 +8,80 @@ import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { Mode } from './Tabs';
 import { getNodeTextContent } from './getNodeTextContent';
 
-const modeColors = {
+const pseudoBold = `
+  0.125px 0 currentColor,
+  -0.125px 0 currentColor,
+  0 0.125px currentColor,
+  0 -0.125px currentColor
+`;
+
+interface ListTitleMode {
+  base: string;
+  hover: string;
+  focus: string;
+  selected: string;
+  disabled: string;
+}
+
+const listTitleModeStyles: Record<Mode, ListTitleMode> = {
   light: {
-    listTitleColor: css`
-      color: ${uiColors.gray.dark1};
+    base: css`
+      color: ${palette.gray.dark1};
+      font-weight: 500;
+      font-family: ${fontFamilies.default};
+      font-size: 13px;
     `,
-    listTitleHover: css`
+    hover: css`
       &:hover {
         cursor: pointer;
-
-        &:not(:focus) {
-          color: ${uiColors.gray.dark3};
-
-          &:after {
-            background-color: ${uiColors.gray.light2};
-          }
+        color: ${palette.gray.dark3};
+        &:after {
+          background-color: ${palette.gray.light2};
         }
       }
     `,
-    listTitleFocus: css`
+    focus: css`
       &:focus {
-        color: ${uiColors.blue.base};
+        color: ${palette.blue.base};
+        text-shadow: ${pseudoBold};
 
         &:after {
-          background-color: ${uiColors.blue.base};
+          background-color: ${palette.blue.light1};
         }
       }
+    `,
+    selected: css`
+      color: ${palette.green.dark2};
+      text-shadow: ${pseudoBold};
+
+      &:after {
+        transform: scaleX(1);
+        background-color: ${palette.green.dark1};
+      }
+
+      &:hover {
+        color: ${palette.green.dark2};
+
+        &:after {
+          transform: scaleX(1);
+          background-color: ${palette.green.dark1};
+        }
+      }
+    `,
+    disabled: css`
+      cursor: not-allowed;
+      color: ${palette.gray.light1};
     `,
   },
 
   dark: {
-    listTitleColor: css`
+    base: css`
       color: ${uiColors.gray.light1};
+      font-weight: 600;
+      font-family: ${fontFamilies.legacy};
+      font-size: 16px;
     `,
-    listTitleHover: css`
+    hover: css`
       &:hover {
         cursor: pointer;
 
@@ -54,7 +94,7 @@ const modeColors = {
         }
       }
     `,
-    listTitleFocus: css`
+    focus: css`
       &:focus {
         color: ${uiColors.blue.light1};
 
@@ -63,20 +103,30 @@ const modeColors = {
         }
       }
     `,
+    selected: css`
+      color: ${uiColors.green.light2};
+
+      &:after {
+        transform: scaleX(1);
+        background-color: ${uiColors.green.base};
+      }
+
+      &:hover {
+        color: ${uiColors.green.light2};
+        font-weight: 700;
+
+        &:after {
+          transform: scaleX(1);
+          background-color: ${uiColors.green.base};
+        }
+      }
+    `,
+    disabled: css`
+      cursor: not-allowed;
+      color: ${uiColors.gray.dark1};
+    `,
   },
 };
-
-const listTitleSelected = css`
-  &:after {
-    transform: scaleX(1);
-    background-color: ${uiColors.green.base};
-  }
-
-  &:hover:after {
-    transform: scaleX(1);
-    background-color: ${uiColors.green.base};
-  }
-`;
 
 const listTitle = css`
   background-color: transparent;
@@ -86,9 +136,6 @@ const listTitle = css`
   max-width: 300px;
   white-space: nowrap;
   transition: 150ms color ease-in-out;
-  font-family: ${fontFamilies.default};
-  font-weight: 600;
-  font-size: 16px;
   position: relative;
 
   &:focus {
@@ -115,7 +162,6 @@ const listTitle = css`
   &:active:after {
     &:after {
       transform: scaleX(1);
-      background-color: ${uiColors.green.base};
     }
   }
 `;
@@ -189,12 +235,13 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     ...rest,
     className: cx(
       listTitle,
-      modeColors[mode].listTitleColor,
+      listTitleModeStyles[mode].base,
       {
-        [listTitleSelected]: selected,
-        [modeColors[mode].listTitleFocus]: showFocus,
+        [listTitleModeStyles[mode].selected]: selected,
+        [listTitleModeStyles[mode].focus]: showFocus,
+        [listTitleModeStyles[mode].hover]: !disabled && !selected,
+        [listTitleModeStyles[mode].disabled]: disabled,
         [textOverflowStyles]: showEllipsis,
-        [modeColors[mode].listTitleHover]: !disabled && !selected,
       },
       className,
     ),

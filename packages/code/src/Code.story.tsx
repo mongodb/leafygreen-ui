@@ -27,7 +27,7 @@ export default class myClass {
 }
 
 function greeting(entity) {
-  return \`Hello, \${entity}!\`;
+  return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
  
 console.log(greeting('World'));
@@ -38,10 +38,8 @@ storiesOf('Code', module)
   .add(
     'Multiline',
     () => {
-      const margin = 50;
       const wrapperStyle = css`
-        margin: ${margin}px;
-        max-width: calc(100% - ${margin * 2}px);
+        width: 512px;
       `;
 
       const lineHighlightOptions = {
