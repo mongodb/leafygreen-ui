@@ -24,6 +24,8 @@ const baseButtonStyles = css`
   text-decoration: none;
   cursor: pointer;
   z-index: 0;
+  font-family: ${fontFamilies.default};
+  border-radius: 6px;
 
   &:focus {
     outline: none;
@@ -418,13 +420,13 @@ export function getClassName({
     { [disabledStyle[mode]]: disabled },
     fontSize,
     size,
-    css`
-      // TODO: Refresh - remove this logic
-      font-family: ${mode === 'dark'
-        ? fontFamilies.legacy
-        : fontFamilies.default};
-      border-radius: ${mode === 'dark' ? 4 : 6}px;
-    `,
+    {
+      [css`
+        // TODO: Refresh - remove this logic
+        font-family: ${fontFamilies.default};
+        border-radius: 4px;
+      `]: mode === 'dark',
+    },
   );
 }
 
