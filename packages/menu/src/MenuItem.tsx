@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
@@ -12,69 +11,19 @@ import {
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
-  svgWidth,
-  paddingLeft,
-  menuItemPadding,
+  mainIconStyle,
+  activeIconStyle,
+  titleTextStyle,
+  activeTitleTextStyle,
+  descriptionTextStyle,
+  linkDescriptionTextStyle,
+  activeDescriptionTextStyle,
+  textContainer,
+  getFocusedStyles,
+  getHoverStyles,
 } from './styles';
 
 const menuItemContainer = createDataProp('menu-item-container');
-
-const titleTextStyle = css`
-  width: 100%;
-  font-size: 14px;
-  font-weight: normal;
-  color: ${uiColors.gray.dark2};
-`;
-
-const focusTitleTextStyle = css`
-  ${menuItemContainer.selector}:focus & {
-    color: ${uiColors.blue.dark3};
-  }
-`;
-
-const activeTitleTextStyle = css`
-  font-weight: bold;
-  color: ${uiColors.green.dark3};
-`;
-
-const activeDescriptionTextStyle = css`
-  color: ${uiColors.green.dark2};
-`;
-
-const descriptionTextStyle = css`
-  font-size: 12px;
-  font-weight: normal;
-  color: ${uiColors.gray.dark1};
-`;
-
-const focusDescriptionTextStyle = css`
-  ${menuItemContainer.selector}:focus & {
-    color: ${uiColors.blue.dark2};
-  }
-`;
-
-const mainIconStyle = css`
-  color: ${uiColors.gray.dark1};
-  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
-  flex-shrink: 0;
-
-  ${menuItemContainer.selector}:hover > & {
-    color: ${uiColors.gray.dark1};
-  }
-`;
-
-const mainIconFocusedStyle = css`
-  ${menuItemContainer.selector}:focus > & {
-    color: ${uiColors.blue.base};
-  }
-`;
-
-const activeIconStyle = css`
-  color: ${uiColors.green.base};
-  ${menuItemContainer.selector}:hover > & {
-    color: ${uiColors.green.base};
-  }
-`;
 
 const Size = {
   Default: 'default',
@@ -85,11 +34,11 @@ type Size = typeof Size[keyof typeof Size];
 
 const menuItemHeight: Record<Size, string> = {
   [Size.Default]: css`
-    min-height: 36px;
+    min-height: 34px;
   `,
 
   [Size.Large]: css`
-    min-height: 56px;
+    min-height: 46px;
   `,
 };
 
@@ -150,6 +99,8 @@ const MenuItem: ExtendableBox<
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const hoverStyles = getHoverStyles(menuItemContainer.selector);
+    const focusStyles = getFocusedStyles(menuItemContainer.selector);
 
     const updatedGlyph =
       glyph &&
@@ -159,7 +110,7 @@ const MenuItem: ExtendableBox<
           mainIconStyle,
           {
             [activeIconStyle]: active,
-            [mainIconFocusedStyle]: showFocus,
+            [focusStyles.iconStyle]: showFocus,
           },
           glyph.props?.className,
         ),
@@ -173,11 +124,7 @@ const MenuItem: ExtendableBox<
         menuItemContainerStyle,
         menuItemHeight[size],
         linkStyle,
-        titleTextStyle,
         {
-          [activeTitleTextStyle]: active,
-          [disabledTextStyle]: disabled,
-          [focusTitleTextStyle]: showFocus,
           [activeMenuItemContainerStyle]: active,
           [disabledMenuItemContainerStyle]: disabled,
           [focusedMenuItemContainerStyle]: showFocus,
@@ -199,20 +146,26 @@ const MenuItem: ExtendableBox<
     const content = (
       <>
         {updatedGlyph}
-        <div
-          className={css`
-            width: 100%;
-          `}
-        >
-          <div>{children}</div>
+        <div className={textContainer}>
+          <div
+            className={cx(titleTextStyle, hoverStyles.text, {
+              [activeTitleTextStyle]: active,
+              [disabledTextStyle]: disabled,
+              [focusStyles.textStyle]: showFocus,
+            })}
+          >
+            {children}
+          </div>
           {description && (
             <div
               className={cx(descriptionTextStyle, {
                 [activeDescriptionTextStyle]: active,
                 [disabledTextStyle]: disabled,
-                [focusDescriptionTextStyle]: showFocus,
+                [focusStyles.descriptionStyle]: showFocus,
+                [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
             >
+              {rest.href}
               {description}
             </div>
           )}

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 
 // Ported from Select/utils
-// TODO - remove from there
+// TODO: - remove duplicated code from Select/utils
 export function useObservedRef<T>(
   callback: (value: T) => void,
   initialValue: T,
