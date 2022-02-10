@@ -355,6 +355,8 @@ function Tooltip({
       onClick={stopClickPropagation}
       className={cx({
         [css`
+          // Try to fit all the content on one line (until it hits max-width)
+          // Overrides default behavior, which is to set width to size of the trigger
           width: max-content;
         `]: !usePortal || justify === Justify.Fit,
       })}
