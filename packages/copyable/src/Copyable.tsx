@@ -97,18 +97,19 @@ const copyableButtonWrapperStyle = css`
   // able to overflow.
   &:before {
     content: '';
-    display: inline-block;
+    display: block;
     position: absolute;
-    height: calc(100% - 2px);
-    width: 8px;
-    left: -8px;
-    top: 1px;
+    height: 100%;
+    width: 24px;
+    left: 0px;
+    top: 0px;
+    border-radius: 100%;
+    box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
+    transition: box-shadow 100ms ease-in-out;
+  }
 
-    background: linear-gradient(
-      to right,
-      ${transparentize(1, palette.gray.dark1)} 0%,
-      ${transparentize(0.9, palette.gray.dark1)} 100%
-    );
+  &:hover:before {
+    box-shadow: 0 0 12px 0 ${transparentize(0.65, palette.gray.dark1)};
   }
 `;
 
