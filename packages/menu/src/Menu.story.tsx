@@ -6,6 +6,7 @@ import { Menu, MenuSeparator, SubMenu, MenuItem } from '.';
 import { Align, Justify } from '@leafygreen-ui/popover';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
+import Button from '@leafygreen-ui/button';
 
 function Uncontrolled() {
   const size = select('Size', ['default', 'large'], 'default');
@@ -15,7 +16,7 @@ function Uncontrolled() {
       <Menu
         align={select('Align', Object.values(Align), Align.Bottom)}
         justify={select('Justify', Object.values(Justify), Justify.Start)}
-        trigger={<button>trigger</button>}
+        trigger={<Button rightGlyph={<CloudIcon />} />}
         popoverZIndex={number('zIndex', 1)}
       >
         <MenuItem active size={size} glyph={<CloudIcon />}>
@@ -45,7 +46,7 @@ function Controlled() {
 
   return (
     <LeafyGreenProvider>
-      <button onClick={() => setOpen(!open)}>
+      <Button onClick={() => setOpen(!open)}>
         trigger
         <Menu
           align={select('Align', Object.values(Align), Align.Bottom)}
@@ -68,7 +69,7 @@ function Controlled() {
           <MenuSeparator />
           <MenuItem size={size}>Left out of the MenuGroup</MenuItem>
         </Menu>
-      </button>
+      </Button>
     </LeafyGreenProvider>
   );
 }
@@ -76,7 +77,7 @@ function Controlled() {
 function SubMenuExample() {
   return (
     <LeafyGreenProvider>
-      <Menu trigger={<button>trigger</button>}>
+      <Menu trigger={<Button>trigger</Button>}>
         <SubMenu
           title="Menu Item 1"
           description="https://google.com"
