@@ -6,11 +6,8 @@ import { Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-<<<<<<< HEAD
 import { svgBlobs } from '.';
-=======
 import { fontFamilies } from '@leafygreen-ui/tokens';
->>>>>>> 6158cd84965883c3c596b376273dc03ddff331ba
 
 const Mode = {
   Dark: 'dark',
