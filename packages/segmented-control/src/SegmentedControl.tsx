@@ -177,8 +177,7 @@ const hoverIndicatorStyle = css`
   background-color: var(--hover-background-color);
   z-index: 0;
   opacity: 0;
-  transition: 100ms ease-in-out;
-  transition-property: opacity, transform;
+  transition: opacity 100ms ease-in-out;
 `;
 
 /**
