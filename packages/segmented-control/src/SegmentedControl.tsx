@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { transparentize } from 'polished';
+import isNull from 'lodash/isNull';
+import once from 'lodash/once';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { Overline } from '@leafygreen-ui/typography';
 import { Size, Mode } from './types';
-import { once } from 'lodash';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
+import { Overline } from '@leafygreen-ui/typography';
 
 /**
  * The selection and hover indicators are absolutely positioned elements that move underneath the text.
@@ -44,21 +45,21 @@ const labelStyle: {
 const optionsWrapperStyleSize: Record<Size, string> = {
   [Size.Small]: css`
     --segment-gap: 1px; // space between segments
-    --frame-padding: 0px;
-    --frame-border-radius: 6px;
+    --wrapper-padding: 0px;
+    --seg-ctrl-border-radius: 6px;
     --indicator-height: 100%;
   `,
   [Size.Default]: css`
     --segment-gap: 5px; // space between segments
-    --frame-padding: 1px;
-    --frame-border-radius: 8px;
-    --indicator-height: calc(100% - 2 * var(--frame-padding));
+    --wrapper-padding: 0px;
+    --seg-ctrl-border-radius: 8px;
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
   [Size.Large]: css`
     --segment-gap: 5px; // space between segments
-    --frame-padding: 1px;
-    --frame-border-radius: 12px;
-    --indicator-height: calc(100% - 2 * var(--frame-padding));
+    --wrapper-padding: 0px;
+    --seg-ctrl-border-radius: 12px;
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
 };
 
@@ -92,21 +93,21 @@ const optionsWrapperStyleMode: Record<Mode, string> = {
 const optionsWrapperStyleSizeDarkModeOverrides: Record<Size, string> = {
   [Size.Small]: css`
     --segment-gap: 1px;
-    --frame-padding: 0px;
-    --frame-border-radius: 4px;
+    --wrapper-padding: 0px;
+    --seg-ctrl-border-radius: 4px;
     --indicator-height: 100%;
   `,
   [Size.Default]: css`
     --segment-gap: 5px;
-    --frame-padding: 3px;
-    --frame-border-radius: 6px;
-    --indicator-height: calc(100% - 2 * var(--frame-padding));
+    --wrapper-padding: 3px;
+    --seg-ctrl-border-radius: 6px;
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
   [Size.Large]: css`
     --segment-gap: 5px;
-    --frame-padding: 3px;
-    --frame-border-radius: 6px;
-    --indicator-height: calc(100% - 2 * var(--frame-padding));
+    --wrapper-padding: 3px;
+    --seg-ctrl-border-radius: 6px;
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
 };
 
@@ -127,9 +128,9 @@ const optionsWrapperStyle = ({
       grid-auto-columns: 1fr;
       gap: var(--segment-gap);
       align-items: center;
-      padding: var(--frame-padding);
+      padding: var(--wrapper-padding);
       border: var(--border-width) solid var(--border-color);
-      border-radius: var(--frame-border-radius);
+      border-radius: var(--seg-ctrl-border-radius);
       background-color: var(--background-color);
 
       &:focus {
@@ -172,22 +173,13 @@ const hoverIndicatorStyle = css`
   position: absolute;
   height: var(--indicator-height);
   width: 100%;
-  grid-column: unset;
   border-radius: inherit;
   background-color: var(--hover-background-color);
   z-index: 0;
   opacity: 0;
+  transition: 100ms ease-in-out;
+  transition-property: opacity, transform;
 `;
-
-// Compute new hover indicator styles based on the hovered item
-const getDynamicHoverStyle = (index: number | null) => {
-  if (index != null) {
-    return css`
-      opacity: 1;
-      grid-column: ${index + 1} / ${index + 2};
-    `;
-  }
-};
 
 /**
  * Types
@@ -507,8 +499,16 @@ const SegmentedControl = React.forwardRef<
 
   // Dynamic hover styles
   const hoverStyleDynamic = useMemo(() => {
-    return getDynamicHoverStyle(hoveredIndex);
-  }, [hoveredIndex]);
+    const count = React.Children.count(renderedChildren);
+    const widthPct = (1 / count) * 100;
+    const transformPct = (hoveredIndex || 0) * 100;
+
+    return css`
+      opacity: ${isNull(hoveredIndex) ? 0 : 1};
+      width: ${widthPct}%;
+      transform: translateX(${transformPct}%);
+    `;
+  }, [hoveredIndex, renderedChildren]);
 
   /**
    * Return

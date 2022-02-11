@@ -64,7 +64,7 @@ const optionSize: Record<Size, string> = {
   [Size.Large]: css`
     --font-size: 16px;
     --line-height: 28px;
-    --padding-block: 4px;
+    --padding-block: 6px;
     --padding-inline: 12px;
     --text-transform: none;
     --font-weight: 400;
@@ -112,7 +112,7 @@ const optionStyle = ({
                 var(--divider-height)
             ) / 2
         );
-        transition: background-color 100ms ease-in-out;
+        transition: background-color 150ms ease-in-out;
         background-color: var(--divider-background-color);
       }
     `,
@@ -143,7 +143,6 @@ const buttonStyle = css`
   justify-content: center;
   padding: var(--padding-block) var(--padding-inline);
   background-color: var(--base-background-color);
-  border-radius: 4px;
   text-align: center;
   font-size: var(--font-size);
   line-height: var(--line-height);
@@ -152,7 +151,7 @@ const buttonStyle = css`
   color: var(--base-text-color);
   box-shadow: 0px 1px 2px var(--base-shadow-color);
   cursor: pointer;
-  transition: all 100ms ease-in-out;
+  transition: all 150ms ease-in-out;
   text-decoration: none;
   outline: none;
   border: none;
@@ -318,6 +317,7 @@ const SegmentedControlOption = React.forwardRef<
       >
         <InteractionRing
           darkMode={mode === 'dark'}
+          borderRadius={'var(--seg-ctrl-border-radius)'}
           className={interactionRingStyle}
         >
           <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
