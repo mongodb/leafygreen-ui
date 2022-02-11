@@ -3,7 +3,7 @@ import { ChipProps, ComboboxSize } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { keyMap } from './util';
@@ -33,8 +33,8 @@ const chipWrapperStyle = ({
     case 'default':
       chipSizeStyle = css`
         --lg-combobox-chip-height: 24px;
-        --lg-combobox-chip-border-radius: 4px;
-        --lg-combobox-chip-font-size: 14px;
+        --lg-combobox-chip-border-radius: 6px;
+        --lg-combobox-chip-font-size: 13px;
         --lg-combobox-chip-line-height: 20px;
         --lg-combobox-chip-padding-x: 6px;
       `;

@@ -3,7 +3,7 @@
  */
 
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
 import { transparentize } from 'polished';
@@ -24,11 +24,12 @@ export const comboboxParentStyle = ({
       --lg-combobox-text-color: ${palette.gray.dark3};
       --lg-combobox-background-color: ${palette.white};
       --lg-combobox-border-color: ${palette.gray.base};
-      --lg-combobox-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
+      --lg-combobox-shadow: unset;
 
       // Focus
       --lg-combobox-background-color-focus: ${palette.white};
-      --lg-combobox-shadow-focus: 0px 4px 4px rgba(6, 22, 33, 0.3);
+      --lg-combobox-shadow-focus: 0px 1px 1px
+        ${transparentize(0.75, palette.gray.dark3)};
 
       // Disabled
       --lg-combobox-text-color-disabled: ${palette.gray.base};
@@ -44,12 +45,12 @@ export const comboboxParentStyle = ({
 
   const sizeStyle: Record<ComboboxSize, string> = {
     [ComboboxSize.Default]: css`
-      --lg-combobox-padding-y: 5px;
-      --lg-combobox-padding-x: 7px;
-      --lg-combobox-height: 24px;
-      --lg-combobox-font-size: 14px;
+      --lg-combobox-padding-y: 7px;
+      --lg-combobox-padding-x: 11px;
+      --lg-combobox-font-size: 13px;
       --lg-combobox-line-height: 20px;
-      --lg-combobox-border-radius: 3px;
+      --lg-combobox-border-radius: 6px;
+      --lg-combobox-height: 24px;
       --lg-combobox-input-default-width: 12ch;
       --lg-combobox-icon-height: 16px;
     `,
@@ -61,8 +62,8 @@ export const comboboxParentStyle = ({
     css`
       --lg-combobox-width: ${overflow === 'expand-x' ? 'unset' : '100%'};
       --lg-combobox-padding: var(--lg-combobox-padding-y)
-        var(--lg-combobox-padding-x) var(--lg-combobox-padding-y)
-        ${overflow === 'scroll-x' ? '0' : 'var(--lg-combobox-padding-x)'};
+        var(--lg-combobox-padding-x) var(--lg-combobox-padding-y);
+      ${overflow === 'scroll-x' ? '0' : 'var(--lg-combobox-padding-x)'};
       width: var(--lg-combobox-width);
     `,
   );
@@ -72,6 +73,7 @@ export const comboboxStyle = css`
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+  font-family: ${fontFamilies.default};
   padding: var(--lg-combobox-padding);
   color: var(--lg-combobox-text-color);
   background-color: var(--lg-combobox-background-color);
@@ -115,11 +117,11 @@ export const interactionRingColor = ({
 }) => {
   if (darkMode) {
     return {
-      hovered: state === 'error' ? uiColors.red.dark2 : undefined,
+      hovered: state === 'error' ? palette.red.dark2 : undefined,
     };
   } else {
     return {
-      hovered: state === 'error' ? uiColors.red.light3 : undefined,
+      hovered: state === 'error' ? palette.red.light3 : undefined,
     };
   }
 };
@@ -213,13 +215,14 @@ export const inputWrapperStyle = ({
 };
 
 export const inputElementStyle = css`
+  font-family: ${fontFamilies.default};
   border: none;
   cursor: inherit;
   background-color: inherit;
   box-sizing: content-box;
-  padding-block: calc(
+  /* padding-block: calc(
     (var(--lg-combobox-height) - var(--lg-combobox-line-height)) / 2
-  );
+  ); */
   padding-inline: 0;
   height: var(--lg-combobox-line-height);
   width: var(
@@ -239,6 +242,7 @@ export const clearButton = css`
 `;
 
 export const errorMessageStyle = css`
+  font-family: ${fontFamilies.default};
   font-size: var(--lg-combobox-font-size);
   line-height: var(--lg-combobox-line-height);
   color: var(--lg-combobox-color-error);
@@ -282,7 +286,7 @@ export const menuWrapperStyle = ({
       --lg-combobox-menu-color: ${palette.gray.dark3};
       --lg-combobox-menu-message-color: ${palette.gray.dark1};
       --lg-combobox-menu-background-color: ${palette.white};
-      --lg-combobox-menu-shadow: 0px 3px 7px
+      --lg-combobox-menu-shadow: 0px 4px 7px
         ${transparentize(0.75, palette.black)};
       --lg-combobox-item-hover-color: ${palette.gray.light2};
       --lg-combobox-item-active-color: ${palette.blue.light3};
@@ -293,12 +297,13 @@ export const menuWrapperStyle = ({
   switch (size) {
     case 'default':
       menuSizeStyle = css`
-        --lg-combobox-menu-border-radius: 4px;
+        --lg-combobox-menu-padding-y: 8px;
+        --lg-combobox-menu-border-radius: 12px;
         --lg-combobox-item-height: 36px;
         --lg-combobox-item-padding-y: 8px;
         --lg-combobox-item-padding-x: 12px;
-        --lg-combobox-item-font-size: 14px;
-        --lg-combobox-item-line-height: 21px;
+        --lg-combobox-item-font-size: 13px;
+        --lg-combobox-item-line-height: 20px;
         --lg-combobox-item-wedge-height: 22px;
       `;
   }
@@ -309,6 +314,7 @@ export const menuWrapperStyle = ({
     css`
       width: ${width}px;
       border-radius: var(--lg-combobox-menu-border-radius);
+      border: none;
 
       & > * {
         border-radius: inherit;
@@ -321,7 +327,7 @@ export const menuStyle = ({ maxHeight }: { maxHeight: number }) => css`
   position: relative;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: var(--lg-combobox-menu-padding-y) 0;
   font-family: ${fontFamilies.default};
   color: var(--lg-combobox-menu-color);
   background-color: var(--lg-combobox-menu-background-color);

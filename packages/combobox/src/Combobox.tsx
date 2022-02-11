@@ -19,7 +19,7 @@ import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
@@ -662,7 +662,7 @@ export default function Combobox<M extends boolean>({
           </IconButton>
         )}
         {state === 'error' ? (
-          <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
+          <Icon glyph="Warning" color={palette.red.base} className={endIcon} />
         ) : (
           <Icon glyph="CaretDown" className={endIcon} />
         )}
@@ -809,7 +809,7 @@ export default function Combobox<M extends boolean>({
           <span className={menuMessage}>
             <Icon
               glyph="Refresh"
-              color={uiColors.blue.base}
+              color={palette.blue.base}
               className={loadingIconStyle}
             />
             {searchLoadingMessage}
@@ -820,7 +820,7 @@ export default function Combobox<M extends boolean>({
       case 'error': {
         return (
           <span className={menuMessage}>
-            <Icon glyph="Warning" color={uiColors.red.base} />
+            <Icon glyph="Warning" color={palette.red.base} />
             {searchErrorMessage}
           </span>
         );
@@ -1117,6 +1117,7 @@ export default function Combobox<M extends boolean>({
           className={interactionRingStyle}
           disabled={disabled}
           color={interactionRingColor({ state, darkMode })}
+          borderRadius="6px"
         >
           {/* Disable eslint: onClick sets focus. Key events would already have focus */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}

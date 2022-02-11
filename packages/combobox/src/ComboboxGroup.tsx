@@ -1,19 +1,19 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import React, { useContext } from 'react';
 import { ComboboxGroupProps } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 
 const comboboxGroupStyle = (darkMode: boolean) => css`
   --lg-combobox-group-label-color: ${darkMode
-    ? uiColors.gray.light1
-    : uiColors.gray.dark1};
+    ? palette.gray.light1
+    : palette.gray.dark1};
   --lg-combobox-group-border-color: ${darkMode
-    ? uiColors.gray.dark1
-    : uiColors.gray.light1};
+    ? palette.gray.dark1
+    : palette.gray.light1};
   padding-top: 8px;
-  border-bottom: 1px solid var(--lg-combobox-group-border-color);
+  border-bottom: none;
 `;
 
 const comboboxGroupLabel = css`
