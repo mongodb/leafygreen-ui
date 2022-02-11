@@ -156,7 +156,6 @@ const optionsWrapperStyle = ({
 
 const selectionIndicatorStyle = css`
   position: absolute;
-  grid-column: 1/2; // position the selector in the grid until it gets positioned
   width: 100%;
   height: var(--indicator-height);
   z-index: 2;
@@ -501,7 +500,6 @@ const SegmentedControl = React.forwardRef<
     const transformPct = selectedIndex * 100;
 
     return css`
-      grid-column: unset;
       width: ${widthPct}%;
       transform: translateX(${transformPct}%);
     `;
