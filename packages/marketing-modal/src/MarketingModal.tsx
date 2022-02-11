@@ -177,7 +177,7 @@ const MarketingModal = ({
   linkText,
   darkMode,
   closeIconColor = CloseIconColor.Dark,
-  blobPosition = BlobPosition.BottomRight,
+  blobPosition = BlobPosition.TopLeft,
   showBlob = false,
   ...modalProps
 }: MarketingModalProps) => {
@@ -261,6 +261,8 @@ MarketingModal.propTypes = {
   className: PropTypes.string,
   buttonText: PropTypes.string.isRequired,
   linkText: PropTypes.string.isRequired,
+  blobPosition: PropTypes.oneOf(Object.values(BlobPosition)),
+  showBlob: PropTypes.bool,
 };
 
 export default MarketingModal;
