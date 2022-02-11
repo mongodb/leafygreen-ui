@@ -51,13 +51,13 @@ const optionsWrapperStyleSize: Record<Size, string> = {
   `,
   [Size.Default]: css`
     --segment-gap: 5px; // space between segments
-    --wrapper-padding: 0px;
+    --wrapper-padding: 3px;
     --seg-ctrl-border-radius: 8px;
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
   [Size.Large]: css`
     --segment-gap: 5px; // space between segments
-    --wrapper-padding: 0px;
+    --wrapper-padding: 3px;
     --seg-ctrl-border-radius: 12px;
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,

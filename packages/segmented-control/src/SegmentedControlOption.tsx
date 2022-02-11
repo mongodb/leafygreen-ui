@@ -2,7 +2,10 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import Box from '@leafygreen-ui/box';
 import { Size, Mode } from './types';
 import { SegmentedControlContext } from './SegmentedControl';
@@ -58,7 +61,7 @@ const optionSize: Record<Size, string> = {
     --padding-block: 3px; // top/bottom
     --padding-inline: 12px; // left/right
     --text-transform: none;
-    --font-weight: 400;
+    --font-weight: 500;
     --divider-height: 18px;
   `,
   [Size.Large]: css`
@@ -67,7 +70,7 @@ const optionSize: Record<Size, string> = {
     --padding-block: 6px;
     --padding-inline: 12px;
     --text-transform: none;
-    --font-weight: 400;
+    --font-weight: 500;
     --divider-height: 20px;
   `,
 };
@@ -75,9 +78,11 @@ const optionSize: Record<Size, string> = {
 const optionStyle = ({
   mode = 'light',
   size = 'default',
+  baseFontSize = 14,
 }: {
   mode: Mode;
   size: Size;
+  baseFontSize: 14 | 16;
 }) =>
   cx(
     optionMode[mode],
@@ -116,6 +121,12 @@ const optionStyle = ({
         background-color: var(--divider-background-color);
       }
     `,
+    {
+      // Update font size according to baseFontSize
+      [css`
+        --font-size: 16px;
+      `]: size === 'default' && baseFontSize === 16,
+    },
   );
 
 const interactionRingStyle = css`
@@ -279,6 +290,7 @@ const SegmentedControlOption = React.forwardRef<
   ) => {
     const { size, mode, followFocus } = useContext(SegmentedControlContext);
     const { usingKeyboard } = useUsingKeyboardContext();
+    const baseFontSize = useBaseFontSize();
 
     const onClick = () => {
       _onClick?.(value);
@@ -311,7 +323,7 @@ const SegmentedControlOption = React.forwardRef<
 
     return (
       <div
-        className={cx(optionStyle({ mode, size }), className)}
+        className={cx(optionStyle({ mode, size, baseFontSize }), className)}
         ref={forwardedRef}
         data-lg-checked={checked}
       >
