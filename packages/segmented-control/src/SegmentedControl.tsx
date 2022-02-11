@@ -180,15 +180,6 @@ const hoverIndicatorStyle = css`
   opacity: 0;
 `;
 
-// Compute new selection indicator styles based on the selection
-const getDynamicSelectionStyle = (width: number, left: number) => {
-  return css`
-    grid-column: unset;
-    width: ${width}px;
-    transform: translateX(${left}px);
-  `;
-};
-
 // Compute new hover indicator styles based on the hovered item
 const getDynamicHoverStyle = (index: number | null) => {
   if (index != null) {
@@ -312,7 +303,7 @@ const SegmentedControl = React.forwardRef<
 
   const getOptionRef = useDynamicRefs<HTMLDivElement>({ prefix: 'option' });
 
-  const mode = darkMode ? 'dark' : 'light';
+  const mode: Mode = darkMode ? 'dark' : 'light';
 
   const name = useIdAllocator({
     prefix: 'segmented-control',
@@ -500,24 +491,30 @@ const SegmentedControl = React.forwardRef<
   };
 
   /**
-   * Dynamic Styles
+   * Dynamic Styles.
+   * Dynamically set the size & position of the selection indicator
    */
 
-  // Dynamically set the size & position of the selection indicator
-  const [selectionStyleDynamic, setSelectionStyle] = useState<string>('');
+  // Compute new selection indicator styles based on the selection
+  const getDynamicSelectionStyle = useCallback(() => {
+    const count = React.Children.count(renderedChildren);
+    const widthPct = (1 / count) * 100;
+    const transformPct = selectedIndex * 100;
+
+    return css`
+      grid-column: unset;
+      width: ${widthPct}%;
+      transform: translateX(${transformPct}%);
+    `;
+  }, [renderedChildren, selectedIndex]);
+
+  const [selectionStyleDynamic, setSelectionStyle] = useState<string>(
+    getDynamicSelectionStyle(),
+  );
+
   useEffect(() => {
-    const selectedRef = getOptionRef(`${selectedIndex}`);
-
-    if (selectedRef && selectedRef.current) {
-      // The ref refers to the button element
-      const selectedElement = selectedRef.current;
-
-      if (selectedElement) {
-        const { offsetWidth: width, offsetLeft: left } = selectedElement;
-        setSelectionStyle(getDynamicSelectionStyle(width, left));
-      }
-    }
-  }, [getOptionRef, selectedIndex, renderedChildren]);
+    setSelectionStyle(getDynamicSelectionStyle());
+  }, [getDynamicSelectionStyle]);
 
   // Dynamic hover styles
   const hoverStyleDynamic = useMemo(() => {
