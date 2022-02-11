@@ -3,7 +3,7 @@ import { ChipProps, ComboboxSize } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { keyMap } from './util';
@@ -21,11 +21,11 @@ const chipWrapperStyle = ({
     chipModeStyle = css``;
   } else {
     chipModeStyle = css`
-      --lg-combobox-chip-text-color: ${uiColors.gray.dark3};
-      --lg-combobox-chip-icon-color: ${uiColors.gray.dark2};
-      --lg-combobox-chip-background-color: ${uiColors.gray.light2};
-      --lg-combobox-chip-hover-color: ${uiColors.gray.light1};
-      --lg-combobox-chip-focus-color: ${uiColors.blue.light2};
+      --lg-combobox-chip-text-color: ${palette.gray.dark3};
+      --lg-combobox-chip-icon-color: ${palette.gray.dark2};
+      --lg-combobox-chip-background-color: ${palette.gray.light2};
+      --lg-combobox-chip-hover-color: ${palette.gray.light1};
+      --lg-combobox-chip-focus-color: ${palette.blue.light2};
     `;
   }
 

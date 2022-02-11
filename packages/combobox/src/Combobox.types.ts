@@ -5,8 +5,15 @@ import { Either } from '@leafygreen-ui/lib';
  * Prop Enums & Types
  */
 
+export const Mode = {
+  Dark: 'dark',
+  Light: 'light',
+} as const;
+
+export type Mode = typeof Mode[keyof typeof Mode];
+
 export const ComboboxSize = {
-  default: 'default',
+  Default: 'default',
 } as const;
 export type ComboboxSize = typeof ComboboxSize[keyof typeof ComboboxSize];
 

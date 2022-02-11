@@ -3,62 +3,61 @@
  */
 
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
-import { ComboboxSize, Overflow, State } from './Combobox.types';
+import { transparentize } from 'polished';
+import { ComboboxSize, Overflow, State, Mode } from './Combobox.types';
 
 export const comboboxParentStyle = ({
-  darkMode,
+  mode,
   size,
   overflow,
 }: {
-  darkMode: boolean;
+  mode: Mode;
   size: ComboboxSize;
   overflow: Overflow;
 }) => {
-  const modeStyle = (darkMode: boolean) => {
-    if (darkMode) {
-      return css``;
-    } else {
-      return css`
-        --lg-combobox-color-error: ${uiColors.red.base};
-        --lg-combobox-text-color: ${uiColors.gray.dark3};
-        --lg-combobox-text-color-disabled: ${uiColors.gray.dark1};
+  const modeStyle: Record<Mode, string> = {
+    [Mode.Light]: css`
+      // Base
+      --lg-combobox-text-color: ${palette.gray.dark3};
+      --lg-combobox-background-color: ${palette.white};
+      --lg-combobox-border-color: ${palette.gray.base};
+      --lg-combobox-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
 
-        --lg-combobox-background-color: ${uiColors.gray.light3};
-        --lg-combobox-background-color-focus: ${uiColors.white};
-        --lg-combobox-background-color-disabled: ${uiColors.gray.light2};
+      // Focus
+      --lg-combobox-background-color-focus: ${palette.white};
+      --lg-combobox-shadow-focus: 0px 4px 4px rgba(6, 22, 33, 0.3);
 
-        --lg-combobox-border-color: ${uiColors.gray.base};
-        --lg-combobox-border-color-disabled: ${uiColors.gray.light1};
-        --lg-combobox-border-color-error: ${uiColors.red.base};
+      // Disabled
+      --lg-combobox-text-color-disabled: ${palette.gray.base};
+      --lg-combobox-background-color-disabled: ${palette.gray.light2};
+      --lg-combobox-border-color-disabled: ${palette.gray.light1};
 
-        --lg-combobox-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
-        --lg-combobox-shadow-focus: 0px 4px 4px rgba(6, 22, 33, 0.3);
-      `;
-    }
+      // Error
+      --lg-combobox-color-error: ${palette.red.base};
+      --lg-combobox-border-color-error: ${palette.red.base};
+    `,
+    [Mode.Dark]: css``,
   };
 
-  const sizeStyle = (size: ComboboxSize) => {
-    switch (size) {
-      case 'default':
-        return css`
-          --lg-combobox-padding-y: 5px;
-          --lg-combobox-padding-x: 7px;
-          --lg-combobox-height: 24px;
-          --lg-combobox-font-size: 14px;
-          --lg-combobox-line-height: 20px;
-          --lg-combobox-border-radius: 3px;
-          --lg-combobox-input-default-width: 12ch;
-          --lg-combobox-icon-height: 16px;
-        `;
-    }
+  const sizeStyle: Record<ComboboxSize, string> = {
+    [ComboboxSize.Default]: css`
+      --lg-combobox-padding-y: 5px;
+      --lg-combobox-padding-x: 7px;
+      --lg-combobox-height: 24px;
+      --lg-combobox-font-size: 14px;
+      --lg-combobox-line-height: 20px;
+      --lg-combobox-border-radius: 3px;
+      --lg-combobox-input-default-width: 12ch;
+      --lg-combobox-icon-height: 16px;
+    `,
   };
 
   return cx(
-    modeStyle(darkMode),
-    sizeStyle(size),
+    modeStyle[mode],
+    sizeStyle[size],
     css`
       --lg-combobox-width: ${overflow === 'expand-x' ? 'unset' : '100%'};
       --lg-combobox-padding: var(--lg-combobox-padding-y)
@@ -280,13 +279,14 @@ export const menuWrapperStyle = ({
     menuModeStyle = css``;
   } else {
     menuModeStyle = css`
-      --lg-combobox-menu-color: ${uiColors.gray.dark3};
-      --lg-combobox-menu-message-color: ${uiColors.gray.dark1};
-      --lg-combobox-menu-background-color: ${uiColors.white};
-      --lg-combobox-menu-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
-      --lg-combobox-item-hover-color: ${uiColors.gray.light2};
-      --lg-combobox-item-active-color: ${uiColors.blue.light3};
-      --lg-combobox-item-wedge-color: ${uiColors.blue.base};
+      --lg-combobox-menu-color: ${palette.gray.dark3};
+      --lg-combobox-menu-message-color: ${palette.gray.dark1};
+      --lg-combobox-menu-background-color: ${palette.white};
+      --lg-combobox-menu-shadow: 0px 3px 7px
+        ${transparentize(0.75, palette.black)};
+      --lg-combobox-item-hover-color: ${palette.gray.light2};
+      --lg-combobox-item-active-color: ${palette.blue.light3};
+      --lg-combobox-item-wedge-color: ${palette.blue.base};
     `;
   }
 

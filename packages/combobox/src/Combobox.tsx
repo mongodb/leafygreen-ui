@@ -23,7 +23,9 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
+  ComboboxSize,
   getNullSelection,
+  Mode,
   onChangeType,
   SelectValueType,
 } from './Combobox.types';
@@ -59,7 +61,7 @@ export default function Combobox<M extends boolean>({
   placeholder = 'Select',
   'aria-label': ariaLabel,
   disabled = false,
-  size = 'default',
+  size = ComboboxSize.Default,
   darkMode = false,
   state = 'none',
   errorMessage,
@@ -86,6 +88,8 @@ export default function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
 
@@ -1097,10 +1101,7 @@ export default function Combobox<M extends boolean>({
       }}
     >
       <div
-        className={cx(
-          comboboxParentStyle({ darkMode, size, overflow }),
-          className,
-        )}
+        className={cx(comboboxParentStyle({ mode, size, overflow }), className)}
         {...rest}
       >
         <div>

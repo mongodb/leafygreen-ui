@@ -4,7 +4,7 @@ import { ComboboxSize, TrunctationLocation } from './Combobox.types';
 interface ComboboxData {
   multiselect: boolean;
   darkMode: boolean;
-  size: keyof typeof ComboboxSize;
+  size: ComboboxSize;
   withIcons: boolean;
   disabled: boolean;
   chipTruncationLocation?: TrunctationLocation;
@@ -15,7 +15,7 @@ interface ComboboxData {
 export const ComboboxContext = createContext<ComboboxData>({
   multiselect: false,
   darkMode: false,
-  size: 'default',
+  size: ComboboxSize.Default,
   withIcons: false,
   disabled: false,
 });
