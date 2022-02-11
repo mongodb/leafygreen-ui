@@ -495,8 +495,7 @@ const SegmentedControl = React.forwardRef<
    * Dynamically set the size & position of the selection indicator
    */
 
-  // Compute new selection indicator styles based on the selection
-  const getDynamicSelectionStyle = useCallback(() => {
+  const selectionStyleDynamic = useMemo(() => {
     const count = React.Children.count(renderedChildren);
     const widthPct = (1 / count) * 100;
     const transformPct = selectedIndex * 100;
@@ -507,14 +506,6 @@ const SegmentedControl = React.forwardRef<
       transform: translateX(${transformPct}%);
     `;
   }, [renderedChildren, selectedIndex]);
-
-  const [selectionStyleDynamic, setSelectionStyle] = useState<string>(
-    getDynamicSelectionStyle(),
-  );
-
-  useEffect(() => {
-    setSelectionStyle(getDynamicSelectionStyle());
-  }, [getDynamicSelectionStyle]);
 
   // Dynamic hover styles
   const hoverStyleDynamic = useMemo(() => {
