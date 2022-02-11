@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline } from '@leafygreen-ui/typography';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import useDynamicRefs from './useDynamicRefs';
 import { Size, Mode } from './types';
 import { once } from 'lodash';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
@@ -279,7 +278,7 @@ const SegmentedControl = React.forwardRef<
   // TODO log warning if defaultValue is set but does not match any child value
   const { usingKeyboard } = useUsingKeyboardContext();
 
-  const [getRef, setRef] = useDynamicRefs<HTMLDivElement>();
+  const getOptionRef = useDynamicRefs<HTMLDivElement>({ prefix: 'option' });
 
   const mode = darkMode ? 'dark' : 'light';
 
@@ -368,7 +367,7 @@ const SegmentedControl = React.forwardRef<
           'aria-controls': child.props['aria-controls'] ?? ariaControls,
           _onClick: updateValue,
           _onHover,
-          ref: setRef(`${name}-${index}`),
+          ref: getOptionRef(`${index}`),
         });
       }),
     [
@@ -380,7 +379,7 @@ const SegmentedControl = React.forwardRef<
       name,
       ariaControls,
       updateValue,
-      setRef,
+      getOptionRef,
     ],
   );
 
@@ -475,7 +474,7 @@ const SegmentedControl = React.forwardRef<
   // Dynamically set the size & position of the selection indicator
   const [selectionStyleDynamic, setSelectionStyle] = useState<string>('');
   useEffect(() => {
-    const selectedRef = getRef(`${name}-${selectedIndex}`);
+    const selectedRef = getOptionRef(`${selectedIndex}`);
 
     if (selectedRef && selectedRef.current) {
       // The ref refers to the button element
@@ -486,7 +485,7 @@ const SegmentedControl = React.forwardRef<
         setSelectionStyle(getDynamicSelectionStyle(width, left));
       }
     }
-  }, [getRef, name, selectedIndex, renderedChildren]);
+  }, [getOptionRef, selectedIndex, renderedChildren]);
 
   // Dynamic hover styles
   const hoverStyleDynamic = useMemo(() => {
