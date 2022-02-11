@@ -1,74 +1,75 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box from '@leafygreen-ui/box';
 import { Size, Mode } from './types';
 import { SegmentedControlContext } from './SegmentedControl';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 /**
  * Styles
  */
-
-const optionMode = (mode: Mode) => {
-  switch (mode) {
-    case 'light':
-      return css`
-        --base-text-color: ${uiColors.gray.dark1};
-        --base-background-color: transparent;
-        --base-shadow-color: transparent;
-        --hover-text-color: ${uiColors.gray.dark3};
-        --hover-background-color: ${uiColors.white};
-        --active-text-color: ${uiColors.gray.dark3};
-        --disabled-text-color: ${uiColors.gray.light1};
-      `;
-    case 'dark':
-      return css`
-        --base-text-color: ${uiColors.gray.light1};
-        --base-background-color: transparent;
-        --base-shadow-color: transparent;
-        --hover-text-color: ${uiColors.gray.light2};
-        --hover-background-color: ${uiColors.gray.dark2};
-        --active-text-color: ${uiColors.white};
-        --disabled-text-color: ${uiColors.gray.dark1};
-      `;
-  }
+const optionMode: Record<Mode, string> = {
+  [Mode.Light]: css`
+    --base-text-color: ${palette.gray.dark1};
+    --base-background-color: transparent;
+    --base-shadow-color: transparent;
+    // Hover
+    --hover-text-color: ${palette.gray.dark3};
+    --hover-background-color: ${palette.white};
+    // Selected
+    --active-text-color: ${palette.white};
+    // Disabled
+    --disabled-text-color: ${palette.gray.light1};
+    // Divider
+    --divider-background-color: ${palette.gray.light1};
+  `,
+  [Mode.Dark]: css`
+    --base-text-color: ${uiColors.gray.light1};
+    --base-background-color: transparent;
+    --base-shadow-color: transparent;
+    // Hover
+    --hover-text-color: ${uiColors.gray.light2};
+    --hover-background-color: ${uiColors.gray.dark2};
+    // Selected
+    --active-text-color: ${uiColors.white};
+    // Disabled
+    --disabled-text-color: ${uiColors.gray.dark1};
+    // Divider
+    --divider-background-color: ${uiColors.gray.light1};
+  `,
 };
 
-const optionSize = (size: Size) => {
-  switch (size) {
-    case 'small':
-      return css`
-        --font-size: 12px;
-        --line-height: 16px;
-        --padding-block: 3px;
-        --padding-inline: 12px;
-        --text-transform: uppercase;
-        --font-weight: bold;
-        --divider-height: 12px;
-      `;
-    case 'large':
-      return css`
-        --font-size: 16px;
-        --line-height: 28px;
-        --padding-block: 4px;
-        --padding-inline: 12px;
-        --text-transform: none;
-        --font-weight: normal;
-        --divider-height: 20px;
-      `;
-    case 'default':
-      return css`
-        --font-size: 14px;
-        --line-height: 24px;
-        --padding-block: 3px;
-        --padding-inline: 12px;
-        --text-transform: none;
-        --font-weight: normal;
-        --divider-height: 18px;
-      `;
-  }
+const optionSize: Record<Size, string> = {
+  [Size.Small]: css`
+    --font-size: 12px;
+    --line-height: 16px;
+    --padding-block: 3px;
+    --padding-inline: 12px;
+    --text-transform: uppercase;
+    --font-weight: 700;
+    --divider-height: 12px;
+  `,
+  [Size.Default]: css`
+    --font-size: 13px;
+    --line-height: 24px;
+    --padding-block: 3px; // top/bottom
+    --padding-inline: 12px; // left/right
+    --text-transform: none;
+    --font-weight: 400;
+    --divider-height: 18px;
+  `,
+  [Size.Large]: css`
+    --font-size: 16px;
+    --line-height: 28px;
+    --padding-block: 4px;
+    --padding-inline: 12px;
+    --text-transform: none;
+    --font-weight: 400;
+    --divider-height: 20px;
+  `,
 };
 
 const optionStyle = ({
@@ -79,8 +80,8 @@ const optionStyle = ({
   size: Size;
 }) =>
   cx(
-    optionMode(mode),
-    optionSize(size),
+    optionMode[mode],
+    optionSize[size],
     css`
       position: relative;
       display: flex;
@@ -88,8 +89,6 @@ const optionStyle = ({
       align-items: center;
       justify-content: center;
       z-index: 3;
-
-      --divider-background-color: ${uiColors.gray.light1};
 
       &:first-child,
       &[data-lg-checked='true'],
@@ -135,6 +134,7 @@ const boxStyle = css`
 `;
 
 const buttonStyle = css`
+  font-family: ${fontFamilies.default};
   display: inline-flex;
   position: relative;
   width: 100%;
@@ -334,7 +334,16 @@ const SegmentedControlOption = React.forwardRef<
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
             >
-              <span className={labelStyle}>{children}</span>
+              <span
+                className={cx(labelStyle, {
+                  // TODO: Refresh - remove darkmode font override
+                  [css`
+                    font-family: ${fontFamilies.legacy};
+                  `]: mode === 'dark',
+                })}
+              >
+                {children}
+              </span>
             </button>
           </Box>
         </InteractionRing>
