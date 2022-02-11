@@ -10,6 +10,7 @@ import Button from '@leafygreen-ui/button';
 
 function Uncontrolled() {
   const size = select('Size', ['default', 'large'], 'default');
+  const usePortal = boolean('Use Portal', true);
 
   return (
     <LeafyGreenProvider>
@@ -18,6 +19,7 @@ function Uncontrolled() {
         justify={select('Justify', Object.values(Justify), Justify.Start)}
         trigger={<Button rightGlyph={<CloudIcon />} />}
         popoverZIndex={number('zIndex', 1)}
+        usePortal={usePortal}
       >
         <MenuItem active size={size} glyph={<CloudIcon />}>
           Active Menu Item
@@ -43,6 +45,7 @@ function Uncontrolled() {
 function Controlled() {
   const [open, setOpen] = useState(false);
   const size = select('Size', ['default', 'large'], 'default');
+  const usePortal = boolean('Use Portal', true);
 
   return (
     <LeafyGreenProvider>
@@ -53,6 +56,7 @@ function Controlled() {
           justify={select('Justify', Object.values(Justify), Justify.Start)}
           open={open}
           setOpen={setOpen}
+          usePortal={usePortal}
         >
           <MenuItem active size={size} glyph={<LaptopIcon size="large" />}>
             Active Menu Item
