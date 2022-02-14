@@ -104,6 +104,10 @@ const chipButton = css`
   }
 `;
 
+const tooltipClassName = css`
+  hyphens: auto;
+`;
+
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
     const {
@@ -204,7 +208,11 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       >
         <span className={chipText}>
           {truncatedName ? (
-            <InlineDefinition definition={displayName} align="bottom">
+            <InlineDefinition
+              definition={displayName}
+              align="bottom"
+              tooltipClassName={tooltipClassName}
+            >
               {truncatedName}
             </InlineDefinition>
           ) : (
