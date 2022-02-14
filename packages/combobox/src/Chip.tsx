@@ -7,6 +7,7 @@ import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { keyMap } from './util';
+import { mix } from 'polished';
 
 const chipWrapperStyle = ({
   darkMode,
@@ -24,8 +25,13 @@ const chipWrapperStyle = ({
       --lg-combobox-chip-text-color: ${palette.gray.dark3};
       --lg-combobox-chip-icon-color: ${palette.gray.dark2};
       --lg-combobox-chip-background-color: ${palette.gray.light2};
-      --lg-combobox-chip-hover-color: ${palette.gray.light1};
-      --lg-combobox-chip-focus-color: ${palette.blue.light2};
+      --lg-combobox-chip-hover-bg-color: ${palette.gray.light1};
+      --lg-combobox-chip-focus-bg-color: ${palette.blue.light2};
+      --lg-combobox-chip-focus-hover-bg-color: ${mix(
+        0.75,
+        palette.blue.light2,
+        palette.blue.light1,
+      )};
     `;
   }
 
@@ -59,7 +65,7 @@ const chipWrapperStyle = ({
       // TODO - refine these styles
       /* &:focus, */
       &:focus-within {
-        background-color: var(--lg-combobox-chip-focus-color);
+        background-color: var(--lg-combobox-chip-focus-bg-color);
       }
     `,
   );
@@ -90,11 +96,11 @@ const chipButton = css`
     left: 0;
     height: 100%;
     width: 1px;
-    background-color: var(--lg-combobox-chip-hover-color);
+    background-color: var(--lg-combobox-chip-hover-bg-color);
   }
 
   &:hover {
-    background-color: var(--lg-combobox-chip-hover-color);
+    background-color: var(--lg-combobox-chip-hover-bg-color);
   }
 `;
 
@@ -210,7 +216,15 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           aria-disabled={disabled}
           disabled={disabled}
           ref={buttonRef}
-          className={chipButton}
+          className={cx(
+            chipButton,
+            css`
+              ${dataProp.selector}:focus-within &:hover,
+            ${dataProp.selector}:focus-within &:before {
+                background-color: var(--lg-combobox-chip-focus-hover-bg-color);
+              }
+            `,
+          )}
           onClick={handleButtonClick}
           onKeyDown={handleKeyDown}
         >

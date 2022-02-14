@@ -213,6 +213,7 @@ export const inputWrapperStyle = ({
         flex-wrap: wrap;
         gap: 4px;
         overflow-x: visible;
+        height: var(--lg-combobox-height);
       `;
     }
   }
