@@ -1,5 +1,14 @@
 # @leafygreen-ui/segmented-control
 
+## 0.9.2
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/typography@9.0.0
+  - @leafygreen-ui/interaction-ring@2.0.0
+
 ## 0.9.1
 
 ### Patch Changes

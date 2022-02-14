@@ -1,5 +1,16 @@
 # @leafygreen-ui/menu
 
+## 12.0.0
+
+### Major Changes
+
+- 8457f92: Updates Menu in line with visual brand refresh. Note: menus are now dark with light text
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+
 ## 11.0.1
 
 ### Patch Changes

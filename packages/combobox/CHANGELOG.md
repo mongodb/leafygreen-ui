@@ -1,5 +1,15 @@
 # @leafygreen-ui/combobox
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/typography@9.0.0
+  - @leafygreen-ui/interaction-ring@2.0.0
+  - @leafygreen-ui/inline-definition@2.0.7
+
 ## 1.0.0
 
 ### Major Changes
