@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-input",
-  "version": "6.2.1",
+  "version": "7.0.0",
   "description": "leafyGreen UI Kit Text Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,10 +22,10 @@
   "dependencies": {
     "@leafygreen-ui/hooks": "^7.1.0",
     "@leafygreen-ui/icon": "^11.4.0",
-    "@leafygreen-ui/interaction-ring": "^1.1.0",
+    "@leafygreen-ui/interaction-ring": "^2.0.0",
     "@leafygreen-ui/lib": "^9.1.0",
     "@leafygreen-ui/palette": "^3.3.0",
-    "@leafygreen-ui/typography": "^8.0.4"
+    "@leafygreen-ui/typography": "^9.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.1.3"

@@ -1,5 +1,14 @@
 # @leafygreen-ui/code
 
+## 9.4.1
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+  - @leafygreen-ui/select@4.0.0
+
 ## 9.4.0
 
 ### Minor Changes

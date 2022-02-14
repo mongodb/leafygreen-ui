@@ -1,5 +1,11 @@
 # @leafygreen-ui/banner
 
+## 4.0.0
+
+### Major Changes
+
+- 8457f92: Updates banner styles in line with visual brand refresh
+
 ## 3.0.9
 
 ### Patch Changes

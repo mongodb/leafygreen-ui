@@ -1,5 +1,12 @@
 # @leafygreen-ui/tooltip
 
+## 6.3.2
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+
 ## 6.3.1
 
 ### Patch Changes

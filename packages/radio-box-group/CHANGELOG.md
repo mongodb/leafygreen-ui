@@ -1,5 +1,12 @@
 # @leafygreen-ui/radio-box-group
 
+## 6.1.6
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+
 ## 6.1.5
 
 ### Patch Changes
