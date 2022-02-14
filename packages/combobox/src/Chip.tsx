@@ -110,7 +110,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       darkMode,
       size,
       disabled,
-      chipTruncationLocation,
+      chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
 

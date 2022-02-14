@@ -51,7 +51,6 @@ export const comboboxParentStyle = ({
       --lg-combobox-line-height: 20px;
       --lg-combobox-border-radius: 6px;
       --lg-combobox-height: 24px;
-      --lg-combobox-input-default-width: 12ch;
       --lg-combobox-icon-height: 16px;
     `,
   };
@@ -146,17 +145,12 @@ export const inputWrapperStyle = ({
 
   // The input should be hidden when there are elements selected in a multiselect
   // We don't set \`display: none\` since we need to be able to set .focus() on the element
-  const inputWidth = isMultiselect
-    ? isOpen || inputLength > 0
-      ? `${inputLength + 1}ch`
-      : '0'
-    : 'var(--lg-combobox-input-default-width)';
 
   const baseWrapperStyle = css`
     flex-grow: 1;
     width: var(--lg-combobox-width);
 
-    --lg-combobox-input-width: ${inputWidth};
+    --lg-combobox-input-width: ${isMultiselect ? `${inputLength}ch` : '100%'};
   `;
 
   switch (overflow) {
@@ -183,12 +177,12 @@ export const inputWrapperStyle = ({
         & > * {
           margin-inline: 2px;
 
-          &:first-child {
-            margin-inline-start: var(--lg-combobox-padding-x);
+          &:first-child:not(input) {
+            margin-inline-start: 0;
           }
 
-          &:last-child {
-            margin-inline-end: var(--lg-combobox-padding-x);
+          &:last-child:not(input) {
+            margin-inline-end: 0;
           }
         }
       `;
@@ -201,7 +195,8 @@ export const inputWrapperStyle = ({
         gap: 4px;
         flex-wrap: nowrap;
         white-space: nowrap;
-        --lg-combobox-input-transition: width 150ms ease-in-out;
+        height: var(--lg-combobox-height);
+        --lg-combobox-input-transition: none; //width 150ms ease-in-out;
       `;
     }
 
@@ -213,7 +208,7 @@ export const inputWrapperStyle = ({
         flex-wrap: wrap;
         gap: 4px;
         overflow-x: visible;
-        height: var(--lg-combobox-height);
+        min-height: var(--lg-combobox-height);
       `;
     }
   }
@@ -225,15 +220,12 @@ export const inputElementStyle = css`
   cursor: inherit;
   background-color: inherit;
   box-sizing: content-box;
-  /* padding-block: calc(
-    (var(--lg-combobox-height) - var(--lg-combobox-line-height)) / 2
-  ); */
-  padding-inline: 0;
-  height: var(--lg-combobox-line-height);
-  width: var(
-    --lg-combobox-input-width,
-    var(--lg-combobox-input-default-width, auto)
-  );
+  padding: 0;
+  margin: 0;
+  text-overflow: ellipsis;
+  line-height: var(--lg-combobox-line-height);
+  height: var(--lg-combobox-height);
+  width: var(--lg-combobox-input-width, 0);
   transition: var(--lg-combobox-input-transition);
 
   &:focus {
