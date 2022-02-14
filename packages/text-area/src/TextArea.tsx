@@ -3,10 +3,11 @@ import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
+import Warning from '@leafygreen-ui/icon/dist/Warning';
 
 export const State = {
   None: 'none',
@@ -31,12 +32,10 @@ const textAreaStyle = css`
   width: 100%;
   min-height: ${spacing[6]}px;
   resize: none;
-  border-radius: 4px;
   margin: 0;
   padding: 10px 12px 1px 12px;
   font-size: 14px;
   font-weight: normal;
-  font-family: ${fontFamilies.default};
   line-height: 16px;
   z-index: 1;
   border: 1px solid;
@@ -52,54 +51,67 @@ const textAreaStyle = css`
 `;
 
 const errorMessageStyle = css`
-  font-size: 14px;
+  display: flex;
   height: 20px;
   padding-top: 4px;
   font-weight: normal;
 `;
 
+const errorIconStyle = css`
+  margin-right: 3px;
+`;
 interface ColorSets {
-  defaultBorder: string;
   textArea: string;
   errorBorder: string;
   errorMessage: string;
+  disabledText: string;
 }
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    defaultBorder: css`
-      border-color: ${uiColors.gray.light1};
-    `,
     textArea: css`
-      color: ${uiColors.gray.dark3};
-      background-color: ${uiColors.white};
-      border-color: ${uiColors.gray.light1};
+      // TODO: Refresh - set one font family & size
+      font-family: ${fontFamilies.default};
+      font-size: 13px;
+      color: ${palette.gray.dark3};
+      background-color: ${palette.white};
+      border-color: ${palette.gray.base};
+      border-radius: 6px;
 
       &:focus {
-        border-color: ${uiColors.white}; // same as background color
+        border-color: ${palette.white}; // same as background color
       }
 
       &:disabled {
-        color: ${uiColors.gray.base};
-        background-color: ${uiColors.gray.light2};
+        color: ${palette.gray.base};
+        background-color: ${palette.gray.light2};
+        border-color: ${palette.gray.light1};
       }
     `,
     errorBorder: css`
-      border-color: ${uiColors.red.base};
+      border-color: ${palette.red.base};
+      &:disabled {
+        border-color: ${palette.red.base};
+      }
     `,
     errorMessage: css`
-      color: ${uiColors.red.base};
+      color: ${palette.red.base};
+      font-family: ${fontFamilies.default};
+      font-size: 13px;
+    `,
+    disabledText: css`
+      color: ${palette.gray.base};
     `,
   },
   [Mode.Dark]: {
-    defaultBorder: css`
-      border-color: #394f5a;
-    `,
-
     textArea: css`
+      // TODO: Refresh - set one font family & size
+      font-family: ${fontFamilies.legacy};
+      font-size: 14px;
       color: ${uiColors.white};
       background-color: #394f5a;
       border-color: #394f5a;
+      border-radius: 4px; // TODO: Refresh - remove this when darkMode is updated
 
       &:focus {
         border-color: #394f5a; // same as background color
@@ -117,6 +129,11 @@ const colorSets: Record<Mode, ColorSets> = {
 
     errorMessage: css`
       color: #ef8d6f;
+      font-family: ${fontFamilies.legacy};
+      font-size: 14px;
+    `,
+    disabledText: css`
+      color: ${uiColors.gray.dark1};
     `,
   },
 };
@@ -203,17 +220,40 @@ const TextArea: React.ComponentType<
   return (
     <div className={cx(containerStyles, className)}>
       {label && (
-        <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
+        <Label
+          darkMode={darkMode}
+          htmlFor={id}
+          disabled={disabled}
+          // className={cx({
+          //   [colorSets[mode].disabledText] : disabled
+          // })}
+        >
           {label}
         </Label>
       )}
       {description && (
-        <Description darkMode={darkMode}>{description}</Description>
+        <Description
+          darkMode={darkMode}
+          disabled={disabled}
+          className={cx({
+            [css`
+              padding-bottom: 4px;
+            `]: !darkMode,
+          })}
+        >
+          {description}
+        </Description>
       )}
       <InteractionRing
         darkMode={darkMode}
         disabled={disabled}
         ignoreKeyboardContext={true}
+        color={
+          state === State.Error
+            ? { hovered: darkMode ? uiColors.red.dark3 : palette.red.light3 }
+            : undefined
+        }
+        borderRadius={darkMode ? '4px' : '6px'} // TODO: Refresh - remove after darkmode is redesigned
       >
         <textarea
           {...rest}
@@ -221,7 +261,7 @@ const TextArea: React.ComponentType<
           title={label != null ? label : undefined}
           id={id}
           className={cx(textAreaStyle, colorSets[mode].textArea, {
-            [colorSets[mode].errorBorder]: state === State.Error,
+            [colorSets[mode].errorBorder]: state === State.Error && !disabled,
             [css`
               background-color: #5a3c3b;
             `]: state === State.Error && darkMode,
@@ -234,6 +274,10 @@ const TextArea: React.ComponentType<
       </InteractionRing>
       {!disabled && state === State.Error && errorMessage && (
         <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
+          {
+            // TODO: Refresh - remove conditional logic
+            !darkMode && <Warning className={errorIconStyle} />
+          }
           <label>{errorMessage}</label>
         </div>
       )}

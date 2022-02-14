@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 
 const borderStyle = css`
-  border-top: 1px solid ${uiColors.gray.light2};
+  border-top: 1px solid ${palette.gray.dark2};
 `;
 
 function MenuSeparator() {
