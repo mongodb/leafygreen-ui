@@ -35,18 +35,21 @@ const underline = css`
 
 type InlineDefinitionProps = Partial<TooltipProps> & {
   definition: React.ReactNode;
+  tooltipClassName?: string;
 };
 
 function InlineDefinition({
   definition,
   children,
   className,
+  tooltipClassName,
   ...tooltipProps
 }: InlineDefinitionProps) {
   return (
     <Tooltip
       justify="middle"
       spacing={5}
+      className={tooltipClassName}
       {...tooltipProps}
       trigger={
         <span
