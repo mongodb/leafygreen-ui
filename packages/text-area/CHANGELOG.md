@@ -1,5 +1,19 @@
 # @leafygreen-ui/text-area
 
+## 5.0.0
+
+### Major Changes
+
+- 8457f92: Updates Text Area to match new visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+  - @leafygreen-ui/typography@9.0.0
+  - @leafygreen-ui/interaction-ring@2.0.0
+
 ## 4.1.1
 
 ### Patch Changes
