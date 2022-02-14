@@ -2,53 +2,54 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps, Mode } from './types';
-import { getClassName, colorMap } from './styles';
+import { getClassName, rippleColors, ButtonDataProp } from './styles';
 import ButtonIcon from './ButtonIcon';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const rippleStyle = css`
   overflow: hidden;
-  border-radius: 3px;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  border-radius: 6px;
 `;
 
 const containerChildStyles = css`
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
   pointer-events: none;
   position: relative;
   z-index: 0;
-  font-family: ${fontFamilies.default};
 `;
 
-const padding: Record<Size, string> = {
+const containerChildSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
-    padding-left: 6px;
-    padding-right: 6px;
+    padding: 0 8px;
+    gap: 6px;
   `,
 
   [Size.Small]: css`
-    padding-left: 12px;
-    padding-right: 12px;
+    padding: 0 12px;
+    gap: 6px;
   `,
 
   [Size.Default]: css`
-    padding-left: 12px;
-    padding-right: 12px;
+    padding: 0 12px;
+    gap: 6px;
   `,
 
   [Size.Large]: css`
-    padding-left: ${spacing[3]}px;
-    padding-right: ${spacing[3]}px;
+    padding: 0 16px;
+    gap: 8px;
   `,
 };
 
@@ -76,7 +77,7 @@ const Button: ExtendableBox<
   useEffect(() => {
     let unregisterRipple: (() => void) | undefined;
     const backgroundColor =
-      colorMap[darkMode ? Mode.Dark : Mode.Light][variant];
+      rippleColors[darkMode ? Mode.Dark : Mode.Light][variant];
 
     if (rippleRef.current != null) {
       unregisterRipple = registerRipple(rippleRef.current, {
@@ -126,41 +127,42 @@ const Button: ExtendableBox<
     // only add a disabled prop if not an anchor
     ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,
+    ...ButtonDataProp.prop,
     ...rest,
   } as const;
 
   const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
 
-  const iconSpacing = size === Size.Large ? '8px' : '6px';
-
   const content = (
     <>
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
-      <div className={rippleStyle} ref={rippleRef} />
+      <div
+        className={cx(rippleStyle, {
+          // TODO: Refresh - remove darkMode logic
+          [css`
+            border-radius: 3px;
+          `]: darkMode,
+        })}
+        ref={rippleRef}
+      />
 
       <div
-        className={cx(
-          containerChildStyles,
-          {
-            [css`
-              justify-content: space-between;
-            `]: !!rightGlyph,
-            [css`
-              justify-content: center;
-            `]: !rightGlyph,
-          },
-          padding[size],
-        )}
+        className={cx(containerChildStyles, containerChildSizeStyles[size], {
+          // TODO: Refresh - remove darkMode logic
+          [css`
+            justify-content: space-between;
+          `]: !!rightGlyph && darkMode,
+          [css`
+            font-family: ${fontFamilies.legacy};
+          `]: darkMode,
+        })}
       >
         {leftGlyph && (
           <ButtonIcon
             glyph={leftGlyph}
-            className={cx(
-              { [css`margin-right: ${iconSpacing};}`]: !isIconOnlyButton },
-              css`
-                vertical-align: text-top;
-              `,
-            )}
+            className={css`
+              justify-self: right;
+            `}
             {...iconProps}
           />
         )}
@@ -168,22 +170,13 @@ const Button: ExtendableBox<
         {children}
 
         {rightGlyph && (
-          <span
+          <ButtonIcon
+            glyph={rightGlyph}
             className={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-left: auto;
+              justify-self: left;
             `}
-          >
-            <ButtonIcon
-              glyph={rightGlyph}
-              className={
-                !isIconOnlyButton ? css`margin-left: ${iconSpacing};}` : ''
-              }
-              {...iconProps}
-            />
-          </span>
+            {...iconProps}
+          />
         )}
       </div>
     </>

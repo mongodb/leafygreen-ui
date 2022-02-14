@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
-import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
-import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
+import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
+import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
@@ -17,8 +17,16 @@ import {
   linkStyle,
   disabledTextStyle,
   paddingLeft,
-  menuItemPadding,
-  svgWidth,
+  descriptionTextStyle,
+  linkDescriptionTextStyle,
+  titleTextStyle,
+  activeTitleTextStyle,
+  activeDescriptionTextStyle,
+  mainIconStyle,
+  activeIconStyle,
+  textContainer,
+  getFocusedStyles,
+  getHoverStyles,
 } from './styles';
 import { ExitHandler } from 'react-transition-group/Transition';
 
@@ -26,7 +34,7 @@ const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
 
 const subMenuContainerHeight = 56;
-const iconButtonContainerHeight = 28;
+const iconButtonContainerSize = 28;
 
 const liStyle = css`
   position: relative;
@@ -35,8 +43,8 @@ const liStyle = css`
 
 const subMenuStyle = css`
   min-height: 56px;
-  border-top: 1px solid ${uiColors.gray.light2};
-  background-color: ${uiColors.gray.light3};
+  background-color: ${palette.black};
+  padding-right: ${iconButtonContainerSize + 16}px;
   align-items: center;
   justify-content: flex-start;
 `;
@@ -45,94 +53,55 @@ const subMenuOpenStyle = css`
   background-color: transparent;
 
   &:hover {
-    background-color: ${uiColors.gray.light2};
+    background-color: ${palette.gray.dark3};
   }
 `;
 
 const focusedIconStyle = css`
   ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
-    color: ${uiColors.blue.dark2};
+    color: ${palette.white};
   }
 `;
 
 const closedIconStyle = css`
   transition: color 200ms ease-in-out;
-  color: ${uiColors.gray.base};
+  color: ${palette.gray.light1};
 `;
 
 const openIconStyle = css`
-  color: ${uiColors.gray.dark2};
-`;
-
-const mainTextStyle = css`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 14px;
-  color: ${uiColors.gray.dark3};
-  ${subMenuContainer.selector}:focus & {
-    color: ${uiColors.blue.dark3};
-  }
-`;
-
-const activeMainTextStyle = css`
-  font-weight: bolder;
-  color: ${uiColors.green.dark3};
+  color: ${palette.gray.light1};
 `;
 
 const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
   right: 8px;
-  top: ${subMenuContainerHeight / 2 - iconButtonContainerHeight / 2}px;
+  top: ${subMenuContainerHeight / 2 - iconButtonContainerSize / 2}px;
   margin: auto;
-  background-color: ${uiColors.gray.light3};
+  background-color: ${palette.black};
   transition: background-color 150ms ease-in-out;
 
+  &:hover {
+    background-color: ${palette.gray.dark2};
+  }
+
   ${subMenuContainer.selector}:hover + & {
-    background-color: ${uiColors.gray.light2};
+    background-color: ${palette.gray.dark3};
   }
 `;
 
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
-    background-color: ${uiColors.blue.light3};
+    background-color: ${palette.blue.dark2};
 
     &:hover:before {
-      background-color: ${uiColors.blue.light2};
+      background-color: ${palette.blue.dark2};
     }
   }
 `;
 
 const openIconButtonStyle = css`
-  background-color: ${uiColors.white};
-`;
-
-const mainIconStyle = css`
-  color: ${uiColors.gray.dark1};
-  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
-  flex-shrink: 0;
-
-  ${subMenuContainer.selector}:hover > & {
-    color: ${uiColors.gray.dark1};
-  }
-`;
-
-const mainIconFocusedStyle = css`
-  ${subMenuContainer.selector}:focus > & {
-    color: ${uiColors.blue.base};
-  }
-`;
-
-const activeIconStyle = css`
-  color: ${uiColors.green.base};
-  ${subMenuContainer.selector}:hover > & {
-    color: ${uiColors.green.base};
-  }
-`;
-
-const descriptionTextStyle = css`
-  font-size: 11px;
+  background-color: ${palette.black};
 `;
 
 const ulStyle = css`
@@ -143,12 +112,32 @@ const ulStyle = css`
   transition: height 150ms ease-in-out;
 `;
 
+const menuItemText = css`
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  padding-left: 16px;
+  text-shadow: none;
+`;
+
 const menuItemBorder = css`
   position: absolute;
   width: 100%;
   height: 1px;
-  background: ${uiColors.gray.light2};
+  background: ${palette.gray.dark2};
   top: 0;
+`;
+
+const menuItemBorderBottom = css`
+  ${menuItemBorder};
+  top: unset;
+  bottom: 0;
+`;
+
+const subItemStyle = css`
+  // Reassign the variable for specificity
+  --lg-menu-item-text-color: ${palette.gray.light1};
+  position: relative;
 `;
 
 const subMenuItemHeight = 36;
@@ -229,6 +218,8 @@ const SubMenu: ExtendableBox<
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const nodeRef = React.useRef(null);
+    const hoverStyles = getHoverStyles(subMenuContainer.selector);
+    const focusStyles = getFocusedStyles(subMenuContainer.selector);
 
     const [
       iconButtonElement,
@@ -259,7 +250,7 @@ const SubMenu: ExtendableBox<
           mainIconStyle,
           {
             [activeIconStyle]: active,
-            [mainIconFocusedStyle]: showFocus,
+            [focusStyles.iconStyle]: showFocus,
           },
           glyph.props?.className,
         ),
@@ -289,10 +280,12 @@ const SubMenu: ExtendableBox<
     const boxContent = (
       <>
         {updatedGlyph}
-        <div>
+        <div className={textContainer}>
           <div
-            className={cx(mainTextStyle, {
-              [activeMainTextStyle]: active,
+            className={cx(titleTextStyle, hoverStyles.text, {
+              [activeTitleTextStyle]: active,
+              [disabledTextStyle]: disabled,
+              [focusStyles.textStyle]: showFocus,
             })}
           >
             {title}
@@ -300,7 +293,10 @@ const SubMenu: ExtendableBox<
 
           <div
             className={cx(descriptionTextStyle, {
+              [activeDescriptionTextStyle]: active,
               [disabledTextStyle]: disabled,
+              [focusStyles.descriptionStyle]: showFocus,
+              [linkDescriptionTextStyle]: typeof rest.href === 'string',
             })}
           >
             {description}
@@ -320,9 +316,10 @@ const SubMenu: ExtendableBox<
         </Box>
       );
 
-    const openCloseiconStyle = open ? openIconStyle : closedIconStyle;
-
-    const caretIconStyles = cx(openCloseiconStyle, {
+    const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
+    const chevronIconStyles = cx({
+      [openIconStyle]: open,
+      [closedIconStyle]: !open,
       [focusedIconStyle]: showFocus,
     });
 
@@ -331,6 +328,7 @@ const SubMenu: ExtendableBox<
         {renderBox}
         <IconButton
           {...iconButton.prop}
+          darkMode={true}
           ref={setIconButtonElement}
           aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
           className={cx(iconButtonStyle, {
@@ -346,11 +344,11 @@ const SubMenu: ExtendableBox<
             }
           }}
         >
-          {open ? (
-            <CaretUpIcon role="presentation" className={caretIconStyles} />
-          ) : (
-            <CaretDownIcon role="presentation" className={caretIconStyles} />
-          )}
+          <ChevronIcon
+            role="presentation"
+            className={chevronIconStyles}
+            size={14}
+          />
         </IconButton>
 
         <Transition
@@ -375,33 +373,40 @@ const SubMenu: ExtendableBox<
               role="menu"
               aria-label={title}
             >
-              {React.Children.map(children as React.ReactElement, child => {
-                return React.cloneElement(child, {
-                  children: (
-                    <>
-                      <div className={menuItemBorder} />
-                      {child.props.children}
-                    </>
-                  ),
-                  className: cx(
-                    // SubMenuItem indentation based on how indented the title of a SubMenuItem is
-                    // glyphs push title further in, therefore their children should have a thicker padding-left
-                    css`
-                      padding-left: ${glyph ? paddingLeft : 28}px;
-                    `,
-                    child.props.className,
-                  ),
-                  onClick: (
-                    e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
-                      React.MouseEvent<HTMLButtonElement, MouseEvent>,
-                  ) => {
-                    child.props?.onClick?.(e);
-                    if (onClick) {
-                      onClick(e);
-                    }
-                  },
-                });
-              })}
+              {React.Children.map(
+                children as React.ReactElement,
+                (child, index) => {
+                  return React.cloneElement(child, {
+                    children: (
+                      <>
+                        <div className={menuItemBorder} />
+                        <span className={menuItemText}>
+                          {child.props.children}
+                        </span>
+                        {index === numberOfMenuItems - 1 && (
+                          <div className={menuItemBorderBottom} />
+                        )}
+                      </>
+                    ),
+                    className: cx(
+                      subItemStyle,
+                      css`
+                        padding-left: ${glyph ? paddingLeft : 28}px;
+                      `,
+                      child.props.className,
+                    ),
+                    onClick: (
+                      e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
+                        React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                    ) => {
+                      child.props?.onClick?.(e);
+                      if (onClick) {
+                        onClick(e);
+                      }
+                    },
+                  });
+                },
+              )}
             </ul>
           )}
         </Transition>
