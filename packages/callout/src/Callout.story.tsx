@@ -12,7 +12,7 @@ storiesOf('Callout', module)
       Variant.Note,
     );
     const hasTitle = boolean('With title', true);
-    const baseFontSize = select('baseFontSize', [14, 16], 14);
+    const baseFontSize = select('baseFontSize', [13, 16], 13);
 
     return (
       <div style={{ width: 700 }}>
@@ -36,7 +36,7 @@ storiesOf('Callout', module)
       Variant.Note,
     );
     const hasTitle = boolean('With title', true);
-    const baseFontSize = select('baseFontSize', [14, 16], 14);
+    const baseFontSize = select('baseFontSize', [13, 16], 13);
 
     return (
       <div style={{ width: 700 }}>
