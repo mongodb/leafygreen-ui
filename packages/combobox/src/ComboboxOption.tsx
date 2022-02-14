@@ -26,6 +26,7 @@ const comboboxOptionStyle = () => css`
   color: inherit;
   cursor: pointer;
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--lg-combobox-item-font-size);
   line-height: var(--lg-combobox-item-line-height);
   padding: var(--lg-combobox-item-padding-y) var(--lg-combobox-item-padding-x);
@@ -65,6 +66,7 @@ const flexSpan = css`
   gap: 8px;
   justify-content: start;
   align-items: inherit;
+  max-width: 100%;
 `;
 
 const disallowPointer = css`
@@ -73,6 +75,9 @@ const disallowPointer = css`
 
 const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 /**
  * Component

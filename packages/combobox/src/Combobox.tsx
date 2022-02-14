@@ -1180,7 +1180,7 @@ export default function Combobox<M extends boolean>({
           / *******/}
         <Popover
           active={isOpen && !disabled}
-          spacing={8}
+          spacing={4}
           align="bottom"
           justify="middle"
           refEl={comboboxRef}
