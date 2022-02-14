@@ -104,6 +104,10 @@ export const comboboxStyle = css`
   }
 `;
 
+export const descriptionStyle = css`
+  margin-bottom: 4px;
+`;
+
 export const interactionRingStyle = css`
   width: var(--lg-combobox-width);
 `;
@@ -246,7 +250,7 @@ export const errorMessageStyle = css`
   font-size: var(--lg-combobox-font-size);
   line-height: var(--lg-combobox-line-height);
   color: var(--lg-combobox-color-error);
-  padding-top: var(--lg-combobox-padding-y);
+  padding: 4px 0 0 2px;
 `;
 
 export const endIcon = css`

@@ -42,6 +42,7 @@ import {
   inputWrapperStyle,
   interactionRingColor,
   interactionRingStyle,
+  descriptionStyle,
   loadingIconStyle,
   menuList,
   menuMessage,
@@ -1110,7 +1111,11 @@ export default function Combobox<M extends boolean>({
               {label}
             </Label>
           )}
-          {description && <Description>{description}</Description>}
+          {description && (
+            <Description className={descriptionStyle}>
+              {description}
+            </Description>
+          )}
         </div>
 
         <InteractionRing
@@ -1175,7 +1180,7 @@ export default function Combobox<M extends boolean>({
           / *******/}
         <Popover
           active={isOpen && !disabled}
-          spacing={4}
+          spacing={8}
           align="bottom"
           justify="middle"
           refEl={comboboxRef}

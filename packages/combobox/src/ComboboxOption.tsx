@@ -17,6 +17,7 @@ import { wrapJSX } from './util';
  */
 
 const comboboxOptionStyle = () => css`
+  --lg-combobox-wedge-width: 4px;
   position: relative;
   display: flex;
   align-items: center;
@@ -33,10 +34,11 @@ const comboboxOptionStyle = () => css`
     content: '';
     position: absolute;
     left: 0;
-    width: 3px;
+    width: var(--lg-combobox-wedge-width);
     height: var(--lg-combobox-item-wedge-height);
     background-color: transparent;
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 calc(2 * var(--lg-combobox-wedge-width))
+      calc(2 * var(--lg-combobox-wedge-width)) 0;
     transform: scaleY(0.3);
     transition: 150ms ease-in-out;
     transition-property: transform, background-color;
