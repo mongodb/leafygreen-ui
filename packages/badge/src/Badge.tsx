@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 export const Variant = {
@@ -16,54 +16,56 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 export const baseStyle = css`
+  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
   display: inline-flex;
   align-items: center;
-  font-weight: bold;
-  font-size: 11px;
-  line-height: 20px;
-  border-radius: 50px;
-  height: 20px;
-  padding-left: 9px;
-  padding-right: 9px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  border-radius: 5px;
+  height: 18px;
+  padding-left: 6px;
+  padding-right: 6px;
   text-transform: uppercase;
   border: 1px solid;
+  letter-spacing: 1px;
 `;
 
 export const badgeVariants: { [K in Variant]: string } = {
   [Variant.LightGray]: css`
-    background-color: ${uiColors.gray.light3};
-    border-color: ${uiColors.gray.light2};
-    color: ${uiColors.gray.dark1};
+    background-color: ${palette.gray.light3};
+    border-color: ${palette.gray.light2};
+    color: ${palette.gray.dark1};
   `,
 
   [Variant.DarkGray]: css`
-    background-color: ${uiColors.gray.dark2};
-    border-color: ${uiColors.gray.dark3};
-    color: ${uiColors.white};
+    background-color: ${palette.gray.dark2};
+    border-color: ${palette.gray.dark3};
+    color: ${palette.white};
   `,
 
   [Variant.Red]: css`
-    background-color: ${uiColors.red.light3};
-    border-color: ${uiColors.red.light2};
-    color: ${uiColors.red.dark2};
+    background-color: ${palette.red.light3};
+    border-color: ${palette.red.light2};
+    color: ${palette.red.dark2};
   `,
 
   [Variant.Yellow]: css`
-    background-color: ${uiColors.yellow.light3};
-    border-color: ${uiColors.yellow.light2};
-    color: ${uiColors.yellow.dark2};
+    background-color: ${palette.yellow.light3};
+    border-color: ${palette.yellow.light2};
+    color: ${palette.yellow.dark2};
   `,
 
   [Variant.Blue]: css`
-    background-color: ${uiColors.blue.light3};
-    border-color: ${uiColors.blue.light2};
-    color: ${uiColors.blue.dark2};
+    background-color: ${palette.blue.light3};
+    border-color: ${palette.blue.light2};
+    color: ${palette.blue.dark1};
   `,
 
   [Variant.Green]: css`
-    background-color: ${uiColors.green.light3};
-    border-color: ${uiColors.green.light2};
-    color: ${uiColors.green.dark2};
+    background-color: ${palette.green.light3};
+    border-color: ${palette.green.light2};
+    color: ${palette.green.dark2};
   `,
 } as const;
 
