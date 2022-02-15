@@ -23,7 +23,7 @@
     "@leafygreen-ui/lib": "^9.0.1",
     "@leafygreen-ui/emotion": "^4.0.0",
     "@leafygreen-ui/icon": "^11.6.0",
-    "@leafygreen-ui/palette": "^3.2.2",
+    "@leafygreen-ui/palette": "^3.3.1",
     "@leafygreen-ui/typography": "^9.0.0",
     "polished": "^4.1.3"
   },
