@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-box-group",
-  "version": "6.1.5",
+  "version": "7.0.0",
   "description": "leafyGreen UI Kit RadioBoxGroup",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,8 +22,8 @@
   "dependencies": {
     "@leafygreen-ui/hooks": "^7.1.0",
     "@leafygreen-ui/lib": "^9.1.0",
-    "@leafygreen-ui/palette": "^3.2.2",
-    "@leafygreen-ui/tokens": "^0.5.3"
+    "@leafygreen-ui/palette": "^3.3.1",
+    "@leafygreen-ui/tokens": "^1.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.1.3"
