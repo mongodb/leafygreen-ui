@@ -31,18 +31,11 @@ storiesOf('Button', module)
       undefined,
     );
 
-    const stretch = boolean('Stretch', false);
-
     const wrapperStyle = cx(
       css`
         background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
         padding: 40px;
       `,
-      {
-        [css`
-          width: 256px;
-        `]: stretch,
-      },
     );
 
     return (
