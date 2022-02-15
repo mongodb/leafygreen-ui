@@ -6,6 +6,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/icon';
 import { Tab, Tabs } from './index';
+import TextInput from '@leafygreen-ui/text-input';
 
 function ControlledTabs() {
   const [selected, setSelected] = useState(0);
@@ -87,9 +88,9 @@ storiesOf('Tabs', module)
           </Tab>
           <Tab
             name={
-              <span>
+              <>
                 <Icon glyph="Support" /> Robert Arnold Audroue
-              </span>
+              </>
             }
           >
             Hello 2
