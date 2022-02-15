@@ -17,6 +17,9 @@
       "path": "../palette"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../box"
     }
   ]

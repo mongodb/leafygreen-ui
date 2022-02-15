@@ -3,12 +3,9 @@ import { boolean } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import Card from './Card';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
-  padding: 16px;
-  height: 70px;
-  width: 140px;
   display: flex;
   align-items: center;
   text-align: center;
@@ -22,7 +19,7 @@ storiesOf('Card', module).add('Default', () => {
     <div
       className={css`
         padding: 24px;
-        background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
+        background-color: ${darkMode ? uiColors.gray.dark3 : palette.white};
       `}
     >
       <Card
