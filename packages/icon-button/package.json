@@ -27,6 +27,7 @@
     "@leafygreen-ui/lib": "^9.0.1",
     "@leafygreen-ui/emotion": "^4.0.0",
     "@leafygreen-ui/palette": "^3.2.2",
-    "@leafygreen-ui/box": "^3.0.6"
+    "@leafygreen-ui/box": "^3.0.6",
+    "@leafygreen-ui/leafygreen-provider": "^2.1.3"
   }
 }

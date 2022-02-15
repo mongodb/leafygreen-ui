@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { keyMap, isComponentType, Either } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
@@ -17,32 +17,12 @@ export { Mode };
 
 const modeColors = {
   [Mode.Light]: {
-    activeStyle: css`
-      color: ${uiColors.green.dark2};
-
-      &:hover:not(:focus) {
-        color: ${uiColors.green.dark2};
-      }
-    `,
-    disabledColor: css`
-      color: ${uiColors.gray.light1};
-    `,
     underlineColor: css`
-      border-bottom: 1px solid ${uiColors.gray.light2};
+      border-bottom: 1px solid ${palette.gray.light2};
     `,
   },
 
   [Mode.Dark]: {
-    activeStyle: css`
-      color: ${uiColors.green.light2};
-
-      &:hover:not(:focus) {
-        color: ${uiColors.green.light2};
-      }
-    `,
-    disabledColor: css`
-      color: ${uiColors.gray.dark1};
-    `,
     underlineColor: css`
       border-bottom: 1px solid ${uiColors.gray.dark2};
     `,
@@ -67,9 +47,9 @@ const listStyle = css`
   scrollbar-width: none; /* Firefox */
 `;
 
-const disabledStyle = css`
-  cursor: not-allowed;
-`;
+// const disabledStyle = css`
+//   cursor: not-allowed;
+// `;
 
 type ReactEmpty = null | undefined | false | '';
 
@@ -222,13 +202,7 @@ function Tabs(props: AccessibleTabsProps) {
       disabled,
       darkMode,
       parentRef: tabNode,
-      className: cx(
-        {
-          [modeColors[mode].activeStyle]: isTabSelected,
-          [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
-        },
-        className,
-      ),
+      className,
       onKeyDown: (event: KeyboardEvent) => {
         onKeyDown?.(event);
         handleArrowKeyPress(event);
