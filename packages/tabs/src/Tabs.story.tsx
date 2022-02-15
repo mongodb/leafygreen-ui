@@ -6,7 +6,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Icon from '@leafygreen-ui/icon';
 import { Tab, Tabs } from './index';
-import TextInput from '@leafygreen-ui/text-input';
 
 function ControlledTabs() {
   const [selected, setSelected] = useState(0);
