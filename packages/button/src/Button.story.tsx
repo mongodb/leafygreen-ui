@@ -50,9 +50,6 @@ storiesOf('Button', module)
             href={href}
             leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
             rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
-            className={css`
-              width: 100%;
-            `}
           >
             {buttonText}
           </Button>
