@@ -9,9 +9,10 @@
 ### Patch Changes
 
 - Updated dependencies [8457f92]
-- Updated dependencies [8457f92]
   - @leafygreen-ui/typography@9.0.0
   - @leafygreen-ui/interaction-ring@2.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
 
 ## 6.2.1
 

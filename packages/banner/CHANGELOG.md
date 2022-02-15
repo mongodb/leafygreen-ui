@@ -6,6 +6,11 @@
 
 - 8457f92: Updates banner styles in line with visual brand refresh
 
+### Patch Changes
+
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
 ## 3.0.9
 
 ### Patch Changes

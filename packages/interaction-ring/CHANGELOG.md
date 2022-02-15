@@ -6,6 +6,11 @@
 
 - 8457f92: Updates interaction ring styles in line with visual brand refresh
 
+### Patch Changes
+
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
 ## 1.1.1
 
 ### Patch Changes

@@ -11,6 +11,8 @@
 
 - Updated dependencies [8457f92]
   - @leafygreen-ui/tokens@1.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
 
 ## 8.1.0
 

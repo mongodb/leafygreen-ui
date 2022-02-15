@@ -9,12 +9,12 @@
 ### Patch Changes
 
 - Updated dependencies [8457f92]
-- Updated dependencies [8457f92]
-- Updated dependencies [8457f92]
   - @leafygreen-ui/tokens@1.0.0
   - @leafygreen-ui/typography@9.0.0
   - @leafygreen-ui/interaction-ring@2.0.0
   - @leafygreen-ui/button@13.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
 
 ## 3.1.0
 
