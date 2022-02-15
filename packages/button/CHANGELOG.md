@@ -1,5 +1,16 @@
 # @leafygreen-ui/button
 
+## 13.0.0
+
+### Major Changes
+
+- 8457f92: Updateslight mode Button in line with visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+
 ## 12.0.5
 
 ### Patch Changes

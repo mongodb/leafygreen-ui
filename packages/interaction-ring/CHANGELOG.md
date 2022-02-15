@@ -1,5 +1,11 @@
 # @leafygreen-ui/interaction-ring
 
+## 2.0.0
+
+### Major Changes
+
+- 8457f92: Updates interaction ring styles in line with visual brand refresh
+
 ## 1.1.1
 
 ### Patch Changes
