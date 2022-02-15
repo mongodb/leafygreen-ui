@@ -9,11 +9,16 @@ function Default() {
   const buttonText = text('Button text', 'Okay');
   const linkText = text('Link text', 'Cancel');
   const darkMode = boolean('darkMode', false);
-  const showBlob = boolean('Show Blob', false);
+  const showBlob = boolean('Show blob', true);
   const blobPosition = select(
-    'Blob Position',
+    'Blob position',
     Object.values(BlobPosition),
-    'bottom right',
+    'top left',
+  );
+  const closeIconColor = select(
+    'Close icon color',
+    Object.values(CloseIconColor),
+    'default',
   );
 
   const graphicStyle = radios(
@@ -42,11 +47,7 @@ function Default() {
         buttonText={buttonText}
         linkText={linkText}
         darkMode={darkMode}
-        closeIconColor={select(
-          'Close icon color',
-          Object.values(CloseIconColor),
-          'default',
-        )}
+        closeIconColor={closeIconColor}
         showBlob={showBlob}
         blobPosition={blobPosition}
       >
