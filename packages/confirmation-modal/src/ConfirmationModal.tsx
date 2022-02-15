@@ -72,10 +72,10 @@ const contentStyle: Record<Mode, string> = {
 const modeAndVariantContentStyles: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Default]: css`
-      padding: 36px 40px 0px;
+      padding: 40px 36px 0px;
     `,
     [Variant.Danger]: css`
-      padding: 36px 40px 0px 78px;
+      padding: 40px 36px 0px 78px;
     `,
   },
   [Mode.Dark]: {
@@ -134,7 +134,7 @@ const warningIconStyles = css`
   justify-content: center;
   position: absolute;
   left: 36px;
-  top: 35px;
+  top: 40px;
 
   svg {
     margin-top: -3px;

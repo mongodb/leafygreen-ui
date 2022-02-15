@@ -135,7 +135,6 @@ const baseCloseButtonStyles = css`
   cursor: pointer;
 `;
 
-// TODO: remove mode logic
 const closeButton: Record<
   Mode,
   Record<CloseIconColor, string> & Record<'position', string>
@@ -143,50 +142,18 @@ const closeButton: Record<
   [Mode.Light]: {
     [CloseIconColor.Default]: css`
       color: ${palette.gray.base};
-
-      &:hover {
-        &:before {
-          background-color: ${palette.gray.light2};
-        }
-        color: ${palette.gray.dark3};
-      }
     `,
     [CloseIconColor.Dark]: css`
       color: ${palette.gray.dark1};
-
-      &:hover {
-        &:before {
-          background-color: ${palette.gray.light2};
-        }
-        color: ${palette.gray.dark3};
-      }
     `,
     [CloseIconColor.Light]: css`
       color: ${palette.white};
-
-      &:hover {
-        &:before {
-          background-color: ${palette.gray.light2};
-        }
-        color: ${palette.gray.dark3};
-      }
     `,
     position: css`
       // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
       // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
       right: 18px;
       top: 18px;
-
-      // TODO: Refresh – remove when IconButton is updated
-      &:focus {
-        color: ${palette.gray.dark3};
-        outline: 2px solid ${palette.blue.light1};
-        border: 2px solid ${palette.white};
-
-        &:before {
-          background-color: ${palette.gray.light2};
-        }
-      }
     `,
   },
   [Mode.Dark]: {
