@@ -128,16 +128,16 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
 };
 
 const listTitle = css`
+  position: relative;
+  max-width: 300px;
+  padding: 12px 16px;
   background-color: transparent;
   border: 0px;
-  padding: 12px 16px;
   text-decoration: none;
-  max-width: 300px;
   white-space: nowrap;
-  transition: 150ms color ease-in-out;
-  position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: 150ms color ease-in-out;
 
   &:focus {
     outline: none;
