@@ -27,6 +27,7 @@ storiesOf('Card', module).add('Default', () => {
         onClick={hasClickBehavior ? () => alert('hello') : undefined}
         darkMode={darkMode}
         className={containerStyle}
+        tabIndex={0}
       >
         This is a card component
       </Card>

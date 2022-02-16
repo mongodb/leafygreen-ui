@@ -87,9 +87,9 @@ storiesOf('Tabs', module)
           </Tab>
           <Tab
             name={
-              <span>
+              <>
                 <Icon glyph="Support" /> Robert Arnold Audroue
-              </span>
+              </>
             }
           >
             Hello 2

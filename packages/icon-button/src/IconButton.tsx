@@ -117,7 +117,7 @@ const focusStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     &:focus {
       color: ${palette.gray.dark3};
-      box-shadow: 0 0 0 3px ${palette.white}, 0 0 0 5px ${palette.blue.light1};
+      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
 
       &:before {
         background-color: ${palette.gray.light2};
@@ -137,9 +137,18 @@ const focusStyle: Record<Mode, string> = {
 
 const disabledStyle: Record<Mode, string> = {
   [Mode.Light]: css`
+    cursor: not-allowed;
     color: ${palette.gray.light1};
-    pointer-events: none;
     background-color: rgba(255, 255, 255, 0);
+
+    &:active,
+    &:hover {
+      color: ${palette.gray.light1};
+
+      &:before {
+        background-color: rgba(255, 255, 255, 0);
+      }
+    }
 
     &:focus {
       color: ${palette.gray.light1};
@@ -150,9 +159,18 @@ const disabledStyle: Record<Mode, string> = {
   `,
 
   [Mode.Dark]: css`
+    cursor: not-allowed;
     color: ${uiColors.gray.dark2};
-    pointer-events: none;
     background-color: rgba(255, 255, 255, 0);
+
+    &:active,
+    &:hover {
+      color: ${uiColors.gray.dark2};
+
+      &:before {
+        background-color: rgba(255, 255, 255, 0);
+      }
+    }
 
     &:focus {
       color: ${uiColors.gray.dark2};
