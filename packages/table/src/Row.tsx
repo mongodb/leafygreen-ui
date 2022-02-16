@@ -80,11 +80,13 @@ const modeStyles = {
 };
 
 const rowStyle = css`
-  --lg-min-cell-height: 20px;
+  --lg-cell-min-height: 20px;
   border-top: 1px solid var(--lg-table-row-border-color);
+  position: relative;
+  z-index: 1;
 
   & > td > ${tdInnerDiv.selector} {
-    min-height: var(--lg-min-cell-height);
+    min-height: var(--lg-cell-min-height);
     max-height: unset;
   }
 `;
@@ -94,18 +96,23 @@ const hideRow = css`
 `;
 
 const nestedRowInitialStyle = css`
+  position: relative;
   opacity: 0;
   border-color: var(--lg-table-row-border-color);
   transform-origin: 50% 0%;
   transition: ${transitionTime}ms ease-in-out;
   transition-property: border-color, opacity;
 
+  // This makes it so that any tall nested rows appear "below" the parents
+  // This may cause issues if there are multiple levels of nesting
+  // that all have more than one line of text. However this scenario is unlikely
+  z-index: 0;
+
   & > td {
     transition: ${transitionTime}ms ease-in-out;
     transition-property: padding-block;
 
     & > ${tdInnerDiv.selector} {
-      overflow: hidden;
       transition: ${transitionTime}ms ease-in-out;
       transition-property: min-height, max-height;
     }
@@ -126,15 +133,19 @@ const hiddenRowStyles = css`
   }
 `;
 
-const transitionStyles = (state: TransitionStatus, height?: number): string => {
+const nestedRowTransitionStyles = (
+  state: TransitionStatus,
+  height?: number,
+): string => {
   switch (state) {
     case 'entered':
       return css`
         opacity: 1;
         & > td {
           & > ${tdInnerDiv.selector} {
-            min-height: var(--lg-min-cell-height);
-            max-height: max(var(--lg-min-cell-height), ${height}px);
+            --lg-cell-max-height: max(var(--lg-cell-min-height), ${height}px);
+            min-height: var(--lg-cell-min-height);
+            max-height: var(--lg-cell-max-height);
           }
         }
       `;
@@ -266,7 +277,10 @@ const Row = React.forwardRef(
     }, [children, hasNestedRows, hasRowSpan, tableDispatch, data]);
 
     // Render any nested rows and their transition group
-    const { rowHasNestedRows, renderedTransitionGroup } = useMemo(() => {
+    const {
+      rowHasNestedRows,
+      renderedNestedRowTransitionGroup,
+    } = useMemo(() => {
       const renderedNestedRows: Array<React.ReactElement> = [];
       const rowHasNestedRows = React.Children.toArray(children).some(child =>
         isComponentType<RowElement>(child, 'Row'),
@@ -276,7 +290,7 @@ const Row = React.forwardRef(
         isExpanded && !isAnyAncestorCollapsedProp;
 
       // We don't need the transition group except on the client here, and rendering this bit on the server breaks rendering these rows.
-      const renderedTransitionGroup = isBrowser ? (
+      const renderedNestedRowTransitionGroup = isBrowser ? (
         <Transition
           in={shouldTransitionGroupBeVisible}
           timeout={{
@@ -296,11 +310,11 @@ const Row = React.forwardRef(
                   key: `${indexRef.current}-${indentLevel}-${index}`,
                   className: cx(
                     nestedRowInitialStyle,
-                    transitionStyles(state, nestedRowHeight),
+                    nestedRowTransitionStyles(state, nestedRowHeight),
                     {
                       // TODO: Refresh - remove dark mode overrides
                       [css`
-                        --lg-min-cell-height: 24px;
+                        --lg-cell-min-height: 24px;
                       `]: darkMode,
                     },
                   ),
@@ -313,7 +327,11 @@ const Row = React.forwardRef(
         renderedNestedRows
       );
 
-      return { rowHasNestedRows, renderedNestedRows, renderedTransitionGroup };
+      return {
+        rowHasNestedRows,
+        renderedNestedRows,
+        renderedNestedRowTransitionGroup,
+      };
     }, [
       children,
       isExpanded,
@@ -409,7 +427,7 @@ const Row = React.forwardRef(
           {renderedChildren}
         </tr>
 
-        {renderedTransitionGroup}
+        {renderedNestedRowTransitionGroup}
       </>
     );
   },
