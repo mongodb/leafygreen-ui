@@ -12,43 +12,47 @@ function ControlledTooltip() {
   const [open, setOpen] = useState(true);
 
   return (
-    <Tooltip
-      open={open}
-      setOpen={setOpen}
-      align={select('Align', Object.values(Align), 'top')}
-      justify={select('Justify', Object.values(Justify), 'start')}
-      trigger={<Button>trigger</Button>}
-      usePortal={boolean('Use Portal', true)}
-      enabled={boolean('Enabled', true)}
-      triggerEvent={select(
-        'triggerEvent',
-        Object.values(TriggerEvent),
-        TriggerEvent.Click,
-      )}
-      darkMode={boolean('darkMode', false)}
-    >
-      I am a controlled Tooltip!
-    </Tooltip>
+    <LeafyGreenProvider>
+      <Tooltip
+        open={open}
+        setOpen={setOpen}
+        align={select('Align', Object.values(Align), 'top')}
+        justify={select('Justify', Object.values(Justify), 'start')}
+        trigger={<Button>trigger</Button>}
+        usePortal={boolean('Use Portal', true)}
+        enabled={boolean('Enabled', true)}
+        triggerEvent={select(
+          'triggerEvent',
+          Object.values(TriggerEvent),
+          TriggerEvent.Click,
+        )}
+        darkMode={boolean('darkMode', false)}
+      >
+        I am a controlled Tooltip!
+      </Tooltip>
+    </LeafyGreenProvider>
   );
 }
 
 storiesOf('Tooltip', module)
   .add('Uncontrolled', () => (
-    <Tooltip
-      align={select('Align', Object.values(Align), 'top')}
-      justify={select('justify', Object.values(Justify), 'start')}
-      trigger={<Button>trigger</Button>}
-      triggerEvent={select(
-        'triggerEvent',
-        Object.values(TriggerEvent),
-        TriggerEvent.Hover,
-      )}
-      enabled={boolean('Enabled', true)}
-      darkMode={boolean('darkMode', false)}
-      usePortal={boolean('Use Portal', false)}
-    >
-      I am an uncontrolled Tooltip!
-    </Tooltip>
+    <LeafyGreenProvider>
+      <Tooltip
+        align={select('Align', Object.values(Align), 'top')}
+        justify={select('justify', Object.values(Justify), 'start')}
+        trigger={<Button>trigger</Button>}
+        triggerEvent={select(
+          'triggerEvent',
+          Object.values(TriggerEvent),
+          TriggerEvent.Hover,
+        )}
+        enabled={boolean('Enabled', true)}
+        darkMode={boolean('darkMode', false)}
+        usePortal={boolean('Use Portal', false)}
+      >
+        I am an uncontrolled Tooltip!
+      </Tooltip>
+    </LeafyGreenProvider>
   ))
   .add('Controlled', () => <ControlledTooltip />)
   .add('Test', () => {
