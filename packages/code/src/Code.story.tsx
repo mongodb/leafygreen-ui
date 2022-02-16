@@ -38,6 +38,29 @@ storiesOf('Code', module)
   .add(
     'Multiline',
     () => {
+      // Knobs
+      const darkMode = boolean('darkMode', false);
+      const showLineNumbers = boolean('Show line numbers', false);
+      const showWindowChrome = boolean('Show window chrome', false);
+      const showCustomActionButtons = boolean(
+        'Show custom action buttons',
+        false,
+      );
+      const copyable = boolean('Copyable', true);
+      const chromeTitle = text('Chrome label', 'directory/fileName.js');
+      const language = select(
+        'Language',
+        Object.values(Language),
+        Language.JavaScript,
+      );
+      const highlightLines = select(
+        'highlight lines',
+        ['none', 'single', 'multiple'],
+        'none',
+      );
+      const baseFontSize = select('Base Font Size', [14, 16], 14);
+      const codeSnippet = text('Code snippet', jsSnippet);
+
       const wrapperStyle = css`
         width: 512px;
       `;
@@ -47,8 +70,6 @@ storiesOf('Code', module)
         single: [1],
         multiple: [[2, 4], 6],
       } as const;
-
-      const darkMode = boolean('darkMode', false);
 
       const actionData = [
         <IconButton
@@ -72,35 +93,20 @@ storiesOf('Code', module)
       ];
 
       return (
-        <LeafyGreenProvider>
+        <LeafyGreenProvider baseFontSize={baseFontSize}>
           <div className={wrapperStyle}>
             <Code
-              showLineNumbers={boolean('Show line numbers', false)}
-              showWindowChrome={boolean('Show window chrome', false)}
-              showCustomActionButtons={boolean(
-                'Show custom action buttons',
-                false,
-              )}
+              showLineNumbers={showLineNumbers}
+              showWindowChrome={showWindowChrome}
+              showCustomActionButtons={showCustomActionButtons}
               customActionButtons={actionData}
-              copyable={boolean('Copyable', true)}
-              chromeTitle={text('Chrome label', 'directory/fileName.js')}
+              copyable={copyable}
+              chromeTitle={chromeTitle}
               darkMode={darkMode}
-              language={select(
-                'Language',
-                Object.values(Language),
-                Language.JavaScript,
-              )}
-              highlightLines={
-                lineHighlightOptions[
-                  select(
-                    'highlight lines',
-                    ['none', 'single', 'multiple'],
-                    'none',
-                  )
-                ]
-              }
+              language={language}
+              highlightLines={lineHighlightOptions[highlightLines]}
             >
-              {text('Code snippet', jsSnippet)}
+              {codeSnippet}
             </Code>
           </div>
         </LeafyGreenProvider>

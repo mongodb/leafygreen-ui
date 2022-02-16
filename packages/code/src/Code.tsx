@@ -46,11 +46,13 @@ const contentWrapperStyles = css`
   position: relative;
   display: grid;
   grid-template-areas: 'code panel';
+  grid-template-columns: auto 38px;
   z-index: 0; // new stacking context
 `;
 
 const contentWrapperStyleWithPicker = css`
   grid-template-areas: 'panel' 'code';
+  grid-template-columns: unset;
   width: 700px;
 `;
 

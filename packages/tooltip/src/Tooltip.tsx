@@ -263,19 +263,19 @@ function Tooltip({
         case TriggerEvent.Hover:
           return {
             onMouseEnter: debounce((e: MouseEvent) => {
-              triggerHandler('onMouseEnter', e);
+              userTriggerHandler('onMouseEnter', e);
               setOpen(true);
             }, 35),
             onMouseLeave: debounce((e: MouseEvent) => {
-              triggerHandler('onMouseLeave', e);
+              userTriggerHandler('onMouseLeave', e);
               handleClose();
             }, 35),
             onFocus: (e: MouseEvent) => {
-              triggerHandler('onFocus', e);
+              userTriggerHandler('onFocus', e);
               setOpen(true);
             },
             onBlur: (e: MouseEvent) => {
-              triggerHandler('onBlur', e);
+              userTriggerHandler('onBlur', e);
               handleClose();
             },
           };
@@ -285,14 +285,14 @@ function Tooltip({
             onClick: (e: MouseEvent) => {
               // ensure that we don't close the tooltip when content inside tooltip is clicked
               if (e.target !== tooltipNode) {
-                triggerHandler('onClick', e);
+                userTriggerHandler('onClick', e);
                 setOpen((curr: boolean) => !curr);
               }
             },
           };
       }
 
-      function triggerHandler(handler: string, e: MouseEvent): void {
+      function userTriggerHandler(handler: string, e: MouseEvent): void {
         // call any click handlers already on the trigger
         if (
           triggerProps &&
