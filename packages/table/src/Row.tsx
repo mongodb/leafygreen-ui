@@ -94,9 +94,9 @@ const hideRow = css`
 `;
 
 const nestedRowInitialStyle = css`
-  transform-origin: 50% 0%;
-  border-color: var(--lg-table-row-border-color);
   opacity: 0;
+  border-color: var(--lg-table-row-border-color);
+  transform-origin: 50% 0%;
   transition: ${transitionTime}ms ease-in-out;
   transition-property: border-color, opacity;
 
@@ -160,9 +160,10 @@ function styleColumn(index: string, dataType?: DataType) {
 }
 
 function getIndentLevelStyle(indentLevel: number) {
+  const indentLevelMultiplier = 36;
   return css`
     & > td:nth-child(1) {
-      padding-left: ${8 + indentLevel * 16}px;
+      padding-left: ${8 + indentLevel * indentLevelMultiplier}px;
     }
   `;
 }
@@ -354,7 +355,7 @@ const Row = React.forwardRef(
           >
             <Icon
               aria-hidden
-              color={darkMode ? uiColors.gray.base : uiColors.gray.dark2}
+              // color={darkMode ? uiColors.gray.base : uiColors.gray.dark1}
             />
           </IconButton>
         );
