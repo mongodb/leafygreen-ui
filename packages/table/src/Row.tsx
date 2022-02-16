@@ -29,16 +29,16 @@ const transitionTime = 200;
  * Styles
  */
 const iconButtonMargin = css`
+  margin: -4px;
   margin-right: 4px;
-  margin-left: -8px;
-  margin-block: -4px;
 `;
 
 const modeStyles = {
   [Mode.Light]: {
     rowStyle: css`
-      --lg-table-row-border-color: ${palette.gray.light2};
-      color: ${palette.gray.dark2};
+      --lg-table-row-border-color: transparent;
+      background-color: ${palette.white};
+      color: ${palette.gray.dark3};
     `,
 
     altColor: css`
@@ -48,11 +48,11 @@ const modeStyles = {
     `,
 
     disabledStyle: css`
-      background-color: ${palette.gray.light2};
-      color: ${palette.gray.base};
+      background-color: ${palette.gray.light3};
+      color: ${palette.gray.light1};
       cursor: not-allowed;
-      border-top: 1px solid ${palette.gray.light1};
-      border-bottom: 1px solid ${palette.gray.light1};
+      border-top: 1px solid ${palette.gray.light2};
+      border-bottom: 1px solid ${palette.gray.light2};
     `,
   },
 
