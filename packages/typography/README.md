@@ -24,6 +24,10 @@ npm install @leafygreen-ui/typography
 | ------------------------------------ | -------- |
 | `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
 
+## Loading MongoDB Fonts
+
+See [tokens documentation](https://github.com/mongodb/leafygreen-ui/blob/main/packages/tokens/README.md#loading-mongodb-fonts) for docs on ow to load fonts into your app
+
 ## Example
 
 ```js
