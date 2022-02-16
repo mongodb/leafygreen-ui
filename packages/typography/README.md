@@ -26,7 +26,7 @@ npm install @leafygreen-ui/typography
 
 ## Loading MongoDB Fonts
 
-See [tokens documentation](https://github.com/mongodb/leafygreen-ui/blob/main/packages/tokens/README.md#loading-mongodb-fonts) for docs on ow to load fonts into your app
+See [tokens documentation](https://github.com/mongodb/leafygreen-ui/blob/main/packages/tokens/README.md#loading-mongodb-fonts) for docs on how to load fonts into your app
 
 ## Example
 
