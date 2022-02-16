@@ -26,15 +26,28 @@ const containerMargin = css`
 `;
 
 const offsets = {
-  [Size.XSmall]: css`
-    margin-top: -3px;
-  `,
-  [Size.Small]: css`
-    margin-top: -2px;
-  `,
-  [Size.Default]: css`
-    margin-top: 1px;
-  `,
+  [Mode.Light]: {
+    [Size.XSmall]: css`
+      margin-top: -3px;
+    `,
+    [Size.Small]: css`
+      margin-top: -3px;
+    `,
+    [Size.Default]: css`
+      margin-top: 0;
+    `,
+  },
+  [Mode.Dark]: {
+    [Size.XSmall]: css`
+      margin-top: -3px;
+    `,
+    [Size.Small]: css`
+      margin-top: -2px;
+    `,
+    [Size.Default]: css`
+      margin-top: 1px;
+    `,
+  },
 };
 
 const labelColorSet = {
@@ -66,17 +79,17 @@ const baseLabelStyle = css`
   display: flex;
   line-height: 20px;
   cursor: pointer;
+  align-items: flex-start;
 `;
 
 const labelStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     font-size: 13px;
     font-weight: 700;
-    align-items: center;
     `,
   [Mode.Dark]: css`
     font-size: 14px;
-    align-items: flex-start;
+    
   `,
 }
 
@@ -92,6 +105,11 @@ const inputColorSet = {
       }
     }
 
+    &:focus + div div {
+      box-shadow: 0 0 0 2px ${palette.white}, 
+      0 0 0 4px ${palette.blue.light1};
+    }
+
     &:focus + div:before {
       transform: scale(1);
       opacity: 1;
@@ -104,6 +122,7 @@ const inputColorSet = {
 
       &:after {
         transform: scale(1);
+        background-color: ${palette.gray.light3};
       }
     }
   `,
@@ -134,11 +153,11 @@ const inputColorSet = {
 const disabledChecked = {
   [Mode.Light]: css`
     &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
-      background-color: ${uiColors.gray.light1};
-      border-color: ${uiColors.gray.light1};
+      background-color: ${palette.gray.light2};
+      border-color: ${palette.gray.light2};
 
       &:after {
-        background-color: ${uiColors.gray.light2};
+        background-color: ${palette.gray.light3};
         transform: scale(1);
       }
     }
@@ -195,10 +214,12 @@ const baseDivStyle = (darkMode: boolean) => {
       content: '';
       position: absolute;
       border-radius: 100%;
-      top: -5px;
-      bottom: -5px;
-      left: -5px;
-      right: -5px;
+      ${darkMode &&
+        `top: -5px;
+        bottom: -5px;
+        left: -5px;
+        right: -5px;`
+      }
     }
 
     &:after {
@@ -356,7 +377,8 @@ function Radio({
           disabled={disabled}
           focusTargetElement={inputElement}
           className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
-          borderRadius="100%"
+          borderRadius='100%'
+          color={!darkMode ? {focused: 'transparent'} : undefined}
           {...inputDisplayWrapper.prop}
         >
           <div
@@ -370,9 +392,7 @@ function Radio({
             css`
               margin-left: ${size === Size.XSmall && darkMode === true ? 4 : 8}px;
             `,
-            {
-              [offsets[size]]: darkMode,
-            }
+            offsets[mode][size],
           )}
         >
           {children}
