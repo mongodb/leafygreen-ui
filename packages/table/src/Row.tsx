@@ -51,8 +51,8 @@ const modeStyles = {
       background-color: ${palette.gray.light3};
       color: ${palette.gray.light1};
       cursor: not-allowed;
-      border-top: 1px solid ${palette.gray.light2};
-      border-bottom: 1px solid ${palette.gray.light2};
+      outline-top: 1px solid ${palette.gray.light2};
+      outline-bottom: 1px solid ${palette.gray.light2};
     `,
   },
 
@@ -73,15 +73,15 @@ const modeStyles = {
       background-color: ${uiColors.gray.dark1};
       color: ${uiColors.gray.base};
       cursor: not-allowed;
-      border-top: 1px solid ${uiColors.gray.base};
-      border-bottom: 1px solid ${uiColors.gray.base};
+      outline-top: 1px solid ${uiColors.gray.base};
+      outline-bottom: 1px solid ${uiColors.gray.base};
     `,
   },
 };
 
 const rowStyle = css`
   --lg-cell-min-height: 20px;
-  border-top: 1px solid var(--lg-table-row-border-color);
+  outline-top: 1px solid var(--lg-table-row-border-color);
   position: relative;
   z-index: 1;
 
@@ -98,10 +98,10 @@ const hideRow = css`
 const nestedRowInitialStyle = css`
   position: relative;
   opacity: 0;
-  border-color: var(--lg-table-row-border-color);
+  outline-color: var(--lg-table-row-border-color);
   transform-origin: 50% 0%;
   transition: ${transitionTime}ms ease-in-out;
-  transition-property: border-color, opacity;
+  transition-property: outline-color, opacity;
 
   // This makes it so that any tall nested rows appear "below" the parents
   // This may cause issues if there are multiple levels of nesting
@@ -121,7 +121,7 @@ const nestedRowInitialStyle = css`
 
 const hiddenRowStyles = css`
   opacity: 0;
-  border-color: transparent;
+  outline-color: transparent;
 
   & > td {
     padding-block: 0;

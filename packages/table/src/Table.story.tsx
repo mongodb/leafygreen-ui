@@ -242,4 +242,45 @@ storiesOf('Table', module)
         </Table>
       </div>
     );
+  })
+  .add('Multiple nested rows', () => {
+    return (
+      <div
+        className={css`
+          position: absolute;
+          top: 0;
+        `}
+      >
+        <Table
+          data={[
+            {
+              title: 'People',
+              people: defaultData,
+            },
+          ]}
+          columns={
+            <HeaderRow>
+              <TableHeader key="name" label="Name" dataType="string" />
+              <TableHeader key="age" label="Age" dataType="number" />
+              <TableHeader label="Color" dataType="string" key="color" />
+              <TableHeader key="location" label="Location" />
+            </HeaderRow>
+          }
+        >
+          {({ datum }) => (
+            <Row key={datum.title}>
+              <Cell>{datum.title}</Cell>
+              {datum.people.map(person => (
+                <Row key={person.name}>
+                  <Cell>{person.name}</Cell>
+                  <Cell>{person.age}</Cell>
+                  <Cell>{person.color}</Cell>
+                  <Cell>{person.location}</Cell>
+                </Row>
+              ))}
+            </Row>
+          )}
+        </Table>
+      </div>
+    );
   });
