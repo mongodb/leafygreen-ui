@@ -3,6 +3,7 @@ import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { getCommonCellStyles } from './styles';
 import { useFontSizeContext } from './FontSizeContext';
+import { useDarkModeContext } from './DarkModeContext';
 
 export const tdInnerDiv = createDataProp('td-inner-div');
 
@@ -40,11 +41,12 @@ const Cell = React.forwardRef(
     const Root = isHeader ? 'th' : 'td';
 
     const baseFontSize = useFontSizeContext();
+    const darkMode = useDarkModeContext();
 
     const props: Partial<CellProps> = {
       ref,
       className: cx(
-        getCommonCellStyles(baseFontSize),
+        getCommonCellStyles(baseFontSize, darkMode),
         baseStyles,
         { [thStyles]: isHeader },
         className,

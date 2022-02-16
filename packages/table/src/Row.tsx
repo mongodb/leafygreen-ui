@@ -6,7 +6,7 @@ import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { isComponentType, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { CellElement, tdInnerDiv } from './Cell';
@@ -31,27 +31,28 @@ const transitionTime = 200;
 const iconButtonMargin = css`
   margin-right: 4px;
   margin-left: -8px;
+  margin-block: -4px;
 `;
 
 const modeStyles = {
   [Mode.Light]: {
     rowStyle: css`
-      --lg-table-row-border-color: ${uiColors.gray.light2};
-      color: ${uiColors.gray.dark2};
+      --lg-table-row-border-color: ${palette.gray.light2};
+      color: ${palette.gray.dark2};
     `,
 
     altColor: css`
       &:nth-of-type(even) {
-        background-color: ${uiColors.gray.light3};
+        background-color: ${palette.gray.light3};
       }
     `,
 
     disabledStyle: css`
-      background-color: ${uiColors.gray.light2};
-      color: ${uiColors.gray.base};
+      background-color: ${palette.gray.light2};
+      color: ${palette.gray.base};
       cursor: not-allowed;
-      border-top: 1px solid ${uiColors.gray.light1};
-      border-bottom: 1px solid ${uiColors.gray.light1};
+      border-top: 1px solid ${palette.gray.light1};
+      border-bottom: 1px solid ${palette.gray.light1};
     `,
   },
 
@@ -79,7 +80,7 @@ const modeStyles = {
 };
 
 const rowStyle = css`
-  --lg-min-cell-height: 40px;
+  --lg-min-cell-height: 20px;
   border-top: 1px solid var(--lg-table-row-border-color);
 
   & > td > ${tdInnerDiv.selector} {
@@ -131,8 +132,6 @@ const transitionStyles = (state: TransitionStatus, height?: number): string => {
       return css`
         opacity: 1;
         & > td {
-          padding-block: 8px;
-
           & > ${tdInnerDiv.selector} {
             min-height: var(--lg-min-cell-height);
             max-height: max(var(--lg-min-cell-height), ${height}px);
@@ -297,7 +296,12 @@ const Row = React.forwardRef(
                   className: cx(
                     nestedRowInitialStyle,
                     transitionStyles(state, nestedRowHeight),
-                    `transition-${state}`,
+                    {
+                      // TODO: Refresh - remove dark mode overrides
+                      [css`
+                        --lg-min-cell-height: 24px;
+                      `]: darkMode,
+                    },
                   ),
                 });
               }
@@ -316,6 +320,7 @@ const Row = React.forwardRef(
       isBrowser,
       indentLevel,
       nestedRowHeight,
+      darkMode,
     ]);
 
     const renderedChildren = useMemo(() => {
