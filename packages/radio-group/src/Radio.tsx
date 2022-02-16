@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { RadioGroupProps } from './RadioGroup';
 import { Size } from './types';
 
@@ -39,12 +40,13 @@ const offsets = {
 const labelColorSet = {
   [Mode.Light]: {
     base: css`
-      color: ${uiColors.gray.dark2};
+      color: ${palette.black};
+      font-family: ${fontFamilies.default};
     `,
 
     disabled: css`
       cursor: not-allowed;
-      color: ${uiColors.gray.base};
+      color: ${palette.gray.dark1};
     `,
   },
 
@@ -60,20 +62,30 @@ const labelColorSet = {
   },
 };
 
-const labelStyle = css`
+const baseLabelStyle = css`
   display: flex;
-  align-items: flex-start;
-  font-size: 14px;
   line-height: 20px;
   cursor: pointer;
 `;
+
+const labelStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    font-size: 13px;
+    font-weight: 700;
+    align-items: center;
+    `,
+  [Mode.Dark]: css`
+    font-size: 14px;
+    align-items: flex-start;
+  `,
+}
 
 // Note colors are not in our palette
 const inputColorSet = {
   [Mode.Light]: css`
     &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
-      background-color: #2798bd;
-      border-color: #2798bd;
+      background-color: ${palette.blue.base};
+      border-color: ${palette.blue.base};
 
       &:after {
         transform: scale(1);
@@ -83,12 +95,16 @@ const inputColorSet = {
     &:focus + div:before {
       transform: scale(1);
       opacity: 1;
-      border-color: ${uiColors.blue.light1};
+      border-color: ${palette.blue.light1};
     }
 
     &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
-      border-color: ${uiColors.gray.light1};
-      background-color: ${uiColors.gray.light2};
+      border-color: ${palette.gray.light2};
+      background-color: ${palette.gray.light3};
+
+      &:after {
+        transform: scale(1);
+      }
     }
   `,
 
@@ -146,67 +162,84 @@ const inputStyle = css`
   opacity: 0;
 `;
 
-const divColorSet = {
-  [Mode.Light]: css`
-    border: 2px solid ${uiColors.gray.dark1};
-    background-color: rgba(255, 255, 255, 0.31);
-  `,
+const divColorSet = (mode: Mode, size: Size) => {
+  const colorSets = {
+    [Mode.Light]: css`
+      border: ${size === Size.Default ? `3px` : `2px`} solid ${palette.gray.dark2};
+      background-color: ${palette.white};
+    `,
 
-  [Mode.Dark]: css`
-    border: 2px solid ${uiColors.white};
-    background-color: rgba(255, 255, 255, 0.2);
-  `,
+    [Mode.Dark]: css`
+      border: 2px solid ${uiColors.white};
+      background-color: rgba(255, 255, 255, 0.2);
+    `,
+  }
+  return colorSets[mode];
 };
 
-const divStyle = css`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  transition: background-color 0.15s ease-in-out;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  border-radius: 100%;
-
-  &:before {
-    content: '';
+const baseDivStyle = (darkMode: boolean) => {
+  return  css`
     position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: background-color 0.15s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
     border-radius: 100%;
-    top: -5px;
-    bottom: -5px;
-    left: -5px;
-    right: -5px;
-  }
 
-  &:after {
-    content: '';
-    box-shadow: inset 0 -1px 0 0 #f1f1f1, 0 1px 0 0 rgba(0, 0, 0, 0.08),
-      0 1px 1px 0 rgba(6, 22, 33, 0.22);
-    background-color: white;
-    border-radius: 100%;
-    transform: scale(0);
-  }
-
-  ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} & {
-    &:after {
-      box-shadow: none;
+    &:before {
+      content: '';
+      position: absolute;
+      border-radius: 100%;
+      top: -5px;
+      bottom: -5px;
+      left: -5px;
+      right: -5px;
     }
-  }
-`;
 
-const divSize = {
-  [Size.Small]: css`
     &:after {
-      width: 4px;
-      height: 4px;
-      transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
-        border-color 0.15s ease-in-out;
+      content: '';
+      ${darkMode && `box-shadow: inset 0 -1px 0 0 #f1f1f1, 0 1px 0 0 rgba(0, 0, 0, 0.08),
+        0 1px 1px 0 rgba(6, 22, 33, 0.22);`}
+      background-color: white;
+      border-radius: 100%;
+      transform: scale(0);
     }
-  `,
-  [Size.Default]: css`
+
+    ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} & {
+      &:after {
+        box-shadow: none;
+      }
+    }
+  `
+};
+
+const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
+  [Size.Small]: {
+    [Mode.Light]: css`
+      &:after {
+        width: 6px;
+        height: 6px;
+        transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
+          border-color 0.15s ease-in-out;
+      }
+    `,
+    [Mode.Dark]: css`
+      &:after {
+        width: 4px;
+        height: 4px;
+        transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
+          border-color 0.15s ease-in-out;
+      }
+    `
+  }
+  ,
+  [Size.Default]: {
+    [Mode.Light]: css`
     &:after {
       width: 8px;
       height: 8px;
@@ -214,6 +247,15 @@ const divSize = {
         border-color 0.15s ease-in-out;
     }
   `,
+    [Mode.Dark]: css`
+      &:after {
+        width: 8px;
+        height: 8px;s
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          border-color 0.15s ease-in-out;
+      }
+    `,
+  },
 };
 
 const radioBoxSize = {
@@ -279,13 +321,14 @@ function Radio({
       <label
         htmlFor={id}
         className={cx(
-          labelStyle,
+          baseLabelStyle,
+          labelStyle[mode],
           labelColorSet[mode].base,
           {
             [labelColorSet[mode].disabled]: disabled,
             [css`
               font-size: 12px;
-            `]: size === Size.XSmall,
+            `]: size === Size.XSmall && darkMode === true,
           },
           className,
         )}
@@ -318,16 +361,18 @@ function Radio({
         >
           <div
             {...inputDisplay.prop}
-            className={cx(divStyle, divColorSet[mode], divSize[normalizedSize])}
+            className={cx(baseDivStyle(darkMode), divColorSet(mode, normalizedSize), divSize[normalizedSize][mode])}
           />
         </InteractionRing>
 
         <div
           className={cx(
             css`
-              margin-left: ${size === Size.XSmall ? 4 : 8}px;
+              margin-left: ${size === Size.XSmall && darkMode === true ? 4 : 8}px;
             `,
-            offsets[size],
+            {
+              [offsets[size]]: darkMode,
+            }
           )}
         >
           {children}
