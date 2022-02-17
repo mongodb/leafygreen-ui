@@ -199,13 +199,10 @@ export default function Table<Shape>({
           cellPadding="0"
           className={cx(
             tableStyles,
-            css`
-              border-bottom: 1px solid
-                ${darkMode ? uiColors.gray.dark1 : palette.gray.light2};
-            `,
             {
               // TODO: Refresh - remove darkMode override
               [css`
+                border-bottom: 1px solid ${uiColors.gray.dark1};
                 font-family: ${fontFamilies.legacy};
               `]: darkMode,
             },

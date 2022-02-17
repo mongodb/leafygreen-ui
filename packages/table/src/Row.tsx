@@ -36,7 +36,6 @@ const iconButtonMargin = css`
 const modeStyles = {
   [Mode.Light]: {
     rowStyle: css`
-      --lg-table-row-border-color: transparent;
       background-color: ${palette.white};
       color: ${palette.gray.dark3};
     `,
@@ -51,16 +50,16 @@ const modeStyles = {
       background-color: ${palette.gray.light3};
       color: ${palette.gray.light1};
       cursor: not-allowed;
-      outline-top: 1px solid ${palette.gray.light2};
-      outline-bottom: 1px solid ${palette.gray.light2};
+      box-shadow: 0 -1px 0 inset ${palette.gray.light2},
+        0 1px 0 inset ${palette.gray.light2};
     `,
   },
 
   [Mode.Dark]: {
     rowStyle: css`
-      --lg-table-row-border-color: ${uiColors.gray.dark1};
       background-color: ${uiColors.gray.dark3};
       color: ${uiColors.gray.light3};
+      box-shadow: 0 -1px 0 inset ${uiColors.gray.dark1};
     `,
 
     altColor: css`
@@ -73,15 +72,14 @@ const modeStyles = {
       background-color: ${uiColors.gray.dark1};
       color: ${uiColors.gray.base};
       cursor: not-allowed;
-      outline-top: 1px solid ${uiColors.gray.base};
-      outline-bottom: 1px solid ${uiColors.gray.base};
+      box-shadow: 0 -1px 0 inset ${uiColors.gray.base},
+        0 1px 0 inset ${uiColors.gray.base};
     `,
   },
 };
 
 const rowStyle = css`
   --lg-cell-min-height: 20px;
-  outline-top: 1px solid var(--lg-table-row-border-color);
   position: relative;
   z-index: 1;
 
@@ -98,7 +96,6 @@ const hideRow = css`
 const nestedRowInitialStyle = css`
   position: relative;
   opacity: 0;
-  outline-color: var(--lg-table-row-border-color);
   transform-origin: 50% 0%;
   transition: ${transitionTime}ms ease-in-out;
   transition-property: outline-color, opacity;

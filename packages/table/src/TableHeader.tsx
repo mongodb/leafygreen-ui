@@ -25,7 +25,7 @@ const modeStyles = {
       border-color: ${palette.gray.light2};
     `,
     labelStyle: css`
-      color: ${palette.gray.dark2};
+      color: ${palette.gray.dark3};
     `,
     glyphColor: css`
       color: ${palette.blue.base};
@@ -47,19 +47,21 @@ const modeStyles = {
 };
 
 const thStyle = css`
-  border-width: 0px 1px 3px 1px;
-  border-style: solid;
+  border-bottom: 3px solid;
 `;
 
 const flexDisplay = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 32px;
 `;
 
 const labelStyle = css`
   padding-right: 4px;
+`;
+
+const iconButtonMargin = css`
+  margin: -4px 0;
 `;
 
 const glyphMap = {
@@ -231,9 +233,16 @@ function TableHeader<Shape>({
       aria-sort={ariaSort}
       {...rest}
       className={cx(
-        thStyle,
         getCommonCellStyles(baseFontSize),
+        thStyle,
         modeStyles[mode].thStyle,
+        {
+          // TODO: Refresh - remove darkMode overrides
+          [css`
+            font-size: 14px;
+            border-width: 0px 1px 3px 1px;
+          `]: darkMode,
+        },
         className,
       )}
     >
@@ -242,7 +251,12 @@ function TableHeader<Shape>({
           {label}
         </span>
         {isSortable && (
-          <IconButton aria-label="sort" onClick={sortRows} darkMode={darkMode}>
+          <IconButton
+            className={iconButtonMargin}
+            aria-label="sort"
+            onClick={sortRows}
+            darkMode={darkMode}
+          >
             <Glyph
               size="small"
               title={`${glyph}-${index}`}
