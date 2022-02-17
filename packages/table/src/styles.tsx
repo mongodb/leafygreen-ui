@@ -6,6 +6,7 @@ const sharedStyles = css`
   padding: var(--lg-cell-padding-block) 8px;
   box-sizing: border-box;
   vertical-align: middle;
+  text-align: left; // Justification is updated in \`Row.tsx\` for number cells
 `;
 
 export const getCommonCellStyles = (

@@ -8,7 +8,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 
 storiesOf('Table', module)
   .add('Default', () => {
-    const withHeaders = boolean('Use Headers', false);
+    const withHeaders = boolean('First column headers', false);
     const darkMode = boolean('darkMode', false);
     const baseFontSize = select('Base Font Size', [14, 16], 14);
 

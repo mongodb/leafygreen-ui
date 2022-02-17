@@ -83,7 +83,7 @@ const rowStyle = css`
   position: relative;
   z-index: 1;
 
-  & > td > ${tdInnerDiv.selector} {
+  & > :is(td, th) > ${tdInnerDiv.selector} {
     min-height: var(--lg-cell-min-height);
     max-height: unset;
   }
@@ -105,7 +105,7 @@ const nestedRowInitialStyle = css`
   // that all have more than one line of text. However this scenario is unlikely
   z-index: 0;
 
-  & > td {
+  & > :is(td, th) {
     transition: ${transitionTime}ms ease-in-out;
     transition-property: padding-block;
 
@@ -120,7 +120,7 @@ const hiddenRowStyles = css`
   opacity: 0;
   outline-color: transparent;
 
-  & > td {
+  & > :is(td, th) {
     padding-block: 0;
 
     & > ${tdInnerDiv.selector} {
@@ -138,7 +138,7 @@ const nestedRowTransitionStyles = (
     case 'entered':
       return css`
         opacity: 1;
-        & > td {
+        & > :is(td, th) {
           & > ${tdInnerDiv.selector} {
             --lg-cell-max-height: max(var(--lg-cell-min-height), ${height}px);
             min-height: var(--lg-cell-min-height);
@@ -161,7 +161,7 @@ function styleColumn(index: string, dataType?: DataType) {
   }
 
   return css`
-    & td:nth-child(${index}) > div {
+    & :is(td, th):nth-child(${index}) > div {
       justify-content: ${justify};
     }
   `;
@@ -170,7 +170,7 @@ function styleColumn(index: string, dataType?: DataType) {
 function getIndentLevelStyle(indentLevel: number) {
   const indentLevelMultiplier = 36;
   return css`
-    & > td:nth-child(1) {
+    & > :is(td, th):nth-child(1) {
       padding-left: ${8 + indentLevel * indentLevelMultiplier}px;
     }
   `;
