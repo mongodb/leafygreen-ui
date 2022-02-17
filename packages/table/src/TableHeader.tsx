@@ -197,6 +197,7 @@ function TableHeader<Shape>({
             : 'asc'
           : 'desc';
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       setSort(prevSort => {
         return {
           columnId: index,
