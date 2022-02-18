@@ -1,5 +1,12 @@
 # @leafygreen-ui/tokens
 
+## 1.0.0
+
+### Major Changes
+
+- 8457f92: - Adds "Euclid Circular A" and "MongoDB Value Serif" to `tokens.fontFamilies`
+  - Updates Light mode typography according to visual brand refresh
+
 ## 0.5.3
 
 ### Patch Changes
