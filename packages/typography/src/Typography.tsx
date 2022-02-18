@@ -1,5 +1,5 @@
 import React from 'react';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import { HTMLElementProps, createDataProp, OneOf } from '@leafygreen-ui/lib';
 import {
   useBaseFontSize,
@@ -104,9 +104,7 @@ type SubtitleProps = HTMLElementProps<'h6'>;
 const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
   className,
   ...rest
-}: {
-  className?: string;
-}) => {
+}: SubtitleProps) => {
   return (
     <Box as="h6" className={cx(sharedStyles, subtitle, className)} {...rest} />
   );
@@ -117,7 +115,7 @@ Subtitle.displayName = 'Subtitle';
 /**
  * Body
  */
-type BodyProps = HTMLElementProps<'div'> & {
+type BodyProps = HTMLElementProps<'p'> & {
   /**
    * font-weight applied to typography element
    * default: `regular`
@@ -125,7 +123,11 @@ type BodyProps = HTMLElementProps<'div'> & {
   weight?: 'regular' | 'medium';
 };
 
-function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
+const Body: ExtendableBox<BodyProps, 'p'> = ({
+  className,
+  weight = 'regular',
+  ...rest
+}: BodyProps) => {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
 
@@ -137,13 +139,10 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
       font-weight: ${weight === 'regular' ? 700 : 800};
     }
   `;
-
   return (
-    <div {...rest} className={cx(sharedStyles, body, fontWeight, className)}>
-      {children}
-    </div>
+    <Box as="p" className={cx(sharedStyles, body, fontWeight, className)} {...rest} />
   );
-}
+};
 
 Body.displayName = 'Body';
 
