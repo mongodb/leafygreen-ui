@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { css } from '@emotion/css';
 import Button from '@leafygreen-ui/button';
-import MarketingModal, { GraphicStyle } from '@leafygreen-ui/marketing-modal';
+import MarketingModal, {
+  BlobPosition,
+  GraphicStyle,
+} from '@leafygreen-ui/marketing-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 import { CDN } from 'utils/routes';
+import { CloseIconColor } from '@leafygreen-ui/modal';
 
 const children =
   'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.';
@@ -15,6 +19,9 @@ const knobsConfig: KnobsConfigInterface<{
   linkText: string;
   children: string;
   darkMode: boolean;
+  closeIconColor: CloseIconColor;
+  showBlob?: boolean;
+  blobPosition: BlobPosition;
 }> = {
   title: {
     type: 'text',
@@ -47,6 +54,23 @@ const knobsConfig: KnobsConfigInterface<{
     default: false,
     label: 'Dark Mode',
   },
+  closeIconColor: {
+    type: 'select',
+    options: Object.values(CloseIconColor),
+    default: CloseIconColor.Default,
+    label: 'Close icon color',
+  },
+  showBlob: {
+    type: 'boolean',
+    default: false,
+    label: 'Show blob',
+  },
+  blobPosition: {
+    type: 'select',
+    options: Object.values(BlobPosition),
+    default: BlobPosition.TopLeft,
+    label: 'Blob position',
+  },
 };
 
 export default function MarketingModalLiveExample() {
@@ -54,7 +78,17 @@ export default function MarketingModalLiveExample() {
 
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ title, graphicStyle, buttonText, linkText, children, darkMode }) => (
+      {({
+        title,
+        graphicStyle,
+        buttonText,
+        linkText,
+        children,
+        darkMode,
+        closeIconColor,
+        showBlob,
+        blobPosition,
+      }) => (
         <>
           <Button onClick={() => setOpen(!open)}>Open Modal</Button>
           <MarketingModal
@@ -85,6 +119,9 @@ export default function MarketingModalLiveExample() {
             graphicStyle={graphicStyle}
             buttonText={buttonText}
             linkText={linkText}
+            closeIconColor={closeIconColor}
+            showBlob={showBlob}
+            blobPosition={blobPosition}
           >
             {children}
           </MarketingModal>
