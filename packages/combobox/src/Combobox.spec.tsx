@@ -253,6 +253,17 @@ describe('packages/combobox', () => {
      * (i.e. `value` prop)
      */
     describe('When value is controlled', () => {
+      test('Typing any character updates the input', () => {
+        const value = '';
+        const { inputEl, rerenderCombobox } = renderCombobox(select, {
+          value,
+        });
+        expect(inputEl).toHaveValue('');
+        userEvent.type(inputEl, 'z');
+        rerenderCombobox({ value });
+        expect(inputEl).toHaveValue('z');
+      });
+
       testSingleSelect('Text input renders with value update', () => {
         let value = 'apple';
         const { inputEl, rerenderCombobox } = renderCombobox(select, {
@@ -549,10 +560,20 @@ describe('packages/combobox', () => {
         ).toHaveAttribute('aria-selected', 'true');
       });
 
-      test('Enter key selects highlighted option', () => {
+      test('Space key types a space character', () => {
+        const { inputEl, openMenu, queryAllChips } = renderCombobox(select);
+        openMenu();
+        userEvent.type(inputEl, 'a{space}fruit');
+        expect(inputEl).toHaveValue('a fruit');
+        if (select === 'multiple') {
+          expect(queryAllChips()).toHaveLength(0);
+        }
+      });
+
+      test('Space key selects highlighted option when focused', () => {
         const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
         openMenu();
-        userEvent.type(inputEl!, '{arrowdown}{enter}');
+        userEvent.type(inputEl, '{arrowdown}{space}');
         if (select === 'multiple') {
           expect(queryChipsByName('Banana')).toBeInTheDocument();
         } else {
@@ -560,10 +581,10 @@ describe('packages/combobox', () => {
         }
       });
 
-      test('Space key selects highlighted option', () => {
+      test('Enter key selects highlighted option', () => {
         const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
         openMenu();
-        userEvent.type(inputEl, '{arrowdown}{space}');
+        userEvent.type(inputEl!, '{arrowdown}{enter}');
         if (select === 'multiple') {
           expect(queryChipsByName('Banana')).toBeInTheDocument();
         } else {
