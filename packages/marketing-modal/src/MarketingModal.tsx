@@ -24,22 +24,11 @@ type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
 
 const titleStyle = css`
   font-size: 24px;
+  color: ${palette.black};
+  font-weight: 700;
+  line-height: 32px;
+  margin-bottom: 4px;
 `;
-
-const titleColors: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-    font-weight: 700;
-    line-height: 32px;
-    margin-bottom: 4px;
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.white};
-    font-weight: bold;
-    line-height: 25px;
-    margin-bottom: 10px;
-  `,
-};
 
 const baseModalStyle = css`
   width: 600px;
@@ -76,36 +65,17 @@ const filledGraphicStyle = css`
   width: 100%;
 `;
 
-const contentStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    font-family: ${fontFamilies.default};
-    font-size: 13px;
-    line-height: 20px;
-    letter-spacing: 0;
-    text-align: center;
-    padding: 0 20px 32px;
-    max-width: 476px;
-    margin: 0 auto;
-  `,
-  [Mode.Dark]: css`
-    font-family: ${fontFamilies.legacy}; // TODO: Refresh – remove when fonts are updated
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0;
-    text-align: center;
-    padding: 0 92px;
-    padding-bottom: 24px;
-  `,
-};
-
-const contentColors: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.gray.dark3};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.gray.light2};
-  `,
-};
+const contentStyle = css`
+  font-family: ${fontFamilies.default};
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-align: center;
+  padding: 0 20px 32px;
+  max-width: 476px;
+  margin: 0 auto;
+  color: ${palette.gray.dark3};
+`;
 
 const renderCurvedSVG = () => {
   const curvedSVGStyles = css`
@@ -192,8 +162,35 @@ const MarketingModal = ({
         })}
         {!darkMode && graphicStyle === GraphicStyle.Fill && renderCurvedSVG()}
       </div>
-      <div className={cx(contentStyle[mode], contentColors[mode])}>
-        <div className={cx(titleStyle, titleColors[mode])}>{title}</div>
+      <div
+        className={cx(contentStyle, {
+          [css`
+            // TODO: Refresh – remove when darkMode is updated
+            font-family: ${fontFamilies.legacy};
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0;
+            text-align: center;
+            padding: 0 92px;
+            padding-bottom: 24px;
+            color: ${uiColors.gray.light2};
+            max-width: inherit;
+          `]: darkMode,
+        })}
+      >
+        <div
+          className={cx(titleStyle, {
+            [css`
+              // TODO: Refresh – remove when darkMode is updated
+              color: ${uiColors.white};
+              font-weight: bold;
+              line-height: 25px;
+              margin-bottom: 10px;
+            `]: darkMode,
+          })}
+        >
+          {title}
+        </div>
         {children}
       </div>
       <div className={footerContentStyle}>

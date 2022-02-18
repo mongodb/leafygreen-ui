@@ -89,25 +89,14 @@ const modalContentStyle = css`
   }
 `;
 
-const modeStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${uiColors.gray.dark3};
-    background-color: ${uiColors.white};
-    font-family: ${fontFamilies.default};
-    border-radius: 24px;
-    padding: 35px 40px;
-    box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.white};
-    background-color: ${uiColors.gray.dark3};
-    // TODO: Refresh – remove once darkmode is updated
-    font-family: ${fontFamilies.legacy};
-    border-radius: 7px;
-    padding: 32px;
-    box-shadow: 0 5px 15px ${transparentize(0.4, uiColors.black)};
-  `,
-};
+const modeStyles = css`
+  color: ${uiColors.gray.dark3};
+  background-color: ${uiColors.white};
+  font-family: ${fontFamilies.default};
+  border-radius: 24px;
+  padding: 35px 40px;
+  box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
+`;
 
 const visibleModalContentStyle = css`
   transform: translate3d(0, 0, 0);
@@ -333,7 +322,19 @@ function Modal({
                   tabIndex={-1}
                   className={cx(
                     modalContentStyle,
-                    modeStyles[mode],
+                    modeStyles,
+                    {
+                      [css`
+                        // TODO: Refresh – remove when darkMode is updated
+                        color: ${uiColors.white};
+                        background-color: ${uiColors.gray.dark3};
+                        font-family: ${fontFamilies.legacy};
+                        border-radius: 7px;
+                        padding: 32px;
+                        box-shadow: 0 5px 15px
+                          ${transparentize(0.4, uiColors.black)};
+                      `]: darkMode,
+                    },
                     modalSizes[size],
                     {
                       [visibleModalContentStyle]: state === 'entered',

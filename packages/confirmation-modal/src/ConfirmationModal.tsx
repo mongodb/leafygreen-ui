@@ -22,30 +22,14 @@ export const Variant = {
 
 export type Variant = typeof Variant[keyof typeof Variant];
 
-const titleStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 32px;
-    margin-bottom: 10px;
-    margin-top: 0;
-  `,
-  [Mode.Dark]: css`
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 25px;
-    margin-bottom: 10px;
-  `,
-};
-
-const titleColors: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.gray.light2};
-  `,
-};
+const titleStyle = css`
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  margin-bottom: 10px;
+  margin-top: 0;
+  color: ${palette.black};
+`;
 
 const baseModalStyle = css`
   width: 600px;
@@ -53,20 +37,12 @@ const baseModalStyle = css`
   letter-spacing: 0;
 `;
 
-// TODO: Refresh – remove mode logic
-const contentStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    font-family: ${fontFamilies.default};
-    font-size: 13px;
-    line-height: 20px;
-  `,
-  [Mode.Dark]: css`
-    font-family: ${fontFamilies.legacy};
-    font-size: 14px;
-    line-height: 20px;
-    padding: 36px;
-  `,
-};
+const contentStyle = css`
+  font-family: ${fontFamilies.default};
+  font-size: 13px;
+  line-height: 20px;
+  color: ${palette.black};
+`;
 
 // TODO: Refresh – remove mode logic
 const modeAndVariantContentStyles: Record<Mode, Record<Variant, string>> = {
@@ -82,15 +58,6 @@ const modeAndVariantContentStyles: Record<Mode, Record<Variant, string>> = {
     [Variant.Default]: css``,
     [Variant.Danger]: css``,
   },
-};
-
-const contentColors = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.white};
-  `,
 };
 
 const textEntryInputStyle = css`
@@ -203,8 +170,17 @@ const ConfirmationModal = ({
     >
       <div
         className={cx(
-          contentStyle[mode],
-          contentColors[mode],
+          contentStyle,
+          {
+            [css`
+              // TODO: Refresh – remove when darkMode is updated
+              font-family: ${fontFamilies.legacy};
+              font-size: 14px;
+              line-height: 20px;
+              padding: 36px;
+              color: ${uiColors.white};
+            `]: darkMode,
+          },
           modeAndVariantContentStyles[mode][variant],
         )}
       >
@@ -214,7 +190,20 @@ const ConfirmationModal = ({
             <WarningIcon fill={palette.red.base} role="presentation" />
           </div>
         )}
-        <h1 className={cx(titleStyle[mode], titleColors[mode])}>{title}</h1>
+        <h1
+          className={cx(titleStyle, {
+            [css`
+              // TODO: Refresh – remove when darkMode is updated
+              font-weight: bold;
+              line-height: 25px;
+              margin-bottom: 10px;
+              margin-top: revert;
+              color: ${uiColors.gray.light2};
+            `]: darkMode,
+          })}
+        >
+          {title}
+        </h1>
         {children}
         {textEntryConfirmation}
       </div>
