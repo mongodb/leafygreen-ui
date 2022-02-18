@@ -7,6 +7,7 @@ import Modal from '@leafygreen-ui/modal';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { svgBlobs } from '.';
 
 const Mode = {
   Dark: 'dark',
@@ -14,6 +15,14 @@ const Mode = {
 };
 
 type Mode = typeof Mode[keyof typeof Mode];
+
+export const BlobPosition = {
+  TopLeft: 'top left',
+  TopRight: 'top right',
+  BottomRight: 'bottom right',
+} as const;
+
+export type BlobPosition = typeof BlobPosition[keyof typeof BlobPosition];
 
 export const GraphicStyle = {
   Center: 'center',
@@ -33,7 +42,7 @@ const titleStyle = css`
 const baseModalStyle = css`
   width: 600px;
   padding: initial;
-  overflow: auto;
+  overflow: hidden;
 `;
 
 const baseGraphicContainerStyle = css`
@@ -122,6 +131,8 @@ interface MarketingModalProps {
   linkText: string;
   darkMode?: boolean;
   closeIconColor?: CloseIconColor;
+  blobPosition?: BlobPosition;
+  showBlob?: boolean;
 }
 
 const MarketingModal = ({
@@ -136,6 +147,8 @@ const MarketingModal = ({
   linkText,
   darkMode,
   closeIconColor = CloseIconColor.Dark,
+  blobPosition = BlobPosition.TopLeft,
+  showBlob = false,
   ...modalProps
 }: MarketingModalProps) => {
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -148,6 +161,10 @@ const MarketingModal = ({
       darkMode={darkMode}
       closeIconColor={closeIconColor}
     >
+      {!darkMode &&
+        showBlob &&
+        graphicStyle === GraphicStyle.Center &&
+        svgBlobs(blobPosition)}
       <div
         className={cx(baseGraphicContainerStyle, {
           [centeredGraphicContainerStyle[mode]]:
@@ -241,6 +258,8 @@ MarketingModal.propTypes = {
   className: PropTypes.string,
   buttonText: PropTypes.string.isRequired,
   linkText: PropTypes.string.isRequired,
+  blobPosition: PropTypes.oneOf(Object.values(BlobPosition)),
+  showBlob: PropTypes.bool,
 };
 
 export default MarketingModal;

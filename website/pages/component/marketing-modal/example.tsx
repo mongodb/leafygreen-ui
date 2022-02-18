@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { css } from '@emotion/css';
 import Button from '@leafygreen-ui/button';
-import MarketingModal, { GraphicStyle } from '@leafygreen-ui/marketing-modal';
+import MarketingModal, {
+  BlobPosition,
+  GraphicStyle,
+} from '@leafygreen-ui/marketing-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 import { CDN } from 'utils/routes';
 import { CloseIconColor } from '@leafygreen-ui/modal';
@@ -17,6 +20,8 @@ const knobsConfig: KnobsConfigInterface<{
   children: string;
   darkMode: boolean;
   closeIconColor: CloseIconColor;
+  showBlob?: boolean;
+  blobPosition: BlobPosition;
 }> = {
   title: {
     type: 'text',
@@ -55,6 +60,17 @@ const knobsConfig: KnobsConfigInterface<{
     default: CloseIconColor.Default,
     label: 'Close icon color',
   },
+  showBlob: {
+    type: 'boolean',
+    default: false,
+    label: 'Show blob',
+  },
+  blobPosition: {
+    type: 'select',
+    options: Object.values(BlobPosition),
+    default: BlobPosition.TopLeft,
+    label: 'Blob position',
+  },
 };
 
 export default function MarketingModalLiveExample() {
@@ -70,6 +86,8 @@ export default function MarketingModalLiveExample() {
         children,
         darkMode,
         closeIconColor,
+        showBlob,
+        blobPosition,
       }) => (
         <>
           <Button onClick={() => setOpen(!open)}>Open Modal</Button>
@@ -102,6 +120,8 @@ export default function MarketingModalLiveExample() {
             buttonText={buttonText}
             linkText={linkText}
             closeIconColor={closeIconColor}
+            showBlob={showBlob}
+            blobPosition={blobPosition}
           >
             {children}
           </MarketingModal>
