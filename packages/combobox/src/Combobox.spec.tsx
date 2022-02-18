@@ -254,13 +254,12 @@ describe('packages/combobox', () => {
      */
     describe('When value is controlled', () => {
       test('Typing any character updates the input', () => {
-        const value = '';
-        const { inputEl, rerenderCombobox } = renderCombobox(select, {
+        const value = select === 'multiple' ? [] : '';
+        const { inputEl } = renderCombobox(select, {
           value,
         });
         expect(inputEl).toHaveValue('');
         userEvent.type(inputEl, 'z');
-        rerenderCombobox({ value });
         expect(inputEl).toHaveValue('z');
       });
 
