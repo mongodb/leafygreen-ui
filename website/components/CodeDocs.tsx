@@ -248,7 +248,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           >
             {example && (
               <Tab default name="Example" className={mt3}>
-                <Code showLineNumbers language="js">
+                <Code language="js">
                   {example}
                 </Code>
               </Tab>
@@ -256,7 +256,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
 
             {outputHTML && (
               <Tab name="Output HTML" className={mt3} default={!example}>
-                <Code showLineNumbers language="xml">
+                <Code language="xml">
                   {outputHTML}
                 </Code>
               </Tab>

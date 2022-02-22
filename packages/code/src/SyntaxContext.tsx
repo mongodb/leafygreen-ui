@@ -10,7 +10,7 @@ interface SyntaxContext {
 
 export const SyntaxContext = createContext<SyntaxContext>({
   highlightLines: [],
-  darkMode: false
+  darkMode: false,
 });
 
 export function useSyntaxContext() {
