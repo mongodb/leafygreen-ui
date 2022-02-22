@@ -84,7 +84,6 @@ const labelStyle = css`
   font-weight: 700;
 `;
 
-// Note colors are not in our palette
 const inputColorSet = {
   [Mode.Light]: css`
     &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
