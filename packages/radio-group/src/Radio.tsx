@@ -250,7 +250,7 @@ const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
     [Mode.Dark]: css`
       &:after {
         width: 8px;
-        height: 8px;s
+        height: 8px;
         transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
           border-color 0.15s ease-in-out;
       }
