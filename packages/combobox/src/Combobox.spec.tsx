@@ -154,6 +154,22 @@ describe('packages/combobox', () => {
         const [optionEl] = Array.from(optionElements!);
         expect(optionEl).toHaveTextContent('abc-def');
       });
+
+      test('Options with long names are rendered with the full text', () => {
+        const displayName = `Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.`;
+        const options: Array<OptionObject> = [
+          {
+            value: 'paragraph',
+            displayName,
+          },
+        ];
+
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        expect(optionEl).toHaveTextContent(displayName);
+      });
+
       // Grouped Options
       describe('Grouped Options', () => {
         test('Grouped items should render', () => {
@@ -212,6 +228,26 @@ describe('packages/combobox', () => {
         const { inputEl } = renderCombobox(select, { initialValue });
         expect(inputEl).toHaveValue('Apple');
       });
+
+      testSingleSelect(
+        'Initial value prop renders truncated long text input value',
+        () => {
+          const displayName = `Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.`;
+          const options: Array<OptionObject> = [
+            {
+              value: 'paragraph',
+              displayName,
+            },
+            ...defaultOptions,
+          ];
+          const initialValue = 'paragraph';
+          const { inputEl } = renderCombobox(select, { initialValue, options });
+          expect(inputEl).toHaveValue(displayName);
+          expect(inputEl.scrollWidth).toBeGreaterThanOrEqual(
+            inputEl.clientWidth,
+          );
+        },
+      );
 
       testMultiSelect('Initial value prop renders chips', () => {
         const initialValue = ['apple', 'banana'];
@@ -544,6 +580,13 @@ describe('packages/combobox', () => {
       test.todo(
         'Clicking in the middle of the input text should set the cursor there',
       );
+    });
+
+    /**
+     * Input element
+     */
+    describe('Input interaction', () => {
+      // TODO:
     });
 
     /**
