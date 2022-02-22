@@ -285,6 +285,25 @@ describe('packages/combobox', () => {
     });
 
     /**
+     * Input element
+     */
+    describe('Input interaction', () => {
+      test('Typing any character updates the input', () => {
+        const { inputEl } = renderCombobox(select);
+        userEvent.type(inputEl, 'zy');
+        expect(inputEl).toHaveValue('zy');
+      });
+
+      test('Initial value prop renders truncated long text input value', () => {
+        const displayName = `Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.`;
+        const { inputEl } = renderCombobox(select);
+        userEvent.type(inputEl, displayName);
+        expect(inputEl).toHaveValue(displayName);
+        expect(inputEl.scrollWidth).toBeGreaterThanOrEqual(inputEl.clientWidth);
+      });
+    });
+
+    /**
      * Controlled
      * (i.e. `value` prop)
      */
@@ -580,13 +599,6 @@ describe('packages/combobox', () => {
       test.todo(
         'Clicking in the middle of the input text should set the cursor there',
       );
-    });
-
-    /**
-     * Input element
-     */
-    describe('Input interaction', () => {
-      // TODO:
     });
 
     /**
