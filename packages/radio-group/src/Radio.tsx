@@ -75,23 +75,14 @@ const labelColorSet = {
   },
 };
 
-const baseLabelStyle = css`
+const labelStyle = css`
   display: flex;
   line-height: 20px;
   cursor: pointer;
   align-items: flex-start;
+  font-size: 13px;
+  font-weight: 700;
 `;
-
-const labelStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    font-size: 13px;
-    font-weight: 700;
-    `,
-  [Mode.Dark]: css`
-    font-size: 14px;
-    
-  `,
-}
 
 // Note colors are not in our palette
 const inputColorSet = {
@@ -342,10 +333,13 @@ function Radio({
       <label
         htmlFor={id}
         className={cx(
-          baseLabelStyle,
-          labelStyle[mode],
+          labelStyle,
           labelColorSet[mode].base,
           {
+            [css`
+              font-size: 14px;
+              font-weight: 400;
+            `]:darkMode,
             [labelColorSet[mode].disabled]: disabled,
             [css`
               font-size: 12px;
