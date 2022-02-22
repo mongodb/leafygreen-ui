@@ -98,9 +98,10 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 
 # Body
 
-| Prop     | Type                    | Description                               | Default     |
-| -------- | ----------------------- | ----------------------------------------- | ----------- |
-| `weight` | `'regular'`, `'medium'` | font-weight applied to typography element | `'regular'` |
+| Prop     | Type                          | Description                                                                                                        | Default     |
+| -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `weight` | `'regular'`, `'medium'`       | font-weight applied to typography element                                                                          | `'regular'` |
+| `as`     | `keyof JSX.IntrinsicElements` | HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `'p'`       |
 
 # InlineCode
 
