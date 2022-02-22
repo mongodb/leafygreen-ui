@@ -100,33 +100,55 @@ Subtitle.displayName = 'Subtitle';
 /**
  * Body
  */
+
+type BodyFontWeight = 'regular' | 'medium';
 type BodyProps = HTMLElementProps<'p'> & {
   /**
    * font-weight applied to typography element
    * default: `regular`
    */
-  weight?: 'regular' | 'medium';
+  weight?: BodyFontWeight;
+  as?: keyof JSX.IntrinsicElements;
 };
 
 const Body: ExtendableBox<BodyProps, 'p'> = ({
   className,
   weight = 'regular',
+  as = 'p',
   ...rest
 }: BodyProps) => {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
+  const fontWeights: {
+    [key: string]: {
+      [key in BodyFontWeight]: number;
+    };
+  } = {
+    default: {
+      regular: 400,
+      medium: 500,
+    },
+    strong: {
+      regular: 700,
+      medium: 800,
+    },
+    b: {
+      regular: 700,
+      medium: 800,
+    },
+  } as const;
+
+  const getFontWeight = () =>
+    as in fontWeights
+      ? fontWeights[as][weight]
+      : fontWeights['default'][weight];
 
   const fontWeight = css`
-    font-weight: ${weight === 'regular' ? 400 : 500};
-
-    strong,
-    b {
-      font-weight: ${weight === 'regular' ? 700 : 800};
-    }
+    font-weight: ${getFontWeight()};
   `;
   return (
     <Box
-      as="p"
+      as={as}
       className={cx(sharedStyles, body, fontWeight, className)}
       {...rest}
     />
