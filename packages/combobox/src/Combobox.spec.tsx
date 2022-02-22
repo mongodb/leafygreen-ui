@@ -472,18 +472,24 @@ describe('packages/combobox', () => {
       );
 
       testSingleSelect(
-        'Clicking the combobox after making a selection should re-open it',
+        'Clicking the combobox after making a selection should re-open the menu',
         async () => {
-          const { openMenu, inputEl, getMenuElements } = renderCombobox(select);
+          const {
+            comboboxEl,
+            inputEl,
+            openMenu,
+            getMenuElements,
+          } = renderCombobox(select);
           const { optionElements, menuContainerEl } = openMenu();
           const firstOption = optionElements![0];
           userEvent.click(firstOption);
           await waitForElementToBeRemoved(menuContainerEl);
-          userEvent.click(inputEl);
+          userEvent.click(comboboxEl);
           await waitFor(() => {
             const { menuContainerEl: newMenuContainerEl } = getMenuElements();
             expect(newMenuContainerEl).not.toBeNull();
             expect(newMenuContainerEl).toBeInTheDocument();
+            expect(inputEl).toHaveFocus();
           });
         },
       );
