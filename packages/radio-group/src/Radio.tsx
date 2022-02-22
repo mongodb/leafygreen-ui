@@ -105,7 +105,7 @@ const inputColorSet = {
       }
     }
 
-    &:focus + div div {
+    &:focus-visible + div div {
       box-shadow: 0 0 0 2px ${palette.white}, 
       0 0 0 4px ${palette.blue.light1};
     }
@@ -349,7 +349,7 @@ function Radio({
             [labelColorSet[mode].disabled]: disabled,
             [css`
               font-size: 12px;
-            `]: size === Size.XSmall && darkMode === true,
+            `]: size === Size.XSmall, // TODO: keeping this style until XS is deprecated
           },
           className,
         )}
@@ -378,7 +378,7 @@ function Radio({
           focusTargetElement={inputElement}
           className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
           borderRadius='100%'
-          color={!darkMode ? {focused: 'transparent'} : undefined}
+          color={!darkMode ? {focused: 'transparent'} : undefined} // TODO: Refresh - overriding the focus style for light mode
           {...inputDisplayWrapper.prop}
         >
           <div
