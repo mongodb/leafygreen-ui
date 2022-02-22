@@ -5,7 +5,9 @@ import Syntax from './Syntax';
 function testSnippetRenders(codeSnippet: string) {
   test("renders the full content that's passed in", () => {
     const { getByRole } = render(
-      <Syntax language="javascript">{codeSnippet}</Syntax>,
+      <Syntax language="javascript" lineNumberStart={1}>
+        {codeSnippet}
+      </Syntax>,
     );
 
     const table = getByRole('table');
@@ -34,7 +36,7 @@ describe('packages/Syntax', () => {
 
   test(`renders "${className}" in the code element's classList`, () => {
     const { container } = render(
-      <Syntax language="none" className={className}>
+      <Syntax language="none" className={className} lineNumberStart={1}>
         {singleLine}
       </Syntax>,
     );
@@ -45,7 +47,7 @@ describe('packages/Syntax', () => {
 
   test("doesn't highlight code when language is 'none'", () => {
     const { container } = render(
-      <Syntax language="none" className={className}>
+      <Syntax language="none" className={className} lineNumberStart={1}>
         {singleLine}
       </Syntax>,
     );
@@ -62,7 +64,7 @@ describe('packages/Syntax', () => {
 
   test("highlights code when language is 'javascript'", () => {
     const { container } = render(
-      <Syntax className={className} language="javascript">
+      <Syntax className={className} language="javascript" lineNumberStart={1}>
         {singleLine}
       </Syntax>,
     );

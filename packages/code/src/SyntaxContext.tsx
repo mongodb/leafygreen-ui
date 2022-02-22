@@ -5,12 +5,12 @@ interface SyntaxContext {
   highlightLines: LineHighlightingDefinition;
   showLineNumbers?: boolean;
   darkMode: boolean;
-  lineNumberStart: number;
+  lineNumberStart?: number;
 }
 
 export const SyntaxContext = createContext<SyntaxContext>({
   highlightLines: [],
-  darkMode: false,
+  darkMode: false
 });
 
 export function useSyntaxContext() {

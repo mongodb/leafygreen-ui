@@ -92,6 +92,7 @@ function LanguageSwitcher({
       highlightLines={highlightLines}
       customActionButtons={CustomActions(darkMode)}
       showCustomActionButtons={showCustomActionButtons}
+      lineNumberStart={1}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
