@@ -97,14 +97,13 @@ const inputColorSet = {
     }
 
     &:focus-visible + div div {
-      box-shadow: 0 0 0 2px ${palette.white}, 
-      0 0 0 4px ${palette.blue.light1};
+      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
     }
 
     &:focus + div:before {
       transform: scale(1);
       opacity: 1;
-      border-color: ${palette.blue.light1};
+      border-color: ${uiColors.blue.light1};
     }
 
     &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
@@ -175,7 +174,8 @@ const inputStyle = css`
 const divColorSet = (mode: Mode, size: Size) => {
   const colorSets = {
     [Mode.Light]: css`
-      border: ${size === Size.Default ? `3px` : `2px`} solid ${palette.gray.dark2};
+      border: ${size === Size.Default ? `3px` : `2px`} solid
+        ${palette.gray.dark2};
       background-color: ${palette.white};
     `,
 
@@ -183,52 +183,42 @@ const divColorSet = (mode: Mode, size: Size) => {
       border: 2px solid ${uiColors.white};
       background-color: rgba(255, 255, 255, 0.2);
     `,
-  }
+  };
   return colorSets[mode];
 };
 
-const baseDivStyle = (darkMode: boolean) => {
-  return  css`
+const divStyle = css`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: background-color 0.15s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 100%;
+
+  &:before {
+    content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transition: background-color 0.15s ease-in-out;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
     border-radius: 100%;
+  }
 
-    &:before {
-      content: '';
-      position: absolute;
-      border-radius: 100%;
-      ${darkMode &&
-        `top: -5px;
-        bottom: -5px;
-        left: -5px;
-        right: -5px;`
-      }
-    }
+  &:after {
+    content: '';
+    background-color: white;
+    border-radius: 100%;
+    transform: scale(0);
+  }
 
+  ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} & {
     &:after {
-      content: '';
-      ${darkMode && `box-shadow: inset 0 -1px 0 0 #f1f1f1, 0 1px 0 0 rgba(0, 0, 0, 0.08),
-        0 1px 1px 0 rgba(6, 22, 33, 0.22);`}
-      background-color: white;
-      border-radius: 100%;
-      transform: scale(0);
+      box-shadow: none;
     }
-
-    ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} & {
-      &:after {
-        box-shadow: none;
-      }
-    }
-  `
-};
+  }
+`;
 
 const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
   [Size.Small]: {
@@ -247,18 +237,17 @@ const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
         transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
           border-color 0.15s ease-in-out;
       }
-    `
-  }
-  ,
+    `,
+  },
   [Size.Default]: {
     [Mode.Light]: css`
-    &:after {
-      width: 8px;
-      height: 8px;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-        border-color 0.15s ease-in-out;
-    }
-  `,
+      &:after {
+        width: 8px;
+        height: 8px;
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          border-color 0.15s ease-in-out;
+      }
+    `,
     [Mode.Dark]: css`
       &:after {
         width: 8px;
@@ -339,7 +328,7 @@ function Radio({
             [css`
               font-size: 14px;
               font-weight: 400;
-            `]:darkMode,
+            `]: darkMode,
             [labelColorSet[mode].disabled]: disabled,
             [css`
               font-size: 12px;
@@ -371,20 +360,42 @@ function Radio({
           disabled={disabled}
           focusTargetElement={inputElement}
           className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
-          borderRadius='100%'
-          color={!darkMode ? {focused: 'transparent'} : undefined} // TODO: Refresh - overriding the focus style for light mode
+          borderRadius="100%"
+          color={!darkMode ? { focused: 'transparent' } : undefined} // TODO: Refresh - overriding the focus style for light mode
           {...inputDisplayWrapper.prop}
         >
           <div
             {...inputDisplay.prop}
-            className={cx(baseDivStyle(darkMode), divColorSet(mode, normalizedSize), divSize[normalizedSize][mode])}
+            className={cx(
+              divStyle,
+              divColorSet(mode, normalizedSize),
+              divSize[normalizedSize][mode],
+              {
+                [css`
+                  &:before {
+                    top: -5px;
+                    bottom: -5px;
+                    left: -5px;
+                    right: -5px;
+                  }
+
+                  &:after {
+                    box-shadow: inset 0 -1px 0 0 #f1f1f1,
+                      0 1px 0 0 rgba(0, 0, 0, 0.08),
+                      0 1px 1px 0 rgba(6, 22, 33, 0.22);
+                  }
+                `]: darkMode,
+              },
+            )}
           />
         </InteractionRing>
 
         <div
           className={cx(
             css`
-              margin-left: ${size === Size.XSmall && darkMode === true ? 4 : 8}px;
+              margin-left: ${size === Size.XSmall && darkMode === true
+                ? 4
+                : 8}px;
             `,
             offsets[mode][size],
           )}
