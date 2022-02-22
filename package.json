@@ -33,6 +33,7 @@
     "check": "run-s check:*",
     "check:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md}\"",
     "check:eslint": "eslint \"**/*.{js,ts,tsx}\"",
+    "check:ts": "tsc --project tsconfig.json",
     "clean": "run-p clean:*",
     "clean:builds": "rimraf packages/*/{dist} **/*.tsbuildinfo",
     "clean:modules": "rimraf packages/*/{node_modules} node_modules",
@@ -54,7 +55,6 @@
     "test": "run-p test:*",
     "test:local": "jest --env jsdom --config jest.config.js",
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
-    "ts": "tsc --project tsconfig.json",
     "ts-downlevel": "rimraf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
     "watch": "yarn build -- -- --watch"
   },
