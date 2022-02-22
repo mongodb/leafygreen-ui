@@ -485,29 +485,24 @@ const SegmentedControl = React.forwardRef<
    * Dynamically set the size & position of the selection indicator
    */
 
-  const selectionStyleDynamic = useMemo(() => {
-    const count = React.Children.count(renderedChildren);
-    const widthPct = (1 / count) * 100;
-    const transformPct = selectedIndex * 100;
+  const getIndicatorDynamicStyles = useCallback(
+    (index: number | null = 0) => {
+      if (isNull(index)) return;
 
-    return css`
-      width: ${widthPct}%;
-      transform: translateX(${transformPct}%);
-    `;
-  }, [renderedChildren, selectedIndex]);
+      const count = React.Children.count(renderedChildren);
+      const widthPct = (1 / count) * 100;
+      const transformPct = index * 100;
 
-  // Dynamic hover styles
-  const hoverStyleDynamic = useMemo(() => {
-    const count = React.Children.count(renderedChildren);
-    const widthPct = (1 / count) * 100;
-    const transformPct = (hoveredIndex || 0) * 100;
-
-    return css`
-      opacity: ${isNull(hoveredIndex) ? 0 : 1};
-      width: ${widthPct}%;
-      transform: translateX(${transformPct}%);
-    `;
-  }, [hoveredIndex, renderedChildren]);
+      return css`
+        opacity: 1;
+        width: calc(${widthPct}% - 2 * var(--wrapper-padding));
+        transform: translateX(
+          calc(${transformPct}% + ${2 * index + 1} * var(--wrapper-padding))
+        );
+      `;
+    },
+    [renderedChildren],
+  );
 
   /**
    * Return
@@ -540,11 +535,17 @@ const SegmentedControl = React.forwardRef<
           {renderedChildren}
           <div
             {...selectionIndicatorDataAttr.prop}
-            className={cx(selectionIndicatorStyle, selectionStyleDynamic)}
+            className={cx(
+              selectionIndicatorStyle,
+              getIndicatorDynamicStyles(selectedIndex),
+            )}
           />
           <div
             {...hoverIndicatorDataAttr.prop}
-            className={cx(hoverIndicatorStyle, hoverStyleDynamic)}
+            className={cx(
+              hoverIndicatorStyle,
+              getIndicatorDynamicStyles(hoveredIndex),
+            )}
           />
         </div>
       </div>
