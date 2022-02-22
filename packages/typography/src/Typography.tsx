@@ -1,5 +1,5 @@
 import React from 'react';
-import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { HTMLElementProps, createDataProp, OneOf } from '@leafygreen-ui/lib';
 import {
   useBaseFontSize,
@@ -30,12 +30,7 @@ const h1 = css`
 
 type H1Props = HTMLElementProps<'h1'>;
 
-const H1: ExtendableBox<H1Props, 'h1'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H1: ExtendableBox<H1Props, 'h1'> = ({ className, ...rest }: H1Props) => {
   return <Box as="h1" className={cx(sharedStyles, h1, className)} {...rest} />;
 };
 
@@ -55,12 +50,7 @@ const h2 = css`
 
 type H2Props = HTMLElementProps<'h2'>;
 
-const H2: ExtendableBox<H2Props, 'h2'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H2: ExtendableBox<H2Props, 'h2'> = ({ className, ...rest }: H2Props) => {
   return <Box as="h2" className={cx(sharedStyles, h2, className)} {...rest} />;
 };
 
@@ -78,12 +68,7 @@ const h3 = css`
 
 type H3Props = HTMLElementProps<'h3'>;
 
-const H3: ExtendableBox<H3Props, 'h3'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H3: ExtendableBox<H3Props, 'h3'> = ({ className, ...rest }: H3Props) => {
   return <Box as="h3" className={cx(sharedStyles, h3, className)} {...rest} />;
 };
 
@@ -140,7 +125,11 @@ const Body: ExtendableBox<BodyProps, 'p'> = ({
     }
   `;
   return (
-    <Box as="p" className={cx(sharedStyles, body, fontWeight, className)} {...rest} />
+    <Box
+      as="p"
+      className={cx(sharedStyles, body, fontWeight, className)}
+      {...rest}
+    />
   );
 };
 
