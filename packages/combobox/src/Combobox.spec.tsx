@@ -412,26 +412,6 @@ describe('packages/combobox', () => {
         expect(containerEl).not.toContainFocus();
       });
 
-      testSingleSelect('Clicking selected option closes menu', async () => {
-        const { openMenu } = renderCombobox(select, {
-          initialValue: 'apple',
-        });
-        const { optionElements, menuContainerEl } = openMenu();
-        expect(optionElements).not.toBeUndefined();
-        userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[0]);
-        await waitForElementToBeRemoved(menuContainerEl);
-        expect(menuContainerEl).not.toBeInTheDocument();
-      });
-
-      test('Menu does not close on interaction with the menu', () => {
-        const { getMenuElements, openMenu } = renderCombobox(select);
-        const { optionElements } = openMenu();
-        expect(optionElements).not.toBeUndefined();
-        userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[1]);
-        const { menuContainerEl } = getMenuElements();
-        expect(menuContainerEl).toBeInTheDocument();
-      });
-
       test('Clicking an option sets selection', () => {
         const { openMenu, queryChipsByName, inputEl } = renderCombobox(select);
         const { optionElements } = openMenu();
@@ -444,8 +424,69 @@ describe('packages/combobox', () => {
         }
       });
 
+      testSingleSelect('Clicking selected option closes menu', async () => {
+        const { openMenu } = renderCombobox(select, {
+          initialValue: 'apple',
+        });
+        const { optionElements, menuContainerEl } = openMenu();
+        expect(optionElements).not.toBeUndefined();
+        userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[0]);
+        await waitForElementToBeRemoved(menuContainerEl);
+        expect(menuContainerEl).not.toBeInTheDocument();
+      });
+
+      testMultiSelect(
+        'Clicking selected option toggles selection & does NOT close menu',
+        async () => {
+          const { openMenu, queryChipsByName } = renderCombobox(select, {
+            initialValue: ['apple'],
+          });
+          const selectedChip = queryChipsByName('Apple');
+          expect(selectedChip).toBeInTheDocument();
+          const { optionElements, menuContainerEl } = openMenu();
+          expect(optionElements).not.toBeUndefined();
+
+          userEvent.click(
+            (optionElements as HTMLCollectionOf<HTMLLIElement>)[0],
+          );
+
+          await waitFor(() => {
+            expect(selectedChip).not.toBeInTheDocument();
+            expect(menuContainerEl).toBeInTheDocument();
+          });
+        },
+      );
+
+      testSingleSelect('Clicking any option closes menu', async () => {
+        const { openMenu } = renderCombobox(select);
+        const { optionElements, menuContainerEl } = openMenu();
+        expect(optionElements).not.toBeUndefined();
+        userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[1]);
+        await waitForElementToBeRemoved(menuContainerEl);
+        expect(menuContainerEl).not.toBeInTheDocument();
+      });
+
+      testMultiSelect(
+        'Clicking any option toggles selection & does NOT close menu',
+        async () => {
+          const { openMenu, queryChipsByName } = renderCombobox(select);
+          const { optionElements, menuContainerEl } = openMenu();
+          expect(optionElements).not.toBeUndefined();
+
+          userEvent.click(
+            (optionElements as HTMLCollectionOf<HTMLLIElement>)[0],
+          );
+
+          await waitFor(() => {
+            const selectedChip = queryChipsByName('Apple');
+            expect(selectedChip).toBeInTheDocument();
+            expect(menuContainerEl).toBeInTheDocument();
+          });
+        },
+      );
+
       testSingleSelect(
-        'Input value is set to selection value when menu closes',
+        'Input returned to previous selection when menu closes',
         () => {
           const initialValue = 'apple';
           const { inputEl } = renderCombobox(select, {
@@ -456,70 +497,71 @@ describe('packages/combobox', () => {
         },
       );
 
-      testMultiSelect('Clicking chip X button removes option', async () => {
-        const initialValue = ['apple', 'banana', 'carrot'];
-        const { queryChipsByName, queryAllChips } = renderCombobox(select, {
-          initialValue,
-        });
-        const appleChip = queryChipsByName('Apple');
-        expect(appleChip).not.toBeNull();
-        const appleChipButton = appleChip!.querySelector('button')!;
-        userEvent.click(appleChipButton);
-        await waitFor(() => {
-          expect(appleChip).not.toBeInTheDocument();
-          const allChips = queryChipsByName(['Banana', 'Carrot']);
-          allChips?.forEach(chip => expect(chip).toBeInTheDocument());
-          expect(queryAllChips()).toHaveLength(2);
-        });
-      });
-
-      testMultiSelect('Clicking chip text focuses the chip', () => {
-        const initialValue = ['apple', 'banana', 'carrot'];
-        const { queryChipsByName, queryAllChips } = renderCombobox(select, {
-          initialValue,
-        });
-        const appleChip = queryChipsByName('Apple');
-        userEvent.click(appleChip!);
-        expect(appleChip!).toContainFocus();
-        expect(queryAllChips()).toHaveLength(3);
-      });
-
-      testMultiSelect(
-        'Clicking chip X button does nothing when disabled',
+      testSingleSelect(
+        'Unfocusing the menu should keep text if input is a valid value',
         async () => {
-          const initialValue = ['apple', 'banana', 'carrot'];
-          const { queryChipsByName, queryAllChips } = renderCombobox(select, {
-            initialValue,
-            disabled: true,
-          });
-          const carrotChip = queryChipsByName('Carrot');
-          const carrotChipButton = carrotChip!.querySelector('button');
-          userEvent.click(carrotChipButton!);
-          await waitFor(() => {
-            expect(queryAllChips()).toHaveLength(3);
-          });
+          const { inputEl, containerEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, 'Apple');
+          userEvent.click(document.body);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(containerEl).not.toContainFocus();
+          expect(inputEl).toHaveValue('Apple');
+        },
+      );
+
+      testSingleSelect(
+        'Unfocusing the menu should NOT keep text if input is not a valid value',
+        async () => {
+          const { inputEl, containerEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, 'abc');
+          userEvent.click(document.body);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(containerEl).not.toContainFocus();
+          expect(inputEl).toHaveValue('');
         },
       );
 
       testMultiSelect(
-        'Removing a chip sets focus to the next chip',
+        'Unfocusing the menu should keep text as typed',
         async () => {
-          const initialValue = ['apple', 'banana', 'carrot'];
-          const { queryChipsByName } = renderCombobox(select, {
-            initialValue,
-          });
-          const appleChip = queryChipsByName('Apple');
-          const bananaChip = queryChipsByName('Banana');
-          const appleChipButton = appleChip!.querySelector('button');
-          const bananaChipButton = bananaChip!.querySelector('button');
-          userEvent.click(appleChipButton!);
+          const { inputEl, containerEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, 'abc');
+          userEvent.click(document.body);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(containerEl).not.toContainFocus();
+          expect(inputEl).toHaveValue('abc');
+        },
+      );
+
+      testSingleSelect(
+        'Clicking the combobox after making a selection should re-open the menu',
+        async () => {
+          const {
+            comboboxEl,
+            inputEl,
+            openMenu,
+            getMenuElements,
+          } = renderCombobox(select);
+          const { optionElements, menuContainerEl } = openMenu();
+          const firstOption = optionElements![0];
+          userEvent.click(firstOption);
+          await waitForElementToBeRemoved(menuContainerEl);
+          userEvent.click(comboboxEl);
           await waitFor(() => {
-            expect(appleChip).not.toBeInTheDocument();
-            expect(bananaChipButton!).toHaveFocus();
+            const { menuContainerEl: newMenuContainerEl } = getMenuElements();
+            expect(newMenuContainerEl).not.toBeNull();
+            expect(newMenuContainerEl).toBeInTheDocument();
+            expect(inputEl).toHaveFocus();
           });
         },
       );
 
+      /**
+       * Clicking buttons
+       */
       test('Clicking clear all button clears selection', () => {
         const initialValue =
           select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
@@ -557,44 +599,71 @@ describe('packages/combobox', () => {
         }
       });
 
-      testSingleSelect(
-        "Unfocusing the menu should keep text if it's a valid selection",
-        async () => {
-          const { inputEl, containerEl, openMenu } = renderCombobox(select);
-          const { menuContainerEl } = openMenu();
-          userEvent.type(inputEl, 'Apple');
-          userEvent.click(document.body);
-          await waitForElementToBeRemoved(menuContainerEl);
-          expect(containerEl).not.toContainFocus();
-          expect(inputEl).toHaveValue('Apple');
-        },
-      );
+      describe('Clicking chips', () => {
+        testMultiSelect('Clicking chip X button removes option', async () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { queryChipsByName, queryAllChips } = renderCombobox(select, {
+            initialValue,
+          });
+          const appleChip = queryChipsByName('Apple');
+          expect(appleChip).not.toBeNull();
+          const appleChipButton = appleChip!.querySelector('button')!;
+          userEvent.click(appleChipButton);
+          await waitFor(() => {
+            expect(appleChip).not.toBeInTheDocument();
+            const allChips = queryChipsByName(['Banana', 'Carrot']);
+            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+            expect(queryAllChips()).toHaveLength(2);
+          });
+        });
 
-      testSingleSelect(
-        'Unfocusing the menu should NOT keep text if not a valid selection',
-        async () => {
-          const { inputEl, containerEl, openMenu } = renderCombobox(select);
-          const { menuContainerEl } = openMenu();
-          userEvent.type(inputEl, 'abc');
-          userEvent.click(document.body);
-          await waitForElementToBeRemoved(menuContainerEl);
-          expect(containerEl).not.toContainFocus();
-          expect(inputEl).toHaveValue('');
-        },
-      );
+        testMultiSelect('Clicking chip text focuses the chip', () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { queryChipsByName, queryAllChips } = renderCombobox(select, {
+            initialValue,
+          });
+          const appleChip = queryChipsByName('Apple');
+          userEvent.click(appleChip!);
+          expect(appleChip!).toContainFocus();
+          expect(queryAllChips()).toHaveLength(3);
+        });
 
-      testMultiSelect(
-        'Unfocusing the menu should keep text as typed',
-        async () => {
-          const { inputEl, containerEl, openMenu } = renderCombobox(select);
-          const { menuContainerEl } = openMenu();
-          userEvent.type(inputEl, 'abc');
-          userEvent.click(document.body);
-          await waitForElementToBeRemoved(menuContainerEl);
-          expect(containerEl).not.toContainFocus();
-          expect(inputEl).toHaveValue('abc');
-        },
-      );
+        testMultiSelect(
+          'Clicking chip X button does nothing when disabled',
+          async () => {
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { queryChipsByName, queryAllChips } = renderCombobox(select, {
+              initialValue,
+              disabled: true,
+            });
+            const carrotChip = queryChipsByName('Carrot');
+            const carrotChipButton = carrotChip!.querySelector('button');
+            userEvent.click(carrotChipButton!);
+            await waitFor(() => {
+              expect(queryAllChips()).toHaveLength(3);
+            });
+          },
+        );
+
+        testMultiSelect(
+          'Removing a chip sets focus to the next chip',
+          async () => {
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { queryChipsByName } = renderCombobox(select, {
+              initialValue,
+            });
+            const appleChip = queryChipsByName('Apple');
+            const bananaChip = queryChipsByName('Banana');
+            const appleChipButton = appleChip!.querySelector('button');
+            const bananaChipButton = bananaChip!.querySelector('button');
+            userEvent.click(appleChipButton!);
+            await waitFor(() => {
+              expect(appleChip).not.toBeInTheDocument();
+              expect(bananaChipButton!).toHaveFocus();
+            });
+          },
+        );
+      });
 
       test.todo(
         'Clicking in the middle of the input text should set the cursor there',
@@ -614,36 +683,60 @@ describe('packages/combobox', () => {
         ).toHaveAttribute('aria-selected', 'true');
       });
 
-      test('Space key types a space character', () => {
-        const { inputEl, openMenu, queryAllChips } = renderCombobox(select);
-        openMenu();
-        userEvent.type(inputEl, 'a{space}fruit');
-        expect(inputEl).toHaveValue('a fruit');
-        if (select === 'multiple') {
-          expect(queryAllChips()).toHaveLength(0);
-        }
+      describe('Enter key', () => {
+        test('selects highlighted option', () => {
+          const { inputEl, openMenu, queryChipsByName } = renderCombobox(
+            select,
+          );
+          openMenu();
+          userEvent.type(inputEl!, '{arrowdown}{enter}');
+          if (select === 'multiple') {
+            expect(queryChipsByName('Banana')).toBeInTheDocument();
+          } else {
+            expect(inputEl).toHaveValue('Banana');
+          }
+        });
+
+        testSingleSelect('Re-opens menu after making a selection', async () => {
+          const { inputEl, openMenu, getMenuElements } = renderCombobox(
+            'single',
+          );
+          const { optionElements, menuContainerEl } = openMenu();
+          const firstOption = optionElements![0];
+          userEvent.click(firstOption);
+          await waitForElementToBeRemoved(menuContainerEl);
+          userEvent.type(inputEl, '{emter}');
+          await waitFor(() => {
+            const { menuContainerEl: newMenuContainerEl } = getMenuElements();
+            expect(newMenuContainerEl).not.toBeNull();
+            expect(newMenuContainerEl).toBeInTheDocument();
+          });
+        });
       });
 
-      test('Space key selects highlighted option when focused', () => {
-        const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
-        openMenu();
-        userEvent.type(inputEl, '{arrowdown}{space}');
-        if (select === 'multiple') {
-          expect(queryChipsByName('Banana')).toBeInTheDocument();
-        } else {
-          expect(inputEl).toHaveValue('Banana');
-        }
-      });
+      describe('Space key', () => {
+        test('Types a space character', () => {
+          const { inputEl, openMenu, queryAllChips } = renderCombobox(select);
+          openMenu();
+          userEvent.type(inputEl, 'a{space}fruit');
+          expect(inputEl).toHaveValue('a fruit');
+          if (select === 'multiple') {
+            expect(queryAllChips()).toHaveLength(0);
+          }
+        });
 
-      test('Enter key selects highlighted option', () => {
-        const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
-        openMenu();
-        userEvent.type(inputEl!, '{arrowdown}{enter}');
-        if (select === 'multiple') {
-          expect(queryChipsByName('Banana')).toBeInTheDocument();
-        } else {
-          expect(inputEl).toHaveValue('Banana');
-        }
+        test('Selects highlighted option when focused', () => {
+          const { inputEl, openMenu, queryChipsByName } = renderCombobox(
+            select,
+          );
+          openMenu();
+          userEvent.type(inputEl, '{arrowdown}{space}');
+          if (select === 'multiple') {
+            expect(queryChipsByName('Banana')).toBeInTheDocument();
+          } else {
+            expect(inputEl).toHaveValue('Banana');
+          }
+        });
       });
 
       test('Escape key closes menu', async () => {

@@ -880,7 +880,7 @@ export default function Combobox<M extends boolean>({
 
   // Prevent combobox from gaining focus by default
   const handleInputWrapperMousedown = (e: React.MouseEvent) => {
-    if (e.target !== inputRef.current) {
+    if (disabled) {
       e.preventDefault();
     }
   };
