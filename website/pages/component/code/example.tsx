@@ -92,6 +92,7 @@ function LanguageSwitcher({
       highlightLines={highlightLines}
       customActionButtons={CustomActions(darkMode)}
       showCustomActionButtons={showCustomActionButtons}
+      lineNumberStart={1}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
@@ -103,6 +104,7 @@ const knobsConfig: KnobsConfigInterface<{
   copyable: boolean;
   chromeTitle: string;
   showLineNumbers: boolean;
+  lineNumberStart: number;
   darkMode: boolean;
   language: Language;
   children: string;
@@ -139,6 +141,11 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'boolean',
     default: false,
     label: 'Show Line Numbers',
+  },
+  lineNumberStart: {
+    type: 'number',
+    default: 1,
+    label: "First row's line number value",
   },
   darkMode: {
     type: 'boolean',
