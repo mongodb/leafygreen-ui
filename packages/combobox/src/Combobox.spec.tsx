@@ -714,25 +714,29 @@ describe('packages/combobox', () => {
         });
       });
 
-      test('Space key types a space character', () => {
-        const { inputEl, openMenu, queryAllChips } = renderCombobox(select);
-        openMenu();
-        userEvent.type(inputEl, 'a{space}fruit');
-        expect(inputEl).toHaveValue('a fruit');
-        if (select === 'multiple') {
-          expect(queryAllChips()).toHaveLength(0);
-        }
-      });
+      describe('Space key', () => {
+        test('Types a space character', () => {
+          const { inputEl, openMenu, queryAllChips } = renderCombobox(select);
+          openMenu();
+          userEvent.type(inputEl, 'a{space}fruit');
+          expect(inputEl).toHaveValue('a fruit');
+          if (select === 'multiple') {
+            expect(queryAllChips()).toHaveLength(0);
+          }
+        });
 
-      test('Space key selects highlighted option when focused', () => {
-        const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
-        openMenu();
-        userEvent.type(inputEl, '{arrowdown}{space}');
-        if (select === 'multiple') {
-          expect(queryChipsByName('Banana')).toBeInTheDocument();
-        } else {
-          expect(inputEl).toHaveValue('Banana');
-        }
+        test('Selects highlighted option when focused', () => {
+          const { inputEl, openMenu, queryChipsByName } = renderCombobox(
+            select,
+          );
+          openMenu();
+          userEvent.type(inputEl, '{arrowdown}{space}');
+          if (select === 'multiple') {
+            expect(queryChipsByName('Banana')).toBeInTheDocument();
+          } else {
+            expect(inputEl).toHaveValue('Banana');
+          }
+        });
       });
 
       test('Escape key closes menu', async () => {
