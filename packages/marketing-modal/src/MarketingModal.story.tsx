@@ -27,6 +27,13 @@ function Default() {
     GraphicStyle.Center,
   );
 
+  const graphicCenterImage = darkMode
+    ? 'DataLake.png'
+    : 'marketing-center-light.png';
+  const graphicFillImage = darkMode
+    ? 'Realm_Rebrand_Image.png'
+    : 'marketing-fill-light.jpg';
+
   return (
     <>
       <button onClick={() => setOpen(!open)}>Open Modal</button>
@@ -38,9 +45,14 @@ function Default() {
         title="Introducing New Feature!"
         graphic={
           graphicStyle === GraphicStyle.Center ? (
-            <img alt="" src="examples/DataLake.png" width={275} height={220} />
+            <img
+              alt=""
+              src={`examples/${graphicCenterImage}`}
+              width={darkMode ? 275 : 278}
+              height={darkMode ? 220 : 227}
+            />
           ) : (
-            <img alt="" src="examples/Realm_Rebrand_Image.png" />
+            <img alt="" src={`examples/${graphicFillImage}`} />
           )
         }
         graphicStyle={graphicStyle}

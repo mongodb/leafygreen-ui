@@ -88,45 +88,54 @@ export default function MarketingModalLiveExample() {
         closeIconColor,
         showBlob,
         blobPosition,
-      }) => (
-        <>
-          <Button onClick={() => setOpen(!open)}>Open Modal</Button>
-          <MarketingModal
-            darkMode={darkMode}
-            open={open}
-            onButtonClick={() => setOpen(false)}
-            onLinkClick={() => setOpen(false)}
-            onClose={() => setOpen(false)}
-            title={title}
-            className={css`
-              z-index: 1;
-            `}
-            graphic={
-              graphicStyle === GraphicStyle.Center ? (
-                <img
-                  alt=""
-                  src={`${CDN}/images/examples/DataLake.png`}
-                  width={275}
-                  height={220}
-                />
-              ) : (
-                <img
-                  alt=""
-                  src={`${CDN}/images/examples/Realm_Rebrand_Image.png.png`}
-                />
-              )
-            }
-            graphicStyle={graphicStyle}
-            buttonText={buttonText}
-            linkText={linkText}
-            closeIconColor={closeIconColor}
-            showBlob={showBlob}
-            blobPosition={blobPosition}
-          >
-            {children}
-          </MarketingModal>
-        </>
-      )}
+      }) => {
+        const graphicCenterImage = darkMode
+          ? 'DataLake.png'
+          : 'marketing-center-light.png';
+        const graphicFillImage = darkMode
+          ? 'Realm_Rebrand_Image.png'
+          : 'marketing-fill-light.jpg';
+
+        return (
+          <>
+            <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+            <MarketingModal
+              darkMode={darkMode}
+              open={open}
+              onButtonClick={() => setOpen(false)}
+              onLinkClick={() => setOpen(false)}
+              onClose={() => setOpen(false)}
+              title={title}
+              className={css`
+                z-index: 1;
+              `}
+              graphic={
+                graphicStyle === GraphicStyle.Center ? (
+                  <img
+                    alt=""
+                    src={`${CDN}/images/examples/${graphicCenterImage}`}
+                    width={darkMode ? 275 : 278}
+                    height={darkMode ? 220 : 227}
+                  />
+                ) : (
+                  <img
+                    alt=""
+                    src={`${CDN}/images/examples/${graphicFillImage}`}
+                  />
+                )
+              }
+              graphicStyle={graphicStyle}
+              buttonText={buttonText}
+              linkText={linkText}
+              closeIconColor={closeIconColor}
+              showBlob={showBlob}
+              blobPosition={blobPosition}
+            >
+              {children}
+            </MarketingModal>
+          </>
+        );
+      }}
     </LiveExample>
   );
 }

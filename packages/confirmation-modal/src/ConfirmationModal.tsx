@@ -63,6 +63,10 @@ const modeAndVariantContentStyles: Record<Mode, Record<Variant, string>> = {
 const textEntryInputStyle = css`
   width: 300px;
   margin-top: 14px;
+
+  label {
+    margin-bottom: 3px;
+  }
 `;
 
 // TODO: Refresh - remove mode logic
