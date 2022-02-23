@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Modal, { ModalSize } from '.';
 
 const scroll = css`
   height: 200vh;
+`;
+
+const buttonPadding = css`
+  margin-top: 4px;
 `;
 
 function Default() {
@@ -57,7 +61,7 @@ function Interactive() {
       >
         <div>
           <div>Modal Content goes here.</div>
-          <Button>Click me, I will not close the modal!</Button>
+          <Button className={buttonPadding}>Click me, I will not close the modal!</Button>
         </div>
       </Modal>
     </>
