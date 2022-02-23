@@ -144,11 +144,20 @@ storiesOf('Code', module)
 
     return (
       <LeafyGreenProvider>
-        <LanguageSwitcherExample
-          darkMode={darkMode}
-          showCustomActionButtons={boolean('Show custom action buttons', false)}
-          customActionButtons={actionData}
-        />
+        <div
+          className={css`
+            width: 200px;
+          `}
+        >
+          <LanguageSwitcherExample
+            darkMode={darkMode}
+            showCustomActionButtons={boolean(
+              'Show custom action buttons',
+              false,
+            )}
+            customActionButtons={actionData}
+          />
+        </div>
       </LeafyGreenProvider>
     );
   });

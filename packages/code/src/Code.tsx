@@ -59,7 +59,6 @@ const contentWrapperStylesWithWindowChrome = css`
 const contentWrapperStyleWithPicker = css`
   grid-template-areas: 'panel' 'code';
   grid-template-columns: unset;
-  width: 700px;
 `;
 
 const codeWrapperStyle = css`
