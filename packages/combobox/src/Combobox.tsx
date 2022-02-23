@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { clone, isArray, isNull, isString, isUndefined } from 'lodash';
+import { clone, isArray, isEqual, isNull, isString, isUndefined } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
 import {
@@ -770,7 +770,7 @@ export default function Combobox<M extends boolean>({
   // onSelect
   // Side effects to run when the selection changes
   useEffect(() => {
-    if (selection !== prevSelection) {
+    if (!isEqual(selection, prevSelection)) {
       onSelect();
     }
   }, [onSelect, prevSelection, selection]);
