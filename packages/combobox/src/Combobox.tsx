@@ -976,13 +976,7 @@ export default function Combobox<M extends boolean>({
           break;
         }
 
-        case keyMap.Enter:
-        case keyMap.Space: {
-          if (isOpen) {
-            // prevent typing the space character
-            event.preventDefault();
-          }
-
+        case keyMap.Enter: {
           if (
             // Focused on input element
             document.activeElement === inputRef.current &&

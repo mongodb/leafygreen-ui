@@ -724,19 +724,6 @@ describe('packages/combobox', () => {
             expect(queryAllChips()).toHaveLength(0);
           }
         });
-
-        test('Selects highlighted option when focused', () => {
-          const { inputEl, openMenu, queryChipsByName } = renderCombobox(
-            select,
-          );
-          openMenu();
-          userEvent.type(inputEl, '{arrowdown}{space}');
-          if (select === 'multiple') {
-            expect(queryChipsByName('Banana')).toBeInTheDocument();
-          } else {
-            expect(inputEl).toHaveValue('Banana');
-          }
-        });
       });
 
       test('Escape key closes menu', async () => {
@@ -1040,8 +1027,15 @@ describe('packages/combobox', () => {
       describe('Any other key', () => {
         test('Updates the value of the input', () => {
           const { inputEl } = renderCombobox(select);
-          userEvent.type(inputEl, 'a');
-          expect(inputEl).toHaveValue('a');
+          userEvent.type(inputEl, 'z');
+          expect(inputEl).toHaveValue('z');
+        });
+
+        test('Updates the input when options are highlighted', () => {
+          const { inputEl, openMenu } = renderCombobox(select);
+          openMenu();
+          userEvent.type(inputEl, '{arrowdown}z');
+          expect(inputEl).toHaveValue('z');
         });
 
         test("Opens the menu if it's closed", async () => {
