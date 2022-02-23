@@ -222,7 +222,7 @@ storiesOf('Combobox', module)
     );
   })
   .add('Controlled multiselect', () => {
-    const [selection, setSelection] = useState([]);
+    const [selection, setSelection] = useState([] as Array<string>);
 
     const handleChange = (value: Array<string>) => {
       setSelection(value);
