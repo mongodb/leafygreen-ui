@@ -20,7 +20,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
   getNullSelection,
@@ -114,8 +114,19 @@ export default function Combobox<M extends boolean>({
 
   // Tells typescript that selection is multiselect
   const isMultiselect = useCallback(
-    <T extends number | string>(test: Array<T> | T | null): test is Array<T> =>
-      multiselect && isArray(test),
+    <T extends string>(val?: Array<T> | T | null): val is Array<T> => {
+      if (multiselect && (typeof val == 'string' || typeof val == 'number')) {
+        consoleOnce.error(
+          `Error in Combobox: multiselect is set to \`true\`, but recieved a ${typeof val} value: "${val}"`,
+        );
+      } else if (!multiselect && isArray(val)) {
+        consoleOnce.error(
+          'Error in Combobox: multiselect is set to `false`, but recieved an Array value',
+        );
+      }
+
+      return multiselect && isArray(val);
+    },
     [multiselect],
   );
 
