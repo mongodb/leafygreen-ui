@@ -10,7 +10,7 @@ storiesOf('SegmentedControl', module)
     const [selectedFruit, setSelectedFruit] = useState('carrot');
 
     return (
-      <LeafygreenProvider>
+      <LeafygreenProvider baseFontSize={select('Base Font Size', [14, 16], 14)}>
         <SegmentedControl
           name="fruit"
           size={select('Size', ['small', 'default', 'large'], 'default')}
