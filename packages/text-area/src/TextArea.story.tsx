@@ -17,7 +17,7 @@ storiesOf('TextArea', module).add('Default', () => {
         `}
       >
         <TextArea
-          label={text('Label', 'TextArea Label')}
+          label={text('Label', 'Label')}
           description={text(
             'Description',
             'This is a description for the textarea',

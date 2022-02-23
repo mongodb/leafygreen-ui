@@ -31,9 +31,10 @@ useEventListener('click', handleClick, { enabled });
 ### Properties
 
 | Prop                    | Type                                       | Description                                                                                                                                                                    | Default           |
-| ----------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------- | --- | ---------- | -------- | ------------------------------------------------------------------------------ | --- |
+| ----------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------- |
 | `type`                  | `Global Event Handler`, `string`           | Type of event to listen for.                                                                                                                                                   |                   |
-| `eventCallback`         | `function`                                 | Callback executed when event is triggered.                                                                                                                                     |                   |     | `optional` | `object` | Optional third argument passed to function with implementation specifications. |     |
+| `eventCallback`         | `function`                                 | Callback executed when event is triggered.                                                                                                                                     |                   |
+| `optional`              | `object`                                   | Optional third argument passed to function with implementation specifications.                                                                                                 |                   |
 | `optional.options`      | `AddEventListenerOptions` excluding `once` | Parameter to specify options passed to the eventListener. To enable the `once` option, see `optional.enabled`.                                                                 |                   |
 | `optional.enabled`      | `boolean`, `'once'`                        | Determines whether the event handler is attached or not. Setting this to `"once"` will ensure the event handler will be detached after the initial time an event is triggered. | `true`            |
 | `optional.dependencies` | `Array`                                    | Array to be passed to useEffect hook, such that the hook will only run if the array's values have changed.                                                                     | `[enabled, type]` |
@@ -172,3 +173,48 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 useIdAllocator({ prefix: 'select-component', id: idProp });
 ```
+
+## useForwardedRef
+
+Returns a MutableRefObject from the forwarded ref.
+
+### Example
+
+```jsx
+import { useForwardedRef } from '@leafygreen-ui/hooks';
+
+const MyComponent = React.forwardRef((props, forwardedRef) => {
+  const ref = useForwawrdedRef(forwardedRef, null);
+});
+```
+
+### Properties
+
+| Prop                 | Type                                        | Description              | Default |
+| -------------------- | ------------------------------------------- | ------------------------ | ------- |
+| `forwardedRefOrRefs` | `SettableRef`, `Array<SettableRef>`, `null` | The forwarded ref        |         |
+| `initialValue`       | `T`                                         | Initial value of the ref |         |
+
+## useDynamicRefs
+
+useDynamicRefs is a hook that allows you to create multiple refs for dynamically created elements. Use the `prefix` property to create multiple sets of dynamic refs.
+
+### Example
+
+```jsx
+import { useDynamicRefs } from '@leafygreen-ui/hooks';
+
+const getRef = useDynamicRefs();
+...
+return ['a','b','c'].map(x => {
+  const divRef = getRef(x)
+  return <div ref={divRef}>{x}</div>
+})
+
+```
+
+### Properties
+
+| Prop     | Type     | Description                                         | Default |
+| -------- | -------- | --------------------------------------------------- | ------- |
+| `prefix` | `string` | Optional prefix to that genterates a ref name space |         |

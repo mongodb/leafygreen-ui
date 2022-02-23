@@ -158,6 +158,11 @@ function Code({
   onChange,
   customActionButtons = [],
   showCustomActionButtons = false,
+  usePortal = true,
+  portalClassName,
+  portalContainer,
+  scrollContainer,
+  popoverZIndex,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -259,6 +264,18 @@ function Code({
     overflow: hidden;
   `;
 
+  const popoverProps = {
+    popoverZIndex,
+    ...(usePortal
+      ? {
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
+      : { usePortal }),
+  } as const;
+
   return (
     <div className={wrapperStyle}>
       {showWindowChrome && (
@@ -302,6 +319,7 @@ function Code({
               isMultiline={isMultiline}
               customActionButtons={filteredCustomActionIconButtons}
               showCustomActionButtons={showCustomActionsInPanel}
+              {...popoverProps}
             />
           )}
       </div>

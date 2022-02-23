@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 7.0.0
+
+### Major Changes
+
+- b4c5700: Updates Radio Box Group according to visual brand refresh
+
 ## 6.1.5
 
 ### Patch Changes

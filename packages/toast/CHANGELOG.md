@@ -1,5 +1,19 @@
 # @leafygreen-ui/toast
 
+## 1.0.0
+
+### Major Changes
+
+- 8457f92: Updates toast styles in line with visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+  - @leafygreen-ui/typography@9.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
 ## 0.4.10
 
 ### Patch Changes

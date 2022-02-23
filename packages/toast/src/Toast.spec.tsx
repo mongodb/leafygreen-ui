@@ -169,7 +169,7 @@ describe('packages/toast', () => {
   describe('the correct icon is rendered', () => {
     const expectedVariantIcons: Record<Variant, string> = {
       [Variant.Success]: 'Checkmark With Circle Icon',
-      [Variant.Note]: 'Cloud Icon',
+      [Variant.Note]: 'Info With Circle Icon',
       [Variant.Warning]: 'Warning Icon',
       [Variant.Important]: 'Important With Circle Icon',
       [Variant.Progress]: 'Refresh Icon',
