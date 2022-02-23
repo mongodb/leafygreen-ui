@@ -50,6 +50,14 @@ storiesOf('Combobox', module)
           <ComboboxOption value="apple" displayName="Apple" />
           <ComboboxOption value="banana" displayName="Banana" />
           <ComboboxOption value="carrot" displayName="Carrot" />
+          <ComboboxOption
+            value="paragraph"
+            displayName="Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet."
+          />
+          <ComboboxOption
+            value="hash"
+            displayName="5f4dcc3b5aa765d61d8327deb882cf99"
+          />
           <ComboboxOption value="dragonfruit" displayName="Dragonfruit" />
           <ComboboxOption value="eggplant" displayName="Eggplant" />
           <ComboboxOption value="fig" displayName="Fig" />

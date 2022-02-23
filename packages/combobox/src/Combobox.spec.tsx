@@ -154,6 +154,22 @@ describe('packages/combobox', () => {
         const [optionEl] = Array.from(optionElements!);
         expect(optionEl).toHaveTextContent('abc-def');
       });
+
+      test('Options with long names are rendered with the full text', () => {
+        const displayName = `Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.`;
+        const options: Array<OptionObject> = [
+          {
+            value: 'paragraph',
+            displayName,
+          },
+        ];
+
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        expect(optionEl).toHaveTextContent(displayName);
+      });
+
       // Grouped Options
       describe('Grouped Options', () => {
         test('Grouped items should render', () => {
@@ -213,6 +229,26 @@ describe('packages/combobox', () => {
         expect(inputEl).toHaveValue('Apple');
       });
 
+      testSingleSelect(
+        'Initial value prop renders truncated long text input value',
+        () => {
+          const displayName = `Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.`;
+          const options: Array<OptionObject> = [
+            {
+              value: 'paragraph',
+              displayName,
+            },
+            ...defaultOptions,
+          ];
+          const initialValue = 'paragraph';
+          const { inputEl } = renderCombobox(select, { initialValue, options });
+          expect(inputEl).toHaveValue(displayName);
+          expect(inputEl.scrollWidth).toBeGreaterThanOrEqual(
+            inputEl.clientWidth,
+          );
+        },
+      );
+
       testMultiSelect('Initial value prop renders chips', () => {
         const initialValue = ['apple', 'banana'];
         const { queryChipsByName, queryAllChips } = renderCombobox(select, {
@@ -249,10 +285,39 @@ describe('packages/combobox', () => {
     });
 
     /**
+     * Input element
+     */
+    describe('Input interaction', () => {
+      test('Typing any character updates the input', () => {
+        const { inputEl } = renderCombobox(select);
+        userEvent.type(inputEl, 'zy');
+        expect(inputEl).toHaveValue('zy');
+      });
+
+      test('Initial value prop renders truncated long text input value', () => {
+        const displayName = `Donec id elit non mi porta gravida at eget metus. Aenean lacinia bibendum nulla sed consectetur.`;
+        const { inputEl } = renderCombobox(select);
+        userEvent.type(inputEl, displayName);
+        expect(inputEl).toHaveValue(displayName);
+        expect(inputEl.scrollWidth).toBeGreaterThanOrEqual(inputEl.clientWidth);
+      });
+    });
+
+    /**
      * Controlled
      * (i.e. `value` prop)
      */
     describe('When value is controlled', () => {
+      test('Typing any character updates the input', () => {
+        const value = select === 'multiple' ? [] : '';
+        const { inputEl } = renderCombobox(select, {
+          value,
+        });
+        expect(inputEl).toHaveValue('');
+        userEvent.type(inputEl, 'z');
+        expect(inputEl).toHaveValue('z');
+      });
+
       testSingleSelect('Text input renders with value update', () => {
         let value = 'apple';
         const { inputEl, rerenderCombobox } = renderCombobox(select, {
@@ -649,7 +714,17 @@ describe('packages/combobox', () => {
         });
       });
 
-      test('Space key selects highlighted option', () => {
+      test('Space key types a space character', () => {
+        const { inputEl, openMenu, queryAllChips } = renderCombobox(select);
+        openMenu();
+        userEvent.type(inputEl, 'a{space}fruit');
+        expect(inputEl).toHaveValue('a fruit');
+        if (select === 'multiple') {
+          expect(queryAllChips()).toHaveLength(0);
+        }
+      });
+
+      test('Space key selects highlighted option when focused', () => {
         const { inputEl, openMenu, queryChipsByName } = renderCombobox(select);
         openMenu();
         userEvent.type(inputEl, '{arrowdown}{space}');
