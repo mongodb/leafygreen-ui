@@ -66,7 +66,7 @@ const baseSliderStyles = css`
 `;
 
 const baseButtonStyles = css`
-  transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
+  transition: ${transitionInMS}ms all ease-in-out, 0s background-color linear;
   display: inline-block;
   flex-shrink: 0;
   position: relative;
