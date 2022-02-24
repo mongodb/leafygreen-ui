@@ -89,6 +89,12 @@ const codeWrapperStyleWithWindowChrome = css`
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 `;
+const codeWrapperStyleWithLanguagePicker = css`
+  border-left: 0;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+`;
 
 const singleLineCodeWrapperStyle = css`
   display: flex;
@@ -260,6 +266,8 @@ function Code({
     ? currentLanguage.language
     : languageProp;
 
+  const showLanguagePicker = !!currentLanguage;
+
   useEffect(() => {
     setShowCopyBar(copyable && ClipboardJS.isSupported());
   }, [copyable, showWindowChrome]);
@@ -336,9 +344,9 @@ function Code({
           getScrollShadow(scrollState, mode),
           {
             [contentWrapperStylesWithWindowChrome]: showWindowChrome,
-            [contentWrapperStyleWithPicker]: !!currentLanguage,
+            [contentWrapperStyleWithPicker]: showLanguagePicker,
             [scrollShadowStylesWithWindowChrome]: showWindowChrome,
-            [scrollShadowStylesWithPicker]: !!currentLanguage,
+            [scrollShadowStylesWithPicker]: showLanguagePicker,
           },
         )}
       >
@@ -349,6 +357,7 @@ function Code({
             getCodeWrapperVariantStyle(mode),
             {
               [codeWrapperStyleWithWindowChrome]: showWindowChrome,
+              [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
               [singleLineCodeWrapperStyle]: !isMultiline,
               [codewrapperFocusStyle]: showFocus,
             },

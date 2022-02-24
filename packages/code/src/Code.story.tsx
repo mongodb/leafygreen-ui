@@ -146,7 +146,7 @@ storiesOf('Code', module)
       <LeafyGreenProvider>
         <div
           className={css`
-            width: 200px;
+            width: 512px;
           `}
         >
           <LanguageSwitcherExample
