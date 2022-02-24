@@ -10,7 +10,6 @@ const title = 'Test button title';
 const child = 'Button child';
 
 function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
-  // @ts-expect-error
   const utils = render(<Button {...props} data-testid="button-id" />);
   const button = utils.getByTestId('button-id');
   return { ...utils, button };
