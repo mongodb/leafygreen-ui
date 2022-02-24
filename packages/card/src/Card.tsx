@@ -35,7 +35,7 @@ const lightHoverBoxShadow = `0 4px 20px -4px ${transparentize(
 )}`;
 const lightFocusBoxShadow = `
   0 0 0 2px ${palette.white},
-  0 0 0 4px ${palette.blue.base}
+  0 0 0 4px ${palette.blue.light1}
 `;
 const darkBaseBoxShadow = `0 4px 20px -4px  ${transparentize(0.3, '#000')}`;
 const darkHoverBoxShadow = `0 2px 12px -2px ${transparentize(0.1, '#000')}`;

@@ -103,7 +103,7 @@ const codewrapperFocusStyle = css`
   &:focus-visible,
   &:focus-within {
     outline: none;
-    box-shadow: 0 0 0 2px ${palette.blue.base} inset;
+    box-shadow: 0 0 0 2px ${palette.blue.light1} inset;
   }
 `;
 
