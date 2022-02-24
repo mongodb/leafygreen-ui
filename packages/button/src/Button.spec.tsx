@@ -106,13 +106,6 @@ describe('packages/button', () => {
       expect(button.tagName.toLowerCase()).toBe('button');
     });
 
-    test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-      const { button } = renderButton({
-        as: 'div',
-      });
-      expect(button.tagName.toLowerCase()).toBe('div');
-    });
-
     test(`does not render the disabled attribute for a disabled link`, () => {
       const { button } = renderButton({
         href: 'http://mongodb.design',
@@ -137,6 +130,17 @@ describe('packages/button', () => {
       const onClick = jest.fn();
       const { button } = renderButton({
         disabled: true,
+        onClick,
+      });
+      fireEvent.click(button);
+      expect(onClick.mock.calls.length).toBe(0);
+    });
+
+    test('does not fire onClick handler on disabled anchor', () => {
+      const onClick = jest.fn();
+      const { button } = renderButton({
+        disabled: true,
+        as: 'a',
         onClick,
       });
       fireEvent.click(button);
