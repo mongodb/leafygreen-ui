@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean, text, number } from '@storybook/addon-knobs';
+import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Language } from './types';
@@ -96,13 +96,9 @@ storiesOf('Code', module)
         <LeafyGreenProvider baseFontSize={baseFontSize}>
           <div className={wrapperStyle}>
             <Code
-              showLineNumbers={boolean('Show line numbers', false)}
-              lineNumberStart={number("First row's line number", 1)}
-              showWindowChrome={boolean('Show window chrome', false)}
-              showCustomActionButtons={boolean(
-                'Show custom action buttons',
-                false,
-              )}
+              showLineNumbers={showLineNumbers}
+              showWindowChrome={showWindowChrome}
+              showCustomActionButtons={showCustomActionButtons}
               customActionButtons={actionData}
               copyable={copyable}
               chromeTitle={chromeTitle}
