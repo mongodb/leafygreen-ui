@@ -132,7 +132,7 @@ describe('packages/button', () => {
         onClick,
       });
       fireEvent.click(button);
-      expect(onClick.mock.calls.length).toBe(0);
+      expect(onClick).toHaveBeenCalledTimes(0);
     });
 
     test('does not fire onClick handler on disabled anchor', () => {
@@ -143,7 +143,7 @@ describe('packages/button', () => {
         onClick,
       });
       fireEvent.click(button);
-      expect(onClick.mock.calls.length).toBe(0);
+      expect(onClick).toHaveBeenCalledTimes(0);
     });
 
     test('href attribute exists on a link', () => {
