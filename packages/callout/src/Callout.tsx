@@ -7,6 +7,7 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+import { Overline } from '@leafygreen-ui/typography';
 
 export const Variant = {
   Note: 'note',
@@ -36,10 +37,6 @@ const baseStyle = css`
 `;
 
 const headerStyle = css`
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  line-height: 16px;
   padding: 12px 24px 12px 52px;
   position: relative;
   text-transform: uppercase;
@@ -208,7 +205,20 @@ function Callout({
           className={headerIconStyle}
           role="presentation"
         />
-        {headerLabels[variant]}
+        <Overline
+          as="h3"
+          className={cx(
+            css`
+              color: inherit;
+              font-size: 12px;
+              font-weight: 500;
+              letter-spacing: 1px;
+              line-height: 16px;
+            `,
+          )}
+        >
+          {headerLabels[variant]}
+        </Overline>
       </div>
       <div className={bodyStyle}>
         {title && (
