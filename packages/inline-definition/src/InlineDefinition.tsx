@@ -10,10 +10,13 @@ import { palette } from '@leafygreen-ui/palette';
  *   ╰―――――――――――╯
  *  ˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚
  */
+
+const underlineDot = 2;
+const underlineGap = 2;
 const underline = css`
   background-repeat: repeat-x;
-  background-position: -2px bottom;
-  background-size: 4px 2px;
+  background-position: 0px bottom;
+  background-size: ${underlineDot + underlineGap}px ${underlineDot}px;
 
   --lg-inline-definition-underline-color: ${palette.gray.dark1};
   background-image: radial-gradient(
