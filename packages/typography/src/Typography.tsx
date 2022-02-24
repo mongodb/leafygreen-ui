@@ -102,29 +102,50 @@ Subtitle.displayName = 'Subtitle';
  */
 
 type BodyFontWeight = 'regular' | 'medium';
-type BodyProps = HTMLElementProps<'p'> & {
+type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> & {
   /**
    * font-weight applied to typography element
    * default: `regular`
    */
   weight?: BodyFontWeight;
-  as?: keyof JSX.IntrinsicElements;
+  as?: T;
 };
 
-const Body: ExtendableBox<BodyProps, 'p'> = ({
+function Body<T extends keyof JSX.IntrinsicElements>({
   className,
   weight = 'regular',
-  as = 'p',
+  as = 'p' as T,
   ...rest
-}: BodyProps) => {
+}: BodyProps<T>) {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
-  const fontWeight = css`
-    font-weight: ${weight === 'regular' ? 400 : 500};
+  const fontWeights: {
+    [key: string]: {
+      [key in BodyFontWeight]: number;
+    };
+  } = {
+    default: {
+      regular: 400,
+      medium: 500,
+    },
+    strong: {
+      regular: 700,
+      medium: 800,
+    },
+    b: {
+      regular: 700,
+      medium: 800,
+    },
+  } as const;
 
-    strong,
+  // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
+  const fontWeight = css`
+    font-weight: ${fontWeights['default'][weight]};
+    strong {
+      font-weight: ${fontWeights['strong'][weight]};
+    }
     b {
-      font-weight: ${weight === 'regular' ? 700 : 800};
+      font-weight: ${fontWeights['b'][weight]};
     }
   `;
 
@@ -135,7 +156,7 @@ const Body: ExtendableBox<BodyProps, 'p'> = ({
       {...rest}
     />
   );
-};
+}
 
 Body.displayName = 'Body';
 
