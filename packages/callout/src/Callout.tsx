@@ -212,8 +212,7 @@ function Callout({
           className={cx(
             css`
               color: inherit;
-              font-weight: 600;
-              letter-spacing: 0.4px;
+              letter-spacing: 0.6px;
             `,
           )}
         >
