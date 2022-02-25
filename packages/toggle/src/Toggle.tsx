@@ -4,7 +4,7 @@ import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
 
 export const Size = {
   Default: 'default',
@@ -427,7 +427,7 @@ function Toggle({
         {...toggleButton.prop}
         {...rest}
       >
-        {size === 'default' && !disabled && (
+        {size === 'default' && !disabled && darkMode && (
           <>
             <span
               aria-hidden={true}
