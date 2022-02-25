@@ -7,7 +7,7 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { Overline } from '@leafygreen-ui/typography';
+import { Overline, Subtitle } from '@leafygreen-ui/typography';
 
 export const Variant = {
   Note: 'note',
@@ -51,7 +51,9 @@ const headerIconStyle = css`
 `;
 
 const titleStyle = css`
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: inherit;
+  color: inherit;
 `;
 
 const bodyStyle = css`
@@ -68,7 +70,7 @@ const fontSet = {
   `,
   [16]: css`
     font-size: 16px;
-    line-height: 24px;
+    line-height: 28px;
   `,
 };
 
@@ -206,14 +208,12 @@ function Callout({
           role="presentation"
         />
         <Overline
-          as="h3"
+          as="h2"
           className={cx(
             css`
               color: inherit;
-              font-size: 12px;
-              font-weight: 500;
-              letter-spacing: 1px;
-              line-height: 16px;
+              font-weight: 600;
+              letter-spacing: 0.4px;
             `,
           )}
         >
@@ -222,7 +222,9 @@ function Callout({
       </div>
       <div className={bodyStyle}>
         {title && (
-          <div className={cx(titleStyle, fontSet[baseFontSize])}>{title}</div>
+          <Subtitle as="h3" className={cx(titleStyle, fontSet[baseFontSize])}>
+            {title}
+          </Subtitle>
         )}
         <div className={fontSet[baseFontSize]}>{contents}</div>
       </div>
