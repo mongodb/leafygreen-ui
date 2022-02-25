@@ -132,20 +132,14 @@ function Body<T extends keyof JSX.IntrinsicElements>({
       regular: 700,
       medium: 800,
     },
-    b: {
-      regular: 700,
-      medium: 800,
-    },
   } as const;
 
   // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
   const fontWeight = css`
     font-weight: ${fontWeights['default'][weight]};
-    strong {
-      font-weight: ${fontWeights['strong'][weight]};
-    }
+    strong,
     b {
-      font-weight: ${fontWeights['b'][weight]};
+      font-weight: ${fontWeights['strong'][weight]};
     }
   `;
 
