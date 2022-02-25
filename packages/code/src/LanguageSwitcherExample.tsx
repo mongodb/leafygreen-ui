@@ -147,6 +147,7 @@ function LanguageSwitcher({
   return (
     <Code
       language={language?.displayName}
+      lineNumberStart={1}
       onChange={handleChange}
       languageOptions={languageOptions}
       darkMode={darkMode}

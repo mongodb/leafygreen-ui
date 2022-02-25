@@ -62,7 +62,7 @@ describe('packages/Syntax', () => {
 
   test("highlights code when language is 'javascript'", () => {
     const { container } = render(
-      <Syntax className={className} language="javascript">
+      <Syntax className={className} language="javascript" lineNumberStart={1}>
         {singleLine}
       </Syntax>,
     );
