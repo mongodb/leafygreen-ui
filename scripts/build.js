@@ -16,24 +16,19 @@ if (args.includes('--watch')) {
   cmdArgs.push('--', '--watch');
 }
 
-if (args.length > 0) {
-  let packageArgs;
+const packages = args.some(arg => arg.startsWith('^'))
+  ? getAllPackageNames().filter(pkg => !args.includes(`^${pkg}`))
+  : args;
 
-  // If we need to ignore some packages
-  if (args.some(arg => arg.startsWith('^'))) {
-    packageArgs = getAllPackageNames()
-      .filter(pkg => !args.includes(`^${pkg}`))
-      .flatMap(pkg => ['--scope', `@leafygreen-ui/${pkg}`]);
-  } else {
-    // Add only the package names passed in
-    packageArgs = args.flatMap(pkg => ['--scope', `@leafygreen-ui/${pkg}`]);
-  }
-  cmdArgs.unshift(...packageArgs);
-}
+const packageArgs = packages.flatMap(pkg => [
+  '--scope',
+  `@leafygreen-ui/${pkg}`,
+]);
+cmdArgs.unshift(...packageArgs);
 
 // eslint-disable-next-line no-console
 console.log('Running pre-build...');
-spawnSync('yarn', ['pre-build', ...args], { stdio: 'inherit' });
+spawnSync('yarn', ['pre-build', ...packages], { stdio: 'inherit' });
 
 // Run lerna
 const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
