@@ -10,7 +10,6 @@ const title = 'Test button title';
 const child = 'Button child';
 
 function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
-  // @ts-expect-error
   const utils = render(<Button {...props} data-testid="button-id" />);
   const button = utils.getByTestId('button-id');
   return { ...utils, button };
@@ -106,13 +105,6 @@ describe('packages/button', () => {
       expect(button.tagName.toLowerCase()).toBe('button');
     });
 
-    test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-      const { button } = renderButton({
-        as: 'div',
-      });
-      expect(button.tagName.toLowerCase()).toBe('div');
-    });
-
     test(`does not render the disabled attribute for a disabled link`, () => {
       const { button } = renderButton({
         href: 'http://mongodb.design',
@@ -140,7 +132,18 @@ describe('packages/button', () => {
         onClick,
       });
       fireEvent.click(button);
-      expect(onClick.mock.calls.length).toBe(0);
+      expect(onClick).toHaveBeenCalledTimes(0);
+    });
+
+    test('does not fire onClick handler on disabled anchor', () => {
+      const onClick = jest.fn();
+      const { button } = renderButton({
+        disabled: true,
+        as: 'a',
+        onClick,
+      });
+      fireEvent.click(button);
+      expect(onClick).toHaveBeenCalledTimes(0);
     });
 
     test('href attribute exists on a link', () => {
