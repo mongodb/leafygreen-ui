@@ -104,7 +104,7 @@ const Button: ExtendableBox<
   const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
 
   const buttonProps = {
-    type: type || (!isAnchor && 'button'),
+    type: isAnchor ? undefined : type || 'button',
     className: cx(buttonClassName, className),
     ref: forwardRef,
     // Provide a default value for the as prop
