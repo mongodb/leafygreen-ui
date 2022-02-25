@@ -29,23 +29,29 @@ const offsets = {
   [Mode.Light]: {
     [Size.XSmall]: css`
       margin-top: -3px;
+      margin-left: 4px;
     `,
     [Size.Small]: css`
       margin-top: -3px;
+      margin-left: 8px;
     `,
     [Size.Default]: css`
       margin-top: 0;
+      margin-left: 8px;
     `,
   },
   [Mode.Dark]: {
     [Size.XSmall]: css`
       margin-top: -3px;
+      margin-left: 4px;
     `,
     [Size.Small]: css`
       margin-top: -2px;
+      margin-left: 8px;
     `,
     [Size.Default]: css`
       margin-top: 1px;
+      margin-left: 8px;
     `,
   },
 };
@@ -95,14 +101,8 @@ const inputColorSet = {
       }
     }
 
-    &:focus-visible + div div {
+    &:focus-visible + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
-    }
-
-    &:focus + div:before {
-      transform: scale(1);
-      opacity: 1;
-      border-color: ${uiColors.blue.light1};
     }
 
     &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
@@ -168,6 +168,7 @@ const inputStyle = css`
   height: 0;
   width: 0;
   opacity: 0;
+  margin: 0;
 `;
 
 const divColorSet = (mode: Mode, size: Size) => {
@@ -327,7 +328,7 @@ function Radio({
             [css`
               font-size: 14px;
               font-weight: 400;
-            `]: darkMode,
+            `]: darkMode, // TODO: Refresh - remove when darkMode is updated
             [labelColorSet[mode].disabled]: disabled,
             [css`
               font-size: 12px;
@@ -360,7 +361,7 @@ function Radio({
           focusTargetElement={inputElement}
           className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
           borderRadius="100%"
-          color={!darkMode ? { focused: 'transparent' } : undefined} // TODO: Refresh - overriding the focus style for light mode
+          color={darkMode ? undefined : { focused: 'transparent' }} // TODO: Refresh - overriding the focus style for light mode
           {...inputDisplayWrapper.prop}
         >
           <div
@@ -383,24 +384,13 @@ function Radio({
                       0 1px 0 0 rgba(0, 0, 0, 0.08),
                       0 1px 1px 0 rgba(6, 22, 33, 0.22);
                   }
-                `]: darkMode,
+                `]: darkMode, // TODO: Refresh - remove when darkMode is updated
               },
             )}
           />
         </InteractionRing>
 
-        <div
-          className={cx(
-            css`
-              margin-left: ${size === Size.XSmall && darkMode === true
-                ? 4
-                : 8}px;
-            `,
-            offsets[mode][size],
-          )}
-        >
-          {children}
-        </div>
+        <div className={cx(offsets[mode][size])}>{children}</div>
       </label>
     </div>
   );
