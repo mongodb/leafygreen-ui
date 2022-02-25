@@ -67,6 +67,8 @@ const Button: ExtendableBox<
     rightGlyph,
     children,
     className,
+    as,
+    type,
     ...rest
   }: ButtonProps,
   forwardRef,
@@ -99,31 +101,15 @@ const Button: ExtendableBox<
     showFocus,
   });
 
-  const isAnchor = typeof rest.href === 'string';
-  let type: JSX.IntrinsicElements['button']['type'];
-
-  // Expecting this error based on typing in Box component
-  // @ts-expect-error rest.as may be defined
-  if ((rest.as && rest.as === 'button') || (!isAnchor && !rest.as)) {
-    type = 'button';
-  }
-
-  // Render a disabled link as a button to retain focusability
-  const getButtonTag = (
-    isAnchor: boolean,
-    disabled: boolean,
-  ): 'a' | 'button' => {
-    if (isAnchor && !disabled) return 'a';
-    return 'button';
-  };
+  const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
 
   const buttonProps = {
-    type,
+    type: isAnchor ? undefined : type || 'button',
     className: cx(buttonClassName, className),
     ref: forwardRef,
     // Provide a default value for the as prop
     // If consumping application passes a value for as, it will override the default set here
-    as: getButtonTag(isAnchor, disabled),
+    as: (isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements,
     // only add a disabled prop if not an anchor
     ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,
