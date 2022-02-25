@@ -30,12 +30,7 @@ const h1 = css`
 
 type H1Props = HTMLElementProps<'h1'>;
 
-const H1: ExtendableBox<H1Props, 'h1'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H1: ExtendableBox<H1Props, 'h1'> = ({ className, ...rest }: H1Props) => {
   return <Box as="h1" className={cx(sharedStyles, h1, className)} {...rest} />;
 };
 
@@ -55,12 +50,7 @@ const h2 = css`
 
 type H2Props = HTMLElementProps<'h2'>;
 
-const H2: ExtendableBox<H2Props, 'h2'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H2: ExtendableBox<H2Props, 'h2'> = ({ className, ...rest }: H2Props) => {
   return <Box as="h2" className={cx(sharedStyles, h2, className)} {...rest} />;
 };
 
@@ -78,12 +68,7 @@ const h3 = css`
 
 type H3Props = HTMLElementProps<'h3'>;
 
-const H3: ExtendableBox<H3Props, 'h3'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H3: ExtendableBox<H3Props, 'h3'> = ({ className, ...rest }: H3Props) => {
   return <Box as="h3" className={cx(sharedStyles, h3, className)} {...rest} />;
 };
 
@@ -104,9 +89,7 @@ type SubtitleProps = HTMLElementProps<'h6'>;
 const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
   className,
   ...rest
-}: {
-  className?: string;
-}) => {
+}: SubtitleProps) => {
   return (
     <Box as="h6" className={cx(sharedStyles, subtitle, className)} {...rest} />
   );
@@ -117,31 +100,55 @@ Subtitle.displayName = 'Subtitle';
 /**
  * Body
  */
-type BodyProps = HTMLElementProps<'div'> & {
+
+type BodyFontWeight = 'regular' | 'medium';
+type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> & {
   /**
    * font-weight applied to typography element
    * default: `regular`
    */
-  weight?: 'regular' | 'medium';
+  weight?: BodyFontWeight;
+  as?: T;
 };
 
-function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
+function Body<T extends keyof JSX.IntrinsicElements>({
+  className,
+  weight = 'regular',
+  as = 'p' as T,
+  ...rest
+}: BodyProps<T>) {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
+  const fontWeights: {
+    [key: string]: {
+      [key in BodyFontWeight]: number;
+    };
+  } = {
+    default: {
+      regular: 400,
+      medium: 500,
+    },
+    strong: {
+      regular: 700,
+      medium: 800,
+    },
+  } as const;
 
+  // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
   const fontWeight = css`
-    font-weight: ${weight === 'regular' ? 400 : 500};
-
+    font-weight: ${fontWeights['default'][weight]};
     strong,
     b {
-      font-weight: ${weight === 'regular' ? 700 : 800};
+      font-weight: ${fontWeights['strong'][weight]};
     }
   `;
 
   return (
-    <div {...rest} className={cx(sharedStyles, body, fontWeight, className)}>
-      {children}
-    </div>
+    <Box
+      as={as}
+      className={cx(sharedStyles, body, fontWeight, className)}
+      {...rest}
+    />
   );
 }
 
