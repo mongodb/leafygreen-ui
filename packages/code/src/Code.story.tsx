@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean, text } from '@storybook/addon-knobs';
+import { select, boolean, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Language } from './types';
@@ -41,6 +41,7 @@ storiesOf('Code', module)
       // Knobs
       const darkMode = boolean('darkMode', false);
       const showLineNumbers = boolean('Show line numbers', false);
+      const lineNumberStart = number("First row's line number", 1);
       const showWindowChrome = boolean('Show window chrome', false);
       const showCustomActionButtons = boolean(
         'Show custom action buttons',
@@ -98,6 +99,7 @@ storiesOf('Code', module)
             <Code
               showLineNumbers={showLineNumbers}
               showWindowChrome={showWindowChrome}
+              lineNumberStart={lineNumberStart}
               showCustomActionButtons={showCustomActionButtons}
               customActionButtons={actionData}
               copyable={copyable}

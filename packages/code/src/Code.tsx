@@ -219,6 +219,7 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
  * @param props.language The language used for syntax highlighing.
  * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
  * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
+ * @param props.lineNumberStart Specifies the numbering of the first line in the block. Default: 1
  * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
  * @param props.onCopy Callback fired when Code is copied
  */
@@ -228,6 +229,7 @@ function Code({
   language: languageProp,
   darkMode = false,
   showLineNumbers = false,
+  lineNumberStart = 1,
   showWindowChrome = false,
   chromeTitle = '',
   copyable = true,
@@ -286,6 +288,7 @@ function Code({
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
+      lineNumberStart={lineNumberStart}
       darkMode={darkMode}
       language={highlightLanguage as Language}
       highlightLines={highlightLines}
@@ -407,6 +410,7 @@ Code.propTypes = {
   darkMode: PropTypes.bool,
   className: PropTypes.string,
   showLineNumbers: PropTypes.bool,
+  lineNumberStart: PropTypes.number,
   showWindowChrome: PropTypes.bool,
   chromeTitle: PropTypes.string,
   highlightLines: PropTypes.arrayOf(
