@@ -109,7 +109,7 @@ const Button: ExtendableBox<
     ref: forwardRef,
     // Provide a default value for the as prop
     // If consumping application passes a value for as, it will override the default set here
-    as: isAnchor ? 'a' : 'button',
+    as: (isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements,
     // only add a disabled prop if not an anchor
     ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,
