@@ -61,7 +61,9 @@ function Interactive() {
       >
         <div>
           <div>Modal Content goes here.</div>
-          <Button className={buttonPadding}>Click me, I will not close the modal!</Button>
+          <Button className={buttonPadding}>
+            Click me, I will not close the modal!
+          </Button>
         </div>
       </Modal>
     </>
