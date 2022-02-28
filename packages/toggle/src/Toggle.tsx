@@ -86,8 +86,8 @@ const baseButtonStyles = css`
   &[aria-checked='true'] {
     // We set background-color here to avoid a small issue with overflow clipping
     // that makes this look less seamless than it should.
-    background-color: #43b1e5;
-    border-color: #2e9ed3;
+    background-color: ${palette.blue.base};
+    border-color: ${palette.blue.base};
     transition-delay: ${transitionInMS}ms;
 
     &:before {
@@ -107,7 +107,7 @@ const baseButtonStyles = css`
     left: 0;
     right: 0;
     border-radius: 50px;
-    background-color: #43b1e5;
+    background-color: ${palette.blue.base};
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
     opacity: 0;
     transform: scale(0.85);
@@ -115,6 +115,17 @@ const baseButtonStyles = css`
 
   &:disabled:before {
     opacity: 0;
+  }
+`;
+
+const baseDarkModeButtonStyles = css`
+  &[aria-checked='true'] {
+    background-color: #43b1e5;
+    border-color: #2e9ed3;
+  }
+
+  &:before {
+    background-color: #43b1e5;
   }
 `;
 
@@ -223,13 +234,13 @@ const modeStyles = {
       box-shadow: inset 0 0 5px rgba(6, 22, 33, 0.1);
 
       &[aria-checked='false']:not(:disabled) {
-        background-color: rgba(61, 79, 88, 0.1);
-        border-color: rgba(18, 22, 22, 0.03);
+        background-color: ${palette.gray.base};
+        border-color: ${palette.gray.base};
       }
 
       &:disabled {
-        background-color: rgba(6, 22, 33, 0.09);
-        border-color: rgba(6, 22, 33, 0.04);
+        background-color: ${palette.gray.light2};
+        border-color: ${palette.gray.light2};
         box-shadow: none;
       }
     `,
@@ -245,7 +256,7 @@ const modeStyles = {
 
       ${sliderSelector.disabled} {
         box-shadow: none;
-        background-color: rgba(6, 22, 33, 0.09);
+        background-color: ${palette.gray.light3};
       }
     `,
 
@@ -423,7 +434,14 @@ function Toggle({
         disabled={disabled}
         aria-disabled={disabled}
         ref={setButtonElement}
-        className={cx(baseButtonStyles, buttonModeStyles, buttonSizeStyles)}
+        className={cx(
+          baseButtonStyles,
+          {
+            [baseDarkModeButtonStyles]: darkMode,
+          },
+          buttonModeStyles,
+          buttonSizeStyles,
+        )}
         {...toggleButton.prop}
         {...rest}
       >
