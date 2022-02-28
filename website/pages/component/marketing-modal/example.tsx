@@ -115,7 +115,7 @@ export default function MarketingModalLiveExample() {
                     alt=""
                     src={`${CDN}/images/examples/${graphicCenterImage}`}
                     width={darkMode ? 275 : 278}
-                    height={darkMode ? 220 : 227}
+                    height={darkMode ? 220 : 252.6}
                   />
                 ) : (
                   <img
