@@ -58,7 +58,7 @@ storiesOf('Tabs', module)
         >
           <Tab
             default={boolean('default', true)}
-            name={text('name', 'Brooke Scarlett Yalof')}
+            name={text('name', 'Adam Michael Thompson')}
           >
             {text('Tab Content', 'Hello 1')}
           </Tab>
@@ -81,15 +81,15 @@ storiesOf('Tabs', module)
         >
           <Tab
             default={boolean('default', true)}
-            name={text('name', 'Brooke Scarlett Yalof')}
+            name={text('name', 'Adam Michael Thompson')}
           >
             {text('Tab Content', 'Hello 1')}
           </Tab>
           <Tab
             name={
-              <span>
+              <>
                 <Icon glyph="Support" /> Robert Arnold Audroue
-              </span>
+              </>
             }
           >
             Hello 2

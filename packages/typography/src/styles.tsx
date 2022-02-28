@@ -12,3 +12,9 @@ export const typeScale2 = css`
   line-height: 24px;
   letter-spacing: 0px;
 `;
+
+export const codeTypeScale2 = css`
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 0px;
+`;
