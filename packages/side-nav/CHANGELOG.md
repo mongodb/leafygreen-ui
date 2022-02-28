@@ -1,5 +1,13 @@
 # @leafygreen-ui/side-nav
 
+## 7.2.2
+
+### Patch Changes
+
+- Updated dependencies [717e2cf]
+  - @leafygreen-ui/tooltip@7.0.0
+  - @leafygreen-ui/menu@12.0.1
+
 ## 7.2.1
 
 ### Patch Changes

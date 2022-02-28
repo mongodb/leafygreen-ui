@@ -1,5 +1,16 @@
 # @leafygreen-ui/copyable
 
+## 3.0.0
+
+### Major Changes
+
+- 717e2cf: Updates Copyable for visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [717e2cf]
+  - @leafygreen-ui/tooltip@7.0.0
+
 ## 2.0.11
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @leafygreen-ui/code
 
+## 10.0.0
+
+### Major Changes
+
+- 717e2cf: Updates Code to allign with visual brand update
+  - Removes fixed width when Language picker is shown (`width` was formerly set to a static `700px`)
+
+### Patch Changes
+
+- Updated dependencies [717e2cf]
+  - @leafygreen-ui/icon-button@10.0.0
+
 ## 9.5.0
 
 ### Minor Changes
