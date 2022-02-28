@@ -29,7 +29,7 @@ function Default() {
 
   const graphicCenterImage = darkMode
     ? 'DataLake.png'
-    : 'marketing-center-light.png';
+    : 'marketing-center-light.svg';
   const graphicFillImage = darkMode
     ? 'Realm_Rebrand_Image.png'
     : 'marketing-fill-light.jpg';
