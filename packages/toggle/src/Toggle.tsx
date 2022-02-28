@@ -5,6 +5,7 @@ import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors, palette } from '@leafygreen-ui/palette';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 export const Size = {
   Default: 'default',
@@ -116,6 +117,10 @@ const baseButtonStyles = css`
   &:disabled:before {
     opacity: 0;
   }
+`;
+
+const baseButtonFocusStyles = css`
+  box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
 `;
 
 const baseDarkModeButtonStyles = css`
@@ -231,8 +236,6 @@ const sizeStyles = {
 const modeStyles = {
   [Mode.Light]: {
     button: css`
-      box-shadow: inset 0 0 5px rgba(6, 22, 33, 0.1);
-
       &[aria-checked='false']:not(:disabled) {
         background-color: ${palette.gray.base};
         border-color: ${palette.gray.base};
@@ -390,6 +393,8 @@ function Toggle({
   const isControlled = typeof controlledChecked === 'boolean';
   const normalizedChecked = controlledChecked ?? checked;
 
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
   const onClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     e => {
       onClickProp?.(e);
@@ -425,6 +430,7 @@ function Toggle({
       borderRadius="50px"
       focusTargetElement={buttonElement}
       className={className}
+      color={darkMode ? undefined : { focused: 'transparent' }} // TODO: Refresh - overriding the focus style for light mode
     >
       <button
         role="switch"
@@ -438,6 +444,7 @@ function Toggle({
           baseButtonStyles,
           {
             [baseDarkModeButtonStyles]: darkMode,
+            [baseButtonFocusStyles]: showFocus && !darkMode,
           },
           buttonModeStyles,
           buttonSizeStyles,
