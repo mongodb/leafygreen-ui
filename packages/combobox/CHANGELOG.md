@@ -1,5 +1,13 @@
 # @leafygreen-ui/combobox
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [ab1fd9e]
+  - @leafygreen-ui/icon-button@10.0.0
+  - @leafygreen-ui/inline-definition@2.0.7
+
 ## 1.0.0
 
 ### Major Changes

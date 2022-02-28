@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 6.0.0
+
+### Major Changes
+
+- ab1fd9e: Updates Card component for Visual brand Refresh
+
 ## 5.1.4
 
 ### Patch Changes

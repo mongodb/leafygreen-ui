@@ -1,5 +1,16 @@
 # @leafygreen-ui/modal
 
+## 8.0.0
+
+### Major Changes
+
+- ab1fd9e: Updates modal and confirmation modal styles in line with visual brand refresh. Add prop closeIconColor.
+
+### Patch Changes
+
+- Updated dependencies [ab1fd9e]
+  - @leafygreen-ui/icon-button@10.0.0
+
 ## 7.0.0
 
 ### Major Changes

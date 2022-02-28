@@ -28,7 +28,7 @@
     "polished": "^4.1.3"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^9.2.0"
+    "@leafygreen-ui/code": "^10.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.1.3"
