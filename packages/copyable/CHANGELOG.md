@@ -4,11 +4,11 @@
 
 ### Major Changes
 
-- 717e2cf: Updates Copyable for visual brand refresh
+- ab1fd9e: Updates Copyable for visual brand refresh
 
 ### Patch Changes
 
-- Updated dependencies [717e2cf]
+- Updated dependencies [ab1fd9e]
   - @leafygreen-ui/tooltip@7.0.0
 
 ## 2.0.11

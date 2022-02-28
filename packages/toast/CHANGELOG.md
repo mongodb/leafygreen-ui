@@ -1,12 +1,5 @@
 # @leafygreen-ui/toast
 
-## 1.0.1
-
-### Patch Changes
-
-- Updated dependencies [717e2cf]
-  - @leafygreen-ui/icon-button@10.0.0
-
 ## 1.0.0
 
 ### Major Changes

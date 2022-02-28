@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "2.0.7",
+  "version": "2.0.6",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -26,7 +26,7 @@
     "@leafygreen-ui/emotion": "^4.0.0",
     "@leafygreen-ui/palette": "3.3.0",
     "@leafygreen-ui/icon": "^11.6.0",
-    "@leafygreen-ui/icon-button": "^10.0.0",
+    "@leafygreen-ui/icon-button": "^9.1.6",
     "react-transition-group": "^4.4.1",
     "lodash": "^4.17.21",
     "use-ssr": "^1.0.23"

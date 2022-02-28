@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/pipeline",
-  "version": "2.1.6",
+  "version": "2.1.5",
   "description": "LeafyGreen UI Kit Pipeline",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,7 +24,7 @@
     "@leafygreen-ui/hooks": "^7.0.0",
     "@leafygreen-ui/lib": "^9.0.0",
     "@leafygreen-ui/palette": "^3.2.2",
-    "@leafygreen-ui/tooltip": "^7.0.0",
+    "@leafygreen-ui/tooltip": "^6.3.1",
     "lodash": "^4.17.21",
     "react-children-utilities": "^2.0.0",
     "react-intersection-observer": "8.25.1",

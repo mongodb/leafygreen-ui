@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- 717e2cf: Updates Tabs component for Visual Brand Refresh
+- ab1fd9e: Updates Tabs component for Visual Brand Refresh
 
 ## 5.1.5
 

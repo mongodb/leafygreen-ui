@@ -1,12 +1,5 @@
 # @leafygreen-ui/pipeline
 
-## 2.1.6
-
-### Patch Changes
-
-- Updated dependencies [717e2cf]
-  - @leafygreen-ui/tooltip@7.0.0
-
 ## 2.1.5
 
 ### Patch Changes

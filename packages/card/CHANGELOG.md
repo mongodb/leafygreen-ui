@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- 717e2cf: Updates Card component for Visual brand Refresh
+- ab1fd9e: Updates Card component for Visual brand Refresh
 
 ## 5.1.4
 

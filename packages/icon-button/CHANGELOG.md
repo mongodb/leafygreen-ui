@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- 717e2cf: Updates Icon Button in line with the visual brand refresh
+- ab1fd9e: Updates Icon Button in line with the visual brand refresh
 
 ## 9.1.7
 

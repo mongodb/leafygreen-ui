@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import Modal, { Footer } from '@leafygreen-ui/modal';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Dark: 'dark',
@@ -22,56 +24,91 @@ export type Variant = typeof Variant[keyof typeof Variant];
 
 const titleStyle = css`
   font-size: 24px;
-  font-weight: bold;
-  line-height: 25px;
+  font-weight: 700;
+  line-height: 32px;
   margin-bottom: 10px;
+  margin-top: 0;
+  color: ${palette.black};
 `;
-
-const titleColors = {
-  [Mode.Light]: css`
-    color: ${uiColors.gray.dark2};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.gray.light2};
-  `,
-};
 
 const baseModalStyle = css`
   width: 600px;
   padding: initial;
+  letter-spacing: 0;
 `;
 
 const contentStyle = css`
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: ${fontFamilies.default};
+  font-size: 13px;
   line-height: 20px;
-  letter-spacing: 0;
-  padding: 36px;
+  color: ${palette.black};
 `;
 
-const contentColors = {
-  [Mode.Light]: css`
-    color: ${uiColors.gray.dark1};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.white};
-  `,
+// TODO: Refresh – remove mode logic
+const modeAndVariantContentStyles: Record<Mode, Record<Variant, string>> = {
+  [Mode.Light]: {
+    [Variant.Default]: css`
+      padding: 40px 36px 0px;
+    `,
+    [Variant.Danger]: css`
+      padding: 40px 36px 0px 78px;
+    `,
+  },
+  [Mode.Dark]: {
+    [Variant.Default]: css``,
+    [Variant.Danger]: css``,
+  },
 };
 
 const textEntryInputStyle = css`
   width: 300px;
   margin-top: 14px;
+
+  label {
+    margin-bottom: 3px;
+  }
 `;
 
-const buttonStyle = css`
-  margin: 0 2px;
+// TODO: Refresh - remove mode logic
+const buttonStyle = {
+  [Mode.Light]: css`
+    margin: 0 2px;
 
-  &:first-of-type {
-    margin: 0 0 0 4px;
-  }
+    &:first-of-type {
+      margin: 0 0 0 5px;
+    }
 
-  &:last-of-type {
-    margin: 0 4px 0 0;
+    &:last-of-type {
+      margin: 0 5px 0 0;
+    }
+  `,
+  [Mode.Dark]: css`
+    margin: 0 2px;
+
+    &:first-of-type {
+      margin: 0 0 0 4px;
+    }
+
+    &:last-of-type {
+      margin: 0 4px 0 0;
+    }
+  `,
+};
+
+const warningIconStyles = css`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: ${palette.red.light3};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 36px;
+  top: 40px;
+
+  svg {
+    margin-top: -3px;
   }
 `;
 
@@ -135,8 +172,42 @@ const ConfirmationModal = ({
       setOpen={onCancel}
       darkMode={darkMode}
     >
-      <div className={cx(contentStyle, contentColors[mode])}>
-        <h1 className={cx(titleStyle, titleColors[mode])}>{title}</h1>
+      <div
+        className={cx(
+          contentStyle,
+          {
+            [css`
+              // TODO: Refresh – remove when darkMode is updated
+              font-family: ${fontFamilies.legacy};
+              font-size: 14px;
+              line-height: 20px;
+              padding: 36px;
+              color: ${uiColors.white};
+            `]: darkMode,
+          },
+          modeAndVariantContentStyles[mode][variant],
+        )}
+      >
+        {/* TODO: Refresh - remove mode logic when darkmode is updated */}
+        {variant === Variant.Danger && mode === Mode.Light && (
+          <div className={cx(warningIconStyles)}>
+            <WarningIcon fill={palette.red.base} role="presentation" />
+          </div>
+        )}
+        <h1
+          className={cx(titleStyle, {
+            [css`
+              // TODO: Refresh – remove when darkMode is updated
+              font-weight: bold;
+              line-height: 25px;
+              margin-bottom: 10px;
+              margin-top: revert;
+              color: ${uiColors.gray.light2};
+            `]: darkMode,
+          })}
+        >
+          {title}
+        </h1>
         {children}
         {textEntryConfirmation}
       </div>
@@ -145,12 +216,16 @@ const ConfirmationModal = ({
           variant={variant}
           disabled={!confirmEnabled || submitDisabled}
           onClick={onConfirm}
-          className={buttonStyle}
+          className={buttonStyle[mode]}
           darkMode={darkMode}
         >
           {buttonText}
         </Button>
-        <Button onClick={onCancel} className={buttonStyle} darkMode={darkMode}>
+        <Button
+          onClick={onCancel}
+          className={buttonStyle[mode]}
+          darkMode={darkMode}
+        >
           Cancel
         </Button>
       </Footer>
