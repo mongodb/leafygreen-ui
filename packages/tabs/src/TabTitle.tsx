@@ -138,10 +138,6 @@ const listTitle = css`
   overflow: hidden;
   text-overflow: ellipsis;
   transition: 150ms color ease-in-out;
-<<<<<<< HEAD
-  position: relative;
-=======
->>>>>>> 717e2cff09543475220cf8a7cfabdf6951c7a655
 
   &:focus {
     outline: none;
@@ -229,10 +225,6 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
         [listTitleModeStyles[mode].focus]: showFocus,
         [listTitleModeStyles[mode].hover]: !disabled && !selected,
         [listTitleModeStyles[mode].disabled]: disabled,
-<<<<<<< HEAD
-        [textOverflowStyles]: showEllipsis,
-=======
->>>>>>> 717e2cff09543475220cf8a7cfabdf6951c7a655
       },
       className,
     ),
