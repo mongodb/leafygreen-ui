@@ -14,34 +14,14 @@ import {
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
-
-// The typographic styles below are largely copied from the Body component.
-// We can't use the Body component here due to it rendering a paragraph tag,
-// Which would conflict with any children passed to it containing a div.
-const baseTypeStyle = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${uiColors.gray.dark3};
-  font-weight: 400;
-`;
-
-const typeScale1 = css`
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0px;
-`;
-
-const typeScale2 = css`
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0px;
-`;
+import SvgNotch from './Notch';
+import { borderRadius, notchWidth } from './tooltipConstants';
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -68,12 +48,38 @@ export type Align = typeof Align[keyof typeof Align];
 
 export { Justify };
 
+// The typographic styles below are largely copied from the Body component.
+// We can't use the Body component here due to it rendering a paragraph tag,
+// Which would conflict with any children passed to it containing a div.
+const baseTypeStyle = css`
+  margin: unset;
+  font-family: ${fontFamilies.default};
+  color: ${palette.gray.light1};
+  font-weight: 400;
+`;
+
+const typeScale1 = css`
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0px;
+`;
+
+const typeScale2 = css`
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+`;
+
 const baseStyles = css`
-  padding: 14px 16px;
-  border-radius: 3px;
-  box-shadow: 0px 2px 4px -1px ${transparentize(0.8, uiColors.black)};
+  display: flex;
+  align-items: center;
+  border-radius: ${borderRadius}px;
+  padding: 12px ${borderRadius}px;
+  box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
   cursor: default;
   overflow-wrap: break-word;
+  width: fit-content;
+  max-width: 256px;
 `;
 
 const positionRelative = css`
@@ -81,37 +87,32 @@ const positionRelative = css`
 `;
 
 const colorSet = {
-  [Mode.Dark]: {
-    tooltip: css`
-      background-color: ${uiColors.gray.dark3};
-      color: ${uiColors.gray.light1};
-    `,
-    children: css`
-      color: ${uiColors.gray.light1};
-    `,
-    notch: css`
-      background-color: ${uiColors.gray.dark3};
-      box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)};
-    `,
-  },
-
   [Mode.Light]: {
     tooltip: css`
-      background-color: ${uiColors.gray.light3};
-      color: ${uiColors.gray.dark2};
-      border: 1px solid ${uiColors.gray.light2};
+      background-color: ${palette.black};
+      color: ${palette.gray.light1};
     `,
     children: css`
-      color: ${uiColors.gray.dark2};
+      color: inherit;
     `,
-    notch: css`
-      background-color: ${uiColors.gray.light3};
-      border: 1px solid ${uiColors.gray.light2};
-      box-shadow: 2px 2px 4px ${transparentize(0.9, uiColors.black)};
+    notchFill: palette.black,
+  },
+  [Mode.Dark]: {
+    tooltip: css`
+      background-color: ${palette.gray.light3};
+      color: ${uiColors.gray.dark3};
     `,
+    children: css`
+      color: inherit;
+    `,
+    notchFill: palette.gray.light3,
   },
 };
 
+const minSize = notchWidth + 2 * borderRadius;
+const minHeightStyle = css`
+  min-height: ${minSize}px;
+`;
 interface PopoverFunctionParameters {
   align: Align;
   justify: Justify;
@@ -262,19 +263,19 @@ function Tooltip({
         case TriggerEvent.Hover:
           return {
             onMouseEnter: debounce((e: MouseEvent) => {
-              triggerHandler('onMouseEnter', e);
+              userTriggerHandler('onMouseEnter', e);
               setOpen(true);
             }, 35),
             onMouseLeave: debounce((e: MouseEvent) => {
-              triggerHandler('onMouseLeave', e);
+              userTriggerHandler('onMouseLeave', e);
               handleClose();
             }, 35),
             onFocus: (e: MouseEvent) => {
-              triggerHandler('onFocus', e);
+              userTriggerHandler('onFocus', e);
               setOpen(true);
             },
             onBlur: (e: MouseEvent) => {
-              triggerHandler('onBlur', e);
+              userTriggerHandler('onBlur', e);
               handleClose();
             },
           };
@@ -284,14 +285,14 @@ function Tooltip({
             onClick: (e: MouseEvent) => {
               // ensure that we don't close the tooltip when content inside tooltip is clicked
               if (e.target !== tooltipNode) {
-                triggerHandler('onClick', e);
+                userTriggerHandler('onClick', e);
                 setOpen((curr: boolean) => !curr);
               }
             },
           };
       }
 
-      function triggerHandler(handler: string, e: MouseEvent): void {
+      function userTriggerHandler(handler: string, e: MouseEvent): void {
         // call any click handlers already on the trigger
         if (
           triggerProps &&
@@ -341,8 +342,8 @@ function Tooltip({
   };
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-
   const active = enabled && open;
+  const isLeftOrRightAligned = ['left', 'right'].includes(align);
 
   const tooltip = (
     <Popover
@@ -352,6 +353,13 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
+      className={cx({
+        [css`
+          // Try to fit all the content on one line (until it hits max-width)
+          // Overrides default behavior, which is to set width to size of the trigger
+          width: max-content;
+        `]: !usePortal,
+      })}
       {...popoverProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
@@ -359,7 +367,11 @@ function Tooltip({
           notchContainer: notchContainerStyle,
           notch: notchStyle,
           tooltip: tooltipNotchStyle,
-        } = notchPositionStyles(align, justify, referenceElPos);
+        } = notchPositionStyles({
+          align,
+          justify,
+          triggerRect: referenceElPos,
+        });
 
         return (
           <div
@@ -370,6 +382,9 @@ function Tooltip({
               baseStyles,
               tooltipNotchStyle,
               colorSet[mode].tooltip,
+              {
+                [minHeightStyle]: isLeftOrRightAligned,
+              },
               className,
             )}
             ref={setTooltipNode}
@@ -385,7 +400,10 @@ function Tooltip({
             </div>
 
             <div className={notchContainerStyle}>
-              <div className={cx(notchStyle, colorSet[mode].notch)} />
+              <SvgNotch
+                className={cx(notchStyle)}
+                fill={colorSet[mode].notchFill}
+              />
             </div>
           </div>
         );
