@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 13.0.1
+
+### Patch Changes
+
+- 686ecae: Disabling onClicks for Button components when as="a"
+
 ## 13.0.0
 
 ### Major Changes
