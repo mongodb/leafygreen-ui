@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 9.5.0
+
+### Minor Changes
+
+- 1067fe9: Add support to specify starting value for line numbering.
+
 ## 9.4.0
 
 ### Minor Changes
