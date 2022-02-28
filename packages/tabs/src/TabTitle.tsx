@@ -165,7 +165,12 @@ const listTitle = css`
       transform: scaleX(1);
     }
   }
+
+  > * {
+    vertical-align: middle;
+  }
 `;
+
 interface BaseTabTitleProps {
   darkMode?: boolean;
   selected?: boolean;

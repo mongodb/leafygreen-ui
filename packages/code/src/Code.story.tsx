@@ -41,6 +41,7 @@ storiesOf('Code', module)
       // Knobs
       const darkMode = boolean('darkMode', false);
       const showLineNumbers = boolean('Show line numbers', false);
+      const lineNumberStart = number("First row's line number", 1);
       const showWindowChrome = boolean('Show window chrome', false);
       const showCustomActionButtons = boolean(
         'Show custom action buttons',
@@ -98,6 +99,7 @@ storiesOf('Code', module)
             <Code
               showLineNumbers={showLineNumbers}
               showWindowChrome={showWindowChrome}
+              lineNumberStart={lineNumberStart}
               showCustomActionButtons={showCustomActionButtons}
               customActionButtons={actionData}
               copyable={copyable}
@@ -144,11 +146,20 @@ storiesOf('Code', module)
 
     return (
       <LeafyGreenProvider>
-        <LanguageSwitcherExample
-          darkMode={darkMode}
-          showCustomActionButtons={boolean('Show custom action buttons', false)}
-          customActionButtons={actionData}
-        />
+        <div
+          className={css`
+            width: 512px;
+          `}
+        >
+          <LanguageSwitcherExample
+            darkMode={darkMode}
+            showCustomActionButtons={boolean(
+              'Show custom action buttons',
+              false,
+            )}
+            customActionButtons={actionData}
+          />
+        </div>
       </LeafyGreenProvider>
     );
   });
