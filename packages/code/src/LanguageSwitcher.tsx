@@ -33,6 +33,16 @@ const menuButtonStyle = css`
     box-shadow: 0 0 0 0;
     border: 0;
   }
+
+  // Override button defaults
+  > *:last-child {
+    grid-template-columns: 16px 1fr 16px;
+    padding: 0 12px;
+    > svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
 `;
 
 const buttonModeStyle = {

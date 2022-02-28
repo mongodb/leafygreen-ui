@@ -121,6 +121,11 @@ const copyableButtonShadowStyle = css`
 const buttonStyle = css`
   height: 100%;
   border-radius: 0 6px 6px 0;
+
+  // The ripple element
+  & > :first-child {
+    border-radius: 0 6px 6px 0;
+  }
 `;
 
 const iconStyle = css`

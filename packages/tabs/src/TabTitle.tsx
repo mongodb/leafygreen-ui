@@ -1,18 +1,17 @@
-import React, { useState, useRef, useEffect, RefObject } from 'react';
+import React, { useRef, useEffect, RefObject } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { Mode } from './Tabs';
 import { getNodeTextContent } from './getNodeTextContent';
 
 const pseudoBold = `
-  0.125px 0 currentColor,
-  -0.125px 0 currentColor,
-  0 0.125px currentColor,
-  0 -0.125px currentColor
+  0.0625px 0 currentColor,
+  -0.0625px 0 currentColor,
+  0 0.0625px currentColor,
+  0 -0.0625px currentColor
 `;
 
 interface ListTitleMode {
@@ -129,14 +128,20 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
 };
 
 const listTitle = css`
+  position: relative;
+  max-width: 300px;
+  padding: 12px 16px;
   background-color: transparent;
   border: 0px;
-  padding: 12px 16px;
   text-decoration: none;
-  max-width: 300px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: 150ms color ease-in-out;
+<<<<<<< HEAD
   position: relative;
+=======
+>>>>>>> 717e2cff09543475220cf8a7cfabdf6951c7a655
 
   &:focus {
     outline: none;
@@ -164,12 +169,10 @@ const listTitle = css`
       transform: scaleX(1);
     }
   }
-`;
 
-const textOverflowStyles = css`
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  > * {
+    vertical-align: middle;
+  }
 `;
 
 interface BaseTabTitleProps {
@@ -194,7 +197,6 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   ...rest
 }: BaseTabTitleProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const [showEllipsis, setShowEllipsis] = useState(false);
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -217,20 +219,6 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     }
   }, [parentRef, disabled, selected, titleRef]);
 
-  useIsomorphicLayoutEffect(() => {
-    const titleNode = titleRef.current;
-
-    if (titleNode == null) {
-      return;
-    }
-
-    // Max-width of TabTitle is 300 pixels, and we only want to show ellipsis when the title exceeds this length
-    // When this style isn't conditionally applied, TabTitle will automatically truncate based on available space in the viewport.
-    if (titleNode.scrollWidth > 300) {
-      setShowEllipsis(true);
-    }
-  }, [titleRef, setShowEllipsis]);
-
   const sharedTabProps = {
     ...rest,
     className: cx(
@@ -241,7 +229,10 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
         [listTitleModeStyles[mode].focus]: showFocus,
         [listTitleModeStyles[mode].hover]: !disabled && !selected,
         [listTitleModeStyles[mode].disabled]: disabled,
+<<<<<<< HEAD
         [textOverflowStyles]: showEllipsis,
+=======
+>>>>>>> 717e2cff09543475220cf8a7cfabdf6951c7a655
       },
       className,
     ),

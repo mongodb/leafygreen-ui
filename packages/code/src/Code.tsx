@@ -46,25 +46,35 @@ const contentWrapperStyles = css`
   position: relative;
   display: grid;
   grid-template-areas: 'code panel';
+  grid-template-columns: auto 38px;
+  border-radius: inherit;
   z-index: 0; // new stacking context
+`;
+
+const contentWrapperStylesWithWindowChrome = css`
+  // No panel with chrome
+  grid-template-areas: 'code code';
 `;
 
 const contentWrapperStyleWithPicker = css`
   grid-template-areas: 'panel' 'code';
-  width: 700px;
+  grid-template-columns: unset;
 `;
 
 const codeWrapperStyle = css`
   grid-area: code;
   overflow-x: auto;
   // Many applications have global styles that are adding a border and border radius to this element.
-  border-radius: 0;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   border: 0;
   // We apply left / right padding in Syntax to support line highlighting
   padding-top: ${spacing[2]}px;
   padding-bottom: ${spacing[2]}px;
   margin: 0;
   position: relative;
+  transition: box-shadow 100ms ease-in-out;
 
   ${mq({
     // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
@@ -75,18 +85,31 @@ const codeWrapperStyle = css`
 
 const codeWrapperStyleWithWindowChrome = css`
   border-left: 0;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+`;
+const codeWrapperStyleWithLanguagePicker = css`
+  border-left: 0;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
 `;
 
-const singleLineWrapperStyle = css`
+const singleLineCodeWrapperStyle = css`
   display: flex;
   align-items: center;
   padding-top: ${(singleLineComponentHeight - lineHeight) / 2}px;
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
 `;
 
-const wrapperFocusStyle = css`
-  &:focus {
+const codewrapperFocusStyle = css`
+  &:focus,
+  &:active,
+  &:focus-visible,
+  &:focus-within {
     outline: none;
+    box-shadow: 0 0 0 2px ${palette.blue.light1} inset;
   }
 `;
 
@@ -95,7 +118,7 @@ const panelStyles = css`
   grid-area: panel;
 `;
 
-function getWrapperVariantStyle(mode: Mode): string {
+function getCodeWrapperVariantStyle(mode: Mode): string {
   const colors = variantColors[mode];
 
   const borderStyle =
@@ -140,10 +163,16 @@ const baseScrollShadowStyles = css`
   }
 `;
 
+const scrollShadowStylesWithWindowChrome = css`
+  &:after {
+    grid-column: 3; // Placed on the right edge
+  }
+`;
+
 const scrollShadowStylesWithPicker = css`
   &:before,
   &:after {
-    grid-row: 2; // Placed either under Panel, or on the right edge
+    grid-row: 2; // Placed on the right edge
   }
 `;
 
@@ -239,6 +268,8 @@ function Code({
     ? currentLanguage.language
     : languageProp;
 
+  const showLanguagePicker = !!currentLanguage;
+
   useEffect(() => {
     setShowCopyBar(copyable && ClipboardJS.isSupported());
   }, [copyable, showWindowChrome]);
@@ -312,9 +343,13 @@ function Code({
       <div
         className={cx(
           contentWrapperStyles,
+          baseScrollShadowStyles,
+          getScrollShadow(scrollState, mode),
           {
-            [contentWrapperStyleWithPicker]: !!currentLanguage,
-            [scrollShadowStylesWithPicker]: !!currentLanguage,
+            [contentWrapperStylesWithWindowChrome]: showWindowChrome,
+            [contentWrapperStyleWithPicker]: showLanguagePicker,
+            [scrollShadowStylesWithWindowChrome]: showWindowChrome,
+            [scrollShadowStylesWithPicker]: showLanguagePicker,
           },
           baseScrollShadowStyles,
           getScrollShadow(scrollState, mode),
@@ -324,11 +359,12 @@ function Code({
           {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={cx(
             codeWrapperStyle,
-            getWrapperVariantStyle(mode),
+            getCodeWrapperVariantStyle(mode),
             {
               [codeWrapperStyleWithWindowChrome]: showWindowChrome,
-              [singleLineWrapperStyle]: !isMultiline,
-              [wrapperFocusStyle]: !showFocus,
+              [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
+              [singleLineCodeWrapperStyle]: !isMultiline,
+              [codewrapperFocusStyle]: showFocus,
             },
             className,
           )}
