@@ -66,6 +66,7 @@ function Syntax({
   language,
   darkMode = false,
   showLineNumbers = false,
+  lineNumberStart,
   highlightLines = [],
   className,
   ...rest
@@ -111,6 +112,7 @@ function Syntax({
       value={{
         highlightLines,
         showLineNumbers,
+        lineNumberStart,
         darkMode,
       }}
     >
@@ -145,6 +147,7 @@ Syntax.propTypes = {
   className: PropTypes.string,
   darkMode: PropTypes.bool,
   showLineNumbers: PropTypes.bool,
+  lineNumberStart: PropTypes.number,
   highlightLines: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.number),

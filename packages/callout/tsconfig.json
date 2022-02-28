@@ -14,10 +14,13 @@
       "path": "../emotion"
     },
     {
+      "path": "../icon"
+    },
+    {
       "path": "../palette"
     },
     {
-      "path": "../icon"
+      "path": "../typography"
     },
     {
       "path": "../leafygreen-provider"
