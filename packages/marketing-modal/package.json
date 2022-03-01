@@ -24,6 +24,7 @@
     "@leafygreen-ui/lib": "^9.0.0",
     "@leafygreen-ui/modal": "^8.0.0",
     "@leafygreen-ui/palette": "^3.2.2",
+    "@leafygreen-ui/tokens": "^1.0.0",
     "@leafygreen-ui/typography": "^8.0.4"
   }
 }
