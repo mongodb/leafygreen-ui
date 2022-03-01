@@ -6,6 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 
 export const Size = {
   Default: 'default',
@@ -467,6 +468,24 @@ function Toggle({
             >
               Off
             </span>
+          </>
+        )}
+
+        {size !== Size.XSmall && !darkMode && (
+          <>
+            <span
+              aria-hidden={true}
+              className={cx(baseLabelStyle, onLabelStyle, onLabelModeStyles)}
+            >
+              <CheckmarkIcon />
+            </span>
+
+            {/* <span
+              aria-hidden={true}
+              className={cx(baseLabelStyle, offLabelStyle, offLabelModeStyles)}
+            >
+              Off
+            </span> */}
           </>
         )}
 
