@@ -7,6 +7,7 @@
 - ab1fd9e: Updates Card component for Visual brand Refresh
 
 ### Patch Changes
+
 - Updated dependencies [ab1fd9e]
   - @leafygreen-ui/tokens@1.0.0
 
