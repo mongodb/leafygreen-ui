@@ -119,7 +119,6 @@ const baseButtonStyles = css`
     right: 0;
     border-radius: 50px;
     background-color: ${palette.blue.base};
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
     opacity: 0;
     transform: scale(0.85);
   }
@@ -133,6 +132,7 @@ const baseButtonFocusStyles = css`
   box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
 `;
 
+//  TODO: Refresh - remove when darkMode is updated
 const baseDarkModeButtonStyles = css`
   &[aria-checked='true'] {
     background-color: #43b1e5;
@@ -141,6 +141,7 @@ const baseDarkModeButtonStyles = css`
 
   &:before {
     background-color: #43b1e5;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -254,18 +255,16 @@ const modeStyles = {
       &:disabled {
         background-color: ${palette.gray.light2};
         border-color: ${palette.gray.light2};
-        box-shadow: none;
       }
     `,
 
     slider: css`
-      background-color: white;
+      background-color: ${palette.white};
       display: flex;
       justify-content: center;
       align-items: center;
 
       ${sliderSelector.disabled} {
-        box-shadow: none;
         background-color: ${palette.gray.light3};
       }
     `,
@@ -328,10 +327,13 @@ const modeStyles = {
   },
 } as const;
 
-const checkmarkStyles = css`
+const baseCheckmarkStyles = css`
+  display: flex;
   color: var(--color);
   transition: color ${transitionInMS}ms ease-in-out;
+`;
 
+const checkmarkStyles = css`
   ${checkmarkSelector.checked} {
     --color: ${palette.blue.base};
   }
@@ -351,8 +353,8 @@ const checkmarkStyles = css`
 
 const checkmarkSize: Omit<Record<Size, number>, 'xsmall'> = {
   [Size.Default]: 16,
-  [Size.Small]: 14
-}
+  [Size.Small]: 14,
+};
 
 interface BaseToggleProps {
   /**
@@ -480,6 +482,7 @@ function Toggle({
         {...toggleButton.prop}
         {...rest}
       >
+        {/* TODO: Refresh - remove when darkMode is updated  */}
         {size === 'default' && !disabled && darkMode && (
           <>
             <span
@@ -501,18 +504,15 @@ function Toggle({
         <div
           className={cx(baseSliderStyles, sliderSizeStyles, sliderModeStyles)}
         >
-            {size !== Size.XSmall && !darkMode && (
-          <>
-            <span
+          {/* TODO: Refresh - remove conditional when darkMode is updated  */}
+          {size !== Size.XSmall && !darkMode && (
+            <CheckmarkIcon
               aria-hidden={true}
-              className={cx(css`display: flex;`)}
-            >
-              <CheckmarkIcon className={checkmarkStyles} size={checkmarkSize[size]} />
-            </span>
-          </>
-        )}
-
-          </div>
+              className={cx(baseCheckmarkStyles, checkmarkStyles)}
+              size={checkmarkSize[size]}
+            />
+          )}
+        </div>
       </button>
     </InteractionRing>
   );
