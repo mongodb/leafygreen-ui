@@ -29,12 +29,21 @@ const buttonSelectors = {
   checked: `${toggleButton.selector}[aria-checked="true"]`,
   unchecked: `${toggleButton.selector}[aria-checked="false"]`,
   disabled: `${toggleButton.selector}:disabled`,
+  disabledChecked: `${toggleButton.selector}[aria-checked="true"]:disabled`,
+  disabledUnchecked: `${toggleButton.selector}[aria-checked="false"]:disabled`,
 };
 
 const sliderSelector = {
   checked: `${buttonSelectors.checked} > &`,
   unchecked: `${buttonSelectors.unchecked} > &`,
   disabled: `${buttonSelectors.disabled} > &`,
+};
+
+const checkmarkSelector = {
+  checked: `${buttonSelectors.checked} &`,
+  unchecked: `${buttonSelectors.unchecked} &`,
+  disabledChecked: `${buttonSelectors.disabledChecked} &`,
+  disabledUnchecked: `${buttonSelectors.disabledUnchecked} &`,
 };
 
 const transitionInMS = 150;
@@ -251,12 +260,9 @@ const modeStyles = {
 
     slider: css`
       background-color: white;
-      box-shadow: 0 0 2px rgba(28, 192, 97, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
-        inset 0 -1px 0 #f1f1f1;
-
-      &:before {
-        background-image: linear-gradient(${uiColors.white}, #f6f6f6);
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       ${sliderSelector.disabled} {
         box-shadow: none;
@@ -264,13 +270,8 @@ const modeStyles = {
       }
     `,
 
-    offLabel: css`
-      color: ${uiColors.gray.dark1};
-    `,
-
-    onLabel: css`
-      color: ${uiColors.white};
-    `,
+    offLabel: css``,
+    onLabel: css``,
   },
 
   [Mode.Dark]: {
@@ -326,6 +327,32 @@ const modeStyles = {
     `,
   },
 } as const;
+
+const checkmarkStyles = css`
+  color: var(--color);
+  transition: color ${transitionInMS}ms ease-in-out;
+
+  ${checkmarkSelector.checked} {
+    --color: ${palette.blue.base};
+  }
+
+  ${checkmarkSelector.unchecked} {
+    --color: ${palette.white};
+  }
+
+  ${checkmarkSelector.disabledChecked} {
+    --color: ${palette.gray.light1};
+  }
+
+  ${checkmarkSelector.disabledUnchecked} {
+    --color: ${palette.gray.light3};
+  }
+`;
+
+const checkmarkSize: Omit<Record<Size, number>, 'xsmall'> = {
+  [Size.Default]: 16,
+  [Size.Small]: 14
+}
 
 interface BaseToggleProps {
   /**
@@ -471,27 +498,21 @@ function Toggle({
           </>
         )}
 
-        {size !== Size.XSmall && !darkMode && (
+        <div
+          className={cx(baseSliderStyles, sliderSizeStyles, sliderModeStyles)}
+        >
+            {size !== Size.XSmall && !darkMode && (
           <>
             <span
               aria-hidden={true}
-              className={cx(baseLabelStyle, onLabelStyle, onLabelModeStyles)}
+              className={cx(css`display: flex;`)}
             >
-              <CheckmarkIcon />
+              <CheckmarkIcon className={checkmarkStyles} size={checkmarkSize[size]} />
             </span>
-
-            {/* <span
-              aria-hidden={true}
-              className={cx(baseLabelStyle, offLabelStyle, offLabelModeStyles)}
-            >
-              Off
-            </span> */}
           </>
         )}
 
-        <div
-          className={cx(baseSliderStyles, sliderSizeStyles, sliderModeStyles)}
-        />
+          </div>
       </button>
     </InteractionRing>
   );
