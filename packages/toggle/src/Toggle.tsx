@@ -217,6 +217,7 @@ const sizeStyles = {
   },
 } as const;
 
+//  TODO: Refresh - remove when darkMode is updated
 const sizeStylesDarkMode: Record<Size, string> = {
   [Size.Default]: css`
     ${sliderSelector.disabled} {
@@ -453,7 +454,7 @@ function Toggle({
     onLabel: onLabelModeStyles,
   } = modeStyles[darkMode ? Mode.Dark : Mode.Light];
 
-  const { button: buttonsizeStyles, slider: slidersizeStyles } = sizeStyles[
+  const { button: buttonSizeStyles, slider: sliderSizeStyles } = sizeStyles[
     size
   ];
 
@@ -481,7 +482,7 @@ function Toggle({
             [baseButtonFocusStyles]: showFocus && !darkMode,
           },
           buttonModeStyles,
-          buttonsizeStyles,
+          buttonSizeStyles,
         )}
         {...toggleButton.prop}
         {...rest}
@@ -508,8 +509,8 @@ function Toggle({
         <div
           className={cx(
             baseSliderStyles,
-            slidersizeStyles,
-            { [sizeStylesDarkMode[size]]: darkMode },
+            sliderSizeStyles,
+            { [sizeStylesDarkMode[size]]: darkMode }, //  TODO: Refresh - remove when darkMode is updated
             sliderModeStyles,
           )}
         >
