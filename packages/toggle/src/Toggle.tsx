@@ -29,8 +29,6 @@ const buttonSelectors = {
   checked: `${toggleButton.selector}[aria-checked="true"]`,
   unchecked: `${toggleButton.selector}[aria-checked="false"]`,
   disabled: `${toggleButton.selector}:disabled`,
-  disabledChecked: `${toggleButton.selector}[aria-checked="true"]:disabled`,
-  disabledUnchecked: `${toggleButton.selector}[aria-checked="false"]:disabled`,
 };
 
 const sliderSelector = {
@@ -40,10 +38,10 @@ const sliderSelector = {
 };
 
 const checkmarkSelector = {
-  checked: `${buttonSelectors.checked} &`,
-  unchecked: `${buttonSelectors.unchecked} &`,
-  disabledChecked: `${buttonSelectors.disabledChecked} &`,
-  disabledUnchecked: `${buttonSelectors.disabledUnchecked} &`,
+  checked: `${buttonSelectors.checked}:not(:disabled) &`,
+  unchecked: `${buttonSelectors.unchecked}:not(:disabled) &`,
+  disabledChecked: `${buttonSelectors.checked}:disabled &`,
+  disabledUnchecked: `${buttonSelectors.unchecked}:disabled &`,
 };
 
 const transitionInMS = 150;
