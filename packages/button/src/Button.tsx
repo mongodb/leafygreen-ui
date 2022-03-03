@@ -81,14 +81,14 @@ const Button: ExtendableBox<
     const backgroundColor =
       rippleColors[darkMode ? Mode.Dark : Mode.Light][variant];
 
-    if (rippleRef.current != null) {
+    if (rippleRef.current != null && !disabled) {
       unregisterRipple = registerRipple(rippleRef.current, {
         backgroundColor,
       });
     }
 
     return unregisterRipple;
-  }, [rippleRef, variant, darkMode]);
+  }, [rippleRef, variant, darkMode, disabled]);
 
   const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
 
