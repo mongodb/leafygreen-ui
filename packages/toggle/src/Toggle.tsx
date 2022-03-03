@@ -183,11 +183,6 @@ const sizeStyles = {
       ${sliderSelector.checked} {
         transform: translate3d(30px, 0, 0);
       }
-
-      ${sliderSelector.disabled} {
-        height: 28px;
-        width: 28px;
-      }
     `,
   },
 
@@ -203,16 +198,6 @@ const sizeStyles = {
 
       ${sliderSelector.checked} {
         transform: translate3d(18px, 0, 0);
-      }
-
-      ${sliderSelector.disabled} {
-        height: 18px;
-        width: 18px;
-        left: 1px;
-      }
-
-      ${buttonSelectors.checked}:disabled {
-        transform: translate3d(17px, 0, 0);
       }
     `,
   },
@@ -230,19 +215,40 @@ const sizeStyles = {
       ${sliderSelector.checked} {
         transform: translate3d(12px, 0, 0);
       }
-
-      ${sliderSelector.disabled} {
-        height: 10px;
-        width: 10px;
-        left: 1px;
-      }
-
-      ${buttonSelectors.checked}:disabled {
-        transform: translate3d(11px, 0, 0);
-      }
     `,
   },
 } as const;
+
+const sizeStylesDarkMode: Record<Size, string> = {
+  [Size.Default]: css`
+    ${sliderSelector.disabled} {
+      height: 28px;
+      width: 28px;
+    }
+  `,
+  [Size.Small]: css`
+    ${sliderSelector.disabled} {
+      height: 18px;
+      width: 18px;
+      left: 1px;
+    }
+
+    ${buttonSelectors.checked}:disabled {
+      transform: translate3d(17px, 0, 0);
+    }
+  `,
+  [Size.XSmall]: css`
+    ${sliderSelector.disabled} {
+      height: 10px;
+      width: 10px;
+      left: 1px;
+    }
+
+    ${buttonSelectors.checked}:disabled {
+      transform: translate3d(11px, 0, 0);
+    }
+  `,
+};
 
 const modeStyles = {
   [Mode.Light]: {
@@ -449,7 +455,7 @@ function Toggle({
     onLabel: onLabelModeStyles,
   } = modeStyles[darkMode ? Mode.Dark : Mode.Light];
 
-  const { button: buttonSizeStyles, slider: sliderSizeStyles } = sizeStyles[
+  const { button: buttonsizeStyles, slider: slidersizeStyles } = sizeStyles[
     size
   ];
 
@@ -477,7 +483,7 @@ function Toggle({
             [baseButtonFocusStyles]: showFocus && !darkMode,
           },
           buttonModeStyles,
-          buttonSizeStyles,
+          buttonsizeStyles,
         )}
         {...toggleButton.prop}
         {...rest}
@@ -502,7 +508,12 @@ function Toggle({
         )}
 
         <div
-          className={cx(baseSliderStyles, sliderSizeStyles, sliderModeStyles)}
+          className={cx(
+            baseSliderStyles,
+            slidersizeStyles,
+            { [sizeStylesDarkMode[size]]: darkMode },
+            sliderModeStyles,
+          )}
         >
           {/* TODO: Refresh - remove conditional when darkMode is updated  */}
           {size !== Size.XSmall && !darkMode && (
