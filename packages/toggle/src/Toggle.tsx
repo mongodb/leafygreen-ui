@@ -130,7 +130,7 @@ const baseButtonFocusStyles = css`
   box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
 `;
 
-//  TODO: Refresh - remove when darkMode is updated
+// TODO: Refresh - remove when darkMode is updated
 const baseDarkModeButtonStyles = css`
   &[aria-checked='true'] {
     background-color: #43b1e5;
@@ -217,7 +217,7 @@ const sizeStyles = {
   },
 } as const;
 
-//  TODO: Refresh - remove when darkMode is updated
+// TODO: Refresh - remove when darkMode is updated
 const sizeStylesDarkMode: Record<Size, string> = {
   [Size.Default]: css`
     ${sliderSelector.disabled} {
@@ -510,7 +510,7 @@ function Toggle({
           className={cx(
             baseSliderStyles,
             sliderSizeStyles,
-            { [sizeStylesDarkMode[size]]: darkMode }, //  TODO: Refresh - remove when darkMode is updated
+            { [sizeStylesDarkMode[size]]: darkMode }, // TODO: Refresh - remove when darkMode is updated
             sliderModeStyles,
           )}
         >
