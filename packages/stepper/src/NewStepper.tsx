@@ -11,7 +11,7 @@ const Stepper = ({
   className,
 }: StepperProps) => {
   // Constants
-  const COMPLETED_STEPS_SHOWN = 4; // Steps shown after prior ellipses and current step
+  const COMPLETED_STEPS_SHOWN = 1; // Steps shown after prior ellipses and current step
 
   // Helper Variables
   const numSteps = React.Children.count(children);
