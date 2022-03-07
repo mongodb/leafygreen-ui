@@ -47,12 +47,14 @@ const Stepper = ({
       ? StepCompletionStates.UpcomingMultiple
       : StepCompletionStates.Upcoming;
 
+  const isLastNonEllipseStep = (step: number) => step + 1 === numSteps
+
   const getStepRangeText: (startStep: number, endStep?: number) => string = (
     startStep,
     endStep,
   ) => {
     const stepRange = endStep ? endStep - startStep : 0;
-
+    
     if (stepRange < 1) {
       return `Step ${startStep}`;
     } else if (stepRange === 1) {
@@ -87,8 +89,10 @@ const Stepper = ({
         (stepContents, i) => (
           <Step
             state={getStepState(firstDisplayedStep + i)}
+            shouldDisplayLine={!isLastNonEllipseStep(firstDisplayedStep + i)}
             index={firstDisplayedStep + i + 1}
           >
+            {console.log(firstDisplayedStep, i, numSteps)}
             {stepContents}
           </Step>
         ),
@@ -96,6 +100,7 @@ const Stepper = ({
       {hasLaterSteps && (
         <EllipseStep
           state={getLaterEllipseState()}
+          shouldDisplayLine={false}
           tooltipContent={childrenArray.slice(lastDisplayedStep, numSteps)}
         >
           {getStepRangeText(lastDisplayedStep + 1, numSteps)}
