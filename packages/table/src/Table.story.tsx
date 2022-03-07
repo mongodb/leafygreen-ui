@@ -278,7 +278,7 @@ storiesOf('Table', module)
             <Row key={datum.title}>
               <Cell>{datum.title}</Cell>
 
-              {datum.title === 'People' ? (
+              {datum.people ? (
                 datum.people.map(person => (
                   <Row key={person.name}>
                     <Cell>{person.name}</Cell>
