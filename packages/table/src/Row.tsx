@@ -368,10 +368,7 @@ const Row = React.forwardRef(
             className={iconButtonMargin}
             darkMode={darkMode}
           >
-            <Icon
-              aria-hidden
-              // color={darkMode ? uiColors.gray.base : uiColors.gray.dark1}
-            />
+            <Icon aria-hidden />
           </IconButton>
         );
         renderedChildren[0] = React.cloneElement(renderedChildren[0], {
