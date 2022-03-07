@@ -8,7 +8,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 
 storiesOf('Table', module)
   .add('Default', () => {
-    const withHeaders = boolean('Use Headers', false);
+    const withHeaders = boolean('First column headers', false);
     const darkMode = boolean('darkMode', false);
     const baseFontSize = select('Base Font Size', [14, 16], 14);
 
@@ -237,6 +237,59 @@ storiesOf('Table', module)
               <Cell>{datum.age}</Cell>
               <Cell>{datum.color}</Cell>
               <Cell>{datum.location}</Cell>
+            </Row>
+          )}
+        </Table>
+      </div>
+    );
+  })
+  .add('Multiple nested rows', () => {
+    return (
+      <div
+        className={css`
+          position: absolute;
+          top: 0;
+        `}
+      >
+        <Table
+          data={[
+            {
+              title: 'People',
+              people: defaultData,
+            },
+            {
+              title: 'Average',
+              age: (
+                defaultData.reduce((sum, { age }) => sum + age, 0) /
+                defaultData.length
+              ).toFixed(2),
+            },
+          ]}
+          columns={
+            <HeaderRow>
+              <TableHeader key="name" label="Name" dataType="string" />
+              <TableHeader key="age" label="Age" dataType="number" />
+              <TableHeader label="Color" dataType="string" key="color" />
+              <TableHeader key="location" label="Location" />
+            </HeaderRow>
+          }
+        >
+          {({ datum }) => (
+            <Row key={datum.title}>
+              <Cell>{datum.title}</Cell>
+
+              {datum.people ? (
+                datum.people.map(person => (
+                  <Row key={person.name}>
+                    <Cell>{person.name}</Cell>
+                    <Cell>{person.age}</Cell>
+                    <Cell>{person.color}</Cell>
+                    <Cell>{person.location}</Cell>
+                  </Row>
+                ))
+              ) : (
+                <Cell>{datum.age}</Cell>
+              )}
             </Row>
           )}
         </Table>
