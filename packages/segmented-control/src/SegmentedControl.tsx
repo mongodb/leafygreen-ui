@@ -8,9 +8,9 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { Overline } from '@leafygreen-ui/typography';
 import { Size, Mode } from './types';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
-import { Overline } from '@leafygreen-ui/typography';
 
 /**
  * The selection and hover indicators are absolutely positioned elements that move underneath the text.
