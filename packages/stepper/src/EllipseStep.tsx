@@ -5,14 +5,25 @@ import React from 'react';
 import Step from './NewStep';
 import { StepCompletionStates, StepProps } from './types';
 
-export type EllipseStepProps = StepProps & {
+export type EllipseStepProps = Omit<StepProps, 'state'> & {
   startingStepIndex?: number;
+  state:
+    | StepCompletionStates.Completed
+    | StepCompletionStates.CompletedMultiple
+    | StepCompletionStates.UpcomingMultiple;
   tooltipContent: Array<
     React.ReactChild | React.ReactFragment | React.ReactPortal
   >;
 };
 
-const EllipseStep = ({ state, children, tooltipContent, startingStepIndex, iconSize = 20, ...rest }: React.PropsWithChildren<EllipseStepProps>) => {
+const EllipseStep = ({
+  state,
+  children,
+  tooltipContent,
+  startingStepIndex,
+  iconSize = 20,
+  ...rest
+}: React.PropsWithChildren<EllipseStepProps>) => {
   const stepBaseStyles = css`
     .step-icon {
       // TODO: use centralized transition value
@@ -35,6 +46,7 @@ const EllipseStep = ({ state, children, tooltipContent, startingStepIndex, iconS
   `;
 
   const stepStyles = {
+    [StepCompletionStates.Completed]: '',
     [StepCompletionStates.CompletedMultiple]: completedMultipleStyles,
     [StepCompletionStates.UpcomingMultiple]: upcomingMultipleStyles,
   };
@@ -44,11 +56,13 @@ const EllipseStep = ({ state, children, tooltipContent, startingStepIndex, iconS
       align={Align.Top}
       justify={Justify.Middle}
       trigger={
-        <Step 
-          className={cx(stepBaseStyles, stepStyles[state])} 
+        <Step
+          className={cx(stepBaseStyles, stepStyles[state])}
           state={state}
           {...rest}
-        >{children}</Step>
+        >
+          {children}
+        </Step>
       }
       triggerEvent={TriggerEvent.Hover}
     >

@@ -6,7 +6,14 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-export const Step = function Step({ children, index, state, shouldDisplayLine = true, iconSize = 20, className }: StepProps) {
+export const Step = function Step({
+  children,
+  index,
+  state,
+  shouldDisplayLine = true,
+  iconSize = 20,
+  className,
+}: StepProps) {
   const isCurrent = state === StepCompletionStates.Current;
 
   const baseStyles = css`
@@ -18,17 +25,18 @@ export const Step = function Step({ children, index, state, shouldDisplayLine = 
     padding-bottom: ${spacing[1]}px;
     position: relative; // for the :after line
 
-    ${shouldDisplayLine && `
-    &:after {
-      content: '';
-      height: 1px;
-      width: 100%;
-      position: absolute;
-      top: ${iconSize / 2}px;
-      left: 50%;
-      z-index: -1;
-      background-color: ${palette.gray.base};
-    }
+    ${shouldDisplayLine &&
+    `
+      &:after {
+        content: '';
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        top: ${iconSize / 2}px;
+        left: 50%;
+        z-index: -1;
+        background-color: ${palette.gray.base};
+      }
     `}
   `;
 
