@@ -1,25 +1,75 @@
+import { css, cx } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
 import Tooltip, { TriggerEvent, Align, Justify } from '@leafygreen-ui/tooltip';
 import React from 'react';
 import Step from './NewStep';
-import { StepProps } from './types';
+import { StepCompletionStates, StepProps } from './types';
 
-export type EllipseStepProps = StepProps & {
+export type EllipseStepProps = Omit<StepProps, 'state'> & {
+  startingStepIndex?: number;
+  state:
+    | StepCompletionStates.Completed
+    | StepCompletionStates.CompletedMultiple
+    | StepCompletionStates.UpcomingMultiple;
   tooltipContent: Array<
     React.ReactChild | React.ReactFragment | React.ReactPortal
   >;
 };
 
-const EllipseStep = (props: React.PropsWithChildren<EllipseStepProps>) => {
+const EllipseStep = ({
+  state,
+  children,
+  tooltipContent,
+  startingStepIndex,
+  iconSize = 20,
+  ...rest
+}: React.PropsWithChildren<EllipseStepProps>) => {
+  const stepBaseStyles = css`
+    .step-icon {
+      // TODO: use centralized transition value
+      transition: 0.3s box-shadow ease;
+    }
+  `;
+
+  const completedMultipleStyles = css`
+    &:hover .step-icon {
+      // TODO: use centralized box-shadow value
+      box-shadow: 0px 0px 0px 3px ${palette.green.light2};
+    }
+  `;
+
+  const upcomingMultipleStyles = css`
+    &:hover .step-icon {
+      // TODO: use centralized box-shadow value
+      box-shadow: 0px 0px 0px 3px ${palette.gray.light2};
+    }
+  `;
+
+  const stepStyles = {
+    [StepCompletionStates.CompletedMultiple]: completedMultipleStyles,
+    [StepCompletionStates.UpcomingMultiple]: upcomingMultipleStyles,
+  };
+
   return (
     <Tooltip
       align={Align.Top}
       justify={Justify.Middle}
-      trigger={<Step {...props}>{props.children}</Step>}
+      trigger={
+        <Step
+          // @ts-ignore 
+          // There are no custom styles for `StepCompletionStates.Completed`
+          className={cx(stepBaseStyles, stepStyles[state])}
+          state={state}
+          {...rest}
+        >
+          {children}
+        </Step>
+      }
       triggerEvent={TriggerEvent.Hover}
     >
       <ol>
-        {React.Children.map(props.tooltipContent, (stepContents, i) => (
-          <li>{stepContents}</li>
+        {React.Children.map(tooltipContent, (stepContents, i) => (
+          <li value={startingStepIndex}>{stepContents}</li>
         ))}
       </ol>
     </Tooltip>

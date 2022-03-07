@@ -6,9 +6,15 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-export const Step = function Step({ children, index, state }: StepProps) {
+export const Step = function Step({
+  children,
+  index,
+  state,
+  shouldDisplayLine = true,
+  iconSize = 20,
+  className,
+}: StepProps) {
   const isCurrent = state === StepCompletionStates.Current;
-  const ICON_SIZE = 20;
 
   const baseStyles = css`
     display: flex;
@@ -19,16 +25,19 @@ export const Step = function Step({ children, index, state }: StepProps) {
     padding-bottom: ${spacing[1]}px;
     position: relative; // for the :after line
 
-    &:not(:last-child):after {
-      content: '';
-      height: 1px;
-      width: 100%;
-      position: absolute;
-      top: ${ICON_SIZE / 2}px;
-      left: 50%;
-      z-index: -1;
-      background-color: ${palette.gray.base};
-    }
+    ${shouldDisplayLine &&
+    `
+      &:after {
+        content: '';
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        top: ${iconSize / 2}px;
+        left: 50%;
+        z-index: -1;
+        background-color: ${palette.gray.base};
+      }
+    `}
   `;
 
   const completedMultipleStyles = css`
@@ -76,7 +85,7 @@ export const Step = function Step({ children, index, state }: StepProps) {
   return (
     // TODO: Currently, the Tooltip trigger only works when the <Step> component is wrapped in a <div>.
     // This is bad semantics as the <Step> component's <li> should be a direct child to the <Stepper>'s <ol>.
-    <div role="listitem" className={cx(baseStyles, styles[state])}>
+    <div role="listitem" className={cx(baseStyles, styles[state], className)}>
       <StepIcon state={state} content={index} />
       {/* NOTE: `<Body as="label" /> currently does not render an actual <label /> */}
       {/*

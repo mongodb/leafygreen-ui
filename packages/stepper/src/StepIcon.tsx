@@ -50,6 +50,7 @@ const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
 
   const completedStyles = css`
     color: ${palette.white};
+    border-width: 0px;
     background-color: ${palette.green.dark1};
   `;
 
@@ -74,7 +75,7 @@ const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
   };
 
   return (
-    <div className={cx(baseStyles, styles[state])}>
+    <div className={`step-icon ${cx(baseStyles, styles[state])}`}>
       <Icon state={state} {...rest} />
     </div>
   );

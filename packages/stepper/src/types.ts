@@ -23,6 +23,8 @@ export interface StepProps {
   index?: number;
   stepIcon?: React.ReactNode;
   className?: string;
+  iconSize?: number;
+  shouldDisplayLine?: boolean;
 }
 
 export interface StepIconProps {
