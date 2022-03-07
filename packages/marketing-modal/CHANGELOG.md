@@ -1,5 +1,16 @@
 # @leafygreen-ui/marketing-modal
 
+## 3.0.0
+
+### Major Changes
+
+- ab1fd9e: Updates marketing modal styles in line with visual brand refresh. Adds new props: closeIconColor, showBlob, and blobPosition.
+
+### Patch Changes
+
+- Updated dependencies [ab1fd9e]
+  - @leafygreen-ui/modal@8.0.0
+
 ## 2.1.3
 
 ### Patch Changes

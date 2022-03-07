@@ -13,6 +13,8 @@ import Syntax from './Syntax';
 import Panel from './Panel';
 import WindowChrome from './WindowChrome';
 import { isComponentType } from '@leafygreen-ui/lib';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import { transparentize } from 'polished';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -27,17 +29,52 @@ const mq = facepaint([
 const singleLineComponentHeight = 36;
 const lineHeight = 24;
 
+const wrapperStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    border: 1px solid ${variantColors[Mode.Light][1]};
+    border-radius: 12px;
+    overflow: hidden;
+  `,
+  [Mode.Dark]: css`
+    border: 0;
+    border-radius: 6px;
+    overflow: hidden;
+  `,
+};
+
+const contentWrapperStyles = css`
+  position: relative;
+  display: grid;
+  grid-template-areas: 'code panel';
+  grid-template-columns: auto 38px;
+  border-radius: inherit;
+  z-index: 0; // new stacking context
+`;
+
+const contentWrapperStylesWithWindowChrome = css`
+  // No panel with chrome
+  grid-template-areas: 'code code';
+`;
+
+const contentWrapperStyleWithPicker = css`
+  grid-template-areas: 'panel' 'code';
+  grid-template-columns: unset;
+`;
+
 const codeWrapperStyle = css`
+  grid-area: code;
   overflow-x: auto;
   // Many applications have global styles that are adding a border and border radius to this element.
-  border-radius: 0;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   border: 0;
   // We apply left / right padding in Syntax to support line highlighting
   padding-top: ${spacing[2]}px;
   padding-bottom: ${spacing[2]}px;
   margin: 0;
   position: relative;
-  flex-grow: 1;
+  transition: box-shadow 100ms ease-in-out;
 
   ${mq({
     // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
@@ -48,28 +85,40 @@ const codeWrapperStyle = css`
 
 const codeWrapperStyleWithWindowChrome = css`
   border-left: 0;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+`;
+const codeWrapperStyleWithLanguagePicker = css`
+  border-left: 0;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
 `;
 
-const singleLineWrapperStyle = css`
+const singleLineCodeWrapperStyle = css`
   display: flex;
   align-items: center;
   padding-top: ${(singleLineComponentHeight - lineHeight) / 2}px;
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
 `;
 
-const wrapperFocusStyle = css`
-  &:focus {
+const codewrapperFocusStyle = css`
+  &:focus,
+  &:active,
+  &:focus-visible,
+  &:focus-within {
     outline: none;
+    box-shadow: 0 0 0 2px ${palette.blue.light1} inset;
   }
 `;
 
-const languagePickerStyle = css`
-  display: flex;
-  flex-direction: column-reverse;
-  width: 700px;
+const panelStyles = css`
+  z-index: 2; // Above the shadows
+  grid-area: panel;
 `;
 
-function getWrapperVariantStyle(mode: Mode): string {
+function getCodeWrapperVariantStyle(mode: Mode): string {
   const colors = variantColors[mode];
 
   const borderStyle =
@@ -91,32 +140,64 @@ const ScrollState = {
 
 type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
-function getScrollShadowStyle(scrollState: ScrollState, mode: Mode): string {
-  const colors = variantColors[mode];
+const baseScrollShadowStyles = css`
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1; // above the code
+    top: 0;
+    height: 100%;
+    width: 8px;
+    border-radius: 100%;
+    box-shadow: unset;
+    transition: box-shadow 100ms ease-in-out;
+  }
+  &:before {
+    grid-column: 1;
+    left: -8px;
+  }
+  &:after {
+    grid-column: 2; // Placed either under Panel, or on the right edge
+  }
+`;
+
+const scrollShadowStylesWithWindowChrome = css`
+  &:after {
+    grid-column: 3; // Placed on the right edge
+  }
+`;
+
+const scrollShadowStylesWithPicker = css`
+  &:before,
+  &:after {
+    grid-row: 2; // Placed on the right edge
+  }
+`;
+
+function getScrollShadow(scrollState: ScrollState, mode: Mode): string {
   const shadowColor =
-    mode === Mode.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
+    mode === Mode.Light
+      ? transparentize(0.7, palette.gray.dark1)
+      : transparentize(0.7, uiColors.black);
 
-  if (scrollState === ScrollState.Both) {
-    return css`
-      box-shadow: inset 6px 0 6px -6px ${shadowColor},
-        inset -6px 0 6px -6px ${shadowColor}, inset 0 6px 6px -6px ${colors[0]},
-        inset 0 -6px 6px -6px ${colors[0]};
-    `;
-  }
+  const boxShadowStyle = css`
+    box-shadow: 0 0 10px 0 ${shadowColor};
+  `;
 
-  if (scrollState === ScrollState.Left) {
-    return css`
-      box-shadow: inset 6px 0 6px -6px ${shadowColor};
-    `;
-  }
-
-  if (scrollState === ScrollState.Right) {
-    return css`
-      box-shadow: inset -6px 0 6px -6px ${shadowColor};
-    `;
-  }
-
-  return '';
+  return css`
+    &:before {
+      ${(scrollState === ScrollState.Both ||
+        scrollState === ScrollState.Left) &&
+      boxShadowStyle};
+    }
+    &:after {
+      ${(scrollState === ScrollState.Both ||
+        scrollState === ScrollState.Right) &&
+      boxShadowStyle};
+    }
+  `;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<
@@ -187,6 +268,8 @@ function Code({
     ? currentLanguage.language
     : languageProp;
 
+  const showLanguagePicker = !!currentLanguage;
+
   useEffect(() => {
     setShowCopyBar(copyable && ClipboardJS.isSupported());
   }, [copyable, showWindowChrome]);
@@ -201,21 +284,6 @@ function Code({
       setScrollState(ScrollState.Right);
     }
   }, []);
-
-  const wrapperClassName = cx(
-    css`
-      border: ${currentLanguage ? '1px solid;' : '2px solid;'};
-    `,
-    codeWrapperStyle,
-    getWrapperVariantStyle(mode),
-    {
-      [codeWrapperStyleWithWindowChrome]: showWindowChrome,
-    },
-    className,
-    getScrollShadowStyle(scrollState, mode),
-    { [singleLineWrapperStyle]: !isMultiline },
-    { [wrapperFocusStyle]: !showFocus },
-  );
 
   const renderedSyntaxComponent = (
     <Syntax
@@ -254,16 +322,6 @@ function Code({
     debounceScroll(e);
   };
 
-  const borderStyle = darkMode
-    ? `border: 0`
-    : `border: 1px solid ${variantColors[mode][1]}`;
-
-  const wrapperStyle = css`
-    ${borderStyle};
-    border-radius: 4px;
-    overflow: hidden;
-  `;
-
   const popoverProps = {
     popoverZIndex,
     ...(usePortal
@@ -277,24 +335,37 @@ function Code({
   } as const;
 
   return (
-    <div className={wrapperStyle}>
+    <div className={wrapperStyle[mode]}>
       {showWindowChrome && (
         <WindowChrome chromeTitle={chromeTitle} darkMode={darkMode} />
       )}
 
       <div
         className={cx(
-          css`
-            display: flex;
-          `,
+          contentWrapperStyles,
+          baseScrollShadowStyles,
+          getScrollShadow(scrollState, mode),
           {
-            [languagePickerStyle]: !!currentLanguage,
+            [contentWrapperStylesWithWindowChrome]: showWindowChrome,
+            [contentWrapperStyleWithPicker]: showLanguagePicker,
+            [scrollShadowStylesWithWindowChrome]: showWindowChrome,
+            [scrollShadowStylesWithPicker]: showLanguagePicker,
           },
         )}
       >
         <pre
           {...(rest as DetailedElementProps<HTMLPreElement>)}
-          className={wrapperClassName}
+          className={cx(
+            codeWrapperStyle,
+            getCodeWrapperVariantStyle(mode),
+            {
+              [codeWrapperStyleWithWindowChrome]: showWindowChrome,
+              [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
+              [singleLineCodeWrapperStyle]: !isMultiline,
+              [codewrapperFocusStyle]: showFocus,
+            },
+            className,
+          )}
           onScroll={onScroll}
           ref={scrollableElementRef}
           // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
@@ -309,6 +380,7 @@ function Code({
         {!showWindowChrome &&
           (copyable || !!currentLanguage || showCustomActionsInPanel) && (
             <Panel
+              className={cx(panelStyles)}
               language={currentLanguage}
               languageOptions={languageOptions}
               onChange={onChange}
