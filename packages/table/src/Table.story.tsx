@@ -257,6 +257,13 @@ storiesOf('Table', module)
               title: 'People',
               people: defaultData,
             },
+            {
+              title: 'Average',
+              age: (
+                defaultData.reduce((sum, { age }) => sum + age, 0) /
+                defaultData.length
+              ).toFixed(2),
+            },
           ]}
           columns={
             <HeaderRow>
@@ -270,14 +277,19 @@ storiesOf('Table', module)
           {({ datum }) => (
             <Row key={datum.title}>
               <Cell>{datum.title}</Cell>
-              {datum.people.map(person => (
-                <Row key={person.name}>
-                  <Cell>{person.name}</Cell>
-                  <Cell>{person.age}</Cell>
-                  <Cell>{person.color}</Cell>
-                  <Cell>{person.location}</Cell>
-                </Row>
-              ))}
+
+              {datum.title === 'People' ? (
+                datum.people.map(person => (
+                  <Row key={person.name}>
+                    <Cell>{person.name}</Cell>
+                    <Cell>{person.age}</Cell>
+                    <Cell>{person.color}</Cell>
+                    <Cell>{person.location}</Cell>
+                  </Row>
+                ))
+              ) : (
+                <Cell>{datum.age}</Cell>
+              )}
             </Row>
           )}
         </Table>
