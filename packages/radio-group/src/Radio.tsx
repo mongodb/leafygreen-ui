@@ -193,7 +193,6 @@ const divStyle = css`
   bottom: 0;
   left: 0;
   right: 0;
-  transition: background-color 0.15s ease-in-out;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -226,7 +225,7 @@ const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
       &:after {
         width: 6px;
         height: 6px;
-        transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
+        transition: transform 0.15s cubic-bezier(0.16, 1.54, 0, 1.31),
           border-color 0.15s ease-in-out;
       }
     `,
@@ -244,7 +243,7 @@ const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
       &:after {
         width: 8px;
         height: 8px;
-        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275),
           border-color 0.15s ease-in-out;
       }
     `,
@@ -372,6 +371,8 @@ function Radio({
               divSize[normalizedSize][mode],
               {
                 [css`
+                  transition: background-color 0.15s ease-in-out;
+
                   &:before {
                     top: -5px;
                     bottom: -5px;
