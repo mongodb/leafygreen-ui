@@ -26,7 +26,7 @@
     "@leafygreen-ui/icon-button": "^9.1.6",
     "@leafygreen-ui/inline-definition": "^2.0.6",
     "@leafygreen-ui/interaction-ring": "^1.1.1",
-    "@leafygreen-ui/hooks": "^7.0.0",
+    "@leafygreen-ui/hooks": "^7.2.0",
     "@leafygreen-ui/lib": "^9.1.0",
     "@leafygreen-ui/palette": "^3.2.2",
     "@leafygreen-ui/popover": "^7.2.2",
