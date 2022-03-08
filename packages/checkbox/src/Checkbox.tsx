@@ -6,6 +6,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { LegacyCheck } from './LegacyCheck';
+import SvgCheck from './Check';
 
 const checkboxWrapper = createDataProp('checkbox-wrapper');
 
@@ -26,7 +27,7 @@ const inputStyle = css`
   pointer-events: none;
   opacity: 0;
 
-  &:focus + ${checkboxWrapper.selector}:after {
+  /* &:focus + ${checkboxWrapper.selector}:after {
     content: '';
     bottom: 0;
     left: 3px;
@@ -35,7 +36,7 @@ const inputStyle = css`
     position: absolute;
     background-color: #43b1e5;
     border-radius: 2px;
-  }
+  } */
 `;
 
 const textColorSet: { [K in Mode]: string } = {
@@ -49,7 +50,7 @@ const textColorSet: { [K in Mode]: string } = {
 };
 
 const baseTextStyle = css`
-  margin-left: 3px;
+  margin-left: 8px;
   flex-grow: 1;
   align-self: baseline;
 `;
@@ -57,13 +58,28 @@ const baseTextStyle = css`
 const containerStyle = css`
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   cursor: pointer;
 
   &:hover > ${checkboxWrapper.selector} {
     opacity: 1;
   }
+`;
+
+const checkWrapperStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  border: 2px solid ${palette.gray.dark2};
+  height: 14px;
+  width: 14px;
+`;
+
+const checkWrapperCheckedStyle = css`
+  border-color: ${palette.blue.base};
+  background-color: ${palette.blue.base};
 `;
 
 /** &:disabled won't work and [disabled] isn't a valid property because this isn't an input */
@@ -103,7 +119,7 @@ function Checkbox({
   ...rest
 }: CheckboxProps) {
   const [checked, setChecked] = React.useState(false);
-  const normalizedChecked = React.useMemo(
+  const isChecked = React.useMemo(
     () => (checkedProp != null ? checkedProp : checked),
     [checkedProp, checked],
   );
@@ -158,10 +174,10 @@ function Checkbox({
         type="checkbox"
         name={name}
         disabled={disabled}
-        checked={normalizedChecked}
+        checked={isChecked}
         aria-label="checkbox"
         aria-disabled={disabled}
-        aria-checked={indeterminateProp ? 'mixed' : normalizedChecked}
+        aria-checked={indeterminateProp ? 'mixed' : isChecked}
         aria-labelledby={labelId}
         onClick={onClick}
         onChange={onChange}
@@ -169,14 +185,21 @@ function Checkbox({
 
       {darkMode ? (
         <LegacyCheck
-          normalizedChecked={normalizedChecked}
+          isChecked={isChecked}
           indeterminateProp={indeterminateProp}
           disabled={disabled}
           animate={animate}
           checkboxWrapper={checkboxWrapper}
         />
       ) : (
-        <div></div>
+        <div
+          {...checkboxWrapper.prop}
+          className={cx(checkWrapperStyle, {
+            [checkWrapperCheckedStyle]: isChecked || indeterminateProp,
+          })}
+        >
+          <SvgCheck />
+        </div>
       )}
 
       {label && (

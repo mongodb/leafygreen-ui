@@ -15,7 +15,6 @@ function Control() {
       checked={checked}
       disabled={boolean('Disabled', false)}
       indeterminate={boolean('Indeterminate', false)}
-      bold={boolean('Bold', false)}
       animate={boolean('Animate', true)}
       onChange={() => setChecked(curr => !curr)}
       label={text('Label', 'I agree to this thing.')}
@@ -37,7 +36,6 @@ storiesOf('Checkbox', module)
         disabled={boolean('Disabled', false)}
         indeterminate={boolean('Indeterminate', false)}
         label={text('Label', 'I agree to this thing.')}
-        bold={boolean('Bold', false)}
         animate={boolean('Animate', true)}
         className={css`
           padding: 20px;

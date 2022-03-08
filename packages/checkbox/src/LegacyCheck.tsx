@@ -44,13 +44,13 @@ const checkboxStyleChecked = css`
 `;
 
 export function LegacyCheck({
-  normalizedChecked,
+  isChecked,
   indeterminateProp,
   disabled,
   animate,
   checkboxWrapper,
 }: {
-  normalizedChecked: boolean;
+  isChecked: boolean;
   indeterminateProp: boolean | undefined;
   disabled: boolean;
   animate: boolean;
@@ -61,7 +61,7 @@ export function LegacyCheck({
 }) {
   const checkboxBackgroundImage = (() => {
     if (disabled) {
-      if (normalizedChecked) {
+      if (isChecked) {
         return css`
           background-image: url(${disabledLightChecked});
         `;
@@ -87,15 +87,13 @@ export function LegacyCheck({
     <div
       {...checkboxWrapper.prop}
       className={cx(wrapperStyle, {
-        [wrapperStyleChecked]:
-          normalizedChecked && indeterminateProp && !disabled,
+        [wrapperStyleChecked]: isChecked && indeterminateProp && !disabled,
         [wrapperStyleAnimated]: animate && !indeterminateProp && !disabled,
       })}
     >
       <div
         className={cx(checkboxStyle, checkboxBackgroundImage, {
-          [checkboxStyleChecked]:
-            normalizedChecked && !indeterminateProp && !disabled,
+          [checkboxStyleChecked]: isChecked && !indeterminateProp && !disabled,
           [checkboxStyleAnimated]: animate && !indeterminateProp && !disabled,
         })}
       />
