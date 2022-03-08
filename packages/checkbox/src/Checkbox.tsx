@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { Label } from '@leafygreen-ui/typography';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { LegacyCheck } from './LegacyCheck';
 import SvgCheck from './Check';
+import SvgIndeterminate from './SvgIndeterminate';
 
 const checkboxWrapper = createDataProp('checkbox-wrapper');
 
@@ -26,8 +28,17 @@ const inputStyle = css`
   top: 0;
   pointer-events: none;
   opacity: 0;
+`;
 
-  /* &:focus + ${checkboxWrapper.selector}:after {
+const inputFocusStyles = css`
+  &:focus + ${checkboxWrapper.selector} {
+    box-shadow: 0 0 0 2px ${palette.gray.light2},
+      0 0 0 4px ${palette.blue.light1};
+  }
+`;
+
+const inputFocusStylesDarkMode = css`
+  &:focus + ${checkboxWrapper.selector}:after {
     content: '';
     bottom: 0;
     left: 3px;
@@ -36,7 +47,8 @@ const inputStyle = css`
     position: absolute;
     background-color: #43b1e5;
     border-radius: 2px;
-  } */
+    box-shadow: unset;
+  }
 `;
 
 const textColorSet: { [K in Mode]: string } = {
@@ -62,24 +74,37 @@ const containerStyle = css`
   justify-content: flex-start;
   cursor: pointer;
 
-  &:hover > ${checkboxWrapper.selector} {
-    opacity: 1;
+  &:hover > ${checkboxWrapper.selector}:not([data-leafygreen-disabled="true"]) {
+    box-shadow: 0 0 0 3px ${palette.gray.light2};
   }
 `;
 
-const checkWrapperStyle = css`
+const checkWrapperBaseStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
   border: 2px solid ${palette.gray.dark2};
+  background-color: transparent;
   height: 14px;
   width: 14px;
-`;
+  transition: 100ms ease-in-out;
+  transition-properties: box-shadow;
 
-const checkWrapperCheckedStyle = css`
-  border-color: ${palette.blue.base};
-  background-color: ${palette.blue.base};
+  &[data-leafygreen-checked='true'],
+  &[data-leafygreen-checked='mixed'] {
+    border-color: ${palette.blue.base};
+    background-color: ${palette.blue.base};
+
+    &[data-leafygreen-disabled='true'] {
+      background-color: ${palette.gray.light2};
+    }
+  }
+
+  &[data-leafygreen-disabled='true'] {
+    border-color: ${palette.gray.light2};
+    background-color: ${palette.gray.light3};
+  }
 `;
 
 /** &:disabled won't work and [disabled] isn't a valid property because this isn't an input */
@@ -123,6 +148,7 @@ function Checkbox({
     () => (checkedProp != null ? checkedProp : checked),
     [checkedProp, checked],
   );
+  const { usingKeyboard } = useUsingKeyboardContext();
 
   const inputRef = React.useRef(null);
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
@@ -161,6 +187,12 @@ function Checkbox({
     <Label
       className={cx(containerStyle, className, {
         [disabledContainerStyle]: disabled,
+        // TODO: Refresh - remove darkMode logic
+        [css`
+          &:hover > ${checkboxWrapper.selector} {
+            box-shadow: unset;
+          }
+        `]: darkMode,
       })}
       style={style}
       htmlFor={checkboxId}
@@ -170,7 +202,11 @@ function Checkbox({
         {...rest}
         id={checkboxId}
         ref={inputRef}
-        className={inputStyle}
+        className={cx(inputStyle, {
+          [inputFocusStyles]: usingKeyboard && !darkMode,
+          // TODO: Refresh - remove darkMode logic
+          [inputFocusStylesDarkMode]: darkMode,
+        })}
         type="checkbox"
         name={name}
         disabled={disabled}
@@ -194,11 +230,18 @@ function Checkbox({
       ) : (
         <div
           {...checkboxWrapper.prop}
-          className={cx(checkWrapperStyle, {
-            [checkWrapperCheckedStyle]: isChecked || indeterminateProp,
-          })}
+          data-leafygreen-checked={indeterminateProp ? 'mixed' : isChecked}
+          data-leafygreen-disabled={disabled}
+          className={checkWrapperBaseStyle}
         >
-          <SvgCheck />
+          {isChecked && !indeterminateProp && (
+            <SvgCheck fill={disabled ? palette.gray.light3 : palette.white} />
+          )}
+          {indeterminateProp && (
+            <SvgIndeterminate
+              fill={disabled ? palette.gray.light3 : palette.white}
+            />
+          )}
         </div>
       )}
 

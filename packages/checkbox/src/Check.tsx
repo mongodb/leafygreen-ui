@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SvgCheck(props: any) {
+const SvgCheck = (props: any) => {
   return (
     <svg
       width="10"
@@ -8,6 +8,7 @@ function SvgCheck(props: any) {
       viewBox="0 0 10 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M2 5.5L4.12132 7.62132L8.36396 3.37868"
@@ -18,6 +19,6 @@ function SvgCheck(props: any) {
       />
     </svg>
   );
-}
+};
 
 export default SvgCheck;
