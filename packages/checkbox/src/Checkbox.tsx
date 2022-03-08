@@ -1,23 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import { Label } from '@leafygreen-ui/typography';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  spritesheetLight,
-  spritesheetDark,
-  disabledLight,
-  disabledLightChecked,
-  disabledDark,
-  disabledDarkChecked,
-  indeterminateLight,
-  indeterminateDark,
-} from './img';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import { LegacyCheck } from './LegacyCheck';
 
 const checkboxWrapper = createDataProp('checkbox-wrapper');
-
-const height = 20;
-const width = 600;
 
 const Mode = {
   Light: 'light',
@@ -25,27 +15,6 @@ const Mode = {
 } as const;
 
 type Mode = typeof Mode[keyof typeof Mode];
-
-const wrapperStyleAnimated = css`
-  transition: 300ms opacity ease-in-out;
-`;
-
-const wrapperStyle = css`
-  height: ${height}px;
-  width: ${height}px;
-  display: inline-block;
-  overflow: hidden;
-  flex-shrink: 0;
-  position: relative;
-  opacity: 0.9;
-`;
-
-const checkboxStyle = css`
-  height: ${height}px;
-  width: ${width}px;
-  background-size: contain;
-  background-repeat: no-repeat;
-`;
 
 const inputStyle = css`
   margin: 0;
@@ -69,40 +38,20 @@ const inputStyle = css`
   }
 `;
 
-const wrapperStyleChecked = css`
-  opacity: 1;
-`;
-
-const checkboxStyleAnimated = css`
-  transition: 500ms transform steps(29);
-`;
-
-const checkboxStyleChecked = css`
-  transform: translate3d(${-width + height}px, 0, 0);
-`;
-
 const textColorSet: { [K in Mode]: string } = {
   [Mode.Light]: css`
-    color: #464c4f; // theme colors.gray[1]
+    color: ${palette.black};
   `,
 
   [Mode.Dark]: css`
-    color: #f4f6f6; // theme colors.gray[8]
+    color: ${uiColors.gray.light3};
   `,
 };
 
 const baseTextStyle = css`
   margin-left: 3px;
-  font-size: 14px;
-  line-height: 1.3em;
   flex-grow: 1;
-  position: relative;
-  top: 2px;
-`;
-
-const boldTextStyle = css`
-  font-weight: bold;
-  top: 1px;
+  align-self: baseline;
 `;
 
 const containerStyle = css`
@@ -144,7 +93,6 @@ function Checkbox({
   label = '',
   disabled = false,
   indeterminate: indeterminateProp,
-  bold = false,
   animate = false,
   className,
   onClick: onClickProp,
@@ -193,56 +141,8 @@ function Checkbox({
     ? textColorSet[Mode.Dark]
     : textColorSet[Mode.Light];
 
-  const checkboxBackgroundImage = (() => {
-    if (darkMode) {
-      if (disabled) {
-        if (normalizedChecked) {
-          return css`
-            background-image: url(${disabledLightChecked});
-          `;
-        }
-
-        return css`
-          background-image: url(${disabledLight});
-        `;
-      }
-
-      if (indeterminateProp) {
-        return css`
-          background-image: url(${indeterminateLight});
-        `;
-      }
-
-      return css`
-        background-image: url(${spritesheetLight});
-      `;
-    } else {
-      if (disabled) {
-        if (normalizedChecked) {
-          return css`
-            background-image: url(${disabledDarkChecked});
-          `;
-        }
-
-        return css`
-          background-image: url(${disabledDark});
-        `;
-      }
-
-      if (indeterminateProp) {
-        return css`
-          background-image: url(${indeterminateDark});
-        `;
-      }
-
-      return css`
-        background-image: url(${spritesheetDark});
-      `;
-    }
-  })();
-
   return (
-    <label
+    <Label
       className={cx(containerStyle, className, {
         [disabledContainerStyle]: disabled,
       })}
@@ -267,34 +167,28 @@ function Checkbox({
         onChange={onChange}
       />
 
-      <div
-        {...checkboxWrapper.prop}
-        className={cx(wrapperStyle, {
-          [wrapperStyleChecked]:
-            normalizedChecked && indeterminateProp && !disabled,
-          [wrapperStyleAnimated]: animate && !indeterminateProp && !disabled,
-        })}
-      >
-        <div
-          className={cx(checkboxStyle, checkboxBackgroundImage, {
-            [checkboxStyleChecked]:
-              normalizedChecked && !indeterminateProp && !disabled,
-            [checkboxStyleAnimated]: animate && !indeterminateProp && !disabled,
-          })}
+      {darkMode ? (
+        <LegacyCheck
+          normalizedChecked={normalizedChecked}
+          indeterminateProp={indeterminateProp}
+          disabled={disabled}
+          animate={animate}
+          checkboxWrapper={checkboxWrapper}
         />
-      </div>
+      ) : (
+        <div></div>
+      )}
 
       {label && (
         <span
           className={cx(baseTextStyle, textVariantStyle, {
             [disabledTextStyle]: disabled,
-            [boldTextStyle]: bold,
           })}
         >
           {label}
         </span>
       )}
-    </label>
+    </Label>
   );
 }
 
