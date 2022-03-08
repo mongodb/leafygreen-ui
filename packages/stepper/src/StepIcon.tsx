@@ -42,6 +42,7 @@ const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
     align-items: center;
     justify-content: center;
     border: 1px solid;
+    transition: 0.3s box-shadow ease;
 
     svg {
       width: 100%;
@@ -75,7 +76,7 @@ const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
   };
 
   return (
-    <div className={`step-icon ${cx(baseStyles, styles[state])}`}>
+    <div className={cx(baseStyles, styles[state])}>
       <Icon state={state} {...rest} />
     </div>
   );

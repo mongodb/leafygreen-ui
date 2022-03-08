@@ -16,14 +16,14 @@ const Stepper = ({
   // Helper Variables
   const numSteps = React.Children.count(children);
   const childrenArray = React.Children.toArray(children);
-  const firstDisplayedStep = Math.min(
+  let firstDisplayedStep = Math.min(
     Math.max(currentStep - COMPLETED_STEPS_SHOWN, 0),
-    numSteps - maxDisplayedSteps + 1, // +1 since Math.max is non-inclusive
+    numSteps - maxDisplayedSteps,
   );
   let lastDisplayedStep = firstDisplayedStep + maxDisplayedSteps;
-  const hasPriorSteps = currentStep - COMPLETED_STEPS_SHOWN > 0;
-  const hasLaterSteps = lastDisplayedStep <= numSteps;
-  if (hasPriorSteps) lastDisplayedStep--; // one step will be the prior ellipses
+  const hasPriorSteps = currentStep > COMPLETED_STEPS_SHOWN;
+  const hasLaterSteps = lastDisplayedStep < numSteps;
+  if (hasPriorSteps) firstDisplayedStep++; // one step will be the prior ellipses
   if (hasLaterSteps) lastDisplayedStep--; // one step will be the later ellipses
 
   const getStepState = (step: number) => {
@@ -37,10 +37,7 @@ const Stepper = ({
   };
 
   // Helper Functions
-  const getPriorEllipseState = () =>
-    currentStep - COMPLETED_STEPS_SHOWN > 1
-      ? StepCompletionStates.CompletedMultiple
-      : StepCompletionStates.Completed;
+  const hasPriorEllipse = () => firstDisplayedStep + COMPLETED_STEPS_SHOWN > 1
 
   const isLastNonEllipseStep = (step: number) => step + 1 === numSteps;
 
@@ -71,10 +68,10 @@ const Stepper = ({
 
   return (
     <ol className={cx(baseStyles, className)}>
-      {hasPriorSteps && (
+      {hasPriorEllipse() && (
         <EllipseStep
-          state={getPriorEllipseState()}
-          tooltipContent={childrenArray.slice(0, firstDisplayedStep)}
+          state={StepCompletionStates.CompletedMultiple}
+          tooltipContent={childrenArray.slice(0, currentStep - firstDisplayedStep)}
         >
           {getStepRangeText(1, firstDisplayedStep)}
         </EllipseStep>

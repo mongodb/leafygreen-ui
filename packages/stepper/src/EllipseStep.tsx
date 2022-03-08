@@ -8,7 +8,6 @@ import { StepCompletionStates, StepProps } from './types';
 export type EllipseStepProps = Omit<StepProps, 'state'> & {
   startingStepIndex?: number;
   state:
-    | StepCompletionStates.Completed
     | StepCompletionStates.CompletedMultiple
     | StepCompletionStates.UpcomingMultiple;
   tooltipContent: Array<
@@ -24,12 +23,6 @@ const EllipseStep = ({
   iconSize = 20,
   ...rest
 }: React.PropsWithChildren<EllipseStepProps>) => {
-  const stepBaseStyles = css`
-    .step-icon {
-      // TODO: use centralized transition value
-      transition: 0.3s box-shadow ease;
-    }
-  `;
 
   const completedMultipleStyles = css`
     &:hover .step-icon {
@@ -56,9 +49,7 @@ const EllipseStep = ({
       justify={Justify.Middle}
       trigger={
         <Step
-          // @ts-ignore 
-          // There are no custom styles for `StepCompletionStates.Completed`
-          className={cx(stepBaseStyles, stepStyles[state])}
+          className={cx(stepStyles[state])}
           state={state}
           {...rest}
         >
