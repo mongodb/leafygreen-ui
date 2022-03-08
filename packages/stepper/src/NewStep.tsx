@@ -42,7 +42,7 @@ export const Step = function Step({
   `;
 
   const completedMultipleStyles = css`
-    [as='label'] {
+    .step-label {
       color: ${palette.green.dark2};
       text-decoration-line: underline;
       text-decoration-style: dotted;
@@ -69,19 +69,19 @@ export const Step = function Step({
   `;
 
   const currentStyles = css`
-    [as='label'] {
+    .step-label {
       color: ${palette.green.dark3};
     }
   `;
 
   const upcomingStyles = css`
-    [as='label'] {
+    .step-label {
       color: ${palette.gray.dark1};
     }
   `;
 
   const upcomingMultipleStyles = css`
-    [as='label'] {
+    .step-label {
       text-decoration-line: underline;
       text-decoration-style: dotted;
       text-underline-position: under;
@@ -106,12 +106,11 @@ export const Step = function Step({
       aria-current={state === StepCompletionStates.Current && 'step'}
     >
       <StepIcon state={state} content={index} />
-      {/* NOTE: `<Body as="label" /> currently does not render an actual <label /> */}
       {/*
         TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
         Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.
       */}
-      <Body as="label" weight={isCurrent ? 'medium' : 'regular'}>
+      <Body className="step-label" weight={isCurrent ? 'medium' : 'regular'}>
         {children}
       </Body>
     </li>
