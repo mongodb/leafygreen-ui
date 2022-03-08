@@ -130,19 +130,6 @@ const baseButtonFocusStyles = css`
   box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
 `;
 
-// TODO: Refresh - remove when darkMode is updated
-const baseDarkModeButtonStyles = css`
-  &[aria-checked='true'] {
-    background-color: #43b1e5;
-    border-color: #2e9ed3;
-  }
-
-  &:before {
-    background-color: #43b1e5;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-`;
-
 const baseLabelStyle = css`
   transition: all ${transitionInMS}ms ease-in-out;
   position: absolute;
@@ -274,6 +261,7 @@ const modeStyles = {
       }
     `,
 
+    // TODO: Refresh - leaving because of destructuring below
     offLabel: css``,
     onLabel: css``,
   },
@@ -285,6 +273,16 @@ const modeStyles = {
       &[aria-checked='false']:not(:disabled) {
         background-color: rgba(6, 22, 33, 0.4);
         border-color: rgba(6, 22, 33, 0.1);
+      }
+
+      &[aria-checked='true'] {
+        background-color: #43b1e5;
+        border-color: #2e9ed3;
+      }
+
+      &:before {
+        background-color: #43b1e5;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
       &:disabled {
@@ -478,7 +476,6 @@ function Toggle({
         className={cx(
           baseButtonStyles,
           {
-            [baseDarkModeButtonStyles]: darkMode,
             [baseButtonFocusStyles]: showFocus && !darkMode,
           },
           buttonModeStyles,
