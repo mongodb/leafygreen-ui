@@ -70,6 +70,7 @@ const Stepper = ({
       {hasPriorEllipse() && (
         <EllipseStep
           state={StepCompletionStates.CompletedMultiple}
+          startingStepIndex={1}
           tooltipContent={childrenArray.slice(
             0,
             currentStep - firstDisplayedStep,
@@ -81,18 +82,21 @@ const Stepper = ({
       {React.Children.map(
         childrenArray.slice(firstDisplayedStep, lastDisplayedStep),
         (stepContents, i) => (
-          <Step
-            state={getStepState(firstDisplayedStep + i)}
-            shouldDisplayLine={!isLastNonEllipseStep(firstDisplayedStep + i)}
-            index={firstDisplayedStep + i + 1}
-          >
-            {stepContents}
-          </Step>
+          <li>
+            <Step
+              state={getStepState(firstDisplayedStep + i)}
+              shouldDisplayLine={!isLastNonEllipseStep(firstDisplayedStep + i)}
+              index={firstDisplayedStep + i + 1}
+            >
+              {stepContents}
+            </Step>
+          </li>
         ),
       )}
       {hasLaterSteps && (
         <EllipseStep
           state={StepCompletionStates.UpcomingMultiple}
+          startingStepIndex={lastDisplayedStep + 1}
           shouldDisplayLine={false}
           tooltipContent={childrenArray.slice(lastDisplayedStep, numSteps)}
         >

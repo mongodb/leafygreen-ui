@@ -1,5 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip, { TriggerEvent, Align, Justify } from '@leafygreen-ui/tooltip';
 import React from 'react';
 import Step from './Step';
@@ -12,6 +13,12 @@ const EllipseStep = ({
   startingStepIndex,
   ...rest
 }: React.PropsWithChildren<EllipseStepProps>) => {
+  // TODO: would be good to define main styles and put ol styles inside, but it is currently impossible because the <Tooltip> content is an iframe.
+  const tooltipStyles = css`
+    // TODO: this is an arbitrary value. It would be nice to have a separate component for <ol> that handles this spacing.
+    padding-inline-start: ${spacing[4]}px;
+  `;
+
   const completedMultipleStyles = css`
     &:hover .step-icon {
       // TODO: use centralized box-shadow value
@@ -36,15 +43,17 @@ const EllipseStep = ({
       align={Align.Top}
       justify={Justify.Middle}
       trigger={
-        <Step className={cx(stepStyles[state])} state={state} {...rest}>
-          {children}
-        </Step>
+        <li>
+          <Step className={cx(stepStyles[state])} state={state} {...rest}>
+            {children}
+          </Step>
+        </li>
       }
       triggerEvent={TriggerEvent.Hover}
     >
-      <ol>
-        {React.Children.map(tooltipContent, stepContents => (
-          <li value={startingStepIndex}>{stepContents}</li>
+      <ol className={cx(tooltipStyles)}>
+        {React.Children.map(tooltipContent, (stepContents, i) => (
+          <li value={startingStepIndex + i}>{stepContents}</li>
         ))}
       </ol>
     </Tooltip>

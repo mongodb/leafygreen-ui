@@ -19,7 +19,7 @@ export const Step = function Step({
 
   const baseStyles = css`
     display: flex;
-    width: fit-content;
+    // width: fit-content;
     margin: auto;
     flex-direction: column;
     align-items: center;
@@ -98,10 +98,10 @@ export const Step = function Step({
   };
 
   return (
-    <li
+    <div
       className={cx(baseStyles, styles[state], className)}
       aria-label={ariaLabel}
-      aria-current={state === StepCompletionStates.Current && 'step'}
+      aria-current={isCurrent && 'step'}
     >
       <StepIcon state={state} content={index} />
       {/*
@@ -111,7 +111,7 @@ export const Step = function Step({
       <Body className="step-label" weight={isCurrent ? 'medium' : 'regular'}>
         {children}
       </Body>
-    </li>
+    </div>
   );
 };
 

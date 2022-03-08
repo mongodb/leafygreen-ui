@@ -26,7 +26,7 @@ export interface StepProps {
 }
 
 export type EllipseStepProps = Omit<StepProps, 'state'> & {
-  startingStepIndex?: number;
+  startingStepIndex: number;
   state:
     | StepCompletionStates.CompletedMultiple
     | StepCompletionStates.UpcomingMultiple;
