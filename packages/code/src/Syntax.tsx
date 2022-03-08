@@ -11,6 +11,7 @@ import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -65,6 +66,7 @@ function Syntax({
   language,
   darkMode = false,
   showLineNumbers = false,
+  lineNumberStart,
   highlightLines = [],
   className,
   ...rest
@@ -97,11 +99,20 @@ function Syntax({
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
+  const baseFontSize = useBaseFontSize();
+  // TODO: Refresh - remove darkMode logic
+  const codeFontSize = baseFontSize === 14 ? 13 : darkMode ? 16 : 15;
+
+  const codeFontStyles = css`
+    font-size: ${codeFontSize}px;
+  `;
+
   return (
     <SyntaxContext.Provider
       value={{
         highlightLines,
         showLineNumbers,
+        lineNumberStart,
         darkMode,
       }}
     >
@@ -110,6 +121,7 @@ function Syntax({
         className={cx(
           `lg-highlight-hljs-${mode}`,
           codeStyles,
+          codeFontStyles,
           language,
           className,
         )}
@@ -135,6 +147,7 @@ Syntax.propTypes = {
   className: PropTypes.string,
   darkMode: PropTypes.bool,
   showLineNumbers: PropTypes.bool,
+  lineNumberStart: PropTypes.number,
   highlightLines: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.number),

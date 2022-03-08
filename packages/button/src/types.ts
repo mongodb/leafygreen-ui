@@ -38,6 +38,8 @@ interface ButtonProps {
   leftGlyph?: React.ReactElement;
   rightGlyph?: React.ReactElement;
   href?: string;
+  type?: JSX.IntrinsicElements['button']['type'];
+  as?: keyof JSX.IntrinsicElements;
 }
 
 export { Variant, Size, Mode, FontSize, ButtonProps };

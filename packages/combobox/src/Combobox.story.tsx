@@ -50,6 +50,14 @@ storiesOf('Combobox', module)
           <ComboboxOption value="apple" displayName="Apple" />
           <ComboboxOption value="banana" displayName="Banana" />
           <ComboboxOption value="carrot" displayName="Carrot" />
+          <ComboboxOption
+            value="paragraph"
+            displayName="Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper."
+          />
+          <ComboboxOption
+            value="hash"
+            displayName="5f4dcc3b5aa765d61d8327deb882cf99"
+          />
           <ComboboxOption value="dragonfruit" displayName="Dragonfruit" />
           <ComboboxOption value="eggplant" displayName="Eggplant" />
           <ComboboxOption value="fig" displayName="Fig" />
@@ -189,7 +197,7 @@ storiesOf('Combobox', module)
     );
   })
   .add('Controlled single select', () => {
-    const [selection, setSelection] = useState<string | null>('apple');
+    const [selection, setSelection] = useState<string | null>(null);
 
     const handleChange = (value: string | null) => {
       setSelection(value);
@@ -214,7 +222,7 @@ storiesOf('Combobox', module)
     );
   })
   .add('Controlled multiselect', () => {
-    const [selection, setSelection] = useState(['apple']);
+    const [selection, setSelection] = useState([] as Array<string>);
 
     const handleChange = (value: Array<string>) => {
       setSelection(value);
