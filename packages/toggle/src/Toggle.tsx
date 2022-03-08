@@ -5,7 +5,6 @@ import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors, palette } from '@leafygreen-ui/palette';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 
 export const Size = {
@@ -127,7 +126,9 @@ const baseButtonStyles = css`
 `;
 
 const baseButtonFocusStyles = css`
-  box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
+  &:focus-visible {
+    box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
+  }
 `;
 
 const baseLabelStyle = css`
@@ -157,7 +158,7 @@ const sizeStyles = {
   [Size.Default]: {
     button: css`
       height: 32px;
-      width: 62px;
+      width: 56px;
     `,
 
     slider: css`
@@ -166,7 +167,7 @@ const sizeStyles = {
       left: 1px;
 
       ${sliderSelector.checked} {
-        transform: translate3d(30px, 0, 0);
+        transform: translate3d(24px, 0, 0);
       }
     `,
   },
@@ -178,8 +179,9 @@ const sizeStyles = {
     `,
 
     slider: css`
-      height: 20px;
-      width: 20px;
+      height: 18px;
+      width: 18px;
+      left: 1px;
 
       ${sliderSelector.checked} {
         transform: translate3d(18px, 0, 0);
@@ -207,12 +209,20 @@ const sizeStyles = {
 // TODO: Refresh - remove when darkMode is updated
 const sizeStylesDarkMode: Record<Size, string> = {
   [Size.Default]: css`
+    ${sliderSelector.checked} {
+      transform: translate3d(30px, 0, 0);
+    }
+
     ${sliderSelector.disabled} {
       height: 28px;
       width: 28px;
     }
   `,
   [Size.Small]: css`
+    height: 20px;
+    width: 20px;
+    left: 0;
+
     ${sliderSelector.disabled} {
       height: 18px;
       width: 18px;
@@ -426,8 +436,6 @@ function Toggle({
   const isControlled = typeof controlledChecked === 'boolean';
   const normalizedChecked = controlledChecked ?? checked;
 
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
   const onClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     e => {
       onClickProp?.(e);
@@ -476,10 +484,15 @@ function Toggle({
         className={cx(
           baseButtonStyles,
           {
-            [baseButtonFocusStyles]: showFocus && !darkMode,
+            [baseButtonFocusStyles]: !darkMode,
           },
           buttonModeStyles,
           buttonSizeStyles,
+          {
+            [css`
+              width: 62px;
+            `]: size === Size.Default && darkMode, // TODO: Refresh - remove when darkMode is updated
+          },
         )}
         {...toggleButton.prop}
         {...rest}
