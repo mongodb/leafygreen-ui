@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/combobox': minor
+'@leafygreen-ui/combobox': patch
 ---
 
 - Updates focus behavior, allowing users to re-open the menu with the mouse after making a selection
