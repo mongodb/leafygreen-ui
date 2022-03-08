@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { clone, isArray, isNull, isString, isUndefined } from 'lodash';
+import { clone, isArray, isEqual, isNull, isString, isUndefined } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
 import {
@@ -20,7 +20,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
   getNullSelection,
@@ -114,8 +114,19 @@ export default function Combobox<M extends boolean>({
 
   // Tells typescript that selection is multiselect
   const isMultiselect = useCallback(
-    <T extends number | string>(test: Array<T> | T | null): test is Array<T> =>
-      multiselect && isArray(test),
+    <T extends string>(val?: Array<T> | T | null): val is Array<T> => {
+      if (multiselect && (typeof val == 'string' || typeof val == 'number')) {
+        consoleOnce.error(
+          `Error in Combobox: multiselect is set to \`true\`, but recieved a ${typeof val} value: "${val}"`,
+        );
+      } else if (!multiselect && isArray(val)) {
+        consoleOnce.error(
+          'Error in Combobox: multiselect is set to `false`, but recieved an Array value',
+        );
+      }
+
+      return multiselect && isArray(val);
+    },
     [multiselect],
   );
 
@@ -770,7 +781,7 @@ export default function Combobox<M extends boolean>({
   // onSelect
   // Side effects to run when the selection changes
   useEffect(() => {
-    if (selection !== prevSelection) {
+    if (!isEqual(selection, prevSelection)) {
       onSelect();
     }
   }, [onSelect, prevSelection, selection]);
@@ -880,7 +891,7 @@ export default function Combobox<M extends boolean>({
 
   // Prevent combobox from gaining focus by default
   const handleInputWrapperMousedown = (e: React.MouseEvent) => {
-    if (e.target !== inputRef.current) {
+    if (disabled) {
       e.preventDefault();
     }
   };
@@ -976,13 +987,7 @@ export default function Combobox<M extends boolean>({
           break;
         }
 
-        case keyMap.Enter:
-        case keyMap.Space: {
-          if (isOpen) {
-            // prevent typing the space character
-            event.preventDefault();
-          }
-
+        case keyMap.Enter: {
           if (
             // Focused on input element
             document.activeElement === inputRef.current &&
