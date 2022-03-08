@@ -2,7 +2,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Tooltip, { TriggerEvent, Align, Justify } from '@leafygreen-ui/tooltip';
 import React from 'react';
-import Step from './NewStep';
+import Step from './Step';
 import { StepCompletionStates, EllipseStepProps } from './types';
 
 const EllipseStep = ({
