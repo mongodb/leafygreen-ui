@@ -98,8 +98,6 @@ export const Step = function Step({
   };
 
   return (
-    // TODO: Currently, the Tooltip trigger only works when the <Step> component is wrapped in a <div>.
-    // This is bad semantics as the <Step> component's <li> should be a direct child to the <Stepper>'s <ol>.
     <li
       className={cx(baseStyles, styles[state], className)}
       aria-label={ariaLabel}

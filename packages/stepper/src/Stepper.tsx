@@ -44,7 +44,7 @@ const Stepper = ({
     startStep,
     endStep,
   ) => {
-    const stepRange = endStep - startStep
+    const stepRange = endStep - startStep;
 
     if (stepRange < 1) {
       return `Step ${startStep}`;
