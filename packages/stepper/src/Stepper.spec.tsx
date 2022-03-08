@@ -1,306 +1,120 @@
 import React from 'react';
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  screen,
-} from '@testing-library/react';
-import { Step, Stepper } from '.';
+import { prettyDOM, render } from '@testing-library/react';
+import { axe } from 'jest-axe';
+import Stepper from '.';
 
-function isVisible(element: HTMLElement): boolean {
-  try {
-    expect(element).toBeVisible();
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
+const defaultProps = {
+  currentStep: 0,
+};
 
-function onlyElement(elements: Array<HTMLElement>): HTMLElement | null {
-  expect(elements.length).toBeLessThanOrEqual(1);
-  return elements[0] ?? null;
-}
-
-function renderSteps(
-  {
-    allSteps,
-    currentStep,
-    maxDisplayedSteps,
-    className = '',
-  }: {
-    allSteps: Array<string>;
-    currentStep: number;
-    maxDisplayedSteps: number;
-    expectedSteps?: Array<string>;
-    className?: string;
-  },
-  renderFunction: typeof render | RenderResult['rerender'],
-) {
-  const result = renderFunction(
-    <Stepper
-      currentStep={currentStep}
-      maxDisplayedSteps={maxDisplayedSteps}
-      className={className}
-    >
-      {allSteps.map(step => (
-        <Step key={step}>{step}</Step>
-      ))}
-    </Stepper>,
-  );
-  return result ? result.rerender : renderFunction;
-}
-
-function assertVisibleSteps({
-  allSteps,
-  currentStep,
-  expectedSteps = allSteps,
-}: {
-  allSteps: Array<string>;
-  currentStep?: number;
-  expectedSteps?: Array<string>;
-}) {
-  const visiblePreviousStepsElement = onlyElement(
-    screen.queryAllByLabelText('Previous steps').filter(isVisible),
-  );
-
-  if (expectedSteps.includes('Previous steps')) {
-    expect(visiblePreviousStepsElement).toBeVisible();
-  } else {
-    expect(visiblePreviousStepsElement).toBeNull();
-  }
-
-  allSteps.forEach(step => {
-    const visibleStepElement = onlyElement(
-      screen.queryAllByLabelText(step).filter(isVisible),
-    );
-
-    if (expectedSteps.includes(step)) {
-      expect(visibleStepElement).toBeVisible();
-      expect(visibleStepElement).toHaveTextContent(step);
-
-      if (currentStep !== undefined && allSteps[currentStep] === step) {
-        expect(visibleStepElement).toHaveAttribute('aria-current', 'step');
-      } else {
-        expect(visibleStepElement).not.toHaveAttribute('aria-current');
-      }
-    } else {
-      expect(visibleStepElement).toBeNull();
-    }
-  });
-
-  const visibleNextStepsElement = onlyElement(
-    screen.queryAllByLabelText('Next steps').filter(isVisible),
-  );
-
-  if (expectedSteps.includes('Next steps')) {
-    expect(visibleNextStepsElement).toBeVisible();
-  } else {
-    expect(visibleNextStepsElement).toBeNull();
-  }
-}
+const StepContents = (n: number) => {
+  return [...Array(n)].map((_, i) => <div key={`step-${i}`}>Step {i + 1}</div>);
+};
 
 describe('packages/stepper', () => {
-  test('renders className in components class list', () => {
-    const allSteps = ['First step', 'Second step', 'Third step'];
-    const maxDisplayedSteps = 3;
-    const className = 'className';
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = render(
+        <Stepper {...defaultProps}>{StepContents(3)}</Stepper>,
+      );
+      const results = await axe(container);
 
-    renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 0,
-        className,
-      },
-      render,
-    );
-
-    const stepper = screen.getByRole('list');
-    expect(stepper.classList).toContain(className);
+      expect(results).toHaveNoViolations();
+    });
   });
 
-  // eslint-disable-next-line jest/expect-expect
-  test('renders steps with correct current step', () => {
-    const allSteps = ['First step', 'Second step', 'Third step'];
-    const maxDisplayedSteps = 3;
+  describe('basic rendering', () => {
+    test('renders steps', async () => {
+      const { getByText } = render(
+        <Stepper {...defaultProps}>{StepContents(3)}</Stepper>,
+      );
 
-    const rerender = renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 0,
-      },
-      render,
-    );
-    assertVisibleSteps({ allSteps, currentStep: 0 });
+      expect(getByText('Step 1')).toBeInTheDocument();
+      expect(getByText('Step 2')).toBeInTheDocument();
+      expect(getByText('Step 3')).toBeInTheDocument();
+    });
 
-    renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 1,
-      },
-      rerender,
-    );
-    assertVisibleSteps({ allSteps, currentStep: 1 });
-
-    renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 2,
-      },
-      rerender,
-    );
-    assertVisibleSteps({ allSteps, currentStep: 2 });
+    test('renders correct default current step', async () => {
+      const { container } = render(
+        <Stepper {...defaultProps}>{StepContents(3)}</Stepper>,
+      );
+      const currentStep = container.querySelector('[aria-current="step"]');
+      expect(currentStep).toContainHTML('Step 1');
+      expect(currentStep).not.toContainHTML('Step 2');
+      expect(currentStep).not.toContainHTML('Step 3');
+    });
   });
 
-  // eslint-disable-next-line jest/expect-expect
-  test('does not show hidden steps', () => {
-    const allSteps = [
-      'First step',
-      'Second step',
-      'Third step',
-      'Fourth step',
-      'Fifth step',
-    ];
-    const maxDisplayedSteps = 3;
-
-    /**
-     *  ----------------------------------------
-     * | *First Step* > Second step >    ...    |
-     *  ----------------------------------------
-     */
-    const rerender = renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 0,
-      },
-      render,
-    );
-    assertVisibleSteps({
-      allSteps,
-      currentStep: 0,
-      expectedSteps: ['First step', 'Second step', 'Next steps'],
+  describe('props', () => {
+    test('renders correct current step', async () => {
+      const { container } = render(
+        <Stepper {...defaultProps} currentStep={1}>
+          {StepContents(3)}
+        </Stepper>,
+      );
+      const currentStep = container.querySelector('[aria-current="step"]');
+      expect(currentStep).not.toContainHTML('Step 1');
+      expect(currentStep).toContainHTML('Step 2');
+      expect(currentStep).not.toContainHTML('Step 3');
     });
 
-    /**
-     *  ----------------------------------------
-     * | First Step > *Second step* >    ...    |
-     *  ----------------------------------------
-     */
-    renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 1,
-        expectedSteps: ['First step', 'Second step', 'Next steps'],
-      },
-      rerender,
-    );
-    assertVisibleSteps({
-      allSteps,
-      currentStep: 1,
-      expectedSteps: ['First step', 'Second step', 'Next steps'],
+    test('controls number of visible steps', async () => {
+      const { queryByText } = render(
+        <Stepper {...defaultProps} maxDisplayedSteps={2}>
+          {StepContents(3)}
+        </Stepper>,
+      );
+
+      expect(queryByText('Step 1')).toBeInTheDocument();
+      expect(queryByText('Step 2')).not.toBeInTheDocument();
+      expect(queryByText('Step 3')).not.toBeInTheDocument();
     });
 
-    // Preview of next steps appears on hover
-    const nextSteps = onlyElement(
-      screen.getAllByLabelText('Next steps').filter(isVisible),
-    );
-    expect(nextSteps).toBeVisible();
-    fireEvent.mouseEnter(nextSteps!);
+    test('renders ellipsis steps', async () => {
+      const { queryByText } = render(
+        <Stepper {...defaultProps} maxDisplayedSteps={2}>
+          {StepContents(3)}
+        </Stepper>,
+      );
 
-    assertVisibleSteps({
-      allSteps,
-      expectedSteps: ['Previous steps', 'Third step', 'Next steps'],
+      expect(queryByText('Steps 2 and 3')).toBeInTheDocument();
     });
 
-    // Preview disappears
-    expect(nextSteps).not.toBeVisible();
-    fireEvent.mouseLeave(nextSteps!);
-    assertVisibleSteps({
-      allSteps,
-      currentStep: 1,
-      expectedSteps: ['First step', 'Second step', 'Next steps'],
+    test('renders correct "and" ellipsis text', async () => {
+      const shouldHaveAndText = render(
+        <Stepper {...defaultProps} maxDisplayedSteps={2}>
+          {StepContents(3)}
+        </Stepper>,
+      );
+
+      expect(
+        shouldHaveAndText.queryByText('Steps 2 and 3'),
+      ).toBeInTheDocument();
     });
 
-    /**
-     *  -------------------------------------
-     * |    ...   > *Third step* >    ...    |
-     *  -------------------------------------
-     */
-    renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 2,
-      },
-      rerender,
-    );
-    assertVisibleSteps({
-      allSteps,
-      currentStep: 2,
-      expectedSteps: ['Previous steps', 'Third step', 'Next steps'],
+    test('renders correct "to" ellipsis text', async () => {
+      const shouldHaveToText = render(
+        <Stepper {...defaultProps} maxDisplayedSteps={2}>
+          {StepContents(5)}
+        </Stepper>,
+      );
+
+      expect(shouldHaveToText.queryByText('Steps 2 to 5')).toBeInTheDocument();
     });
 
-    /**
-     *  ----------------------------------------
-     * | *Fourth Step* > Fifth step >    ...    |
-     *  ----------------------------------------
-     */
-    renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 3,
-      },
-      rerender,
-    );
-    assertVisibleSteps({
-      allSteps,
-      currentStep: 3,
-      expectedSteps: ['Previous steps', 'Fourth step', 'Fifth step'],
-    });
+    test('renders correct number of completed steps', async () => {
+      const { queryByText } = render(
+        <Stepper
+          {...defaultProps}
+          currentStep={3}
+          maxDisplayedSteps={4}
+          completedStepsShown={2}
+        >
+          {StepContents(5)}
+        </Stepper>,
+      );
 
-    /**
-     *  ----------------------------------------
-     * | Fourth Step > *Fifth step* >    ...    |
-     *  ----------------------------------------
-     */
-    renderSteps(
-      {
-        allSteps,
-        maxDisplayedSteps,
-        currentStep: 4,
-      },
-      rerender,
-    );
-    assertVisibleSteps({
-      allSteps,
-      currentStep: 4,
-      expectedSteps: ['Previous steps', 'Fourth step', 'Fifth step'],
-    });
-
-    // Preview of previous steps appears on hover
-    const previousStepsElement = onlyElement(
-      screen.queryAllByLabelText('Previous steps').filter(isVisible),
-    );
-    expect(previousStepsElement).toBeVisible();
-    fireEvent.mouseEnter(previousStepsElement!);
-    assertVisibleSteps({
-      allSteps,
-      expectedSteps: ['Previous steps', 'Third step', 'Next steps'],
-    });
-
-    // Preview disappears
-    expect(previousStepsElement).not.toBeVisible();
-    fireEvent.mouseLeave(previousStepsElement!);
-    assertVisibleSteps({
-      allSteps,
-      currentStep: 4,
-      expectedSteps: ['Previous steps', 'Fourth step', 'Fifth step'],
+      expect(queryByText('Steps 1 and 2')).toBeInTheDocument();
     });
   });
 });
