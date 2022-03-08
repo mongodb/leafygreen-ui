@@ -8,24 +8,32 @@ export enum StepCompletionStates {
   UpcomingMultiple = 'upcoming-multiple',
 }
 
-export type StepElements = React.ReactNode;
-
 export interface StepperProps {
   currentStep: number;
   maxDisplayedSteps?: number;
-  children: StepElements;
+  completedStepsShown?: number;
   className?: string;
 }
 
 export interface StepProps {
-  children: React.ReactNode;
   state: StepCompletionStates;
   index?: number;
   stepIcon?: React.ReactNode;
+  ariaLabel?: string;
   className?: string;
   iconSize?: number;
   shouldDisplayLine?: boolean;
 }
+
+export type EllipseStepProps = Omit<StepProps, 'state'> & {
+  startingStepIndex?: number;
+  state:
+    | StepCompletionStates.CompletedMultiple
+    | StepCompletionStates.UpcomingMultiple;
+  tooltipContent: Array<
+    React.ReactChild | React.ReactFragment | React.ReactPortal
+  >;
+};
 
 export interface StepIconProps {
   state: StepCompletionStates;

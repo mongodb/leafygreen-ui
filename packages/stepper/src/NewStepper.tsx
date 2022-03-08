@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Step from './NewStep';
 import { StepCompletionStates, StepperProps } from './types';
@@ -8,20 +8,18 @@ const Stepper = ({
   children,
   currentStep,
   maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
+  completedStepsShown = 1,
   className,
-}: StepperProps) => {
-  // Constants
-  const COMPLETED_STEPS_SHOWN = 1; // Steps shown after prior ellipses and current step
-
+}: PropsWithChildren<StepperProps>) => {
   // Helper Variables
   const numSteps = React.Children.count(children);
   const childrenArray = React.Children.toArray(children);
   let firstDisplayedStep = Math.min(
-    Math.max(currentStep - COMPLETED_STEPS_SHOWN, 0),
+    Math.max(currentStep - completedStepsShown, 0),
     numSteps - maxDisplayedSteps,
   );
   let lastDisplayedStep = firstDisplayedStep + maxDisplayedSteps;
-  const hasPriorSteps = currentStep > COMPLETED_STEPS_SHOWN;
+  const hasPriorSteps = currentStep > completedStepsShown;
   const hasLaterSteps = lastDisplayedStep < numSteps;
   if (hasPriorSteps) firstDisplayedStep++; // one step will be the prior ellipses
   if (hasLaterSteps) lastDisplayedStep--; // one step will be the later ellipses
@@ -37,7 +35,7 @@ const Stepper = ({
   };
 
   // Helper Functions
-  const hasPriorEllipse = () => firstDisplayedStep + COMPLETED_STEPS_SHOWN > 1
+  const hasPriorEllipse = () => currentStep > completedStepsShown;
 
   const isLastNonEllipseStep = (step: number) => step + 1 === numSteps;
 
@@ -71,7 +69,10 @@ const Stepper = ({
       {hasPriorEllipse() && (
         <EllipseStep
           state={StepCompletionStates.CompletedMultiple}
-          tooltipContent={childrenArray.slice(0, currentStep - firstDisplayedStep)}
+          tooltipContent={childrenArray.slice(
+            0,
+            currentStep - firstDisplayedStep,
+          )}
         >
           {getStepRangeText(1, firstDisplayedStep)}
         </EllipseStep>

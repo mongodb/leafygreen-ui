@@ -42,6 +42,7 @@ const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
     align-items: center;
     justify-content: center;
     border: 1px solid;
+    // TODO: use centralized transition prop
     transition: 0.3s box-shadow ease;
 
     svg {
@@ -51,7 +52,7 @@ const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
 
   const completedStyles = css`
     color: ${palette.white};
-    border-width: 0px;
+    border-color: ${palette.green.dark1};
     background-color: ${palette.green.dark1};
   `;
 
@@ -66,7 +67,6 @@ const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
     background-color: ${palette.white};
     border-color: ${palette.gray.dark1};
   `;
-
   const styles = {
     [StepCompletionStates.CompletedMultiple]: completedStyles,
     [StepCompletionStates.Completed]: completedStyles,
@@ -76,7 +76,7 @@ const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
   };
 
   return (
-    <div className={cx(baseStyles, styles[state])}>
+    <div className={`step-icon ${cx(baseStyles, styles[state])}`}>
       <Icon state={state} {...rest} />
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { StepCompletionStates, StepProps } from './types';
 import StepIcon from './StepIcon';
@@ -10,10 +10,11 @@ export const Step = function Step({
   children,
   index,
   state,
+  ariaLabel = `step${index || ''}`,
   shouldDisplayLine = true,
   iconSize = 20,
   className,
-}: StepProps) {
+}: PropsWithChildren<StepProps>) {
   const isCurrent = state === StepCompletionStates.Current;
 
   const baseStyles = css`
@@ -47,10 +48,24 @@ export const Step = function Step({
       text-decoration-style: dotted;
       text-underline-position: under;
     }
+
+    ${shouldDisplayLine &&
+    `
+        &:after {
+          background-color: ${palette.green.dark1};
+        }
+      `}
   `;
 
   const completedStyles = css`
     color: ${palette.green.dark2};
+
+    ${shouldDisplayLine &&
+    `
+        &:after {
+          background-color: ${palette.green.dark1};
+        }
+      `}
   `;
 
   const currentStyles = css`
@@ -85,7 +100,11 @@ export const Step = function Step({
   return (
     // TODO: Currently, the Tooltip trigger only works when the <Step> component is wrapped in a <div>.
     // This is bad semantics as the <Step> component's <li> should be a direct child to the <Stepper>'s <ol>.
-    <div role="listitem" className={cx(baseStyles, styles[state], className)}>
+    <li
+      className={cx(baseStyles, styles[state], className)}
+      aria-label={ariaLabel}
+      aria-current={state === StepCompletionStates.Current && 'step'}
+    >
       <StepIcon state={state} content={index} />
       {/* NOTE: `<Body as="label" /> currently does not render an actual <label /> */}
       {/*
@@ -95,7 +114,7 @@ export const Step = function Step({
       <Body as="label" weight={isCurrent ? 'medium' : 'regular'}>
         {children}
       </Body>
-    </div>
+    </li>
   );
 };
 

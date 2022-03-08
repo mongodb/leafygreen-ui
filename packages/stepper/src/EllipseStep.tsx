@@ -3,27 +3,15 @@ import { palette } from '@leafygreen-ui/palette';
 import Tooltip, { TriggerEvent, Align, Justify } from '@leafygreen-ui/tooltip';
 import React from 'react';
 import Step from './NewStep';
-import { StepCompletionStates, StepProps } from './types';
-
-export type EllipseStepProps = Omit<StepProps, 'state'> & {
-  startingStepIndex?: number;
-  state:
-    | StepCompletionStates.CompletedMultiple
-    | StepCompletionStates.UpcomingMultiple;
-  tooltipContent: Array<
-    React.ReactChild | React.ReactFragment | React.ReactPortal
-  >;
-};
+import { StepCompletionStates, EllipseStepProps } from './types';
 
 const EllipseStep = ({
   state,
   children,
   tooltipContent,
   startingStepIndex,
-  iconSize = 20,
   ...rest
 }: React.PropsWithChildren<EllipseStepProps>) => {
-
   const completedMultipleStyles = css`
     &:hover .step-icon {
       // TODO: use centralized box-shadow value
@@ -48,18 +36,14 @@ const EllipseStep = ({
       align={Align.Top}
       justify={Justify.Middle}
       trigger={
-        <Step
-          className={cx(stepStyles[state])}
-          state={state}
-          {...rest}
-        >
+        <Step className={cx(stepStyles[state])} state={state} {...rest}>
           {children}
         </Step>
       }
       triggerEvent={TriggerEvent.Hover}
     >
       <ol>
-        {React.Children.map(tooltipContent, (stepContents, i) => (
+        {React.Children.map(tooltipContent, stepContents => (
           <li value={startingStepIndex}>{stepContents}</li>
         ))}
       </ol>

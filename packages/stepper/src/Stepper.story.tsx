@@ -30,6 +30,7 @@ storiesOf('Stepper', module)
     let currentStep = number('Step', 1, { min: 0 });
     const numSteps = number('Number of steps', 10, { min: 1 });
     const maxDisplayedSteps = number('Max displayed', 5, { min: 1 });
+    const completedStepsShown = number('Completed steps shown', 3, { min: 1 });
 
     // Can't dynamically change the max, so we manually enforce it
     if (currentStep + 1 > numSteps) {
@@ -44,6 +45,7 @@ storiesOf('Stepper', module)
       <div style={{ width: 1000 }}>
         <NewStepper
           currentStep={currentStep}
+          completedStepsShown={completedStepsShown}
           maxDisplayedSteps={maxDisplayedSteps}
         >
           {times(numSteps, count => (
