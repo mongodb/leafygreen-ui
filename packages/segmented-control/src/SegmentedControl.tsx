@@ -46,19 +46,22 @@ const optionsWrapperStyleSize: Record<Size, string> = {
   [Size.Small]: css`
     --segment-gap: 1px; // space between segments
     --wrapper-padding: 0px;
-    --seg-ctrl-border-radius: 6px;
+    --outer-radius: 6px;
+    --indicator-radius: 6px;
     --indicator-height: 100%;
   `,
   [Size.Default]: css`
     --segment-gap: 5px; // space between segments
     --wrapper-padding: 3px;
-    --seg-ctrl-border-radius: 8px;
+    --outer-radius: 8px;
+    --indicator-radius: 6px;
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
   [Size.Large]: css`
     --segment-gap: 5px; // space between segments
     --wrapper-padding: 3px;
-    --seg-ctrl-border-radius: 12px;
+    --outer-radius: 12px;
+    --indicator-radius: 6px;
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
 };
@@ -94,19 +97,22 @@ const optionsWrapperStyleSizeDarkModeOverrides: Record<Size, string> = {
   [Size.Small]: css`
     --segment-gap: 1px;
     --wrapper-padding: 0px;
-    --seg-ctrl-border-radius: 4px;
+    --outer-radius: 4px;
+    --indicator-radius: 4px;
     --indicator-height: 100%;
   `,
   [Size.Default]: css`
     --segment-gap: 5px;
     --wrapper-padding: 3px;
-    --seg-ctrl-border-radius: 6px;
+    --outer-radius: 6px;
+    --indicator-radius: 6px;
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
   [Size.Large]: css`
     --segment-gap: 5px;
     --wrapper-padding: 3px;
-    --seg-ctrl-border-radius: 6px;
+    --outer-radius: 6px;
+    --indicator-radius: 6px;
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
 };
@@ -130,7 +136,8 @@ const optionsWrapperStyle = ({
       align-items: center;
       padding: var(--wrapper-padding);
       border: var(--border-width) solid var(--border-color);
-      border-radius: var(--seg-ctrl-border-radius);
+      border-radius: var(--outer-radius);
+      --indicator-radius: 6px;
       background-color: var(--background-color);
 
       &:focus {
@@ -161,7 +168,7 @@ const selectionIndicatorStyle = css`
   height: var(--indicator-height);
   z-index: 2;
   box-shadow: var(--indicator-shadow-color);
-  border-radius: inherit;
+  border-radius: var(--indicator-radius);
   border-width: 1px;
   border-style: solid;
   background-color: var(--indicator-background-color);
@@ -173,7 +180,7 @@ const hoverIndicatorStyle = css`
   position: absolute;
   height: var(--indicator-height);
   width: 100%;
-  border-radius: inherit;
+  border-radius: var(--indicator-radius);
   background-color: var(--hover-background-color);
   z-index: 0;
   opacity: 0;
