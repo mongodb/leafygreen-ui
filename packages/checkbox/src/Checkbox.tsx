@@ -90,21 +90,19 @@ const checkWrapperBaseStyle = css`
   width: 14px;
   transition: 100ms ease-in-out;
   transition-properties: box-shadow;
+`;
 
-  &[data-leafygreen-checked='true'],
-  &[data-leafygreen-checked='mixed'] {
-    border-color: ${palette.blue.base};
-    background-color: ${palette.blue.base};
-
-    &[data-leafygreen-disabled='true'] {
-      background-color: ${palette.gray.light2};
-    }
-  }
-
-  &[data-leafygreen-disabled='true'] {
-    border-color: ${palette.gray.light2};
-    background-color: ${palette.gray.light3};
-  }
+const checkWrapperCheckedStyle = css`
+  border-color: ${palette.blue.base};
+  background-color: ${palette.blue.base};
+`;
+const checkWrapperDisabledCheckedStyle = css`
+  border-color: ${palette.gray.light2};
+  background-color: ${palette.gray.light2};
+`;
+const checkWrapperDisabledUncheckedStyle = css`
+  border-color: ${palette.gray.light2};
+  background-color: ${palette.gray.light3};
 `;
 
 /** &:disabled won't work and [disabled] isn't a valid property because this isn't an input */
@@ -230,9 +228,11 @@ function Checkbox({
       ) : (
         <div
           {...checkboxWrapper.prop}
-          data-leafygreen-checked={indeterminateProp ? 'mixed' : isChecked}
-          data-leafygreen-disabled={disabled}
-          className={checkWrapperBaseStyle}
+          className={cx(checkWrapperBaseStyle, {
+            [checkWrapperCheckedStyle]: isChecked,
+            [checkWrapperDisabledUncheckedStyle]: disabled,
+            [checkWrapperDisabledCheckedStyle]: disabled && isChecked,
+          })}
         >
           {isChecked && !indeterminateProp && (
             <SvgCheck fill={disabled ? palette.gray.light3 : palette.white} />
