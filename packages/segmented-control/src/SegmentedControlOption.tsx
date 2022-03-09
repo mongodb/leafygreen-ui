@@ -129,16 +129,6 @@ const optionStyle = ({
     },
   );
 
-const interactionRingStyle = css`
-  width: 100%;
-  z-index: 1;
-
-  /* disable the interaction ring hover state */
-  &:hover > [data-leafygreen-ui='interaction-ring'] {
-    box-shadow: none;
-  }
-`;
-
 const boxStyle = css`
   width: 100%;
   text-decoration: none;
@@ -154,6 +144,7 @@ const buttonStyle = css`
   justify-content: center;
   padding: var(--padding-block) var(--padding-inline);
   background-color: var(--base-background-color);
+  border-radius: var(--indicator-radius);
   text-align: center;
   font-size: var(--font-size);
   line-height: var(--line-height);
@@ -162,7 +153,8 @@ const buttonStyle = css`
   color: var(--base-text-color);
   box-shadow: 0px 1px 2px var(--base-shadow-color);
   cursor: pointer;
-  transition: all 150ms ease-in-out;
+  transition: 150ms ease-in-out;
+  transition-property: color, box-shadow;
   text-decoration: none;
   outline: none;
   border: none;
@@ -180,6 +172,19 @@ const buttonStyle = css`
     cursor: not-allowed;
   }
 `;
+
+const buttonFocusStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    &:focus {
+      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
+    }
+  `,
+  [Mode.Dark]: css`
+    &:focus {
+      box-shadow: 0 0 0 2px ${uiColors.focus};
+    }
+  `,
+};
 
 const labelStyle = css`
   display: inline-flex;
@@ -327,38 +332,34 @@ const SegmentedControlOption = React.forwardRef<
         ref={forwardedRef}
         data-lg-checked={checked}
       >
-        <InteractionRing
-          darkMode={mode === 'dark'}
-          borderRadius={'var(--seg-ctrl-border-radius)'}
-          className={interactionRingStyle}
-        >
-          <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
-            <button
-              role="tab"
-              id={id}
-              tabIndex={focused ? 0 : -1}
-              aria-selected={checked}
-              aria-controls={ariaControls}
-              disabled={disabled}
-              className={buttonStyle}
-              ref={buttonRef}
-              onClick={onClick}
-              onMouseEnter={onMouseEnter}
-              onMouseLeave={onMouseLeave}
+        <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
+          <button
+            role="tab"
+            id={id}
+            tabIndex={focused ? 0 : -1}
+            aria-selected={checked}
+            aria-controls={ariaControls}
+            disabled={disabled}
+            className={cx(buttonStyle, {
+              [buttonFocusStyle[mode]]: usingKeyboard,
+            })}
+            ref={buttonRef}
+            onClick={onClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          >
+            <span
+              className={cx(labelStyle, {
+                // TODO: Refresh - remove darkmode font override
+                [css`
+                  font-family: ${fontFamilies.legacy};
+                `]: mode === 'dark',
+              })}
             >
-              <span
-                className={cx(labelStyle, {
-                  // TODO: Refresh - remove darkmode font override
-                  [css`
-                    font-family: ${fontFamilies.legacy};
-                  `]: mode === 'dark',
-                })}
-              >
-                {children}
-              </span>
-            </button>
-          </Box>
-        </InteractionRing>
+              {children}
+            </span>
+          </button>
+        </Box>
       </div>
     );
   },
