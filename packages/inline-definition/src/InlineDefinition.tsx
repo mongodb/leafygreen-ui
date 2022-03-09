@@ -11,7 +11,8 @@ import { palette } from '@leafygreen-ui/palette';
  *  ˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚
  */
 
-const underline = css`
+const triggerElementStyles = css`
+  border-radius: 2px;
   text-decoration: underline dotted 2px;
   text-decoration-color: ${palette.gray.dark1};
   text-underline-offset: 0.125em;
@@ -20,7 +21,8 @@ const underline = css`
     text-decoration-color: currentColor;
   }
 
-  &:focus {
+  &:focus,
+  &:focus-visible {
     text-decoration-color: ${palette.blue.light1};
     outline-color: ${palette.blue.light1};
     outline-offset: 3px;
@@ -49,7 +51,7 @@ function InlineDefinition({
         <span
           // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
-          className={cx(underline, className)}
+          className={cx(triggerElementStyles, className)}
         >
           {children}
         </span>
