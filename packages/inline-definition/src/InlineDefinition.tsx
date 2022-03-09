@@ -11,26 +11,17 @@ import { palette } from '@leafygreen-ui/palette';
  *  ˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚
  */
 
-const underlineDot = 2;
-const underlineGap = 2;
 const underline = css`
-  background-repeat: repeat-x;
-  background-position: 0px bottom;
-  background-size: ${underlineDot + underlineGap}px ${underlineDot}px;
-
-  --lg-inline-definition-underline-color: ${palette.gray.dark1};
-  background-image: radial-gradient(
-    circle closest-side,
-    var(--lg-inline-definition-underline-color) 100%,
-    transparent 0%
-  );
+  text-decoration: underline dotted 2px;
+  text-decoration-color: ${palette.gray.dark1};
+  text-underline-offset: 0.125em;
 
   &:hover {
-    --lg-inline-definition-underline-color: currentColor;
+    text-decoration-color: currentColor;
   }
 
   &:focus {
-    --lg-inline-definition-underline-color: ${palette.blue.light1};
+    text-decoration-color: ${palette.blue.light1};
     outline-color: ${palette.blue.light1};
     outline-offset: 3px;
   }
