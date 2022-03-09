@@ -16,9 +16,18 @@ if (args.includes('--watch')) {
   cmdArgs.push('--', '--watch');
 }
 
-const packages = args.some(arg => arg.startsWith('^'))
-  ? getAllPackageNames().filter(pkg => !args.includes(`^${pkg}`))
-  : args;
+let packages = args;
+// Look for the packages we should be excluding
+
+if (args.includes('--exclude') || args.includes('-e')) {
+  const flagIndex =
+    args.indexOf('--exclude') >= 0
+      ? args.indexOf('--exclude')
+      : args.indexOf('-e');
+  args.splice(flagIndex, 1);
+
+  packages = getAllPackageNames().filter(pkg => !args.includes(`${pkg}`));
+}
 
 const packageArgs = packages.flatMap(pkg => [
   '--scope',
