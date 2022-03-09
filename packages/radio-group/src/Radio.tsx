@@ -171,20 +171,15 @@ const inputStyle = css`
   margin: 0;
 `;
 
-const divColorSet = (mode: Mode, size: Size) => {
-  const colorSets = {
-    [Mode.Light]: css`
-      border: ${size === Size.Default ? `3px` : `2px`} solid
-        ${palette.gray.dark2};
-      background-color: ${palette.white};
-    `,
-
-    [Mode.Dark]: css`
-      border: 2px solid ${uiColors.white};
-      background-color: rgba(255, 255, 255, 0.2);
-    `,
-  };
-  return colorSets[mode];
+const divColorSet = {
+  [Mode.Light]: css`
+    border-color: ${palette.gray.dark2};
+    background-color: ${palette.white};
+  `,
+  [Mode.Dark]: css`
+    border-color: ${uiColors.white};
+    background-color: rgba(255, 255, 255, 0.2);
+  `,
 };
 
 const divStyle = css`
@@ -198,6 +193,7 @@ const divStyle = css`
   justify-content: center;
   flex-shrink: 0;
   border-radius: 100%;
+  border-style: solid;
 
   &:before {
     content: '';
@@ -222,6 +218,8 @@ const divStyle = css`
 const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
   [Size.Small]: {
     [Mode.Light]: css`
+      border-width: 2px;
+
       &:after {
         width: 6px;
         height: 6px;
@@ -230,6 +228,8 @@ const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
       }
     `,
     [Mode.Dark]: css`
+      border-width: 2px;
+
       &:after {
         width: 4px;
         height: 4px;
@@ -240,6 +240,8 @@ const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
   },
   [Size.Default]: {
     [Mode.Light]: css`
+      border-width: 3px;
+
       &:after {
         width: 8px;
         height: 8px;
@@ -248,6 +250,8 @@ const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
       }
     `,
     [Mode.Dark]: css`
+      border-width: 2px;
+
       &:after {
         width: 8px;
         height: 8px;
@@ -367,7 +371,7 @@ function Radio({
             {...inputDisplay.prop}
             className={cx(
               divStyle,
-              divColorSet(mode, normalizedSize),
+              divColorSet[mode],
               divSize[normalizedSize][mode],
               {
                 [css`
