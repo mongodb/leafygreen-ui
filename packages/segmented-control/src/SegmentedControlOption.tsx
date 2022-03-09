@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
 import {
   useBaseFontSize,
   useUsingKeyboardContext,
