@@ -76,7 +76,7 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
   };
 
   return (
-    <div className={`step-icon ${cx(baseStyles, styles[state])}`}>
+    <div className={`lg-ui-step-icon ${cx(baseStyles, styles[state])}`}>
       <Icon state={state} {...rest} />
     </div>
   );

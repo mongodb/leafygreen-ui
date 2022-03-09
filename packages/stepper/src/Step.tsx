@@ -41,7 +41,7 @@ export const Step = function Step({
   `;
 
   const completedMultipleStyles = css`
-    .step-label {
+    .lg-ui-step-label {
       color: ${palette.green.dark2};
       text-decoration-line: underline;
       text-decoration-style: dotted;
@@ -57,7 +57,7 @@ export const Step = function Step({
   `;
 
   const completedStyles = css`
-    .step-label {
+    .lg-ui-step-label {
       color: ${palette.green.dark2};
     }
 
@@ -70,19 +70,19 @@ export const Step = function Step({
   `;
 
   const currentStyles = css`
-    .step-label {
+    .lg-ui-step-label {
       color: ${palette.green.dark3};
     }
   `;
 
   const upcomingStyles = css`
-    .step-label {
+    .lg-ui-step-label {
       color: ${palette.gray.dark1};
     }
   `;
 
   const upcomingMultipleStyles = css`
-    .step-label {
+    .lg-ui-step-label {
       text-decoration-line: underline;
       text-decoration-style: dotted;
       text-underline-position: under;
@@ -109,7 +109,10 @@ export const Step = function Step({
         TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
         Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.
       */}
-      <Body className="step-label" weight={isCurrent ? 'medium' : 'regular'}>
+      <Body
+        className="lg-ui-step-label"
+        weight={isCurrent ? 'medium' : 'regular'}
+      >
         {children}
       </Body>
     </div>

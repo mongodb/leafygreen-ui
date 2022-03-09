@@ -20,14 +20,14 @@ const EllipseStep = ({
   `;
 
   const completedMultipleStyles = css`
-    &:hover .step-icon {
+    &:hover .lg-ui-step-icon {
       // TODO: use centralized box-shadow value
       box-shadow: 0px 0px 0px 3px ${palette.green.light2};
     }
   `;
 
   const upcomingMultipleStyles = css`
-    &:hover .step-icon {
+    &:hover .lg-ui-step-icon {
       // TODO: use centralized box-shadow value
       box-shadow: 0px 0px 0px 3px ${palette.gray.light2};
     }
