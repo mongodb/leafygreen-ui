@@ -9,6 +9,7 @@ const getAllPackageNames = () =>
 
 const cmdArgs = ['--parallel', 'build'];
 const args = process.argv.slice(2);
+let packages = args;
 
 // check if we should be watching
 if (args.includes('--watch')) {
@@ -16,9 +17,10 @@ if (args.includes('--watch')) {
   cmdArgs.push('--', '--watch');
 }
 
-let packages = args;
-// Look for the packages we should be excluding
+// TODO: add a flag to build only changed files
+// Base this off of git-staged files or off of components different from `main`
 
+// Look for the packages we should be excluding
 if (args.includes('--exclude') || args.includes('-e')) {
   const flagIndex =
     args.indexOf('--exclude') >= 0
