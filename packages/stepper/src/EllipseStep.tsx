@@ -43,6 +43,7 @@ const EllipseStep = ({
       align={Align.Top}
       justify={Justify.Middle}
       trigger={
+        // The <li> needs to be defined here and not in <Stepper> because the Tooltip doesn't trigger without a wrapping HTML element.
         <li>
           <Step className={cx(stepStyles[state])} state={state} {...rest}>
             {children}

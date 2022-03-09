@@ -19,7 +19,6 @@ export const Step = function Step({
 
   const baseStyles = css`
     display: flex;
-    // width: fit-content;
     margin: auto;
     flex-direction: column;
     align-items: center;
@@ -58,7 +57,9 @@ export const Step = function Step({
   `;
 
   const completedStyles = css`
-    color: ${palette.green.dark2};
+    .step-label {
+      color: ${palette.green.dark2};
+    }
 
     ${shouldDisplayLine &&
     `
@@ -103,7 +104,7 @@ export const Step = function Step({
       aria-label={ariaLabel}
       aria-current={isCurrent && 'step'}
     >
-      <StepIcon state={state} content={index} />
+      <StepIcon state={state} content={index} size={iconSize} />
       {/*
         TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
         Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.

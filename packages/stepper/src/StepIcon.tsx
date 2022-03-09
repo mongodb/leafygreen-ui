@@ -31,7 +31,7 @@ const Icon = ({ state, content }: StepIconProps) => {
   }
 };
 
-const StepIcon = ({ state, size = 20, ...rest }: StepIconProps) => {
+const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
   const baseStyles = css`
     width: ${size}px;
     height: ${size}px;
