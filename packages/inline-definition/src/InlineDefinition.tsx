@@ -4,13 +4,6 @@ import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
-/**
- *   ╭―――――――――――╮
- *   │   TEXT    │
- *   ╰―――――――――――╯
- *  ˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚
- */
-
 const triggerElementStyles = css`
   border-radius: 2px;
   text-decoration: underline dotted 2px;
