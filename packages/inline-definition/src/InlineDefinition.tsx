@@ -12,6 +12,11 @@ const triggerElementStyles = css`
 
   &:hover {
     text-decoration-color: currentColor;
+
+    * {
+      // Remove the Link underline styles
+      background-size: 0px;
+    }
   }
 
   &:focus,
