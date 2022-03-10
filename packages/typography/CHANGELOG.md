@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 9.1.0
+
+### Minor Changes
+
+- 1067fe9: Body typography component now uses the Box component, allowing the use of the `as` prop
+
 ## 9.0.0
 
 ### Major Changes

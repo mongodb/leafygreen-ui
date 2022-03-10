@@ -10,8 +10,7 @@ const footerStyle = css`
   display: flex;
   justify-content: right;
   flex-direction: row-reverse;
-  padding: 16px 24px;
-  border-top: 1px solid ${uiColors.gray.light2};
+  padding: 24px 35px 35px;
 `;
 
 interface FooterProps {
@@ -25,10 +24,12 @@ const Footer = ({ children, className, darkMode }: FooterProps) => {
     <div
       className={cx(
         footerStyle,
-        css`
-          border-top: 1px solid
-            ${!darkMode ? uiColors.gray.light2 : uiColors.gray.dark2};
-        `,
+        {
+          [css`
+            padding: 16px 24px;
+            border-top: 1px solid ${uiColors.gray.dark2};
+          `]: darkMode,
+        },
         className,
       )}
     >
