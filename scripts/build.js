@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 const cmdArgs = ['--parallel', 'build'];
 const args = process.argv.slice(2);
-let packages; // = getAllPackageNames();
+let packages = [];
 
 // check if we should be watching
 if (args.includes('--watch')) {
