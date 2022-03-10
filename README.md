@@ -6,6 +6,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 
 ## Package Table of Contents
 
+- [A11y](https://github.com/mongodb/leafygreen-ui/tree/main/packages/a11y)
 - [Badge](https://github.com/mongodb/leafygreen-ui/tree/main/packages/badge)
 - [Banner](https://github.com/mongodb/leafygreen-ui/tree/main/packages/banner)
 - [Box](https://github.com/mongodb/leafygreen-ui/tree/main/packages/box)
@@ -18,6 +19,8 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/confirmation-modal)
 - [Copyable](https://github.com/mongodb/leafygreen-ui/tree/main/packages/copyable)
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/main/packages/emotion)
+- [Expandable Card](https://github.com/mongodb/leafygreen-ui/tree/main/packages/expandable-card)
+- [Form Footer](https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-footer)
 - [Hooks](https://github.com/mongodb/leafygreen-ui/tree/main/packages/hooks)
 - [Icon](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon)
 - [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button)
@@ -29,7 +32,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/marketing-modal)
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
-- [MongoNav](https://github.com/10gen/leafygreen-ui-mongo-nav) (This package is a private submodule of leafygreen-ui)
+- [MongoNav](https://github.com/10gen/leafygreen-ui-private/tree/main/packages/mongo-nav) (This package lives in a private repository)
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
 - [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline)
 - [Popover](https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover)
@@ -48,6 +51,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Text Input](https://github.com/mongodb/leafygreen-ui/tree/main/packages/text-input)
 - [Toast](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast)
 - [Toggle](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toggle)
+- [Tokens](https://github.com/mongodb/leafygreen-ui/tree/main/packages/tokens)
 - [Tooltip](https://github.com/mongodb/leafygreen-ui/tree/main/packages/tooltip)
 - [Typography](https://github.com/mongodb/leafygreen-ui/tree/main/packages/typography)
 

@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 10.0.0
+
+### Major Changes
+
+- ab1fd9e: Updates Icon Button in line with the visual brand refresh
+
 ## 9.1.7
 
 ### Patch Changes

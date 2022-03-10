@@ -4,7 +4,10 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Button from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
+import { CloseIconColor } from '@leafygreen-ui/modal';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+import { svgBlobs } from '.';
 
 const Mode = {
   Dark: 'dark',
@@ -12,6 +15,14 @@ const Mode = {
 };
 
 type Mode = typeof Mode[keyof typeof Mode];
+
+export const BlobPosition = {
+  TopLeft: 'top left',
+  TopRight: 'top right',
+  BottomRight: 'bottom right',
+} as const;
+
+export type BlobPosition = typeof BlobPosition[keyof typeof BlobPosition];
 
 export const GraphicStyle = {
   Center: 'center',
@@ -22,24 +33,16 @@ type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
 
 const titleStyle = css`
   font-size: 24px;
-  font-weight: bold;
-  line-height: 25px;
-  margin-bottom: 10px;
+  color: ${palette.black};
+  font-weight: 700;
+  line-height: 32px;
+  margin-bottom: 4px;
 `;
-
-const titleColors = {
-  [Mode.Light]: css`
-    color: ${uiColors.gray.dark2};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.white};
-  `,
-};
 
 const baseModalStyle = css`
   width: 600px;
   padding: initial;
-  overflow: auto;
+  overflow: hidden;
 `;
 
 const baseGraphicContainerStyle = css`
@@ -51,13 +54,20 @@ const baseGraphicStyle = css`
   display: block;
 `;
 
-const centeredGraphicContainerStyle = css`
-  padding-top: 20px;
-  padding-bottom: 8px;
-`;
+const centeredGraphicContainerStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    padding-top: 48px;
+    padding-bottom: 24px;
+  `,
+  [Mode.Dark]: css`
+    padding-top: 20px;
+    padding-bottom: 8px;
+  `,
+};
 
 const filledGraphicContainerStyle = css`
   padding-bottom: 24px;
+  position: relative;
 `;
 
 const filledGraphicStyle = css`
@@ -65,22 +75,37 @@ const filledGraphicStyle = css`
 `;
 
 const contentStyle = css`
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: ${fontFamilies.default};
+  font-size: 13px;
   line-height: 20px;
   letter-spacing: 0;
   text-align: center;
-  padding: 0 92px;
-  padding-bottom: 24px;
+  padding: 0 20px 32px;
+  max-width: 476px;
+  margin: 0 auto;
+  color: ${palette.gray.dark3};
 `;
 
-const contentColors = {
-  [Mode.Light]: css`
-    color: ${uiColors.gray.dark1};
-  `,
-  [Mode.Dark]: css`
-    color: ${uiColors.gray.light2};
-  `,
+const renderCurvedSVG = () => {
+  const curvedSVGStyles = css`
+    position: absolute;
+    left: 0;
+    bottom: 24px;
+  `;
+
+  return (
+    <svg
+      className={cx(curvedSVGStyles)}
+      viewBox="0 0 600 49"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z"
+        fill="#ffffff"
+      />
+    </svg>
+  );
 };
 
 const footerContentStyle = css`
@@ -105,19 +130,25 @@ interface MarketingModalProps {
   buttonText: string;
   linkText: string;
   darkMode?: boolean;
+  closeIconColor?: CloseIconColor;
+  blobPosition?: BlobPosition;
+  showBlob?: boolean;
 }
 
 const MarketingModal = ({
   children,
   title,
   graphic,
-  graphicStyle = 'center',
+  graphicStyle = GraphicStyle.Center,
   onButtonClick,
   onLinkClick,
   onClose,
   buttonText,
   linkText,
   darkMode,
+  closeIconColor = CloseIconColor.Dark,
+  blobPosition = BlobPosition.TopLeft,
+  showBlob = false,
   ...modalProps
 }: MarketingModalProps) => {
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -128,10 +159,16 @@ const MarketingModal = ({
       contentClassName={baseModalStyle}
       setOpen={onClose}
       darkMode={darkMode}
+      closeIconColor={closeIconColor}
     >
+      {!darkMode &&
+        showBlob &&
+        graphicStyle === GraphicStyle.Center &&
+        svgBlobs(blobPosition)}
       <div
         className={cx(baseGraphicContainerStyle, {
-          [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
+          [centeredGraphicContainerStyle[mode]]:
+            graphicStyle === GraphicStyle.Center,
           [filledGraphicContainerStyle]: graphicStyle === GraphicStyle.Fill,
         })}
       >
@@ -140,29 +177,65 @@ const MarketingModal = ({
             [filledGraphicStyle]: graphicStyle === GraphicStyle.Fill,
           })}`,
         })}
+        {!darkMode && graphicStyle === GraphicStyle.Fill && renderCurvedSVG()}
       </div>
-      <div className={cx(contentStyle, contentColors[mode])}>
-        <div className={cx(titleStyle, titleColors[mode])}>{title}</div>
+      <div
+        className={cx(contentStyle, {
+          [css`
+            // TODO: Refresh – remove when darkMode is updated
+            font-family: ${fontFamilies.legacy};
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0;
+            text-align: center;
+            padding: 0 92px;
+            padding-bottom: 24px;
+            color: ${uiColors.gray.light2};
+            max-width: inherit;
+          `]: darkMode,
+        })}
+      >
+        <div
+          className={cx(titleStyle, {
+            [css`
+              // TODO: Refresh – remove when darkMode is updated
+              color: ${uiColors.white};
+              font-weight: bold;
+              line-height: 25px;
+              margin-bottom: 10px;
+            `]: darkMode,
+          })}
+        >
+          {title}
+        </div>
         {children}
       </div>
       <div className={footerContentStyle}>
-        <Button variant="primary" onClick={onButtonClick} darkMode={darkMode}>
+        <Button
+          variant="baseGreen"
+          onClick={onButtonClick}
+          darkMode={darkMode}
+          className={cx({
+            [css`
+              min-width: 200px;
+            `]: !darkMode,
+          })}
+        >
           {buttonText}
         </Button>
         <Link
           tabIndex={0}
           onClick={onLinkClick}
           hideExternalIcon
-          className={cx(
-            css`
+          className={cx({
+            [css`
+              margin-top: 16px;
+            `]: !darkMode,
+            [css`
+              color: #41c6ff;
               margin-top: 24px;
-            `,
-            {
-              [css`
-                color: #41c6ff;
-              `]: darkMode,
-            },
-          )}
+            `]: darkMode,
+          })}
         >
           {linkText}
         </Link>
@@ -185,6 +258,8 @@ MarketingModal.propTypes = {
   className: PropTypes.string,
   buttonText: PropTypes.string.isRequired,
   linkText: PropTypes.string.isRequired,
+  blobPosition: PropTypes.oneOf(Object.values(BlobPosition)),
+  showBlob: PropTypes.bool,
 };
 
 export default MarketingModal;
