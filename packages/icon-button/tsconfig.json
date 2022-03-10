@@ -24,6 +24,9 @@
     },
     {
       "path": "../a11y"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }
