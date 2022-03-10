@@ -70,6 +70,30 @@ describe('packages/stepper', () => {
       expect(queryByText('Step 3')).not.toBeInTheDocument();
     });
 
+    test('sets maxDisplayedSteps to length of list', async () => {
+      const { queryByText } = render(
+        <Stepper {...defaultProps}>
+          {StepContents(3)}
+        </Stepper>,
+      );
+
+      expect(queryByText('Step 1')).toBeInTheDocument();
+      expect(queryByText('Step 2')).toBeInTheDocument();
+      expect(queryByText('Step 3')).toBeInTheDocument();
+      expect(queryByText('Step 4')).not.toBeInTheDocument();
+    });
+
+    test('sets maxDisplayedSteps to 1 if there is only one child', async () => {
+      const { queryByText } = render(
+        <Stepper {...defaultProps}>
+          <div>Step 1</div>
+        </Stepper>,
+      );
+
+      expect(queryByText('Step 1')).toBeInTheDocument();
+      expect(queryByText('Step 2')).not.toBeInTheDocument();
+    });
+
     test('renders ellipsis steps', async () => {
       const { queryByText } = render(
         <Stepper {...defaultProps} maxDisplayedSteps={2}>
