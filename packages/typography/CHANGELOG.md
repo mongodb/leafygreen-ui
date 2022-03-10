@@ -1,5 +1,25 @@
 # @leafygreen-ui/typography
 
+## 9.1.0
+
+### Minor Changes
+
+- 1067fe9: Body typography component now uses the Box component, allowing the use of the `as` prop
+
+## 9.0.0
+
+### Major Changes
+
+- 8457f92: - Adds "Euclid Circular A" and "MongoDB Value Serif" to `tokens.fontFamilies`
+  - Updates Light mode typography according to visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
 ## 8.1.0
 
 ### Minor Changes

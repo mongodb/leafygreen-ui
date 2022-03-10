@@ -1,9 +1,10 @@
 const Variant = {
+  Default: 'default',
   Primary: 'primary',
   PrimaryOutline: 'primaryOutline',
-  Default: 'default',
   Danger: 'danger',
   DangerOutline: 'dangerOutline',
+  BaseGreen: 'baseGreen',
 } as const;
 
 type Variant = typeof Variant[keyof typeof Variant];
@@ -37,6 +38,8 @@ interface ButtonProps {
   leftGlyph?: React.ReactElement;
   rightGlyph?: React.ReactElement;
   href?: string;
+  type?: JSX.IntrinsicElements['button']['type'];
+  as?: keyof JSX.IntrinsicElements;
 }
 
 export { Variant, Size, Mode, FontSize, ButtonProps };

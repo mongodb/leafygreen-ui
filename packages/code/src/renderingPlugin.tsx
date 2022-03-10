@@ -2,7 +2,7 @@ import { transparentize } from 'polished';
 import React from 'react';
 import flatMap from 'lodash/flatMap';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useSyntaxContext } from './SyntaxContext';
 import {
@@ -167,10 +167,10 @@ export function LineTableRow({
   darkMode,
   children,
 }: LineTableRowProps) {
-  const numberColor = uiColors.gray[darkMode ? 'dark1' : 'light1'];
+  const numberColor = darkMode ? uiColors.gray.dark1 : palette.gray.dark1;
   const highlightedNumberColor = darkMode
     ? uiColors.gray.light2
-    : uiColors.yellow.dark2;
+    : palette.yellow.dark2;
 
   return (
     <tr className={cx({ [getHighlightedRowStyle(darkMode)]: highlighted })}>
@@ -353,7 +353,12 @@ interface TableContentProps {
 }
 
 export function TableContent({ lines }: TableContentProps) {
-  const { highlightLines, showLineNumbers, darkMode } = useSyntaxContext();
+  const {
+    highlightLines,
+    showLineNumbers,
+    darkMode,
+    lineNumberStart,
+  } = useSyntaxContext();
   const trimmedLines = [...lines];
 
   // Strip empty lines from the beginning of code blocks
@@ -385,7 +390,7 @@ export function TableContent({ lines }: TableContentProps) {
   return (
     <>
       {trimmedLines.map((line, index) => {
-        const currentLineNumber = index + 1;
+        const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
         let displayLineNumber;

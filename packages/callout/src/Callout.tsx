@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { palette } from '@leafygreen-ui/palette';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+import { Overline, Subtitle } from '@leafygreen-ui/typography';
 
 export const Variant = {
   Note: 'note',
@@ -21,33 +20,29 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
-  background-color: ${uiColors.white};
-  border-radius: 6px;
-  box-shadow: 0px 2px 5px 0 ${transparentize(0.9, uiColors.gray.dark3)};
-  overflow: hidden;
+  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – update to fontFamilies.default
+  background-color: ${palette.white};
+  border-radius: 16px;
   position: relative;
 
   &:after {
     content: '';
     position: absolute;
-    width: 4px;
-    left: 0px;
-    top: -1px;
-    bottom: -1px;
-    border-radius: 6px 0px 0px 6px;
+    width: 16px;
+    left: -2px;
+    top: -2px;
+    bottom: -2px;
+    border-radius: 16px 0px 0px 16px;
   }
 `;
 
 const headerStyle = css`
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 0.8px;
-  line-height: 16px;
   padding: 12px 24px 12px 52px;
   position: relative;
   text-transform: uppercase;
   width: 100%;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
 `;
 
 const headerIconStyle = css`
@@ -56,25 +51,26 @@ const headerIconStyle = css`
 `;
 
 const titleStyle = css`
-  font-weight: bold;
-  margin-bottom: 6px;
-  line-height: 1;
+  font-weight: 600;
+  letter-spacing: inherit;
+  color: inherit;
 `;
 
 const bodyStyle = css`
   display: flex;
   flex-direction: column;
-  padding: 18px 24px 18px 52px;
+  padding: 16px 24px 16px 52px;
+  font-weight: 400;
 `;
 
 const fontSet = {
-  [14]: css`
-    font-size: 14px;
+  [13]: css`
+    font-size: 13px;
     line-height: 20px;
   `,
   [16]: css`
     font-size: 16px;
-    line-height: 24px;
+    line-height: 28px;
   `,
 };
 
@@ -97,48 +93,53 @@ export const headerIcons = {
 export const colorSets: Record<Variant, ColorSet> = {
   [Variant.Note]: {
     header: {
-      background: uiColors.blue.light3,
-      text: uiColors.blue.dark2,
+      background: palette.blue.light3,
+      text: palette.blue.dark1,
     },
-    text: uiColors.blue.dark3,
-    bar: uiColors.blue.base,
-    icon: uiColors.blue.base,
+    text: palette.blue.dark3,
+    bar: palette.blue.base,
+    icon: palette.blue.base,
+    border: palette.blue.light2,
   },
   [Variant.Tip]: {
     header: {
-      background: '#F3F2FC', // purple light3
-      text: '#5A59C6', // purple base
+      background: palette.purple.light3,
+      text: palette.purple.dark2,
     },
-    text: '#2C3A64', // purple dark3
-    bar: '#5A59C6', // purple base
-    icon: '#5A59C6', // purple base
+    text: palette.purple.dark3,
+    bar: palette.purple.base,
+    icon: palette.purple.base,
+    border: palette.purple.light2,
   },
   [Variant.Important]: {
     header: {
-      background: uiColors.yellow.light3,
-      text: uiColors.yellow.dark2,
+      background: palette.yellow.light3,
+      text: palette.yellow.dark2,
     },
-    text: uiColors.yellow.dark3,
-    bar: uiColors.yellow.base,
-    icon: uiColors.yellow.dark2,
+    text: palette.yellow.dark3,
+    bar: palette.yellow.base,
+    icon: palette.yellow.dark2,
+    border: palette.yellow.light2,
   },
   [Variant.Warning]: {
     header: {
-      background: uiColors.red.light3,
-      text: uiColors.red.dark2,
+      background: palette.red.light3,
+      text: palette.red.dark2,
     },
-    text: uiColors.red.dark3,
-    bar: uiColors.red.base,
-    icon: uiColors.red.base,
+    text: palette.red.dark3,
+    bar: palette.red.base,
+    icon: palette.red.base,
+    border: palette.red.light2,
   },
   [Variant.Example]: {
     header: {
-      background: uiColors.gray.light2,
-      text: uiColors.gray.dark2,
+      background: palette.gray.light2,
+      text: palette.gray.dark2,
     },
-    text: uiColors.gray.dark3,
-    bar: uiColors.gray.dark1,
-    icon: uiColors.gray.dark2,
+    text: palette.gray.dark3,
+    bar: palette.gray.dark1,
+    icon: palette.gray.dark3,
+    border: palette.gray.light1,
   },
 };
 
@@ -150,6 +151,7 @@ interface ColorSet {
   text: string;
   bar: string;
   icon: string;
+  border: string;
 }
 
 interface CalloutProps {
@@ -157,21 +159,16 @@ interface CalloutProps {
   children: React.ReactNode;
   className?: string;
   variant: Variant;
-  baseFontSize?: 14 | 16;
+  baseFontSize?: 13 | 16;
 }
 
 function Callout({
   variant,
   title,
-  baseFontSize,
+  baseFontSize = 13,
   className,
   children: contents,
 }: CalloutProps) {
-  const providerFontSize = useBaseFontSize();
-  const normalizedProviderFontSize =
-    providerFontSize === 14 || providerFontSize === 16 ? providerFontSize : 14;
-  const fontSize = baseFontSize ?? normalizedProviderFontSize;
-
   const colorSet = colorSets[variant];
   const Icon = headerIcons[variant];
 
@@ -182,9 +179,15 @@ function Callout({
         baseStyle,
         css`
           color: ${colorSet.text};
+          border: 2px solid ${colorSet.border};
+          box-shadow: inset 0px 2px 0px 0px ${colorSet.header.background}; // hides gap between the border and the header div when zoomed in.
 
           &:after {
-            background-color: ${colorSet.bar};
+            background: linear-gradient(
+              to left,
+              transparent 9px,
+              ${colorSet.bar} 9px
+            );
           }
         `,
         className,
@@ -204,13 +207,25 @@ function Callout({
           className={headerIconStyle}
           role="presentation"
         />
-        {headerLabels[variant]}
+        <Overline
+          as="h2"
+          className={cx(
+            css`
+              color: inherit;
+              letter-spacing: 0.6px;
+            `,
+          )}
+        >
+          {headerLabels[variant]}
+        </Overline>
       </div>
       <div className={bodyStyle}>
         {title && (
-          <div className={cx(titleStyle, fontSet[fontSize])}>{title}</div>
+          <Subtitle as="h3" className={cx(titleStyle, fontSet[baseFontSize])}>
+            {title}
+          </Subtitle>
         )}
-        <div className={fontSet[fontSize]}>{contents}</div>
+        <div className={fontSet[baseFontSize]}>{contents}</div>
       </div>
     </div>
   );

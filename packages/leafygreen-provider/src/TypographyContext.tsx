@@ -1,12 +1,14 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
+// TODO: Refresh - update to 13 | 16
+type FontSize = 14 | 16;
 export interface TypographyProviderProps {
   children: React.ReactNode;
-  baseFontSize?: 14 | 16;
+  baseFontSize?: FontSize;
 }
 
-const BaseFontSizeContext = createContext<14 | 16>(14);
+const BaseFontSizeContext = createContext<FontSize>(14);
 
 export function useBaseFontSize() {
   return useContext(BaseFontSizeContext);

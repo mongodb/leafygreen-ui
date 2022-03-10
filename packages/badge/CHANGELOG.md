@@ -1,5 +1,16 @@
 # @leafygreen-ui/badge
 
+## 5.0.0
+
+### Major Changes
+
+- 8457f92: Updates badge styles in line with visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
 ## 4.0.5
 
 ### Patch Changes

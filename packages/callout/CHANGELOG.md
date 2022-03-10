@@ -1,5 +1,18 @@
 # @leafygreen-ui/callout
 
+## 4.0.0
+
+### Major Changes
+
+- 8457f92: Updates callout styles in line with visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/typography@9.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
 ## 3.0.6
 
 ### Patch Changes
