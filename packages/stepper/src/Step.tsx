@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { StepCompletionStates, StepProps } from './types';
+import { StepStates, StepProps } from './types';
 import StepIcon from './StepIcon';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -15,7 +15,7 @@ export const Step = function Step({
   iconSize = 20,
   className,
 }: PropsWithChildren<StepProps>) {
-  const isCurrent = state === StepCompletionStates.Current;
+  const isCurrent = state === StepStates.Current;
 
   const baseStyles = css`
     display: flex;
@@ -90,12 +90,12 @@ export const Step = function Step({
     }
   `;
 
-  const styles = {
-    [StepCompletionStates.CompletedMultiple]: completedMultipleStyles,
-    [StepCompletionStates.Completed]: completedStyles,
-    [StepCompletionStates.Current]: currentStyles,
-    [StepCompletionStates.Upcoming]: upcomingStyles,
-    [StepCompletionStates.UpcomingMultiple]: upcomingMultipleStyles,
+  const styles: Record<StepStates, string> = {
+    [StepStates.CompletedMultiple]: completedMultipleStyles,
+    [StepStates.Completed]: completedStyles,
+    [StepStates.Current]: currentStyles,
+    [StepStates.Upcoming]: upcomingStyles,
+    [StepStates.UpcomingMultiple]: upcomingMultipleStyles,
   };
 
   return (

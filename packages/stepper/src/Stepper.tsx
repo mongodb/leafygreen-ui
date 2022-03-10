@@ -1,8 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Step from './Step';
-import { StepCompletionStates, StepperProps } from './types';
-import EllipseStep from './EllipseStep';
+import { StepStates, StepperProps } from './types';
+import EllipsesStep from './EllipsesStep';
 
 const Stepper = ({
   children,
@@ -14,7 +14,7 @@ const Stepper = ({
   // Helper Variables
   const numSteps = React.Children.count(children);
   const childrenArray = React.Children.toArray(children);
-  // first non-ellipse step displayed
+  // first non-Ellipses step displayed
   let firstDisplayedStep = Math.min(
     Math.max(currentStep - completedStepsShown, 0),
     numSteps - maxDisplayedSteps,
@@ -22,21 +22,21 @@ const Stepper = ({
   let lastDisplayedStep = firstDisplayedStep + maxDisplayedSteps;
   const hasPriorSteps = currentStep > completedStepsShown;
   const hasLaterSteps = lastDisplayedStep < numSteps;
-  if (hasPriorSteps) firstDisplayedStep++; // one step will be the prior ellipses
-  if (hasLaterSteps) lastDisplayedStep--; // one step will be the later ellipses
+  if (hasPriorSteps) firstDisplayedStep++; // one step will be the prior Ellipsess
+  if (hasLaterSteps) lastDisplayedStep--; // one step will be the later Ellipsess
 
   const getStepState = (step: number) => {
     if (step < currentStep) {
-      return StepCompletionStates.Completed;
+      return StepStates.Completed;
     } else if (step === currentStep) {
-      return StepCompletionStates.Current;
+      return StepStates.Current;
     } else {
-      return StepCompletionStates.Upcoming;
+      return StepStates.Upcoming;
     }
   };
 
   // Helper Functions
-  const hasPriorEllipse = () => currentStep > completedStepsShown;
+  const hasPriorEllipses = () => currentStep > completedStepsShown;
 
   const isLastStep = (step: number) => step + 1 === numSteps;
 
@@ -67,14 +67,14 @@ const Stepper = ({
 
   return (
     <ol className={cx(baseStyles, className)}>
-      {hasPriorEllipse() && (
-        <EllipseStep
-          state={StepCompletionStates.CompletedMultiple}
+      {hasPriorEllipses() && (
+        <EllipsesStep
+          state={StepStates.CompletedMultiple}
           startingStepIndex={1}
           tooltipContent={childrenArray.slice(0, firstDisplayedStep)}
         >
           {getStepRangeText(1, firstDisplayedStep)}
-        </EllipseStep>
+        </EllipsesStep>
       )}
       {React.Children.map(
         childrenArray.slice(firstDisplayedStep, lastDisplayedStep),
@@ -91,14 +91,14 @@ const Stepper = ({
         ),
       )}
       {hasLaterSteps && (
-        <EllipseStep
-          state={StepCompletionStates.UpcomingMultiple}
+        <EllipsesStep
+          state={StepStates.UpcomingMultiple}
           startingStepIndex={lastDisplayedStep + 1}
           shouldDisplayLine={false}
           tooltipContent={childrenArray.slice(lastDisplayedStep, numSteps)}
         >
           {getStepRangeText(lastDisplayedStep + 1, numSteps)}
-        </EllipseStep>
+        </EllipsesStep>
       )}
     </ol>
   );

@@ -4,15 +4,15 @@ import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip, { TriggerEvent, Align, Justify } from '@leafygreen-ui/tooltip';
 import React from 'react';
 import Step from './Step';
-import { StepCompletionStates, EllipseStepProps } from './types';
+import { StepStates, EllipsesStepProps, EllipsesStepStates } from './types';
 
-const EllipseStep = ({
+const EllipsesStep = ({
   state,
   children,
   tooltipContent,
   startingStepIndex,
   ...rest
-}: React.PropsWithChildren<EllipseStepProps>) => {
+}: React.PropsWithChildren<EllipsesStepProps>) => {
   // TODO: would be good to define main styles and put ol styles inside, but it is currently impossible because the <Tooltip> content is an iframe.
   const tooltipStyles = css`
     // TODO: this is an arbitrary value. It would be nice to have a separate component for <ol> that handles this spacing.
@@ -33,9 +33,9 @@ const EllipseStep = ({
     }
   `;
 
-  const stepStyles = {
-    [StepCompletionStates.CompletedMultiple]: completedMultipleStyles,
-    [StepCompletionStates.UpcomingMultiple]: upcomingMultipleStyles,
+  const stepStyles: Record<EllipsesStepStates, string> = {
+    [StepStates.CompletedMultiple]: completedMultipleStyles,
+    [StepStates.UpcomingMultiple]: upcomingMultipleStyles,
   };
 
   return (
@@ -61,4 +61,4 @@ const EllipseStep = ({
   );
 };
 
-export default EllipseStep;
+export default EllipsesStep;

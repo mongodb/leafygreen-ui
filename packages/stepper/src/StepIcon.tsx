@@ -1,5 +1,5 @@
 import React from 'react';
-import { StepCompletionStates, StepIconProps } from './types';
+import { StepStates, StepIconProps } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -8,11 +8,11 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 
 const Icon = ({ state, content }: StepIconProps) => {
-  if (state === StepCompletionStates.Completed) {
+  if (state === StepStates.Completed) {
     return <CheckmarkIcon />;
   } else if (
-    state === StepCompletionStates.UpcomingMultiple ||
-    state === StepCompletionStates.CompletedMultiple
+    state === StepStates.UpcomingMultiple ||
+    state === StepStates.CompletedMultiple
   ) {
     return <EllipsisIcon />;
   } else {
@@ -68,11 +68,11 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
     border-color: ${palette.gray.dark1};
   `;
   const styles = {
-    [StepCompletionStates.CompletedMultiple]: completedStyles,
-    [StepCompletionStates.Completed]: completedStyles,
-    [StepCompletionStates.Current]: currentStyles,
-    [StepCompletionStates.Upcoming]: upcomingStyles,
-    [StepCompletionStates.UpcomingMultiple]: upcomingStyles,
+    [StepStates.CompletedMultiple]: completedStyles,
+    [StepStates.Completed]: completedStyles,
+    [StepStates.Current]: currentStyles,
+    [StepStates.Upcoming]: upcomingStyles,
+    [StepStates.UpcomingMultiple]: upcomingStyles,
   };
 
   return (

@@ -1,12 +1,16 @@
 import React from 'react';
 
-export enum StepCompletionStates {
+export enum StepStates {
   CompletedMultiple = 'completed-multiple',
   Completed = 'completed',
   Current = 'current',
   Upcoming = 'upcoming',
   UpcomingMultiple = 'upcoming-multiple',
 }
+
+export type EllipsesStepStates =
+  | StepStates.CompletedMultiple
+  | StepStates.UpcomingMultiple;
 
 export interface StepperProps {
   currentStep: number;
@@ -16,7 +20,7 @@ export interface StepperProps {
 }
 
 export interface StepProps {
-  state: StepCompletionStates;
+  state: StepStates;
   index?: number;
   stepIcon?: React.ReactNode;
   ariaLabel?: string;
@@ -25,18 +29,16 @@ export interface StepProps {
   shouldDisplayLine?: boolean;
 }
 
-export type EllipseStepProps = Omit<StepProps, 'state'> & {
+export type EllipsesStepProps = Omit<StepProps, 'state'> & {
   startingStepIndex: number;
-  state:
-    | StepCompletionStates.CompletedMultiple
-    | StepCompletionStates.UpcomingMultiple;
+  state: StepStates.CompletedMultiple | StepStates.UpcomingMultiple;
   tooltipContent: Array<
     React.ReactChild | React.ReactFragment | React.ReactPortal
   >;
 };
 
 export interface StepIconProps {
-  state: StepCompletionStates;
+  state: StepStates;
   size?: number;
   content?: string | number;
 }
