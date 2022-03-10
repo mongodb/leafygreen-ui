@@ -2,4 +2,4 @@
 '@leafygreen-ui/tokens': minor
 ---
 
-Adds fontSizes export from tokens
+Adds `typeScales` export from tokens
