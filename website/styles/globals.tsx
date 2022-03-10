@@ -52,32 +52,6 @@ export const globalStyles = css`
    * Euclid
    */
 
-  /* Bold */
-  @font-face {
-    font-family: 'Euclid Circular A';
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold-WebXL.woff')
-        format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold-WebXL.woff2')
-        format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Bold.ttf')
-        format('truetype');
-    font-weight: 800;
-    font-style: normal;
-  }
-
-  /* Bold Italic */
-  @font-face {
-    font-family: 'Euclid Circular A';
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff')
-        format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic-WebXL.woff2')
-        format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-BoldItalic.ttf')
-        format('truetype');
-    font-weight: 800;
-    font-style: italic;
-  }
-
   /* Semibold */
   @font-face {
     font-family: 'Euclid Circular A';
@@ -87,7 +61,7 @@ export const globalStyles = css`
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Semibold.ttf')
         format('truetype');
-    font-weight: 700;
+    font-weight: 700, bold;
     font-style: normal;
   }
 
@@ -100,7 +74,7 @@ export const globalStyles = css`
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-SemiboldItalic.ttf')
         format('truetype');
-    font-weight: 700;
+    font-weight: 700, bold;
     font-style: italic;
   }
 
@@ -153,32 +127,6 @@ export const globalStyles = css`
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-RegularItalic.ttf')
         format('truetype');
     font-weight: 400, normal;
-    font-style: italic;
-  }
-
-  /* Light */
-  @font-face {
-    font-family: 'Euclid Circular A';
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Light-WebXL.woff')
-        format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Light-WebXL.woff2')
-        format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Light.ttf')
-        format('truetype');
-    font-weight: 300;
-    font-style: normal;
-  }
-
-  /* Light Italic */
-  @font-face {
-    font-family: 'Euclid Circular A';
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-LightItalic-WebXL.woff')
-        format('woff'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-LightItalic-WebXL.woff2')
-        format('woff2'),
-      url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-LightItalic.ttf')
-        format('truetype');
-    font-weight: 300;
     font-style: italic;
   }
 
