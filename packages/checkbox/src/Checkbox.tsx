@@ -4,7 +4,7 @@ import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { Label } from '@leafygreen-ui/typography';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { LegacyCheck } from './LegacyCheck';
 import SvgCheck from './SvgCheck';
