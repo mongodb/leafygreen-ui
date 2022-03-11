@@ -147,6 +147,7 @@ function Checkbox({
     [checkedProp, checked],
   );
   const { usingKeyboard } = useUsingKeyboardContext();
+  const mode = darkMode ? Mode.Dark : Mode.Light;
 
   const inputRef = React.useRef(null);
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
@@ -176,10 +177,6 @@ function Checkbox({
       e.stopPropagation();
     }
   };
-
-  const textVariantStyle = darkMode
-    ? textColorSet[Mode.Dark]
-    : textColorSet[Mode.Light];
 
   return (
     <Label
@@ -247,7 +244,7 @@ function Checkbox({
 
       {label && (
         <span
-          className={cx(baseTextStyle, textVariantStyle, {
+          className={cx(baseTextStyle, textColorSet[mode], {
             [disabledTextStyle]: disabled,
           })}
         >
