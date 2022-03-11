@@ -39,6 +39,7 @@ const inputFocusStyles = css`
   }
 `;
 
+// TODO: Refresh - remove when darkmode is updated
 const inputFocusStylesDarkMode = css`
   &:focus + ${checkboxWrapper.selector}:after {
     content: '';
@@ -84,38 +85,63 @@ const containerStyle = css`
 `;
 
 const checkAnimationTiming = 100;
+const hypotenuse = 100 * Math.sqrt(2); // ensure the circle reaches the corners of the box
+const flourishSize = 14;
 
 const checkWrapperBaseStyle = css`
   --lg-checkbox-border-color: ${palette.gray.dark2};
   --lg-checkbox-animation-timing: 0ms;
   position: relative;
   display: flex;
+  z-index: 0;
+  height: 14px;
+  width: 14px;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
   border: 2px solid var(--lg-checkbox-border-color);
   background-color: transparent;
-  height: 14px;
-  width: 14px;
-  overflow: hidden;
   transition: box-shadow 100ms ease-in-out, background-color 0ms linear 0ms;
 
+  // The animated background circle
   &:before {
     content: '';
     position: absolute;
-    height: ${100 *
-    Math.sqrt(2)}%; // ensure the circle reaches the corners of the box
-    width: ${100 * Math.sqrt(2)}%;
+    height: ${hypotenuse}%; // ensure the circle reaches the corners of the box
+    width: ${hypotenuse}%;
+    z-index: 1;
     border-radius: 100%;
     background-color: ${palette.blue.base};
     transform: scale(0);
     transform-origin: center center;
     transition: transform var(--lg-checkbox-animation-timing) ease-in-out;
   }
+
+  // The flourish ring
+  &:after {
+    content: '';
+    position: absolute;
+    height: calc(${hypotenuse}% + ${flourishSize}px);
+    width: calc(${hypotenuse}% + ${flourishSize}px);
+    z-index: 0;
+    border-radius: 100%;
+    background-color: ${palette.blue.dark1};
+    opacity: 1;
+    z-index: 0;
+    transform: scale(0);
+    transform-origin: center center;
+    transition: 0ms ease-in-out;
+    transition-property: transform, opacity;
+  }
 `;
 
+// Toggles on the animation timing
 const checkWrapperAnimationStyles = css`
-  --lg-checkbox-animation-timing: ${checkAnimationTiming}ms;
+  &,
+  &:before,
+  &:after {
+    --lg-checkbox-animation-timing: ${checkAnimationTiming}ms;
+  }
 `;
 
 const checkWrapperCheckedStyle = css`
@@ -125,6 +151,12 @@ const checkWrapperCheckedStyle = css`
 
   &:before {
     transform: scale(1);
+  }
+  &:after {
+    // only animate flourish on enter
+    transition-duration: calc(3 * var(--lg-checkbox-animation-timing));
+    transform: scale(1);
+    opacity: 0;
   }
 `;
 
@@ -244,6 +276,7 @@ function Checkbox({
   const CheckIcon = indeterminateProp ? SvgIndeterminate : SvgCheck;
   const showCheckIcon = indeterminateProp || isChecked;
   const checkIconColor = disabled ? palette.gray.light3 : palette.white;
+  const shouldAnimate = animate && !usingKeyboard;
 
   return (
     <Label
@@ -296,12 +329,12 @@ function Checkbox({
             [checkWrapperCheckedStyle]: showCheckIcon,
             [checkWrapperDisabledStyle]: disabled,
             [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,
-            [checkWrapperAnimationStyles]: animate,
+            [checkWrapperAnimationStyles]: shouldAnimate,
           })}
         >
           <Transition
             in={showCheckIcon}
-            timeout={animate ? checkAnimationTiming : 0}
+            timeout={shouldAnimate ? checkAnimationTiming : 0}
           >
             {state => (
               <CheckIcon

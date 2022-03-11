@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Checkbox from '.';
 
 function Control() {
@@ -31,17 +32,21 @@ storiesOf('Checkbox', module)
     const darkMode = boolean('darkMode', false);
 
     return (
-      <Checkbox
-        darkMode={darkMode}
-        disabled={boolean('Disabled', false)}
-        indeterminate={boolean('Indeterminate', false)}
-        label={text('Label', 'I agree to this thing.')}
-        animate={boolean('Animate', true)}
-        className={css`
-          padding: 20px;
-          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
-        `}
-      />
+      <LeafygreenProvider>
+        <Checkbox
+          darkMode={darkMode}
+          disabled={boolean('Disabled', false)}
+          indeterminate={boolean('Indeterminate', false)}
+          label={text('Label', 'I agree to this thing.')}
+          animate={boolean('Animate', true)}
+          className={css`
+            padding: 20px;
+            background-color: ${darkMode
+              ? uiColors.gray.dark3
+              : uiColors.white};
+          `}
+        />
+      </LeafygreenProvider>
     );
   })
   .add('Controlled', () => <Control />);
