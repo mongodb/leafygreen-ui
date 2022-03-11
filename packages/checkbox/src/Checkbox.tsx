@@ -217,7 +217,7 @@ const baseLabelStyle = css`
   align-self: baseline;
 `;
 
-const textColorSet: { [K in Mode]: string } = {
+const textColorSet: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${palette.black};
   `,
