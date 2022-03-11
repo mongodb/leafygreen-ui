@@ -7,7 +7,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { LegacyCheck } from './LegacyCheck';
-import SvgCheck from './Check';
+import SvgCheck from './SvgCheck';
 import SvgIndeterminate from './SvgIndeterminate';
 
 const checkboxWrapper = createDataProp('checkbox-wrapper');
