@@ -78,15 +78,15 @@ function ExampleComponent() {
 
 ## Properties
 
-| Prop                   | Type                              | Description                                                                                                                                          | Default      |
-| ---------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| `open`                 | `boolean`                         | Determines open state of `Modal` component                                                                                                           | `false`      |
-| `setOpen`              | `function`                        | Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component.          | `() => {}`   |
-| `size`                 | `'small'`, `'default'`, `'large'` | Determines `Modal` size.                                                                                                                             | `'default'`  |
-| `shouldClose`          | `function`                        | Callback to determine whether or not Modal should close when user tries to close it.                                                                 | `() => true` |
-| `children`             | `node`                            | Children that will be rendered inside `<Modal />` component.                                                                                         |              |
-| `className`            | `string`                          | Style to be applied to the container's root node.                                                                                                    |              |
-| `contentClassName`     | `string`                          | Style to be applied to the content div.                                                                                                              |              |
-| `initialFocus`         | `string`                          | A selector string for the element to move focus to when the modal is opened. The first focusable element in the modal will receive focus by default. |              |
-| `darkMode`             | `boolean`                         | Determines if the component will appear in dark mode.                                                                                                | `false`      |
-| `closeIconColor`       | `'default'`, `'dark'`, `'light'`  | Determines the color of the close icon. Currently will only work if `darkMode` is set to false.                                                      | `default`    |
+| Prop               | Type                              | Description                                                                                                                                          | Default      |
+| ------------------ | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `open`             | `boolean`                         | Determines open state of `Modal` component                                                                                                           | `false`      |
+| `setOpen`          | `function`                        | Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component.          | `() => {}`   |
+| `size`             | `'small'`, `'default'`, `'large'` | Determines `Modal` size.                                                                                                                             | `'default'`  |
+| `shouldClose`      | `function`                        | Callback to determine whether or not Modal should close when user tries to close it.                                                                 | `() => true` |
+| `children`         | `node`                            | Children that will be rendered inside `<Modal />` component.                                                                                         |              |
+| `className`        | `string`                          | Style to be applied to the container's root node.                                                                                                    |              |
+| `contentClassName` | `string`                          | Style to be applied to the content div.                                                                                                              |              |
+| `initialFocus`     | `string`                          | A selector string for the element to move focus to when the modal is opened. The first focusable element in the modal will receive focus by default. |              |
+| `darkMode`         | `boolean`                         | Determines if the component will appear in dark mode.                                                                                                | `false`      |
+| `closeIconColor`   | `'default'`, `'dark'`, `'light'`  | Determines the color of the close icon. Currently will only work if `darkMode` is set to false.                                                      | `default`    |
