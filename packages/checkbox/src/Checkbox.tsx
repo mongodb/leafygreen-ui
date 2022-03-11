@@ -113,9 +113,11 @@ const checkWrapperBaseStyle = css`
   border: 2px solid var(--lg-checkbox-border-color);
   overflow: hidden;
   background-color: transparent;
-  transition: box-shadow 100ms ease-in-out 0ms, background-color 0ms linear 0ms,
-    // delay border-color out
-    border-color 0ms linear var(--lg-checkbox-base-duration);
+  transition: box-shadow 100ms ease-in-out, background-color 0ms linear,
+    border-color 0ms linear;
+
+  // delay border-color out
+  transition-delay: 0ms, 0ms, var(--lg-checkbox-base-duration);
 
   /**
    * The animated background circle
