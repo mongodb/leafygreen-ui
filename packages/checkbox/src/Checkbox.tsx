@@ -4,13 +4,15 @@ import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { Label } from '@leafygreen-ui/typography';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { LegacyCheck } from './LegacyCheck';
 import SvgCheck from './SvgCheck';
 import SvgIndeterminate from './SvgIndeterminate';
+import { Transition, TransitionStatus } from 'react-transition-group';
 
 const checkboxWrapper = createDataProp('checkbox-wrapper');
+const checkboxInput = createDataProp('checkbox-input');
 
 const Mode = {
   Light: 'light',
@@ -74,36 +76,97 @@ const containerStyle = css`
   justify-content: flex-start;
   cursor: pointer;
 
-  &:hover > ${checkboxWrapper.selector}:not([data-leafygreen-disabled="true"]) {
+  &:hover
+    > ${checkboxInput.selector}:not([disabled])
+    + ${checkboxWrapper.selector} {
     box-shadow: 0 0 0 3px ${palette.gray.light2};
   }
 `;
 
+const checkAnimationTiming = 100;
+
 const checkWrapperBaseStyle = css`
+  --lg-checkbox-border-color: ${palette.gray.dark2};
+  --lg-checkbox-animation-timing: 0ms;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
-  border: 2px solid ${palette.gray.dark2};
+  border: 2px solid var(--lg-checkbox-border-color);
   background-color: transparent;
   height: 14px;
   width: 14px;
-  transition: 100ms ease-in-out;
-  transition-properties: box-shadow;
+  overflow: hidden;
+  transition: box-shadow 100ms ease-in-out, background-color 0ms linear 0ms;
+
+  &:before {
+    content: '';
+    position: absolute;
+    height: ${100 *
+    Math.sqrt(2)}%; // ensure the circle reaches the corners of the box
+    width: ${100 * Math.sqrt(2)}%;
+    border-radius: 100%;
+    background-color: ${palette.blue.base};
+    transform: scale(0);
+    transform-origin: center center;
+    transition: transform var(--lg-checkbox-animation-timing) ease-in-out;
+  }
+`;
+
+const checkWrapperAnimationStyles = css`
+  --lg-checkbox-animation-timing: ${checkAnimationTiming}ms;
 `;
 
 const checkWrapperCheckedStyle = css`
-  border-color: ${palette.blue.base};
+  --lg-checkbox-border-color: ${palette.blue.base};
   background-color: ${palette.blue.base};
+  transition-delay: 0ms, var(--lg-checkbox-animation-timing);
+
+  &:before {
+    transform: scale(1);
+  }
 `;
-const checkWrapperDisabledCheckedStyle = css`
-  border-color: ${palette.gray.light2};
-  background-color: ${palette.gray.light2};
-`;
-const checkWrapperDisabledUncheckedStyle = css`
-  border-color: ${palette.gray.light2};
+
+const checkWrapperDisabledStyle = css`
+  --lg-checkbox-border-color: ${palette.gray.light2};
   background-color: ${palette.gray.light3};
+  box-shadow: unset;
+
+  &:before {
+    background-color: ${palette.gray.light3};
+  }
 `;
+
+const checkWrapperCheckedDisabledStyle = css`
+  background-color: var(--lg-checkbox-border-color);
+
+  &:before {
+    background-color: var(--lg-checkbox-border-color);
+  }
+`;
+
+const checkIconStyles = css`
+  z-index: 1;
+  transform-origin: center;
+  transition: transform var(--lg-checkbox-animation-timing) ease-in-out;
+`;
+
+const checkInStyles = css`
+  transform: scale(1) rotate(0);
+`;
+
+const checkOutStyles = css`
+  transform: scale(0) rotate(-45deg);
+`;
+
+const checkIconTransitionStyles: Record<TransitionStatus, string> = {
+  entering: checkOutStyles,
+  entered: checkInStyles,
+  exiting: checkInStyles,
+  exited: checkOutStyles,
+  unmounted: checkOutStyles,
+};
 
 /** &:disabled won't work and [disabled] isn't a valid property because this isn't an input */
 const disabledContainerStyle = css`
@@ -178,6 +241,10 @@ function Checkbox({
     }
   };
 
+  const CheckIcon = indeterminateProp ? SvgIndeterminate : SvgCheck;
+  const showCheckIcon = indeterminateProp || isChecked;
+  const checkIconColor = disabled ? palette.gray.light3 : palette.white;
+
   return (
     <Label
       className={cx(containerStyle, className, {
@@ -195,6 +262,7 @@ function Checkbox({
     >
       <input
         {...rest}
+        {...checkboxInput.prop}
         id={checkboxId}
         ref={inputRef}
         className={cx(inputStyle, {
@@ -213,7 +281,6 @@ function Checkbox({
         onClick={onClick}
         onChange={onChange}
       />
-
       {darkMode ? (
         <LegacyCheck
           isChecked={isChecked}
@@ -226,19 +293,26 @@ function Checkbox({
         <div
           {...checkboxWrapper.prop}
           className={cx(checkWrapperBaseStyle, {
-            [checkWrapperCheckedStyle]: isChecked,
-            [checkWrapperDisabledUncheckedStyle]: disabled,
-            [checkWrapperDisabledCheckedStyle]: disabled && isChecked,
+            [checkWrapperCheckedStyle]: showCheckIcon,
+            [checkWrapperDisabledStyle]: disabled,
+            [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,
+            [checkWrapperAnimationStyles]: animate,
           })}
         >
-          {isChecked && !indeterminateProp && (
-            <SvgCheck fill={disabled ? palette.gray.light3 : palette.white} />
-          )}
-          {indeterminateProp && (
-            <SvgIndeterminate
-              fill={disabled ? palette.gray.light3 : palette.white}
-            />
-          )}
+          <Transition
+            in={showCheckIcon}
+            timeout={animate ? checkAnimationTiming : 0}
+          >
+            {state => (
+              <CheckIcon
+                stroke={checkIconColor}
+                className={cx(
+                  checkIconStyles,
+                  checkIconTransitionStyles[state],
+                )}
+              />
+            )}
+          </Transition>
         </div>
       )}
 

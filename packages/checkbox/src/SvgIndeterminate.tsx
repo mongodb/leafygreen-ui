@@ -1,3 +1,4 @@
+import { palette } from '@leafygreen-ui/palette';
 import React from 'react';
 
 const SvgIndeterminate = (props: any) => {
@@ -10,7 +11,15 @@ const SvgIndeterminate = (props: any) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect width="8" height="2" rx="1" fill="white" />
+      <line
+        x1="1"
+        x2="7"
+        y1="1"
+        y2="1"
+        strokeWidth="2"
+        strokeLinecap="round"
+        stroke={props.stroke ?? palette.white}
+      />
     </svg>
   );
 };

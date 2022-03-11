@@ -1,3 +1,4 @@
+import { palette } from '@leafygreen-ui/palette';
 import React from 'react';
 
 const SvgCheck = (props: any) => {
@@ -12,7 +13,7 @@ const SvgCheck = (props: any) => {
     >
       <path
         d="M2 5.5L4.12132 7.62132L8.36396 3.37868"
-        stroke="white"
+        stroke={props.stroke ?? palette.white}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
