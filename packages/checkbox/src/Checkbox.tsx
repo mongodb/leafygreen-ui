@@ -27,7 +27,7 @@ const hypotenusePct = 100 * Math.sqrt(2); // ensure the circle reaches the corne
 const circleDiffPct = 100 - hypotenusePct;
 
 const containerStyle = css`
-  --lg-checkbox-animation-duration: 0ms;
+  --lg-checkbox-base-duration: 0ms;
   display: grid;
   grid-template-columns: ${checkBoxSize}px max-content;
   grid-template-areas: 'check label' '. description';
@@ -45,18 +45,18 @@ const containerStyle = css`
 
 // Toggles on the animation timing
 const enableAnimationStyles = css`
-  --lg-checkbox-animation-duration: ${checkAnimationDuration}ms;
+  --lg-checkbox-base-duration: ${checkAnimationDuration}ms;
   // Enable var access in pseudo elements
   *:before,
   *:after {
-    --lg-checkbox-animation-duration: ${checkAnimationDuration}ms;
+    --lg-checkbox-base-duration: ${checkAnimationDuration}ms;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    --lg-checkbox-animation-duration: 0ms;
+    --lg-checkbox-base-duration: 0ms;
     *:before,
     *:after {
-      --lg-checkbox-animation-duration: 0ms;
+      --lg-checkbox-base-duration: 0ms;
     }
   }
 `;
@@ -113,9 +113,13 @@ const checkWrapperBaseStyle = css`
   border: 2px solid var(--lg-checkbox-border-color);
   overflow: hidden;
   background-color: transparent;
-  transition: box-shadow 100ms ease-in-out, background-color 0ms linear 0ms;
+  transition: box-shadow 100ms ease-in-out 0ms, background-color 0ms linear 0ms,
+    // delay border-color out
+    border-color 0ms linear var(--lg-checkbox-base-duration);
 
-  // The animated background circle
+  /**
+   * The animated background circle
+   */
   &:before {
     content: '';
     position: absolute;
@@ -125,17 +129,21 @@ const checkWrapperBaseStyle = css`
     background-color: ${palette.blue.base};
     transform: scale(0);
     transform-origin: center center;
-    transition: transform var(--lg-checkbox-animation-duration) ease-in-out;
+    transition: transform var(--lg-checkbox-base-duration) ease-in-out;
+    transition-delay: calc(var(--lg-checkbox-base-duration) / 2);
   }
 `;
 
 const checkWrapperCheckedStyle = css`
   --lg-checkbox-border-color: ${palette.blue.base};
   background-color: ${palette.blue.base};
-  transition-delay: 0ms, var(--lg-checkbox-animation-duration);
+  // Delay background transition in
+  transition-delay: 0ms, var(--lg-checkbox-base-duration), 0ms;
 
   &:before {
     transform: scale(1);
+    // No delay on enter
+    transition-delay: 0ms;
   }
 `;
 
@@ -175,7 +183,7 @@ const flourishStyles = css`
 
 const flourishStylesChecked = css`
   // only animate flourish on enter
-  transition-duration: calc(4 * var(--lg-checkbox-animation-duration));
+  transition-duration: calc(4 * var(--lg-checkbox-base-duration));
   transform: scale(${flourishScale});
   opacity: 0;
 `;
@@ -183,7 +191,7 @@ const flourishStylesChecked = css`
 const checkIconStyles = css`
   z-index: 1;
   transform-origin: center;
-  transition: transform var(--lg-checkbox-animation-duration) ease-in-out;
+  transition: transform var(--lg-checkbox-base-duration) ease-in-out;
 `;
 
 const checkInStyles = css`
@@ -197,7 +205,7 @@ const checkOutStyles = css`
 const checkIconTransitionStyles: Record<TransitionStatus, string> = {
   entering: checkOutStyles,
   entered: checkInStyles,
-  exiting: checkInStyles,
+  exiting: checkOutStyles,
   exited: checkOutStyles,
   unmounted: checkOutStyles,
 };
@@ -290,7 +298,7 @@ function Checkbox({
   const CheckIcon = indeterminateProp ? SvgIndeterminate : SvgCheck;
   const showCheckIcon = indeterminateProp || isChecked;
   const checkIconColor = disabled ? palette.gray.light3 : palette.white;
-  const shouldAnimate = animate && !usingKeyboard;
+  const shouldAnimate = animate;
 
   return (
     <Label
@@ -362,11 +370,13 @@ function Checkbox({
               )}
             </Transition>
           </div>
-          <div
-            className={cx(flourishStyles, {
-              [flourishStylesChecked]: isChecked,
-            })}
-          />
+          {!usingKeyboard && (
+            <div
+              className={cx(flourishStyles, {
+                [flourishStylesChecked]: isChecked,
+              })}
+            />
+          )}
         </>
       )}
 
