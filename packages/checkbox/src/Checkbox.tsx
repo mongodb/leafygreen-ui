@@ -21,6 +21,51 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
+const checkBoxSize = 14;
+const checkAnimationDuration = 100;
+const hypotenusePct = 100 * Math.sqrt(2); // ensure the circle reaches the corners of the box
+const circleDiffPct = 100 - hypotenusePct;
+
+const containerStyle = css`
+  --lg-checkbox-animation-duration: 0ms;
+  display: grid;
+  grid-template-columns: ${checkBoxSize}px max-content;
+  grid-template-areas: 'check label' '. description';
+  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+
+  &:hover
+    > ${checkboxInput.selector}:not([disabled])
+    + ${checkboxWrapper.selector} {
+    box-shadow: 0 0 0 3px ${palette.gray.light2};
+  }
+`;
+
+// Toggles on the animation timing
+const enableAnimationStyles = css`
+  --lg-checkbox-animation-duration: ${checkAnimationDuration}ms;
+  // Enable var access in pseudo elements
+  *:before,
+  *:after {
+    --lg-checkbox-animation-duration: ${checkAnimationDuration}ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    --lg-checkbox-animation-duration: 0ms;
+    *:before,
+    *:after {
+      --lg-checkbox-animation-duration: 0ms;
+    }
+  }
+`;
+
+/** &:disabled won't work and [disabled] isn't a valid property because this isn't an input */
+const disabledContainerStyle = css`
+  cursor: not-allowed;
+`;
+
 const inputStyle = css`
   margin: 0;
   position: absolute;
@@ -54,52 +99,19 @@ const inputFocusStylesDarkMode = css`
   }
 `;
 
-const textColorSet: { [K in Mode]: string } = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-  `,
-
-  [Mode.Dark]: css`
-    color: ${uiColors.gray.light3};
-  `,
-};
-
-const baseTextStyle = css`
-  margin-left: 8px;
-  flex-grow: 1;
-  align-self: baseline;
-`;
-
-const containerStyle = css`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  cursor: pointer;
-
-  &:hover
-    > ${checkboxInput.selector}:not([disabled])
-    + ${checkboxWrapper.selector} {
-    box-shadow: 0 0 0 3px ${palette.gray.light2};
-  }
-`;
-
-const checkAnimationTiming = 100;
-const hypotenuse = 100 * Math.sqrt(2); // ensure the circle reaches the corners of the box
-const flourishSize = 14;
-
 const checkWrapperBaseStyle = css`
   --lg-checkbox-border-color: ${palette.gray.dark2};
-  --lg-checkbox-animation-timing: 0ms;
+  grid-area: check;
   position: relative;
   display: flex;
-  z-index: 0;
-  height: 14px;
-  width: 14px;
+  z-index: 1;
+  height: ${checkBoxSize}px;
+  width: ${checkBoxSize}px;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
   border: 2px solid var(--lg-checkbox-border-color);
+  overflow: hidden;
   background-color: transparent;
   transition: box-shadow 100ms ease-in-out, background-color 0ms linear 0ms;
 
@@ -107,56 +119,23 @@ const checkWrapperBaseStyle = css`
   &:before {
     content: '';
     position: absolute;
-    height: ${hypotenuse}%; // ensure the circle reaches the corners of the box
-    width: ${hypotenuse}%;
+    inset: ${circleDiffPct}%;
     z-index: 1;
     border-radius: 100%;
     background-color: ${palette.blue.base};
     transform: scale(0);
     transform-origin: center center;
-    transition: transform var(--lg-checkbox-animation-timing) ease-in-out;
-  }
-
-  // The flourish ring
-  &:after {
-    content: '';
-    position: absolute;
-    height: calc(${hypotenuse}% + ${flourishSize}px);
-    width: calc(${hypotenuse}% + ${flourishSize}px);
-    z-index: 0;
-    border-radius: 100%;
-    background-color: ${palette.blue.dark1};
-    opacity: 1;
-    z-index: 0;
-    transform: scale(0);
-    transform-origin: center center;
-    transition: 0ms ease-in-out;
-    transition-property: transform, opacity;
-  }
-`;
-
-// Toggles on the animation timing
-const checkWrapperAnimationStyles = css`
-  &,
-  &:before,
-  &:after {
-    --lg-checkbox-animation-timing: ${checkAnimationTiming}ms;
+    transition: transform var(--lg-checkbox-animation-duration) ease-in-out;
   }
 `;
 
 const checkWrapperCheckedStyle = css`
   --lg-checkbox-border-color: ${palette.blue.base};
   background-color: ${palette.blue.base};
-  transition-delay: 0ms, var(--lg-checkbox-animation-timing);
+  transition-delay: 0ms, var(--lg-checkbox-animation-duration);
 
   &:before {
     transform: scale(1);
-  }
-  &:after {
-    // only animate flourish on enter
-    transition-duration: calc(3 * var(--lg-checkbox-animation-timing));
-    transform: scale(1);
-    opacity: 0;
   }
 `;
 
@@ -178,10 +157,33 @@ const checkWrapperCheckedDisabledStyle = css`
   }
 `;
 
+const flourishScale = 2;
+
+const flourishStyles = css`
+  grid-area: check;
+  height: ${checkBoxSize}px;
+  width: ${checkBoxSize}px;
+  z-index: 0;
+  border-radius: 100%;
+  background-color: ${palette.blue.dark1};
+  opacity: 1;
+  transform: scale(0);
+  transform-origin: center center;
+  transition: 0ms ease-in-out;
+  transition-property: transform, opacity;
+`;
+
+const flourishStylesChecked = css`
+  // only animate flourish on enter
+  transition-duration: calc(4 * var(--lg-checkbox-animation-duration));
+  transform: scale(${flourishScale});
+  opacity: 0;
+`;
+
 const checkIconStyles = css`
   z-index: 1;
   transform-origin: center;
-  transition: transform var(--lg-checkbox-animation-timing) ease-in-out;
+  transition: transform var(--lg-checkbox-animation-duration) ease-in-out;
 `;
 
 const checkInStyles = css`
@@ -200,10 +202,22 @@ const checkIconTransitionStyles: Record<TransitionStatus, string> = {
   unmounted: checkOutStyles,
 };
 
-/** &:disabled won't work and [disabled] isn't a valid property because this isn't an input */
-const disabledContainerStyle = css`
-  cursor: not-allowed;
+const baseLabelStyle = css`
+  grid-area: label;
+  margin-left: 8px;
+  flex-grow: 1;
+  align-self: baseline;
 `;
+
+const textColorSet: { [K in Mode]: string } = {
+  [Mode.Light]: css`
+    color: ${palette.black};
+  `,
+
+  [Mode.Dark]: css`
+    color: ${uiColors.gray.light3};
+  `,
+};
 
 const disabledTextStyle = css`
   color: #babdbe; // theme colors.gray[5]
@@ -282,6 +296,7 @@ function Checkbox({
     <Label
       className={cx(containerStyle, className, {
         [disabledContainerStyle]: disabled,
+        [enableAnimationStyles]: shouldAnimate,
         // TODO: Refresh - remove darkMode logic
         [css`
           &:hover > ${checkboxWrapper.selector} {
@@ -323,35 +338,41 @@ function Checkbox({
           checkboxWrapper={checkboxWrapper}
         />
       ) : (
-        <div
-          {...checkboxWrapper.prop}
-          className={cx(checkWrapperBaseStyle, {
-            [checkWrapperCheckedStyle]: showCheckIcon,
-            [checkWrapperDisabledStyle]: disabled,
-            [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,
-            [checkWrapperAnimationStyles]: shouldAnimate,
-          })}
-        >
-          <Transition
-            in={showCheckIcon}
-            timeout={shouldAnimate ? checkAnimationTiming : 0}
+        <>
+          <div
+            {...checkboxWrapper.prop}
+            className={cx(checkWrapperBaseStyle, {
+              [checkWrapperCheckedStyle]: showCheckIcon,
+              [checkWrapperDisabledStyle]: disabled,
+              [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,
+            })}
           >
-            {state => (
-              <CheckIcon
-                stroke={checkIconColor}
-                className={cx(
-                  checkIconStyles,
-                  checkIconTransitionStyles[state],
-                )}
-              />
-            )}
-          </Transition>
-        </div>
+            <Transition
+              in={showCheckIcon}
+              timeout={shouldAnimate ? checkAnimationDuration : 0}
+            >
+              {state => (
+                <CheckIcon
+                  stroke={checkIconColor}
+                  className={cx(
+                    checkIconStyles,
+                    checkIconTransitionStyles[state],
+                  )}
+                />
+              )}
+            </Transition>
+          </div>
+          <div
+            className={cx(flourishStyles, {
+              [flourishStylesChecked]: isChecked,
+            })}
+          />
+        </>
       )}
 
       {label && (
         <span
-          className={cx(baseTextStyle, textColorSet[mode], {
+          className={cx(baseLabelStyle, textColorSet[mode], {
             [disabledTextStyle]: disabled,
           })}
         >
