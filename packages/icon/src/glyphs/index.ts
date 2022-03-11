@@ -22,10 +22,12 @@ import CaretUp from './CaretUp.svg';
 import Charts from './Charts.svg';
 import Checkmark from './Checkmark.svg';
 import CheckmarkWithCircle from './CheckmarkWithCircle.svg';
-import ChevronUp from './ChevronUp.svg';
 import ChevronDown from './ChevronDown.svg';
-import ChevronRight from './ChevronRight.svg';
 import ChevronLeft from './ChevronLeft.svg';
+import ChevronRight from './ChevronRight.svg';
+import ChevronUp from './ChevronUp.svg';
+import Clock from './Clock.svg';
+import ClockWithArrow from './ClockWithArrow.svg';
 import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
@@ -52,6 +54,7 @@ import Home from './Home.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
+import Key from './Key.svg';
 import Laptop from './Laptop.svg';
 import Lock from './Lock.svg';
 import MagnifyingGlass from './MagnifyingGlass.svg';
@@ -59,6 +62,7 @@ import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import Minus from './Minus.svg';
 import NotAllowed from './NotAllowed.svg';
+import Note from './Note.svg';
 import OpenNewTab from './OpenNewTab.svg';
 import Pause from './Pause.svg';
 import Person from './Person.svg';
@@ -68,8 +72,12 @@ import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
+import Redo from './Redo.svg';
 import Refresh from './Refresh.svg';
+import ReplicaSet from './ReplicaSet.svg';
 import Save from './Save.svg';
+import Serverless from './Serverless.svg';
+import ShardedCluster from './ShardedCluster.svg';
 import Settings from './Settings.svg';
 import Shell from './Shell.svg';
 import SortAscending from './SortAscending.svg';
@@ -79,6 +87,7 @@ import Support from './Support.svg';
 import Table from './Table.svg';
 import TimeSeries from './TimeSeries.svg';
 import Trash from './Trash.svg';
+import Undo from './Undo.svg';
 import University from './University.svg';
 import Unlock from './Unlock.svg';
 import Unsorted from './Unsorted.svg';
@@ -116,6 +125,8 @@ const glyphs = {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Clock,
+  ClockWithArrow,
   Clone,
   Cloud,
   Code,
@@ -142,6 +153,7 @@ const glyphs = {
   ImportantWithCircle,
   InfoWithCircle,
   InviteUser,
+  Key,
   Laptop,
   Lock,
   MagnifyingGlass,
@@ -149,6 +161,7 @@ const glyphs = {
   Menu,
   Minus,
   NotAllowed,
+  Note,
   OpenNewTab,
   Pause,
   Person,
@@ -158,8 +171,12 @@ const glyphs = {
   Plus,
   PlusWithCircle,
   QuestionMarkWithCircle,
+  Redo,
   Refresh,
+  ReplicaSet,
   Save,
+  Serverless,
+  ShardedCluster,
   Settings,
   Shell,
   SortAscending,
@@ -169,6 +186,7 @@ const glyphs = {
   Table,
   TimeSeries,
   Trash,
+  Undo,
   University,
   Unlock,
   Unsorted,
