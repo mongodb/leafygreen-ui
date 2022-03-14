@@ -131,6 +131,7 @@ const optionStyle = ({
 
 const boxStyle = css`
   width: 100%;
+  height: 100%;
   text-decoration: none;
 `;
 
