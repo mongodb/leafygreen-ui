@@ -204,6 +204,7 @@ const checkIconStyles = css`
 
 const checkInStyles = css`
   transform: scale(1) rotate(0);
+  transition-delay: calc(var(--lg-checkbox-base-duration) / 8);
 `;
 
 const checkOutStyles = css`
