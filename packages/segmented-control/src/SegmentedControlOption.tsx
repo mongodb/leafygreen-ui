@@ -96,7 +96,9 @@ const optionStyle = ({
 
       &:first-child,
       &[data-lg-checked='true'],
-      &[data-lg-checked='true'] + [data-lg-checked='false'] {
+      &[data-lg-checked='true'] + [data-lg-checked='false'],
+      &:focus-within,
+      &:focus-within + :not(:focus-within) {
         --divider-background-color: transparent;
       }
 
