@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 8.0.0
+
+### Major Changes
+
+- 532986a: Updates radio group styles in line with visual brand refresh.
+
 ## 7.0.6
 
 ### Patch Changes
