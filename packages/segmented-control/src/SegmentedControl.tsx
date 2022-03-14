@@ -494,7 +494,10 @@ const SegmentedControl = React.forwardRef<
 
   const getIndicatorDynamicStyles = useCallback(
     (index: number | null = 0) => {
-      if (isNull(index)) return;
+      if (isNull(index))
+        return css`
+          width: 0;
+        `;
 
       const count = React.Children.count(renderedChildren);
       const widthPct = (1 / count) * 100;
