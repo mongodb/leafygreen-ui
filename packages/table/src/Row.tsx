@@ -47,11 +47,11 @@ const modeStyles = {
     `,
 
     disabledStyle: css`
-      background-color: ${palette.gray.light3};
-      color: ${palette.gray.light1};
+      background-color: ${palette.gray.light2};
+      color: ${palette.gray.base};
       cursor: not-allowed;
-      box-shadow: 0 -1px 0 inset ${palette.gray.light2},
-        0 1px 0 inset ${palette.gray.light2};
+      box-shadow: 0 -1px 0 inset ${palette.gray.light1},
+        0 1px 0 inset ${palette.gray.light1};
     `,
   },
 
