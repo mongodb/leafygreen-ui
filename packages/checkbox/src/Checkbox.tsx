@@ -23,8 +23,11 @@ type Mode = typeof Mode[keyof typeof Mode];
 
 const checkBoxSize = 14;
 const checkAnimationDuration = 100;
-const hypotenusePct = 100 * Math.sqrt(2); // ensure the circle reaches the corners of the box
-const circleDiffPct = 100 - hypotenusePct;
+const hypotenusePct = 100 * Math.sqrt(2); // relative distance from corner to corner
+const insetPct = 100 - hypotenusePct;
+const flourishScale = 2.25;
+const flourishTransitionScale = 4;
+const flourishTransitionDelay = -flourishTransitionScale / flourishScale;
 
 const containerStyle = css`
   --lg-checkbox-base-duration: 0ms;
@@ -125,7 +128,7 @@ const checkWrapperBaseStyle = css`
   &:before {
     content: '';
     position: absolute;
-    inset: ${circleDiffPct}%;
+    inset: ${insetPct}%;
     z-index: 1;
     border-radius: 100%;
     background-color: ${palette.blue.base};
@@ -167,8 +170,6 @@ const checkWrapperCheckedDisabledStyle = css`
   }
 `;
 
-const flourishScale = 2;
-
 const flourishStyles = css`
   grid-area: check;
   height: ${checkBoxSize}px;
@@ -185,7 +186,12 @@ const flourishStyles = css`
 
 const flourishStylesChecked = css`
   // only animate flourish on enter
-  transition-duration: calc(4 * var(--lg-checkbox-base-duration));
+  transition-duration: calc(
+    ${flourishTransitionScale} * var(--lg-checkbox-base-duration)
+  );
+  transition-delay: calc(
+    ${flourishTransitionDelay} * var(--lg-checkbox-base-duration)
+  );
   transform: scale(${flourishScale});
   opacity: 0;
 `;
