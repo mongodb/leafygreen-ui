@@ -1,5 +1,19 @@
 # @leafygreen-ui/segmented-control
 
+## 1.0.0
+
+### Major Changes
+
+- 614be76: - Updates Segmented Control in line with Visual Brand refresh
+  - Fixes a flicker animation on initial component render
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+- Updated dependencies [614be76]
+  - @leafygreen-ui/typography@9.1.1
+  - @leafygreen-ui/tokens@1.1.0
+
 ## 0.9.1
 
 ### Patch Changes
