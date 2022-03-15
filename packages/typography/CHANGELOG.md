@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 9.1.1
+
+### Patch Changes
+
+- ccdb0ec: Reduces outline width for InlineCode focus state
+
 ## 9.1.0
 
 ### Minor Changes

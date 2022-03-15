@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 3.0.0
+
+### Major Changes
+
+- ccdb0ec: Updates Table styles according to visual brand refresh
+
 ## 2.0.6
 
 ### Patch Changes

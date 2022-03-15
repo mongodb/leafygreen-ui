@@ -1,5 +1,17 @@
 # @leafygreen-ui/inline-definition
 
+## 3.0.0
+
+### Major Changes
+
+- ccdb0ec: - Updates InlineDefinition according to visual design refresh
+  - Adds a passthrough `tooltipClassName` prop to InlineDefinition
+
+### Patch Changes
+
+- Updated dependencies [ccdb0ec]
+  - @leafygreen-ui/typography@9.1.1
+
 ## 2.0.6
 
 ### Patch Changes
