@@ -4,7 +4,12 @@
 
 ### Major Changes
 
-- ccdb0ec: Updates Table styles according to visual brand refresh
+- 614be76: Updates Table styles according to visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+  - @leafygreen-ui/tokens@1.1.0
 
 ## 2.0.6
 

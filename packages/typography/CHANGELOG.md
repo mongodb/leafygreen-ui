@@ -4,7 +4,9 @@
 
 ### Patch Changes
 
-- ccdb0ec: Reduces outline width for InlineCode focus state
+- 614be76: Reduces outline width for InlineCode focus state
+- Updated dependencies [614be76]
+  - @leafygreen-ui/tokens@1.1.0
 
 ## 9.1.0
 

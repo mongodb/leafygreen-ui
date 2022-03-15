@@ -24,7 +24,7 @@
     "@leafygreen-ui/lib": "^9.1.0",
     "@leafygreen-ui/checkbox": "^6.0.6",
     "@leafygreen-ui/emotion": "^4.0.0",
-    "@leafygreen-ui/tokens": "^1.0.0",
+    "@leafygreen-ui/tokens": "^1.1.0",
     "@leafygreen-ui/palette": "3.3.1",
     "@leafygreen-ui/icon": "^11.6.1",
     "@leafygreen-ui/icon-button": "^10.0.0",
