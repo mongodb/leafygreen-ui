@@ -35,7 +35,6 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
   const baseStyles = css`
     width: ${size}px;
     height: ${size}px;
-    padding: ${spacing[1]}px;
     margin-bottom: ${spacing[1]}px;
     border-radius: 50%;
     display: flex;

@@ -56,10 +56,10 @@ npm install @leafygreen-ui/stepper
 
 ## Properties
 
-| Prop                | Type           | Description                                                      | Default           |
-| ------------------- | -------------- | ---------------------------------------------------------------- | ----------------- |
-| `children`          | `React.ReactNode` | ReactNode to display as the children of each step     |                   |
-| `currentStep`       | `number`       | Starting at 0, index of current step that should be highlighted. |                   |
-| `maxDisplayedSteps` | `number`       | Maximum number of steps displayed a time. The rest are hidden.   | `children.length` |
-| `completedStepsShown` | `number`       | Number of completed steps shown before the `currentStep`. The ellipses step is included in this count.   | 1 |
-| `className`         | `string`       | className applied to the root element                            |                   |
+| Prop                  | Type              | Description                                                                                            | Default           |
+| --------------------- | ----------------- | ------------------------------------------------------------------------------------------------------ | ----------------- |
+| `children`            | `React.ReactNode` | ReactNode to display as the children of each step                                                      |                   |
+| `currentStep`         | `number`          | Starting at 0, index of current step that should be highlighted.                                       |                   |
+| `maxDisplayedSteps`   | `number`          | Maximum number of steps displayed a time. The rest are hidden.                                         | `children.length` |
+| `completedStepsShown` | `number`          | Number of completed steps shown before the `currentStep`. The ellipses step is included in this count. | 1                 |
+| `className`           | `string`          | className applied to the root element                                                                  |                   |

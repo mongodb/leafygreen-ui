@@ -45,7 +45,12 @@ const EllipsesStep = ({
       trigger={
         // The <li> needs to be defined here and not in <Stepper> because the Tooltip doesn't trigger without a wrapping HTML element.
         <li>
-          <Step className={cx(stepStyles[state])} state={state} {...rest}>
+          <Step
+            className={cx(stepStyles[state])}
+            state={state}
+            tabIndex={0}
+            {...rest}
+          >
             {children}
           </Step>
         </li>

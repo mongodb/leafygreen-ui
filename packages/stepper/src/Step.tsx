@@ -14,7 +14,8 @@ export const Step = function Step({
   shouldDisplayLine = true,
   iconSize = 20,
   className,
-}: PropsWithChildren<StepProps>) {
+  ...rest
+}: PropsWithChildren<StepProps & React.HTMLProps<HTMLDivElement>>) {
   const isCurrent = state === StepStates.Current;
 
   const baseStyles = css`
@@ -24,6 +25,15 @@ export const Step = function Step({
     align-items: center;
     padding-bottom: ${spacing[1]}px;
     position: relative; // for the :after line
+
+    &:focus {
+      outline: none;
+      .lg-ui-step-icon {
+        // TODO: should use box-shadow utility for this.
+        box-shadow: 0px 0px 0px 2px ${palette.white},
+          0px 0px 0px 4px ${palette.blue.light1};
+      }
+    }
 
     ${shouldDisplayLine &&
     `
@@ -103,6 +113,7 @@ export const Step = function Step({
       className={cx(baseStyles, styles[state], className)}
       aria-label={ariaLabel}
       aria-current={isCurrent && 'step'}
+      {...rest}
     >
       <StepIcon state={state} content={index} size={iconSize} />
       {/*

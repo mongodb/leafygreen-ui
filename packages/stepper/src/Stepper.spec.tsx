@@ -72,9 +72,7 @@ describe('packages/stepper', () => {
 
     test('sets maxDisplayedSteps to length of list', async () => {
       const { queryByText } = render(
-        <Stepper {...defaultProps}>
-          {StepContents(3)}
-        </Stepper>,
+        <Stepper {...defaultProps}>{StepContents(3)}</Stepper>,
       );
 
       expect(queryByText('Step 1')).toBeInTheDocument();

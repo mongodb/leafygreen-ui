@@ -22,8 +22,8 @@ const Stepper = ({
   let lastDisplayedStep = firstDisplayedStep + maxDisplayedSteps;
   const hasPriorSteps = currentStep > completedStepsShown;
   const hasLaterSteps = lastDisplayedStep < numSteps;
-  if (hasPriorSteps) firstDisplayedStep++; // one step will be the prior Ellipsess
-  if (hasLaterSteps) lastDisplayedStep--; // one step will be the later Ellipsess
+  if (hasPriorSteps) firstDisplayedStep++; // one step will be the prior Ellipses
+  if (hasLaterSteps) lastDisplayedStep--; // one step will be the later Ellipses
 
   const getStepState = (step: number) => {
     if (step < currentStep) {
@@ -45,6 +45,7 @@ const Stepper = ({
     endStep,
   ) => {
     const stepRange = endStep - startStep;
+
     if (stepRange === 1) {
       return `Steps ${startStep} and ${endStep}`;
     } else {

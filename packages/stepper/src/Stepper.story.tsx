@@ -30,15 +30,24 @@ storiesOf('Stepper', module)
     let currentStep = number('Step', 1, { min: 0 });
     const numSteps = number('Number of steps', 10, { min: 1 });
     const maxDisplayedSteps = number('Max displayed', 5, { min: 1 });
-    const completedStepsShown = number('Completed steps shown', 3, { min: 1 });
+    let completedStepsShown = number('Completed steps shown', 3, { min: 1 });
 
     // Can't dynamically change the max, so we manually enforce it
-    if (currentStep + 1 > numSteps) {
+    if (currentStep >= numSteps) {
       channel.emit(CHANGE, {
         name: 'Step',
         value: numSteps - 1,
       });
       currentStep = numSteps - 1;
+    }
+
+    // Can't dynamically change the max, so we manually enforce it
+    if (completedStepsShown >= maxDisplayedSteps - 2) {
+      channel.emit(CHANGE, {
+        name: 'Completed steps shown',
+        value: maxDisplayedSteps - 2,
+      });
+      completedStepsShown = maxDisplayedSteps - 2;
     }
 
     return (
