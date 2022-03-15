@@ -5,7 +5,10 @@
 ### Major Changes
 
 - 614be76: - Updates InlineDefinition according to visual design refresh
-  - Adds a passthrough `tooltipClassName` prop to InlineDefinition
+
+## Minor Changes
+
+- 614be76: Adds a passthrough `tooltipClassName` prop to InlineDefinition
 
 ### Patch Changes
 

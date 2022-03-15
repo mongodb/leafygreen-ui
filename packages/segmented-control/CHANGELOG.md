@@ -5,11 +5,10 @@
 ### Major Changes
 
 - 614be76: - Updates Segmented Control in line with Visual Brand refresh
-  - Fixes a flicker animation on initial component render
 
 ### Patch Changes
 
-- Updated dependencies [614be76]
+- Fixes a flickering animation on initial component render
 - Updated dependencies [614be76]
   - @leafygreen-ui/typography@9.1.1
   - @leafygreen-ui/tokens@1.1.0
