@@ -1,14 +1,5 @@
 # @leafygreen-ui/combobox
 
-## 1.0.2
-
-### Patch Changes
-
-- Updated dependencies [ccdb0ec]
-- Updated dependencies [ccdb0ec]
-  - @leafygreen-ui/typography@9.1.1
-  - @leafygreen-ui/inline-definition@3.0.0
-
 ## 1.0.1
 
 ### Patch Changes
