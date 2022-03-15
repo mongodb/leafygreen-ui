@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { RadioGroupProps } from './RadioGroup';
 import { Size } from './types';
 
@@ -25,26 +26,46 @@ const containerMargin = css`
 `;
 
 const offsets = {
-  [Size.XSmall]: css`
-    margin-top: -3px;
-  `,
-  [Size.Small]: css`
-    margin-top: -2px;
-  `,
-  [Size.Default]: css`
-    margin-top: 1px;
-  `,
+  [Mode.Light]: {
+    [Size.XSmall]: css`
+      margin-top: -3px;
+      margin-left: 4px;
+    `,
+    [Size.Small]: css`
+      margin-top: -3px;
+      margin-left: 8px;
+    `,
+    [Size.Default]: css`
+      margin-top: 0;
+      margin-left: 8px;
+    `,
+  },
+  [Mode.Dark]: {
+    [Size.XSmall]: css`
+      margin-top: -3px;
+      margin-left: 4px;
+    `,
+    [Size.Small]: css`
+      margin-top: -2px;
+      margin-left: 8px;
+    `,
+    [Size.Default]: css`
+      margin-top: 1px;
+      margin-left: 8px;
+    `,
+  },
 };
 
 const labelColorSet = {
   [Mode.Light]: {
     base: css`
-      color: ${uiColors.gray.dark2};
+      color: ${palette.black};
+      font-family: ${fontFamilies.default};
     `,
 
     disabled: css`
       cursor: not-allowed;
-      color: ${uiColors.gray.base};
+      color: ${palette.gray.dark1};
     `,
   },
 
@@ -62,33 +83,36 @@ const labelColorSet = {
 
 const labelStyle = css`
   display: flex;
-  align-items: flex-start;
-  font-size: 14px;
   line-height: 20px;
   cursor: pointer;
+  align-items: flex-start;
+  font-size: 13px;
+  font-weight: 700;
 `;
 
-// Note colors are not in our palette
 const inputColorSet = {
   [Mode.Light]: css`
     &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
-      background-color: #2798bd;
-      border-color: #2798bd;
+      background-color: ${palette.blue.base};
+      border-color: ${palette.blue.base};
 
       &:after {
         transform: scale(1);
       }
     }
 
-    &:focus + div:before {
-      transform: scale(1);
-      opacity: 1;
-      border-color: ${uiColors.blue.light1};
+    &:focus-visible + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
+      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
     }
 
     &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
-      border-color: ${uiColors.gray.light1};
-      background-color: ${uiColors.gray.light2};
+      border-color: ${palette.gray.light2};
+      background-color: ${palette.gray.light3};
+
+      &:after {
+        transform: scale(1);
+        background-color: ${palette.gray.light3};
+      }
     }
   `,
 
@@ -118,11 +142,11 @@ const inputColorSet = {
 const disabledChecked = {
   [Mode.Light]: css`
     &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
-      background-color: ${uiColors.gray.light1};
-      border-color: ${uiColors.gray.light1};
+      background-color: ${palette.gray.light2};
+      border-color: ${palette.gray.light2};
 
       &:after {
-        background-color: ${uiColors.gray.light2};
+        background-color: ${palette.gray.light3};
         transform: scale(1);
       }
     }
@@ -144,16 +168,16 @@ const inputStyle = css`
   height: 0;
   width: 0;
   opacity: 0;
+  margin: 0;
 `;
 
 const divColorSet = {
   [Mode.Light]: css`
-    border: 2px solid ${uiColors.gray.dark1};
-    background-color: rgba(255, 255, 255, 0.31);
+    border-color: ${palette.gray.dark2};
+    background-color: ${palette.white};
   `,
-
   [Mode.Dark]: css`
-    border: 2px solid ${uiColors.white};
+    border-color: ${uiColors.white};
     background-color: rgba(255, 255, 255, 0.2);
   `,
 };
@@ -164,27 +188,21 @@ const divStyle = css`
   bottom: 0;
   left: 0;
   right: 0;
-  transition: background-color 0.15s ease-in-out;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   border-radius: 100%;
+  border-style: solid;
 
   &:before {
     content: '';
     position: absolute;
     border-radius: 100%;
-    top: -5px;
-    bottom: -5px;
-    left: -5px;
-    right: -5px;
   }
 
   &:after {
     content: '';
-    box-shadow: inset 0 -1px 0 0 #f1f1f1, 0 1px 0 0 rgba(0, 0, 0, 0.08),
-      0 1px 1px 0 rgba(6, 22, 33, 0.22);
     background-color: white;
     border-radius: 100%;
     transform: scale(0);
@@ -197,23 +215,51 @@ const divStyle = css`
   }
 `;
 
-const divSize = {
-  [Size.Small]: css`
-    &:after {
-      width: 4px;
-      height: 4px;
-      transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
-        border-color 0.15s ease-in-out;
-    }
-  `,
-  [Size.Default]: css`
-    &:after {
-      width: 8px;
-      height: 8px;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-        border-color 0.15s ease-in-out;
-    }
-  `,
+const divSize: Omit<Record<Size, Record<Mode, string>>, 'xsmall'> = {
+  [Size.Small]: {
+    [Mode.Light]: css`
+      border-width: 2px;
+
+      &:after {
+        width: 6px;
+        height: 6px;
+        transition: transform 0.15s cubic-bezier(0.16, 1.54, 0, 1.31),
+          border-color 0.15s ease-in-out;
+      }
+    `,
+    [Mode.Dark]: css`
+      border-width: 2px;
+
+      &:after {
+        width: 4px;
+        height: 4px;
+        transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
+          border-color 0.15s ease-in-out;
+      }
+    `,
+  },
+  [Size.Default]: {
+    [Mode.Light]: css`
+      border-width: 3px;
+
+      &:after {
+        width: 8px;
+        height: 8px;
+        transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          border-color 0.15s ease-in-out;
+      }
+    `,
+    [Mode.Dark]: css`
+      border-width: 2px;
+
+      &:after {
+        width: 8px;
+        height: 8px;
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          border-color 0.15s ease-in-out;
+      }
+    `,
+  },
 };
 
 const radioBoxSize = {
@@ -282,10 +328,14 @@ function Radio({
           labelStyle,
           labelColorSet[mode].base,
           {
+            [css`
+              font-size: 14px;
+              font-weight: 400;
+            `]: darkMode, // TODO: Refresh - remove when darkMode is updated
             [labelColorSet[mode].disabled]: disabled,
             [css`
               font-size: 12px;
-            `]: size === Size.XSmall,
+            `]: size === Size.XSmall, // TODO: keeping this style until XS is deprecated
           },
           className,
         )}
@@ -314,24 +364,38 @@ function Radio({
           focusTargetElement={inputElement}
           className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
           borderRadius="100%"
+          color={darkMode ? undefined : { focused: 'transparent' }} // TODO: Refresh - overriding the focus style for light mode
           {...inputDisplayWrapper.prop}
         >
           <div
             {...inputDisplay.prop}
-            className={cx(divStyle, divColorSet[mode], divSize[normalizedSize])}
+            className={cx(
+              divStyle,
+              divColorSet[mode],
+              divSize[normalizedSize][mode],
+              {
+                [css`
+                  transition: background-color 0.15s ease-in-out;
+
+                  &:before {
+                    top: -5px;
+                    bottom: -5px;
+                    left: -5px;
+                    right: -5px;
+                  }
+
+                  &:after {
+                    box-shadow: inset 0 -1px 0 0 #f1f1f1,
+                      0 1px 0 0 rgba(0, 0, 0, 0.08),
+                      0 1px 1px 0 rgba(6, 22, 33, 0.22);
+                  }
+                `]: darkMode, // TODO: Refresh - remove when darkMode is updated
+              },
+            )}
           />
         </InteractionRing>
 
-        <div
-          className={cx(
-            css`
-              margin-left: ${size === Size.XSmall ? 4 : 8}px;
-            `,
-            offsets[size],
-          )}
-        >
-          {children}
-        </div>
+        <div className={cx(offsets[mode][size])}>{children}</div>
       </label>
     </div>
   );

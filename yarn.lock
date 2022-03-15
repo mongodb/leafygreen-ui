@@ -2975,11 +2975,6 @@
     "@leafygreen-ui/typography" "^8.0.4"
     lodash "^4.17.21"
 
-"@leafygreen-ui/palette@3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/palette/-/palette-3.3.0.tgz#4757c53a9f0249f52e16640beb0c43840a64344b"
-  integrity sha512-B3fveUzs7r+yoNRscAJ3Tfjcdb2xnXhAlfYDgSUwlr9PFnCcZs2y/8lEBmsnRAdQzN37vGY2LiUbVW0gJ9DgxA==
-
 "@leafygreen-ui/select@^3.0.5", "@leafygreen-ui/select@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/select/-/select-3.1.0.tgz#3f1e1091a83472dfd36652291e20784446969172"

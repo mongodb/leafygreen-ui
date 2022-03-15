@@ -23,6 +23,9 @@
       "path": "../icon-button"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../hooks"
     },
     {

@@ -201,8 +201,7 @@ const codeModes = {
 const codeFocusModes = {
   [Mode.Light]: css`
     ${anchorDataProp.selector}:focus > & {
-      box-shadow: 0 0 0 3px ${palette.gray.light3},
-        0 0 0 6px ${palette.blue.light1};
+      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
       border: 1px solid ${palette.blue.base};
     }
   `,

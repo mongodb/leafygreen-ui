@@ -20,7 +20,9 @@ npm install @leafygreen-ui/combobox
 
 ## Example
 
-```tsx
+```js
+import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
+
 <Combobox
   label="Choose a fruit"
   description="Please pick one"
@@ -35,7 +37,7 @@ npm install @leafygreen-ui/combobox
     <ComboboxOption value="habanero" />
     <ComboboxOption value="jalapeno" displayName="Jalapeño" />
   </ComboboxGroup>
-</Combobox>
+</Combobox>;
 ```
 
 **Output HTML**

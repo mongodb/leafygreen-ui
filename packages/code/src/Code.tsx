@@ -351,6 +351,8 @@ function Code({
             [scrollShadowStylesWithWindowChrome]: showWindowChrome,
             [scrollShadowStylesWithPicker]: showLanguagePicker,
           },
+          baseScrollShadowStyles,
+          getScrollShadow(scrollState, mode),
         )}
       >
         <pre
