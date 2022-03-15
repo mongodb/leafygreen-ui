@@ -10,7 +10,7 @@ const Stepper = ({
   maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
   completedStepsShown = 1,
   className,
-}: PropsWithChildren<StepperProps>) => {
+}: PropsWithChildren<StepperProps & React.HTMLProps<HTMLOListElement>>) => {
   // Helper Variables
   const numSteps = React.Children.count(children);
   const childrenArray = React.Children.toArray(children);

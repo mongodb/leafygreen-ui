@@ -31,7 +31,7 @@ const Icon = ({ state, content }: StepIconProps) => {
   }
 };
 
-const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
+const StepIcon = ({ state, size, ...rest }: StepIconProps & React.HTMLProps<HTMLDivElement>) => {
   const baseStyles = css`
     width: ${size}px;
     height: ${size}px;
