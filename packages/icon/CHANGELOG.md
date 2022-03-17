@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.7.0
+
+### Minor Changes
+
+- e8f1a97: Adds Clock, ClockWithArrow, Key, Note, Redo, ReplicaSet, Serverless, ShardedCluster, Undo icons to the Icon component.
+
 ## 11.6.1
 
 ### Patch Changes

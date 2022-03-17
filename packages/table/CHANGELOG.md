@@ -1,5 +1,16 @@
 # @leafygreen-ui/table
 
+## 3.0.0
+
+### Major Changes
+
+- 614be76: Updates Table styles according to visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+  - @leafygreen-ui/tokens@1.1.0
+
 ## 2.0.6
 
 ### Patch Changes
