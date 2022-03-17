@@ -1,5 +1,14 @@
 # @leafygreen-ui/select
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+- Updated dependencies [614be76]
+  - @leafygreen-ui/typography@9.1.1
+  - @leafygreen-ui/tokens@1.1.0
+
 ## 4.0.0
 
 ### Major Changes
