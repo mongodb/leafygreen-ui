@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
-import { Label } from '@leafygreen-ui/typography';
+import { Description, Label } from '@leafygreen-ui/typography';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -33,8 +33,9 @@ const flourishTransitionDelay = -flourishTransitionScale / flourishScale;
 const containerStyle = css`
   --lg-checkbox-base-duration: 0ms;
   display: grid;
-  grid-template-columns: ${checkBoxSize}px max-content;
+  grid-template-columns: ${checkBoxSize}px auto;
   grid-template-areas: 'check label' '. description';
+  gap: 0 8px;
   position: relative;
   align-items: center;
   justify-content: flex-start;
@@ -222,9 +223,11 @@ const checkIconTransitionStyles: Record<TransitionStatus, string> = {
 
 const baseLabelStyle = css`
   grid-area: label;
-  margin-left: 8px;
-  flex-grow: 1;
   align-self: baseline;
+`;
+
+const descriptionStyle = css`
+  grid-area: description;
 `;
 
 const textColorSet: Record<Mode, string> = {
@@ -245,6 +248,7 @@ interface CheckboxProps extends HTMLElementProps<'input', never> {
   darkMode?: boolean;
   checked?: boolean;
   label: React.ReactNode;
+  description?: string;
   disabled?: boolean;
   indeterminate?: boolean;
   className?: string;
@@ -257,6 +261,7 @@ function Checkbox({
   darkMode = false,
   checked: checkedProp,
   label = '',
+  description,
   disabled = false,
   indeterminate: indeterminateProp,
   animate = false,
@@ -408,6 +413,12 @@ function Checkbox({
         >
           {label}
         </span>
+      )}
+
+      {description && (
+        <Description className={descriptionStyle} darkMode={darkMode}>
+          {description}
+        </Description>
       )}
     </Label>
   );

@@ -38,12 +38,17 @@ storiesOf('Checkbox', module)
           disabled={boolean('Disabled', false)}
           indeterminate={boolean('Indeterminate', false)}
           label={text('Label', 'I agree to this thing.')}
+          description={text(
+            'Description',
+            'Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.',
+          )}
           animate={boolean('Animate', true)}
           className={css`
             padding: 20px;
             background-color: ${darkMode
               ? uiColors.gray.dark3
               : uiColors.white};
+            max-width: 512px;
           `}
         />
       </LeafygreenProvider>
