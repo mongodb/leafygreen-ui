@@ -247,14 +247,9 @@ const SubMenu: ExtendableBox<
           onClick={onRootClick}
           ref={ref}
           className={cx(
-            menuItemContainerStyle,
             subMenuStyle,
-            linkStyle,
             {
-              [activeMenuItemContainerStyle]: active,
-              [disabledMenuItemContainerStyle]: disabled,
               [subMenuOpenStyle]: open,
-              [focusedMenuItemContainerStyle]: showFocus,
             },
             className,
           )}
