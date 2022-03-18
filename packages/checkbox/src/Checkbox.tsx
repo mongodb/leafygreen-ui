@@ -311,16 +311,22 @@ function Checkbox({
 
   return (
     <Label
-      className={cx(containerStyle, className, {
-        [disabledContainerStyle]: disabled,
-        [enableAnimationStyles]: shouldAnimate,
-        // TODO: Refresh - remove darkMode logic
-        [css`
-          &:hover > ${checkboxWrapper.selector} {
-            box-shadow: unset;
-          }
-        `]: darkMode,
-      })}
+      className={cx(
+        containerStyle,
+        {
+          [disabledContainerStyle]: disabled,
+          [enableAnimationStyles]: shouldAnimate,
+          // TODO: Refresh - remove darkMode logic
+          [css`
+            &:hover
+              > ${checkboxInput.selector}:not([disabled])
+              + ${checkboxWrapper.selector} {
+              box-shadow: unset;
+            }
+          `]: darkMode,
+        },
+        className,
+      )}
       style={style}
       htmlFor={checkboxId}
       id={labelId}
