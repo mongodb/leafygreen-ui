@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 1.1.0
+
+### Minor Changes
+
+- 614be76: Adds `typeScales` export from tokens
+
 ## 1.0.0
 
 ### Major Changes
