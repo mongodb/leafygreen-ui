@@ -3,5 +3,6 @@
 ---
 
 Updates checkbox for visual brand refresh
- - Removes `bold` prop
- - Adds `description` prop  
+ - Sets default for `bold` prop to `true`
+ - Adds `description` prop
+ - Adds support for `aria-label` and `aria-labelledby`

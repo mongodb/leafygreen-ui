@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { Description, Label } from '@leafygreen-ui/typography';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -109,6 +109,10 @@ const labelTextStyle = css`
   align-self: baseline;
 `;
 
+const labelTextUnboldStyle = css`
+  font-weight: 400;
+`;
+
 const descriptionStyle = css`
   grid-area: description;
 `;
@@ -135,6 +139,7 @@ function Checkbox({
   disabled = false,
   indeterminate: indeterminateProp,
   animate = false,
+  bold = true,
   className,
   onClick: onClickProp,
   onChange: onChangeProp,
@@ -244,6 +249,7 @@ function Checkbox({
         {label && (
           <span
             className={cx(labelTextStyle, labelTextColorStyle[mode], {
+              [labelTextUnboldStyle]: !bold,
               [disabledTextStyle]: disabled,
               // TODO: Refresh - remove dark mode font
               [css`
