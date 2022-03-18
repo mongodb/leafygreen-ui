@@ -10,6 +10,7 @@ import { LegacyCheck } from './LegacyCheck';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { Check } from './Check';
 import { checkAnimationDuration, checkBoxSize } from './constants';
+import { CheckboxProps } from './types';
 
 const checkboxWrapper = createDataProp('checkbox-wrapper');
 const checkboxInput = createDataProp('checkbox-input');
@@ -125,19 +126,6 @@ const labelTextColorStyle: Record<Mode, string> = {
 const disabledTextStyle = css`
   color: #babdbe; // theme colors.gray[5]
 `;
-
-interface CheckboxProps extends HTMLElementProps<'input', never> {
-  darkMode?: boolean;
-  checked?: boolean;
-  label: React.ReactNode;
-  description?: string;
-  disabled?: boolean;
-  indeterminate?: boolean;
-  className?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  bold?: boolean;
-  animate?: boolean;
-}
 
 function Checkbox({
   darkMode = false,
