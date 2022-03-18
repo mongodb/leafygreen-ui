@@ -1,6 +1,5 @@
 import React from 'react';
 import { Transition, TransitionStatus } from 'react-transition-group';
-import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import {

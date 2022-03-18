@@ -11,8 +11,8 @@ interface InternalCheckboxProps extends HTMLElementProps<'input', never> {
   indeterminate?: boolean;
   className?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  bold?: boolean;
   animate?: boolean;
+  bold?: boolean;
 }
 
 export type CheckboxProps = Either<

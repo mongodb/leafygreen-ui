@@ -109,10 +109,6 @@ const labelTextStyle = css`
   align-self: baseline;
 `;
 
-const labelTextUnboldStyle = css`
-  font-weight: 400;
-`;
-
 const descriptionStyle = css`
   grid-area: description;
 `;
@@ -138,8 +134,7 @@ function Checkbox({
   description,
   disabled = false,
   indeterminate: indeterminateProp,
-  animate = false,
-  bold = true,
+  animate = true,
   className,
   onClick: onClickProp,
   onChange: onChangeProp,
@@ -249,7 +244,6 @@ function Checkbox({
         {label && (
           <span
             className={cx(labelTextStyle, labelTextColorStyle[mode], {
-              [labelTextUnboldStyle]: !bold,
               [disabledTextStyle]: disabled,
               // TODO: Refresh - remove dark mode font
               [css`

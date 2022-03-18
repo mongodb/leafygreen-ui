@@ -6,7 +6,6 @@ import {
   disabledLightChecked,
   indeterminateLight,
 } from './img';
-import { createDataProp } from '@leafygreen-ui/lib';
 import { CheckProps } from './types';
 
 const height = 20;
