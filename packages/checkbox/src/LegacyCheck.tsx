@@ -6,6 +6,8 @@ import {
   disabledLightChecked,
   indeterminateLight,
 } from './img';
+import { createDataProp } from '@leafygreen-ui/lib';
+import { CheckProps } from './types';
 
 const height = 20;
 const width = 600;
@@ -45,20 +47,11 @@ const checkboxStyleChecked = css`
 
 export function LegacyCheck({
   isChecked,
-  indeterminateProp,
+  indeterminate,
   disabled,
   animate,
-  checkboxWrapper,
-}: {
-  isChecked: boolean;
-  indeterminateProp: boolean | undefined;
-  disabled: boolean;
-  animate: boolean;
-  checkboxWrapper: {
-    prop: { [x: string]: string };
-    selector: string;
-  };
-}) {
+  selector,
+}: CheckProps) {
   const checkboxBackgroundImage = (() => {
     if (disabled) {
       if (isChecked) {
@@ -72,7 +65,7 @@ export function LegacyCheck({
       `;
     }
 
-    if (indeterminateProp) {
+    if (indeterminate) {
       return css`
         background-image: url(${indeterminateLight});
       `;
@@ -85,16 +78,16 @@ export function LegacyCheck({
 
   return (
     <div
-      {...checkboxWrapper.prop}
+      {...selector.prop}
       className={cx(wrapperStyle, {
-        [wrapperStyleChecked]: isChecked && indeterminateProp && !disabled,
-        [wrapperStyleAnimated]: animate && !indeterminateProp && !disabled,
+        [wrapperStyleChecked]: isChecked && indeterminate && !disabled,
+        [wrapperStyleAnimated]: animate && !indeterminate && !disabled,
       })}
     >
       <div
         className={cx(checkboxStyle, checkboxBackgroundImage, {
-          [checkboxStyleChecked]: isChecked && !indeterminateProp && !disabled,
-          [checkboxStyleAnimated]: animate && !indeterminateProp && !disabled,
+          [checkboxStyleChecked]: isChecked && !indeterminate && !disabled,
+          [checkboxStyleAnimated]: animate && !indeterminate && !disabled,
         })}
       />
     </div>
