@@ -9,14 +9,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import {
-  menuItemContainerStyle,
-  activeMenuItemContainerStyle,
-  disabledMenuItemContainerStyle,
-  focusedMenuItemContainerStyle,
-  linkStyle,
-  paddingLeft,
-} from './styles';
+import { paddingLeft } from './styles';
 import { ExitHandler } from 'react-transition-group/Transition';
 import MenuItem from './MenuItem';
 
