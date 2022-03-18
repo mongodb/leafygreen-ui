@@ -25,12 +25,11 @@ const containerStyle = css`
   --lg-checkbox-base-duration: 0ms;
   display: grid;
   grid-template-columns: ${checkBoxSize}px auto;
-  grid-template-areas: 'check label' '. description';
+  grid-template-areas: 'label label' '. description';
   gap: 0 8px;
   position: relative;
   align-items: center;
   justify-content: flex-start;
-  cursor: pointer;
 
   &:hover
     > ${checkboxInput.selector}:not([disabled])
@@ -95,8 +94,17 @@ const inputFocusStylesDarkMode = css`
   }
 `;
 
-const baseLabelStyle = css`
+const labelStyle = css`
   grid-area: label;
+  display: grid;
+  grid-template-areas: 'check text';
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+`;
+
+const labelTextStyle = css`
   align-self: baseline;
 `;
 
@@ -104,7 +112,7 @@ const descriptionStyle = css`
   grid-area: description;
 `;
 
-const textColorSet: Record<Mode, string> = {
+const labelTextColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${palette.black};
   `,
@@ -185,7 +193,7 @@ function Checkbox({
   };
 
   return (
-    <Label
+    <div
       className={cx(
         containerStyle,
         {
@@ -203,8 +211,6 @@ function Checkbox({
         className,
       )}
       style={style}
-      htmlFor={checkboxId}
-      id={labelId}
     >
       <input
         {...rest}
@@ -227,44 +233,47 @@ function Checkbox({
         onClick={onClick}
         onChange={onChange}
       />
-      {darkMode ? (
-        <LegacyCheck
-          isChecked={isChecked}
-          indeterminate={indeterminateProp}
-          disabled={disabled}
-          animate={animate}
-          selector={checkboxWrapper}
-        />
-      ) : (
-        <Check
-          isChecked={isChecked}
-          indeterminate={indeterminateProp}
-          disabled={disabled}
-          animate={animate}
-          selector={checkboxWrapper}
-        />
-      )}
 
-      {label && (
-        <span
-          className={cx(baseLabelStyle, textColorSet[mode], {
-            [disabledTextStyle]: disabled,
-            // TODO: Refresh - remove dark mode font
-            [css`
-              font-family: ${fontFamilies.legacy};
-            `]: darkMode,
-          })}
-        >
-          {label}
-        </span>
-      )}
+      <Label className={labelStyle} htmlFor={checkboxId} id={labelId}>
+        {darkMode ? (
+          <LegacyCheck
+            isChecked={isChecked}
+            indeterminate={indeterminateProp}
+            disabled={disabled}
+            animate={animate}
+            selector={checkboxWrapper}
+          />
+        ) : (
+          <Check
+            isChecked={isChecked}
+            indeterminate={indeterminateProp}
+            disabled={disabled}
+            animate={animate}
+            selector={checkboxWrapper}
+          />
+        )}
+
+        {label && (
+          <span
+            className={cx(labelTextStyle, labelTextColorStyle[mode], {
+              [disabledTextStyle]: disabled,
+              // TODO: Refresh - remove dark mode font
+              [css`
+                font-family: ${fontFamilies.legacy};
+              `]: darkMode,
+            })}
+          >
+            {label}
+          </span>
+        )}
+      </Label>
 
       {description && (
         <Description className={descriptionStyle} darkMode={darkMode}>
           {description}
         </Description>
       )}
-    </Label>
+    </div>
   );
 }
 
