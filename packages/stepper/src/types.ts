@@ -16,20 +16,22 @@ export interface StepperProps {
   currentStep: number;
   maxDisplayedSteps?: number;
   completedStepsShown?: number;
+  darkMode?: boolean;
   className?: string;
 }
 
-export interface StepProps {
+export interface InternalStepProps {
   state: StepStates;
   index?: number;
   stepIcon?: React.ReactNode;
   ariaLabel?: string;
   className?: string;
   iconSize?: number;
+  darkMode?: boolean;
   shouldDisplayLine?: boolean;
 }
 
-export type EllipsesStepProps = Omit<StepProps, 'state'> & {
+export type EllipsesStepProps = Omit<InternalStepProps, 'state'> & {
   startingStepIndex: number;
   state: StepStates.CompletedMultiple | StepStates.UpcomingMultiple;
   tooltipContent: Array<
@@ -40,5 +42,6 @@ export type EllipsesStepProps = Omit<StepProps, 'state'> & {
 export interface StepIconProps {
   state: StepStates;
   size?: number;
+  darkMode?: boolean;
   content?: string | number;
 }

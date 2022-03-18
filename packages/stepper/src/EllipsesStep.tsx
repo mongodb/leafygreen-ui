@@ -1,9 +1,9 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import Tooltip, { TriggerEvent, Align, Justify } from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
 import React from 'react';
-import Step from './Step';
+import Step from './InternalStep';
 import { StepStates, EllipsesStepProps, EllipsesStepStates } from './types';
 
 const EllipsesStep = ({
@@ -46,7 +46,7 @@ const EllipsesStep = ({
         // The <li> needs to be defined here and not in <Stepper> because the Tooltip doesn't trigger without a wrapping HTML element.
         <li>
           <Step
-            className={cx(stepStyles[state])}
+            className={stepStyles[state]}
             state={state}
             tabIndex={0}
             {...rest}
@@ -55,7 +55,6 @@ const EllipsesStep = ({
           </Step>
         </li>
       }
-      triggerEvent={TriggerEvent.Hover}
     >
       <ol className={cx(tooltipStyles)}>
         {React.Children.map(tooltipContent, (stepContents, i) => (

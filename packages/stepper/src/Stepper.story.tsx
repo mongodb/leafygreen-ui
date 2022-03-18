@@ -2,7 +2,7 @@ import React from 'react';
 import times from 'lodash/times';
 import { storiesOf } from '@storybook/react';
 import { number } from '@storybook/addon-knobs';
-import Stepper from '.';
+import Stepper, { Step } from '.';
 import { addons } from '@storybook/addons';
 import { CHANGE } from '@storybook/addon-knobs';
 
@@ -16,13 +16,13 @@ storiesOf('Stepper', module)
         completedStepsShown={number('Completed steps shown', 2, { min: 1 })}
         maxDisplayedSteps={5}
       >
-        <div>Overview</div>
-        <div>Configuration</div>
-        <div>Update</div>
-        <div>Install</div>
-        <div>Billing</div>
-        <div>Address</div>
-        <div>Confirmation</div>
+        <Step>Overview</Step>
+        <Step>Configuration</Step>
+        <Step>Update</Step>
+        <Step>Install</Step>
+        <Step>Billing</Step>
+        <Step>Address</Step>
+        <Step>Confirmation</Step>
       </Stepper>
     </div>
   ))

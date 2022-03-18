@@ -31,7 +31,7 @@ const Icon = ({ state, content }: StepIconProps) => {
   }
 };
 
-const StepIcon = ({ state, size, ...rest }: StepIconProps & React.HTMLProps<HTMLDivElement>) => {
+const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
   const baseStyles = css`
     width: ${size}px;
     height: ${size}px;
@@ -67,15 +67,18 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps & React.HTMLProps<HTML
     border-color: ${palette.gray.dark1};
   `;
   const styles = {
-    [StepStates.CompletedMultiple]: completedStyles,
-    [StepStates.Completed]: completedStyles,
-    [StepStates.Current]: currentStyles,
-    [StepStates.Upcoming]: upcomingStyles,
-    [StepStates.UpcomingMultiple]: upcomingStyles,
+    [Mode.Dark]: {},
+    [Mode.Light]: {
+      [StepStates.CompletedMultiple]: completedStyles,
+      [StepStates.Completed]: completedStyles,
+      [StepStates.Current]: currentStyles,
+      [StepStates.Upcoming]: upcomingStyles,
+      [StepStates.UpcomingMultiple]: upcomingStyles,
+    },
   };
 
   return (
-    <div className={`lg-ui-step-icon ${cx(baseStyles, styles[state])}`}>
+    <div className={cx('lg-ui-step-icon', baseStyles, styles[darkMode][state])}>
       <Icon state={state} {...rest} />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import Step from './Step';
+import Step from './InternalStep';
 import { StepStates, StepperProps } from './types';
 import EllipsesStep from './EllipsesStep';
 
