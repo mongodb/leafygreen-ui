@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
-import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -15,20 +15,10 @@ import {
   disabledMenuItemContainerStyle,
   focusedMenuItemContainerStyle,
   linkStyle,
-  disabledTextStyle,
   paddingLeft,
-  descriptionTextStyle,
-  linkDescriptionTextStyle,
-  titleTextStyle,
-  activeTitleTextStyle,
-  activeDescriptionTextStyle,
-  mainIconStyle,
-  activeIconStyle,
-  textContainer,
-  getFocusedStyles,
-  getHoverStyles,
 } from './styles';
 import { ExitHandler } from 'react-transition-group/Transition';
+import MenuItem from './MenuItem';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
@@ -218,8 +208,6 @@ const SubMenu: ExtendableBox<
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const nodeRef = React.useRef(null);
-    const hoverStyles = getHoverStyles(subMenuContainer.selector);
-    const focusStyles = getFocusedStyles(subMenuContainer.selector);
 
     const [
       iconButtonElement,
@@ -242,80 +230,6 @@ const SubMenu: ExtendableBox<
 
     const numberOfMenuItems = React.Children.toArray(children).length;
 
-    const updatedGlyph =
-      glyph &&
-      React.cloneElement(glyph, {
-        role: 'presentation',
-        className: cx(
-          mainIconStyle,
-          {
-            [activeIconStyle]: active,
-            [focusStyles.iconStyle]: showFocus,
-          },
-          glyph.props?.className,
-        ),
-      });
-
-    const sharedBoxProps = {
-      ...subMenuContainer.prop,
-      ...rest,
-      ref,
-      onClick: onRootClick,
-      role: 'menuitem',
-      'aria-haspopup': true,
-      className: cx(
-        menuItemContainerStyle,
-        subMenuStyle,
-        linkStyle,
-        {
-          [activeMenuItemContainerStyle]: active,
-          [disabledMenuItemContainerStyle]: disabled,
-          [subMenuOpenStyle]: open,
-          [focusedMenuItemContainerStyle]: showFocus,
-        },
-        className,
-      ),
-    };
-
-    const boxContent = (
-      <>
-        {updatedGlyph}
-        <div className={textContainer}>
-          <div
-            className={cx(titleTextStyle, hoverStyles.text, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
-              [focusStyles.textStyle]: showFocus,
-            })}
-          >
-            {title}
-          </div>
-
-          <div
-            className={cx(descriptionTextStyle, {
-              [activeDescriptionTextStyle]: active,
-              [disabledTextStyle]: disabled,
-              [focusStyles.descriptionStyle]: showFocus,
-              [linkDescriptionTextStyle]: typeof rest.href === 'string',
-            })}
-          >
-            {description}
-          </div>
-        </div>
-      </>
-    );
-
-    const renderBox =
-      typeof rest.href === 'string' ? (
-        <Box as="a" {...sharedBoxProps}>
-          {boxContent}
-        </Box>
-      ) : (
-        <Box as="button" {...sharedBoxProps}>
-          {boxContent}
-        </Box>
-      );
-
     const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
     const chevronIconStyles = cx({
       [openIconStyle]: open,
@@ -325,7 +239,34 @@ const SubMenu: ExtendableBox<
 
     return (
       <li role="none" className={liStyle}>
-        {renderBox}
+        <MenuItem
+          {...subMenuContainer.prop}
+          {...rest}
+          role="menuitem"
+          aria-haspopup={true}
+          onClick={onRootClick}
+          ref={ref}
+          className={cx(
+            menuItemContainerStyle,
+            subMenuStyle,
+            linkStyle,
+            {
+              [activeMenuItemContainerStyle]: active,
+              [disabledMenuItemContainerStyle]: disabled,
+              [subMenuOpenStyle]: open,
+              [focusedMenuItemContainerStyle]: showFocus,
+            },
+            className,
+          )}
+          disabled={disabled}
+          active={active}
+          size={'default'}
+          description={description}
+          glyph={glyph}
+        >
+          {title}
+        </MenuItem>
+
         <IconButton
           {...iconButton.prop}
           darkMode={true}
