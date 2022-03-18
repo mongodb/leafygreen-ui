@@ -10,6 +10,7 @@ import { LegacyCheck } from './LegacyCheck';
 import SvgCheck from './SvgCheck';
 import SvgIndeterminate from './SvgIndeterminate';
 import { Transition, TransitionStatus } from 'react-transition-group';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const checkboxWrapper = createDataProp('checkbox-wrapper');
 const checkboxInput = createDataProp('checkbox-input');
@@ -399,6 +400,10 @@ function Checkbox({
         <span
           className={cx(baseLabelStyle, textColorSet[mode], {
             [disabledTextStyle]: disabled,
+            // TODO: Refresh - remove dark mode font
+            [css`
+              font-family: ${fontFamilies.legacy};
+            `]: darkMode,
           })}
         >
           {label}
