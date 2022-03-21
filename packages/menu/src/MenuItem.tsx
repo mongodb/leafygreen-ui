@@ -116,6 +116,8 @@ const MenuItem: ExtendableBox<
         ),
       });
 
+    description = description ?? rest.href;
+
     const commonProps = {
       ...rest,
       ...menuItemContainer.prop,
@@ -165,7 +167,6 @@ const MenuItem: ExtendableBox<
                 [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
             >
-              {rest.href}
               {description}
             </div>
           )}
