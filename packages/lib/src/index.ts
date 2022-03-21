@@ -2,6 +2,7 @@ import { once } from 'lodash';
 import * as typeIs from './typeIs';
 
 export { typeIs };
+export { getNodeTextContent } from './getNodeTextContent';
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<

@@ -89,7 +89,7 @@ export const titleTextStyle = css`
     content: attr(data-text);
     content: attr(data-text) / '';
     height: 0;
-    font-weight: bold;
+    font-weight: 700;
     visibility: hidden;
     overflow: hidden;
     user-select: none;
@@ -121,10 +121,7 @@ export const linkDescriptionTextStyle = css`
 export const getHoverStyles = (container: string) => ({
   text: css`
     ${container}:hover & {
-      font-weight: bold;
-      // Pseudo-bold so the text doesn't overflow on hover
-      // var is defined in \`*TextStyles\` for specificity
-      /* text-shadow: var(--lg-menu-pseudo-bold); */
+      font-weight: 700;
     }
   `,
 });

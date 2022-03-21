@@ -4,15 +4,8 @@ import { palette, uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { Mode } from './Tabs';
-import { getNodeTextContent } from './getNodeTextContent';
-
-const pseudoBold = `
-  0.0625px 0 currentColor,
-  -0.0625px 0 currentColor,
-  0 0.0625px currentColor,
-  0 -0.0625px currentColor
-`;
 
 interface ListTitleMode {
   base: string;
@@ -42,7 +35,7 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
     focus: css`
       &:focus {
         color: ${palette.blue.base};
-        text-shadow: ${pseudoBold};
+        font-weight: 700;
 
         &:after {
           background-color: ${palette.blue.light1};
@@ -51,7 +44,7 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
     `,
     selected: css`
       color: ${palette.green.dark2};
-      text-shadow: ${pseudoBold};
+      font-weight: 700;
 
       &:after {
         transform: scaleX(1);
@@ -127,8 +120,12 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
   },
 };
 
-const listTitle = css`
+const listTitleStyles = css`
   position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   max-width: 300px;
   padding: 12px 16px;
   background-color: transparent;
@@ -141,6 +138,23 @@ const listTitle = css`
 
   &:focus {
     outline: none;
+  }
+
+  // We create a pseudo element that's the width of the bolded text
+  // This way there's no layout shift on hover when the text is bolded.
+  &:before {
+    content: attr(data-text);
+    content: attr(data-text) / '';
+    height: 0;
+    font-weight: 700;
+    visibility: hidden;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+
+    @media speech {
+      display: none;
+    }
   }
 
   &:after {
@@ -169,6 +183,12 @@ const listTitle = css`
   > * {
     vertical-align: middle;
   }
+`;
+
+const listTitleChildrenStyles = css`
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `;
 
 interface BaseTabTitleProps {
@@ -215,10 +235,12 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     }
   }, [parentRef, disabled, selected, titleRef]);
 
+  const nodeText = getNodeTextContent(rest.name);
+
   const sharedTabProps = {
     ...rest,
     className: cx(
-      listTitle,
+      listTitleStyles,
       listTitleModeStyles[mode].base,
       {
         [listTitleModeStyles[mode].selected]: selected,
@@ -231,7 +253,8 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     role: 'tab',
     tabIndex: selected ? 0 : -1,
     ['aria-selected']: selected,
-    name: getNodeTextContent(rest.name),
+    name: nodeText,
+    ['data-text']: nodeText,
   } as const;
 
   if (typeof rest.href === 'string') {
@@ -241,7 +264,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
         ref={titleRef as RefObject<HTMLAnchorElement>}
         {...sharedTabProps}
       >
-        {children}
+        <div className={listTitleChildrenStyles}>{children}</div>
       </Box>
     );
   }
@@ -252,7 +275,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
       ref={titleRef as RefObject<HTMLButtonElement>}
       {...sharedTabProps}
     >
-      {children}
+      <div className={listTitleChildrenStyles}>{children}</div>
     </Box>
   );
 };
