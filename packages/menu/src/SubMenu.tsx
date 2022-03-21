@@ -257,6 +257,7 @@ const SubMenu: ExtendableBox<
 
         <IconButton
           {...iconButton.prop}
+          data-testid="lg-sub-menu-icon-button"
           darkMode={true}
           ref={setIconButtonElement}
           aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
