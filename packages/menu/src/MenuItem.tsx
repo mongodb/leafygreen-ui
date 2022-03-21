@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
@@ -148,7 +148,7 @@ const MenuItem: ExtendableBox<
         {updatedGlyph}
         <div className={textContainer}>
           <div
-            data-text={children?.toString()}
+            data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle]: active,
               [disabledTextStyle]: disabled,
