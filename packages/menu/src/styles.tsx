@@ -1,7 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
-import { transparentize } from 'polished';
 
 const indentation = 16;
 const leftBar = 4;
@@ -74,19 +73,32 @@ export const mainIconStyle = css`
   flex-shrink: 0;
 `;
 
-const pseudoBoldWeight = 0.125;
-const pseudoBoldColor = transparentize(0.4, palette.white);
-
 export const titleTextStyle = css`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   width: 100%;
   font-size: 13px;
   font-weight: 500;
   color: ${palette.white};
-  // Define the default pseudo-bold styles
-  --lg-menu-pseudo-bold: ${pseudoBoldWeight}px 0 ${pseudoBoldColor},
-    ${-pseudoBoldWeight}px 0 ${pseudoBoldColor},
-    0 ${pseudoBoldWeight}px ${pseudoBoldColor},
-    0 ${-pseudoBoldWeight}px ${pseudoBoldColor};
+
+  // We create a pseudo element that's the width of the bolded text
+  // This way there's no layout shift on hover when the text is bolded.
+  &:after {
+    content: attr(data-text);
+    content: attr(data-text) / '';
+    height: 0;
+    font-weight: bold;
+    visibility: hidden;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+
+    @media speech {
+      display: none;
+    }
+  }
 `;
 
 export const descriptionTextStyle = css`
@@ -109,9 +121,10 @@ export const linkDescriptionTextStyle = css`
 export const getHoverStyles = (container: string) => ({
   text: css`
     ${container}:hover & {
+      font-weight: bold;
       // Pseudo-bold so the text doesn't overflow on hover
       // var is defined in \`*TextStyles\` for specificity
-      text-shadow: var(--lg-menu-pseudo-bold);
+      /* text-shadow: var(--lg-menu-pseudo-bold); */
     }
   `,
 });

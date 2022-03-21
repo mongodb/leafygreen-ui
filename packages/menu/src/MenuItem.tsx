@@ -148,6 +148,7 @@ const MenuItem: ExtendableBox<
         {updatedGlyph}
         <div className={textContainer}>
           <div
+            data-text={children?.toString()}
             className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle]: active,
               [disabledTextStyle]: disabled,
