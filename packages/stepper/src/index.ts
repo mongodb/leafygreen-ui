@@ -1,5 +1,6 @@
 import Stepper from './Stepper';
 import Step from './Step';
-export { StepperProps } from './types';
+import type { StepperProps } from './types';
 export { Step };
+export type { StepperProps };
 export default Stepper;

@@ -9,6 +9,7 @@ const Stepper = ({
   currentStep,
   maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
   completedStepsShown = 1,
+  darkMode,
   className,
 }: PropsWithChildren<StepperProps & React.HTMLProps<HTMLOListElement>>) => {
   // Helper Variables
@@ -20,7 +21,7 @@ const Stepper = ({
     numSteps - maxDisplayedSteps,
   );
   let lastDisplayedStep = firstDisplayedStep + maxDisplayedSteps;
-  const hasPriorSteps = currentStep > completedStepsShown;
+  const hasPriorSteps = firstDisplayedStep > 0;
   const hasLaterSteps = lastDisplayedStep < numSteps;
   if (hasPriorSteps) firstDisplayedStep++; // one step will be the prior Ellipses
   if (hasLaterSteps) lastDisplayedStep--; // one step will be the later Ellipses
@@ -36,8 +37,6 @@ const Stepper = ({
   };
 
   // Helper Functions
-  const hasPriorEllipses = () => currentStep > completedStepsShown;
-
   const isLastStep = (step: number) => step + 1 === numSteps;
 
   const getStepRangeText: (startStep: number, endStep: number) => string = (
@@ -65,10 +64,11 @@ const Stepper = ({
 
   return (
     <ol className={cx(baseStyles, className)}>
-      {hasPriorEllipses() && (
+      {hasPriorSteps && (
         <EllipsesStep
           state={StepStates.CompletedMultiple}
           startingStepIndex={1}
+          darkMode={darkMode}
           tooltipContent={childrenArray.slice(0, firstDisplayedStep)}
         >
           {getStepRangeText(1, firstDisplayedStep)}
@@ -82,6 +82,7 @@ const Stepper = ({
               state={getStepState(firstDisplayedStep + i)}
               shouldDisplayLine={!isLastStep(firstDisplayedStep + i)}
               index={firstDisplayedStep + i + 1}
+              darkMode={darkMode}
             >
               {stepContents}
             </Step>
@@ -93,6 +94,7 @@ const Stepper = ({
           state={StepStates.UpcomingMultiple}
           startingStepIndex={lastDisplayedStep + 1}
           shouldDisplayLine={false}
+          darkMode={darkMode}
           tooltipContent={childrenArray.slice(lastDisplayedStep, numSteps)}
         >
           {getStepRangeText(lastDisplayedStep + 1, numSteps)}

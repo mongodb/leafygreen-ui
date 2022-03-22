@@ -13,6 +13,7 @@ export const Step = function Step({
   ariaLabel = `step${index || ''}`,
   shouldDisplayLine = true,
   iconSize = 20,
+  darkMode,
   className,
   ...rest
 }: PropsWithChildren<InternalStepProps & React.HTMLProps<HTMLDivElement>>) {
@@ -30,7 +31,7 @@ export const Step = function Step({
       outline: none;
       .lg-ui-step-icon {
         // TODO: should use box-shadow utility for this.
-        box-shadow: 0px 0px 0px 2px ${palette.white},
+        box-shadow: 0px 0px 0px 2px ${darkMode ? palette.black : palette.white},
           0px 0px 0px 4px ${palette.blue.light1};
       }
     }
@@ -44,15 +45,15 @@ export const Step = function Step({
         position: absolute;
         top: ${iconSize / 2}px;
         left: 50%;
-        z-index: -1;
-        background-color: ${palette.gray.base};
+        z-index: 0;
+        background-color: ${darkMode ? palette.gray.light1 : palette.gray.base};
       }
     `}
   `;
 
   const completedMultipleStyles = css`
     .lg-ui-step-label {
-      color: ${palette.green.dark2};
+      color: ${darkMode ? palette.green.base : palette.green.dark2};
       text-decoration-line: underline;
       text-decoration-style: dotted;
       text-underline-position: under;
@@ -61,33 +62,37 @@ export const Step = function Step({
     ${shouldDisplayLine &&
     `
         &:after {
-          background-color: ${palette.green.dark1};
+          background-color: ${
+            darkMode ? palette.green.base : palette.green.dark1
+          };
         }
       `}
   `;
 
   const completedStyles = css`
     .lg-ui-step-label {
-      color: ${palette.green.dark2};
+      color: ${darkMode ? palette.green.base : palette.green.dark2};
     }
 
     ${shouldDisplayLine &&
     `
         &:after {
-          background-color: ${palette.green.dark1};
+          background-color: ${
+            darkMode ? palette.green.base : palette.green.dark1
+          };
         }
       `}
   `;
 
   const currentStyles = css`
     .lg-ui-step-label {
-      color: ${palette.green.dark3};
+      color: ${darkMode ? palette.green.base : palette.green.dark3};
     }
   `;
 
   const upcomingStyles = css`
     .lg-ui-step-label {
-      color: ${palette.gray.dark1};
+      color: ${darkMode ? palette.green.base : palette.gray.dark1};
     }
   `;
 
@@ -96,7 +101,7 @@ export const Step = function Step({
       text-decoration-line: underline;
       text-decoration-style: dotted;
       text-underline-position: under;
-      color: ${palette.gray.dark1};
+      color: ${darkMode ? palette.gray.base : palette.gray.dark1};
     }
   `;
 
@@ -115,7 +120,12 @@ export const Step = function Step({
       aria-current={isCurrent && 'step'}
       {...rest}
     >
-      <StepIcon state={state} content={index} size={iconSize} />
+      <StepIcon
+        state={state}
+        content={index}
+        size={iconSize}
+        darkMode={darkMode}
+      />
       {/*
         TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
         Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.

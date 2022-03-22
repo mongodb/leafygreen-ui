@@ -1,5 +1,11 @@
 import React from 'react';
 
+// TODO: replace with common type across all components
+export const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
 export enum StepStates {
   CompletedMultiple = 'completed-multiple',
   Completed = 'completed',
@@ -11,6 +17,11 @@ export enum StepStates {
 export type EllipsesStepStates =
   | StepStates.CompletedMultiple
   | StepStates.UpcomingMultiple;
+
+export type SingleStepStates =
+  | StepStates.Completed
+  | StepStates.Current
+  | StepStates.Upcoming;
 
 export interface StepperProps {
   currentStep: number;

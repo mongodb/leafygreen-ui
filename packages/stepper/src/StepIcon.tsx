@@ -1,5 +1,5 @@
 import React from 'react';
-import { StepStates, StepIconProps } from './types';
+import { StepStates, StepIconProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -21,7 +21,7 @@ const Icon = ({ state, content }: StepIconProps) => {
     return (
       <Overline
         className={css`
-          font-weight: 400;
+          font-weight: 500;
           color: inherit;
         `}
       >
@@ -31,10 +31,11 @@ const Icon = ({ state, content }: StepIconProps) => {
   }
 };
 
-const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
+const StepIcon = ({ state, size, darkMode, ...rest }: StepIconProps) => {
   const baseStyles = css`
     width: ${size}px;
     height: ${size}px;
+    box-sizing: content-box;
     margin-bottom: ${spacing[1]}px;
     border-radius: 50%;
     display: flex;
@@ -43,12 +44,14 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
     border: 1px solid;
     // TODO: use centralized transition prop
     transition: 0.3s box-shadow ease;
+    z-index: 1;
 
     svg {
       width: 100%;
     }
   `;
 
+  // Light Mode Styles
   const completedStyles = css`
     color: ${palette.white};
     border-color: ${palette.green.dark1};
@@ -66,8 +69,34 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
     background-color: ${palette.white};
     border-color: ${palette.gray.dark1};
   `;
+
+  // Dark Mode Styles
+  const darkCompletedStyles = css`
+    color: ${palette.black};
+    border-color: ${palette.green.base};
+    background-color: ${palette.green.base};
+  `;
+
+  const darkCurrentStyles = css`
+    color: ${palette.green.base};
+    background-color: ${palette.black};
+    border-color: ${palette.green.base};
+  `;
+
+  const darkUpcomingStyles = css`
+    color: ${palette.gray.light1};
+    background-color: ${palette.black};
+    border-color: ${palette.gray.light1};
+  `;
+
   const styles = {
-    [Mode.Dark]: {},
+    [Mode.Dark]: {
+      [StepStates.CompletedMultiple]: darkCompletedStyles,
+      [StepStates.Completed]: darkCompletedStyles,
+      [StepStates.Current]: darkCurrentStyles,
+      [StepStates.Upcoming]: darkUpcomingStyles,
+      [StepStates.UpcomingMultiple]: darkUpcomingStyles,
+    },
     [Mode.Light]: {
       [StepStates.CompletedMultiple]: completedStyles,
       [StepStates.Completed]: completedStyles,
@@ -78,7 +107,13 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
   };
 
   return (
-    <div className={cx('lg-ui-step-icon', baseStyles, styles[darkMode][state])}>
+    <div
+      className={cx(
+        'lg-ui-step-icon',
+        baseStyles,
+        styles[darkMode ? Mode.Dark : Mode.Light][state],
+      )}
+    >
       <Icon state={state} {...rest} />
     </div>
   );

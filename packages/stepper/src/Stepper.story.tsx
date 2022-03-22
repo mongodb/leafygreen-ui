@@ -1,21 +1,18 @@
 import React from 'react';
 import times from 'lodash/times';
 import { storiesOf } from '@storybook/react';
-import { number } from '@storybook/addon-knobs';
+import { boolean, number } from '@storybook/addon-knobs';
 import Stepper, { Step } from '.';
 import { addons } from '@storybook/addons';
 import { CHANGE } from '@storybook/addon-knobs';
+import { palette } from '@leafygreen-ui/palette';
 
 const channel = addons.getChannel();
 
 storiesOf('Stepper', module)
   .add('Default', () => (
     <div style={{ width: 1000 }}>
-      <Stepper
-        currentStep={number('Step', 0, { min: 0, max: 6 })}
-        completedStepsShown={number('Completed steps shown', 2, { min: 1 })}
-        maxDisplayedSteps={5}
-      >
+      <Stepper currentStep={number('Step', 0, { min: 0, max: 6 })}>
         <Step>Overview</Step>
         <Step>Configuration</Step>
         <Step>Update</Step>
@@ -31,6 +28,7 @@ storiesOf('Stepper', module)
     const numSteps = number('Number of steps', 10, { min: 1 });
     const maxDisplayedSteps = number('Max displayed', 5, { min: 1 });
     let completedStepsShown = number('Completed steps shown', 3, { min: 1 });
+    const darkMode = boolean('Dark mode', false);
 
     // Can't dynamically change the max, so we manually enforce it
     if (currentStep >= numSteps) {
@@ -51,11 +49,17 @@ storiesOf('Stepper', module)
     }
 
     return (
-      <div style={{ width: 1000 }}>
+      <div
+        style={{
+          width: 1000,
+          background: darkMode ? palette.black : palette.white,
+        }}
+      >
         <Stepper
           currentStep={currentStep}
           completedStepsShown={completedStepsShown}
           maxDisplayedSteps={maxDisplayedSteps}
+          darkMode={darkMode}
         >
           {times(numSteps, count => (
             <div key={count}>Step {count + 1}</div>
