@@ -86,7 +86,6 @@ export const titleTextStyle = css`
   // We create a pseudo element that's the width of the bolded text
   // This way there's no layout shift on hover when the text is bolded.
   &:after {
-    content: attr(data-text);
     content: attr(data-text) / '';
     height: 0;
     font-weight: 700;
@@ -94,10 +93,6 @@ export const titleTextStyle = css`
     overflow: hidden;
     user-select: none;
     pointer-events: none;
-
-    @media speech {
-      display: none;
-    }
   }
 `;
 
