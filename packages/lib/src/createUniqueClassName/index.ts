@@ -3,17 +3,11 @@
 // That way, even if Math.random is on the same seed, both clients would have to generate the UUID the exact same number of microseconds since pageload (if high-perfomance time is supported) AND at the exact same millisecond (or 10,000+ years later) to get the same UUID:
 
 const generateUUID = () => {
-  let date1 = new Date().getTime(),
-    date2 = (performance && performance.now && performance.now() * 1000) || 0;
-  return 'xxxxxxxx'.replace(/[xy]/g, char => {
+  let date1 = new Date().getTime();
+  return 'xxxxxxxx'.replace(/[x]/g, char => {
     let rand = Math.random() * 16;
-    if (date1 > 0) {
-      rand = (date1 + rand) % 16 | 0;
-      date1 = Math.floor(date1 / 16);
-    } else {
-      rand = (date2 + rand) % 16 | 0;
-      date2 = Math.floor(date2 / 16);
-    }
+    rand = (date1 + rand) % 16 | 0;
+    date1 = Math.floor(date1 / 16);
     return (char == 'x' ? rand : (rand & 0x7) | 0x8).toString(16);
   });
 };
