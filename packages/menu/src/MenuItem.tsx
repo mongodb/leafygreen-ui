@@ -120,6 +120,7 @@ const MenuItem: ExtendableBox<
       ...rest,
       ...menuItemContainer.prop,
       ref,
+      role: 'menuitem',
       className: cx(
         menuItemContainerStyle,
         menuItemHeight[size],
@@ -131,11 +132,10 @@ const MenuItem: ExtendableBox<
         },
         className,
       ),
-      role: 'menuitem',
       tabIndex: disabled ? -1 : undefined,
       // only add a disabled prop if not an anchor
-      ...(typeof rest.href !== 'string' && { disabled }),
       'aria-disabled': disabled,
+      ...(typeof rest.href !== 'string' && { disabled }),
     };
 
     const anchorProps = {
@@ -157,6 +157,7 @@ const MenuItem: ExtendableBox<
           >
             {children}
           </div>
+
           {description && (
             <div
               className={cx(descriptionTextStyle, {

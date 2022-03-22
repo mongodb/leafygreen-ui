@@ -233,9 +233,8 @@ const SubMenu: ExtendableBox<
     return (
       <li role="none" className={liStyle}>
         <MenuItem
-          {...subMenuContainer.prop}
           {...rest}
-          role="menuitem"
+          {...subMenuContainer.prop}
           aria-haspopup={true}
           onClick={onRootClick}
           ref={ref}
