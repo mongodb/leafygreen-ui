@@ -143,7 +143,7 @@ const listTitleStyles = css`
   // We create a pseudo element that's the width of the bolded text
   // This way there's no layout shift on hover when the text is bolded.
   &:before {
-    content: attr(data-text) / '';
+    content: attr(data-text);
     height: 0;
     font-weight: 700;
     visibility: hidden;
