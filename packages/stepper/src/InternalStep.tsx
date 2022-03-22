@@ -86,13 +86,13 @@ export const Step = function Step({
 
   const currentStyles = css`
     .lg-ui-step-label {
-      color: ${darkMode ? palette.green.base : palette.green.dark3};
+      color: ${darkMode ? palette.white : palette.green.dark3};
     }
   `;
 
   const upcomingStyles = css`
     .lg-ui-step-label {
-      color: ${darkMode ? palette.green.base : palette.gray.dark1};
+      color: ${darkMode ? palette.gray.light1 : palette.gray.dark1};
     }
   `;
 
@@ -101,7 +101,7 @@ export const Step = function Step({
       text-decoration-line: underline;
       text-decoration-style: dotted;
       text-underline-position: under;
-      color: ${darkMode ? palette.gray.base : palette.gray.dark1};
+      color: ${darkMode ? palette.gray.light1 : palette.gray.dark1};
     }
   `;
 
