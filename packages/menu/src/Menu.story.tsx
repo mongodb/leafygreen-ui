@@ -84,7 +84,7 @@ function SubMenuExample() {
       <Menu trigger={<Button>trigger</Button>}>
         <SubMenu
           title="Menu Item 1"
-          description="https://google.com"
+          description=".design"
           glyph={<CloudIcon size="large" />}
           active={true}
           href="http://mongodb.design"
