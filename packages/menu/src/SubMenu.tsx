@@ -231,7 +231,7 @@ const SubMenu: ExtendableBox<
     });
 
     return (
-      <li role="none" className={liStyle}>
+      <>
         <MenuItem
           {...rest}
           {...subMenuContainer.prop}
@@ -252,33 +252,32 @@ const SubMenu: ExtendableBox<
           glyph={glyph}
         >
           {title}
+          <IconButton
+            {...iconButton.prop}
+            data-testid="lg-sub-menu-icon-button"
+            darkMode={true}
+            ref={setIconButtonElement}
+            aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
+            className={cx(iconButtonStyle, {
+              [openIconButtonStyle]: open,
+              [iconButtonFocusedStyle]: showFocus,
+            })}
+            onClick={(e: React.MouseEvent) => {
+              // we stop the event from propagating and closing the entire menu
+              e.nativeEvent.stopImmediatePropagation();
+
+              if (setOpen) {
+                setOpen(!open);
+              }
+            }}
+          >
+            <ChevronIcon
+              role="presentation"
+              className={chevronIconStyles}
+              size={14}
+            />
+          </IconButton>
         </MenuItem>
-
-        <IconButton
-          {...iconButton.prop}
-          data-testid="lg-sub-menu-icon-button"
-          darkMode={true}
-          ref={setIconButtonElement}
-          aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-          className={cx(iconButtonStyle, {
-            [openIconButtonStyle]: open,
-            [iconButtonFocusedStyle]: showFocus,
-          })}
-          onClick={(e: React.MouseEvent) => {
-            // we stop the event from propagating and closing the entire menu
-            e.nativeEvent.stopImmediatePropagation();
-
-            if (setOpen) {
-              setOpen(!open);
-            }
-          }}
-        >
-          <ChevronIcon
-            role="presentation"
-            className={chevronIconStyles}
-            size={14}
-          />
-        </IconButton>
 
         <Transition
           in={open}
@@ -339,7 +338,7 @@ const SubMenu: ExtendableBox<
             </ul>
           )}
         </Transition>
-      </li>
+      </>
     );
   },
 );
