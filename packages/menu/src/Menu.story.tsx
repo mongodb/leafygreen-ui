@@ -7,6 +7,7 @@ import { Align, Justify } from '@leafygreen-ui/popover';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 
 function Uncontrolled() {
   const size = select('Size', ['default', 'large'], 'default');
