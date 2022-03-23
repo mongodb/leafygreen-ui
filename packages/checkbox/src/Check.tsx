@@ -145,6 +145,8 @@ export function Check({
   const showCheckIcon = indeterminate || isChecked;
   const checkIconColor = disabled ? palette.gray.light3 : palette.white;
 
+  const shouldAnimate = animate && !indeterminate;
+
   return (
     <>
       <div
@@ -157,7 +159,7 @@ export function Check({
       >
         <Transition
           in={showCheckIcon}
-          timeout={animate ? checkAnimationDuration : 0}
+          timeout={shouldAnimate ? checkAnimationDuration : 0}
         >
           {state => (
             <CheckIcon
@@ -170,7 +172,7 @@ export function Check({
       {!usingKeyboard && (
         <div
           className={cx(flourishStyles, {
-            [flourishStylesChecked]: isChecked,
+            [flourishStylesChecked]: isChecked && shouldAnimate,
           })}
         />
       )}
