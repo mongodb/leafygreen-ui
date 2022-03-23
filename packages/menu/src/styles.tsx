@@ -143,8 +143,6 @@ export const activeMenuItemContainerStyle = css`
 export const activeTitleTextStyle = css`
   font-weight: bold;
   color: ${palette.green.base};
-  // no pseudo bold text when active */
-  --lg-menu-pseudo-bold: unset;
 `;
 export const activeDescriptionTextStyle = css`
   color: ${palette.gray.light1};
