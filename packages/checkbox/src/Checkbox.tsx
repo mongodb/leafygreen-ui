@@ -74,7 +74,7 @@ const inputStyle = css`
 `;
 
 const inputFocusStyles = css`
-  &:focus + ${checkboxWrapper.selector} {
+  &:focus + label > ${checkboxWrapper.selector} {
     box-shadow: 0 0 0 2px ${palette.gray.light2},
       0 0 0 4px ${palette.blue.light1};
   }
@@ -82,7 +82,7 @@ const inputFocusStyles = css`
 
 // TODO: Refresh - remove when darkmode is updated
 const inputFocusStylesDarkMode = css`
-  &:focus + ${checkboxWrapper.selector}:after {
+  &:focus + label > ${checkboxWrapper.selector}:after {
     content: '';
     bottom: 0;
     left: 3px;
