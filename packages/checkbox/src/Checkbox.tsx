@@ -98,6 +98,7 @@ const inputFocusStylesDarkMode = css`
 const labelStyle = css`
   grid-area: label;
   display: grid;
+  grid-template-columns: ${checkBoxSize}px auto;
   grid-template-areas: 'check text';
   gap: 8px;
   align-items: center;
@@ -245,9 +246,11 @@ function Checkbox({
           <span
             className={cx(labelTextStyle, labelTextColorStyle[mode], {
               [disabledTextStyle]: disabled,
-              // TODO: Refresh - remove dark mode font
+              // TODO: Refresh - remove dark mode styles
               [css`
                 font-family: ${fontFamilies.legacy};
+                font-size: 14px;
+                padding-left: 1px;
               `]: darkMode,
             })}
           >
