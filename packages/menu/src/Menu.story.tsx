@@ -70,7 +70,11 @@ function Controlled() {
           <MenuItem href="http://mongodb.design" size={size}>
             I am a link!
           </MenuItem>
-          <MenuSeparator margin={0} />
+          <MenuSeparator
+            className={css`
+              margin: 0;
+            `}
+          />
           <MenuItem size={size}>Left out of the MenuGroup</MenuItem>
         </Menu>
       </Button>

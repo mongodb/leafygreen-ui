@@ -6,25 +6,8 @@ const borderStyle = css`
   border-top: 1px solid ${palette.gray.dark2};
 `;
 
-function MenuSeparator({
-  margin = 0,
-}: {
-  /**
-   * Vertical margin fo the separator
-   */
-  margin?: number;
-}) {
-  return (
-    <li
-      role="separator"
-      className={cx(
-        borderStyle,
-        css`
-          margin: ${margin}px 0;
-        `,
-      )}
-    />
-  );
+function MenuSeparator({ className }: { className?: string }) {
+  return <li role="separator" className={cx(borderStyle, className)} />;
 }
 
 MenuSeparator.displayName = 'MenuSeparator';
