@@ -19,11 +19,6 @@ const iconButton = createDataProp('icon-button');
 const subMenuContainerHeight = 56;
 const iconButtonContainerSize = 28;
 
-const liStyle = css`
-  position: relative;
-  overflow: hidden;
-`;
-
 const subMenuStyle = css`
   min-height: 56px;
   background-color: ${palette.black};
