@@ -91,6 +91,7 @@ const ulStyle = css`
 `;
 
 const menuItemText = css`
+  width: 100%;
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
