@@ -41,18 +41,13 @@ const containerStyle = css`
 
 // Toggles on the animation timing
 const enableAnimationStyles = css`
-  --lg-checkbox-base-duration: ${checkAnimationDuration}ms;
-  // Enable var access in pseudo elements
-  *:before,
-  *:after {
+  // if there is no motion preference
+  @media (prefers-reduced-motion: no-preference) {
     --lg-checkbox-base-duration: ${checkAnimationDuration}ms;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    --lg-checkbox-base-duration: 0ms;
+    // Enable var access in pseudo elements
     *:before,
     *:after {
-      --lg-checkbox-base-duration: 0ms;
+      --lg-checkbox-base-duration: ${checkAnimationDuration}ms;
     }
   }
 `;
