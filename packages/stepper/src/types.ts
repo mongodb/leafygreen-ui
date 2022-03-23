@@ -38,7 +38,6 @@ export interface InternalStepProps {
   ariaLabel?: string;
   className?: string;
   iconSize?: number;
-  darkMode?: boolean;
   shouldDisplayLine?: boolean;
 }
 
@@ -53,6 +52,5 @@ export type EllipsesStepProps = Omit<InternalStepProps, 'state'> & {
 export interface StepIconProps {
   state: StepStates;
   size?: number;
-  darkMode?: boolean;
   content?: string | number;
 }

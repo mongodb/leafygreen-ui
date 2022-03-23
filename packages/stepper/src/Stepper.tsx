@@ -1,17 +1,23 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Step from './InternalStep';
 import { StepStates, StepperProps } from './types';
 import EllipsesStep from './EllipsesStep';
+import StepperContextProvider, { useStepperContext } from './StepperContext';
 
 const Stepper = ({
   children,
   currentStep,
   maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
   completedStepsShown = 1,
-  darkMode,
+  darkMode = false,
   className,
 }: PropsWithChildren<StepperProps & React.HTMLProps<HTMLOListElement>>) => {
+  const { setIsDarkMode } = useStepperContext();
+  useEffect(() => {
+    if (setIsDarkMode) setIsDarkMode(darkMode);
+  }, [darkMode, setIsDarkMode]);
+
   // Helper Variables
   const numSteps = React.Children.count(children);
   const childrenArray = React.Children.toArray(children);
@@ -63,12 +69,12 @@ const Stepper = ({
   `;
 
   return (
+    <StepperContextProvider>
     <ol className={cx(baseStyles, className)}>
       {hasPriorSteps && (
         <EllipsesStep
           state={StepStates.CompletedMultiple}
           startingStepIndex={1}
-          darkMode={darkMode}
           tooltipContent={childrenArray.slice(0, firstDisplayedStep)}
         >
           {getStepRangeText(1, firstDisplayedStep)}
@@ -82,7 +88,6 @@ const Stepper = ({
               state={getStepState(firstDisplayedStep + i)}
               shouldDisplayLine={!isLastStep(firstDisplayedStep + i)}
               index={firstDisplayedStep + i + 1}
-              darkMode={darkMode}
             >
               {stepContents}
             </Step>
@@ -94,13 +99,13 @@ const Stepper = ({
           state={StepStates.UpcomingMultiple}
           startingStepIndex={lastDisplayedStep + 1}
           shouldDisplayLine={false}
-          darkMode={darkMode}
           tooltipContent={childrenArray.slice(lastDisplayedStep, numSteps)}
         >
           {getStepRangeText(lastDisplayedStep + 1, numSteps)}
         </EllipsesStep>
       )}
     </ol>
+    </StepperContextProvider>
   );
 };
 

@@ -5,6 +5,7 @@ import StepIcon from './StepIcon';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
+import { useStepperContext } from './StepperContext';
 
 export const Step = function Step({
   children,
@@ -13,10 +14,11 @@ export const Step = function Step({
   ariaLabel = `step${index || ''}`,
   shouldDisplayLine = true,
   iconSize = 20,
-  darkMode,
   className,
   ...rest
 }: PropsWithChildren<InternalStepProps & React.HTMLProps<HTMLDivElement>>) {
+  const { isDarkMode, stepIconClassName, stepLabelClassName } =
+    useStepperContext();
   const isCurrent = state === StepStates.Current;
 
   const baseStyles = css`
@@ -29,9 +31,9 @@ export const Step = function Step({
 
     &:focus {
       outline: none;
-      .lg-ui-step-icon {
+      .${stepIconClassName} {
         // TODO: should use box-shadow utility for this.
-        box-shadow: 0px 0px 0px 2px ${darkMode ? palette.black : palette.white},
+        box-shadow: 0px 0px 0px 2px ${isDarkMode ? palette.black : palette.white},
           0px 0px 0px 4px ${palette.blue.light1};
       }
     }
@@ -46,14 +48,14 @@ export const Step = function Step({
         top: ${iconSize / 2}px;
         left: 50%;
         z-index: 0;
-        background-color: ${darkMode ? palette.gray.light1 : palette.gray.base};
+        background-color: ${isDarkMode ? palette.gray.light1 : palette.gray.base};
       }
     `}
   `;
 
   const completedMultipleStyles = css`
-    .lg-ui-step-label {
-      color: ${darkMode ? palette.green.base : palette.green.dark2};
+    .${stepLabelClassName} {
+      color: ${isDarkMode ? palette.green.base : palette.green.dark2};
       text-decoration-line: underline;
       text-decoration-style: dotted;
       text-underline-position: under;
@@ -63,45 +65,45 @@ export const Step = function Step({
     `
         &:after {
           background-color: ${
-            darkMode ? palette.green.base : palette.green.dark1
+            isDarkMode ? palette.green.base : palette.green.dark1
           };
         }
       `}
   `;
 
   const completedStyles = css`
-    .lg-ui-step-label {
-      color: ${darkMode ? palette.green.base : palette.green.dark2};
+    .${stepLabelClassName} {
+      color: ${isDarkMode ? palette.green.base : palette.green.dark2};
     }
 
     ${shouldDisplayLine &&
     `
         &:after {
           background-color: ${
-            darkMode ? palette.green.base : palette.green.dark1
+            isDarkMode ? palette.green.base : palette.green.dark1
           };
         }
       `}
   `;
 
   const currentStyles = css`
-    .lg-ui-step-label {
-      color: ${darkMode ? palette.white : palette.green.dark3};
+    .${stepLabelClassName} {
+      color: ${isDarkMode ? palette.white : palette.green.dark3};
     }
   `;
 
   const upcomingStyles = css`
-    .lg-ui-step-label {
-      color: ${darkMode ? palette.gray.light1 : palette.gray.dark1};
+    .${stepLabelClassName} {
+      color: ${isDarkMode ? palette.gray.light1 : palette.gray.dark1};
     }
   `;
 
   const upcomingMultipleStyles = css`
-    .lg-ui-step-label {
+    .${stepLabelClassName} {
       text-decoration-line: underline;
       text-decoration-style: dotted;
       text-underline-position: under;
-      color: ${darkMode ? palette.gray.light1 : palette.gray.dark1};
+      color: ${isDarkMode ? palette.gray.light1 : palette.gray.dark1};
     }
   `;
 
@@ -124,14 +126,13 @@ export const Step = function Step({
         state={state}
         content={index}
         size={iconSize}
-        darkMode={darkMode}
       />
       {/*
         TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
         Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.
       */}
       <Body
-        className="lg-ui-step-label"
+        className="${stepLabelClassName}"
         weight={isCurrent ? 'medium' : 'regular'}
       >
         {children}
