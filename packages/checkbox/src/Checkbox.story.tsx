@@ -54,15 +54,21 @@ storiesOf('Checkbox', module)
       </LeafygreenProvider>
     );
   })
-  .add('Controlled', () => <Control />)
+  .add('Controlled', () => (
+    <LeafygreenProvider>
+      <Control />
+    </LeafygreenProvider>
+  ))
   .add('No Label', () => {
     return (
-      <Checkbox
-        aria-label="Some Check"
-        animate={true}
-        className={css`
-          padding: 20px;
-        `}
-      />
+      <LeafygreenProvider>
+        <Checkbox
+          aria-label="Some Check"
+          animate={true}
+          className={css`
+            padding: 20px;
+          `}
+        />
+      </LeafygreenProvider>
     );
   });

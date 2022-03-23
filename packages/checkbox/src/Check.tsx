@@ -5,9 +5,9 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   checkAnimationDuration,
   checkBoxSize,
-  flourishScale,
-  flourishTransitionDelay,
-  flourishTransitionScale,
+  rippleScale,
+  rippleTransitionDelay,
+  rippleTransitionScale,
   insetPct,
 } from './constants';
 import SvgCheck from './SvgCheck';
@@ -83,7 +83,7 @@ const checkWrapperCheckedDisabledStyle = css`
   }
 `;
 
-const flourishStyles = css`
+const rippleStyles = css`
   grid-area: check;
   height: ${checkBoxSize}px;
   width: ${checkBoxSize}px;
@@ -97,15 +97,15 @@ const flourishStyles = css`
   transition-property: transform, opacity;
 `;
 
-const flourishStylesChecked = css`
-  // only animate flourish on enter
+const rippleStylesChecked = css`
+  // only animate ripple on enter
   transition-duration: calc(
-    ${flourishTransitionScale} * var(--lg-checkbox-base-duration)
+    ${rippleTransitionScale} * var(--lg-checkbox-base-duration)
   );
   transition-delay: calc(
-    ${flourishTransitionDelay} * var(--lg-checkbox-base-duration)
+    ${rippleTransitionDelay} * var(--lg-checkbox-base-duration)
   );
-  transform: scale(${flourishScale});
+  transform: scale(${rippleScale});
   opacity: 0;
 `;
 
@@ -144,7 +144,6 @@ export function Check({
   const CheckIcon = indeterminate ? SvgIndeterminate : SvgCheck;
   const showCheckIcon = indeterminate || isChecked;
   const checkIconColor = disabled ? palette.gray.light3 : palette.white;
-
   const shouldAnimate = animate && !indeterminate;
 
   return (
@@ -171,8 +170,8 @@ export function Check({
       </div>
       {!usingKeyboard && (
         <div
-          className={cx(flourishStyles, {
-            [flourishStylesChecked]: isChecked && shouldAnimate,
+          className={cx(rippleStyles, {
+            [rippleStylesChecked]: isChecked && shouldAnimate,
           })}
         />
       )}
