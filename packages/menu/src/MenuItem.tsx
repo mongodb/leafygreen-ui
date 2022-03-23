@@ -102,8 +102,6 @@ const MenuItem: ExtendableBox<
     const hoverStyles = getHoverStyles(menuItemContainer.selector);
     const focusStyles = getFocusedStyles(menuItemContainer.selector);
 
-    description = description ?? rest.href;
-
     const updatedGlyph =
       glyph &&
       React.cloneElement(glyph, {
