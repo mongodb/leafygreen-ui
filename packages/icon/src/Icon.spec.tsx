@@ -6,10 +6,11 @@ import { toJson } from 'xml2json';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { typeIs } from '@leafygreen-ui/lib';
-import { SVGR } from './types';
+import { LGGlyph, SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
 import createGlyphComponent from './createGlyphComponent';
 import EditIcon from '@leafygreen-ui/icon/dist/Edit';
+import { Size } from './glyphCommon';
 
 function getBaseName(filePath: string): string {
   return path.basename(filePath, path.extname(filePath));
@@ -137,6 +138,32 @@ describe('packages/Icon/createIconComponent', () => {
 
     expect(glyph.nodeName.toLowerCase()).toBe('div');
     expect(glyph.textContent).toBe(text);
+  });
+
+  describe('The generated component passes through the `size` prop', () => {
+    let MyIconComponent: ReturnType<typeof createIconComponent>;
+    beforeEach(() => {
+      const mySvg = ({ size }: LGGlyph.ComponentProps) => (
+        <svg height={size} width={size}></svg>
+      );
+      MyIconComponent = createIconComponent({ mySvg });
+    });
+
+    test('as number', () => {
+      const renderedIcon = render(<MyIconComponent glyph="mySvg" size={20} />);
+      const svgTag = renderedIcon.container.querySelector('svg');
+      expect(svgTag).toHaveAttribute('height', '20');
+      expect(svgTag).toHaveAttribute('width', '20');
+    });
+
+    test('as Size', () => {
+      const renderedIcon = render(
+        <MyIconComponent glyph="mySvg" size={Size.Large} />,
+      );
+      const svgTag = renderedIcon.container.querySelector('svg');
+      expect(svgTag).toHaveAttribute('height', '20');
+      expect(svgTag).toHaveAttribute('width', '20');
+    });
   });
 });
 
