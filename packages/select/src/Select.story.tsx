@@ -4,8 +4,23 @@ import { boolean, select, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { uiColors } from '@leafygreen-ui/palette';
-import { Option, OptionGroup, Select, Size } from '.';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import { Option, OptionGroup, Select, Size, State } from '.';
+
+// eslint-disable-next-line react/prop-types
+const Wrapper = ({ darkMode, children }: any) => (
+  <div
+    className={css`
+      position: absolute;
+      background-color: ${darkMode ? palette.gray.dark3 : uiColors.white};
+      padding: 20px;
+      height: 100%;
+      width: 400px;
+    `}
+  >
+    {children}
+  </div>
+);
 
 storiesOf('Select', module)
   .add('Uncontrolled', () => {
@@ -21,17 +36,11 @@ storiesOf('Select', module)
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
     const usePortal = boolean('usePortal', false);
     const allowDeselect = boolean('allowDeselect', false);
+    const errorMessage = text('errorMessage', 'This is the error message');
+    const state = select('State', Object.values(State), State.None);
 
     return (
-      <div
-        className={css`
-          position: absolute;
-          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
-          padding: 20px;
-          height: 100%;
-          width: 400px;
-        `}
-      >
+      <Wrapper darkMode={darkMode}>
         <Provider>
           <Select
             darkMode={darkMode}
@@ -48,6 +57,8 @@ storiesOf('Select', module)
             className={css`
               min-width: 200px;
             `}
+            state={state}
+            errorMessage={errorMessage}
           >
             <OptionGroup label="Common">
               <Option value="dog" glyph={glyph}>
@@ -69,7 +80,7 @@ storiesOf('Select', module)
             </Option>
           </Select>
         </Provider>
-      </div>
+      </Wrapper>
     );
   })
   .add('Controlled', () => {
@@ -84,18 +95,13 @@ storiesOf('Select', module)
     const usePortal = boolean('usePortal', false);
     const useProvider = boolean('Use LeafygreenProvider', false);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
+    const errorMessage = text('errorMessage', 'This is the error message');
+    const state = select('State', Object.values(State), State.None);
 
     const [value, setValue] = useState('cat');
 
     return (
-      <div
-        className={css`
-          position: absolute;
-          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
-          padding: 20px;
-          height: 100%;
-        `}
-      >
+      <Wrapper darkMode={darkMode}>
         <Provider>
           <Select
             darkMode={darkMode}
@@ -108,6 +114,8 @@ storiesOf('Select', module)
             onChange={setValue}
             disabled={disabled}
             usePortal={usePortal}
+            state={state}
+            errorMessage={errorMessage}
           >
             <OptionGroup label="Common">
               <Option value="dog" glyph={glyph}>
@@ -131,6 +139,6 @@ storiesOf('Select', module)
             </Option>
           </Select>
         </Provider>
-      </div>
+      </Wrapper>
     );
   });

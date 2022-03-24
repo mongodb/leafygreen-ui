@@ -37,7 +37,7 @@ function renderModal(
   return render(<WrappedModal {...props} />);
 }
 
-describe('packages/confirmation-modal', () => {
+describe('packages/marketing-modal', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container, getByText } = renderModal({ open: true });
@@ -127,5 +127,14 @@ describe('packages/confirmation-modal', () => {
 
       await waitForElementToBeRemoved(modal);
     });
+  });
+
+  test('renders blob when `showBlob` is true', () => {
+    const { getByTestId } = renderModal({
+      open: true,
+      showBlob: true,
+    });
+
+    expect(getByTestId('svg-blob')).toBeVisible();
   });
 });

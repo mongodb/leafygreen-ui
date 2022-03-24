@@ -1,5 +1,22 @@
 # @leafygreen-ui/toggle
 
+## 8.0.0
+
+### Major Changes
+
+- 532986a: Updates toggle styles in line with visual brand refresh.
+
+### Patch Changes
+
+- Updated dependencies [532986a]
+  - @leafygreen-ui/interaction-ring@2.0.0
+
+## 7.0.5
+
+### Patch Changes
+
+- 70f3c2c: Add type="button" to Toggle button element
+
 ## 7.0.4
 
 ### Patch Changes

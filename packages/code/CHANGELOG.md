@@ -1,5 +1,43 @@
 # @leafygreen-ui/code
 
+## 10.0.0
+
+### Major Changes
+
+- ab1fd9e: Updates Code to allign with visual brand update
+  - Removes fixed width when Language picker is shown (`width` was formerly set to a static `700px`)
+
+### Patch Changes
+
+- Updated dependencies [ab1fd9e]
+  - @leafygreen-ui/icon-button@10.0.0
+
+## 9.5.0
+
+### Minor Changes
+
+- 1067fe9: Add support to specify starting value for line numbering.
+
+## 9.4.0
+
+### Minor Changes
+
+- 548ca2c: Adds support for controlling the language switcher popover characteristics with `usePortal`, `portalClassName`, `portalContainer`, `scrollContainer`, and `popoverZIndex` props.
+- 548ca2c: Add support for Dart language
+
+## 9.3.0
+
+### Minor Changes
+
+- 70f3c2c: Add support for custom action buttons in the code component
+
+### Patch Changes
+
+- Updated dependencies [70f3c2c]
+- Updated dependencies [70f3c2c]
+  - @leafygreen-ui/hooks@7.1.1
+  - @leafygreen-ui/select@3.1.0
+
 ## 9.2.0
 
 ### Minor Changes

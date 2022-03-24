@@ -2,8 +2,9 @@ import React from 'react';
 import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 export const ContentStyle = {
   None: 'none',
@@ -26,39 +27,50 @@ interface ColorSet {
 
 const lightBaseBoxShadow = `0 4px 10px -4px ${transparentize(
   0.7,
-  uiColors.black,
+  palette.black,
 )}`;
+const lightHoverBoxShadow = `0 4px 20px -4px ${transparentize(
+  0.8,
+  palette.black,
+)}`;
+const lightFocusBoxShadow = `
+  0 0 0 2px ${palette.white},
+  0 0 0 4px ${palette.blue.light1}
+`;
 const darkBaseBoxShadow = `0 4px 20px -4px  ${transparentize(0.3, '#000')}`;
-const lightHoverBoxShadow = `0 2px 6px -2px ${transparentize(
-  0.4,
-  uiColors.black,
-)}`;
 const darkHoverBoxShadow = `0 2px 12px -2px ${transparentize(0.1, '#000')}`;
-const lightFocusBoxShadow = `0 0 0 3px ${uiColors.blue.light1}`;
-const darkFocusBoxShadow = `0 0 0 3px ${uiColors.blue.base}`;
+const darkFocusBoxShadow = `0 0 0 3px ${uiColors.focus}`;
 
 const colorSet: Record<Mode, ColorSet> = {
   [Mode.Light]: {
     containerStyle: css`
-      border: 1px solid ${uiColors.gray.light2};
-      box-shadow: 0 4px 10px -4px ${transparentize(0.7, uiColors.black)};
+      border: 1px solid ${palette.gray.light2};
+      box-shadow: ${lightBaseBoxShadow};
       background-color: white;
-      color: ${uiColors.gray.dark3};
+      color: ${palette.gray.dark3};
+      // TODO: Refresh - remove properties from mode logic
+      border-radius: 24px;
+      font-family: ${fontFamilies.default};
+      font-size: 13px;
+      line-height: 20px;
+      padding: 24px;
+      min-height: 68px; // 48px + 20px (padding + line-height)
     `,
     clickableStyle: css`
       cursor: pointer;
 
       &:focus {
         outline: none;
-        box-shadow: ${lightBaseBoxShadow}, ${lightFocusBoxShadow};
+        box-shadow: ${lightFocusBoxShadow}, ${lightBaseBoxShadow};
       }
 
-      &:hover {
-        border: 1px solid ${uiColors.gray.light2};
+      &:hover,
+      &:active {
+        border: 1px solid ${palette.gray.light2};
         box-shadow: ${lightHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${lightHoverBoxShadow}, ${lightFocusBoxShadow};
+          box-shadow: ${lightFocusBoxShadow}, ${lightHoverBoxShadow};
         }
       }
     `,
@@ -69,6 +81,10 @@ const colorSet: Record<Mode, ColorSet> = {
       box-shadow: ${darkBaseBoxShadow};
       background-color: ${uiColors.gray.dark2};
       color: ${uiColors.white};
+      // TODO: Refresh - remove properties from dark mode logic
+      border-radius: 7px;
+      font-family: ${fontFamilies.legacy};
+      padding: 16px;
     `,
     clickableStyle: css`
       cursor: pointer;
@@ -91,8 +107,8 @@ const colorSet: Record<Mode, ColorSet> = {
 
 const containerStyle = css`
   position: relative;
-  border-radius: 7px;
-  transition: border 300ms ease-in-out, box-shadow 300ms ease-in-out;
+  transition: 150ms ease-in-out;
+  transition-property: border, box-shadow;
 `;
 
 interface CardProps {

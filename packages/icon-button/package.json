@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon-button",
-  "version": "9.1.6",
+  "version": "10.0.0",
   "description": "LeafyGreen UI Kit Icon Buttons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,13 +20,14 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "11.6.1"
+    "@leafygreen-ui/icon": "11.7.0"
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.2.2",
     "@leafygreen-ui/lib": "^9.0.1",
     "@leafygreen-ui/emotion": "^4.0.0",
     "@leafygreen-ui/palette": "^3.2.2",
-    "@leafygreen-ui/box": "^3.0.6"
+    "@leafygreen-ui/box": "^3.0.6",
+    "@leafygreen-ui/leafygreen-provider": "^2.1.3"
   }
 }

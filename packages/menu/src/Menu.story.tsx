@@ -6,35 +6,37 @@ import { Menu, MenuSeparator, SubMenu, MenuItem } from '.';
 import { Align, Justify } from '@leafygreen-ui/popover';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
+import Button from '@leafygreen-ui/button';
 
 function Uncontrolled() {
+  const size = select('Size', ['default', 'large'], 'default');
+  const usePortal = boolean('Use Portal', true);
+
   return (
     <LeafyGreenProvider>
       <Menu
         align={select('Align', Object.values(Align), Align.Bottom)}
         justify={select('Justify', Object.values(Justify), Justify.Start)}
-        trigger={<button>trigger</button>}
-        spacing={number('spacing', 15)}
+        trigger={<Button rightGlyph={<CloudIcon />} />}
         popoverZIndex={number('zIndex', 1)}
+        usePortal={usePortal}
       >
-        <MenuItem
-          active
-          size={select('Size', ['default', 'large'], 'default')}
-          glyph={<CloudIcon />}
-        >
+        <MenuItem active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description">
+        <MenuItem description="I am also a description" size={size}>
           Menu Item With Description
         </MenuItem>
         <MenuItem
           disabled={boolean('Disable item', true)}
           description="I am a description"
+          size={size}
         >
           Disabled Menu Item
         </MenuItem>
-
-        <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
+        <MenuItem size={size} href="http://mongodb.design">
+          I am a link!
+        </MenuItem>
       </Menu>
     </LeafyGreenProvider>
   );
@@ -42,35 +44,36 @@ function Uncontrolled() {
 
 function Controlled() {
   const [open, setOpen] = useState(false);
+  const size = select('Size', ['default', 'large'], 'default');
+  const usePortal = boolean('Use Portal', true);
+
   return (
     <LeafyGreenProvider>
-      <button onClick={() => setOpen(!open)}>
+      <Button onClick={() => setOpen(!open)}>
         trigger
         <Menu
           align={select('Align', Object.values(Align), Align.Bottom)}
           justify={select('Justify', Object.values(Justify), Justify.Start)}
           open={open}
           setOpen={setOpen}
+          usePortal={usePortal}
         >
-          <MenuItem
-            size={select('Size', ['default', 'large'], 'large')}
-            glyph={<LaptopIcon size="xlarge" />}
-          >
+          <MenuItem active size={size} glyph={<LaptopIcon size="large" />}>
             Active Menu Item
           </MenuItem>
-          <MenuItem disabled={boolean('Disable item', true)} size="large">
+          <MenuItem disabled={boolean('Disable item', true)} size={size}>
             Disabled Menu Item
           </MenuItem>
-          <MenuItem active description="I am a description" size="large">
+          <MenuItem description="I am a description" size={size}>
             Menu Item With Description
           </MenuItem>
-          <MenuItem href="http://mongodb.design" size="large">
+          <MenuItem href="http://mongodb.design" size={size}>
             I am a link!
           </MenuItem>
           <MenuSeparator />
-          <MenuItem size="large">Left out of the MenuGroup</MenuItem>
+          <MenuItem size={size}>Left out of the MenuGroup</MenuItem>
         </Menu>
-      </button>
+      </Button>
     </LeafyGreenProvider>
   );
 }
@@ -78,11 +81,11 @@ function Controlled() {
 function SubMenuExample() {
   return (
     <LeafyGreenProvider>
-      <Menu trigger={<button>trigger</button>}>
+      <Menu trigger={<Button>trigger</Button>}>
         <SubMenu
           title="Menu Item 1"
           description="https://google.com"
-          glyph={<CloudIcon size="xlarge" />}
+          glyph={<CloudIcon size="large" />}
           active={true}
           href="http://mongodb.design"
         >
@@ -91,8 +94,8 @@ function SubMenuExample() {
         </SubMenu>
         <SubMenu
           title="Menu Item 2"
-          description="https://google.com"
-          glyph={<LaptopIcon size="xlarge" />}
+          description="Sed posuere consectetur"
+          glyph={<LaptopIcon size="large" />}
         >
           <MenuItem>Support 1</MenuItem>
         </SubMenu>

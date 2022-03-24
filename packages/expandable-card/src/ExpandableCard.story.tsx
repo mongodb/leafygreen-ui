@@ -30,6 +30,7 @@ storiesOf('ExpandableCard', module)
         )}
         isOpen={isOpen}
         onClick={e => {
+          // eslint-disable-next-line no-console
           console.log(`Parent controlling isOpen:`, e);
           setIsOpen(!isOpen);
         }}

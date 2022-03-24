@@ -1,5 +1,24 @@
 # @leafygreen-ui/button
 
+## 13.0.1
+
+### Patch Changes
+
+- 686ecae: Disabling onClicks for Button components when as="a"
+
+## 13.0.0
+
+### Major Changes
+
+- 8457f92: Updateslight mode Button in line with visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
 ## 12.0.5
 
 ### Patch Changes

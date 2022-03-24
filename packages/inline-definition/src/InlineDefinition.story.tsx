@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
-import { H2, Body } from '@leafygreen-ui/typography';
+import { H2, Body, Link } from '@leafygreen-ui/typography';
 import InlineDefinition from '.';
 
 const shardDefinition =
@@ -10,6 +10,12 @@ const shardDefinition =
 
 const replicaSetDefintion =
   'An Atlas replica set is a group of MongoDB servers with the same data to provide redundancy and high availability. ';
+
+const collectionDefinition =
+  'A grouping of MongoDB documents. A collection exists within a single database. Collections do not enforce a schema.';
+
+const collectionsLink =
+  'https://docs.mongodb.com/manual/core/sharding-shard-a-collection';
 
 storiesOf('InlineDefinition', module).add('Default', () => (
   <div
@@ -30,7 +36,14 @@ storiesOf('InlineDefinition', module).add('Default', () => (
       <InlineDefinition definition={replicaSetDefintion}>
         replica set
       </InlineDefinition>{' '}
-      with 3 data bearing servers
+      with 3 data bearing servers.
+    </Body>
+    <Body>
+      MongoDB shards data at the{' '}
+      <InlineDefinition definition={collectionDefinition}>
+        <Link href={collectionsLink}>collections</Link>
+      </InlineDefinition>{' '}
+      level, distributing the collection data across the shards in the cluster.
     </Body>
   </div>
 ));

@@ -1,4 +1,4 @@
-const Size = {
+export const Size = {
   Small: 'small',
   Default: 'default',
   Large: 'large',
@@ -6,7 +6,7 @@ const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-const Mode = {
+export const Mode = {
   Dark: 'dark',
   Light: 'light',
 } as const;

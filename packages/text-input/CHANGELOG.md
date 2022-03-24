@@ -1,5 +1,36 @@
 # @leafygreen-ui/text-input
 
+## 7.0.0
+
+### Major Changes
+
+- 8457f92: Updates text input to be in line with the visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/typography@9.0.0
+  - @leafygreen-ui/interaction-ring@2.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
+## 6.2.1
+
+### Patch Changes
+
+- 548ca2c: Restores the ability to pass onBlur handlers while using the useValidation hook.
+
+## 6.2.0
+
+### Minor Changes
+
+- ded2831: Add sizeVariant prop
+
+### Patch Changes
+
+- Updated dependencies [ded2831]
+  - @leafygreen-ui/palette@3.3.0
+
 ## 6.1.0
 
 ### Minor Changes

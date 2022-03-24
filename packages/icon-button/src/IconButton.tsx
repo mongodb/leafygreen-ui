@@ -3,7 +3,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { Either, isComponentType } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 
@@ -33,11 +34,11 @@ const removeButtonStyle = css`
 const baseIconButtonStyle = css`
   display: inline-block;
   border-radius: 100px;
-  color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
-  transition: color 150ms ease-in-out;
+  transition: 150ms ease-in-out;
+  transition-property: color, box-shadow;
 
   // Set background to fully-transparent white for cross-browser compatability with Safari
   //
@@ -76,8 +77,8 @@ const iconButtonSizes = {
     width: 28px;
   `,
   [Size.Large]: css`
-    height: 35px;
-    width: 35px;
+    height: 36px;
+    width: 36px;
   `,
   [Size.XLarge]: css`
     height: 42px;
@@ -85,26 +86,22 @@ const iconButtonSizes = {
   `,
 } as const;
 
-const iconButtonMode = {
+const iconButtonMode: Record<Mode, string> = {
   [Mode.Light]: css`
+    color: ${palette.gray.base};
+
     &:active,
     &:hover {
-      color: ${uiColors.gray.dark2};
+      color: ${palette.gray.dark3};
 
       &:before {
-        background-color: ${uiColors.gray.light2};
-      }
-    }
-
-    &:focus {
-      color: ${uiColors.blue.dark2};
-
-      &:before {
-        background-color: ${uiColors.blue.light2};
+        background-color: ${palette.gray.light2};
       }
     }
   `,
   [Mode.Dark]: css`
+    color: ${uiColors.gray.base};
+
     &:active,
     &:hover {
       color: ${uiColors.white};
@@ -113,7 +110,21 @@ const iconButtonMode = {
         background-color: ${uiColors.gray.dark2};
       }
     }
+  `,
+};
 
+const focusStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    &:focus {
+      color: ${palette.gray.dark3};
+      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
+
+      &:before {
+        background-color: ${palette.gray.light2};
+      }
+    }
+  `,
+  [Mode.Dark]: css`
     &:focus {
       color: ${uiColors.blue.light1};
 
@@ -122,21 +133,56 @@ const iconButtonMode = {
       }
     }
   `,
-};
+} as const;
 
-const disabledStyle = {
+const disabledStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.light2};
-    pointer-events: none;
+    cursor: not-allowed;
+    color: ${palette.gray.light1};
+    background-color: rgba(255, 255, 255, 0);
+
+    &:active,
+    &:hover {
+      color: ${palette.gray.light1};
+
+      &:before {
+        background-color: rgba(255, 255, 255, 0);
+      }
+    }
+
+    &:focus {
+      color: ${palette.gray.light1};
+      &:before {
+        background-color: ${palette.gray.light3};
+      }
+    }
   `,
 
   [Mode.Dark]: css`
+    cursor: not-allowed;
     color: ${uiColors.gray.dark2};
-    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0);
+
+    &:active,
+    &:hover {
+      color: ${uiColors.gray.dark2};
+
+      &:before {
+        background-color: rgba(255, 255, 255, 0);
+      }
+    }
+
+    &:focus {
+      color: ${uiColors.gray.dark2};
+
+      &:before {
+        background-color: ${uiColors.gray.dark1};
+      }
+    }
   `,
 } as const;
 
-const activeStyle = {
+const activeStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.gray.dark2};
     background-color: ${uiColors.gray.light2};
@@ -173,7 +219,8 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: Size | number;
   title?: string | null | boolean;
 }
-interface BaseIconButtonProps {
+interface BaseIconButtonProps
+  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
@@ -183,6 +230,7 @@ interface BaseIconButtonProps {
   href?: string;
   'aria-label'?: string;
   'aria-labelledby'?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
@@ -206,6 +254,7 @@ const IconButton: ExtendableBox<
     ref: React.Ref<any>,
   ) => {
     const mode = darkMode ? 'dark' : 'light';
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
     // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
     validateAriaLabelProps(rest, 'IconButton');
@@ -240,16 +289,21 @@ const IconButton: ExtendableBox<
     const iconButtonProps = {
       ...rest,
       ref,
-      tabIndex: disabled ? -1 : 0,
+      tabIndex: 0,
+      // We don't set the `disabled` prop since we want the button to be focusable
       ['aria-disabled']: disabled,
+      // Override any actions if it's disabled
+      href: disabled ? undefined : rest.href,
+      onClick: disabled ? undefined : rest.onClick,
       className: cx(
         removeButtonStyle,
         baseIconButtonStyle,
         iconButtonSizes[size],
         iconButtonMode[mode],
         {
-          [disabledStyle[mode]]: disabled,
+          [focusStyle[mode]]: showFocus,
           [activeStyle[mode]]: active,
+          [disabledStyle[mode]]: disabled,
         },
         className,
       ),

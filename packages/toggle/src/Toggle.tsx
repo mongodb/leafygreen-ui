@@ -4,7 +4,8 @@ import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
+import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 
 export const Size = {
   Default: 'default',
@@ -33,6 +34,13 @@ const sliderSelector = {
   checked: `${buttonSelectors.checked} > &`,
   unchecked: `${buttonSelectors.unchecked} > &`,
   disabled: `${buttonSelectors.disabled} > &`,
+};
+
+const checkmarkSelector = {
+  checked: `${buttonSelectors.checked}:not(:disabled) &`,
+  unchecked: `${buttonSelectors.unchecked}:not(:disabled) &`,
+  disabledChecked: `${buttonSelectors.checked}:disabled &`,
+  disabledUnchecked: `${buttonSelectors.unchecked}:disabled &`,
 };
 
 const transitionInMS = 150;
@@ -66,7 +74,7 @@ const baseSliderStyles = css`
 `;
 
 const baseButtonStyles = css`
-  transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
+  transition: ${transitionInMS}ms all ease-in-out, 0s background-color linear;
   display: inline-block;
   flex-shrink: 0;
   position: relative;
@@ -86,8 +94,8 @@ const baseButtonStyles = css`
   &[aria-checked='true'] {
     // We set background-color here to avoid a small issue with overflow clipping
     // that makes this look less seamless than it should.
-    background-color: #43b1e5;
-    border-color: #2e9ed3;
+    background-color: ${palette.blue.base};
+    border-color: ${palette.blue.base};
     transition-delay: ${transitionInMS}ms;
 
     &:before {
@@ -107,14 +115,19 @@ const baseButtonStyles = css`
     left: 0;
     right: 0;
     border-radius: 50px;
-    background-color: #43b1e5;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: ${palette.blue.base};
     opacity: 0;
     transform: scale(0.85);
   }
 
   &:disabled:before {
     opacity: 0;
+  }
+`;
+
+const baseButtonFocusStyles = css`
+  &:focus-visible {
+    box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
   }
 `;
 
@@ -145,7 +158,7 @@ const sizeStyles = {
   [Size.Default]: {
     button: css`
       height: 32px;
-      width: 62px;
+      width: 56px;
     `,
 
     slider: css`
@@ -154,12 +167,7 @@ const sizeStyles = {
       left: 1px;
 
       ${sliderSelector.checked} {
-        transform: translate3d(30px, 0, 0);
-      }
-
-      ${sliderSelector.disabled} {
-        height: 28px;
-        width: 28px;
+        transform: translate3d(24px, 0, 0);
       }
     `,
   },
@@ -171,21 +179,12 @@ const sizeStyles = {
     `,
 
     slider: css`
-      height: 20px;
-      width: 20px;
+      height: 18px;
+      width: 18px;
+      left: 1px;
 
       ${sliderSelector.checked} {
         transform: translate3d(18px, 0, 0);
-      }
-
-      ${sliderSelector.disabled} {
-        height: 18px;
-        width: 18px;
-        left: 1px;
-      }
-
-      ${buttonSelectors.checked}:disabled {
-        transform: translate3d(17px, 0, 0);
       }
     `,
   },
@@ -203,59 +202,78 @@ const sizeStyles = {
       ${sliderSelector.checked} {
         transform: translate3d(12px, 0, 0);
       }
-
-      ${sliderSelector.disabled} {
-        height: 10px;
-        width: 10px;
-        left: 1px;
-      }
-
-      ${buttonSelectors.checked}:disabled {
-        transform: translate3d(11px, 0, 0);
-      }
     `,
   },
 } as const;
 
+// TODO: Refresh - remove when darkMode is updated
+const sizeStylesDarkMode: Record<Size, string> = {
+  [Size.Default]: css`
+    ${sliderSelector.checked} {
+      transform: translate3d(30px, 0, 0);
+    }
+
+    ${sliderSelector.disabled} {
+      height: 28px;
+      width: 28px;
+    }
+  `,
+  [Size.Small]: css`
+    height: 20px;
+    width: 20px;
+    left: 0;
+
+    ${sliderSelector.disabled} {
+      height: 18px;
+      width: 18px;
+      left: 1px;
+    }
+
+    ${buttonSelectors.checked}:disabled {
+      transform: translate3d(17px, 0, 0);
+    }
+  `,
+  [Size.XSmall]: css`
+    ${sliderSelector.disabled} {
+      height: 10px;
+      width: 10px;
+      left: 1px;
+    }
+
+    ${buttonSelectors.checked}:disabled {
+      transform: translate3d(11px, 0, 0);
+    }
+  `,
+};
+
 const modeStyles = {
   [Mode.Light]: {
     button: css`
-      box-shadow: inset 0 0 5px rgba(6, 22, 33, 0.1);
-
       &[aria-checked='false']:not(:disabled) {
-        background-color: rgba(61, 79, 88, 0.1);
-        border-color: rgba(18, 22, 22, 0.03);
+        background-color: ${palette.gray.base};
+        border-color: ${palette.gray.base};
       }
 
       &:disabled {
-        background-color: rgba(6, 22, 33, 0.09);
-        border-color: rgba(6, 22, 33, 0.04);
-        box-shadow: none;
+        background-color: ${palette.gray.light2};
+        border-color: ${palette.gray.light2};
       }
     `,
 
     slider: css`
-      background-color: white;
-      box-shadow: 0 0 2px rgba(28, 192, 97, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
-        inset 0 -1px 0 #f1f1f1;
-
-      &:before {
-        background-image: linear-gradient(${uiColors.white}, #f6f6f6);
-      }
+      background-color: ${palette.white};
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       ${sliderSelector.disabled} {
-        box-shadow: none;
-        background-color: rgba(6, 22, 33, 0.09);
+        background-color: ${palette.gray.light3};
       }
     `,
 
-    offLabel: css`
-      color: ${uiColors.gray.dark1};
-    `,
-
-    onLabel: css`
-      color: ${uiColors.white};
-    `,
+    // TODO: Refresh - leaving because of destructuring below
+    offLabel: css``,
+    onLabel: css``,
   },
 
   [Mode.Dark]: {
@@ -265,6 +283,16 @@ const modeStyles = {
       &[aria-checked='false']:not(:disabled) {
         background-color: rgba(6, 22, 33, 0.4);
         border-color: rgba(6, 22, 33, 0.1);
+      }
+
+      &[aria-checked='true'] {
+        background-color: #43b1e5;
+        border-color: #2e9ed3;
+      }
+
+      &:before {
+        background-color: #43b1e5;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
       &:disabled {
@@ -311,6 +339,35 @@ const modeStyles = {
     `,
   },
 } as const;
+
+const baseCheckmarkStyles = css`
+  display: flex;
+  color: var(--color);
+  transition: color ${transitionInMS}ms ease-in-out;
+`;
+
+const checkmarkStyles = css`
+  ${checkmarkSelector.checked} {
+    --color: ${palette.blue.base};
+  }
+
+  ${checkmarkSelector.unchecked} {
+    --color: ${palette.white};
+  }
+
+  ${checkmarkSelector.disabledChecked} {
+    --color: ${palette.gray.light1};
+  }
+
+  ${checkmarkSelector.disabledUnchecked} {
+    --color: ${palette.gray.light3};
+  }
+`;
+
+const checkmarkSize: Omit<Record<Size, number>, 'xsmall'> = {
+  [Size.Default]: 16,
+  [Size.Small]: 14,
+};
 
 interface BaseToggleProps {
   /**
@@ -414,19 +471,34 @@ function Toggle({
       borderRadius="50px"
       focusTargetElement={buttonElement}
       className={className}
+      color={darkMode ? undefined : { focused: 'transparent' }} // TODO: Refresh - overriding the focus style for light mode
     >
       <button
         role="switch"
+        type="button"
         onClick={onClick}
         aria-checked={normalizedChecked}
         disabled={disabled}
         aria-disabled={disabled}
         ref={setButtonElement}
-        className={cx(baseButtonStyles, buttonModeStyles, buttonSizeStyles)}
+        className={cx(
+          baseButtonStyles,
+          {
+            [baseButtonFocusStyles]: !darkMode,
+          },
+          buttonModeStyles,
+          buttonSizeStyles,
+          {
+            [css`
+              width: 62px;
+            `]: size === Size.Default && darkMode, // TODO: Refresh - remove when darkMode is updated
+          },
+        )}
         {...toggleButton.prop}
         {...rest}
       >
-        {size === 'default' && !disabled && (
+        {/* TODO: Refresh - remove when darkMode is updated  */}
+        {size === 'default' && !disabled && darkMode && (
           <>
             <span
               aria-hidden={true}
@@ -445,8 +517,22 @@ function Toggle({
         )}
 
         <div
-          className={cx(baseSliderStyles, sliderSizeStyles, sliderModeStyles)}
-        />
+          className={cx(
+            baseSliderStyles,
+            sliderSizeStyles,
+            { [sizeStylesDarkMode[size]]: darkMode }, // TODO: Refresh - remove when darkMode is updated
+            sliderModeStyles,
+          )}
+        >
+          {/* TODO: Refresh - remove conditional when darkMode is updated  */}
+          {size !== Size.XSmall && !darkMode && (
+            <CheckmarkIcon
+              aria-hidden={true}
+              className={cx(baseCheckmarkStyles, checkmarkStyles)}
+              size={checkmarkSize[size]}
+            />
+          )}
+        </div>
       </button>
     </InteractionRing>
   );

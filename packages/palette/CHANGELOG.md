@@ -1,5 +1,17 @@
 # @leafygreen-ui/palette
 
+## 3.3.1
+
+### Patch Changes
+
+- 63ddf39: Updates gray dark 3 from #21313C to #1C2D38
+
+## 3.3.0
+
+### Minor Changes
+
+- ded2831: Adds palette.ts and palette.less files reflecting the brand refresh palette.
+
 ## 3.2.2
 
 ### Patch Changes

@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useMemo, useState } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
+import { uiColors, palette } from '@leafygreen-ui/palette';
 
 const Mode = {
   Light: 'light',
@@ -18,8 +18,8 @@ interface ColorSet {
 
 const colorSets: Record<Mode, ColorSet> = {
   [Mode.Light]: {
-    interactionRingHover: uiColors.gray.light2,
-    interactionRingFocus: uiColors.focus,
+    interactionRingHover: palette.gray.light2,
+    interactionRingFocus: palette.blue.light1,
   },
   [Mode.Dark]: {
     interactionRingHover: uiColors.gray.dark1,

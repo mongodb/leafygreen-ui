@@ -1,5 +1,18 @@
 # @leafygreen-ui/tabs
 
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+  - @leafygreen-ui/tokens@1.1.0
+
+## 6.0.0
+
+### Major Changes
+
+- ab1fd9e: Updates Tabs component for Visual Brand Refresh
+
 ## 5.1.5
 
 ### Patch Changes

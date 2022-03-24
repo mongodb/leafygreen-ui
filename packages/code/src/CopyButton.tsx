@@ -2,61 +2,55 @@ import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Mode } from './types';
 
-function getCopyButtonStyle(
-  mode: Mode,
-  copied: boolean,
-  withLanguageSwitcher: boolean,
-): string {
+const copiedStyle = css`
+  color: ${palette.white};
+  background-color: ${palette.green.dark1};
+
+  &:focus {
+    color: ${palette.white};
+
+    &:before {
+      background-color: ${palette.green.dark1};
+    }
+  }
+
+  &:hover {
+    color: ${palette.white};
+
+    &:before {
+      background-color: ${palette.green.dark1};
+    }
+  }
+`;
+
+function getCopyButtonStyle(mode: Mode): string {
   const baseStyle = css`
     align-self: center;
-    color: ${uiColors.gray.base};
+    color: ${palette.gray.base};
   `;
 
-  if (copied) {
-    return cx(
-      baseStyle,
-      css`
-        color: ${uiColors.white};
-        background-color: ${uiColors.green.base};
+  // TODO: Refresh - Update these styles
+  const darkModeStyles = css`
+    color: ${uiColors.gray.light2};
 
-        &:focus {
-          color: ${uiColors.white};
+    &:hover {
+      color: ${uiColors.gray.light3};
 
-          &:before {
-            background-color: ${uiColors.green.base};
-          }
-        }
-
-        &:hover {
-          color: ${uiColors.white};
-
-          &:before {
-            background-color: ${uiColors.green.base};
-          }
-        }
-      `,
-    );
-  }
-
-  if (mode === Mode.Dark) {
-    return cx(baseStyle, {
-      [css`
+      &:before {
         background-color: ${uiColors.gray.dark3};
-      `]: !withLanguageSwitcher,
-      [css`
-        background-color: ${uiColors.gray.dark2};
-        color: ${uiColors.gray.light2};
-      `]: withLanguageSwitcher,
-    });
-  }
+      }
+    }
+  `;
 
-  return baseStyle;
+  return cx(baseStyle, {
+    [darkModeStyles]: mode === Mode.Dark,
+  });
 }
 
 interface CopyProps {
@@ -111,7 +105,9 @@ function CopyButton({
       ref={setButtonNode}
       darkMode={darkMode}
       aria-label="Copy"
-      className={getCopyButtonStyle(mode, copied, withLanguageSwitcher)}
+      className={cx(getCopyButtonStyle(mode), {
+        [copiedStyle]: copied,
+      })}
       onClick={handleClick}
     >
       {copied ? <CheckmarkIcon /> : <CopyIcon />}

@@ -103,7 +103,7 @@ const languageOptions = [
 const jsSnippet = `
 
 function greeting(entity) {
-  return \`Hello, \${entity}!\`;
+  return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
 
 console.log(greeting('World'));
@@ -113,7 +113,7 @@ console.log(greeting('World'));
 const pythonSnippet = `
 
 def greeting(entity):
-    return "Hello {}".format(entity)
+    return "Hello {} Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.".format(entity)
 
 print (greeting("World"))
 
@@ -127,9 +127,13 @@ const snippetMap = {
 function LanguageSwitcher({
   darkMode,
   onChange,
+  customActionButtons = [],
+  showCustomActionButtons = false,
 }: {
   darkMode?: boolean;
   onChange?: Function;
+  customActionButtons?: Array<React.ReactNode>;
+  showCustomActionButtons?: boolean;
 }) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
 
@@ -143,9 +147,12 @@ function LanguageSwitcher({
   return (
     <Code
       language={language?.displayName}
+      lineNumberStart={1}
       onChange={handleChange}
       languageOptions={languageOptions}
       darkMode={darkMode}
+      customActionButtons={customActionButtons}
+      showCustomActionButtons={showCustomActionButtons}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>

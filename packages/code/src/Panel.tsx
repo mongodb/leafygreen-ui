@@ -3,72 +3,64 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import CopyButton from './CopyButton';
 import LanguageSwitcher from './LanguageSwitcher';
-import { variantColors } from './globalStyles';
+import { PopoverProps } from './types';
 import {
   Mode,
   LanguageOption,
   LanguageSwitcher as LanguageSwitcherProps,
 } from './types';
-
-const singleLineComponentHeight = 36;
-
-const copyStyle = css`
-  width: 38px;
-  border-left: solid 1px;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  padding-top: 6px;
-`;
-
-const singleLineCopyStyle = css`
-  min-height: ${singleLineComponentHeight}px;
-  padding-top: ${spacing[1]}px;
-`;
+import { palette, uiColors } from '@leafygreen-ui/palette';
 
 function getSidebarVariantStyle(mode: Mode): string {
-  const colors = variantColors[mode];
-
   switch (mode) {
     case Mode.Light:
       return css`
-        border-color: ${colors[1]};
-        background-color: white;
+        background-color: ${palette.white};
+        border-color: ${palette.gray.light2};
       `;
 
     case Mode.Dark:
       return css`
-        border-color: ${colors[1]};
-        background-color: ${colors[1]};
+        // TODO: Refresh - update these colors
+        background-color: ${uiColors.gray.dark2};
+        border-color: ${uiColors.gray.dark3};
       `;
   }
 }
 
-function getPanelStyles(
-  mode: Mode,
-  withLanguageSwitcher: boolean,
-  isMultiline: boolean,
-) {
-  if (!withLanguageSwitcher) {
-    return cx(
-      copyStyle,
-      singleLineCopyStyle,
-      { [singleLineCopyStyle]: !isMultiline },
-      getSidebarVariantStyle(mode),
-    );
-  }
-
-  const colors = variantColors[mode];
-
-  return css`
+function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
+  const basePanelStyle = css`
     display: flex;
-    flex-direction: row;
     align-items: center;
-    padding-left: 12px;
-    padding-right: 8px;
-    background-color: ${colors[4]};
-    border-bottom: 1px solid ${colors[1]};
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: ${spacing[1]}px;
+    padding: 6px;
+    border-left: solid 1px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   `;
+
+  const languageSwitcherPanelStyle = css`
+    flex-direction: row;
+    border-left: unset;
+    border-bottom: 1px solid;
+    justify-content: space-between;
+    padding: 0;
+    padding-right: 8px;
+    height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
+  `;
+
+  return cx(
+    basePanelStyle,
+    {
+      [languageSwitcherPanelStyle]: withLanguageSwitcher,
+    },
+    getSidebarVariantStyle(mode),
+  );
 }
 
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
@@ -78,7 +70,10 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   showCopyButton?: boolean;
   language?: LanguageOption;
   isMultiline?: boolean;
-};
+  customActionButtons?: Array<React.ReactNode>;
+  showCustomActionButtons?: boolean;
+  className?: string;
+} & PopoverProps;
 
 function Panel({
   language,
@@ -88,13 +83,28 @@ function Panel({
   onCopy,
   showCopyButton,
   darkMode,
-  isMultiline = false,
+  customActionButtons,
+  showCustomActionButtons,
+  usePortal,
+  portalClassName,
+  portalContainer,
+  scrollContainer,
+  popoverZIndex,
+  className,
 }: PanelProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
+  const popoverProps = {
+    popoverZIndex,
+    usePortal,
+    portalClassName,
+    portalContainer,
+    scrollContainer,
+  } as const;
+
   return (
     <div
-      className={getPanelStyles(mode, !!language, isMultiline)}
+      className={cx(getPanelStyles(mode, !!language), className)}
       data-testid="leafygreen-code-panel"
     >
       {language !== undefined &&
@@ -105,6 +115,7 @@ function Panel({
             language={language}
             languageOptions={languageOptions}
             darkMode={darkMode}
+            {...popoverProps}
           />
         )}
 
@@ -115,6 +126,9 @@ function Panel({
           contents={contents}
           withLanguageSwitcher={!!language}
         />
+      )}
+      {showCustomActionButtons && (
+        <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
       )}
     </div>
   );

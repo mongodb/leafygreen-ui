@@ -1,52 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
-import { Body } from '@leafygreen-ui/typography';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 
-const underline = css`
-  background-repeat: repeat-x;
-  background-position: center bottom;
-  background-size: 3px 2px;
-
-  background-image: radial-gradient(
-    circle closest-side,
-    ${uiColors.gray.dark1} 75%,
-    transparent 25%
-  );
+const triggerElementStyles = css`
+  border-radius: 2px;
+  text-decoration: underline dotted 2px;
+  text-decoration-color: ${palette.gray.dark1};
+  text-underline-offset: 0.125em;
 
   &:hover {
-    background-image: radial-gradient(
-      circle closest-side,
-      currentColor 75%,
-      transparent 25%
-    );
-  }
-`;
+    text-decoration-color: currentColor;
 
-const maxWidth = css`
-  max-width: 360px;
+    * {
+      // Remove the Link underline styles
+      background-size: 0px;
+    }
+  }
+
+  &:focus,
+  &:focus-visible {
+    text-decoration-color: ${palette.blue.light1};
+    outline-color: ${palette.blue.light1};
+    outline-offset: 3px;
+  }
 `;
 
 type InlineDefinitionProps = Partial<TooltipProps> & {
   definition: React.ReactNode;
+  tooltipClassName?: string;
 };
 
 function InlineDefinition({
   definition,
   children,
   className,
+  tooltipClassName,
   ...tooltipProps
 }: InlineDefinitionProps) {
   return (
     <Tooltip
       justify="middle"
       spacing={5}
+      className={tooltipClassName}
       {...tooltipProps}
-      trigger={<span className={cx(underline, className)}>{children}</span>}
+      trigger={
+        <span
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+          tabIndex={0}
+          className={cx(triggerElementStyles, className)}
+        >
+          {children}
+        </span>
+      }
     >
-      <Body className={maxWidth}>{definition}</Body>
+      {definition}
     </Tooltip>
   );
 }

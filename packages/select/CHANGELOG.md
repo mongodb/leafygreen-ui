@@ -1,5 +1,48 @@
 # @leafygreen-ui/select
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+- Updated dependencies [614be76]
+  - @leafygreen-ui/typography@9.1.1
+  - @leafygreen-ui/tokens@1.1.0
+
+## 4.0.0
+
+### Major Changes
+
+- 8457f92: Updates select in line with Visual Brand refresh
+
+### Patch Changes
+
+- Updated dependencies [8457f92]
+  - @leafygreen-ui/tokens@1.0.0
+  - @leafygreen-ui/typography@9.0.0
+  - @leafygreen-ui/interaction-ring@2.0.0
+  - @leafygreen-ui/button@13.0.0
+- Updated dependencies [cb54eef]
+  - @leafygreen-ui/palette@3.3.1
+
+## 3.1.0
+
+### Minor Changes
+
+- 70f3c2c: Added error state to select component
+
+### Patch Changes
+
+- Updated dependencies [70f3c2c]
+  - @leafygreen-ui/hooks@7.1.1
+
+## 3.0.8
+
+### Patch Changes
+
+- 9d0bcd4: - Resolves an issue where a Select component would break keyboard navigation with `Tab` in a form
+  - Prevents page from scrolling when using arrow keys to navigate a Select menu
+
 ## 3.0.7
 
 ### Patch Changes

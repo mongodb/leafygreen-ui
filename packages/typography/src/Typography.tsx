@@ -6,79 +6,82 @@ import {
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { typeScale1, typeScale2 } from './styles';
+import { typeScale1, typeScale2, codeTypeScale2 } from './styles';
 
 const sharedStyles = css`
   margin: unset;
   font-family: ${fontFamilies.default};
-  color: ${uiColors.gray.dark3};
+  color: ${palette.black};
 `;
 
+/**
+ * H1
+ */
 const h1 = css`
-  font-weight: 500;
-  font-size: 60px;
-  line-height: 68px;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 62px;
   letter-spacing: -0.3px;
+  font-family: ${fontFamilies.serif};
+  color: ${palette.green.dark2};
 `;
 
 type H1Props = HTMLElementProps<'h1'>;
 
-const H1: ExtendableBox<H1Props, 'h1'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H1: ExtendableBox<H1Props, 'h1'> = ({ className, ...rest }: H1Props) => {
   return <Box as="h1" className={cx(sharedStyles, h1, className)} {...rest} />;
 };
 
 H1.displayName = 'H1';
 
+/**
+ * H2
+ */
 const h2 = css`
   font-size: 32px;
   line-height: 40px;
-  letter-spacing: 0px;
+  letter-spacing: -0.3px;
+  font-weight: 400;
+  font-family: ${fontFamilies.serif};
+  color: ${palette.green.dark2};
 `;
 
 type H2Props = HTMLElementProps<'h2'>;
 
-const H2: ExtendableBox<H2Props, 'h2'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H2: ExtendableBox<H2Props, 'h2'> = ({ className, ...rest }: H2Props) => {
   return <Box as="h2" className={cx(sharedStyles, h2, className)} {...rest} />;
 };
 
 H2.displayName = 'H2';
 
+/**
+ * H3
+ */
 const h3 = css`
   font-size: 24px;
   line-height: 32px;
-  letter-spacing: 0px;
-  font-weight: medium;
+  letter-spacing: -0.3px;
+  font-weight: 500;
 `;
 
 type H3Props = HTMLElementProps<'h3'>;
 
-const H3: ExtendableBox<H3Props, 'h3'> = ({
-  className,
-  ...rest
-}: {
-  className?: string;
-}) => {
+const H3: ExtendableBox<H3Props, 'h3'> = ({ className, ...rest }: H3Props) => {
   return <Box as="h3" className={cx(sharedStyles, h3, className)} {...rest} />;
 };
 
 H3.displayName = 'H3';
 
+/**
+ * Subtitle
+ */
 const subtitle = css`
   font-size: 18px;
   line-height: 24px;
-  letter-spacing: 0px;
+  letter-spacing: -0.3px;
+  font-weight: 700;
 `;
 
 type SubtitleProps = HTMLElementProps<'h6'>;
@@ -86,9 +89,7 @@ type SubtitleProps = HTMLElementProps<'h6'>;
 const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
   className,
   ...rest
-}: {
-  className?: string;
-}) => {
+}: SubtitleProps) => {
   return (
     <Box as="h6" className={cx(sharedStyles, subtitle, className)} {...rest} />
   );
@@ -96,26 +97,58 @@ const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
 
 Subtitle.displayName = 'Subtitle';
 
-type BodyProps = HTMLElementProps<'div'> & {
+/**
+ * Body
+ */
+
+type BodyFontWeight = 'regular' | 'medium';
+type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> & {
   /**
    * font-weight applied to typography element
    * default: `regular`
    */
-  weight?: 'regular' | 'medium';
+  weight?: BodyFontWeight;
+  as?: T;
 };
 
-function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
+function Body<T extends keyof JSX.IntrinsicElements>({
+  className,
+  weight = 'regular',
+  as = 'p' as T,
+  ...rest
+}: BodyProps<T>) {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
+  const fontWeights: {
+    [key: string]: {
+      [key in BodyFontWeight]: number;
+    };
+  } = {
+    default: {
+      regular: 400,
+      medium: 500,
+    },
+    strong: {
+      regular: 700,
+      medium: 800,
+    },
+  } as const;
 
+  // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
   const fontWeight = css`
-    font-weight: ${weight !== 'regular' ? 600 : 400};
+    font-weight: ${fontWeights['default'][weight]};
+    strong,
+    b {
+      font-weight: ${fontWeights['strong'][weight]};
+    }
   `;
 
   return (
-    <div {...rest} className={cx(sharedStyles, body, fontWeight, className)}>
-      {children}
-    </div>
+    <Box
+      as={as}
+      className={cx(sharedStyles, body, fontWeight, className)}
+      {...rest}
+    />
   );
 }
 
@@ -123,6 +156,9 @@ Body.displayName = 'Body';
 
 const anchorDataProp = createDataProp('anchor-inline-code');
 
+/**
+ * Code
+ */
 const code = css`
   transition: all 0.15s ease-in-out;
   border-radius: 3px;
@@ -140,13 +176,13 @@ const Mode = {
 
 const codeModes = {
   [Mode.Light]: css`
-    background-color: ${uiColors.gray.light3};
-    border: 1px solid ${uiColors.gray.light2};
-    color: ${uiColors.gray.dark3};
+    background-color: ${palette.gray.light3};
+    border: 1px solid ${palette.gray.light2};
+    color: ${palette.gray.dark3};
 
     ${anchorDataProp.selector}:hover > & {
-      box-shadow: 0 0 0 3px ${uiColors.gray.light2};
-      border: 1px solid ${uiColors.gray.light1};
+      box-shadow: 0 0 0 3px ${palette.gray.light2};
+      border: 1px solid ${palette.gray.light1};
     }
   `,
 
@@ -165,8 +201,8 @@ const codeModes = {
 const codeFocusModes = {
   [Mode.Light]: css`
     ${anchorDataProp.selector}:focus > & {
-      box-shadow: 0 0 0 3px ${uiColors.blue.light2};
-      border: 1px solid ${uiColors.focus};
+      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
+      border: 1px solid ${palette.blue.base};
     }
   `,
 
@@ -180,7 +216,7 @@ const codeFocusModes = {
 
 const codeLinkStyleModes = {
   [Mode.Light]: css`
-    color: ${uiColors.blue.base};
+    color: ${palette.blue.base};
   `,
   [Mode.Dark]: css`
     color: #28bfff;
@@ -205,6 +241,9 @@ const normal = css`
   white-space: normal;
 `;
 
+/**
+ * Inline Code
+ */
 type InlineCodeProps = OneOf<
   HTMLElementProps<'code'>,
   HTMLElementProps<'a'>
@@ -220,7 +259,7 @@ function InlineCode({
 }: InlineCodeProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const size = useBaseFontSize();
-  const fontSize = size === 16 ? typeScale2 : typeScale1;
+  const typeScale = size === 16 ? codeTypeScale2 : typeScale1;
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const whiteSpace =
     ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <= 30
@@ -233,10 +272,12 @@ function InlineCode({
       className={cx(
         code,
         codeModes[mode],
-        fontSize,
+        typeScale,
         whiteSpace,
-        { [codeLinkStyleModes[mode]]: isAnchor },
-        { [codeFocusModes[mode]]: showFocus },
+        {
+          [codeLinkStyleModes[mode]]: isAnchor,
+          [codeFocusModes[mode]]: showFocus,
+        },
         className,
       )}
     >
@@ -261,10 +302,13 @@ function InlineCode({
 
 InlineCode.displayName = 'InlineCode';
 
+/**
+ * Inline Key Code
+ */
 const inlineKeyCode = css`
   font-family: ${fontFamilies.code};
-  color: ${uiColors.gray.dark3};
-  border: 1px solid ${uiColors.gray.dark3};
+  color: ${palette.gray.dark3};
+  border: 1px solid ${palette.gray.dark3};
   border-radius: 3px;
   padding-left: 4px;
   padding-right: 4px;
@@ -272,7 +316,7 @@ const inlineKeyCode = css`
 
 function InlineKeyCode({ children, className, ...rest }: InlineCodeProps) {
   const size = useBaseFontSize();
-  const body = size === 16 ? typeScale2 : typeScale1;
+  const body = size === 16 ? codeTypeScale2 : typeScale1;
 
   return (
     <code className={cx(inlineKeyCode, body, className)} {...rest}>
@@ -283,11 +327,14 @@ function InlineKeyCode({ children, className, ...rest }: InlineCodeProps) {
 
 InlineKeyCode.displayName = 'InlineKeyCode';
 
+/**
+ * Disclaimer
+ */
 const disclaimer = css`
   display: block;
   font-size: 12px;
   line-height: 20px;
-  letter-spacing: 0.2px;
+  letter-spacing: 0px;
 `;
 
 type DisclaimerProps = HTMLElementProps<'small'>;
@@ -302,12 +349,15 @@ function Disclaimer({ children, className, ...rest }: DisclaimerProps) {
 
 Disclaimer.displayName = 'Disclaimer';
 
+/**
+ * Overline
+ */
 const overline = css`
   font-size: 12px;
-  font-weight: 600;
+  font-weight: bold;
   text-transform: uppercase;
   line-height: 16px;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.3px;
 `;
 
 const Overline: ExtendableBox<{

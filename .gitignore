@@ -33,3 +33,6 @@ website/hosting/
 
 # Environment variables
 .env
+
+# test coverage 
+coverage/
