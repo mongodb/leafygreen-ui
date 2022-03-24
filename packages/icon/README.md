@@ -61,12 +61,14 @@ This package exposes a method used to generate a custom version of the Icon comp
 
 ```js
 // Import the createIconComponent method from the Icon package
-import { createIconComponent } from '@leafygreen-ui/Icon';
+import { createIconComponent, Size } from '@leafygreen-ui/Icon';
 
 // Create your 'glyphs' object. For each key / value pair, the key will be the name of the icon,
 // and the value can be any valid React component.
 const myGlyphs = {
-  MyCustomGlyph: () => <svg />,
+  MyCustomGlyph: ({ size }: LGGlyph.Component) => (
+    <svg height={size} width={size} />
+  ),
 };
 
 // The createIconComponent function returns your custom Icon component.
@@ -75,7 +77,7 @@ const MyIconComponent = createIconComponent(myGlyphs);
 // Your icon is now ready to use!
 const SomeComponent = () => (
   <div>
-    <MyIconComponent glyph="MyCustomGlyph" />
+    <MyIconComponent glyph="MyCustomGlyph" size={Size.Default} />
   </div>
 );
 ```
