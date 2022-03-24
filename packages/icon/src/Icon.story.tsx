@@ -4,6 +4,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { storiesOf } from '@storybook/react';
 import { color, select } from '@storybook/addon-knobs';
 import { uiColors } from '@leafygreen-ui/palette';
+import { LGGlyph } from './types';
 
 const containerStyle = css`
   width: 150px;
@@ -43,8 +44,16 @@ storiesOf('Icons', module)
     const fill = color('Fill', '#000000');
     const size = select('size', Object.values(Size), Size.Default);
 
-    const featuresSvg = () => (
-      <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+    const featuresSvg: React.ComponentType<LGGlyph.ComponentProps> = ({
+      size,
+    }) => (
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 72 72"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M52.5 18.2354C53.8807 18.2354 55 17.1161 55 15.7354C55 14.3546 53.8807 13.2354 52.5 13.2354C51.1193 13.2354 50 14.3546 50 15.7354C50 17.1161 51.1193 18.2354 52.5 18.2354Z"
           fill="#00ED64"
