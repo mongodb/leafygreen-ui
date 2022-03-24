@@ -2,8 +2,7 @@
 '@leafygreen-ui/icon': minor
 ---
 
-Exports `createGlyphComponent` from the package. 
-Use this to ensure any custom glyphs behave the same as build in Leafygreen icons.
+Exports `createGlyphComponent` from the package. This provides a way to ensure parity between built-in icons and custom icons. By processing an icon with `createGlyphComponent`, consumers can ensure that props like `size`, `fill` and `role` behave as expected in both custom and default icons.
 
 e.g.
 ```js

@@ -86,8 +86,6 @@ describe('packages/Icon/glyphs/', () => {
   });
 });
 
-const text = 'Hello world';
-
 const MyGlyph: SVGR.Component = props => (
   <svg data-testid="my-glyph" {...props}></svg>
 );
