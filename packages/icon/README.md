@@ -68,7 +68,9 @@ import { createGlyphComponent, createIconComponent } from '@leafygreen-ui/icon';
 // Create your 'glyphs' object. For each key / value pair, the key will be the name of the icon,
 // and the value can be any valid React component.
 const myGlyphs = {
-  MyCustomGlyph: createGlyphComponent('MyCustomGlyph', () => <svg />),
+  MyCustomGlyph: createGlyphComponent('MyCustomGlyph', props => (
+    <svg {...props} />
+  )),
 };
 
 // The createIconComponent function returns your custom Icon component.
@@ -89,7 +91,9 @@ import { createGlyphComponent, createIconComponent } from '@leafygreen-ui/icon';
 
 const myGlyphs = {
   ...glyphs,
-  MyCustomGlyph: createGlyphComponent('MyCustomGlyph', () => <svg />),
+  MyCustomGlyph: createGlyphComponent('MyCustomGlyph', props => (
+    <svg {...props} />
+  )),
 };
 
 const MyIconComponent = createIconComponent(myGlyphs);
