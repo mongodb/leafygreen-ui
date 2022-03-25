@@ -113,7 +113,12 @@ A custom `Icon` component, that includes any custom `glyph`s
 
 # createGlyphComponent
 
-Ensures a custom glyph accepts the same props, and behaves the same, as a built-in Leafygreen icon.
+Ensures a custom glyph accepts the same props and treat them the same as a built-in Leafygreen icon.
+To ensure a custom glyph behaves similarly to built-in icons, be sure to:
+
+- Spread `props` onto the `svg` element
+- Ensure all fills in the `svg` are set to `currentColor`
+- Strokes are converted to outlines (this should be done in Figma)
 
 ## Usage
 
