@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 686ecae: Disabling onClicks for Button components when as="a"
+- 686ecae: Disables `onClick` events when `as="a"` and `disabled={true}`
 
 ## 13.0.0
 
