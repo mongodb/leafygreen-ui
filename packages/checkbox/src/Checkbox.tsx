@@ -57,6 +57,29 @@ const disabledContainerStyle = css`
   cursor: not-allowed;
 `;
 
+const labelStyle = css`
+  grid-area: label;
+  display: grid;
+  grid-template-columns: ${checkBoxSize}px auto;
+  grid-template-areas: 'check text';
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+`;
+
+const labelHoverSelector = `
+  &:hover 
+    > ${checkboxInput.selector}:not([disabled]):not(:focus) 
+      + ${checkboxWrapper.selector}
+`;
+
+const labelHoverStyle = css`
+  ${labelHoverSelector} {
+    box-shadow: 0 0 0 3px ${palette.gray.light2};
+  }
+`;
+
 const inputStyle = css`
   margin: 0;
   position: absolute;
@@ -69,7 +92,7 @@ const inputStyle = css`
 `;
 
 const inputFocusStyles = css`
-  &:focus + label > ${checkboxWrapper.selector} {
+  &:focus + ${checkboxWrapper.selector} {
     box-shadow: 0 0 0 2px ${palette.gray.light2},
       0 0 0 4px ${palette.blue.light1};
   }
@@ -77,7 +100,7 @@ const inputFocusStyles = css`
 
 // TODO: Refresh - remove when darkmode is updated
 const inputFocusStylesDarkMode = css`
-  &:focus + label > ${checkboxWrapper.selector}:after {
+  &:focus + ${checkboxWrapper.selector}:after {
     content: '';
     bottom: 0;
     left: 3px;
@@ -88,17 +111,6 @@ const inputFocusStylesDarkMode = css`
     border-radius: 2px;
     box-shadow: unset;
   }
-`;
-
-const labelStyle = css`
-  grid-area: label;
-  display: grid;
-  grid-template-columns: ${checkBoxSize}px auto;
-  grid-template-areas: 'check text';
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-  cursor: pointer;
 `;
 
 const labelTextStyle = css`
@@ -175,29 +187,6 @@ function Checkbox({
     }
   };
 
-  const InputElement = () => (
-    <input
-      {...rest}
-      {...checkboxInput.prop}
-      id={checkboxId}
-      className={cx(inputStyle, {
-        [inputFocusStyles]: usingKeyboard && !darkMode,
-        // TODO: Refresh - remove darkMode logic
-        [inputFocusStylesDarkMode]: darkMode,
-      })}
-      type="checkbox"
-      name={name}
-      disabled={disabled}
-      checked={isChecked}
-      aria-label="checkbox"
-      aria-disabled={disabled}
-      aria-checked={indeterminateProp ? 'mixed' : isChecked}
-      aria-labelledby={labelId}
-      onClick={onClick}
-      onChange={onChange}
-    />
-  );
-
   return (
     <div
       className={cx(
@@ -218,9 +207,32 @@ function Checkbox({
       )}
       style={style}
     >
-      <InputElement />
+      <Label
+        className={cx(labelStyle, labelHoverStyle)}
+        htmlFor={checkboxId}
+        id={labelId}
+      >
+        <input
+          {...rest}
+          {...checkboxInput.prop}
+          id={checkboxId}
+          className={cx(inputStyle, {
+            [inputFocusStyles]: usingKeyboard && !darkMode,
+            // TODO: Refresh - remove darkMode logic
+            [inputFocusStylesDarkMode]: darkMode,
+          })}
+          type="checkbox"
+          name={name}
+          disabled={disabled}
+          checked={isChecked}
+          aria-label="checkbox"
+          aria-disabled={disabled}
+          aria-checked={indeterminateProp ? 'mixed' : isChecked}
+          aria-labelledby={labelId}
+          onClick={onClick}
+          onChange={onChange}
+        />
 
-      <Label className={labelStyle} htmlFor={checkboxId} id={labelId}>
         {darkMode ? (
           <LegacyCheck
             isChecked={isChecked}
