@@ -147,7 +147,6 @@ function Checkbox({
   const { usingKeyboard } = useUsingKeyboardContext();
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
-  const inputRef = React.useRef(null);
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
   const labelId = `${checkboxId}-label`;
 
@@ -176,6 +175,29 @@ function Checkbox({
     }
   };
 
+  const InputElement = () => (
+    <input
+      {...rest}
+      {...checkboxInput.prop}
+      id={checkboxId}
+      className={cx(inputStyle, {
+        [inputFocusStyles]: usingKeyboard && !darkMode,
+        // TODO: Refresh - remove darkMode logic
+        [inputFocusStylesDarkMode]: darkMode,
+      })}
+      type="checkbox"
+      name={name}
+      disabled={disabled}
+      checked={isChecked}
+      aria-label="checkbox"
+      aria-disabled={disabled}
+      aria-checked={indeterminateProp ? 'mixed' : isChecked}
+      aria-labelledby={labelId}
+      onClick={onClick}
+      onChange={onChange}
+    />
+  );
+
   return (
     <div
       className={cx(
@@ -196,27 +218,7 @@ function Checkbox({
       )}
       style={style}
     >
-      <input
-        {...rest}
-        {...checkboxInput.prop}
-        id={checkboxId}
-        ref={inputRef}
-        className={cx(inputStyle, {
-          [inputFocusStyles]: usingKeyboard && !darkMode,
-          // TODO: Refresh - remove darkMode logic
-          [inputFocusStylesDarkMode]: darkMode,
-        })}
-        type="checkbox"
-        name={name}
-        disabled={disabled}
-        checked={isChecked}
-        aria-label="checkbox"
-        aria-disabled={disabled}
-        aria-checked={indeterminateProp ? 'mixed' : isChecked}
-        aria-labelledby={labelId}
-        onClick={onClick}
-        onChange={onChange}
-      />
+      <InputElement />
 
       <Label className={labelStyle} htmlFor={checkboxId} id={labelId}>
         {darkMode ? (
