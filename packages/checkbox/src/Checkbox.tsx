@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { Description, Label } from '@leafygreen-ui/typography';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -12,8 +12,8 @@ import { Check } from './Check';
 import { checkAnimationDuration, checkBoxSize } from './constants';
 import { CheckboxProps } from './types';
 
-const checkboxWrapper = createDataProp('checkbox-wrapper');
-const checkboxInput = createDataProp('checkbox-input');
+const checkClassName = createUniqueClassName();
+const inputClassName = createUniqueClassName();
 
 const Mode = {
   Light: 'light',
@@ -31,12 +31,6 @@ const containerStyle = css`
   position: relative;
   align-items: center;
   justify-content: flex-start;
-
-  &:hover
-    > ${checkboxInput.selector}:not([disabled])
-    + ${checkboxWrapper.selector} {
-    box-shadow: 0 0 0 3px ${palette.gray.light2};
-  }
 `;
 
 // Toggles on the animation timing
@@ -70,8 +64,8 @@ const labelStyle = css`
 
 const labelHoverSelector = `
   &:hover 
-    > ${checkboxInput.selector}:not([disabled]):not(:focus) 
-      + ${checkboxWrapper.selector}
+    > .${inputClassName}:not([disabled]):not(:focus) 
+      + .${checkClassName}
 `;
 
 const labelHoverStyle = css`
@@ -92,7 +86,7 @@ const inputStyle = css`
 `;
 
 const inputFocusStyles = css`
-  &:focus + ${checkboxWrapper.selector} {
+  &:focus + .${checkClassName} {
     box-shadow: 0 0 0 2px ${palette.gray.light2},
       0 0 0 4px ${palette.blue.light1};
   }
@@ -100,7 +94,7 @@ const inputFocusStyles = css`
 
 // TODO: Refresh - remove when darkmode is updated
 const inputFocusStylesDarkMode = css`
-  &:focus + ${checkboxWrapper.selector}:after {
+  &:focus + .${checkClassName}:after {
     content: '';
     bottom: 0;
     left: 3px;
@@ -194,29 +188,27 @@ function Checkbox({
         {
           [disabledContainerStyle]: disabled,
           [enableAnimationStyles]: animate,
-          // TODO: Refresh - remove darkMode logic
-          [css`
-            &:hover
-              > ${checkboxInput.selector}:not([disabled])
-              + ${checkboxWrapper.selector} {
-              box-shadow: unset;
-            }
-          `]: darkMode,
         },
         className,
       )}
       style={style}
     >
       <Label
-        className={cx(labelStyle, labelHoverStyle)}
+        className={cx(labelStyle, labelHoverStyle, {
+          // TODO: Refresh - remove darkMode logic
+          [css`
+            ${labelHoverSelector} {
+              box-shadow: unset;
+            }
+          `]: darkMode,
+        })}
         htmlFor={checkboxId}
         id={labelId}
       >
         <input
           {...rest}
-          {...checkboxInput.prop}
           id={checkboxId}
-          className={cx(inputStyle, {
+          className={cx(inputClassName, inputStyle, {
             [inputFocusStyles]: usingKeyboard && !darkMode,
             // TODO: Refresh - remove darkMode logic
             [inputFocusStylesDarkMode]: darkMode,
@@ -239,7 +231,7 @@ function Checkbox({
             indeterminate={indeterminateProp}
             disabled={disabled}
             animate={animate}
-            selector={checkboxWrapper}
+            selector={checkClassName}
           />
         ) : (
           <Check
@@ -247,7 +239,7 @@ function Checkbox({
             indeterminate={indeterminateProp}
             disabled={disabled}
             animate={animate}
-            selector={checkboxWrapper}
+            selector={checkClassName}
           />
         )}
 

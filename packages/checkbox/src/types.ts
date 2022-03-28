@@ -1,4 +1,9 @@
-import { createDataProp, Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  createDataProp,
+  createUniqueClassName,
+  Either,
+  HTMLElementProps,
+} from '@leafygreen-ui/lib';
 
 interface InternalCheckboxProps extends HTMLElementProps<'input', never> {
   darkMode?: boolean;
@@ -24,6 +29,6 @@ export interface CheckProps {
   isChecked: boolean;
   disabled: boolean;
   animate: boolean;
-  selector: ReturnType<typeof createDataProp>;
+  selector: ReturnType<typeof createUniqueClassName>;
   indeterminate?: boolean;
 }

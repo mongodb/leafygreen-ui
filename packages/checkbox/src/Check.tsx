@@ -149,8 +149,7 @@ export function Check({
   return (
     <>
       <div
-        {...selector.prop}
-        className={cx(checkWrapperBaseStyle, {
+        className={cx(selector, checkWrapperBaseStyle, {
           [checkWrapperCheckedStyle]: showCheckIcon,
           [checkWrapperDisabledStyle]: disabled,
           [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,

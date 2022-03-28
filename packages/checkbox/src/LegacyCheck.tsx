@@ -77,8 +77,7 @@ export function LegacyCheck({
 
   return (
     <div
-      {...selector.prop}
-      className={cx(wrapperStyle, {
+      className={cx(selector, wrapperStyle, {
         [wrapperStyleChecked]: isChecked && indeterminate && !disabled,
         [wrapperStyleAnimated]: animate && !indeterminate && !disabled,
       })}
