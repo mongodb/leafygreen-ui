@@ -7,6 +7,7 @@ import { Align, Justify } from '@leafygreen-ui/popover';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 
 function Uncontrolled() {
   const size = select('Size', ['default', 'large'], 'default');
@@ -70,7 +71,11 @@ function Controlled() {
           <MenuItem href="http://mongodb.design" size={size}>
             I am a link!
           </MenuItem>
-          <MenuSeparator />
+          <MenuSeparator
+            className={css`
+              margin: 0;
+            `}
+          />
           <MenuItem size={size}>Left out of the MenuGroup</MenuItem>
         </Menu>
       </Button>
