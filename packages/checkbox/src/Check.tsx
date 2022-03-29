@@ -156,7 +156,9 @@ export function Check({
       >
         <Transition
           in={showCheckIcon}
-          timeout={shouldAnimate ? checkAnimationDuration : 0}
+          timeout={checkAnimationDuration}
+          enter={shouldAnimate}
+          exit={shouldAnimate}
         >
           {state => (
             <CheckIcon
