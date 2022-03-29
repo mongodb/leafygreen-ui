@@ -16,7 +16,6 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { CheckProps } from './types';
 
 const checkWrapperBaseStyle = css`
-  --lg-checkbox-border-color: ${palette.gray.dark2};
   grid-area: check;
   position: relative;
   display: flex;
@@ -26,7 +25,7 @@ const checkWrapperBaseStyle = css`
   align-items: center;
   justify-content: center;
   border-radius: 3px;
-  border: 2px solid var(--lg-checkbox-border-color);
+  border: 2px solid ${palette.gray.dark2};
   overflow: hidden;
   background-color: transparent;
   transition: box-shadow 100ms ease-in-out, background-color 0ms linear,
@@ -53,8 +52,8 @@ const checkWrapperBaseStyle = css`
 `;
 
 const checkWrapperCheckedStyle = css`
-  --lg-checkbox-border-color: ${palette.blue.base};
   background-color: ${palette.blue.base};
+  border-color: ${palette.blue.base};
   // Delay background transition in
   transition-delay: 0ms, var(--lg-checkbox-base-duration), 0ms;
 
@@ -66,7 +65,7 @@ const checkWrapperCheckedStyle = css`
 `;
 
 const checkWrapperDisabledStyle = css`
-  --lg-checkbox-border-color: ${palette.gray.light2};
+  border-color: ${palette.gray.light2};
   background-color: ${palette.gray.light3};
   box-shadow: unset;
 
@@ -76,10 +75,10 @@ const checkWrapperDisabledStyle = css`
 `;
 
 const checkWrapperCheckedDisabledStyle = css`
-  background-color: var(--lg-checkbox-border-color);
+  background-color: ${palette.gray.light2};
 
   &:before {
-    background-color: var(--lg-checkbox-border-color);
+    background-color: ${palette.gray.light2};
   }
 `;
 
