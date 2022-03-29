@@ -87,8 +87,7 @@ const inputStyle = css`
 
 const inputFocusStyles = css`
   &:focus + .${checkClassName} {
-    box-shadow: 0 0 0 2px ${palette.gray.light2},
-      0 0 0 4px ${palette.blue.light1};
+    box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
   }
 `;
 
