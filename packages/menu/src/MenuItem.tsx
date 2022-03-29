@@ -133,8 +133,8 @@ const MenuItem: ExtendableBox<
         className,
       ),
       tabIndex: disabled ? -1 : undefined,
-      // only add a disabled prop if not an anchor
       'aria-disabled': disabled,
+      // only add a disabled prop if not an anchor
       ...(typeof rest.href !== 'string' && { disabled }),
     };
 
