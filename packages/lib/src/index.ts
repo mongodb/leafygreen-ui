@@ -1,8 +1,7 @@
 import { once } from 'lodash';
 import * as typeIs from './typeIs';
-
-export { typeIs };
-export { getNodeTextContent } from './getNodeTextContent';
+import createUniqueClassName from './createUniqueClassName';
+export { typeIs, createUniqueClassName };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<

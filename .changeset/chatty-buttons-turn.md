@@ -2,4 +2,4 @@
 '@leafygreen-ui/menu': minor
 ---
 
-Adds an optional `margin` prop to MenuSeparator
+Updates `MenuSeparator` to optionally accept a `className` prop
