@@ -1,5 +1,4 @@
 import {
-  createDataProp,
   createUniqueClassName,
   Either,
   HTMLElementProps,
