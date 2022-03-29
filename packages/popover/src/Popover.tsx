@@ -130,9 +130,13 @@ function Popover({
     getElementViewportPosition(referenceElement, scrollContainer),
   );
 
+  // console.log(referenceElViewportPos);
+
   const contentElViewportPos = useObjectDependency(
     getElementViewportPosition(contentNode, scrollContainer),
   );
+
+  // console.log(contentElViewportPos);
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
@@ -195,6 +199,8 @@ function Popover({
     return null;
   }
 
+  // if (contentElViewportPos.width === 0) {}
+
   const {
     align: windowSafeAlign,
     justify: windowSafeJustify,
@@ -208,7 +214,12 @@ function Popover({
     referenceElDocumentPos,
     contentElViewportPos,
     contentElDocumentPos,
+    scrollContainer
   });
+
+  console.group();
+  console.log('🩳', positionCSS);
+  console.groupEnd();
 
   const activeStyle = css`
     opacity: 1;

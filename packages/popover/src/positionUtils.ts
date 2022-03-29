@@ -27,6 +27,7 @@ interface CalculatePosition
   useRelativePositioning: boolean;
   align: Align;
   justify: Justify;
+  scrollContainer: HTMLElement | null | undefined;
 }
 
 // Returns the style object that is used to position and transition the popover component
@@ -39,6 +40,7 @@ export function calculatePosition({
   referenceElDocumentPos = defaultElementPosition,
   contentElViewportPos = defaultElementPosition,
   contentElDocumentPos = defaultElementPosition,
+  scrollContainer,
   windowHeight = window.innerHeight,
   windowWidth = window.innerWidth,
 }: CalculatePosition): {
@@ -54,12 +56,31 @@ export function calculatePosition({
     spacing,
   };
 
+  console.group();
+  console.log({window});
+  console.log({referenceElViewportPos,
+    contentElViewportPos});
+  console.groupEnd();
+
+  // if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
+  //   return {
+  //     align,
+  //     justify,
+  //     positionCSS: {
+  //       left: 0,
+  //       top: 0,
+  //     }
+  //   }
+  // }
+
   const windowSafeAlign = getWindowSafeAlign(align, windowSafeCommonArgs);
   const windowSafeJustify = getWindowSafeJustify(
     justify,
     windowSafeAlign,
     windowSafeCommonArgs,
   );
+
+  console.log({windowSafeJustify});
 
   const transformOrigin = getTransformOrigin({
     align: windowSafeAlign,
@@ -69,6 +90,17 @@ export function calculatePosition({
   const transform = getTransform(windowSafeAlign, spacing);
 
   if (useRelativePositioning) {
+    if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
+      return {
+        align,
+        justify,
+        positionCSS: {
+          left: '0px', top: '10px', transformOrigin,
+          transform,
+        },
+      }
+    }
+
     return {
       align: windowSafeAlign,
       justify: windowSafeJustify,
@@ -84,6 +116,17 @@ export function calculatePosition({
         transform,
       },
     };
+  }
+
+  if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
+    return {
+      align,
+      justify,
+      positionCSS: {
+        left: '0px', top: '10px', transformOrigin,
+        transform,
+      },
+    }
   }
 
   return {
@@ -122,8 +165,12 @@ export function getElementDocumentPosition(
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right } = element.getBoundingClientRect();
-  const { offsetHeight: height, offsetWidth: width } = element;
+  const { top, bottom, left, right, width: boundingWidth } = element.getBoundingClientRect();
+  const { offsetHeight: height, offsetWidth } = element;
+
+  console.log({boundingWidth}, {offsetWidth});
+
+  const width = Math.abs(boundingWidth - offsetWidth) < 1 ? boundingWidth : offsetWidth;
 
   if (scrollContainer) {
     const { scrollTop, scrollLeft } = scrollContainer;
@@ -134,25 +181,52 @@ export function getElementDocumentPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
+    // return {
+    //   top: Math.floor(top + scrollTop - offsetTop),
+    //   bottom: Math.floor(bottom + scrollTop - offsetBottom),
+    //   left: Math.floor(left + scrollLeft - offsetLeft),
+    //   right: Math.floor(right + scrollLeft - offsetRight),
+    //   height: Math.floor(height),
+    //   width: Math.floor(width),
+    // };
     return {
       top: top + scrollTop - offsetTop,
       bottom: bottom + scrollTop - offsetBottom,
-      left: left + scrollLeft - offsetLeft,
+      left: Math.floor(left) + scrollLeft - offsetLeft,
       right: right + scrollLeft - offsetRight,
-      height,
-      width,
+      height: height,
+      width: Math.floor(width),
     };
   }
 
   const { scrollX, scrollY } = window;
 
+  // console.group()
+  // console.log('getElementDocumentPosition');
+  // console.log({top});
+  // console.log({bottom});
+  // console.log({left});
+  // console.log({right});
+  // console.log({width});
+  // console.log({height});
+  // console.groupEnd()
+
+
+  // return {
+  //   top: Math.floor(top + scrollY),
+  //   bottom: Math.floor(bottom + scrollY),
+  //   left: Math.floor(left + scrollX),
+  //   right: Math.floor(right + scrollX),
+  //   height: Math.floor(height),
+  //   width: Math.floor(width),
+  // };
   return {
     top: top + scrollY,
     bottom: bottom + scrollY,
-    left: left + scrollX,
+    left: Math.floor(left) + scrollX,
     right: right + scrollX,
-    height,
-    width,
+    height: height,
+    width: Math.floor(width),
   };
 }
 
@@ -165,8 +239,12 @@ export function getElementViewportPosition(
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right } = element.getBoundingClientRect();
-  const { offsetHeight: height, offsetWidth: width } = element;
+  const { top, bottom, left, right, width: boundingWidth } = element.getBoundingClientRect();
+  const { offsetHeight: height, offsetWidth } = element;
+
+  console.log({boundingWidth}, {offsetWidth});
+
+  const width = Math.abs(boundingWidth - offsetWidth) < 1 ? boundingWidth : offsetWidth;
 
   if (scrollContainer) {
     const {
@@ -176,23 +254,49 @@ export function getElementViewportPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
+    // return {
+    //   top: Math.floor(top - offsetTop),
+    //   bottom: Math.floor(bottom - offsetBottom),
+    //   left: Math.floor(left - offsetLeft),
+    //   right: Math.floor(right - offsetRight),
+    //   height: Math.floor(height),
+    //   width: Math.floor(width),
+    // };
     return {
       top: top - offsetTop,
       bottom: bottom - offsetBottom,
-      left: left - offsetLeft,
+      left: Math.floor(left) - offsetLeft,
       right: right - offsetRight,
-      height,
-      width,
+      height: height,
+      width: Math.floor(width),
     };
   }
 
+  // console.group()
+  // console.log('getElementViewportPosition');
+  // console.log({top});
+  // console.log({bottom});
+  // console.log({left});
+  // console.log({right});
+  // console.log({width});
+  // console.log({height});
+  // console.groupEnd()
+
+  // return {
+  //   top: Math.floor(top),
+  //   bottom: Math.floor(bottom),
+  //   left: Math.floor(left),
+  //   right: Math.floor(right),
+  //   height: Math.floor(height),
+  //   width: Math.floor(width),
+  // };
   return {
-    top,
-    bottom,
-    left,
-    right,
-    height,
-    width,
+    top: top,
+    bottom: bottom,
+    left: Math.floor(left),
+    right: right,
+    height: height,
+    width: Math.floor(width),
   };
 }
 
@@ -395,6 +499,12 @@ function calcAbsolutePosition({
     spacing,
   })}px`;
 
+  console.group();
+  console.log('calcAbsolutePosition');
+  console.log({contentElDocumentPos});
+  console.log({referenceElDocumentPos});
+  console.groupEnd();
+
   if (justify !== Justify.Fit) {
     return { left, top };
   }
@@ -480,6 +590,8 @@ function calcLeft({
   referenceElPos,
   spacing,
 }: CalcPosition): number {
+  console.log('calcLeft contentElPos.width', contentElPos.width);
+  console.log('calcLeft referenceElPos.width', referenceElPos.width);
   switch (align) {
     case Align.Top:
     case Align.Bottom:
@@ -527,6 +639,13 @@ function safelyWithinHorizontalWindow({
   contentWidth: number;
 }): boolean {
   const tooWide = left + contentWidth > windowWidth;
+  console.group();
+  console.log({left});
+  console.log({contentWidth});
+  console.log({windowWidth});
+
+  console.log({tooWide});
+  console.groupEnd();
 
   return left >= 0 && !tooWide;
 }
@@ -646,6 +765,11 @@ function getWindowSafeJustify(
     contentElViewportPos,
     referenceElViewportPos,
   } = windowSafeCommon;
+
+  // if (contentElViewportPos.width === 0) {
+  //   console.log()
+  //   return justify;
+  // }
 
   const justifyOptions = [justify, ...justifyFallbacks[justify]];
 
