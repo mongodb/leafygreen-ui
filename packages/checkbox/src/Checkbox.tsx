@@ -125,7 +125,7 @@ const labelTextColorStyle: Record<Mode, string> = {
 };
 
 const disabledTextStyle = css`
-  color: #babdbe; // theme colors.gray[5]
+  color: ${palette.gray.dark1};
 `;
 
 function Checkbox({
@@ -252,6 +252,9 @@ function Checkbox({
                 font-size: 14px;
                 padding-left: 1px;
               `]: darkMode,
+              [css`
+                color: #babdbe;
+              `]: darkMode && disabled,
             })}
           >
             {label}
