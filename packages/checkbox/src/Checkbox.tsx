@@ -63,8 +63,8 @@ const labelStyle = css`
 `;
 
 const labelHoverSelector = `
-  &:hover 
-    > .${inputClassName}:not([disabled]):not(:focus) 
+  &:hover:not(:focus-within)
+    > .${inputClassName}:not([disabled])
       + .${checkClassName}
 `;
 
