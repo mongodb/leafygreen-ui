@@ -62,6 +62,7 @@ export function calculatePosition({
   };
 
   console.group();
+  // console.log('scrollContainer.scrollLeft',scrollContainer?.scrollLeft);
   console.log({windowContainerWidth});
   console.log({referenceElViewportPos,
     contentElViewportPos});
@@ -195,6 +196,17 @@ export function getElementDocumentPosition(
     //   height: Math.floor(height),
     //   width: Math.floor(width),
     // };
+
+    console.group();
+    console.log('getElementDocumentPosition');
+    console.log({right});
+    console.log({scrollLeft});
+    console.log({offsetRight});
+    console.log(left, scrollLeft, offsetLeft, Math.floor(left) + scrollLeft - offsetLeft);
+    console.log(right, scrollLeft, offsetRight, right + scrollLeft - offsetRight)
+    console.groupEnd();
+
+    console
     return {
       top: top + scrollTop - offsetTop,
       bottom: bottom + scrollTop - offsetBottom,
@@ -528,6 +540,12 @@ function calcAbsolutePosition({
       bottom: `${windowHeight - referenceElDocumentPos.bottom}px`,
     };
   }
+
+  console.group();
+  console.log('windowWidth', windowWidth);
+  console.log('referenceElDocumentPos.right', referenceElDocumentPos.right);
+  console.log(`${windowWidth - referenceElDocumentPos.right}px`);
+  console.groupEnd();
 
   return {
     left,
