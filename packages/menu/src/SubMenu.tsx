@@ -10,8 +10,9 @@ import { palette } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { paddingLeft } from './styles';
-import { ExitHandler } from 'react-transition-group/Transition';
-import MenuItem from './MenuItem';
+import { InternalMenuItemContent } from './InternalMenuItemContent';
+import { SubMenuProps } from './types';
+import { InternalMenuItemBox } from './InternalMenuItemBox';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
@@ -121,59 +122,6 @@ const subItemStyle = css`
 
 const subMenuItemHeight = 36;
 
-interface SubMenuProps {
-  /**
-   * Determines if `<SubMenu />` item appears open
-   */
-  open?: boolean;
-
-  /**
-   * Function to set the value of `open` in `<SubMenu />`
-   */
-  setOpen?: (value: boolean) => void;
-
-  /**
-   * className applied to `SubMenu` root element
-   */
-  className?: string;
-
-  /**
-   * Content to appear below main text of SubMenu
-   */
-  description?: string | React.ReactElement;
-
-  /**
-   * Determines if `<SubMenu />` item appears disabled
-   */
-  disabled?: boolean;
-
-  /**
-   * Determines if `<SubMenu />` item appears active
-   */
-  active?: boolean;
-
-  /**
-   * Slot to pass in an Icon rendered to the left of `SubMenu` text.
-   */
-  glyph?: React.ReactElement;
-
-  /**
-   * Main text rendered in `SubMenu`.
-   */
-  title?: string;
-
-  /**
-   * Content rendered inside of `SubMenu`.
-   */
-  children?: React.ReactNode;
-
-  onClick?: React.MouseEventHandler;
-
-  onExited?: ExitHandler<HTMLElement>;
-
-  href?: string;
-}
-
 const SubMenu: ExtendableBox<
   SubMenuProps & { ref?: React.Ref<any> },
   'button'
@@ -195,7 +143,7 @@ const SubMenu: ExtendableBox<
     }: SubMenuProps,
     ref: React.Ref<any>,
   ) => {
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const { usingKeyboard } = useUsingKeyboardContext();
     const nodeRef = React.useRef(null);
 
     const [
@@ -223,16 +171,12 @@ const SubMenu: ExtendableBox<
     const chevronIconStyles = cx({
       [openIconStyle]: open,
       [closedIconStyle]: !open,
-      [focusedIconStyle]: showFocus,
+      [focusedIconStyle]: usingKeyboard,
     });
 
     return (
-      <>
-        <MenuItem
-          {...rest}
-          {...subMenuContainer.prop}
-          aria-haspopup={true}
-          onClick={onRootClick}
+      <li role="none">
+        <InternalMenuItemBox
           ref={ref}
           className={cx(
             subMenuStyle,
@@ -241,13 +185,23 @@ const SubMenu: ExtendableBox<
             },
             className,
           )}
-          disabled={disabled}
           active={active}
-          size={'default'}
-          description={description}
-          glyph={glyph}
+          disabled={disabled}
+          aria-haspopup={true}
+          onClick={onRootClick}
+          {...subMenuContainer.prop}
+          {...rest}
         >
-          {title}
+          <InternalMenuItemContent
+            {...rest}
+            disabled={disabled}
+            active={active}
+            description={description}
+            glyph={glyph}
+            container={subMenuContainer}
+          >
+            {title}
+          </InternalMenuItemContent>
           <IconButton
             {...iconButton.prop}
             data-testid="lg-sub-menu-icon-button"
@@ -256,7 +210,7 @@ const SubMenu: ExtendableBox<
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
             className={cx(iconButtonStyle, {
               [openIconButtonStyle]: open,
-              [iconButtonFocusedStyle]: showFocus,
+              [iconButtonFocusedStyle]: usingKeyboard,
             })}
             onClick={(e: React.MouseEvent) => {
               // we stop the event from propagating and closing the entire menu
@@ -273,7 +227,7 @@ const SubMenu: ExtendableBox<
               size={14}
             />
           </IconButton>
-        </MenuItem>
+        </InternalMenuItemBox>
 
         <Transition
           in={open}
@@ -334,7 +288,7 @@ const SubMenu: ExtendableBox<
             </ul>
           )}
         </Transition>
-      </>
+      </li>
     );
   },
 );
