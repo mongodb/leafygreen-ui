@@ -48,6 +48,8 @@ export function calculatePosition({
   justify: Justify;
   positionCSS: any;
 } {
+
+  // Use scrollContainer width and height instead of window when a scrollContainer is set
   const windowContainerWidth = scrollContainer ? scrollContainer.offsetWidth : windowWidth;
   const windowContainerHeight = scrollContainer ? scrollContainer.offsetHeight : windowHeight;
 
@@ -93,6 +95,7 @@ export function calculatePosition({
   const transform = getTransform(windowSafeAlign, spacing);
 
   if (useRelativePositioning) {
+    // TODO: maybemove this outside, towards the top of the function
     if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
       return {
         align,
