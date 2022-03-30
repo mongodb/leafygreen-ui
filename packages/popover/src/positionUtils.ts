@@ -48,16 +48,19 @@ export function calculatePosition({
   justify: Justify;
   positionCSS: any;
 } {
+  const windowContainerWidth = scrollContainer ? scrollContainer.offsetWidth : windowWidth;
+  const windowContainerHeight = scrollContainer ? scrollContainer.offsetHeight : windowHeight;
+
   const windowSafeCommonArgs = {
-    windowWidth,
-    windowHeight,
+    windowWidth: windowContainerWidth,
+    windowHeight: windowContainerHeight,
     referenceElViewportPos,
     contentElViewportPos,
     spacing,
   };
 
   console.group();
-  console.log({window});
+  console.log({windowContainerWidth});
   console.log({referenceElViewportPos,
     contentElViewportPos});
   console.groupEnd();
@@ -139,8 +142,8 @@ export function calculatePosition({
         referenceElDocumentPos,
         contentElDocumentPos,
         spacing,
-        windowHeight,
-        windowWidth,
+        windowHeight: windowContainerHeight,
+        windowWidth: windowContainerWidth,
       }),
       transformOrigin,
       transform,
