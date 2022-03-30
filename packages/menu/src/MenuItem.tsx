@@ -102,6 +102,8 @@ const MenuItem: ExtendableBox<
     const hoverStyles = getHoverStyles(menuItemContainer.selector);
     const focusStyles = getFocusedStyles(menuItemContainer.selector);
 
+    const isAnchor = typeof rest.href === 'string';
+
     const updatedGlyph =
       glyph &&
       React.cloneElement(glyph, {
@@ -116,32 +118,23 @@ const MenuItem: ExtendableBox<
         ),
       });
 
-    const commonProps = {
+    const boxProps = {
       ...rest,
       ...menuItemContainer.prop,
       ref,
       role: 'menuitem',
-      className: cx(
-        menuItemContainerStyle,
-        menuItemHeight[size],
-        linkStyle,
-        {
-          [activeMenuItemContainerStyle]: active,
-          [disabledMenuItemContainerStyle]: disabled,
-          [focusedMenuItemContainerStyle]: showFocus,
-        },
-        className,
-      ),
       tabIndex: disabled ? -1 : undefined,
       'aria-disabled': disabled,
       // only add a disabled prop if not an anchor
-      ...(typeof rest.href !== 'string' && { disabled }),
+      ...(!isAnchor && { disabled }),
     };
 
-    const anchorProps = {
-      target: '_self',
-      rel: '',
-    };
+    const anchorProps = isAnchor
+      ? {
+          target: '_self',
+          rel: '',
+        }
+      : {};
 
     const content = (
       <>
@@ -174,19 +167,26 @@ const MenuItem: ExtendableBox<
       </>
     );
 
-    if (typeof rest.href === 'string') {
-      return (
-        <li role="none">
-          <Box as="a" {...anchorProps} {...commonProps}>
-            {content}
-          </Box>
-        </li>
-      );
-    }
+    const as = isAnchor ? 'a' : 'button';
 
     return (
       <li role="none">
-        <Box as="button" {...commonProps}>
+        <Box
+          as={as}
+          className={cx(
+            menuItemContainerStyle,
+            menuItemHeight[size],
+            linkStyle,
+            {
+              [activeMenuItemContainerStyle]: active,
+              [disabledMenuItemContainerStyle]: disabled,
+              [focusedMenuItemContainerStyle]: showFocus,
+            },
+            className,
+          )}
+          {...boxProps}
+          {...anchorProps}
+        >
           {content}
         </Box>
       </li>
