@@ -1,6 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
+import { Size } from './types';
 
 const indentation = 16;
 const leftBar = 4;
@@ -60,6 +61,16 @@ export const menuItemContainerStyle = css`
     }
   }
 `;
+
+export const menuItemHeight: Record<Size, string> = {
+  [Size.Default]: css`
+    min-height: 34px;
+  `,
+
+  [Size.Large]: css`
+    min-height: 46px;
+  `,
+};
 
 export const textContainer = css`
   width: 100%;

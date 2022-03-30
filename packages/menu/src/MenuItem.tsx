@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
@@ -19,29 +19,13 @@ import {
   linkDescriptionTextStyle,
   activeDescriptionTextStyle,
   textContainer,
+  menuItemHeight,
   getFocusedStyles,
   getHoverStyles,
 } from './styles';
+import { Size } from './types';
 
 const menuItemContainer = createDataProp('menu-item-container');
-
-const Size = {
-  Default: 'default',
-  Large: 'large',
-} as const;
-
-type Size = typeof Size[keyof typeof Size];
-
-const menuItemHeight: Record<Size, string> = {
-  [Size.Default]: css`
-    min-height: 34px;
-  `,
-
-  [Size.Large]: css`
-    min-height: 46px;
-  `,
-};
-
 interface BaseMenuItemProps {
   /**
    * Determines whether or not the MenuItem is active.
@@ -119,7 +103,6 @@ const MenuItem: ExtendableBox<
       });
 
     const boxProps = {
-      ...rest,
       ...menuItemContainer.prop,
       ref,
       role: 'menuitem',
@@ -141,6 +124,7 @@ const MenuItem: ExtendableBox<
         {updatedGlyph}
         <div className={textContainer}>
           <div
+            // Add text as data attribute to ensure no layout shift on hover
             data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle]: active,
@@ -150,7 +134,6 @@ const MenuItem: ExtendableBox<
           >
             {children}
           </div>
-
           {description && (
             <div
               className={cx(descriptionTextStyle, {
@@ -173,6 +156,9 @@ const MenuItem: ExtendableBox<
       <li role="none">
         <Box
           as={as}
+          {...boxProps}
+          {...anchorProps}
+          {...rest}
           className={cx(
             menuItemContainerStyle,
             menuItemHeight[size],
@@ -184,8 +170,6 @@ const MenuItem: ExtendableBox<
             },
             className,
           )}
-          {...boxProps}
-          {...anchorProps}
         >
           {content}
         </Box>

@@ -267,7 +267,6 @@ const SubMenu: ExtendableBox<
       });
 
     const boxProps = {
-      ...rest,
       ...subMenuContainer.prop,
       ref,
       role: 'menuitem',
@@ -300,7 +299,6 @@ const SubMenu: ExtendableBox<
           >
             {title}
           </div>
-
           {description && (
             <div
               className={cx(descriptionTextStyle, {
@@ -323,6 +321,9 @@ const SubMenu: ExtendableBox<
       <li role="none">
         <Box
           as={as}
+          {...boxProps}
+          {...anchorProps}
+          {...rest}
           className={cx(
             menuItemContainerStyle,
             menuItemHeight['default'],
@@ -336,8 +337,6 @@ const SubMenu: ExtendableBox<
             },
             className,
           )}
-          {...boxProps}
-          {...anchorProps}
         >
           {content}
           <IconButton
