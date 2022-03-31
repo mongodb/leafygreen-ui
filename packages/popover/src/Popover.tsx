@@ -130,13 +130,9 @@ function Popover({
     getElementViewportPosition(referenceElement, scrollContainer),
   );
 
-  // console.log(referenceElViewportPos);
-
   const contentElViewportPos = useObjectDependency(
     getElementViewportPosition(contentNode, scrollContainer),
   );
-
-  // console.log(contentElViewportPos);
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
@@ -214,12 +210,11 @@ function Popover({
     referenceElDocumentPos,
     contentElViewportPos,
     contentElDocumentPos,
-    scrollContainer
+    scrollContainer,
   });
 
-  console.group();
-  console.log('🩳', positionCSS);
-  console.groupEnd();
+  // TODO: remove
+  // console.log('🩳', positionCSS);
 
   const activeStyle = css`
     opacity: 1;

@@ -48,10 +48,14 @@ export function calculatePosition({
   justify: Justify;
   positionCSS: any;
 } {
-
-  // Use scrollContainer width and height instead of window when a scrollContainer is set
-  const windowContainerWidth = scrollContainer ? scrollContainer.offsetWidth : windowWidth;
-  const windowContainerHeight = scrollContainer ? scrollContainer.offsetHeight : windowHeight;
+  // Use scrollContainer width and height instead of window width and height when a scrollContainer is set
+  // so we can correctly determine if the content elemnt is safely within the "window"
+  const windowContainerWidth = scrollContainer
+    ? scrollContainer.offsetWidth
+    : windowWidth;
+  const windowContainerHeight = scrollContainer
+    ? scrollContainer.offsetHeight
+    : windowHeight;
 
   const windowSafeCommonArgs = {
     windowWidth: windowContainerWidth,
@@ -61,23 +65,18 @@ export function calculatePosition({
     spacing,
   };
 
-  console.group();
-  // console.log('scrollContainer.scrollLeft',scrollContainer?.scrollLeft);
-  console.log({windowContainerWidth});
-  console.log({referenceElViewportPos,
-    contentElViewportPos});
-  console.groupEnd();
-
-  // if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
-  //   return {
-  //     align,
-  //     justify,
-  //     positionCSS: {
-  //       left: 0,
-  //       top: 0,
-  //     }
-  //   }
-  // }
+  // calculatePosition will run and return CSS even if the content has no dimensions i.e. getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if there are dimensions.
+  //  Justify fit does not position itself properly in this case so we continue to return the CSS
+  if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
+    return {
+      align,
+      justify,
+      positionCSS: {
+        left: 0,
+        top: 0,
+      },
+    };
+  }
 
   const windowSafeAlign = getWindowSafeAlign(align, windowSafeCommonArgs);
   const windowSafeJustify = getWindowSafeJustify(
@@ -85,8 +84,6 @@ export function calculatePosition({
     windowSafeAlign,
     windowSafeCommonArgs,
   );
-
-  console.log({windowSafeJustify});
 
   const transformOrigin = getTransformOrigin({
     align: windowSafeAlign,
@@ -96,18 +93,6 @@ export function calculatePosition({
   const transform = getTransform(windowSafeAlign, spacing);
 
   if (useRelativePositioning) {
-    // TODO: maybemove this outside, towards the top of the function
-    if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
-      return {
-        align,
-        justify,
-        positionCSS: {
-          left: '0px', top: '10px', transformOrigin,
-          transform,
-        },
-      }
-    }
-
     return {
       align: windowSafeAlign,
       justify: windowSafeJustify,
@@ -123,17 +108,6 @@ export function calculatePosition({
         transform,
       },
     };
-  }
-
-  if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
-    return {
-      align,
-      justify,
-      positionCSS: {
-        left: '0px', top: '10px', transformOrigin,
-        transform,
-      },
-    }
   }
 
   return {
@@ -172,12 +146,21 @@ export function getElementDocumentPosition(
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right, width: boundingWidth } = element.getBoundingClientRect();
+  const {
+    top,
+    bottom,
+    left,
+    right,
+    width: boundingWidth,
+  } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth } = element;
 
-  console.log({boundingWidth}, {offsetWidth});
-
-  const width = Math.abs(boundingWidth - offsetWidth) < 1 ? boundingWidth : offsetWidth;
+  // offsetWidth returns a rounded number of the element's layout width and height.
+  // boundingWidth returns an exact number with the rendered width and height which can include transformations.
+  // Using the exact number is a better indicator of determining if an element will fit in the window, e.g. calcLeft() uses the width to determine the left position and then that number is used to check if it is safetly within the window bounds. In some cases the offsetWidth is rounded up which means that it might not fit in the window bounds when it really can.
+  // With this we check if the difference between the bounding width and offsetWidth is less than one, if thats the case then the number was rounded and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
+  const width =
+    Math.abs(boundingWidth - offsetWidth) < 1 ? boundingWidth : offsetWidth;
 
   if (scrollContainer) {
     const { scrollTop, scrollLeft } = scrollContainer;
@@ -188,56 +171,18 @@ export function getElementDocumentPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
-    // return {
-    //   top: Math.floor(top + scrollTop - offsetTop),
-    //   bottom: Math.floor(bottom + scrollTop - offsetBottom),
-    //   left: Math.floor(left + scrollLeft - offsetLeft),
-    //   right: Math.floor(right + scrollLeft - offsetRight),
-    //   height: Math.floor(height),
-    //   width: Math.floor(width),
-    // };
-
-    console.group();
-    console.log('getElementDocumentPosition');
-    console.log({right});
-    console.log({scrollLeft});
-    console.log({offsetRight});
-    console.log(left, scrollLeft, offsetLeft, Math.floor(left) + scrollLeft - offsetLeft);
-    console.log(right, scrollLeft, offsetRight, right + scrollLeft - offsetRight)
-    console.groupEnd();
-
-    console
     return {
       top: top + scrollTop - offsetTop,
       bottom: bottom + scrollTop - offsetBottom,
-      left: Math.floor(left) + scrollLeft - offsetLeft,
+      left: Math.floor(left) + scrollLeft - offsetLeft, // remove decimals from left to get a whole number
       right: right + scrollLeft - offsetRight,
       height: height,
-      width: Math.floor(width),
+      width: Math.floor(width), // remove decimals from width to get a whole number
     };
   }
 
   const { scrollX, scrollY } = window;
 
-  // console.group()
-  // console.log('getElementDocumentPosition');
-  // console.log({top});
-  // console.log({bottom});
-  // console.log({left});
-  // console.log({right});
-  // console.log({width});
-  // console.log({height});
-  // console.groupEnd()
-
-
-  // return {
-  //   top: Math.floor(top + scrollY),
-  //   bottom: Math.floor(bottom + scrollY),
-  //   left: Math.floor(left + scrollX),
-  //   right: Math.floor(right + scrollX),
-  //   height: Math.floor(height),
-  //   width: Math.floor(width),
-  // };
   return {
     top: top + scrollY,
     bottom: bottom + scrollY,
@@ -257,12 +202,17 @@ export function getElementViewportPosition(
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right, width: boundingWidth } = element.getBoundingClientRect();
+  const {
+    top,
+    bottom,
+    left,
+    right,
+    width: boundingWidth,
+  } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth } = element;
 
-  console.log({boundingWidth}, {offsetWidth});
-
-  const width = Math.abs(boundingWidth - offsetWidth) < 1 ? boundingWidth : offsetWidth;
+  const width =
+    Math.abs(boundingWidth - offsetWidth) < 1 ? boundingWidth : offsetWidth;
 
   if (scrollContainer) {
     const {
@@ -272,14 +222,6 @@ export function getElementViewportPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
-    // return {
-    //   top: Math.floor(top - offsetTop),
-    //   bottom: Math.floor(bottom - offsetBottom),
-    //   left: Math.floor(left - offsetLeft),
-    //   right: Math.floor(right - offsetRight),
-    //   height: Math.floor(height),
-    //   width: Math.floor(width),
-    // };
     return {
       top: top - offsetTop,
       bottom: bottom - offsetBottom,
@@ -290,24 +232,6 @@ export function getElementViewportPosition(
     };
   }
 
-  // console.group()
-  // console.log('getElementViewportPosition');
-  // console.log({top});
-  // console.log({bottom});
-  // console.log({left});
-  // console.log({right});
-  // console.log({width});
-  // console.log({height});
-  // console.groupEnd()
-
-  // return {
-  //   top: Math.floor(top),
-  //   bottom: Math.floor(bottom),
-  //   left: Math.floor(left),
-  //   right: Math.floor(right),
-  //   height: Math.floor(height),
-  //   width: Math.floor(width),
-  // };
   return {
     top: top,
     bottom: bottom,
@@ -517,11 +441,12 @@ function calcAbsolutePosition({
     spacing,
   })}px`;
 
-  console.group();
-  console.log('calcAbsolutePosition');
-  console.log({contentElDocumentPos});
-  console.log({referenceElDocumentPos});
-  console.groupEnd();
+  // TODO: remove
+  // console.group();
+  // console.log('calcAbsolutePosition');
+  // console.log({contentElDocumentPos});
+  // console.log({referenceElDocumentPos});
+  // console.groupEnd();
 
   if (justify !== Justify.Fit) {
     return { left, top };
@@ -541,11 +466,12 @@ function calcAbsolutePosition({
     };
   }
 
-  console.group();
-  console.log('windowWidth', windowWidth);
-  console.log('referenceElDocumentPos.right', referenceElDocumentPos.right);
-  console.log(`${windowWidth - referenceElDocumentPos.right}px`);
-  console.groupEnd();
+  // TODO: remove
+  // console.group();
+  // console.log('windowWidth', windowWidth);
+  // console.log('referenceElDocumentPos.right', referenceElDocumentPos.right);
+  // console.log(`${windowWidth - referenceElDocumentPos.right}px`);
+  // console.groupEnd();
 
   return {
     left,
@@ -614,8 +540,9 @@ function calcLeft({
   referenceElPos,
   spacing,
 }: CalcPosition): number {
-  console.log('calcLeft contentElPos.width', contentElPos.width);
-  console.log('calcLeft referenceElPos.width', referenceElPos.width);
+  // TODO: remove
+  // console.log('calcLeft contentElPos.width', contentElPos.width);
+  // console.log('calcLeft referenceElPos.width', referenceElPos.width);
   switch (align) {
     case Align.Top:
     case Align.Bottom:
@@ -663,13 +590,14 @@ function safelyWithinHorizontalWindow({
   contentWidth: number;
 }): boolean {
   const tooWide = left + contentWidth > windowWidth;
-  console.group();
-  console.log({left});
-  console.log({contentWidth});
-  console.log({windowWidth});
 
-  console.log({tooWide});
-  console.groupEnd();
+  // TODO: remove
+  // console.group();
+  // console.log({left});
+  // console.log({contentWidth});
+  // console.log({windowWidth});
+  // console.log({tooWide});
+  // console.groupEnd();
 
   return left >= 0 && !tooWide;
 }
@@ -789,11 +717,6 @@ function getWindowSafeJustify(
     contentElViewportPos,
     referenceElViewportPos,
   } = windowSafeCommon;
-
-  // if (contentElViewportPos.width === 0) {
-  //   console.log()
-  //   return justify;
-  // }
 
   const justifyOptions = [justify, ...justifyFallbacks[justify]];
 
