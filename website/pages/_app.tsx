@@ -20,14 +20,20 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     document.querySelectorAll('a, button').forEach(e => {
       // @ts-ignore
-      e.onclick = (e) => {
-        if(!!!localStorage.getItem('yaDoneBeenRolled')) {
+      e.onclick = e => {
+        const today = new Date();
+
+        if (
+          !localStorage.getItem('yaDoneBeenRolled') &&
+          today.getDate() == 1 &&
+          today.getMonth() == 3
+        ) {
           e.preventDefault();
-          window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+          window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
           localStorage.setItem('yaDoneBeenRolled', 'rolled asf');
         }
-      }
-    })
+      };
+    });
   }, []);
 
   let SubLayout: React.FunctionComponent;
