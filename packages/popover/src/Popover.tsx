@@ -86,6 +86,18 @@ function Popover({
   portalContainer = portalContainerProp || portalContainer;
   scrollContainer = scrollContainerProp || scrollContainer;
 
+  // When usePortal is true and a scrollContainer is passed in
+  // show a warning if the portalContainer is not inside of the scrollContainer.
+  // Note: If no portalContainer is passed the portalContainer will be undefined and this warning will show up.
+  // By default if no portalContainer is passed the <Portal> component will create a div and append it to the body.
+  if (usePortal && scrollContainer) {
+    if (!scrollContainer.contains(portalContainer as HTMLElement)) {
+      console.warn(
+        'To ensure correct positioning make sure that the portalContainer element is inside of the scrollContainer',
+      );
+    }
+  }
+
   // To remove StrictMode warnings produced by react-transition-group we need
   // to pass in a useRef object to the <Transition> component.
   // To do so we're shadowing the contentNode onto this nodeRef as
