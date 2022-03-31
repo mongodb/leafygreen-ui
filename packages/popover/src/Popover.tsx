@@ -195,8 +195,6 @@ function Popover({
     return null;
   }
 
-  // if (contentElViewportPos.width === 0) {}
-
   const {
     align: windowSafeAlign,
     justify: windowSafeJustify,
@@ -212,9 +210,6 @@ function Popover({
     contentElDocumentPos,
     scrollContainer,
   });
-
-  // TODO: remove
-  // console.log('🩳', positionCSS);
 
   const activeStyle = css`
     opacity: 1;

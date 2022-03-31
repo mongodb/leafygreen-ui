@@ -233,11 +233,11 @@ export function getElementViewportPosition(
   }
 
   return {
-    top: top,
-    bottom: bottom,
+    top,
+    bottom,
     left: Math.floor(left),
-    right: right,
-    height: height,
+    right,
+    height,
     width: Math.floor(width),
   };
 }
