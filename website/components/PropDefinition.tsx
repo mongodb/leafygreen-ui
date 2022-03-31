@@ -4,6 +4,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import formatType from 'utils/formatType';
+import { palette } from '@leafygreen-ui/palette';
 
 interface PropDefinitionProps {
   defaultValue: string;
@@ -64,6 +65,7 @@ const descriptionContainer = css`
   margin-bottom: -14px;
   background-color: white;
   padding: 10px 20px;
+  color: ${palette.black};
 `;
 
 function Definition({
@@ -93,6 +95,10 @@ const inlineDefinitionStyle = css`
   font-weight: 600;
 `;
 
+const tooltipStyle = css`
+  max-width: inherit;
+`;
+
 function PropDefinition({
   prop,
   type,
@@ -102,6 +108,7 @@ function PropDefinition({
   return (
     <InlineDefinition
       className={inlineDefinitionStyle}
+      tooltipClassName={tooltipStyle}
       definition={
         <Definition
           prop={prop}
