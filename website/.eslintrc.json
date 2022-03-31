@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "quotes": ["error", "double"]
+  },
+
+  "overrides": [
+    {
+      "files": ["bin/*.js", "lib/*.js"],
+      "excludedFiles": "*.test.js",
+      "rules": {
+        "quotes": ["error", "single"]
+      }
+    },
+    {
+      "files": ["*.md", "*.mdx"],
+      "extends": "plugin:mdx/recommended"
+    }
+  ]
+}

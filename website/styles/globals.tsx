@@ -4,6 +4,7 @@ import { CDN } from 'utils/routes';
 const fontsURL = `${CDN}/fonts`;
 
 export const globalStyles = css`
+
   @font-face {
     font-family: 'Akzidenz';
     font-weight: normal;
