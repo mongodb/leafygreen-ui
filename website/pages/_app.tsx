@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -16,6 +16,19 @@ function DefaultLayout({ children }) {
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const layout = router.pathname.split('/').filter(substr => !!substr)[0];
+
+  useEffect(() => {
+    document.querySelectorAll('a, button').forEach(e => {
+      // @ts-ignore
+      e.onclick = (e) => {
+        if(!!!localStorage.getItem('yaDoneBeenRolled')) {
+          e.preventDefault();
+          window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank");
+          localStorage.setItem('yaDoneBeenRolled', 'rolled asf');
+        }
+      }
+    })
+  }, []);
 
   let SubLayout: React.FunctionComponent;
 
