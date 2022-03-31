@@ -3,14 +3,14 @@ import Banner, { Variant } from '@leafygreen-ui/banner';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
-  variant: Variant;
+  variant?: Variant;
   dismissible: boolean;
   children: string;
 }> = {
   variant: {
     type: 'select',
     options: Object.values(Variant),
-    default: Variant.Success,
+    default: Variant.Info,
     label: 'Variant',
   },
   dismissible: {
@@ -30,6 +30,7 @@ export default function BannerLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Banner {...props} />}
+      {/* {props => <>{JSON.stringify(props)}</>} */}
     </LiveExample>
   );
 }

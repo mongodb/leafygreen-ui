@@ -91,20 +91,20 @@ interface KnobInterface {
   label: string;
   prop: string;
   darkMode: boolean;
+  isRequired?: boolean;
 }
-
 export interface BooleanInterface extends KnobInterface {
-  onChange: (value: boolean, prop: string) => void;
+  onChange: (prop: string, value: boolean) => void;
   value: boolean;
 }
 
-function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
+function Boolean({ onChange, label, value, prop, darkMode, isRequired = false }: BooleanInterface) {
   const viewport = useViewportSize();
   const isTouchDevice =
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   const handleChange = () => {
-    onChange(!value, prop);
+    onChange(prop, !value);
   };
 
   const labelId = useIdAllocator({ prefix: 'boolean' });
@@ -116,6 +116,7 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
       >
         {label}
+        {isRequired && '*'}
       </label>
 
       <Toggle
@@ -132,7 +133,7 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
 Boolean.displayName = 'Boolean';
 
 export interface NumberInterface extends KnobInterface {
-  onChange: (value: number, prop: string) => void;
+  onChange: (prop: string, value: number) => void;
   value: number;
   min?: number;
   max?: number;
@@ -148,9 +149,10 @@ function Number({
   min,
   max,
   step,
+  isRequired = false,
 }: NumberInterface) {
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(parseFloat(target.value), prop);
+    onChange(prop, parseFloat(target.value));
   };
 
   const labelId = useIdAllocator({ prefix: 'number' });
@@ -162,6 +164,7 @@ function Number({
         id={labelId}
       >
         {label}
+        {isRequired && '*'}
       </label>
 
       <TextInput
@@ -184,14 +187,14 @@ function Number({
 Number.displayName = 'Number';
 
 export interface TextInterface extends KnobInterface {
-  onChange: (value: string, prop: string) => void;
+  onChange: (prop: string, value: string) => void;
   value: string;
 }
 
-function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
+function Text({ onChange, label, value, prop, darkMode, isRequired = false }: TextInterface) {
   const handleChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-      onChange(target.value, prop);
+      onChange(prop, target.value);
     },
     [prop, onChange],
   );
@@ -205,6 +208,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         id={labelId}
       >
         {label}
+        {isRequired && '*'}
       </label>
 
       <TextInput
@@ -220,10 +224,10 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
 
 Text.displayName = 'Text';
 
-function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
+function Area({ onChange, label, value, prop, darkMode, isRequired = false }: TextInterface) {
   const handleChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
-      onChange(target.value, prop);
+      onChange(prop, target.value);
     },
     [onChange, prop],
   );
@@ -237,6 +241,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
         id={labelId}
       >
         {label}
+        {isRequired && '*'}
       </label>
 
       <TextArea
@@ -253,7 +258,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
 Area.displayName = 'Area';
 
 export interface SelectInterface extends KnobInterface {
-  onChange: (value: string, prop: string) => void;
+  onChange: (prop: string, value?: string, ) => void;
   value: string;
   options: Array<string>;
   disabled?: boolean;
@@ -267,16 +272,17 @@ function Select({
   options,
   darkMode,
   disabled,
+  isRequired = false,
 }: SelectInterface) {
   const labelId = useIdAllocator({ prefix: 'select' });
   const container = useBodyContainerRef();
 
   const handleChange = (value: string) => {
-    if (value === '') {
+    if (isRequired && value === '') {
       return;
     }
 
-    onChange(value, prop);
+    onChange(prop, value === '' ? undefined : value);
   };
 
   const generateOptionsCallback = () => {
@@ -296,6 +302,7 @@ function Select({
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
       >
         {label}
+        {isRequired && '*'}
       </label>
 
       <LGUISelect
