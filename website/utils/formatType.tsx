@@ -34,11 +34,18 @@ export default function formatType(
 
       return (
         <Fragment key={val}>
-          , <InlineCode href={linkURL} className={className}>{val}</InlineCode>
+          ,{' '}
+          <InlineCode href={linkURL} className={className}>
+            {val}
+          </InlineCode>
         </Fragment>
       );
     });
   }
 
-  return <InlineCode href={linkURL} className={className}>{valueArray[0]}</InlineCode>;
+  return (
+    <InlineCode href={linkURL} className={className}>
+      {valueArray[0]}
+    </InlineCode>
+  );
 }
