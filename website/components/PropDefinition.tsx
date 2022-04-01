@@ -66,9 +66,17 @@ const descriptionContainer = css`
   background-color: ${palette.black};
   padding-top: 10px;
   color: ${palette.gray.light1};
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
-  border-top: 1px solid ${palette.gray.dark2};
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: calc(100% + ${spacing[3]}px * 2);
+    top: 0;
+    left: -${spacing[3]}px;
+    background-color: ${palette.gray.dark2};
+  }
 `;
 
 function Definition({
@@ -114,6 +122,7 @@ function PropDefinition({
 }: PropDefinitionProps) {
   return (
     <InlineDefinition
+    open={true}
       className={inlineDefinitionStyle}
       tooltipClassName={tooltipStyle}
       definition={
