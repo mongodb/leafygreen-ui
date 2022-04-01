@@ -26,6 +26,9 @@ const propBlockCodeStyle = css`
   font-weight: bold;
   white-space: pre-wrap;
   padding: 0 4px;
+  background-color: ${palette.gray.dark3};
+  border-color: ${palette.gray.dark2};
+  color: ${palette.gray.light1};
 `;
 
 function PropBlock({ header, value }: { header: string; value: string }) {
@@ -43,7 +46,7 @@ function TypeBlock({ header, value }: { header: string; value: string }) {
   return (
     <div className={propBlockContainer}>
       <p className={propBlockPStyle}>{header}</p>
-      {formatType(value)}
+      {formatType(value, undefined, propBlockCodeStyle)}
     </div>
   );
 }
@@ -63,9 +66,12 @@ const descriptionContainer = css`
   margin-left: -16px;
   margin-right: -16px;
   margin-bottom: -14px;
-  background-color: white;
+  background-color: ${palette.black};
   padding: 10px 20px;
-  color: ${palette.black};
+  color: ${palette.white};
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-top: 1px solid ${palette.gray.dark2};
 `;
 
 function Definition({
