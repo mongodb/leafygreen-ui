@@ -14,7 +14,6 @@ interface PropDefinitionProps {
 }
 
 const propBlockContainer = css`
-  width: 50%;
   margin-bottom: ${spacing[3]}px;
 `;
 
@@ -54,8 +53,9 @@ function TypeBlock({ header, value }: { header: string; value: string }) {
 TypeBlock.displayName = 'TypeBlock';
 
 const flexContainer = css`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: ${spacing[3]}px;
 `;
 
 const definitionContainer = css`
@@ -63,12 +63,9 @@ const definitionContainer = css`
 `;
 
 const descriptionContainer = css`
-  margin-left: -16px;
-  margin-right: -16px;
-  margin-bottom: -14px;
   background-color: ${palette.black};
-  padding: 10px 20px;
-  color: ${palette.white};
+  padding-top: 10px;
+  color: ${palette.gray.light1};
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   border-top: 1px solid ${palette.gray.dark2};
@@ -85,9 +82,13 @@ function Definition({
   return (
     <div className={definitionContainer}>
       <div className={flexContainer}>
-        <PropBlock header="Prop" value={prop} />
+        <div>
+          <PropBlock header="Prop" value={prop} />
+          {showDefault && <PropBlock header="Default" value={defaultValue} />}
+        </div>
+        <div>
         <TypeBlock header="Type" value={type} />
-        {showDefault && <PropBlock header="Default" value={defaultValue} />}
+        </div>
       </div>
       <div className={descriptionContainer}>{description}</div>
     </div>
