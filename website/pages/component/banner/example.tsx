@@ -30,7 +30,6 @@ export default function BannerLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Banner {...props} />}
-      {/* {props => <>{JSON.stringify(props)}</>} */}
     </LiveExample>
   );
 }
