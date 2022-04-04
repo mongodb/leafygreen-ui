@@ -44,8 +44,8 @@ export default function SelectLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ darkMode, size, label, followFocus, disabled }) => (
-        <SegmentedControl
-          label={label}
+      <> <SegmentedControl
+          // label={label}
           name="fruit"
           size={size}
           darkMode={darkMode}
@@ -68,6 +68,8 @@ export default function SelectLiveExample() {
             Grape
           </SegmentedControlOption>
         </SegmentedControl>
+        {/* {label} */}
+        </>
       )}
     </LiveExample>
   );

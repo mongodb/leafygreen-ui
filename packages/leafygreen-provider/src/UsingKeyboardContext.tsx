@@ -41,6 +41,7 @@ function UsingKeyboardProvider({ children }: UsingKeyboardProviderProps) {
     ({ keyCode }) => {
       if (Object.values(NavigationKeyCodes).includes(keyCode)) {
         setUsingKeyboard(true);
+        console.log('👚👚👚keydown true👚👚👚');
       }
     },
     { enabled: !usingKeyboard },
