@@ -18,6 +18,12 @@
     },
     {
       "path": "../hooks"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }
