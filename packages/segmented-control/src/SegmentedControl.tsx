@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { transparentize } from 'polished';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
@@ -297,11 +303,10 @@ const SegmentedControl = React.forwardRef<
 ) {
   // TODO: log warning if defaultValue is set but does not match any child value
   const { usingKeyboard } = useUsingKeyboardContext();
-  const [segContainer, setSegContainer] = useState<null | Element>(null);
+  const [segmentedContainer, setSegmentedContainer] = useState<null | Element>(
+    null,
+  );
   const [isfocusInComponent, setIsfocusInComponent] = useState<boolean>(false);
-  const [wasTabKeyPressed, setWasTabKeyPressed] = useState(false);
-
-  console.log('✨RENDER ‼️');
 
   const getOptionRef = useDynamicRefs<HTMLDivElement>({ prefix: 'option' });
 
@@ -339,26 +344,21 @@ const SegmentedControl = React.forwardRef<
     }
   });
 
-  // Check if the organic focus is inside of this component. We'll use this to check if the focus should be progammatically set in SegmentedControlOption.
-  // Also check if the tab key is pressed while options in this component are focused. We'll use this to check if focus should organically leave this component.
+  // Check if the organic focus is inside of this component. We'll use this to check if the focus should be programmatically set in SegmentedControlOption.
   const handleFocusIn = useCallback(() => {
-    if (segContainer?.contains(document.activeElement as HTMLElement)) {
+    if (segmentedContainer?.contains(document.activeElement as HTMLElement)) {
       setIsfocusInComponent(true);
-      setWasTabKeyPressed(true);
     } else {
       setIsfocusInComponent(false);
-      setWasTabKeyPressed(false);
     }
-
-  },[segContainer]);
+  }, [segmentedContainer]);
 
   useEffect(() => {
     document.addEventListener('focusin', handleFocusIn);
     return () => {
       document.removeEventListener('focusin', handleFocusIn);
-  };
+    };
   }, [handleFocusIn]);
-
 
   // Handle value updates
   const updateValue = useCallback(
@@ -415,7 +415,6 @@ const SegmentedControl = React.forwardRef<
           _onHover,
           ref: getOptionRef(`${index}`),
           isfocusInComponent,
-          wasTabKeyPressed
         });
       }),
     [
@@ -429,7 +428,6 @@ const SegmentedControl = React.forwardRef<
       updateValue,
       getOptionRef,
       isfocusInComponent,
-      wasTabKeyPressed
     ],
   );
 
@@ -501,7 +499,6 @@ const SegmentedControl = React.forwardRef<
   }, [internalValue, usingKeyboard]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log('😈😈handlekeydown', e.key);
     // Note: Arrow keys don't fire a keyPress event — need to use keyDown
     e.stopPropagation();
     // We only handle right and left arrow keys
@@ -509,14 +506,9 @@ const SegmentedControl = React.forwardRef<
     switch (e.key) {
       case 'ArrowRight':
         updateFocusedIndex(focusedIndex + 1);
-        setWasTabKeyPressed(false);
         break;
       case 'ArrowLeft':
         updateFocusedIndex(focusedIndex - 1);
-        setWasTabKeyPressed(false);
-        break;
-      case 'Tab':
-        setWasTabKeyPressed(true);
         break;
       default:
         break;
@@ -556,7 +548,7 @@ const SegmentedControl = React.forwardRef<
   return (
     <SegmentedControlContext.Provider value={{ size, mode, name, followFocus }}>
       <div
-        ref={(el) => setSegContainer(el)}
+        ref={el => setSegmentedContainer(el)}
         className={cx(
           wrapperStyle,
           {

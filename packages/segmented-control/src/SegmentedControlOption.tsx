@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import {
@@ -291,7 +291,6 @@ const SegmentedControlOption = React.forwardRef<
       _onClick,
       _onHover,
       isfocusInComponent,
-      wasTabKeyPressed,
       ...rest
     }: SegmentedControlOptionProps,
     forwardedRef,
@@ -299,14 +298,6 @@ const SegmentedControlOption = React.forwardRef<
     const { size, mode, followFocus } = useContext(SegmentedControlContext);
     const { usingKeyboard } = useUsingKeyboardContext();
     const baseFontSize = useBaseFontSize();
-    const [isMyInputFocused, setIsMyInputFocused] = useState(false);
-
-    // console.group();
-    // console.log({wasTabKeyPressed});
-    // console.log({focused});
-    // console.log({usingKeyboard});
-    // console.log({isfocusInComponent});
-    // console.groupEnd();
 
     const onClick = () => {
       _onClick?.(value);
@@ -324,8 +315,7 @@ const SegmentedControlOption = React.forwardRef<
     const buttonRef = useRef<HTMLButtonElement>(null);
     useEffect(() => {
       // Check if the component did mount
-      // wasTabKeyPressed: Returns if the tab key was pressed. If the tab key was pressed then we don't want to update the focus and we want the focus to organically leave this component.
-      if (didComponentMount.current && !wasTabKeyPressed) {
+      if (didComponentMount.current) {
         // usingKeyboard: Returns if the keyboard is being used.
         // focused: Returns if this option should be the item in focus.
         // isfocusInComponent: Returns if the focus should organically be this component. Without this check focus will be hijacked to this component if `usingKeyboard` is updated to true.
@@ -340,7 +330,7 @@ const SegmentedControlOption = React.forwardRef<
         }
       }
       didComponentMount.current = true;
-    }, [focused, followFocus, usingKeyboard, isMyInputFocused, isfocusInComponent, wasTabKeyPressed]);
+    }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
 
     return (
       <div
@@ -363,8 +353,6 @@ const SegmentedControlOption = React.forwardRef<
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            onBlur={() => setIsMyInputFocused(false)}
-            onFocus={() => setIsMyInputFocused(true)}
           >
             <span
               className={cx(labelStyle, {
