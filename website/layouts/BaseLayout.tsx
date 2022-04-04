@@ -49,14 +49,12 @@ const childrenWrapper = css`
 
 function BaseLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [
-    bodyContainerRef,
-    setBodyContainerRef,
-  ] = useState<HTMLDivElement | null>(null);
+  const [bodyContainerRef, setBodyContainerRef] =
+    useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handler = () => {
-      if(bodyContainerRef) {
+      if (bodyContainerRef) {
         bodyContainerRef.scroll(0, 0);
       }
     };

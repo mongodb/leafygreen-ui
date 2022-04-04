@@ -2,19 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/*": [
-        "../packages/*"
-      ],
-      "@leafygreen-ui/logo": [
-        "/node_modules/@leafygreen-ui/logo"
-      ]
+      "@leafygreen-ui/*": ["../packages/*"],
+      "@leafygreen-ui/logo": ["/node_modules/@leafygreen-ui/logo"]
     },
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
@@ -40,7 +32,5 @@
     "utils/*.tsx",
     "pages/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

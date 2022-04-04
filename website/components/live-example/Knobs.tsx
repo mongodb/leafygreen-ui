@@ -98,7 +98,14 @@ export interface BooleanInterface extends KnobInterface {
   value: boolean;
 }
 
-function Boolean({ onChange, label, value, prop, darkMode, isRequired = false }: BooleanInterface) {
+function Boolean({
+  onChange,
+  label,
+  value,
+  prop,
+  darkMode,
+  isRequired = false,
+}: BooleanInterface) {
   const viewport = useViewportSize();
   const isTouchDevice =
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
@@ -191,7 +198,14 @@ export interface TextInterface extends KnobInterface {
   value: string;
 }
 
-function Text({ onChange, label, value, prop, darkMode, isRequired = false }: TextInterface) {
+function Text({
+  onChange,
+  label,
+  value,
+  prop,
+  darkMode,
+  isRequired = false,
+}: TextInterface) {
   const handleChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLInputElement>) => {
       onChange(prop, target.value);
@@ -224,7 +238,14 @@ function Text({ onChange, label, value, prop, darkMode, isRequired = false }: Te
 
 Text.displayName = 'Text';
 
-function Area({ onChange, label, value, prop, darkMode, isRequired = false }: TextInterface) {
+function Area({
+  onChange,
+  label,
+  value,
+  prop,
+  darkMode,
+  isRequired = false,
+}: TextInterface) {
   const handleChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
       onChange(prop, target.value);
@@ -258,7 +279,7 @@ function Area({ onChange, label, value, prop, darkMode, isRequired = false }: Te
 Area.displayName = 'Area';
 
 export interface SelectInterface extends KnobInterface {
-  onChange: (prop: string, value?: string, ) => void;
+  onChange: (prop: string, value?: string) => void;
   value: string;
   options: Array<string>;
   disabled?: boolean;
