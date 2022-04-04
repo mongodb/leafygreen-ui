@@ -1,8 +1,9 @@
 {
+  "root": true,
+  "parser": "babel-eslint",
   "rules": {
     "quotes": ["error", "double"]
   },
-
   "overrides": [
     {
       "files": ["bin/*.js", "lib/*.js"],
