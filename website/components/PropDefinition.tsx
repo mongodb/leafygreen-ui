@@ -95,7 +95,7 @@ function Definition({
           {showDefault && <PropBlock header="Default" value={defaultValue} />}
         </div>
         <div>
-        <TypeBlock header="Type" value={type} />
+          <TypeBlock header="Type" value={type} />
         </div>
       </div>
       <div className={descriptionContainer}>{description}</div>
@@ -122,7 +122,6 @@ function PropDefinition({
 }: PropDefinitionProps) {
   return (
     <InlineDefinition
-    open={true}
       className={inlineDefinitionStyle}
       tooltipClassName={tooltipStyle}
       definition={
