@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -8,7 +8,6 @@ import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';
 import metaTagKey from 'utils/metaTagKey';
 import FoundationLayout from 'layouts/FoundationLayout';
-import ScrollToTop from 'layouts/ScrollToTop';
 
 function DefaultLayout({ children }) {
   return children;
@@ -71,13 +70,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Global styles={globalStyles} />
-      <ScrollToTop>
-        <BaseLayout>
-          <SubLayout>
-            <Component {...pageProps} />
-          </SubLayout>
-        </BaseLayout>
-      </ScrollToTop>
+      <BaseLayout>
+        <SubLayout>
+          <Component {...pageProps} />
+        </SubLayout>
+      </BaseLayout>
     </>
   );
 }
