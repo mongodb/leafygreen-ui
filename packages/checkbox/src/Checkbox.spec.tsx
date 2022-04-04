@@ -11,9 +11,10 @@ function renderCheckbox(props = {}) {
   const utils = render(
     <Checkbox data-testid="checkbox" label="this is the label" {...props} />,
   );
+  const wrapper = utils.container.firstElementChild;
   const checkbox = utils.getByTestId('checkbox');
   const label = utils.container.querySelector('label');
-  return { ...utils, checkbox, label };
+  return { ...utils, wrapper, checkbox, label };
 }
 
 describe('packages/checkbox', () => {
@@ -32,9 +33,9 @@ describe('packages/checkbox', () => {
     });
   });
 
-  test(`renders ${className} in the Checkbox label's classlist`, () => {
-    const { label } = renderCheckbox({ className });
-    expect(label?.classList.contains(className)).toBe(true);
+  test(`passes \`className\` through to checkbox parent`, () => {
+    const { wrapper } = renderCheckbox({ className });
+    expect(wrapper?.classList).toContain(className);
   });
 
   test('renders as unchecked by default', () => {
