@@ -262,7 +262,7 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   `;
 };
 
-export interface BannerProps extends HTMLElementProps<'div', never> {
+interface BannerProps extends HTMLElementProps<'div', never> {
   /**
    * Sets the variant for the Banner
    *
