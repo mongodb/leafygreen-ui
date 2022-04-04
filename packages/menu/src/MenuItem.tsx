@@ -161,7 +161,7 @@ const MenuItem: ExtendableBox<
           {...rest}
           className={cx(
             menuItemContainerStyle,
-            menuItemHeight[size],
+            menuItemHeight(size),
             linkStyle,
             {
               [activeMenuItemContainerStyle]: active,

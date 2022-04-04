@@ -326,7 +326,7 @@ const SubMenu: ExtendableBox<
           {...rest}
           className={cx(
             menuItemContainerStyle,
-            menuItemHeight['default'],
+            menuItemHeight('default'),
             linkStyle,
             subMenuStyle,
             {
