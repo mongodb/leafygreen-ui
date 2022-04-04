@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { transparentize } from 'polished';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
