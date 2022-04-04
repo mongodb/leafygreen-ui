@@ -1,13 +1,16 @@
-import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import Typography from '@leafygreen-ui/typography';
+const { Body } = Typography;
 import nextMdx from '@next/mdx';
 
 const withMDX = nextMdx({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkToc],
-    rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]
+    rehypePlugins: [
+      rehypeSlug, 
+      [rehypeAutolinkHeadings, { behavior: 'wrap' }], 
+    ],
   }
 });
 
