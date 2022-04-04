@@ -44,33 +44,30 @@ export default function SelectLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ darkMode, size, label, followFocus, disabled }) => (
-        <>
-          {' '}
-          <SegmentedControl
-            label={label}
-            name="fruit"
-            size={size}
-            darkMode={darkMode}
-            followFocus={followFocus}
-            // eslint-disable-next-line no-console
-            onChange={val => console.log(val)}
-            aria-controls=""
-          >
-            <SegmentedControlOption value="dragonfruit">
-              Dragonfruit
-            </SegmentedControlOption>
+        <SegmentedControl
+          label={label}
+          name="fruit"
+          size={size}
+          darkMode={darkMode}
+          followFocus={followFocus}
+          // eslint-disable-next-line no-console
+          onChange={val => console.log(val)}
+          aria-controls=""
+        >
+          <SegmentedControlOption value="dragonfruit">
+            Dragonfruit
+          </SegmentedControlOption>
 
-            <SegmentedControlOption value="eggplant">
-              Eggplant
-            </SegmentedControlOption>
+          <SegmentedControlOption value="eggplant">
+            Eggplant
+          </SegmentedControlOption>
 
-            <SegmentedControlOption value="fig">Fig</SegmentedControlOption>
+          <SegmentedControlOption value="fig">Fig</SegmentedControlOption>
 
-            <SegmentedControlOption disabled={disabled} value="grape">
-              Grape
-            </SegmentedControlOption>
-          </SegmentedControl>
-        </>
+          <SegmentedControlOption disabled={disabled} value="grape">
+            Grape
+          </SegmentedControlOption>
+        </SegmentedControl>
       )}
     </LiveExample>
   );
