@@ -247,6 +247,15 @@ const SubMenu: ExtendableBox<
       [focusedIconStyle]: showFocus,
     });
 
+    const handleChevronClick = (e: React.MouseEvent) => {
+      // we stop the event from propagating and closing the entire menu
+      e.nativeEvent.stopImmediatePropagation();
+
+      if (setOpen) {
+        setOpen(!open);
+      }
+    };
+
     // TODO: This code is duplicated in `MenuItem`
     // We should consider combining these.
     // See: https://github.com/mongodb/leafygreen-ui/pull/1176
@@ -349,14 +358,7 @@ const SubMenu: ExtendableBox<
               [openIconButtonStyle]: open,
               [iconButtonFocusedStyle]: showFocus,
             })}
-            onClick={(e: React.MouseEvent) => {
-              // we stop the event from propagating and closing the entire menu
-              e.nativeEvent.stopImmediatePropagation();
-
-              if (setOpen) {
-                setOpen(!open);
-              }
-            }}
+            onClick={handleChevronClick}
           >
             <ChevronIcon
               role="presentation"
