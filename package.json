@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "node ./scripts/build.js",
-    "build:storybook": "build-storybook -o ./.storybook/public -s ./.storybook/static",
+    "build:storybook": "build-storybook",
     "changeset:version": "yarn fix && yarn changeset version",
     "clean": "rimraf packages/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
     "clean:builds": "rimraf packages/*/{dist} **/*.tsbuildinfo",
@@ -44,7 +44,7 @@
     "release": "yarn changeset publish --public",
     "release:site": "gh-pages --dist storybook/public",
     "slackbot": "node ./scripts/slackbot.js",
-    "start": "start-storybook -p 9001 -s ./.storybook/static --no-version-updates",
+    "start": "start-storybook -p 9001 --no-version-updates",
     "submodules:update": "git submodule update --init --recursive --remote",
     "test": "jest --env jsdom --config jest.config.js",
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
