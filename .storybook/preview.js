@@ -1,3 +1,7 @@
+import { addDecorator } from '@storybook/react';
+import ComponentPreview from './decorators/ComponentPreview';
+import ReactStrictMode from './decorators/ReactStrictMode';
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -14,3 +18,6 @@ export const parameters = {
     },
   },
 }
+
+addDecorator(ReactStrictMode);
+addDecorator(ComponentPreview);
