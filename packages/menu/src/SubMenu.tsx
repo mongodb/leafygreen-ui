@@ -7,8 +7,9 @@ import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { ExitHandler } from 'react-transition-group/Transition';
 import {
   menuItemContainerStyle,
   activeMenuItemContainerStyle,
@@ -16,30 +17,25 @@ import {
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
-  paddingLeft,
-  descriptionTextStyle,
-  linkDescriptionTextStyle,
-  titleTextStyle,
-  activeTitleTextStyle,
-  activeDescriptionTextStyle,
   mainIconStyle,
   activeIconStyle,
+  titleTextStyle,
+  activeTitleTextStyle,
+  descriptionTextStyle,
+  linkDescriptionTextStyle,
+  activeDescriptionTextStyle,
   textContainer,
   getFocusedStyles,
   getHoverStyles,
+  menuItemHeight,
+  paddingLeft,
 } from './styles';
-import { ExitHandler } from 'react-transition-group/Transition';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
 
 const subMenuContainerHeight = 56;
 const iconButtonContainerSize = 28;
-
-const liStyle = css`
-  position: relative;
-  overflow: hidden;
-`;
 
 const subMenuStyle = css`
   min-height: 56px;
@@ -113,6 +109,7 @@ const ulStyle = css`
 `;
 
 const menuItemText = css`
+  width: 100%;
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
@@ -217,9 +214,10 @@ const SubMenu: ExtendableBox<
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const nodeRef = React.useRef(null);
     const hoverStyles = getHoverStyles(subMenuContainer.selector);
     const focusStyles = getFocusedStyles(subMenuContainer.selector);
+
+    const nodeRef = React.useRef(null);
 
     const [
       iconButtonElement,
@@ -242,6 +240,27 @@ const SubMenu: ExtendableBox<
 
     const numberOfMenuItems = React.Children.toArray(children).length;
 
+    const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
+    const chevronIconStyles = cx({
+      [openIconStyle]: open,
+      [closedIconStyle]: !open,
+      [focusedIconStyle]: showFocus,
+    });
+
+    const handleChevronClick = (e: React.MouseEvent) => {
+      // we stop the event from propagating and closing the entire menu
+      e.nativeEvent.stopImmediatePropagation();
+
+      if (setOpen) {
+        setOpen(!open);
+      }
+    };
+
+    // TODO: This code is duplicated in `MenuItem`
+    // We should consider combining these.
+    // See: https://github.com/mongodb/leafygreen-ui/pull/1176
+    const isAnchor = typeof rest.href === 'string';
+
     const updatedGlyph =
       glyph &&
       React.cloneElement(glyph, {
@@ -256,32 +275,31 @@ const SubMenu: ExtendableBox<
         ),
       });
 
-    const sharedBoxProps = {
+    const boxProps = {
       ...subMenuContainer.prop,
-      ...rest,
       ref,
-      onClick: onRootClick,
       role: 'menuitem',
       'aria-haspopup': true,
-      className: cx(
-        menuItemContainerStyle,
-        subMenuStyle,
-        linkStyle,
-        {
-          [activeMenuItemContainerStyle]: active,
-          [disabledMenuItemContainerStyle]: disabled,
-          [subMenuOpenStyle]: open,
-          [focusedMenuItemContainerStyle]: showFocus,
-        },
-        className,
-      ),
+      onClick: onRootClick,
+      tabIndex: disabled ? -1 : undefined,
+      'aria-disabled': disabled,
+      // only add a disabled prop if not an anchor
+      ...(typeof rest.href !== 'string' && { disabled }),
     };
 
-    const boxContent = (
+    const anchorProps = isAnchor
+      ? {
+          target: '_self',
+          rel: '',
+        }
+      : {};
+
+    const content = (
       <>
         {updatedGlyph}
         <div className={textContainer}>
           <div
+            data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle]: active,
               [disabledTextStyle]: disabled,
@@ -290,66 +308,65 @@ const SubMenu: ExtendableBox<
           >
             {title}
           </div>
-
-          <div
-            className={cx(descriptionTextStyle, {
-              [activeDescriptionTextStyle]: active,
-              [disabledTextStyle]: disabled,
-              [focusStyles.descriptionStyle]: showFocus,
-              [linkDescriptionTextStyle]: typeof rest.href === 'string',
-            })}
-          >
-            {description}
-          </div>
+          {description && (
+            <div
+              className={cx(descriptionTextStyle, {
+                [activeDescriptionTextStyle]: active,
+                [disabledTextStyle]: disabled,
+                [focusStyles.descriptionStyle]: showFocus,
+                [linkDescriptionTextStyle]: typeof rest.href === 'string',
+              })}
+            >
+              {description}
+            </div>
+          )}
         </div>
       </>
     );
 
-    const renderBox =
-      typeof rest.href === 'string' ? (
-        <Box as="a" {...sharedBoxProps}>
-          {boxContent}
-        </Box>
-      ) : (
-        <Box as="button" {...sharedBoxProps}>
-          {boxContent}
-        </Box>
-      );
-
-    const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
-    const chevronIconStyles = cx({
-      [openIconStyle]: open,
-      [closedIconStyle]: !open,
-      [focusedIconStyle]: showFocus,
-    });
+    const as = isAnchor ? 'a' : 'button';
 
     return (
-      <li role="none" className={liStyle}>
-        {renderBox}
-        <IconButton
-          {...iconButton.prop}
-          darkMode={true}
-          ref={setIconButtonElement}
-          aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-          className={cx(iconButtonStyle, {
-            [openIconButtonStyle]: open,
-            [iconButtonFocusedStyle]: showFocus,
-          })}
-          onClick={(e: React.MouseEvent) => {
-            // we stop the event from propagating and closing the entire menu
-            e.nativeEvent.stopImmediatePropagation();
-
-            if (setOpen) {
-              setOpen(!open);
-            }
-          }}
+      <li role="none">
+        <Box
+          as={as}
+          {...boxProps}
+          {...anchorProps}
+          {...rest}
+          className={cx(
+            menuItemContainerStyle,
+            menuItemHeight('default'),
+            linkStyle,
+            subMenuStyle,
+            {
+              [activeMenuItemContainerStyle]: active,
+              [disabledMenuItemContainerStyle]: disabled,
+              [focusedMenuItemContainerStyle]: showFocus,
+              [subMenuOpenStyle]: open,
+            },
+            className,
+          )}
         >
-          <ChevronIcon
-            role="presentation"
-            className={chevronIconStyles}
-            size={14}
-          />
-        </IconButton>
+          {content}
+          <IconButton
+            {...iconButton.prop}
+            data-testid="lg-sub-menu-icon-button"
+            darkMode={true}
+            ref={setIconButtonElement}
+            aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
+            className={cx(iconButtonStyle, {
+              [openIconButtonStyle]: open,
+              [iconButtonFocusedStyle]: showFocus,
+            })}
+            onClick={handleChevronClick}
+          >
+            <ChevronIcon
+              role="presentation"
+              className={chevronIconStyles}
+              size={14}
+            />
+          </IconButton>
+        </Box>
 
         <Transition
           in={open}
