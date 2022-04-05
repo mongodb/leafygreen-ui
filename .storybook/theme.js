@@ -1,5 +1,5 @@
 import { create } from '@storybook/theming';
-import { uiColors } from '../packages/palette';
+import { uiColors } from '../packages/palette/dist';
 
 export default create({
   name: 'leafygreen',
