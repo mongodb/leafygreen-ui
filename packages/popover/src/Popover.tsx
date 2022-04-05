@@ -17,6 +17,7 @@ import {
   getElementViewportPosition,
   getElementDocumentPosition,
 } from './positionUtils';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 const rootPopoverStyle = css`
   position: absolute;
@@ -92,7 +93,7 @@ function Popover({
   // By default if no portalContainer is passed the <Portal> component will create a div and append it to the body.
   if (usePortal && scrollContainer) {
     if (!scrollContainer.contains(portalContainer as HTMLElement)) {
-      console.warn(
+      consoleOnce.warn(
         'To ensure correct positioning make sure that the portalContainer element is inside of the scrollContainer',
       );
     }
