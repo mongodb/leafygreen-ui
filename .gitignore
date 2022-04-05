@@ -7,7 +7,7 @@ lerna-debug.log
 # Dist files
 dist/
 *.tgz
-storybook/public/
+.storybook/public/
 
 # Cache directories
 .cache/
