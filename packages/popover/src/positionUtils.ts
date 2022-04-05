@@ -425,13 +425,15 @@ function calcAbsolutePosition({
   windowWidth,
   windowHeight,
 }: CalcAbsolutePositionArgs): AbsolutePositionObject {
-  const left = `${calcLeft({
+  const leftNum = calcLeft({
     align,
     justify,
     referenceElPos: referenceElDocumentPos,
     contentElPos: contentElDocumentPos,
     spacing,
-  })}px`;
+  });
+
+  const left = `${leftNum}px`;
 
   const top = `${calcTop({
     align,
@@ -440,13 +442,6 @@ function calcAbsolutePosition({
     contentElPos: contentElDocumentPos,
     spacing,
   })}px`;
-
-  // TODO: remove
-  // console.group();
-  // console.log('calcAbsolutePosition');
-  // console.log({contentElDocumentPos});
-  // console.log({referenceElDocumentPos});
-  // console.groupEnd();
 
   if (justify !== Justify.Fit) {
     return { left, top };
@@ -466,17 +461,10 @@ function calcAbsolutePosition({
     };
   }
 
-  // TODO: remove
-  // console.group();
-  // console.log('windowWidth', windowWidth);
-  // console.log('referenceElDocumentPos.right', referenceElDocumentPos.right);
-  // console.log(`${windowWidth - referenceElDocumentPos.right}px`);
-  // console.groupEnd();
-
   return {
     left,
     top,
-    right: `${windowWidth - referenceElDocumentPos.right}px`,
+    right: `${windowWidth - (leftNum + referenceElDocumentPos.width)}px`, // take the left position of the content element and add the width of the reference element. This is where we want the right position of the content element to be. To get the equivalent right position minus this number from the container width.
   };
 }
 
@@ -590,14 +578,6 @@ function safelyWithinHorizontalWindow({
   contentWidth: number;
 }): boolean {
   const tooWide = left + contentWidth > windowWidth;
-
-  // TODO: remove
-  // console.group();
-  // console.log({left});
-  // console.log({contentWidth});
-  // console.log({windowWidth});
-  // console.log({tooWide});
-  // console.groupEnd();
 
   return left >= 0 && !tooWide;
 }
