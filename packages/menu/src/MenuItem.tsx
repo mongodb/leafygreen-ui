@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp } from '@leafygreen-ui/lib';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
+import { cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
@@ -19,29 +19,13 @@ import {
   linkDescriptionTextStyle,
   activeDescriptionTextStyle,
   textContainer,
+  menuItemHeight,
   getFocusedStyles,
   getHoverStyles,
 } from './styles';
+import { Size } from './types';
 
 const menuItemContainer = createDataProp('menu-item-container');
-
-const Size = {
-  Default: 'default',
-  Large: 'large',
-} as const;
-
-type Size = typeof Size[keyof typeof Size];
-
-const menuItemHeight: Record<Size, string> = {
-  [Size.Default]: css`
-    min-height: 34px;
-  `,
-
-  [Size.Large]: css`
-    min-height: 46px;
-  `,
-};
-
 interface BaseMenuItemProps {
   /**
    * Determines whether or not the MenuItem is active.
@@ -102,6 +86,8 @@ const MenuItem: ExtendableBox<
     const hoverStyles = getHoverStyles(menuItemContainer.selector);
     const focusStyles = getFocusedStyles(menuItemContainer.selector);
 
+    const isAnchor = typeof rest.href === 'string';
+
     const updatedGlyph =
       glyph &&
       React.cloneElement(glyph, {
@@ -116,38 +102,30 @@ const MenuItem: ExtendableBox<
         ),
       });
 
-    const commonProps = {
-      ...rest,
+    const boxProps = {
       ...menuItemContainer.prop,
       ref,
-      className: cx(
-        menuItemContainerStyle,
-        menuItemHeight[size],
-        linkStyle,
-        {
-          [activeMenuItemContainerStyle]: active,
-          [disabledMenuItemContainerStyle]: disabled,
-          [focusedMenuItemContainerStyle]: showFocus,
-        },
-        className,
-      ),
       role: 'menuitem',
       tabIndex: disabled ? -1 : undefined,
-      // only add a disabled prop if not an anchor
-      ...(typeof rest.href !== 'string' && { disabled }),
       'aria-disabled': disabled,
+      // only add a disabled prop if not an anchor
+      ...(!isAnchor && { disabled }),
     };
 
-    const anchorProps = {
-      target: '_self',
-      rel: '',
-    };
+    const anchorProps = isAnchor
+      ? {
+          target: '_self',
+          rel: '',
+        }
+      : {};
 
     const content = (
       <>
         {updatedGlyph}
         <div className={textContainer}>
           <div
+            // Add text as data attribute to ensure no layout shift on hover
+            data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle]: active,
               [disabledTextStyle]: disabled,
@@ -165,7 +143,6 @@ const MenuItem: ExtendableBox<
                 [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
             >
-              {rest.href}
               {description}
             </div>
           )}
@@ -173,19 +150,27 @@ const MenuItem: ExtendableBox<
       </>
     );
 
-    if (typeof rest.href === 'string') {
-      return (
-        <li role="none">
-          <Box as="a" {...anchorProps} {...commonProps}>
-            {content}
-          </Box>
-        </li>
-      );
-    }
+    const as = isAnchor ? 'a' : 'button';
 
     return (
       <li role="none">
-        <Box as="button" {...commonProps}>
+        <Box
+          as={as}
+          {...boxProps}
+          {...anchorProps}
+          {...rest}
+          className={cx(
+            menuItemContainerStyle,
+            menuItemHeight(size),
+            linkStyle,
+            {
+              [activeMenuItemContainerStyle]: active,
+              [disabledMenuItemContainerStyle]: disabled,
+              [focusedMenuItemContainerStyle]: showFocus,
+            },
+            className,
+          )}
+        >
           {content}
         </Box>
       </li>
