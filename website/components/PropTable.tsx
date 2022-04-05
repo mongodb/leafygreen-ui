@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import Card from '@leafygreen-ui/card';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography';
@@ -262,6 +262,10 @@ function PropTable({
             {tableData[index] && (
               <Wrapper isTouchDevice={isTouchDevice}>
                 <Table
+                  className={css`
+                    position: relative;
+                    z-index: 0;
+                  `}
                   key={header}
                   data={tableData[index]}
                   columns={[
