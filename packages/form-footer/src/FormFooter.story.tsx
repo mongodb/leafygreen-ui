@@ -6,7 +6,7 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import FormFooter from '.';
 
-storiesOf('FormFooter', module)
+storiesOf('Packages/FormFooter', module)
   .add('Default', () => (
     <FormFooter
       className={css`

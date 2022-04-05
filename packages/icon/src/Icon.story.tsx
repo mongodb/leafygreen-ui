@@ -25,7 +25,7 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-storiesOf('Icons', module).add('Icon', () => {
+storiesOf('Packages/Icons', module).add('Icon', () => {
   const fill = color('Fill', '#000000');
   const size = select('size', Object.values(Size), Size.Default);
 

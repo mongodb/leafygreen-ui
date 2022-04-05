@@ -8,7 +8,7 @@ import { CHANGE } from '@storybook/addon-knobs';
 
 const channel = addons.getChannel();
 
-storiesOf('Stepper', module)
+storiesOf('Packages/Stepper', module)
   .add('Default', () => (
     <div style={{ width: 1000 }}>
       <Stepper

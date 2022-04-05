@@ -11,7 +11,7 @@ const wrapperStyle = css`
   padding: 40px;
 `;
 
-storiesOf('TextInput', module)
+storiesOf('Packages/TextInput', module)
   .add('Default', () => {
     const darkMode = boolean('darkMode', false);
 

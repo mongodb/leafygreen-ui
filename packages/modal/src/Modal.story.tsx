@@ -70,7 +70,7 @@ function Interactive() {
   );
 }
 
-storiesOf('Modal', module)
+storiesOf('Packages/Modal', module)
   .add('Default', () => <Default />)
   .add('Scroll', () => <Scroll />)
   .add('Interactive', () => <Interactive />);

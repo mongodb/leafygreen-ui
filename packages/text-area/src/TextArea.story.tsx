@@ -6,7 +6,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import TextArea, { State } from './TextArea';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-storiesOf('TextArea', module).add('Default', () => {
+storiesOf('Packages/TextArea', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
   return (
     <LeafyGreenProvider>

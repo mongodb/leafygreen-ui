@@ -7,7 +7,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Button, { Variant, Size } from '.';
 
-storiesOf('Button', module)
+storiesOf('Packages/Button', module)
   .add('Default', () => {
     const buttonText = text('Text', 'MongoDB');
     const variant = select('Variant', Object.values(Variant), Variant.Default);
