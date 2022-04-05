@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { transparentize } from 'polished';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
@@ -297,9 +303,7 @@ const SegmentedControl = React.forwardRef<
 ) {
   // TODO: log warning if defaultValue is set but does not match any child value
   const { usingKeyboard } = useUsingKeyboardContext();
-  const [segmentedContainer, setSegmentedContainer] = useState<null | Element>(
-    null,
-  );
+  const segmentedContainerRef = useRef<null | HTMLDivElement>(null);
   const [isfocusInComponent, setIsfocusInComponent] = useState<boolean>(false);
 
   const getOptionRef = useDynamicRefs<HTMLDivElement>({ prefix: 'option' });
@@ -340,12 +344,16 @@ const SegmentedControl = React.forwardRef<
 
   // Check if the organic focus is inside of this component. We'll use this to check if the focus should be programmatically set in SegmentedControlOption.
   const handleFocusIn = useCallback(() => {
-    if (segmentedContainer?.contains(document.activeElement as HTMLElement)) {
+    if (
+      segmentedContainerRef.current?.contains(
+        document.activeElement as HTMLElement,
+      )
+    ) {
       setIsfocusInComponent(true);
     } else {
       setIsfocusInComponent(false);
     }
-  }, [segmentedContainer]);
+  }, []);
 
   useEffect(() => {
     document.addEventListener('focusin', handleFocusIn);
@@ -542,7 +550,7 @@ const SegmentedControl = React.forwardRef<
   return (
     <SegmentedControlContext.Provider value={{ size, mode, name, followFocus }}>
       <div
-        ref={el => setSegmentedContainer(el)}
+        ref={segmentedContainerRef}
         className={cx(
           wrapperStyle,
           {
