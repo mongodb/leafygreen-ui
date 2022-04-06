@@ -11,6 +11,11 @@ export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
 
 type GlyphObject = Record<string, LGGlyph.Component>;
 
+/**
+ * Returns a single component with a `glyph` prop to select the glyph
+ * @param glyphs The set of glyphs
+ * @returns Icon component
+ */
 export default function createIconComponent<
   G extends GlyphObject = GlyphObject
 >(glyphs: G) {

@@ -1,8 +1,9 @@
 import { once } from 'lodash';
 import * as typeIs from './typeIs';
+import createUniqueClassName from './createUniqueClassName';
+import getNodeTextContent from './getNodeTextContent';
 
-export { typeIs };
-
+export { typeIs, createUniqueClassName, getNodeTextContent };
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
   Element extends keyof JSX.IntrinsicElements,

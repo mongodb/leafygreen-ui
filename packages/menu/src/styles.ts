@@ -1,13 +1,18 @@
 import { css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
-import { transparentize } from 'polished';
+import { Size } from './types';
 
-const indentation = 16;
-const leftBar = 4;
 export const svgWidth = 24;
 export const menuItemPadding = 15;
 export const paddingLeft = 52;
+const indentation = 16;
+const wedgeWidth = 4;
+const minMenuContent = 32;
+const menuBlockPadding: Record<Size, number> = {
+  [Size.Default]: 2,
+  [Size.Large]: 6.5,
+};
 
 /**
  * Base styles
@@ -40,11 +45,11 @@ export const menuItemContainerStyle = css`
   &:before {
     content: '';
     position: absolute;
-    width: ${leftBar}px;
+    width: ${wedgeWidth}px;
     left: 0px;
     height: calc(100% - 8px);
     max-height: 32px;
-    border-radius: 0 ${leftBar}px ${leftBar}px 0;
+    border-radius: 0 ${wedgeWidth}px ${wedgeWidth}px 0;
     background-color: transparent;
     transition: background-color 150ms ease-in-out;
   }
@@ -62,6 +67,12 @@ export const menuItemContainerStyle = css`
   }
 `;
 
+export const menuItemHeight = (size: Size) => {
+  return css`
+    min-height: ${minMenuContent + 2 * menuBlockPadding[size]}px;
+  `;
+};
+
 export const textContainer = css`
   width: 100%;
   overflow: hidden;
@@ -74,19 +85,27 @@ export const mainIconStyle = css`
   flex-shrink: 0;
 `;
 
-const pseudoBoldWeight = 0.125;
-const pseudoBoldColor = transparentize(0.4, palette.white);
-
 export const titleTextStyle = css`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   width: 100%;
   font-size: 13px;
   font-weight: 500;
   color: ${palette.white};
-  // Define the default pseudo-bold styles
-  --lg-menu-pseudo-bold: ${pseudoBoldWeight}px 0 ${pseudoBoldColor},
-    ${-pseudoBoldWeight}px 0 ${pseudoBoldColor},
-    0 ${pseudoBoldWeight}px ${pseudoBoldColor},
-    0 ${-pseudoBoldWeight}px ${pseudoBoldColor};
+
+  // We create a pseudo element that's the width of the bolded text
+  // This way there's no layout shift on hover when the text is bolded.
+  &:after {
+    content: attr(data-text);
+    height: 0;
+    font-weight: 700;
+    visibility: hidden;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+  }
 `;
 
 export const descriptionTextStyle = css`
@@ -109,9 +128,7 @@ export const linkDescriptionTextStyle = css`
 export const getHoverStyles = (container: string) => ({
   text: css`
     ${container}:hover & {
-      // Pseudo-bold so the text doesn't overflow on hover
-      // var is defined in \`*TextStyles\` for specificity
-      text-shadow: var(--lg-menu-pseudo-bold);
+      font-weight: 700;
     }
   `,
 });
@@ -138,8 +155,6 @@ export const activeMenuItemContainerStyle = css`
 export const activeTitleTextStyle = css`
   font-weight: bold;
   color: ${palette.green.base};
-  // no pseudo bold text when active */
-  --lg-menu-pseudo-bold: unset;
 `;
 export const activeDescriptionTextStyle = css`
   color: ${palette.gray.light1};
