@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/checkbox",
-  "version": "6.0.6",
+  "version": "7.0.0",
   "description": "LeafyGreen UI Kit Checkbox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,12 +21,12 @@
   },
   "dependencies": {
     "@leafygreen-ui/hooks": "^7.0.0",
-    "@leafygreen-ui/lib": "^9.0.0",
+    "@leafygreen-ui/lib": "^9.2.0",
     "@leafygreen-ui/typography": "^9.1.0",
     "@leafygreen-ui/leafygreen-provider": "^2.1.3"
   },
   "devDependencies": {
-    "@leafygreen-ui/palette": "^3.2.2"
+    "@leafygreen-ui/palette": "^3.3.2"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
 }
