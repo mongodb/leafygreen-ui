@@ -1,5 +1,19 @@
 # @leafygreen-ui/table
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+  - @leafygreen-ui/lib@9.2.0
+  - @leafygreen-ui/icon@11.8.0
+  - @leafygreen-ui/checkbox@7.0.0
+  - @leafygreen-ui/palette@3.3.2
+
 ## 3.0.0
 
 ### Major Changes
