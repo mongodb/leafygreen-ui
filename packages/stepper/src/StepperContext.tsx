@@ -3,16 +3,10 @@ import React, {
   ReactNode,
   useContext,
   useState,
-  Dispatch,
   useEffect,
 } from 'react';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
-interface StepperContextValues {
-  isDarkMode: boolean;
-  setIsDarkMode: Dispatch<React.SetStateAction<boolean>>;
-  stepIconClassName: string;
-  stepLabelClassName: string;
-}
+import { StepperContextValues } from './types';
 
 export const StepperContext = createContext({});
 export const useStepperContext = () =>

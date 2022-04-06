@@ -1,4 +1,11 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
+
+export interface StepperContextValues {
+  isDarkMode: boolean;
+  setIsDarkMode: Dispatch<React.SetStateAction<boolean>>;
+  stepIconClassName: string;
+  stepLabelClassName: string;
+}
 
 // TODO: replace with common type across all components
 export const Mode = {
