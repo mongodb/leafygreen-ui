@@ -176,7 +176,7 @@ export function getElementDocumentPosition(
       bottom: bottom + scrollTop - offsetBottom,
       left: Math.floor(left) + scrollLeft - offsetLeft, // remove decimals from left to get a whole number
       right: right + scrollLeft - offsetRight,
-      height: height,
+      height,
       width: Math.floor(width), // remove decimals from width to get a whole number
     };
   }
@@ -188,7 +188,7 @@ export function getElementDocumentPosition(
     bottom: bottom + scrollY,
     left: Math.floor(left) + scrollX,
     right: right + scrollX,
-    height: height,
+    height,
     width: Math.floor(width),
   };
 }
@@ -227,7 +227,7 @@ export function getElementViewportPosition(
       bottom: bottom - offsetBottom,
       left: Math.floor(left) - offsetLeft,
       right: right - offsetRight,
-      height: height,
+      height,
       width: Math.floor(width),
     };
   }
