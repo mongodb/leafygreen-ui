@@ -5,15 +5,14 @@ import { palette } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import Button, { Variant, Size } from '.';
-import { FontSize } from './types';
+import Button, { FontSize, Variant, Size } from '.';
 
 const wrapperStyle = (darkMode: boolean) => css`
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${!darkMode ? palette.white : palette.gray.dark3};
-  width: 100%;
+  width: 100vw;
   height: 100vh;
 `;
 
