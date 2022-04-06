@@ -46,9 +46,10 @@ const map = {
 
 function renderLogoStory(LogoComponent: React.FunctionComponent<LogoProps>) {
   const color = select('Color', SupportedColors, SupportedColors.GreenDark2);
-  const darkBackground = (
-    [SupportedColors.White, SupportedColors.GreenBase] as Array<string>
-  ).includes(color);
+  const darkBackground = ([
+    SupportedColors.White,
+    SupportedColors.GreenBase,
+  ] as Array<string>).includes(color);
 
   const background = css`
     ${containerStyle};

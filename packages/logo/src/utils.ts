@@ -19,8 +19,7 @@ const SupportedColorsMap: Record<SupportedColors, string> = {
   [SupportedColors.GreenBase]: '#00ED64',
 } as const;
 
-type SupportedColorsMap =
-  typeof SupportedColorsMap[keyof typeof SupportedColorsMap];
+type SupportedColorsMap = typeof SupportedColorsMap[keyof typeof SupportedColorsMap];
 
 export { SupportedColors, SupportedColorsMap };
 

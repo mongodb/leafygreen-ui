@@ -6,7 +6,7 @@ type Override2<T, U, V> = Override<Override<T, U>, V>;
 
 type BoxDefault<
   Default extends React.ElementType = 'div',
-  ExtraProps = {},
+  ExtraProps = {}
 > = Override2<
   React.ComponentPropsWithRef<Default>,
   {
@@ -27,7 +27,7 @@ type BoxAnchorDefault<ExtraProps = {}> = Override2<
 
 type BoxIntrinsic<
   TElement extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements,
-  ExtraProps = {},
+  ExtraProps = {}
 > = Override2<
   React.ComponentPropsWithRef<TElement>,
   {
@@ -46,7 +46,7 @@ type BoxComponent<TProps = {}, ExtraProps = {}> = Override2<
 
 export type BoxProps<
   Default extends React.ElementType = 'div',
-  ExtraProps = {},
+  ExtraProps = {}
 > =
   | BoxAnchorDefault<ExtraProps>
   | BoxIntrinsic<keyof JSX.IntrinsicElements, ExtraProps>
@@ -99,7 +99,7 @@ export default Box;
 
 export interface ExtendableBox<
   ExtraProps,
-  Default extends React.ElementType = 'div',
+  Default extends React.ElementType = 'div'
 > extends Pick<
     React.FunctionComponent<BoxProps<Default, ExtraProps>>,
     'displayName' | 'propTypes'

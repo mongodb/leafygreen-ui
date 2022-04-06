@@ -84,5 +84,4 @@ export const SupportedLanguages = {
   Xml: 'xml',
 } as const;
 
-export type SupportedLanguages =
-  typeof SupportedLanguages[keyof typeof SupportedLanguages];
+export type SupportedLanguages = typeof SupportedLanguages[keyof typeof SupportedLanguages];

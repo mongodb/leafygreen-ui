@@ -40,7 +40,7 @@ export interface Context<THandle> {
 type ContextResult<
   TEnterResult extends MaybePromise<any>,
   TFnResult extends MaybePromise<any>,
-  TExitResult extends MaybePromise<void>,
+  TExitResult extends MaybePromise<void>
 > = TFnResult extends PromiseLike<any>
   ? TFnResult
   : TEnterResult extends PromiseLike<any>
@@ -66,7 +66,7 @@ function isPromiseLike<T>(obj: MaybePromise<T>): obj is PromiseLike<T> {
 function handleMaybeAsyncException<
   TArgs extends Array<any>,
   TResolvedResult,
-  TOnExceptionReturn,
+  TOnExceptionReturn
 >(
   fn: (...args: TArgs) => MaybePromise<TResolvedResult>,
   onException: (exception: unknown) => TOnExceptionReturn,
@@ -89,7 +89,7 @@ function handleMaybeAsyncException<
 function asyncCompose<
   TInnerArgs extends Array<any>,
   TResolvedResult,
-  TOuterResult,
+  TOuterResult
 >(
   innerFn: (...args: TInnerArgs) => MaybePromise<TResolvedResult>,
   outerFn: (result: Resolve<TResolvedResult>) => TOuterResult,
@@ -108,7 +108,7 @@ function asyncCompose<
 export function within<
   TEnterResult extends MaybePromise<any>,
   TFnResult extends MaybePromise<any>,
-  TExitResult extends MaybePromise<void> = void,
+  TExitResult extends MaybePromise<void> = void
 >(
   context: {
     [enter]: () => TEnterResult;

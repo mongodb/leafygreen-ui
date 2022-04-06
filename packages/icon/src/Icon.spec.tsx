@@ -228,10 +228,14 @@ describe('Generated glyphs', () => {
           },
         );
 
-        const [, script, checksum, checkedContents] =
-          /^\/\*.*@script ([^\n]*).*@checksum ([^\n]*).*\*\/\n(.*)$/s.exec(
-            generatedFileContents,
-          )!;
+        const [
+          ,
+          script,
+          checksum,
+          checkedContents,
+        ] = /^\/\*.*@script ([^\n]*).*@checksum ([^\n]*).*\*\/\n(.*)$/s.exec(
+          generatedFileContents,
+        )!;
 
         const expectedChecksum = createHash('md5')
           .update(script)

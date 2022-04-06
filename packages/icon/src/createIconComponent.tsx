@@ -17,7 +17,7 @@ type GlyphObject = Record<string, LGGlyph.Component>;
  * @returns Icon component
  */
 export default function createIconComponent<
-  G extends GlyphObject = GlyphObject,
+  G extends GlyphObject = GlyphObject
 >(glyphs: G) {
   const Icon = ({ glyph, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];

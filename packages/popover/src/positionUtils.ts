@@ -400,9 +400,11 @@ function calcAbsolutePosition({
   }
 
   if (
-    (
-      [Align.Left, Align.Right, Align.CenterHorizontal] as Array<Align>
-    ).includes(align)
+    ([
+      Align.Left,
+      Align.Right,
+      Align.CenterHorizontal,
+    ] as Array<Align>).includes(align)
   ) {
     return {
       left,
@@ -577,9 +579,11 @@ function getWindowSafeAlign(
       // Check that an alignment will not cause the popover to collide with the window.
 
       if (
-        (
-          [Align.Top, Align.Bottom, Align.CenterVertical] as Array<Align>
-        ).includes(fallback)
+        ([
+          Align.Top,
+          Align.Bottom,
+          Align.CenterVertical,
+        ] as Array<Align>).includes(fallback)
       ) {
         const top = calcTop({
           align: fallback,
@@ -596,9 +600,11 @@ function getWindowSafeAlign(
       }
 
       if (
-        (
-          [Align.Left, Align.Right, Align.CenterHorizontal] as Array<Align>
-        ).includes(fallback)
+        ([
+          Align.Left,
+          Align.Right,
+          Align.CenterHorizontal,
+        ] as Array<Align>).includes(fallback)
       ) {
         const left = calcLeft({
           align: fallback,

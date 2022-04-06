@@ -216,10 +216,9 @@ const Row = React.forwardRef(
     const [nestedRowHeight, setNestedRowHeight] = useState(0);
     useEffect(() => {
       if (nestedRowNodeRef && nestedRowNodeRef.current) {
-        const innerSpan: HTMLSpanElement | null =
-          nestedRowNodeRef.current.querySelector(
-            `${tdInnerDiv.selector} > span`,
-          );
+        const innerSpan: HTMLSpanElement | null = nestedRowNodeRef.current.querySelector(
+          `${tdInnerDiv.selector} > span`,
+        );
 
         if (innerSpan && innerSpan.offsetHeight) {
           setNestedRowHeight(innerSpan.offsetHeight);
@@ -275,71 +274,70 @@ const Row = React.forwardRef(
     }, [children, hasNestedRows, hasRowSpan, tableDispatch, data]);
 
     // Render any nested rows and their transition group
-    const { rowHasNestedRows, renderedNestedRowTransitionGroup } =
-      useMemo(() => {
-        const renderedNestedRows: Array<React.ReactElement> = [];
-        const rowHasNestedRows = React.Children.toArray(children).some(child =>
-          isComponentType<RowElement>(child, 'Row'),
-        );
+    const {
+      rowHasNestedRows,
+      renderedNestedRowTransitionGroup,
+    } = useMemo(() => {
+      const renderedNestedRows: Array<React.ReactElement> = [];
+      const rowHasNestedRows = React.Children.toArray(children).some(child =>
+        isComponentType<RowElement>(child, 'Row'),
+      );
 
-        const shouldTransitionGroupBeVisible =
-          isExpanded && !isAnyAncestorCollapsedProp;
+      const shouldTransitionGroupBeVisible =
+        isExpanded && !isAnyAncestorCollapsedProp;
 
-        // We don't need the transition group except on the client here, and rendering this bit on the server breaks rendering these rows.
-        const renderedNestedRowTransitionGroup = isBrowser ? (
-          <Transition
-            in={shouldTransitionGroupBeVisible}
-            timeout={{
-              enter: 0,
-              exit: transitionTime,
-            }}
-            nodeRef={nestedRowNodeRef}
-          >
-            {state =>
-              React.Children.map(children, (child, index) => {
-                if (
-                  child != null &&
-                  isComponentType<RowElement>(child, 'Row')
-                ) {
-                  return React.cloneElement(child, {
-                    ref: nestedRowNodeRef,
-                    isAnyAncestorCollapsed:
-                      isAnyAncestorCollapsedProp || !isExpanded,
-                    indentLevel: indentLevel + 1,
-                    key: `${indexRef.current}-${indentLevel}-${index}`,
-                    className: cx(
-                      nestedRowInitialStyle,
-                      nestedRowTransitionStyles(state, nestedRowHeight),
-                      {
-                        // TODO: Refresh - remove dark mode overrides
-                        [css`
-                          --lg-cell-min-height: 24px;
-                        `]: darkMode,
-                      },
-                    ),
-                  });
-                }
-              })
-            }
-          </Transition>
-        ) : (
-          renderedNestedRows
-        );
+      // We don't need the transition group except on the client here, and rendering this bit on the server breaks rendering these rows.
+      const renderedNestedRowTransitionGroup = isBrowser ? (
+        <Transition
+          in={shouldTransitionGroupBeVisible}
+          timeout={{
+            enter: 0,
+            exit: transitionTime,
+          }}
+          nodeRef={nestedRowNodeRef}
+        >
+          {state =>
+            React.Children.map(children, (child, index) => {
+              if (child != null && isComponentType<RowElement>(child, 'Row')) {
+                return React.cloneElement(child, {
+                  ref: nestedRowNodeRef,
+                  isAnyAncestorCollapsed:
+                    isAnyAncestorCollapsedProp || !isExpanded,
+                  indentLevel: indentLevel + 1,
+                  key: `${indexRef.current}-${indentLevel}-${index}`,
+                  className: cx(
+                    nestedRowInitialStyle,
+                    nestedRowTransitionStyles(state, nestedRowHeight),
+                    {
+                      // TODO: Refresh - remove dark mode overrides
+                      [css`
+                        --lg-cell-min-height: 24px;
+                      `]: darkMode,
+                    },
+                  ),
+                });
+              }
+            })
+          }
+        </Transition>
+      ) : (
+        renderedNestedRows
+      );
 
-        return {
-          rowHasNestedRows,
-          renderedNestedRows,
-          renderedNestedRowTransitionGroup,
-        };
-      }, [
-        children,
-        isExpanded,
-        isAnyAncestorCollapsedProp,
-        isBrowser,
-        indentLevel,
-        nestedRowHeight,
-        darkMode,
-      ]);
+      return {
+        rowHasNestedRows,
+        renderedNestedRows,
+        renderedNestedRowTransitionGroup,
+      };
+    }, [
+      children,
+      isExpanded,
+      isAnyAncestorCollapsedProp,
+      isBrowser,
+      indentLevel,
+      nestedRowHeight,
+      darkMode,
+    ]);
 
     const renderedChildren = useMemo(() => {
       const renderedChildren: Array<React.ReactElement> = [];

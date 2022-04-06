@@ -18,8 +18,7 @@ type FilteredSupportedLanguagesEnum = Omit<
   // Aliases for languages
   'Cs' | 'JS' | 'TS'
 >;
-type FilteredSupportedLanguages =
-  FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
+type FilteredSupportedLanguages = FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
 
 function filterSupportedLanguages(
   language: SupportedLanguages,

@@ -222,10 +222,10 @@ export default function Combobox<M extends boolean>({
     [filteredOptions, getDisplayNameForValue, inputValue],
   );
 
-  const visibleOptions = useMemo(
-    () => allOptions.filter(isOptionVisible),
-    [allOptions, isOptionVisible],
-  );
+  const visibleOptions = useMemo(() => allOptions.filter(isOptionVisible), [
+    allOptions,
+    isOptionVisible,
+  ]);
 
   const isValueValid = useCallback(
     (value: string | null): boolean => {
@@ -508,8 +508,10 @@ export default function Combobox<M extends boolean>({
 
       if (focusedElementRef && focusedElementRef.current && menuRef.current) {
         const { offsetTop: optionTop } = focusedElementRef.current;
-        const { scrollTop: menuScroll, offsetHeight: menuHeight } =
-          menuRef.current;
+        const {
+          scrollTop: menuScroll,
+          offsetHeight: menuHeight,
+        } = menuRef.current;
 
         if (optionTop > menuHeight || optionTop < menuScroll) {
           menuRef.current.scrollTop = optionTop;
@@ -592,10 +594,10 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
-  const renderedOptions = useMemo(
-    () => renderInternalOptions(children),
-    [children, renderInternalOptions],
-  );
+  const renderedOptions = useMemo(() => renderInternalOptions(children), [
+    children,
+    renderInternalOptions,
+  ]);
 
   const renderedChips = useMemo(() => {
     if (isMultiselect(selection)) {
@@ -685,10 +687,9 @@ export default function Combobox<M extends boolean>({
   ]);
 
   // Do any of the options have an icon?
-  const withIcons = useMemo(
-    () => allOptions.some(opt => opt.hasGlyph),
-    [allOptions],
-  );
+  const withIcons = useMemo(() => allOptions.some(opt => opt.hasGlyph), [
+    allOptions,
+  ]);
 
   /**
    *
@@ -858,8 +859,10 @@ export default function Combobox<M extends boolean>({
     const menuMargin = 8;
 
     if (viewportSize && comboboxRef.current && menuRef.current) {
-      const { top: triggerTop, bottom: triggerBottom } =
-        comboboxRef.current.getBoundingClientRect();
+      const {
+        top: triggerTop,
+        bottom: triggerBottom,
+      } = comboboxRef.current.getBoundingClientRect();
 
       // Find out how much space is available above or below the trigger
       const safeSpace = Math.max(

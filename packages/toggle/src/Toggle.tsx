@@ -460,8 +460,9 @@ function Toggle({
     onLabel: onLabelModeStyles,
   } = modeStyles[darkMode ? Mode.Dark : Mode.Light];
 
-  const { button: buttonSizeStyles, slider: sliderSizeStyles } =
-    sizeStyles[size];
+  const { button: buttonSizeStyles, slider: sliderSizeStyles } = sizeStyles[
+    size
+  ];
 
   return (
     <InteractionRing

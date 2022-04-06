@@ -316,10 +316,9 @@ const SegmentedControl = React.forwardRef<
   });
 
   // If a value is given, then it's controlled
-  const isControlled = useMemo(
-    () => controlledValue != null,
-    [controlledValue],
-  );
+  const isControlled = useMemo(() => controlledValue != null, [
+    controlledValue,
+  ]);
 
   // Keep track of the value internally
   const [internalValue, setInternalValue] = useState<string | undefined>(
@@ -453,9 +452,9 @@ const SegmentedControl = React.forwardRef<
   // Keep track of the index of the selected value
   const selectedIndex = useMemo(
     () =>
-      (
-        React.Children.toArray(renderedChildren) as Array<React.ReactElement>
-      ).findIndex(child =>
+      (React.Children.toArray(
+        renderedChildren,
+      ) as Array<React.ReactElement>).findIndex(child =>
         isControlled
           ? child.props.value === controlledValue
           : child.props.value === internalValue,
@@ -470,16 +469,18 @@ const SegmentedControl = React.forwardRef<
   // Keep track of the index of the focused value
   const focusedIndex = useMemo(
     () =>
-      (
-        React.Children.toArray(renderedChildren) as Array<React.ReactElement>
-      ).findIndex(child => child.props.value === focusedOptionValue),
+      (React.Children.toArray(
+        renderedChildren,
+      ) as Array<React.ReactElement>).findIndex(
+        child => child.props.value === focusedOptionValue,
+      ),
     [renderedChildren, focusedOptionValue],
   );
 
   const updateFocusedIndex = (newIndex: number): void => {
-    const children = (
-      React.Children.toArray(renderedChildren) as Array<React.ReactElement>
-    ).filter(child => !child.props.disabled);
+    const children = (React.Children.toArray(
+      renderedChildren,
+    ) as Array<React.ReactElement>).filter(child => !child.props.disabled);
     const length = children.length;
     newIndex =
       newIndex >= length

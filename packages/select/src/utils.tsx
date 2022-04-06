@@ -234,10 +234,10 @@ export function useForwardedRef<T>(
   );
 
   return useObservedRef(
-    useCallback(
-      value => forwardValueToRefs(forwardedRefOrRefs, value),
-      [forwardedRefOrRefs, forwardValueToRefs],
-    ),
+    useCallback(value => forwardValueToRefs(forwardedRefOrRefs, value), [
+      forwardedRefOrRefs,
+      forwardValueToRefs,
+    ]),
     { initialValue },
   );
 }

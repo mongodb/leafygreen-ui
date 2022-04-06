@@ -140,8 +140,10 @@ export default function Table<Shape>({
   }, [viewportSize]);
 
   const handleScroll = (e: React.UIEvent) => {
-    const { scrollWidth, clientWidth: elementWidth } =
-      e.target as HTMLDivElement;
+    const {
+      scrollWidth,
+      clientWidth: elementWidth,
+    } = e.target as HTMLDivElement;
     const isScrollable = scrollWidth > elementWidth;
 
     if (isScrollable) {

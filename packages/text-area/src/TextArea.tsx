@@ -160,129 +160,130 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
 type AriaLabels = 'label' | 'aria-labelledby';
 type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
 
-const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
-  React.forwardRef(function TextArea(
-    {
-      label,
-      description,
-      className,
-      errorMessage,
-      darkMode = false,
-      disabled = false,
-      state = State.None,
-      id: idProp,
-      value: controlledValue,
-      onChange,
-      onBlur,
-      handleValidation,
-      'aria-labelledby': ariaLabelledby,
-      ...rest
-    }: TextAreaProps,
-    forwardedRef: React.Ref<HTMLTextAreaElement>,
-  ) {
-    const id = useIdAllocator({ prefix: 'textarea', id: idProp });
-    const mode = darkMode ? Mode.Dark : Mode.Light;
+const TextArea: React.ComponentType<
+  React.PropsWithRef<TextAreaProps>
+> = React.forwardRef(function TextArea(
+  {
+    label,
+    description,
+    className,
+    errorMessage,
+    darkMode = false,
+    disabled = false,
+    state = State.None,
+    id: idProp,
+    value: controlledValue,
+    onChange,
+    onBlur,
+    handleValidation,
+    'aria-labelledby': ariaLabelledby,
+    ...rest
+  }: TextAreaProps,
+  forwardedRef: React.Ref<HTMLTextAreaElement>,
+) {
+  const id = useIdAllocator({ prefix: 'textarea', id: idProp });
+  const mode = darkMode ? Mode.Dark : Mode.Light;
 
-    const isControlled = typeof controlledValue === 'string';
-    const [uncontrolledValue, setValue] = useState('');
-    const value = isControlled ? controlledValue : uncontrolledValue;
+  const isControlled = typeof controlledValue === 'string';
+  const [uncontrolledValue, setValue] = useState('');
+  const value = isControlled ? controlledValue : uncontrolledValue;
 
-    // Validation
-    const validation = useValidation<HTMLTextAreaElement>(handleValidation);
+  // Validation
+  const validation = useValidation<HTMLTextAreaElement>(handleValidation);
 
-    const onBlurHandler: React.FocusEventHandler<HTMLTextAreaElement> = e => {
-      if (onBlur) {
-        onBlur(e);
-      }
-
-      validation.onBlur(e);
-    };
-
-    const onValueChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
-      if (onChange) {
-        onChange(e);
-      }
-
-      if (!isControlled) {
-        setValue(e.target.value);
-      }
-
-      validation.onChange(e);
-    };
-
-    if (!label && !ariaLabelledby) {
-      console.error(
-        'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
-      );
+  const onBlurHandler: React.FocusEventHandler<HTMLTextAreaElement> = e => {
+    if (onBlur) {
+      onBlur(e);
     }
 
-    return (
-      <div className={cx(containerStyles, className)}>
-        {label && (
-          <Label
-            darkMode={darkMode}
-            htmlFor={id}
-            disabled={disabled}
-            // className={cx({
-            //   [colorSets[mode].disabledText] : disabled
-            // })}
-          >
-            {label}
-          </Label>
-        )}
-        {description && (
-          <Description
-            darkMode={darkMode}
-            disabled={disabled}
-            className={cx({
-              [css`
-                padding-bottom: 4px;
-              `]: !darkMode,
-            })}
-          >
-            {description}
-          </Description>
-        )}
-        <InteractionRing
+    validation.onBlur(e);
+  };
+
+  const onValueChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
+    if (onChange) {
+      onChange(e);
+    }
+
+    if (!isControlled) {
+      setValue(e.target.value);
+    }
+
+    validation.onChange(e);
+  };
+
+  if (!label && !ariaLabelledby) {
+    console.error(
+      'For screen-reader accessibility, label or aria-labelledby must be provided to TextArea.',
+    );
+  }
+
+  return (
+    <div className={cx(containerStyles, className)}>
+      {label && (
+        <Label
+          darkMode={darkMode}
+          htmlFor={id}
+          disabled={disabled}
+          // className={cx({
+          //   [colorSets[mode].disabledText] : disabled
+          // })}
+        >
+          {label}
+        </Label>
+      )}
+      {description && (
+        <Description
           darkMode={darkMode}
           disabled={disabled}
-          ignoreKeyboardContext={true}
-          color={
-            state === State.Error
-              ? { hovered: darkMode ? uiColors.red.dark3 : palette.red.light3 }
-              : undefined
-          }
-          borderRadius={darkMode ? '4px' : '6px'} // TODO: Refresh - remove after darkmode is redesigned
+          className={cx({
+            [css`
+              padding-bottom: 4px;
+            `]: !darkMode,
+          })}
         >
-          <textarea
-            {...rest}
-            ref={forwardedRef}
-            title={label != null ? label : undefined}
-            id={id}
-            className={cx(textAreaStyle, colorSets[mode].textArea, {
-              [colorSets[mode].errorBorder]: state === State.Error && !disabled,
-              [css`
-                background-color: #5a3c3b;
-              `]: state === State.Error && darkMode,
-            })}
-            disabled={disabled}
-            onChange={onValueChange}
-            onBlur={onBlurHandler}
-            value={value}
-          />
-        </InteractionRing>
-        {!disabled && state === State.Error && errorMessage && (
-          <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
-            {
-              // TODO: Refresh - remove conditional logic
-              !darkMode && <Warning className={errorIconStyle} />
-            }
-            <label>{errorMessage}</label>
-          </div>
-        )}
-      </div>
-    );
-  });
+          {description}
+        </Description>
+      )}
+      <InteractionRing
+        darkMode={darkMode}
+        disabled={disabled}
+        ignoreKeyboardContext={true}
+        color={
+          state === State.Error
+            ? { hovered: darkMode ? uiColors.red.dark3 : palette.red.light3 }
+            : undefined
+        }
+        borderRadius={darkMode ? '4px' : '6px'} // TODO: Refresh - remove after darkmode is redesigned
+      >
+        <textarea
+          {...rest}
+          ref={forwardedRef}
+          title={label != null ? label : undefined}
+          id={id}
+          className={cx(textAreaStyle, colorSets[mode].textArea, {
+            [colorSets[mode].errorBorder]: state === State.Error && !disabled,
+            [css`
+              background-color: #5a3c3b;
+            `]: state === State.Error && darkMode,
+          })}
+          disabled={disabled}
+          onChange={onValueChange}
+          onBlur={onBlurHandler}
+          value={value}
+        />
+      </InteractionRing>
+      {!disabled && state === State.Error && errorMessage && (
+        <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
+          {
+            // TODO: Refresh - remove conditional logic
+            !darkMode && <Warning className={errorIconStyle} />
+          }
+          <label>{errorMessage}</label>
+        </div>
+      )}
+    </div>
+  );
+});
 
 TextArea.displayName = 'TextArea';
 

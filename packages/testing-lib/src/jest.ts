@@ -18,7 +18,7 @@ export interface SpyHandle<T extends {}, M extends FunctionPropertyNames<T>>
 
 export interface SpyContextManager<
   T extends {},
-  M extends FunctionPropertyNames<T>,
+  M extends FunctionPropertyNames<T>
 > {
   [Context.enter]: () => SpyHandle<T, M>;
   [Context.exit]: (spy: SpyHandle<T, M>) => void;
