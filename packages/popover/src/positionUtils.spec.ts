@@ -66,6 +66,8 @@ const contentElPos = {
   width: 20,
 };
 
+const scrollContainer = null;
+
 function checkPixelValue(actual: string | number, expected: number) {
   if (typeof actual === 'string') {
     expect(actual).toBe(`${expected}px`);
@@ -88,6 +90,7 @@ describe('positionUtils', () => {
         referenceElViewportPos: refElPos.top,
         contentElDocumentPos: contentElPos,
         contentElViewportPos: contentElPos,
+        scrollContainer,
       });
 
       expect(calcPositionObject.align).toBeTruthy();
@@ -109,6 +112,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('bottom');
@@ -133,6 +137,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -158,6 +163,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('right');
@@ -182,6 +188,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('right');
@@ -206,6 +213,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('right');
@@ -230,6 +238,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -255,6 +264,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('bottom');
@@ -279,6 +289,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('bottom');
@@ -303,6 +314,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('bottom');
@@ -327,6 +339,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -352,6 +365,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('left');
@@ -376,6 +390,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('left');
@@ -400,6 +415,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('left');
@@ -424,6 +440,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -449,6 +466,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('bottom');
@@ -473,6 +491,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -498,6 +517,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('center-horizontal');
@@ -520,6 +540,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('center-horizontal');
@@ -542,6 +563,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(align).toBe('center-horizontal');
@@ -564,6 +586,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.top,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -590,6 +613,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -612,6 +636,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -634,6 +659,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -656,6 +682,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -680,6 +707,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -703,6 +731,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -725,6 +754,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -747,6 +777,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -769,6 +800,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -793,6 +825,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -815,6 +848,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -837,6 +871,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -859,6 +894,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -883,6 +919,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -903,6 +940,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -923,6 +961,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -943,6 +982,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -965,6 +1005,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.right,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -991,6 +1032,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -1013,6 +1055,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -1035,6 +1078,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -1057,6 +1101,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1082,6 +1127,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1104,6 +1150,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1126,6 +1173,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1148,6 +1196,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1172,6 +1221,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -1196,6 +1246,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1218,6 +1269,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1240,6 +1292,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1262,6 +1315,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1287,6 +1341,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -1311,6 +1366,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1331,6 +1387,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1351,6 +1408,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1371,6 +1429,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.bottom,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1396,6 +1455,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1418,6 +1478,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1440,6 +1501,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1462,6 +1524,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1487,6 +1550,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1509,6 +1573,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1531,6 +1596,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -1553,6 +1619,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1577,6 +1644,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1599,6 +1667,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1621,6 +1690,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1643,6 +1713,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1668,6 +1739,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1692,6 +1764,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1712,6 +1785,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1732,6 +1806,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1752,6 +1827,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1775,6 +1851,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.left,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1801,6 +1878,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1823,6 +1901,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1845,6 +1924,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1867,6 +1947,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1892,6 +1973,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1914,6 +1996,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1936,6 +2019,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -1958,6 +2042,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -1983,6 +2068,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -2005,6 +2091,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -2027,6 +2114,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -2049,6 +2137,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2074,6 +2163,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -2096,6 +2186,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -2118,6 +2209,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -2140,6 +2232,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2165,6 +2258,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -2185,6 +2279,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -2205,6 +2300,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -2225,6 +2321,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2248,6 +2345,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -2268,6 +2366,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -2288,6 +2387,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -2308,6 +2408,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2333,6 +2434,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
@@ -2355,6 +2457,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
@@ -2377,6 +2480,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
@@ -2399,6 +2503,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2424,6 +2529,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 0);
@@ -2446,6 +2552,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('-5px');
@@ -2468,6 +2575,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.bottom, 0);
@@ -2490,6 +2598,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2515,6 +2624,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
@@ -2537,6 +2647,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
@@ -2559,6 +2670,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
@@ -2581,6 +2693,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2606,6 +2719,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 0);
@@ -2628,6 +2742,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('-5px');
@@ -2650,6 +2765,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.bottom, 0);
@@ -2672,6 +2788,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2697,6 +2814,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('calc(5px - 50%)');
@@ -2717,6 +2835,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('calc(5px - 50%)');
@@ -2737,6 +2856,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('calc(5px - 50%)');
@@ -2757,6 +2877,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
@@ -2780,6 +2901,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.top, 0);
@@ -2800,6 +2922,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(positionCSS.top).toBe('-5px');
@@ -2820,6 +2943,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           checkPixelValue(positionCSS.bottom, 0);
@@ -2840,6 +2964,7 @@ describe('positionUtils', () => {
             referenceElViewportPos: refElPos.center,
             contentElDocumentPos: contentElPos,
             contentElViewportPos: contentElPos,
+            scrollContainer,
           });
 
           expect(justify).toBe('fit');
