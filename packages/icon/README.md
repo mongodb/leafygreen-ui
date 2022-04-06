@@ -55,18 +55,22 @@ const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
 | `title`            | `string`, `boolean`, `null`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Renders a title tag with the passed string within the SVG element for screen reader accessibility. Setting this value to `false` will entirely unset the title. <br />If title is `undefined` or `null`, a human-readable title will be generated based on the glyph's name. |             |
 | ...                | `SVGR.ComponentProps`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | All other props will be spread on the `svg` element                                                                                                                                                                                                                          |             |
 
-## Advanced Usage (Registering custom icon sets)
+# createIconComponent
+
+## Usage (Registering custom icon sets)
 
 This package exposes a method used to generate a custom version of the Icon component with any specified set of icons.
 
 ```js
 // Import the createIconComponent method from the Icon package
-import { createIconComponent } from '@leafygreen-ui/Icon';
+import { createGlyphComponent, createIconComponent } from '@leafygreen-ui/icon';
 
 // Create your 'glyphs' object. For each key / value pair, the key will be the name of the icon,
 // and the value can be any valid React component.
 const myGlyphs = {
-  MyCustomGlyph: () => <svg />,
+  MyCustomGlyph: createGlyphComponent('MyCustomGlyph', props => (
+    <svg {...props} />
+  )),
 };
 
 // The createIconComponent function returns your custom Icon component.
@@ -83,14 +87,58 @@ const SomeComponent = () => (
 We also export the default icon set for you! If you want to include our glyphs with your custom glyphs, you can do something like this:
 
 ```js
-import { createIconComponent, glyphs } from '@leafygreen-ui/Icon';
+import { createGlyphComponent, createIconComponent } from '@leafygreen-ui/icon';
 
 const myGlyphs = {
   ...glyphs,
-  MyCustomGlyph: () => <svg />,
+  MyCustomGlyph: createGlyphComponent('MyCustomGlyph', props => (
+    <svg {...props} />
+  )),
 };
 
 const MyIconComponent = createIconComponent(myGlyphs);
 ```
 
 **Note:** Glyph has a static property, `isGlyph`, that enables checking whether or not a component is a LeafyGreen glyph.
+
+## Returns
+
+A custom `Icon` component, that includes any custom `glyph`s
+
+## Properties
+
+| Prop          | Type                                | Description                                                | Default |
+| ------------- | ----------------------------------- | ---------------------------------------------------------- | ------- |
+| `GlyphObject` | `Record<string, LGGlyph.Component>` | A dictionary record of all the named icons in the icon set |         |
+
+# createGlyphComponent
+
+Ensures a custom glyph accepts the same props and treat them the same as a built-in Leafygreen icon.
+To ensure a custom glyph behaves similarly to built-in icons, be sure to:
+
+- Spread `props` onto the `svg` element
+- Ensure all fills in the `svg` are set to `currentColor`
+- Strokes are converted to outlines (this should be done in Figma)
+
+## Usage
+
+```js
+import { createGlyphComponent, Size } from '@leafygreen-ui/icon';
+
+const MyIconGlyph = createGlyphComponent('myIconName', props => (
+  <svg {...props} />
+));
+
+return <MyIconGlyph size={Size.Large} role="presentation" />;
+```
+
+## Returns
+
+A `LGGlyph.Component`
+
+## Properties
+
+| Prop    | Type             | Description             | Default |
+| ------- | ---------------- | ----------------------- | ------- |
+| `name`  | `string`         | The name of the icon    |         |
+| `Glyph` | `SVGR.Component` | The React SVG component |         |
