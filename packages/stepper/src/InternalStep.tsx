@@ -17,11 +17,8 @@ export const Step = function Step({
   className,
   ...rest
 }: PropsWithChildren<InternalStepProps & React.HTMLProps<HTMLDivElement>>) {
-  const {
-    isDarkMode,
-    stepIconClassName,
-    stepLabelClassName,
-  } = useStepperContext();
+  const { isDarkMode, stepIconClassName, stepLabelClassName } =
+    useStepperContext();
   const isCurrent = state === StepStates.Current;
 
   const baseStyles = css`

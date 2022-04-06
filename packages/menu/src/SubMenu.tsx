@@ -221,10 +221,8 @@ const SubMenu: ExtendableBox<
     const hoverStyles = getHoverStyles(subMenuContainer.selector);
     const focusStyles = getFocusedStyles(subMenuContainer.selector);
 
-    const [
-      iconButtonElement,
-      setIconButtonElement,
-    ] = useState<HTMLElement | null>(null);
+    const [iconButtonElement, setIconButtonElement] =
+      useState<HTMLElement | null>(null);
 
     const onRootClick = useCallback(
       (

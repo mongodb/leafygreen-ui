@@ -324,12 +324,8 @@ describe('packages/RadioBoxGroup', () => {
     });
 
     test('first radio box becomes checked when clicked second', () => {
-      const {
-        firstInput,
-        secondInput,
-        secondLabel,
-        firstLabel,
-      } = setupUncontrolledTest();
+      const { firstInput, secondInput, secondLabel, firstLabel } =
+        setupUncontrolledTest();
       fireEvent.click(secondLabel);
       fireEvent.click(firstLabel);
 
