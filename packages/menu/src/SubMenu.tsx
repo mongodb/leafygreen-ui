@@ -217,6 +217,8 @@ const SubMenu: ExtendableBox<
     const hoverStyles = getHoverStyles(subMenuContainer.selector);
     const focusStyles = getFocusedStyles(subMenuContainer.selector);
 
+    const nodeRef = React.useRef(null);
+
     const [
       iconButtonElement,
       setIconButtonElement,
