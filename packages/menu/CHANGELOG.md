@@ -1,5 +1,22 @@
 # @leafygreen-ui/menu
 
+## 12.1.0
+
+### Minor Changes
+
+- acd6919: Updates `MenuSeparator` to optionally accept a `className` prop
+
+### Patch Changes
+
+- acd6919: Removes an undocumented change where both `href` and `description` would be rendered if provided to `MenuItem`. Now only `description` will be rendered.
+- acd6919: - Eliminates fuzzy text on hover in `menu` and `tabs`
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+  - @leafygreen-ui/lib@9.2.0
+  - @leafygreen-ui/palette@3.3.2
+  - @leafygreen-ui/icon-button@10.0.0
+
 ## 12.0.0
 
 ### Major Changes
