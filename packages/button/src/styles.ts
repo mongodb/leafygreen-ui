@@ -1,8 +1,8 @@
 import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
-import { Size, Variant, Mode, ButtonProps } from './types';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { Size, Variant, Mode, ButtonProps, FontSize } from './types';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { createDataProp } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
@@ -367,29 +367,17 @@ const sizeSet: Record<Size, string> = {
   `,
 };
 
-const fontStyles = {
-  [Mode.Light]: {
-    [14]: css`
-      font-size: 13px;
-      font-weight: 500;
-    `,
-    [16]: css`
-      font-size: 16px;
-      // Pixel pushing for optical alignment purposes
-      transform: translateY(1px);
-      font-weight: 500;
-    `,
-  },
-  [Mode.Dark]: {
-    [14]: css`
-      font-size: 14px;
-    `,
-    [16]: css`
-      font-size: 16px;
-      // Pixel pushing for optical alignment purposes
-      transform: translateY(1px);
-    `,
-  },
+const fontStyles: Record<FontSize, string> = {
+  [FontSize.Body1]: css`
+    font-size: ${typeScales.body1};
+    font-weight: 500;
+  `,
+  [FontSize.Body2]: css`
+    font-size: ${typeScales.body2};
+    // Pixel pushing for optical alignment purposes
+    transform: translateY(1px);
+    font-weight: 500;
+  `,
 };
 
 export const ButtonDataProp = createDataProp('button');
@@ -400,33 +388,26 @@ export function getClassName({
   darkMode,
   baseFontSize,
   disabled,
-  showFocus,
+  usingKeyboard,
 }: Required<
   Pick<
     ButtonProps,
     'baseFontSize' | 'variant' | 'size' | 'darkMode' | 'disabled'
-  > & { showFocus: boolean }
+  > & { usingKeyboard: boolean }
 >) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const color = colorSet[mode][variant];
   const focus = focusStyle[mode][variant];
   const size = sizeSet[sizeProp];
-  const fontSize = fontStyles[mode][baseFontSize];
+  const fontSize = fontStyles[baseFontSize];
 
   return cx(
     baseButtonStyles,
     color,
-    { [focus]: showFocus },
-    { [disabledStyle[mode]]: disabled },
     fontSize,
     size,
-    {
-      [css`
-        // TODO: Refresh - remove this logic
-        font-family: ${fontFamilies.default};
-        border-radius: 4px;
-      `]: mode === 'dark',
-    },
+    { [focus]: usingKeyboard },
+    { [disabledStyle[mode]]: disabled },
   );
 }
 
