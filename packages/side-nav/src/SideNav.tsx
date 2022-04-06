@@ -198,10 +198,8 @@ function SideNav({
   const [focus, setFocus] = useState(false);
   const { usingKeyboard } = useUsingKeyboardContext();
   const navId = useIdAllocator({ prefix: 'side-nav', id: idProp });
-  const [
-    portalContainer,
-    setPortalContainer,
-  ] = useState<HTMLUListElement | null>(null);
+  const [portalContainer, setPortalContainer] =
+    useState<HTMLUListElement | null>(null);
   const providerFontSize = useBaseFontSize();
   const fontSize: 14 | 16 = baseFontSize ?? providerFontSize;
   const width =

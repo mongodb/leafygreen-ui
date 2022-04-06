@@ -47,10 +47,8 @@ const childrenWrapper = css`
 `;
 
 function BaseLayout({ children }: { children: React.ReactNode }) {
-  const [
-    bodyContainerRef,
-    setBodyContainerRef,
-  ] = useState<HTMLDivElement | null>(null);
+  const [bodyContainerRef, setBodyContainerRef] =
+    useState<HTMLDivElement | null>(null);
 
   return (
     <LeafyGreenProvider

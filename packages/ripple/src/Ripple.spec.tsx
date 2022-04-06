@@ -30,12 +30,12 @@ describe('registerRipple', () => {
     const button = screen.getByText(buttonText);
 
     expect(
-      ((global as unknown) as Global)[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(true);
     expect(
-      ((global as unknown) as Global)[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.get(button),
     ).toBe(buttonOptions);
@@ -47,7 +47,7 @@ describe('registerRipple', () => {
     fireEvent.click(button);
 
     expect(
-      ((global as unknown) as Global)[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].setRippleListener,
     ).toBe(true);
@@ -57,14 +57,14 @@ describe('registerRipple', () => {
     const { unmount } = render(<ButtonWrapper />);
     const button = screen.getByText(buttonText);
     expect(
-      ((global as unknown) as Global)[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(true);
 
     unmount();
     expect(
-      ((global as unknown) as Global)[lgNamespace].modules[
+      (global as unknown as Global)[lgNamespace].modules[
         '@leafygreen-ui/ripple'
       ].registeredRippleElements.has(button),
     ).toBe(false);
