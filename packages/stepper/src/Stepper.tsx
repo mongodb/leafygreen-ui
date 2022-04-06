@@ -1,9 +1,9 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Step from './InternalStep';
 import { StepStates, StepperProps } from './types';
 import EllipsesStep from './EllipsesStep';
-import StepperContextProvider, { useStepperContext } from './StepperContext';
+import StepperContextProvider from './StepperContext';
 
 const Stepper = ({
   children,
@@ -13,11 +13,6 @@ const Stepper = ({
   darkMode = false,
   className,
 }: PropsWithChildren<StepperProps & React.HTMLProps<HTMLOListElement>>) => {
-  const { setIsDarkMode } = useStepperContext();
-  useEffect(() => {
-    if (setIsDarkMode) setIsDarkMode(darkMode);
-  }, [darkMode, setIsDarkMode]);
-
   // Helper Variables
   const numSteps = React.Children.count(children);
   const childrenArray = React.Children.toArray(children);
@@ -69,42 +64,42 @@ const Stepper = ({
   `;
 
   return (
-    <StepperContextProvider>
-    <ol className={cx(baseStyles, className)}>
-      {hasPriorSteps && (
-        <EllipsesStep
-          state={StepStates.CompletedMultiple}
-          startingStepIndex={1}
-          tooltipContent={childrenArray.slice(0, firstDisplayedStep)}
-        >
-          {getStepRangeText(1, firstDisplayedStep)}
-        </EllipsesStep>
-      )}
-      {React.Children.map(
-        childrenArray.slice(firstDisplayedStep, lastDisplayedStep),
-        (stepContents, i) => (
-          <li>
-            <Step
-              state={getStepState(firstDisplayedStep + i)}
-              shouldDisplayLine={!isLastStep(firstDisplayedStep + i)}
-              index={firstDisplayedStep + i + 1}
-            >
-              {stepContents}
-            </Step>
-          </li>
-        ),
-      )}
-      {hasLaterSteps && (
-        <EllipsesStep
-          state={StepStates.UpcomingMultiple}
-          startingStepIndex={lastDisplayedStep + 1}
-          shouldDisplayLine={false}
-          tooltipContent={childrenArray.slice(lastDisplayedStep, numSteps)}
-        >
-          {getStepRangeText(lastDisplayedStep + 1, numSteps)}
-        </EllipsesStep>
-      )}
-    </ol>
+    <StepperContextProvider darkMode={darkMode}>
+      <ol className={cx(baseStyles, className)}>
+        {hasPriorSteps && (
+          <EllipsesStep
+            state={StepStates.CompletedMultiple}
+            startingStepIndex={1}
+            tooltipContent={childrenArray.slice(0, firstDisplayedStep)}
+          >
+            {getStepRangeText(1, firstDisplayedStep)}
+          </EllipsesStep>
+        )}
+        {React.Children.map(
+          childrenArray.slice(firstDisplayedStep, lastDisplayedStep),
+          (stepContents, i) => (
+            <li>
+              <Step
+                state={getStepState(firstDisplayedStep + i)}
+                shouldDisplayLine={!isLastStep(firstDisplayedStep + i)}
+                index={firstDisplayedStep + i + 1}
+              >
+                {stepContents}
+              </Step>
+            </li>
+          ),
+        )}
+        {hasLaterSteps && (
+          <EllipsesStep
+            state={StepStates.UpcomingMultiple}
+            startingStepIndex={lastDisplayedStep + 1}
+            shouldDisplayLine={false}
+            tooltipContent={childrenArray.slice(lastDisplayedStep, numSteps)}
+          >
+            {getStepRangeText(lastDisplayedStep + 1, numSteps)}
+          </EllipsesStep>
+        )}
+      </ol>
     </StepperContextProvider>
   );
 };

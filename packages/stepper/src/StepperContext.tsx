@@ -4,6 +4,7 @@ import React, {
   useContext,
   useState,
   Dispatch,
+  useEffect,
 } from 'react';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 interface StepperContextValues {
@@ -17,11 +18,21 @@ export const StepperContext = createContext({});
 export const useStepperContext = () =>
   useContext<Partial<StepperContextValues>>(StepperContext);
 
-const StepperContextProvider = ({ children }: { children: ReactNode }) => {
+const StepperContextProvider = ({
+  darkMode,
+  children,
+}: {
+  darkMode: boolean;
+  children: ReactNode;
+}) => {
   // TODO: This dark mode state should ideally be managed in a global state.
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(darkMode);
   const stepIconClassName = createUniqueClassName();
   const stepLabelClassName = createUniqueClassName();
+
+  useEffect(() => {
+    setIsDarkMode(darkMode);
+  }, [darkMode]);
 
   return (
     <StepperContext.Provider

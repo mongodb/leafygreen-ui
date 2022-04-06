@@ -15,7 +15,8 @@ const EllipsesStep = ({
   ...rest
 }: React.PropsWithChildren<EllipsesStepProps>) => {
   const { isDarkMode, stepIconClassName } = useStepperContext();
-  // TODO: would be good to define main styles and put ol styles inside, but it is currently impossible because the <Tooltip> content is an iframe.
+
+  // TODO: would be good to put these styles inside a baseStyles, but it is currently impossible because the <Tooltip> content is an iframe.
   const tooltipStyles = css`
     // TODO: this is an arbitrary value. It would be nice to have a separate component for <ol> that handles this spacing.
     padding-inline-start: ${spacing[4]}px;

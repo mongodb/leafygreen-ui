@@ -61,7 +61,7 @@ storiesOf('Stepper', module)
           maxDisplayedSteps={maxDisplayedSteps}
           darkMode={darkMode}
         >
-          {times(numSteps, count => (
+          {times(numSteps, (count: number) => (
             <div key={count}>Step {count + 1}</div>
           ))}
         </Stepper>

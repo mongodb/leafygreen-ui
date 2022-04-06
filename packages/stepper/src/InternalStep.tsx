@@ -17,8 +17,11 @@ export const Step = function Step({
   className,
   ...rest
 }: PropsWithChildren<InternalStepProps & React.HTMLProps<HTMLDivElement>>) {
-  const { isDarkMode, stepIconClassName, stepLabelClassName } =
-    useStepperContext();
+  const {
+    isDarkMode,
+    stepIconClassName,
+    stepLabelClassName,
+  } = useStepperContext();
   const isCurrent = state === StepStates.Current;
 
   const baseStyles = css`
@@ -29,17 +32,18 @@ export const Step = function Step({
     padding-bottom: ${spacing[1]}px;
     position: relative; // for the :after line
 
-    &:focus {
+    &:focus-visible {
       outline: none;
       .${stepIconClassName} {
         // TODO: should use box-shadow utility for this.
-        box-shadow: 0px 0px 0px 2px ${isDarkMode ? palette.black : palette.white},
+        box-shadow: 0px 0px 0px 2px
+            ${isDarkMode ? palette.black : palette.white},
           0px 0px 0px 4px ${palette.blue.light1};
       }
     }
 
     ${shouldDisplayLine &&
-    `
+    css`
       &:after {
         content: '';
         height: 1px;
@@ -48,7 +52,9 @@ export const Step = function Step({
         top: ${iconSize / 2}px;
         left: 50%;
         z-index: 0;
-        background-color: ${isDarkMode ? palette.gray.light1 : palette.gray.base};
+        background-color: ${isDarkMode
+          ? palette.gray.light1
+          : palette.gray.base};
       }
     `}
   `;
@@ -122,17 +128,13 @@ export const Step = function Step({
       aria-current={isCurrent && 'step'}
       {...rest}
     >
-      <StepIcon
-        state={state}
-        content={index}
-        size={iconSize}
-      />
+      <StepIcon state={state} content={index} size={iconSize} />
       {/*
         TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
         Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.
       */}
       <Body
-        className="${stepLabelClassName}"
+        className={stepLabelClassName}
         weight={isCurrent ? 'medium' : 'regular'}
       >
         {children}
