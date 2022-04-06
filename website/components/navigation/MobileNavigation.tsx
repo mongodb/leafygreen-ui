@@ -79,8 +79,10 @@ const h4Style = css`
 `;
 
 function MobileNavigation({ children }: { children: React.ReactNode }) {
-  const [scrollContainerNode, setScrollContainerNode] =
-    useState<HTMLElement | null>(null);
+  const [
+    scrollContainerNode,
+    setScrollContainerNode,
+  ] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const { push } = useRouter();
 
