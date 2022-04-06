@@ -158,7 +158,7 @@ export function getElementDocumentPosition(
   // offsetWidth returns a rounded number of the element's layout width and height.
   // boundingWidth returns an exact number with the rendered width and height which can include transformations.
   // Using the exact number is a better indicator of determining if an element will fit in the window, e.g. calcLeft() uses the width to determine the left position and then that number is used to check if it is safetly within the window bounds. In some cases the offsetWidth is rounded up which means that it might not fit in the window bounds when it really can.
-  // With this we check if the difference between the bounding width and offsetWidth is less than one, if thats the case then the number was rounded and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
+  // With this we check if the difference between the bounding width and offsetWidth is less than one, if thats the case then the number was rounded to a whole number and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
   const width =
     Math.abs(boundingWidth - offsetWidth) < 1 ? boundingWidth : offsetWidth;
 
@@ -171,13 +171,14 @@ export function getElementDocumentPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
+    // Make left a whole number for easier calculations
     return {
       top: top + scrollTop - offsetTop,
       bottom: bottom + scrollTop - offsetBottom,
       left: Math.floor(left) + scrollLeft - offsetLeft, // remove decimals from left to get a whole number
       right: right + scrollLeft - offsetRight,
       height,
-      width: Math.floor(width), // remove decimals from width to get a whole number
+      width,
     };
   }
 
@@ -189,7 +190,7 @@ export function getElementDocumentPosition(
     left: Math.floor(left) + scrollX,
     right: right + scrollX,
     height,
-    width: Math.floor(width),
+    width,
   };
 }
 
@@ -228,7 +229,7 @@ export function getElementViewportPosition(
       left: Math.floor(left) - offsetLeft,
       right: right - offsetRight,
       height,
-      width: Math.floor(width),
+      width,
     };
   }
 
@@ -238,7 +239,7 @@ export function getElementViewportPosition(
     left: Math.floor(left),
     right,
     height,
-    width: Math.floor(width),
+    width,
   };
 }
 
