@@ -29,9 +29,11 @@ const containerStyle = css`
 
 const tableStyles = css`
   font-family: ${fontFamilies.default};
+  position: relative;
   border-collapse: collapse;
   box-sizing: border-box;
   width: 100%;
+  z-index: 0;
 `;
 
 const shadow = css`
