@@ -4,6 +4,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import formatType from 'utils/formatType';
+import { palette } from '@leafygreen-ui/palette';
 
 interface PropDefinitionProps {
   defaultValue: string;
@@ -13,7 +14,6 @@ interface PropDefinitionProps {
 }
 
 const propBlockContainer = css`
-  width: 50%;
   margin-bottom: ${spacing[3]}px;
 `;
 
@@ -25,6 +25,9 @@ const propBlockCodeStyle = css`
   font-weight: bold;
   white-space: pre-wrap;
   padding: 0 4px;
+  background-color: ${palette.gray.dark3};
+  border-color: ${palette.gray.dark2};
+  color: ${palette.gray.light1};
 `;
 
 function PropBlock({ header, value }: { header: string; value: string }) {
@@ -42,7 +45,7 @@ function TypeBlock({ header, value }: { header: string; value: string }) {
   return (
     <div className={propBlockContainer}>
       <p className={propBlockPStyle}>{header}</p>
-      {formatType(value)}
+      {formatType(value, undefined, propBlockCodeStyle)}
     </div>
   );
 }
@@ -50,8 +53,9 @@ function TypeBlock({ header, value }: { header: string; value: string }) {
 TypeBlock.displayName = 'TypeBlock';
 
 const flexContainer = css`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: ${spacing[3]}px;
 `;
 
 const definitionContainer = css`
@@ -59,11 +63,20 @@ const definitionContainer = css`
 `;
 
 const descriptionContainer = css`
-  margin-left: -16px;
-  margin-right: -16px;
-  margin-bottom: -14px;
-  background-color: white;
-  padding: 10px 20px;
+  background-color: ${palette.black};
+  padding-top: 10px;
+  color: ${palette.gray.light1};
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: calc(100% + ${spacing[3]}px * 2);
+    top: 0;
+    left: -${spacing[3]}px;
+    background-color: ${palette.gray.dark2};
+  }
 `;
 
 function Definition({
@@ -77,9 +90,13 @@ function Definition({
   return (
     <div className={definitionContainer}>
       <div className={flexContainer}>
-        <PropBlock header="Prop" value={prop} />
-        <TypeBlock header="Type" value={type} />
-        {showDefault && <PropBlock header="Default" value={defaultValue} />}
+        <div>
+          <PropBlock header="Prop" value={prop} />
+          {showDefault && <PropBlock header="Default" value={defaultValue} />}
+        </div>
+        <div>
+          <TypeBlock header="Type" value={type} />
+        </div>
       </div>
       <div className={descriptionContainer}>{description}</div>
     </div>
@@ -93,6 +110,10 @@ const inlineDefinitionStyle = css`
   font-weight: 600;
 `;
 
+const tooltipStyle = css`
+  max-width: inherit;
+`;
+
 function PropDefinition({
   prop,
   type,
@@ -102,6 +123,7 @@ function PropDefinition({
   return (
     <InlineDefinition
       className={inlineDefinitionStyle}
+      tooltipClassName={tooltipStyle}
       definition={
         <Definition
           prop={prop}
