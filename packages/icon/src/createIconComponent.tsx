@@ -4,8 +4,8 @@ import { LGGlyph } from './types';
 import { Size } from './glyphCommon';
 
 // We omit size here because we map string values for size to numbers in this component.
-export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
-  glyph: string;
+export interface IconProps<GlyphName extends string> extends Omit<LGGlyph.ComponentProps, 'size'> {
+  glyph: GlyphName;
   size?: Size | number;
 }
 
@@ -19,7 +19,7 @@ type GlyphObject = Record<string, LGGlyph.Component>;
 export default function createIconComponent<
   G extends GlyphObject = GlyphObject
 >(glyphs: G) {
-  const Icon = ({ glyph, ...rest }: IconProps) => {
+  const Icon = ({ glyph, ...rest }: IconProps<string & keyof G>) => {
     const SVGComponent = glyphs[glyph];
 
     return <SVGComponent {...rest} />;
