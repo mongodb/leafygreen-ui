@@ -10,4 +10,5 @@ module.exports = {
     '@storybook/addon-knobs',
   ],
   framework: '@storybook/react',
+  staticDirs: ['./static'],
 };

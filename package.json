@@ -42,7 +42,7 @@
     "prettier:check": "prettier --check \"**/*.{js,ts,tsx,json,md}\"",
     "publish:sites": "yarn build:storybook && yarn release:site && cd website && yarn build && yarn release",
     "release": "yarn changeset publish --public",
-    "release:site": "gh-pages --dist storybook/public",
+    "release:site": "gh-pages --dist storybook-static",
     "slackbot": "node ./scripts/slackbot.js",
     "start": "start-storybook -p 9001 --no-version-updates",
     "submodules:update": "git submodule update --init --recursive --remote",
