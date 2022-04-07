@@ -4,12 +4,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-
-const sharedStyles = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${palette.black};
-`;
+import { sharedStyles } from './styles';
 
 /**
  * H2

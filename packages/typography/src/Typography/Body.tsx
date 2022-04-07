@@ -3,15 +3,8 @@ import Box from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
 import { typeScale1, typeScale2 } from '../styles';
-
-const sharedStyles = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${palette.black};
-`;
+import { sharedStyles } from './styles';
 
 /**
  * Body

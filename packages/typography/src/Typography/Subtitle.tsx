@@ -1,20 +1,8 @@
 import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { HTMLElementProps, createDataProp, OneOf } from '@leafygreen-ui/lib';
-import {
-  useBaseFontSize,
-  useUsingKeyboardContext,
-} from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { typeScale1, typeScale2, codeTypeScale2 } from '../styles';
-
-const sharedStyles = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${palette.black};
-`;
+import { sharedStyles } from './styles';
 
 /**
  * Subtitle

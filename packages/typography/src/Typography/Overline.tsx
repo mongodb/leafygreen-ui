@@ -1,14 +1,7 @@
 import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-
-const sharedStyles = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${palette.black};
-`;
+import { sharedStyles } from './styles';
 
 /**
  * Overline
