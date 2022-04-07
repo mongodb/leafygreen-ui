@@ -6,144 +6,20 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors, palette } from '@leafygreen-ui/palette';
-import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { Description, Label } from '@leafygreen-ui/typography';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, typeScales, BaseFontSize } from '@leafygreen-ui/tokens';
+import {
+  AccessibleTextInputProps,
+  Mode,
+  SizeVariant,
+  State,
+  TextInputFontSize,
+  TextInputType,
+} from './types';
 
 const iconSelectorProp = createDataProp('icon-selector');
-
-export const State = {
-  None: 'none',
-  Valid: 'valid',
-  Error: 'error',
-} as const;
-
-export type State = typeof State[keyof typeof State];
-
-export const TextInputType = {
-  Email: 'email',
-  Password: 'password',
-  Search: 'search',
-  Text: 'text',
-  Url: 'url',
-  Tel: 'tel',
-  Number: 'number',
-} as const;
-
-export type TextInputType = typeof TextInputType[keyof typeof TextInputType];
-
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
-
-export const SizeVariant = {
-  XSmall: 'xsmall',
-  Small: 'small',
-  Default: 'default',
-  Large: 'large',
-} as const;
-
-export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
-
-export const BaseFontSize = 14 | 16; // TODO: Refresh  - remove 14 when new dark mode is added
-
-export type BaseFontSize = typeof BaseFontSize;
-
-interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
-  /**
-   * id associated with the TextInput component.
-   */
-  id?: string;
-
-  /**
-   * Text shown in bold above the input element.
-   */
-  label?: string | null;
-
-  /**
-   * Text that gives more detail about the requirements for the input.
-   */
-  description?: string;
-
-  /**
-   * Whether or not the field is optional.
-   * Default: false
-   */
-  optional?: boolean;
-
-  /**
-   * Whether or not the field is currently disabled.
-   * Default: false
-   */
-  disabled?: boolean;
-
-  /**
-   * Callback to be executed when the input stops being focused.
-   */
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
-
-  /**
-   * Callback to be executed when the value of the input field changes.
-   */
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-
-  /**
-   * The placeholder text shown in the input field before the user begins typing.
-   */
-  placeholder?: string;
-
-  /**
-   * The message shown below the input field if the value is invalid.
-   */
-  errorMessage?: string;
-
-  /**
-   * The current state of the TextInput. This can be none, valid, or error.
-   */
-  state?: State;
-
-  /**
-   * The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
-   */
-  value?: string;
-
-  /**
-   * className supplied to the TextInput container.
-   */
-  className?: string;
-
-  /**
-   *  determines whether or not the component appears in dark mode.
-   */
-  darkMode?: boolean;
-
-  type?: TextInputType;
-
-  handleValidation?: (value: string) => void;
-
-  ['aria-labelledby']?: string;
-
-  /**
-   *  determines the font size and padding.
-   */
-
-  sizeVariant?: SizeVariant;
-
-  /**
-   *  determines the base font size if sizeVariant is set to default.
-   */
-
-  baseFontSize?: BaseFontSize;
-}
-
-type AriaLabels = 'label' | 'aria-labelledby';
-type AccessibleTextInputProps =
-  | Either<TextInputProps, AriaLabels>
-  | (TextInputProps & { type: 'search'; 'aria-label': string });
 
 const interactionRingStyle = css`
   width: 100%;
@@ -298,8 +174,8 @@ const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
 
 interface SizeSet {
   inputHeight: number;
-  inputText: BaseFontSize;
-  text: BaseFontSize;
+  inputText: TextInputFontSize;
+  text: TextInputFontSize;
   lineHeight: number;
   padding: number;
 }
@@ -320,8 +196,7 @@ function getStatefulInputStyles({
   switch (state) {
     case State.Valid: {
       return css`
-        // TODO: Refresh - remove mode === 'dark' toggle when new dark mode is added
-        padding-right: ${mode === 'dark' ? 30 : 36}px;
+        padding-right: 36px;
         border-color: ${!disabled ? colorSets[mode].validBorder : 'inherit'};
       `;
     }
@@ -329,8 +204,7 @@ function getStatefulInputStyles({
     case State.Error: {
       return cx(
         css`
-          // TODO: Refresh - remove mode === 'dark' toggle when new dark mode is added
-          padding-right: ${mode === 'dark' ? 30 : 36}px;
+          padding-right: 36px;
           border-color: ${!disabled ? colorSets[mode].errorBorder : 'inherit'};
         `,
         {
@@ -352,11 +226,7 @@ function getStatefulInputStyles({
   }
 }
 
-function getSizeSets(
-  baseFontSize: BaseFontSize,
-  sizeVariant: SizeVariant,
-  mode: Mode,
-) {
+function getSizeSets(baseFontSize: BaseFontSize, sizeVariant: SizeVariant) {
   const sizeSets: Record<SizeVariant, SizeSet> = {
     [SizeVariant.XSmall]: {
       inputHeight: 22,
@@ -374,12 +244,12 @@ function getSizeSets(
     },
     [SizeVariant.Default]: {
       inputHeight: 36,
-      // TODO: Refresh - simplify this logic
-      inputText:
-        mode == 'dark' ? baseFontSize : baseFontSize === 14 ? 13 : baseFontSize,
-      text:
-        mode == 'dark' ? baseFontSize : baseFontSize === 14 ? 13 : baseFontSize,
-      lineHeight: mode == 'dark' ? (baseFontSize === 14 ? 16 : 20) : 20,
+      inputText: baseFontSize,
+      text: baseFontSize,
+      lineHeight:
+        baseFontSize == BaseFontSize.Body2
+          ? typeScales.body2.lineHeight
+          : typeScales.body1.lineHeight,
       padding: 12,
     },
     [SizeVariant.Large]: {
@@ -438,7 +308,7 @@ const TextInput: React.ComponentType<
       sizeVariant = SizeVariant.Default,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
-      baseFontSize = 14,
+      baseFontSize = BaseFontSize.Body1,
       ...rest
     }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -448,7 +318,7 @@ const TextInput: React.ComponentType<
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-    const sizeSet = getSizeSets(baseFontSize, sizeVariant, mode); // TODO: Refresh - remove `mode` arg when dark mode is added
+    const sizeSet = getSizeSets(baseFontSize, sizeVariant);
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
@@ -490,18 +360,7 @@ const TextInput: React.ComponentType<
       : CheckmarkIcon;
 
     return (
-      <div
-        className={cx(
-          textInputStyle,
-          className,
-          css`
-            // TODO: Refresh - remove mode === 'dark' toggles when new dark mode is added
-            font-family: ${mode === 'dark'
-              ? fontFamilies.legacy
-              : fontFamilies.default};
-          `,
-        )}
-      >
+      <div className={cx(textInputStyle, className)}>
         {label && (
           <Label
             darkMode={darkMode}
@@ -523,11 +382,6 @@ const TextInput: React.ComponentType<
                 font-size: ${sizeSet.text}px;
                 line-height: ${sizeSet.lineHeight}px;
               `,
-              {
-                [css`
-                  padding-bottom: 4px;
-                `]: !darkMode,
-              },
             )}
           >
             {description}
@@ -560,12 +414,8 @@ const TextInput: React.ComponentType<
                   font-size: ${sizeSet.inputText}px;
                   height: ${sizeSet.inputHeight}px;
                   padding-left: ${sizeSet.padding}px;
-
-                  // TODO: Refresh - remove mode === 'dark' toggles when new dark mode is added
-                  font-family: ${mode === 'dark'
-                    ? fontFamilies.legacy
-                    : fontFamilies.default};
-                  border-radius: ${mode === 'dark' ? 4 : 6}px;
+                  border-radius: 6px;
+                  font-family: ${fontFamilies.default};
 
                   &::placeholder {
                     color: ${colorSets[mode].placeholderColor};
@@ -691,7 +541,7 @@ TextInput.propTypes = {
   value: PropTypes.string,
   className: PropTypes.string,
   sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
-  baseFontSize: PropTypes.oneOf([14, 16]),
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };
 
 export default TextInput;
