@@ -28,8 +28,6 @@ const renderNewContainer = () => {
   const banana = getByText(rendered.container, 'Banana')
     .parentElement as Element;
 
-  userEvent.tab();
-
   return {
     ...rendered,
     apple,

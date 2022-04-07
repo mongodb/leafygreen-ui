@@ -290,6 +290,7 @@ const SegmentedControlOption = React.forwardRef<
       _index: index,
       _onClick,
       _onHover,
+      isfocusInComponent,
       ...rest
     }: SegmentedControlOptionProps,
     forwardedRef,
@@ -313,8 +314,12 @@ const SegmentedControlOption = React.forwardRef<
     const didComponentMount = useRef(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     useEffect(() => {
+      // Check if the component did mount
       if (didComponentMount.current) {
-        if (usingKeyboard && focused) {
+        // usingKeyboard: Returns if the keyboard is being used.
+        // focused: Returns if this option should be the item in focus.
+        // isfocusInComponent: Returns if the focus should organically be this component. Without this check focus will be hijacked to this component if `usingKeyboard` is updated to true.
+        if (usingKeyboard && focused && isfocusInComponent) {
           // Respond in the DOM when this option is given focus via keyboard
           buttonRef?.current?.focus();
 
@@ -325,7 +330,7 @@ const SegmentedControlOption = React.forwardRef<
         }
       }
       didComponentMount.current = true;
-    }, [focused, followFocus, usingKeyboard]);
+    }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
 
     return (
       <div
