@@ -1,10 +1,17 @@
+export const BaseFontSize = {
+  Body1: 13,
+  Body2: 16,
+} as const;
+
+export type BaseFontSize = typeof BaseFontSize[keyof typeof BaseFontSize];
+
 const typeScales = {
   body1: {
-    fontSize: 13,
+    fontSize: BaseFontSize.Body1,
     lineHeight: 20,
   } as const,
   body2: {
-    fontSize: 16,
+    fontSize: BaseFontSize.Body2,
     lineHeight: 28,
   } as const,
   code1: {
