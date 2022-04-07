@@ -8,7 +8,7 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { typeScale1, typeScale2, codeTypeScale2 } from './styles';
+import { typeScale1, typeScale2, codeTypeScale2 } from '../styles';
 
 const sharedStyles = css`
   margin: unset;
