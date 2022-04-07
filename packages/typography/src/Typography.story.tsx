@@ -17,12 +17,21 @@ import {
 import { Link, ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
+const wrapperStyles = css`
+  height: 100vh;
+  padding: 0 25vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+`;
 
 const displayBlock = css`
   display: block;
-  max-width: 500px;
-  padding: 8px 16px;
 `;
 
 const darkModeBodyStyles = css`
@@ -49,8 +58,20 @@ storiesOf('Typography', module).add('Default', () => {
   );
 
   return (
-    <LeafygreenProvider baseFontSize={select('baseFontSize', [14, 16], 14)}>
-      <div>
+    <LeafygreenProvider
+      baseFontSize={select(
+        'baseFontSize',
+        Object.values(BaseFontSize),
+        BaseFontSize.Body1,
+      )}
+    >
+      <div
+        className={cx(wrapperStyles, {
+          [css`
+            background-color: ${palette.gray.dark3};
+          `]: darkMode,
+        })}
+      >
         <H1 className={displayBlock}>Heading 1</H1>
         <H2 className={displayBlock}>Heading 2</H2>
         <H3 className={displayBlock}>Heading 3</H3>
@@ -125,13 +146,7 @@ storiesOf('Typography', module).add('Default', () => {
         <Overline className={displayBlock}>Overline</Overline>
         <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
 
-        <div
-          className={cx(displayBlock, {
-            [css`
-              background-color: ${uiColors.gray.dark3};
-            `]: darkMode,
-          })}
-        >
+        <div className={cx(displayBlock)}>
           <Label darkMode={darkMode} htmlFor="id">
             This is a label
           </Label>
