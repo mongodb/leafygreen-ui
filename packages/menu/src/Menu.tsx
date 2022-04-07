@@ -207,11 +207,11 @@ function Menu({
           });
         }
 
-        if (props?.children) {
-          return React.cloneElement(child, {
-            children: updateChildren(props.children),
-          });
-        }
+        // if (props?.children) {
+        //   return React.cloneElement(child, {
+        //     children: updateChildren(props.children),
+        //   });
+        // }
 
         return child;
       });
