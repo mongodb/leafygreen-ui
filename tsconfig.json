@@ -1,6 +1,9 @@
 {
   "extends": "./common.tsconfig.json",
   "include": ["packages/**/src/**/*", "typings/**/*"],
+  "exclude": [
+    "**/node_modules",
+  ],
   "compilerOptions": {
     "module": "system",
     "noEmit": true,
