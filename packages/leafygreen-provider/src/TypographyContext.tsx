@@ -1,14 +1,13 @@
 import React, { createContext, useContext } from 'react';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import PropTypes from 'prop-types';
 
-// TODO: Refresh - update to 13 | 16
-type FontSize = 14 | 16;
 export interface TypographyProviderProps {
   children: React.ReactNode;
-  baseFontSize?: FontSize;
+  baseFontSize?: BaseFontSize;
 }
 
-const BaseFontSizeContext = createContext<FontSize>(14);
+const BaseFontSizeContext = createContext<BaseFontSize>(BaseFontSize.Body1);
 
 export function useBaseFontSize() {
   return useContext(BaseFontSizeContext);
@@ -16,7 +15,7 @@ export function useBaseFontSize() {
 
 function TypographyProvider({
   children,
-  baseFontSize = 14,
+  baseFontSize = BaseFontSize.Body1,
 }: TypographyProviderProps) {
   return (
     <BaseFontSizeContext.Provider value={baseFontSize}>
