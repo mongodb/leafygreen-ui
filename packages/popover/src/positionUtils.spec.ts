@@ -98,6 +98,51 @@ describe('positionUtils', () => {
       expect(calcPositionObject.positionCSS).toBeTruthy();
     });
 
+    describe('uses the scrollContainer offsetWidth and offsetHeight instead of windowHeight and windowWidth', () => {
+      let offsetHeightSpy: jest.SpyInstance, offsetWeightSpy: jest.SpyInstance;
+      const mockScrollContainer = document.createElement('div');
+
+      // Mock the width and height of an HTML element
+      beforeEach(() => {
+        offsetWeightSpy = jest
+          .spyOn(mockScrollContainer, 'offsetWidth', 'get')
+          .mockImplementation(() => 100);
+        offsetHeightSpy = jest
+          .spyOn(mockScrollContainer, 'offsetHeight', 'get')
+          .mockImplementation(() => 100);
+      });
+
+      afterEach(() => {
+        offsetWeightSpy.mockRestore();
+        offsetHeightSpy.mockRestore();
+      });
+
+      test('Align.Right, Justify.Start works', () => {
+        const { align, justify, positionCSS } = calculatePosition({
+          spacing: SPACING,
+          windowHeight: 0,
+          windowWidth: 0,
+          useRelativePositioning: false,
+          align: Align.Right,
+          justify: Justify.Start,
+          referenceElDocumentPos: refElPos.top,
+          referenceElViewportPos: refElPos.top,
+          contentElDocumentPos: contentElPos,
+          contentElViewportPos: contentElPos,
+          scrollContainer: mockScrollContainer,
+        });
+
+        expect(align).toBe('right');
+        expect(justify).toBe('start');
+        checkPixelValue(positionCSS.top, 0);
+        checkPixelValue(positionCSS.left, 60);
+        expect(positionCSS.transformOrigin).toBe('left top');
+        expect(positionCSS.transform).toBe(
+          'translate3d(-5px, 0, 0) scale(0.8)',
+        );
+      });
+    });
+
     describe('when the reference element is on the top', () => {
       describe('Align.Top', () => {
         test('Align.Top respositions to Align.Bottom based on available space', () => {

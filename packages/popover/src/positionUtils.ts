@@ -49,7 +49,7 @@ export function calculatePosition({
   positionCSS: any;
 } {
   // Use scrollContainer width and height instead of window width and height when a scrollContainer is set
-  // so we can correctly determine if the content elemnt is safely within the "window"
+  // so we can correctly determine if the content element is safely within the "window"
   const windowContainerWidth = scrollContainer
     ? scrollContainer.offsetWidth
     : windowWidth;
@@ -65,7 +65,7 @@ export function calculatePosition({
     spacing,
   };
 
-  // calculatePosition will run and return CSS even if the content has no dimensions i.e. getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if there are dimensions.
+  // calculatePosition will run and return CSS even if getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if something is returned.
   //  Justify fit does not position itself properly in this case so we continue to return the CSS
   if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
     return {
@@ -158,7 +158,7 @@ export function getElementDocumentPosition(
   // offsetWidth returns a rounded number of the element's layout width and height.
   // boundingWidth returns an exact number with the rendered width and height which can include transformations.
   // Using the exact number is a better indicator of determining if an element will fit in the window, e.g. calcLeft() uses the width to determine the left position and then that number is used to check if it is safetly within the window bounds. In some cases the offsetWidth is rounded up which means that it might not fit in the window bounds when it really can.
-  // With this we check if the difference between the bounding width and offsetWidth is less than one, if thats the case then the number was rounded to a whole number and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
+  // With this we check if the difference between the boundingWidth and offsetWidth is less than one, if thats the case then the number was rounded to a whole number and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
   const width =
     Math.abs(boundingWidth - offsetWidth) < 1 ? boundingWidth : offsetWidth;
 
@@ -529,9 +529,6 @@ function calcLeft({
   referenceElPos,
   spacing,
 }: CalcPosition): number {
-  // TODO: remove
-  // console.log('calcLeft contentElPos.width', contentElPos.width);
-  // console.log('calcLeft referenceElPos.width', referenceElPos.width);
   switch (align) {
     case Align.Top:
     case Align.Bottom:
