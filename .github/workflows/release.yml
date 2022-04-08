@@ -44,6 +44,10 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         run: yarn publish:storybook
 
+      - name: Publish mongodb.design with package updates
+        if: steps.changesets.outputs.published == 'true'
+        run: yarn publish:website
+
       - name: Notify Slack channel of new releases
         if: steps.changesets.outputs.published == 'true'
         id: slackbot
