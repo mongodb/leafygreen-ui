@@ -1,26 +1,16 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
 import { Mode } from '../types';
 import { palette } from '@leafygreen-ui/palette';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { bodyTypeScaleStyles } from '../styles';
 
 const labelStyle = css`
   font-family: ${fontFamilies.default};
   font-weight: bold;
 `;
-
-const labelTypeScale: Record<BaseFontSize, string> = {
-  [BaseFontSize.Body1]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-  `,
-  [BaseFontSize.Body2]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
-  `,
-};
 
 const labelColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
@@ -61,7 +51,7 @@ export const Label = ({
       className={cx(
         labelStyle,
         labelColorStyle[mode],
-        labelTypeScale[baseFontSize],
+        bodyTypeScaleStyles[baseFontSize],
         { [disabledLabelColorStyle[mode]]: disabled },
         className,
       )}

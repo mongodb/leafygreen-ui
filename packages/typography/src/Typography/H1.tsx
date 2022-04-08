@@ -4,7 +4,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
-import { sharedStyles } from './styles';
+import { baseTypographyStyles } from '../styles';
 
 /**
  * H1
@@ -24,7 +24,13 @@ export const H1: ExtendableBox<H1Props, 'h1'> = ({
   className,
   ...rest
 }: H1Props) => {
-  return <Box as="h1" className={cx(sharedStyles, h1, className)} {...rest} />;
+  return (
+    <Box
+      as="h1"
+      className={cx(baseTypographyStyles, h1, className)}
+      {...rest}
+    />
+  );
 };
 
 H1.displayName = 'H1';

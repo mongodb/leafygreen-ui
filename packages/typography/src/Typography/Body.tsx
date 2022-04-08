@@ -3,8 +3,7 @@ import Box from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { typeScale1, typeScale2 } from '../styles';
-import { sharedStyles } from './styles';
+import { baseTypographyStyles, bodyTypeScaleStyles } from '../styles';
 
 /**
  * Body
@@ -20,28 +19,27 @@ type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> & {
   as?: T;
 };
 
+const fontWeights: Record<
+  'default' | 'strong',
+  Record<BodyFontWeight, number>
+> = {
+  default: {
+    regular: 400,
+    medium: 500,
+  },
+  strong: {
+    regular: 700,
+    medium: 800,
+  },
+} as const;
+
 export function Body<T extends keyof JSX.IntrinsicElements>({
   className,
   weight = 'regular',
   as = 'p' as T,
   ...rest
 }: BodyProps<T>) {
-  const size = useBaseFontSize();
-  const body = size === 16 ? typeScale2 : typeScale1;
-  const fontWeights: {
-    [key: string]: {
-      [key in BodyFontWeight]: number;
-    };
-  } = {
-    default: {
-      regular: 400,
-      medium: 500,
-    },
-    strong: {
-      regular: 700,
-      medium: 800,
-    },
-  } as const;
+  const baseFontSize = useBaseFontSize();
 
   // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
   const fontWeight = css`
@@ -55,7 +53,12 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
   return (
     <Box
       as={as}
-      className={cx(sharedStyles, body, fontWeight, className)}
+      className={cx(
+        baseTypographyStyles,
+        bodyTypeScaleStyles[baseFontSize],
+        fontWeight,
+        className,
+      )}
       {...rest}
     />
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { sharedStyles } from './styles';
+import { baseTypographyStyles } from '../styles';
 
 /**
  * Disclaimer
@@ -17,7 +17,10 @@ type DisclaimerProps = HTMLElementProps<'small'>;
 
 export function Disclaimer({ children, className, ...rest }: DisclaimerProps) {
   return (
-    <small {...rest} className={cx(sharedStyles, disclaimer, className)}>
+    <small
+      {...rest}
+      className={cx(baseTypographyStyles, disclaimer, className)}
+    >
       {children}
     </small>
   );

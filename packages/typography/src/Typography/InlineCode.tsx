@@ -7,7 +7,7 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { typeScale1, codeTypeScale2 } from '../styles';
+import { codeTypeScaleStyles } from '../styles';
 
 const anchorDataProp = createDataProp('anchor-inline-code');
 
@@ -113,8 +113,8 @@ export function InlineCode({
   ...rest
 }: InlineCodeProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const size = useBaseFontSize();
-  const typeScale = size === 16 ? codeTypeScale2 : typeScale1;
+  const baseFontSize = useBaseFontSize();
+
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const whiteSpace =
     ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <= 30
@@ -127,7 +127,7 @@ export function InlineCode({
       className={cx(
         code,
         codeModes[mode],
-        typeScale,
+        codeTypeScaleStyles[baseFontSize],
         whiteSpace,
         {
           [codeLinkStyleModes[mode]]: isAnchor,
@@ -174,11 +174,17 @@ export function InlineKeyCode({
   className,
   ...rest
 }: InlineCodeProps) {
-  const size = useBaseFontSize();
-  const body = size === 16 ? codeTypeScale2 : typeScale1;
+  const baseFontSize = useBaseFontSize();
 
   return (
-    <code className={cx(inlineKeyCode, body, className)} {...rest}>
+    <code
+      className={cx(
+        inlineKeyCode,
+        codeTypeScaleStyles[baseFontSize],
+        className,
+      )}
+      {...rest}
+    >
       {children}
     </code>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { sharedStyles } from './styles';
+import { baseTypographyStyles } from '../styles';
 
 /**
  * Overline
@@ -17,7 +17,9 @@ const overline = css`
 export const Overline: ExtendableBox<{
   className?: string;
 }> = ({ className, ...rest }: { className?: string }) => {
-  return <Box className={cx(sharedStyles, overline, className)} {...rest} />;
+  return (
+    <Box className={cx(baseTypographyStyles, overline, className)} {...rest} />
+  );
 };
 
 Overline.displayName = 'Overline';

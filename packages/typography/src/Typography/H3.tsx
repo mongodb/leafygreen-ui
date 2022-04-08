@@ -2,7 +2,7 @@ import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { sharedStyles } from './styles';
+import { baseTypographyStyles } from '../styles';
 
 /**
  * H3
@@ -20,7 +20,13 @@ export const H3: ExtendableBox<H3Props, 'h3'> = ({
   className,
   ...rest
 }: H3Props) => {
-  return <Box as="h3" className={cx(sharedStyles, h3, className)} {...rest} />;
+  return (
+    <Box
+      as="h3"
+      className={cx(baseTypographyStyles, h3, className)}
+      {...rest}
+    />
+  );
 };
 
 H3.displayName = 'H3';

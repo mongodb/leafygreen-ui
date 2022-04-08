@@ -2,7 +2,7 @@ import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { sharedStyles } from './styles';
+import { baseTypographyStyles } from '../styles';
 
 /**
  * Subtitle
@@ -21,7 +21,11 @@ export const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
   ...rest
 }: SubtitleProps) => {
   return (
-    <Box as="h6" className={cx(sharedStyles, subtitle, className)} {...rest} />
+    <Box
+      as="h6"
+      className={cx(baseTypographyStyles, subtitle, className)}
+      {...rest}
+    />
   );
 };
 

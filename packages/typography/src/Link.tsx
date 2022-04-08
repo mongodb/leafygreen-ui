@@ -7,7 +7,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
-import { typeScale1, typeScale2 } from './styles';
+import { bodyTypeScaleStyles } from './styles';
 
 const anchorDataProp = createDataProp('anchor-container');
 
@@ -102,8 +102,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
   }, [href, currentHostname]);
 
-  const size = useBaseFontSize();
-  const fontSize = size === 16 ? typeScale2 : typeScale1;
+  const baseFontSize = useBaseFontSize();
 
   let target, icon, rel;
 
@@ -141,7 +140,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
 
   return (
     <Box
-      className={cx(linkStyles, fontSize, className)}
+      className={cx(linkStyles, bodyTypeScaleStyles[baseFontSize], className)}
       {...elementProps}
       {...anchorDataProp.prop}
       {...rest}
