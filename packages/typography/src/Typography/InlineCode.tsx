@@ -8,6 +8,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { codeTypeScaleStyles } from '../styles';
+import { CommonTypographyProps } from '../types';
 
 const anchorDataProp = createDataProp('anchor-inline-code');
 
@@ -99,12 +100,8 @@ const normal = css`
 /**
  * Inline Code
  */
-type InlineCodeProps = OneOf<
-  HTMLElementProps<'code'>,
-  HTMLElementProps<'a'>
-> & {
-  darkMode?: boolean;
-};
+type InlineCodeProps = OneOf<HTMLElementProps<'code'>, HTMLElementProps<'a'>> &
+  CommonTypographyProps;
 
 export function InlineCode({
   children,

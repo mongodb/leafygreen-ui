@@ -3,6 +3,7 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { baseTypographyStyles } from '../styles';
+import { CommonTypographyProps } from '../types';
 
 /**
  * Subtitle
@@ -14,7 +15,7 @@ const subtitle = css`
   font-weight: 700;
 `;
 
-type SubtitleProps = HTMLElementProps<'h6'>;
+type SubtitleProps = HTMLElementProps<'h6'> & CommonTypographyProps;
 
 export const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
   className,

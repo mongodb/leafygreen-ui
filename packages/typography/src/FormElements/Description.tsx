@@ -4,7 +4,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { Mode } from '../types';
+import { CommonTypographyProps, Mode } from '../types';
 import { bodyTypeScaleStyles } from '../styles';
 
 const descriptionStyle = css`
@@ -32,10 +32,10 @@ const disabledDescriptionColorStyle: Record<Mode, string> = {
   `,
 };
 
-type DescriptionProps = HTMLElementProps<'p', never> & {
-  darkMode?: boolean;
-  disabled?: boolean;
-};
+type DescriptionProps = HTMLElementProps<'p', never> &
+  CommonTypographyProps & {
+    disabled?: boolean;
+  };
 
 export const Description = ({
   darkMode = false,

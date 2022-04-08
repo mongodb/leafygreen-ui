@@ -3,6 +3,7 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { baseTypographyStyles } from '../styles';
+import { CommonTypographyProps } from '../types';
 
 /**
  * H3
@@ -14,7 +15,7 @@ const h3 = css`
   font-weight: 500;
 `;
 
-type H3Props = HTMLElementProps<'h3'>;
+type H3Props = HTMLElementProps<'h3'> & CommonTypographyProps;
 
 export const H3: ExtendableBox<H3Props, 'h3'> = ({
   className,

@@ -5,6 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import { baseTypographyStyles } from '../styles';
+import { CommonTypographyProps } from '../types';
 
 /**
  * H1
@@ -18,7 +19,7 @@ const h1 = css`
   color: ${palette.green.dark2};
 `;
 
-type H1Props = HTMLElementProps<'h1'>;
+type H1Props = HTMLElementProps<'h1'> & CommonTypographyProps;
 
 export const H1: ExtendableBox<H1Props, 'h1'> = ({
   className,

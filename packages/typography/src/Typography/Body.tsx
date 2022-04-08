@@ -4,20 +4,22 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { baseTypographyStyles, bodyTypeScaleStyles } from '../styles';
+import { CommonTypographyProps } from '../types';
 
 /**
  * Body
  */
 
 type BodyFontWeight = 'regular' | 'medium';
-type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> & {
-  /**
-   * font-weight applied to typography element
-   * default: `regular`
-   */
-  weight?: BodyFontWeight;
-  as?: T;
-};
+type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> &
+  CommonTypographyProps & {
+    /**
+     * font-weight applied to typography element
+     * default: `regular`
+     */
+    weight?: BodyFontWeight;
+    as?: T;
+  };
 
 const fontWeights: Record<
   'default' | 'strong',

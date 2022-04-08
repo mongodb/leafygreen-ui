@@ -2,7 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
-import { Mode } from '../types';
+import { CommonTypographyProps, Mode } from '../types';
 import { palette } from '@leafygreen-ui/palette';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { bodyTypeScaleStyles } from '../styles';
@@ -30,11 +30,11 @@ const disabledLabelColorStyle: Record<Mode, string> = {
   `,
 };
 
-type LabelProps = HTMLElementProps<'label', never> & {
-  darkMode?: boolean;
-  htmlFor: string;
-  disabled?: boolean;
-};
+type LabelProps = HTMLElementProps<'label', never> &
+  CommonTypographyProps & {
+    htmlFor: string;
+    disabled?: boolean;
+  };
 
 export const Label = ({
   darkMode = false,
