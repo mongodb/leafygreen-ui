@@ -167,10 +167,13 @@ const inlineKeyCode = css`
 `;
 
 export function InlineKeyCode({
+  darkMode,
   children,
   className,
   ...rest
 }: InlineCodeProps) {
+  // TODO: Replace with context
+  const mode = darkMode ? Mode.Dark : Mode.Light;
   const baseFontSize = useBaseFontSize();
 
   return (
@@ -178,6 +181,7 @@ export function InlineKeyCode({
       className={cx(
         inlineKeyCode,
         codeTypeScaleStyles[baseFontSize],
+        codeModes[mode],
         className,
       )}
       {...rest}

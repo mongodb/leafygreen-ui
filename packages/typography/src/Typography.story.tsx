@@ -72,12 +72,21 @@ storiesOf('Typography', module).add('Default', () => {
           `]: darkMode,
         })}
       >
-        <H1 className={displayBlock}>Heading 1</H1>
-        <H2 className={displayBlock}>Heading 2</H2>
-        <H3 className={displayBlock}>Heading 3</H3>
-        <Subtitle className={displayBlock}>Subtitle</Subtitle>
+        <H1 darkMode={darkMode} className={displayBlock}>
+          Heading 1
+        </H1>
+        <H2 darkMode={darkMode} className={displayBlock}>
+          Heading 2
+        </H2>
+        <H3 darkMode={darkMode} className={displayBlock}>
+          Heading 3
+        </H3>
+        <Subtitle darkMode={darkMode} className={displayBlock}>
+          Subtitle
+        </Subtitle>
 
         <Body
+          darkMode={darkMode}
           weight={select(
             'select Body weight',
             ['medium', 'regular'],
@@ -100,6 +109,7 @@ storiesOf('Typography', module).add('Default', () => {
         </Body>
 
         <Body
+          darkMode={darkMode}
           className={cx(
             displayBlock,
             css`
@@ -124,27 +134,40 @@ storiesOf('Typography', module).add('Default', () => {
             `,
           )}
         >
-          <Link href={href} arrowAppearance={linkArrowAppearance}>
+          <Link
+            // darkMode={darkMode}
+            href={href}
+            arrowAppearance={linkArrowAppearance}
+          >
             Link
           </Link>
-          <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
+          <Link
+            // darkMode={darkMode}
+            href="?path=/story/button--icon-only"
+            arrowAppearance="persist"
+          >
             Internal
           </Link>
           <Link
+            // darkMode={darkMode}
             href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
             arrowAppearance="persist"
           >
             External
           </Link>
         </div>
-        <div className={displayBlock}>
-          <InlineKeyCode>CTRL</InlineKeyCode>
+        <Body darkMode={darkMode} className={displayBlock}>
+          <InlineKeyCode darkMode={darkMode}>CTRL</InlineKeyCode>
           <code> + </code>
-          <InlineKeyCode>C</InlineKeyCode>
-        </div>
+          <InlineKeyCode darkMode={darkMode}>C</InlineKeyCode>
+        </Body>
 
-        <Overline className={displayBlock}>Overline</Overline>
-        <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
+        <Overline darkMode={darkMode} className={displayBlock}>
+          Overline
+        </Overline>
+        <Disclaimer darkMode={darkMode} className={displayBlock}>
+          Disclaimer
+        </Disclaimer>
 
         <div className={cx(displayBlock)}>
           <Label darkMode={darkMode} htmlFor="id">

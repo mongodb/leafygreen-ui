@@ -4,7 +4,8 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { baseTypographyStyles, bodyTypeScaleStyles } from '../styles';
-import { CommonTypographyProps } from '../types';
+import { CommonTypographyProps, Mode } from '../types';
+import { palette } from '@leafygreen-ui/palette';
 
 /**
  * Body
@@ -35,12 +36,24 @@ const fontWeights: Record<
   },
 } as const;
 
+const bodyColor: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${palette.black};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.gray.light2};
+  `,
+};
+
 export function Body<T extends keyof JSX.IntrinsicElements>({
+  darkMode,
   className,
   weight = 'regular',
   as = 'p' as T,
   ...rest
 }: BodyProps<T>) {
+  // TODO: Replace with context
+  const mode = darkMode ? Mode.Dark : Mode.Light;
   const baseFontSize = useBaseFontSize();
 
   // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
@@ -58,6 +71,7 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
       className={cx(
         baseTypographyStyles,
         bodyTypeScaleStyles[baseFontSize],
+        bodyColor[mode],
         fontWeight,
         className,
       )}

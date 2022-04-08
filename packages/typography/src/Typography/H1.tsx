@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import { baseTypographyStyles } from '../styles';
-import { CommonTypographyProps } from '../types';
+import { CommonTypographyProps, Mode } from '../types';
 
 /**
  * H1
@@ -16,19 +16,30 @@ const h1 = css`
   line-height: 62px;
   letter-spacing: -0.3px;
   font-family: ${fontFamilies.serif};
-  color: ${palette.green.dark2};
 `;
+
+const h1Color: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${palette.green.dark2};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.green.light1};
+  `,
+};
 
 type H1Props = HTMLElementProps<'h1'> & CommonTypographyProps;
 
 export const H1: ExtendableBox<H1Props, 'h1'> = ({
+  darkMode,
   className,
   ...rest
 }: H1Props) => {
+  // TODO: Replace with context
+  const mode = darkMode ? Mode.Dark : Mode.Light;
   return (
     <Box
       as="h1"
-      className={cx(baseTypographyStyles, h1, className)}
+      className={cx(baseTypographyStyles, h1, h1Color[mode], className)}
       {...rest}
     />
   );
