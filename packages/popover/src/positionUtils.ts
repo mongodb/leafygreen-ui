@@ -171,7 +171,6 @@ export function getElementDocumentPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
-    // Make left a whole number for easier calculations
     return {
       top: top + scrollTop - offsetTop,
       bottom: bottom + scrollTop - offsetBottom,
@@ -236,7 +235,7 @@ export function getElementViewportPosition(
   return {
     top,
     bottom,
-    left: left,
+    left,
     right,
     height,
     width,
