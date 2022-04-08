@@ -78,7 +78,7 @@ function DefaultExample() {
           spacing={number('spacing', 10)}
           adjustOnMutation={boolean('adjustOnMutation', false)}
         >
-          <div className={popoverStyle}>Popover content is in here</div>
+          <div className={popoverStyle}>Popover content</div>
         </Popover>
       </button>
     </div>
@@ -118,7 +118,7 @@ function AdvancedExample() {
         popoverZIndex={number('popoverZIndex', 1)}
         refEl={refEl}
       >
-        <div className={popoverStyle}>Popover content is in here</div>
+        <div className={popoverStyle}>Popover content</div>
       </Popover>
     </>
   );
@@ -173,7 +173,7 @@ function ScrollExample() {
         active={active}
         refEl={buttonRef}
       >
-        <div className={popoverStyle}>Popover content is in here</div>
+        <div className={popoverStyle}>Popover content</div>
       </Popover>
     </>
   );

@@ -175,7 +175,7 @@ export function getElementDocumentPosition(
     return {
       top: top + scrollTop - offsetTop,
       bottom: bottom + scrollTop - offsetBottom,
-      left: Math.floor(left) + scrollLeft - offsetLeft, // remove decimals from left to get a whole number
+      left: left + scrollLeft - offsetLeft,
       right: right + scrollLeft - offsetRight,
       height,
       width,
@@ -187,7 +187,7 @@ export function getElementDocumentPosition(
   return {
     top: top + scrollY,
     bottom: bottom + scrollY,
-    left: Math.floor(left) + scrollX,
+    left: left + scrollX,
     right: right + scrollX,
     height,
     width,
@@ -226,7 +226,7 @@ export function getElementViewportPosition(
     return {
       top: top - offsetTop,
       bottom: bottom - offsetBottom,
-      left: Math.floor(left) - offsetLeft,
+      left: left - offsetLeft,
       right: right - offsetRight,
       height,
       width,
@@ -236,7 +236,7 @@ export function getElementViewportPosition(
   return {
     top,
     bottom,
-    left: Math.floor(left),
+    left: left,
     right,
     height,
     width,
