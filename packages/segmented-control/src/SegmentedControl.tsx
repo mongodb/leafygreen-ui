@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { transparentize } from 'polished';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
@@ -295,8 +301,10 @@ const SegmentedControl = React.forwardRef<
   }: SegmentedControlProps,
   forwardedRef,
 ) {
-  // TODO log warning if defaultValue is set but does not match any child value
+  // TODO: log warning if defaultValue is set but does not match any child value
   const { usingKeyboard } = useUsingKeyboardContext();
+  const segmentedContainerRef = useRef<null | HTMLDivElement>(null);
+  const [isfocusInComponent, setIsfocusInComponent] = useState<boolean>(false);
 
   const getOptionRef = useDynamicRefs<HTMLDivElement>({ prefix: 'option' });
 
@@ -333,6 +341,26 @@ const SegmentedControl = React.forwardRef<
       setFocusedOptionValue(firstChild.props.value);
     }
   });
+
+  // Check if the organic focus is inside of this component. We'll use this to check if the focus should be programmatically set in SegmentedControlOption.
+  const handleFocusIn = useCallback(() => {
+    if (
+      segmentedContainerRef.current?.contains(
+        document.activeElement as HTMLElement,
+      )
+    ) {
+      setIsfocusInComponent(true);
+    } else {
+      setIsfocusInComponent(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('focusin', handleFocusIn);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, [handleFocusIn]);
 
   // Handle value updates
   const updateValue = useCallback(
@@ -388,6 +416,7 @@ const SegmentedControl = React.forwardRef<
           _onClick: updateValue,
           _onHover,
           ref: getOptionRef(`${index}`),
+          isfocusInComponent,
         });
       }),
     [
@@ -400,6 +429,7 @@ const SegmentedControl = React.forwardRef<
       ariaControls,
       updateValue,
       getOptionRef,
+      isfocusInComponent,
     ],
   );
 
@@ -520,6 +550,7 @@ const SegmentedControl = React.forwardRef<
   return (
     <SegmentedControlContext.Provider value={{ size, mode, name, followFocus }}>
       <div
+        ref={segmentedContainerRef}
         className={cx(
           wrapperStyle,
           {

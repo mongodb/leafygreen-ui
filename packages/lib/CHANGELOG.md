@@ -1,5 +1,12 @@
 # @leafygreen-ui/lib
 
+## 9.2.0
+
+### Minor Changes
+
+- acd6919: Publish createUniqueClassName so className values can be shared across components without conflicts
+- acd6919: Exports `getNodeTextContent` from `lib`
+
 ## 9.1.0
 
 ### Minor Changes
