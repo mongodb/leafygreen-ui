@@ -116,7 +116,7 @@ interface ComponentPropsInterface {
 }
 
 export type KnobsConfigInterface<
-  ComponentProps extends ComponentPropsInterface
+  ComponentProps extends ComponentPropsInterface,
 > = {
   [K in keyof ComponentProps]: Extract<
     PropsType<ComponentProps[K]>,

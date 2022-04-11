@@ -35,9 +35,8 @@ interface CounterProps {
 }
 
 const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
-  const { chevron, fontSize, fontWeight, gutter, height, lineHeight } = layout[
-    size
-  ];
+  const { chevron, fontSize, fontWeight, gutter, height, lineHeight } =
+    layout[size];
 
   const { color, secondary } = colors;
   const outerSize = height / 2;

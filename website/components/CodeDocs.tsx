@@ -217,9 +217,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const version = changelog?.split('h2')[1]?.replace(/[>/<]+/g, '');
   const example = readme?.split('js')[1]?.split('```')[0]?.trimStart();
   const outputHTML = readme?.split('```html')[1]?.split('```')[0]?.trimStart();
-  const markdownAst = (unified()
+  const markdownAst = unified()
     .use(markdown)
-    .parse(readme) as unknown) as ReadmeMarkdown;
+    .parse(readme) as unknown as ReadmeMarkdown;
 
   return (
     <>

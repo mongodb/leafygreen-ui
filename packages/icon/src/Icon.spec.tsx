@@ -10,6 +10,7 @@ import { SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
 import createGlyphComponent from './createGlyphComponent';
 import EditIcon from '@leafygreen-ui/icon/dist/Edit';
+import { Size } from './glyphCommon';
 
 function getBaseName(filePath: string): string {
   return path.basename(filePath, path.extname(filePath));
@@ -85,58 +86,105 @@ describe('packages/Icon/glyphs/', () => {
   });
 });
 
-const text = 'Hello world';
+const MyGlyph: SVGR.Component = props => (
+  <svg data-testid="my-glyph" {...props}></svg>
+);
 
-// eslint-disable-next-line react/display-name
-const MyGlyph: SVGR.Component = () => <div>{text}</div>;
-
-describe('packages/Icon/createGlyphComponent createGlyphComponent()', () => {
+describe('packages/Icon/createGlyphComponent', () => {
   const GlyphComponent = createGlyphComponent('MyGlyph', MyGlyph);
 
-  test('createGlyphComponent returns a function', () => {
+  test('returns a function', () => {
     expect(typeof GlyphComponent).toBe('function');
   });
 
-  test('The function returned by createGlyphComponent has the displayName: "MyGlyph"', () => {
+  test('returned function has correct display name', () => {
     expect(GlyphComponent.displayName).toBe('MyGlyph');
   });
 
-  const { container } = render(<GlyphComponent />);
-  const glyph = container.firstChild;
+  test('returned function renders the glyph specified', () => {
+    const { getByTestId } = render(<GlyphComponent />);
+    const glyph = getByTestId('my-glyph');
 
-  test('The function returned by createGlyphComponent renders the glyph specified', () => {
     if (!typeIs.element(glyph)) {
       throw new Error('Glyph was not rendered');
     }
+    expect(glyph.nodeName.toLowerCase()).toBe('svg');
+  });
 
-    expect(glyph.nodeName.toLowerCase()).toBe('div');
-    expect(glyph.textContent).toBe(text);
+  describe('returned funcion passes through props', () => {
+    test('`size` prop as number', () => {
+      const { getByTestId } = render(<GlyphComponent size={20} />);
+      const glyph = getByTestId('my-glyph');
+      expect(glyph).toHaveAttribute('height', '20');
+      expect(glyph).toHaveAttribute('width', '20');
+    });
+
+    test('`size` prop as Size', () => {
+      const { getByTestId } = render(<GlyphComponent size={Size.Large} />);
+      const glyph = getByTestId('my-glyph');
+      expect(glyph).toHaveAttribute('height', '20');
+      expect(glyph).toHaveAttribute('width', '20');
+    });
+
+    test('`role`', () => {
+      const { getByTestId } = render(<GlyphComponent role="presentation" />);
+      const glyph = getByTestId('my-glyph');
+      expect(glyph).toHaveAttribute('role', 'presentation');
+    });
   });
 });
 
-const customGlyphs = { MyGlyph };
+const customGlyphs = {
+  MyGlyph: createGlyphComponent('MyGlyph', MyGlyph),
+};
 
 describe('packages/Icon/createIconComponent', () => {
   const IconComponent = createIconComponent(customGlyphs);
 
-  test('createIconComponent returns a function', () => {
+  test('returns a function', () => {
     expect(typeof IconComponent).toBe('function');
   });
 
-  test('The function returned by createIconComponent has the displayName: "Icon"', () => {
+  test('returned function has the displayName: "Icon"', () => {
     expect(IconComponent.displayName).toBe('Icon');
   });
 
-  const renderedIcon = render(<IconComponent glyph="MyGlyph" />);
-  const glyph = renderedIcon.container.firstChild;
+  test('returned funciton renders the glyph specified', () => {
+    const { getByTestId } = render(<IconComponent glyph="MyGlyph" />);
+    const glyph = getByTestId('my-glyph');
 
-  test('The function returned by createIconComponent renders the glyph specified', () => {
     if (!typeIs.element(glyph)) {
       throw new Error('Glyph was not rendered');
     }
+    expect(glyph.nodeName.toLowerCase()).toBe('svg');
+  });
 
-    expect(glyph.nodeName.toLowerCase()).toBe('div');
-    expect(glyph.textContent).toBe(text);
+  describe('returned funcion passes through props', () => {
+    test('`size` prop as number', () => {
+      const { getByTestId } = render(
+        <IconComponent glyph="MyGlyph" size={20} />,
+      );
+      const glyph = getByTestId('my-glyph');
+      expect(glyph).toHaveAttribute('height', '20');
+      expect(glyph).toHaveAttribute('width', '20');
+    });
+
+    test('`size` prop as Size', () => {
+      const { getByTestId } = render(
+        <IconComponent glyph="MyGlyph" size={Size.Large} />,
+      );
+      const glyph = getByTestId('my-glyph');
+      expect(glyph).toHaveAttribute('height', '20');
+      expect(glyph).toHaveAttribute('width', '20');
+    });
+
+    test('`role`', () => {
+      const { getByTestId } = render(
+        <IconComponent glyph="MyGlyph" role="presentation" />,
+      );
+      const glyph = getByTestId('my-glyph');
+      expect(glyph).toHaveAttribute('role', 'presentation');
+    });
   });
 });
 
@@ -180,14 +228,10 @@ describe('Generated glyphs', () => {
           },
         );
 
-        const [
-          ,
-          script,
-          checksum,
-          checkedContents,
-        ] = /^\/\*.*@script ([^\n]*).*@checksum ([^\n]*).*\*\/\n(.*)$/s.exec(
-          generatedFileContents,
-        )!;
+        const [, script, checksum, checkedContents] =
+          /^\/\*.*@script ([^\n]*).*@checksum ([^\n]*).*\*\/\n(.*)$/s.exec(
+            generatedFileContents,
+          )!;
 
         const expectedChecksum = createHash('md5')
           .update(script)

@@ -44,8 +44,24 @@ function renderSubMenuItem(props = {}) {
       </SubMenu>
     </Menu>,
   );
-  const subMenu = utils.getByText('First SubMenu');
-  return { subMenu, ...utils };
+  const subMenu = utils.getByTestId('sub-menu-a');
+  const subMenuB = utils.getByTestId('sub-menu-b');
+  const [subMenuButtonA, subMenuButtonB] = utils.getAllByTestId(
+    'lg-sub-menu-icon-button',
+  );
+
+  const getItemA = () => utils.getByTestId('sub-menu-item-a');
+  const getItemB = () => utils.getByTestId('sub-menu-item-b');
+
+  return {
+    subMenu,
+    subMenuB,
+    subMenuButtonA,
+    subMenuButtonB,
+    getItemA,
+    getItemB,
+    ...utils,
+  };
 }
 
 describe('packages/menu', () => {
@@ -125,24 +141,24 @@ describe('packages/menu/menu-item', () => {
 
 describe('packages/menu/sub-menu', () => {
   test('renders a SubMenu open by default, when the SubMenu is active', () => {
-    const { getByTestId } = renderSubMenuItem({ active: true });
-    const subMenuItem = getByTestId('sub-menu-item-a');
+    const { getItemA } = renderSubMenuItem({ active: true });
+    const subMenuItem = getItemA();
     expect(subMenuItem).toBeInTheDocument();
   });
 
   test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', async () => {
-    const { getByTestId } = renderSubMenuItem({ active: true });
-    const subMenuB = getByTestId('sub-menu-b');
-    const subMenuBArrow = subMenuB?.parentNode?.querySelectorAll('button')[1];
+    const { subMenuButtonB, getItemA, getItemB } = renderSubMenuItem({
+      active: true,
+    });
 
-    fireEvent.click(subMenuBArrow as HTMLElement);
+    fireEvent.click(subMenuButtonB as HTMLElement);
 
-    const subMenuItem = getByTestId('sub-menu-item-a');
+    const subMenuItem = getItemA();
     await act(async () => {
       await waitForElementToBeRemoved(subMenuItem);
     });
 
-    const subMenuItemB = getByTestId('sub-menu-item-b');
+    const subMenuItemB = getItemB();
     expect(subMenuItemB).toBeVisible();
   });
 

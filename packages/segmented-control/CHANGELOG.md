@@ -1,5 +1,14 @@
 # @leafygreen-ui/segmented-control
 
+## 1.0.1
+
+### Patch Changes
+
+- acd6919: Prevent segmented control from hijacking focus
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+  - @leafygreen-ui/lib@9.2.0
+
 ## 1.0.0
 
 ### Major Changes
