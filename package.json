@@ -50,6 +50,7 @@
     "publish:website": "cd website && yarn build && yarn publish",
     "slackbot": "node ./scripts/slackbot.js",
     "start": "yarn storybook:start",
+    "start:website": "cd website && yarn dev",
     "storybook:start": "start-storybook -p 9001 -c storybook -s ./storybook/static --no-version-updates",
     "storybook:build": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "test": "npm-run-all --serial test:*",
