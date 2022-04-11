@@ -39,25 +39,21 @@ or
 **Output HTML**
 
 ```html
-<ol class="leafygreen-ui-1pvgjhr">
+<ol class="leafygreen-ui-1pvgjhr" aria-label="progress">
   <li>
-    <div class="leafygreen-ui-1utybxd" aria-label="step1" aria-current="step">
-      <div class="lg-ui-step-icon leafygreen-ui-1rv12ay">
-        <div class="leafygreen-ui-11fjm0v">1</div>
+    <div class="leafygreen-ui-1x8f1m7" aria-label="step1" aria-current="step">
+      <div class="lg-ui-03f12bfd leafygreen-ui-1dyv85w">
+        <div class="leafygreen-ui-17xqetg">1</div>
       </div>
-      <div class="lg-ui-step-label leafygreen-ui-77vd0k">
-        <div>Step 1</div>
-      </div>
+      <p class="lg-ui-d036aa4e leafygreen-ui-1u866nc">Step 1</p>
     </div>
   </li>
   <li>
-    <div class="leafygreen-ui-1q7k9qe" aria-label="step2" aria-current="false">
-      <div class="lg-ui-step-icon leafygreen-ui-1ch160a">
-        <div class="leafygreen-ui-11fjm0v">2</div>
+    <div class="leafygreen-ui-1x8f1m7" aria-label="step2" aria-current="false">
+      <div class="lg-ui-03f12bfd leafygreen-ui-1oypnhq">
+        <div class="leafygreen-ui-17xqetg">2</div>
       </div>
-      <div class="lg-ui-step-label leafygreen-ui-gtf36y">
-        <div>Step 2</div>
-      </div>
+      <p class="lg-ui-d036aa4e leafygreen-ui-1uk291k">Step 2</p>
     </div>
   </li>
 </ol>
