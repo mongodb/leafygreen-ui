@@ -113,9 +113,8 @@ export function Stepper({
     'previous' | 'next' | 'current'
   >('current');
 
-  const allSteps: Array<StepItem> = (Array.isArray(children)
-    ? children
-    : [children]
+  const allSteps: Array<StepItem> = (
+    Array.isArray(children) ? children : [children]
   ).map((child, index) => {
     let state: StepCompletionState;
 
@@ -171,11 +170,10 @@ export function Stepper({
   }
 
   if (rangeEnd < numSteps - 1) {
-    currentDisplayedSteps[
-      currentDisplayedSteps.length - 1
-    ].onMouseOver = () => {
-      setVisibleLayer('next');
-    };
+    currentDisplayedSteps[currentDisplayedSteps.length - 1].onMouseOver =
+      () => {
+        setVisibleLayer('next');
+      };
 
     layerToLayerSteps.next = getStepRange(allSteps, {
       currentStep,

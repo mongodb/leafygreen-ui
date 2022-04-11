@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["packages/icon/src/generated/*"],
       "@leafygreen-ui/*": ["packages/*/src"]
