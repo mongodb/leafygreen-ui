@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { OlHTMLAttributes, PropsWithChildren } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Step from './InternalStep';
 import { StepStates, StepperProps } from './types';
@@ -12,7 +12,8 @@ const Stepper = ({
   completedStepsShown = 1,
   darkMode = false,
   className,
-}: PropsWithChildren<StepperProps & React.HTMLProps<HTMLOListElement>>) => {
+  ...rest
+}: PropsWithChildren<StepperProps & OlHTMLAttributes<HTMLOListElement>>) => {
   // Helper Variables
   const numSteps = React.Children.count(children);
   const childrenArray = React.Children.toArray(children);
@@ -65,7 +66,7 @@ const Stepper = ({
 
   return (
     <StepperContextProvider darkMode={darkMode}>
-      <ol className={cx(baseStyles, className)}>
+      <ol className={cx(baseStyles, className)} {...rest}>
         {hasPriorSteps && (
           <EllipsesStep
             state={StepStates.CompletedMultiple}
