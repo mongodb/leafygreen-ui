@@ -123,6 +123,10 @@ async function expectElementToNotBeRemoved(element: HTMLElement) {
     throw new Error('Expected to catch error.');
   } catch (error) {
     // eslint-disable-next-line jest/no-try-expect
-    expect(error.toString()).toMatch('Timed out in waitForElementToBeRemoved.');
+    if (error instanceof Error) {
+      expect(error.toString()).toMatch(
+        'Timed out in waitForElementToBeRemoved.',
+      );
+    }
   }
 }

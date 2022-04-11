@@ -51,12 +51,8 @@ describe('packages/side-nav', () => {
       );
     };
 
-    const {
-      sideNavGroup,
-      sideNavHeader,
-      sideNavLink,
-      sideNavHeaderIcon,
-    } = testIds;
+    const { sideNavGroup, sideNavHeader, sideNavLink, sideNavHeaderIcon } =
+      testIds;
 
     describe('when the group is passed a glyph', () => {
       beforeEach(() => {

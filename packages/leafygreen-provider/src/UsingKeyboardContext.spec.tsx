@@ -10,9 +10,8 @@ const childTestID = 'using-keyboard-provider';
 const buttonTestId = 'test-button';
 
 function TestContextComponent() {
-  const { usingKeyboard, setUsingKeyboard = () => {} } = useContext(
-    UsingKeyboardContext,
-  );
+  const { usingKeyboard, setUsingKeyboard = () => {} } =
+    useContext(UsingKeyboardContext);
 
   return (
     <>
