@@ -66,7 +66,7 @@ const Stepper = ({
 
   return (
     <StepperContextProvider darkMode={darkMode}>
-      <ol className={cx(baseStyles, className)} {...rest}>
+      <ol className={cx(baseStyles, className)} aria-label="progress" {...rest}>
         {hasPriorSteps && (
           <EllipsesStep
             state={StepStates.CompletedMultiple}

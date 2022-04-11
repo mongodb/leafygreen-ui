@@ -3,6 +3,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
 import React from 'react';
+import { stepIconClassName } from './constants';
 import Step from './InternalStep';
 import { useStepperContext } from './StepperContext';
 import { StepStates, EllipsesStepProps, EllipsesStepStates } from './types';
@@ -14,7 +15,7 @@ const EllipsesStep = ({
   startingStepIndex,
   ...rest
 }: React.PropsWithChildren<EllipsesStepProps>) => {
-  const { isDarkMode, stepIconClassName } = useStepperContext();
+  const { isDarkMode } = useStepperContext();
 
   // TODO: would be good to put these styles inside a baseStyles, but it is currently impossible because the <Tooltip> content is an iframe.
   const tooltipStyles = css`

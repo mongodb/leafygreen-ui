@@ -7,8 +7,9 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 import { useStepperContext } from './StepperContext';
+import { stepIconClassName } from './constants';
 
-const Icon = ({ state, content }: StepIconProps) => {
+const StepIconGlyph = ({ state, content }: StepIconProps) => {
   if (state === StepStates.Completed) {
     return <CheckmarkIcon />;
   } else if (
@@ -33,7 +34,7 @@ const Icon = ({ state, content }: StepIconProps) => {
 };
 
 const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
-  const { isDarkMode, stepIconClassName } = useStepperContext();
+  const { isDarkMode } = useStepperContext();
   const baseStyles = css`
     width: ${size}px;
     height: ${size}px;
@@ -116,7 +117,7 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
         styles[isDarkMode ? Mode.Dark : Mode.Light][state],
       )}
     >
-      <Icon state={state} {...rest} />
+      <StepIconGlyph state={state} {...rest} />
     </div>
   );
 };

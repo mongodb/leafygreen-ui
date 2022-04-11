@@ -4,10 +4,11 @@ import { StepStates, InternalStepProps } from './types';
 import StepIcon from './StepIcon';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Body } from '@leafygreen-ui/typography';
 import { useStepperContext } from './StepperContext';
+import StepLabel from './StepLabel';
+import { stepIconClassName } from './constants';
 
-export const Step = function Step({
+const Step = ({
   children,
   index,
   state,
@@ -16,13 +17,11 @@ export const Step = function Step({
   iconSize = 20,
   className,
   ...rest
-}: PropsWithChildren<InternalStepProps & React.HTMLProps<HTMLDivElement>>) {
-  const {
-    isDarkMode,
-    stepIconClassName,
-    stepLabelClassName,
-  } = useStepperContext();
+}: PropsWithChildren<InternalStepProps & React.HTMLProps<HTMLDivElement>>) => {
+  const { isDarkMode } = useStepperContext();
   const isCurrent = state === StepStates.Current;
+  const isCompleted =
+    state === StepStates.Completed || state === StepStates.CompletedMultiple;
 
   const baseStyles = css`
     display: flex;
@@ -59,86 +58,32 @@ export const Step = function Step({
     `}
   `;
 
-  const completedMultipleStyles = css`
-    .${stepLabelClassName} {
-      color: ${isDarkMode ? palette.green.base : palette.green.dark2};
-      text-decoration-line: underline;
-      text-decoration-style: dotted;
-      text-underline-position: under;
-    }
-
-    ${shouldDisplayLine &&
-    `
-        &:after {
-          background-color: ${
-            isDarkMode ? palette.green.base : palette.green.dark1
-          };
-        }
-      `}
-  `;
-
   const completedStyles = css`
-    .${stepLabelClassName} {
-      color: ${isDarkMode ? palette.green.base : palette.green.dark2};
-    }
-
     ${shouldDisplayLine &&
     `
-        &:after {
-          background-color: ${
-            isDarkMode ? palette.green.base : palette.green.dark1
-          };
-        }
-      `}
+      &:after {
+        background-color: ${
+          isDarkMode ? palette.green.base : palette.green.dark1
+        };
+      }
+    `}
   `;
-
-  const currentStyles = css`
-    .${stepLabelClassName} {
-      color: ${isDarkMode ? palette.white : palette.green.dark3};
-    }
-  `;
-
-  const upcomingStyles = css`
-    .${stepLabelClassName} {
-      color: ${isDarkMode ? palette.gray.light1 : palette.gray.dark1};
-    }
-  `;
-
-  const upcomingMultipleStyles = css`
-    .${stepLabelClassName} {
-      text-decoration-line: underline;
-      text-decoration-style: dotted;
-      text-underline-position: under;
-      color: ${isDarkMode ? palette.gray.light1 : palette.gray.dark1};
-    }
-  `;
-
-  const styles: Record<StepStates, string> = {
-    [StepStates.CompletedMultiple]: completedMultipleStyles,
-    [StepStates.Completed]: completedStyles,
-    [StepStates.Current]: currentStyles,
-    [StepStates.Upcoming]: upcomingStyles,
-    [StepStates.UpcomingMultiple]: upcomingMultipleStyles,
-  };
 
   return (
     <div
-      className={cx(baseStyles, styles[state], className)}
+      className={cx(
+        baseStyles,
+        {
+          [completedStyles]: isCompleted,
+        },
+        className,
+      )}
       aria-label={ariaLabel}
       aria-current={isCurrent && 'step'}
       {...rest}
     >
       <StepIcon state={state} content={index} size={iconSize} />
-      {/*
-        TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
-        Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.
-      */}
-      <Body
-        className={stepLabelClassName}
-        weight={isCurrent ? 'medium' : 'regular'}
-      >
-        {children}
-      </Body>
+      <StepLabel state={state}>{children}</StepLabel>
     </div>
   );
 };

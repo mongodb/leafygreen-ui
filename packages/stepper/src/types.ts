@@ -61,3 +61,5 @@ export interface StepIconProps {
   size?: number;
   content?: string | number;
 }
+
+export type StepLabelProps = Pick<InternalStepProps, 'state'>;
