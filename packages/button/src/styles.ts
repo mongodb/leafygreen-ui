@@ -416,7 +416,7 @@ export function getClassName({
   return cx(
     baseButtonStyles,
     color,
-    { [focus]: showFocus },
+    { [focus]: showFocus && !disabled },
     { [disabledStyle[mode]]: disabled },
     fontSize,
     size,
