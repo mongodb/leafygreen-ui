@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { css, cx } from '@emotion/css';
-import unified from 'unified';
+import { unified } from 'unified';
 import markdown from 'remark-parse';
 import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
 import Button from '@leafygreen-ui/button';

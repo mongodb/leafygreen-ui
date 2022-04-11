@@ -148,7 +148,10 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
 
   const [props, setProps] = useState<ComponentProps>(initialProps);
 
-  const onChange = <T extends PropsType['default']>(prop: string, value: T) => {
+  const onChange = <T extends PropsType['default']>(
+    prop: string,
+    value?: T,
+  ) => {
     setProps({ ...props, [prop]: value });
   };
 

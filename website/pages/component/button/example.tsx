@@ -73,8 +73,8 @@ export default function ButtonLiveExample() {
         {({ leftGlyph, rightGlyph, hasHrefProp, ...props }) => (
           <Button
             href={hasHrefProp ? 'https://cloud.mongodb.com' : undefined}
-            leftGlyph={!!leftGlyph && <Icon glyph={leftGlyph} />}
-            rightGlyph={!!rightGlyph && <Icon glyph={rightGlyph} />}
+            leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+            rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
             {...props}
           />
         )}
