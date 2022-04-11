@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.3.2
+
+### Patch Changes
+
+- acd6919: Updating gray-dark-3 on palette.less to the correct value
+
 ## 3.3.1
 
 ### Patch Changes

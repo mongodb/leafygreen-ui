@@ -1,6 +1,5 @@
 // https://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid
-// This is a RFC4122 version 4 compliant solution that solves that issue by offsetting the first 13 hex numbers by a hex portion of the timestamp, and once depleted offsets by a hex portion of the microseconds since pageload.
-// That way, even if Math.random is on the same seed, both clients would have to generate the UUID the exact same number of microseconds since pageload (if high-perfomance time is supported) AND at the exact same millisecond (or 10,000+ years later) to get the same UUID:
+// This function returns a randomized 8-character string based on new Date()
 
 const generateUUID = () => {
   let date1 = new Date().getTime();

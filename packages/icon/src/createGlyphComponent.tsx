@@ -4,6 +4,13 @@ import { SVGR, LGGlyph } from './types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap, Size } from './glyphCommon';
 
+/**
+ * Returns a single glyph component.
+ * Process custom glyphs to ensure consistent behavior between custom and built-in icons
+ * @param glyphName: string - the display name of the icon
+ * @param Glyph: SVGR.Component - the SVG icon component
+ * @returns LGGlyph.Component
+ */
 export default function createGlyphComponent(
   glyphName: string,
   Glyph: SVGR.Component,

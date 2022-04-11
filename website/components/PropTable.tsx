@@ -262,6 +262,10 @@ function PropTable({
             {tableData[index] && (
               <Wrapper isTouchDevice={isTouchDevice}>
                 <Table
+                  className={css`
+                    position: relative;
+                    z-index: 0;
+                  `}
                   key={header}
                   data={tableData[index]}
                   columns={[

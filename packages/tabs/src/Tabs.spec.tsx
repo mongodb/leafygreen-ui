@@ -1,5 +1,10 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  screen,
+  RenderResult,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import { Tabs, Tab } from '.';
@@ -63,13 +68,13 @@ describe('packages/tabs', () => {
     });
 
     test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-      renderTabs({
+      const { getAllByTestId } = renderTabs({
         setSelected,
         selected: 1,
         as: 'a',
       });
 
-      const tabListItem = screen.getByText('First');
+      const [tabListItem] = getAllByTestId('first-tab');
       expect(tabListItem.tagName.toLowerCase()).toBe('a');
     });
 
@@ -135,8 +140,9 @@ describe('packages/tabs', () => {
     });
 
     test('keyboard navigation is supported', () => {
-      renderTabs({}, { default: true });
-      const firstTab = screen.getByText('First');
+      const { getAllByTestId } = renderTabs({}, { default: true });
+      const [firstTab] = getAllByTestId('first-tab');
+      const [secondTab] = getAllByTestId('second-tab');
 
       // Focus on first tab
       userEvent.tab();
@@ -147,26 +153,29 @@ describe('packages/tabs', () => {
         key: 'ArrowRight',
         keyCode: 39,
       });
-      expect(screen.getByText('Second')).toHaveFocus();
+      expect(secondTab).toHaveFocus();
     });
 
     test('keyboard navigation skips disabled tabs', () => {
-      render(
+      const { getAllByTestId } = render(
         <Tabs
           data-testid={tabsTestId}
           aria-label="Description of our test tabs"
         >
-          <Tab default name="First">
+          <Tab default name="First" data-testid="first-tab">
             Content 1
           </Tab>
-          <Tab disabled name="Second">
+          <Tab disabled name="Second" data-testid="second-tab">
             Content 2
           </Tab>
-          <Tab name="Third"> Content 3</Tab>
+          <Tab name="Third" data-testid="third-tab">
+            {' '}
+            Content 3
+          </Tab>
         </Tabs>,
       );
 
-      const firstTab = screen.getByText('First');
+      const [firstTab] = getAllByTestId('first-tab');
 
       // Tab to first tab
       userEvent.tab();
@@ -177,7 +186,8 @@ describe('packages/tabs', () => {
         key: 'ArrowRight',
         keyCode: 39,
       });
-      expect(screen.getByText('Third')).toHaveFocus();
+      const [thirdTab] = getAllByTestId('third-tab');
+      expect(thirdTab).toHaveFocus();
     });
 
     test('keyboard nav does not work if modifier key is also pressed', () => {
@@ -196,38 +206,46 @@ describe('packages/tabs', () => {
   });
 
   describe('when there are two sets of tabs on the page', () => {
+    let renderResult: RenderResult;
+
     beforeEach(() => {
-      render(
+      renderResult = render(
         <>
           <Tabs aria-label="Description of another set of test tabs">
-            <Tab default name="Tab Set 1-A">
+            <Tab default name="Tab Set 1-A" data-testid="tab-1-a">
               Content 1-A
             </Tab>
-            <Tab name="Tab Set 1-B">Content 1-B</Tab>
+            <Tab name="Tab Set 1-B" data-testid="tab-1-b">
+              Content 1-B
+            </Tab>
           </Tabs>
           <Tabs aria-label="Description of another set of test tabs">
-            <Tab default name="Tab Set 2-A">
+            <Tab default name="Tab Set 2-A" data-testid="tab-2-a">
               Content 2-A
             </Tab>
-            <Tab name="Tab Set 2-B">Content 2-B</Tab>
+            <Tab name="Tab Set 2-B" data-testid="tab-2-b">
+              Content 2-B
+            </Tab>
           </Tabs>
         </>,
       );
     });
 
     test('only the current Tabs set is toggled when the arrow keys are pressed', () => {
-      const firstTab = screen.getByText('Tab Set 1-A');
+      const { getAllByTestId } = renderResult;
+      const [tab1A] = getAllByTestId('tab-1-a');
+      const [tab1B] = getAllByTestId('tab-1-b');
 
       // Tab to first tab
       userEvent.tab();
-      expect(firstTab).toHaveFocus();
+      expect(tab1A).toHaveFocus();
 
-      fireEvent.keyDown(firstTab, {
+      fireEvent.keyDown(tab1A, {
         key: 'ArrowRight',
         keyCode: 39,
       });
 
-      expect(screen.getByText('Tab Set 1-B')).toHaveFocus();
+      expect(tab1B).toHaveFocus();
     });
   });
 
