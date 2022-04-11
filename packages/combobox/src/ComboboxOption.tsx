@@ -91,9 +91,8 @@ const InternalComboboxOption = React.forwardRef<
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
-    const { multiselect, darkMode, withIcons, inputValue } = useContext(
-      ComboboxContext,
-    );
+    const { multiselect, darkMode, withIcons, inputValue } =
+      useContext(ComboboxContext);
     const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
     const optionRef = useForwardedRef(forwardedRef, null);
 

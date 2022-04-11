@@ -125,10 +125,10 @@ export default function Select({
   __INTERNAL__menuButtonSlot__,
 }: Props) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
-  const labelId = useMemo(() => ariaLabelledby ?? `${id}-label`, [
-    ariaLabelledby,
-    id,
-  ]);
+  const labelId = useMemo(
+    () => ariaLabelledby ?? `${id}-label`,
+    [ariaLabelledby, id],
+  );
 
   if (!label && !ariaLabelledby) {
     console.error(
@@ -213,10 +213,8 @@ export default function Select({
 
   // We store the option element instance rather than just the value in order
   // to differentiate between multiple options that have the same value.
-  const [
-    uncontrolledSelectedOption,
-    setUncontrolledSelectedOption,
-  ] = useState<OptionElement | null>(initialUncontrolledSelectedOption);
+  const [uncontrolledSelectedOption, setUncontrolledSelectedOption] =
+    useState<OptionElement | null>(initialUncontrolledSelectedOption);
 
   // If the option instances have changed we'll do our best to preserve
   // the state by checking if any of the new option instances sufficiently

@@ -34,9 +34,8 @@ export function getRippleGlobalNamespace() {
 
   (window as SetWindow).__LEAFYGREEN_UTILS__ ??= { modules: {} };
 
-  (window as LGWindow).__LEAFYGREEN_UTILS__.modules[
-    '@leafygreen-ui/ripple'
-  ] = defaultRippleParams;
+  (window as LGWindow).__LEAFYGREEN_UTILS__.modules['@leafygreen-ui/ripple'] =
+    defaultRippleParams;
 
   return (window as LGWindow).__LEAFYGREEN_UTILS__.modules[
     '@leafygreen-ui/ripple'

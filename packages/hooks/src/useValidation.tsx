@@ -2,7 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import { useState } from 'react';
 
 export default function useValidation<
-  T extends HTMLInputElement | HTMLTextAreaElement
+  T extends HTMLInputElement | HTMLTextAreaElement,
 >(handleValidation?: (value: string) => void) {
   const [isDirty, setIsDirty] = useState(false);
 

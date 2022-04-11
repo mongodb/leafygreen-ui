@@ -1,16 +1,26 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
-import { CommonTypographyProps, Mode } from '../types';
+import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { Mode } from '../types';
 import { palette } from '@leafygreen-ui/palette';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { bodyTypeScaleStyles } from '../styles';
 
 const labelStyle = css`
   font-family: ${fontFamilies.default};
   font-weight: bold;
 `;
+
+const labelTypeScale: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize};
+    line-height: ${typeScales.body1.lineHeight};
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize};
+    line-height: ${typeScales.body2.lineHeight};
+  `,
+};
 
 const labelColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
@@ -30,11 +40,11 @@ const disabledLabelColorStyle: Record<Mode, string> = {
   `,
 };
 
-type LabelProps = HTMLElementProps<'label', never> &
-  CommonTypographyProps & {
-    htmlFor: string;
-    disabled?: boolean;
-  };
+type LabelProps = HTMLElementProps<'label', never> & {
+  darkMode?: boolean;
+  htmlFor: string;
+  disabled?: boolean;
+};
 
 export const Label = ({
   darkMode = false,
@@ -51,7 +61,7 @@ export const Label = ({
       className={cx(
         labelStyle,
         labelColorStyle[mode],
-        bodyTypeScaleStyles[baseFontSize],
+        labelTypeScale[baseFontSize],
         { [disabledLabelColorStyle[mode]]: disabled },
         className,
       )}

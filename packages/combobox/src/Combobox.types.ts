@@ -16,7 +16,8 @@ export const TrunctationLocation = {
   end: 'end',
   none: 'none',
 } as const;
-export type TrunctationLocation = typeof TrunctationLocation[keyof typeof TrunctationLocation];
+export type TrunctationLocation =
+  typeof TrunctationLocation[keyof typeof TrunctationLocation];
 
 export const Overflow = {
   expandY: 'expand-y',
@@ -55,7 +56,7 @@ export function getNullSelection<M extends boolean>(
   multiselect: M,
 ): SelectValueType<M> {
   if (multiselect) {
-    return ([] as Array<string>) as SelectValueType<M>;
+    return [] as Array<string> as SelectValueType<M>;
   } else {
     return null as SelectValueType<M>;
   }

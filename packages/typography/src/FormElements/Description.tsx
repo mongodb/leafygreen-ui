@@ -1,11 +1,10 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { Mode } from '../types';
 import { palette } from '@leafygreen-ui/palette';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { CommonTypographyProps, Mode } from '../types';
-import { bodyTypeScaleStyles } from '../styles';
 
 const descriptionStyle = css`
   font-family: ${fontFamilies.default};
@@ -13,6 +12,17 @@ const descriptionStyle = css`
   margin-top: 0;
   margin-bottom: 0;
 `;
+
+const descriptionTypeScale: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize};
+    line-height: ${typeScales.body1.lineHeight};
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize};
+    line-height: ${typeScales.body2.lineHeight};
+  `,
+};
 
 const descriptionColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
@@ -32,10 +42,10 @@ const disabledDescriptionColorStyle: Record<Mode, string> = {
   `,
 };
 
-type DescriptionProps = HTMLElementProps<'p', never> &
-  CommonTypographyProps & {
-    disabled?: boolean;
-  };
+type DescriptionProps = HTMLElementProps<'p', never> & {
+  darkMode?: boolean;
+  disabled?: boolean;
+};
 
 export const Description = ({
   darkMode = false,
@@ -52,7 +62,7 @@ export const Description = ({
       className={cx(
         descriptionStyle,
         descriptionColorStyle[mode],
-        bodyTypeScaleStyles[baseFontSize],
+        descriptionTypeScale[baseFontSize],
         {
           [disabledDescriptionColorStyle[mode]]: disabled,
         },
