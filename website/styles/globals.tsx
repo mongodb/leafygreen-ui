@@ -196,12 +196,18 @@ export const globalStyles = css`
     text-decoration: none;
     position: relative;
 
-    &:hover:after {
+    :after {
       content: url(/connect.svg);
       position: absolute;
       left: 100%;
       top: 2px;
       margin-left: 8px;
+      opacity: 0;
+    }
+
+    &:hover:after {
+      opacity: 1;
+      cursor: pointer;
     }
   }
 
