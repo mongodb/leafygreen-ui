@@ -219,10 +219,8 @@ const SubMenu: ExtendableBox<
 
     const nodeRef = React.useRef(null);
 
-    const [
-      iconButtonElement,
-      setIconButtonElement,
-    ] = useState<HTMLElement | null>(null);
+    const [iconButtonElement, setIconButtonElement] =
+      useState<HTMLElement | null>(null);
 
     const onRootClick = useCallback(
       (
