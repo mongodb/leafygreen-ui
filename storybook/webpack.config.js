@@ -12,6 +12,7 @@ module.exports = ({ config }) => {
             [
               '@babel/preset-env',
               {
+                // Can't use ESM modules yet in Storybook
                 modules: 'auto',
               },
             ],
