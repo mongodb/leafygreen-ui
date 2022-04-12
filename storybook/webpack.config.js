@@ -2,14 +2,22 @@ module.exports = ({ config }) => {
   config.module.rules = [
     {
       test: /\.(t|j)sx?$/,
+      exclude: /node_modules/,
       use: {
         loader: 'babel-loader',
         options: {
           // Makes Babel treat the directory containing babel.config.js as the project root
           rootMode: 'upward',
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                modules: 'auto',
+              },
+            ],
+          ],
         },
       },
-      exclude: /node_modules/,
     },
 
     {
