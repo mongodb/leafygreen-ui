@@ -1,5 +1,11 @@
 # @leafygreen-ui/confirmation-modal
 
+## 3.0.1
+
+### Patch Changes
+
+- 63f87292: Updating button version to v13.0.1
+
 ## 3.0.0
 
 ### Major Changes
