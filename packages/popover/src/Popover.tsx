@@ -221,6 +221,7 @@ function Popover({
     referenceElDocumentPos,
     contentElViewportPos,
     contentElDocumentPos,
+    scrollContainer,
   });
 
   const activeStyle = css`

@@ -27,6 +27,7 @@ interface CalculatePosition
   useRelativePositioning: boolean;
   align: Align;
   justify: Justify;
+  scrollContainer: HTMLElement | null | undefined;
 }
 
 // Returns the style object that is used to position and transition the popover component
@@ -39,6 +40,7 @@ export function calculatePosition({
   referenceElDocumentPos = defaultElementPosition,
   contentElViewportPos = defaultElementPosition,
   contentElDocumentPos = defaultElementPosition,
+  scrollContainer,
   windowHeight = window.innerHeight,
   windowWidth = window.innerWidth,
 }: CalculatePosition): {
@@ -46,13 +48,35 @@ export function calculatePosition({
   justify: Justify;
   positionCSS: any;
 } {
+  // Use scrollContainer width and height instead of window width and height when a scrollContainer is set
+  // so we can correctly determine if the content element is safely within the "window"
+  const windowContainerWidth = scrollContainer
+    ? scrollContainer.offsetWidth
+    : windowWidth;
+  const windowContainerHeight = scrollContainer
+    ? scrollContainer.offsetHeight
+    : windowHeight;
+
   const windowSafeCommonArgs = {
-    windowWidth,
-    windowHeight,
+    windowWidth: windowContainerWidth,
+    windowHeight: windowContainerHeight,
     referenceElViewportPos,
     contentElViewportPos,
     spacing,
   };
+
+  // calculatePosition will run and return CSS even if getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if something is returned.
+  //  Justify fit does not position itself properly in this case so we continue to return the CSS
+  if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
+    return {
+      align,
+      justify,
+      positionCSS: {
+        left: 0,
+        top: 0,
+      },
+    };
+  }
 
   const windowSafeAlign = getWindowSafeAlign(align, windowSafeCommonArgs);
   const windowSafeJustify = getWindowSafeJustify(
@@ -96,8 +120,8 @@ export function calculatePosition({
         referenceElDocumentPos,
         contentElDocumentPos,
         spacing,
-        windowHeight,
-        windowWidth,
+        windowHeight: windowContainerHeight,
+        windowWidth: windowContainerWidth,
       }),
       transformOrigin,
       transform,
@@ -114,6 +138,22 @@ const defaultElementPosition = {
   width: 0,
 };
 
+/**
+ * Returns the boundingWidth if the difference between the boundingWidth and offsetWidth is less than one else the offsetWidth is returned.
+ */
+const getClosestToExactWidth = (
+  boundingWidth: number,
+  offsetWidth: number,
+): number => {
+  // offsetWidth returns a rounded number of the element's layout width and height.
+  // boundingWidth returns an exact number with the rendered width and height which can include transformations.
+  // Using the boundingWidth (exact number) is a better indicator of determining if an element will fit in the window, e.g. calcLeft() uses the width to determine the left position and then that number is used to check if it is safetly within the window bounds. In some cases the offsetWidth is rounded up which means that it might not fit in the window bounds when it really can.
+  // With this we check if the difference between the boundingWidth and offsetWidth is less than one, if thats the case then the number was rounded to a whole number and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
+  const wasRounded = Math.abs(boundingWidth - offsetWidth) < 1;
+
+  return wasRounded ? boundingWidth : offsetWidth;
+};
+
 export function getElementDocumentPosition(
   element: HTMLElement | null,
   scrollContainer?: HTMLElement | null,
@@ -122,8 +162,16 @@ export function getElementDocumentPosition(
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right } = element.getBoundingClientRect();
-  const { offsetHeight: height, offsetWidth: width } = element;
+  const {
+    top,
+    bottom,
+    left,
+    right,
+    width: boundingWidth,
+  } = element.getBoundingClientRect();
+  const { offsetHeight: height, offsetWidth } = element;
+
+  const width = getClosestToExactWidth(boundingWidth, offsetWidth);
 
   if (scrollContainer) {
     const { scrollTop, scrollLeft } = scrollContainer;
@@ -165,8 +213,16 @@ export function getElementViewportPosition(
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right } = element.getBoundingClientRect();
-  const { offsetHeight: height, offsetWidth: width } = element;
+  const {
+    top,
+    bottom,
+    left,
+    right,
+    width: boundingWidth,
+  } = element.getBoundingClientRect();
+  const { offsetHeight: height, offsetWidth } = element;
+
+  const width = getClosestToExactWidth(boundingWidth, offsetWidth);
 
   if (scrollContainer) {
     const {
@@ -379,13 +435,15 @@ function calcAbsolutePosition({
   windowWidth,
   windowHeight,
 }: CalcAbsolutePositionArgs): AbsolutePositionObject {
-  const left = `${calcLeft({
+  const leftNum = calcLeft({
     align,
     justify,
     referenceElPos: referenceElDocumentPos,
     contentElPos: contentElDocumentPos,
     spacing,
-  })}px`;
+  });
+
+  const left = `${leftNum}px`;
 
   const top = `${calcTop({
     align,
@@ -414,7 +472,7 @@ function calcAbsolutePosition({
   return {
     left,
     top,
-    right: `${windowWidth - referenceElDocumentPos.right}px`,
+    right: `${windowWidth - (leftNum + referenceElDocumentPos.width)}px`, // take the left position of the content element and add the width of the reference element. This is where we want the right position of the content element to be. To get the equivalent right position minus this number from the container width.
   };
 }
 

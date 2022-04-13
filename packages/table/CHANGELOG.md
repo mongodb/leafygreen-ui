@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 3.0.2
+
+### Patch Changes
+
+- ae4704d7: Creates a new stacking context for the Table component
+
 ## 3.0.1
 
 ### Patch Changes
