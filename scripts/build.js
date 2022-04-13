@@ -2,11 +2,49 @@ const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 const _ = require('lodash');
 const chalk = require('chalk');
+const { exit } = require('process');
 
 const cmdArgs = ['--parallel', 'build'];
 const args = process.argv.slice(2);
 let packages = [];
 let dryRun = false;
+
+const docs = `
+${chalk.green.bold.underline('Leafygreen Build script')}
+
+By default, this script will build all packages in the \`packages/\` directory.
+Cutomize which packages get built by adding flags to this script:
+
+${chalk.bold.inverse('--help, -h')}: Show this help menu.
+
+${chalk.bold.inverse(
+  '--exclude, -e',
+)}: Optionally "exclude" packages from being built.
+  For example: ${chalk.bgGray(
+    `yarn build -e icon typography`,
+  )} will build everything ${chalk.underline('but')} icon & typography.
+  Note: If an exclude flag is provided, any packages listed before the flag are ignored.
+
+${chalk.bold.inverse(
+  '--diff',
+)}: Builds packages that you have been working on, based on the current git diff
+
+${chalk.bold.inverse(
+  '--dependencies, --deps',
+)}: Builds packages that you have been working on, and their leafygreen-ui dependencies. 
+
+${chalk.bold.inverse(
+  '--dry',
+)}: Don't build, but print what would have been build given the same arguments.
+
+${chalk.bold.inverse('--watch')}: Watch all files you intend to build
+`;
+
+if (argsIncludes('--help', '-h')) {
+  // eslint-disable-next-line no-console
+  console.log(docs);
+  exit(0);
+}
 
 // check if we should be watching
 if (args.includes('--watch')) {
