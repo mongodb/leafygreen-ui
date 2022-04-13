@@ -89,9 +89,8 @@ function RadioGroup({
     }
   });
 
-  const [uncontrolledValue, setUncontrolledValue] = React.useState<string>(
-    defaultChecked,
-  );
+  const [uncontrolledValue, setUncontrolledValue] =
+    React.useState<string>(defaultChecked);
 
   const name = useIdAllocator({ prefix: 'radio-group', id: nameProp });
 

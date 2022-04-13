@@ -24,7 +24,7 @@ const colors = [
 
 const spacingBlockVariants = Object.keys(spacing).reduce(
   (acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
-    const key = (index as PropertyKey) as keyof typeof spacing;
+    const key = index as PropertyKey as keyof typeof spacing;
     acc[key] = css`
       background-color: ${colors[idx]};
       width: ${spacing[key]}px;
@@ -54,7 +54,7 @@ storiesOf('Tokens', module).add('Spacing', () => (
   >
     {Object.keys(spacing).map(space => (
       <SpacingBlock
-        space={(space as PropertyKey) as keyof typeof spacing}
+        space={space as PropertyKey as keyof typeof spacing}
         key={space}
       />
     ))}
