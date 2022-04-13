@@ -4,8 +4,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { Mode } from '../types';
 import { palette } from '@leafygreen-ui/palette';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { useUpdatedBaseFontSize } from '../utils';
+import { useUpdatedBaseFontSize } from '../useUpdatedBaseFontSize';
 
 const labelStyle = css`
   font-family: ${fontFamilies.default};
