@@ -1,15 +1,22 @@
 const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 const _ = require('lodash');
+const chalk = require('chalk');
 
 const cmdArgs = ['--parallel', 'build'];
 const args = process.argv.slice(2);
 let packages = [];
+let dryRun = false;
 
 // check if we should be watching
 if (args.includes('--watch')) {
   cmdArgs.push('--', '--watch');
   removeFromArgs('--watch');
+}
+
+if (argsIncludes('--dry')) {
+  dryRun = true;
+  removeFromArgs('--dry');
 }
 
 /**
@@ -37,32 +44,58 @@ if (argsIncludes('--diff', '--dependencies', '--deps')) {
  * `--exclude` - run all packages EXCEPT the ones following this flag (alias: `-e`)
  */
 if (argsIncludes('--exclude', '-e')) {
+  removeFromArgs('--exclude', '-e');
   // Look for the packages we should be excluding
-  packages = (packages ?? getAllPackageNames()).filter(
+  packages = (packages.length ? packages : getAllPackageNames()).filter(
     pkg => !args.includes(pkg),
   );
-  removeFromArgs('--exclude', '-e', ...args);
+
+  // eslint-disable-next-line no-console
+  console.log(`
+  ${chalk.bold('Excluding:')} ${chalk.red(args.join(', '))}
+  `);
+
+  removeFromArgs(...args);
 } else {
   packages.push(...args);
 }
 
+// Remove duplicates
 packages = _.uniq(packages);
-const packageArgs = packages.flatMap(pkg => [
-  '--scope',
-  `@leafygreen-ui/${pkg}`,
-]);
-cmdArgs.unshift(...packageArgs);
 
-// eslint-disable-next-line no-console
-console.log('Running pre-build...');
-spawnSync('yarn', ['pre-build', ...packages], { stdio: 'inherit' });
+if (!dryRun) {
+  const packageArgs = packages.flatMap(pkg => [
+    '--scope',
+    `@leafygreen-ui/${pkg}`,
+  ]);
 
-// Run lerna
-const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
-cmd.on('close', code => {
   // eslint-disable-next-line no-console
-  console.log(code === 0 ? '✅ Finished building \n' : `Exit code ${code}`);
-});
+  console.log(chalk.magenta('Running pre-build...'));
+  spawnSync('yarn', ['pre-build', ...packages], { stdio: 'inherit' });
+
+  // Run lerna
+  cmdArgs.unshift(...packageArgs);
+
+  // eslint-disable-next-line no-console
+  console.log(chalk.green.bold(`Building ${packages.length} packages.\n`));
+
+  const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
+  cmd.on('close', code => {
+    // eslint-disable-next-line no-console
+    console.log(
+      code === 0
+        ? chalk.green.bold(`\n✅ Finished building\n`)
+        : chalk.red.bold(`\nExit code ${code}\n`),
+    );
+  });
+} else {
+  // eslint-disable-next-line no-console
+  console.log(`
+  ${chalk.bgYellowBright.black.bold('    Dry Run    ')}
+  ${chalk.bold('Would have built:')}
+    ${chalk.green(packages.length ? packages.join(', ') : 'all packages')}
+  `);
+}
 
 function getAllPackageNames() {
   return fs
