@@ -157,6 +157,7 @@ const knobsConfig: KnobsConfigInterface<{
     default: Language.JavaScript,
     options: Object.values(Language),
     label: 'Language',
+    isRequired: true,
   },
   children: {
     type: 'area',
