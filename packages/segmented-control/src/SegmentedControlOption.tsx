@@ -1,86 +1,91 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import {
+  useBaseFontSize,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import Box from '@leafygreen-ui/box';
 import { Size, Mode } from './types';
 import { SegmentedControlContext } from './SegmentedControl';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 /**
  * Styles
  */
-
-const optionMode = (mode: Mode) => {
-  switch (mode) {
-    case 'light':
-      return css`
-        --base-text-color: ${uiColors.gray.dark1};
-        --base-background-color: transparent;
-        --base-shadow-color: transparent;
-        --hover-text-color: ${uiColors.gray.dark3};
-        --hover-background-color: ${uiColors.white};
-        --active-text-color: ${uiColors.gray.dark3};
-        --disabled-text-color: ${uiColors.gray.light1};
-      `;
-    case 'dark':
-      return css`
-        --base-text-color: ${uiColors.gray.light1};
-        --base-background-color: transparent;
-        --base-shadow-color: transparent;
-        --hover-text-color: ${uiColors.gray.light2};
-        --hover-background-color: ${uiColors.gray.dark2};
-        --active-text-color: ${uiColors.white};
-        --disabled-text-color: ${uiColors.gray.dark1};
-      `;
-  }
+const optionMode: Record<Mode, string> = {
+  [Mode.Light]: css`
+    --base-text-color: ${palette.gray.dark1};
+    --base-background-color: transparent;
+    --base-shadow-color: transparent;
+    // Hover
+    --hover-text-color: ${palette.gray.dark3};
+    --hover-background-color: ${palette.white};
+    // Selected
+    --active-text-color: ${palette.white};
+    // Disabled
+    --disabled-text-color: ${palette.gray.light1};
+    // Divider
+    --divider-background-color: ${palette.gray.light1};
+  `,
+  [Mode.Dark]: css`
+    --base-text-color: ${uiColors.gray.light1};
+    --base-background-color: transparent;
+    --base-shadow-color: transparent;
+    // Hover
+    --hover-text-color: ${uiColors.gray.light2};
+    --hover-background-color: ${uiColors.gray.dark2};
+    // Selected
+    --active-text-color: ${uiColors.white};
+    // Disabled
+    --disabled-text-color: ${uiColors.gray.dark1};
+    // Divider
+    --divider-background-color: ${uiColors.gray.light1};
+  `,
 };
 
-const optionSize = (size: Size) => {
-  switch (size) {
-    case 'small':
-      return css`
-        --font-size: 12px;
-        --line-height: 16px;
-        --padding-block: 3px;
-        --padding-inline: 12px;
-        --text-transform: uppercase;
-        --font-weight: bold;
-        --divider-height: 12px;
-      `;
-    case 'large':
-      return css`
-        --font-size: 16px;
-        --line-height: 28px;
-        --padding-block: 4px;
-        --padding-inline: 12px;
-        --text-transform: none;
-        --font-weight: normal;
-        --divider-height: 20px;
-      `;
-    case 'default':
-      return css`
-        --font-size: 14px;
-        --line-height: 24px;
-        --padding-block: 3px;
-        --padding-inline: 12px;
-        --text-transform: none;
-        --font-weight: normal;
-        --divider-height: 18px;
-      `;
-  }
+const optionSize: Record<Size, string> = {
+  [Size.Small]: css`
+    --font-size: 12px;
+    --line-height: 16px;
+    --padding-block: 3px;
+    --padding-inline: 12px;
+    --text-transform: uppercase;
+    --font-weight: 700;
+    --divider-height: 12px;
+  `,
+  [Size.Default]: css`
+    --font-size: 13px;
+    --line-height: 24px;
+    --padding-block: 3px; // top/bottom
+    --padding-inline: 12px; // left/right
+    --text-transform: none;
+    --font-weight: 500;
+    --divider-height: 18px;
+  `,
+  [Size.Large]: css`
+    --font-size: 16px;
+    --line-height: 28px;
+    --padding-block: 6px;
+    --padding-inline: 12px;
+    --text-transform: none;
+    --font-weight: 500;
+    --divider-height: 20px;
+  `,
 };
 
 const optionStyle = ({
   mode = 'light',
   size = 'default',
+  baseFontSize = 14,
 }: {
   mode: Mode;
   size: Size;
+  baseFontSize: 14 | 16;
 }) =>
   cx(
-    optionMode(mode),
-    optionSize(size),
+    optionMode[mode],
+    optionSize[size],
     css`
       position: relative;
       display: flex;
@@ -89,11 +94,10 @@ const optionStyle = ({
       justify-content: center;
       z-index: 3;
 
-      --divider-background-color: ${uiColors.gray.light1};
-
       &:first-child,
       &[data-lg-checked='true'],
-      &[data-lg-checked='true'] + [data-lg-checked='false'] {
+      &[data-lg-checked='true'] + [data-lg-checked='false'],
+      &:focus-within + :not(:focus-within) {
         --divider-background-color: transparent;
       }
 
@@ -113,28 +117,26 @@ const optionStyle = ({
                 var(--divider-height)
             ) / 2
         );
-        transition: background-color 100ms ease-in-out;
+        transition: background-color 150ms ease-in-out;
         background-color: var(--divider-background-color);
       }
     `,
+    {
+      // Update font size according to baseFontSize
+      [css`
+        --font-size: 16px;
+      `]: size === 'default' && baseFontSize === 16,
+    },
   );
-
-const interactionRingStyle = css`
-  width: 100%;
-  z-index: 1;
-
-  /* disable the interaction ring hover state */
-  &:hover > [data-leafygreen-ui='interaction-ring'] {
-    box-shadow: none;
-  }
-`;
 
 const boxStyle = css`
   width: 100%;
+  height: 100%;
   text-decoration: none;
 `;
 
 const buttonStyle = css`
+  font-family: ${fontFamilies.default};
   display: inline-flex;
   position: relative;
   width: 100%;
@@ -143,7 +145,7 @@ const buttonStyle = css`
   justify-content: center;
   padding: var(--padding-block) var(--padding-inline);
   background-color: var(--base-background-color);
-  border-radius: 4px;
+  border-radius: var(--indicator-radius);
   text-align: center;
   font-size: var(--font-size);
   line-height: var(--line-height);
@@ -152,7 +154,8 @@ const buttonStyle = css`
   color: var(--base-text-color);
   box-shadow: 0px 1px 2px var(--base-shadow-color);
   cursor: pointer;
-  transition: all 100ms ease-in-out;
+  transition: 150ms ease-in-out;
+  transition-property: color, box-shadow;
   text-decoration: none;
   outline: none;
   border: none;
@@ -170,6 +173,19 @@ const buttonStyle = css`
     cursor: not-allowed;
   }
 `;
+
+const buttonFocusStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    &:focus {
+      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
+    }
+  `,
+  [Mode.Dark]: css`
+    &:focus {
+      box-shadow: 0 0 0 2px ${uiColors.focus};
+    }
+  `,
+};
 
 const labelStyle = css`
   display: inline-flex;
@@ -274,12 +290,14 @@ const SegmentedControlOption = React.forwardRef<
       _index: index,
       _onClick,
       _onHover,
+      isfocusInComponent,
       ...rest
     }: SegmentedControlOptionProps,
     forwardedRef,
   ) => {
     const { size, mode, followFocus } = useContext(SegmentedControlContext);
     const { usingKeyboard } = useUsingKeyboardContext();
+    const baseFontSize = useBaseFontSize();
 
     const onClick = () => {
       _onClick?.(value);
@@ -296,8 +314,12 @@ const SegmentedControlOption = React.forwardRef<
     const didComponentMount = useRef(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     useEffect(() => {
+      // Check if the component did mount
       if (didComponentMount.current) {
-        if (usingKeyboard && focused) {
+        // usingKeyboard: Returns if the keyboard is being used.
+        // focused: Returns if this option should be the item in focus.
+        // isfocusInComponent: Returns if the focus should organically be this component. Without this check focus will be hijacked to this component if `usingKeyboard` is updated to true.
+        if (usingKeyboard && focused && isfocusInComponent) {
           // Respond in the DOM when this option is given focus via keyboard
           buttonRef?.current?.focus();
 
@@ -308,36 +330,42 @@ const SegmentedControlOption = React.forwardRef<
         }
       }
       didComponentMount.current = true;
-    }, [focused, followFocus, usingKeyboard]);
+    }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
 
     return (
       <div
-        className={cx(optionStyle({ mode, size }), className)}
+        className={cx(optionStyle({ mode, size, baseFontSize }), className)}
         ref={forwardedRef}
         data-lg-checked={checked}
       >
-        <InteractionRing
-          darkMode={mode === 'dark'}
-          className={interactionRingStyle}
-        >
-          <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
-            <button
-              role="tab"
-              id={id}
-              tabIndex={focused ? 0 : -1}
-              aria-selected={checked}
-              aria-controls={ariaControls}
-              disabled={disabled}
-              className={buttonStyle}
-              ref={buttonRef}
-              onClick={onClick}
-              onMouseEnter={onMouseEnter}
-              onMouseLeave={onMouseLeave}
+        <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
+          <button
+            role="tab"
+            id={id}
+            tabIndex={focused ? 0 : -1}
+            aria-selected={checked}
+            aria-controls={ariaControls}
+            disabled={disabled}
+            className={cx(buttonStyle, {
+              [buttonFocusStyle[mode]]: usingKeyboard,
+            })}
+            ref={buttonRef}
+            onClick={onClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          >
+            <span
+              className={cx(labelStyle, {
+                // TODO: Refresh - remove darkmode font override
+                [css`
+                  font-family: ${fontFamilies.legacy};
+                `]: mode === 'dark',
+              })}
             >
-              <span className={labelStyle}>{children}</span>
-            </button>
-          </Box>
-        </InteractionRing>
+              {children}
+            </span>
+          </button>
+        </Box>
       </div>
     );
   },

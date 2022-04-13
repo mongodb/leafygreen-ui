@@ -1,5 +1,33 @@
 # @leafygreen-ui/combobox
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+  - @leafygreen-ui/lib@9.2.0
+  - @leafygreen-ui/icon@11.8.0
+  - @leafygreen-ui/checkbox@7.0.0
+  - @leafygreen-ui/palette@3.3.2
+
+## 1.0.1
+
+### Patch Changes
+
+- e8f1a97: - Updates focus behavior, allowing users to re-open the menu with the mouse after making a selection
+  - Adds a warning if `multiselect` and `value` props don't align
+  - Fixes a bug where long display names would get truncated early
+  - Fixes a bug where the space bar wouldn't type a space character
+  - Fixes a bug where some characters could not be typed when a `value` prop was passed in
+  - Updates hooks dependency to `^7.2.0`
+- Updated dependencies [e8f1a97]
+  - @leafygreen-ui/icon@11.7.0
+  - @leafygreen-ui/icon-button@10.0.0
+
 ## 1.0.0
 
 ### Major Changes

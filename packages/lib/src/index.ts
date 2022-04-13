@@ -1,12 +1,13 @@
 import { once } from 'lodash';
 import * as typeIs from './typeIs';
+import createUniqueClassName from './createUniqueClassName';
+import getNodeTextContent from './getNodeTextContent';
 
-export { typeIs };
-
+export { typeIs, createUniqueClassName, getNodeTextContent };
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
   Element extends keyof JSX.IntrinsicElements,
-  RefType extends HTMLElement = never
+  RefType extends HTMLElement = never,
 > = Omit<JSX.IntrinsicElements[Element], 'ref'> & {
   ref?: [RefType] extends [never] ? never : React.Ref<RefType>;
   key?: React.Key | null;
@@ -124,7 +125,8 @@ export const AriaCurrentValue = {
   Unset: 'false', // equivalent to omitting the aria-current attribute
 } as const;
 
-export type AriaCurrentValue = typeof AriaCurrentValue[keyof typeof AriaCurrentValue];
+export type AriaCurrentValue =
+  typeof AriaCurrentValue[keyof typeof AriaCurrentValue];
 
 /**
  * Accepts a type as an argument and makes all of the keys of the type optional

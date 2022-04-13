@@ -1,5 +1,21 @@
 # @leafygreen-ui/checkbox
 
+## 7.0.0
+
+### Major Changes
+
+- acd6919: Updates checkbox for visual brand refresh
+  - Updates default `animate` value to `true`
+  - Adds `description` prop
+  - Adds support for `aria-label` and `aria-labelledby`
+  - Currently disregarding `bold` prop, and the label will always be bold. This will be updated in a future update to the `Label` component
+
+### Patch Changes
+
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+  - @leafygreen-ui/lib@9.2.0
+
 ## 6.0.6
 
 ### Patch Changes

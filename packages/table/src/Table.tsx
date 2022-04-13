@@ -3,7 +3,8 @@ import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import {
   useIsomorphicLayoutEffect,
   useViewportSize,
@@ -18,7 +19,7 @@ import { SortProvider } from './SortContext';
 import { FontSizeProvider } from './FontSizeContext';
 import { DarkModeProvider } from './DarkModeContext';
 
-const lmShadowColor = transparentize(0.7, uiColors.black);
+const lmShadowColor = transparentize(0.7, palette.black);
 const dmShadowColor = transparentize(0.2, uiColors.black);
 
 const containerStyle = css`
@@ -27,9 +28,12 @@ const containerStyle = css`
 `;
 
 const tableStyles = css`
+  font-family: ${fontFamilies.default};
+  position: relative;
   border-collapse: collapse;
   box-sizing: border-box;
   width: 100%;
+  z-index: 0;
 `;
 
 const shadow = css`
@@ -138,10 +142,8 @@ export default function Table<Shape>({
   }, [viewportSize]);
 
   const handleScroll = (e: React.UIEvent) => {
-    const {
-      scrollWidth,
-      clientWidth: elementWidth,
-    } = e.target as HTMLDivElement;
+    const { scrollWidth, clientWidth: elementWidth } =
+      e.target as HTMLDivElement;
     const isScrollable = scrollWidth > elementWidth;
 
     if (isScrollable) {
@@ -197,10 +199,13 @@ export default function Table<Shape>({
           cellPadding="0"
           className={cx(
             tableStyles,
-            css`
-              border-bottom: 1px solid
-                ${darkMode ? uiColors.gray.dark1 : uiColors.gray.light2};
-            `,
+            {
+              // TODO: Refresh - remove darkMode override
+              [css`
+                border-bottom: 1px solid ${uiColors.gray.dark1};
+                font-family: ${fontFamilies.legacy};
+              `]: darkMode,
+            },
             className,
           )}
           {...rest}

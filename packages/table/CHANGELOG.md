@@ -1,5 +1,36 @@
 # @leafygreen-ui/table
 
+## 3.0.2
+
+### Patch Changes
+
+- ae4704d7: Creates a new stacking context for the Table component
+
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+  - @leafygreen-ui/lib@9.2.0
+  - @leafygreen-ui/icon@11.8.0
+  - @leafygreen-ui/checkbox@7.0.0
+  - @leafygreen-ui/palette@3.3.2
+
+## 3.0.0
+
+### Major Changes
+
+- 614be76: Updates Table styles according to visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+  - @leafygreen-ui/tokens@1.1.0
+
 ## 2.0.6
 
 ### Patch Changes

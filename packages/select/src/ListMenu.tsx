@@ -91,10 +91,8 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
 
     const maxHeight = useMemo(() => {
       if (viewportSize && ref.current && referenceElement.current) {
-        const {
-          top: triggerTop,
-          bottom: triggerBottom,
-        } = referenceElement.current.getBoundingClientRect();
+        const { top: triggerTop, bottom: triggerBottom } =
+          referenceElement.current.getBoundingClientRect();
 
         // Find out how much space is available above or below the trigger
         const safeSpace = Math.max(

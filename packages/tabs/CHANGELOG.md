@@ -1,5 +1,23 @@
 # @leafygreen-ui/tabs
 
+## 6.0.2
+
+### Patch Changes
+
+- acd6919: - Eliminates fuzzy text on hover in `menu` and `tabs`
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+  - @leafygreen-ui/lib@9.2.0
+  - @leafygreen-ui/palette@3.3.2
+
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+  - @leafygreen-ui/tokens@1.1.0
+
 ## 6.0.0
 
 ### Major Changes

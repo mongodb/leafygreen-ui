@@ -1,15 +1,27 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { transparentize } from 'polished';
+import isNull from 'lodash/isNull';
+import once from 'lodash/once';
+import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
-import { Overline } from '@leafygreen-ui/typography';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import useDynamicRefs from './useDynamicRefs';
+import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+import { Overline } from '@leafygreen-ui/typography';
 import { Size, Mode } from './types';
-import { once } from 'lodash';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
 
+/**
+ * The selection and hover indicators are absolutely positioned elements that move underneath the text.
+ * This allows us to achieve the sliding effect.
+ */
 const selectionIndicatorDataAttr = createDataProp('selection-indicator');
 const hoverIndicatorDataAttr = createDataProp('hover-indicator');
 
@@ -21,59 +33,60 @@ const wrapperStyle = css`
   gap: 8px;
   align-items: center;
   z-index: 0;
+  font-family: ${fontFamilies.default};
 `;
 
 const labelStyle: {
   [key in Mode]: string;
 } = {
   light: css`
-    color: ${uiColors.gray.dark1};
+    letter-spacing: 1.4px;
+    color: ${palette.gray.dark1};
   `,
   dark: css`
     color: ${uiColors.gray.light1};
   `,
 };
 
-// The border color is slightly different from the base gray for accessibility reasons
-const selectionBorderColor = '#869499';
-
-const frameStyleSize: {
-  [key in Size]: string;
-} = {
-  small: css`
-    --segment-gap: 1px;
-    --frame-padding: 0px;
-    --frame-border-radius: 4px;
+const optionsWrapperStyleSize: Record<Size, string> = {
+  [Size.Small]: css`
+    --segment-gap: 1px; // space between segments
+    --wrapper-padding: 0px;
+    --outer-radius: 6px;
+    --indicator-radius: 6px;
     --indicator-height: 100%;
   `,
-  default: css`
-    --segment-gap: 5px;
-    --frame-padding: 3px;
-    --frame-border-radius: 6px;
-    --indicator-height: calc(100% - 2 * var(--frame-padding));
+  [Size.Default]: css`
+    --segment-gap: 5px; // space between segments
+    --wrapper-padding: 3px;
+    --outer-radius: 8px;
+    --indicator-radius: 6px;
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
-  large: css`
-    --segment-gap: 5px;
-    --frame-padding: 3px;
-    --frame-border-radius: 6px;
-    --indicator-height: calc(100% - 2 * var(--frame-padding));
+  [Size.Large]: css`
+    --segment-gap: 5px; // space between segments
+    --wrapper-padding: 3px;
+    --outer-radius: 12px;
+    --indicator-radius: 6px;
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
   `,
 };
 
-const frameStyleMode: {
-  [key in Mode]: string;
-} = {
-  light: css`
-    --background-color: ${uiColors.gray.light3};
+const optionsWrapperStyleMode: Record<Mode, string> = {
+  [Mode.Light]: css`
+    --background-color: ${palette.gray.light3};
     --border-color: transparent;
     --border-width: 0px;
-    --inner-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3) inset;
-    --outer-shadow: 0px 1px 1px #e7eeec;
-    --hover-background-color: ${uiColors.white};
-    --indicator-background-color: ${uiColors.gray.light2};
-    --indicator-border-color: ${selectionBorderColor};
+    --inner-shadow: 0px 1px 2px ${transparentize(0.7, palette.black)} inset;
+    --outer-shadow: 0px 1px 1px ${palette.gray.light2};
+    // Hover indicator
+    --hover-background-color: ${palette.white};
+    // Selection indicator
+    --indicator-background-color: ${palette.black};
+    --indicator-border-color: ${palette.black};
+    --indicator-shadow: 0px 1px 2px ${transparentize(0.7, palette.gray.dark3)};
   `,
-  dark: css`
+  [Mode.Dark]: css`
     --background-color: ${uiColors.gray.dark3};
     --border-color: ${uiColors.gray.dark1};
     --border-width: 1px;
@@ -82,10 +95,35 @@ const frameStyleMode: {
     --hover-background-color: ${uiColors.gray.dark2};
     --indicator-background-color: ${uiColors.gray.dark1};
     --indicator-border-color: ${uiColors.gray.base};
+    --indicator-shadow: 0px 1px 2px ${transparentize(0.7, uiColors.gray.dark3)};
   `,
 };
 
-const frameStyle = ({
+const optionsWrapperStyleSizeDarkModeOverrides: Record<Size, string> = {
+  [Size.Small]: css`
+    --segment-gap: 1px;
+    --wrapper-padding: 0px;
+    --outer-radius: 4px;
+    --indicator-radius: 4px;
+    --indicator-height: 100%;
+  `,
+  [Size.Default]: css`
+    --segment-gap: 5px;
+    --wrapper-padding: 3px;
+    --outer-radius: 6px;
+    --indicator-radius: 6px;
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
+  `,
+  [Size.Large]: css`
+    --segment-gap: 5px;
+    --wrapper-padding: 3px;
+    --outer-radius: 6px;
+    --indicator-radius: 6px;
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
+  `,
+};
+
+const optionsWrapperStyle = ({
   mode = 'light',
   size = 'default',
 }: {
@@ -93,8 +131,8 @@ const frameStyle = ({
   size: Size;
 }) =>
   cx(
-    frameStyleSize[size],
-    frameStyleMode[mode],
+    optionsWrapperStyleSize[size],
+    optionsWrapperStyleMode[mode],
     css`
       position: relative;
       display: grid;
@@ -102,9 +140,10 @@ const frameStyle = ({
       grid-auto-columns: 1fr;
       gap: var(--segment-gap);
       align-items: center;
-      padding: var(--frame-padding);
+      padding: var(--wrapper-padding);
       border: var(--border-width) solid var(--border-color);
-      border-radius: var(--frame-border-radius);
+      border-radius: var(--outer-radius);
+      --indicator-radius: 6px;
       background-color: var(--background-color);
 
       &:focus {
@@ -123,16 +162,19 @@ const frameStyle = ({
         pointer-events: none;
       }
     `,
+    {
+      // TODO: Refresh - remove darkMode overrides
+      [optionsWrapperStyleSizeDarkModeOverrides[size]]: mode === 'dark',
+    },
   );
 
 const selectionIndicatorStyle = css`
   position: absolute;
-  grid-column: 1/2; // position the selector in the grid until it gets positioned
   width: 100%;
   height: var(--indicator-height);
   z-index: 2;
-  box-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
-  border-radius: 4px;
+  box-shadow: var(--indicator-shadow-color);
+  border-radius: var(--indicator-radius);
   border-width: 1px;
   border-style: solid;
   background-color: var(--indicator-background-color);
@@ -140,33 +182,16 @@ const selectionIndicatorStyle = css`
   transition: transform 150ms ease-in-out;
 `;
 
-const getDynamicSelectionStyle = (width: number, left: number) => {
-  return css`
-    grid-column: unset;
-    width: ${width}px;
-    transform: translateX(${left}px);
-  `;
-};
-
 const hoverIndicatorStyle = css`
   position: absolute;
   height: var(--indicator-height);
   width: 100%;
-  grid-column: unset;
-  border-radius: 4px;
+  border-radius: var(--indicator-radius);
   background-color: var(--hover-background-color);
   z-index: 0;
   opacity: 0;
+  transition: opacity 100ms ease-in-out;
 `;
-
-const getDynamicHoverStyle = (index: number | null) => {
-  if (index != null) {
-    return css`
-      opacity: 1;
-      grid-column: ${index + 1} / ${index + 2};
-    `;
-  }
-};
 
 /**
  * Types
@@ -276,12 +301,14 @@ const SegmentedControl = React.forwardRef<
   }: SegmentedControlProps,
   forwardedRef,
 ) {
-  // TODO log warning if defaultValue is set but does not match any child value
+  // TODO: log warning if defaultValue is set but does not match any child value
   const { usingKeyboard } = useUsingKeyboardContext();
+  const segmentedContainerRef = useRef<null | HTMLDivElement>(null);
+  const [isfocusInComponent, setIsfocusInComponent] = useState<boolean>(false);
 
-  const [getRef, setRef] = useDynamicRefs<HTMLDivElement>();
+  const getOptionRef = useDynamicRefs<HTMLDivElement>({ prefix: 'option' });
 
-  const mode = darkMode ? 'dark' : 'light';
+  const mode: Mode = darkMode ? 'dark' : 'light';
 
   const name = useIdAllocator({
     prefix: 'segmented-control',
@@ -289,9 +316,10 @@ const SegmentedControl = React.forwardRef<
   });
 
   // If a value is given, then it's controlled
-  const isControlled = useMemo(() => controlledValue != null, [
-    controlledValue,
-  ]);
+  const isControlled = useMemo(
+    () => controlledValue != null,
+    [controlledValue],
+  );
 
   // Keep track of the value internally
   const [internalValue, setInternalValue] = useState<string | undefined>(
@@ -314,6 +342,26 @@ const SegmentedControl = React.forwardRef<
       setFocusedOptionValue(firstChild.props.value);
     }
   });
+
+  // Check if the organic focus is inside of this component. We'll use this to check if the focus should be programmatically set in SegmentedControlOption.
+  const handleFocusIn = useCallback(() => {
+    if (
+      segmentedContainerRef.current?.contains(
+        document.activeElement as HTMLElement,
+      )
+    ) {
+      setIsfocusInComponent(true);
+    } else {
+      setIsfocusInComponent(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('focusin', handleFocusIn);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, [handleFocusIn]);
 
   // Handle value updates
   const updateValue = useCallback(
@@ -368,7 +416,8 @@ const SegmentedControl = React.forwardRef<
           'aria-controls': child.props['aria-controls'] ?? ariaControls,
           _onClick: updateValue,
           _onHover,
-          ref: setRef(`${name}-${index}`),
+          ref: getOptionRef(`${index}`),
+          isfocusInComponent,
         });
       }),
     [
@@ -380,7 +429,8 @@ const SegmentedControl = React.forwardRef<
       name,
       ariaControls,
       updateValue,
-      setRef,
+      getOptionRef,
+      isfocusInComponent,
     ],
   );
 
@@ -403,9 +453,9 @@ const SegmentedControl = React.forwardRef<
   // Keep track of the index of the selected value
   const selectedIndex = useMemo(
     () =>
-      (React.Children.toArray(
-        renderedChildren,
-      ) as Array<React.ReactElement>).findIndex(child =>
+      (
+        React.Children.toArray(renderedChildren) as Array<React.ReactElement>
+      ).findIndex(child =>
         isControlled
           ? child.props.value === controlledValue
           : child.props.value === internalValue,
@@ -420,18 +470,16 @@ const SegmentedControl = React.forwardRef<
   // Keep track of the index of the focused value
   const focusedIndex = useMemo(
     () =>
-      (React.Children.toArray(
-        renderedChildren,
-      ) as Array<React.ReactElement>).findIndex(
-        child => child.props.value === focusedOptionValue,
-      ),
+      (
+        React.Children.toArray(renderedChildren) as Array<React.ReactElement>
+      ).findIndex(child => child.props.value === focusedOptionValue),
     [renderedChildren, focusedOptionValue],
   );
 
   const updateFocusedIndex = (newIndex: number): void => {
-    const children = (React.Children.toArray(
-      renderedChildren,
-    ) as Array<React.ReactElement>).filter(child => !child.props.disabled);
+    const children = (
+      React.Children.toArray(renderedChildren) as Array<React.ReactElement>
+    ).filter(child => !child.props.disabled);
     const length = children.length;
     newIndex =
       newIndex >= length
@@ -469,54 +517,75 @@ const SegmentedControl = React.forwardRef<
   };
 
   /**
-   * Dynamic Styles
+   * Dynamic Styles.
+   * Dynamically set the size & position of the selection indicator
    */
 
-  // Dynamically set the size & position of the selection indicator
-  const [selectionStyleDynamic, setSelectionStyle] = useState<string>('');
-  useEffect(() => {
-    const selectedRef = getRef(`${name}-${selectedIndex}`);
+  const getIndicatorDynamicStyles = useCallback(
+    (index: number | null = 0) => {
+      if (isNull(index))
+        return css`
+          width: 0;
+        `;
 
-    if (selectedRef && selectedRef.current) {
-      // The ref refers to the button element
-      const selectedElement = selectedRef.current;
+      const count = React.Children.count(renderedChildren);
+      const widthPct = (1 / count) * 100;
+      const transformPct = index * 100;
 
-      if (selectedElement) {
-        const { offsetWidth: width, offsetLeft: left } = selectedElement;
-        setSelectionStyle(getDynamicSelectionStyle(width, left));
-      }
-    }
-  }, [getRef, name, selectedIndex, renderedChildren]);
-
-  // Dynamic hover styles
-  const hoverStyleDynamic = useMemo(() => {
-    return getDynamicHoverStyle(hoveredIndex);
-  }, [hoveredIndex]);
+      return css`
+        opacity: 1;
+        width: calc(${widthPct}% - 2 * var(--wrapper-padding));
+        transform: translateX(
+          calc(${transformPct}% + ${2 * index + 1} * var(--wrapper-padding))
+        );
+      `;
+    },
+    [renderedChildren],
+  );
 
   /**
    * Return
    */
   return (
     <SegmentedControlContext.Provider value={{ size, mode, name, followFocus }}>
-      <div className={cx(wrapperStyle, className)} {...rest}>
+      <div
+        ref={segmentedContainerRef}
+        className={cx(
+          wrapperStyle,
+          {
+            // TODO: Refresh - remove darkmode font override
+            [css`
+              font-family: ${fontFamilies.legacy};
+            `]: darkMode,
+          },
+          className,
+        )}
+        {...rest}
+      >
         {label && <Overline className={labelStyle[mode]}>{label}</Overline>}
 
         <div
           role="tablist"
           aria-label={name}
           aria-owns={childrenIdList}
-          className={cx(frameStyle({ mode, size }))}
+          className={cx(optionsWrapperStyle({ mode, size }))}
           ref={forwardedRef}
           onKeyDownCapture={handleKeyDown}
         >
           {renderedChildren}
           <div
             {...selectionIndicatorDataAttr.prop}
-            className={cx(selectionIndicatorStyle, selectionStyleDynamic)}
+            className={cx(
+              selectionIndicatorStyle,
+              getIndicatorDynamicStyles(selectedIndex),
+            )}
           />
           <div
             {...hoverIndicatorDataAttr.prop}
-            className={cx(hoverIndicatorStyle, hoverStyleDynamic)}
+            className={cx(
+              hoverIndicatorStyle,
+              getIndicatorDynamicStyles(hoveredIndex),
+            )}
           />
         </div>
       </div>

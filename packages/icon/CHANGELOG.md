@@ -1,5 +1,41 @@
 # @leafygreen-ui/icon
 
+## 11.8.0
+
+### Minor Changes
+
+- acd6919: Exports `createGlyphComponent` from the package. This provides a way to ensure parity between built-in icons and custom icons. By processing an icon with `createGlyphComponent`, consumers can ensure that props like `size`, `fill` and `role` behave as expected in both custom and default icons.
+
+  e.g.
+
+  ```js
+  import { createGlyphComponent, Size } from '@leafygreen-ui/icon';
+
+  const myIconGlyph = createGlyphComponent('myIconName', props => (
+    <svg {...props} />
+  ));
+
+  const MyIconComponent = createIconComponent({
+    myIconName: myIconGlyph,
+  });
+
+  return (
+    <MyIconComponent glyph="myIconName" size={Size.Large} role="presentation" />
+  );
+  ```
+
+### Patch Changes
+
+- Updated dependencies [acd6919]
+- Updated dependencies [acd6919]
+  - @leafygreen-ui/lib@9.2.0
+
+## 11.7.0
+
+### Minor Changes
+
+- e8f1a97: Adds Clock, ClockWithArrow, Key, Note, Redo, ReplicaSet, Serverless, ShardedCluster, Undo icons to the Icon component.
+
 ## 11.6.1
 
 ### Patch Changes

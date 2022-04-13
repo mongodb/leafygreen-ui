@@ -10,6 +10,7 @@ import { InlineCode } from '@leafygreen-ui/typography';
 export default function formatType(
   typeString: string,
   linkURL: string | undefined = undefined,
+  className?: string,
 ) {
   if (typeString === '') {
     return null;
@@ -25,7 +26,7 @@ export default function formatType(
     return valueArray.map((val, index) => {
       if (index === 0) {
         return (
-          <InlineCode href={linkURL} key={val}>
+          <InlineCode href={linkURL} key={val} className={className}>
             {val}
           </InlineCode>
         );
@@ -33,11 +34,18 @@ export default function formatType(
 
       return (
         <Fragment key={val}>
-          , <InlineCode href={linkURL}>{val}</InlineCode>
+          ,{' '}
+          <InlineCode href={linkURL} className={className}>
+            {val}
+          </InlineCode>
         </Fragment>
       );
     });
   }
 
-  return <InlineCode href={linkURL}>{valueArray[0]}</InlineCode>;
+  return (
+    <InlineCode href={linkURL} className={className}>
+      {valueArray[0]}
+    </InlineCode>
+  );
 }

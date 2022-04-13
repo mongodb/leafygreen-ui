@@ -1,5 +1,20 @@
 # @leafygreen-ui/inline-definition
 
+## 3.0.0
+
+### Major Changes
+
+- 614be76: - Updates InlineDefinition according to visual design refresh
+
+## Minor Changes
+
+- 614be76: Adds a passthrough `tooltipClassName` prop to InlineDefinition
+
+### Patch Changes
+
+- Updated dependencies [614be76]
+  - @leafygreen-ui/typography@9.1.1
+
 ## 2.0.6
 
 ### Patch Changes
