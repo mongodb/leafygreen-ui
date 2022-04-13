@@ -11,7 +11,7 @@ const wrapperStyle = (darkMode: boolean) => css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${!darkMode ? palette.white : palette.gray.dark3};
+  background-color: ${!darkMode ? palette.white : palette.black};
   width: 100vw;
   height: 100vh;
 `;

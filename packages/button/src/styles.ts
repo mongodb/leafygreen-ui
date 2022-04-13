@@ -1,4 +1,4 @@
-import { transparentize } from 'polished';
+import { mix, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Size, Variant, Mode, ButtonProps, FontSize } from './types';
@@ -117,6 +117,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        background-color: ${mix(0.12, palette.green.dark3, palette.green.base)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
     `,
@@ -213,15 +214,15 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       border-color: ${palette.green.base};
       color: ${palette.green.dark3};
 
-      &:focus {
-        color: ${palette.green.dark3};
-      }
-
       &:hover,
       &:active {
-        color: ${palette.green.dark3};
-        background-color: ${palette.green.base};
-        box-shadow: 0px 0px 0px 3px ${palette.green.dark3};
+        background-color: ${mix(
+          0.16,
+          palette.green.light3,
+          palette.green.base,
+        )};
+        border-color: ${mix(0.16, palette.green.light3, palette.green.base)};
+        box-shadow: 0px 0px 0px 3px ${palette.green.dark2};
       }
     `,
   },
@@ -360,14 +361,14 @@ const fontStyles: Record<FontSize, string> = {
   [FontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    font-weight: 500;
+    font-weight: 500; // Medium
   `,
   [FontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     // Pixel pushing for optical alignment purposes
     transform: translateY(1px);
-    font-weight: 500;
+    font-weight: 500; // Medium
   `,
 };
 
@@ -402,23 +403,23 @@ export function getClassName({
   );
 }
 
-const buttonOpacity = 0.76;
+const rippleOpacity = 0.76;
 
 export const rippleColors: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
     [Variant.Default]: palette.gray.light2,
     [Variant.Primary]: palette.green.dark1,
-    [Variant.PrimaryOutline]: transparentize(buttonOpacity, palette.green.base),
+    [Variant.PrimaryOutline]: transparentize(rippleOpacity, palette.green.base),
     [Variant.Danger]: palette.red.light1,
-    [Variant.DangerOutline]: transparentize(buttonOpacity, palette.red.base),
+    [Variant.DangerOutline]: transparentize(rippleOpacity, palette.red.base),
     [Variant.BaseGreen]: palette.green.light1,
   },
   [Mode.Dark]: {
     [Variant.Default]: palette.gray.base,
     [Variant.Primary]: palette.green.dark1,
-    [Variant.PrimaryOutline]: transparentize(buttonOpacity, palette.green.base),
+    [Variant.PrimaryOutline]: transparentize(rippleOpacity, palette.green.base),
     [Variant.Danger]: palette.red.base,
-    [Variant.DangerOutline]: transparentize(buttonOpacity, palette.red.base),
+    [Variant.DangerOutline]: transparentize(rippleOpacity, palette.red.base),
     [Variant.BaseGreen]: palette.green.dark1,
   },
 };

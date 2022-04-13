@@ -15,7 +15,7 @@ const rippleStyle = css`
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 6px;
+  border-radius: 5px;
 `;
 
 const containerChildStyles = css`
