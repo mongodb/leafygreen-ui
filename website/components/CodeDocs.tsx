@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { css, cx } from '@emotion/css';
-import unified from 'unified';
+import { unified } from 'unified';
 import markdown from 'remark-parse';
+import remarkGfm from 'remark-gfm';
 import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
 import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
@@ -217,9 +218,10 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const version = changelog?.split('h2')[1]?.replace(/[>/<]+/g, '');
   const example = readme?.split('js')[1]?.split('```')[0]?.trimStart();
   const outputHTML = readme?.split('```html')[1]?.split('```')[0]?.trimStart();
-  const markdownAst = (unified()
+  const markdownAst = unified()
     .use(markdown)
-    .parse(readme) as unknown) as ReadmeMarkdown;
+    .use(remarkGfm)
+    .parse(readme) as unknown as ReadmeMarkdown;
 
   return (
     <>

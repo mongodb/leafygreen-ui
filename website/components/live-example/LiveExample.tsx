@@ -66,6 +66,7 @@ interface SelectConfigInterface<T> {
   type: 'select';
   options: Array<T | undefined>;
   default: T;
+  isRequired?: boolean;
   label: string;
   shouldDisable?: (props: any) => boolean;
 }
@@ -110,11 +111,12 @@ export type PropsType<T = string> =
 
 interface ComponentPropsInterface {
   darkMode?: boolean;
+  isRequired?: boolean;
   [key: string]: unknown;
 }
 
 export type KnobsConfigInterface<
-  ComponentProps extends ComponentPropsInterface
+  ComponentProps extends ComponentPropsInterface,
 > = {
   [K in keyof ComponentProps]: Extract<
     PropsType<ComponentProps[K]>,
@@ -146,7 +148,10 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
 
   const [props, setProps] = useState<ComponentProps>(initialProps);
 
-  const onChange = <T extends PropsType['default']>(value: T, prop: string) => {
+  const onChange = <T extends PropsType['default']>(
+    prop: string,
+    value?: T,
+  ) => {
     setProps({ ...props, [prop]: value });
   };
 
@@ -195,6 +200,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
           return (
             <Select
               {...sharedProps}
+              isRequired={knobConfig?.isRequired}
               options={knobConfig?.options as Array<string>}
               value={props[propName] as string}
               // Allows us to disable Select dropdown based on current component props

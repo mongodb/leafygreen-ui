@@ -43,9 +43,10 @@ module.exports = function template(
     />`;
 
   // Augment the `<svg attributes />` so we can customize it with the values above.
-  jsx.openingElement.attributes = jsxAttributes.expression.openingElement.attributes.concat(
-    jsx.openingElement.attributes[2],
-  );
+  jsx.openingElement.attributes =
+    jsxAttributes.expression.openingElement.attributes.concat(
+      jsx.openingElement.attributes[2],
+    );
 
   return typeScriptTpl(`
     %%imports%%

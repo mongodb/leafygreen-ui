@@ -337,13 +337,10 @@ describe('packages/combobox', () => {
 
       testMultiSelect('Updating `value` updates the chips', () => {
         let value = ['apple', 'banana'];
-        const {
-          queryChipsByName,
-          queryAllChips,
-          rerenderCombobox,
-        } = renderCombobox(select, {
-          value,
-        });
+        const { queryChipsByName, queryAllChips, rerenderCombobox } =
+          renderCombobox(select, {
+            value,
+          });
         waitFor(() => {
           const allChips = queryChipsByName(['Apple', 'Banana']);
           allChips?.forEach(chip => expect(chip).toBeInTheDocument());
@@ -539,12 +536,8 @@ describe('packages/combobox', () => {
       testSingleSelect(
         'Clicking the combobox after making a selection should re-open the menu',
         async () => {
-          const {
-            comboboxEl,
-            inputEl,
-            openMenu,
-            getMenuElements,
-          } = renderCombobox(select);
+          const { comboboxEl, inputEl, openMenu, getMenuElements } =
+            renderCombobox(select);
           const { optionElements, menuContainerEl } = openMenu();
           const firstOption = optionElements![0];
           userEvent.click(firstOption);
@@ -685,9 +678,8 @@ describe('packages/combobox', () => {
 
       describe('Enter key', () => {
         test('selects highlighted option', () => {
-          const { inputEl, openMenu, queryChipsByName } = renderCombobox(
-            select,
-          );
+          const { inputEl, openMenu, queryChipsByName } =
+            renderCombobox(select);
           openMenu();
           userEvent.type(inputEl!, '{arrowdown}{enter}');
           if (select === 'multiple') {
@@ -698,9 +690,8 @@ describe('packages/combobox', () => {
         });
 
         testSingleSelect('Re-opens menu after making a selection', async () => {
-          const { inputEl, openMenu, getMenuElements } = renderCombobox(
-            'single',
-          );
+          const { inputEl, openMenu, getMenuElements } =
+            renderCombobox('single');
           const { optionElements, menuContainerEl } = openMenu();
           const firstOption = optionElements![0];
           userEvent.click(firstOption);
@@ -797,9 +788,8 @@ describe('packages/combobox', () => {
         );
 
         testSingleSelect('Re-opens menu after making a selection', async () => {
-          const { inputEl, openMenu, getMenuElements } = renderCombobox(
-            'single',
-          );
+          const { inputEl, openMenu, getMenuElements } =
+            renderCombobox('single');
           const { optionElements, menuContainerEl } = openMenu();
           const firstOption = optionElements![0];
           userEvent.click(firstOption);
@@ -1054,9 +1044,8 @@ describe('packages/combobox', () => {
         testSingleSelect(
           'Opens the menu after making a selection',
           async () => {
-            const { inputEl, openMenu, getMenuElements } = renderCombobox(
-              select,
-            );
+            const { inputEl, openMenu, getMenuElements } =
+              renderCombobox(select);
             const { optionElements, menuContainerEl } = openMenu();
             const firstOption = optionElements![0];
             userEvent.click(firstOption);

@@ -26,19 +26,19 @@ describe('getRippleGlobalNamespace', () => {
 
   describe(`when ${lgNamespace} is already defined`, () => {
     beforeAll(() => {
-      ((global as unknown) as GlobalSpecType)[lgNamespace]!.modules[
+      (global as unknown as GlobalSpecType)[lgNamespace]!.modules[
         '@leafygreen-ui/button'
       ] = { present: true };
     });
 
     afterAll(() => {
-      delete ((global as unknown) as GlobalSpecType)[lgNamespace];
+      delete (global as unknown as GlobalSpecType)[lgNamespace];
     });
 
     test('it adds the @leafygreen-ui/ripple module to the namespace', () => {
       getRippleGlobalNamespace();
       expect(
-        ((global as unknown) as GlobalSpecType)[lgNamespace]!.modules,
+        (global as unknown as GlobalSpecType)[lgNamespace]!.modules,
       ).toHaveProperty('@leafygreen-ui/ripple');
     });
 
@@ -53,7 +53,7 @@ describe('getRippleGlobalNamespace', () => {
     test('it does not overwrite existing modules', () => {
       getRippleGlobalNamespace();
       expect(
-        ((global as unknown) as GlobalSpecType)[lgNamespace]!.modules,
+        (global as unknown as GlobalSpecType)[lgNamespace]!.modules,
       ).toHaveProperty('@leafygreen-ui/button');
     });
   });
