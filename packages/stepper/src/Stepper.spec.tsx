@@ -24,7 +24,7 @@ describe('packages/stepper', () => {
   });
 
   describe('basic rendering', () => {
-    test('renders steps', async () => {
+    test('renders steps', () => {
       const { getByText } = render(
         <Stepper {...defaultProps}>{StepContents(3)}</Stepper>,
       );
@@ -34,7 +34,7 @@ describe('packages/stepper', () => {
       expect(getByText('Step 3')).toBeInTheDocument();
     });
 
-    test('renders correct default current step', async () => {
+    test('renders correct default current step', () => {
       const { container } = render(
         <Stepper {...defaultProps}>{StepContents(3)}</Stepper>,
       );
@@ -46,7 +46,7 @@ describe('packages/stepper', () => {
   });
 
   describe('props', () => {
-    test('renders correct current step', async () => {
+    test('renders correct current step', () => {
       const { container } = render(
         <Stepper {...defaultProps} currentStep={1}>
           {StepContents(3)}
@@ -58,7 +58,7 @@ describe('packages/stepper', () => {
       expect(currentStep).not.toContainHTML('Step 3');
     });
 
-    test('controls number of visible steps', async () => {
+    test('controls number of visible steps', () => {
       const { queryByText } = render(
         <Stepper {...defaultProps} maxDisplayedSteps={2}>
           {StepContents(3)}
@@ -70,7 +70,7 @@ describe('packages/stepper', () => {
       expect(queryByText('Step 3')).not.toBeInTheDocument();
     });
 
-    test('sets maxDisplayedSteps to length of list', async () => {
+    test('sets maxDisplayedSteps to length of list', () => {
       const { queryByText } = render(
         <Stepper {...defaultProps}>{StepContents(3)}</Stepper>,
       );
@@ -81,7 +81,7 @@ describe('packages/stepper', () => {
       expect(queryByText('Step 4')).not.toBeInTheDocument();
     });
 
-    test('sets maxDisplayedSteps to 1 if there is only one child', async () => {
+    test('sets maxDisplayedSteps to 1 if there is only one child', () => {
       const { queryByText } = render(
         <Stepper {...defaultProps}>
           <div>Step 1</div>
@@ -92,7 +92,7 @@ describe('packages/stepper', () => {
       expect(queryByText('Step 2')).not.toBeInTheDocument();
     });
 
-    test('renders ellipsis steps', async () => {
+    test('renders ellipsis steps', () => {
       const { queryByText } = render(
         <Stepper {...defaultProps} maxDisplayedSteps={2}>
           {StepContents(3)}
@@ -102,7 +102,7 @@ describe('packages/stepper', () => {
       expect(queryByText('Steps 2 and 3')).toBeInTheDocument();
     });
 
-    test('renders correct "and" ellipsis text', async () => {
+    test('renders correct "and" ellipsis text', () => {
       const shouldHaveAndText = render(
         <Stepper {...defaultProps} maxDisplayedSteps={2}>
           {StepContents(3)}
@@ -114,7 +114,7 @@ describe('packages/stepper', () => {
       ).toBeInTheDocument();
     });
 
-    test('renders correct "to" ellipsis text', async () => {
+    test('renders correct "to" ellipsis text', () => {
       const shouldHaveToText = render(
         <Stepper {...defaultProps} maxDisplayedSteps={2}>
           {StepContents(5)}
@@ -124,7 +124,7 @@ describe('packages/stepper', () => {
       expect(shouldHaveToText.queryByText('Steps 2 to 5')).toBeInTheDocument();
     });
 
-    test('renders correct number of completed steps', async () => {
+    test('renders correct number of completed steps', () => {
       const { queryByText } = render(
         <Stepper
           {...defaultProps}

@@ -5,6 +5,16 @@ import { StepStates, StepperProps } from './types';
 import EllipsesStep from './EllipsesStep';
 import StepperContextProvider from './StepperContext';
 
+const baseStyles = css`
+  list-style: none;
+  padding-inline-start: 0;
+  width: 100%;
+  display: flex;
+  & > * {
+    flex: 1;
+  }
+`;
+
 const Stepper = ({
   children,
   currentStep,
@@ -53,16 +63,6 @@ const Stepper = ({
       return `Steps ${startStep} to ${endStep}`;
     }
   };
-
-  const baseStyles = css`
-    list-style: none;
-    padding-inline-start: 0;
-    width: 100%;
-    display: flex;
-    & > * {
-      flex: 1;
-    }
-  `;
 
   return (
     <StepperContextProvider darkMode={darkMode}>
