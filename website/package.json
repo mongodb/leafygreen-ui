@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "NEXT_TELEMETRY_DISABLED=1 next dev",
     "build": "NEXT_TELEMETRY_DISABLED=1 next build && next export -o hosting/files/",
-    "release": "gh-pages -b website --dist .",
+    "publish": "gh-pages -b website --dist .",
     "start": "NEXT_TELEMETRY_DISABLED=1 next start",
-    "ts": "tsc --project tsconfig.json",
-    "lint": "eslint . --ext js,md,mdx --fix"
+    "fix": "eslint . --ext js,md,mdx --fix",
+    "check:ts": "tsc --project tsconfig.json"
   },
   "dependencies": {
     "@emotion/css": "^11.0.0",
