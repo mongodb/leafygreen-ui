@@ -37,9 +37,9 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/webpack.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/storybook/webpack.config.js', '!**/node_modules', '!**/dist') }}
       - name: build
         if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn build
+        run: yarn build:packages
       - name: tests
-        run: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+        run: yarn test:local --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
 
@@ -75,7 +75,7 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/webpack.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/storybook/webpack.config.js', '!**/node_modules', '!**/dist') }}
       - name: build
         if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn build
+        run: yarn build:packages
       - name: tests
         run: yarn test:ssr --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
@@ -105,9 +105,9 @@ jobs:
             ${{ runner.os }}-yarn-cache-
       - run: yarn install --frozen-lockfile
       - name: prettier
-        run: yarn prettier:check
+        run: yarn check:prettier
       - name: eslint
-        run: yarn eslint:check --format junit -o reports/junit/js-lint-results.xml
+        run: yarn check:eslint --format junit -o reports/junit/js-lint-results.xml
 
   types:
     name: Check types
@@ -133,7 +133,7 @@ jobs:
             ${{ runner.os }}-yarn-cache-
       - run: yarn install --frozen-lockfile
       - name: types
-        run: yarn ts
+        run: yarn check:ts
 
   sizeDiff:
     name: Check file size
@@ -160,3 +160,5 @@ jobs:
       - uses: preactjs/compressed-size-action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          clean-script: 'clean:packages'
+          build-script: 'build:packages'

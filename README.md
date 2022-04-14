@@ -167,7 +167,7 @@ To run the unit tests for our components, run the following:
 yarn test
 ```
 
-## Commiting
+## Committing
 
 When making a PR that contains changes that should be included in a package's changelog, be sure to do so by running:
 
