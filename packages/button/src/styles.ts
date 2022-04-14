@@ -117,7 +117,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
-        background-color: ${mix(0.12, palette.green.dark3, palette.green.base)};
+        background-color: ${mix(0.96, palette.green.base, palette.green.dark3)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
     `,
@@ -221,7 +221,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
           palette.green.light3,
           palette.green.base,
         )};
-        border-color: ${mix(0.16, palette.green.light3, palette.green.base)};
+        border-color: ${mix(0.96, palette.green.base, palette.green.light3)};
         box-shadow: 0px 0px 0px 3px ${palette.green.dark2};
       }
     `,
