@@ -160,6 +160,51 @@ import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
 </div>
 ```
 
+## Usage with NextJS Link components
+
+We recommend using `Menu` with NextJS's links components in the following pattern:
+
+```
+import NextLink from 'next/link';
+
+function CustomLink({ href, children, ...props }) {
+  return (
+    <NextLink href={href}>
+      <a {...props}>
+        {children}
+      </a>
+    </NextLink>
+  );
+}
+
+<Menu trigger={<button onClick={handleClick}>trigger</button>} open={open}>
+  <MenuItem as={CustomLink} href="/test">
+    Test
+  </MenuItem>
+  <SubMenu
+    title="Submenu"
+    href="http://mongodb.design"
+  >
+    <MenuItem>SubMenu Item 1</MenuItem>
+    <MenuItem as={CustomLink} href="/test-2">
+      SubMenu Item 2
+    </MenuItem>
+  </SubMenu>
+</Menu>
+```
+
+This pattern is recommended given the `SubMenu` component expects to pass styling through the `className` prop, which would not apply correctly if it was passed to `NextLink`.
+
+In other words, defining a `MenuItem` as:
+
+```
+<MenuItem as={CustomLink} href="/test-2">
+  SubMenu Item 2
+  </MenuItem>
+```
+
+would render, but without the correct styles.
+
 ## Properties
 
 | Prop               | Type                                     | Description                                                                                                                                                                                                                                                             | Default      |
