@@ -219,10 +219,8 @@ const SubMenu: ExtendableBox<
 
     const nodeRef = React.useRef(null);
 
-    const [
-      iconButtonElement,
-      setIconButtonElement,
-    ] = useState<HTMLElement | null>(null);
+    const [iconButtonElement, setIconButtonElement] =
+      useState<HTMLElement | null>(null);
 
     const onRootClick = useCallback(
       (
@@ -393,6 +391,7 @@ const SubMenu: ExtendableBox<
               {React.Children.map(
                 children as React.ReactElement,
                 (child, index) => {
+                  const { className, ...rest } = child.props;
                   return React.cloneElement(child, {
                     children: (
                       <>
@@ -421,6 +420,7 @@ const SubMenu: ExtendableBox<
                         onClick(e);
                       }
                     },
+                    ...rest,
                   });
                 },
               )}

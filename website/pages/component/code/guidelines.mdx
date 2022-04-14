@@ -34,11 +34,16 @@ import { mq } from 'utils/mediaQuery';
   `}
 >
   In order to view syntax highlighting in Figma you will need to{' '}
-  <Link href="https://www.figma.com/community/plugin/764836637878472379/Figma-Code-Highlighter">
-    install the Figma Code Highlighter plugin.
-  </Link>{' '}
-  This will emulate similar highlighting found in production. Use the
-  atomOneLight highlighter theme in light mode; use Agate for dark mode.
+  <Link
+    className={css`
+      font-size: inherit;
+    `}
+    href="https://www.figma.com/community/plugin/764836637878472379/Figma-Code-Highlighter"
+  >
+    install the Figma Code Highlighter plugin
+  </Link>
+  . This will emulate similar highlighting found in production. Use the atomOneLight
+  highlighter theme in light mode; use Agate for dark mode.
 </Callout>
 
 <Body>Only use the Source Code Pro font within the code component.</Body>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -7,6 +7,7 @@ import Navigation from 'components/navigation';
 import { LayoutContext } from 'components/LayoutContext';
 import { mq } from 'utils/mediaQuery';
 import Footer from './Footer';
+import { useRouter } from 'next/router';
 
 const containerStyle = css`
   width: 100%;
@@ -47,10 +48,21 @@ const childrenWrapper = css`
 `;
 
 function BaseLayout({ children }: { children: React.ReactNode }) {
-  const [
-    bodyContainerRef,
-    setBodyContainerRef,
-  ] = useState<HTMLDivElement | null>(null);
+  const router = useRouter();
+  const [bodyContainerRef, setBodyContainerRef] =
+    useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handler = () => {
+      if (bodyContainerRef) {
+        bodyContainerRef.scroll(0, 0);
+      }
+    };
+    router.events.on('routeChangeComplete', handler);
+    return () => {
+      router.events.off('routeChangeComplete', handler);
+    };
+  });
 
   return (
     <LeafyGreenProvider
