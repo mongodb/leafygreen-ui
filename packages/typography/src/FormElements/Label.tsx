@@ -4,7 +4,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { Mode } from '../types';
 import { palette } from '@leafygreen-ui/palette';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { useUpdatedBaseFontSize } from '../useUpdatedBaseFontSize';
 
 const labelStyle = css`
   font-family: ${fontFamilies.default};
@@ -53,7 +53,7 @@ export const Label = ({
   disabled = false,
   ...rest
 }: LabelProps) => {
-  const baseFontSize = useBaseFontSize() as BaseFontSize;
+  const baseFontSize = useUpdatedBaseFontSize();
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
