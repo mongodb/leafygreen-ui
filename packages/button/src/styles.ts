@@ -335,8 +335,7 @@ const disabledStyle: Record<Mode, string> = {
     }
 
     &:focus {
-      box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
-        0px 0px 0px 3px ${uiColors.focus};
+      box-shadow: ${focusBoxShadow(palette.black)};
     }
   `,
 };
