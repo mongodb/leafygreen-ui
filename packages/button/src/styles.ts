@@ -325,6 +325,10 @@ const disabledStyle: Record<Mode, string> = {
       cursor: not-allowed;
       color: ${palette.gray.base};
     }
+
+    &:focus {
+      box-shadow: ${focusBoxShadow(palette.white)};
+    }
   `,
 
   [Mode.Dark]: css`
@@ -338,6 +342,11 @@ const disabledStyle: Record<Mode, string> = {
       border: 1px solid ${uiColors.gray.dark2};
       color: ${uiColors.gray.base};
       cursor: not-allowed;
+    }
+
+    &:focus {
+      box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
+        0px 0px 0px 3px ${uiColors.focus};
     }
   `,
 };
@@ -416,7 +425,7 @@ export function getClassName({
   return cx(
     baseButtonStyles,
     color,
-    { [focus]: showFocus },
+    { [focus]: showFocus && !disabled },
     { [disabledStyle[mode]]: disabled },
     fontSize,
     size,
