@@ -36,10 +36,7 @@ storiesOf('TextInput', module)
             )}
             optional={boolean('Optional', false)}
             disabled={boolean('Disabled', false)}
-            placeholder={text(
-              'Placeholder Text',
-              'This is some placeholder text',
-            )}
+            placeholder={text('Placeholder Text', 'This is a placeholder')}
             state={select('State', ['none', 'valid', 'error'], 'none')}
             type={select(
               'Type',

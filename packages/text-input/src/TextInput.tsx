@@ -18,24 +18,15 @@ import {
   TextInputFontSize,
   TextInputType,
 } from './types';
-
-const iconSelectorProp = createDataProp('icon-selector');
-
-const interactionRingStyle = css`
-  width: 100%;
-`;
-
-const textInputStyle = css`
-  display: flex;
-  flex-direction: column;
-`;
-
-const inputContainerStyle = css`
-  position: relative;
-  display: flex;
-  align-items: center;
-  z-index: 0;
-`;
+import {
+  errorMessageStyle,
+  iconClassName,
+  inputContainerStyle,
+  inputIconStyle,
+  interactionRingStyle,
+  optionalTextStyle,
+  textInputStyle,
+} from './style';
 
 const inputStyle = css`
   width: 100%;
@@ -67,13 +58,6 @@ const inputStyle = css`
   }
 `;
 
-const inputIconStyle = css`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  z-index: 1;
-`;
-
 const inputIconStyleSize: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
     right: 10px;
@@ -88,19 +72,6 @@ const inputIconStyleSize: Record<SizeVariant, string> = {
     right: 16px;
   `,
 };
-
-const optionalStyle = css`
-  font-size: 12px;
-  font-style: italic;
-  font-weight: normal;
-`;
-
-const errorMessageStyle = css`
-  font-size: 13px;
-  min-height: 20px;
-  padding-top: 4px;
-  font-weight: normal;
-`;
 
 interface ColorSets {
   inputColor: string;
@@ -160,6 +131,59 @@ const colorSets: Record<Mode, ColorSets> = {
     optional: uiColors.gray.light1,
   },
 } as const;
+
+// const inputStyles = cx(
+//   inputStyle,
+//   css`
+//     color: ${colorSets[mode].inputColor};
+//     background-color: ${colorSets[mode].inputBackgroundColor};
+//     font-size: ${sizeSet.inputText}px;
+//     height: ${sizeSet.inputHeight}px;
+//     padding-left: ${sizeSet.padding}px;
+//     border-radius: 6px;
+//     font-family: ${fontFamilies.default};
+
+//     &::placeholder {
+//       color: ${colorSets[mode].placeholderColor};
+//       font-weight: normal;
+//     }
+
+//     &:focus {
+//       border: 1px solid ${colorSets[mode].inputBackgroundColor};
+//     }
+
+//     &:disabled {
+//       color: ${colorSets[mode].disabledColor};
+//       background-color: ${colorSets[mode]
+//         .disabledBackgroundColor};
+//       border-color: ${colorSets[mode].disabledBorderColor};
+
+//       &::placeholder {
+//         color: ${colorSets[mode].disabledColor};
+//       }
+
+//       &:-webkit-autofill {
+//         &,
+//         &:hover,
+//         &:focus {
+//           appearance: none;
+//           border: 1px solid ${colorSets[mode].defaultBorder};
+//           -webkit-text-fill-color: ${colorSets[mode]
+//             .disabledColor};
+//           -webkit-box-shadow: 0 0 0px 1000px
+//             ${colorSets[mode].disabledBackgroundColor} inset;
+//         }
+//       }
+//     }
+//   `,
+//   getStatefulInputStyles({
+//     state,
+//     optional,
+//     mode,
+//     disabled,
+//     sizeSet,
+//   }),
+// )
 
 const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
   [Mode.Light]: {
@@ -362,34 +386,18 @@ const TextInput: React.ComponentType<
     return (
       <div className={cx(textInputStyle, className)}>
         {label && (
-          <Label
-            darkMode={darkMode}
-            htmlFor={id}
-            disabled={disabled}
-            className={css`
-              font-size: ${sizeSet.text}px;
-            `}
-          >
+          <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
             {label}
           </Label>
         )}
         {description && (
-          <Description
-            darkMode={darkMode}
-            disabled={disabled}
-            className={cx(
-              css`
-                font-size: ${sizeSet.text}px;
-                line-height: ${sizeSet.lineHeight}px;
-              `,
-            )}
-          >
+          <Description darkMode={darkMode} disabled={disabled}>
             {description}
           </Description>
         )}
         <div className={inputContainerStyle}>
           <InteractionRing
-            borderRadius={mode === 'dark' ? '4px' : '6px'}
+            borderRadius={'6px'}
             className={interactionRingStyle}
             darkMode={darkMode}
             disabled={disabled}
@@ -472,8 +480,11 @@ const TextInput: React.ComponentType<
           </InteractionRing>
 
           <div
-            {...iconSelectorProp.prop}
-            className={cx(inputIconStyle, inputIconStyleSize[sizeVariant])}
+            className={cx(
+              iconClassName,
+              inputIconStyle,
+              inputIconStyleSize[sizeVariant],
+            )}
           >
             {state === State.Valid && (
               <RenderedCheckmarkIcon
@@ -496,7 +507,7 @@ const TextInput: React.ComponentType<
             {state === State.None && !disabled && optional && (
               <div
                 className={cx(
-                  optionalStyle,
+                  optionalTextStyle,
                   css`
                     color: ${colorSets[mode].optional};
                   `,
