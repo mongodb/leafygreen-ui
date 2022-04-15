@@ -33,6 +33,8 @@ export default function PortalContextProvider({
   popover = defaultPortalContextValues.popover,
   children,
 }: PortalContext) {
+  // eslint-disable-next-line no-console
+  console.log(popover);
   return (
     <PortalContext.Provider value={{ popover }}>
       {children}

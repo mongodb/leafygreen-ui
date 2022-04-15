@@ -1,4 +1,4 @@
-import React, { SetStateAction, useCallback } from 'react';
+import React, { SetStateAction, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import FocusTrap from 'focus-trap-react';
 import { Transition } from 'react-transition-group';
@@ -11,6 +11,7 @@ import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { PortalContextProvider } from '@leafygreen-ui/leafygreen-provider';
 
 const Mode = {
   Dark: 'dark',
@@ -272,6 +273,8 @@ function Modal({
 
   const nodeRef = React.useRef(null);
 
+  const [modalRef, setModalRef] = useState<null | HTMLDivElement>(null);
+
   const handleClose = useCallback(() => {
     if (setOpen && shouldClose()) {
       setOpen(false);
@@ -316,6 +319,7 @@ function Modal({
             <FocusTrap focusTrapOptions={focusTrapOptions}>
               <div className={scrollContainer}>
                 <div
+                  ref={(el) => setModalRef(el)}
                   aria-modal="true"
                   role="dialog"
                   tabIndex={-1}
@@ -341,6 +345,10 @@ function Modal({
                     contentClassName,
                   )}
                 >
+                  <PortalContextProvider popover={{
+                    portalContainer: modalRef,
+                    scrollContainer: modalRef,
+                  }}>
                   {children}
                   <IconButton
                     onClick={handleClose}
@@ -354,6 +362,7 @@ function Modal({
                   >
                     <XIcon />
                   </IconButton>
+                  </PortalContextProvider>
                 </div>
               </div>
             </FocusTrap>
