@@ -12,7 +12,7 @@ import {
 } from '@leafygreen-ui/typography';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
-  AccessibleTextInputProps,
+  TextInputProps,
   Mode,
   SizeVariant,
   State,
@@ -61,174 +61,173 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
  * @param props.darkMode determines whether or not the component appears in dark mode.
  * @param props.sizeVariant determines the size of the text and the height of the input.
  */
-const TextInput: React.ComponentType<
-  React.PropsWithRef<AccessibleTextInputProps>
-> = React.forwardRef(
-  (
-    {
-      label,
-      description,
-      onChange,
-      onBlur,
-      placeholder,
-      errorMessage,
-      optional = false,
-      disabled = false,
-      state = State.None,
-      type = TextInputType.Text,
-      id: propsId,
-      value: controlledValue,
-      className,
-      darkMode = false,
-      sizeVariant = SizeVariant.Default,
-      'aria-labelledby': ariaLabelledby,
-      handleValidation,
-      baseFontSize: baseFontSizeProp,
-      ...rest
-    }: AccessibleTextInputProps,
-    forwardRef: React.Ref<HTMLInputElement>,
-  ) => {
-    const mode = darkMode ? Mode.Dark : Mode.Light;
-    const isControlled = typeof controlledValue === 'string';
-    const [uncontrolledValue, setValue] = useState('');
-    const value = isControlled ? controlledValue : uncontrolledValue;
-    const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-    const { usingKeyboard } = useUsingKeyboardContext();
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
+  React.forwardRef(
+    (
+      {
+        label,
+        description,
+        onChange,
+        onBlur,
+        placeholder,
+        errorMessage,
+        optional = false,
+        disabled = false,
+        state = State.None,
+        type = TextInputType.Text,
+        id: propsId,
+        value: controlledValue,
+        className,
+        darkMode = false,
+        sizeVariant = SizeVariant.Default,
+        'aria-labelledby': ariaLabelledby,
+        handleValidation,
+        baseFontSize: baseFontSizeProp,
+        ...rest
+      }: TextInputProps,
+      forwardRef: React.Ref<HTMLInputElement>,
+    ) => {
+      const mode = darkMode ? Mode.Dark : Mode.Light;
+      const isControlled = typeof controlledValue === 'string';
+      const [uncontrolledValue, setValue] = useState('');
+      const value = isControlled ? controlledValue : uncontrolledValue;
+      const id = useIdAllocator({ prefix: 'textinput', id: propsId });
+      const { usingKeyboard } = useUsingKeyboardContext();
+      const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
-    // Validation
-    const validation = useValidation<HTMLInputElement>(handleValidation);
+      // Validation
+      const validation = useValidation<HTMLInputElement>(handleValidation);
 
-    const onBlurHandler: React.FocusEventHandler<HTMLInputElement> = e => {
-      if (onBlur) {
-        onBlur(e);
+      const onBlurHandler: React.FocusEventHandler<HTMLInputElement> = e => {
+        if (onBlur) {
+          onBlur(e);
+        }
+
+        validation.onBlur(e);
+      };
+
+      const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+        if (onChange) {
+          onChange(e);
+        }
+
+        if (!isControlled) {
+          setValue(e.target.value);
+        }
+
+        validation.onChange(e);
+      };
+
+      if (type !== 'search' && !label && !ariaLabelledby) {
+        console.error(
+          'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
+        );
       }
 
-      validation.onBlur(e);
-    };
-
-    const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-      if (onChange) {
-        onChange(e);
+      if (type === 'search' && !rest['aria-label']) {
+        console.error(
+          'For screen-reader accessibility, aria-label must be provided to TextInput.',
+        );
       }
 
-      if (!isControlled) {
-        setValue(e.target.value);
-      }
+      const RenderedCheckmarkIcon = darkMode
+        ? CheckmarkWithCircleIcon
+        : CheckmarkIcon;
 
-      validation.onChange(e);
-    };
+      return (
+        <div
+          className={cx(
+            wrapperStyle,
+            getWrapperFontSize(sizeVariant, baseFontSize),
+            className,
+          )}
+        >
+          {label && (
+            <Label
+              darkMode={darkMode}
+              htmlFor={id}
+              disabled={disabled}
+              className={inheritTypeScale}
+            >
+              {label}
+            </Label>
+          )}
+          {description && (
+            <Description
+              darkMode={darkMode}
+              disabled={disabled}
+              className={inheritTypeScale}
+            >
+              {description}
+            </Description>
+          )}
+          <div className={inputContainerStyle}>
+            <input
+              {...rest}
+              aria-labelledby={ariaLabelledby}
+              type={type}
+              className={cx(
+                baseInputStyle,
+                inputModeStyles[mode],
+                inputSizeStyles[sizeVariant],
+                inputStateStyles[state][mode],
+                {
+                  [inputFocusStyles]: usingKeyboard,
+                  [css`
+                    padding-right: 60px;
+                  `]: optional && !disabled,
+                },
+              )}
+              value={value}
+              required={!optional}
+              disabled={disabled}
+              placeholder={placeholder}
+              onChange={onValueChange}
+              onBlur={onBlurHandler}
+              ref={forwardRef}
+              id={id}
+              autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
+              aria-invalid={state === 'error'}
+            />
 
-    if (type !== 'search' && !label && !ariaLabelledby) {
-      console.error(
-        'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
-      );
-    }
+            <div
+              className={cx(
+                iconClassName,
+                inputIndicatorStyle,
+                inputIndicatorSizeStyle[sizeVariant],
+              )}
+            >
+              {/* Render State Icon or Optional text*/}
+              {state === State.Valid && (
+                <RenderedCheckmarkIcon
+                  role="presentation"
+                  className={stateIndicatorStyles.valid[mode]}
+                />
+              )}
 
-    if (type === 'search' && !rest['aria-label']) {
-      console.error(
-        'For screen-reader accessibility, aria-label must be provided to TextInput.',
-      );
-    }
+              {state === State.Error && (
+                <WarningIcon
+                  role="presentation"
+                  className={stateIndicatorStyles.error[mode]}
+                />
+              )}
 
-    const RenderedCheckmarkIcon = darkMode
-      ? CheckmarkWithCircleIcon
-      : CheckmarkIcon;
-
-    return (
-      <div
-        className={cx(
-          wrapperStyle,
-          getWrapperFontSize(sizeVariant, baseFontSize),
-          className,
-        )}
-      >
-        {label && (
-          <Label
-            darkMode={darkMode}
-            htmlFor={id}
-            disabled={disabled}
-            className={inheritTypeScale}
-          >
-            {label}
-          </Label>
-        )}
-        {description && (
-          <Description
-            darkMode={darkMode}
-            disabled={disabled}
-            className={inheritTypeScale}
-          >
-            {description}
-          </Description>
-        )}
-        <div className={inputContainerStyle}>
-          <input
-            {...rest}
-            aria-labelledby={ariaLabelledby}
-            type={type}
-            className={cx(
-              baseInputStyle,
-              inputModeStyles[mode],
-              inputSizeStyles[sizeVariant],
-              inputStateStyles[state][mode],
-              {
-                [inputFocusStyles]: usingKeyboard,
-                [css`
-                  padding-right: 60px;
-                `]: optional && !disabled,
-              },
-            )}
-            value={value}
-            required={!optional}
-            disabled={disabled}
-            placeholder={placeholder}
-            onChange={onValueChange}
-            onBlur={onBlurHandler}
-            ref={forwardRef}
-            id={id}
-            autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
-            aria-invalid={state === 'error'}
-          />
-
-          <div
-            className={cx(
-              iconClassName,
-              inputIndicatorStyle,
-              inputIndicatorSizeStyle[sizeVariant],
-            )}
-          >
-            {/* Render State Icon or Optional text*/}
-            {state === State.Valid && (
-              <RenderedCheckmarkIcon
-                role="presentation"
-                className={stateIndicatorStyles.valid[mode]}
-              />
-            )}
-
-            {state === State.Error && (
-              <WarningIcon
-                role="presentation"
-                className={stateIndicatorStyles.error[mode]}
-              />
-            )}
-
-            {state === State.None && !disabled && optional && (
-              <div className={optionalTextStyle}>
-                <p>Optional</p>
-              </div>
-            )}
+              {state === State.None && !disabled && optional && (
+                <div className={optionalTextStyle}>
+                  <p>Optional</p>
+                </div>
+              )}
+            </div>
           </div>
+          {state === State.Error && errorMessage && (
+            <div className={cx(errorMessageStyle, errorMessageModeStyle[mode])}>
+              <span>{errorMessage}</span>
+            </div>
+          )}
         </div>
-        {state === State.Error && errorMessage && (
-          <div className={cx(errorMessageStyle, errorMessageModeStyle[mode])}>
-            <span>{errorMessage}</span>
-          </div>
-        )}
-      </div>
-    );
-  },
-);
+      );
+    },
+  );
 
 TextInput.displayName = 'TextInput';
 

@@ -1,8 +1,11 @@
 export { default } from './TextInput';
+// Export types
+export type { TextInputProps } from './types';
+// Export constants
 export {
-  TextInputType,
   State,
+  TextInputType,
+  Mode,
   SizeVariant,
   TextInputFontSize,
-  TextInputProps,
 } from './types';

@@ -45,7 +45,7 @@ export const TextInputFontSize = {
 export type TextInputFontSize =
   typeof TextInputFontSize[keyof typeof TextInputFontSize];
 
-export interface TextInputProps
+export interface BaseTextInputProps
   extends HTMLElementProps<'input', HTMLInputElement> {
   /**
    * id associated with the TextInput component.
@@ -134,6 +134,6 @@ export interface TextInputProps
 }
 
 type AriaLabels = 'label' | 'aria-labelledby';
-export type AccessibleTextInputProps =
-  | Either<TextInputProps, AriaLabels>
-  | (TextInputProps & { type: 'search'; 'aria-label': string });
+export type TextInputProps =
+  | Either<BaseTextInputProps, AriaLabels>
+  | (BaseTextInputProps & { type: 'search'; 'aria-label': string });
