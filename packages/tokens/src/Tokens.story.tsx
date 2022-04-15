@@ -1,7 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '.';
+import { boolean } from '@storybook/addon-knobs';
+import { palette } from '@leafygreen-ui/palette';
+import { focusRing } from './focusRing';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const gutter = css`
   margin-left: ${spacing[3]}px;
@@ -46,17 +50,81 @@ function SpacingBlock({ space }: { space: keyof typeof spacing }) {
   );
 }
 
-storiesOf('Tokens', module).add('Spacing', () => (
-  <div
-    className={css`
+storiesOf('Tokens', module)
+  .add('Spacing', () => (
+    <div
+      className={css`
+        display: flex;
+      `}
+    >
+      {Object.keys(spacing).map(space => (
+        <SpacingBlock
+          space={space as PropertyKey as keyof typeof spacing}
+          key={space}
+        />
+      ))}
+    </div>
+  ))
+  .add('Focus ring', () => {
+    const wrapperStyle = (darkMode: boolean) => css`
       display: flex;
-    `}
-  >
-    {Object.keys(spacing).map(space => (
-      <SpacingBlock
-        space={space as PropertyKey as keyof typeof spacing}
-        key={space}
-      />
-    ))}
-  </div>
-));
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      background-color: ${!darkMode ? palette.white : palette.black};
+      width: 100vw;
+      height: 100vh;
+    `;
+
+    const { usingKeyboard } = useUsingKeyboardContext();
+
+    const darkMode = boolean('Dark Mode', false);
+    const mode = darkMode ? 'dark' : 'light';
+
+    return (
+      <div className={wrapperStyle(darkMode)}>
+        <button
+          className={cx(
+            css`
+              border: unset;
+              box-shadow: inset;
+              border-radius: 4px;
+              &:focus {
+                outline: none;
+              }
+            `,
+            {
+              [css`
+                &:focus {
+                  ${focusRing.default[mode]}
+                }
+              `]: usingKeyboard,
+            },
+          )}
+        >
+          Default
+        </button>
+        <input
+          type="text"
+          className={cx(
+            css`
+              border: unset;
+              box-shadow: inset;
+              border-radius: 4px;
+              &:focus {
+                outline: none;
+              }
+            `,
+            {
+              [css`
+                &:focus {
+                  ${focusRing.input[mode]}
+                }
+              `]: usingKeyboard,
+            },
+          )}
+        />
+      </div>
+    );
+  });
