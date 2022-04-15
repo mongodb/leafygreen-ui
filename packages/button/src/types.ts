@@ -25,7 +25,12 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-type FontSize = 14 | 16;
+const FontSize = {
+  Body1: 13,
+  Body2: 16,
+} as const;
+
+type FontSize = typeof FontSize[keyof typeof FontSize];
 
 interface ButtonProps {
   variant?: Variant;

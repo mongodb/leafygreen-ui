@@ -9,7 +9,7 @@ const knobsConfig: KnobsConfigInterface<{
   size: Size;
   leftGlyph: string;
   rightGlyph: string;
-  baseFontSize: 14 | 16;
+  baseFontSize: 13 | 16;
   darkMode: boolean;
   children: React.ReactNode;
   hasHrefProp: boolean;
@@ -60,8 +60,8 @@ const knobsConfig: KnobsConfigInterface<{
   },
   baseFontSize: {
     type: 'select',
-    options: [14, 16],
-    default: 14,
+    options: [13, 16],
+    default: 13,
     label: 'Base Font Size',
   },
 };
