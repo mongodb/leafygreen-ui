@@ -24,7 +24,7 @@ storiesOf('TextInput', module)
         <div
           className={cx(wrapperStyle, {
             [css`
-              background-color: ${palette.gray.dark3};
+              background-color: ${palette.black};
             `]: darkMode,
           })}
         >

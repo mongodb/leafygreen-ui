@@ -4,288 +4,38 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { uiColors, palette } from '@leafygreen-ui/palette';
-import { createDataProp } from '@leafygreen-ui/lib';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
-import { Description, Label } from '@leafygreen-ui/typography';
-import { fontFamilies, typeScales, BaseFontSize } from '@leafygreen-ui/tokens';
+import {
+  Description,
+  Label,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
   AccessibleTextInputProps,
   Mode,
   SizeVariant,
   State,
-  TextInputFontSize,
   TextInputType,
 } from './types';
 import {
-  errorMessageStyle,
   iconClassName,
+  wrapperStyle,
+  errorMessageStyle,
   inputContainerStyle,
-  inputIconStyle,
-  interactionRingStyle,
   optionalTextStyle,
-  textInputStyle,
+  baseInputStyle,
+  stateIndicatorStyles,
+  errorMessageModeStyle,
+  getWrapperFontSize,
+  inputSizeStyles,
+  inputModeStyles,
+  inputStateStyles,
+  inputFocusStyles,
+  inputIndicatorStyle,
+  inputIndicatorSizeStyle,
 } from './style';
-
-const inputStyle = css`
-  width: 100%;
-  height: 36px;
-  font-weight: normal;
-  border: 1px solid;
-  transition: border-color 150ms ease-in-out;
-  z-index: 1;
-  outline: none;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-
-  /* clears the ‘X’ from Internet Explorer & Chrome */
-  &[type='search'] {
-    &::-ms-clear,
-    &::-ms-reveal {
-      display: none;
-      width: 0;
-      height: 0;
-    }
-    &::-webkit-search-decoration,
-    &::-webkit-search-cancel-button,
-    &::-webkit-search-results-button,
-    &::-webkit-search-results-decoration {
-      display: none;
-    }
-  }
-`;
-
-const inputIconStyleSize: Record<SizeVariant, string> = {
-  [SizeVariant.XSmall]: css`
-    right: 10px;
-  `,
-  [SizeVariant.Small]: css`
-    right: 10px;
-  `,
-  [SizeVariant.Default]: css`
-    right: 12px;
-  `,
-  [SizeVariant.Large]: css`
-    right: 16px;
-  `,
-};
-
-interface ColorSets {
-  inputColor: string;
-  defaultBorder: string;
-  inputBackgroundColor: string;
-  placeholderColor: string;
-
-  disabledColor: string;
-  disabledBorderColor: string;
-  disabledBackgroundColor: string;
-
-  errorIconColor: string;
-  errorBorder: string;
-  errorMessage: string;
-
-  validBorder: string;
-  validIconColor: string;
-
-  optional: string;
-}
-
-const colorSets: Record<Mode, ColorSets> = {
-  [Mode.Light]: {
-    inputColor: palette.black,
-    inputBackgroundColor: palette.white,
-    defaultBorder: palette.gray.base,
-    placeholderColor: palette.gray.light1,
-
-    disabledColor: palette.gray.base,
-    disabledBorderColor: palette.gray.light1,
-    disabledBackgroundColor: palette.gray.light2,
-
-    errorIconColor: palette.red.base,
-    errorMessage: palette.red.base,
-    errorBorder: palette.red.base,
-
-    validBorder: palette.green.dark1,
-    validIconColor: palette.green.dark1,
-    optional: palette.gray.dark1,
-  },
-  [Mode.Dark]: {
-    inputColor: uiColors.white,
-    inputBackgroundColor: '#394F5A',
-    defaultBorder: '#394F5A',
-    placeholderColor: uiColors.gray.base,
-
-    disabledColor: uiColors.gray.dark1,
-    disabledBorderColor: '#394F5A',
-    disabledBackgroundColor: '#263843',
-
-    errorIconColor: '#EF8D6F',
-    errorMessage: '#EF8D6F',
-    errorBorder: '#5a3c3b',
-
-    validBorder: '#394F5A',
-    validIconColor: uiColors.green.base,
-    optional: uiColors.gray.light1,
-  },
-} as const;
-
-// const inputStyles = cx(
-//   inputStyle,
-//   css`
-//     color: ${colorSets[mode].inputColor};
-//     background-color: ${colorSets[mode].inputBackgroundColor};
-//     font-size: ${sizeSet.inputText}px;
-//     height: ${sizeSet.inputHeight}px;
-//     padding-left: ${sizeSet.padding}px;
-//     border-radius: 6px;
-//     font-family: ${fontFamilies.default};
-
-//     &::placeholder {
-//       color: ${colorSets[mode].placeholderColor};
-//       font-weight: normal;
-//     }
-
-//     &:focus {
-//       border: 1px solid ${colorSets[mode].inputBackgroundColor};
-//     }
-
-//     &:disabled {
-//       color: ${colorSets[mode].disabledColor};
-//       background-color: ${colorSets[mode]
-//         .disabledBackgroundColor};
-//       border-color: ${colorSets[mode].disabledBorderColor};
-
-//       &::placeholder {
-//         color: ${colorSets[mode].disabledColor};
-//       }
-
-//       &:-webkit-autofill {
-//         &,
-//         &:hover,
-//         &:focus {
-//           appearance: none;
-//           border: 1px solid ${colorSets[mode].defaultBorder};
-//           -webkit-text-fill-color: ${colorSets[mode]
-//             .disabledColor};
-//           -webkit-box-shadow: 0 0 0px 1000px
-//             ${colorSets[mode].disabledBackgroundColor} inset;
-//         }
-//       }
-//     }
-//   `,
-//   getStatefulInputStyles({
-//     state,
-//     optional,
-//     mode,
-//     disabled,
-//     sizeSet,
-//   }),
-// )
-
-const interactionRingColor: Record<Mode, Record<'valid' | 'error', string>> = {
-  [Mode.Light]: {
-    [State.Error]: palette.red.light3,
-    [State.Valid]: palette.green.light3,
-  },
-  [Mode.Dark]: {
-    [State.Error]: uiColors.red.dark2,
-    [State.Valid]: uiColors.gray.dark1,
-  },
-};
-
-interface SizeSet {
-  inputHeight: number;
-  inputText: TextInputFontSize;
-  text: TextInputFontSize;
-  lineHeight: number;
-  padding: number;
-}
-
-function getStatefulInputStyles({
-  state,
-  optional,
-  mode,
-  disabled,
-  sizeSet,
-}: {
-  state: State;
-  optional: boolean;
-  mode: Mode;
-  disabled: boolean;
-  sizeSet: SizeSet;
-}) {
-  switch (state) {
-    case State.Valid: {
-      return css`
-        padding-right: 36px;
-        border-color: ${!disabled ? colorSets[mode].validBorder : 'inherit'};
-      `;
-    }
-
-    case State.Error: {
-      return cx(
-        css`
-          padding-right: 36px;
-          border-color: ${!disabled ? colorSets[mode].errorBorder : 'inherit'};
-        `,
-        {
-          [css`
-            background-color: #5a3c3b;
-          `]: mode === Mode.Dark,
-        },
-      );
-    }
-
-    default: {
-      return css`
-        padding-right: ${optional ? 60 : sizeSet.padding}px;
-        border-color: ${disabled
-          ? colorSets[mode].disabledBorderColor
-          : colorSets[mode].defaultBorder};
-      `;
-    }
-  }
-}
-
-function getSizeSets(baseFontSize: BaseFontSize, sizeVariant: SizeVariant) {
-  const sizeSets: Record<SizeVariant, SizeSet> = {
-    [SizeVariant.XSmall]: {
-      inputHeight: 22,
-      inputText: 13,
-      text: 13,
-      lineHeight: 20,
-      padding: 10,
-    },
-    [SizeVariant.Small]: {
-      inputHeight: 28,
-      inputText: 13,
-      text: 13,
-      lineHeight: 20,
-      padding: 10,
-    },
-    [SizeVariant.Default]: {
-      inputHeight: 36,
-      inputText: baseFontSize,
-      text: baseFontSize,
-      lineHeight:
-        baseFontSize == BaseFontSize.Body2
-          ? typeScales.body2.lineHeight
-          : typeScales.body1.lineHeight,
-      padding: 12,
-    },
-    [SizeVariant.Large]: {
-      inputHeight: 48,
-      inputText: 18,
-      text: 18,
-      lineHeight: 22,
-      padding: 16,
-    },
-  };
-  return sizeSets[sizeVariant];
-}
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * # TextInput
@@ -332,7 +82,7 @@ const TextInput: React.ComponentType<
       sizeVariant = SizeVariant.Default,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
-      baseFontSize = BaseFontSize.Body1,
+      baseFontSize: baseFontSizeProp,
       ...rest
     }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -342,7 +92,8 @@ const TextInput: React.ComponentType<
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-    const sizeSet = getSizeSets(baseFontSize, sizeVariant);
+    const { usingKeyboard } = useUsingKeyboardContext();
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
@@ -384,7 +135,13 @@ const TextInput: React.ComponentType<
       : CheckmarkIcon;
 
     return (
-      <div className={cx(textInputStyle, className)}>
+      <div
+        className={cx(
+          wrapperStyle,
+          getWrapperFontSize(sizeVariant, baseFontSize),
+          className,
+        )}
+      >
         {label && (
           <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
             {label}
@@ -396,140 +153,66 @@ const TextInput: React.ComponentType<
           </Description>
         )}
         <div className={inputContainerStyle}>
-          <InteractionRing
-            borderRadius={'6px'}
-            className={interactionRingStyle}
-            darkMode={darkMode}
+          <input
+            {...rest}
+            aria-labelledby={ariaLabelledby}
+            type={type}
+            className={cx(
+              baseInputStyle,
+              inputModeStyles[mode],
+              inputSizeStyles[sizeVariant],
+              inputStateStyles[state][mode],
+              {
+                [inputFocusStyles]: usingKeyboard,
+                [css`
+                  padding-right: 60px;
+                `]: optional && !disabled,
+              },
+            )}
+            value={value}
+            required={!optional}
             disabled={disabled}
-            ignoreKeyboardContext={true}
-            color={
-              state === State.Valid || state === State.Error
-                ? {
-                    hovered: interactionRingColor[mode][state],
-                  }
-                : undefined
-            }
-          >
-            <input
-              {...rest}
-              aria-labelledby={ariaLabelledby}
-              type={type}
-              className={cx(
-                inputStyle,
-                css`
-                  color: ${colorSets[mode].inputColor};
-                  background-color: ${colorSets[mode].inputBackgroundColor};
-                  font-size: ${sizeSet.inputText}px;
-                  height: ${sizeSet.inputHeight}px;
-                  padding-left: ${sizeSet.padding}px;
-                  border-radius: 6px;
-                  font-family: ${fontFamilies.default};
-
-                  &::placeholder {
-                    color: ${colorSets[mode].placeholderColor};
-                    font-weight: normal;
-                  }
-
-                  &:focus {
-                    border: 1px solid ${colorSets[mode].inputBackgroundColor};
-                  }
-
-                  &:disabled {
-                    color: ${colorSets[mode].disabledColor};
-                    background-color: ${colorSets[mode]
-                      .disabledBackgroundColor};
-                    border-color: ${colorSets[mode].disabledBorderColor};
-
-                    &::placeholder {
-                      color: ${colorSets[mode].disabledColor};
-                    }
-
-                    &:-webkit-autofill {
-                      &,
-                      &:hover,
-                      &:focus {
-                        appearance: none;
-                        border: 1px solid ${colorSets[mode].defaultBorder};
-                        -webkit-text-fill-color: ${colorSets[mode]
-                          .disabledColor};
-                        -webkit-box-shadow: 0 0 0px 1000px
-                          ${colorSets[mode].disabledBackgroundColor} inset;
-                      }
-                    }
-                  }
-                `,
-                getStatefulInputStyles({
-                  state,
-                  optional,
-                  mode,
-                  disabled,
-                  sizeSet,
-                }),
-              )}
-              value={value}
-              required={!optional}
-              disabled={disabled}
-              placeholder={placeholder}
-              onChange={onValueChange}
-              onBlur={onBlurHandler}
-              ref={forwardRef}
-              id={id}
-              autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
-              aria-invalid={state === 'error'}
-            />
-          </InteractionRing>
+            placeholder={placeholder}
+            onChange={onValueChange}
+            onBlur={onBlurHandler}
+            ref={forwardRef}
+            id={id}
+            autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
+            aria-invalid={state === 'error'}
+          />
 
           <div
             className={cx(
               iconClassName,
-              inputIconStyle,
-              inputIconStyleSize[sizeVariant],
+              inputIndicatorStyle,
+              inputIndicatorSizeStyle[sizeVariant],
             )}
           >
+            {/* Render State Icon or Optional text*/}
             {state === State.Valid && (
               <RenderedCheckmarkIcon
                 role="presentation"
-                className={css`
-                  color: ${colorSets[mode].validIconColor};
-                `}
+                className={stateIndicatorStyles.valid[mode]}
               />
             )}
 
             {state === State.Error && (
               <WarningIcon
                 role="presentation"
-                className={css`
-                  color: ${colorSets[mode].errorIconColor};
-                `}
+                className={stateIndicatorStyles.error[mode]}
               />
             )}
 
             {state === State.None && !disabled && optional && (
-              <div
-                className={cx(
-                  optionalTextStyle,
-                  css`
-                    color: ${colorSets[mode].optional};
-                  `,
-                )}
-              >
+              <div className={optionalTextStyle}>
                 <p>Optional</p>
               </div>
             )}
           </div>
         </div>
         {state === State.Error && errorMessage && (
-          <div
-            className={cx(
-              errorMessageStyle,
-              css`
-                color: ${colorSets[mode].errorMessage};
-                font-size: ${sizeSet.text}px;
-                line-height: ${sizeSet.lineHeight}px;
-              `,
-            )}
-          >
-            <label>{errorMessage}</label>
+          <div className={cx(errorMessageStyle, errorMessageModeStyle[mode])}>
+            <span>{errorMessage}</span>
           </div>
         )}
       </div>
