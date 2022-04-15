@@ -426,8 +426,8 @@ export const rippleColors: Record<Mode, Record<Variant, string>> = {
     [Variant.Default]: palette.gray.base,
     [Variant.Primary]: palette.green.dark1,
     [Variant.PrimaryOutline]: transparentize(rippleOpacity, palette.green.base),
-    [Variant.Danger]: palette.red.base,
-    [Variant.DangerOutline]: transparentize(rippleOpacity, palette.red.base),
+    [Variant.Danger]: palette.red.dark2,
+    [Variant.DangerOutline]: transparentize(rippleOpacity, palette.red.light1),
     [Variant.BaseGreen]: palette.green.dark1,
   },
 };
