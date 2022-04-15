@@ -34,6 +34,7 @@ import {
   inputFocusStyles,
   inputIndicatorStyle,
   inputIndicatorSizeStyle,
+  inheritTypeScale,
 } from './style';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
@@ -143,12 +144,21 @@ const TextInput: React.ComponentType<
         )}
       >
         {label && (
-          <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
+          <Label
+            darkMode={darkMode}
+            htmlFor={id}
+            disabled={disabled}
+            className={inheritTypeScale}
+          >
             {label}
           </Label>
         )}
         {description && (
-          <Description darkMode={darkMode} disabled={disabled}>
+          <Description
+            darkMode={darkMode}
+            disabled={disabled}
+            className={inheritTypeScale}
+          >
             {description}
           </Description>
         )}

@@ -20,18 +20,21 @@ export const getWrapperFontSize = (
     case SizeVariant.XSmall: {
       return css`
         font-size: ${typeScales.body1.fontSize}px;
+        line-height: ${typeScales.body1.lineHeight}px;
       `;
     }
 
     case SizeVariant.Small: {
       return css`
         font-size: ${typeScales.body1.fontSize}px;
+        line-height: ${typeScales.body1.lineHeight}px;
       `;
     }
 
     case SizeVariant.Large: {
       return css`
         font-size: 18px;
+        line-height: 32px;
       `;
     }
 
@@ -49,6 +52,11 @@ export const getWrapperFontSize = (
   }
 };
 
+export const inheritTypeScale = css`
+  font-size: inherit;
+  line-height: inherit;
+`;
+
 export const inputContainerStyle = css`
   position: relative;
   display: flex;
@@ -57,6 +65,7 @@ export const inputContainerStyle = css`
 `;
 
 export const baseInputStyle = css`
+  ${inheritTypeScale};
   font-family: ${fontFamilies.default};
   width: 100%;
   height: 36px;
@@ -65,8 +74,6 @@ export const baseInputStyle = css`
   z-index: 1;
   outline: none;
   border-radius: 6px;
-  font-size: inherit;
-  line-height: inherit;
   transition: 150ms ease-in-out;
   transition-property: border-color, box-shadow;
 
@@ -80,8 +87,7 @@ export const baseInputStyle = css`
   }
 
   &::placeholder {
-    font-size: inherit;
-    line-height: inherit;
+    ${inheritTypeScale};
   }
 
   /* clears the ‘X’ from Internet Explorer & Chrome */
@@ -308,8 +314,7 @@ export const optionalTextStyle = css`
 `;
 
 export const errorMessageStyle = css`
-  font-size: inherit;
-  line-height: inherit;
+  ${inheritTypeScale};
   min-height: 20px;
   padding-top: 4px;
   font-weight: normal;
