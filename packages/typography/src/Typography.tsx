@@ -63,7 +63,7 @@ const h3 = css`
   font-size: 24px;
   line-height: 32px;
   letter-spacing: -0.3px;
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 type H3Props = HTMLElementProps<'h3'>;
