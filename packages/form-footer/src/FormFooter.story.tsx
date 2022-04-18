@@ -10,7 +10,7 @@ storiesOf('FormFooter', module)
   .add('Default', () => (
     <div
       className={css`
-        width: 1024px;
+        width: 1200px;
         margin: auto;
         position: relative;
       `}
@@ -37,7 +37,7 @@ storiesOf('FormFooter', module)
     <div
       className={css`
         position: relative;
-        width: 1024px;
+        width: 1200px;
         margin: auto;
       `}
     >
