@@ -1,4 +1,7 @@
 {
-  "presets": [["next/babel"], "@emotion/babel-preset-css-prop"],
+  "presets": [
+    ["next/babel"],
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ],
   "plugins": ["@emotion/babel-plugin"]
 }

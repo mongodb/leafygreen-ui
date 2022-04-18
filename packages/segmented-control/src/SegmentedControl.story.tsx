@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { SegmentedControl, SegmentedControlOption } from '.';
-import { boolean, select } from '@storybook/addon-knobs';
+import { boolean, select, text } from '@storybook/addon-knobs';
 import Icon from '@leafygreen-ui/icon';
 
 storiesOf('Packages/SegmentedControl', module)
@@ -13,6 +13,7 @@ storiesOf('Packages/SegmentedControl', module)
       <LeafygreenProvider baseFontSize={select('Base Font Size', [14, 16], 14)}>
         <SegmentedControl
           name="fruit"
+          label={text('Label', 'Label')}
           size={select('Size', ['small', 'default', 'large'], 'default')}
           darkMode={boolean('darkMode', false)}
           followFocus={boolean('followFocus', true)}

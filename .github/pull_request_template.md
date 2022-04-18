@@ -23,6 +23,7 @@ What types of changes does your code introduce? Put an `x` in the applicable box
 - [ ] Bugfix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Style change (purely visual updates; if this is the case, attach a screenshot below!)
 
 ## ✅ Checklist
 
@@ -56,3 +57,16 @@ Consider putting screenshots of your addition / change here if there are visual 
 
 Alternatively, if this is a very minor, and self-explanatory change, feel free to remove this section.
 -->
+
+## Feedback Levels
+
+Please try to mark your comments with one of these levels
+
+1. Praise (👏 🚀 🔥 🍾)
+2. Opinions, Ideas, Suggestions (💡 👀)
+3. Let’s discuss @ Code review (🤷 🤔 🧐 )
+4. Doesn’t meet agreed upon standards (😬 ⚠️ ‼️)
+5. Missing an edge case (🛑 🙅 ❌)
+6. Missing core functionality (⛔️ ☣️ 🚧 🌋 💀)
+
+(Note: Use ⌘-⌃-␣ to open the Emoji keyboard!)

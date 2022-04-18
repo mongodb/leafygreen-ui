@@ -29,6 +29,7 @@ const popoverStyle = css`
 const referenceElPositions = {
   centered: css`
     position: relative;
+    margin-bottom: 200vh;
   `,
   top: css`
     top: 0;
@@ -149,9 +150,6 @@ function ScrollExample() {
           onClick={() => setActive(curr => !curr)}
           className={cx(
             containerStyle,
-            css`
-              margin-bottom: 200vh;
-            `,
             referenceElPositions[
               select(
                 'Reference Element Position',

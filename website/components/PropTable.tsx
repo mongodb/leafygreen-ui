@@ -252,6 +252,7 @@ function PropTable({
       `}
     >
       {component === 'typography' && <TypographyPropTable />}
+
       {headers.map((header: string, index: number) => {
         return (
           <div key={index} className={tableWrapper}>
@@ -262,6 +263,10 @@ function PropTable({
             {tableData[index] && (
               <Wrapper isTouchDevice={isTouchDevice}>
                 <Table
+                  className={css`
+                    position: relative;
+                    z-index: 0;
+                  `}
                   key={header}
                   data={tableData[index]}
                   columns={[

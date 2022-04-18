@@ -69,7 +69,7 @@ attempt_publish() {
     read -r -p "Are you sure this is correct? [y/N] " response
 
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        yarn run release:site --repo $repo
+        yarn run publish:storybook --repo $repo
     else
         echo "\nExiting without publishing...\n"
     fi
