@@ -183,8 +183,10 @@ export const inputModeStyles: Record<Mode, string> = {
 };
 
 export const inputFocusStyles = css`
-  border-color: ${palette.blue.light1};
-  box-shadow: 0 0 0 2px ${palette.blue.light1};
+  &:focus {
+    border-color: ${palette.blue.light1};
+    box-shadow: 0 0 0 2px ${palette.blue.light1};
+  }
 `;
 
 export const inputSizeStyles: Record<SizeVariant, string> = {
