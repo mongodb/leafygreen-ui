@@ -81,6 +81,7 @@ function DefaultExample({
   usePortal,
   spacing,
   adjustOnMutation,
+  children,
 }: Knobs) {
   const [active, setActive] = useState(false);
   return (
@@ -95,7 +96,7 @@ function DefaultExample({
           spacing={spacing}
           adjustOnMutation={adjustOnMutation}
         >
-          <div className={popoverStyle}>Popover content</div>
+          <div className={popoverStyle}>{children}</div>
         </Popover>
       </Button>
     </div>

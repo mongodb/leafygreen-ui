@@ -2,36 +2,39 @@
   "name": "website",
   "version": "0.4.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "NEXT_TELEMETRY_DISABLED=1 next dev",
     "build": "NEXT_TELEMETRY_DISABLED=1 next build && next export -o hosting/files/",
-    "release": "gh-pages -b website --dist .",
+    "publish": "gh-pages -b website --dist .",
     "start": "NEXT_TELEMETRY_DISABLED=1 next start",
-    "ts": "tsc --project tsconfig.json"
+    "fix": "eslint . --ext js,md,mdx --fix",
+    "check:ts": "tsc --project tsconfig.json"
   },
   "dependencies": {
     "@emotion/css": "^11.0.0",
     "@emotion/server": "^11.0.0",
     "clipboard": "^2.0.6",
     "gray-matter": "4.0.2",
-    "next": "^10.0.0",
+    "next": "^12.1.4",
+    "polished": "^4.1.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "remark": "^12.0.1",
-    "remark-html": "^12.0.0",
-    "remark-parse": "8.0.3",
-    "polished": "^4.1.3"
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-slug": "^5.0.1",
+    "remark": "^14.0.2",
+    "remark-gfm": "^3.0.1",
+    "remark-html": "^15.0.1",
+    "remark-parse": "^10.0.1"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "11.0.0",
-    "@mdx-js/loader": "^1.6.21",
+    "@mdx-js/loader": "^2.1.0",
     "@next/mdx": "^10.0.3",
     "@types/react": "^16.9.56",
+    "@types/unist": "1.0.0",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "@typescript-eslint/parser": "^3.7.1",
-    "@types/unist": "1.0.0",
-    "eslint": "^7.5.0",
-    "eslint-plugin-react": "^7.20.5",
     "typescript": "^4.1.0"
   }
 }

@@ -1,0 +1,17 @@
+import GuidelineImage from 'components/GuidelineImage';
+import { CDN } from 'utils/routes';
+import { css } from '@emotion/css';
+import { Link } from '@leafygreen-ui/typography';
+export const imagePath = `${CDN}/images/new-guidelines/form`;
+
+Do not use a sticky footer for setting pages, short forms (less than 3 inputs), forms in modals, or for any forms that won’t usually go below the fold. In these other cases, place any CTAs directly below the content of the form.
+
+<GuidelineImage
+  imageURL={`${imagePath}/form-guidelines-17@3x.png`}
+  className={css`
+    width: 100%;
+    height: 416px;
+  `}
+/>
+
+Find more information on forms in general, click <Link href="/foundation/forms">here</Link>.
