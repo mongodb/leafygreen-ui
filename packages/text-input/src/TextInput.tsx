@@ -172,7 +172,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
                 inputSizeStyles[sizeVariant],
                 inputStateStyles[state][mode],
                 {
-                  [inputFocusStyles]: usingKeyboard,
+                  [inputFocusStyles]: usingKeyboard && !disabled,
                   [css`
                     padding-right: 60px;
                   `]: optional && !disabled,
