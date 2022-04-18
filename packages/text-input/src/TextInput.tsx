@@ -36,7 +36,6 @@ import {
   inputIndicatorSizeStyle,
   inheritTypeScale,
 } from './style';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * # TextInput
@@ -92,7 +91,6 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
       const [uncontrolledValue, setValue] = useState('');
       const value = isControlled ? controlledValue : uncontrolledValue;
       const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-      const { usingKeyboard } = useUsingKeyboardContext();
       const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
       // Validation
@@ -171,8 +169,8 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
                 inputModeStyles[mode],
                 inputSizeStyles[sizeVariant],
                 inputStateStyles[state][mode],
+                inputFocusStyles, // Always show focus styles
                 {
-                  [inputFocusStyles]: usingKeyboard && !disabled,
                   [css`
                     padding-right: 60px;
                   `]: optional && !disabled,
