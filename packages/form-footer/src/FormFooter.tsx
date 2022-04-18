@@ -6,6 +6,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import { once } from 'lodash';
+import ChevronLeftIcon from '@leafygreen-ui/icon/dist/ChevronLeft';
 
 const footerStyle = css`
   min-height: 92px;
@@ -13,21 +14,24 @@ const footerStyle = css`
   padding: 24px;
   border: 1px solid ${uiColors.gray.light2};
   box-shadow: 0px -4px 4px 0px ${transparentize(0.9, uiColors.black)};
+  display: flex;
+  align-items: center;
 `;
 
 const contentStyle = css`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-inline: auto;
   gap: 8px;
+  width: 100%;
 `;
 
 const buttonStyle = css`
   white-space: nowrap;
+  justify-self: left;
 `;
 
-const flexSpan = css`
+const flexEndContent = css`
+  justify-self: right;
   display: inline-flex;
   gap: inherit;
 `;
@@ -36,6 +40,7 @@ const bannerStyle = css`
   flex-grow: 0;
   min-height: unset;
   padding-block: 7px;
+  max-width: 700px;
 `;
 
 /**
@@ -140,7 +145,7 @@ export default function FormFooter({
       }
 
       errorOnce(
-        '`primaryButton` prop in `FormFooter` must be either a `Button` component, or object with at minumum a `text` property',
+        '`primaryButton` prop in `FormFooter` must be either a `Button` component, or object with at minimum a `text` property',
       );
     }
   }, [primaryButton]);
@@ -148,28 +153,27 @@ export default function FormFooter({
   return (
     <footer className={cx(footerStyle, className)}>
       <div className={cx(contentStyle, contentClassName)}>
-        <span className={flexSpan}>
-          {backButtonText && (
-            <Button
-              variant="default"
-              onClick={onBackClick}
-              className={buttonStyle}
-            >
-              {backButtonText}
-            </Button>
-          )}
+        {backButtonText && (
+          <Button
+            variant="default"
+            onClick={onBackClick}
+            className={buttonStyle}
+            leftGlyph={<ChevronLeftIcon />}
+          >
+            {backButtonText}
+          </Button>
+        )}
+        <div className={flexEndContent}>
           {errorMessage && (
             <Banner className={bannerStyle} variant="danger">
               {errorMessage}
             </Banner>
           )}
-        </span>
-        <span className={flexSpan}>
           <Button variant="default" onClick={onCancel} className={buttonStyle}>
             {cancelButtonText || 'Cancel'}
           </Button>
           {primaryButton && RenderedPrimaryButton}
-        </span>
+        </div>
       </div>
     </footer>
   );
