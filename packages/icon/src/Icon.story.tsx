@@ -29,12 +29,16 @@ storiesOf('Packages/Icons', module).add('Icon', () => {
   const fill = color('Fill', '#000000');
   const size = select('size', Object.values(Size), Size.Default);
 
-  const renderGlyph = (glyph: string) => (
-    <div key={glyph} className={containerStyle}>
-      <Icon glyph={glyph} fill={fill} size={size} />
-      <div className={textStyle}>{glyph}</div>
-    </div>
-  );
+  console.log(glyphs)
 
-  return <>{Object.keys(glyphs).map(renderGlyph)}</>;
+  return (
+    <>
+      {Object.keys(glyphs).map((glyph) => (
+        <div key={glyph} className={containerStyle}>
+          <Icon glyph={glyph} fill={fill} size={size} />
+          <div className={textStyle}>{glyph}</div>
+        </div>
+      ))}
+    </>
+  );
 });
