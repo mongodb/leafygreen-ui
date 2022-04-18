@@ -61,6 +61,7 @@ export const inputContainerStyle = css`
   position: relative;
   display: flex;
   align-items: center;
+  padding-top: 4px;
   z-index: 0;
 `;
 
