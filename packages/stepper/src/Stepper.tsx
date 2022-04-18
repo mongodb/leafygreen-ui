@@ -26,6 +26,7 @@ const Stepper = ({
 }: PropsWithChildren<StepperProps & OlHTMLAttributes<HTMLOListElement>>) => {
   // Helper Variables
   const numSteps = React.Children.count(children);
+  maxDisplayedSteps = Math.min(maxDisplayedSteps, numSteps);
   const childrenArray = React.Children.toArray(children);
   // first non-Ellipses step displayed
   let firstDisplayedStep = Math.min(
@@ -71,6 +72,7 @@ const Stepper = ({
           <EllipsesStep
             state={StepStates.CompletedMultiple}
             startingStepIndex={1}
+            shouldDisplayLine={maxDisplayedSteps > 1}
             tooltipContent={childrenArray.slice(0, firstDisplayedStep)}
           >
             {getStepRangeText(1, firstDisplayedStep)}
