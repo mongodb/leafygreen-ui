@@ -12,9 +12,9 @@ object-assign
  */
 
 /*!
- * clipboard.js v2.0.6
+ * clipboard.js v2.0.10
  * https://clipboardjs.com/
- * 
+ *
  * Licensed MIT © Zeno Rocha
  */
 
@@ -50,26 +50,29 @@ object-assign
  */
 
 /*!
-* focus-trap 6.3.0
+* focus-trap 6.7.3
 * @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
 */
 
 /*!
-* tabbable 5.1.5
+* tabbable 5.2.1
 * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
 */
 
-/*! axe v4.3.1
- * Copyright (c) 2021 Deque Systems, Inc.
- *
- * Your use of this Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- *
- * This entire copyright notice must appear in every copy of this file you
- * distribute or in any file that contains substantial portions of this source
- * code.
- */
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
@@ -102,15 +105,6 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v17.0.1
- * react-is.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 /** @license React v17.0.2
  * react-dom-server.browser.production.min.js
  *
@@ -122,6 +116,15 @@ object-assign
 
 /** @license React v17.0.2
  * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.2
+ * react-is.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
