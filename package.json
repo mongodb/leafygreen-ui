@@ -93,6 +93,7 @@
     "@slack/web-api": "^6.4.0",
     "@storybook/addon-a11y": "^6.4.20",
     "@storybook/addon-actions": "^6.4.20",
+    "@storybook/addon-docs": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-interactions": "^6.4.20",
     "@storybook/addon-knobs": "^6.4.0",
@@ -182,8 +183,5 @@
     "packages/*",
     "website"
   ],
-  "version": "0.0.0",
-  "dependencies": {
-    "@storybook/addon-docs": "^6.4.22"
-  }
+  "version": "0.0.0"
 }
