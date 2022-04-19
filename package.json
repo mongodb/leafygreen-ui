@@ -182,5 +182,8 @@
     "packages/*",
     "website"
   ],
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": {
+    "@storybook/addon-docs": "^6.4.22"
+  }
 }

@@ -29,11 +29,9 @@ storiesOf('Packages/Icons', module).add('Icon', () => {
   const fill = color('Fill', '#000000');
   const size = select('size', Object.values(Size), Size.Default);
 
-  console.log(glyphs)
-
   return (
     <>
-      {Object.keys(glyphs).map((glyph) => (
+      {Object.keys(glyphs).map(glyph => (
         <div key={glyph} className={containerStyle}>
           <Icon glyph={glyph} fill={fill} size={size} />
           <div className={textStyle}>{glyph}</div>

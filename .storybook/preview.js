@@ -1,6 +1,14 @@
 import { addDecorator } from '@storybook/react';
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
+import {
+  H1,
+  H2,
+  H3,
+  Subtitle,
+  Body,
+  InlineCode,
+} from '@leafygreen-ui/typography';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -13,8 +21,18 @@ export const parameters = {
   options: {
     storySort: {
       method: '',
-      order: ['Overview', 'Packages'],
+      order: ['Overview', 'Sample Pages', 'Packages'],
       locales: '',
+    },
+  },
+  docs: {
+    components: {
+      h1: H1,
+      h2: H2,
+      h3: H3,
+      h4: Subtitle,
+      p: Body,
+      code: InlineCode,
     },
   },
 };
