@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Card from '@leafygreen-ui/card';
 import Icon from '@leafygreen-ui/icon';
-import { H3, Body } from '@leafygreen-ui/typography';
+import { Body, Subtitle } from '@leafygreen-ui/typography';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Transition, TransitionStatus } from 'react-transition-group';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 const transitionDuration = 300;
@@ -53,7 +53,6 @@ const flagTextStyle = css`
 const iconStyle = css`
   grid-column: 2;
   grid-row: 1/3;
-  align-self: center;
   transition: transform ${transitionDuration}ms ease-in-out;
 `;
 
@@ -258,7 +257,7 @@ const ExpandableCard = ({
         tabIndex={0}
       >
         <span>
-          <H3 className={summaryHeader}>{title}</H3>
+          <Subtitle className={summaryHeader}>{title}</Subtitle>
           {flagText && <span className={flagTextStyle}>{flagText}</span>}
         </span>
         {description && <Body className={summaryText}>{description}</Body>}
@@ -268,6 +267,8 @@ const ExpandableCard = ({
             <Icon
               className={cx(iconStyle, iconTransitionStyle[state])}
               glyph="ChevronUp"
+              size={24}
+              fill={palette.gray.base}
             />
           )}
         </Transition>
