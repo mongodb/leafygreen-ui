@@ -6,7 +6,7 @@ import {
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { typeScale1, typeScale2, codeTypeScale2 } from './styles';
 
@@ -63,7 +63,7 @@ const h3 = css`
   font-size: 24px;
   line-height: 32px;
   letter-spacing: -0.3px;
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 type H3Props = HTMLElementProps<'h3'>;
@@ -188,12 +188,12 @@ const codeModes = {
 
   [Mode.Dark]: css`
     background-color: transparent;
-    border: 1px solid ${uiColors.gray.dark1};
-    color: ${uiColors.gray.light3};
+    border: 1px solid ${palette.gray.dark1};
+    color: ${palette.gray.light3};
 
     ${anchorDataProp.selector}:hover > & {
-      box-shadow: 0 0 0 3px ${uiColors.gray.dark1};
-      border: 1px solid ${uiColors.gray.base};
+      box-shadow: 0 0 0 3px ${palette.gray.dark1};
+      border: 1px solid ${palette.gray.base};
     }
   `,
 };
@@ -208,8 +208,8 @@ const codeFocusModes = {
 
   [Mode.Dark]: css`
     ${anchorDataProp.selector}:focus > & {
-      box-shadow: 0 0 0 3px ${uiColors.blue.base};
-      border: 1px solid ${uiColors.focus};
+      box-shadow: 0 0 0 2px ${palette.black}, 0 0 0 4px ${palette.blue.light1};
+      border: 1px solid ${palette.blue.base};
     }
   `,
 };
@@ -219,7 +219,7 @@ const codeLinkStyleModes = {
     color: ${palette.blue.base};
   `,
   [Mode.Dark]: css`
-    color: #28bfff;
+    color: ${palette.blue.light1};
   `,
 };
 
