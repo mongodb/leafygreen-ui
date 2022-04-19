@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@leafygreen-ui/button';
-import { once } from 'lodash';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 /**
  * Types
@@ -21,7 +21,7 @@ export const isPrimaryButtonProps = (
 
 const PrimaryButton = (props: PrimaryButtonProps) => {
   if (!isPrimaryButtonProps(props)) {
-    errorOnce(
+    consoleOnce.error(
       '`primaryButton` prop in `FormFooter` must be either a `Button` component, or object with at minumum a `text` property',
     );
   }
@@ -34,7 +34,5 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
     </Button>
   );
 };
-
-const errorOnce = once(console.error);
 
 export default PrimaryButton;

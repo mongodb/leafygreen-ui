@@ -65,7 +65,7 @@ export interface FormFooterProps {
   primaryButton?: React.ReactChild | PrimaryButtonProps;
 
   /**
-   * Text for the cancel button. A cancel button will appear regardless of whether text is defined.
+   * Text for the cancel button. A cancel button will only appear if this text is defined.
    */
   cancelButtonText?: string;
 
