@@ -319,7 +319,7 @@ function Modal({
             <FocusTrap focusTrapOptions={focusTrapOptions}>
               <div className={scrollContainer}>
                 <div
-                  ref={(el) => setModalRef(el)}
+                  ref={el => setModalRef(el)}
                   aria-modal="true"
                   role="dialog"
                   tabIndex={-1}
@@ -345,23 +345,25 @@ function Modal({
                     contentClassName,
                   )}
                 >
-                  <PortalContextProvider popover={{
-                    portalContainer: modalRef,
-                    scrollContainer: modalRef,
-                  }}>
-                  {children}
-                  <IconButton
-                    onClick={handleClose}
-                    aria-label="Close modal"
-                    className={cx(
-                      baseCloseButtonStyles,
-                      closeButton[mode][closeIconColor],
-                      closeButton[mode].position,
-                    )}
-                    darkMode={darkMode}
+                  <PortalContextProvider
+                    popover={{
+                      portalContainer: modalRef,
+                      scrollContainer: modalRef,
+                    }}
                   >
-                    <XIcon />
-                  </IconButton>
+                    {children}
+                    <IconButton
+                      onClick={handleClose}
+                      aria-label="Close modal"
+                      className={cx(
+                        baseCloseButtonStyles,
+                        closeButton[mode][closeIconColor],
+                        closeButton[mode].position,
+                      )}
+                      darkMode={darkMode}
+                    >
+                      <XIcon />
+                    </IconButton>
                   </PortalContextProvider>
                 </div>
               </div>
