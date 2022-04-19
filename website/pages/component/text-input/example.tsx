@@ -3,9 +3,9 @@ import TextInput, {
   State,
   TextInputType,
   SizeVariant,
-  BaseFontSize,
 } from '@leafygreen-ui/text-input';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 const knobsConfig: KnobsConfigInterface<{
   label: string;
@@ -76,8 +76,8 @@ const knobsConfig: KnobsConfigInterface<{
   },
   baseFontSize: {
     type: 'select',
-    options: [14, 16],
-    default: 14,
+    options: [13, 16],
+    default: 13,
     label: 'Base Font Size',
   },
 };
