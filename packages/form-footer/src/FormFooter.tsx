@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
-import { once } from 'lodash';
+import ChevronLeftIcon from '@leafygreen-ui/icon/dist/ChevronLeft';
+import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 
 const footerStyle = css`
   min-height: 92px;
@@ -13,22 +14,22 @@ const footerStyle = css`
   padding: 24px;
   border: 1px solid ${uiColors.gray.light2};
   box-shadow: 0px -4px 4px 0px ${transparentize(0.9, uiColors.black)};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const contentStyle = css`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-inline: auto;
   gap: 8px;
+  width: 100%;
 `;
 
-const buttonStyle = css`
-  white-space: nowrap;
-`;
-
-const flexSpan = css`
+const flexEndContent = css`
+  margin-left: auto;
   display: inline-flex;
+  align-items: center;
   gap: inherit;
 `;
 
@@ -36,22 +37,16 @@ const bannerStyle = css`
   flex-grow: 0;
   min-height: unset;
   padding-block: 7px;
+  max-width: 700px;
+`;
+
+const buttonStyle = css`
+  white-space: nowrap;
 `;
 
 /**
  * Types
  */
-interface PrimaryButtonProps {
-  text: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  variant?: 'primary' | 'danger';
-  disabled?: boolean;
-  type?: 'button' | 'submit';
-}
-
-const isPrimaryButtonProps = (testObj: any): testObj is PrimaryButtonProps => {
-  return testObj && testObj.text != null;
-};
 
 export interface FormFooterProps {
   /**
@@ -70,7 +65,7 @@ export interface FormFooterProps {
   primaryButton?: React.ReactChild | PrimaryButtonProps;
 
   /**
-   * Text for the cancel button. A cancel button will appear regardless of whether text is defined.
+   * Text for the cancel button. A cancel button will only appear if this text is defined.
    */
   cancelButtonText?: string;
 
@@ -119,60 +114,41 @@ export default function FormFooter({
   contentClassName,
   className,
 }: FormFooterProps) {
-  const RenderedPrimaryButton: React.ReactNode = useMemo(() => {
-    if (primaryButton) {
-      if (isPrimaryButtonProps(primaryButton)) {
-        return (
-          <Button
-            variant={primaryButton.variant ?? 'primary'}
-            disabled={primaryButton.disabled}
-            onClick={primaryButton.onClick}
-            type={primaryButton.type}
-            className={buttonStyle}
-          >
-            {primaryButton.text}
-          </Button>
-        );
-      }
-
-      if (isComponentType(primaryButton, 'Button')) {
-        return primaryButton;
-      }
-
-      errorOnce(
-        '`primaryButton` prop in `FormFooter` must be either a `Button` component, or object with at minumum a `text` property',
-      );
-    }
-  }, [primaryButton]);
-
   return (
     <footer className={cx(footerStyle, className)}>
       <div className={cx(contentStyle, contentClassName)}>
-        <span className={flexSpan}>
-          {backButtonText && (
-            <Button
-              variant="default"
-              onClick={onBackClick}
-              className={buttonStyle}
-            >
-              {backButtonText}
-            </Button>
-          )}
+        {backButtonText && (
+          <Button
+            variant="default"
+            onClick={onBackClick}
+            className={buttonStyle}
+            leftGlyph={<ChevronLeftIcon />}
+          >
+            {backButtonText}
+          </Button>
+        )}
+        <div className={flexEndContent}>
           {errorMessage && (
             <Banner className={bannerStyle} variant="danger">
               {errorMessage}
             </Banner>
           )}
-        </span>
-        <span className={flexSpan}>
-          <Button variant="default" onClick={onCancel} className={buttonStyle}>
-            {cancelButtonText || 'Cancel'}
-          </Button>
-          {primaryButton && RenderedPrimaryButton}
-        </span>
+          {cancelButtonText && (
+            <Button
+              variant="default"
+              onClick={onCancel}
+              className={buttonStyle}
+            >
+              {cancelButtonText || 'Cancel'}
+            </Button>
+          )}
+          {isComponentType(primaryButton, 'Button') ? (
+            primaryButton
+          ) : (
+            <PrimaryButton {...(primaryButton as PrimaryButtonProps)} />
+          )}
+        </div>
       </div>
     </footer>
   );
 }
-
-const errorOnce = once(console.error);
