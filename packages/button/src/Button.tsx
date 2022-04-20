@@ -5,52 +5,15 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps, Mode, FontSize } from './types';
-import { getClassName, rippleColors, ButtonDataProp } from './styles';
+import {
+  getClassName,
+  rippleColors,
+  ButtonDataProp,
+  rippleStyle,
+  buttonContentStyle,
+  buttonContentSizeStyle,
+} from './styles';
 import ButtonIcon from './ButtonIcon';
-
-const rippleStyle = css`
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 5px;
-`;
-
-const containerChildStyles = css`
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  pointer-events: none;
-  position: relative;
-  z-index: 0;
-`;
-
-const containerChildSizeStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    padding: 0 8px;
-    gap: 6px;
-  `,
-
-  [Size.Small]: css`
-    padding: 0 12px;
-    gap: 6px;
-  `,
-
-  [Size.Default]: css`
-    padding: 0 12px;
-    gap: 6px;
-  `,
-
-  [Size.Large]: css`
-    padding: 0 16px;
-    gap: 8px;
-  `,
-};
 
 const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
   React.forwardRef(function Button(
@@ -122,7 +85,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
         <div className={cx(rippleStyle)} ref={rippleRef} />
 
         <div
-          className={cx(containerChildStyles, containerChildSizeStyles[size], {
+          className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
             [css`
               justify-content: space-between;
             `]: !!rightGlyph && darkMode,
