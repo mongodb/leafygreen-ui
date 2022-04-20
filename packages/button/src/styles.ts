@@ -340,7 +340,7 @@ const disabledStyle: Record<Mode, string> = {
   `,
 };
 
-const sizeSet: Record<Size, string> = {
+const sizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
     text-transform: uppercase;
@@ -398,7 +398,7 @@ export function getClassName({
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const color = colorSet[mode][variant];
   const focus = focusStyle[mode][variant];
-  const size = sizeSet[sizeProp];
+  const size = sizeStyle[sizeProp];
   const fontSize = fontStyles[baseFontSize];
 
   return cx(
@@ -430,4 +430,48 @@ export const rippleColors: Record<Mode, Record<Variant, string>> = {
     [Variant.DangerOutline]: transparentize(rippleOpacity, palette.red.light1),
     [Variant.BaseGreen]: palette.green.dark1,
   },
+};
+
+export const rippleStyle = css`
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px;
+`;
+
+export const buttonContentStyle = css`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  position: relative;
+  z-index: 0;
+`;
+
+export const buttonContentSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    padding: 0 7px; // 8px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Small]: css`
+    padding: 0 11px; // 12px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Default]: css`
+    padding: 0 11px; // 12px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Large]: css`
+    padding: 0 15px; // 16px - 1px border
+    gap: 8px;
+  `,
 };
