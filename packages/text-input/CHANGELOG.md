@@ -1,5 +1,23 @@
 # @leafygreen-ui/text-input
 
+## 8.0.0
+
+### Major Changes
+
+- f3aad7e2: Updates Dark Mode for visual brand refresh
+
+### Patch Changes
+
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [679b6239]
+- Updated dependencies [f3aad7e2]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/typography@10.0.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 7.0.1
 
 ### Patch Changes
