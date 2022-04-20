@@ -57,7 +57,6 @@
     "test": "npm-run-all --serial test:*",
     "test:local": "jest --env jsdom --config jest.config.js",
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
-    "version": "yarn changeset version",
     "watch": "yarn build -- -- --watch"
   },
   "devDependencies": {
