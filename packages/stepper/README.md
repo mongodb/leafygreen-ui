@@ -22,6 +22,15 @@ npm install @leafygreen-ui/stepper
 
 ```js
 <Stepper currentStep={0} maxDisplayedSteps={2}>
+  <div>Step 1</div>
+  <div>Step 2</div>
+</Stepper>
+```
+
+or
+
+```js
+<Stepper currentStep={0} maxDisplayedSteps={2}>
   <Step>Step 1</Step>
   <Step>Step 2</Step>
 </Stepper>
@@ -30,42 +39,32 @@ npm install @leafygreen-ui/stepper
 **Output HTML**
 
 ```html
-<div aria-label="breadcrumbs" class="leafygreen-ui-13pcgvz">
-  <div class="leafygreen-ui-plizcc">
-    <div
-      class="leafygreen-ui-1cyt2ch"
-      aria-label="Step 1"
-      aria-current="step"
-      step="0"
-    >
-      <div class="leafygreen-ui-7uty9f">
-        <div class="leafygreen-ui-gbxl1s">1</div>
+<ol class="leafygreen-ui-1pvgjhr" aria-label="progress">
+  <li>
+    <div class="leafygreen-ui-1x8f1m7" aria-label="step1" aria-current="step">
+      <div class="lg-ui-03f12bfd leafygreen-ui-1dyv85w">
+        <div class="leafygreen-ui-17xqetg">1</div>
       </div>
-      Step 1
-      <div class="leafygreen-ui-1d8yxum">
-        <span class="leafygreen-ui-1tyue0g"><div></div></span>
-        <span class="leafygreen-ui-s0bv6u"><div></div></span>
-      </div>
+      <p class="lg-ui-d036aa4e leafygreen-ui-1u866nc">Step 1</p>
     </div>
-    <div class="leafygreen-ui-15p2xzb" aria-label="Step 2" step="1">
-      <div class="leafygreen-ui-9u2rvb">
-        <div class="leafygreen-ui-gbxl1s">2</div>
+  </li>
+  <li>
+    <div class="leafygreen-ui-1x8f1m7" aria-label="step2" aria-current="false">
+      <div class="lg-ui-03f12bfd leafygreen-ui-1oypnhq">
+        <div class="leafygreen-ui-17xqetg">2</div>
       </div>
-      Step 2
-      <div class="leafygreen-ui-1d8yxum">
-        <span class="leafygreen-ui-1tyue0g"><div></div></span>
-        <span class="leafygreen-ui-s0bv6u"><div></div></span>
-      </div>
+      <p class="lg-ui-d036aa4e leafygreen-ui-1uk291k">Step 2</p>
     </div>
-  </div>
-</div>
+  </li>
+</ol>
 ```
 
 ## Properties
 
-| Prop                | Type           | Description                                                      | Default           |
-| ------------------- | -------------- | ---------------------------------------------------------------- | ----------------- |
-| `children`          | `StepElements` | Strings wrapped in `<Step></Step>` to display as each step       |                   |
-| `currentStep`       | `number`       | Starting at 0, index of current step that should be highlighted. |                   |
-| `maxDisplayedSteps` | `number`       | Maximum number of steps displayed a time. The rest are hidden.   | `children.length` |
-| `className`         | `string`       | className applied to the root element                            |                   |
+| Prop                  | Type              | Description                                                                                            | Default           |
+| --------------------- | ----------------- | ------------------------------------------------------------------------------------------------------ | ----------------- |
+| `children`            | `React.ReactNode` | ReactNode to display as the children of each step                                                      |                   |
+| `currentStep`         | `number`          | Starting at 0, index of current step that should be highlighted.                                       |                   |
+| `maxDisplayedSteps`   | `number`          | Maximum number of steps displayed a time. The rest are hidden.                                         | `children.length` |
+| `completedStepsShown` | `number`          | Number of completed steps shown before the `currentStep`. The ellipses step is included in this count. | 1                 |
+| `className`           | `string`          | className applied to the root element                                                                  |                   |
