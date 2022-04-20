@@ -40,33 +40,27 @@ const Step = ({
           0px 0px 0px 4px ${palette.blue.light1};
       }
     }
-
-    ${shouldDisplayLine &&
-    css`
-      &:after {
-        content: '';
-        height: 1px;
-        width: 100%;
-        position: absolute;
-        top: ${iconSize / 2}px;
-        left: 50%;
-        z-index: 0;
-        background-color: ${isDarkMode
-          ? palette.gray.light1
-          : palette.gray.base};
-      }
-    `}
   `;
 
-  const completedStyles = css`
-    ${shouldDisplayLine &&
-    `
-      &:after {
-        background-color: ${
-          isDarkMode ? palette.green.base : palette.green.dark1
-        };
-      }
-    `}
+  const lineStyles = css`
+    &:after {
+      content: '';
+      height: 1px;
+      width: 100%;
+      position: absolute;
+      top: ${iconSize / 2}px;
+      left: 50%;
+      z-index: 0;
+      background-color: ${isDarkMode ? palette.gray.light1 : palette.gray.base};
+    }
+  `;
+
+  const completedLineStyles = css`
+    &:after {
+      background-color: ${isDarkMode
+        ? palette.green.base
+        : palette.green.dark1};
+    }
   `;
 
   return (
@@ -74,7 +68,8 @@ const Step = ({
       className={cx(
         baseStyles,
         {
-          [completedStyles]: isCompleted,
+          [lineStyles]: shouldDisplayLine,
+          [completedLineStyles]: isCompleted && shouldDisplayLine,
         },
         className,
       )}
