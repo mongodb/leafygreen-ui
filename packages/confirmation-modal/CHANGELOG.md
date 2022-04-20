@@ -11,11 +11,10 @@
 - Updated dependencies [2f6e595d]
 - Updated dependencies [f3aad7e2]
 - Updated dependencies [c1f9c4d4]
-  - @leafygreen-ui/button@14.0.0
   - @leafygreen-ui/tokens@1.2.0
   - @leafygreen-ui/lib@9.2.1
   - @leafygreen-ui/modal@8.0.1
-  - @leafygreen-ui/text-input@8.0.0
+  - @leafygreen-ui/text-input@7.0.1
 
 ## 3.0.1
 

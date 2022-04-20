@@ -8,7 +8,7 @@
 - Updated dependencies [2cf1bc4a]
 - Updated dependencies [679b6239]
 - Updated dependencies [f3aad7e2]
-  - @leafygreen-ui/typography@10.0.0
+  - @leafygreen-ui/typography@9.1.1
   - @leafygreen-ui/lib@9.2.1
 
 ## 4.0.0

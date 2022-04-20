@@ -27,7 +27,7 @@
     "@leafygreen-ui/tokens": "^1.2.0",
     "@leafygreen-ui/icon": "^11.3.0",
     "@leafygreen-ui/icon-button": "^9.1.6",
-    "@leafygreen-ui/typography": "^10.0.0",
+    "@leafygreen-ui/typography": "^9.1.1",
     "lodash": "^4.17.21"
   }
 }

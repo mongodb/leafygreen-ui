@@ -13,9 +13,8 @@
 - Updated dependencies [ef84b5fd]
 - Updated dependencies [f3aad7e2]
 - Updated dependencies [c1f9c4d4]
-  - @leafygreen-ui/button@14.0.0
+  - @leafygreen-ui/button@13.0.1
   - @leafygreen-ui/tokens@1.2.0
-  - @leafygreen-ui/typography@10.0.0
   - @leafygreen-ui/lib@9.2.1
   - @leafygreen-ui/popover@7.2.3
 

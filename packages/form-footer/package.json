@@ -22,6 +22,6 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^9.2.1",
     "@leafygreen-ui/banner": "^3.0.9",
-    "@leafygreen-ui/button": "^14.0.0"
+    "@leafygreen-ui/button": "^13.0.1"
   }
 }

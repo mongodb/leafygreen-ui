@@ -11,5 +11,5 @@
 - Updated dependencies [f3aad7e2]
 - Updated dependencies [2cf1bc4a]
 - Updated dependencies [c1f9c4d4]
-  - @leafygreen-ui/button@14.0.0
+  - @leafygreen-ui/button@13.0.1
   - @leafygreen-ui/lib@9.2.1
