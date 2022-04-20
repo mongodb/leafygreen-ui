@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/form-footer': patch
+'@leafygreen-ui/form-footer': minor
 ---
 
-Style updates
+Cancel button is no longer displayed when the cancelButtonText prop is not set. Minor style updates.
