@@ -1,5 +1,15 @@
 # @leafygreen-ui/inline-definition
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [679b6239]
+- Updated dependencies [f3aad7e2]
+  - @leafygreen-ui/lib@9.2.1
+
 ## 3.0.0
 
 ### Major Changes
