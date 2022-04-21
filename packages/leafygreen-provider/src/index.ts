@@ -4,6 +4,7 @@ export {
   usePopoverPortalContainer,
 } from './PortalContext';
 export {
+  PopoverContext,
   usePopoverContext,
   default as PopoverProvider,
 } from './PopoverContext';
