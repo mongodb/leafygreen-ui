@@ -8,7 +8,7 @@ import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 // TODO: import ConfirmationModalProps from component
 interface ConfirmationModalExampleProps {
-  variant?: Variant;
+  variant: Variant;
   buttonText: string;
   requiredInputText: boolean;
   title: string;
