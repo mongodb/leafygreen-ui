@@ -45,7 +45,7 @@ describe('packages/leafygreen-provider/PopoverContext', () => {
   test('when passed true, setIsPopoverOpen sets isPopoverOpen to true', () => {
     const { testChild, getByTestId } = renderProvider();
 
-    // The button's click handler fires setUsingKeyboard(true)
+    // The button's click handler fires setIsPopoverOpen(true)
     fireEvent.click(getByTestId(buttonTestId));
 
     expect(testChild.textContent).toBe('true');
@@ -67,7 +67,7 @@ describe('usePopoverContext', () => {
   test('when child is not a descendent of PopoverProvider, isPopoverOpen is false when setIsPopoverOpen sets isPopoverOpen to true', () => {
     const { testChild, getByTestId } = renderUsePopoverContext();
 
-    // The button's click handler fires setUsingKeyboard(true)
+    // The button's click handler fires setIsPopoverOpen(true)
     fireEvent.click(getByTestId(buttonTestId));
 
     expect(testChild.textContent).toBe('false');
