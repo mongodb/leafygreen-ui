@@ -4,17 +4,17 @@ import Button from '@leafygreen-ui/button';
 import ConfirmationModal, { Variant } from '@leafygreen-ui/confirmation-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
+// TODO: import ConfirmationModalProps from component
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-// TODO: import ConfirmationModalProps from component
-interface ConfirmationModalExampleProps {
-  variant: Variant;
+type ConfirmationModalExampleProps = {
+  variant?: Variant;
   buttonText: string;
   requiredInputText: boolean;
   title: string;
   children: string;
   darkMode: boolean;
-}
+};
 
 const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
   variant: {
