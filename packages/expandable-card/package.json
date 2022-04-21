@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@leafygreen-ui/card": "^6.0.0",
-    "@leafygreen-ui/icon": "^11.5.0",
+    "@leafygreen-ui/icon": "^11.8.0",
     "@leafygreen-ui/lib": "^9.2.1",
-    "@leafygreen-ui/typography": "^9.1.1",
+    "@leafygreen-ui/typography": "^10.0.0",
     "react-transition-group": "^4.4.1"
   }
 }
