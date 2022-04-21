@@ -13,13 +13,20 @@ const ModalWrapper = ({
   const [open, setOpen] = useState(initialOpen);
 
   return (
-    <ModalView data-testid="modal-test-id" {...props} open={open} setOpen={setOpen}>
+    <ModalView
+      data-testid="modal-test-id"
+      {...props}
+      open={open}
+      setOpen={setOpen}
+    >
       {modalContent}
     </ModalView>
   );
 };
 
-function renderModal(props: Partial<React.ComponentProps<typeof ModalView>> = {}) {
+function renderModal(
+  props: Partial<React.ComponentProps<typeof ModalView>> = {},
+) {
   return render(<ModalWrapper {...props}>{modalContent}</ModalWrapper>);
 }
 
