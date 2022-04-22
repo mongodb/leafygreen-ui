@@ -1,5 +1,16 @@
 # @leafygreen-ui/modal
 
+## 8.0.1
+
+### Patch Changes
+
+- 2f6e595d: Fixes bug where select items are not selectable inside modal. Modal children are now wrapped in `PortalContextProvider` and the modal ref is passed in as the default portalContainer and scrollContainer.
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 8.0.0
 
 ### Major Changes
