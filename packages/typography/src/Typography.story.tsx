@@ -29,7 +29,7 @@ const darkModeBodyStyles = css`
   background-color: ${uiColors.gray.dark3};
 `;
 
-storiesOf('Typography', module).add('Default', () => {
+storiesOf('Packages/Typography', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
 
   const href = select(

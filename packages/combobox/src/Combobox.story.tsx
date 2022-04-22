@@ -19,7 +19,7 @@ const Wrapper = ({ children }: any) => (
   </div>
 );
 
-storiesOf('Combobox', module)
+storiesOf('Packages/Combobox', module)
   .add('Single Select', () => {
     const [isError, setIsError] = useState(false);
 

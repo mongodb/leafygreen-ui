@@ -17,7 +17,7 @@ const collectionDefinition =
 const collectionsLink =
   'https://docs.mongodb.com/manual/core/sharding-shard-a-collection';
 
-storiesOf('InlineDefinition', module).add('Default', () => (
+storiesOf('Packages/InlineDefinition', module).add('Default', () => (
   <div
     className={css`
       display: flex;

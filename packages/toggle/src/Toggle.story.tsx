@@ -6,7 +6,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Toggle, { Size } from '.';
 
-storiesOf('Toggle', module).add('Default', () => {
+storiesOf('Packages/Toggle', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
 
   const wrapperStyles = css`

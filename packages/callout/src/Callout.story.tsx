@@ -4,7 +4,7 @@ import { boolean, text, select } from '@storybook/addon-knobs';
 import Code from '@leafygreen-ui/code';
 import Callout, { Variant } from '.';
 
-storiesOf('Callout', module)
+storiesOf('Packages/Callout', module)
   .add('Default', () => {
     const variant = select(
       'Variant',

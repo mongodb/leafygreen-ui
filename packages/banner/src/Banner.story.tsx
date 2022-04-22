@@ -10,7 +10,7 @@ const margin = css`
   margin-right: 100px;
 `;
 
-storiesOf('Banner', module)
+storiesOf('Packages/Banner', module)
   .add('Default', () => (
     <div className={margin}>
       <Banner

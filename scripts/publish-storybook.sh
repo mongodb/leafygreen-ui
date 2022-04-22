@@ -1,7 +1,7 @@
 #!/bin/sh
 
 check_storybook_built() {
-    if [ ! -d "./storybook/public" ]; then
+    if [ ! -d "./storybook-static" ]; then
         read -r -p "No Storybook directory was found. Build it now? [y/N] " RESPONSE
         echo
 

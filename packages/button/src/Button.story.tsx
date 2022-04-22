@@ -16,7 +16,7 @@ const wrapperStyle = (darkMode: boolean) => css`
   height: 100vh;
 `;
 
-storiesOf('Button', module)
+storiesOf('Packages/Button', module)
   .add('Default', () => {
     const buttonText = text('Text', 'MongoDB');
     const variant = select('Variant', Object.values(Variant), Variant.Default);
