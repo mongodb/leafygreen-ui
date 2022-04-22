@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import LGButton, { ButtonProps } from '.';
+import LGButton, { Variant, ButtonProps } from '.';
 import { Story } from '@storybook/react';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef
@@ -12,6 +12,9 @@ export default {
   title: 'Packages/Button',
   component: Button,
   excludeStories: ['Button'],
+  args: {
+    text: 'MongoDB',
+  },
   argTypes: {
     leftGlyph: {
       options: Object.keys(glyphs),
@@ -38,7 +41,32 @@ const Template: Story<
   </Button>
 );
 
-export const Basic = Template.bind({});
-Basic.args = {
-  text: 'MongoDB',
+export const Default = Template.bind({});
+Default.args = {
+  variant: Variant.Default,
+};
+
+export const Primary = Template.bind({});
+Primary.args = {
+  variant: Variant.Primary,
+};
+
+export const PrimaryOutline = Template.bind({});
+PrimaryOutline.args = {
+  variant: Variant.PrimaryOutline,
+};
+
+export const Danger = Template.bind({});
+Danger.args = {
+  variant: Variant.Danger,
+};
+
+export const DangerOutline = Template.bind({});
+DangerOutline.args = {
+  variant: Variant.DangerOutline,
+};
+
+export const BaseGreen = Template.bind({});
+BaseGreen.args = {
+  variant: Variant.BaseGreen,
 };
