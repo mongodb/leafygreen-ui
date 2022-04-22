@@ -2,6 +2,6 @@ node_modules
 dist
 lib
 packages/icon/src/glyphs/*.svg
-storybook/public
+storybook-static
 website/.next
 website/hosting

@@ -82,4 +82,4 @@ function renderColors() {
   return <div>{renderedRanges}</div>;
 }
 
-storiesOf('Palette', module).add('Default', renderColors);
+storiesOf('Packages/Palette', module).add('Default', renderColors);

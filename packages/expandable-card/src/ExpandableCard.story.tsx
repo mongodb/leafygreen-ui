@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import ExpandableCard from '.';
 
-storiesOf('ExpandableCard', module)
+storiesOf('Packages/ExpandableCard', module)
   .add('Uncontrolled', () => (
     <ExpandableCard
       title={text('Title', 'Lorem Ipsum')}

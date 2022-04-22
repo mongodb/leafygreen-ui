@@ -70,4 +70,4 @@ function Default() {
   );
 }
 
-storiesOf('MarketingModal', module).add('Default', () => <Default />);
+storiesOf('Packages/MarketingModal', module).add('Default', () => <Default />);

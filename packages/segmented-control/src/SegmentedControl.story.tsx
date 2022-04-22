@@ -5,7 +5,7 @@ import { SegmentedControl, SegmentedControlOption } from '.';
 import { boolean, select, text } from '@storybook/addon-knobs';
 import Icon from '@leafygreen-ui/icon';
 
-storiesOf('SegmentedControl', module)
+storiesOf('Packages/SegmentedControl', module)
   .add('Default', () => {
     const [selectedFruit, setSelectedFruit] = useState('carrot');
 

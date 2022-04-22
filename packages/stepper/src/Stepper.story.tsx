@@ -9,7 +9,7 @@ import { palette } from '@leafygreen-ui/palette';
 
 const channel = addons.getChannel();
 
-storiesOf('Stepper', module)
+storiesOf('Packages/Stepper', module)
   .add('Default', () => (
     <div style={{ width: 1000 }}>
       <Stepper currentStep={number('Step', 0, { min: 0, max: 6 })}>

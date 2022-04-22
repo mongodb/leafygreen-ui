@@ -11,7 +11,7 @@ const containerStyle = css`
   text-align: center;
 `;
 
-storiesOf('Card', module).add('Default', () => {
+storiesOf('Packages/Card', module).add('Default', () => {
   const hasClickBehavior = boolean('Has click behavior', true);
   const darkMode = boolean('darkMode', false);
 
