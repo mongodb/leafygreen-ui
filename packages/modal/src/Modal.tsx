@@ -99,16 +99,16 @@ export interface ModalProps {
  * @param props.closeIconColor Choose between dark or light close icon. Default is dark.
  */
 function Modal({
-  open = false,
-  size = ModalSize.Default,
-  setOpen = () => {},
-  shouldClose = () => true,
-  darkMode = false,
+  open,
+  size,
+  setOpen,
+  shouldClose,
+  darkMode,
   children,
   className,
   contentClassName,
   initialFocus,
-  closeIconColor = CloseIconColor.Default,
+  closeIconColor,
   ...rest
 }: ModalProps) {
   const props = {
