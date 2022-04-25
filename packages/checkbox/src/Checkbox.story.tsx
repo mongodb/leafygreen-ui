@@ -27,7 +27,7 @@ function Control() {
   );
 }
 
-storiesOf('Checkbox', module)
+storiesOf('Packages/Checkbox', module)
   .add('Uncontrolled', () => {
     const darkMode = boolean('darkMode', false);
 

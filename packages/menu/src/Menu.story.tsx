@@ -109,7 +109,7 @@ function SubMenuExample() {
   );
 }
 
-storiesOf('Menu', module)
+storiesOf('Packages/Menu', module)
   .add('Controlled', () => <Controlled />)
   .add('Uncontrolled', () => <Uncontrolled />)
   .add('With SubMenus', () => <SubMenuExample />);

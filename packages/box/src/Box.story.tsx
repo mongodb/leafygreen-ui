@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, select } from '@storybook/addon-knobs';
 import Box from '.';
 
-storiesOf('Box', module)
+storiesOf('Packages/Box', module)
   .add('Default', () => <Box>I am a div</Box>)
   .add('Anchor', () => (
     <Box href="https://mongodb.design">
