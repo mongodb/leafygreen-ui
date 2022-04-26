@@ -154,6 +154,18 @@ describe('packages/button', () => {
       expect(onClick).toHaveBeenCalledTimes(0);
     });
 
+    test('does not fire onClick handler on disabled anchor set by "href"', () => {
+      const onClick = jest.fn();
+      const href = 'https://mongodb.design';
+      const { button } = renderButton({
+        disabled: true,
+        href,
+        onClick,
+      });
+      fireEvent.click(button);
+      expect(onClick).toHaveBeenCalledTimes(0);
+    });
+
     test('href attribute exists on a link', () => {
       const href = 'https://mongodb.design';
       const { button } = renderButton({
