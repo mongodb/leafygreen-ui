@@ -126,7 +126,7 @@ function DefaultSelect() {
   );
 }
 
-storiesOf('Modal', module)
+storiesOf('Packages/Modal', module)
   .add('Default', () => <Default />)
   .add('DefaultSelect', () => <DefaultSelect />)
   .add('Scroll', () => <Scroll />)

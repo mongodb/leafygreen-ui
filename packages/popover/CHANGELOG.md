@@ -1,5 +1,13 @@
 # @leafygreen-ui/popover
 
+## 7.2.3
+
+### Patch Changes
+
+- ef84b5fd: Fix positioning when reference element is aligned to the right edge of the container and also fixes the width of justify fit element inside a scrollContainer
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/lib@9.2.1
+
 ## 7.2.2
 
 ### Patch Changes

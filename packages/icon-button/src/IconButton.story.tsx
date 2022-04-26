@@ -34,7 +34,7 @@ function getCommonProps() {
   };
 }
 
-storiesOf('IconButton', module)
+storiesOf('Packages/IconButton', module)
   .add('Default', () => {
     const commonProps = getCommonProps();
 

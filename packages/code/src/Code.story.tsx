@@ -34,7 +34,7 @@ console.log(greeting('World'));
 
 `;
 
-storiesOf('Code', module)
+storiesOf('Packages/Code', module)
   .add(
     'Multiline',
     () => {

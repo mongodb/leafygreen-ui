@@ -337,7 +337,7 @@ function NestedGroups() {
   );
 }
 
-storiesOf('SideNav', module)
+storiesOf('Packages/SideNav', module)
   .add('Simple Navigation', () => <MockSideNav />)
   .add('Realm', () => <RealmSideNav />)
   .add('Org Settings', () => <OrgSettingsSideNav />)

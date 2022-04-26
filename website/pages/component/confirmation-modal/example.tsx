@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { css } from '@emotion/css';
 import Button from '@leafygreen-ui/button';
-import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
+import ConfirmationModal, { Variant } from '@leafygreen-ui/confirmation-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
+// TODO: import ConfirmationModalProps from component
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type ConfirmationModalExampleProps = {
+  variant?: Variant;
   buttonText: string;
   requiredInputText: boolean;
   title: string;
@@ -15,6 +17,12 @@ type ConfirmationModalExampleProps = {
 };
 
 const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
+  variant: {
+    type: 'select',
+    default: Variant.Default,
+    label: 'Variant',
+    options: Object.values(Variant),
+  },
   buttonText: {
     type: 'text',
     default: 'Configure a New Data Lake',
@@ -43,6 +51,7 @@ const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
 };
 
 function Confirm({
+  variant,
   title = 'Confirm Title Here',
   buttonText = 'Confirm',
   requiredInputText,
@@ -56,6 +65,7 @@ function Confirm({
     <>
       <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <ConfirmationModal
+        variant={variant}
         darkMode={darkMode}
         open={open}
         onConfirm={() => setOpen(false)}
