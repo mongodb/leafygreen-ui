@@ -108,6 +108,7 @@ const MenuItem: ExtendableBox<
       role: 'menuitem',
       tabIndex: disabled ? -1 : undefined,
       'aria-disabled': disabled,
+      'aria-current': active ?? undefined,
       // only add a disabled prop if not an anchor
       ...(!isAnchor && { disabled }),
     };
