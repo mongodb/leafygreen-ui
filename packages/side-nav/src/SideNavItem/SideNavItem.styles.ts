@@ -19,7 +19,7 @@ export const baseNavItemStyle = css`
   position: relative;
   width: 100%;
   min-height: 32px;
-  padding: ${spacing[2]}px ${spacing[3]}px;
+  padding: 6px 16px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@ export const baseNavItemStyle = css`
   text-align: left;
   text-decoration: none;
   text-transform: capitalize;
-  color: ${palette.gray.dark2};
+  color: ${palette.black};
 
   // Stateful transitions
   transition: background-color 100ms ease-in-out;
@@ -69,10 +69,10 @@ export const activeNavItemStyle = css`
   cursor: default;
   font-weight: bold;
   text-decoration: none;
+  color: ${palette.green.dark2};
 
   &,
   &:hover {
-    color: ${palette.green.dark3};
     background-color: ${palette.green.light3};
   }
 

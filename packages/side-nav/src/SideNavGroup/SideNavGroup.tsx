@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
+import { Transition, TransitionStatus } from 'react-transition-group';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
@@ -16,7 +16,7 @@ import {
   collapsibleHeaderFocusStyle,
   collapsibleHeaderStyle,
   customIconStyles,
-  sideNavGroupBaseStyles,
+  sideNavCollapsibleGroupBaseStyles,
   expandIconStyle,
   headerStyle,
   listItemStyle,
@@ -160,11 +160,13 @@ function SideNavGroup({
   );
 
   // compute the entered ul wrapper styles based on the ul height
-  const enteredTransitionStyles = css`
-    opacity: 1;
-    max-height: ${ulRef?.current?.getBoundingClientRect().height}px;
-    border-bottom: 1px solid ${palette.gray.light2};
-  `;
+  useEffect(() => {
+    transitionStyles['entered'] = css`
+      opacity: 1;
+      max-height: ${ulRef?.current?.getBoundingClientRect().height}px;
+      border-bottom: 1px solid ${palette.gray.light2};
+    `;
+  }, [open, ulRef]);
 
   // generate shared props for collapsible and static headers
   const groupHeaderProps = {
@@ -212,15 +214,13 @@ function SideNavGroup({
             mountOnEnter
             unmountOnExit
           >
-            {(state: string) => (
+            {(state: TransitionStatus) => (
               <div
                 ref={nodeRef}
-                className={cx(sideNavGroupBaseStyles, {
-                  [transitionStyles.entering]: state === 'entering',
-                  [enteredTransitionStyles]: state === 'entered',
-                  [transitionStyles.exiting]: state === 'exiting',
-                  [transitionStyles.exited]: state === 'exited',
-                })}
+                className={cx(
+                  sideNavCollapsibleGroupBaseStyles,
+                  transitionStyles[state],
+                )}
               >
                 <ul
                   ref={ulRef}

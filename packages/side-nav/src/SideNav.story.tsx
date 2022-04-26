@@ -123,7 +123,7 @@ function RealmSideNav() {
   return (
     <LeafyGreenProvider>
       <div className={gridStyles}>
-        <MongoNav className={topNavStyles} mode="dev" />
+        {/* <MongoNav className={topNavStyles} mode="dev" /> */}
         <SideNav className={sideNavStyles} aria-label="Realm app">
           <SideNavItem
             active
@@ -181,7 +181,7 @@ function OrgSettingsSideNav() {
   return (
     <LeafyGreenProvider>
       <div className={gridStyles}>
-        <MongoNav className={topNavStyles} mode="dev" />
+        {/* <MongoNav className={topNavStyles} mode="dev" /> */}
         <SideNav
           className={sideNavStyles}
           aria-label="Realm app"
@@ -257,7 +257,7 @@ function MockSideNav() {
   return (
     <LeafyGreenProvider>
       <div className={gridStyles}>
-        <MongoNav className={topNavStyles} mode="dev" />
+        {/* <MongoNav className={topNavStyles} mode="dev" /> */}
 
         <SideNav
           collapsed={collapsed}
@@ -306,7 +306,7 @@ function NestedGroups() {
   return (
     <LeafyGreenProvider>
       <div className={gridStyles}>
-        <MongoNav className={topNavStyles} mode="dev" />
+        {/* <MongoNav className={topNavStyles} mode="dev" /> */}
 
         <SideNav widthOverride={300}>
           <SideNavItem>Overview</SideNavItem>

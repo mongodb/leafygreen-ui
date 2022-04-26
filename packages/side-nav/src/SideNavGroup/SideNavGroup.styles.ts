@@ -7,17 +7,6 @@ import { sideNavItemSidePadding } from '../styles';
 
 export const buttonClassName = createUniqueClassName('side-nav-group-button');
 
-export const sideNavGroupBaseStyles = css`
-  transition: all 150ms ease-in-out;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 1;
-
-  ${prefersReducedMotion(`
-    transition: opacity 150ms ease-in-out;
-  `)}
-`;
-
 export const listItemStyle = css`
   display: flex;
   flex-direction: column;
@@ -49,7 +38,7 @@ export const collapsibleHeaderStyle = css`
   border-bottom: 1px solid ${palette.gray.light2};
 
   &:hover {
-    background-color: ${palette.gray.light3};
+    background-color: ${palette.gray.light2};
     border-color: ${palette.green.dark1};
   }
 
@@ -94,14 +83,28 @@ export const openExpandIconStyle = css`
   transform: rotate(90deg);
 `;
 
+export const sideNavCollapsibleGroupBaseStyles = css`
+  max-height: 0;
+  overflow: hidden;
+  opacity: 1;
+  transition: 150ms ease-in-out;
+  transition-property: opacity, max-height;
+
+  ${prefersReducedMotion(`
+    transition: opacity 150ms ease-in-out;
+  `)}
+`;
+
 export const transitionStyles = {
   entering: css`
     opacity: 0;
   `,
+  entered: '',
   exiting: css`
     opacity: 0;
   `,
   exited: css`
     opacity: 0;
   `,
+  unmounted: undefined,
 };
