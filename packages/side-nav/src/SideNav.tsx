@@ -6,8 +6,8 @@ import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { keyMap, createDataProp } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
 import { SideNavProps } from './types';
@@ -72,7 +72,7 @@ function SideNav({
   className,
   children,
   id: idProp,
-  baseFontSize,
+  baseFontSize: baseFontSizeProp,
   widthOverride,
   collapsed: controlledCollapsed,
   setCollapsed: setControlledCollapsed = () => {},
@@ -86,8 +86,7 @@ function SideNav({
   const navId = useIdAllocator({ prefix: 'side-nav', id: idProp });
   const [portalContainer, setPortalContainer] =
     useState<HTMLUListElement | null>(null);
-  const providerFontSize = useBaseFontSize();
-  const fontSize: 14 | 16 = baseFontSize ?? providerFontSize;
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const width =
     typeof widthOverride === 'number' ? widthOverride : sideNavWidth;
 
@@ -144,7 +143,7 @@ function SideNav({
             portalContainer,
             width,
             transitionState: state,
-            baseFontSize: fontSize,
+            baseFontSize,
           }}
         >
           <div

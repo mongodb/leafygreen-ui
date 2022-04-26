@@ -1,7 +1,7 @@
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { BaseFontSize, spacing, typeScales } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 
 export const sideNavItemSidePadding = 16;
@@ -113,3 +113,14 @@ export const collapsedExitedStyle = css`
   opacity: 0;
   pointer-events: none;
 `;
+
+export const typographyStyle = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+  `,
+} as const;

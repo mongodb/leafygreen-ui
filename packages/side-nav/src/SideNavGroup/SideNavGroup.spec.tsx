@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import Icon from '@leafygreen-ui/icon';
 import { SideNavGroup } from './';
-import { SideNavGroupProps } from './SideNavGroup';
+import { SideNavGroupProps } from './types';
 import { SideNavItem } from '../SideNavItem';
 
 describe('packages/side-nav', () => {

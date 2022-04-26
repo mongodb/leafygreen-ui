@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import { SideNavItem } from '.';
-import { SideNavItemProps } from './SideNavItem';
+import { SideNavItemProps } from './types';
 
 type renderedElement = HTMLElement | null;
 
