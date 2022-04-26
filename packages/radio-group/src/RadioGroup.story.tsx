@@ -47,7 +47,7 @@ function ControlledRadioGroup() {
   );
 }
 
-storiesOf('RadioGroup', module)
+storiesOf('Packages/RadioGroup', module)
   .add('Uncontrolled', () => {
     const darkMode = boolean('darkMode', false);
 

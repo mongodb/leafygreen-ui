@@ -2,24 +2,31 @@ import React, { useState } from 'react';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import Modal from './Modal';
+import ModalView from './';
 
 const modalContent = 'Modal Content';
 
 const ModalWrapper = ({
   open: initialOpen,
   ...props
-}: Partial<React.ComponentProps<typeof Modal>>) => {
+}: Partial<React.ComponentProps<typeof ModalView>>) => {
   const [open, setOpen] = useState(initialOpen);
 
   return (
-    <Modal data-testid="modal-test-id" {...props} open={open} setOpen={setOpen}>
+    <ModalView
+      data-testid="modal-test-id"
+      {...props}
+      open={open}
+      setOpen={setOpen}
+    >
       {modalContent}
-    </Modal>
+    </ModalView>
   );
 };
 
-function renderModal(props: Partial<React.ComponentProps<typeof Modal>> = {}) {
+function renderModal(
+  props: Partial<React.ComponentProps<typeof ModalView>> = {},
+) {
   return render(<ModalWrapper {...props}>{modalContent}</ModalWrapper>);
 }
 

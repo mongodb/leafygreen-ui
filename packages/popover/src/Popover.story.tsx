@@ -179,7 +179,7 @@ function ScrollExample() {
   );
 }
 
-storiesOf('Popover', module)
+storiesOf('Packages/Popover', module)
   .add('Default', () => <DefaultExample />)
   .add('Advanced', () => <AdvancedExample />)
   .add('Scroll Container', () => <ScrollExample />);

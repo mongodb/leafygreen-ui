@@ -43,4 +43,4 @@ function DefaultExample() {
   );
 }
 
-storiesOf('Pipeline', module).add('Default', () => <DefaultExample />);
+storiesOf('Packages/Pipeline', module).add('Default', () => <DefaultExample />);
