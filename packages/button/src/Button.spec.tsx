@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { BoxProps } from '@leafygreen-ui/box';
@@ -80,7 +80,7 @@ describe('packages/button', () => {
 
     test(`renders a button as another component if the "as" prop is set`, () => {
       const { container } = renderButton({
-        as: 'p'
+        as: 'p',
       });
       expect(container.querySelector('button')).toBeNull();
       expect(container.querySelector('p')).not.toBeNull();
@@ -130,7 +130,7 @@ describe('packages/button', () => {
         onClick,
       });
       fireEvent.click(button);
-      expect(onClick.mock.calls.length).toBe(1);
+      expect(onClick).toHaveBeenCalledTimes(1);
     });
 
     test('does not fire onClick handler when disabled', () => {
