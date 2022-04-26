@@ -16,6 +16,7 @@ import {
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { CloseIconColor, ModalProps, ModalSize } from './Modal';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 
 const Mode = {
   Dark: 'dark',
@@ -165,6 +166,8 @@ const closeButton: Record<
   },
 };
 
+const closeClassName = createUniqueClassName();
+
 function ModalView({
   open = false,
   size = ModalSize.Default,
@@ -199,8 +202,11 @@ function ModalView({
   const focusTrapOptions = initialFocus
     ? {
         initialFocus: `#${id} ${initialFocus}`,
+        fallbackFocus: `#${id} .${closeClassName}`,
       }
-    : {};
+    : {
+        fallbackFocus: `#${id} .${closeClassName}`, // test fail without a fallback
+      };
 
   return (
     <Transition
@@ -270,11 +276,13 @@ function ModalView({
                         baseCloseButtonStyles,
                         closeButton[mode][closeIconColor],
                         closeButton[mode].position,
+                        closeClassName,
                       )}
                       darkMode={darkMode}
                     >
                       <XIcon />
                     </IconButton>
+                    {/* <div id="dialog" tabIndex={-1}></div> */}
                   </PortalContextProvider>
                 </div>
               </div>
