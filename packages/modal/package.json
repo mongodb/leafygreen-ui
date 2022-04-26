@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "focus-trap-react": "8.4.2",
+    "focus-trap-react": "8.10.0",
     "react-transition-group": "^4.4.1",
     "@leafygreen-ui/hooks": "^7.0.0",
     "@leafygreen-ui/icon": "^11.6.1",

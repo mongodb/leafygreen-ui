@@ -9,6 +9,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
+import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
 
 const Mode = {
   Light: 'light',
@@ -159,6 +160,8 @@ export default function Copyable({
   const [showCopyButton, setShowCopyButton] = useState(false);
   const [buttonRef, setButtonRef] = useState<HTMLButtonElement>();
 
+  const { portalContainer } = usePopoverPortalContainer();
+
   useEffect(() => {
     setShowCopyButton(copyable && ClipboardJS.isSupported());
   }, [copyable]);
@@ -203,6 +206,7 @@ export default function Copyable({
 
     const clipboard = new ClipboardJS(buttonRef, {
       text: () => children,
+      container: portalContainer,
     });
 
     if (copied) {
@@ -214,7 +218,7 @@ export default function Copyable({
     }
 
     return () => clipboard.destroy();
-  }, [buttonRef, children, copied]);
+  }, [buttonRef, children, copied, portalContainer]);
 
   return (
     <>
