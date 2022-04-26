@@ -90,7 +90,7 @@ npm install @leafygreen-ui/copyable
 
 ## Notes
 
-Inside of `Copyable`, `[ClipboardJS](https://clipboardjs.com/g)` is utilized to handle the copy functionality. The `ClipboardJS` API gives us the `container` option which is used to specify where the focus should be contained. This is not really necessary to add, however, the `container` needs to be set if used inside of `Modal` because `Modal` uses an outside library to trap focus for accessibility reasons. The setting of the `container` is handled internally in `Copyable` but if you need to use the `ClipboardJS` library directly inside of `Modal` then you will need to set the `container` yourself. Below is an example of how to set the `container`:
+Inside of `Copyable`, `[ClipboardJS](https://clipboardjs.com)` is utilized to handle the copy functionality. The `ClipboardJS` API gives us the `container` option which is used to specify where the focus should be contained. This is not really necessary to add, however, the `container` needs to be set if used inside of `Modal` because `Modal` uses an outside library to trap focus for accessibility reasons. The setting of the `container` is handled internally in `Copyable` but if you need to use the `ClipboardJS` library directly inside of `Modal` then you will need to set the `container` yourself. Below is an example of how to set the `container`:
 
 ```
   const { portalContainer } = usePopoverPortalContainer();
