@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { BoxProps } from '@leafygreen-ui/box';
@@ -76,6 +76,14 @@ describe('packages/button', () => {
         type: 'submit',
       });
       expect((button as HTMLButtonElement).type).toBe('submit');
+    });
+
+    test(`renders a button as another component if the "as" prop is set`, () => {
+      const { container } = renderButton({
+        as: 'p'
+      });
+      expect(container.querySelector('button')).toBeNull();
+      expect(container.querySelector('p')).not.toBeNull();
     });
 
     test(`renders inside of a \`button\` tag by default`, () => {
