@@ -1,10 +1,6 @@
 import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import {
-  AriaCurrentValue,
-  createDataProp,
-  isComponentType,
-} from '@leafygreen-ui/lib';
+import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -12,17 +8,16 @@ import CollapsedSideNavItem from './CollapsedSideNavItem';
 import { useSideNavContext } from '../SideNavContext';
 import { getIndentLevelStyle, typographyStyle } from '../styles';
 import {
-  activeStyle,
-  defaultStyle,
-  disabledStyle,
-  focusedDisabledStyle,
-  focusedStyle,
+  baseNavItemStyle,
+  activeNavItemStyle,
+  disabledNavItemStyle,
+  focusedNavItemStyle,
+  focusedDisabledNavItemStyle,
   glyphWrapper,
   nestedChildrenStyles,
+  sideNavItemClassName,
 } from './SideNavItem.styles';
 import { SideNavItemProps } from './types';
-
-const sideNavItemContainer = createDataProp('side-nav-item-container');
 
 /**
  * # SideNavItem
@@ -61,7 +56,7 @@ const SideNavItem: ExtendableBox<
     glyph,
     ...rest
   } = props;
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { usingKeyboard } = useUsingKeyboardContext();
   const { baseFontSize } = useSideNavContext();
   const hasNestedChildren = useRef(false);
 
@@ -153,15 +148,15 @@ const SideNavItem: ExtendableBox<
       <Box
         as={props.href ? 'a' : 'button'}
         {...rest}
-        {...sideNavItemContainer.prop}
         className={cx(
-          defaultStyle,
+          sideNavItemClassName,
+          baseNavItemStyle,
           typographyStyle[baseFontSize],
           {
-            [activeStyle]: active,
-            [disabledStyle]: disabled,
-            [focusedStyle]: showFocus,
-            [focusedDisabledStyle]: showFocus && disabled,
+            [activeNavItemStyle]: active,
+            [disabledNavItemStyle]: disabled,
+            [focusedNavItemStyle]: usingKeyboard,
+            [focusedDisabledNavItemStyle]: usingKeyboard && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
             [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
           },

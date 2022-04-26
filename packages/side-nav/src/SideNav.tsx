@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { keyMap, createDataProp } from '@leafygreen-ui/lib';
+import { keyMap } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
@@ -27,10 +27,10 @@ import {
   listStyles,
   collapsedEnteredStyle,
   collapsedExitedStyle,
+  sideNavClassName,
 } from './styles';
 
-const dataProp = createDataProp('side-nav');
-const sideNavSelector = dataProp.selector;
+const sideNavSelector = `.${sideNavClassName}`;
 
 export { sideNavSelector };
 
@@ -78,15 +78,16 @@ function SideNav({
   setCollapsed: setControlledCollapsed = () => {},
   ...rest
 }: SideNavProps) {
-  const { Provider: ContextProvider } = SideNavContext;
+  const { Provider: SideNavProvider } = SideNavContext;
   const [uncontrolledCollapsed, uncontrolledSetCollapsed] = useState(false);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const { usingKeyboard } = useUsingKeyboardContext();
+
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
-  const { usingKeyboard } = useUsingKeyboardContext();
   const navId = useIdAllocator({ prefix: 'side-nav', id: idProp });
   const [portalContainer, setPortalContainer] =
     useState<HTMLUListElement | null>(null);
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const width =
     typeof widthOverride === 'number' ? widthOverride : sideNavWidth;
 
@@ -136,7 +137,7 @@ function SideNav({
       timeout={collapseDuration}
     >
       {state => (
-        <ContextProvider
+        <SideNavProvider
           value={{
             navId,
             collapsed,
@@ -148,8 +149,8 @@ function SideNav({
         >
           <div
             data-testid="side-nav-container"
-            {...dataProp.prop}
             className={cx(
+              sideNavClassName,
               space,
               css`
                 width: ${width}px;
@@ -215,7 +216,7 @@ function SideNav({
               />
             </div>
           </div>
-        </ContextProvider>
+        </SideNavProvider>
       )}
     </Transition>
   );

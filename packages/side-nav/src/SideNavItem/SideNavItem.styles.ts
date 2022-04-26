@@ -1,10 +1,13 @@
 import { css } from '@leafygreen-ui/emotion';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 
+export const sideNavItemClassName = createUniqueClassName('side-nav-item');
+
 // container styles
-export const defaultStyle = css`
+export const baseNavItemStyle = css`
   // Unset defaults
   margin: 0;
   appearance: none;
@@ -13,9 +16,10 @@ export const defaultStyle = css`
   cursor: pointer;
 
   // Layout
+  position: relative;
   width: 100%;
   min-height: 32px;
-  padding: ${spacing[1]}px ${spacing[3]}px;
+  padding: ${spacing[2]}px ${spacing[3]}px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -45,9 +49,23 @@ export const defaultStyle = css`
   &::-moz-focus-inner {
     border: 0;
   }
+
+  // Setup the active/focus wedge
+  &:before {
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: ${spacing[1]}px;
+    border-radius: 0 6px 6px 0;
+    transition: transform 150ms ease-in-out;
+    transform: scaleY(0.3);
+  }
 `;
 
-export const activeStyle = css`
+export const activeNavItemStyle = css`
   cursor: default;
   font-weight: bold;
   text-decoration: none;
@@ -57,9 +75,15 @@ export const activeStyle = css`
     color: ${palette.green.dark3};
     background-color: ${palette.green.light3};
   }
+
+  // The active wedge
+  &:before {
+    transform: scaleY(1);
+    background-color: ${palette.green.dark1};
+  }
 `;
 
-export const disabledStyle = css`
+export const disabledNavItemStyle = css`
   pointer-events: none;
   background-color: transparent;
   font-weight: normal;
@@ -71,38 +95,23 @@ export const disabledStyle = css`
   }
 `;
 
-export const focusedStyle = css`
+export const focusedNavItemStyle = css`
   position: relative;
-
-  &:before {
-    transition: all 150ms ease-in-out;
-    content: '';
-    transform: scaleY(0.3);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 3px;
-    height: 20px;
-    margin: auto;
-    background-color: ${palette.blue.light1};
-    opacity: 0;
-    border-radius: 0 3px 3px 0;
-  }
 
   &:focus {
     text-decoration: none;
     color: ${palette.blue.dark3};
     background-color: ${palette.blue.light2};
 
+    // The focus wedge
     &:before {
-      opacity: 1;
       transform: scaleY(1);
+      background-color: ${palette.blue.light1};
     }
   }
 `;
 
-export const focusedDisabledStyle = css`
+export const focusedDisabledNavItemStyle = css`
   &:focus {
     color: ${palette.blue.light1};
   }

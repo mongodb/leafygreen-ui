@@ -1,9 +1,16 @@
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css } from '@leafygreen-ui/emotion';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, spacing, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  spacing,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 
+export const sideNavClassName = createUniqueClassName('side-nav');
 export const sideNavItemSidePadding = 16;
 export const sideNavWidth = 184;
 export const collapseDuration = 200;
@@ -24,11 +31,13 @@ export function getIndentLevelStyle(indentLevel: number) {
 }
 
 export const navStyles = css`
-  transition: all ${collapseDuration}ms ease-in-out;
+  font-family: ${fontFamilies.default};
   background-color: ${palette.gray.light3};
   border-right: 1px solid ${palette.gray.light2};
   position: relative;
   z-index: 0;
+  // TODO: don't transition all
+  transition: all ${collapseDuration}ms ease-in-out;
 
   ${prefersReducedMotion(`
     transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
