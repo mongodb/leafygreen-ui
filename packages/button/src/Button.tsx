@@ -23,6 +23,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       darkMode = false,
       baseFontSize = FontSize.Body1,
       disabled = false,
+      onClick,
       leftGlyph,
       rightGlyph,
       children,
@@ -68,11 +69,14 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       className: cx(buttonClassName, className),
       ref: forwardRef,
       // Provide a default value for the as prop
-      // If consumping application passes a value for as, it will override the default set here
-      as: (isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements,
+      // If consuming application passes a value for as, it will override the default set here
+      as: as
+        ? as
+        : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
       // only add a disabled prop if not an anchor
       ...(typeof rest.href !== 'string' && { disabled }),
       'aria-disabled': disabled,
+      onClick: !disabled ? onClick : undefined,
       ...ButtonDataProp.prop,
       ...rest,
     } as const;
