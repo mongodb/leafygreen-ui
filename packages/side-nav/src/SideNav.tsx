@@ -4,7 +4,7 @@ import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { keyMap, createDataProp } from '@leafygreen-ui/lib';
@@ -17,6 +17,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
+import { SideNavProps } from './types';
 
 const dataProp = createDataProp('side-nav');
 const sideNavSelector = dataProp.selector;
@@ -25,8 +26,8 @@ export { sideNavSelector };
 
 const navStyles = css`
   transition: all ${collapseDuration}ms ease-in-out;
-  background-color: ${uiColors.gray.light3};
-  border-right: 1px solid ${uiColors.gray.light2};
+  background-color: ${palette.gray.light3};
+  border-right: 1px solid ${palette.gray.light2};
   position: relative;
   z-index: 0;
 
@@ -40,13 +41,13 @@ const collapsedNavStyles = css`
 `;
 
 const hoverNavStyles = css`
-  box-shadow: 2px 0 4px ${transparentize(0.9, uiColors.black)};
-  border-right-color: ${uiColors.gray.light3};
+  box-shadow: 2px 0 4px ${transparentize(0.9, palette.black)};
+  border-right-color: ${palette.gray.light3};
 `;
 
 const listWrapper = css`
-  transition: opacity ${collapseDuration}ms ease-in-out,
-    transform ${collapseDuration}ms ease-in-out;
+  transition: ${collapseDuration}ms ease-in-out;
+  transition-property: opacity, transform;
   position: absolute;
   left: 0;
   right: 0;
@@ -127,40 +128,6 @@ const collapsedStateStyles: Partial<Record<TransitionStatus, string>> = {
   exiting: collapsedExitedStyle,
   exited: collapsedExitedStyle,
 } as const;
-
-interface SideNavProps {
-  /**
-   * Class name that will be applied to the root-level element.
-   */
-  className?: string;
-
-  /**
-   * Content that will be rendered inside the root-level element.
-   */
-  children?: React.ReactNode;
-
-  id?: string;
-
-  /**
-   * Determines the base font size for the menu items.
-   */
-  baseFontSize?: 14 | 16;
-
-  /**
-   * Provides an override for the SideNav width.
-   */
-  widthOverride?: number;
-
-  /**
-   * Allows consuming applications to control the collapsed state of the navigation.
-   */
-  collapsed?: boolean;
-
-  /**
-   * Consuming application's collapsed-state management controller
-   */
-  setCollapsed?: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 /**
  * # SideNav

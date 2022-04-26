@@ -2,7 +2,7 @@ import React from 'react';
 import Portal from '@leafygreen-ui/portal';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useSideNavContext } from './SideNavContext';
+import { useSideNavContext } from '../SideNavContext';
 
 const collapsedItemStyles = css`
   display: flex;

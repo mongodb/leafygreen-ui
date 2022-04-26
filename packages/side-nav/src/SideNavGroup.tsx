@@ -10,7 +10,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import CollapsedSideNavItem from './CollapsedSideNavItem';
+import { CollapsedSideNavItem } from './SideNavItem';
 import {
   ulStyleOverrides,
   sideNavItemSidePadding,

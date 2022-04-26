@@ -12,8 +12,8 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
-import { useSideNavContext } from './SideNavContext';
-import { getIndentLevelStyle } from './styles';
+import { useSideNavContext } from '../SideNavContext';
+import { getIndentLevelStyle } from '../styles';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
