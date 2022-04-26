@@ -33,7 +33,7 @@ export const baseNavItemStyle = css`
   color: ${palette.gray.dark2};
 
   // Stateful transitions
-  transition: background-color 150ms ease-in-out;
+  transition: background-color 100ms ease-in-out;
   background-color: ${transparentize(100, palette.gray.light3)};
 
   &:hover {

@@ -5,7 +5,7 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { CollapsedSideNavItem } from '../SideNavItem';
@@ -14,16 +14,17 @@ import { ulStyleOverrides, getIndentLevelStyle } from '../styles';
 import {
   buttonClassName,
   collapsibleHeaderFocusStyle,
-  collapsibleLabelStyle,
+  collapsibleHeaderStyle,
   customIconStyles,
-  defaultStyle,
+  sideNavGroupBaseStyles,
   expandIconStyle,
-  labelStyle,
+  headerStyle,
   listItemStyle,
   openExpandIconStyle,
   transitionStyles,
 } from './SideNavGroup.styles';
 import { SideNavGroupProps } from './types';
+import { Overline } from '@leafygreen-ui/typography';
 
 /**
  * # SideNavGroup
@@ -57,12 +58,13 @@ function SideNavGroup({
   const [open, setOpen] = React.useState(!initialCollapsed);
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { usingKeyboard } = useUsingKeyboardContext();
 
   const menuGroupLabelId = useIdAllocator({ prefix: 'menu-group-label-id' });
   const menuId = useIdAllocator({ prefix: 'menu' });
   const { width } = useSideNavContext();
 
+  // Iterate over `children` and render them appropriately
   const renderedChildren = useMemo(() => {
     const checkForNestedGroups = (children: React.ReactNode) => {
       return React.Children.map(children, child => {
@@ -85,6 +87,7 @@ function SideNavGroup({
     return checkForNestedGroups(children);
   }, [children, indentLevel]);
 
+  // compute whether this group is active
   const isActiveGroup: boolean = useMemo(() => {
     if (hasActiveItem != null) {
       return hasActiveItem;
@@ -110,6 +113,7 @@ function SideNavGroup({
     return checkForActiveNestedItems(children);
   }, [hasActiveItem, children]);
 
+  // render the provided glyph with appropriate aria roles
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
       ? React.cloneElement(glyph, {
@@ -119,7 +123,8 @@ function SideNavGroup({
         })
       : null;
 
-  const renderedLabelText = (
+  // Render the header text
+  const renderedHeader = (
     <div
       className={css`
         display: inline-flex;
@@ -135,15 +140,17 @@ function SideNavGroup({
           </CollapsedSideNavItem>
         </>
       )}
-
-      {/** We wrap the text in a span here to allow us to style based
-       * on the glyph being the last child of its parent.
-       * Text nodes aren't considered children.
-       * */}
-      <span>{header}</span>
+      <Overline
+        className={css`
+          color: inherit;
+        `}
+      >
+        {header}
+      </Overline>
     </div>
   );
 
+  // compute styles for indented itels
   const intentedStyle = cx(
     getIndentLevelStyle(indentLevel),
     css`
@@ -152,102 +159,109 @@ function SideNavGroup({
     `,
   );
 
-  if (collapsible) {
-    return (
-      <li className={cx(listItemStyle, className)} {...rest}>
-        <button
-          aria-controls={menuId}
-          aria-expanded={open}
-          className={cx(
-            buttonClassName,
-            labelStyle,
-            collapsibleLabelStyle,
-            css`
-              width: ${width}px;
-            `,
-            {
-              [collapsibleHeaderFocusStyle]: showFocus,
-              [intentedStyle]: indentLevel > 1,
-            },
-          )}
-          onClick={() => setOpen(curr => !curr)}
-          id={menuGroupLabelId}
-          data-testid="side-nav-group-header-label"
-        >
-          {renderedLabelText}
-          <ChevronRight
-            role="presentation"
-            size={12}
-            className={cx(expandIconStyle, {
-              [openExpandIconStyle]: open,
-            })}
-          />
-        </button>
+  // compute the entered ul wrapper styles based on the ul height
+  const enteredTransitionStyles = css`
+    opacity: 1;
+    max-height: ${ulRef?.current?.getBoundingClientRect().height}px;
+    border-bottom: 1px solid ${palette.gray.light2};
+  `;
 
-        <Transition
-          in={open}
-          appear
-          timeout={150}
-          nodeRef={nodeRef}
-          mountOnEnter
-          unmountOnExit
-        >
-          {(state: string) => (
-            <div
-              ref={nodeRef}
-              className={cx(defaultStyle, {
-                [transitionStyles.entering]: state === 'entering',
-                [css`
-                  opacity: 1;
-                  max-height: ${ulRef?.current?.getBoundingClientRect()
-                    .height}px;
-                  border-bottom: 1px solid ${uiColors.gray.light2};
-                `]: state === 'entered',
-                [transitionStyles.exiting]: state === 'exiting',
-                [transitionStyles.exited]: state === 'exited',
-              })}
-            >
-              <ul
-                ref={ulRef}
-                id={menuId}
-                aria-labelledby={menuGroupLabelId}
-                className={cx(
-                  ulStyleOverrides,
-                  css`
-                    transition: opacity 150ms ease-in-out;
-                    opacity: 0;
-                  `,
-                  {
-                    [css`
-                      opacity: 1;
-                    `]: ['entering', 'entered'].includes(state),
-                  },
-                )}
-              >
-                {renderedChildren}
-              </ul>
-            </div>
-          )}
-        </Transition>
-      </li>
-    );
-  }
+  // generate shared props for collapsible and static headers
+  const groupHeaderProps = {
+    'data-testid': 'side-nav-group-header-label',
+    id: menuGroupLabelId,
+  };
 
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
-      <div
-        data-testid="side-nav-group-header-label"
-        id={menuGroupLabelId}
-        className={cx(buttonClassName, labelStyle, {
-          [intentedStyle]: indentLevel > 1,
-        })}
-      >
-        {renderedLabelText}
-      </div>
+      {collapsible ? (
+        <>
+          <button
+            {...groupHeaderProps}
+            aria-controls={menuId}
+            aria-expanded={open}
+            className={cx(
+              buttonClassName,
+              headerStyle,
+              collapsibleHeaderStyle,
+              css`
+                width: ${width}px;
+              `,
+              {
+                [collapsibleHeaderFocusStyle]: usingKeyboard,
+                [intentedStyle]: indentLevel > 1,
+              },
+            )}
+            onClick={() => setOpen(curr => !curr)}
+          >
+            {renderedHeader}
+            <ChevronRight
+              role="presentation"
+              size={12}
+              className={cx(expandIconStyle, {
+                [openExpandIconStyle]: open,
+              })}
+            />
+          </button>
 
-      <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
-        {renderedChildren}
-      </ul>
+          <Transition
+            in={open}
+            appear
+            timeout={150}
+            nodeRef={nodeRef}
+            mountOnEnter
+            unmountOnExit
+          >
+            {(state: string) => (
+              <div
+                ref={nodeRef}
+                className={cx(sideNavGroupBaseStyles, {
+                  [transitionStyles.entering]: state === 'entering',
+                  [enteredTransitionStyles]: state === 'entered',
+                  [transitionStyles.exiting]: state === 'exiting',
+                  [transitionStyles.exited]: state === 'exited',
+                })}
+              >
+                <ul
+                  ref={ulRef}
+                  id={menuId}
+                  aria-labelledby={menuGroupLabelId}
+                  className={cx(
+                    ulStyleOverrides,
+                    css`
+                      transition: opacity 150ms ease-in-out;
+                      opacity: 0;
+                    `,
+                    {
+                      [css`
+                        opacity: 1;
+                      `]: ['entering', 'entered'].includes(state),
+                    },
+                  )}
+                >
+                  {renderedChildren}
+                </ul>
+              </div>
+            )}
+          </Transition>
+        </>
+      ) : (
+        // not collapsible
+        <>
+          <div
+            {...groupHeaderProps}
+            className={cx(headerStyle, {
+              [intentedStyle]: indentLevel > 1,
+            })}
+          >
+            {renderedHeader}
+          </div>
+
+          <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
+            {renderedChildren}
+          </ul>
+        </>
+      )}
     </li>
   );
 }

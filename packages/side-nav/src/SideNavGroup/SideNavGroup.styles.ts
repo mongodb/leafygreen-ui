@@ -7,6 +7,17 @@ import { sideNavItemSidePadding } from '../styles';
 
 export const buttonClassName = createUniqueClassName('side-nav-group-button');
 
+export const sideNavGroupBaseStyles = css`
+  transition: all 150ms ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 1;
+
+  ${prefersReducedMotion(`
+    transition: opacity 150ms ease-in-out;
+  `)}
+`;
+
 export const listItemStyle = css`
   display: flex;
   flex-direction: column;
@@ -17,52 +28,33 @@ export const listItemStyle = css`
   }
 `;
 
-export const labelStyle = css`
+export const headerStyle = css`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
-  line-height: 1em;
-  letter-spacing: 0.3px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: ${palette.green.dark2};
-  min-height: ${spacing[5]}px;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 8px 16px;
-
-  &:not(:first-of-type) {
-    margin-top: ${spacing[1]}px;
-  }
+  padding: 16px 16px 8px;
+  color: ${palette.green.dark2};
 `;
 
-export const collapsibleLabelStyle = css`
+export const collapsibleHeaderStyle = css`
   background-color: transparent;
   border: none;
   margin: 0px;
-  transition: border-color 150ms ease-in-out, color 150ms ease-in-out;
+  transition: 100ms ease-in-out;
+  transition-property: border-color, background-color, color;
   cursor: pointer;
   border-bottom: 1px solid ${palette.gray.light2};
 
   &:hover {
-    border-color: ${palette.green.base};
+    background-color: ${palette.gray.light3};
+    border-color: ${palette.green.dark1};
   }
 
   &:focus {
     outline: none;
-  }
-`;
-
-export const customIconStyles = css`
-  margin-right: ${spacing[2]}px;
-
-  // When the glyph is the last child, we remove the margin
-  // used to space it from the text. This matters in the navigation
-  // collapsed state.
-  &:last-child {
-    margin-right: 0;
   }
 `;
 
@@ -78,6 +70,17 @@ export const collapsibleHeaderFocusStyle = css`
   }
 `;
 
+export const customIconStyles = css`
+  margin-right: ${spacing[2]}px;
+
+  // When the glyph is the last child, we remove the margin
+  // used to space it from the text. This matters in the navigation
+  // collapsed state.
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
 export const expandIconStyle = css`
   transition: 150ms all ease-in-out;
   margin-left: ${spacing[2]}px;
@@ -89,17 +92,6 @@ export const expandIconStyle = css`
 
 export const openExpandIconStyle = css`
   transform: rotate(90deg);
-`;
-
-export const defaultStyle = css`
-  transition: all 150ms ease-in-out;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 1;
-
-  ${prefersReducedMotion(`
-    transition: opacity 150ms ease-in-out;
-  `)}
 `;
 
 export const transitionStyles = {
