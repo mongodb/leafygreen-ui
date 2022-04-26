@@ -10,13 +10,13 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { CollapsedSideNavItem } from './SideNavItem';
+import { CollapsedSideNavItem } from '../SideNavItem';
+import { useSideNavContext } from '../SideNavContext';
 import {
   ulStyleOverrides,
   sideNavItemSidePadding,
   getIndentLevelStyle,
-} from './styles';
-import { useSideNavContext } from './SideNavContext';
+} from '../styles';
 
 const button = createDataProp('side-nav-group-button');
 

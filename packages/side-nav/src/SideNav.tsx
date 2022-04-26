@@ -1,108 +1,38 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
-import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
 import { keyMap, createDataProp } from '@leafygreen-ui/lib';
-import {
-  prefersReducedMotion,
-  validateAriaLabelProps,
-} from '@leafygreen-ui/a11y';
+import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
 import { SideNavProps } from './types';
+import {
+  sideNavWidth,
+  ulStyleOverrides,
+  collapseDuration,
+  expandedEnteredStyle,
+  expandedExitedStyle,
+  space,
+  collapsedSpace,
+  wrapper,
+  navStyles,
+  collapsedNavStyles,
+  hoverNavStyles,
+  listWrapper,
+  listStyles,
+  collapsedEnteredStyle,
+  collapsedExitedStyle,
+} from './styles';
 
 const dataProp = createDataProp('side-nav');
 const sideNavSelector = dataProp.selector;
 
 export { sideNavSelector };
-
-const navStyles = css`
-  transition: all ${collapseDuration}ms ease-in-out;
-  background-color: ${palette.gray.light3};
-  border-right: 1px solid ${palette.gray.light2};
-  position: relative;
-  z-index: 0;
-
-  ${prefersReducedMotion(`
-    transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
-  `)}
-`;
-
-const collapsedNavStyles = css`
-  width: 48px;
-`;
-
-const hoverNavStyles = css`
-  box-shadow: 2px 0 4px ${transparentize(0.9, palette.black)};
-  border-right-color: ${palette.gray.light3};
-`;
-
-const listWrapper = css`
-  transition: ${collapseDuration}ms ease-in-out;
-  transition-property: opacity, transform;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  overflow: hidden;
-
-  ${prefersReducedMotion(`
-    transition: opacity ${collapseDuration}ms ease-in-out;
-  `)}
-`;
-
-const listStyles = css`
-  padding-top: ${spacing[3]}px;
-  padding-bottom: ${spacing[3]}px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-`;
-
-const wrapper = css`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-`;
-
-const space = css`
-  transition: width ${collapseDuration}ms ease-in-out;
-  position: relative;
-
-  ${prefersReducedMotion(`
-    transition: none;
-  `)}
-`;
-
-const collapsedSpace = css`
-  width: 48px;
-`;
-
-const expandedEnteredStyle = css`
-  transform: translate3d(0, ${spacing[2]}px, 0);
-  opacity: 0;
-  pointer-events: none;
-`;
-
-const expandedExitedStyle = css`
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-`;
 
 const expandedStateStyles: Partial<Record<TransitionStatus, string>> = {
   entering: expandedEnteredStyle,
@@ -110,17 +40,6 @@ const expandedStateStyles: Partial<Record<TransitionStatus, string>> = {
   exiting: expandedExitedStyle,
   exited: expandedExitedStyle,
 } as const;
-
-const collapsedEnteredStyle = css`
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-`;
-
-const collapsedExitedStyle = css`
-  transform: translate3d(0, -${spacing[2]}px, 0);
-  opacity: 0;
-  pointer-events: none;
-`;
 
 const collapsedStateStyles: Partial<Record<TransitionStatus, string>> = {
   entering: collapsedEnteredStyle,
