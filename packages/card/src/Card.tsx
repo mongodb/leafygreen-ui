@@ -111,7 +111,7 @@ const containerStyle = css`
   transition-property: border, box-shadow;
 `;
 
-interface CardProps {
+export interface CardProps {
   className?: string;
   contentStyle?: ContentStyle;
   darkMode?: boolean;

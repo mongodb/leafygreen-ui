@@ -1,36 +1,36 @@
+/* eslint react/prop-types: 0 */
+import { BoxProps } from '@leafygreen-ui/box';
+import { Story } from '@storybook/react';
 import React from 'react';
-import { boolean } from '@storybook/addon-knobs';
-import { storiesOf } from '@storybook/react';
-import { css } from '@leafygreen-ui/emotion';
-import Card from './Card';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import LGCard, { CardProps } from './Card';
 
-const containerStyle = css`
-  display: flex;
-  align-items: center;
-  text-align: center;
-`;
+// This is a workaround to make sure props are correctly imported despite Button using forwardRef
+// https://github.com/storybookjs/storybook/issues/15334
+// eslint-disable-next-line react/jsx-props-no-spreading
+type CardStoryProps = BoxProps<'div', CardProps>;
+export const Card: React.FC<CardStoryProps> = props => (
+  // @ts-ignore-next-line
+  <LGCard {...props} />
+);
 
-storiesOf('Packages/Card', module).add('Default', () => {
-  const hasClickBehavior = boolean('Has click behavior', true);
-  const darkMode = boolean('darkMode', false);
+export default {
+  title: 'Packages/Card',
+  component: Card,
+  excludeStories: ['Card'],
+  args: {
+    text: 'This is a card component.',
+  },
+};
 
-  return (
-    <div
-      className={css`
-        padding: 24px;
-        background-color: ${darkMode ? uiColors.gray.dark3 : palette.white};
-      `}
-    >
-      <Card
-        as="div"
-        onClick={hasClickBehavior ? () => alert('hello') : undefined}
-        darkMode={darkMode}
-        className={containerStyle}
-        tabIndex={0}
-      >
-        This is a card component
-      </Card>
-    </div>
-  );
-});
+const Template: Story<CardStoryProps & { text: string }> = ({
+  text,
+  as,
+  ...args
+}) => (
+  <Card as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args}>
+    {text}
+  </Card>
+);
+
+export const Basic = Template.bind({});
+Basic.args = {};
