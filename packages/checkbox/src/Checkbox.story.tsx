@@ -1,21 +1,26 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Story } from '@storybook/react';
 import React from 'react';
 import Checkbox from '.';
+import { CheckboxProps } from './types';
 
 export default {
   title: 'Packages/Checkbox',
   component: Checkbox,
-  parameters: { 
-    controls: { exclude: ['children'] }
-  }
+  parameters: {
+    controls: { exclude: ['children'] },
+  },
 };
 
-const Template = args => <Checkbox {...args} />;
+const Template: Story<CheckboxProps> = args => <Checkbox {...args} />;
 
-export const Basic = Template.bind({})
-Basic.args = { 
+export const Basic = Template.bind({});
+Basic.args = {
   animate: true,
   label: 'I agree to this thing.',
-  description: 'Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.',
-  className: css`max-width: 700px;`
+  description:
+    'Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.',
+  className: css`
+    max-width: 700px;
+  `,
 };
