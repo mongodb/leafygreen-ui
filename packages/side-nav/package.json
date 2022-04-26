@@ -30,6 +30,7 @@
     "@leafygreen-ui/palette": "^3.2.2",
     "@leafygreen-ui/portal": "^4.0.0",
     "@leafygreen-ui/tooltip": "^7.0.1",
+    "@leafygreen-ui/tokens": "^1.2.0",
     "@leafygreen-ui/typography": "^10.0.0"
   },
   "peerDependencies": {
