@@ -2116,7 +2116,7 @@
     "@leafygreen-ui/typography" "^8.0.4"
     lodash "^4.17.21"
 
-"@leafygreen-ui/select@^3.0.5", "@leafygreen-ui/select@^3.1.0":
+"@leafygreen-ui/select@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/select/-/select-3.1.0.tgz#3f1e1091a83472dfd36652291e20784446969172"
   integrity sha512-gcTYv+86C0pLJ4SaDvgKbmXEQAABkLe+7HfaobnjLnlHqa5/93w43g5WPq1xFgWHiHezckQnSIZcXDABLkl5gw==

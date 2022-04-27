@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import { TransitionStatus } from 'react-transition-group/Transition';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -15,38 +14,22 @@ import {
   sideNavWidth,
   ulStyleOverrides,
   collapseDuration,
-  expandedEnteredStyle,
-  expandedExitedStyle,
-  space,
-  collapsedSpace,
-  wrapper,
+  outerContainerStyle,
+  outerContainerCollapsedStyle,
+  innerNavWrapperStyle,
   navStyles,
   collapsedNavStyles,
   hoverNavStyles,
-  listWrapper,
+  listWrapperStyle,
   listStyles,
-  collapsedEnteredStyle,
-  collapsedExitedStyle,
   sideNavClassName,
+  expandedStateStyles,
+  collapsedStateStyles,
 } from './styles';
 
 const sideNavSelector = `.${sideNavClassName}`;
 
 export { sideNavSelector };
-
-const expandedStateStyles: Partial<Record<TransitionStatus, string>> = {
-  entering: expandedEnteredStyle,
-  entered: expandedEnteredStyle,
-  exiting: expandedExitedStyle,
-  exited: expandedExitedStyle,
-} as const;
-
-const collapsedStateStyles: Partial<Record<TransitionStatus, string>> = {
-  entering: collapsedEnteredStyle,
-  entered: collapsedEnteredStyle,
-  exiting: collapsedExitedStyle,
-  exited: collapsedExitedStyle,
-} as const;
 
 /**
  * # SideNav
@@ -151,15 +134,18 @@ function SideNav({
             data-testid="side-nav-container"
             className={cx(
               sideNavClassName,
-              space,
+              outerContainerStyle,
               css`
                 width: ${width}px;
               `,
-              { [collapsedSpace]: collapsed },
+              { [outerContainerCollapsedStyle]: collapsed },
               className,
             )}
           >
-            <div className={wrapper} onMouseLeave={() => setHover(false)}>
+            <div
+              className={innerNavWrapperStyle}
+              onMouseLeave={() => setHover(false)}
+            >
               <nav
                 id={navId}
                 className={cx(
@@ -179,7 +165,14 @@ function SideNav({
                 onMouseEnter={() => setHover(true)}
                 {...rest}
               >
-                <div className={cx(listWrapper, expandedStateStyles[state])}>
+                {/**
+                 * We render the sidenav items in both the expanded and collapsed states,
+                 * and transition between them. This way we can reduce layout shift from
+                 * elements appearing and disappearing
+                 */}
+                <div
+                  className={cx(listWrapperStyle, expandedStateStyles[state])}
+                >
                   <ul
                     className={cx(
                       ulStyleOverrides,
@@ -193,7 +186,9 @@ function SideNav({
                   </ul>
                 </div>
 
-                <div className={cx(listWrapper, collapsedStateStyles[state])}>
+                <div
+                  className={cx(listWrapperStyle, collapsedStateStyles[state])}
+                >
                   <ul
                     // We hide the duplicate items from screen readers.
                     aria-hidden

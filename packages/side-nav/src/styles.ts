@@ -9,6 +9,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
+import { TransitionStatus } from 'react-transition-group';
 
 export const sideNavClassName = createUniqueClassName('side-nav');
 export const sideNavItemSidePadding = 16;
@@ -30,22 +31,44 @@ export function getIndentLevelStyle(indentLevel: number) {
   `;
 }
 
-export const navStyles = css`
-  font-family: ${fontFamilies.default};
-  background-color: ${palette.gray.light3};
-  border-right: 1px solid ${palette.gray.light2};
+export const outerContainerStyle = css`
   position: relative;
-  z-index: 0;
-  // TODO: don't transition all
-  transition: all ${collapseDuration}ms ease-in-out;
+  /* height: 100%; */
+  transition: width ${collapseDuration}ms ease-in-out;
 
   ${prefersReducedMotion(`
-    transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
+    transition: none;
   `)}
 `;
 
-export const collapsedNavStyles = css`
+export const outerContainerCollapsedStyle = css`
   width: 48px;
+`;
+
+export const innerNavWrapperStyle = css`
+  /**
+   * Settibng position: absolute; here so the nav wrapper can appear
+   * above the content in on the collapsed state. 
+   */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+`;
+
+export const navStyles = css`
+  position: relative;
+  font-family: ${fontFamilies.default};
+  background-color: ${palette.gray.light3};
+  border-right: 1px solid ${palette.gray.light2};
+  z-index: 0;
+  transition: ${collapseDuration}ms ease-in-out;
+  transition-property: box-shadow, border-color, width;
+
+  ${prefersReducedMotion(`
+    transition-property: box-shadow, border-color;
+  `)}
 `;
 
 export const hoverNavStyles = css`
@@ -53,15 +76,24 @@ export const hoverNavStyles = css`
   border-right-color: ${palette.gray.light3};
 `;
 
-export const listWrapper = css`
-  transition: ${collapseDuration}ms ease-in-out;
-  transition-property: opacity, transform;
+export const collapsedNavStyles = css`
+  width: 48px;
+`;
+
+export const listWrapperStyle = css`
+  /**
+  * Setting position: absolute so the expanded and collapsed menus
+  * can be rendered in the same spot.
+  * We transition the opacity & transform to display one or the other.
+  */
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   overflow: hidden;
+  transition: ${collapseDuration}ms ease-in-out;
+  transition-property: opacity, transform;
 
   ${prefersReducedMotion(`
     transition: opacity ${collapseDuration}ms ease-in-out;
@@ -73,55 +105,48 @@ export const listStyles = css`
   padding-bottom: ${spacing[3]}px;
   overflow-x: hidden;
   overflow-y: auto;
-  position: absolute;
+  /* position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
+  bottom: 0; */
 `;
 
-export const wrapper = css`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-`;
-
-export const space = css`
-  transition: width ${collapseDuration}ms ease-in-out;
-  position: relative;
-
-  ${prefersReducedMotion(`
-    transition: none;
-  `)}
-`;
-
-export const collapsedSpace = css`
-  width: 48px;
-`;
-
-export const expandedEnteredStyle = css`
+export const expandedMenu_EnteredStyle = css`
   transform: translate3d(0, ${spacing[2]}px, 0);
   opacity: 0;
   pointer-events: none;
 `;
 
-export const expandedExitedStyle = css`
+export const expandedMenu_ExitedStyle = css`
   transform: translate3d(0, 0, 0);
   opacity: 1;
 `;
 
-export const collapsedEnteredStyle = css`
+export const collapsedMenu_EnteredStyle = css`
   transform: translate3d(0, 0, 0);
   opacity: 1;
 `;
 
-export const collapsedExitedStyle = css`
+export const collapsedMenu_ExitedStyle = css`
   transform: translate3d(0, -${spacing[2]}px, 0);
   opacity: 0;
   pointer-events: none;
 `;
+
+export const expandedStateStyles: Partial<Record<TransitionStatus, string>> = {
+  entering: expandedMenu_EnteredStyle,
+  entered: expandedMenu_EnteredStyle,
+  exiting: expandedMenu_ExitedStyle,
+  exited: expandedMenu_ExitedStyle,
+} as const;
+
+export const collapsedStateStyles: Partial<Record<TransitionStatus, string>> = {
+  entering: collapsedMenu_EnteredStyle,
+  entered: collapsedMenu_EnteredStyle,
+  exiting: collapsedMenu_ExitedStyle,
+  exited: collapsedMenu_ExitedStyle,
+} as const;
 
 export const typographyStyle = {
   [BaseFontSize.Body1]: css`

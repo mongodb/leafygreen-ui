@@ -5,37 +5,28 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import MongoNav from '@leafygreen-ui/mongo-nav';
-import { Select, Option } from '@leafygreen-ui/select';
+import { Select, Option, Size } from '@leafygreen-ui/select';
 import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import { SideNav, SideNavItem, SideNavGroup } from '.';
+import { Body } from '@leafygreen-ui/typography';
 
 const gridStyles = css`
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
   height: 100vh;
   width: 100%;
 `;
 
-const topNavStyles = css`
-  grid-column-start: 1;
-  grid-column-end: 3;
-  z-index: 1;
-`;
-
 const sideNavStyles = css`
-  grid-row-start: 2;
-  grid-column-start: 1;
-  grid-column-end: 2;
+  grid-row: 1/-1;
+  grid-column: 1/2;
 `;
 
 const contentStyles = css`
-  grid-row-start: 2;
-  grid-column-start: 2;
-  grid-column-end: 3;
-  padding: 48px;
+  grid-row: 1/-1;
+  grid-column: 2/3;
+  padding: 24px 48px;
   overflow-y: auto;
 `;
 
@@ -53,7 +44,7 @@ const arbitraryContent = css`
 `;
 
 const content = (
-  <div className={contentStyles}>
+  <Body className={contentStyles}>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
     et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
     alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
@@ -116,7 +107,7 @@ const content = (
     dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
     voluptas a consequatur odit commodi consequuntur accusantium ullam alias
     dolorem distinctio debitis ipsam dolore vel molestiae.
-  </div>
+  </Body>
 );
 
 function RealmSideNav() {
@@ -181,7 +172,6 @@ function OrgSettingsSideNav() {
   return (
     <LeafyGreenProvider>
       <div className={gridStyles}>
-        {/* <MongoNav className={topNavStyles} mode="dev" /> */}
         <SideNav
           className={sideNavStyles}
           aria-label="Realm app"
@@ -200,16 +190,17 @@ function OrgSettingsSideNav() {
               `}
             >
               <Select
-                defaultValue="1"
+                defaultValue="greenery"
                 aria-labelledby="context-label"
+                size={Size.Small}
                 className={css`
                   > div {
                     width: 100%;
                   }
                 `}
               >
-                <Option value="1">LeafyCorp</Option>
-                <Option value="2">2</Option>
+                <Option value="leafycorp">LeafyCorp</Option>
+                <Option value="greenery">Greenery</Option>
                 <Option value="3">3</Option>
               </Select>
             </li>
@@ -306,8 +297,6 @@ function NestedGroups() {
   return (
     <LeafyGreenProvider>
       <div className={gridStyles}>
-        {/* <MongoNav className={topNavStyles} mode="dev" /> */}
-
         <SideNav widthOverride={300}>
           <SideNavItem>Overview</SideNavItem>
           <SideNavItem>Introduction</SideNavItem>
@@ -352,7 +341,6 @@ storiesOf('Packages/SideNav', module)
     return (
       <LeafyGreenProvider>
         <div className={gridStyles}>
-          <MongoNav className={topNavStyles} mode="dev" />
           <SideNav widthOverride={300} aria-label="nav">
             <SideNavItem
               data-id="apple"

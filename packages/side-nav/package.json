@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/mongo-nav": "^7.2.1",
-    "@leafygreen-ui/select": "^3.0.5",
+    "@leafygreen-ui/select": "^4.0.2",
     "@leafygreen-ui/icon-button": "^9.1.6"
   }
 }
