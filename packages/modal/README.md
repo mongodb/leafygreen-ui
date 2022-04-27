@@ -76,6 +76,10 @@ function ExampleComponent() {
 </div>
 ```
 
+## Notes
+
+It is HIGHLY encouraged that any children inside of `Modal` should refrain from using `usePortal={false}` because this can cause stacking context/z-indexing issues since the popover element will render relative to the parent rather than rendering in a `React portal` which is automatically appended to inside of the `Modal`. By default any component that can use a `React portal`, like `Tooltip` or `Select`, will have `usePortal` set to `true`.
+
 ## Properties
 
 | Prop               | Type                              | Description                                                                                                                                          | Default      |
