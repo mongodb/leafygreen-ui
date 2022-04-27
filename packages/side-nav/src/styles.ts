@@ -101,34 +101,34 @@ export const listWrapperStyle = css`
 `;
 
 export const listStyles = css`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   padding-top: ${spacing[3]}px;
   padding-bottom: ${spacing[3]}px;
   overflow-x: hidden;
   overflow-y: auto;
-  /* position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0; */
 `;
 
-export const expandedMenu_EnteredStyle = css`
+const expandedMenu_EnteredStyle = css`
   transform: translate3d(0, ${spacing[2]}px, 0);
   opacity: 0;
   pointer-events: none;
 `;
 
-export const expandedMenu_ExitedStyle = css`
+const expandedMenu_ExitedStyle = css`
   transform: translate3d(0, 0, 0);
   opacity: 1;
 `;
 
-export const collapsedMenu_EnteredStyle = css`
+const collapsedMenu_EnteredStyle = css`
   transform: translate3d(0, 0, 0);
   opacity: 1;
 `;
 
-export const collapsedMenu_ExitedStyle = css`
+const collapsedMenu_ExitedStyle = css`
   transform: translate3d(0, -${spacing[2]}px, 0);
   opacity: 0;
   pointer-events: none;

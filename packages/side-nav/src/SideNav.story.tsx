@@ -6,129 +6,97 @@ import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Select, Option, Size } from '@leafygreen-ui/select';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import { SideNav, SideNavItem, SideNavGroup } from '.';
-import { Body } from '@leafygreen-ui/typography';
+import { Body, H1 } from '@leafygreen-ui/typography';
 
-const gridStyles = css`
+const appContainer = css`
   display: grid;
+  grid-template-areas: 'mongonav mongonav' 'nav content';
+  grid-template-rows: auto 1fr;
   grid-template-columns: auto 1fr;
   height: 100vh;
   width: 100%;
+  outline: 1px solid ${palette.red.base};
+`;
+
+const realmAppContainer = css`
+  display: flex;
+  flex-grow: 1;
+`;
+
+const mongoNavStyles = css`
+  grid-area: mongonav;
+  width: 100%;
+  height: 105px;
+  background-color: ${palette.white};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px 0 ${palette.gray.light2};
+  z-index: 1;
 `;
 
 const sideNavStyles = css`
-  grid-row: 1/-1;
-  grid-column: 1/2;
+  grid-area: nav;
 `;
 
 const contentStyles = css`
-  grid-row: 1/-1;
-  grid-column: 2/3;
+  grid-area: content;
   padding: 24px 48px;
+  margin: auto;
+  max-width: 72ch;
+  max-height: 100%;
   overflow-y: auto;
 `;
 
-const arbitraryContent = css`
+const realmAppId = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
-  color: ${uiColors.gray.dark2};
-  margin: 8px 16px;
-  padding: 2px 8px;
-  border: 1px solid ${uiColors.gray.light2};
-  background-color: ${uiColors.white};
-  border-radius: 4px;
 `;
+
+const MongoNavPlaceholder = ({ ...props }) => (
+  <header className={mongoNavStyles} {...props}>
+    <H1>
+      {'<'}MongoNav Placeholder{'>'}
+    </H1>
+  </header>
+);
+
+const loremIpsum = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
+et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
+alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
+dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
+voluptas a consequatur odit commodi consequuntur accusantium ullam alias
+dolorem distinctio debitis ipsam dolore vel molestiae.`;
 
 const content = (
   <Body className={contentStyles}>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
-    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
-    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
-    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
-    dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br />
-    <br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
-    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
-    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
-    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
-    dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br />
-    <br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
-    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
-    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
-    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
-    dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br />
-    <br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
-    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
-    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
-    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
-    dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br />
-    <br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
-    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
-    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
-    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
-    dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br />
-    <br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
-    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
-    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
-    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
-    dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br />
-    <br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
-    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
-    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
-    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
-    dolorem distinctio debitis ipsam dolore vel molestiae.
-    <br />
-    <br />
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius
-    et minus, voluptas a consequatur odit commodi consequuntur accusantium ullam
-    alias dolorem distinctio debitis ipsam dolore vel molestiae. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Nihil eum ut, eius et minus,
-    voluptas a consequatur odit commodi consequuntur accusantium ullam alias
-    dolorem distinctio debitis ipsam dolore vel molestiae.
+    {new Array(6).fill(<p>{loremIpsum}</p>)}
   </Body>
 );
 
 function RealmSideNav() {
   return (
     <LeafyGreenProvider>
-      <div className={gridStyles}>
-        {/* <MongoNav className={topNavStyles} mode="dev" /> */}
+      <MongoNavPlaceholder />
+      <div className={realmAppContainer}>
         <SideNav className={sideNavStyles} aria-label="Realm app">
           <SideNavItem
-            active
-            glyph={<Icon glyph="Apps" fill={uiColors.blue.base} />}
+            href="https://realm.mongodb.com"
+            glyph={<Icon glyph="Apps" fill={palette.blue.base} />}
           >
             Realm Apps
           </SideNavItem>
 
-          <li className={arbitraryContent}>
+          <SideNavItem active className={realmAppId}>
             <span id="arbitrary-1">App ID</span>
             <IconButton aria-label="copy arbitrary-1">
               <Icon glyph="Copy" />
             </IconButton>
-          </li>
+          </SideNavItem>
 
           <SideNavGroup glyph={<CloudIcon />} header="Data Access">
             <SideNavItem href="/">Rules</SideNavItem>
@@ -143,13 +111,13 @@ function RealmSideNav() {
             <SideNavItem>GraphQL</SideNavItem>
             <SideNavItem>Functions</SideNavItem>
             <SideNavItem>Triggers</SideNavItem>
-            <SideNavItem>3rd Party Services</SideNavItem>
-            <SideNavItem>Values & Secrets</SideNavItem>
+            <SideNavItem>HTTPS Endpoints</SideNavItem>
+            <SideNavItem>Values</SideNavItem>
           </SideNavGroup>
 
           <SideNavGroup glyph={<Icon glyph="Settings" />} header="Manage">
             <SideNavItem>Linked Data Sources</SideNavItem>
-            <SideNavItem>Deploy</SideNavItem>
+            <SideNavItem>Deployment</SideNavItem>
             <SideNavItem>Hosting</SideNavItem>
             <SideNavItem>Logs</SideNavItem>
             <SideNavItem>App Settings</SideNavItem>
@@ -159,6 +127,10 @@ function RealmSideNav() {
           <SideNavGroup glyph={<Icon glyph="Support" />} header="Help">
             <SideNavItem>Documentation</SideNavItem>
             <SideNavItem>Feature Requests</SideNavItem>
+          </SideNavGroup>
+
+          <SideNavGroup header="Admin">
+            <SideNavItem>Trigger State Console</SideNavItem>
           </SideNavGroup>
         </SideNav>
 
@@ -171,7 +143,8 @@ function RealmSideNav() {
 function OrgSettingsSideNav() {
   return (
     <LeafyGreenProvider>
-      <div className={gridStyles}>
+      <div className={appContainer}>
+        <MongoNavPlaceholder />
         <SideNav
           className={sideNavStyles}
           aria-label="Realm app"
@@ -247,9 +220,8 @@ function MockSideNav() {
 
   return (
     <LeafyGreenProvider>
-      <div className={gridStyles}>
-        {/* <MongoNav className={topNavStyles} mode="dev" /> */}
-
+      <div className={appContainer}>
+        <MongoNavPlaceholder />
         <SideNav
           collapsed={collapsed}
           setCollapsed={setCollapsed}
@@ -296,7 +268,8 @@ function MockSideNav() {
 function NestedGroups() {
   return (
     <LeafyGreenProvider>
-      <div className={gridStyles}>
+      <div className={appContainer}>
+        <MongoNavPlaceholder />
         <SideNav widthOverride={300}>
           <SideNavItem>Overview</SideNavItem>
           <SideNavItem>Introduction</SideNavItem>
@@ -340,7 +313,7 @@ storiesOf('Packages/SideNav', module)
 
     return (
       <LeafyGreenProvider>
-        <div className={gridStyles}>
+        <div className={appContainer}>
           <SideNav widthOverride={300} aria-label="nav">
             <SideNavItem
               data-id="apple"

@@ -90,7 +90,7 @@ export const disabledNavItemStyle = css`
 
   &,
   &:hover {
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
     background-color: ${transparentize(100, palette.gray.light3)};
   }
 `;
