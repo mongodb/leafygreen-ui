@@ -2,37 +2,45 @@ import React from 'react';
 import { transparentize } from 'polished';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
-import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
+import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
 import { useSideNavContext } from './SideNavContext';
+import { InlineKeyCode } from '@leafygreen-ui/typography';
 
-const buttonDataProp = createDataProp('button');
+const iconClassName = createUniqueClassName('collapse-menu');
 
 const buttonStyles = css`
-  transition: all 150ms ease-in-out;
   position: absolute;
   bottom: ${spacing[3]}px;
   right: -${spacing[3]}px;
   width: ${spacing[5]}px;
   height: ${spacing[5]}px;
+
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 100%;
-  color: ${uiColors.green.dark2};
-  box-shadow: 0 3px 4px ${transparentize(0.9, uiColors.black)};
-  background-color: ${uiColors.white};
-  border: 1px solid ${uiColors.gray.light2};
+
+  color: ${palette.green.dark2};
+  box-shadow: 0 3px 4px ${transparentize(0.9, palette.black)};
+  background-color: ${palette.white};
+  border: 1px solid ${palette.gray.light2};
   cursor: pointer;
+  transition: 150ms ease-in-out;
+  transition-property: color, border-color, box-shadow;
 
   &:hover {
-    background-color: ${uiColors.gray.light3};
-    box-shadow: 0 2px 2px ${transparentize(0.8, uiColors.black)};
+    background-color: ${palette.gray.light3};
+    box-shadow: 0 2px 2px ${transparentize(0.8, palette.black)};
+
+    .${iconClassName} {
+      transform: translate3d(-2px, 0, 0);
+    }
   }
 
   &:focus {
@@ -46,10 +54,20 @@ const buttonStyles = css`
 
 const buttonFocusStyles = css`
   &:focus {
-    color: ${uiColors.blue.base};
+    color: ${palette.blue.base};
     border-color: transparent;
-    box-shadow: 0 3px 4px ${transparentize(0.9, uiColors.black)},
-      0 0 0 3px ${uiColors.focus};
+    box-shadow: 0 3px 4px ${transparentize(0.9, palette.black)},
+      // Focus ring
+      0 0 0 2px ${palette.white},
+      0 0 0 4px ${palette.blue.light1};
+  }
+`;
+
+const buttonCollapsedStyles = css`
+  &:hover {
+    .${iconClassName} {
+      transform: translate3d(2px, 0, 0);
+    }
   }
 `;
 
@@ -58,39 +76,19 @@ const iconWrapper = css`
   display: inline-block;
   height: 16px;
 
-  ${buttonDataProp.selector}:hover & {
-    transform: translate3d(-2px, 0, 0);
-  }
-
   ${prefersReducedMotion(`
-		${buttonDataProp.selector}:hover & {
-			transform: translate3d(0, 0, 0);
-		}
-	`)}
-`;
-
-const iconWrapperCollapsed = css`
-  ${buttonDataProp.selector}:hover & {
-    transform: translate3d(2px, 0, 0);
-  }
-
-  ${prefersReducedMotion(`
-		${buttonDataProp.selector}:hover & {
-			transform: translate3d(0, 0, 0);
-		}
-	`)}
+    transition-property: unset;
+  `)}
 `;
 
 const keyboardShortcut = css`
-  font-family: ${fontFamilies.code};
-  background-color: ${uiColors.gray.dark2};
+  background-color: ${palette.gray.dark2};
+  color: ${palette.white};
+  border-color: ${palette.gray.dark1};
   padding: 0 3px 2px 2px;
-  border-radius: 2px;
-  box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0, 0, 0, 0.3),
+  box-shadow: 0 3px 3px -2px rgba(113, 39, 39, 0.3), 0 0 2px rgba(0, 0, 0, 0.3),
     inset 0 1px 2px rgba(255, 255, 255, 0.15);
-  border: 1px solid ${uiColors.gray.dark1};
   line-height: 1em;
-  color: ${uiColors.white};
   margin-left: ${spacing[2]}px;
 `;
 
@@ -105,14 +103,13 @@ function CollapseToggle({
   hideTooltip,
   ...rest
 }: CollapseToggleProps) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { usingKeyboard } = useUsingKeyboardContext();
   const { navId } = useSideNavContext();
 
   const Chevron = collapsed ? ChevronRight : ChevronLeft;
 
   return (
     <Tooltip
-      darkMode
       align="right"
       justify="middle"
       open={typeof hideTooltip === 'boolean' ? !hideTooltip : undefined}
@@ -124,17 +121,15 @@ function CollapseToggle({
           aria-expanded={!collapsed}
           className={cx(
             buttonStyles,
-            { [buttonFocusStyles]: showFocus },
+            {
+              [buttonFocusStyles]: usingKeyboard,
+              [buttonCollapsedStyles]: collapsed,
+            },
             className,
           )}
-          {...buttonDataProp.prop}
           {...rest}
         >
-          <div
-            className={cx(iconWrapper, {
-              [iconWrapperCollapsed]: collapsed,
-            })}
-          >
+          <div className={cx(iconClassName, iconWrapper)}>
             <Chevron role="presentation" />
           </div>
         </button>
@@ -142,7 +137,8 @@ function CollapseToggle({
     >
       <span aria-hidden>
         {collapsed ? 'Expand' : 'Collapse'}
-        <kbd className={keyboardShortcut}>[</kbd>
+        {/* TODO: Pass darkMode instead of className */}
+        <InlineKeyCode className={keyboardShortcut}>[</InlineKeyCode>
       </span>
     </Tooltip>
   );
