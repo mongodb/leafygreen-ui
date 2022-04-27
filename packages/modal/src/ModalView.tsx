@@ -205,7 +205,7 @@ function ModalView({
         fallbackFocus: `#${id} .${closeClassName}`,
       }
     : {
-        fallbackFocus: `#${id} .${closeClassName}`, // test fail without a fallback
+        fallbackFocus: `#${id} .${closeClassName}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
       };
 
   return (
@@ -282,7 +282,6 @@ function ModalView({
                     >
                       <XIcon />
                     </IconButton>
-                    {/* <div id="dialog" tabIndex={-1}></div> */}
                   </PortalContextProvider>
                 </div>
               </div>
