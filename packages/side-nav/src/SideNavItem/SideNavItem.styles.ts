@@ -84,9 +84,9 @@ export const activeNavItemStyle = css`
 `;
 
 export const disabledNavItemStyle = css`
-  pointer-events: none;
   background-color: transparent;
   font-weight: normal;
+  cursor: not-allowed;
 
   &,
   &:hover {
@@ -114,6 +114,11 @@ export const focusedNavItemStyle = css`
 export const focusedDisabledNavItemStyle = css`
   &:focus {
     color: ${palette.blue.light1};
+    background-color: ${transparentize(0.1, palette.blue.light3)};
+
+    &:before {
+      content: unset;
+    }
   }
 `;
 

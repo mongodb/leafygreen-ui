@@ -5,7 +5,7 @@ import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
