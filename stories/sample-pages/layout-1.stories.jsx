@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@leafygreen-ui/button';
 
 export default {
-  title: 'Sample Pages/Layout 1',
+  title: 'Sample Pages (WIP)/Layout 1',
 };
 
 const Template = ({ children }) => {

@@ -78,6 +78,14 @@ describe('packages/button', () => {
       expect((button as HTMLButtonElement).type).toBe('submit');
     });
 
+    test(`renders a button as another component if the "as" prop is set`, () => {
+      const { container } = renderButton({
+        as: 'p',
+      });
+      expect(container.querySelector('button')).toBeNull();
+      expect(container.querySelector('p')).not.toBeNull();
+    });
+
     test(`renders inside of a \`button\` tag by default`, () => {
       const { button } = renderButton();
       expect(button.tagName.toLowerCase()).toBe('button');
@@ -122,7 +130,7 @@ describe('packages/button', () => {
         onClick,
       });
       fireEvent.click(button);
-      expect(onClick.mock.calls.length).toBe(1);
+      expect(onClick).toHaveBeenCalledTimes(1);
     });
 
     test('does not fire onClick handler when disabled', () => {
@@ -140,6 +148,18 @@ describe('packages/button', () => {
       const { button } = renderButton({
         disabled: true,
         as: 'a',
+        onClick,
+      });
+      fireEvent.click(button);
+      expect(onClick).toHaveBeenCalledTimes(0);
+    });
+
+    test('does not fire onClick handler on disabled anchor set by "href"', () => {
+      const onClick = jest.fn();
+      const href = 'https://mongodb.design';
+      const { button } = renderButton({
+        disabled: true,
+        href,
         onClick,
       });
       fireEvent.click(button);
