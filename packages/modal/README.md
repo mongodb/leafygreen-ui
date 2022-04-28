@@ -94,3 +94,15 @@ It is HIGHLY encouraged that any children inside of `Modal` should refrain from 
 | `initialFocus`     | `string`                          | A selector string for the element to move focus to when the modal is opened. The first focusable element in the modal will receive focus by default. |              |
 | `darkMode`         | `boolean`                         | Determines if the component will appear in dark mode.                                                                                                | `false`      |
 | `closeIconColor`   | `'default'`, `'dark'`, `'light'`  | Determines the color of the close icon. Currently will only work if `darkMode` is set to false.                                                      | `default`    |
+
+## Using `Clipboard.js` inside `Modal`
+
+To directly use the `Clipboard.js` library inside of `Modal`, rather than using the `Copyable` component, the reference value of the `Modal` should be used as the `container` when `Clipboard.js` is instantiated. You can get the reference value by consuming the `usePopoverPortalContainer` hook:
+
+```
+  const { portalContainer } = usePopoverPortalContainer();
+
+  const clipboard = new ClipboardJS(buttonRef, {
+    container: portalContainer,
+  });
+```
