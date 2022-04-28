@@ -11,9 +11,11 @@ export const tdInnerDiv = createDataProp('td-inner-div');
 interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
   isHeader: true;
+  isZebra?: boolean;
 }
 
 interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
+  isZebra?: boolean;
   isHeader?: false;
 }
 
@@ -37,6 +39,10 @@ const lightModeThStyles = css`
   background-color: ${palette.gray.light3};
 `;
 
+const zebraLightModeThStyles = css`
+  border-right: 3px solid ${palette.gray.light2};
+`;
+
 const innerDivStyles = css`
   display: flex;
   align-items: center;
@@ -45,7 +51,7 @@ const innerDivStyles = css`
 export type CellElement = React.ReactComponentElement<typeof Cell>;
 const Cell = React.forwardRef(
   (
-    { children, className, isHeader = false, ...rest }: CellProps,
+    { children, className, isHeader = false, isZebra, ...rest }: CellProps,
     ref: React.Ref<any>,
   ) => {
     const Root = isHeader ? 'th' : 'td';
@@ -60,7 +66,8 @@ const Cell = React.forwardRef(
         baseStyles,
         {
           [thStyles]: isHeader,
-          [lightModeThStyles]: isHeader && !darkMode,
+          [lightModeThStyles]: isHeader && !darkMode && !isZebra,
+          [zebraLightModeThStyles]: isHeader && !darkMode && isZebra,
           [darkModeThStyles]: isHeader && darkMode,
         },
         className,

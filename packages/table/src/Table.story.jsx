@@ -24,6 +24,30 @@ const Template = ({ children, withHeaders, ...args }) => (
 export const Basic = Template.bind({});
 Basic.args = {
   withHeaders: false,
+  data: defaultData.slice(0, 8),
+  columns:
+    <HeaderRow>
+        <TableHeader key="name" label="Name" dataType="string" />
+        <TableHeader key="age" label="Age" dataType="number" />
+        <TableHeader key="color" label="Color" dataType="string" />
+        <TableHeader key="location" label="Location" />
+      </HeaderRow>,
+  children:
+    withHeaders =>
+    ({ datum }) =>
+      (
+        <Row key={datum.name}>
+          <Cell isHeader={withHeaders}>{datum.name}</Cell>
+          <Cell>{datum.age}</Cell>
+          <Cell>{datum.color}</Cell>
+          <Cell>{datum.location}</Cell>
+        </Row>
+      ),
+}
+
+export const BuiltInZebraStripes = Template.bind({});
+BuiltInZebraStripes.args = {
+  withHeaders: false,
   columns:
     <HeaderRow>
         <TableHeader key="name" label="Name" dataType="string" />

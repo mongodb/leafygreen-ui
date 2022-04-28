@@ -209,6 +209,9 @@ const Row = React.forwardRef(
     const darkMode = useDarkModeContext();
     const mode = darkMode ? Mode.Dark : Mode.Light;
 
+    const shouldAltRowColor =
+      data && data.length >= 10 && hasNestedRows != null && !hasNestedRows;
+
     const indexRef = useRef(useIdAllocator({ prefix: 'row' }));
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nestedRowNodeRef = useRef<HTMLTableRowElement>(null);
@@ -354,6 +357,8 @@ const Row = React.forwardRef(
             React.cloneElement(child, {
               children: <span>{child.props.children}</span>,
               key: `${indexRef.current}-${index}`,
+              isZebra: shouldAltRowColor && index % 2 === 0,
+              ...child.props,
             }),
           );
         }
@@ -385,10 +390,14 @@ const Row = React.forwardRef(
       }
 
       return renderedChildren;
-    }, [children, rowHasNestedRows, isExpanded, setIsExpanded, darkMode]);
-
-    const shouldAltRowColor =
-      data && data.length >= 10 && hasNestedRows != null && !hasNestedRows;
+    }, [
+      children,
+      rowHasNestedRows,
+      isExpanded,
+      setIsExpanded,
+      darkMode,
+      shouldAltRowColor,
+    ]);
 
     const alignmentStyles = columnInfo
       ? Object.entries(columnInfo).map(([key, { dataType }]) =>
