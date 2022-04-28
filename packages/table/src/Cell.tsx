@@ -25,7 +25,15 @@ const baseStyles = css`
 `;
 
 const thStyles = css`
-  font-weight: bold;
+  font-weight: 600;
+`;
+
+const darkModeThStyles = css`
+  border-right: 3px solid ${palette.gray.dark1};
+`;
+
+const lightModeThStyles = css`
+  border-right: 3px solid ${palette.gray.light2};
   background-color: ${palette.gray.light3};
 `;
 
@@ -50,7 +58,11 @@ const Cell = React.forwardRef(
       className: cx(
         getCommonCellStyles(baseFontSize, darkMode),
         baseStyles,
-        { [thStyles]: isHeader },
+        {
+          [thStyles]: isHeader,
+          [lightModeThStyles]: isHeader && !darkMode,
+          [darkModeThStyles]: isHeader && darkMode,
+        },
         className,
       ),
     };
