@@ -358,6 +358,7 @@ const Row = React.forwardRef(
               children: <span>{child.props.children}</span>,
               key: `${indexRef.current}-${index}`,
               isZebra: shouldAltRowColor && index % 2 === 0,
+              isHeader: child.props.isHeader && !disabled,
               ...child.props,
             }),
           );

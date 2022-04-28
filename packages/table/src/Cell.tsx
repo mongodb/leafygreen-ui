@@ -32,6 +32,11 @@ const thStyles = css`
 
 const darkModeThStyles = css`
   border-right: 3px solid ${palette.gray.dark1};
+  background-color: ${palette.gray.dark2};
+`;
+
+const darkModeZebraThStyles = css`
+  border-right: 3px solid ${palette.gray.dark2};
 `;
 
 const lightModeThStyles = css`
@@ -39,7 +44,7 @@ const lightModeThStyles = css`
   background-color: ${palette.gray.light3};
 `;
 
-const zebraLightModeThStyles = css`
+const lightModeZebraThStyles = css`
   border-right: 3px solid ${palette.gray.light2};
 `;
 
@@ -67,8 +72,9 @@ const Cell = React.forwardRef(
         {
           [thStyles]: isHeader,
           [lightModeThStyles]: isHeader && !darkMode && !isZebra,
-          [zebraLightModeThStyles]: isHeader && !darkMode && isZebra,
-          [darkModeThStyles]: isHeader && darkMode,
+          [lightModeZebraThStyles]: isHeader && !darkMode && isZebra,
+          [darkModeThStyles]: isHeader && darkMode && !isZebra,
+          [darkModeZebraThStyles]: isHeader && darkMode && isZebra,
         },
         className,
       ),
