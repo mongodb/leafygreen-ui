@@ -47,6 +47,7 @@ const contentStyles = css`
   padding: 24px 48px;
   margin: auto;
   max-width: 72ch;
+  height: 100%;
   max-height: 100%;
   overflow-y: auto;
 `;
@@ -74,7 +75,7 @@ dolorem distinctio debitis ipsam dolore vel molestiae.`;
 
 const content = (
   <Body className={contentStyles}>
-    {new Array(6).fill(<p>{loremIpsum}</p>)}
+    {new Array(10).fill(<p>{loremIpsum}</p>)}
   </Body>
 );
 
