@@ -87,17 +87,3 @@ npm install @leafygreen-ui/copyable
 | `size`                   | `'default'`, `'large'` | Display size of the copyable text.                             | `'default'` |
 | `copyable`               | `boolean`              | Whether or not a copy button should be shown.                  | `true`      |
 | `shouldTooltipUsePortal` | `boolean`              | Whether or not the "Copied!" tooltip should use a React portal | `true`      |
-
-## Notes
-
-Inside of `Copyable`, `[ClipboardJS](https://clipboardjs.com)` is utilized to handle the copy functionality. The `ClipboardJS` API gives us the `container` option which is used to specify where the focus should be contained. This is not really necessary to add, however, the `container` needs to be set if used inside of `Modal` because `Modal` uses an outside library to trap focus for accessibility reasons. The setting of the `container` is handled internally in `Copyable` but if you need to use the `ClipboardJS` library directly inside of `Modal` then you will need to set the `container` yourself. Below is an example of how to set the `container`:
-
-```
-  const { portalContainer } = usePopoverPortalContainer();
-
-  const clipboard = new ClipboardJS(buttonRef, {
-    container: portalContainer,
-  });
-```
-
-Currently, a `Modal` reference value is stored in the `[PortalContext](https://github.com/mongodb/leafygreen-ui/blob/main/packages/leafygreen-provider/src/PortalContext.tsx)` and that value is consumable using the hook, `usePopoverPortalContainer`.
