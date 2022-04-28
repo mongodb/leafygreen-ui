@@ -4,6 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { getCommonCellStyles } from './styles';
 import { useFontSizeContext } from './FontSizeContext';
 import { useDarkModeContext } from './DarkModeContext';
+import { palette } from '@leafygreen-ui/palette';
 
 export const tdInnerDiv = createDataProp('td-inner-div');
 
@@ -25,6 +26,7 @@ const baseStyles = css`
 
 const thStyles = css`
   font-weight: bold;
+  background-color: ${palette.gray.light3};
 `;
 
 const innerDivStyles = css`
