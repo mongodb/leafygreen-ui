@@ -28,5 +28,8 @@
     "@leafygreen-ui/tooltip": "^7.0.0",
     "@leafygreen-ui/typography": "^8.0.4",
     "clipboard": "^2.0.6"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^2.1.3"
   }
 }
