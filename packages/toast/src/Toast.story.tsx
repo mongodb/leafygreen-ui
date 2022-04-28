@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { number, select, text, boolean } from '@storybook/addon-knobs';
 import Toast, { Variant } from '.';
 
-storiesOf('Toast', module).add('Default', () => {
+storiesOf('Packages/Toast', module).add('Default', () => {
   const variant = select('Variant', Object.values(Variant), 'success');
   const knobs = {
     variant,

@@ -1,5 +1,20 @@
 # @leafygreen-ui/stepper
 
+## 3.0.0
+
+### Major Changes
+
+- dccc9dc1: New designs applied to the Stepper component.
+
+### Patch Changes
+
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [679b6239]
+- Updated dependencies [f3aad7e2]
+  - @leafygreen-ui/typography@10.0.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 2.1.6
 
 ### Patch Changes

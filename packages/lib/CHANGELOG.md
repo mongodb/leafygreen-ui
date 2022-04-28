@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 9.2.1
+
+### Patch Changes
+
+- 2cf1bc4a: Adding prefix functionality to createUniqueClassName
+
 ## 9.2.0
 
 ### Minor Changes

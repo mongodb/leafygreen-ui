@@ -66,6 +66,6 @@ function Delete() {
   );
 }
 
-storiesOf('ConfirmationModal', module)
+storiesOf('Packages/ConfirmationModal', module)
   .add('Confirm', () => <Confirm />)
   .add('Delete', () => <Delete />);

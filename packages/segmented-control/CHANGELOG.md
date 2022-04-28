@@ -1,5 +1,18 @@
 # @leafygreen-ui/segmented-control
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [679b6239]
+- Updated dependencies [f3aad7e2]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 1.0.1
 
 ### Patch Changes

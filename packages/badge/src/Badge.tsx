@@ -88,6 +88,9 @@ interface BadgeProps {
   variant?: Variant;
 }
 
+/**
+ * Badge component for status indication.
+ */
 function Badge({
   children,
   variant = Variant.LightGray,

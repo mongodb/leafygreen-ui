@@ -7,7 +7,7 @@ import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, multiRowData, testTableDataShape } from './fixtures';
 import { uiColors } from '@leafygreen-ui/palette';
 
-storiesOf('Table', module)
+storiesOf('Packages/Table', module)
   .add('Default', () => {
     const withHeaders = boolean('First column headers', false);
     const darkMode = boolean('darkMode', false);

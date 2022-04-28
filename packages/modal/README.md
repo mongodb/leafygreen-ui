@@ -76,6 +76,10 @@ function ExampleComponent() {
 </div>
 ```
 
+## Notes
+
+It is HIGHLY encouraged that any children inside of `Modal` should refrain from using `usePortal={false}` because this can cause stacking context/z-indexing issues since the popover element will render relative to the parent rather than rendering in a `React portal` which is automatically appended to the `Modal`. By default any component that can use a `React portal`, like `Tooltip` or `Select`, will have `usePortal` set to `true`.
+
 ## Properties
 
 | Prop               | Type                              | Description                                                                                                                                          | Default      |
@@ -90,3 +94,15 @@ function ExampleComponent() {
 | `initialFocus`     | `string`                          | A selector string for the element to move focus to when the modal is opened. The first focusable element in the modal will receive focus by default. |              |
 | `darkMode`         | `boolean`                         | Determines if the component will appear in dark mode.                                                                                                | `false`      |
 | `closeIconColor`   | `'default'`, `'dark'`, `'light'`  | Determines the color of the close icon. Currently will only work if `darkMode` is set to false.                                                      | `default`    |
+
+## Using `Clipboard.js` inside `Modal`
+
+To directly use the `Clipboard.js` library inside of `Modal`, rather than using the `Copyable` component, the reference value of the `Modal` should be used as the `container` when `Clipboard.js` is instantiated. You can get the reference value by consuming the `usePopoverPortalContainer` hook:
+
+```
+  const { portalContainer } = usePopoverPortalContainer();
+
+  const clipboard = new ClipboardJS(buttonRef, {
+    container: portalContainer,
+  });
+```

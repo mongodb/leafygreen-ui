@@ -1,5 +1,16 @@
 # @leafygreen-ui/checkbox
 
+## 7.0.1
+
+### Patch Changes
+
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [679b6239]
+- Updated dependencies [f3aad7e2]
+  - @leafygreen-ui/typography@9.1.1
+  - @leafygreen-ui/lib@9.2.1
+
 ## 7.0.0
 
 ### Major Changes

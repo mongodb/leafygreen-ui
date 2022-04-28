@@ -15,7 +15,7 @@ const wrapperStyle = css`
   height: 100vh;
 `;
 
-storiesOf('TextInput', module)
+storiesOf('Packages/TextInput', module)
   .add('Default', () => {
     const darkMode = boolean('darkMode', false);
 

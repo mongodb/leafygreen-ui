@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Copyable, { Size } from '.';
 
-storiesOf('Copyable', module).add('Default', () => {
+storiesOf('Packages/Copyable', module).add('Default', () => {
   const darkMode = boolean('Dark mode', false);
   const label = text('Label', 'Label');
   const description = text('Description', 'Description') || undefined;

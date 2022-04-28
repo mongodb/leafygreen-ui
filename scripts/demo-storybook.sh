@@ -1,7 +1,7 @@
 #!/bin/sh
 
 check_storybook_built() {
-    if [ ! -d "./storybook/public" ]; then
+    if [ ! -d "./storybook-static" ]; then
         read -r -p "No Storybook directory was found. Build it now? [y/N] " RESPONSE
         echo
 
@@ -69,7 +69,7 @@ attempt_publish() {
     read -r -p "Are you sure this is correct? [y/N] " response
 
     if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        yarn run publish:storybook --repo $repo
+        gh-pages --dist ./storybook-static --repo $repo
     else
         echo "\nExiting without publishing...\n"
     fi

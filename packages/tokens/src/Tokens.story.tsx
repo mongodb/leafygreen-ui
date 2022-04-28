@@ -46,7 +46,7 @@ function SpacingBlock({ space }: { space: keyof typeof spacing }) {
   );
 }
 
-storiesOf('Tokens', module).add('Spacing', () => (
+storiesOf('Packages/Tokens', module).add('Spacing', () => (
   <div
     className={css`
       display: flex;

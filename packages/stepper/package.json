@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/stepper",
-  "version": "2.1.6",
+  "version": "3.0.0",
   "description": "leafyGreen UI Kit Stepper",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,10 +22,10 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.0",
     "@leafygreen-ui/icon": "^11.6.0",
-    "@leafygreen-ui/lib": "^9.1.0",
+    "@leafygreen-ui/lib": "^9.2.1",
     "@leafygreen-ui/palette": "^3.2.2",
     "@leafygreen-ui/tooltip": "^7.0.0",
-    "@leafygreen-ui/typography": "^9.1.0",
+    "@leafygreen-ui/typography": "^10.0.0",
     "polished": "^4.1.3"
   }
 }

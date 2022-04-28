@@ -3,7 +3,7 @@ dist/
 package.json
 packages/icon/src/glyphs/*.svg
 packages/icon/src/generated/*.tsx
-storybook/public/
+storybook-static
 .changeset/
 website/.next/
 website/hosting/

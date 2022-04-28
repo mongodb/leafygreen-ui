@@ -1,5 +1,21 @@
 # @leafygreen-ui/confirmation-modal
 
+## 3.0.2
+
+### Patch Changes
+
+- Updated dependencies [f3aad7e2]
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [2f6e595d]
+- Updated dependencies [f3aad7e2]
+- Updated dependencies [c1f9c4d4]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+  - @leafygreen-ui/modal@8.0.1
+  - @leafygreen-ui/text-input@7.0.1
+
 ## 3.0.1
 
 ### Patch Changes

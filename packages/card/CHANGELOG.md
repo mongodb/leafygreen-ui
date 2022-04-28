@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- ab1fd9e: Updates Card component for Visual brand Refresh
+- ab1fd9e: Updates Card component for Visual brand Refresh. This includes adding a default `24px` padding inside the card. Override this with `className`
 
 ### Patch Changes
 

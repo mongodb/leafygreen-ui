@@ -1,5 +1,15 @@
 # @leafygreen-ui/tabs
 
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 6.0.2
 
 ### Patch Changes

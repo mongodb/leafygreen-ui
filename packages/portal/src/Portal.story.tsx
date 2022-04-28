@@ -17,7 +17,7 @@ function getRoot() {
   return root;
 }
 
-storiesOf('Portal', module).add('Default', () => (
+storiesOf('Packages/Portal', module).add('Default', () => (
   <Portal container={getRoot()}>
     <div className={portalChildrenStyle}>
       Portals transport their children to a <code>div</code> that is appended to

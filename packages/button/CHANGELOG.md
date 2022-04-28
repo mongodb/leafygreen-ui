@@ -1,5 +1,20 @@
 # @leafygreen-ui/button
 
+## 14.0.0
+
+### Major Changes
+
+- f3aad7e2: Updates Dark Mode Button for visual brand refresh
+
+### Patch Changes
+
+- c1f9c4d4: Disabling focus styles and ripple on disabled Buttons
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 13.0.1
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @leafygreen-ui/tokens
 
+## 1.2.0
+
+### Minor Changes
+
+- ba4aab15: Exports the constant `BaseFontSize` from `tokens`
+
+### Patch Changes
+
+- 233ac580: Adds documentation to `typeScales`. Exports `fontFamilies` as read-only
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/lib@9.2.1
+
 ## 1.1.0
 
 ### Minor Changes
