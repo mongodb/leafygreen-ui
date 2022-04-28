@@ -3,13 +3,13 @@ import React from 'react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { H2, InlineCode } from '@leafygreen-ui/typography';
-import { spacing } from '.';
-import hoverRing from './hoverRing';
+import { spacing, hoverRing, fontFamilies, typeScales, focusRing } from '.';
 import { Mode } from './mode';
 import { startCase } from 'lodash';
-import fontFamilies from './fontFamilies';
-import typeScales from './typeScales';
-import { focusRing } from '../dist';
+
+type HoverRingColor = keyof typeof hoverRing.dark;
+type TypeScale = keyof typeof typeScales;
+type FontFamily = keyof typeof fontFamilies;
 
 const gutter = css`
   margin-left: ${spacing[3]}px;
@@ -75,24 +75,27 @@ export const TypeScales = () => {
   return (
     <div>
       <H2>Typescales</H2>
-      {Object.keys(typeScales).map(scale => (
-        <div
-          key={scale}
-          className={css`
-            font-family: ${scale.includes('code')
-              ? fontFamilies.code
-              : fontFamilies.default};
-            font-size: ${typeScales[scale].fontSize}px;
-            line-height: ${typeScales[scale].lineHeight}px;
-            margin: ${spacing[3]}px 0;
-          `}
-        >
-          <InlineCode>
-            typeScales.{scale}: {JSON.stringify(typeScales[scale])}
-          </InlineCode>{' '}
-          <div>{scale}</div>
-        </div>
-      ))}
+      {Object.keys(typeScales).map((_scale: string) => {
+        const scale = _scale as TypeScale;
+        return (
+          <div
+            key={scale}
+            className={css`
+              font-family: ${scale.includes('code')
+                ? fontFamilies.code
+                : fontFamilies.default};
+              font-size: ${typeScales[scale].fontSize}px;
+              line-height: ${typeScales[scale].lineHeight}px;
+              margin: ${spacing[3]}px 0;
+            `}
+          >
+            <InlineCode>
+              typeScales.{scale}: {JSON.stringify(typeScales[scale])}
+            </InlineCode>{' '}
+            <div>{scale}</div>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -100,20 +103,23 @@ export const TypeScales = () => {
 export const FontFamilies = () => (
   <div>
     <H2>Font Families</H2>
-    {Object.keys(fontFamilies).map(family => (
-      <div
-        key={family}
-        className={css`
-          font-family: ${fontFamilies[family]};
-          margin: ${spacing[3]}px 0;
-        `}
-      >
-        <InlineCode>
-          fontFamilies.{family}: {fontFamilies[family]}
-        </InlineCode>
-        <div>{family}</div>
-      </div>
-    ))}
+    {Object.keys(fontFamilies).map((_family: string) => {
+      const family = _family as FontFamily;
+      return (
+        <div
+          key={family}
+          className={css`
+            font-family: ${fontFamilies[family]};
+            margin: ${spacing[3]}px 0;
+          `}
+        >
+          <InlineCode>
+            fontFamilies.{family}: {fontFamilies[family]}
+          </InlineCode>
+          <div>{family}</div>
+        </div>
+      );
+    })}
   </div>
 );
 
@@ -148,9 +154,10 @@ export const InteractionRings = () => {
     <div>
       <H2>Interaction States</H2>
       <div>
-        {Object.values(Mode).map(mode => (
-          <div key={mode} className={modeWrapper(mode as Mode)}>
-            {Object.keys(hoverRing[mode]).map(color => {
+        {Object.values(Mode).map((mode: Mode) => (
+          <div key={mode} className={modeWrapper(mode)}>
+            {Object.keys(hoverRing[mode]).map(_color => {
+              const color = _color as HoverRingColor;
               return (
                 <button
                   key={color}
