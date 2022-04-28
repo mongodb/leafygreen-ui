@@ -32,5 +32,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^14.0.0"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^2.1.3"
   }
 }

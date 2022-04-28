@@ -137,6 +137,11 @@ describe('packages/menu/menu-item', () => {
     const { menuItem } = renderMenuItem({ as: 'div' });
     expect(menuItem.tagName.toLowerCase()).toBe('div');
   });
+
+  test('has the `aria-current` attribute when active', () => {
+    const { menuItem } = renderMenuItem({ active: true });
+    expect(menuItem).toHaveAttribute('aria-current', 'true');
+  });
 });
 
 describe('packages/menu/sub-menu', () => {
