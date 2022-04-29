@@ -7,6 +7,8 @@ import Modal, { ModalSize } from '.';
 import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
 import { Subtitle, Body } from '@leafygreen-ui/typography';
 import { palette } from '@leafygreen-ui/palette';
+import Copyable from '@leafygreen-ui/copyable';
+import Code from '@leafygreen-ui/code';
 
 const scroll = css`
   height: 200vh;
@@ -150,8 +152,56 @@ function DefaultSelect() {
   );
 }
 
+function CopyableModal() {
+  const [open, setOpen] = useState(false);
+
+  const jsSnippet = `
+
+const myVar = 42;
+
+var myObj = {
+  someProp: ['arr', 'ay'],
+  regex: /([A-Z])w+/
+}
+
+export default class myClass {
+  constructor(){
+    // access properties
+    this.myProp = false
+  }
+}
+
+function greeting(entity) {
+  return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
+}
+ 
+console.log(greeting('World'));
+
+`;
+
+  return (
+    <>
+      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Modal
+        open={open}
+        setOpen={setOpen}
+        size={select('size', Object.values(ModalSize), ModalSize.Default)}
+        darkMode={boolean('darkMode', false)}
+      >
+        <div>Modal Content goes here.</div>
+        <Copyable>Hello world in a modal</Copyable>
+
+        <Code copyable={true} language="javascript">
+          {jsSnippet}
+        </Code>
+      </Modal>
+    </>
+  );
+}
+
 storiesOf('Packages/Modal', module)
   .add('Default', () => <Default />)
   .add('DefaultSelect', () => <DefaultSelect />)
   .add('Scroll', () => <Scroll />)
-  .add('Interactive', () => <Interactive />);
+  .add('Interactive', () => <Interactive />)
+  .add('Copyable', () => <CopyableModal />);
