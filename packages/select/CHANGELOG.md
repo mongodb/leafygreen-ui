@@ -2,6 +2,11 @@
 
 ## 5.0.0
 
+### Major Changes
+
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
 ### Patch Changes
 
 - Updated dependencies [e13d2487]

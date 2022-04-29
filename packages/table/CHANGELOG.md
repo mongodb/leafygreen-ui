@@ -2,6 +2,11 @@
 
 ## 4.0.0
 
+### Major Changes
+
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
 ### Patch Changes
 
 - Updated dependencies [e13d2487]
@@ -10,7 +15,6 @@
 - Updated dependencies [500d6c60]
   - @leafygreen-ui/checkbox@8.0.0
   - @leafygreen-ui/icon-button@11.0.0
-  - @leafygreen-ui/leafygreen-provider@2.2.0
   - @leafygreen-ui/tokens@1.3.0
   - @leafygreen-ui/icon@11.9.0
 

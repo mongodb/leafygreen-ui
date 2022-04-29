@@ -5,6 +5,8 @@
 ### Major Changes
 
 - e13d2487: Moving leafygreen-provider to peerDependencies.
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
 
 ### Patch Changes
 
@@ -14,7 +16,6 @@
 - Updated dependencies [c48e943e]
 - Updated dependencies [500d6c60]
   - @leafygreen-ui/icon-button@11.0.0
-  - @leafygreen-ui/leafygreen-provider@2.2.0
   - @leafygreen-ui/tokens@1.3.0
   - @leafygreen-ui/icon@11.9.0
   - @leafygreen-ui/select@5.0.0

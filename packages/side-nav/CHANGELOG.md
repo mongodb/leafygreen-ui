@@ -2,13 +2,17 @@
 
 ## 8.0.0
 
+### Major Changes
+
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
 ### Patch Changes
 
 - Updated dependencies [ddd0f1ec]
 - Updated dependencies [5f28fce1]
 - Updated dependencies [500d6c60]
   - @leafygreen-ui/menu@13.0.0
-  - @leafygreen-ui/leafygreen-provider@2.2.0
   - @leafygreen-ui/icon@11.9.0
   - @leafygreen-ui/tooltip@7.0.2
 
