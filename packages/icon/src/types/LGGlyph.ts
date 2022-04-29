@@ -5,4 +5,4 @@ export interface ComponentProps extends SVGR.ComponentProps {
   size?: number | 'small' | 'default' | 'large' | 'xlarge';
 }
 
-export type Component = ComponentType<ComponentProps>;
+export type Component = ComponentType<ComponentProps> & { isGlyph?: boolean };

@@ -21,11 +21,13 @@ export default function createIconComponent<
 >(glyphs: G) {
   const Icon = ({ glyph, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
-
+    SVGComponent.isGlyph = true;
     return <SVGComponent {...rest} />;
   };
 
   Icon.displayName = 'Icon';
+
+  Icon.isGlyph = true;
 
   Icon.propTypes = {
     glyph: PropTypes.oneOf(Object.keys(glyphs)).isRequired,
