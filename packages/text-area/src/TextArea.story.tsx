@@ -5,7 +5,6 @@ import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import TextArea, { State } from './TextArea';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 storiesOf('Packages/TextArea', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);

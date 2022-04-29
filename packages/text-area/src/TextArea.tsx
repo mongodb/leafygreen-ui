@@ -172,6 +172,11 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
    * Callback to be executed when the value of the input field changes.
    */
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
+
+  /**
+   * Override the global `baseFontSize` set in LeafygreenProvider
+   */
+  baseFontSize?: BaseFontSize;
 };
 
 type AriaLabels = 'label' | 'aria-labelledby';
@@ -193,11 +198,12 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
       onBlur,
       handleValidation,
       'aria-labelledby': ariaLabelledby,
+      baseFontSize: baseFontSizeProp,
       ...rest
     }: TextAreaProps,
     forwardedRef: React.Ref<HTMLTextAreaElement>,
   ) {
-    const baseFontSize = useUpdatedBaseFontSize();
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const id = useIdAllocator({ prefix: 'textarea', id: idProp });
     const mode = darkMode ? Mode.Dark : Mode.Light;
 
