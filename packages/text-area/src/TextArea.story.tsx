@@ -5,13 +5,12 @@ import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import TextArea, { State } from './TextArea';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 storiesOf('Packages/TextArea', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
   return (
-    <LeafyGreenProvider
-      baseFontSize={select('Global base font size', [14, 16], 14)}
-    >
+    <LeafyGreenProvider baseFontSize={select('Global font size', [14, 16], 14)}>
       <div
         className={css`
           padding: 30px;
@@ -19,6 +18,11 @@ storiesOf('Packages/TextArea', module).add('Default', () => {
         `}
       >
         <TextArea
+          baseFontSize={select(
+            'Base font size',
+            Object.values(BaseFontSize),
+            13,
+          )}
           label={text('Label', 'Label')}
           description={text(
             'Description',
