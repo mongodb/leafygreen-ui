@@ -84,7 +84,7 @@ const modeStyles = css`
   background-color: ${uiColors.white};
   font-family: ${fontFamilies.default};
   border-radius: 24px;
-  padding: 35px 40px;
+  padding: 40px 36px;
   box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
 `;
 
