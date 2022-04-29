@@ -1,5 +1,19 @@
 # @leafygreen-ui/button
 
+## 15.0.0
+
+### Major Changes
+
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- 3a14d852: Restoring as prop to Button component
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/tokens@1.3.0
+
 ## 14.0.0
 
 ### Major Changes

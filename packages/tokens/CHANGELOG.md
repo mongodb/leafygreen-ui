@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 1.3.0
+
+### Minor Changes
+
+- c48e943e: Exports `Mode`, `hoverRing` and `focusRing` from `tokens`. Add `hoverRing` and `focusRing` to the `box-shadow` property to render Leafygreen interaction states
+
 ## 1.2.0
 
 ### Minor Changes

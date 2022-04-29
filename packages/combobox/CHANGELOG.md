@@ -1,5 +1,18 @@
 # @leafygreen-ui/combobox
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [e13d2487]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/checkbox@8.0.0
+  - @leafygreen-ui/icon-button@11.0.0
+  - @leafygreen-ui/popover@8.0.0
+  - @leafygreen-ui/interaction-ring@3.0.0
+  - @leafygreen-ui/icon@11.9.0
+  - @leafygreen-ui/typography@11.0.0
+
 ## 1.0.2
 
 ### Patch Changes
