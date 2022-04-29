@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, select, text, number } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette, uiColors } from '@leafygreen-ui/palette';
@@ -31,7 +32,7 @@ storiesOf('Packages/Select', module)
     const size = select('Size', Object.values(Size), Size.Default);
     const disabled = boolean('Disabled', false);
     const withIcons = boolean('With icons', false);
-    const glyph = withIcons ? <BeakerIcon /> : undefined;
+    const glyph = withIcons && <Icon glyph="Beaker" />;
     const useProvider = boolean('Use LeafygreenProvider', true);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
     const usePortal = boolean('usePortal', false);
