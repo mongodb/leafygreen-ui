@@ -1,5 +1,24 @@
 # @leafygreen-ui/code
 
+## 11.0.0
+
+### Major Changes
+
+- e13d2487: Moving leafygreen-provider to peerDependencies.
+
+### Patch Changes
+
+- 91e24dfe: Add `container` to copyable.js instance to help keep focus inside of a modal
+- Updated dependencies [e13d2487]
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/icon-button@11.0.0
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+  - @leafygreen-ui/tokens@1.3.0
+  - @leafygreen-ui/icon@11.9.0
+  - @leafygreen-ui/select@5.0.0
+
 ## 10.0.0
 
 ### Major Changes

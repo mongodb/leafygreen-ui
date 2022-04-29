@@ -1,5 +1,13 @@
 # @leafygreen-ui/form-footer
 
+## 0.10.1
+
+### Patch Changes
+
+- 4904e7db: Updating dependency versions on form footer
+- Updated dependencies [3a14d852]
+  - @leafygreen-ui/button@15.0.0
+
 ## 0.10.0
 
 ### Minor Changes

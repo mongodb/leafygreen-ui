@@ -1,5 +1,19 @@
 # @leafygreen-ui/copyable
 
+## 4.0.0
+
+### Patch Changes
+
+- 91e24dfe: Add `container` to copyable.js instance to help keep focus inside of a modal
+- Updated dependencies [3a14d852]
+- Updated dependencies [5f28fce1]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/button@15.0.0
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+  - @leafygreen-ui/icon@11.9.0
+  - @leafygreen-ui/tooltip@7.0.2
+  - @leafygreen-ui/typography@11.0.0
+
 ## 3.0.0
 
 ### Major Changes
