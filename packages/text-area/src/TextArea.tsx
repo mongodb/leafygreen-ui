@@ -4,9 +4,18 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { palette, uiColors } from '@leafygreen-ui/palette';
-import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
+import {
+  spacing,
+  fontFamilies,
+  BaseFontSize,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
-import { Description, Label } from '@leafygreen-ui/typography';
+import {
+  Description,
+  Label,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
 import Warning from '@leafygreen-ui/icon/dist/Warning';
 
 export const State = {
@@ -29,6 +38,7 @@ const containerStyles = css`
 `;
 
 const textAreaStyle = css`
+  font-family: ${fontFamilies.default};
   width: 100%;
   min-height: ${spacing[6]}px;
   resize: none;
@@ -39,6 +49,7 @@ const textAreaStyle = css`
   line-height: 16px;
   z-index: 1;
   border: 1px solid;
+  border-radius: 6px;
   transition: border-color 150ms ease-in-out;
 
   &:focus {
@@ -49,6 +60,18 @@ const textAreaStyle = css`
     cursor: not-allowed;
   }
 `;
+
+// TODO: Export this CSS block from `tokens` or `typography`
+const textAreaTypeScaleStyles: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+  `,
+};
 
 const errorMessageStyle = css`
   display: flex;
@@ -71,12 +94,9 @@ const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
     textArea: css`
       // TODO: Refresh - set one font family & size
-      font-family: ${fontFamilies.default};
-      font-size: 13px;
       color: ${palette.gray.dark3};
       background-color: ${palette.white};
       border-color: ${palette.gray.base};
-      border-radius: 6px;
 
       &:focus {
         border-color: ${palette.white}; // same as background color
@@ -105,9 +125,6 @@ const colorSets: Record<Mode, ColorSets> = {
   },
   [Mode.Dark]: {
     textArea: css`
-      // TODO: Refresh - set one font family & size
-      font-family: ${fontFamilies.legacy};
-      font-size: 14px;
       color: ${uiColors.white};
       background-color: #394f5a;
       border-color: #394f5a;
@@ -180,6 +197,7 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
     }: TextAreaProps,
     forwardedRef: React.Ref<HTMLTextAreaElement>,
   ) {
+    const baseFontSize = useUpdatedBaseFontSize();
     const id = useIdAllocator({ prefix: 'textarea', id: idProp });
     const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -223,9 +241,13 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
             darkMode={darkMode}
             htmlFor={id}
             disabled={disabled}
-            // className={cx({
-            //   [colorSets[mode].disabledText] : disabled
-            // })}
+            className={cx({
+              // TODO: Remove temporary darkMode overrides
+              [css`
+                font-size: ${baseFontSize === 13 ? 14 : 16}px;
+                font-family: ${fontFamilies.legacy};
+              `]: darkMode,
+            })}
           >
             {label}
           </Label>
@@ -235,6 +257,11 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
             darkMode={darkMode}
             disabled={disabled}
             className={cx({
+              // TODO: Remove temporary darkMode overrides
+              [css`
+                font-size: ${baseFontSize === 13 ? 14 : 16}px;
+                font-family: ${fontFamilies.legacy};
+              `]: darkMode,
               [css`
                 padding-bottom: 4px;
               `]: !darkMode,
@@ -259,12 +286,23 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
             ref={forwardedRef}
             title={label != null ? label : undefined}
             id={id}
-            className={cx(textAreaStyle, colorSets[mode].textArea, {
-              [colorSets[mode].errorBorder]: state === State.Error && !disabled,
-              [css`
-                background-color: #5a3c3b;
-              `]: state === State.Error && darkMode,
-            })}
+            className={cx(
+              textAreaStyle,
+              textAreaTypeScaleStyles[baseFontSize],
+              colorSets[mode].textArea,
+              {
+                [colorSets[mode].errorBorder]:
+                  state === State.Error && !disabled,
+                [css`
+                  background-color: #5a3c3b;
+                `]: state === State.Error && darkMode,
+                [css`
+                  // TODO: Refresh - remove this when darkMode is updated
+                  font-family: ${fontFamilies.legacy};
+                  border-radius: 4px;
+                `]: darkMode,
+              },
+            )}
             disabled={disabled}
             onChange={onValueChange}
             onBlur={onBlurHandler}

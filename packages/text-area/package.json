@@ -26,6 +26,6 @@
     "@leafygreen-ui/interaction-ring": "^2.0.0",
     "@leafygreen-ui/palette": "^3.3.1",
     "@leafygreen-ui/tokens": "^1.2.0",
-    "@leafygreen-ui/typography": "^9.1.1"
+    "@leafygreen-ui/typography": "^10.0.0"
   }
 }
