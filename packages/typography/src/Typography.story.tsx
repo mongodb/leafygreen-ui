@@ -13,8 +13,9 @@ import {
   Overline,
   Label,
   Description,
+  Link,
 } from '.';
-import { Link, ArrowAppearance } from './Link';
+import { ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
