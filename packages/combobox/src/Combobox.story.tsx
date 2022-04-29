@@ -3,6 +3,7 @@ import Icon from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
 import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import { useState } from '@storybook/client-api';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {
   title: 'Packages/Combobox',
@@ -10,7 +11,7 @@ export default {
   parameters: {
     controls: { exclude: ['children', 'setError'] },
   },
-};
+} as ComponentMeta<typeof Combobox>;
 
 const ComboboxOptions = [
   <ComboboxOption key="apple" value="apple" displayName="Apple" />,
@@ -67,7 +68,10 @@ const ComboboxOptions = [
     />
   </ComboboxGroup>,
 ];
-const Template = args => <Combobox {...args} />;
+
+const Template: ComponentStory<typeof Combobox> = args => (
+  <Combobox {...args} />
+);
 
 export const Basic = Template.bind({});
 Basic.args = {
@@ -112,9 +116,9 @@ Multiselect.args = {
 };
 
 export const ControlledSingleSelect = () => {
-  const [selection, setSelection] = useState(null);
+  const [selection, setSelection] = useState<string | null>(null);
 
-  const handleChange = (value) => {
+  const handleChange = (value: string | null) => {
     setSelection(value);
   };
 
