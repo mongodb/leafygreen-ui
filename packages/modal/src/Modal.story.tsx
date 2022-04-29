@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Modal, { ModalSize } from '.';
 import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
+import { Subtitle, Body } from '@leafygreen-ui/typography';
+import { palette } from '@leafygreen-ui/palette';
 import Copyable from '@leafygreen-ui/copyable';
 import Code from '@leafygreen-ui/code';
 
@@ -16,8 +18,17 @@ const buttonPadding = css`
   margin-top: 4px;
 `;
 
+const titleMargin = css`
+  margin-bottom: 4px;
+`;
+
+const darkModeColor = css`
+  color: ${palette.white};
+`;
+
 function Default() {
   const [open, setOpen] = useState(false);
+  const darkMode = boolean('darkMode', false);
 
   return (
     <>
@@ -26,9 +37,22 @@ function Default() {
         open={open}
         setOpen={setOpen}
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
-        darkMode={boolean('darkMode', false)}
+        darkMode={darkMode}
       >
-        Modal Content goes here.
+        <Subtitle
+          className={cx(titleMargin, {
+            [darkModeColor]: darkMode,
+          })}
+        >
+          Base modal
+        </Subtitle>
+        <Body
+          className={cx({
+            [darkModeColor]: darkMode,
+          })}
+        >
+          Modal Content goes here.
+        </Body>
       </Modal>
     </>
   );
