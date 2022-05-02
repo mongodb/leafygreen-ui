@@ -88,7 +88,7 @@ const Cell = React.forwardRef(
     return (
       <Root {...props} {...rest}>
         <div className={innerDivStyles} {...tdInnerDiv.prop}>
-          {children}
+          <span>{children}</span>
         </div>
       </Root>
     );

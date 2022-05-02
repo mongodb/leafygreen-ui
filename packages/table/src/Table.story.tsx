@@ -1,8 +1,9 @@
 /* eslint-disable */
+// TODO: Table Shape is defined as `any` for now since our test data format isn't consistent.
 import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
 import {
-  Table as LGTable,
+  Table,
   Row,
   Cell,
   TableHeader,
@@ -20,11 +21,11 @@ type TableStoryProps = Omit<TableProps<any>, 'children'> & {
   withHeaders: boolean;
 };
 
-const Table: React.FC<TableStoryProps> = ({
+const StoryTable: React.FC<TableStoryProps> = ({
   children,
   withHeaders,
   ...args
-}: TableStoryProps) => <LGTable children={children(withHeaders)} {...args} />;
+}: TableStoryProps) => <Table children={children(withHeaders)} {...args} />;
 
 export default {
   title: 'Packages/Table',
@@ -40,8 +41,8 @@ export default {
   },
 } as Meta<typeof Table>;
 
-const Template: ComponentStory<typeof Table> = (args: TableStoryProps) => (
-  <Table {...args} />
+const Template: ComponentStory<typeof StoryTable> = ({ children, withHeaders, ...args }: TableStoryProps) => (
+  <Table children={children(withHeaders)} {...args} />
 );
 
 export const Basic = Template.bind({});

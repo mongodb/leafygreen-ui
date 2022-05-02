@@ -379,14 +379,16 @@ const Row = React.forwardRef(
             <Icon aria-hidden />
           </IconButton>
         );
+        const { children: firstChildChildren, ...firstChildProps } = renderedChildren[0].props;
         renderedChildren[0] = React.cloneElement(renderedChildren[0], {
           children: (
             <>
               {chevronButton}
-              <span>{renderedChildren[0].props.children}</span>
+              <span>{firstChildChildren}</span>
             </>
           ),
           key: `${indexRef.current}-${renderedChildren[0].props.children}`,
+          ...firstChildProps,
         });
       }
 
