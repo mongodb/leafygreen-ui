@@ -32,7 +32,7 @@ storiesOf('Packages/Select', module)
     const size = select('Size', Object.values(Size), Size.Default);
     const disabled = boolean('Disabled', false);
     const withIcons = boolean('With icons', false);
-    const glyph = withIcons && <Icon glyph="Beaker" />;
+    const glyph = withIcons ? <Icon glyph="Beaker" /> : undefined;
     const useProvider = boolean('Use LeafygreenProvider', true);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
     const usePortal = boolean('usePortal', false);
