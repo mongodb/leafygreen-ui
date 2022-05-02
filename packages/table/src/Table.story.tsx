@@ -2,7 +2,7 @@
 import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
 import {
-  Table as LGTable,
+  Table,
   Row,
   Cell,
   TableHeader,
@@ -13,18 +13,13 @@ import {
 import { defaultData, multiRowData } from './fixtures';
 import { TableProps } from './Table';
 
-type TableStoryProps = Omit<TableProps<any>, 'children'> & {
-  children: (
-    withHeaders: boolean,
-  ) => (TableRowArgs: TableRowInterface<any>) => JSX.Element;
-  withHeaders: boolean;
-};
-
-const Table: React.FC<TableStoryProps> = ({
+/**
+ * @deprecated
+ */
+const Template: ComponentStory<typeof Table> = ({
   children,
-  withHeaders,
   ...args
-}: TableStoryProps) => <LGTable children={children(withHeaders)} {...args} />;
+}: TableProps<any>) => <Table {...args}>{children}</Table>;
 
 export default {
   title: 'Packages/Table',
@@ -40,11 +35,20 @@ export default {
   },
 } as Meta<typeof Table>;
 
-const Template: ComponentStory<typeof Table> = (args: TableStoryProps) => (
-  <Table {...args} />
-);
+type TableArgs<T = any> = TableProps<T> & { withHeaders?: boolean };
 
-export const Basic = Template.bind({});
+export const Basic = ({ withHeaders, ...args }: TableArgs<any>) => (
+  <Table {...args}>
+    {({ datum }: { datum: any }) => (
+      <Row key={datum.name}>
+        <Cell isHeader={withHeaders}>{datum.name}</Cell>
+        <Cell>{datum.age}</Cell>
+        <Cell>{datum.color}</Cell>
+        <Cell>{datum.location}</Cell>
+      </Row>
+    )}
+  </Table>
+);
 Basic.args = {
   withHeaders: false,
   data: defaultData.slice(0, 8),
@@ -56,17 +60,6 @@ Basic.args = {
       <TableHeader key="location" label="Location" />
     </HeaderRow>
   ),
-  children:
-    (withHeaders: boolean) =>
-    ({ datum }: { datum: any }) =>
-      (
-        <Row key={datum.name}>
-          <Cell isHeader={withHeaders}>{datum.name}</Cell>
-          <Cell>{datum.age}</Cell>
-          <Cell>{datum.color}</Cell>
-          <Cell>{datum.location}</Cell>
-        </Row>
-      ),
 };
 
 export const BuiltInZebraStripes = Template.bind({});
