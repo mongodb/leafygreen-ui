@@ -1,5 +1,22 @@
 # @leafygreen-ui/menu
 
+## 13.0.0
+
+### Major Changes
+
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- ddd0f1ec: Adds `aria-current` attribute to active menu item
+- Updated dependencies [e13d2487]
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/icon-button@11.0.0
+  - @leafygreen-ui/popover@8.0.0
+  - @leafygreen-ui/tokens@1.3.0
+
 ## 12.2.0
 
 ### Minor Changes

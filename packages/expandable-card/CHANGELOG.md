@@ -1,5 +1,14 @@
 # @leafygreen-ui/expandable-card
 
+## 0.9.3
+
+### Patch Changes
+
+- 2335b37d: Updating dependency versions to use redesigned components
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/icon@11.9.0
+  - @leafygreen-ui/typography@11.0.0
+
 ## 0.9.2
 
 ### Patch Changes

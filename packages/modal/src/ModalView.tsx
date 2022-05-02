@@ -16,6 +16,7 @@ import {
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { CloseIconColor, ModalProps, ModalSize } from './Modal';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 
 const Mode = {
   Dark: 'dark',
@@ -83,7 +84,7 @@ const modeStyles = css`
   background-color: ${uiColors.white};
   font-family: ${fontFamilies.default};
   border-radius: 24px;
-  padding: 35px 40px;
+  padding: 40px 36px;
   box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
 `;
 
@@ -165,6 +166,8 @@ const closeButton: Record<
   },
 };
 
+const closeClassName = createUniqueClassName();
+
 function ModalView({
   open = false,
   size = ModalSize.Default,
@@ -199,8 +202,11 @@ function ModalView({
   const focusTrapOptions = initialFocus
     ? {
         initialFocus: `#${id} ${initialFocus}`,
+        fallbackFocus: `#${id} .${closeClassName}`,
       }
-    : {};
+    : {
+        fallbackFocus: `#${id} .${closeClassName}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
+      };
 
   return (
     <Transition
@@ -270,6 +276,7 @@ function ModalView({
                         baseCloseButtonStyles,
                         closeButton[mode][closeIconColor],
                         closeButton[mode].position,
+                        closeClassName,
                       )}
                       darkMode={darkMode}
                     >

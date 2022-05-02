@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.9.0
+
+### Minor Changes
+
+- 500d6c60: Adds Cursor, Diagram2, Diagram3, Link, SplitHorizontal, SplitVertical, and Sweep icons to the Icon component.
+
 ## 11.8.0
 
 ### Minor Changes

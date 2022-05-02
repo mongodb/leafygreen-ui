@@ -2,18 +2,16 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { Mode } from '../types';
+import { Mode } from './types';
 import { palette } from '@leafygreen-ui/palette';
-import { useUpdatedBaseFontSize } from '../useUpdatedBaseFontSize';
+import { useUpdatedBaseFontSize } from './useUpdatedBaseFontSize';
 
-const descriptionStyle = css`
+const labelStyle = css`
   font-family: ${fontFamilies.default};
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0;
+  font-weight: bold;
 `;
 
-const descriptionTypeScale: Record<BaseFontSize, string> = {
+const labelTypeScale: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
@@ -24,16 +22,16 @@ const descriptionTypeScale: Record<BaseFontSize, string> = {
   `,
 };
 
-const descriptionColorStyle: Record<Mode, string> = {
+const labelColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${palette.gray.dark1};
+    color: ${palette.black};
   `,
   [Mode.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.white};
   `,
 };
 
-const disabledDescriptionColorStyle: Record<Mode, string> = {
+const disabledLabelColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${palette.gray.base};
   `,
@@ -42,37 +40,38 @@ const disabledDescriptionColorStyle: Record<Mode, string> = {
   `,
 };
 
-type DescriptionProps = HTMLElementProps<'p', never> & {
+type LabelProps = HTMLElementProps<'label', never> & {
   darkMode?: boolean;
+  htmlFor: string;
   disabled?: boolean;
 };
 
-export const Description = ({
+export const Label = ({
   darkMode = false,
-  disabled = false,
-  children,
   className,
+  children,
+  disabled = false,
   ...rest
-}: DescriptionProps) => {
+}: LabelProps) => {
   const baseFontSize = useUpdatedBaseFontSize();
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
-    <p
+    <label
       className={cx(
-        descriptionStyle,
-        descriptionColorStyle[mode],
-        descriptionTypeScale[baseFontSize],
-        {
-          [disabledDescriptionColorStyle[mode]]: disabled,
-        },
+        labelStyle,
+        labelColorStyle[mode],
+        labelTypeScale[baseFontSize],
+        { [disabledLabelColorStyle[mode]]: disabled },
         className,
       )}
       {...rest}
     >
       {children}
-    </p>
+    </label>
   );
 };
 
-Description.displayName = 'Description';
+Label.displayName = 'Label';
+
+export default Label;
