@@ -1,20 +1,18 @@
-import { ComponentType, isValidElement, ReactElement, ReactNode } from 'react';
+import { ComponentType, isValidElement, ReactNode } from 'react';
 import { LGGlyph } from './types';
 
 type ExtendedComponentType = ComponentType<any> & {
   [key: string]: any;
 };
 /** Helper type to check if element is a LeafyGreen UI Glyph  */
-function isComponentGlyph(
-  node: ReactNode,
-): node is ReactElement<LGGlyph.ComponentProps>;
+function isComponentGlyph(node: ReactNode): node is LGGlyph.Element;
 function isComponentGlyph(
   component: ExtendedComponentType,
 ): component is LGGlyph.Component;
 function isComponentGlyph(
   child: ReactNode | ExtendedComponentType,
-): child is ReactElement<LGGlyph.ComponentProps> | LGGlyph.Component {
-  // If we're received a rendered component
+): child is LGGlyph.Element | LGGlyph.Component {
+  // If we're received a rendered component (i.e. ReactNode)
   if (isValidElement(child)) {
     return (
       child != null &&
