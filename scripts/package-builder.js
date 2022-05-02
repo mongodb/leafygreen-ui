@@ -67,6 +67,9 @@ const packageJSON = `
       "type": "git",
       "url": "https://github.com/mongodb/leafygreen-ui"
     },
+    "bugs": {
+      "url": "https://jira.mongodb.org/projects/PD/summary"
+    },
     "publishConfig": {
       "access": "public"
     },
