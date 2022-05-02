@@ -6,7 +6,7 @@ import { toJson } from 'xml2json';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { typeIs } from '@leafygreen-ui/lib';
-import { LGGlyph, SVGR } from './types';
+import { SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
 import createGlyphComponent from './createGlyphComponent';
 import EditIcon from '@leafygreen-ui/icon/dist/Edit';
