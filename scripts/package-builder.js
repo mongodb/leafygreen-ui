@@ -62,6 +62,11 @@ const packageJSON = `
       "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
     },
     "license": "Apache-2.0",
+    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/${PACKAGE_LC}",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mongodb/leafygreen-ui"
+    },
     "publishConfig": {
       "access": "public"
     },
