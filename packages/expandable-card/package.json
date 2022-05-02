@@ -25,5 +25,13 @@
     "@leafygreen-ui/lib": "^9.2.1",
     "@leafygreen-ui/typography": "^11.0.0",
     "react-transition-group": "^4.4.1"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/expandable-card",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }

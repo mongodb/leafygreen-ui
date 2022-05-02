@@ -25,5 +25,13 @@
   },
   "devDependencies": {
     "@leafygreen-ui/lib": "^9.0.1"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ripple",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }

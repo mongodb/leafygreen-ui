@@ -30,5 +30,13 @@
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.2.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }
