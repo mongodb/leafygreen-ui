@@ -35,8 +35,11 @@ import Connect from './Connect.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
 import CurlyBraces from './CurlyBraces.svg';
+import Cursor from './Cursor.svg';
 import Database from './Database.svg';
 import Diagram from './Diagram.svg';
+import Diagram2 from './Diagram2.svg';
+import Diagram3 from './Diagram3.svg';
 import Disconnect from './Disconnect.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
@@ -56,6 +59,7 @@ import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
+import Link from './Link.svg';
 import Lock from './Lock.svg';
 import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
@@ -82,8 +86,11 @@ import Settings from './Settings.svg';
 import Shell from './Shell.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
+import SplitHorizontal from './SplitHorizontal.svg';
+import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
 import Support from './Support.svg';
+import Sweep from './Sweep.svg';
 import Table from './Table.svg';
 import TimeSeries from './TimeSeries.svg';
 import Trash from './Trash.svg';
@@ -134,8 +141,11 @@ const glyphs = {
   Copy,
   CreditCard,
   CurlyBraces,
+  Cursor,
   Database,
   Diagram,
+  Diagram2,
+  Diagram3,
   Disconnect,
   Download,
   Edit,
@@ -155,6 +165,7 @@ const glyphs = {
   InviteUser,
   Key,
   Laptop,
+  Link,
   Lock,
   MagnifyingGlass,
   Megaphone,
@@ -181,8 +192,11 @@ const glyphs = {
   Shell,
   SortAscending,
   SortDescending,
+  SplitHorizontal,
+  SplitVertical,
   Stitch,
   Support,
+  Sweep,
   Table,
   TimeSeries,
   Trash,

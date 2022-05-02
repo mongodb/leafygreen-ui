@@ -7,6 +7,7 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Mode } from './types';
+import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
 
 const copiedStyle = css`
   color: ${palette.white};
@@ -60,15 +61,12 @@ interface CopyProps {
   withLanguageSwitcher?: boolean;
 }
 
-function CopyButton({
-  onCopy,
-  contents,
-  darkMode,
-  withLanguageSwitcher = false,
-}: CopyProps) {
+function CopyButton({ onCopy, contents, darkMode }: CopyProps) {
   const [copied, setCopied] = useState(false);
   const [buttonNode, setButtonNode] = useState(null);
   const mode = darkMode ? Mode.Dark : Mode.Light;
+
+  const { portalContainer } = usePopoverPortalContainer();
 
   useEffect(() => {
     if (!buttonNode) {
@@ -77,6 +75,7 @@ function CopyButton({
 
     const clipboard = new ClipboardJS(buttonNode, {
       text: () => contents,
+      container: portalContainer,
     });
 
     if (copied) {
@@ -88,7 +87,7 @@ function CopyButton({
     }
 
     return () => clipboard.destroy();
-  }, [buttonNode, contents, copied]);
+  }, [buttonNode, contents, copied, portalContainer]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();

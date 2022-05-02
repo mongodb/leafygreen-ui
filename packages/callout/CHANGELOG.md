@@ -1,5 +1,19 @@
 # @leafygreen-ui/callout
 
+## 5.0.0
+
+### Major Changes
+
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- Updated dependencies [5f28fce1]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/icon@11.9.0
+  - @leafygreen-ui/typography@11.0.0
+
 ## 4.0.1
 
 ### Patch Changes
