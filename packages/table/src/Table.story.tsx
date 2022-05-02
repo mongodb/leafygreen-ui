@@ -1,7 +1,30 @@
 /* eslint-disable */
+import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
-import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
+import {
+  Table as LGTable,
+  Row,
+  Cell,
+  TableHeader,
+  HeaderRow,
+  DataType,
+  TableRowInterface,
+} from '.';
 import { defaultData, multiRowData } from './fixtures';
+import { TableProps } from './Table';
+
+type TableStoryProps = Omit<TableProps<any>, 'children'> & {
+  children: (
+    withHeaders: boolean,
+  ) => (TableRowArgs: TableRowInterface<any>) => JSX.Element;
+  withHeaders: boolean;
+};
+
+const Table: React.FC<TableStoryProps> = ({
+  children,
+  withHeaders,
+  ...args
+}: TableStoryProps) => <LGTable children={children(withHeaders)} {...args} />;
 
 export default {
   title: 'Packages/Table',
@@ -15,26 +38,27 @@ export default {
   parameters: {
     controls: { exclude: ['children', 'data', 'columns'] },
   },
-};
+} as Meta<typeof Table>;
 
-const Template = ({ children, withHeaders, ...args }) => (
-  <Table {...args}>{children(withHeaders)}</Table>
+const Template: ComponentStory<typeof Table> = (args: TableStoryProps) => (
+  <Table {...args} />
 );
 
 export const Basic = Template.bind({});
 Basic.args = {
   withHeaders: false,
   data: defaultData.slice(0, 8),
-  columns:
+  columns: (
     <HeaderRow>
-        <TableHeader key="name" label="Name" dataType="string" />
-        <TableHeader key="age" label="Age" dataType="number" />
-        <TableHeader key="color" label="Color" dataType="string" />
-        <TableHeader key="location" label="Location" />
-      </HeaderRow>,
+      <TableHeader key="name" label="Name" dataType="string" />
+      <TableHeader key="age" label="Age" dataType="number" />
+      <TableHeader key="color" label="Color" dataType="string" />
+      <TableHeader key="location" label="Location" />
+    </HeaderRow>
+  ),
   children:
-    withHeaders =>
-    ({ datum }) =>
+    (withHeaders: boolean) =>
+    ({ datum }: { datum: any }) =>
       (
         <Row key={datum.name}>
           <Cell isHeader={withHeaders}>{datum.name}</Cell>
@@ -43,21 +67,22 @@ Basic.args = {
           <Cell>{datum.location}</Cell>
         </Row>
       ),
-}
+};
 
 export const BuiltInZebraStripes = Template.bind({});
 BuiltInZebraStripes.args = {
   withHeaders: false,
-  columns:
+  columns: (
     <HeaderRow>
-        <TableHeader key="name" label="Name" dataType="string" />
-        <TableHeader key="age" label="Age" dataType="number" />
-        <TableHeader key="color" label="Color" dataType="string" />
-        <TableHeader key="location" label="Location" />
-      </HeaderRow>,
+      <TableHeader key="name" label="Name" dataType="string" />
+      <TableHeader key="age" label="Age" dataType="number" />
+      <TableHeader key="color" label="Color" dataType="string" />
+      <TableHeader key="location" label="Location" />
+    </HeaderRow>
+  ),
   children:
-    withHeaders =>
-    ({ datum }) =>
+    (withHeaders: boolean) =>
+    ({ datum }: { datum: any }) =>
       (
         <Row key={datum.name}>
           <Cell isHeader={withHeaders}>{datum.name}</Cell>
@@ -66,7 +91,7 @@ BuiltInZebraStripes.args = {
           <Cell>{datum.location}</Cell>
         </Row>
       ),
-}
+};
 
 export const CustomLogic = Template.bind({});
 CustomLogic.args = {
@@ -77,8 +102,8 @@ CustomLogic.args = {
         dataType={DataType.String}
         label="Name"
         key="name"
-        compareFn={(a, b, dir) => {
-          const reverse = (str) => str.split('').reverse().join('');
+        compareFn={(a: any, b: any, dir) => {
+          const reverse = (str: string) => str.split('').reverse().join('');
 
           // Pin 'Yvonne' to the top
           if (b.name === 'Yvonne') return 1;
@@ -97,14 +122,14 @@ CustomLogic.args = {
         dataType={DataType.Number}
         label="Age"
         key="age"
-        sortBy={(data) => data.age.toString()}
+        sortBy={(datum: any) => datum.age.toString()}
       />
 
       <TableHeader
         dataType={DataType.String}
         label="Favorite Color"
         key="color"
-        sortBy={(data) => data.color}
+        sortBy={(datum: any) => datum.color}
       />
 
       <TableHeader
@@ -119,8 +144,8 @@ CustomLogic.args = {
     </>
   ),
   children:
-    withHeaders =>
-    ({ datum }) =>
+    (withHeaders: boolean) =>
+    ({ datum }: { datum: any }) =>
       (
         <Row key={datum.name} disabled={datum.disabled}>
           <Cell isHeader={withHeaders}>
@@ -188,8 +213,8 @@ MultiRowHeader.args = {
     </HeaderRow>,
   ],
   children:
-    withHeaders =>
-    ({ datum }) =>
+    (withHeaders: boolean) =>
+    ({ datum }: { datum: any }) =>
       (
         <Row>
           <Cell rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}>
@@ -209,7 +234,7 @@ NoNestedRows.args = {
       <TableHeader key="age" label="Age" dataType="number" />
       <TableHeader
         label="Color"
-        sortBy={(datum) => datum.color}
+        sortBy={(datum: any) => datum.color}
         dataType="string"
         key="color"
       />
@@ -217,8 +242,8 @@ NoNestedRows.args = {
     </HeaderRow>
   ),
   children:
-    withHeaders =>
-    ({ datum }) =>
+    (withHeaders: boolean) =>
+    ({ datum }: { datum: any }) =>
       (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell isHeader={withHeaders}>{datum.name}</Cell>
@@ -241,8 +266,8 @@ OverflowingTable.args = {
     </HeaderRow>
   ),
   children:
-    withHeaders =>
-    ({ datum }) =>
+    (withHeaders: boolean) =>
+    ({ datum }: { datum: any }) =>
       (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell isHeader={withHeaders}>{datum.name}</Cell>
@@ -277,14 +302,14 @@ MultipleNestedRows.args = {
     </HeaderRow>
   ),
   children:
-    withHeaders =>
-    ({ datum }) =>
+    (withHeaders: boolean) =>
+    ({ datum }: { datum: any }) =>
       (
         <Row key={datum.title}>
           <Cell isHeader={withHeaders}>{datum.title}</Cell>
 
           {datum.people ? (
-            datum.people.map(person => (
+            datum.people.map((person: any) => (
               <Row key={person.name}>
                 <Cell isHeader={withHeaders}>{person.name}</Cell>
                 <Cell>{person.age}</Cell>

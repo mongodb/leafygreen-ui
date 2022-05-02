@@ -11,11 +11,11 @@ export const tdInnerDiv = createDataProp('td-inner-div');
 interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
   isHeader: true;
-  isZebra?: boolean;
+  isAltColor?: boolean;
 }
 
 interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
-  isZebra?: boolean;
+  isAltColor?: boolean;
   isHeader?: false;
 }
 
@@ -56,7 +56,7 @@ const innerDivStyles = css`
 export type CellElement = React.ReactComponentElement<typeof Cell>;
 const Cell = React.forwardRef(
   (
-    { children, className, isHeader = false, isZebra, ...rest }: CellProps,
+    { children, className, isHeader = false, isAltColor, ...rest }: CellProps,
     ref: React.Ref<any>,
   ) => {
     const Root = isHeader ? 'th' : 'td';
@@ -71,10 +71,10 @@ const Cell = React.forwardRef(
         baseStyles,
         {
           [thStyles]: isHeader,
-          [lightModeThStyles]: isHeader && !darkMode && !isZebra,
-          [lightModeZebraThStyles]: isHeader && !darkMode && isZebra,
-          [darkModeThStyles]: isHeader && darkMode && !isZebra,
-          [darkModeZebraThStyles]: isHeader && darkMode && isZebra,
+          [lightModeThStyles]: isHeader && !darkMode && !isAltColor,
+          [lightModeZebraThStyles]: isHeader && !darkMode && isAltColor,
+          [darkModeThStyles]: isHeader && darkMode && !isAltColor,
+          [darkModeZebraThStyles]: isHeader && darkMode && isAltColor,
         },
         className,
       ),
