@@ -73,7 +73,8 @@ export interface ComboboxMultiselectProps<M extends boolean> {
    */
   multiselect?: M;
   /**
-   * The initial selection.
+   * The `value` of the initial selection.
+   * Mapped to the `value` prop of the provided options. (See note on default `value`s)
    * Must be a string for a single-select, or an array of strings for multiselect.
    * Changing the initialValue after initial render will not change the selection.
    */
