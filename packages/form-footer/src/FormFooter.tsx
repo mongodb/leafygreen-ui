@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
-import ChevronLeftIcon from '@leafygreen-ui/icon/dist/ChevronLeft';
+import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 
 const footerStyle = css`
@@ -122,7 +122,7 @@ export default function FormFooter({
             variant="default"
             onClick={onBackClick}
             className={buttonStyle}
-            leftGlyph={<ChevronLeftIcon />}
+            leftGlyph={<ArrowLeftIcon />}
           >
             {backButtonText}
           </Button>
