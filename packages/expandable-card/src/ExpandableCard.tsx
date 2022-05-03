@@ -17,14 +17,15 @@ const cardStyle = (darkMode: boolean) => css`
   --card-divider-color: ${darkMode ? uiColors.gray.base : uiColors.gray.light2};
   display: block;
   width: 100%;
+  padding: 0;
 `;
 
 const summaryStyle = css`
   display: grid;
   grid-template-columns: auto 24px;
+  padding: 24px;
   column-gap: 8px;
   cursor: pointer;
-  padding: 24px;
   color: inherit;
 `;
 
@@ -254,7 +255,7 @@ const ExpandableCard = ({
         className={summaryStyle}
         onClick={onClick}
         onKeyPress={onClick}
-        tabIndex={0}
+        tabIndex={-1}
       >
         <span>
           <Subtitle className={summaryHeader}>{title}</Subtitle>
@@ -269,6 +270,7 @@ const ExpandableCard = ({
               glyph="ChevronUp"
               size={24}
               fill={palette.gray.base}
+              tabIndex={0}
             />
           )}
         </Transition>
