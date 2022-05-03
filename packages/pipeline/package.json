@@ -30,5 +30,13 @@
     "react-intersection-observer": "8.25.1",
     "react-merge-refs": "^1.0.0"
   },
-  "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
+  "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
 }

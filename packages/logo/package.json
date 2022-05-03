@@ -23,5 +23,13 @@
     "@leafygreen-ui/lib": "^9.0.0",
     "@leafygreen-ui/emotion": "^4.0.0",
     "@leafygreen-ui/palette": "^3.2.2"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }

@@ -23,5 +23,13 @@
     "@leafygreen-ui/lib": "^9.2.1",
     "@leafygreen-ui/banner": "^4.0.0",
     "@leafygreen-ui/button": "^15.0.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-footer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }
