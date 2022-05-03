@@ -11,11 +11,13 @@ export const tdInnerDiv = createDataProp('td-inner-div');
 interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
   isHeader: true;
+  isDisabled?: boolean;
   isAltColor?: boolean;
 }
 
 interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
   isAltColor?: boolean;
+  isDisabled?: boolean;
   isHeader?: false;
 }
 
@@ -53,10 +55,22 @@ const innerDivStyles = css`
   align-items: center;
 `;
 
+const disabledHeaderStyles = css`
+  border-top: 1px inset ${palette.gray.light3};
+  border-bottom: 1px inset ${palette.gray.light3};
+`;
+
 export type CellElement = React.ReactComponentElement<typeof Cell>;
 const Cell = React.forwardRef(
   (
-    { children, className, isHeader = false, isAltColor, ...rest }: CellProps,
+    {
+      children,
+      className,
+      isHeader = false,
+      isAltColor,
+      isDisabled,
+      ...rest
+    }: CellProps,
     ref: React.Ref<any>,
   ) => {
     const Root = isHeader ? 'th' : 'td';
@@ -75,6 +89,7 @@ const Cell = React.forwardRef(
           [lightModeZebraThStyles]: isHeader && !darkMode && isAltColor,
           [darkModeThStyles]: isHeader && darkMode && !isAltColor,
           [darkModeZebraThStyles]: isHeader && darkMode && isAltColor,
+          [disabledHeaderStyles]: isHeader && isDisabled,
         },
         className,
       ),
@@ -88,7 +103,13 @@ const Cell = React.forwardRef(
     return (
       <Root {...props} {...rest}>
         <div className={innerDivStyles} {...tdInnerDiv.prop}>
-          <span>{children}</span>
+          <span
+            className={css`
+              display: flex;
+            `}
+          >
+            {children}
+          </span>
         </div>
       </Root>
     );

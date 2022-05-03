@@ -50,8 +50,8 @@ const modeStyles = {
       background-color: ${palette.gray.light2};
       color: ${palette.gray.base};
       cursor: not-allowed;
-      box-shadow: 0 -1px 0 inset ${palette.gray.light1},
-        0 1px 0 inset ${palette.gray.light1};
+      border-top: 1px inset ${palette.gray.light1};
+      border-bottom: 1px inset ${palette.gray.light1};
     `,
   },
 
@@ -357,6 +357,7 @@ const Row = React.forwardRef(
             React.cloneElement(child, {
               children: <span>{child.props.children}</span>,
               key: `${indexRef.current}-${index}`,
+              isDisabled: disabled,
               isAltColor: shouldAltRowColor && index % 2 === 0,
               isHeader: child.props.isHeader && !disabled,
               ...child.props,
@@ -379,7 +380,8 @@ const Row = React.forwardRef(
             <Icon aria-hidden />
           </IconButton>
         );
-        const { children: firstChildChildren, ...firstChildProps } = renderedChildren[0].props;
+        const { children: firstChildChildren, ...firstChildProps } =
+          renderedChildren[0].props;
         renderedChildren[0] = React.cloneElement(renderedChildren[0], {
           children: (
             <>
@@ -400,6 +402,7 @@ const Row = React.forwardRef(
       setIsExpanded,
       darkMode,
       shouldAltRowColor,
+      disabled,
     ]);
 
     const alignmentStyles = columnInfo
