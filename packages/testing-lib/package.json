@@ -19,5 +19,13 @@
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "restricted"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/testing-lib",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }
