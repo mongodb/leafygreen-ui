@@ -12,11 +12,9 @@ interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
   isHeader: true;
   isDisabled?: boolean;
-  isAltColor?: boolean;
 }
 
 interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
-  isAltColor?: boolean;
   isDisabled?: boolean;
   isHeader?: false;
 }
@@ -32,22 +30,14 @@ const thStyles = css`
   font-weight: 600;
 `;
 
-const darkModeThStyles = css`
-  border-right: 3px solid ${palette.gray.dark1};
-  background-color: ${palette.gray.dark2};
-`;
-
-const darkModeZebraThStyles = css`
-  border-right: 3px solid ${palette.gray.dark2};
-`;
-
 const lightModeThStyles = css`
   border-right: 3px solid ${palette.gray.light2};
   background-color: ${palette.gray.light3};
 `;
 
-const lightModeZebraThStyles = css`
-  border-right: 3px solid ${palette.gray.light2};
+const darkModeThStyles = css`
+  border-right: 3px solid ${palette.gray.dark1};
+  background-color: ${palette.gray.dark2};
 `;
 
 const innerDivStyles = css`
@@ -55,22 +45,22 @@ const innerDivStyles = css`
   align-items: center;
 `;
 
-const disabledHeaderStyles = css`
-  border-top: 1px inset ${palette.gray.light3};
-  border-bottom: 1px inset ${palette.gray.light3};
+const lightModeDisabledHeaderStyles = css`
+  border-top: 1px solid ${palette.gray.light3};
+  border-bottom: 1px solid ${palette.gray.light3};
+  color: ${palette.black};
+  cursor: auto;
+`;
+
+const darkModeDisabledHeaderStyles = css`
+  color: ${palette.white};
+  cursor: auto;
 `;
 
 export type CellElement = React.ReactComponentElement<typeof Cell>;
 const Cell = React.forwardRef(
   (
-    {
-      children,
-      className,
-      isHeader = false,
-      isAltColor,
-      isDisabled,
-      ...rest
-    }: CellProps,
+    { children, className, isHeader = false, isDisabled, ...rest }: CellProps,
     ref: React.Ref<any>,
   ) => {
     const Root = isHeader ? 'th' : 'td';
@@ -85,11 +75,10 @@ const Cell = React.forwardRef(
         baseStyles,
         {
           [thStyles]: isHeader,
-          [lightModeThStyles]: isHeader && !darkMode && !isAltColor,
-          [lightModeZebraThStyles]: isHeader && !darkMode && isAltColor,
-          [darkModeThStyles]: isHeader && darkMode && !isAltColor,
-          [darkModeZebraThStyles]: isHeader && darkMode && isAltColor,
-          [disabledHeaderStyles]: isHeader && isDisabled,
+          [lightModeThStyles]: isHeader && !darkMode,
+          [darkModeThStyles]: isHeader && darkMode,
+          [lightModeDisabledHeaderStyles]: isHeader && isDisabled && !darkMode,
+          [darkModeDisabledHeaderStyles]: isHeader && isDisabled && darkMode,
         },
         className,
       ),

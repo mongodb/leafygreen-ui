@@ -195,7 +195,10 @@ export const MultiRowHeader = ({ withHeaders, ...args }: TableArgs<any>) => (
   >
     {({ datum }: { datum: any }) => (
       <Row>
-        <Cell rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}>
+        <Cell
+          isHeader={withHeaders}
+          rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}
+        >
           {datum.flavor}
         </Cell>
         <Cell>{datum.price}</Cell>
@@ -221,29 +224,6 @@ export const NoNestedRows = ({ withHeaders, ...args }: TableArgs<any>) => (
           dataType="string"
           key="color"
         />
-        <TableHeader key="location" label="Location" />
-      </HeaderRow>
-    }
-  >
-    {({ datum }: { datum: any }) => (
-      <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
-        <Cell isHeader={withHeaders}>{datum.name}</Cell>
-        <Cell>{datum.age}</Cell>
-        <Cell>{datum.color}</Cell>
-        <Cell>{datum.location}</Cell>
-      </Row>
-    )}
-  </Table>
-);
-
-export const OverflowingTable = ({ withHeaders, ...args }: TableArgs<any>) => (
-  <Table
-    {...args}
-    columns={
-      <HeaderRow>
-        <TableHeader key="name" label="Name" dataType="string" />
-        <TableHeader key="age" label="Age" dataType="number" />
-        <TableHeader label="Color" dataType="string" key="color" />
         <TableHeader key="location" label="Location" />
       </HeaderRow>
     }

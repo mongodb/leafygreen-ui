@@ -44,6 +44,10 @@ const modeStyles = {
       &:nth-of-type(even) {
         background-color: ${palette.gray.light3};
       }
+
+      &:nth-of-type(odd) > th {
+        background-color: ${palette.white};
+      }
     `,
 
     disabledStyle: css`
@@ -66,14 +70,20 @@ const modeStyles = {
       &:nth-of-type(even) {
         background-color: ${uiColors.gray.dark2};
       }
+
+      &:nth-of-type(odd) > th {
+        background-color: ${palette.gray.dark3};
+      }
+
+      > th {
+        box-shadow: 0 -1px 0 inset ${uiColors.gray.dark1};
+      }
     `,
 
     disabledStyle: css`
       background-color: ${uiColors.gray.dark1};
       color: ${uiColors.gray.base};
       cursor: not-allowed;
-      box-shadow: 0 -1px 0 inset ${uiColors.gray.base},
-        0 1px 0 inset ${uiColors.gray.base};
     `,
   },
 };
@@ -358,7 +368,6 @@ const Row = React.forwardRef(
               children: <span>{child.props.children}</span>,
               key: `${indexRef.current}-${index}`,
               isDisabled: disabled,
-              isAltColor: shouldAltRowColor && index % 2 === 0,
               isHeader: child.props.isHeader && !disabled,
               ...child.props,
             }),
@@ -401,7 +410,6 @@ const Row = React.forwardRef(
       isExpanded,
       setIsExpanded,
       darkMode,
-      shouldAltRowColor,
       disabled,
     ]);
 
