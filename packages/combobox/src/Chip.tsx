@@ -5,8 +5,8 @@ import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { createDataProp } from '@leafygreen-ui/lib';
 import { keyMap } from './util';
+import { chipClassName } from './Combobox.styles';
 
 const chipWrapperStyle = ({
   darkMode,
@@ -182,17 +182,14 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       }
     };
 
-    const dataProp = createDataProp('combobox-chip');
-
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
       <span
         role="option"
         aria-selected={isFocused}
         data-test-id="lg-combobox-chip"
-        {...dataProp.prop}
         ref={forwardedRef}
-        className={chipWrapperStyle({ darkMode, size })}
+        className={cx(chipClassName, chipWrapperStyle({ darkMode, size }))}
         onClick={handleChipClick}
         tabIndex={-1}
       >
