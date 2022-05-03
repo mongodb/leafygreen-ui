@@ -1,6 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { storiesOf } from '@storybook/react';
-import { boolean, select, text, number } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
+import { ComponentMeta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
@@ -79,7 +78,74 @@ const content = (
   </Body>
 );
 
-function RealmSideNav() {
+export default {
+  title: 'Packages/SideNav',
+  component: SideNav,
+  parameters: {
+    controls: {
+      exclude: ['children', 'id', 'className'],
+    },
+  },
+} as ComponentMeta<typeof SideNav>;
+
+export const Basic = ({
+  isCollapsible,
+  isDisabled,
+  groupHeaderText,
+  navItemText,
+}: any) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const textHeader = 'States';
+
+  return (
+    <LeafyGreenProvider>
+      <div className={appContainer}>
+        <MongoNavPlaceholder />
+        <SideNav
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          className={sideNavStyles}
+          aria-label="General example"
+        >
+          <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
+            <SideNavItem active>Active State</SideNavItem>
+            <SideNavItem disabled>Disabled State</SideNavItem>
+          </SideNavGroup>
+
+          <SideNavGroup header="Test">
+            <SideNavItem>Default root element</SideNavItem>
+            <SideNavItem href="/">Anchor root element</SideNavItem>
+            <SideNavItem>Another item</SideNavItem>
+          </SideNavGroup>
+
+          <SideNavGroup
+            // hasActiveItem={hasActiveItem}
+            glyph={<Icon glyph="Warning" />}
+            header={groupHeaderText}
+            collapsible={isCollapsible}
+          >
+            <SideNavItem disabled={isDisabled}>{navItemText}</SideNavItem>
+            <SideNavItem>Dave</SideNavItem>
+            <SideNavItem>Brooke</SideNavItem>
+            <SideNavItem>Rob</SideNavItem>
+            <SideNavItem>Michael</SideNavItem>
+            <SideNavItem>Fred</SideNavItem>
+            <SideNavItem>Harry</SideNavItem>
+          </SideNavGroup>
+        </SideNav>
+        {content}
+      </div>
+    </LeafyGreenProvider>
+  );
+};
+Basic.args = {
+  isCollapsible: true,
+  isDisabled: false,
+  groupHeaderText: 'Header text',
+  navItemText: 'Modify Me!',
+};
+
+export const Realm = () => {
   return (
     <LeafyGreenProvider>
       <MongoNavPlaceholder />
@@ -139,9 +205,9 @@ function RealmSideNav() {
       </div>
     </LeafyGreenProvider>
   );
-}
+};
 
-function OrgSettingsSideNav() {
+export const OrgSettings = ({ baseFontSize, widthOverride }: any) => {
   return (
     <LeafyGreenProvider>
       <div className={appContainer}>
@@ -149,8 +215,8 @@ function OrgSettingsSideNav() {
         <SideNav
           className={sideNavStyles}
           aria-label="Realm app"
-          baseFontSize={select('baseFontSize', [14, 16], 14)}
-          widthOverride={number('widthOverride', 200)}
+          baseFontSize={baseFontSize}
+          widthOverride={widthOverride}
         >
           <SideNavGroup
             glyph={<Icon glyph="Cloud" />}
@@ -212,61 +278,19 @@ function OrgSettingsSideNav() {
       </div>
     </LeafyGreenProvider>
   );
-}
+};
+OrgSettings.args = {
+  baseFontSize: 14,
+  widthOverride: 200,
+};
+OrgSettings.argTypes = {
+  baseFontSize: {
+    options: [14, 16],
+    control: { type: 'select' },
+  },
+};
 
-function MockSideNav() {
-  const [collapsed, setCollapsed] = useState(false);
-  const textHeader = 'States';
-  const hasActiveItem = boolean('hasActiveItem', false);
-
-  return (
-    <LeafyGreenProvider>
-      <div className={appContainer}>
-        <MongoNavPlaceholder />
-        <SideNav
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
-          className={sideNavStyles}
-          aria-label="General example"
-        >
-          <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
-            <SideNavItem active>Active State</SideNavItem>
-            <SideNavItem disabled>Disabled State</SideNavItem>
-          </SideNavGroup>
-
-          <SideNavGroup header="Test">
-            <SideNavItem>Default root element</SideNavItem>
-            <SideNavItem href="/">Anchor root element</SideNavItem>
-            <SideNavItem>Another item</SideNavItem>
-          </SideNavGroup>
-
-          <SideNavGroup
-            hasActiveItem={hasActiveItem}
-            glyph={<Icon glyph="Warning" />}
-            header={text('Header Text', 'With Knobs!')}
-            collapsible={boolean('collapsible', true)}
-          >
-            <SideNavItem disabled={boolean('Disabled', false)}>
-              {text('Nav Item Text', 'Modify Me!')}
-            </SideNavItem>
-            <SideNavItem href={text('href', 'https://google.com/')}>
-              Dave
-            </SideNavItem>
-            <SideNavItem>Brooke</SideNavItem>
-            <SideNavItem>Rob</SideNavItem>
-            <SideNavItem>Michael</SideNavItem>
-            <SideNavItem>Fred</SideNavItem>
-            <SideNavItem>Harry</SideNavItem>
-          </SideNavGroup>
-        </SideNav>
-
-        {content}
-      </div>
-    </LeafyGreenProvider>
-  );
-}
-
-function NestedGroups() {
+export const Nested = () => {
   return (
     <LeafyGreenProvider>
       <div className={appContainer}>
@@ -298,112 +322,4 @@ function NestedGroups() {
       </div>
     </LeafyGreenProvider>
   );
-}
-
-storiesOf('Packages/SideNav', module)
-  .add('Simple Navigation', () => <MockSideNav />)
-  .add('Realm', () => <RealmSideNav />)
-  .add('Org Settings', () => <OrgSettingsSideNav />)
-  .add('NestedGroups', () => <NestedGroups />)
-  .add('Nested Repro', () => {
-    const [active, setActive] = useState('gala');
-
-    const onClick = useCallback(e => {
-      setActive(e.target.dataset.id);
-    }, []);
-
-    return (
-      <LeafyGreenProvider>
-        <div className={appContainer}>
-          <SideNav widthOverride={300} aria-label="nav">
-            <SideNavItem
-              data-id="apple"
-              onClick={onClick}
-              active={active === 'apple'}
-            >
-              Apple
-              <SideNavItem
-                data-id="mcintosh"
-                onClick={onClick}
-                active={active === 'mcintosh'}
-              >
-                McIntosh
-              </SideNavItem>
-              <SideNavItem
-                data-id="reddelicious"
-                onClick={onClick}
-                active={active === 'reddelicious'}
-              >
-                Red delicious
-              </SideNavItem>
-              <SideNavItem
-                data-id="gala"
-                onClick={onClick}
-                active={active === 'gala'}
-              >
-                Gala
-              </SideNavItem>
-            </SideNavItem>
-            <SideNavItem
-              data-id="banana"
-              onClick={onClick}
-              active={active === 'banana'}
-            >
-              Banana
-              <SideNavItem
-                data-id="yellow"
-                onClick={onClick}
-                active={active === 'yellow'}
-              >
-                Yellow
-              </SideNavItem>
-              <SideNavItem
-                data-id="green"
-                onClick={onClick}
-                active={active === 'green'}
-              >
-                Green
-              </SideNavItem>
-              <SideNavItem
-                data-id="plantain"
-                onClick={onClick}
-                active={active === 'plantain'}
-              >
-                Plantain
-              </SideNavItem>
-            </SideNavItem>
-            <SideNavItem
-              data-id="carrot"
-              onClick={onClick}
-              active={active === 'carrot'}
-            >
-              Carrot
-              <SideNavItem
-                data-id="orange"
-                onClick={onClick}
-                active={active === 'orange'}
-              >
-                Orange
-              </SideNavItem>
-              <SideNavItem
-                data-id="turnip"
-                onClick={onClick}
-                active={active === 'turnip'}
-              >
-                Turnip
-              </SideNavItem>
-              <SideNavItem
-                data-id="parsnip"
-                onClick={onClick}
-                active={active === 'parsnip'}
-              >
-                Parsnip
-              </SideNavItem>
-            </SideNavItem>
-          </SideNav>
-
-          {content}
-        </div>
-      </LeafyGreenProvider>
-    );
-  });
+};
