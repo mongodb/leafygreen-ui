@@ -31,5 +31,13 @@
     "@leafygreen-ui/palette": "^3.3.2",
     "@leafygreen-ui/popover": "^8.0.0",
     "@leafygreen-ui/typography": "^11.0.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }

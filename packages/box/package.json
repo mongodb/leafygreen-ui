@@ -22,5 +22,13 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^9.0.0",
     "lodash": "^4.17.21"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/box",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }

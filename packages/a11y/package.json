@@ -23,5 +23,13 @@
     "@leafygreen-ui/hooks": "^7.0.0",
     "@leafygreen-ui/lib": "^9.0.0",
     "@leafygreen-ui/emotion": "^4.0.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/a11y",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }
