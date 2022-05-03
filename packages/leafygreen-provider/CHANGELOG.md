@@ -1,5 +1,11 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 2.2.0
+
+### Minor Changes
+
+- 5f28fce1: Adds popover context to store whether a popover is open or not.
+
 ## 2.1.3
 
 ### Patch Changes

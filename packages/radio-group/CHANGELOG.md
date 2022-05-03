@@ -1,5 +1,12 @@
 # @leafygreen-ui/radio-group
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [e13d2487]
+  - @leafygreen-ui/interaction-ring@3.0.0
+
 ## 8.0.0
 
 ### Major Changes

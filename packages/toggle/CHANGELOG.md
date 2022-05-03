@@ -1,5 +1,14 @@
 # @leafygreen-ui/toggle
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [e13d2487]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/interaction-ring@3.0.0
+  - @leafygreen-ui/icon@11.9.0
+
 ## 8.0.0
 
 ### Major Changes

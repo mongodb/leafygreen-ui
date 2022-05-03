@@ -29,5 +29,13 @@
     "@leafygreen-ui/icon-button": "^9.1.6",
     "@leafygreen-ui/typography": "^9.1.1",
     "lodash": "^4.17.21"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }
