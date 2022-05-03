@@ -1,5 +1,18 @@
 # @leafygreen-ui/radio-box-group
 
+## 8.0.0
+
+### Major Changes
+
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/tokens@1.3.0
+
 ## 7.0.0
 
 ### Major Changes

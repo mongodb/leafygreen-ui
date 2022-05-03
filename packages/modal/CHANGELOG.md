@@ -1,5 +1,25 @@
 # @leafygreen-ui/modal
 
+## 9.0.0
+
+### Major Changes
+
+- 5f28fce1: Wraps modal in PopoverProvider to check if a popover is open. If open the modal will not close if `esc` is clicked. Adds peerDependency to leafygreen-provider.
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- 91e24dfe: Update focus-trap-react version to 8.10.0
+- 08fe9960: Update padding for base modal
+- Updated dependencies [e13d2487]
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/icon-button@11.0.0
+  - @leafygreen-ui/tokens@1.3.0
+  - @leafygreen-ui/icon@11.9.0
+
 ## 8.0.1
 
 ### Patch Changes

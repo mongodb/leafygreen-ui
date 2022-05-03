@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,16 +20,24 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/checkbox": "^7.0.0",
+    "@leafygreen-ui/checkbox": "^8.0.0",
     "@leafygreen-ui/emotion": "^4.0.0",
-    "@leafygreen-ui/icon": "^11.8.0",
-    "@leafygreen-ui/icon-button": "^10.0.0",
+    "@leafygreen-ui/icon": "^11.9.0",
+    "@leafygreen-ui/icon-button": "^11.0.0",
     "@leafygreen-ui/inline-definition": "^2.0.6",
-    "@leafygreen-ui/interaction-ring": "^1.1.1",
+    "@leafygreen-ui/interaction-ring": "^3.0.0",
     "@leafygreen-ui/hooks": "^7.2.0",
     "@leafygreen-ui/lib": "^9.2.0",
     "@leafygreen-ui/palette": "^3.3.2",
-    "@leafygreen-ui/popover": "^7.2.2",
-    "@leafygreen-ui/typography": "^8.1.0"
+    "@leafygreen-ui/popover": "^8.0.0",
+    "@leafygreen-ui/typography": "^11.0.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }

@@ -25,5 +25,13 @@
     "@leafygreen-ui/palette": "^3.3.1",
     "@leafygreen-ui/tooltip": "^7.0.0",
     "@leafygreen-ui/emotion": "^4.0.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/inline-definition",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }

@@ -1,5 +1,13 @@
 # @leafygreen-ui/popover
 
+## 8.0.0
+
+### Major Changes
+
+- e13d2487: Moving leafygreen-provider to peerDependencies.
+- Updated dependencies [5f28fce1]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
 ## 7.2.3
 
 ### Patch Changes
