@@ -48,7 +48,7 @@
     "publish": "npm-run-all --serial publish:*",
     "publish:packages": "yarn changeset publish --public",
     "publish:storybook": "yarn build:storybook && gh-pages --dist ./storybook-static",
-    "publish:website": "cd website && yarn build && yarn publish",
+    "publish:website": "cd website && yarn build && yarn run publish",
     "slackbot": "node ./scripts/slackbot.js",
     "start": "yarn start:storybook",
     "start:all": "npm-run-all --parallel start:storybook start:website",
