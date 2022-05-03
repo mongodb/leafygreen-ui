@@ -61,7 +61,6 @@ export const navStyles = css`
   position: relative;
   font-family: ${fontFamilies.default};
   background-color: ${palette.gray.light3};
-  border-right: 1px solid ${palette.gray.light2};
   z-index: 0;
   transition: ${collapseDuration}ms ease-in-out;
   transition-property: box-shadow, border-color, width;
@@ -73,7 +72,6 @@ export const navStyles = css`
 
 export const hoverNavStyles = css`
   box-shadow: 2px 0 4px ${transparentize(0.9, palette.black)};
-  border-right-color: ${palette.gray.light3};
 `;
 
 export const collapsedNavStyles = css`
