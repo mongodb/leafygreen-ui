@@ -368,7 +368,7 @@ const Row = React.forwardRef(
               children: <span>{child.props.children}</span>,
               key: `${indexRef.current}-${index}`,
               isDisabled: disabled,
-              isHeader: child.props.isHeader && !disabled,
+              isHeader: child.props.isHeader,
               ...child.props,
             }),
           );
