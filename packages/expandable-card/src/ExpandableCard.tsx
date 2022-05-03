@@ -36,6 +36,7 @@ const summaryHeader = css`
 
 const summaryText = css`
   color: inherit;
+  margin-top: 4px;
 `;
 
 const flagTextStyle = css`

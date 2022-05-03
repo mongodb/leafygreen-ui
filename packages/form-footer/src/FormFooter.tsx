@@ -11,11 +11,9 @@ import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 const footerStyle = css`
   min-height: 92px;
   width: 100%;
-  padding: 24px;
-  border: 1px solid ${uiColors.gray.light2};
+  padding: 24px; 
   box-shadow: 0px -4px 4px 0px ${transparentize(0.9, uiColors.black)};
   display: flex;
-  justify-content: center;
   align-items: center;
 `;
 
