@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { ComponentStory } from '@storybook/react';
+import React, { SyntheticEvent, useState } from 'react';
 import ExpandableCard from '.';
 
 export default {
@@ -13,26 +14,31 @@ export default {
   },
 };
 
-const Template = args => <ExpandableCard {...args} />;
+const Template: ComponentStory<typeof ExpandableCard> = args => (
+  <ExpandableCard {...args} />
+);
 
 export const Uncontrolled = Template.bind({});
 Uncontrolled.args = {};
 
-const ControlledTemplate = args => {
+export const Controlled: ComponentStory<typeof ExpandableCard> = args => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleClick = (
+    e: SyntheticEvent<
+      HTMLDivElement | HTMLButtonElement,
+      MouseEvent | KeyboardEvent
+    >,
+  ) => {
+    // eslint-disable-next-line no-console
+    console.log(`Parent controlling isOpen:`, e);
+    setIsOpen(isOpen => !isOpen);
+  };
+
   return (
-    <ExpandableCard
-      {...args}
-      isOpen={isOpen}
-      onClick={e => {
-        // eslint-disable-next-line no-console
-        console.log(`Parent controlling isOpen:`, e);
-        setIsOpen(isOpen => !isOpen);
-      }}
-    />
+    <div>
+      <button onClick={handleClick}>handleClick</button>
+      <ExpandableCard {...args} isOpen={isOpen} onClick={handleClick} />
+    </div>
   );
 };
-
-export const Controlled = ControlledTemplate.bind({});
-Controlled.args = {};

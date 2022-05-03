@@ -1,4 +1,5 @@
 import React from 'react';
+import { ComponentStory } from '@storybook/react';
 import ConfirmationModal, { Variant } from '.';
 
 export default {
@@ -16,7 +17,9 @@ export default {
   },
 };
 
-const Template = args => <ConfirmationModal {...args} />;
+const Template: ComponentStory<typeof ConfirmationModal> = args => (
+  <ConfirmationModal {...args} />
+);
 
 export const Basic = Template.bind({});
 Basic.args = {

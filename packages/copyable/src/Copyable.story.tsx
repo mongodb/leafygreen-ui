@@ -1,3 +1,4 @@
+import { ComponentStory } from '@storybook/react';
 import React from 'react';
 import Copyable from '.';
 
@@ -9,7 +10,7 @@ export default {
   },
 };
 
-const Template = args => (
+const Template: ComponentStory<typeof Copyable> = args => (
   <div>
     <Copyable {...args} />
   </div>
