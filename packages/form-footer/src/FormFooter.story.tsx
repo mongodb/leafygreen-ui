@@ -11,15 +11,9 @@ storiesOf('Packages/FormFooter', module)
     <div
       className={css`
         width: 100%;
-        // position: relative;
       `}
     >
       <FormFooter
-        // className={css`
-        //   position: absolute;
-        //   bottom: 0;
-        //   left: 0;
-        // `}
         primaryButton={{
           text: text('Primary button text', 'Save Draft'),
         }}

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Card from '@leafygreen-ui/card';
 import Icon from '@leafygreen-ui/icon';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
+import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import { palette, uiColors } from '@leafygreen-ui/palette';
@@ -266,13 +267,13 @@ const ExpandableCard = ({
 
         <Transition in={isOpen} timeout={transitionDuration}>
           {state => (
-            <Icon
+            <IconButton
               className={cx(iconStyle, iconTransitionStyle[state])}
-              glyph="ChevronUp"
-              size={24}
-              fill={palette.gray.base}
+              aria-label={title}
               tabIndex={0}
-            />
+            >
+              <Icon glyph="ChevronUp" size={24} fill={palette.gray.base} />
+            </IconButton>
           )}
         </Transition>
       </div>
