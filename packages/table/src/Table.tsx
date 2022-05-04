@@ -89,7 +89,7 @@ const ScrollState = {
 
 type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
-interface TableRowInterface<Shape = {}> {
+export interface TableRowInterface<Shape = {}> {
   datum: Shape;
 }
 
