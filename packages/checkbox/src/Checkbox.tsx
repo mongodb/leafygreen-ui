@@ -31,6 +31,7 @@ const containerStyle = css`
   position: relative;
   align-items: center;
   justify-content: flex-start;
+  z-index: 0;
 `;
 
 // Toggles on the animation timing
