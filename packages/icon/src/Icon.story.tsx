@@ -39,4 +39,4 @@ export const AllIcons: ComponentStory<typeof Icon> = args => (
       </div>
     ))}
   </>
-)
+);

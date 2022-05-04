@@ -1,6 +1,5 @@
 import React from 'react';
-import { ComponentStory, Meta, storiesOf } from '@storybook/react';
-import { boolean, text } from '@storybook/addon-knobs';
+import { ComponentStory, Meta } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -9,46 +8,50 @@ import FormFooter from '.';
 export default {
   title: 'Packages/FormFooter',
   component: FormFooter,
-  parameters: { 
-    controls: { 
-      exclude: ['children', 'onClose', 'ref'] 
-    }
-  }
+  parameters: {
+    controls: {
+      exclude: ['children', 'onClose', 'ref'],
+    },
+  },
 } as Meta<typeof FormFooter>;
 
-const Template: ComponentStory<typeof FormFooter> = args => <FormFooter {...args} />
+const Template: ComponentStory<typeof FormFooter> = args => (
+  <FormFooter {...args} />
+);
 
-export const Basic = Template.bind({})
+export const Basic = Template.bind({});
 Basic.args = {
   primaryButton: {
-    text: 'Primary button text'
+    text: 'Primary button text',
   },
-}
+};
 
-export const AllButtons = Template.bind({})
+export const AllButtons = Template.bind({});
 AllButtons.args = {
   cancelButtonText: 'Cancel button text',
   backButtonText: 'Back button text',
   errorMessage: 'Error message',
   primaryButton: {
-    text: 'Primary button text'
+    text: 'Primary button text',
   },
-}
+};
 
-export const WithCustomPrimaryButton = Template.bind({})
+export const WithCustomPrimaryButton = Template.bind({});
 WithCustomPrimaryButton.args = {
   cancelButtonText: 'Cancel button text',
   backButtonText: 'Back button text',
   errorMessage: 'Error message',
-  primaryButton: <Button
-              leftGlyph={<Icon glyph={'Cloud'} />}
-              rightGlyph={<Icon glyph={'Checkmark'} />}
-              variant="primary"
-              disabled
-            >
-              Save to cloud
-            </Button>
-}
+  primaryButton: (
+    <Button
+      leftGlyph={<Icon glyph={'Cloud'} />}
+      rightGlyph={<Icon glyph={'Checkmark'} />}
+      variant="primary"
+      disabled
+    >
+      Save to cloud
+    </Button>
+  ),
+};
 
 export const InLargerContainer: ComponentStory<typeof FormFooter> = args => (
   <div
@@ -58,12 +61,12 @@ export const InLargerContainer: ComponentStory<typeof FormFooter> = args => (
   >
     <FormFooter {...args} />
   </div>
-)
+);
 InLargerContainer.args = {
   primaryButton: {
-    text: 'Primary button text'
+    text: 'Primary button text',
   },
-}
+};
 
 // storiesOf('Packages/FormFooter', module)
 //   .add('Default', () => (

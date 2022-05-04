@@ -2,6 +2,7 @@ import React from 'react';
 import { css } from '@leafygreen-ui/emotion';
 import { H2, Body, Link } from '@leafygreen-ui/typography';
 import InlineDefinition from '.';
+import { ComponentStory } from '@storybook/react';
 
 export default {
   title: 'Packages/InlineDefinition',
@@ -20,8 +21,7 @@ const collectionDefinition =
 const collectionsLink =
   'https://docs.mongodb.com/manual/core/sharding-shard-a-collection';
 
-
-export const Demo = (args) => (
+export const Demo: ComponentStory<typeof InlineDefinition> = args => (
   <div
     className={css`
       display: flex;
@@ -29,7 +29,7 @@ export const Demo = (args) => (
     `}
   >
     <H2>
-      <InlineDefinition definition={shardDefinition}>
+      <InlineDefinition {...args} definition={shardDefinition}>
         Shard
       </InlineDefinition>{' '}
       your cluster
@@ -37,27 +37,27 @@ export const Demo = (args) => (
 
     <Body>
       Base hourly rate is for a MongoDB{' '}
-      <InlineDefinition definition={replicaSetDefintion}>
+      <InlineDefinition {...args} definition={replicaSetDefintion}>
         replica set
       </InlineDefinition>{' '}
       with 3 data bearing servers.
     </Body>
     <Body>
       MongoDB shards data at the{' '}
-      <InlineDefinition definition={collectionDefinition}>
+      <InlineDefinition {...args} definition={collectionDefinition}>
         <Link href={collectionsLink}>collections</Link>
       </InlineDefinition>{' '}
       level, distributing the collection data across the shards in the cluster.
     </Body>
   </div>
-)
+);
 
-const Template = (args) => (
+const Template: ComponentStory<typeof InlineDefinition> = args => (
   <InlineDefinition {...args} />
-)
+);
 
-export const Basic = Template.bind({})
+export const Basic = Template.bind({});
 Basic.args = {
   children: 'Shard',
   definition: shardDefinition,
-}
+};
