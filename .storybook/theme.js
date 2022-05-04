@@ -1,5 +1,6 @@
 import { create } from '@storybook/theming';
-import { uiColors } from '../packages/palette';
+import { fontFamilies } from '../packages/tokens';
+import { palette } from '../packages/palette';
 
 export default create({
   name: 'leafygreen',
@@ -10,31 +11,31 @@ export default create({
   brandUrl: 'https://github.com/mongodb/leafygreen-ui',
   brandImage: 'logo.svg',
 
-  colorPrimary: uiColors.green.base,
-  colorSecondary: uiColors.green.base,
+  colorPrimary: palette.green.base,
+  colorSecondary: palette.green.dark1,
 
   // UI
-  appBg: uiColors.gray.light3,
-  appContentBg: uiColors.white,
-  appBorderColor: uiColors.gray.light2,
-  appBorderRadius: 4,
+  appBg: palette.gray.light3,
+  appContentBg: palette.white,
+  appBorderColor: palette.gray.light2,
+  appBorderRadius: 8,
 
   // Typography
-  fontBase: '"Akzidenz", Helvetica, Arial, sans-serif',
-  fontCode: 'monospace',
+  fontBase: fontFamilies.default,
+  fontCode: fontFamilies.code,
 
   // Text colors
-  textColor: uiColors.gray.dark3,
-  textInverseColor: 'rgba(255, 255, 255, 0.9)',
+  textColor: palette.gray.dark3,
+  textInverseColor: palette.black,
 
   // Toolbar default and active colors
-  barTextColor: 'silver',
-  barSelectedColor: uiColors.green.base,
-  barBg: uiColors.white,
+  barTextColor: palette.gray.base,
+  barSelectedColor: palette.green.dark1,
+  barBg: palette.white,
 
   // Form colors
-  inputBg: uiColors.gray.light3,
-  inputBorder: uiColors.gray.light2,
-  inputTextColor: uiColors.gray.dark3,
+  inputBg: palette.gray.light3,
+  inputBorder: palette.gray.light2,
+  inputTextColor: palette.gray.dark3,
   inputBorderRadius: 4,
 });
