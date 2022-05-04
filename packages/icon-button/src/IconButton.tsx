@@ -235,9 +235,9 @@ interface BaseIconButtonProps
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
-type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
+export type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
 
-const IconButton: ExtendableBox<
+export const IconButton: ExtendableBox<
   AccessibleIconButtonProps & { ref?: React.Ref<any> },
   'button'
 > = React.forwardRef(

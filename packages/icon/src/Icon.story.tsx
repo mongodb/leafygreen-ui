@@ -2,9 +2,8 @@
 import React from 'react';
 import Icon, { glyphs } from '.';
 import { css } from '@leafygreen-ui/emotion';
-import { Meta } from '@storybook/react';
+import { ComponentStory, Meta } from '@storybook/react';
 import { palette } from '@leafygreen-ui/palette';
-import { IconProps } from './createIconComponent';
 
 export default {
   title: 'Packages/Icons',
@@ -31,7 +30,7 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-export const AllIcons = (args: IconProps) => (
+export const AllIcons: ComponentStory<typeof Icon> = args => (
   <>
     {Object.keys(glyphs).map(glyph => (
       <div key={glyph} className={containerStyle}>
