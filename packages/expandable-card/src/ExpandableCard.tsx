@@ -268,6 +268,8 @@ const ExpandableCard = ({
         <Transition in={isOpen} timeout={transitionDuration}>
           {state => (
             <IconButton
+              // Setting 'as="div"' to avoid nesting interactive components for accessibility
+              as="div"
               className={cx(iconStyle, iconTransitionStyle[state])}
               aria-label={title}
               tabIndex={0}
