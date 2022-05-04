@@ -35,7 +35,7 @@ export default {
       control: false,
     },
     className: {
-      control: 'string',
+      type: 'string',
     },
   },
 };
