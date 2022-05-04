@@ -24,7 +24,6 @@ const contentStyle = css`
   align-items: center;
   gap: 8px;
   width: 100%;
-  max-width: 1024px;
 `;
 
 const flexEndContent = css`

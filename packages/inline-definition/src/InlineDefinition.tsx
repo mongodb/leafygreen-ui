@@ -27,7 +27,7 @@ const triggerElementStyles = css`
   }
 `;
 
-export type InlineDefinitionProps = Partial<TooltipProps> & {
+type InlineDefinitionProps = Partial<TooltipProps> & {
   definition: React.ReactNode;
   tooltipClassName?: string;
 };
