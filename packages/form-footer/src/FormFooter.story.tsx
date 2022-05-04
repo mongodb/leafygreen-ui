@@ -9,14 +9,6 @@ import FormFooter from '.';
 export default {
   title: 'Packages/FormFooter',
   component: FormFooter,
-  // args: {
-  //   cancelButtonText: 'Cancel button text',
-  //   backButtonText: 'Back button text',
-  //   errorMessage: 'Error message',
-  //   primaryButton: {
-  //     text: 'Primary button text'
-  //   },
-  // },
   parameters: { 
     controls: { 
       exclude: ['children', 'onClose', 'ref'] 
