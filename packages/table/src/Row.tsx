@@ -44,14 +44,18 @@ const modeStyles = {
       &:nth-of-type(even) {
         background-color: ${palette.gray.light3};
       }
+
+      &:nth-of-type(odd) > th {
+        background-color: ${palette.white};
+      }
     `,
 
     disabledStyle: css`
       background-color: ${palette.gray.light2};
       color: ${palette.gray.base};
       cursor: not-allowed;
-      box-shadow: 0 -1px 0 inset ${palette.gray.light1},
-        0 1px 0 inset ${palette.gray.light1};
+      border-top: 1px inset ${palette.gray.light1};
+      border-bottom: 1px inset ${palette.gray.light1};
     `,
   },
 
@@ -66,14 +70,20 @@ const modeStyles = {
       &:nth-of-type(even) {
         background-color: ${uiColors.gray.dark2};
       }
+
+      &:nth-of-type(odd) > th {
+        background-color: ${palette.gray.dark3};
+      }
+
+      > th {
+        box-shadow: 0 -1px 0 inset ${uiColors.gray.dark1};
+      }
     `,
 
     disabledStyle: css`
       background-color: ${uiColors.gray.dark1};
       color: ${uiColors.gray.base};
       cursor: not-allowed;
-      box-shadow: 0 -1px 0 inset ${uiColors.gray.base},
-        0 1px 0 inset ${uiColors.gray.base};
     `,
   },
 };
@@ -208,6 +218,9 @@ const Row = React.forwardRef(
     } = useTableContext();
     const darkMode = useDarkModeContext();
     const mode = darkMode ? Mode.Dark : Mode.Light;
+
+    const shouldAltRowColor =
+      data && data.length >= 10 && hasNestedRows != null && !hasNestedRows;
 
     const indexRef = useRef(useIdAllocator({ prefix: 'row' }));
     const [isExpanded, setIsExpanded] = useState(expanded);
@@ -354,6 +367,9 @@ const Row = React.forwardRef(
             React.cloneElement(child, {
               children: <span>{child.props.children}</span>,
               key: `${indexRef.current}-${index}`,
+              isDisabled: disabled,
+              isHeader: child.props.isHeader,
+              ...child.props,
             }),
           );
         }
@@ -373,22 +389,29 @@ const Row = React.forwardRef(
             <Icon aria-hidden />
           </IconButton>
         );
+        const { children: firstChildChildren, ...firstChildProps } =
+          renderedChildren[0].props;
         renderedChildren[0] = React.cloneElement(renderedChildren[0], {
           children: (
             <>
               {chevronButton}
-              <span>{renderedChildren[0].props.children}</span>
+              <span>{firstChildChildren}</span>
             </>
           ),
           key: `${indexRef.current}-${renderedChildren[0].props.children}`,
+          ...firstChildProps,
         });
       }
 
       return renderedChildren;
-    }, [children, rowHasNestedRows, isExpanded, setIsExpanded, darkMode]);
-
-    const shouldAltRowColor =
-      data && data.length >= 10 && hasNestedRows != null && !hasNestedRows;
+    }, [
+      children,
+      rowHasNestedRows,
+      isExpanded,
+      setIsExpanded,
+      darkMode,
+      disabled,
+    ]);
 
     const alignmentStyles = columnInfo
       ? Object.entries(columnInfo).map(([key, { dataType }]) =>
