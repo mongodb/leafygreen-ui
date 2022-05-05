@@ -1,5 +1,45 @@
 # @leafygreen-ui/select
 
+## 5.0.0
+
+### Major Changes
+
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- Updated dependencies [e13d2487]
+- Updated dependencies [3a14d852]
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/popover@8.0.0
+  - @leafygreen-ui/interaction-ring@3.0.0
+  - @leafygreen-ui/button@15.0.0
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+  - @leafygreen-ui/tokens@1.3.0
+  - @leafygreen-ui/icon@11.9.0
+  - @leafygreen-ui/typography@11.0.0
+
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [f3aad7e2]
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [679b6239]
+- Updated dependencies [ef84b5fd]
+- Updated dependencies [f3aad7e2]
+- Updated dependencies [c1f9c4d4]
+  - @leafygreen-ui/button@13.0.1
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+  - @leafygreen-ui/popover@7.2.3
+
 ## 4.0.1
 
 ### Patch Changes

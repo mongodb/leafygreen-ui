@@ -118,6 +118,28 @@ The script does several things in order:
 
 After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `yarn build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
 
+## create-leafygreen-app
+
+An externally maintained script to bootstrap a React app with all Leafygreen UI components.
+
+Create a new React app with Leafygreen UI components pre-installed
+
+```bash
+npx create-leafygreen-app@latest <project-name>
+```
+
+Create a new Next app
+
+```bash
+npx create-leafygreen-app@latest --next <project-name>
+```
+
+Install all Leafygreen UI components to an existing project
+
+```bash
+npx create-leafygreen-app@latest --packages-only
+```
+
 ## Creating New Component
 
 ### Getting Started
@@ -167,7 +189,7 @@ To run the unit tests for our components, run the following:
 yarn test
 ```
 
-## Commiting
+## Committing
 
 When making a PR that contains changes that should be included in a package's changelog, be sure to do so by running:
 

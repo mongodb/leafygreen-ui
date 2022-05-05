@@ -1,5 +1,41 @@
 # @leafygreen-ui/typography
 
+## 11.0.0
+
+### Major Changes
+
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/tokens@1.3.0
+  - @leafygreen-ui/icon@11.9.0
+
+## 10.0.0
+
+### Major Changes
+
+- ba4aab15: Updates `Label` and `Description` for Dark Mode Refresh
+
+  Exports a temporary `useUpdatedBaseFontSize` hook to convert the values returned from `useBaseFontSize` to the new `tokens`
+
+### Minor Changes
+
+- f3aad7e2: Adds an optional `override` parameter to `useUpdatedBaseFontSize`. If the containing component accepts a `baseFontSize` prop, use this parameter to respect that prop
+
+### Patch Changes
+
+- 679b6239: Updating h3 font-weight from 500 to 600
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 9.1.1
 
 ### Patch Changes

@@ -27,23 +27,23 @@ const baseIconStyle: Record<Mode, Record<Variant, string>> = {
   },
 
   [Mode.Dark]: {
+    [Variant.Default]: css`
+      color: ${palette.gray.light2};
+    `,
     [Variant.Primary]: css`
-      color: ${uiColors.green.light2};
+      color: ${palette.green.light2};
     `,
     [Variant.PrimaryOutline]: css`
-      color: #13aa52;
-    `,
-    [Variant.Default]: css`
-      color: ${uiColors.gray.light1};
+      color: ${palette.green.base};
     `,
     [Variant.Danger]: css`
-      color: ${uiColors.red.light3};
+      color: ${palette.red.light2};
     `,
     [Variant.DangerOutline]: css`
-      color: #f97216;
+      color: ${palette.red.light1};
     `,
     [Variant.BaseGreen]: css`
-      color: ${uiColors.gray.light1};
+      color: ${uiColors.green.dark3};
     `,
   },
 };
@@ -70,23 +70,23 @@ const onlyIconStyle: Record<Mode, Record<Variant, string>> = {
     `,
   },
   [Mode.Dark]: {
+    [Variant.Default]: css`
+      color: ${palette.gray.light3};
+    `,
     [Variant.Primary]: css`
-      color: ${uiColors.white};
+      color: ${palette.green.light3};
     `,
     [Variant.PrimaryOutline]: css`
-      color: #0ad05b;
-    `,
-    [Variant.Default]: css`
-      color: ${uiColors.white};
+      color: ${palette.green.base};
     `,
     [Variant.Danger]: css`
-      color: ${uiColors.white};
+      color: ${palette.red.light3};
     `,
     [Variant.DangerOutline]: css`
-      color: #f97216;
+      color: ${palette.red.light1};
     `,
     [Variant.BaseGreen]: css`
-      color: ${uiColors.gray.light1};
+      color: ${uiColors.green.dark3};
     `,
   },
 };
@@ -122,7 +122,7 @@ const disabledIconStyle: Record<Mode, string> = {
     color: ${palette.gray.light2};
   `,
   [Mode.Dark]: css`
-    color: ${uiColors.gray.dark1};
+    color: ${palette.gray.dark1};
   `,
 };
 

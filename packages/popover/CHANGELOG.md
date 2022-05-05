@@ -1,5 +1,21 @@
 # @leafygreen-ui/popover
 
+## 8.0.0
+
+### Major Changes
+
+- e13d2487: Moving leafygreen-provider to peerDependencies.
+- Updated dependencies [5f28fce1]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+## 7.2.3
+
+### Patch Changes
+
+- ef84b5fd: Fix positioning when reference element is aligned to the right edge of the container and also fixes the width of justify fit element inside a scrollContainer
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/lib@9.2.1
+
 ## 7.2.2
 
 ### Patch Changes

@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text, select } from '@storybook/addon-knobs';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { cx, css } from '@leafygreen-ui/emotion';
 import TextInput, { TextInputType } from '.';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 const wrapperStyle = css`
-  width: 400px;
-  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
 `;
 
-storiesOf('TextInput', module)
+storiesOf('Packages/TextInput', module)
   .add('Default', () => {
     const darkMode = boolean('darkMode', false);
 
@@ -20,7 +24,7 @@ storiesOf('TextInput', module)
         <div
           className={cx(wrapperStyle, {
             [css`
-              background-color: ${uiColors.gray.dark3};
+              background-color: ${palette.black};
             `]: darkMode,
           })}
         >
@@ -32,10 +36,7 @@ storiesOf('TextInput', module)
             )}
             optional={boolean('Optional', false)}
             disabled={boolean('Disabled', false)}
-            placeholder={text(
-              'Placeholder Text',
-              'This is some placeholder text',
-            )}
+            placeholder={text('Placeholder Text', 'This is a placeholder')}
             state={select('State', ['none', 'valid', 'error'], 'none')}
             type={select(
               'Type',
@@ -49,7 +50,11 @@ storiesOf('TextInput', module)
             )}
             errorMessage={text('Error Message', 'This is an error message')}
             darkMode={darkMode}
-            baseFontSize={select('Base Font Size', [14, 16], 14)}
+            baseFontSize={select(
+              'Base Font Size',
+              Object.values(BaseFontSize),
+              BaseFontSize.Body1,
+            )}
           />
         </div>
       </LeafyGreenProvider>

@@ -1,5 +1,13 @@
 # @leafygreen-ui/interaction-ring
 
+## 3.0.0
+
+### Major Changes
+
+- e13d2487: Moving leafygreen-provider to peerDependencies.
+- Updated dependencies [5f28fce1]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,5 +1,29 @@
 # @leafygreen-ui/text-area
 
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [e13d2487]
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/interaction-ring@3.0.0
+  - @leafygreen-ui/tokens@1.3.0
+  - @leafygreen-ui/typography@11.0.0
+
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [679b6239]
+- Updated dependencies [f3aad7e2]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/typography@9.1.1
+  - @leafygreen-ui/lib@9.2.1
+
 ## 5.0.0
 
 ### Major Changes

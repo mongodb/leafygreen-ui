@@ -1,5 +1,29 @@
 # @leafygreen-ui/checkbox
 
+## 8.0.0
+
+### Major Changes
+
+- e13d2487: Moving leafygreen-provider to peerDependencies.
+- Updated dependencies [5f28fce1]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- Updated dependencies [5f28fce1]
+  - @leafygreen-ui/typography@11.0.0
+
+## 7.0.1
+
+### Patch Changes
+
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+- Updated dependencies [679b6239]
+- Updated dependencies [f3aad7e2]
+  - @leafygreen-ui/typography@9.1.1
+  - @leafygreen-ui/lib@9.2.1
+
 ## 7.0.0
 
 ### Major Changes

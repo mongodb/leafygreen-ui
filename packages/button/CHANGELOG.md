@@ -1,5 +1,34 @@
 # @leafygreen-ui/button
 
+## 15.0.0
+
+### Major Changes
+
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- 3a14d852: Restoring as prop to Button component
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/tokens@1.3.0
+
+## 14.0.0
+
+### Major Changes
+
+- f3aad7e2: Updates Dark Mode Button for visual brand refresh
+
+### Patch Changes
+
+- c1f9c4d4: Disabling focus styles and ripple on disabled Buttons
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 13.0.1
 
 ### Patch Changes

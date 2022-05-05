@@ -13,6 +13,7 @@ const knobsConfig: KnobsConfigInterface<{
     default: Variant.Note,
     options: Object.values(Variant),
     label: 'Variant',
+    isRequired: true,
   },
   children: {
     type: 'area',

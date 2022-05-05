@@ -2,11 +2,11 @@ import { css } from '@emotion/css';
 import { Link } from '@leafygreen-ui/typography';
 import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
-const imagePath = `${CDN}/images/new-guidelines/form`;
+export const imagePath = `${CDN}/images/new-guidelines/form`;
 
 # Forms
 
-There are 2 main types of forms, those found on setup pages and those on setting pages. Both are used to collect user data via form elements like text, or select inputs. Forms on setup pages are used to setup accounts, processes, or features whereas a setting page form allows the user to alter data they defined previously on a setup page.
+There are 2 main types of forms, those found on setup pages and those on setting pages. Both are used to collect user data via form elements like text, or select inputs. Forms on setup pages are used to setup accounts, processes, or features, and can have a <Link href="#sticky-footer">sticky footer</Link>, whereas a setting page form allows the user to alter data they defined previously on a setup page.
 
 <GuidelineImage
   imageURL={`${imagePath}/form-guidelines-1@3x.png`}
@@ -152,10 +152,7 @@ When a card is closed, its chevron points opposite to the direction the card ope
 
 # Form buttons
 
-<Link href="https://www.mongodb.design/component/button/guidelines/">
-  Buttons
-</Link> are sorted by importance from right to left, with the primary button on the
-right.{' '}
+<Link href="https://www.mongodb.design/component/button/guidelines/">Button</Link> are sorted by importance from right to left, with the primary button on the right.
 
 <GuidelineImage
   imageURL={`${imagePath}/form-guidelines-14@3x.png`}
@@ -189,15 +186,7 @@ Multi-page settings forms (with no sticky footer) can also have a back button. I
 
 # Sticky footer
 
-Do not use a sticky footer for setting pages, short forms (less than 3 inputs), forms in modals, or for any forms that won’t usually go below the fold. In these other cases, place any CTAs directly below the content of the form.
-
-<GuidelineImage
-  imageURL={`${imagePath}/form-guidelines-17@3x.png`}
-  className={css`
-    width: 100%;
-    height: 416px;
-  `}
-/>
+Learn more about forms' sticky footers <Link href="/component/form-footer/guidelines/">here</Link>.
 
 # Autosave
 
@@ -255,13 +244,8 @@ Whenver possible use the approriate input type for the data you’re collecting.
 
 # Form validation & error handling
 
-<Link
-  href="https://www.nngroup.com/articles/errors-forms-design-guidelines/"
-  arrowAppearance="persist"
->
-  When user text input is required, aim for inline validation with real-time
-  feedback whenever possible.
-</Link> Try not to let the user reach the end of the form to inform them that something
+<Link href="https://www.nngroup.com/articles/errors-forms-design-guidelines/" arrowAppearance="persist"
+>When user text input is required, aim for inline validation with real-time feedback whenever possible.</Link> Try not to let the user reach the end of the form to inform them that something
 is wrong. LeafyGreen inline validation has been developed such that, on valid (“clean”)
 fields, inline validation will occur when a user leaves the field; on invalid (“dirty”)
 fields, inline validation will occur while a user is typing in a field.

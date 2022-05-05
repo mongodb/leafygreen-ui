@@ -5,6 +5,10 @@ export const BaseFontSize = {
 
 export type BaseFontSize = typeof BaseFontSize[keyof typeof BaseFontSize];
 
+/**
+ * Defines font sizes and line heights of common typographic elements.
+ * Units are in `px`
+ */
 const typeScales = {
   body1: {
     fontSize: BaseFontSize.Body1,

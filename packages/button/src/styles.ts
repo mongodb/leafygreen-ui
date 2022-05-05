@@ -1,8 +1,8 @@
-import { transparentize } from 'polished';
+import { mix, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
-import { Size, Variant, Mode, ButtonProps } from './types';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { palette } from '@leafygreen-ui/palette';
+import { Size, Variant, Mode, ButtonProps, FontSize } from './types';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { createDataProp } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
@@ -31,6 +31,7 @@ const baseButtonStyles = css`
     outline: none;
   }
 
+  &[disabled],
   &:disabled {
     pointer-events: none;
   }
@@ -106,7 +107,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
         color: ${palette.red.dark2};
         background-color: ${transparentize(0.96, palette.red.base)};
         border-color: ${palette.red.base};
-        box-shadow: 0px 0px 0px 3px ${uiColors.red.light3};
+        box-shadow: 0px 0px 0px 3px ${palette.red.light3};
       }
     `,
 
@@ -117,112 +118,112 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        background-color: ${mix(0.96, palette.green.base, palette.green.dark3)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
     `,
   },
   [Mode.Dark]: {
-    [Variant.Primary]: css`
-      background-color: ${uiColors.green.dark2};
-      border: 1px solid ${uiColors.green.base};
-      color: ${uiColors.white};
+    [Variant.Default]: css`
+      background-color: ${palette.gray.dark2};
+      border-color: ${palette.gray.base};
+      color: ${palette.white};
 
       &:focus {
-        color: ${uiColors.white};
+        color: ${palette.white};
       }
 
       &:hover,
       &:active {
-        color: ${uiColors.white};
-        background-color: ${uiColors.green.dark1};
-        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark2};
+        background-color: ${palette.gray.dark1};
+        border-color: ${palette.gray.base};
+        color: ${palette.white};
+        box-shadow: 0px 0px 0px 3px ${palette.gray.dark2};
+      }
+    `,
+    [Variant.Primary]: css`
+      background-color: ${palette.green.dark2};
+      border: 1px solid ${palette.green.base};
+      color: ${palette.white};
+
+      &:focus {
+        color: ${palette.white};
+      }
+
+      &:hover,
+      &:active {
+        color: ${palette.white};
+        background-color: #00593f; // Off palette
+        box-shadow: 0 0 0 3px ${palette.green.dark3};
       }
     `,
 
     [Variant.PrimaryOutline]: css`
-      border: 1px solid ${uiColors.green.base};
-      color: #0ad05b;
+      background-color: transparent;
+      border-color: ${palette.green.base};
+      color: ${palette.green.base};
 
       &:focus {
-        color: #0ad05b;
+        color: ${palette.green.base};
       }
 
       &:hover,
       &:active {
-        color: #0ad05b;
-        background-color: rgba(10, 208, 91, 0.08);
-        border: 1px solid ${uiColors.green.base};
-        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark2};
-      }
-    `,
-
-    [Variant.Default]: css`
-      background-color: ${uiColors.gray.dark2};
-      border: 1px solid ${uiColors.gray.base};
-      color: ${uiColors.white};
-
-      &:focus {
-        color: ${uiColors.white};
-      }
-
-      &:hover,
-      &:active {
-        color: ${uiColors.white};
-        background-color: ${uiColors.gray.dark1};
-        border: 1px solid ${uiColors.gray.base};
-        box-shadow: 0px 0px 0px 3px ${uiColors.gray.dark2};
+        color: ${palette.green.base};
+        background-color: ${transparentize(0.96, palette.green.base)};
+        border-color: ${palette.green.base};
+        box-shadow: 0px 0px 0px 3px ${palette.green.dark3};
       }
     `,
 
     [Variant.Danger]: css`
-      background-color: ${uiColors.red.dark1};
-      border: 1px solid #f97216;
-      color: ${uiColors.white};
+      background-color: ${palette.red.base};
+      border-color: ${palette.red.light1};
+      color: ${palette.white};
 
       &:focus {
-        color: ${uiColors.white};
+        color: ${palette.white};
       }
 
       &:hover,
       &:active {
-        color: ${uiColors.white};
-        background-color: ${uiColors.red.base};
-        border: 1px solid #f97216;
-        box-shadow: 0px 0px 0px 3px ${uiColors.red.dark2};
+        border-color: ${palette.red.light1};
+        color: ${palette.white};
+        background-color: #c82222; // Off palette
+        box-shadow: 0px 0px 0px 3px ${palette.yellow.dark3}; // yes, yellow
       }
     `,
 
     [Variant.DangerOutline]: css`
-      border: 1px solid #f97216;
-      color: #f97216;
+      border-color: ${palette.red.light1};
+      color: ${palette.red.light1};
 
       &:focus {
-        color: #f97216;
+        color: ${palette.red.light1};
       }
 
       &:hover,
       &:active {
-        color: #f97216;
-        background: rgba(249, 114, 22, 0.08);
-        box-shadow: 0px 0px 0px 3px ${uiColors.red.dark2};
+        color: ${palette.red.light1};
+        background-color: ${transparentize(0.96, palette.red.base)};
+        box-shadow: 0px 0px 0px 3px ${palette.yellow.dark3}; // yes, yellow
       }
     `,
 
-    // TODO: Refresh - Dark mode doesn't have a Base Green variant. This just duplicates `Primary`
     [Variant.BaseGreen]: css`
-      background-color: ${uiColors.green.dark2};
-      border: 1px solid ${uiColors.green.base};
-      color: ${uiColors.white};
-
-      &:focus {
-        color: ${uiColors.white};
-      }
+      background-color: ${palette.green.base};
+      border-color: ${palette.green.dark2};
+      color: ${palette.green.dark3};
 
       &:hover,
       &:active {
-        color: ${uiColors.white};
-        background-color: ${uiColors.green.dark1};
-        box-shadow: 0px 0px 0px 3px ${uiColors.green.dark2};
+        background-color: ${mix(
+          0.96,
+          palette.green.base,
+          palette.green.light3,
+        )};
+        border-color: ${palette.green.dark2};
+        box-shadow: 0px 0px 0px 3px ${palette.green.dark3};
       }
     `,
   },
@@ -258,7 +259,7 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
     `,
     [Variant.DangerOutline]: css`
       &:focus {
-        color: ${uiColors.red.dark2};
+        color: ${palette.red.dark2};
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
@@ -269,44 +270,42 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
     `,
   },
   [Mode.Dark]: {
+    [Variant.Default]: css`
+      &:focus {
+        background-color: ${palette.gray.dark1};
+        box-shadow: ${focusBoxShadow(palette.black)};
+      }
+    `,
     [Variant.Primary]: css`
       &:focus {
-        background: ${uiColors.green.dark1};
-        box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
-          0px 0px 0px 3px ${uiColors.focus};
+        background-color: #00593f; // Off palette
+        box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.PrimaryOutline]: css`
       &:focus {
-        background: rgba(10, 208, 91, 0.08);
-        border: 1px solid ${uiColors.green.dark1};
-        box-shadow: 0px 0px 0px 3px #139fd7;
-      }
-    `,
-    [Variant.Default]: css`
-      &:focus {
-        background-color: ${uiColors.gray.dark1};
-        box-shadow: 0px 0px 0px 3px #2f9fc5;
+        background-color: ${transparentize(0.96, palette.green.base)};
+        border-color: ${palette.green.base};
+        box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.Danger]: css`
       &:focus {
-        background: ${uiColors.red.base};
-        box-shadow: 0px 0px 0px 3px ${uiColors.focus};
+        background-color: #c82222; // Off palette
+        box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.DangerOutline]: css`
       &:focus {
-        background: rgba(249, 114, 22, 0.08);
-        border: 1px solid #f97216;
-        box-shadow: 0px 0px 0px 3px #019ee2;
+        background-color: ${transparentize(0.96, palette.red.base)};
+        border-color: ${palette.red.light1};
+        box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.BaseGreen]: css`
       &:focus {
-        background: ${uiColors.green.dark1};
-        box-shadow: 0px 4px 4px rgba(0, 124, 173, 0.4),
-          0px 0px 0px 3px ${uiColors.focus};
+        background-color: ${palette.green.base};
+        box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
   },
@@ -314,35 +313,35 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
 
 const disabledStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    background-color: ${palette.gray.light2};
-    border: 1px solid ${palette.gray.light1};
-    cursor: not-allowed;
-    color: ${palette.gray.base};
-
+    &,
     &:hover {
       background-color: ${palette.gray.light2};
-      border: 1px solid ${palette.gray.light1};
-      cursor: not-allowed;
+      border-color: ${palette.gray.light1};
       color: ${palette.gray.base};
+      cursor: not-allowed;
+    }
+
+    &:focus {
+      box-shadow: ${focusBoxShadow(palette.white)};
     }
   `,
 
   [Mode.Dark]: css`
-    background: rgba(61, 79, 88, 0.3);
-    border: 1px solid ${uiColors.gray.dark2};
-    color: ${uiColors.gray.base};
-    cursor: not-allowed;
-
+    &,
     &:hover {
-      background: rgba(61, 79, 88, 0.3);
-      border: 1px solid ${uiColors.gray.dark2};
-      color: ${uiColors.gray.base};
+      background-color: ${palette.gray.dark3};
+      border-color: ${palette.gray.dark1};
+      color: ${palette.gray.dark1};
       cursor: not-allowed;
+    }
+
+    &:focus {
+      box-shadow: ${focusBoxShadow(palette.black)};
     }
   `,
 };
 
-const sizeSet: Record<Size, string> = {
+const sizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
     text-transform: uppercase;
@@ -367,29 +366,19 @@ const sizeSet: Record<Size, string> = {
   `,
 };
 
-const fontStyles = {
-  [Mode.Light]: {
-    [14]: css`
-      font-size: 13px;
-      font-weight: 500;
-    `,
-    [16]: css`
-      font-size: 16px;
-      // Pixel pushing for optical alignment purposes
-      transform: translateY(1px);
-      font-weight: 500;
-    `,
-  },
-  [Mode.Dark]: {
-    [14]: css`
-      font-size: 14px;
-    `,
-    [16]: css`
-      font-size: 16px;
-      // Pixel pushing for optical alignment purposes
-      transform: translateY(1px);
-    `,
-  },
+const fontStyles: Record<FontSize, string> = {
+  [FontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    font-weight: 500; // Medium
+  `,
+  [FontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+    // Pixel pushing for optical alignment purposes
+    transform: translateY(1px);
+    font-weight: 500; // Medium
+  `,
 };
 
 export const ButtonDataProp = createDataProp('button');
@@ -400,64 +389,90 @@ export function getClassName({
   darkMode,
   baseFontSize,
   disabled,
-  showFocus,
+  usingKeyboard,
 }: Required<
   Pick<
     ButtonProps,
     'baseFontSize' | 'variant' | 'size' | 'darkMode' | 'disabled'
-  > & { showFocus: boolean }
+  > & { usingKeyboard: boolean }
 >) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const color = colorSet[mode][variant];
   const focus = focusStyle[mode][variant];
-  const size = sizeSet[sizeProp];
-  const fontSize = fontStyles[mode][baseFontSize];
+  const size = sizeStyle[sizeProp];
+  const fontSize = fontStyles[baseFontSize];
 
   return cx(
     baseButtonStyles,
     color,
-    { [focus]: showFocus },
-    { [disabledStyle[mode]]: disabled },
     fontSize,
     size,
-    {
-      [css`
-        // TODO: Refresh - remove this logic
-        font-family: ${fontFamilies.default};
-        border-radius: 4px;
-      `]: mode === 'dark',
-    },
+    { [focus]: usingKeyboard && !disabled },
+    { [disabledStyle[mode]]: disabled },
   );
 }
 
-const buttonOpacity = 0.76;
-
-const visualDesignPalette = {
-  green5: '#0AD05B',
-  orange4: '#F97216',
-};
+const rippleOpacity = 0.76;
 
 export const rippleColors: Record<Mode, Record<Variant, string>> = {
   [Mode.Light]: {
-    [Variant.Primary]: palette.green.dark1,
-    [Variant.PrimaryOutline]: transparentize(buttonOpacity, palette.green.base),
     [Variant.Default]: palette.gray.light2,
+    [Variant.Primary]: palette.green.dark1,
+    [Variant.PrimaryOutline]: transparentize(rippleOpacity, palette.green.base),
     [Variant.Danger]: palette.red.light1,
-    [Variant.DangerOutline]: transparentize(buttonOpacity, palette.red.base),
+    [Variant.DangerOutline]: transparentize(rippleOpacity, palette.red.base),
     [Variant.BaseGreen]: palette.green.light1,
   },
   [Mode.Dark]: {
-    [Variant.Primary]: visualDesignPalette.green5,
-    [Variant.PrimaryOutline]: transparentize(
-      buttonOpacity,
-      uiColors.green.base,
-    ),
-    [Variant.Default]: uiColors.gray.base,
-    [Variant.Danger]: visualDesignPalette.orange4,
-    [Variant.DangerOutline]: transparentize(
-      buttonOpacity,
-      visualDesignPalette.orange4,
-    ),
-    [Variant.BaseGreen]: visualDesignPalette.green5,
+    [Variant.Default]: palette.gray.base,
+    [Variant.Primary]: palette.green.dark1,
+    [Variant.PrimaryOutline]: transparentize(rippleOpacity, palette.green.base),
+    [Variant.Danger]: palette.red.dark2,
+    [Variant.DangerOutline]: transparentize(rippleOpacity, palette.red.light1),
+    [Variant.BaseGreen]: palette.green.dark1,
   },
+};
+
+export const rippleStyle = css`
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px;
+`;
+
+export const buttonContentStyle = css`
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  position: relative;
+  z-index: 0;
+`;
+
+export const buttonContentSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    padding: 0 7px; // 8px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Small]: css`
+    padding: 0 11px; // 12px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Default]: css`
+    padding: 0 11px; // 12px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Large]: css`
+    padding: 0 15px; // 16px - 1px border
+    gap: 8px;
+  `,
 };

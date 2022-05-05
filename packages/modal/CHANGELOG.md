@@ -1,5 +1,36 @@
 # @leafygreen-ui/modal
 
+## 9.0.0
+
+### Major Changes
+
+- 5f28fce1: Wraps modal in PopoverProvider to check if a popover is open. If open the modal will not close if `esc` is clicked. Adds peerDependency to leafygreen-provider.
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- 91e24dfe: Update focus-trap-react version to 8.10.0
+- 08fe9960: Update padding for base modal
+- Updated dependencies [e13d2487]
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+- Updated dependencies [500d6c60]
+  - @leafygreen-ui/icon-button@11.0.0
+  - @leafygreen-ui/tokens@1.3.0
+  - @leafygreen-ui/icon@11.9.0
+
+## 8.0.1
+
+### Patch Changes
+
+- 2f6e595d: Fixes bug where select items are not selectable inside modal. Modal children are now wrapped in `PortalContextProvider` and the modal ref is passed in as the default portalContainer and scrollContainer.
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 8.0.0
 
 ### Major Changes

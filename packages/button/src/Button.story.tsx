@@ -1,103 +1,72 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { boolean, select, text } from '@storybook/addon-knobs';
-import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import Button, { Variant, Size } from '.';
+import LGButton, { Variant, ButtonProps } from '.';
+import { Story } from '@storybook/react';
 
-storiesOf('Button', module)
-  .add('Default', () => {
-    const buttonText = text('Text', 'MongoDB');
-    const variant = select('Variant', Object.values(Variant), Variant.Default);
-    const size = select('Size', Object.values(Size), Size.Default);
-    const baseFontSize = select('Base Font Size', [14, 16], 14);
-    const disabled = boolean('Disabled', false);
-    const darkMode = boolean('Dark Mode', false);
-    const href = select(
-      'href',
-      [undefined, 'https://mongodb.design'],
-      undefined,
-    );
-    const leftGlyph = select(
-      'Left Glyph',
-      [...Object.keys(glyphs), undefined],
-      undefined,
-    );
-    const rightGlyph = select(
-      'Right Glyph',
-      [...Object.keys(glyphs), undefined],
-      undefined,
-    );
+// This is a workaround to make sure props are correctly imported despite Button using forwardRef
+// https://github.com/storybookjs/storybook/issues/15334
+// eslint-disable-next-line react/jsx-props-no-spreading
+export const Button: React.FC<ButtonProps> = props => <LGButton {...props} />;
 
-    const wrapperStyle = cx(
-      css`
-        background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
-        padding: 40px;
-      `,
-    );
+export default {
+  title: 'Packages/Button',
+  component: Button,
+  excludeStories: ['Button'],
+  args: {
+    text: 'MongoDB',
+  },
+  argTypes: {
+    leftGlyph: {
+      options: Object.keys(glyphs),
+      control: { type: 'select' },
+    },
+    rightGlyph: {
+      options: Object.keys(glyphs),
+      control: { type: 'select' },
+    },
+  },
+  controls: { exclude: ['children'] },
+};
 
-    return (
-      <LeafygreenProvider>
-        <div className={wrapperStyle}>
-          <Button
-            variant={variant}
-            darkMode={darkMode}
-            size={size}
-            disabled={disabled}
-            baseFontSize={baseFontSize}
-            href={href}
-            leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-            rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
-          >
-            {buttonText}
-          </Button>
-        </div>
-      </LeafygreenProvider>
-    );
-  })
-  .add('Icon only', () => {
-    const variant = select('Variant', Object.values(Variant), Variant.Default);
-    const size = select('Size', Object.values(Size), Size.Default);
-    const baseFontSize = select('Base Font Size', [14, 16], 14);
-    const disabled = boolean('Disabled', false);
-    const darkMode = boolean('Dark Mode', false);
-    const href = select(
-      'href',
-      [undefined, 'https://mongodb.design'],
-      undefined,
-    );
-    const leftGlyph = select(
-      'Left Glyph',
-      [...Object.keys(glyphs), undefined],
-      'Beaker',
-    );
-    const rightGlyph = select(
-      'Right Glyph',
-      [...Object.keys(glyphs), undefined],
-      undefined,
-    );
+const Template: Story<
+  ButtonProps & { text: string; leftGlyph: string; rightGlyph: string }
+  // eslint-disable-next-line react/prop-types
+> = ({ text, leftGlyph, rightGlyph, ...args }) => (
+  <Button
+    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
+    {...args}
+  >
+    {text}
+  </Button>
+);
 
-    const className = css`
-      background-color: ${!darkMode ? uiColors.white : uiColors.gray.dark3};
-      padding: 40px;
-    `;
+export const Default = Template.bind({});
+Default.args = {
+  variant: Variant.Default,
+};
 
-    return (
-      <LeafygreenProvider>
-        <div className={className}>
-          <Button
-            variant={variant}
-            darkMode={darkMode}
-            size={size}
-            disabled={disabled}
-            baseFontSize={baseFontSize}
-            href={href}
-            leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-            rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
-          />
-        </div>
-      </LeafygreenProvider>
-    );
-  });
+export const Primary = Template.bind({});
+Primary.args = {
+  variant: Variant.Primary,
+};
+
+export const PrimaryOutline = Template.bind({});
+PrimaryOutline.args = {
+  variant: Variant.PrimaryOutline,
+};
+
+export const Danger = Template.bind({});
+Danger.args = {
+  variant: Variant.Danger,
+};
+
+export const DangerOutline = Template.bind({});
+DangerOutline.args = {
+  variant: Variant.DangerOutline,
+};
+
+export const BaseGreen = Template.bind({});
+BaseGreen.args = {
+  variant: Variant.BaseGreen,
+};

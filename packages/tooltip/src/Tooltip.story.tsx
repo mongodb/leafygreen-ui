@@ -34,7 +34,7 @@ function ControlledTooltip() {
   );
 }
 
-storiesOf('Tooltip', module)
+storiesOf('Packages/Tooltip', module)
   .add('Uncontrolled', () => (
     <LeafyGreenProvider>
       <Tooltip

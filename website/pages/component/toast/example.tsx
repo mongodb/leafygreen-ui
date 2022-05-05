@@ -14,6 +14,7 @@ const knobsConfig: KnobsConfigInterface<{
     options: Object.values(Variant),
     default: Variant.Success as Variant,
     label: 'Variant',
+    isRequired: true,
   },
   progress: {
     type: 'number',

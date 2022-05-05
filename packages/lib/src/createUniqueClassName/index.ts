@@ -11,8 +11,8 @@ const generateUUID = () => {
   });
 };
 
-const createUniqueClassName = () => {
-  return `lg-ui-${generateUUID()}`;
+const createUniqueClassName = (prefix?: string) => {
+  return `lg-ui${prefix ? `-${prefix}` : ''}-${generateUUID()}`;
 };
 
 export default createUniqueClassName;

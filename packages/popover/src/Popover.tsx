@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
-import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
+import {
+  usePopoverPortalContainer,
+  usePopoverContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import {
   useViewportSize,
   useMutationObserver,
@@ -81,6 +84,8 @@ function Popover({
   );
   const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
+
+  const { setIsPopoverOpen } = usePopoverContext();
 
   let { portalContainer, scrollContainer } = usePopoverPortalContainer();
 
@@ -221,6 +226,7 @@ function Popover({
     referenceElDocumentPos,
     contentElViewportPos,
     contentElDocumentPos,
+    scrollContainer,
   });
 
   const activeStyle = css`
@@ -258,6 +264,8 @@ function Popover({
       mountOnEnter
       unmountOnExit
       appear
+      onEntered={() => setIsPopoverOpen(true)}
+      onExit={() => setIsPopoverOpen(false)}
     >
       {state => (
         <>
@@ -285,9 +293,9 @@ function Popover({
               )}
             >
               {/*
-                We create this inner node with a ref because placing it on its parent
-                creates an infinite loop in some cases when dynamic styles are applied.
-               */}
+                  We create this inner node with a ref because placing it on its parent
+                  creates an infinite loop in some cases when dynamic styles are applied.
+                */}
               <div ref={setContentNode}>{renderedChildren}</div>
             </div>
           </Root>

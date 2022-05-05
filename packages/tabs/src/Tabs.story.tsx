@@ -41,7 +41,7 @@ function ControlledTabs() {
   );
 }
 
-storiesOf('Tabs', module)
+storiesOf('Packages/Tabs', module)
   .add('Uncontrolled', () => {
     const darkMode = boolean('darkMode', false);
 

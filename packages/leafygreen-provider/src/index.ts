@@ -1,5 +1,13 @@
 export { useUsingKeyboardContext } from './UsingKeyboardContext';
-export { usePopoverPortalContainer } from './PortalContext';
+export {
+  default as PortalContextProvider,
+  usePopoverPortalContainer,
+} from './PortalContext';
+export {
+  PopoverContext,
+  usePopoverContext,
+  default as PopoverProvider,
+} from './PopoverContext';
 export { useBaseFontSize } from './TypographyContext';
 
 export { default } from './LeafyGreenContext';

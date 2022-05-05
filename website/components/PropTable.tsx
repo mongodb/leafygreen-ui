@@ -252,6 +252,7 @@ function PropTable({
       `}
     >
       {component === 'typography' && <TypographyPropTable />}
+
       {headers.map((header: string, index: number) => {
         return (
           <div key={index} className={tableWrapper}>

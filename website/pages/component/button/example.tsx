@@ -9,7 +9,7 @@ const knobsConfig: KnobsConfigInterface<{
   size: Size;
   leftGlyph: string;
   rightGlyph: string;
-  baseFontSize: 14 | 16;
+  baseFontSize: 13 | 16;
   darkMode: boolean;
   children: React.ReactNode;
   hasHrefProp: boolean;
@@ -60,8 +60,8 @@ const knobsConfig: KnobsConfigInterface<{
   },
   baseFontSize: {
     type: 'select',
-    options: [14, 16],
-    default: 14,
+    options: [13, 16],
+    default: 13,
     label: 'Base Font Size',
   },
 };
@@ -73,8 +73,8 @@ export default function ButtonLiveExample() {
         {({ leftGlyph, rightGlyph, hasHrefProp, ...props }) => (
           <Button
             href={hasHrefProp ? 'https://cloud.mongodb.com' : undefined}
-            leftGlyph={<Icon glyph={leftGlyph} />}
-            rightGlyph={<Icon glyph={rightGlyph} />}
+            leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+            rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
             {...props}
           />
         )}

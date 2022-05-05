@@ -208,8 +208,10 @@ function Menu({
         }
 
         if (props?.children) {
+          const { children, ...rest } = props;
           return React.cloneElement(child, {
             children: updateChildren(props.children),
+            ...rest,
           });
         }
 

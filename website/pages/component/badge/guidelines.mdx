@@ -1,0 +1,83 @@
+import { css } from '@emotion/css';
+import { Link, H3 } from '@leafygreen-ui/typography';
+import GuidelineImage from 'components/GuidelineImage';
+import { CDN } from 'utils/routes';
+
+Badges can be used to highlight information or the status of something.
+
+### Do's
+
+- Ensure to align the badge with the item or content it is identifying
+- Label text should not wrap
+- Use one label per badge
+
+### Don'ts
+
+- Do not use it as a button or link
+- Do not use actionable words for the badge that conveys its interactive state
+- Do not use it with icons
+
+#### Examples
+
+Colors can define the different states of the badge is identifying.
+
+Use different colors to show different status
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/badge/badge-guidelines-1.svg`}
+  className={css`
+    width: auto;
+    height: 178px;
+  `}
+/>
+
+Do not use actionable words for the badge that conveys its interactive state.
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/badge/badge-guidelines-2.svg`}
+  className={css`
+    width: auto;
+    height: 178px;
+  `}
+/>
+
+Do not use it as a button or link
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/badge/badge-guidelines-3.svg`}
+  className={css`
+    width: auto;
+    height: 178px;
+  `}
+/>
+
+Label text should not wrap
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/badge/badge-guidelines-4.svg`}
+  className={css`
+    width: auto;
+    height: 178px;
+  `}
+/>
+
+### Color Usage
+
+Colors can define the different states of the badge is identifying.
+
+<GuidelineImage
+  imageURL={`${CDN}/images/guidelines/badge/badge-guidelines-5.svg`}
+  className={css`
+    width: auto;
+    height: 178px;
+  `}
+/>
+
+- **Light Gray**: Default badge. Use this badge on dark background for higher contrast or when the badge needs a subtle presence on the page.
+  Could be confusing with the small size button; no action verb for the label.
+- **White**: Use this badge when higher contrast is needed on a light background.
+- **Blue**: Use this badge to call attention to information that needs to stand out.
+- **Green**: Use to communicate the status of content. (Approved, successful, positive)
+  - _Exception_: A green badge can be used other than displaying status when there needs to be a differentiation from the other color badges.
+- **Yellow**: Use to communicate the status of content. (Warning)
+- **Red**: Use to communicate the status of content. (Critical, errors, failed, disabled)

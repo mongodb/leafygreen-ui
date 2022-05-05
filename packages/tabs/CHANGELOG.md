@@ -1,5 +1,29 @@
 # @leafygreen-ui/tabs
 
+## 7.0.0
+
+### Major Changes
+
+- e13d2487: Moving leafygreen-provider to peerDependencies.
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/leafygreen-provider@2.2.0
+
+### Patch Changes
+
+- Updated dependencies [5f28fce1]
+- Updated dependencies [c48e943e]
+  - @leafygreen-ui/tokens@1.3.0
+
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [233ac580]
+- Updated dependencies [ba4aab15]
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/tokens@1.2.0
+  - @leafygreen-ui/lib@9.2.1
+
 ## 6.0.2
 
 ### Patch Changes

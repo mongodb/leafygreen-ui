@@ -54,7 +54,7 @@ npm install @leafygreen-ui/form-footer
 | Prop             | Type                                | Description                                                                                             | Default  |
 | ---------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------- | -------- |
 | primaryButton    | `<Button>` or `PrimaryButtonProps`  | The primary (right-most) button. Defined as a `<Button>` element, or as an object with the shape below. |          |
-| cancelButtonText | `string`                            | Text for the cancel button. A cancel button will appear regardless of whether text is defined.          | "Cancel" |
+| cancelButtonText | `string`                            | Text for the cancel button. A cancel button will only appear if this text is defined.                   | "Cancel" |
 | onCancel         | `(event: React.MouseEvent) => void` | onClick callback for the cancel button.                                                                 |          |
 | backButtonText   | `string`                            | Text for the back button. A back button will only appear if text is defined.                            |          |
 | onBackClick      | `(event: React.MouseEvent) => void` | onClick callback for the back button                                                                    |          |

@@ -42,7 +42,7 @@ function ControlledRadioBoxGroup() {
   );
 }
 
-storiesOf('RadioBoxGroup', module)
+storiesOf('Packages/RadioBoxGroup', module)
   .add('Uncontrolled', () => (
     <LeafyGreenProvider>
       <div

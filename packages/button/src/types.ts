@@ -1,3 +1,5 @@
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 const Variant = {
   Default: 'default',
   Primary: 'primary',
@@ -25,21 +27,26 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-type FontSize = 14 | 16;
+const FontSize = {
+  Body1: 13,
+  Body2: 16,
+} as const;
 
-interface ButtonProps {
+type FontSize = typeof FontSize[keyof typeof FontSize];
+
+type ButtonProps = Pick<
+  HTMLElementProps<'button'>,
+  'disabled' | 'onClick' | 'type' | 'className'
+> & {
   variant?: Variant;
   darkMode?: boolean;
   baseFontSize?: FontSize;
   size?: Size;
-  disabled?: boolean;
-  className?: string;
   children?: React.ReactNode;
   leftGlyph?: React.ReactElement;
   rightGlyph?: React.ReactElement;
   href?: string;
-  type?: JSX.IntrinsicElements['button']['type'];
   as?: keyof JSX.IntrinsicElements;
-}
+};
 
 export { Variant, Size, Mode, FontSize, ButtonProps };

@@ -62,6 +62,14 @@ const packageJSON = `
       "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
     },
     "license": "Apache-2.0",
+    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/${PACKAGE_LC}",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mongodb/leafygreen-ui"
+    },
+    "bugs": {
+      "url": "https://jira.mongodb.org/projects/PD/summary"
+    },
     "publishConfig": {
       "access": "public"
     },
@@ -136,7 +144,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import ${PACKAGE_UC} from '.';
 
-storiesOf('${PACKAGE_UC}', module)
+storiesOf('Packages/${PACKAGE_UC}', module)
   .add('Default', () => (
     <${PACKAGE_UC} />
   ))

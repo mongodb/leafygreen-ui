@@ -185,4 +185,34 @@ export const globalStyles = css`
   *:after {
     box-sizing: border-box;
   }
+
+  h1 > a,
+  h2 > a,
+  h3 > a,
+  h4 > a,
+  h5 > a,
+  h6 > a {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+
+    :after {
+      content: url(/connect.svg);
+      position: absolute;
+      left: 100%;
+      top: 2px;
+      margin-left: 8px;
+      opacity: 0;
+    }
+
+    &:hover:after {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+
+  li {
+    margin: 12px 0;
+    line-spacing: 1.6;
+  }
 `;

@@ -18,6 +18,12 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../tooltip"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }

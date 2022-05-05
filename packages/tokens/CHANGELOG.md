@@ -1,5 +1,23 @@
 # @leafygreen-ui/tokens
 
+## 1.3.0
+
+### Minor Changes
+
+- c48e943e: Exports `Mode`, `hoverRing` and `focusRing` from `tokens`. Add `hoverRing` and `focusRing` to the `box-shadow` property to render Leafygreen interaction states
+
+## 1.2.0
+
+### Minor Changes
+
+- ba4aab15: Exports the constant `BaseFontSize` from `tokens`
+
+### Patch Changes
+
+- 233ac580: Adds documentation to `typeScales`. Exports `fontFamilies` as read-only
+- Updated dependencies [2cf1bc4a]
+  - @leafygreen-ui/lib@9.2.1
+
 ## 1.1.0
 
 ### Minor Changes

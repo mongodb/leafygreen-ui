@@ -151,4 +151,4 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   );
 };
 
-export { Link };
+export default Link;

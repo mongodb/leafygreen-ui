@@ -21,7 +21,8 @@
     "pretty": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",

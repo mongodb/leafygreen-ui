@@ -83,6 +83,9 @@ function Footer() {
         <FooterLink href="https://www.mongodb.com/blog/channel/events">
           Events
         </FooterLink>
+        <FooterLink href="https://github.com/mongodb/leafygreen-ui">
+          GitHub
+        </FooterLink>
         <FooterLink href="https://www.mongodb.com/careers">Careers</FooterLink>
         <p className={trademarkStyle}>© 2021 MongoDB, Inc.</p>
       </div>

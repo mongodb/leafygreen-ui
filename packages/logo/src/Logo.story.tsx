@@ -62,7 +62,7 @@ function renderLogoStory(LogoComponent: React.FunctionComponent<LogoProps>) {
   );
 }
 
-storiesOf('Logo', module)
+storiesOf('Packages/Logo', module)
   .add('MongoDB Logo', () => renderLogoStory(MongoDBLogo))
   .add('MongoDB Logo Mark', () => renderLogoStory(MongoDBLogoMark))
   .add('Atlas Logo Lockup', () => renderLogoStory(AtlasLogoLockup))

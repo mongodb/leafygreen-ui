@@ -22,17 +22,17 @@ jobs:
         run: yarn
 
       - name: Build packages
-        run: yarn build
+        run: yarn build:packages
 
       - name: Build typescript
-        run: yarn ts:build
+        run: yarn build:ts
 
       - name: Create Release Pull Request
         id: changesets
-        uses: changesets/action@master
+        uses: changesets/action@v1
         with:
-          version: yarn changeset:version
-          publish: yarn release
+          version: yarn changeset version
+          publish: yarn publish:packages
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
@@ -40,9 +40,13 @@ jobs:
       - name: Push Changeset Updates to Submodules
         run: git submodule foreach 'git checkout -B changesets && git add . && git commit -m "changeset update" && git push -f origin changesets'
 
-      - name: Publish website with package updates
+      - name: Publish storybook with package updates
         if: steps.changesets.outputs.published == 'true'
-        run: yarn publish:sites
+        run: yarn publish:storybook
+
+      - name: Publish mongodb.design with package updates
+        if: steps.changesets.outputs.published == 'true'
+        run: yarn publish:website
 
       - name: Notify Slack channel of new releases
         if: steps.changesets.outputs.published == 'true'

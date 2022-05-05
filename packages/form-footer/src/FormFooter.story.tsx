@@ -6,44 +6,60 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import FormFooter from '.';
 
-storiesOf('FormFooter', module)
+storiesOf('Packages/FormFooter', module)
   .add('Default', () => (
-    <FormFooter
+    <div
       className={css`
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        width: 1200px;
+        margin: auto;
+        position: relative;
       `}
-      primaryButton={{
-        text: text('Primary button text', 'Save Draft'),
-      }}
-      cancelButtonText={text('Cancel button text', '')}
-      backButtonText={text('Back button text', '')}
-      errorMessage={text('Error message', 'There is an error in this form')}
-      contentClassName={css`
-        max-width: 1024px;
-      `}
-    />
+    >
+      <FormFooter
+        className={css`
+          position: absolute;
+          bottom: 0;
+          left: 0;
+        `}
+        primaryButton={{
+          text: text('Primary button text', 'Save Draft'),
+        }}
+        cancelButtonText={text('Cancel button text', '')}
+        backButtonText={text('Back button text', '')}
+        errorMessage={text('Error message', 'There is an error in this form')}
+        contentClassName={css`
+          max-width: 1024px;
+        `}
+      />
+    </div>
   ))
   .add('with custom primary button', () => (
-    <FormFooter
+    <div
       className={css`
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        position: relative;
+        width: 1200px;
+        margin: auto;
       `}
-      primaryButton={
-        <Button
-          leftGlyph={<Icon glyph={'Cloud'} />}
-          rightGlyph={<Icon glyph={'Checkmark'} />}
-          variant="primary"
-          disabled={boolean('Primary button disabled', false)}
-        >
-          Save to cloud
-        </Button>
-      }
-      cancelButtonText={text('Cancel button text', '')}
-      backButtonText={text('Back button text', 'Go back')}
-      errorMessage={text('Error message', 'There is an error in this form')}
-    />
+    >
+      <FormFooter
+        className={css`
+          position: absolute;
+          bottom: 0;
+          left: 0;
+        `}
+        primaryButton={
+          <Button
+            leftGlyph={<Icon glyph={'Cloud'} />}
+            rightGlyph={<Icon glyph={'Checkmark'} />}
+            variant="primary"
+            disabled={boolean('Primary button disabled', false)}
+          >
+            Save to cloud
+          </Button>
+        }
+        cancelButtonText={text('Cancel button text', '')}
+        backButtonText={text('Back button text', 'Go back')}
+        errorMessage={text('Error message', 'There is an error in this form')}
+      />
+    </div>
   ));

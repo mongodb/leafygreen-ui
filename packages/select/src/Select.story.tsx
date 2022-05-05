@@ -22,7 +22,7 @@ const Wrapper = ({ darkMode, children }: any) => (
   </div>
 );
 
-storiesOf('Select', module)
+storiesOf('Packages/Select', module)
   .add('Uncontrolled', () => {
     const darkMode = boolean('darkMode', false);
     const label = text('Label', 'Label');
