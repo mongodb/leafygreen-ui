@@ -1,103 +1,87 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
 import Button from '@leafygreen-ui/button';
-import { css, cx } from '@leafygreen-ui/emotion';
-import Modal, { ModalSize } from '.';
+import { css } from '@leafygreen-ui/emotion';
+import Modal from '.';
 import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
 import { Subtitle, Body } from '@leafygreen-ui/typography';
-import { palette } from '@leafygreen-ui/palette';
 import Copyable from '@leafygreen-ui/copyable';
 import Code from '@leafygreen-ui/code';
+import { ComponentStory, Meta } from '@storybook/react';
+import { ModalProps } from './Modal';
 
-const scroll = css`
-  height: 200vh;
-`;
+export default {
+  title: 'Packages/Modals/Modal',
+  component: Modal,
+  argTypes: {
+    open: {
+      control: false,
+    },
+    setOpen: {
+      control: false,
+    },
+    children: {
+      control: false,
+    },
+  },
+} as Meta<typeof Modal>;
 
-const buttonPadding = css`
-  margin-top: 4px;
-`;
+const UncontrolledTemplate: ComponentStory<typeof Modal> = (
+  args: ModalProps,
+) => <Modal {...args} />;
+export const Uncontrolled = UncontrolledTemplate.bind({});
+Uncontrolled.args = {
+  open: true,
+  children: (
+    <>
+      <Subtitle>Base modal</Subtitle>
+      <Body>Modal Content goes here.</Body>
+    </>
+  ),
+};
 
-const titleMargin = css`
-  margin-bottom: 4px;
-`;
-
-const darkModeColor = css`
-  color: ${palette.white};
-`;
-
-function Default() {
+const ControlledTemplate: ComponentStory<typeof Modal> = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
-  const darkMode = boolean('darkMode', false);
-
   return (
     <>
       <Button onClick={() => setOpen(!open)}>Open Modal</Button>
-      <Modal
-        open={open}
-        setOpen={setOpen}
-        size={select('size', Object.values(ModalSize), ModalSize.Default)}
-        darkMode={darkMode}
-      >
-        <Subtitle
-          className={cx(titleMargin, {
-            [darkModeColor]: darkMode,
-          })}
-        >
-          Base modal
-        </Subtitle>
-        <Body
-          className={cx({
-            [darkModeColor]: darkMode,
-          })}
-        >
-          Modal Content goes here.
-        </Body>
-      </Modal>
+      <Modal {...args} open={open} setOpen={setOpen} />
     </>
   );
-}
+};
 
-function Scroll() {
-  const [open, setOpen] = useState(false);
-
-  return (
+export const Controlled = ControlledTemplate.bind({});
+Controlled.args = {
+  children: (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
-      <Modal
-        open={open}
-        setOpen={setOpen}
-        size={select('size', Object.values(ModalSize), ModalSize.Default)}
-      >
-        <div className={scroll}>Modal Content goes here.</div>
-      </Modal>
+      <Subtitle>Base modal</Subtitle>
+      <Body>Modal Content goes here.</Body>
     </>
-  );
-}
+  ),
+};
 
-function Interactive() {
-  const [open, setOpen] = useState(false);
+export const Scroll = ControlledTemplate.bind({});
+Scroll.args = {
+  children: (
+    <div
+      className={css`
+        height: 200vh;
+      `}
+    >
+      Modal Content goes here.
+    </div>
+  ),
+};
 
-  return (
-    <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
-      <Modal
-        open={open}
-        setOpen={setOpen}
-        size={select('size', Object.values(ModalSize), ModalSize.Default)}
-      >
-        <div>
-          <div>Modal Content goes here.</div>
-          <Button className={buttonPadding}>
-            Click me, I will not close the modal!
-          </Button>
-        </div>
-      </Modal>
-    </>
-  );
-}
+export const Interactive = ControlledTemplate.bind({});
+Interactive.args = {
+  children: (
+    <div>
+      <Button>Click me, I will not close the modal!</Button>
+    </div>
+  ),
+};
 
-function DefaultSelect() {
+export const DefaultSelect = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('cat');
   const [valueB, setValueB] = useState('smallCat');
@@ -105,12 +89,7 @@ function DefaultSelect() {
   return (
     <>
       <Button onClick={() => setOpen(!open)}>Open Modal</Button>
-      <Modal
-        open={open}
-        setOpen={setOpen}
-        size={select('size', Object.values(ModalSize), ModalSize.Default)}
-        darkMode={boolean('darkMode', false)}
-      >
+      <Modal {...args} open={open} setOpen={setOpen}>
         <div>Modal Content goes here.</div>
 
         <div>
@@ -150,9 +129,9 @@ function DefaultSelect() {
       </Modal>
     </>
   );
-}
+};
 
-function CopyableModal() {
+export function CopyableModal(args: ModalProps) {
   const [open, setOpen] = useState(false);
 
   const jsSnippet = `
@@ -182,12 +161,7 @@ console.log(greeting('World'));
   return (
     <>
       <Button onClick={() => setOpen(!open)}>Open Modal</Button>
-      <Modal
-        open={open}
-        setOpen={setOpen}
-        size={select('size', Object.values(ModalSize), ModalSize.Default)}
-        darkMode={boolean('darkMode', false)}
-      >
+      <Modal {...args} open={open} setOpen={setOpen}>
         <div>Modal Content goes here.</div>
         <Copyable>Hello world in a modal</Copyable>
 
@@ -198,10 +172,3 @@ console.log(greeting('World'));
     </>
   );
 }
-
-storiesOf('Packages/Modal', module)
-  .add('Default', () => <Default />)
-  .add('DefaultSelect', () => <DefaultSelect />)
-  .add('Scroll', () => <Scroll />)
-  .add('Interactive', () => <Interactive />)
-  .add('Copyable', () => <CopyableModal />);

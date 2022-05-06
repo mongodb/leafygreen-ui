@@ -26,7 +26,7 @@ const scrollContainerStyle = css`
   padding: 0px;
 `;
 
-interface MenuProps extends Omit<PopoverProps, 'active'> {
+export interface MenuProps extends Omit<PopoverProps, 'active'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.

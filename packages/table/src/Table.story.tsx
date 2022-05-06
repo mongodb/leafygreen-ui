@@ -1,302 +1,292 @@
+/* eslint-disable */
+// TODO: Table Shape is defined as `any` for now since our test data format isn't consistent.
+import { Meta } from '@storybook/react';
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { boolean, select } from '@storybook/addon-knobs';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { css } from '@leafygreen-ui/emotion';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
-import { defaultData, multiRowData, testTableDataShape } from './fixtures';
-import { uiColors } from '@leafygreen-ui/palette';
+import { defaultData, multiRowData } from './fixtures';
+import { TableProps } from './Table';
 
-storiesOf('Packages/Table', module)
-  .add('Default', () => {
-    const withHeaders = boolean('First column headers', false);
-    const darkMode = boolean('darkMode', false);
-    const baseFontSize = select('Base Font Size', [14, 16], 14);
+export default {
+  title: 'Packages/Table',
+  component: Table,
+  args: {
+    data: defaultData,
+    withHeaders: false,
+  },
+  argTypes: {
+    withHeaders: 'boolean',
+  },
+  parameters: {
+    controls: { exclude: ['children', 'data', 'columns'] },
+  },
+} as Meta<typeof Table>;
 
-    return (
-      <LeafygreenProvider>
-        <div
-          className={css`
-            padding: 20px;
-            background-color: ${darkMode ? uiColors.gray.dark3 : 'transparent'};
-            width: 768px;
-          `}
-        >
-          <Table
-            baseFontSize={baseFontSize}
-            darkMode={darkMode}
-            data={defaultData}
-            columns={
-              <>
-                <TableHeader
-                  dataType={DataType.String}
-                  label="Name"
-                  key="name"
-                  compareFn={(
-                    a: testTableDataShape,
-                    b: testTableDataShape,
-                    dir,
-                  ) => {
-                    const reverse = (str: string) =>
-                      str.split('').reverse().join('');
+type TableArgs<T = any> = TableProps<T> & { withHeaders?: boolean };
 
-                    // Pin 'Yvonne' to the top
-                    if (b.name === 'Yvonne') return 1;
-                    else if (a.name === 'Yvonne') return -1;
+export const Basic = ({ withHeaders, ...args }: TableArgs<any>) => (
+  <Table
+    {...args}
+    data={defaultData.slice(0, 8)}
+    columns={
+      <HeaderRow>
+        <TableHeader key="name" label="Name" dataType="string" />
+        <TableHeader key="age" label="Age" dataType="number" />
+        <TableHeader key="color" label="Color" dataType="string" />
+        <TableHeader key="location" label="Location" />
+      </HeaderRow>
+    }
+  >
+    {({ datum }: { datum: any }) => (
+      <Row key={datum.name}>
+        <Cell isHeader={withHeaders}>{datum.name}</Cell>
+        <Cell>{datum.age}</Cell>
+        <Cell>{datum.color}</Cell>
+        <Cell>{datum.location}</Cell>
+      </Row>
+    )}
+  </Table>
+);
 
-                    // Sort by reversed name
-                    if (dir == 'desc') {
-                      return reverse(b.name) >= reverse(a.name) ? 1 : -1;
-                    }
+export const BuiltInZebraStripes = ({
+  withHeaders,
+  ...args
+}: TableArgs<any>) => (
+  <Table
+    {...args}
+    columns={
+      <HeaderRow>
+        <TableHeader key="name" label="Name" dataType="string" />
+        <TableHeader key="age" label="Age" dataType="number" />
+        <TableHeader key="color" label="Color" dataType="string" />
+        <TableHeader key="location" label="Location" />
+      </HeaderRow>
+    }
+  >
+    {({ datum }) => (
+      <Row key={datum.name}>
+        <Cell isHeader={withHeaders}>{datum.name}</Cell>
+        <Cell>{datum.age}</Cell>
+        <Cell>{datum.color}</Cell>
+        <Cell>{datum.location}</Cell>
+      </Row>
+    )}
+  </Table>
+);
 
-                    return reverse(b.name) >= reverse(a.name) ? -1 : 1;
-                  }}
-                />
+export const CustomLogic = ({ withHeaders, ...args }: TableArgs<any>) => (
+  <Table
+    {...args}
+    columns={
+      <>
+        <TableHeader
+          dataType={DataType.String}
+          label="Name"
+          key="name"
+          compareFn={(a: any, b: any, dir) => {
+            const reverse = (str: string) => str.split('').reverse().join('');
 
-                <TableHeader
-                  dataType={DataType.Number}
-                  label="Age"
-                  key="age"
-                  sortBy={(data: testTableDataShape) => data.age.toString()}
-                />
+            // Pin 'Yvonne' to the top
+            if (b.name === 'Yvonne') return 1;
+            else if (a.name === 'Yvonne') return -1;
 
-                <TableHeader
-                  dataType={DataType.String}
-                  label="Favorite Color"
-                  key="color"
-                  sortBy={(data: testTableDataShape) => data.color}
-                />
-
-                <TableHeader
-                  dataType={DataType.String}
-                  label="Location"
-                  key="location"
-                  handleSort={dir => {
-                    // eslint-disable-next-line no-console
-                    console.log(`Sorting location ${dir}`);
-                  }}
-                />
-              </>
+            // Sort by reversed name
+            if (dir == 'desc') {
+              return reverse(b.name) >= reverse(a.name) ? 1 : -1;
             }
-          >
-            {({ datum }) => (
-              <Row key={datum.name} disabled={datum.disabled}>
-                <Cell isHeader={withHeaders}>
-                  {datum.name} {datum.rand}
-                </Cell>
-                <Cell>{datum.age}</Cell>
-                <Cell>{datum.color}</Cell>
+
+            return reverse(b.name) >= reverse(a.name) ? -1 : 1;
+          }}
+        />
+
+        <TableHeader
+          dataType={DataType.Number}
+          label="Age"
+          key="age"
+          sortBy={(datum: any) => datum.age.toString()}
+        />
+
+        <TableHeader
+          dataType={DataType.String}
+          label="Favorite Color"
+          key="color"
+          sortBy={(datum: any) => datum.color}
+        />
+
+        <TableHeader
+          dataType={DataType.String}
+          label="Location"
+          key="location"
+          handleSort={dir => {
+            // eslint-disable-next-line no-console
+            console.log(`Sorting location ${dir}`);
+          }}
+        />
+      </>
+    }
+  >
+    {({ datum }: { datum: any }) => (
+      <Row key={datum.name} disabled={datum.disabled}>
+        <Cell isHeader={withHeaders}>
+          {datum.name} {datum.rand}
+        </Cell>
+        <Cell>{datum.age}</Cell>
+        <Cell>{datum.color}</Cell>
+        <Cell>{datum.location}</Cell>
+
+        {datum.name === 'Donna' && (
+          <Row>
+            <Cell isHeader={withHeaders} colSpan={4}>
+              Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur
+              est at lobortis. Integer posuere erat a ante venenatis dapibus
+              posuere velit aliquet. Maecenas faucibus mollis interdum. Nullam
+              id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est
+              non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
+              sem nec elit. Cras justo odio, dapibus ac facilisis in, egestas
+              eget quam. Donec id elit non mi porta gravida at eget metus. Donec
+              id elit non mi porta gravida at eget metus. Aenean lacinia
+              bibendum nulla sed consectetur. Vestibulum id ligula porta felis
+              euismod semper. Maecenas sed diam eget risus varius blandit sit
+              amet non magna. Etiam porta sem malesuada magna mollis euismod.
+              Donec ullamcorper nulla non metus auctor fringilla. Donec id elit
+              non mi porta gravida at eget metus.
+            </Cell>
+          </Row>
+        )}
+
+        {datum.name !== 'Donna' && datum.expandable && (
+          <Row>
+            <Cell isHeader={withHeaders}>expanded name: {datum.name}</Cell>
+            <Cell>expanded age: {datum.age}</Cell>
+            <Cell>expanded color: {datum.color}</Cell>
+            <Cell>{datum.location}</Cell>
+
+            {datum.age > 30 && (
+              <Row>
+                <Cell isHeader={withHeaders}>expanded name: {datum.name}</Cell>
+                <Cell>expanded age: {datum.age}</Cell>
+                <Cell>expanded color: {datum.color}</Cell>
                 <Cell>{datum.location}</Cell>
-
-                {datum.name === 'Donna' && (
-                  <Row>
-                    <Cell isHeader={withHeaders} colSpan={4}>
-                      Nulla vitae elit libero, a pharetra augue. Sed posuere
-                      consectetur est at lobortis. Integer posuere erat a ante
-                      venenatis dapibus posuere velit aliquet. Maecenas faucibus
-                      mollis interdum. Nullam id dolor id nibh ultricies
-                      vehicula ut id elit. Duis mollis, est non commodo luctus,
-                      nisi erat porttitor ligula, eget lacinia odio sem nec
-                      elit. Cras justo odio, dapibus ac facilisis in, egestas
-                      eget quam. Donec id elit non mi porta gravida at eget
-                      metus. Donec id elit non mi porta gravida at eget metus.
-                      Aenean lacinia bibendum nulla sed consectetur. Vestibulum
-                      id ligula porta felis euismod semper. Maecenas sed diam
-                      eget risus varius blandit sit amet non magna. Etiam porta
-                      sem malesuada magna mollis euismod. Donec ullamcorper
-                      nulla non metus auctor fringilla. Donec id elit non mi
-                      porta gravida at eget metus.
-                    </Cell>
-                  </Row>
-                )}
-
-                {datum.name !== 'Donna' && datum.expandable && (
-                  <Row>
-                    <Cell isHeader={withHeaders}>
-                      expanded name: {datum.name}
-                    </Cell>
-                    <Cell>expanded age: {datum.age}</Cell>
-                    <Cell>expanded color: {datum.color}</Cell>
-                    <Cell>{datum.location}</Cell>
-
-                    {datum.age > 30 && (
-                      <Row>
-                        <Cell isHeader={withHeaders}>
-                          expanded name: {datum.name}
-                        </Cell>
-                        <Cell>expanded age: {datum.age}</Cell>
-                        <Cell>expanded color: {datum.color}</Cell>
-                        <Cell>{datum.location}</Cell>
-                      </Row>
-                    )}
-                  </Row>
-                )}
               </Row>
             )}
-          </Table>
-        </div>
-      </LeafygreenProvider>
-    );
-  })
-  .add('Multi-row Header', () => {
-    const darkMode = boolean('darkMode', false);
-    return (
-      <div
-        className={css`
-          padding: 20px;
-          background-color: ${darkMode ? uiColors.gray.dark3 : 'transparent'};
-        `}
-      >
-        <Table
-          darkMode={darkMode}
-          data={multiRowData}
-          columns={[
-            <HeaderRow key="1">
-              <TableHeader
-                key="icecreamshoppe"
-                colSpan={3}
-                label="Ice Cream Shoppe"
-              />
-            </HeaderRow>,
-            <HeaderRow key="2">
-              <TableHeader key="flavor" label="Flavor" />
-              <TableHeader key="price" label="Price" />
-            </HeaderRow>,
-          ]}
-        >
-          {({ datum }) => (
-            <Row>
-              <Cell rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}>
-                {datum.flavor}
-              </Cell>
-              <Cell>{datum.price}</Cell>
-            </Row>
-          )}
-        </Table>
-      </div>
-    );
-  })
-  .add('No nested Rows', () => {
-    const darkMode = boolean('darkMode', false);
-    return (
-      <div
-        className={css`
-          padding: 20px;
-          background-color: ${darkMode ? uiColors.gray.dark3 : 'transparent'};
-        `}
-      >
-        <Table
-          darkMode={darkMode}
-          data={defaultData}
-          columns={
-            <HeaderRow>
-              <TableHeader key="name" label="Name" dataType="string" />
-              <TableHeader key="age" label="Age" dataType="number" />
-              <TableHeader
-                label="Color"
-                sortBy={(datum: typeof defaultData[0]) => datum.color}
-                dataType="string"
-                key="color"
-              />
-              <TableHeader key="location" label="Location" />
-            </HeaderRow>
-          }
-        >
-          {({ datum }) => (
-            <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
-              <Cell>{datum.name}</Cell>
-              <Cell>{datum.age}</Cell>
-              <Cell>{datum.color}</Cell>
-              <Cell>{datum.location}</Cell>
-            </Row>
-          )}
-        </Table>
-      </div>
-    );
-  })
-  .add('When table is too big for its container', () => {
-    const darkMode = boolean('darkMode', false);
-    return (
-      <div
-        className={css`
-          padding: 20px;
-          background-color: ${darkMode ? uiColors.gray.dark3 : 'transparent'};
-        `}
-      >
-        <Table
-          darkMode={darkMode}
-          data={defaultData}
-          columns={
-            <HeaderRow>
-              <TableHeader key="name" label="Name" dataType="string" />
-              <TableHeader key="age" label="Age" dataType="number" />
-              <TableHeader label="Color" dataType="string" key="color" />
-              <TableHeader key="location" label="Location" />
-            </HeaderRow>
-          }
-        >
-          {({ datum }) => (
-            <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
-              <Cell>{datum.name}</Cell>
-              <Cell>{datum.age}</Cell>
-              <Cell>{datum.color}</Cell>
-              <Cell>{datum.location}</Cell>
-            </Row>
-          )}
-        </Table>
-      </div>
-    );
-  })
-  .add('Multiple nested rows', () => {
-    return (
-      <div
-        className={css`
-          position: absolute;
-          top: 0;
-        `}
-      >
-        <Table
-          data={[
-            {
-              title: 'People',
-              people: defaultData,
-            },
-            {
-              title: 'Average',
-              age: (
-                defaultData.reduce((sum, { age }) => sum + age, 0) /
-                defaultData.length
-              ).toFixed(2),
-            },
-          ]}
-          columns={
-            <HeaderRow>
-              <TableHeader key="name" label="Name" dataType="string" />
-              <TableHeader key="age" label="Age" dataType="number" />
-              <TableHeader label="Color" dataType="string" key="color" />
-              <TableHeader key="location" label="Location" />
-            </HeaderRow>
-          }
-        >
-          {({ datum }) => (
-            <Row key={datum.title}>
-              <Cell>{datum.title}</Cell>
+          </Row>
+        )}
+      </Row>
+    )}
+  </Table>
+);
 
-              {datum.people ? (
-                datum.people.map(person => (
-                  <Row key={person.name}>
-                    <Cell>{person.name}</Cell>
-                    <Cell>{person.age}</Cell>
-                    <Cell>{person.color}</Cell>
-                    <Cell>{person.location}</Cell>
-                  </Row>
-                ))
-              ) : (
-                <Cell>{datum.age}</Cell>
-              )}
+export const MultiRowHeader = ({ withHeaders, ...args }: TableArgs<any>) => (
+  <Table
+    {...args}
+    data={multiRowData}
+    columns={[
+      <HeaderRow key="1">
+        <TableHeader
+          key="icecreamshoppe"
+          colSpan={3}
+          label="Ice Cream Shoppe"
+        />
+      </HeaderRow>,
+      <HeaderRow key="2">
+        <TableHeader key="flavor" label="Flavor" />
+        <TableHeader key="price" label="Price" />
+      </HeaderRow>,
+    ]}
+  >
+    {({ datum }: { datum: any }) => (
+      <Row>
+        <Cell
+          isHeader={withHeaders}
+          rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}
+        >
+          {datum.flavor}
+        </Cell>
+        <Cell>{datum.price}</Cell>
+      </Row>
+    )}
+  </Table>
+);
+
+MultiRowHeader.args = {
+  withHeaders: true,
+};
+
+export const NoNestedRows = ({ withHeaders, ...args }: TableArgs<any>) => (
+  <Table
+    {...args}
+    columns={
+      <HeaderRow>
+        <TableHeader key="name" label="Name" dataType="string" />
+        <TableHeader key="age" label="Age" dataType="number" />
+        <TableHeader
+          label="Color"
+          sortBy={(datum: any) => datum.color}
+          dataType="string"
+          key="color"
+        />
+        <TableHeader key="location" label="Location" />
+      </HeaderRow>
+    }
+  >
+    {({ datum }: { datum: any }) => (
+      <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
+        <Cell isHeader={withHeaders}>{datum.name}</Cell>
+        <Cell>{datum.age}</Cell>
+        <Cell>{datum.color}</Cell>
+        <Cell>{datum.location}</Cell>
+      </Row>
+    )}
+  </Table>
+);
+
+export const MultipleNestedRows = ({
+  withHeaders,
+  ...args
+}: TableArgs<any>) => (
+  <Table
+    {...args}
+    data={[
+      {
+        title: 'People',
+        people: defaultData,
+      },
+      {
+        title: 'Average',
+        age: (
+          defaultData.reduce((sum, { age }) => sum + age, 0) /
+          defaultData.length
+        ).toFixed(2),
+      },
+    ]}
+    columns={
+      <HeaderRow>
+        <TableHeader key="name" label="Name" dataType="string" />
+        <TableHeader key="age" label="Age" dataType="number" />
+        <TableHeader label="Color" dataType="string" key="color" />
+        <TableHeader key="location" label="Location" />
+      </HeaderRow>
+    }
+  >
+    {({ datum }: { datum: any }) => (
+      <Row key={datum.title}>
+        <Cell isHeader={withHeaders}>{datum.title}</Cell>
+
+        {datum.people ? (
+          datum.people.map((person: any) => (
+            <Row key={person.name}>
+              <Cell isHeader={withHeaders}>{person.name}</Cell>
+              <Cell>{person.age}</Cell>
+              <Cell>{person.color}</Cell>
+              <Cell>{person.location}</Cell>
             </Row>
-          )}
-        </Table>
-      </div>
-    );
-  });
+          ))
+        ) : (
+          <Cell>{datum.age}</Cell>
+        )}
+      </Row>
+    )}
+  </Table>
+);
+MultipleNestedRows.args = {
+  withHeaders: true,
+};
