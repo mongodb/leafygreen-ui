@@ -187,7 +187,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       <span
         role="option"
         aria-selected={isFocused}
-        data-test-id="lg-combobox-chip"
+        data-testid="lg-combobox-chip"
         ref={forwardedRef}
         className={cx(chipClassName, chipWrapperStyle({ darkMode, size }))}
         onClick={handleChipClick}
