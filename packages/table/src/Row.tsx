@@ -53,7 +53,6 @@ const modeStyles = {
     disabledStyle: css`
       background-color: ${palette.gray.light2};
       color: ${palette.gray.base};
-      cursor: not-allowed;
       border-top: 1px inset ${palette.gray.light1};
       border-bottom: 1px inset ${palette.gray.light1};
     `,
@@ -83,7 +82,6 @@ const modeStyles = {
     disabledStyle: css`
       background-color: ${uiColors.gray.dark1};
       color: ${uiColors.gray.base};
-      cursor: not-allowed;
     `,
   },
 };
