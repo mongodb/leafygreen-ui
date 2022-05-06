@@ -177,3 +177,44 @@ export const ExternalFilter = () => {
     </Combobox>
   );
 };
+
+const allOptions = [
+  { value: 'pepper-cayenne', displayName: 'Cayenne' },
+  { value: 'pepper-ghost', displayName: 'Ghost pepper' },
+  { value: 'pepper-habanero', displayName: 'Habanero' },
+  { value: 'pepper-jalapeno', displayName: 'Jalapeño' },
+  { value: 'pepper-red', displayName: 'Red pepper' },
+  { value: 'pepper-scotch-bonnet', displayName: 'Scotch bonnet' },
+];
+
+export const TEST = () => {
+  const [filteredOptions, setFilteredOptions] = useState(null);
+
+  const handleFilter = match => {
+    const matching = allOptions
+      .filter(
+        option =>
+          option.value.includes(match) || option.displayName.includes(match),
+      )
+      .map(filtered => filtered.value);
+    setFilteredOptions(matching);
+  };
+
+  return (
+    <div className="App">
+      <Combobox
+        label="Select"
+        filteredOptions={filteredOptions}
+        onFilter={handleFilter}
+      >
+        {allOptions.map((option, idx) => (
+          <ComboboxOption
+            key={idx}
+            value={option.value}
+            displayName={option.displayName}
+          />
+        ))}
+      </Combobox>
+    </div>
+  );
+};

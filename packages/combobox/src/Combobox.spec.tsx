@@ -1,7 +1,6 @@
 /* eslint-disable jest/no-disabled-tests */
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import React from 'react';
 import {
   waitForElementToBeRemoved,
   act,
@@ -28,10 +27,53 @@ import { OptionObject, wrapJSX } from './util';
 describe('packages/combobox/utils', () => {
   describe('wrapJSX', () => {
     test('Wraps the matched string in the provided element', () => {
-      const JSX = wrapJSX('Apple', 'ap', 'em');
+      const JSX = wrapJSX('Apple', 'pp', 'em');
       const { container } = render(JSX);
-      expect(container).toBeInTheDocument();
-      expect(container.innerHTML).toEqual(`<em>Ap</em>ple`);
+      expect(container.innerHTML).toEqual(`A<em>pp</em>le`);
+    });
+    test('Wraps the entire string when it matches', () => {
+      const JSX = wrapJSX('Apple', 'Apple', 'em');
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`<em>Apple</em>`);
+    });
+    test('Keeps case consistent with source', () => {
+      const JSX = wrapJSX('Apple', 'aPPlE', 'em');
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`<em>Apple</em>`);
+    });
+    test('wraps all instances of a match', () => {
+      const JSX = wrapJSX('Pepper', 'p', 'em');
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`<em>P</em>e<em>p</em><em>p</em>er`);
+    });
+    test('Wraps nothing when there is no match', () => {
+      const JSX = wrapJSX('Apple', 'q', 'em');
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`Apple`);
+    });
+
+    // No `wrap`
+    test('Returns the input string when "wrap" is empty', () => {
+      const JSX = wrapJSX('Apple', '', 'em');
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`Apple`);
+    });
+    test('Returns the input string when "wrap" is `undefined`', () => {
+      const JSX = wrapJSX('Apple', undefined, 'em');
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`Apple`);
+    });
+
+    // No `element`
+    test('Returns the input string when "element" is empty', () => {
+      const JSX = wrapJSX('Apple', 'ap', '' as keyof HTMLElementTagNameMap);
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`Apple`);
+    });
+    test('Returns the input string when "element" is undefined', () => {
+      const JSX = wrapJSX('Apple', 'ap');
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`Apple`);
     });
   });
 });
