@@ -1,7 +1,7 @@
 import { isComponentType, keyMap as _keyMap } from '@leafygreen-ui/lib';
 import kebabCase from 'lodash/kebabCase';
 import isEqual from 'lodash/isEqual';
-import React, { DOMAttributes, DOMElement } from 'react';
+import React, { DOMAttributes, DOMElement, ReactChild } from 'react';
 import { ComboboxOptionProps } from './Combobox.types';
 
 // TODO - remove this when lib/keyMap supports Backspace & Delete
@@ -32,9 +32,7 @@ export const wrapJSX = (
     const matches = str.matchAll(regex);
 
     if (matches) {
-      const outArray = str.split('') as Array<
-        string | DOMElement<DOMAttributes<Element>, Element>
-      >;
+      const outArray = str.split('') as Array<ReactChild>;
 
       /**
        * For every match, splice it into the "string",
@@ -45,12 +43,14 @@ export const wrapJSX = (
         const matchIndex = match.index ?? -1;
         const matchContent = match[0];
         const matchLength = matchContent.length;
+        // We create a replacement array that's
+        // the same length as the match we're deleting
+        // in order to keep the matchIndexes aligned with the indexes
+        // of the output array
+        const replacement = new Array<ReactChild>(matchLength).fill('');
+        replacement[0] = React.createElement(element, null, matchContent);
 
-        outArray.splice(
-          matchIndex,
-          matchLength,
-          React.createElement(element, null, matchContent),
-        );
+        outArray.splice(matchIndex, matchLength, ...replacement);
       }
 
       return <>{outArray}</>;

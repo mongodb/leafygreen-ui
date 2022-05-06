@@ -41,15 +41,15 @@ describe('packages/combobox/utils', () => {
       const { container } = render(JSX);
       expect(container.innerHTML).toEqual(`<em>Apple</em>`);
     });
-    test('wraps all instances of a match', () => {
-      const JSX = wrapJSX('Pepper', 'p', 'em');
-      const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`<em>P</em>e<em>p</em><em>p</em>er`);
-    });
     test('Wraps nothing when there is no match', () => {
       const JSX = wrapJSX('Apple', 'q', 'em');
       const { container } = render(JSX);
       expect(container.innerHTML).toEqual(`Apple`);
+    });
+    test('wraps all instances of longer match', () => {
+      const JSX = wrapJSX('Pepper', 'pe', 'em');
+      const { container } = render(JSX);
+      expect(container.innerHTML).toEqual(`<em>Pe</em>p<em>pe</em>r`);
     });
 
     // No `wrap`
