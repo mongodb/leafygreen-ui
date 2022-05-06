@@ -87,8 +87,6 @@ function SideNavGroup({
     return checkForNestedGroups(children);
   }, [children, indentLevel]);
 
-  const childCount = React.Children.count(renderedChildren);
-
   // compute whether this group is active
   const isActiveGroup: boolean = useMemo(() => {
     if (hasActiveItem != null) {
