@@ -39,7 +39,7 @@ interface StateForStyles {
   size: Size;
 }
 
-interface PipelineProps {
+export interface PipelineProps {
   /**
    * Content that will appear inside of the Pipeline component.
    */
