@@ -38,15 +38,16 @@ export const wrapJSX = (
        * For every match, splice it into the "string",
        * wrapped in the React element
        */
-      // TODO: consider adding --downlevelIteration TS flag
+      // Consider adding --downlevelIteration TS flag so we don't need Array.from
       for (const match of Array.from(matches)) {
         const matchIndex = match.index ?? -1;
         const matchContent = match[0];
         const matchLength = matchContent.length;
+
         // We create a replacement array that's
-        // the same length as the match we're deleting
-        // in order to keep the matchIndexes aligned with the indexes
-        // of the output array
+        // the same length as the match we're deleting,
+        // in order to keep the matchIndexes aligned
+        // with the indexes of the output array
         const replacement = new Array<ReactChild>(matchLength).fill('');
         replacement[0] = React.createElement(element, null, matchContent);
 
