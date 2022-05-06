@@ -1,11 +1,13 @@
 /* eslint-disable jest/no-disabled-tests */
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
+import React from 'react';
 import {
   waitForElementToBeRemoved,
   act,
   waitFor,
   queryByText,
+  render,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -18,11 +20,22 @@ import {
   Select,
   testif,
 } from './ComboboxTestUtils';
-import { OptionObject } from './util';
+import { OptionObject, wrapJSX } from './util';
 
 /**
  * Tests
  */
+describe('packages/combobox/utils', () => {
+  describe('wrapJSX', () => {
+    test('Wraps the matched string in the provided element', () => {
+      const JSX = wrapJSX('Apple', 'ap', 'em');
+      const { container } = render(JSX);
+      expect(container).toBeInTheDocument();
+      expect(container.innerHTML).toEqual(`<em>Ap</em>ple`);
+    });
+  });
+});
+
 describe('packages/combobox', () => {
   describe('A11y', () => {
     test('does not have basic accessibility violations', async () => {
