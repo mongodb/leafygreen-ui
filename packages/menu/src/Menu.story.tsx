@@ -1,38 +1,61 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { select, boolean, number } from '@storybook/addon-knobs';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Menu, MenuSeparator, SubMenu, MenuItem } from '.';
-import { Align, Justify } from '@leafygreen-ui/popover';
+import { Menu, MenuProps, SubMenu, MenuItem } from '.';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
 import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
+import { Size } from './types';
 
-function Uncontrolled() {
-  const size = select('Size', ['default', 'large'], 'default');
-  const usePortal = boolean('Use Portal', true);
+export default {
+  title: 'Packages/Menu',
+  component: Menu,
+  args: {
+    open: true,
+    align: 'bottom',
+    usePortal: true,
+    trigger: <Button rightGlyph={<CloudIcon />} />,
+  },
+  argTypes: {
+    open: {
+      control: 'boolean',
+    },
+    usePortal: {
+      control: 'boolean',
+    },
+    trigger: {
+      control: false,
+    },
+    children: {
+      control: false,
+    },
+    refEl: {
+      control: false,
+    },
+    setOpen: {
+      control: false,
+    },
+    className: {
+      type: 'string',
+    },
+  },
+};
 
+export const UncontrolledTemplate = ({
+  size,
+  open,
+  trigger,
+  ...args
+}: MenuProps & { size: Size }) => {
   return (
     <LeafyGreenProvider>
-      <Menu
-        align={select('Align', Object.values(Align), Align.Bottom)}
-        justify={select('Justify', Object.values(Justify), Justify.Start)}
-        trigger={<Button rightGlyph={<CloudIcon />} />}
-        popoverZIndex={number('zIndex', 1)}
-        usePortal={usePortal}
-      >
+      <Menu open={open} trigger={trigger} {...args}>
         <MenuItem active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
         <MenuItem description="I am also a description" size={size}>
           Menu Item With Description
         </MenuItem>
-        <MenuItem
-          disabled={boolean('Disable item', true)}
-          description="I am a description"
-          size={size}
-        >
+        <MenuItem disabled description="I am a description" size={size}>
           Disabled Menu Item
         </MenuItem>
         <MenuItem size={size} href="http://mongodb.design">
@@ -41,52 +64,28 @@ function Uncontrolled() {
       </Menu>
     </LeafyGreenProvider>
   );
-}
+};
+UncontrolledTemplate.storyName = 'Uncontrolled';
 
-function Controlled() {
-  const [open, setOpen] = useState(false);
-  const size = select('Size', ['default', 'large'], 'default');
-  const usePortal = boolean('Use Portal', true);
-
+export const SubMenuExample = ({
+  size,
+  ...args
+}: MenuProps & { size: Size }) => {
   return (
     <LeafyGreenProvider>
-      <Button onClick={() => setOpen(!open)}>
-        trigger
-        <Menu
-          align={select('Align', Object.values(Align), Align.Bottom)}
-          justify={select('Justify', Object.values(Justify), Justify.Start)}
-          open={open}
-          setOpen={setOpen}
-          usePortal={usePortal}
-        >
-          <MenuItem active size={size} glyph={<LaptopIcon size="large" />}>
-            Active Menu Item
-          </MenuItem>
-          <MenuItem disabled={boolean('Disable item', true)} size={size}>
-            Disabled Menu Item
-          </MenuItem>
-          <MenuItem description="I am a description" size={size}>
-            Menu Item With Description
-          </MenuItem>
-          <MenuItem href="http://mongodb.design" size={size}>
-            I am a link!
-          </MenuItem>
-          <MenuSeparator
-            className={css`
-              margin: 0;
-            `}
-          />
-          <MenuItem size={size}>Left out of the MenuGroup</MenuItem>
-        </Menu>
-      </Button>
-    </LeafyGreenProvider>
-  );
-}
-
-function SubMenuExample() {
-  return (
-    <LeafyGreenProvider>
-      <Menu trigger={<Button>trigger</Button>}>
+      <Menu {...args}>
+        <MenuItem active size={size} glyph={<CloudIcon />}>
+          Active Menu Item
+        </MenuItem>
+        <MenuItem description="I am also a description" size={size}>
+          Menu Item With Description
+        </MenuItem>
+        <MenuItem disabled description="I am a description" size={size}>
+          Disabled Menu Item
+        </MenuItem>
+        <MenuItem size={size} href="http://mongodb.design">
+          I am a link!
+        </MenuItem>
         <SubMenu
           title="Menu Item 1"
           description=".design"
@@ -107,9 +106,22 @@ function SubMenuExample() {
       </Menu>
     </LeafyGreenProvider>
   );
-}
+};
+UncontrolledTemplate.storyName = 'Uncontrolled';
 
-storiesOf('Packages/Menu', module)
-  .add('Controlled', () => <Controlled />)
-  .add('Uncontrolled', () => <Uncontrolled />)
-  .add('With SubMenus', () => <SubMenuExample />);
+export const Controlled = ({
+  size,
+  open,
+  trigger,
+  ...args
+}: MenuProps & { size: Size }) => {
+  const [isOpen, setIsOpen] = useState(open);
+  return UncontrolledTemplate({
+    size,
+    open: isOpen,
+    trigger: (
+      <Button onClick={() => setIsOpen(o => !o)} rightGlyph={<CloudIcon />} />
+    ),
+    ...args,
+  });
+};
