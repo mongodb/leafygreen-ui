@@ -1,7 +1,6 @@
 import { isComponentType, keyMap as _keyMap } from '@leafygreen-ui/lib';
 import kebabCase from 'lodash/kebabCase';
-import isEqual from 'lodash/isEqual';
-import React, { DOMAttributes, DOMElement, ReactChild } from 'react';
+import React, { ReactChild } from 'react';
 import { ComboboxOptionProps } from './Combobox.types';
 
 // TODO - remove this when lib/keyMap supports Backspace & Delete
