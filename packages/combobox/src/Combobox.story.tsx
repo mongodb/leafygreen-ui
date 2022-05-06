@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
 import { Combobox, ComboboxOption, ComboboxGroup } from '.';
-import { useState } from '@storybook/client-api';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {
@@ -187,10 +186,12 @@ const allOptions = [
   { value: 'pepper-scotch-bonnet', displayName: 'Scotch bonnet' },
 ];
 
-export const TEST = () => {
-  const [filteredOptions, setFilteredOptions] = useState(null);
+export const Test_wrapJSX = () => {
+  const [filteredOptions, setFilteredOptions] = useState<Array<string>>(
+    allOptions.map(o => o.value),
+  );
 
-  const handleFilter = match => {
+  const handleFilter = (match: string) => {
     const matching = allOptions
       .filter(
         option =>
