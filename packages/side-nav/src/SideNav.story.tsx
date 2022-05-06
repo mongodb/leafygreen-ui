@@ -93,6 +93,7 @@ export const Basic = ({
   isDisabled,
   groupHeaderText,
   navItemText,
+  hasActiveItem,
 }: any) => {
   const [collapsed, setCollapsed] = useState(false);
   const textHeader = 'States';
@@ -119,7 +120,7 @@ export const Basic = ({
           </SideNavGroup>
 
           <SideNavGroup
-            // hasActiveItem={hasActiveItem}
+            hasActiveItem={hasActiveItem}
             glyph={<Icon glyph="Warning" />}
             header={groupHeaderText}
             collapsible={isCollapsible}
@@ -143,6 +144,7 @@ Basic.args = {
   isDisabled: false,
   groupHeaderText: 'Header text',
   navItemText: 'Modify Me!',
+  hasActiveItem: false,
 };
 
 export const Realm = () => {

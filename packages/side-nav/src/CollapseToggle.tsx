@@ -137,7 +137,7 @@ function CollapseToggle({
     >
       <span aria-hidden>
         {collapsed ? 'Expand' : 'Collapse'}
-        {/* TODO: Pass darkMode instead of className */}
+        {/* TODO: When InlinkeKeyCode accepts `darkMode`, pass that prop instead of custom styles in className */}
         <InlineKeyCode className={keyboardShortcut}>[</InlineKeyCode>
       </span>
     </Tooltip>

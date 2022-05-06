@@ -33,7 +33,6 @@ export function getIndentLevelStyle(indentLevel: number) {
 
 export const outerContainerStyle = css`
   position: relative;
-  /* height: 100%; */
   transition: width ${collapseDuration}ms ease-in-out;
 
   ${prefersReducedMotion(`
@@ -47,7 +46,7 @@ export const outerContainerCollapsedStyle = css`
 
 export const innerNavWrapperStyle = css`
   /**
-   * Settibng position: absolute; here so the nav wrapper can appear
+   * Setting position: absolute; here so the nav wrapper can appear
    * above the content in on the collapsed state. 
    */
   position: absolute;
