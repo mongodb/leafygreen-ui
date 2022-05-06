@@ -22,6 +22,7 @@
   "dependencies": {
     "focus-trap-react": "8.10.0",
     "react-transition-group": "^4.4.1",
+    "prop-types": "^15.8.1",
     "@leafygreen-ui/hooks": "^7.0.0",
     "@leafygreen-ui/icon": "^11.9.0",
     "@leafygreen-ui/icon-button": "^11.0.0",
@@ -35,5 +36,13 @@
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.2.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }

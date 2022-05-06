@@ -38,5 +38,13 @@
     "@leafygreen-ui/mongo-nav": "^7.2.1",
     "@leafygreen-ui/select": "^5.0.0",
     "@leafygreen-ui/icon-button": "^11.0.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }
