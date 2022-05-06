@@ -127,11 +127,14 @@ export const Basic = ({
           >
             <SideNavItem disabled={isDisabled}>{navItemText}</SideNavItem>
             <SideNavItem>Dave</SideNavItem>
-            <SideNavItem>Brooke</SideNavItem>
-            <SideNavItem>Rob</SideNavItem>
-            <SideNavItem>Michael</SideNavItem>
+            <SideNavItem>Robert Arnold Audroue</SideNavItem>
+            <SideNavItem>Adam Michael Thompson</SideNavItem>
+            <SideNavItem>Shaneeza</SideNavItem>
+            <SideNavItem>Sean</SideNavItem>
+            <SideNavItem>Sooa</SideNavItem>
+            <SideNavItem>Alven</SideNavItem>
+            <SideNavItem>Kelsey</SideNavItem>
             <SideNavItem>Fred</SideNavItem>
-            <SideNavItem>Harry</SideNavItem>
           </SideNavGroup>
         </SideNav>
         {content}

@@ -87,6 +87,8 @@ function SideNavGroup({
     return checkForNestedGroups(children);
   }, [children, indentLevel]);
 
+  const childCount = React.Children.count(renderedChildren);
+
   // compute whether this group is active
   const isActiveGroup: boolean = useMemo(() => {
     if (hasActiveItem != null) {
@@ -161,9 +163,10 @@ function SideNavGroup({
 
   // compute the entered ul wrapper styles based on the ul height
   useEffect(() => {
+    const ulHeight = ulRef?.current?.getBoundingClientRect().height ?? 0;
     transitionStyles['entered'] = css`
       opacity: 1;
-      max-height: ${ulRef?.current?.getBoundingClientRect().height}px;
+      max-height: ${ulHeight + 1}px; // +1 for border
       border-bottom: 1px solid ${palette.gray.light2};
     `;
   }, [open, ulRef]);
