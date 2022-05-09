@@ -42,13 +42,14 @@ export const wrapJSX = (
         const matchIndex = match.index ?? -1;
         const matchContent = match[0];
         const matchLength = matchContent.length;
+        const key = matchIndex + matchContent + matchLength;
 
         // We create a replacement array that's
         // the same length as the match we're deleting,
         // in order to keep the matchIndexes aligned
         // with the indexes of the output array
         const replacement = new Array<ReactChild>(matchLength).fill('');
-        replacement[0] = React.createElement(element, null, matchContent);
+        replacement[0] = React.createElement(element, { key }, matchContent);
 
         outArray.splice(matchIndex, matchLength, ...replacement);
       }

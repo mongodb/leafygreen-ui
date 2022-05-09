@@ -21,6 +21,10 @@ import {
 } from './ComboboxTestUtils';
 import { OptionObject, wrapJSX } from './util';
 
+// Removes HTML comments added by SSR from `innerHTML`
+const getInnerHTML = (element: HTMLElement) =>
+  element.innerHTML.replace(/<!--.*?-->/g, '');
+
 /**
  * Tests
  */
@@ -29,56 +33,70 @@ describe('packages/combobox/utils', () => {
     test('Wraps the matched string in the provided element', () => {
       const JSX = wrapJSX('Apple', 'pp', 'em');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`A<em>pp</em>le`);
+      expect(getInnerHTML(container)).toEqual(`A<em>pp</em>le`);
     });
     test('Wraps the entire string when it matches', () => {
       const JSX = wrapJSX('Apple', 'Apple', 'em');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`<em>Apple</em>`);
+      expect(getInnerHTML(container)).toEqual(`<em>Apple</em>`);
     });
     test('Keeps case consistent with source', () => {
       const JSX = wrapJSX('Apple', 'aPPlE', 'em');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`<em>Apple</em>`);
+      expect(getInnerHTML(container)).toEqual(`<em>Apple</em>`);
     });
+    // No match
     test('Wraps nothing when there is no match', () => {
       const JSX = wrapJSX('Apple', 'q', 'em');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`Apple`);
+      expect(getInnerHTML(container)).toEqual(`Apple`);
     });
+
+    // Multiple matches
     test('wraps all instances of a match', () => {
       const JSX = wrapJSX('Pepper', 'p', 'em');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`<em>P</em>e<em>p</em><em>p</em>er`);
+      expect(getInnerHTML(container)).toEqual(
+        `<em>P</em>e<em>p</em><em>p</em>er`,
+      );
     });
     test('wraps all instances of longer match', () => {
       const JSX = wrapJSX('Pepper', 'pe', 'em');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`<em>Pe</em>p<em>pe</em>r`);
+      expect(getInnerHTML(container)).toEqual(`<em>Pe</em>p<em>pe</em>r`);
     });
 
     // No `wrap`
     test('Returns the input string when "wrap" is empty', () => {
       const JSX = wrapJSX('Apple', '', 'em');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`Apple`);
+      expect(getInnerHTML(container)).toEqual(`Apple`);
     });
     test('Returns the input string when "wrap" is `undefined`', () => {
       const JSX = wrapJSX('Apple', undefined, 'em');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`Apple`);
+      expect(getInnerHTML(container)).toEqual(`Apple`);
     });
 
     // No `element`
     test('Returns the input string when "element" is empty', () => {
       const JSX = wrapJSX('Apple', 'ap', '' as keyof HTMLElementTagNameMap);
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`Apple`);
+      expect(getInnerHTML(container)).toEqual(`Apple`);
     });
     test('Returns the input string when "element" is undefined', () => {
       const JSX = wrapJSX('Apple', 'ap');
       const { container } = render(JSX);
-      expect(container.innerHTML).toEqual(`Apple`);
+      expect(getInnerHTML(container)).toEqual(`Apple`);
+    });
+
+    test('Updates after a second call', () => {
+      const JSX = wrapJSX('Apple', 'p', 'em');
+      const { container, rerender } = render(JSX);
+      expect(getInnerHTML(container)).toEqual(`A<em>p</em><em>p</em>le`);
+      const JSX2 = wrapJSX('Apple', 'pp', 'em');
+      rerender(JSX2);
+      expect(getInnerHTML(container)).toEqual(`A<em>pp</em>le`);
     });
   });
 });
