@@ -1,5 +1,4 @@
 import React from 'react';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { baseTypographyStyles } from './styles';
@@ -7,15 +6,16 @@ import { CommonTypographyProps, Mode } from './types';
 import { palette } from '@leafygreen-ui/palette';
 
 /**
- * Subtitle
+ * Charts
  */
-const subtitle = css`
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 700;
+const chart = css`
+  display: block;
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 0.2px;
 `;
 
-const subtitleColor: Record<Mode, string> = {
+const chartColor: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${palette.black};
   `,
@@ -24,20 +24,31 @@ const subtitleColor: Record<Mode, string> = {
   `,
 };
 
-type SubtitleProps = HTMLElementProps<'h6'> & CommonTypographyProps;
+type ChartProps = HTMLElementProps<'small'> & CommonTypographyProps;
 
-const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
+export function Chart({
   darkMode,
+  children,
   className,
   ...rest
-}: SubtitleProps) => {
+}: ChartProps) {
   // TODO: Replace with context
   const mode = darkMode ? Mode.Dark : Mode.Light;
   return (
-    <Box as="h6" className={cx(baseTypographyStyles, subtitle, subtitleColor[mode], className)} {...rest} />
+    <small
+      {...rest}
+      className={cx(
+        baseTypographyStyles,
+        chart,
+        chartColor[mode],
+        className,
+      )}
+    >
+      {children}
+    </small>
   );
-};
+}
 
-Subtitle.displayName = 'Subtitle';
+Chart.displayName = 'Chart';
 
-export default Subtitle;
+export default Chart;

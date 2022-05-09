@@ -1,7 +1,9 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { sharedStyles } from './styles';
+import { baseTypographyStyles } from './styles';
+import { CommonTypographyProps, Mode } from './types';
+import { palette } from '@leafygreen-ui/palette';
 
 /**
  * Disclaimer
@@ -10,14 +12,38 @@ const disclaimer = css`
   display: block;
   font-size: 12px;
   line-height: 20px;
-  letter-spacing: 0px;
+  letter-spacing: 0.2px;
 `;
 
-type DisclaimerProps = HTMLElementProps<'small'>;
+const disclaimerColor: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${palette.black};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.gray.light2};
+  `,
+};
 
-function Disclaimer({ children, className, ...rest }: DisclaimerProps) {
+type DisclaimerProps = HTMLElementProps<'small'> & CommonTypographyProps;
+
+export function Disclaimer({
+  darkMode,
+  children,
+  className,
+  ...rest
+}: DisclaimerProps) {
+  // TODO: Replace with context
+  const mode = darkMode ? Mode.Dark : Mode.Light;
   return (
-    <small {...rest} className={cx(sharedStyles, disclaimer, className)}>
+    <small
+      {...rest}
+      className={cx(
+        baseTypographyStyles,
+        disclaimer,
+        disclaimerColor[mode],
+        className,
+      )}
+    >
       {children}
     </small>
   );
