@@ -1,3 +1,4 @@
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import React, { createContext, useContext } from 'react';
 import { TransitionStatus } from 'react-transition-group/Transition';
 import { sideNavWidth } from './styles';
@@ -7,13 +8,14 @@ interface SideNavigationContext {
   portalContainer?: React.RefObject<HTMLUListElement | null>['current'];
   transitionState?: TransitionStatus;
   navId?: string;
-  baseFontSize?: 14 | 16;
+  baseFontSize: BaseFontSize;
   width: number;
 }
 
 const SideNavContext = createContext<SideNavigationContext>({
   collapsed: false,
   width: sideNavWidth,
+  baseFontSize: BaseFontSize.Body1,
 });
 
 export const useSideNavContext = () => {
