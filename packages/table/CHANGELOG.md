@@ -1,5 +1,19 @@
 # @leafygreen-ui/table
 
+## 4.1.0
+
+### Minor Changes
+
+- 2f357a54: Updating isHeader styles in Cell component; adding isAltColor prop to Cell component
+
+### Patch Changes
+
+- 14614768: Removing not-allowed cursor from disabled rows
+- Updated dependencies [1fb8ab18]
+- Updated dependencies [bc2558c5]
+  - @leafygreen-ui/checkbox@8.0.1
+  - @leafygreen-ui/icon-button@11.0.1
+
 ## 4.0.0
 
 ### Major Changes
