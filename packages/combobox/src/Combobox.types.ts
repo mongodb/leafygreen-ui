@@ -22,7 +22,7 @@ export type TrunctationLocation =
 export const Overflow = {
   expandY: 'expand-y',
   expandX: 'expand-x',
-  scrollY: 'scroll-x',
+  scrollX: 'scroll-x',
 } as const;
 export type Overflow = typeof Overflow[keyof typeof Overflow];
 
