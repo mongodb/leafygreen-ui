@@ -1,201 +1,23 @@
-import React, { ReactNode, useRef, useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { transparentize } from 'polished';
-import {
-  AriaCurrentValue,
-  createDataProp,
-  isComponentType,
-} from '@leafygreen-ui/lib';
+import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
-import { useSideNavContext } from './SideNavContext';
-import { getIndentLevelStyle } from './styles';
-
-const sideNavItemContainer = createDataProp('side-nav-item-container');
-
-// container styles
-const defaultStyle = css`
-  // Unset defaults
-  margin: 0;
-  appearance: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  // Layout
-  width: 100%;
-  min-height: 32px;
-  padding: ${spacing[1]}px ${spacing[3]}px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-
-  // Typography
-  font-family: ${fontFamilies.default};
-  font-weight: normal;
-  text-align: left;
-  text-decoration: none;
-  text-transform: capitalize;
-  color: ${uiColors.gray.dark2};
-
-  // Stateful transitions
-  transition: background-color 150ms ease-in-out;
-  background-color: ${transparentize(100, uiColors.gray.light3)};
-
-  &:hover {
-    background-color: ${uiColors.gray.light2};
-    text-decoration: none;
-  }
-
-  &:focus {
-    text-decoration: none;
-    outline: none;
-  }
-
-  &::-moz-focus-inner {
-    border: 0;
-  }
-`;
-
-const typographyStyle = {
-  [14]: css`
-    font-size: 14px;
-    line-height: 20px;
-  `,
-  [16]: css`
-    font-size: 16px;
-    line-height: 24px;
-  `,
-};
-
-const activeStyle = css`
-  cursor: default;
-  font-weight: bold;
-  text-decoration: none;
-
-  &,
-  &:hover {
-    color: ${uiColors.green.dark3};
-    background-color: ${uiColors.green.light3};
-  }
-`;
-
-const disabledStyle = css`
-  pointer-events: none;
-  background-color: transparent;
-  font-weight: normal;
-
-  &,
-  &:hover {
-    color: ${uiColors.gray.light1};
-    background-color: ${transparentize(100, uiColors.gray.light3)};
-  }
-`;
-
-const focusedStyle = css`
-  position: relative;
-
-  &:before {
-    transition: all 150ms ease-in-out;
-    content: '';
-    transform: scaleY(0.3);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 3px;
-    height: 20px;
-    margin: auto;
-    background-color: ${uiColors.focus};
-    opacity: 0;
-    border-radius: 0 3px 3px 0;
-  }
-
-  &:focus {
-    text-decoration: none;
-    color: ${uiColors.blue.dark3};
-    background-color: ${uiColors.blue.light2};
-
-    &:before {
-      opacity: 1;
-      transform: scaleY(1);
-    }
-  }
-`;
-
-const focusedDisabledStyle = css`
-  &:focus {
-    color: ${uiColors.blue.light1};
-  }
-`;
-
-const glyphWrapper = css`
-  margin-right: ${spacing[2]}px;
-  display: inline-flex;
-  align-items: center;
-`;
-
-const nestedChildrenStyles = css`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-export interface SideNavItemProps {
-  /**
-   * Whether or not the component should be rendered in an active state.
-   *
-   * default: `false`
-   */
-  active?: boolean;
-
-  /**
-   * Whether or not the component should be rendered in a disabled state.
-   *
-   * default: `false`
-   */
-  disabled?: boolean;
-
-  /**
-   * The aria-current attribute value set when the component is active.
-   *
-   * default: `"page"`
-   */
-  ariaCurrentValue?: AriaCurrentValue;
-
-  /**
-   * Class name that will be applied to the root-level element.
-   */
-  className?: string;
-
-  /**
-   * Content that will be rendered inside the root-level element.
-   */
-  children?: ReactNode;
-
-  /**
-   * When provided, the component will be rendered as an anchor element with the passed href value.
-   */
-  href?: string;
-
-  /**
-   * The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.
-   */
-  onClick?: React.MouseEventHandler;
-
-  /**
-   * Icon that's rendered in the item.
-   */
-  glyph?: React.ReactNode;
-
-  indentLevel?: number;
-
-  isParentActive?: boolean;
-}
+import { useSideNavContext } from '../SideNavContext';
+import { getIndentLevelStyle, typographyStyle } from '../styles';
+import {
+  baseNavItemStyle,
+  activeNavItemStyle,
+  disabledNavItemStyle,
+  focusedNavItemStyle,
+  focusedDisabledNavItemStyle,
+  glyphWrapper,
+  nestedChildrenStyles,
+  sideNavItemClassName,
+} from './SideNavItem.styles';
+import { SideNavItemProps } from './types';
 
 /**
  * # SideNavItem
@@ -234,8 +56,8 @@ const SideNavItem: ExtendableBox<
     glyph,
     ...rest
   } = props;
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const { baseFontSize = 14 } = useSideNavContext();
+  const { usingKeyboard } = useUsingKeyboardContext();
+  const { baseFontSize } = useSideNavContext();
   const hasNestedChildren = useRef(false);
 
   const onClick = disabled
@@ -326,15 +148,15 @@ const SideNavItem: ExtendableBox<
       <Box
         as={props.href ? 'a' : 'button'}
         {...rest}
-        {...sideNavItemContainer.prop}
         className={cx(
-          defaultStyle,
+          sideNavItemClassName,
+          baseNavItemStyle,
           typographyStyle[baseFontSize],
           {
-            [activeStyle]: active,
-            [disabledStyle]: disabled,
-            [focusedStyle]: showFocus,
-            [focusedDisabledStyle]: showFocus && disabled,
+            [activeNavItemStyle]: active,
+            [disabledNavItemStyle]: disabled,
+            [focusedNavItemStyle]: usingKeyboard,
+            [focusedDisabledNavItemStyle]: usingKeyboard && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
             [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
           },

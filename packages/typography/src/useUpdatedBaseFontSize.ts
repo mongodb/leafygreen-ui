@@ -17,9 +17,10 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
  * @returns - {@link BaseFontSize}
  */
 export const useUpdatedBaseFontSize = (
-  override?: BaseFontSize,
+  override?: BaseFontSize | 14,
 ): BaseFontSize => {
   const baseFontSize = useBaseFontSize();
-  if (override) return override;
+  if (override)
+    return override === 16 ? BaseFontSize.Body2 : BaseFontSize.Body1;
   return baseFontSize === 16 ? BaseFontSize.Body2 : BaseFontSize.Body1;
 };
