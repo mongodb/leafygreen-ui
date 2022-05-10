@@ -504,15 +504,6 @@ describe('packages/combobox', () => {
         expect(menuContainerEl).toBeInTheDocument();
       });
 
-      test('Menu closes on click-away', async () => {
-        const { containerEl, openMenu } = renderCombobox(select);
-        const { menuContainerEl } = openMenu();
-        userEvent.click(containerEl.parentElement!);
-        await waitForElementToBeRemoved(menuContainerEl);
-        expect(menuContainerEl).not.toBeInTheDocument();
-        expect(containerEl).not.toContainFocus();
-      });
-
       test('Clicking an option sets selection', () => {
         const { openMenu, queryChipsByName, inputEl } = renderCombobox(select);
         const { optionElements } = openMenu();
@@ -599,45 +590,6 @@ describe('packages/combobox', () => {
       );
 
       testSingleSelect(
-        'Unfocusing the menu should keep text if input is a valid value',
-        async () => {
-          const { inputEl, containerEl, openMenu } = renderCombobox(select);
-          const { menuContainerEl } = openMenu();
-          userEvent.type(inputEl, 'Apple');
-          userEvent.click(document.body);
-          await waitForElementToBeRemoved(menuContainerEl);
-          expect(containerEl).not.toContainFocus();
-          expect(inputEl).toHaveValue('Apple');
-        },
-      );
-
-      testSingleSelect(
-        'Unfocusing the menu should NOT keep text if input is not a valid value',
-        async () => {
-          const { inputEl, containerEl, openMenu } = renderCombobox(select);
-          const { menuContainerEl } = openMenu();
-          userEvent.type(inputEl, 'abc');
-          userEvent.click(document.body);
-          await waitForElementToBeRemoved(menuContainerEl);
-          expect(containerEl).not.toContainFocus();
-          expect(inputEl).toHaveValue('');
-        },
-      );
-
-      testMultiSelect(
-        'Unfocusing the menu should keep text as typed',
-        async () => {
-          const { inputEl, containerEl, openMenu } = renderCombobox(select);
-          const { menuContainerEl } = openMenu();
-          userEvent.type(inputEl, 'abc');
-          userEvent.click(document.body);
-          await waitForElementToBeRemoved(menuContainerEl);
-          expect(containerEl).not.toContainFocus();
-          expect(inputEl).toHaveValue('abc');
-        },
-      );
-
-      testSingleSelect(
         'Clicking the combobox after making a selection should re-open the menu',
         async () => {
           const { comboboxEl, inputEl, openMenu, getMenuElements } =
@@ -655,6 +607,52 @@ describe('packages/combobox', () => {
           });
         },
       );
+
+      describe('Clickaway', () => {
+        test('Menu closes on click-away', async () => {
+          const { containerEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.click(containerEl.parentElement!);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+          expect(containerEl).toContainFocus();
+        });
+
+        test("Other click handlers don't fire on click-away", () => {});
+
+        testSingleSelect(
+          'Clicking away should keep text if input is a valid value',
+          async () => {
+            const { inputEl, openMenu } = renderCombobox(select);
+            const { menuContainerEl } = openMenu();
+            userEvent.type(inputEl, 'Apple');
+            userEvent.click(document.body);
+            await waitForElementToBeRemoved(menuContainerEl);
+            expect(inputEl).toHaveValue('Apple');
+          },
+        );
+
+        testSingleSelect(
+          'Clicking away should NOT keep text if input is not a valid value',
+          async () => {
+            const { inputEl, openMenu } = renderCombobox(select);
+            const { menuContainerEl } = openMenu();
+            userEvent.type(inputEl, 'abc');
+            userEvent.click(document.body);
+            await waitForElementToBeRemoved(menuContainerEl);
+            expect(inputEl).toHaveValue('');
+          },
+        );
+
+        testMultiSelect('Clicking away should keep text as typed', async () => {
+          const { inputEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, 'abc');
+          userEvent.click(document.body);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(inputEl).toHaveValue('abc');
+        });
+      });
 
       /**
        * Clicking buttons
@@ -821,12 +819,21 @@ describe('packages/combobox', () => {
         });
       });
 
-      test('Escape key closes menu', async () => {
-        const { inputEl, openMenu } = renderCombobox(select);
-        const { menuContainerEl } = openMenu();
-        userEvent.type(inputEl, '{esc}');
-        await waitForElementToBeRemoved(menuContainerEl);
-        expect(menuContainerEl).not.toBeInTheDocument();
+      describe('Escape key', () => {
+        test('Closes menu', async () => {
+          const { inputEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, '{esc}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+        test('Returns focus to the combobox', async () => {
+          const { inputEl, openMenu } = renderCombobox(select);
+          const { menuContainerEl } = openMenu();
+          userEvent.type(inputEl, '{esc}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(inputEl).toContainFocus();
+        });
       });
 
       describe('Tab key', () => {
