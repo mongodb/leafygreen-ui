@@ -11,4 +11,4 @@ export { default as Disclaimer } from './Disclaimer';
 export { default as Link } from './Link';
 export { default as Chart } from './Chart';
 export { Description } from './Description';
-export {  Label } from './Label';
+export { Label } from './Label';

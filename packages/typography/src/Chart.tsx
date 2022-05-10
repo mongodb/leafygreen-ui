@@ -26,23 +26,13 @@ const chartColor: Record<Mode, string> = {
 
 type ChartProps = HTMLElementProps<'small'> & CommonTypographyProps;
 
-export function Chart({
-  darkMode,
-  children,
-  className,
-  ...rest
-}: ChartProps) {
+export function Chart({ darkMode, children, className, ...rest }: ChartProps) {
   // TODO: Replace with context
   const mode = darkMode ? Mode.Dark : Mode.Light;
   return (
     <small
       {...rest}
-      className={cx(
-        baseTypographyStyles,
-        chart,
-        chartColor[mode],
-        className,
-      )}
+      className={cx(baseTypographyStyles, chart, chartColor[mode], className)}
     >
       {children}
     </small>

@@ -34,7 +34,16 @@ const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
   // TODO: Replace with context
   const mode = darkMode ? Mode.Dark : Mode.Light;
   return (
-    <Box as="h6" className={cx(baseTypographyStyles, subtitle, subtitleColor[mode], className)} {...rest} />
+    <Box
+      as="h6"
+      className={cx(
+        baseTypographyStyles,
+        subtitle,
+        subtitleColor[mode],
+        className,
+      )}
+      {...rest}
+    />
   );
 };
 

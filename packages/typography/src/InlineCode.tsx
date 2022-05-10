@@ -2,13 +2,15 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, OneOf, createUniqueClassName } from '@leafygreen-ui/lib';
 import {
-  useUsingKeyboardContext,
-} from '@leafygreen-ui/leafygreen-provider';
+  HTMLElementProps,
+  OneOf,
+  createUniqueClassName,
+} from '@leafygreen-ui/lib';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { codeTypeScaleStyles } from './styles';
 import { CommonTypographyProps, Mode } from './types';
-import {useUpdatedBaseFontSize} from '.';
+import { useUpdatedBaseFontSize } from '.';
 
 const anchorClassName = createUniqueClassName();
 
@@ -101,7 +103,8 @@ const normal = css`
 export type InlineCodeProps = OneOf<
   HTMLElementProps<'code'>,
   HTMLElementProps<'a'>
-> & CommonTypographyProps;
+> &
+  CommonTypographyProps;
 
 function InlineCode({
   children,
@@ -138,10 +141,7 @@ function InlineCode({
 
   if (isAnchor) {
     return (
-      <a
-        className={cx(anchorClassName, codeLinkWrapper, className)}
-        {...rest}
-      >
+      <a className={cx(anchorClassName, codeLinkWrapper, className)} {...rest}>
         {renderedInlineCode}
       </a>
     );

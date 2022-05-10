@@ -18,7 +18,7 @@ const linkStyles = css`
   align-items: center;
   text-decoration: none;
   cursor: pointer;
-  
+
   line-height: 1;
 
   &:focus {
@@ -26,7 +26,7 @@ const linkStyles = css`
   }
 `;
 
-const linkModeStyles : Record<Mode, string> = {
+const linkModeStyles: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${palette.blue.base};
     font-weight: 400;
@@ -51,7 +51,7 @@ const underline = css`
 
   .${anchorClassName}:focus & {
     &::after {
-      background-color: ${palette.blue.light1}
+      background-color: ${palette.blue.light1};
     }
   }
 `;
@@ -60,14 +60,14 @@ const underlineColor: Record<Mode, string> = {
   [Mode.Light]: css`
     .${anchorClassName}:hover & {
       &::after {
-        background-color: ${palette.gray.light2}
+        background-color: ${palette.gray.light2};
       }
     }
   `,
   [Mode.Dark]: css`
     .${anchorClassName}:hover & {
       &::after {
-        background-color: ${palette.gray.dark2}
+        background-color: ${palette.gray.dark2};
       }
     }
   `,
@@ -105,10 +105,12 @@ type ArrowAppearance = typeof ArrowAppearance[keyof typeof ArrowAppearance];
 
 export { ArrowAppearance };
 
-export interface LinkProps extends CommonTypographyProps, HTMLElementProps<'a'> {
+export interface LinkProps
+  extends CommonTypographyProps,
+    HTMLElementProps<'a'> {
   arrowAppearance?: ArrowAppearance;
   hideExternalIcon?: boolean;
-};
+}
 
 const Link: ExtendableBox<LinkProps, 'a'> = ({
   href,
@@ -172,7 +174,13 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
 
   return (
     <Box
-      className={cx(anchorClassName, bodyTypeScaleStyles[baseFontSize], linkStyles, linkModeStyles[mode], className)}
+      className={cx(
+        anchorClassName,
+        bodyTypeScaleStyles[baseFontSize],
+        linkStyles,
+        linkModeStyles[mode],
+        className,
+      )}
       {...elementProps}
       {...rest}
     >

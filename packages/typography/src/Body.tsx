@@ -12,14 +12,15 @@ import { palette } from '@leafygreen-ui/palette';
  */
 
 type BodyFontWeight = 'regular' | 'medium';
-type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> & CommonTypographyProps & {
-  /**
-   * font-weight applied to typography element
-   * default: `regular`
-   */
-  weight?: BodyFontWeight;
-  as?: T;
-};
+type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> &
+  CommonTypographyProps & {
+    /**
+     * font-weight applied to typography element
+     * default: `regular`
+     */
+    weight?: BodyFontWeight;
+    as?: T;
+  };
 
 const fontWeights: Record<
   'default' | 'strong',
@@ -67,11 +68,13 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
   return (
     <Box
       as={as}
-      className={cx(baseTypographyStyles,
+      className={cx(
+        baseTypographyStyles,
         bodyTypeScaleStyles[baseFontSize],
         bodyColor[mode],
         fontWeight,
-        className,)}
+        className,
+      )}
       {...rest}
     />
   );

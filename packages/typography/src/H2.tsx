@@ -28,10 +28,20 @@ const h2Color: Record<Mode, string> = {
 
 type H2Props = HTMLElementProps<'h2'> & CommonTypographyProps;
 
-const H2: ExtendableBox<H2Props, 'h2'> = ({ darkMode, className, ...rest }: H2Props) => {
+const H2: ExtendableBox<H2Props, 'h2'> = ({
+  darkMode,
+  className,
+  ...rest
+}: H2Props) => {
   // TODO: Replace with context
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  return <Box as="h2" className={cx(baseTypographyStyles, h2, h2Color[mode], className)} {...rest} />;
+  return (
+    <Box
+      as="h2"
+      className={cx(baseTypographyStyles, h2, h2Color[mode], className)}
+      {...rest}
+    />
+  );
 };
 
 H2.displayName = 'H2';

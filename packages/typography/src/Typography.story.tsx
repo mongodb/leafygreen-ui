@@ -14,7 +14,7 @@ import {
   Label,
   Description,
   Link,
-  Chart
+  Chart,
 } from '.';
 import { ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -60,9 +60,7 @@ storiesOf('Packages/Typography', module).add('Default', () => {
   );
 
   return (
-    <LeafygreenProvider
-      baseFontSize={select('baseFontSize', [14, 16], 14)}
-    >
+    <LeafygreenProvider baseFontSize={select('baseFontSize', [14, 16], 14)}>
       <div
         className={cx(wrapperStyles, {
           [css`
@@ -119,7 +117,7 @@ storiesOf('Packages/Typography', module).add('Default', () => {
         >
           <InlineCode darkMode={darkMode}>&quot;Inline Code&quot;</InlineCode>
           <InlineCode darkMode={darkMode} href={href}>
-          &quot;Inline Code Link&quot;
+            &quot;Inline Code Link&quot;
           </InlineCode>
         </Body>
 
@@ -180,7 +178,7 @@ storiesOf('Packages/Typography', module).add('Default', () => {
         </div>
 
         <Body darkMode={darkMode}>
-          <InlineDefinition darkMode={darkMode} definition='Tooltip Definition'>
+          <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
             Inline definition
           </InlineDefinition>{' '}
         </Body>

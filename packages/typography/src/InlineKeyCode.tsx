@@ -31,13 +31,26 @@ const inlineKeyCodeColor: Record<Mode, string> = {
 
 type InlineKeyCodeProps = HTMLElementProps<'h1'> & CommonTypographyProps;
 
-function InlineKeyCode({ darkMode, children, className, ...rest }: InlineKeyCodeProps) {
+function InlineKeyCode({
+  darkMode,
+  children,
+  className,
+  ...rest
+}: InlineKeyCodeProps) {
   const baseFontSize = useUpdatedBaseFontSize();
   // TODO: Replace with context
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
-    <code className={cx(inlineKeyCode, inlineKeyCodeColor[mode], codeTypeScaleStyles[baseFontSize], className)} {...rest}>
+    <code
+      className={cx(
+        inlineKeyCode,
+        inlineKeyCodeColor[mode],
+        codeTypeScaleStyles[baseFontSize],
+        className,
+      )}
+      {...rest}
+    >
       {children}
     </code>
   );
