@@ -1,74 +1,42 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { text, boolean, select } from '@storybook/addon-knobs';
-import { css } from '@leafygreen-ui/emotion';
+import { Meta } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import RadioBoxGroup from './RadioBoxGroup';
 import RadioBox from './RadioBox';
-import Size from './Size';
 
-function ControlledRadioBoxGroup() {
-  const [activeRadioBox, setActiveRadioBox] = useState<any>('test1');
+export default {
+  title: 'Packages/RadioBoxGroup',
+  component: RadioBoxGroup,
+  argTypes: {
+    children: {
+      control: false,
+    },
+  },
+} as Meta<typeof RadioBoxGroup>;
 
-  const changeHandler = (e: React.FormEvent) => {
+export const Uncontrolled = args => (
+  <LeafyGreenProvider>
+    <RadioBoxGroup name="radio-box-group-default" {...args}>
+      <RadioBox value="1">Option One</RadioBox>
+      <RadioBox value="2">Option Two</RadioBox>
+      <RadioBox default value="3">
+        Option Three
+      </RadioBox>
+      <RadioBox disabled={true} value="option-4">
+        Disabled Option
+      </RadioBox>
+    </RadioBoxGroup>
+  </LeafyGreenProvider>
+);
+
+export const Controlled = args => {
+  const [activeRadioBox, setActiveRadioBox] = useState<string>('test1');
+
+  const handleChange = (e: React.FormEvent) => {
     setActiveRadioBox((e.target as HTMLInputElement).value);
   };
 
   return (
-    <LeafyGreenProvider>
-      <div
-        className={css`
-          width: 100%;
-          padding: 2rem;
-        `}
-      >
-        <RadioBoxGroup
-          onChange={changeHandler}
-          value={activeRadioBox}
-          size={select(
-            'Size',
-            Object.values(Size) as Array<Size>,
-            Size.Default,
-          )}
-        >
-          <RadioBox value="test1">
-            {text('RadioBox Content', 'Option 1')}
-          </RadioBox>
-          <RadioBox value="test2">Option 2</RadioBox>
-          <RadioBox value="test3">Option 3</RadioBox>
-        </RadioBoxGroup>
-      </div>
-    </LeafyGreenProvider>
+    <Uncontrolled {...args} onChange={handleChange} value={activeRadioBox} />
   );
-}
-
-storiesOf('Packages/RadioBoxGroup', module)
-  .add('Uncontrolled', () => (
-    <LeafyGreenProvider>
-      <div
-        className={css`
-          width: 100%;
-          padding: 2rem;
-        `}
-      >
-        <RadioBoxGroup
-          size={select(
-            'Size',
-            Object.values(Size) as Array<Size>,
-            Size.Default,
-          )}
-          name="radio-box-group-default"
-        >
-          <RadioBox value="1">Option One</RadioBox>
-          <RadioBox value="2">{text('Label text', 'Option Two')}</RadioBox>
-          <RadioBox default value="3">
-            Option Three
-          </RadioBox>
-          <RadioBox disabled={boolean('Disabled', true)} value="option-4">
-            Disabled Option
-          </RadioBox>
-        </RadioBoxGroup>
-      </div>
-    </LeafyGreenProvider>
-  ))
-  .add('Controlled', () => <ControlledRadioBoxGroup />);
+};
