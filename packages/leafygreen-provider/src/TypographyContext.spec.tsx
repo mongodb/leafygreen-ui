@@ -15,7 +15,7 @@ describe('packages/leafygreen-provider/TypographyContext', () => {
   test('without a provider, by default useBaseFontSize returns 14', () => {
     const { container } = render(<TestComponent />);
 
-    expect(container.innerHTML.includes('13')).toBeTruthy();
+    expect(container.innerHTML.includes('14')).toBeTruthy();
   });
 
   test('with a provider, by default useBaseFontSize returns 14', () => {
@@ -25,7 +25,7 @@ describe('packages/leafygreen-provider/TypographyContext', () => {
       </LeafyGreenProvider>,
     );
 
-    expect(container.innerHTML.includes('13')).toBeTruthy();
+    expect(container.innerHTML.includes('14')).toBeTruthy();
   });
 
   test(`when baseFontSize prop is set to ${value}, useBaseFontSize returns ${value}`, () => {

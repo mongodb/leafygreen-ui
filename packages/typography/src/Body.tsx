@@ -31,7 +31,7 @@ const fontWeights: Record<
   },
   strong: {
     regular: 700,
-    medium: 800,
+    medium: 700,
   },
 } as const;
 
