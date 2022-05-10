@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { Radio, RadioGroup } from '.';
+import { RadioGroupProps } from './RadioGroup';
 
 export default {
   title: 'Packages/RadioGroup',
@@ -20,14 +21,21 @@ export default {
   },
 } as Meta<typeof RadioGroup>;
 
-export const Uncontrolled = ({ className, darkMode, ...args }) => (
+export const Uncontrolled = ({
+  className,
+  darkMode,
+  ...args
+}: RadioGroupProps) => (
   <RadioGroup
     name="radio-group-default"
     darkMode={darkMode}
-    className={cx(css`
-      background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
-      padding: 20px;
-    `, className)}
+    className={cx(
+      css`
+        background-color: ${darkMode ? palette.gray.dark3 : palette.white};
+        padding: 20px;
+      `,
+      className,
+    )}
     {...args}
   >
     <Radio value="1">Radio Input Copy</Radio>
@@ -39,17 +47,14 @@ export const Uncontrolled = ({ className, darkMode, ...args }) => (
       Disabled Option
     </Radio>
   </RadioGroup>
-)
+);
 
-export const Controlled = (args) => {
+export const Controlled = (args: RadioGroupProps) => {
   const [activeRadio, setActiveRadio] = useState<string>('test1');
 
   const handleChange = (e: React.ChangeEvent) => {
     setActiveRadio((e.target as HTMLInputElement).value);
   };
-  return <Uncontrolled 
-    {...args}
-    onChange={handleChange}
-    value={activeRadio}
-   />;
-}
+
+  return <Uncontrolled {...args} onChange={handleChange} value={activeRadio} />;
+};

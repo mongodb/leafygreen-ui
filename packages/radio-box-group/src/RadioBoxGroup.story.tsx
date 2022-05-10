@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import RadioBoxGroup from './RadioBoxGroup';
+import RadioBoxGroup, { RadioBoxGroupProps } from './RadioBoxGroup';
 import RadioBox from './RadioBox';
 
 export default {
@@ -14,7 +14,7 @@ export default {
   },
 } as Meta<typeof RadioBoxGroup>;
 
-export const Uncontrolled = args => (
+export const Uncontrolled = (args: RadioBoxGroupProps) => (
   <LeafyGreenProvider>
     <RadioBoxGroup name="radio-box-group-default" {...args}>
       <RadioBox value="1">Option One</RadioBox>
@@ -29,7 +29,7 @@ export const Uncontrolled = args => (
   </LeafyGreenProvider>
 );
 
-export const Controlled = args => {
+export const Controlled = (args: RadioBoxGroupProps) => {
   const [activeRadioBox, setActiveRadioBox] = useState<string>('test1');
 
   const handleChange = (e: React.FormEvent) => {

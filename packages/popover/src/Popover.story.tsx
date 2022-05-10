@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Popover, { Align, Justify } from '.';
+import Popover, { Align, Justify, PopoverProps } from '.';
 
 const popoverStyle = css`
   border: 1px solid ${uiColors.gray.light1};
@@ -43,7 +43,9 @@ export default {
   },
 } as Meta<typeof Popover>;
 
-const Template = ({ buttonText, ...args }) => {
+type PopoverStoryProps = PopoverProps & { buttonText: string };
+
+const Template = ({ buttonText, ...args }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
   return (
     <button onClick={() => setActive(active => !active)}>
@@ -57,7 +59,7 @@ const Template = ({ buttonText, ...args }) => {
 
 export const Basic = Template.bind({});
 
-export const ScrollableContainer = args => (
+export const ScrollableContainer = (args: PopoverStoryProps) => (
   <div className={scrollableStyle}>
     <Template {...args} />
   </div>

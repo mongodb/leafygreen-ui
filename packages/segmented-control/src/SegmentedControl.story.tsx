@@ -3,6 +3,7 @@ import { Meta } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import Icon from '@leafygreen-ui/icon';
+import { SegmentedControlProps } from './SegmentedControl';
 
 export default {
   title: 'Packages/SegmentedControl',
@@ -20,84 +21,90 @@ export default {
   },
 } as Meta<typeof SegmentedControl>;
 
-
-export const Uncontrolled = ({ children, ...args }) => (
+export const Uncontrolled = ({ children, ...args }: SegmentedControlProps) => (
   <LeafygreenProvider>
-    <SegmentedControl
-      {...args}
-    >
-      {children}
-    </SegmentedControl>
+    <SegmentedControl {...args}>{children}</SegmentedControl>
   </LeafygreenProvider>
-)
+);
 Uncontrolled.args = {
   label: 'Fruit',
   name: 'fruit',
   children: [
-    <SegmentedControlOption value="dragonfruit">
-        Dragonfruit
-      </SegmentedControlOption>,
-      <SegmentedControlOption value="eggplant">
-        Eggplant
-      </SegmentedControlOption>,
-      <SegmentedControlOption value="fig">Fig</SegmentedControlOption>,
-      <SegmentedControlOption value="grape">Grape</SegmentedControlOption>,
+    <SegmentedControlOption key="dragonfruit" value="dragonfruit">
+      Dragonfruit
+    </SegmentedControlOption>,
+    <SegmentedControlOption key="eggplant" value="eggplant">
+      Eggplant
+    </SegmentedControlOption>,
+    <SegmentedControlOption key="fig" value="fig">
+      Fig
+    </SegmentedControlOption>,
+    <SegmentedControlOption key="grape" value="grape">
+      Grape
+    </SegmentedControlOption>,
   ],
-}
+};
 
-export const Controlled = (args) => {
+export const Controlled = (args: SegmentedControlProps) => {
   const [selectedFruit, setSelectedFruit] = useState('eggplant');
-  return <Uncontrolled 
-    {...args}  
-    value={selectedFruit}
-    onChange={setSelectedFruit}
-  />
-}
+  return (
+    <Uncontrolled
+      {...args}
+      key="selectedFruit"
+      value={selectedFruit}
+      onChange={setSelectedFruit}
+    />
+  );
+};
 Controlled.args = {
   label: 'Fruit',
   name: 'fruit',
   children: [
-    <SegmentedControlOption value="dragonfruit">
-        Dragonfruit
-      </SegmentedControlOption>,
-      <SegmentedControlOption value="eggplant">
-        Eggplant
-      </SegmentedControlOption>,
-      <SegmentedControlOption value="fig">Fig</SegmentedControlOption>,
-      <SegmentedControlOption value="grape">Grape</SegmentedControlOption>,
+    <SegmentedControlOption key="dragonfruit" value="dragonfruit">
+      Dragonfruit
+    </SegmentedControlOption>,
+    <SegmentedControlOption key="eggplant" value="eggplant">
+      Eggplant
+    </SegmentedControlOption>,
+    <SegmentedControlOption key="fig" value="fig">
+      Fig
+    </SegmentedControlOption>,
+    <SegmentedControlOption key="grape" value="grape">
+      Grape
+    </SegmentedControlOption>,
   ],
-}
+};
 
-export const WithIcons = Uncontrolled.bind({})
+export const WithIcons = Uncontrolled.bind({});
 WithIcons.args = {
   label: 'View as',
   name: 'language',
   children: [
-    <SegmentedControlOption value="json">
+    <SegmentedControlOption key="json" value="json">
       <Icon glyph="CurlyBraces"></Icon> JSON
-   </SegmentedControlOption>,
-    <SegmentedControlOption value="xml">
+    </SegmentedControlOption>,
+    <SegmentedControlOption key="xml" value="xml">
       <Icon glyph="Code"></Icon> XML
     </SegmentedControlOption>,
-    <SegmentedControlOption value="shell">
+    <SegmentedControlOption key="shell" value="shell">
       <Icon glyph="Shell"></Icon> Shell
     </SegmentedControlOption>,
   ],
-}
+};
 
-export const IconsOnly = Uncontrolled.bind({})
+export const IconsOnly = Uncontrolled.bind({});
 IconsOnly.args = {
   label: 'Location',
   name: 'location',
   children: [
-    <SegmentedControlOption value="cloud">
+    <SegmentedControlOption key="cloud" value="cloud">
       <Icon glyph="Cloud" />
-   </SegmentedControlOption>,
-    <SegmentedControlOption value="globe">
+    </SegmentedControlOption>,
+    <SegmentedControlOption key="globe" value="globe">
       <Icon glyph="GlobeAmericas" />
     </SegmentedControlOption>,
-    <SegmentedControlOption value="government">
+    <SegmentedControlOption key="government" value="government">
       <Icon glyph="GovernmentBuilding" />
     </SegmentedControlOption>,
   ],
-}
+};
