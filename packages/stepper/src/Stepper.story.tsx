@@ -1,70 +1,76 @@
 import React from 'react';
-import times from 'lodash/times';
-import { storiesOf } from '@storybook/react';
-import { boolean, number } from '@storybook/addon-knobs';
-import Stepper, { Step } from '.';
-import { addons } from '@storybook/addons';
-import { CHANGE } from '@storybook/addon-knobs';
+import { ComponentStory, Meta } from '@storybook/react';
+import Stepper, { Step, StepperProps } from '.';
 import { palette } from '@leafygreen-ui/palette';
 
-const channel = addons.getChannel();
+export default {
+  title: 'Packages/Stepper',
+  component: Stepper,
+  args: {},
+  argTypes: {
+    className: {
+      type: 'string',
+    },
+    children: {
+      control: false,
+    },
+    currentStep: {
+      control: {
+        type: 'range',
+        max: 7, // numSteps' max
+      },
+    },
+    maxDisplayedSteps: {
+      control: {
+        type: 'range',
+        min: 3,
+        max: 6, // numSteps' max - 1
+      },
+    },
+    completedStepsShown: {
+      control: {
+        type: 'range',
+        max: 5, // numSteps' max - 2
+      },
+    },
+    darkMode: {
+      control: 'boolean',
+    },
+  },
+} as Meta<typeof Stepper>;
 
-storiesOf('Packages/Stepper', module)
-  .add('Default', () => (
-    <div style={{ width: 1000 }}>
-      <Stepper currentStep={number('Step', 0, { min: 0, max: 6 })}>
-        <Step>Overview</Step>
-        <Step>Configuration</Step>
-        <Step>Update</Step>
-        <Step>Install</Step>
-        <Step>Billing</Step>
-        <Step>Address</Step>
-        <Step>Confirmation</Step>
-      </Stepper>
-    </div>
-  ))
-  .add('Many', () => {
-    let currentStep = number('Step', 1, { min: 0 });
-    const numSteps = number('Number of steps', 10, { min: 1 });
-    const maxDisplayedSteps = number('Max displayed', 5, { min: 1 });
-    let completedStepsShown = number('Completed steps shown', 3, { min: 1 });
-    const darkMode = boolean('Dark mode', false);
+const Template: ComponentStory<typeof Stepper> = ({
+  darkMode,
+  ...args
+}: StepperProps) => (
+  <div
+    style={{
+      width: 1000,
+      background: darkMode ? palette.black : palette.white,
+    }}
+  >
+    <p>
+      Note: Min and max values for ranges are not defined in the component. The
+      range values are only defined specifically for the Storybook instance so
+      it renders correctly with all values. Value checking within the component
+      will be added at a later date.
+    </p>
+    <Stepper darkMode={darkMode} {...args} />
+  </div>
+);
 
-    // Can't dynamically change the max, so we manually enforce it
-    if (currentStep >= numSteps) {
-      channel.emit(CHANGE, {
-        name: 'Step',
-        value: numSteps - 1,
-      });
-      currentStep = numSteps - 1;
-    }
-
-    // Can't dynamically change the max, so we manually enforce it
-    if (completedStepsShown >= maxDisplayedSteps - 2) {
-      channel.emit(CHANGE, {
-        name: 'Completed steps shown',
-        value: maxDisplayedSteps - 2,
-      });
-      completedStepsShown = maxDisplayedSteps - 2;
-    }
-
-    return (
-      <div
-        style={{
-          width: 1000,
-          background: darkMode ? palette.black : palette.white,
-        }}
-      >
-        <Stepper
-          currentStep={currentStep}
-          completedStepsShown={completedStepsShown}
-          maxDisplayedSteps={maxDisplayedSteps}
-          darkMode={darkMode}
-        >
-          {times(numSteps, (count: number) => (
-            <div key={count}>Step {count + 1}</div>
-          ))}
-        </Stepper>
-      </div>
-    );
-  });
+export const Basic = Template.bind({});
+Basic.args = {
+  currentStep: 1,
+  maxDisplayedSteps: 5,
+  completedStepsShown: 3,
+  children: [
+    <Step key="Overview">Overview</Step>,
+    <Step key="Configuration">Configuration</Step>,
+    <Step key="Update">Update</Step>,
+    <Step key="Install">Install</Step>,
+    <Step key="Billing">Billing</Step>,
+    <Step key="Address">Address</Step>,
+    <Step key="Confirmation">Confirmation</Step>,
+  ],
+};
