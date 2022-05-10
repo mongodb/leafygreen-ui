@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import * as palette from './palette';
@@ -53,7 +52,11 @@ function ColorBlock({ color, name }: ColorBlockProps) {
   return <div className={styles} />;
 }
 
-function renderColors() {
+export default {
+  title: 'Packages/Palette',
+};
+
+export function AllColors() {
   const ranges = Object.keys(palette) as Array<keyof typeof palette>;
 
   const renderedRanges = ranges.map(range => {
@@ -81,5 +84,3 @@ function renderColors() {
 
   return <div>{renderedRanges}</div>;
 }
-
-storiesOf('Packages/Palette', module).add('Default', renderColors);

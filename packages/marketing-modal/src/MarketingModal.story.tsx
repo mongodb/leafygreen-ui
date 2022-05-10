@@ -1,32 +1,59 @@
-import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { radios, text, boolean, select } from '@storybook/addon-knobs';
+/* eslint-disable react/prop-types */
+import React from 'react';
+import { ComponentStory, Meta } from '@storybook/react';
 import MarketingModal, { BlobPosition, GraphicStyle } from '.';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
-function Default() {
-  const [open, setOpen] = useState(false);
-  const buttonText = text('Button text', 'Okay');
-  const linkText = text('Link text', 'Cancel');
-  const darkMode = boolean('darkMode', false);
-  const showBlob = boolean('Show blob', true);
-  const blobPosition = select(
-    'Blob position',
-    Object.values(BlobPosition),
-    'top left',
-  );
-  const closeIconColor = select(
-    'Close icon color',
-    Object.values(CloseIconColor),
-    'default',
-  );
+export default {
+  title: 'Packages/Modals/Marketing Modal',
+  component: MarketingModal,
+  args: {
+    buttonText: 'Button Text',
+    linkText: 'Link Text',
+    title: 'Title Text',
+    graphicStyle: 'center',
+    children:
+      'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
+  },
+  argTypes: {
+    open: {
+      control: false,
+    },
+    setOpen: {
+      control: false,
+    },
+    onClose: {
+      control: false,
+    },
+    children: {
+      control: 'string',
+    },
+    graphic: {
+      control: false,
+    },
+    graphicStyle: {
+      control: 'radio',
+      options: [GraphicStyle.Center, GraphicStyle.Fill],
+    },
+    closeIconColor: {
+      control: 'radio',
+      options: Object.values(CloseIconColor),
+    },
+    showBlob: {
+      control: 'boolean',
+    },
+    blobPosition: {
+      control: 'radio',
+      options: Object.values(BlobPosition),
+    },
+  },
+} as Meta<typeof MarketingModal>;
 
-  const graphicStyle = radios(
-    'Graphic style example',
-    { center: GraphicStyle.Center, fill: GraphicStyle.Fill },
-    GraphicStyle.Center,
-  );
-
+const UncontrolledTemplate: ComponentStory<typeof MarketingModal> = ({
+  graphicStyle,
+  darkMode,
+  ...args
+}) => {
   const graphicCenterImage = darkMode
     ? 'DataLake.png'
     : 'marketing-center-light.svg';
@@ -35,41 +62,27 @@ function Default() {
     : 'marketing-fill-light.jpg';
 
   return (
-    <>
-      <button onClick={() => setOpen(!open)}>Open Modal</button>
-      <MarketingModal
-        open={open}
-        onButtonClick={() => setOpen(false)}
-        onLinkClick={() => setOpen(false)}
-        onClose={() => setOpen(false)}
-        title="Introducing New Feature!"
-        graphic={
-          graphicStyle === GraphicStyle.Center ? (
-            <img
-              alt=""
-              src={`examples/${graphicCenterImage}`}
-              width={darkMode ? 275 : 278}
-              height={darkMode ? 220 : 252.6}
-            />
-          ) : (
-            <img alt="" src={`examples/${graphicFillImage}`} />
-          )
-        }
-        graphicStyle={graphicStyle}
-        buttonText={buttonText}
-        linkText={linkText}
-        darkMode={darkMode}
-        closeIconColor={closeIconColor}
-        showBlob={showBlob}
-        blobPosition={blobPosition}
-      >
-        This is some description text, and it is extra long so it fills up this
-        modal. Another thing about the modals here.
-      </MarketingModal>
-    </>
+    <MarketingModal
+      {...args}
+      graphicStyle={graphicStyle}
+      darkMode={darkMode}
+      graphic={
+        graphicStyle === GraphicStyle.Center ? (
+          <img
+            alt=""
+            src={`examples/${graphicCenterImage}`}
+            width={darkMode ? 275 : 278}
+            height={darkMode ? 220 : 252.6}
+          />
+        ) : (
+          <img alt="Marketing Modal" src={`examples/${graphicFillImage}`} />
+        )
+      }
+    />
   );
-}
+};
 
-storiesOf('Packages/Modals/MarketingModal', module).add('Default', () => (
-  <Default />
-));
+export const Uncontrolled = UncontrolledTemplate.bind({});
+Uncontrolled.args = {
+  open: true,
+};
