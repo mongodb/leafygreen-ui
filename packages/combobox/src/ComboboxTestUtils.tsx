@@ -179,11 +179,6 @@ export function renderCombobox<T extends Select>(
    */
   function queryAllChips(): Array<HTMLElement> {
     return queryAllByTestId(containerEl, 'lg-combobox-chip');
-    // return queryAllByAttribute(
-    //   'data-leafygreen-ui',
-    //   containerEl,
-    //   'combobox-chip',
-    // );
   }
 
   /**
