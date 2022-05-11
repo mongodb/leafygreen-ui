@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { useUpdatedBaseFontSize } from '.';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { HTMLElementProps, createUniqueClassName } from '@leafygreen-ui/lib';
 import { bodyTypeScaleStyles } from './styles';
 import { Mode, CommonTypographyProps } from './types';
+import { useUpdatedBaseFontSize } from '.';
 
 const anchorClassName = createUniqueClassName();
 

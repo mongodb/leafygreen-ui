@@ -2,10 +2,10 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { useUpdatedBaseFontSize } from '.';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { codeTypeScaleStyles } from './styles';
 import { CommonTypographyProps, Mode } from './types';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { useUpdatedBaseFontSize } from '.';
 
 /**
  * Inline Key Code

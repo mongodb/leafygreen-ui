@@ -2,10 +2,10 @@ import React from 'react';
 import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { baseTypographyStyles, bodyTypeScaleStyles } from './styles';
-import { useUpdatedBaseFontSize } from '.';
-import { CommonTypographyProps, Mode } from './types';
 import { palette } from '@leafygreen-ui/palette';
+import { baseTypographyStyles, bodyTypeScaleStyles } from './styles';
+import { CommonTypographyProps, Mode } from './types';
+import { useUpdatedBaseFontSize } from '.';
 
 /**
  * Body

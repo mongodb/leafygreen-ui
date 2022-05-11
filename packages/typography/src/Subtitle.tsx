@@ -2,9 +2,9 @@ import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { baseTypographyStyles } from './styles';
 import { CommonTypographyProps, Mode } from './types';
-import { palette } from '@leafygreen-ui/palette';
 
 /**
  * Subtitle
