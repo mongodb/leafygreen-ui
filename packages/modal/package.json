@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "LeafyGreen UI Kit Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,7 +25,7 @@
     "prop-types": "^15.8.1",
     "@leafygreen-ui/hooks": "^7.0.0",
     "@leafygreen-ui/icon": "^11.9.0",
-    "@leafygreen-ui/icon-button": "^11.0.0",
+    "@leafygreen-ui/icon-button": "^11.0.1",
     "@leafygreen-ui/lib": "^9.2.1",
     "@leafygreen-ui/palette": "^3.2.2",
     "@leafygreen-ui/portal": "^4.0.0",
