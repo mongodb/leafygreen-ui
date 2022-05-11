@@ -39,7 +39,7 @@ const displayBlock = css`
 const displayFlex = css`
   display: flex;
   gap: 8px;
-`
+`;
 
 storiesOf('Packages/Typography', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
@@ -82,10 +82,7 @@ storiesOf('Packages/Typography', module).add('Default', () => {
           Subtitle
         </Subtitle>
 
-        <Body
-          darkMode={darkMode}
-          className={cx(displayBlock)}
-        >
+        <Body darkMode={darkMode} className={cx(displayBlock)}>
           <div>Body</div>
           <div>
             <strong>Body (Semibold)</strong>
@@ -100,23 +97,14 @@ storiesOf('Packages/Typography', module).add('Default', () => {
           </div>
         </Body>
 
-        <Body
-          darkMode={darkMode}
-          className={cx(
-            displayFlex
-          )}
-        >
+        <Body darkMode={darkMode} className={cx(displayFlex)}>
           <InlineCode darkMode={darkMode}>&quot;Inline Code&quot;</InlineCode>
           <InlineCode darkMode={darkMode} href={href}>
             &quot;Inline Code Link&quot;
           </InlineCode>
         </Body>
 
-        <div
-          className={cx(
-            displayFlex
-          )}
-        >
+        <div className={cx(displayFlex)}>
           <Link
             darkMode={darkMode}
             href={href}

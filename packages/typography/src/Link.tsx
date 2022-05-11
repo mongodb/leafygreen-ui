@@ -183,7 +183,9 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
       {...elementProps}
       {...rest}
     >
-      <span className={cx(underlineStyles, underlineModeStyles[mode])}>{children}</span>
+      <span className={cx(underlineStyles, underlineModeStyles[mode])}>
+        {children}
+      </span>
       {icon}
     </Box>
   );
