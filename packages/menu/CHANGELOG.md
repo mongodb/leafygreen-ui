@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 13.0.1
+
+### Patch Changes
+
+- bc2558c5: Adding named exports for select components and types
+- Updated dependencies [bc2558c5]
+  - @leafygreen-ui/icon-button@11.0.1
+
 ## 13.0.0
 
 ### Major Changes
