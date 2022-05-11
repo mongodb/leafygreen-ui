@@ -1,5 +1,13 @@
 # @leafygreen-ui/modal
 
+## 9.0.1
+
+### Patch Changes
+
+- 8744ba4c: Adds dependency for `prop-types@^15.8.1`
+- Updated dependencies [bc2558c5]
+  - @leafygreen-ui/icon-button@11.0.1
+
 ## 9.0.0
 
 ### Major Changes

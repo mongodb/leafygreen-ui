@@ -1,5 +1,15 @@
 # @leafygreen-ui/marketing-modal
 
+## 3.0.2
+
+### Patch Changes
+
+- bc2558c5: Adding named exports for select components and types
+- Updated dependencies [8744ba4c]
+- Updated dependencies [909209c4]
+  - @leafygreen-ui/modal@9.0.1
+  - @leafygreen-ui/typography@11.0.1
+
 ## 3.0.1
 
 ### Patch Changes
