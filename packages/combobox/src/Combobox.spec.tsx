@@ -1,6 +1,7 @@
 /* eslint-disable jest/no-disabled-tests */
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
+import React from 'react';
 import {
   waitForElementToBeRemoved,
   act,
@@ -13,6 +14,7 @@ import { axe } from 'jest-axe';
 import { flatten, isUndefined, startCase } from 'lodash';
 import {
   defaultOptions,
+  getComboboxJSX,
   groupedOptions,
   NestedObject,
   renderCombobox,
@@ -20,6 +22,7 @@ import {
   testif,
 } from './ComboboxTestUtils';
 import { OptionObject, wrapJSX } from './util';
+import Button from '@leafygreen-ui/button';
 
 /**
  * Tests
@@ -618,7 +621,26 @@ describe('packages/combobox', () => {
           expect(containerEl).toContainFocus();
         });
 
-        test("Other click handlers don't fire on click-away", () => {});
+        test("Other click handlers don't fire on click-away", async () => {
+          const buttonClickHandler = jest.fn();
+          const comboboxJSX = getComboboxJSX({
+            multiselect: select === 'multiple',
+          });
+          const renderResult = render(
+            <>
+              {comboboxJSX}
+              <Button onClick={buttonClickHandler}></Button>
+            </>,
+          );
+
+          const comboboxEl = renderResult.getByRole('combobox');
+          const buttonEl = renderResult.getByRole('button');
+          userEvent.click(comboboxEl); // Open menu
+          const menuContainerEl = renderResult.queryByRole('listbox');
+          userEvent.click(buttonEl); // Click button to close menu
+          await waitForElementToBeRemoved(menuContainerEl); // wait for menu to close
+          expect(buttonClickHandler).not.toHaveBeenCalled();
+        });
 
         testSingleSelect(
           'Clicking away should keep text if input is a valid value',
