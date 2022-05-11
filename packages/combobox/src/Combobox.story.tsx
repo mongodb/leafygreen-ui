@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import Icon from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
-import TextInput from '@leafygreen-ui/text-input';
 import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
@@ -185,18 +184,3 @@ export const ExternalFilter = () => {
     </Combobox>
   );
 };
-
-export const PageTest = (args: any) => {
-  return (
-    <div
-      className={css`
-        width: 256px;
-      `}
-    >
-      <Button onClick={() => console.log('Click button')}>Test Button</Button>
-      <TextInput label="Test" placeholder="Some input" />
-      <Combobox {...args} />
-    </div>
-  );
-};
-PageTest.args = Basic.args;
