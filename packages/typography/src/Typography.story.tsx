@@ -19,7 +19,7 @@ import {
 import { ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 
 const wrapperStyles = css`
@@ -139,6 +139,7 @@ storiesOf('Packages/Typography', module).add('Default', () => {
             External
           </Link>
         </div>
+
         <Body darkMode={darkMode} className={displayBlock}>
           <InlineKeyCode darkMode={darkMode}>CTRL</InlineKeyCode>
           <code> + </code>
@@ -154,7 +155,6 @@ storiesOf('Packages/Typography', module).add('Default', () => {
         <Chart darkMode={darkMode} className={displayBlock}>
           Charts
         </Chart>
-
 
         <Body darkMode={darkMode}>
           <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
