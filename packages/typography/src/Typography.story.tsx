@@ -36,9 +36,10 @@ const displayBlock = css`
   display: block;
 `;
 
-const darkModeBodyStyles = css`
-  background-color: ${uiColors.gray.dark3};
-`;
+const displayFlex = css`
+  display: flex;
+  gap: 8px;
+`
 
 storiesOf('Packages/Typography', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
@@ -83,23 +84,18 @@ storiesOf('Packages/Typography', module).add('Default', () => {
 
         <Body
           darkMode={darkMode}
-          weight={select(
-            'select Body weight',
-            ['medium', 'regular'],
-            'regular',
-          )}
           className={cx(displayBlock)}
         >
           <div>Body</div>
           <div>
-            <strong>Body (Strong)</strong>
+            <strong>Body (Semibold)</strong>
           </div>
           <div>
             <em>Body (Italic)</em>
           </div>
           <div>
             <strong>
-              <em>Body (Strong Italic)</em>
+              <em>Body (Semibold Italic)</em>
             </strong>
           </div>
         </Body>
@@ -107,12 +103,7 @@ storiesOf('Packages/Typography', module).add('Default', () => {
         <Body
           darkMode={darkMode}
           className={cx(
-            displayBlock,
-            css`
-              display: flex;
-              gap: 8px;
-            `,
-            { [darkModeBodyStyles]: darkMode },
+            displayFlex
           )}
         >
           <InlineCode darkMode={darkMode}>&quot;Inline Code&quot;</InlineCode>
@@ -123,11 +114,7 @@ storiesOf('Packages/Typography', module).add('Default', () => {
 
         <div
           className={cx(
-            displayBlock,
-            css`
-              display: flex;
-              gap: 8px;
-            `,
+            displayFlex
           )}
         >
           <Link
@@ -168,6 +155,13 @@ storiesOf('Packages/Typography', module).add('Default', () => {
           Charts
         </Chart>
 
+
+        <Body darkMode={darkMode}>
+          <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
+            Inline definition
+          </InlineDefinition>{' '}
+        </Body>
+
         <div className={cx(displayBlock)}>
           <Label darkMode={darkMode} htmlFor="id">
             This is a label
@@ -176,12 +170,6 @@ storiesOf('Packages/Typography', module).add('Default', () => {
             This is the description for said label
           </Description>
         </div>
-
-        <Body darkMode={darkMode}>
-          <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
-            Inline definition
-          </InlineDefinition>{' '}
-        </Body>
       </div>
     </LeafygreenProvider>
   );

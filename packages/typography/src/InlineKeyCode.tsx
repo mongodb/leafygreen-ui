@@ -21,11 +21,13 @@ const inlineKeyCode = css`
 const inlineKeyCodeColor: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${palette.black};
-    border-color: ${palette.black};
+    border-color: ${palette.gray.dark3};
+    background-color: ${palette.white};
   `,
   [Mode.Dark]: css`
     color: ${palette.gray.light2};
     border-color: ${palette.gray.base};
+    background-color: ${palette.gray.dark3};
   `,
 };
 

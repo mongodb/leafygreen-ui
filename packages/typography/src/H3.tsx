@@ -13,7 +13,6 @@ const h3 = css`
   font-size: 24px;
   line-height: 32px;
   font-weight: 400;
-  letter-spacing: -0.3px;
 `;
 
 const h3Color: Record<Mode, string> = {

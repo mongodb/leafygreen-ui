@@ -1,7 +1,7 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, focusRing } from '@leafygreen-ui/tokens';
 import {
   HTMLElementProps,
   OneOf,
@@ -56,14 +56,14 @@ const codeModes: Record<Mode, string> = {
 const codeFocusModes: Record<Mode, string> = {
   [Mode.Light]: css`
     .${anchorClassName}:focus > & {
-      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
+      box-shadow: ${focusRing[Mode.Light].default};
       border: 1px solid ${palette.blue.base};
     }
   `,
 
   [Mode.Dark]: css`
     .${anchorClassName}:focus > & {
-      box-shadow: 0 0 0 2px ${palette.black}, 0 0 0 4px ${palette.blue.light1};
+      box-shadow: ${focusRing[Mode.Dark].default};
       border: 1px solid ${palette.blue.base};
     }
   `,

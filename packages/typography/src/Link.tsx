@@ -18,7 +18,6 @@ const linkStyles = css`
   align-items: center;
   text-decoration: none;
   cursor: pointer;
-
   line-height: 1;
 
   &:focus {
@@ -37,7 +36,7 @@ const linkModeStyles: Record<Mode, string> = {
   `,
 };
 
-const underline = css`
+const underlineStyles = css`
   position: relative;
   &::after {
     content: '';
@@ -56,7 +55,7 @@ const underline = css`
   }
 `;
 
-const underlineColor: Record<Mode, string> = {
+const underlineModeStyles: Record<Mode, string> = {
   [Mode.Light]: css`
     .${anchorClassName}:hover & {
       &::after {
@@ -184,7 +183,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
       {...elementProps}
       {...rest}
     >
-      <span className={cx(underline, underlineColor[mode])}>{children}</span>
+      <span className={cx(underlineStyles, underlineModeStyles[mode])}>{children}</span>
       {icon}
     </Box>
   );
