@@ -186,7 +186,7 @@ export const ExternalFilter = () => {
   );
 };
 
-export const PageTest = args => {
+export const PageTest = (args: any) => {
   return (
     <div
       className={css`
