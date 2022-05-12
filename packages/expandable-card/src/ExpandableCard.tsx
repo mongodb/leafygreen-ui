@@ -271,7 +271,7 @@ const ExpandableCard = ({
               // Setting 'as="div"' to avoid nesting interactive components for accessibility
               as="div"
               className={cx(iconStyle, iconTransitionStyle[state])}
-              aria-label={title}
+              aria-label={`${isOpen ? 'collapse' : 'expand'} card`}
               tabIndex={0}
             >
               <Icon glyph="ChevronUp" size={24} fill={palette.gray.base} />
