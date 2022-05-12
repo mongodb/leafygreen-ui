@@ -93,7 +93,7 @@ const iconButtonMode: Record<Mode, string> = {
 
     &:active,
     &:hover {
-      color: ${palette.gray.dark3};
+      color: ${palette.black};
 
       &:before {
         background-color: ${palette.gray.light2};
@@ -117,7 +117,7 @@ const iconButtonMode: Record<Mode, string> = {
 const focusStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     &:focus {
-      color: ${palette.gray.dark3};
+      color: ${palette.black};
       box-shadow: ${focusRing[Mode.Light].default};
 
       &:before {
@@ -127,7 +127,7 @@ const focusStyle: Record<Mode, string> = {
   `,
   [Mode.Dark]: css`
     &:focus {
-      color: ${palette.gray.light1};
+      color: ${palette.gray.light3};
       box-shadow: ${focusRing[Mode.Dark].default};
 
       &:before {
@@ -186,7 +186,7 @@ const disabledStyle: Record<Mode, string> = {
 
 const activeStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${palette.gray.dark3};
+    color: ${palette.black};
 
     &:before {
       background-color: ${palette.gray.light2};
