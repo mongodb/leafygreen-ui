@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 11.0.1
+
+### Patch Changes
+
+- 909209c4: Fixes `useUpdatedBaseFontSize` override prop to accept the deprecated value `14`
+
 ## 11.0.0
 
 ### Major Changes

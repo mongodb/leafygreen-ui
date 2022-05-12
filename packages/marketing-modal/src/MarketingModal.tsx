@@ -260,6 +260,7 @@ MarketingModal.propTypes = {
   linkText: PropTypes.string.isRequired,
   blobPosition: PropTypes.oneOf(Object.values(BlobPosition)),
   showBlob: PropTypes.bool,
+  darkMode: PropTypes.bool,
 };
 
 export default MarketingModal;
