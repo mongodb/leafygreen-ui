@@ -1075,22 +1075,29 @@ export default function Combobox<M extends boolean>({
    *  This ensures that even if we click on a button, that handler is not fired
    * 5. Then we call `closeMenu`, setting `isOpen = false`, and rerender the component
    */
-  useEventListener('mousedown', (mousedown: MouseEvent) => {
-    if (!doesComponentContainEventTarget(mousedown) && isOpen) {
-      mousedown.preventDefault(); // Prevent focus from being applied to body
-      mousedown.stopPropagation(); // Stop any other mousedown events from firing
-    }
-  });
+  useEventListener(
+    'mousedown',
+    (mousedown: MouseEvent) => {
+      if (!doesComponentContainEventTarget(mousedown)) {
+        mousedown.preventDefault(); // Prevent focus from being applied to body
+        mousedown.stopPropagation(); // Stop any other mousedown events from firing
+      }
+    },
+    {
+      enabled: isOpen,
+    },
+  );
   useEventListener(
     'click',
     (click: MouseEvent) => {
-      if (!doesComponentContainEventTarget(click) && isOpen) {
+      if (!doesComponentContainEventTarget(click)) {
         click.stopPropagation(); // Stop any other click events from firing
         closeMenu();
       }
     },
     {
       options: { capture: true },
+      enabled: isOpen,
     },
   );
 
