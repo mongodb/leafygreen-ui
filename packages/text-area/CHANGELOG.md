@@ -1,5 +1,22 @@
 # @leafygreen-ui/text-area
 
+## 5.1.0
+
+### Minor Changes
+
+- 671c110e: Updates TextArea font-size and line-height based on global baseFontSize setting in LeafygreenProvider.
+  Adds an override `baseFontSize` prop to TextArea.
+  Note: override prop will not affect `Label` or `Description` font sizes. (https://jira.mongodb.org/browse/PD-2018)
+
+  Updates Dependency:
+
+  - @leafygree-ui/typography@10.0.0
+
+### Patch Changes
+
+- Updated dependencies [909209c4]
+  - @leafygreen-ui/typography@11.0.1
+
 ## 5.0.2
 
 ### Patch Changes
