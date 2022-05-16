@@ -6,7 +6,7 @@ import { baseTypographyStyles } from './styles';
 import { CommonTypographyProps, Mode } from './types';
 
 /**
- * Charts
+ * ChartLabel
  */
 const chart = css`
   display: block;
@@ -26,7 +26,12 @@ const chartColor: Record<Mode, string> = {
 
 type ChartProps = HTMLElementProps<'small'> & CommonTypographyProps;
 
-export function Chart({ darkMode, children, className, ...rest }: ChartProps) {
+export function ChartLabel({
+  darkMode,
+  children,
+  className,
+  ...rest
+}: ChartProps) {
   // TODO: Replace with context
   const mode = darkMode ? Mode.Dark : Mode.Light;
   return (
@@ -39,6 +44,6 @@ export function Chart({ darkMode, children, className, ...rest }: ChartProps) {
   );
 }
 
-Chart.displayName = 'Chart';
+ChartLabel.displayName = 'ChartLabel';
 
-export default Chart;
+export default ChartLabel;
