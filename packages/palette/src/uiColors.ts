@@ -48,12 +48,12 @@ export const red = {
 } as const;
 
 /**
- * @deprecated
  *
  * uiColors exports colors used before the brand refresh. For an export of the latest colors, use `palette` instead.
  *
  * Refer to the [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/palette/UPGRADE.md) for additional information.
  *
+ * @deprecated
  * @public
  */
 const uiColors = {

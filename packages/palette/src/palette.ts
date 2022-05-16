@@ -58,7 +58,7 @@ export const red = {
 
 /**
  *
- * Exports the latest colors used in designs following the brand refresh.
+ * Palette exports the latest colors used in designs following the brand refresh.
  *
  * If you are still using `uiColors`, refer to the [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/palette/UPGRADE.md) for additional information.
  *

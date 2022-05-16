@@ -5,7 +5,11 @@ const options = {
   savePropValueAsString: true,
 };
 
-const parsedPackages = ['radio-group'];
+const parsedPackages = [
+  // 'radio',
+  // 'radio-group',
+  'palette',
+];
 const tsConfigParser = docgen.withCustomConfig('./tsconfig.json', options);
 
 async function getFilenames() {
@@ -14,7 +18,9 @@ async function getFilenames() {
     const dirPath = `./packages/${pkg}/src`;
     const dir = await fs.readdirSync(dirPath);
     const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
-    const filenames = dir.filter(filename => regex.test(filename));
+    const filenames = dir.filter(
+      filename => filename !== 'index.ts' && regex.test(filename),
+    );
     parsedFileNames.push(...filenames.map(fn => `${dirPath}/${fn}`));
   });
   return parsedFileNames;
