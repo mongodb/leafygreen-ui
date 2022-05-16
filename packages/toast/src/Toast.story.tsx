@@ -1,21 +1,33 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { number, select, text, boolean } from '@storybook/addon-knobs';
+import { ComponentStory } from '@storybook/react';
 import Toast, { Variant } from '.';
 
-storiesOf('Packages/Toast', module).add('Default', () => {
-  const variant = select('Variant', Object.values(Variant), 'success');
-  const knobs = {
-    variant,
-    progress:
-      variant === 'progress'
-        ? number('Progress', 1, { range: true, min: 0, max: 1, step: 0.01 })
-        : undefined,
-    title: text('Title', 'Exercitation incididunt ea proident velit mollit'),
-    body: text('Body', 'Velit ea exercitation qui aute dolor proident.'),
-    open: boolean('Open', true),
-    close: boolean('Close', false) ? () => {} : undefined,
-  };
+export default {
+  title: 'Packages/Toast',
+  component: Toast,
+  args: {
+    title: 'Velit ea exercitation qui aute dolor proident.',
+    body: 'Exercitation incididunt ea proident velit mollit',
+    open: true,
+    variant: Variant.Note,
+  },
+  argTypes: {
+    className: {
+      control: 'string',
+    },
+    progress: {
+      control: 'range',
+      min: 0,
+      max: 1,
+      step: 0.01,
+      initialValue: 0,
+    },
+    open: {
+      control: 'boolean',
+    },
+  },
+};
 
-  return <Toast {...knobs} />;
-});
+const Template: ComponentStory<typeof Toast> = args => <Toast {...args} />;
+
+export const Basic = Template.bind({});

@@ -1,6 +1,6 @@
 import React from 'react';
 import Portal from './Portal';
-import { storiesOf } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 
 const portalChildrenStyle = css`
@@ -17,7 +17,23 @@ function getRoot() {
   return root;
 }
 
-storiesOf('Packages/Portal', module).add('Default', () => (
+export default {
+  title: 'Packages/Portal',
+  component: Portal,
+  args: {
+    container: getRoot(),
+  },
+  argTypes: {
+    className: {
+      type: 'string',
+    },
+    children: {
+      control: false,
+    },
+  },
+} as Meta<typeof Portal>;
+
+export const Basic = () => (
   <Portal container={getRoot()}>
     <div className={portalChildrenStyle}>
       Portals transport their children to a <code>div</code> that is appended to
@@ -25,4 +41,4 @@ storiesOf('Packages/Portal', module).add('Default', () => (
       can be specified with a <code>container</code> prop.
     </div>
   </Portal>
-));
+);
