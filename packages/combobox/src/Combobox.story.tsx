@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
 import { Combobox, ComboboxOption, ComboboxGroup } from '.';
-import { useState } from '@storybook/client-api';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { css } from '@leafygreen-ui/emotion';
+
+const wrapperStyle = css`
+  width: 256px;
+`;
 
 export default {
   title: 'Packages/Combobox',
@@ -70,7 +74,9 @@ const ComboboxOptions = [
 ];
 
 const Template: ComponentStory<typeof Combobox> = args => (
-  <Combobox {...args} />
+  <div className={wrapperStyle}>
+    <Combobox {...args} />
+  </div>
 );
 
 export const Basic = Template.bind({});

@@ -1,6 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
 import {
   H1,
   H2,
@@ -16,8 +14,8 @@ import {
   Link,
   Chart,
 } from '.';
-import { ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+<<<<<<< HEAD
 import { cx, css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
@@ -59,8 +57,34 @@ storiesOf('Packages/Typography', module).add('Default', () => {
     Object.values(ArrowAppearance),
     ArrowAppearance.Hover,
   );
+=======
+import { css } from '@leafygreen-ui/emotion';
 
+export default {
+  title: 'Packages/Typography',
+  component: <></>,
+  argTypes: {
+    baseFontSize: {
+      options: [14, 16],
+      control: { type: 'radio' },
+    },
+    darkMode: {
+      control: { type: 'boolean' },
+    },
+  },
+};
+>>>>>>> d67a5c86b762c92b2a08d9b3d0d8bbb75939011d
+
+// eslint-disable-next-line react/prop-types
+export const AllTypography = ({
+  baseFontSize,
+  darkMode,
+}: {
+  baseFontSize: 14 | 16;
+  darkMode: boolean;
+}) => {
   return (
+<<<<<<< HEAD
     <LeafygreenProvider baseFontSize={select('baseFontSize', [14, 16], 14)}>
       <div
         className={cx(wrapperStyles, {
@@ -118,6 +142,71 @@ storiesOf('Packages/Typography', module).add('Default', () => {
             arrowAppearance="persist"
           >
             Internal
+=======
+    <LeafygreenProvider baseFontSize={baseFontSize}>
+      <div
+        className={css`
+          > * {
+            margin-bottom: 16px;
+          }
+        `}
+      >
+        <H1>Heading 1</H1>
+        <H2>Heading 2</H2>
+        <H3>Heading 3</H3>
+        <Subtitle>Subtitle</Subtitle>
+        <div
+          className={css`
+            display: flex;
+            > * {
+              flex: 1;
+              margin-right: 32px;
+            }
+          `}
+        >
+          <Body weight="regular">
+            <div>Body (regular)</div>
+            <div>
+              <strong>Body (Strong)</strong>
+            </div>
+            <div>
+              <em>Body (Italic)</em>
+            </div>
+            <div>
+              <strong>
+                <em>Body (Strong Italic)</em>
+              </strong>
+            </div>
+          </Body>
+          <Body weight="medium">
+            <div>Body (medium)</div>
+            <div>
+              <strong>Body (Strong)</strong>
+            </div>
+            <div>
+              <em>Body (Italic)</em>
+            </div>
+            <div>
+              <strong>
+                <em>Body (Strong Italic)</em>
+              </strong>
+            </div>
+          </Body>
+        </div>
+        <div
+          className={css`
+            display: block;
+          `}
+        >
+          <Link href="http://localhost:9001" arrowAppearance="hover">
+            Local (Arrow on Hover)
+          </Link>
+          <Link href="http://localhost:9001" arrowAppearance="none">
+            Local (No Arrow)
+          </Link>
+          <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
+            Internal (Persist Arrow)
+>>>>>>> d67a5c86b762c92b2a08d9b3d0d8bbb75939011d
           </Link>
           <Link
             darkMode={darkMode}
@@ -127,9 +216,23 @@ storiesOf('Packages/Typography', module).add('Default', () => {
             External
           </Link>
         </div>
+<<<<<<< HEAD
 
         <Body darkMode={darkMode} className={displayBlock}>
           <InlineKeyCode darkMode={darkMode}>CTRL</InlineKeyCode>
+=======
+        <div>
+          <InlineCode darkMode={darkMode}>Inline Code</InlineCode>
+          <InlineCode
+            darkMode={darkMode}
+            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
+          >
+            Inline Code Link
+          </InlineCode>
+        </div>
+        <div>
+          <InlineKeyCode>CTRL</InlineKeyCode>
+>>>>>>> d67a5c86b762c92b2a08d9b3d0d8bbb75939011d
           <code> + </code>
           <InlineKeyCode darkMode={darkMode}>C</InlineKeyCode>
         </Body>
@@ -144,6 +247,7 @@ storiesOf('Packages/Typography', module).add('Default', () => {
           Charts
         </Chart>
 
+<<<<<<< HEAD
         <Body darkMode={darkMode}>
           <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
             Inline definition
@@ -151,6 +255,12 @@ storiesOf('Packages/Typography', module).add('Default', () => {
         </Body>
 
         <div className={cx(displayBlock)}>
+=======
+        <Overline>Overline</Overline>
+        <Disclaimer>Disclaimer</Disclaimer>
+
+        <div>
+>>>>>>> d67a5c86b762c92b2a08d9b3d0d8bbb75939011d
           <Label darkMode={darkMode} htmlFor="id">
             This is a label
           </Label>
@@ -161,4 +271,4 @@ storiesOf('Packages/Typography', module).add('Default', () => {
       </div>
     </LeafygreenProvider>
   );
-});
+};
