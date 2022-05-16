@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Card from '@leafygreen-ui/card';
 import Icon from '@leafygreen-ui/icon';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
+import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import { palette, uiColors } from '@leafygreen-ui/palette';
@@ -17,14 +18,15 @@ const cardStyle = (darkMode: boolean) => css`
   --card-divider-color: ${darkMode ? uiColors.gray.base : uiColors.gray.light2};
   display: block;
   width: 100%;
+  padding: 0;
 `;
 
 const summaryStyle = css`
   display: grid;
   grid-template-columns: auto 24px;
+  padding: 24px;
   column-gap: 8px;
   cursor: pointer;
-  padding: 24px;
   color: inherit;
 `;
 
@@ -35,6 +37,7 @@ const summaryHeader = css`
 
 const summaryText = css`
   color: inherit;
+  margin-top: 4px;
 `;
 
 const flagTextStyle = css`
@@ -254,7 +257,7 @@ const ExpandableCard = ({
         className={summaryStyle}
         onClick={onClick}
         onKeyPress={onClick}
-        tabIndex={0}
+        tabIndex={-1}
       >
         <span>
           <Subtitle className={summaryHeader}>{title}</Subtitle>
@@ -264,12 +267,15 @@ const ExpandableCard = ({
 
         <Transition in={isOpen} timeout={transitionDuration}>
           {state => (
-            <Icon
+            <IconButton
+              // Setting 'as="div"' to avoid nesting interactive components for accessibility
+              as="div"
               className={cx(iconStyle, iconTransitionStyle[state])}
-              glyph="ChevronUp"
-              size={24}
-              fill={palette.gray.base}
-            />
+              aria-label={`${isOpen ? 'collapse' : 'expand'} card`}
+              tabIndex={0}
+            >
+              <Icon glyph="ChevronUp" size={24} fill={palette.gray.base} />
+            </IconButton>
           )}
         </Transition>
       </div>
