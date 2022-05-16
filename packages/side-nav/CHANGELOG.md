@@ -1,5 +1,18 @@
 # @leafygreen-ui/side-nav
 
+## 9.0.0
+
+### Major Changes
+
+- 909209c4: Updates sidenav for Visual Brand Refresh
+
+### Patch Changes
+
+- Updated dependencies [909209c4]
+- Updated dependencies [bc2558c5]
+  - @leafygreen-ui/typography@11.0.1
+  - @leafygreen-ui/menu@13.0.1
+
 ## 8.0.0
 
 ### Major Changes

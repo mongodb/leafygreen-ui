@@ -3,10 +3,15 @@
  */
 
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
 import { ComboboxSize, Overflow, State } from './Combobox.types';
+
+const minWidth = 24;
+
+export const chipClassName = createUniqueClassName('combobox-chip');
 
 export const comboboxParentStyle = ({
   darkMode,
@@ -64,6 +69,11 @@ export const comboboxParentStyle = ({
         var(--lg-combobox-padding-x) var(--lg-combobox-padding-y)
         ${overflow === 'scroll-x' ? '0' : 'var(--lg-combobox-padding-x)'};
       width: var(--lg-combobox-width);
+      // TODO: Clean this up 🤮
+      min-width: calc(
+        ${minWidth}px + var(--lg-combobox-padding-x) * 2 + 2px +
+          var(--lg-combobox-icon-height)
+      );
     `,
   );
 };
@@ -82,7 +92,6 @@ export const comboboxStyle = css`
   cursor: text;
   transition: 150ms ease-in-out;
   transition-property: background-color, box-shadow;
-  min-width: 256px;
 
   &:focus-within {
     background-color: var(--lg-combobox-background-color-focus);
@@ -153,6 +162,7 @@ export const inputWrapperStyle = ({
         height: var(--lg-combobox-height);
         white-space: nowrap;
         overflow-x: scroll;
+        padding-left: var(--lg-combobox-padding-x);
         scroll-behavior: smooth;
         scrollbar-width: none;
         /*
@@ -166,14 +176,14 @@ export const inputWrapperStyle = ({
           display: none;
         }
 
-        & > * {
+        & > .${chipClassName} {
           margin-inline: 2px;
 
-          &:first-child:not(input) {
+          &:first-child {
             margin-inline-start: 0;
           }
 
-          &:last-child:not(input) {
+          &:last-child {
             margin-inline-end: 0;
           }
         }

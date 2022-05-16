@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/pipeline",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "LeafyGreen UI Kit Pipeline",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
