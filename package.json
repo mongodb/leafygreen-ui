@@ -57,7 +57,8 @@
     "test": "npm-run-all --serial test:*",
     "test:local": "jest --env jsdom --config jest.config.js",
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
-    "watch": "yarn build -- -- --watch"
+    "watch": "yarn build -- -- --watch",
+    "parse-docs": "node ./scripts/parse-tsdocs.js"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
