@@ -827,6 +827,20 @@ describe('packages/combobox', () => {
             expect(newMenuContainerEl).toBeInTheDocument();
           });
         });
+
+        testMultiSelect('Removes Chip when one is focused', () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { comboboxEl, queryAllChips, queryChipsByName } =
+            renderCombobox(select, {
+              initialValue,
+            });
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const chip = queryChipsByName('Carrot');
+          if (!chip) throw new Error('Carrot Chip not found');
+          const chipButton = chip.querySelector('button') as HTMLElement;
+          userEvent.type(chipButton, '{enter}');
+          waitFor(() => expect(queryAllChips()).toHaveLength(2));
+        });
       });
 
       describe('Space key', () => {
@@ -838,6 +852,20 @@ describe('packages/combobox', () => {
           if (select === 'multiple') {
             expect(queryAllChips()).toHaveLength(0);
           }
+        });
+
+        testMultiSelect('Removes Chip when one is focused', () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { comboboxEl, queryAllChips, queryChipsByName } =
+            renderCombobox(select, {
+              initialValue,
+            });
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const chip = queryChipsByName('Carrot');
+          if (!chip) throw new Error('Carrot Chip not found');
+          const chipButton = chip.querySelector('button') as HTMLElement;
+          userEvent.type(chipButton, '{space}');
+          waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
       });
 
@@ -956,6 +984,20 @@ describe('packages/combobox', () => {
           userEvent.type(inputEl, '{backspace}');
           expect(queryAllChips()).toHaveLength(1);
           expect(queryAllChips()[0]).toContainFocus();
+        });
+
+        testMultiSelect('Removes Chip when one is focused', () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { comboboxEl, queryAllChips, queryChipsByName } =
+            renderCombobox(select, {
+              initialValue,
+            });
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const chip = queryChipsByName('Carrot');
+          if (!chip) throw new Error('Carrot Chip not found');
+          const chipButton = chip.querySelector('button') as HTMLElement;
+          userEvent.type(chipButton, '{backspace}');
+          waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
       });
 
@@ -1112,38 +1154,6 @@ describe('packages/combobox', () => {
           userEvent.type(inputEl!, '{arrowleft}{arrowleft}{arrowright}');
           const lastChip = queryChipsByIndex('last');
           expect(lastChip!).toContainFocus();
-        });
-      });
-
-      describe('Remove chips with keyboard', () => {
-        let comboboxEl: HTMLElement,
-          queryAllChips: () => Array<HTMLElement>,
-          chipButton: HTMLElement;
-
-        beforeEach(() => {
-          const initialValue = ['apple', 'banana', 'carrot'];
-          const combobox = renderCombobox(select, {
-            initialValue,
-          });
-          comboboxEl = combobox.comboboxEl;
-          userEvent.type(comboboxEl, '{arrowleft}');
-          queryAllChips = combobox.queryAllChips;
-          const chip = combobox.queryChipsByName('Carrot');
-          if (!chip) throw new Error('Carrot Chip not found');
-          chipButton = chip.querySelector('button') as HTMLElement;
-        });
-
-        testMultiSelect('Enter key', () => {
-          userEvent.type(chipButton, '{enter}');
-          waitFor(() => expect(queryAllChips()).toHaveLength(2));
-        });
-        testMultiSelect('Backspace key', () => {
-          userEvent.type(chipButton, '{backspace}');
-          waitFor(() => expect(queryAllChips()).toHaveLength(2));
-        });
-        testMultiSelect('Space key', () => {
-          userEvent.type(chipButton, '{space}');
-          waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
       });
 
