@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 import Stepper, { Step, StepperProps } from '.';
-import { palette } from '@leafygreen-ui/palette';
 
 export default {
   title: 'Packages/Stepper',
@@ -39,24 +38,16 @@ export default {
   },
 } as Meta<typeof Stepper>;
 
-const Template: ComponentStory<typeof Stepper> = ({
-  darkMode,
-  ...args
-}: StepperProps) => (
-  <div
-    style={{
-      width: 1000,
-      background: darkMode ? palette.black : palette.white,
-    }}
-  >
+const Template: ComponentStory<typeof Stepper> = (args: StepperProps) => (
+  <>
     <p>
       Note: Min and max values for ranges are not defined in the component. The
       range values are only defined specifically for the Storybook instance so
       it renders correctly with all values. Value checking within the component
       will be added at a later date.
     </p>
-    <Stepper darkMode={darkMode} {...args} />
-  </div>
+    <Stepper {...args} />
+  </>
 );
 
 export const Basic = Template.bind({});

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Option, OptionGroup, Select } from '.';
 import { SelectProps } from './Select';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
@@ -65,11 +64,7 @@ export const Controlled = ({
     />
   );
 };
-export const WithProvider = (args: SelectProps) => (
-  <LeafygreenProvider>
-    <Uncontrolled {...args} />
-  </LeafygreenProvider>
-);
+
 export const WithIcons = (args: SelectProps) => <Uncontrolled {...args} />;
 WithIcons.args = {
   children: [

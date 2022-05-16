@@ -1,40 +1,51 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { boolean, select } from '@storybook/addon-knobs';
+import { ComponentStory } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import Toggle, { Size } from '.';
+import { palette } from '@leafygreen-ui/palette';
+import Toggle from '.';
 
-storiesOf('Packages/Toggle', module).add('Default', () => {
-  const darkMode = boolean('darkMode', false);
+export default {
+  title: 'Packages/Toggle',
+  component: Toggle,
+  argTypes: {
+    darkMode: {
+      control: 'boolean',
+    },
+    checked: {
+      control: 'boolean',
+    },
+  },
+};
 
-  const wrapperStyles = css`
-    background-color: ${darkMode ? uiColors.gray.dark2 : uiColors.white};
-    padding: 20px;
-  `;
+const Template: ComponentStory<typeof Toggle> = args => (
+  <Toggle aria-labelledby="toggle" {...args} />
+);
 
-  const labelStyles = css`
-    display: block;
-    margin-bottom: 16px;
-    color: ${darkMode ? uiColors.white : uiColors.gray.dark2};
-  `;
+export const Basic = Template.bind({});
 
-  return (
-    <LeafyGreenProvider>
-      <div className={wrapperStyles}>
-        <label htmlFor="toggle" id="label" className={labelStyles}>
-          This is a label for my toggle.
-        </label>
+export const WithLabel: ComponentStory<typeof Toggle> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => (
+  <>
+    <label
+      htmlFor="toggle"
+      id="label"
+      className={css`
+        display: block;
+        margin-bottom: 16px;
+        color: ${darkMode ? palette.white : palette.gray.dark2};
+      `}
+    >
+      This is a label for my toggle.
+    </label>
 
-        <Toggle
-          id="toggle"
-          aria-labelledby="label"
-          darkMode={darkMode}
-          size={select('Size', Object.values(Size), Size.Default)}
-          disabled={boolean('Disabled', false)}
-        />
-      </div>
-    </LeafyGreenProvider>
-  );
-});
+    <Toggle
+      id="toggle"
+      aria-labelledby="toggle"
+      darkMode={darkMode}
+      {...args}
+    />
+  </>
+);

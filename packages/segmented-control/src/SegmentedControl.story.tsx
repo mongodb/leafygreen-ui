@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import Icon from '@leafygreen-ui/icon';
 import { SegmentedControlProps } from './SegmentedControl';
@@ -21,10 +20,8 @@ export default {
   },
 } as Meta<typeof SegmentedControl>;
 
-export const Uncontrolled = ({ children, ...args }: SegmentedControlProps) => (
-  <LeafygreenProvider>
-    <SegmentedControl {...args}>{children}</SegmentedControl>
-  </LeafygreenProvider>
+export const Uncontrolled = (args: SegmentedControlProps) => (
+  <SegmentedControl {...args} />
 );
 Uncontrolled.args = {
   label: 'Fruit',

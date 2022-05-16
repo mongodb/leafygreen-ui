@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
-import { palette } from '@leafygreen-ui/palette';
-import { css } from '@leafygreen-ui/emotion';
 import TextInput, { TextInputProps } from '.';
 
 export const StoryTextInput: React.FC<TextInputProps> = props => (
@@ -25,18 +23,8 @@ export default {
 };
 
 const Template: ComponentStory<typeof StoryTextInput> = ({
-  darkMode,
   ...args
-}: TextInputProps) => (
-  <div
-    className={css`
-      padding: 30px;
-      background-color: ${darkMode ? palette.black : 'white'};
-    `}
-  >
-    <TextInput darkMode={darkMode} {...args} />
-  </div>
-);
+}: TextInputProps) => <TextInput {...args} />;
 
 export const Basic = Template.bind({});
 
