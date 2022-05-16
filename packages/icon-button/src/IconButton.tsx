@@ -154,8 +154,9 @@ const disabledStyle: Record<Mode, string> = {
 
     &:focus {
       color: ${palette.gray.light1};
+
       &:before {
-        background-color: ${palette.gray.light3};
+        background-color: transparent;
       }
     }
   `,
@@ -178,7 +179,7 @@ const disabledStyle: Record<Mode, string> = {
       color: ${palette.gray.dark1};
 
       &:before {
-        background-color: ${palette.gray.dark1};
+        background-color: transparent;
       }
     }
   `,
