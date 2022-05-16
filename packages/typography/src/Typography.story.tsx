@@ -59,12 +59,9 @@ export const AllTypography = ({
   baseFontSize: 14 | 16;
   darkMode: boolean;
 }) => {
-
   return (
     <LeafygreenProvider baseFontSize={baseFontSize}>
-      <div
-        className={cx(wrapperStyles)}
-      >
+      <div className={cx(wrapperStyles)}>
         <H1 darkMode={darkMode} className={displayBlock}>
           Heading 1
         </H1>
@@ -95,19 +92,34 @@ export const AllTypography = ({
 
         <Body className={cx(displayFlex)}>
           <InlineCode darkMode={darkMode}>&quot;Inline Code&quot;</InlineCode>
-          <InlineCode darkMode={darkMode} href='https://mongodb.github.io/leafygreen-ui/?path=/story/*'>
+          <InlineCode
+            darkMode={darkMode}
+            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
+          >
             &quot;Inline Code Link&quot;
           </InlineCode>
         </Body>
 
         <div className={cx(displayFlex)}>
-          <Link href="http://localhost:9001" arrowAppearance="hover" darkMode={darkMode}>
+          <Link
+            href="http://localhost:9001"
+            arrowAppearance="hover"
+            darkMode={darkMode}
+          >
             Local (Arrow on Hover)
           </Link>
-          <Link href="http://localhost:9001" arrowAppearance="none" darkMode={darkMode}>
+          <Link
+            href="http://localhost:9001"
+            arrowAppearance="none"
+            darkMode={darkMode}
+          >
             Local (No Arrow)
           </Link>
-          <Link href="?path=/story/button--icon-only" arrowAppearance="persist" darkMode={darkMode}>
+          <Link
+            href="?path=/story/button--icon-only"
+            arrowAppearance="persist"
+            darkMode={darkMode}
+          >
             Internal (Persist Arrow)
           </Link>
           <Link
