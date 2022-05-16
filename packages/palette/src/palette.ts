@@ -55,3 +55,24 @@ export const red = {
   light2: '#FFCDC7',
   light3: '#FFEAE5',
 } as const;
+
+/**
+ *
+ * Exports the latest colors used in designs following the brand refresh.
+ *
+ * If you are still using `uiColors`, refer to the [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/palette/UPGRADE.md) for additional information.
+ *
+ * @public
+ */
+const palette = {
+  white,
+  black,
+  focus,
+  gray,
+  green,
+  blue,
+  yellow,
+  red,
+};
+
+export default palette;

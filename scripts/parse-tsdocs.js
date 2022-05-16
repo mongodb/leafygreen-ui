@@ -6,6 +6,7 @@ const options = {
 };
 
 const parsedPackages = ['radio-group'];
+const tsConfigParser = docgen.withCustomConfig('./tsconfig.json', options);
 
 async function getFilenames() {
   const parsedFileNames = [];
@@ -20,7 +21,7 @@ async function getFilenames() {
 }
 
 getFilenames().then(filenames => {
-  const docs = docgen.parse(filenames, options);
+  const docs = tsConfigParser.parse(filenames, options);
   // TODO: Replace log with push to CMS
   // eslint-disable-next-line no-console
   console.log(docs);
