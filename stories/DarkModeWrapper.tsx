@@ -8,7 +8,7 @@ const DarkModeWrapper = ({
   darkMode = false,
 }: PropsWithChildren<{ darkMode?: boolean }>) => {
   const styles = css`
-    background-color: ${darkMode ? palette.gray.dark2 : palette.white};
+    background-color: ${darkMode ? palette.black : palette.white};
     padding: 20px;
   `;
 
