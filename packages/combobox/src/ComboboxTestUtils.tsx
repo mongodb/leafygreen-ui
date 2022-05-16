@@ -4,6 +4,7 @@ import {
   configure,
   queryByText,
   queryByAttribute,
+  queryAllByTestId,
   queryAllByAttribute,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -177,11 +178,7 @@ export function renderCombobox<T extends Select>(
    * @returns all chip elements
    */
   function queryAllChips(): Array<HTMLElement> {
-    return queryAllByAttribute(
-      'data-leafygreen-ui',
-      containerEl,
-      'combobox-chip',
-    );
+    return queryAllByTestId(containerEl, 'lg-combobox-chip');
   }
 
   /**

@@ -1,6 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
 import {
   H1,
   H2,
@@ -14,12 +12,10 @@ import {
   Label,
   Description,
   Link,
-  Chart,
+  ChartLabel,
 } from '.';
-import { ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 
 const wrapperStyles = css`
@@ -29,7 +25,7 @@ const wrapperStyles = css`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 `;
 
 const displayBlock = css`
@@ -41,34 +37,31 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-storiesOf('Packages/Typography', module).add('Default', () => {
-  const darkMode = boolean('darkMode', false);
+export default {
+  title: 'Packages/Typography',
+  component: <></>,
+  argTypes: {
+    baseFontSize: {
+      options: [14, 16],
+      control: { type: 'radio' },
+    },
+    darkMode: {
+      control: { type: 'boolean' },
+    },
+  },
+};
 
-  const href = select(
-    'select Link href',
-    [
-      'http://localhost:9001',
-      '?path=/story/button--icon-only',
-      'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
-    ],
-    'http://localhost:9001',
-  );
-
-  const linkArrowAppearance = select(
-    'select Link arrowAppearance',
-    Object.values(ArrowAppearance),
-    ArrowAppearance.Hover,
-  );
-
+// eslint-disable-next-line react/prop-types
+export const AllTypography = ({
+  baseFontSize,
+  darkMode,
+}: {
+  baseFontSize: 14 | 16;
+  darkMode: boolean;
+}) => {
   return (
-    <LeafygreenProvider baseFontSize={select('baseFontSize', [14, 16], 14)}>
-      <div
-        className={cx(wrapperStyles, {
-          [css`
-            background-color: ${palette.gray.dark3};
-          `]: darkMode,
-        })}
-      >
+    <LeafygreenProvider baseFontSize={baseFontSize}>
+      <div className={cx(wrapperStyles)}>
         <H1 darkMode={darkMode} className={displayBlock}>
           Heading 1
         </H1>
@@ -97,32 +90,42 @@ storiesOf('Packages/Typography', module).add('Default', () => {
           </div>
         </Body>
 
-        <Body darkMode={darkMode} className={cx(displayFlex)}>
+        <Body className={cx(displayFlex)}>
           <InlineCode darkMode={darkMode}>&quot;Inline Code&quot;</InlineCode>
-          <InlineCode darkMode={darkMode} href={href}>
+          <InlineCode
+            darkMode={darkMode}
+            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
+          >
             &quot;Inline Code Link&quot;
           </InlineCode>
         </Body>
 
         <div className={cx(displayFlex)}>
           <Link
+            href="http://localhost:9001"
+            arrowAppearance="hover"
             darkMode={darkMode}
-            href={href}
-            arrowAppearance={linkArrowAppearance}
           >
-            Link
+            Local (Arrow on Hover)
           </Link>
           <Link
+            href="http://localhost:9001"
+            arrowAppearance="none"
             darkMode={darkMode}
+          >
+            Local (No Arrow)
+          </Link>
+          <Link
             href="?path=/story/button--icon-only"
             arrowAppearance="persist"
+            darkMode={darkMode}
           >
-            Internal
+            Internal (Persist Arrow)
           </Link>
           <Link
-            darkMode={darkMode}
             href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
             arrowAppearance="persist"
+            darkMode={darkMode}
           >
             External
           </Link>
@@ -140,9 +143,9 @@ storiesOf('Packages/Typography', module).add('Default', () => {
         <Disclaimer darkMode={darkMode} className={displayBlock}>
           Disclaimer
         </Disclaimer>
-        <Chart darkMode={darkMode} className={displayBlock}>
-          Charts
-        </Chart>
+        <ChartLabel darkMode={darkMode} className={displayBlock}>
+          Charts Label
+        </ChartLabel>
 
         <Body darkMode={darkMode}>
           <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
@@ -161,4 +164,4 @@ storiesOf('Packages/Typography', module).add('Default', () => {
       </div>
     </LeafygreenProvider>
   );
-});
+};

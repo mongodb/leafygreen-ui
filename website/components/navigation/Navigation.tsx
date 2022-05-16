@@ -17,6 +17,14 @@ import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
 
+const sideNavStyles = css`
+  z-index: 1;
+
+  li {
+    margin: 6px 0;
+  }
+`;
+
 const logoStyles = css`
   cursor: pointer;
 `;
@@ -32,6 +40,7 @@ const foundations: Array<String> = [
   'forms',
   'grid',
   'icon-creation',
+  'refresh-guide',
 ];
 
 const components: Array<Component> = [
@@ -164,12 +173,7 @@ function Navigation() {
   }
 
   return (
-    <SideNav
-      aria-label="LeafyGreen Design System"
-      className={css`
-        z-index: 1;
-      `}
-    >
+    <SideNav aria-label="LeafyGreen Design System" className={sideNavStyles}>
       <a
         className={logoLinkStyles}
         href="/"

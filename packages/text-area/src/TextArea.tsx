@@ -180,7 +180,7 @@ type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
 };
 
 type AriaLabels = 'label' | 'aria-labelledby';
-type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
+export type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
 
 const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
   React.forwardRef(function TextArea(

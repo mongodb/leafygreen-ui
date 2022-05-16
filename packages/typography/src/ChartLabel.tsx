@@ -1,12 +1,11 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { baseTypographyStyles } from './styles';
+import { baseTypographyStyles, defaultTextColor } from './styles';
 import { CommonTypographyProps, Mode } from './types';
 
 /**
- * Charts
+ * ChartLabel
  */
 const chart = css`
   display: block;
@@ -15,30 +14,31 @@ const chart = css`
   letter-spacing: 0.2px;
 `;
 
-const chartColor: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-  `,
-  [Mode.Dark]: css`
-    color: ${palette.gray.light2};
-  `,
-};
-
 type ChartProps = HTMLElementProps<'small'> & CommonTypographyProps;
 
-export function Chart({ darkMode, children, className, ...rest }: ChartProps) {
+export function ChartLabel({
+  darkMode,
+  children,
+  className,
+  ...rest
+}: ChartProps) {
   // TODO: Replace with context
   const mode = darkMode ? Mode.Dark : Mode.Light;
   return (
     <small
       {...rest}
-      className={cx(baseTypographyStyles, chart, chartColor[mode], className)}
+      className={cx(
+        baseTypographyStyles,
+        chart,
+        defaultTextColor[mode],
+        className,
+      )}
     >
       {children}
     </small>
   );
 }
 
-Chart.displayName = 'Chart';
+ChartLabel.displayName = 'ChartLabel';
 
-export default Chart;
+export default ChartLabel;

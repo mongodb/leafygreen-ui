@@ -2,9 +2,6 @@ import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import IconButton from './IconButton';
-import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 export default {
   title: 'Packages/IconButton',
@@ -26,18 +23,9 @@ export default {
 };
 // eslint-disable-next-line react/prop-types
 const Template: ComponentStory<typeof IconButton> = ({ darkMode, ...args }) => (
-  <LeafyGreenProvider>
-    <div
-      className={css`
-        padding: 60px;
-        ${darkMode && `background-color: ${palette.gray.dark3};`}
-      `}
-    >
-      <IconButton darkMode={darkMode} {...args}>
-        <CloudIcon />
-      </IconButton>
-    </div>
-  </LeafyGreenProvider>
+  <IconButton darkMode={darkMode} {...args}>
+    <CloudIcon />
+  </IconButton>
 );
 
 export const Basic = Template.bind({});

@@ -1,9 +1,8 @@
 import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { baseTypographyStyles } from './styles';
+import { baseTypographyStyles, defaultTextColor } from './styles';
 import { CommonTypographyProps, Mode } from './types';
 
 /**
@@ -14,15 +13,6 @@ const h3 = css`
   line-height: 32px;
   font-weight: 400;
 `;
-
-const h3Color: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-  `,
-  [Mode.Dark]: css`
-    color: ${palette.gray.light2};
-  `,
-};
 
 type H3Props = HTMLElementProps<'h3'> & CommonTypographyProps;
 
@@ -36,7 +26,12 @@ const H3: ExtendableBox<H3Props, 'h3'> = ({
   return (
     <Box
       as="h3"
-      className={cx(baseTypographyStyles, h3, h3Color[mode], className)}
+      className={cx(
+        baseTypographyStyles,
+        h3,
+        defaultTextColor[mode],
+        className,
+      )}
       {...rest}
     />
   );

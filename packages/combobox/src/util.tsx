@@ -1,6 +1,6 @@
 import { isComponentType, keyMap as _keyMap } from '@leafygreen-ui/lib';
-import { kebabCase } from 'lodash';
-import React from 'react';
+import kebabCase from 'lodash/kebabCase';
+import React, { ReactChild } from 'react';
 import { ComboboxOptionProps } from './Combobox.types';
 
 // TODO - remove this when lib/keyMap supports Backspace & Delete
@@ -12,9 +12,9 @@ export const keyMap = {
 
 /**
  *
- * Wraps the first instance of `wrap` found in `str` within the provided `element`.
+ * Wraps every instance of `wrap` found in `str` in the provided `element`.
  *
- * E.g. `wrapJSX('Apple', 'ap', 'em') => <><em>Ap</em>ple</>`
+ * E.g. `wrapJSX('Apple', 'ap', 'em') => <em>Ap</em>ple`
  *
  * @param str
  * @param wrap
@@ -24,24 +24,40 @@ export const keyMap = {
 export const wrapJSX = (
   str: string,
   wrap?: string,
-  element?: string,
+  element?: keyof HTMLElementTagNameMap,
 ): JSX.Element => {
   if (wrap && element) {
     const regex = new RegExp(wrap, 'gi');
-    const startIndex = str.search(regex);
-    const endIndex = startIndex + wrap.length;
-    const nameArr = str.split('');
-    const start = nameArr.slice(0, startIndex).join('');
-    const end = nameArr.slice(endIndex).join('');
-    const match = nameArr.slice(startIndex, endIndex).join('');
-    const matchEl = React.createElement(element, null, match);
-    return (
-      <>
-        {start}
-        {matchEl}
-        {end}
-      </>
-    );
+    const matches = str.matchAll(regex);
+
+    if (matches) {
+      const outArray = str.split('') as Array<ReactChild>;
+
+      /**
+       * For every match, splice it into the "string",
+       * wrapped in the React element
+       */
+      // Consider adding --downlevelIteration TS flag so we don't need Array.from
+      for (const match of Array.from(matches)) {
+        const matchIndex = match.index ?? -1;
+        const matchContent = match[0];
+        const matchLength = matchContent.length;
+        const key = matchIndex + matchContent + matchLength;
+
+        // We create a replacement array that's
+        // the same length as the match we're deleting,
+        // in order to keep the matchIndexes aligned
+        // with the indexes of the output array
+        const replacement = new Array<ReactChild>(matchLength).fill('');
+        replacement[0] = React.createElement(element, { key }, matchContent);
+
+        outArray.splice(matchIndex, matchLength, ...replacement);
+      }
+
+      return <>{outArray}</>;
+    }
+
+    return <>{str}</>;
   }
 
   return <>{str}</>;

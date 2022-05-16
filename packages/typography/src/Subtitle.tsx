@@ -2,8 +2,7 @@ import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { baseTypographyStyles } from './styles';
+import { baseTypographyStyles, defaultTextColor } from './styles';
 import { CommonTypographyProps, Mode } from './types';
 
 /**
@@ -14,15 +13,6 @@ const subtitle = css`
   line-height: 24px;
   font-weight: 700;
 `;
-
-const subtitleColor: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-  `,
-  [Mode.Dark]: css`
-    color: ${palette.gray.light2};
-  `,
-};
 
 type SubtitleProps = HTMLElementProps<'h6'> & CommonTypographyProps;
 
@@ -39,7 +29,7 @@ const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
       className={cx(
         baseTypographyStyles,
         subtitle,
-        subtitleColor[mode],
+        defaultTextColor[mode],
         className,
       )}
       {...rest}
