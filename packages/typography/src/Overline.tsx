@@ -1,9 +1,8 @@
 import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { baseTypographyStyles } from './styles';
+import { baseTypographyStyles, defaultTextColor } from './styles';
 import { CommonTypographyProps, Mode } from './types';
 
 /**
@@ -16,15 +15,6 @@ const overline = css`
   line-height: 20px;
   letter-spacing: 0.4px;
 `;
-
-const overlineColor: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-  `,
-  [Mode.Dark]: css`
-    color: ${palette.gray.light2};
-  `,
-};
 
 type OverlineProps = HTMLElementProps<'div'> & CommonTypographyProps;
 
@@ -40,7 +30,7 @@ export const Overline: ExtendableBox<OverlineProps, 'div'> = ({
       className={cx(
         baseTypographyStyles,
         overline,
-        overlineColor[mode],
+        defaultTextColor[mode],
         className,
       )}
       {...rest}

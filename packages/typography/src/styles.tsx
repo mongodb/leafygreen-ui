@@ -1,6 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  Mode,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 export const baseTypographyStyles = css`
   margin: unset;
@@ -29,3 +34,12 @@ export const codeTypeScaleStyles: Record<BaseFontSize, string> = {
     line-height: ${typeScales.code2.lineHeight}px;
   `,
 } as const;
+
+export const defaultTextColor: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${palette.black};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.gray.light2};
+  `,
+};

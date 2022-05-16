@@ -25,7 +25,7 @@ const wrapperStyles = css`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 `;
 
 const displayBlock = css`

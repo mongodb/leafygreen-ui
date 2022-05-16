@@ -2,8 +2,11 @@ import React from 'react';
 import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { baseTypographyStyles, bodyTypeScaleStyles } from './styles';
+import {
+  baseTypographyStyles,
+  bodyTypeScaleStyles,
+  defaultTextColor,
+} from './styles';
 import { CommonTypographyProps, Mode } from './types';
 import { useUpdatedBaseFontSize } from '.';
 
@@ -36,15 +39,6 @@ const fontWeights: Record<
   },
 } as const;
 
-const bodyColor: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-  `,
-  [Mode.Dark]: css`
-    color: ${palette.gray.light2};
-  `,
-};
-
 export function Body<T extends keyof JSX.IntrinsicElements>({
   darkMode,
   className,
@@ -71,7 +65,7 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
       className={cx(
         baseTypographyStyles,
         bodyTypeScaleStyles[baseFontSize],
-        bodyColor[mode],
+        defaultTextColor[mode],
         fontWeight,
         className,
       )}
