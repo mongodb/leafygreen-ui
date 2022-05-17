@@ -5,11 +5,11 @@ import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
 import { State } from '.';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const menuButtonStyleOverrides = css`
   text-transform: unset;
