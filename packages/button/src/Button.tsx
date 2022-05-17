@@ -15,7 +15,7 @@ import {
 } from './styles';
 import ButtonIcon from './ButtonIcon';
 
-const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
+export const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
   React.forwardRef(function Button(
     {
       variant = Variant.Default,

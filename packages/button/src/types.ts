@@ -1,4 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLProps } from 'react';
 
 const Variant = {
   Default: 'default',
@@ -35,7 +36,7 @@ const FontSize = {
 type FontSize = typeof FontSize[keyof typeof FontSize];
 
 type ButtonProps = Pick<
-  HTMLElementProps<'button'>,
+  HTMLProps<HTMLButtonElement>,
   'disabled' | 'onClick' | 'type' | 'className'
 > & {
   variant?: Variant;

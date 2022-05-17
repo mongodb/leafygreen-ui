@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { FC, ReactElement } from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import LGButton, { Variant, ButtonProps } from '.';
-import { Story } from '@storybook/react';
+import Button, { Variant, ButtonProps } from '.';
+import { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import { ComponentStory, Meta, Story } from '@storybook/react';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-// This is a workaround to make sure props are correctly imported despite Button using forwardRef
-// https://github.com/storybookjs/storybook/issues/15334
-// eslint-disable-next-line react/jsx-props-no-spreading
-export const Button: React.FC<ButtonProps> = props => <LGButton {...props} />;
+type ButtonStoryProps = BoxProps<HTMLButtonElement, ButtonProps>;
+export const StoryButton: React.FC<ButtonStoryProps> = props => (
+  // @ts-ignore-next-line
+  <Button {...props} />
+);
 
 export default {
   title: 'Packages/Button',
-  component: Button,
-  excludeStories: ['Button'],
+  component: StoryButton,
   args: {
-    text: 'MongoDB',
+    children: 'MongoDB',
   },
   argTypes: {
     leftGlyph: {
@@ -25,20 +27,14 @@ export default {
       control: { type: 'select' },
     },
   },
-  controls: { exclude: ['children'] },
-};
+} as Meta<ButtonStoryProps>;
 
-const Template: Story<
-  ButtonProps & { text: string; leftGlyph: string; rightGlyph: string }
-  // eslint-disable-next-line react/prop-types
-> = ({ text, leftGlyph, rightGlyph, ...args }) => (
+const Template: Story<ButtonStoryProps> = ({ leftGlyph, rightGlyph, ...args }) => (
   <Button
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
     rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
     {...args}
-  >
-    {text}
-  </Button>
+  />
 );
 
 export const Default = Template.bind({});
