@@ -986,18 +986,17 @@ describe('packages/combobox', () => {
           expect(queryAllChips()[0]).toContainFocus();
         });
 
-        testMultiSelect('Removes Chip when one is focused', () => {
+        testMultiSelect('Removes Chip when one is focused', async () => {
           const initialValue = ['apple', 'banana', 'carrot'];
-          const { comboboxEl, queryAllChips, queryChipsByName } =
+          const { comboboxEl, queryAllChips, queryChipsByIndex } =
             renderCombobox(select, {
               initialValue,
             });
           userEvent.type(comboboxEl, '{arrowleft}');
-          const chip = queryChipsByName('Carrot');
-          if (!chip) throw new Error('Carrot Chip not found');
-          const chipButton = chip.querySelector('button') as HTMLElement;
+          const lastChip = queryChipsByIndex(2);
+          const chipButton = lastChip.querySelector('button') as HTMLElement;
           userEvent.type(chipButton, '{backspace}');
-          waitFor(() => expect(queryAllChips()).toHaveLength(2));
+          expect(queryAllChips()).toHaveLength(2);
         });
       });
 
