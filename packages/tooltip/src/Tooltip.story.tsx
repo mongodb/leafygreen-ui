@@ -8,7 +8,7 @@ export default {
   title: 'Packages/Tooltip',
   component: Tooltip,
   args: {
-    children: 'I am a tooltip!'
+    children: 'I am a tooltip!',
   },
   argTypes: {
     darkMode: {

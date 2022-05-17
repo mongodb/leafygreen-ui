@@ -1,11 +1,10 @@
-import React, { FC, ReactElement } from 'react';
+import React, { ElementType } from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Button, { Variant, ButtonProps } from '.';
-import { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
-import { ComponentStory, Meta, Story } from '@storybook/react';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { BoxProps } from '@leafygreen-ui/box';
+import { Meta, Story } from '@storybook/react';
 
-type ButtonStoryProps = BoxProps<HTMLButtonElement, ButtonProps>;
+type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
 export const StoryButton: React.FC<ButtonStoryProps> = props => (
   // @ts-ignore-next-line
   <Button {...props} />
@@ -29,9 +28,15 @@ export default {
   },
 } as Meta<ButtonStoryProps>;
 
-const Template: Story<ButtonStoryProps> = ({ leftGlyph, rightGlyph, ...args }) => (
+const Template: Story<ButtonStoryProps> = ({
+  leftGlyph,
+  rightGlyph,
+  ...args
+}: ButtonStoryProps) => (
   <Button
+    // @ts-ignore-next-line
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+    // @ts-ignore-next-line
     rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
     {...args}
   />

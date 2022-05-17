@@ -1,11 +1,10 @@
-import React, { useCallback, useContext } from 'react';
+import React, { HTMLProps, useCallback, useContext } from 'react';
 import Button, { Size, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
@@ -108,8 +107,7 @@ const menuButtonErrorStyle: Record<Mode, string> = {
   `,
 };
 
-interface MenuButtonProps
-  extends HTMLElementProps<'button', HTMLButtonElement> {
+interface MenuButtonProps extends HTMLProps<HTMLButtonElement> {
   children: React.ReactNode;
   value: string;
   text: React.ReactNode;
