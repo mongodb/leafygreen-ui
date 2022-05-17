@@ -1,0 +1,59 @@
+import { css } from '@emotion/css';
+import { H2, Body, Subtitle, Link } from '@leafygreen-ui/typography';
+import GuidelineImage from 'components/GuidelineImage';
+import { CDN } from 'utils/routes';
+import Card from '@leafygreen-ui/card';
+import Button from '@leafygreen-ui/button';
+import Icon from '@leafygreen-ui/icon';
+
+<H2
+  className={css`
+    margin-bottom: 30px;
+  `}
+>
+  LeafyGreen refresh guide
+</H2>
+
+<Card className={css`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+@media (min-width: 768px) {
+flex-direction: row;
+align-items: center;
+}
+`}> <div className={css`
+flex-shrink: 0;
+`}> <GuidelineImage imageURL={`${CDN}/images/new-guidelines/brand-refresh/brand-refresh-illo@3x.png`} className={css`
+width: 188px;
+height: 167px; {/* Any smaller and it becomes really pixelated on external monitor */}
+margin: 0;
+`}
+/>
+</div>
+
+    <div>
+    	<Body
+      className={css`
+        p {
+          margin: 0 0 30px;
+        }
+      `}
+    >
+    		We've modernized our LeafyGreen components and guidelines to reflect our changing identity and bring greater consistency across out properties.
+    	</Body>
+    	<Button
+    		variant='baseGreen'
+    		rightGlyph={<Icon glyph='ArrowRight' />}
+      href='https://docs.google.com/presentation/d/1PJKdnnmLKZ4AcAOSZC0URlKGUwF7GaeSuiPz3wSC7Tw/edit#slide=id.g10e289f1d47_0_2472'
+    		className={css`
+    			p {
+    				margin: 0;
+    			}
+    	`}>
+    		View refresh guide
+    	</Button>
+    </div>
+
+</Card>

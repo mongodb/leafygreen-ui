@@ -54,7 +54,7 @@ This is a static AST checker for accessibility rules on JSX elements.
 
 2.  `@storybook/addon-a11y`
 
-We have an accessibility addon in our storybook, next to the `knobs` tab, which checks for `a11y` violations in components. While developing, please be sure that your component does not fail any accessibility checks here.
+We have an accessibility addon in Storybook which checks for `a11y` violations in components. While developing, please be sure that your component does not fail any accessibility checks here.
 
 To note: The addon is not able to detect information on the DOM that is portaled. Therefore, if working with a portaled component, please be sure to test the component’s accessibility without portaling the content.
 

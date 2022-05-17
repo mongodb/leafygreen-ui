@@ -57,7 +57,8 @@
     "test": "npm-run-all --serial test:*",
     "test:local": "jest --env jsdom --config jest.config.js",
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
-    "watch": "yarn build -- -- --watch"
+    "watch": "yarn build -- -- --watch",
+    "parse-docs": "node ./scripts/parse-tsdocs.js"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -95,7 +96,6 @@
     "@storybook/addon-docs": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-interactions": "^6.4.20",
-    "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-links": "^6.4.20",
     "@storybook/addons": "^6.4.20",
     "@storybook/api": "^6.4.20",

@@ -55,7 +55,7 @@ const errorTextStyle = ({
   transition-delay: 100ms;
 `;
 
-export type Props = {
+export type SelectProps = {
   children: React.ReactNode;
   className?: string;
   id?: string;
@@ -123,7 +123,7 @@ export default function Select({
   errorMessage = 'error message right here',
   state = State.None,
   __INTERNAL__menuButtonSlot__,
-}: Props) {
+}: SelectProps) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
   const labelId = useMemo(
     () => ariaLabelledby ?? `${id}-label`,

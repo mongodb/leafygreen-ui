@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 11.0.1
+
+### Patch Changes
+
+- bc2558c5: Adding named exports for select components and types
+
 ## 11.0.0
 
 ### Major Changes
