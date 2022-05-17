@@ -7,9 +7,15 @@ import { css } from '@leafygreen-ui/emotion';
 export default {
   title: 'Packages/Tooltip',
   component: Tooltip,
+  args: {
+    children: 'I am a tooltip!'
+  },
   argTypes: {
     darkMode: {
       control: 'boolean',
+    },
+    children: {
+      control: 'none',
     },
   },
 };
