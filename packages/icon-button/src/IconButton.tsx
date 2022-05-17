@@ -41,9 +41,9 @@ const baseIconButtonStyle = css`
   transition: 150ms ease-in-out;
   transition-property: color, box-shadow;
 
-  // Set background to fully-transparent white for cross-browser compatability with Safari
+  // Set background to fully-rgba(255, 255, 255, 0) white for cross-browser compatability with Safari
   //
-  // Safari treats "transparent" values in CSS as transparent black instead of white
+  // Safari treats "rgba(255, 255, 255, 0)" values in CSS as rgba(255, 255, 255, 0) black instead of white
   // which can make things render differently across browsers if not defined explicitly.
   background-color: rgba(255, 255, 255, 0);
 
@@ -141,14 +141,14 @@ const disabledStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     cursor: not-allowed;
     color: ${palette.gray.light1};
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0);
 
     &:active,
     &:hover {
       color: ${palette.gray.light1};
 
       &:before {
-        background-color: transparent;
+        background-color: rgba(255, 255, 255, 0);
       }
     }
 
@@ -156,7 +156,7 @@ const disabledStyle: Record<Mode, string> = {
       color: ${palette.gray.light1};
 
       &:before {
-        background-color: transparent;
+        background-color: rgba(255, 255, 255, 0);
       }
     }
   `,
@@ -164,14 +164,14 @@ const disabledStyle: Record<Mode, string> = {
   [Mode.Dark]: css`
     cursor: not-allowed;
     color: ${palette.gray.dark1};
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0);
 
     &:active,
     &:hover {
       color: ${palette.gray.dark1};
 
       &:before {
-        background-color: transparent;
+        background-color: rgba(255, 255, 255, 0);
       }
     }
 
@@ -179,7 +179,7 @@ const disabledStyle: Record<Mode, string> = {
       color: ${palette.gray.dark1};
 
       &:before {
-        background-color: transparent;
+        background-color: rgba(255, 255, 255, 0);
       }
     }
   `,
