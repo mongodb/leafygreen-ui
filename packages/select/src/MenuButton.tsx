@@ -1,4 +1,4 @@
-import React, { HTMLProps, useCallback, useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import Button, { Size, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
@@ -9,6 +9,7 @@ import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
 import { State } from '.';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const menuButtonStyleOverrides = css`
   text-transform: unset;
@@ -107,7 +108,8 @@ const menuButtonErrorStyle: Record<Mode, string> = {
   `,
 };
 
-interface MenuButtonProps extends HTMLProps<HTMLButtonElement> {
+interface MenuButtonProps
+  extends HTMLElementProps<'button', HTMLButtonElement> {
   children: React.ReactNode;
   value: string;
   text: React.ReactNode;

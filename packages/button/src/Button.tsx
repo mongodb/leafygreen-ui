@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, ElementType } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -17,7 +17,8 @@ import ButtonIcon from './ButtonIcon';
 
 export const Button: ExtendableBox<
   ButtonProps & { ref?: React.Ref<any> },
-  ElementType<HTMLButtonElement>
+  // ElementType<HTMLButtonElement>
+  'button'
 > = React.forwardRef(function Button(
   {
     variant = Variant.Default,
