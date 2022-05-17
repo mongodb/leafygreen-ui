@@ -11,7 +11,7 @@ import once from 'lodash/once';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
+import { createDataProp, DarkModeProps, isComponentType } from '@leafygreen-ui/lib';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
@@ -211,7 +211,7 @@ export const SegmentedControlContext = React.createContext<SCContext>({
 });
 
 export interface SegmentedControlProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>, DarkModeProps {
   /**
    * Children must be SegmentedControlOptions
    */
@@ -221,11 +221,6 @@ export interface SegmentedControlProps
    * Defines the size of the segmented control. Can be either `small`, `default`, or `large`
    */
   size?: Size;
-
-  /**
-   * Toggles dark mode
-   */
-  darkMode?: boolean;
 
   /**
    * Defines the default, or initial value of the component. Ignored if `value` is also provided.

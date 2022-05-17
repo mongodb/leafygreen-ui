@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useMemo, useState } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, DarkModeProps } from '@leafygreen-ui/lib';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 
 const Mode = {
@@ -101,8 +101,7 @@ interface State {
   focused?: boolean;
 }
 
-interface InteractionRingProps {
-  darkMode?: boolean;
+interface InteractionRingProps extends DarkModeProps {
   className?: string;
   borderRadius?: string;
   color?: {

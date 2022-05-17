@@ -1,4 +1,4 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, DarkModeProps } from '@leafygreen-ui/lib';
 
 const Variant = {
   Default: 'default',
@@ -37,9 +37,8 @@ type FontSize = typeof FontSize[keyof typeof FontSize];
 type ButtonProps = Pick<
   HTMLElementProps<'button'>,
   'disabled' | 'onClick' | 'type' | 'className'
-> & {
+> & DarkModeProps & {
   variant?: Variant;
-  darkMode?: boolean;
   baseFontSize?: FontSize;
   size?: Size;
   children?: React.ReactNode;

@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode } from 'react';
-import { Either } from '@leafygreen-ui/lib';
+import { DarkModeProps, Either } from '@leafygreen-ui/lib';
 
 /**
  * Prop Enums & Types
@@ -103,7 +103,7 @@ export interface ComboboxMultiselectProps<M extends boolean> {
   overflow?: M extends true ? Overflow : undefined;
 }
 
-export interface BaseComboboxProps {
+export interface BaseComboboxProps extends DarkModeProps {
   /**
    * Defines the Combobox Options by passing children. Must be `ComboboxOption` or `ComboboxGroup`
    */
@@ -138,11 +138,6 @@ export interface BaseComboboxProps {
    * Defines the visual size of the component
    */
   size?: ComboboxSize;
-
-  /**
-   * Toggles Dark Mode
-   */
-  darkMode?: boolean;
 
   /**
    * The error state of the component. Defines whether the error message is displayed.

@@ -1,6 +1,6 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { Mode } from './types';
 import { palette } from '@leafygreen-ui/palette';
@@ -40,8 +40,7 @@ const disabledLabelColorStyle: Record<Mode, string> = {
   `,
 };
 
-type LabelProps = HTMLElementProps<'label', never> & {
-  darkMode?: boolean;
+type LabelProps = HTMLElementProps<'label', never> & DarkModeProps & {
   htmlFor: string;
   disabled?: boolean;
 };

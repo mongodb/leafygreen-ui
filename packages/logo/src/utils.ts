@@ -1,5 +1,5 @@
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
 
 const SupportedColors = {
@@ -40,10 +40,9 @@ export interface LogoProps extends HTMLElementProps<'svg'> {
   height?: number;
 }
 
-export type ProductLogoProps = HTMLElementProps<'svg', never> & {
+export type ProductLogoProps = HTMLElementProps<'svg', never> & DarkModeProps & {
   knockout?: boolean;
   size?: number;
-  darkMode?: boolean;
   height?: number;
 };
 

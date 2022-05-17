@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { variantColors } from './globalStyles';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 const Mode = {
   Light: 'light',
@@ -32,8 +33,7 @@ const textStyle = css`
   padding-right: ${controlSpacing}px;
   font-size: 14px;
 `;
-interface WindowChromeProps {
-  darkMode?: boolean;
+interface WindowChromeProps extends DarkModeProps {
   chromeTitle?: string;
 }
 

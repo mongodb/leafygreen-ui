@@ -7,6 +7,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Transition, TransitionStatus } from 'react-transition-group';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 const transitionDuration = 300;
 
@@ -122,7 +123,7 @@ const childrenWrapperTransitionStyle = (
 /**
  * Types
  */
-interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement>, DarkModeProps {
   /**
    * The title of the card
    */
@@ -137,11 +138,6 @@ interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement> {
    * Text in parentheses immediately following the title. Typically 'optional' or 'required'
    */
   flagText?: 'optional' | 'required' | string;
-
-  /**
-   * Toggles dark mode
-   */
-  darkMode?: boolean;
 
   /**
    * Defines the default state of the card

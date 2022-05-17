@@ -1,3 +1,4 @@
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import React, { Dispatch } from 'react';
 
 export interface StepperContextValues {
@@ -31,11 +32,10 @@ export type SingleStepStates =
   | StepStates.Current
   | StepStates.Upcoming;
 
-export interface StepperProps {
+export interface StepperProps extends DarkModeProps {
   currentStep: number;
   maxDisplayedSteps?: number;
   completedStepsShown?: number;
-  darkMode?: boolean;
   className?: string;
 }
 

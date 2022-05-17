@@ -8,6 +8,7 @@ import { uiColors, palette } from '@leafygreen-ui/palette';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { svgBlobs } from '.';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 const Mode = {
   Dark: 'dark',
@@ -117,7 +118,7 @@ const footerContentStyle = css`
   justify-content: center;
 `;
 
-interface MarketingModalProps {
+interface MarketingModalProps extends DarkModeProps {
   title: string;
   graphic: React.ReactElement;
   graphicStyle?: GraphicStyle;
@@ -129,7 +130,6 @@ interface MarketingModalProps {
   className?: string;
   buttonText: string;
   linkText: string;
-  darkMode?: boolean;
   closeIconColor?: CloseIconColor;
   blobPosition?: BlobPosition;
   showBlob?: boolean;

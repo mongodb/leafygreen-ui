@@ -7,6 +7,7 @@ import { uiColors, palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 const Mode = {
   Dark: 'dark',
@@ -112,7 +113,7 @@ const warningIconStyles = css`
   }
 `;
 
-interface ConfirmationModalProps {
+interface ConfirmationModalProps extends DarkModeProps {
   title: string;
   children: React.ReactNode;
   open?: boolean;
@@ -123,7 +124,6 @@ interface ConfirmationModalProps {
   variant?: Variant;
   requiredInputText?: string;
   submitDisabled?: boolean;
-  darkMode?: boolean;
 }
 
 const ConfirmationModal = ({

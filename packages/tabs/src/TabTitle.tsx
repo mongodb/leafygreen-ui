@@ -4,7 +4,7 @@ import { palette, uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
+import { DarkModeProps, getNodeTextContent } from '@leafygreen-ui/lib';
 import { Mode } from './Tabs';
 
 interface ListTitleMode {
@@ -186,8 +186,7 @@ const listTitleChildrenStyles = css`
   gap: 4px;
 `;
 
-interface BaseTabTitleProps {
-  darkMode?: boolean;
+interface BaseTabTitleProps extends DarkModeProps {
   selected?: boolean;
   href?: string;
   children?: React.ReactNode;

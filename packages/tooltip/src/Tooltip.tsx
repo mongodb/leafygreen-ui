@@ -16,7 +16,7 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
@@ -125,7 +125,7 @@ export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
   keyof ModifiedPopoverProps
 > &
-  ModifiedPopoverProps & {
+  ModifiedPopoverProps & DarkModeProps & {
     /**
      * A slot for the element used to trigger the `Tooltip`.
      */
@@ -147,12 +147,6 @@ export type TooltipProps = Omit<
      * Callback to change the open state of the `Tooltip`.
      */
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-
-    /**
-     * Whether the `Tooltip` will appear in dark mode.
-     * @default: false
-     */
-    darkMode?: boolean;
 
     /**
      * id given to `Tooltip` content.

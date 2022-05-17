@@ -1,7 +1,7 @@
 import React from 'react';
 import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette, uiColors } from '@leafygreen-ui/palette';
@@ -93,7 +93,7 @@ export interface TableRowInterface<Shape = {}> {
   datum: Shape;
 }
 
-export interface TableProps<Shape> extends HTMLElementProps<'table', never> {
+export interface TableProps<Shape> extends HTMLElementProps<'table', never>, DarkModeProps {
   data: Array<Shape>;
   columns:
     | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
@@ -101,7 +101,6 @@ export interface TableProps<Shape> extends HTMLElementProps<'table', never> {
 
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
   baseFontSize?: 14 | 16;
-  darkMode?: boolean;
 }
 
 export default function Table<Shape>({

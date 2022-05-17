@@ -10,6 +10,7 @@ import { palette, uiColors } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
 import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 const Mode = {
   Light: 'light',
@@ -133,8 +134,7 @@ const iconStyle = css`
   padding-right: 6px;
 `;
 
-interface CopyableProps {
-  darkMode?: boolean;
+interface CopyableProps extends DarkModeProps {
   children: string;
   label?: string;
   description?: string;

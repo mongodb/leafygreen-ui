@@ -1,3 +1,4 @@
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import React, { useState } from 'react';
 import Code from '.';
 import { Language, LanguageOption } from './types';
@@ -130,11 +131,10 @@ function LanguageSwitcher({
   customActionButtons = [],
   showCustomActionButtons = false,
 }: {
-  darkMode?: boolean;
   onChange?: Function;
   customActionButtons?: Array<React.ReactNode>;
   showCustomActionButtons?: boolean;
-}) {
+} & DarkModeProps) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
 
   const handleChange = (languageObject: LanguageOption) => {

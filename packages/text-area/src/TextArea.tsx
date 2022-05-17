@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -155,9 +155,8 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 };
 
-type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
+type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & DarkModeProps & {
   id?: string;
-  darkMode?: boolean;
   label?: string | null;
   description?: string;
   state?: State;

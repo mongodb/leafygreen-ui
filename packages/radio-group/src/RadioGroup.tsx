@@ -1,17 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { DarkModeProps, isComponentType } from '@leafygreen-ui/lib';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Size } from './types';
 
-export interface RadioGroupProps {
-  /**
-   * Determines whether or not the RadioGroup will appear in dark mode.
-   *
-   * @default false
-   */
-  darkMode?: boolean;
+export interface RadioGroupProps extends DarkModeProps {
 
   /**
    * className supplied to RadioGroup container.

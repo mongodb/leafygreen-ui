@@ -2,7 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { Either, isComponentType } from '@leafygreen-ui/lib';
+import { DarkModeProps, Either, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
@@ -220,12 +220,11 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
   title?: string | null | boolean;
 }
 interface BaseIconButtonProps
-  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
+  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement>, DarkModeProps {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
   size?: Size;
-  darkMode?: boolean;
   active?: boolean;
   href?: string;
   'aria-label'?: string;

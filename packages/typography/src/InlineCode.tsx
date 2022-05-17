@@ -2,7 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { createDataProp, HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+import { createDataProp, DarkModeProps, HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
 import {
   useBaseFontSize,
   useUsingKeyboardContext,
@@ -102,9 +102,7 @@ const normal = css`
 export type InlineCodeProps = OneOf<
   HTMLElementProps<'code'>,
   HTMLElementProps<'a'>
-> & {
-  darkMode?: boolean;
-};
+> & DarkModeProps;
 
 function InlineCode({
   children,

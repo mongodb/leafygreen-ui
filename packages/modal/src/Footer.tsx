@@ -1,6 +1,7 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 const footerStyle = css`
   position: relative;
@@ -13,10 +14,9 @@ const footerStyle = css`
   padding: 24px 35px 35px;
 `;
 
-interface FooterProps {
+interface FooterProps extends DarkModeProps {
   children: React.ReactNode;
   className?: string;
-  darkMode?: boolean;
 }
 
 const Footer = ({ children, className, darkMode }: FooterProps) => {

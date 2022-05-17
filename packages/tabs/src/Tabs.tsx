@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
-import { keyMap, isComponentType, Either } from '@leafygreen-ui/lib';
+import { keyMap, isComponentType, Either, DarkModeProps } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 
@@ -53,7 +53,7 @@ const listStyle = css`
 
 type ReactEmpty = null | undefined | false | '';
 
-export interface TabsProps {
+export interface TabsProps extends DarkModeProps {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
    */
@@ -73,12 +73,6 @@ export interface TabsProps {
    * className supplied to Tabs container.
    */
   className?: string;
-
-  /**
-   * determines if component will appear for Dark Mode
-   * @default false
-   */
-  darkMode?: boolean;
 
   /**
    * HTML Element that wraps title in Tab List.

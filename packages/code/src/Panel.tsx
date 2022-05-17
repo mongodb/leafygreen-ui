@@ -10,6 +10,7 @@ import {
   LanguageSwitcher as LanguageSwitcherProps,
 } from './types';
 import { palette, uiColors } from '@leafygreen-ui/palette';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 function getSidebarVariantStyle(mode: Mode): string {
   switch (mode) {
@@ -63,10 +64,9 @@ function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
   );
 }
 
-type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
+type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & DarkModeProps &  {
   onCopy?: Function;
   contents: string;
-  darkMode?: boolean;
   showCopyButton?: boolean;
   language?: LanguageOption;
   isMultiline?: boolean;

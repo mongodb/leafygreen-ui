@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { DarkModeProps, isComponentType } from '@leafygreen-ui/lib';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
@@ -110,11 +110,10 @@ function isLeafyGreenIcon(element: React.ReactNode) {
   return false;
 }
 
-interface Props extends PopoverProps {
+interface Props extends PopoverProps, DarkModeProps {
   language: LanguageOption;
   languageOptions: Array<LanguageOption>;
   onChange: (arg0: LanguageOption) => void;
-  darkMode?: boolean;
 }
 
 function LanguageSwitcher({

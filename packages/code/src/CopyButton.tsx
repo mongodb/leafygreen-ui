@@ -8,6 +8,7 @@ import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Mode } from './types';
 import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 const copiedStyle = css`
   color: ${palette.white};
@@ -54,10 +55,9 @@ function getCopyButtonStyle(mode: Mode): string {
   });
 }
 
-interface CopyProps {
+interface CopyProps extends DarkModeProps {
   onCopy?: Function;
   contents: string;
-  darkMode?: boolean;
   withLanguageSwitcher?: boolean;
 }
 

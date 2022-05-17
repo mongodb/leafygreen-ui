@@ -1,4 +1,4 @@
-import { HTMLElementProps, Either } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Either, DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {
@@ -46,7 +46,7 @@ export type TextInputFontSize =
   typeof TextInputFontSize[keyof typeof TextInputFontSize];
 
 export interface BaseTextInputProps
-  extends HTMLElementProps<'input', HTMLInputElement> {
+  extends HTMLElementProps<'input', HTMLInputElement>, DarkModeProps {
   /**
    * id associated with the TextInput component.
    */
@@ -108,11 +108,6 @@ export interface BaseTextInputProps
    * className supplied to the TextInput container.
    */
   className?: string;
-
-  /**
-   *  determines whether or not the component appears in dark mode.
-   */
-  darkMode?: boolean;
 
   type?: TextInputType;
 

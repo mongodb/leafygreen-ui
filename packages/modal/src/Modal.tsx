@@ -2,6 +2,7 @@ import React, { SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import { ModalView } from '.';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const CloseIconColor = {
   Default: 'default',
@@ -19,7 +20,7 @@ export const ModalSize = {
 
 export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 
-export interface ModalProps {
+export interface ModalProps extends DarkModeProps {
   /**
    * Content that will appear inside of the Modal component.
    */
@@ -67,8 +68,6 @@ export interface ModalProps {
    * Selector string (which will be passed to document.querySelector() to find the DOM node)
    */
   initialFocus?: string;
-
-  darkMode?: boolean;
 
   closeIconColor?: CloseIconColor;
 }

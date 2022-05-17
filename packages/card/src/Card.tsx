@@ -5,6 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const ContentStyle = {
   None: 'none',
@@ -111,10 +112,9 @@ const containerStyle = css`
   transition-property: border, box-shadow;
 `;
 
-export interface CardProps {
+export interface CardProps extends DarkModeProps {
   className?: string;
   contentStyle?: ContentStyle;
-  darkMode?: boolean;
 }
 
 const Card: ExtendableBox<CardProps> = ({

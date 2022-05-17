@@ -7,7 +7,7 @@ import {
   useEventListener,
 } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
-import { OneOf, keyMap } from '@leafygreen-ui/lib';
+import { OneOf, keyMap, DarkModeProps } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
@@ -55,11 +55,10 @@ const errorTextStyle = ({
   transition-delay: 100ms;
 `;
 
-export type SelectProps = {
+export type SelectProps = DarkModeProps & {
   children: React.ReactNode;
   className?: string;
   id?: string;
-  darkMode?: boolean;
   size?: Size;
   disabled?: boolean;
   description?: string;
