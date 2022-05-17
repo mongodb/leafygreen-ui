@@ -306,7 +306,7 @@ export const IconButton: ExtendableBox<
         iconButtonMode[mode],
         {
           [focusStyle[mode]]: showFocus,
-          [activeStyle[mode]]: active,
+          [activeStyle[mode]]: active && !disabled,
           [disabledStyle[mode]]: disabled,
         },
         className,
