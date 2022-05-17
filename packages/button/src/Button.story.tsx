@@ -17,6 +17,9 @@ export default {
     children: 'MongoDB',
   },
   argTypes: {
+    disabled: {
+      control: { type: 'boolean' },
+    },
     leftGlyph: {
       options: Object.keys(glyphs),
       control: { type: 'select' },
