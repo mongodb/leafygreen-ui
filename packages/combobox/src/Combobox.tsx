@@ -430,16 +430,21 @@ export default function Combobox<M extends boolean>({
               break;
             }
 
-            case 'LastChip': {
-              // if focus is on last chip, go to input
-              event.preventDefault();
-              setInputFocus(0);
-              updateFocusedChip(null);
-              break;
-            }
-
             case 'FirstChip':
-            case 'MiddleChip': {
+            case 'MiddleChip':
+            case 'LastChip': {
+              if (
+                focusedElementName === 'LastChip' ||
+                // the first chip is also the last chip (i.e. only one)
+                selection?.length === 1
+              ) {
+                // if focus is on last chip, go to input
+                setInputFocus(0);
+                updateFocusedChip(null);
+                event.preventDefault();
+                break;
+              }
+              // First/middle chips
               updateFocusedChip('next');
               break;
             }
