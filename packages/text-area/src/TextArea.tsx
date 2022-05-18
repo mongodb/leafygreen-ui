@@ -69,14 +69,19 @@ const textAreaStyle = css`
 const errorMessageStyle = css`
   display: flex;
   height: 20px;
-  padding-top: 4px;
+  padding-top: 5px;
+  align-items: center;
   font-weight: normal;
-  font-size: 13px;
+`;
+
+const errorMessageLabelStyles = css`
+  line-height: 1;
 `;
 
 const errorIconStyle = css`
   margin-right: 3px;
 `;
+
 interface ColorSets {
   textArea: string;
   errorBorder: string;
@@ -212,6 +217,7 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
     forwardedRef: React.Ref<HTMLTextAreaElement>,
   ) {
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+    const errorBaseFontSize = useUpdatedBaseFontSize();
     const id = useIdAllocator({ prefix: 'textarea', id: idProp });
     const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -289,7 +295,7 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
         {!disabled && state === State.Error && errorMessage && (
           <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
             <Warning className={errorIconStyle} />
-            <label>{errorMessage}</label>
+            <label className={cx(bodyTypeScaleStyles[errorBaseFontSize], errorMessageLabelStyles)}>{errorMessage}</label>
           </div>
         )}
       </div>

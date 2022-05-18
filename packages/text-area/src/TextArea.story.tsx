@@ -5,7 +5,7 @@ import TextArea, { TextAreaProps } from './TextArea';
 import { ComponentStory } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-export const StoryTextArea: React.FC<TextAreaProps & {leafygreenBaseFontSize: 14 | 16}> = props => (
+export const StoryTextArea: React.FC<TextAreaProps & {lgProviderBaseFontSize: 14 | 16}> = props => (
   <TextArea {...props} />
 );
 
@@ -17,7 +17,7 @@ export default {
       options: [13, 16],
       control: { type: 'radio' },
     },
-    leafygreenBaseFontSize: {
+    lgProviderBaseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },
     },
@@ -31,10 +31,10 @@ export default {
 const Template: ComponentStory<typeof StoryTextArea> = ({
   baseFontSize,
   darkMode,
-  leafygreenBaseFontSize,
+  lgProviderBaseFontSize,
   ...args
-}: TextAreaProps & {leafygreenBaseFontSize: 14 | 16}) => (
-  <LeafygreenProvider baseFontSize={leafygreenBaseFontSize}>
+}: TextAreaProps & {lgProviderBaseFontSize: 14 | 16}) => (
+  <LeafygreenProvider baseFontSize={lgProviderBaseFontSize}>
   <div
     className={css`
       padding: 30px;
