@@ -11,6 +11,7 @@ import { createIconComponent, glyphs } from '.';
 import createGlyphComponent from './createGlyphComponent';
 import EditIcon from '@leafygreen-ui/icon/dist/Edit';
 import { Size } from './glyphCommon';
+import { isComponentGlyph } from './isComponentGlyph';
 
 function getBaseName(filePath: string): string {
   return path.basename(filePath, path.extname(filePath));
@@ -30,6 +31,50 @@ const baseNameToGeneratedFilePath: Record<string, string> = {};
 
 fs.readdirSync(generatedFilesDirectory).forEach(filePath => {
   baseNameToGeneratedFilePath[getBaseName(filePath)] = filePath;
+});
+
+const MyTestSVGRGlyph: SVGR.Component = props => (
+  <svg data-testid="my-glyph" {...props}></svg>
+);
+
+const customTestGlyphs = {
+  MyTestSVGRGlyph: createGlyphComponent('MyTestSVGRGlyph', MyTestSVGRGlyph),
+};
+
+describe('packages/Icon/isComponentGlyph', () => {
+  test('returns `true` for a rendered component', () => {
+    const TestNode: React.ComponentType<any> & { isGlyph?: boolean } = () => (
+      <div />
+    );
+    TestNode.isGlyph = true;
+    const renderedTestNode = <TestNode />;
+    expect(isComponentGlyph(renderedTestNode)).toBeTruthy();
+  });
+
+  test('returns `true` for a component function', () => {
+    const TestNode: React.ComponentType<any> & { isGlyph?: boolean } = () => (
+      <div />
+    );
+    TestNode.isGlyph = true;
+    expect(isComponentGlyph(TestNode)).toBeTruthy();
+  });
+
+  test('returns `false` if isGlyph is false', () => {
+    const TestNode: React.ComponentType<any> & { isGlyph?: boolean } = () => (
+      <div />
+    );
+    TestNode.isGlyph = false;
+    const renderedTestNode = <TestNode />;
+    expect(isComponentGlyph(TestNode)).toBeFalsy();
+    expect(isComponentGlyph(renderedTestNode)).toBeFalsy();
+  });
+
+  test('returns `false` if isGlyph is not set', () => {
+    const TestNode: React.ComponentType<any> = () => <div />;
+    const renderedTestNode = <TestNode />;
+    expect(isComponentGlyph(TestNode)).toBeFalsy();
+    expect(isComponentGlyph(renderedTestNode)).toBeFalsy();
+  });
 });
 
 describe('packages/Icon/glyphs/', () => {
@@ -86,19 +131,28 @@ describe('packages/Icon/glyphs/', () => {
   });
 });
 
-const MyGlyph: SVGR.Component = props => (
-  <svg data-testid="my-glyph" {...props}></svg>
-);
-
 describe('packages/Icon/createGlyphComponent', () => {
-  const GlyphComponent = createGlyphComponent('MyGlyph', MyGlyph);
+  const GlyphComponent = createGlyphComponent(
+    'MyTestSVGRGlyph',
+    MyTestSVGRGlyph,
+  );
 
-  test('returns a function', () => {
+  test('returns a LGGlyph component', () => {
     expect(typeof GlyphComponent).toBe('function');
+    expect(isComponentGlyph(GlyphComponent)).toBeTruthy();
   });
 
-  test('returned function has correct display name', () => {
-    expect(GlyphComponent.displayName).toBe('MyGlyph');
+  test('returned component has correct display name', () => {
+    expect(GlyphComponent.displayName).toBe('MyTestSVGRGlyph');
+  });
+
+  test('returned component has the property `isGlyph`', () => {
+    expect(GlyphComponent).toHaveProperty('isGlyph');
+    expect(GlyphComponent.isGlyph).toBeTruthy();
+  });
+
+  test('returned function passes `isComponentGlyph`', () => {
+    expect(isComponentGlyph(GlyphComponent)).toBeTruthy();
   });
 
   test('returned function renders the glyph specified', () => {
@@ -134,12 +188,8 @@ describe('packages/Icon/createGlyphComponent', () => {
   });
 });
 
-const customGlyphs = {
-  MyGlyph: createGlyphComponent('MyGlyph', MyGlyph),
-};
-
 describe('packages/Icon/createIconComponent', () => {
-  const IconComponent = createIconComponent(customGlyphs);
+  const IconComponent = createIconComponent(customTestGlyphs);
 
   test('returns a function', () => {
     expect(typeof IconComponent).toBe('function');
@@ -149,8 +199,17 @@ describe('packages/Icon/createIconComponent', () => {
     expect(IconComponent.displayName).toBe('Icon');
   });
 
+  test('returned function has the property: `isGlyph`', () => {
+    expect(IconComponent).toHaveProperty('isGlyph');
+    expect(IconComponent.isGlyph).toBeTruthy();
+  });
+
+  test('returned function passes `isComponentGlyph`', () => {
+    expect(isComponentGlyph(IconComponent)).toBeTruthy();
+  });
+
   test('returned funciton renders the glyph specified', () => {
-    const { getByTestId } = render(<IconComponent glyph="MyGlyph" />);
+    const { getByTestId } = render(<IconComponent glyph="MyTestSVGRGlyph" />);
     const glyph = getByTestId('my-glyph');
 
     if (!typeIs.element(glyph)) {
@@ -162,7 +221,7 @@ describe('packages/Icon/createIconComponent', () => {
   describe('returned funcion passes through props', () => {
     test('`size` prop as number', () => {
       const { getByTestId } = render(
-        <IconComponent glyph="MyGlyph" size={20} />,
+        <IconComponent glyph="MyTestSVGRGlyph" size={20} />,
       );
       const glyph = getByTestId('my-glyph');
       expect(glyph).toHaveAttribute('height', '20');
@@ -171,7 +230,7 @@ describe('packages/Icon/createIconComponent', () => {
 
     test('`size` prop as Size', () => {
       const { getByTestId } = render(
-        <IconComponent glyph="MyGlyph" size={Size.Large} />,
+        <IconComponent glyph="MyTestSVGRGlyph" size={Size.Large} />,
       );
       const glyph = getByTestId('my-glyph');
       expect(glyph).toHaveAttribute('height', '20');
@@ -180,7 +239,7 @@ describe('packages/Icon/createIconComponent', () => {
 
     test('`role`', () => {
       const { getByTestId } = render(
-        <IconComponent glyph="MyGlyph" role="presentation" />,
+        <IconComponent glyph="MyTestSVGRGlyph" role="presentation" />,
       );
       const glyph = getByTestId('my-glyph');
       expect(glyph).toHaveAttribute('role', 'presentation');
