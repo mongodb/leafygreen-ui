@@ -25,10 +25,10 @@ const descriptionColorStyle: Record<Mode, string> = {
 
 const disabledDescriptionColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${palette.gray.base};
+    color: ${palette.gray.dark1};
   `,
   [Mode.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
   `,
 };
 

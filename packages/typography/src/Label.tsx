@@ -27,16 +27,16 @@ const labelColorStyle: Record<Mode, string> = {
     color: ${palette.black};
   `,
   [Mode.Dark]: css`
-    color: ${palette.white};
+    color: ${palette.gray.light1};
   `,
 };
 
 const disabledLabelColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${palette.gray.base};
+    color: ${palette.gray.dark1};
   `,
   [Mode.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
   `,
 };
 

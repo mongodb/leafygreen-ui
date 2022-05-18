@@ -97,8 +97,7 @@ const colorSets: Record<Mode, ColorSets> = {
       background-color: ${palette.white};
       border-color: ${palette.gray.base};
 
-
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: ${palette.gray.base};
         box-shadow: ${hoverRing[Mode.Light].gray};
       }
@@ -112,13 +111,13 @@ const colorSets: Record<Mode, ColorSets> = {
     errorBorder: css`
       border-color: ${palette.red.base};
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: ${palette.red.base};
         box-shadow: ${hoverRing[Mode.Light].red};
       }
 
       &:disabled {
-        border-color: ${palette.red.base};
+        border-color: ${palette.gray.light1};
       }
     `,
     errorMessage: css`
@@ -134,7 +133,7 @@ const colorSets: Record<Mode, ColorSets> = {
       background-color: ${palette.gray.dark3};
       border-color: ${palette.gray.base};
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: ${palette.gray.base};
         box-shadow: ${hoverRing[Mode.Dark].gray};
       }
@@ -149,13 +148,13 @@ const colorSets: Record<Mode, ColorSets> = {
     errorBorder: css`
       border-color: ${palette.red.light1};
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: ${palette.red.light1};
         box-shadow: ${hoverRing[Mode.Dark].red};
       }
 
       &:disabled {
-        border-color: ${palette.red.light1};
+        border-color: ${palette.gray.dark2};
       }
     `,
 
