@@ -14,11 +14,11 @@ const labelStyle = css`
 const labelTypeScale: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
+    line-height: 20px;
   `,
   [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
+    line-height: 20px;
   `,
 };
 

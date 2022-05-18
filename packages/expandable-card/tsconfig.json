@@ -8,6 +8,9 @@
   "include": ["src/**/*"],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
       "path": "../card"
     },
     {
@@ -15,6 +18,9 @@
     },
     {
       "path": "../lib"
+    },
+    {
+      "path": "../icon-button"
     },
     {
       "path": "../typography"
