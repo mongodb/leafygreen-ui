@@ -998,6 +998,21 @@ describe('packages/combobox', () => {
           userEvent.type(chipButton, '{backspace}');
           expect(queryAllChips()).toHaveLength(2);
         });
+
+        testMultiSelect('Focuses input when last chip is removed', () => {
+          const initialValue = ['apple', 'banana'];
+          const { comboboxEl, inputEl, queryChipsByIndex } = renderCombobox(
+            select,
+            {
+              initialValue,
+            },
+          );
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const lastChip = queryChipsByIndex(1);
+          const chipButton = lastChip.querySelector('button') as HTMLElement;
+          userEvent.type(chipButton, '{backspace}');
+          expect(inputEl).toHaveFocus();
+        });
       });
 
       describe('Up & Down arrow keys', () => {

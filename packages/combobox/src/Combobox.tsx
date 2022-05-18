@@ -601,22 +601,20 @@ export default function Combobox<M extends boolean>({
     if (isMultiselect(selection)) {
       return selection.filter(isValueValid).map((value, index) => {
         const displayName = getDisplayNameForValue(value);
+        const isFocused = focusedChip === value;
+        const chipRef = getChipRef(value);
         const isLastChip = index >= selection.length - 1;
 
         const onRemove = () => {
-          updateSelection(value);
-
-          // Focus the input if this is the last chip in the set
           if (isLastChip) {
-            updateFocusedChip(null);
+            // Focus the input if this is the last chip in the set
             setInputFocus();
+            updateFocusedChip(null);
           } else {
             updateFocusedChip('next', index);
           }
+          updateSelection(value);
         };
-
-        const isFocused = focusedChip === value;
-        const chipRef = getChipRef(value);
 
         const onFocus = () => {
           setFocusedChip(value);
