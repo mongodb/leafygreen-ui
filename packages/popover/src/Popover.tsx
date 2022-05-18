@@ -264,8 +264,8 @@ function Popover({
       mountOnEnter
       unmountOnExit
       appear
-      onEntered={() => setIsPopoverOpen(true)}
-      onExit={() => setIsPopoverOpen(false)}
+      // onEntered={() => setIsPopoverOpen(true)}
+      // onExit={() => setIsPopoverOpen(false)}
     >
       {state => (
         <>

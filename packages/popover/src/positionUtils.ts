@@ -65,19 +65,6 @@ export function calculatePosition({
     spacing,
   };
 
-  // calculatePosition will run and return CSS even if getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if something is returned.
-  //  Justify fit does not position itself properly in this case so we continue to return the CSS
-  if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
-    return {
-      align,
-      justify,
-      positionCSS: {
-        left: 0,
-        top: 0,
-      },
-    };
-  }
-
   const windowSafeAlign = getWindowSafeAlign(align, windowSafeCommonArgs);
   const windowSafeJustify = getWindowSafeJustify(
     justify,
@@ -91,6 +78,22 @@ export function calculatePosition({
   });
 
   const transform = getTransform(windowSafeAlign, spacing);
+
+  // const dummyTransform = 'translate3d(10px, 0, 0) scale(0.8)';
+
+  // calculatePosition will run and return CSS even if getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if something is returned.
+  //  Justify fit does not position itself properly in this case so we continue to return the CSS
+  if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
+    return {
+      align,
+      justify,
+      positionCSS: {
+        left: 0,
+        top: 0,
+        transform,
+      },
+    };
+  }
 
   if (useRelativePositioning) {
     return {

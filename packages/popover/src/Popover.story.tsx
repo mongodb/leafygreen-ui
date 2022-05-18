@@ -18,9 +18,37 @@ const popoverStyle = css`
 `;
 
 const scrollableStyle = css`
-  height: 200vh;
-  padding-top: 50vh;
+  width: 500px;
+  position: relative;
+  height: 90vh;
 `;
+
+interface RefPos {
+  [key: string]: string;
+}
+
+const referenceElPositions: RefPos = {
+  centered: css`
+    position: relative;
+    margin-bottom: 200vh;
+  `,
+  top: css`
+    top: 0;
+    position: absolute;
+  `,
+  right: css`
+    right: 0;
+    position: absolute;
+  `,
+  bottom: css`
+    bottom: 0;
+    position: absolute;
+  `,
+  left: css`
+    left: 0;
+    position: absolute;
+  `,
+};
 
 export default {
   title: 'Packages/Popover',
@@ -40,12 +68,16 @@ export default {
     children: {
       control: false,
     },
+    refButtonPosition: {
+      options: ['centered', 'top', 'right', 'bottom', 'left'],
+      control: { type: 'select' },
+    },
   },
 } as Meta<typeof Popover>;
 
-type PopoverStoryProps = PopoverProps & { buttonText: string };
+type PopoverStoryProps = PopoverProps & { buttonText: string } & { refButtonPosition: string};
 
-const Template = ({ buttonText, ...args }: PopoverStoryProps) => {
+export const Template = ({ buttonText, ...args }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
   return (
     <button onClick={() => setActive(active => !active)}>
@@ -57,10 +89,37 @@ const Template = ({ buttonText, ...args }: PopoverStoryProps) => {
   );
 };
 
-export const Basic = Template.bind({});
+// export const Basic = Template.bind({});
 
-export const ScrollableContainer = (args: PopoverStoryProps) => (
-  <div className={scrollableStyle}>
-    <Template {...args} />
-  </div>
-);
+// export const ScrollableContainer = (args: PopoverStoryProps) => {
+//   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
+//     null,
+//   );
+//   return (
+//     <div className={scrollableStyle}>
+//       <Template {...args} />
+//     </div>
+//   );
+
+// }
+
+export const ScrollableContainer = ({ refButtonPosition, buttonText, ...args }: PopoverStoryProps) => {
+  const [active, setActive] = useState<boolean>(false);
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
+    null,
+  );
+
+  const position = referenceElPositions[refButtonPosition];
+
+  return (
+    <div className={scrollableStyle} ref={el => setPortalContainer(el)} >
+      <button onClick={() => setActive(active => !active)} className={position}>
+        {buttonText}
+        <Popover {...args} active={active} usePortal={true} portalContainer={portalContainer}
+          scrollContainer={portalContainer}>
+          <div className={popoverStyle}>Popover content</div>
+        </Popover>
+      </button>
+    </div>
+  );
+};
