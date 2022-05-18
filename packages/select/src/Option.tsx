@@ -12,10 +12,6 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const option = createDataProp('option');
 
-type GlyphElement = React.ReactElement<LGGlyph.ComponentProps> & {
-  type?: { isGlyph?: boolean };
-};
-
 export type ReactEmpty = null | undefined | false | '';
 
 const optionStyle = css`
@@ -62,7 +58,7 @@ const glyphFocusStyle = css`
 export interface InternalProps {
   children: React.ReactNode;
   className: string | undefined;
-  glyph: GlyphElement | undefined;
+  glyph: LGGlyph.Element | undefined;
   selected: boolean;
   focused: boolean;
   disabled: boolean;
@@ -293,7 +289,7 @@ InternalOption.displayName = 'Option';
 
 interface Props {
   className?: string;
-  glyph?: GlyphElement;
+  glyph?: LGGlyph.Element;
   disabled?: boolean;
   value?: string;
   children: React.ReactText | Array<React.ReactText | ReactEmpty>;
