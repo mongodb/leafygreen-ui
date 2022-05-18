@@ -1,24 +1,24 @@
 import React from 'react';
 import Portal from '@leafygreen-ui/portal';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { useSideNavContext } from './SideNavContext';
+import { palette } from '@leafygreen-ui/palette';
+import { useSideNavContext } from '../SideNavContext';
 
 const collapsedItemStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
-  border-bottom: 1px solid ${uiColors.gray.light2};
-  color: ${uiColors.green.dark2};
+  border-bottom: 1px solid ${palette.gray.light2};
+  color: ${palette.green.dark2};
 
   &:first-of-type {
-    border-top: 1px solid ${uiColors.gray.light2};
+    border-top: 1px solid ${palette.gray.light2};
   }
 `;
 
 const collapsedItemActiveStyle = css`
-  background-color: ${uiColors.green.light3};
+  background-color: ${palette.green.light3};
 `;
 
 interface CollapsedSideNavItemProps {

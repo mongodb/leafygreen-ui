@@ -10,7 +10,7 @@ const baseGroupStyle = css`
   display: flex;
 `;
 
-interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
+export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
   /**
    * Content that will appear inside of RadioBoxGroup component.
    */

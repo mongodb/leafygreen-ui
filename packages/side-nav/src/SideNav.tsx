@@ -1,166 +1,35 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
-import { TransitionStatus } from 'react-transition-group/Transition';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
-import { keyMap, createDataProp } from '@leafygreen-ui/lib';
-import {
-  prefersReducedMotion,
-  validateAriaLabelProps,
-} from '@leafygreen-ui/a11y';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { keyMap } from '@leafygreen-ui/lib';
+import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { sideNavWidth, ulStyleOverrides, collapseDuration } from './styles';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import SideNavContext from './SideNavContext';
 import CollapseToggle from './CollapseToggle';
+import { SideNavProps } from './types';
+import {
+  sideNavWidth,
+  ulStyleOverrides,
+  collapseDuration,
+  outerContainerStyle,
+  outerContainerCollapsedStyle,
+  innerNavWrapperStyle,
+  navStyles,
+  collapsedNavStyles,
+  hoverNavStyles,
+  listWrapperStyle,
+  listStyles,
+  sideNavClassName,
+  expandedStateStyles,
+  collapsedStateStyles,
+} from './styles';
 
-const dataProp = createDataProp('side-nav');
-const sideNavSelector = dataProp.selector;
+const sideNavSelector = `.${sideNavClassName}`;
 
 export { sideNavSelector };
-
-const navStyles = css`
-  transition: all ${collapseDuration}ms ease-in-out;
-  background-color: ${uiColors.gray.light3};
-  border-right: 1px solid ${uiColors.gray.light2};
-  position: relative;
-  z-index: 0;
-
-  ${prefersReducedMotion(`
-    transition: all ${collapseDuration}ms ease-in-out, width 0ms linear;
-  `)}
-`;
-
-const collapsedNavStyles = css`
-  width: 48px;
-`;
-
-const hoverNavStyles = css`
-  box-shadow: 2px 0 4px ${transparentize(0.9, uiColors.black)};
-  border-right-color: ${uiColors.gray.light3};
-`;
-
-const listWrapper = css`
-  transition: opacity ${collapseDuration}ms ease-in-out,
-    transform ${collapseDuration}ms ease-in-out;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  overflow: hidden;
-
-  ${prefersReducedMotion(`
-    transition: opacity ${collapseDuration}ms ease-in-out;
-  `)}
-`;
-
-const listStyles = css`
-  padding-top: ${spacing[3]}px;
-  padding-bottom: ${spacing[3]}px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-`;
-
-const wrapper = css`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-`;
-
-const space = css`
-  transition: width ${collapseDuration}ms ease-in-out;
-  position: relative;
-
-  ${prefersReducedMotion(`
-    transition: none;
-  `)}
-`;
-
-const collapsedSpace = css`
-  width: 48px;
-`;
-
-const expandedEnteredStyle = css`
-  transform: translate3d(0, ${spacing[2]}px, 0);
-  opacity: 0;
-  pointer-events: none;
-`;
-
-const expandedExitedStyle = css`
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-`;
-
-const expandedStateStyles: Partial<Record<TransitionStatus, string>> = {
-  entering: expandedEnteredStyle,
-  entered: expandedEnteredStyle,
-  exiting: expandedExitedStyle,
-  exited: expandedExitedStyle,
-} as const;
-
-const collapsedEnteredStyle = css`
-  transform: translate3d(0, 0, 0);
-  opacity: 1;
-`;
-
-const collapsedExitedStyle = css`
-  transform: translate3d(0, -${spacing[2]}px, 0);
-  opacity: 0;
-  pointer-events: none;
-`;
-
-const collapsedStateStyles: Partial<Record<TransitionStatus, string>> = {
-  entering: collapsedEnteredStyle,
-  entered: collapsedEnteredStyle,
-  exiting: collapsedExitedStyle,
-  exited: collapsedExitedStyle,
-} as const;
-
-interface SideNavProps {
-  /**
-   * Class name that will be applied to the root-level element.
-   */
-  className?: string;
-
-  /**
-   * Content that will be rendered inside the root-level element.
-   */
-  children?: React.ReactNode;
-
-  id?: string;
-
-  /**
-   * Determines the base font size for the menu items.
-   */
-  baseFontSize?: 14 | 16;
-
-  /**
-   * Provides an override for the SideNav width.
-   */
-  widthOverride?: number;
-
-  /**
-   * Allows consuming applications to control the collapsed state of the navigation.
-   */
-  collapsed?: boolean;
-
-  /**
-   * Consuming application's collapsed-state management controller
-   */
-  setCollapsed?: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 /**
  * # SideNav
@@ -186,22 +55,22 @@ function SideNav({
   className,
   children,
   id: idProp,
-  baseFontSize,
+  baseFontSize: baseFontSizeProp,
   widthOverride,
   collapsed: controlledCollapsed,
   setCollapsed: setControlledCollapsed = () => {},
   ...rest
 }: SideNavProps) {
-  const { Provider: ContextProvider } = SideNavContext;
+  const { Provider: SideNavProvider } = SideNavContext;
   const [uncontrolledCollapsed, uncontrolledSetCollapsed] = useState(false);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const { usingKeyboard } = useUsingKeyboardContext();
+
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
-  const { usingKeyboard } = useUsingKeyboardContext();
   const navId = useIdAllocator({ prefix: 'side-nav', id: idProp });
   const [portalContainer, setPortalContainer] =
     useState<HTMLUListElement | null>(null);
-  const providerFontSize = useBaseFontSize();
-  const fontSize: 14 | 16 = baseFontSize ?? providerFontSize;
   const width =
     typeof widthOverride === 'number' ? widthOverride : sideNavWidth;
 
@@ -251,29 +120,32 @@ function SideNav({
       timeout={collapseDuration}
     >
       {state => (
-        <ContextProvider
+        <SideNavProvider
           value={{
             navId,
             collapsed,
             portalContainer,
             width,
             transitionState: state,
-            baseFontSize: fontSize,
+            baseFontSize,
           }}
         >
           <div
             data-testid="side-nav-container"
-            {...dataProp.prop}
             className={cx(
-              space,
+              sideNavClassName,
+              outerContainerStyle,
               css`
                 width: ${width}px;
               `,
-              { [collapsedSpace]: collapsed },
+              { [outerContainerCollapsedStyle]: collapsed },
               className,
             )}
           >
-            <div className={wrapper} onMouseLeave={() => setHover(false)}>
+            <div
+              className={innerNavWrapperStyle}
+              onMouseLeave={() => setHover(false)}
+            >
               <nav
                 id={navId}
                 className={cx(
@@ -293,7 +165,14 @@ function SideNav({
                 onMouseEnter={() => setHover(true)}
                 {...rest}
               >
-                <div className={cx(listWrapper, expandedStateStyles[state])}>
+                {/**
+                 * We render the sidenav items in both the expanded and collapsed states,
+                 * and transition between them. This way we can reduce layout shift from
+                 * elements appearing and disappearing
+                 */}
+                <div
+                  className={cx(listWrapperStyle, expandedStateStyles[state])}
+                >
                   <ul
                     className={cx(
                       ulStyleOverrides,
@@ -307,7 +186,9 @@ function SideNav({
                   </ul>
                 </div>
 
-                <div className={cx(listWrapper, collapsedStateStyles[state])}>
+                <div
+                  className={cx(listWrapperStyle, collapsedStateStyles[state])}
+                >
                   <ul
                     // We hide the duplicate items from screen readers.
                     aria-hidden
@@ -330,7 +211,7 @@ function SideNav({
               />
             </div>
           </div>
-        </ContextProvider>
+        </SideNavProvider>
       )}
     </Transition>
   );

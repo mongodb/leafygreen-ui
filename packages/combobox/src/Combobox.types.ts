@@ -22,7 +22,7 @@ export type TrunctationLocation =
 export const Overflow = {
   expandY: 'expand-y',
   expandX: 'expand-x',
-  scrollY: 'scroll-x',
+  scrollX: 'scroll-x',
 } as const;
 export type Overflow = typeof Overflow[keyof typeof Overflow];
 
@@ -74,8 +74,8 @@ export interface ComboboxMultiselectProps<M extends boolean> {
   multiselect?: M;
   /**
    * The initial selection.
-   * Must be a string for a single-select, or an array of strings for multiselect.
-   * Changing the initialValue after initial render will not change the selection.
+   * Must be a string (or array of strings) that matches the `value` prop of a `ComboboxOption`.
+   * Changing the `initialValue` after initial render will not change the selection.
    */
   initialValue?: SelectValueType<M>;
   /**
@@ -85,10 +85,12 @@ export interface ComboboxMultiselectProps<M extends boolean> {
   onChange?: onChangeType<M>;
   /**
    * The controlled value of the Combobox.
-   * Must be a string for a single-select, or an array of strings for multiselect.
-   * Changing value after initial render will affect the selection.
+   * Must be a string (or array of strings) that matches the `value` prop of a `ComboboxOption`.
+   * Changing `value` after initial render _will_ affect the selection.
+   * `value` will always take precedence over `initialValue` if both are provided.
    */
   value?: SelectValueType<M>;
+
   /**
    * Defines the overflow behavior of a multiselect combobox.
    *
