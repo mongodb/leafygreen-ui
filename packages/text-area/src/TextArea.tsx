@@ -39,6 +39,8 @@ import {
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
  * @param props.className className supplied to the TextArea container.
  * @param props.darkMode determines whether or not the component appears in dark mode.
+ * @param props.handleValidation Validation callback used to validate input.
+ * @param props.baseFontSize Override the global `baseFontSize` set in LeafygreenProvider. This will only change the input text.
  */
 
 const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
