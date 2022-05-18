@@ -8,6 +8,7 @@ import {
   waitFor,
   queryByText,
   render,
+  fireEvent,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -23,6 +24,7 @@ import {
 } from './ComboboxTestUtils';
 import { OptionObject, wrapJSX } from './util';
 import Button from '@leafygreen-ui/button';
+import { keyMap } from './util';
 
 /**
  * Tests
@@ -836,10 +838,9 @@ describe('packages/combobox', () => {
             });
           userEvent.type(comboboxEl, '{arrowleft}');
           const chip = queryChipsByName('Carrot');
-          if (!chip) throw new Error('Carrot Chip not found');
-          const chipButton = chip.querySelector('button') as HTMLElement;
-          userEvent.type(chipButton, '{enter}');
-          waitFor(() => expect(queryAllChips()).toHaveLength(2));
+          // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
+          fireEvent.keyDown(chip!, { keyCode: keyMap.Enter });
+          expect(queryAllChips()).toHaveLength(2);
         });
       });
 
@@ -862,9 +863,8 @@ describe('packages/combobox', () => {
             });
           userEvent.type(comboboxEl, '{arrowleft}');
           const chip = queryChipsByName('Carrot');
-          if (!chip) throw new Error('Carrot Chip not found');
-          const chipButton = chip.querySelector('button') as HTMLElement;
-          userEvent.type(chipButton, '{space}');
+          // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
+          fireEvent.keyDown(chip!, { keyCode: keyMap.Space });
           waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
       });
@@ -994,8 +994,8 @@ describe('packages/combobox', () => {
             });
           userEvent.type(comboboxEl, '{arrowleft}');
           const lastChip = queryChipsByIndex(2);
-          const chipButton = lastChip.querySelector('button') as HTMLElement;
-          userEvent.type(chipButton, '{backspace}');
+          // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
+          fireEvent.keyDown(lastChip!, { keyCode: keyMap.Backspace });
           expect(queryAllChips()).toHaveLength(2);
         });
 
@@ -1003,14 +1003,11 @@ describe('packages/combobox', () => {
           const initialValue = ['apple', 'banana'];
           const { comboboxEl, inputEl, queryChipsByIndex } = renderCombobox(
             select,
-            {
-              initialValue,
-            },
+            { initialValue },
           );
           userEvent.type(comboboxEl, '{arrowleft}');
           const lastChip = queryChipsByIndex(1);
-          const chipButton = lastChip.querySelector('button') as HTMLElement;
-          userEvent.type(chipButton, '{backspace}');
+          fireEvent.keyDown(lastChip!, { keyCode: keyMap.Backspace });
           expect(inputEl).toHaveFocus();
         });
       });
