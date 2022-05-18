@@ -1,7 +1,9 @@
 import React from 'react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import TextArea, { TextAreaProps } from './TextArea';
+import TextArea from './TextArea';
+import { TextAreaProps } from './types';
+
 import { ComponentStory } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 

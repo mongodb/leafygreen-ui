@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import {
-  spacing,
-  fontFamilies,
-  BaseFontSize,
-  focusRing,
-  hoverRing,
-} from '@leafygreen-ui/tokens';
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import {
   Description,
@@ -18,181 +9,37 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 import Warning from '@leafygreen-ui/icon/dist/Warning';
+import { State, TextAreaProps, Mode } from './types';
+import {
+  containerStyles,
+  textAreaStyle,
+  colorSets,
+  errorMessageStyle,
+  errorIconStyle,
+  errorMessageLabelStyles,
+} from './styles';
 
-export const State = {
-  None: 'none',
-  Error: 'error',
-} as const;
-
-export type State = typeof State[keyof typeof State];
-
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
-
-const containerStyles = css`
-  display: flex;
-  flex-direction: column;
-`;
-
-const textAreaStyle = css`
-  font-family: ${fontFamilies.default};
-  width: 100%;
-  min-height: ${spacing[6]}px;
-  resize: none;
-  margin: 0;
-  padding: 8px 12px 1px 12px;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 16px;
-  z-index: 1;
-  border: 1px solid;
-  border-radius: 6px;
-  transition: 150ms ease-in-out;
-  transition-property: border-color, box-shadow;
-  margin-top: 2px;
-
-  &:focus {
-    outline: none;
-    border-color: transparent;
-    box-shadow: ${focusRing[Mode.Light].input};
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-`;
-
-const errorMessageStyle = css`
-  display: flex;
-  height: 20px;
-  padding-top: 5px;
-  align-items: center;
-  font-weight: normal;
-`;
-
-const errorMessageLabelStyles = css`
-  line-height: 1;
-`;
-
-const errorIconStyle = css`
-  margin-right: 3px;
-`;
-
-interface ColorSets {
-  textArea: string;
-  errorBorder: string;
-  errorMessage: string;
-  disabledText: string;
-}
-
-const colorSets: Record<Mode, ColorSets> = {
-  [Mode.Light]: {
-    textArea: css`
-      // TODO: Refresh - set one font family & size
-      color: ${palette.gray.dark3};
-      background-color: ${palette.white};
-      border-color: ${palette.gray.base};
-
-      &:hover:not(:disabled) {
-        border-color: ${palette.gray.base};
-        box-shadow: ${hoverRing[Mode.Light].gray};
-      }
-
-      &:disabled {
-        color: ${palette.gray.base};
-        background-color: ${palette.gray.light2};
-        border-color: ${palette.gray.light1};
-      }
-    `,
-    errorBorder: css`
-      border-color: ${palette.red.base};
-
-      &:hover:not(:disabled) {
-        border-color: ${palette.red.base};
-        box-shadow: ${hoverRing[Mode.Light].red};
-      }
-
-      &:disabled {
-        border-color: ${palette.gray.light1};
-      }
-    `,
-    errorMessage: css`
-      color: ${palette.red.base};
-    `,
-    disabledText: css`
-      color: ${palette.gray.base};
-    `,
-  },
-  [Mode.Dark]: {
-    textArea: css`
-      color: ${palette.gray.light3};
-      background-color: ${palette.gray.dark3};
-      border-color: ${palette.gray.base};
-
-      &:hover:not(:disabled) {
-        border-color: ${palette.gray.base};
-        box-shadow: ${hoverRing[Mode.Dark].gray};
-      }
-
-      &:disabled {
-        color: ${palette.gray.dark1};
-        background-color: ${palette.gray.dark3};
-        border-color: ${palette.gray.dark2};
-      }
-    `,
-
-    errorBorder: css`
-      border-color: ${palette.red.light1};
-
-      &:hover:not(:disabled) {
-        border-color: ${palette.red.light1};
-        box-shadow: ${hoverRing[Mode.Dark].red};
-      }
-
-      &:disabled {
-        border-color: ${palette.gray.dark2};
-      }
-    `,
-
-    errorMessage: css`
-      color: ${palette.red.light1};
-    `,
-    disabledText: css`
-      color: ${palette.gray.base};
-    `,
-  },
-};
-
-type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
-  id?: string;
-  darkMode?: boolean;
-  label?: string | null;
-  description?: string;
-  state?: State;
-  errorMessage?: string;
-  handleValidation?: (value: string) => void;
-  /**
-   * Callback to be executed when the input stops being focused.
-   */
-  onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
-
-  /**
-   * Callback to be executed when the value of the input field changes.
-   */
-  onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
-
-  /**
-   * Override the global `baseFontSize` set in LeafygreenProvider
-   */
-  baseFontSize?: BaseFontSize;
-};
-
-type AriaLabels = 'label' | 'aria-labelledby';
-export type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
+/**
+ * # TextArea
+ *
+ * TextArea component
+ *
+ * ```
+<TextArea label='Input Label' onChange={() => execute when value of input field changes}/>
+```
+ * @param props.id id associated with the TextArea component.
+ * @param props.label Text shown in bold above the input element.
+ * @param props.description Text that gives more detail about the requirements for the input.
+ * @param props.disabled Whether or not the field is currently disabled.
+ * @param props.onChange Callback to be executed when the value of the input field changes.
+ * @param props.onBlur Callback to be executed when the input stops being focused.
+ * @param props.placeholder The placeholder text shown in the input field before the user begins typing.
+ * @param props.errorMessage The message shown below the input field if the value is invalid.
+ * @param props.state The current state of the TextArea. This can be none or error.
+ * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
+ * @param props.className className supplied to the TextArea container.
+ * @param props.darkMode determines whether or not the component appears in dark mode.
+ */
 
 const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
   React.forwardRef(function TextArea(
