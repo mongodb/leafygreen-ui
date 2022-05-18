@@ -44,7 +44,7 @@ const textAreaStyle = css`
   min-height: ${spacing[6]}px;
   resize: none;
   margin: 0;
-  padding: 10px 12px 1px 12px;
+  padding: 8px 12px 1px 12px;
   font-size: 14px;
   font-weight: normal;
   line-height: 16px;
@@ -159,7 +159,7 @@ const colorSets: Record<Mode, ColorSets> = {
     `,
 
     errorMessage: css`
-      color:${palette.red.light1};
+      color: ${palette.red.light1};
     `,
     disabledText: css`
       color: ${palette.gray.base};
@@ -256,45 +256,44 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
     return (
       <div className={cx(containerStyles, className)}>
         {label && (
-          <Label
-            darkMode={darkMode}
-            htmlFor={id}
-            disabled={disabled}
-          >
+          <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
             {label}
           </Label>
         )}
         {description && (
-          <Description
-            darkMode={darkMode}
-            disabled={disabled}
-          >
+          <Description darkMode={darkMode} disabled={disabled}>
             {description}
           </Description>
         )}
-          <textarea
-            {...rest}
-            ref={forwardedRef}
-            title={label != null ? label : undefined}
-            id={id}
-            className={cx(
-              textAreaStyle,
-              bodyTypeScaleStyles[baseFontSize],
-              colorSets[mode].textArea,
-              {
-                [colorSets[mode].errorBorder]:
-                  state === State.Error && !disabled,
-              },
-            )}
-            disabled={disabled}
-            onChange={onValueChange}
-            onBlur={onBlurHandler}
-            value={value}
-          />
+        <textarea
+          {...rest}
+          ref={forwardedRef}
+          title={label != null ? label : undefined}
+          id={id}
+          className={cx(
+            textAreaStyle,
+            bodyTypeScaleStyles[baseFontSize],
+            colorSets[mode].textArea,
+            {
+              [colorSets[mode].errorBorder]: state === State.Error && !disabled,
+            },
+          )}
+          disabled={disabled}
+          onChange={onValueChange}
+          onBlur={onBlurHandler}
+          value={value}
+        />
         {!disabled && state === State.Error && errorMessage && (
           <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
             <Warning className={errorIconStyle} />
-            <label className={cx(bodyTypeScaleStyles[errorBaseFontSize], errorMessageLabelStyles)}>{errorMessage}</label>
+            <label
+              className={cx(
+                bodyTypeScaleStyles[errorBaseFontSize],
+                errorMessageLabelStyles,
+              )}
+            >
+              {errorMessage}
+            </label>
           </div>
         )}
       </div>

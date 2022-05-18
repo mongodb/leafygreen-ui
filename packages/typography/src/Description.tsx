@@ -1,11 +1,10 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { Mode } from './types';
 import { palette } from '@leafygreen-ui/palette';
 import { useUpdatedBaseFontSize } from './useUpdatedBaseFontSize';
-import { bodyTypeScaleStyles} from './styles';
 
 const descriptionStyle = css`
   font-family: ${fontFamilies.default};
@@ -13,6 +12,17 @@ const descriptionStyle = css`
   margin-top: 0;
   margin-bottom: 0;
 `;
+
+const descriptionTypeScale: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: 20px;
+  `,
+};
 
 const descriptionColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
@@ -52,7 +62,7 @@ export const Description = ({
       className={cx(
         descriptionStyle,
         descriptionColorStyle[mode],
-        bodyTypeScaleStyles[baseFontSize],
+        descriptionTypeScale[baseFontSize],
         {
           [disabledDescriptionColorStyle[mode]]: disabled,
         },

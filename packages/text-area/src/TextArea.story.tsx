@@ -5,9 +5,9 @@ import TextArea, { TextAreaProps } from './TextArea';
 import { ComponentStory } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-export const StoryTextArea: React.FC<TextAreaProps & {lgProviderBaseFontSize: 14 | 16}> = props => (
-  <TextArea {...props} />
-);
+export const StoryTextArea: React.FC<
+  TextAreaProps & { lgProviderBaseFontSize: 14 | 16 }
+> = props => <TextArea {...props} />;
 
 export default {
   title: 'Packages/TextArea',
@@ -33,16 +33,16 @@ const Template: ComponentStory<typeof StoryTextArea> = ({
   darkMode,
   lgProviderBaseFontSize,
   ...args
-}: TextAreaProps & {lgProviderBaseFontSize: 14 | 16}) => (
+}: TextAreaProps & { lgProviderBaseFontSize: 14 | 16 }) => (
   <LeafygreenProvider baseFontSize={lgProviderBaseFontSize}>
-  <div
-    className={css`
-      padding: 30px;
-      background-color: ${darkMode ? palette.black : 'white'};
-    `}
-  >
-    <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
-  </div>
+    <div
+      className={css`
+        padding: 30px;
+        background-color: ${darkMode ? palette.black : 'white'};
+      `}
+    >
+      <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
+    </div>
   </LeafygreenProvider>
 );
 
@@ -52,5 +52,5 @@ Basic.args = {
   description: 'This is a description for the textarea',
   errorMessage: 'This is an error message',
   disabled: false,
-  placeholder: 'Input'
+  placeholder: 'Placeholder',
 };
