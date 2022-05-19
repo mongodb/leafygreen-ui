@@ -1,5 +1,16 @@
 # @leafygreen-ui/select
 
+## 5.0.1
+
+### Patch Changes
+
+- efa9e8f4: Exporting / renaming props for Storybook
+- 2670e4db: Expects `glyph` prop to be of type `LGGlyph.Element`
+- Updated dependencies [646c00f7]
+- Updated dependencies [2670e4db]
+  - @leafygreen-ui/button@15.0.1
+  - @leafygreen-ui/icon@11.10.0
+
 ## 5.0.0
 
 ### Major Changes
