@@ -1284,6 +1284,10 @@ export default function Combobox<M extends boolean>({
   );
 
   // Closure-dependant utils
+
+  /**
+   * Returns whether the event target is a Combobox element
+   */
   function doesComponentContainEventTarget({ target }: MouseEvent): boolean {
     return (
       menuRef.current?.contains(target as Node) ||
@@ -1292,8 +1296,10 @@ export default function Combobox<M extends boolean>({
     );
   }
 
-  // Scrolls the combobox to the far right
-  // Used when `overflow == 'scroll-x'`
+  /**
+   * Scrolls the combobox to the far right.
+   * Used when `overflow == 'scroll-x'`
+   */
   function scrollToEnd() {
     if (inputWrapperRef && inputWrapperRef.current) {
       // TODO - consider converting to .scrollTo(). This is not yet suppoted in IE or jsdom
