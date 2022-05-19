@@ -1,20 +1,26 @@
 import React from 'react';
-import LGBox, { BoxProps } from '.';
-import { Story } from '@storybook/react';
+import Box, { BoxProps } from '.';
+import { Meta, Story } from '@storybook/react';
 import IntrinsicElements from '../../../.storybook/utils/IntrinsicElements';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef
 // https://github.com/storybookjs/storybook/issues/15334
+// TODO: Ensure that TSDocs are being read from the Box component directly, not this StoryBox component
 // eslint-disable-next-line react/jsx-props-no-spreading
-export const Box: React.FC<BoxProps> = props => (
+/**
+ * Box component handles the `as` prop, allowing the component to be rendered using alternate HTML elements.
+ *
+ * It also defaults to an `<a>` tag when a `href` prop is set.
+ */
+export const StoryBox: React.FC<BoxProps> = props => (
   // @ts-ignore-next-line
-  <LGBox {...props} />
+  <Box {...props} />
 );
 
 export default {
   title: 'Packages/Box',
-  component: Box,
-  excludeStories: ['Box'],
+  component: StoryBox,
+  excludeStories: ['StoryBox'],
   parameters: {
     controls: {
       exclude: ['ref'],
@@ -28,7 +34,7 @@ export default {
       control: { type: 'select' },
     },
   },
-};
+} as Meta<typeof Box>;
 
 const Template: Story<
   BoxProps & { text: string }

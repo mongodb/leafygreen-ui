@@ -80,13 +80,17 @@ function InlineBox(props: BoxProps, ref: React.Ref<any>) {
 
 InlineBox.displayName = 'InlineBox';
 
-// @ts-expect-error
-const Box = React.forwardRef(InlineBox) as typeof InlineBox;
+/**
+ * The Box component handles the `as` prop, allowing the component to be rendered using alternate HTML elements.
+ *
+ * It also defaults to an `<a>` tag when a `href` prop is set.
+ */
+const Box = React.forwardRef(InlineBox) as InlineBox;
 
 Box.displayName = 'Box';
 
-// @ts-expect-error
 Box.propTypes = {
+  //  @ts-expect-error
   as: PropTypes.oneOfType([
     PropTypes.elementType,
     PropTypes.element,
