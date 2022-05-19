@@ -20,7 +20,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
+import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
   getNullSelection,
@@ -52,7 +52,6 @@ import {
   flattenChildren,
   getDisplayNameForValue,
   getNameAndValue,
-  keyMap,
 } from './utils';
 
 /**
