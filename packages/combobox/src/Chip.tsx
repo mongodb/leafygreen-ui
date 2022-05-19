@@ -191,6 +191,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         ref={forwardedRef}
         className={cx(chipClassName, chipWrapperStyle({ darkMode, size }))}
         onClick={handleChipClick}
+        onKeyDown={handleKeyDown}
         tabIndex={-1}
       >
         <span className={chipText}>
@@ -209,7 +210,6 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           ref={buttonRef}
           className={chipButton}
           onClick={handleButtonClick}
-          onKeyDown={handleKeyDown}
         >
           <Icon glyph="X" />
         </button>
