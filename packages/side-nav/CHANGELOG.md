@@ -1,5 +1,13 @@
 # @leafygreen-ui/side-nav
 
+## 9.0.1
+
+### Patch Changes
+
+- 07efe081: Updates '@leafygreen-ui/palette' dependency for SideNav and ConfirmationModal. Updates collapsed nav items for visual brand refresh
+- Updated dependencies [2670e4db]
+  - @leafygreen-ui/icon@11.10.0
+
 ## 9.0.0
 
 ### Major Changes
