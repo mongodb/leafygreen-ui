@@ -123,7 +123,9 @@ export default function Combobox<M extends boolean>({
       ? undefined
       : placeholder;
 
-  // Tells typescript that selection is multiselect
+  /**
+   * Utility function that tells Typescript whether selection is multiselect
+   */
   const isMultiselect = useCallback(
     <T extends string>(val?: Array<T> | T | null): val is Array<T> => {
       if (multiselect && (typeof val == 'string' || typeof val == 'number')) {
@@ -201,7 +203,9 @@ export default function Combobox<M extends boolean>({
     [children],
   );
 
-  // Computes whether the option is visible based on the current input
+  /**
+   * Computes whether the option is visible based on the current input
+   */
   const isOptionVisible = useCallback(
     (option: string | OptionObject): boolean => {
       const value = typeof option === 'string' ? option : option.value;
