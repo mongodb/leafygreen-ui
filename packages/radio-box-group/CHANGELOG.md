@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 8.0.1
+
+### Patch Changes
+
+- efa9e8f4: Exporting / renaming props for Storybook
+
 ## 8.0.0
 
 ### Major Changes

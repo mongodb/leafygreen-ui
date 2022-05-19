@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 15.0.1
+
+### Patch Changes
+
+- 646c00f7: Changing Button's HTML element prop definitions from Pick<> to explicit definitions
+
 ## 15.0.0
 
 ### Major Changes
