@@ -8,7 +8,7 @@ const { CLIEngine } = require('eslint');
 const meow = require('meow');
 const prettier = require('prettier');
 
-const template = require('../src/template');
+const template = require('./template');
 
 const cli = meow(
   `

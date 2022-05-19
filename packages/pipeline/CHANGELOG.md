@@ -1,5 +1,11 @@
 # @leafygreen-ui/pipeline
 
+## 2.1.6
+
+### Patch Changes
+
+- bc2558c5: Adding named exports for select components and types
+
 ## 2.1.5
 
 ### Patch Changes

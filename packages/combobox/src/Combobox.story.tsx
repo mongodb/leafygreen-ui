@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import Icon from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';

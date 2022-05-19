@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon-button",
-  "version": "11.0.0",
+  "version": "11.0.1",
   "description": "LeafyGreen UI Kit Icon Buttons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "11.9.0"
+    "@leafygreen-ui/icon": "11.10.0"
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.2.2",
