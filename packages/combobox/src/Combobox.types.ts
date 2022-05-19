@@ -5,6 +5,12 @@ import { Either } from '@leafygreen-ui/lib';
  * Prop Enums & Types
  */
 
+export interface OptionObject {
+  value: string;
+  displayName: string;
+  hasGlyph?: boolean;
+}
+
 export const ComboboxSize = {
   default: 'default',
 } as const;

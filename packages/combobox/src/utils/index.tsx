@@ -1,7 +1,7 @@
 import { isComponentType, keyMap as _keyMap } from '@leafygreen-ui/lib';
 import kebabCase from 'lodash/kebabCase';
 import React, { ReactChild } from 'react';
-import { ComboboxOptionProps } from './Combobox.types';
+import { ComboboxOptionProps, OptionObject } from '../Combobox.types';
 
 // TODO - remove this when lib/keyMap supports Backspace & Delete
 export const keyMap = {
@@ -83,12 +83,6 @@ export const getNameAndValue = ({
     displayName: nameProp ?? valProp ?? '', // TODO consider adding a prop to customize displayName => startCase(valProp),
   };
 };
-
-export interface OptionObject {
-  value: string;
-  displayName: string;
-  hasGlyph?: boolean;
-}
 
 /**
  *

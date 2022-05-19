@@ -21,7 +21,8 @@ import {
   Select,
   testif,
 } from './ComboboxTestUtils';
-import { OptionObject, wrapJSX } from './util';
+import { wrapJSX } from './utils';
+import { OptionObject } from './Combobox.types';
 import Button from '@leafygreen-ui/button';
 
 /**
@@ -255,7 +256,7 @@ describe('packages/combobox', () => {
 
       test('Option is rendered with provided value when no displayName is provided', () => {
         const options = [{ value: 'abc-def' }];
-        // @ts-expect-error `options` will not match the expected type
+        /// @ts-expect-error `options` will not match the expected type
         const { openMenu } = renderCombobox(select, { options });
         const { optionElements } = openMenu();
         const [optionEl] = Array.from(optionElements!);
