@@ -224,13 +224,16 @@ export default function Combobox<M extends boolean>({
           ? getDisplayNameForValue(value, allOptions)
           : option.displayName;
 
-      const isVisible = displayName
+      const isValueInDisplayName = displayName
         .toLowerCase()
         .includes(inputValue.toLowerCase());
 
-      return isVisible;
+      // if the menu has just been opened
+      // then the option should be visible regardless of the input value
+      const isNewlyOpened = isOpen && !wasOpen;
+      return isNewlyOpened || isValueInDisplayName;
     },
-    [filteredOptions, allOptions, inputValue],
+    [filteredOptions, allOptions, inputValue, isOpen, wasOpen],
   );
 
   /**
