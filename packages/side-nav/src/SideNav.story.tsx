@@ -17,7 +17,6 @@ const appContainer = css`
   grid-template-columns: auto 1fr;
   height: 100vh;
   width: 100%;
-  outline: 1px solid ${palette.red.base};
 `;
 
 const realmAppContainer = css`

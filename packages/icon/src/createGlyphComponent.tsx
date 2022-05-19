@@ -15,7 +15,7 @@ export default function createGlyphComponent(
   glyphName: string,
   Glyph: SVGR.Component,
 ): LGGlyph.Component {
-  function GlyphComponent({
+  const GlyphComponent: LGGlyph.Component = ({
     className,
     size = Size.Default,
     fill,
@@ -24,7 +24,7 @@ export default function createGlyphComponent(
     'aria-label': ariaLabel,
     role = 'img',
     ...rest
-  }: LGGlyph.ComponentProps) {
+  }: LGGlyph.ComponentProps) => {
     const fillStyle = css`
       color: ${fill};
     `;
@@ -56,7 +56,7 @@ export default function createGlyphComponent(
         {...rest}
       />
     );
-  }
+  };
 
   GlyphComponent.displayName = glyphName;
 
