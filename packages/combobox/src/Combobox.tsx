@@ -238,6 +238,9 @@ export default function Combobox<M extends boolean>({
     [allOptions, isOptionVisible],
   );
 
+  /**
+   * Returns whether the given value is in the options array
+   */
   const isValueValid = useCallback(
     (value: string | null): boolean => {
       return value ? !!allOptions.find(opt => opt.value === value) : false;
@@ -245,6 +248,9 @@ export default function Combobox<M extends boolean>({
     [allOptions],
   );
 
+  /**
+   * Returns the index of a given value in the array of visible (filtered) options
+   */
   const getIndexOfValue = useCallback(
     (value: string | null): number => {
       return visibleOptions
@@ -254,6 +260,9 @@ export default function Combobox<M extends boolean>({
     [visibleOptions],
   );
 
+  /**
+   * Returns the option value of a given inded in the array of visible (filtered) options
+   */
   const getValueAtIndex = useCallback(
     (index: number): string | undefined => {
       if (visibleOptions && visibleOptions.length >= index) {
@@ -264,6 +273,9 @@ export default function Combobox<M extends boolean>({
     [visibleOptions],
   );
 
+  /**
+   * Returns the index of the active chip in the selection array
+   */
   const getActiveChipIndex = useCallback(
     () =>
       isMultiselect(selection)
