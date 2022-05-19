@@ -26,6 +26,7 @@ import {
   getNullSelection,
   onChangeType,
   SelectValueType,
+  OptionObject,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
@@ -47,7 +48,7 @@ import {
   menuWrapperStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
-import { flattenChildren, getNameAndValue, OptionObject, keyMap } from './util';
+import { flattenChildren, getNameAndValue, keyMap } from './utils';
 
 /**
  * Component
@@ -191,7 +192,13 @@ export default function Combobox<M extends boolean>({
       ? undefined
       : placeholder;
 
-  const allOptions = useMemo(() => flattenChildren(children), [children]);
+  /**
+   * Array of all of the options objects
+   */
+  const allOptions: Array<OptionObject> = useMemo(
+    () => flattenChildren(children),
+    [children],
+  );
 
   const getDisplayNameForValue = useCallback(
     (value: string | null): string => {
@@ -217,12 +224,20 @@ export default function Combobox<M extends boolean>({
         typeof option === 'string'
           ? getDisplayNameForValue(value)
           : option.displayName;
-      return displayName.toLowerCase().includes(inputValue.toLowerCase());
+
+      const isVisible = displayName
+        .toLowerCase()
+        .includes(inputValue.toLowerCase());
+
+      return isVisible;
     },
     [filteredOptions, getDisplayNameForValue, inputValue],
   );
 
-  const visibleOptions = useMemo(
+  /**
+   * The array of visible options objects
+   */
+  const visibleOptions: Array<OptionObject> = useMemo(
     () => allOptions.filter(isOptionVisible),
     [allOptions, isOptionVisible],
   );
@@ -592,11 +607,13 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
-  const renderedOptions = useMemo(
+  /**
+   * The rendered JSX elements for the options
+   */
+  const renderedOptionsJSX = useMemo(
     () => renderInternalOptions(children),
     [children, renderInternalOptions],
   );
-
   const renderedChips = useMemo(() => {
     if (isMultiselect(selection)) {
       return selection.filter(isValueValid).map((value, index) => {
@@ -835,15 +852,15 @@ export default function Combobox<M extends boolean>({
 
       case 'unset':
       default: {
-        if (renderedOptions && renderedOptions.length > 0) {
-          return <ul className={menuList}>{renderedOptions}</ul>;
+        if (renderedOptionsJSX && renderedOptionsJSX.length > 0) {
+          return <ul className={menuList}>{renderedOptionsJSX}</ul>;
         }
 
         return <span className={menuMessage}>{searchEmptyMessage}</span>;
       }
     }
   }, [
-    renderedOptions,
+    renderedOptionsJSX,
     searchEmptyMessage,
     searchErrorMessage,
     searchLoadingMessage,
