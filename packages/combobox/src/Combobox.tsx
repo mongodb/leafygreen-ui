@@ -295,6 +295,10 @@ export default function Combobox<M extends boolean>({
    *
    */
 
+  /**
+   * Returns the name of the current focused element
+   * @returns "FirstChip" | "LastChip" | "MiddleChip" | "Input" | "ClearButton" | "Combobox"
+   */
   const getFocusedElementName = useCallback(() => {
     const isFocusOn = {
       Input: inputRef.current?.contains(document.activeElement),
@@ -330,6 +334,10 @@ export default function Combobox<M extends boolean>({
   }, [getChipRef, isMultiselect, selection]);
 
   type Direction = 'next' | 'prev' | 'first' | 'last';
+
+  /**
+   * Updates the highlighted menu option based on the provided direction
+   */
   const updateFocusedOption = useCallback(
     (direction: Direction) => {
       const optionsCount = visibleOptions?.length ?? 0;
@@ -386,6 +394,9 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
+  /**
+   * Updates the focused chip based on the provided direction
+   */
   const updateFocusedChip = useCallback(
     (direction: Direction | null, relativeToIndex?: number) => {
       if (isMultiselect(selection)) {
@@ -435,6 +446,9 @@ export default function Combobox<M extends boolean>({
     [getActiveChipIndex, isMultiselect, selection],
   );
 
+  /**
+   * Handles an arrow key press
+   */
   const handleArrowKey = useCallback(
     (direction: 'left' | 'right', event: React.KeyboardEvent<Element>) => {
       // Remove focus from menu
