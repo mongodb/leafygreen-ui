@@ -118,6 +118,11 @@ export default function Combobox<M extends boolean>({
     !isNull(selection) &&
     ((isArray(selection) && selection.length > 0) || isString(selection));
 
+  const placeholderValue =
+    multiselect && isArray(selection) && selection.length > 0
+      ? undefined
+      : placeholder;
+
   // Tells typescript that selection is multiselect
   const isMultiselect = useCallback(
     <T extends string>(val?: Array<T> | T | null): val is Array<T> => {
@@ -136,7 +141,9 @@ export default function Combobox<M extends boolean>({
     [multiselect],
   );
 
-  // Force focus of input box
+  /**
+   * Forces focus of input box
+   */
   const setInputFocus = useCallback(
     (cursorPos?: number) => {
       if (!disabled && inputRef && inputRef.current) {
@@ -149,7 +156,10 @@ export default function Combobox<M extends boolean>({
     [disabled],
   );
 
-  // Update selection differently in mulit & single select
+  /**
+   * Update selection.
+   * This behaves differently in multi. vs single select
+   */
   const updateSelection = useCallback(
     (value: string | null) => {
       if (isMultiselect(selection)) {
@@ -182,20 +192,6 @@ export default function Combobox<M extends boolean>({
     },
     [isMultiselect, onChange, selection],
   );
-
-  // Scrolls the combobox to the far right
-  // Used when `overflow == 'scroll-x'`
-  const scrollToEnd = () => {
-    if (inputWrapperRef && inputWrapperRef.current) {
-      // TODO - consider converting to .scrollTo(). This is not yet wuppoted in IE or jsdom
-      inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
-    }
-  };
-
-  const placeholderValue =
-    multiselect && isArray(selection) && selection.length > 0
-      ? undefined
-      : placeholder;
 
   /**
    * Array of all of the options objects
@@ -1253,5 +1249,14 @@ export default function Combobox<M extends boolean>({
       comboboxRef.current?.contains(target as Node) ||
       false
     );
+  }
+
+  // Scrolls the combobox to the far right
+  // Used when `overflow == 'scroll-x'`
+  function scrollToEnd() {
+    if (inputWrapperRef && inputWrapperRef.current) {
+      // TODO - consider converting to .scrollTo(). This is not yet suppoted in IE or jsdom
+      inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
+    }
   }
 }
