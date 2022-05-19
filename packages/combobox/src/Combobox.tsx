@@ -48,7 +48,12 @@ import {
   menuWrapperStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
-import { flattenChildren, getNameAndValue, keyMap } from './utils';
+import {
+  flattenChildren,
+  getDisplayNameForValue,
+  getNameAndValue,
+  keyMap,
+} from './utils';
 
 /**
  * Component
@@ -200,15 +205,6 @@ export default function Combobox<M extends boolean>({
     [children],
   );
 
-  const getDisplayNameForValue = useCallback(
-    (value: string | null): string => {
-      return value
-        ? allOptions.find(opt => opt.value === value)?.displayName ?? value
-        : '';
-    },
-    [allOptions],
-  );
-
   // Computes whether the option is visible based on the current input
   const isOptionVisible = useCallback(
     (option: string | OptionObject): boolean => {
@@ -222,7 +218,7 @@ export default function Combobox<M extends boolean>({
       // otherwise, we do our own filtering
       const displayName =
         typeof option === 'string'
-          ? getDisplayNameForValue(value)
+          ? getDisplayNameForValue(value, allOptions)
           : option.displayName;
 
       const isVisible = displayName
@@ -231,7 +227,7 @@ export default function Combobox<M extends boolean>({
 
       return isVisible;
     },
-    [filteredOptions, getDisplayNameForValue, inputValue],
+    [filteredOptions, allOptions, inputValue],
   );
 
   /**
@@ -617,7 +613,7 @@ export default function Combobox<M extends boolean>({
   const renderedChips = useMemo(() => {
     if (isMultiselect(selection)) {
       return selection.filter(isValueValid).map((value, index) => {
-        const displayName = getDisplayNameForValue(value);
+        const displayName = getDisplayNameForValue(value, allOptions);
 
         const onRemove = () => {
           updateFocusedChip('next', index);
@@ -647,7 +643,7 @@ export default function Combobox<M extends boolean>({
     isMultiselect,
     selection,
     isValueValid,
-    getDisplayNameForValue,
+    allOptions,
     focusedChip,
     getChipRef,
     updateFocusedChip,
@@ -728,12 +724,15 @@ export default function Combobox<M extends boolean>({
       } else {
         // Revert the value to the previous selection
         const displayName =
-          getDisplayNameForValue(selection as SelectValueType<false>) ?? '';
+          getDisplayNameForValue(
+            selection as SelectValueType<false>,
+            allOptions,
+          ) ?? '';
         setInputValue(displayName);
       }
     }
   }, [
-    getDisplayNameForValue,
+    allOptions,
     inputValue,
     isMultiselect,
     prevSelection,
@@ -750,14 +749,17 @@ export default function Combobox<M extends boolean>({
       } else if (!isMultiselect(selection)) {
         // Update the text input
         const displayName =
-          getDisplayNameForValue(selection as SelectValueType<false>) ?? '';
+          getDisplayNameForValue(
+            selection as SelectValueType<false>,
+            allOptions,
+          ) ?? '';
         setInputValue(displayName);
         closeMenu();
       }
     } else {
       setInputValue('');
     }
-  }, [doesSelectionExist, getDisplayNameForValue, isMultiselect, selection]);
+  }, [doesSelectionExist, allOptions, isMultiselect, selection]);
 
   // Set initialValue
   useEffect(() => {
