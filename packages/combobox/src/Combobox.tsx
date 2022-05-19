@@ -1326,3 +1326,7 @@ export default function Combobox<M extends boolean>({
     }
   }
 }
+/**
+ * Why'd you have to go and make things so complicated?
+ * - Avril; and also me to myself about this component
+ */
