@@ -52,6 +52,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        color: ${palette.gray.dark3};
         background-color: ${palette.white};
         box-shadow: 0 0 0 3px ${palette.gray.light2};
       }
@@ -78,6 +79,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        color: ${palette.green.dark2};
         background-color: ${transparentize(0.96, palette.green.base)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
@@ -118,6 +120,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        color: ${palette.green.dark3};
         background-color: ${mix(0.96, palette.green.base, palette.green.dark3)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
@@ -217,6 +220,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        color: ${palette.green.dark3};
         background-color: ${mix(
           0.96,
           palette.green.base,
