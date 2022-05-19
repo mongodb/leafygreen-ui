@@ -858,10 +858,13 @@ export default function Combobox<M extends boolean>({
 
   const [menuWidth, setMenuWidth] = useState(0);
 
+  // When the menu opens, or the selection changes, or the focused option changes
+  // update the menu width
   useEffect(() => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   }, [comboboxRef, isOpen, focusedOption, selection]);
 
+  // Handler fired when the manu has finished transitioning in/out
   const handleTransitionEnd = () => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   };
