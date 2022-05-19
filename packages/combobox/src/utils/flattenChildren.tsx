@@ -1,15 +1,7 @@
 import { isComponentType, keyMap as _keyMap } from '@leafygreen-ui/lib';
 import React from 'react';
 import { OptionObject } from '../Combobox.types';
-export { wrapJSX } from './wrapJSX';
-export { getNameAndValue } from './getNameAndValue';
-
-// TODO - remove this when lib/keyMap supports Backspace & Delete
-export const keyMap = {
-  ..._keyMap,
-  Backspace: 8,
-  Delete: 46,
-} as const;
+import { getNameAndValue } from './getNameAndValue';
 
 /**
  *
