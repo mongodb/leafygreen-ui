@@ -411,15 +411,6 @@ describe('packages/combobox', () => {
         expect(inputEl).toHaveValue(displayName);
         expect(inputEl.scrollWidth).toBeGreaterThanOrEqual(inputEl.clientWidth);
       });
-
-      // Filtering
-      test('Menu options list narrows when text is entered', async () => {
-        const { inputEl, openMenu, findAllByRole } = renderCombobox(select);
-        openMenu();
-        userEvent.type(inputEl, 'c');
-        const optionElements = await findAllByRole('option');
-        expect(optionElements.length).toEqual(1);
-      });
     });
 
     /**
