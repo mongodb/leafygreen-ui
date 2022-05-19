@@ -525,7 +525,8 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
-  // Update the focused option when the inputValue changes
+  // When the input value changes (or when the menu opens)
+  // Update the focused option
   useEffect(() => {
     if (inputValue !== prevValue) {
       updateFocusedOption('first');
