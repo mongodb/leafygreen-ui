@@ -25,7 +25,7 @@ import {
 import { wrapJSX } from './utils';
 import { OptionObject } from './Combobox.types';
 import Button from '@leafygreen-ui/button';
-import { keyMap } from './utils';
+import { keyMap } from '@leafygreen-ui/lib';
 
 /**
  * Tests

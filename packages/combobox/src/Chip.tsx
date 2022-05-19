@@ -5,7 +5,7 @@ import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { keyMap } from './utils';
+import { keyMap } from '@leafygreen-ui/lib';
 import { chipClassName } from './Combobox.styles';
 
 const chipWrapperStyle = ({
