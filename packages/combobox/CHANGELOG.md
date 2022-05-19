@@ -1,5 +1,23 @@
 # @leafygreen-ui/combobox
 
+## 1.1.0
+
+### Minor Changes
+
+- e9c39305: - Reduces `min-width` of combobox down to `24px`
+
+### Patch Changes
+
+- a526ac52: Adds `@leafygreen-ui/tokens` and `@leafygreen-ui/tooltip` to dependencies
+- e9c39305: Updates highlighting function to fix a bug where some text would be duplicated
+  - Fixes left padding when `overflow="scroll-x"`
+  - Clarifies wording for `initialValue` prop docs
+- Updated dependencies [e630a889]
+- Updated dependencies [2670e4db]
+- Updated dependencies [6c12e85a]
+  - @leafygreen-ui/checkbox@8.0.2
+  - @leafygreen-ui/icon@11.10.0
+
 ## 1.0.3
 
 ### Patch Changes

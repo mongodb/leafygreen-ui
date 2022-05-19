@@ -46,7 +46,8 @@ export type TextInputFontSize =
   typeof TextInputFontSize[keyof typeof TextInputFontSize];
 
 export interface BaseTextInputProps
-  extends HTMLElementProps<'input', HTMLInputElement>, DarkModeProps {
+  extends HTMLElementProps<'input', HTMLInputElement>,
+    DarkModeProps {
   /**
    * id associated with the TextInput component.
    */

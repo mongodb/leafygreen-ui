@@ -40,10 +40,11 @@ const disabledLabelColorStyle: Record<Mode, string> = {
   `,
 };
 
-type LabelProps = HTMLElementProps<'label', never> & DarkModeProps & {
-  htmlFor: string;
-  disabled?: boolean;
-};
+type LabelProps = HTMLElementProps<'label', never> &
+  DarkModeProps & {
+    htmlFor: string;
+    disabled?: boolean;
+  };
 
 export const Label = ({
   darkMode = false,

@@ -6,7 +6,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Size } from './types';
 
 export interface RadioGroupProps extends DarkModeProps {
-
   /**
    * className supplied to RadioGroup container.
    */

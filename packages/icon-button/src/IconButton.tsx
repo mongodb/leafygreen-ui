@@ -220,7 +220,8 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
   title?: string | null | boolean;
 }
 interface BaseIconButtonProps
-  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement>, DarkModeProps {
+  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement>,
+    DarkModeProps {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;

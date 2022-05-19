@@ -1,4 +1,5 @@
-import { HTMLElementProps, DarkModeProps } from '@leafygreen-ui/lib';
+import { HTMLProps } from 'react';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 const Variant = {
   Default: 'default',
@@ -34,10 +35,18 @@ const FontSize = {
 
 type FontSize = typeof FontSize[keyof typeof FontSize];
 
-type ButtonProps = Pick<
-  HTMLElementProps<'button'>,
-  'disabled' | 'onClick' | 'type' | 'className'
-> & DarkModeProps & {
+interface ButtonProps extends DarkModeProps {
+  // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.
+  // https://github.com/storybookjs/storybook/issues/14798
+  /**
+   * Determines whether the button element will be disabled.
+   *
+   * @default false
+   */
+  disabled?: HTMLProps<HTMLButtonElement>['disabled'];
+  onClick?: HTMLProps<HTMLButtonElement>['onClick'];
+  type?: HTMLProps<HTMLButtonElement>['type'];
+  className?: HTMLProps<HTMLButtonElement>['className'];
   variant?: Variant;
   baseFontSize?: FontSize;
   size?: Size;
@@ -46,6 +55,6 @@ type ButtonProps = Pick<
   rightGlyph?: React.ReactElement;
   href?: string;
   as?: keyof JSX.IntrinsicElements;
-};
+}
 
 export { Variant, Size, Mode, FontSize, ButtonProps };

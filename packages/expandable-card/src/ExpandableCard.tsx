@@ -123,7 +123,9 @@ const childrenWrapperTransitionStyle = (
 /**
  * Types
  */
-interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement>, DarkModeProps {
+interface ExpandableCardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    DarkModeProps {
   /**
    * The title of the card
    */

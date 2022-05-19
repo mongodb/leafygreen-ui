@@ -93,7 +93,9 @@ export interface TableRowInterface<Shape = {}> {
   datum: Shape;
 }
 
-export interface TableProps<Shape> extends HTMLElementProps<'table', never>, DarkModeProps {
+export interface TableProps<Shape>
+  extends HTMLElementProps<'table', never>,
+    DarkModeProps {
   data: Array<Shape>;
   columns:
     | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>

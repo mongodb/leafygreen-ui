@@ -64,16 +64,17 @@ function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
   );
 }
 
-type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & DarkModeProps &  {
-  onCopy?: Function;
-  contents: string;
-  showCopyButton?: boolean;
-  language?: LanguageOption;
-  isMultiline?: boolean;
-  customActionButtons?: Array<React.ReactNode>;
-  showCustomActionButtons?: boolean;
-  className?: string;
-} & PopoverProps;
+type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> &
+  DarkModeProps & {
+    onCopy?: Function;
+    contents: string;
+    showCopyButton?: boolean;
+    language?: LanguageOption;
+    isMultiline?: boolean;
+    customActionButtons?: Array<React.ReactNode>;
+    showCustomActionButtons?: boolean;
+    className?: string;
+  } & PopoverProps;
 
 function Panel({
   language,

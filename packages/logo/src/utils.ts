@@ -40,11 +40,12 @@ export interface LogoProps extends HTMLElementProps<'svg'> {
   height?: number;
 }
 
-export type ProductLogoProps = HTMLElementProps<'svg', never> & DarkModeProps & {
-  knockout?: boolean;
-  size?: number;
-  height?: number;
-};
+export type ProductLogoProps = HTMLElementProps<'svg', never> &
+  DarkModeProps & {
+    knockout?: boolean;
+    size?: number;
+    height?: number;
+  };
 
 export const getAccessibleProps = ({
   role,

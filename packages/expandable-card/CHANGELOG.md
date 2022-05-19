@@ -1,5 +1,13 @@
 # @leafygreen-ui/expandable-card
 
+## 0.9.4
+
+### Patch Changes
+
+- 0171c6bb: Adds IconButton and A11y packages to `tsconfig`
+- Updated dependencies [2670e4db]
+  - @leafygreen-ui/icon@11.10.0
+
 ## 0.9.3
 
 ### Patch Changes

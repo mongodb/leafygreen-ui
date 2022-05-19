@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/checkbox",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "LeafyGreen UI Kit Checkbox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,6 +20,7 @@
     "access": "public"
   },
   "dependencies": {
+    "react-transition-group": "^4.4.1",
     "@leafygreen-ui/hooks": "^7.0.0",
     "@leafygreen-ui/lib": "^9.2.1",
     "@leafygreen-ui/typography": "^11.0.1"

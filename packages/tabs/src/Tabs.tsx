@@ -2,7 +2,12 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
-import { keyMap, isComponentType, Either, DarkModeProps } from '@leafygreen-ui/lib';
+import {
+  keyMap,
+  isComponentType,
+  Either,
+  DarkModeProps,
+} from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 

@@ -155,28 +155,29 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 };
 
-type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & DarkModeProps & {
-  id?: string;
-  label?: string | null;
-  description?: string;
-  state?: State;
-  errorMessage?: string;
-  handleValidation?: (value: string) => void;
-  /**
-   * Callback to be executed when the input stops being focused.
-   */
-  onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
+type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> &
+  DarkModeProps & {
+    id?: string;
+    label?: string | null;
+    description?: string;
+    state?: State;
+    errorMessage?: string;
+    handleValidation?: (value: string) => void;
+    /**
+     * Callback to be executed when the input stops being focused.
+     */
+    onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
 
-  /**
-   * Callback to be executed when the value of the input field changes.
-   */
-  onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
+    /**
+     * Callback to be executed when the value of the input field changes.
+     */
+    onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 
-  /**
-   * Override the global `baseFontSize` set in LeafygreenProvider
-   */
-  baseFontSize?: BaseFontSize;
-};
+    /**
+     * Override the global `baseFontSize` set in LeafygreenProvider
+     */
+    baseFontSize?: BaseFontSize;
+  };
 
 type AriaLabels = 'label' | 'aria-labelledby';
 export type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;

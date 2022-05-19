@@ -42,9 +42,10 @@ const disabledDescriptionColorStyle: Record<Mode, string> = {
   `,
 };
 
-type DescriptionProps = HTMLElementProps<'p', never> & DarkModeProps & {
-  disabled?: boolean;
-};
+type DescriptionProps = HTMLElementProps<'p', never> &
+  DarkModeProps & {
+    disabled?: boolean;
+  };
 
 export const Description = ({
   darkMode = false,

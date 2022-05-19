@@ -11,7 +11,11 @@ import once from 'lodash/once';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { createDataProp, DarkModeProps, isComponentType } from '@leafygreen-ui/lib';
+import {
+  createDataProp,
+  DarkModeProps,
+  isComponentType,
+} from '@leafygreen-ui/lib';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
@@ -211,7 +215,8 @@ export const SegmentedControlContext = React.createContext<SCContext>({
 });
 
 export interface SegmentedControlProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>, DarkModeProps {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
+    DarkModeProps {
   /**
    * Children must be SegmentedControlOptions
    */

@@ -19,7 +19,9 @@ export type LineHighlightingDefinition = ReadonlyArray<
   number | readonly [number, number]
 >;
 
-export interface SyntaxProps extends React.HTMLAttributes<HTMLElement>, DarkModeProps {
+export interface SyntaxProps
+  extends React.HTMLAttributes<HTMLElement>,
+    DarkModeProps {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
    */

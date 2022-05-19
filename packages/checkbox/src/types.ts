@@ -5,7 +5,9 @@ import {
   HTMLElementProps,
 } from '@leafygreen-ui/lib';
 
-interface InternalCheckboxProps extends HTMLElementProps<'input', never>, DarkModeProps {
+interface InternalCheckboxProps
+  extends HTMLElementProps<'input', never>,
+    DarkModeProps {
   checked?: boolean;
   label?: React.ReactNode;
   ['aria-label']?: string;
