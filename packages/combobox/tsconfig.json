@@ -41,6 +41,9 @@
       "path": "../tooltip"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../typography"
     }
   ]
