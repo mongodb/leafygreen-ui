@@ -1,5 +1,12 @@
 # @leafygreen-ui/checkbox
 
+## 8.0.2
+
+### Patch Changes
+
+- e630a889: Add react-transition-group as a dependency
+- 6c12e85a: Update the alignment of the label when there are multiple lines
+
 ## 8.0.1
 
 ### Patch Changes

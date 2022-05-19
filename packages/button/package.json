@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "15.0.0",
+  "version": "15.0.1",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -28,7 +28,7 @@
     "@leafygreen-ui/ripple": "^1.1.1"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "^11.9.0"
+    "@leafygreen-ui/icon": "^11.10.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.2.0"
