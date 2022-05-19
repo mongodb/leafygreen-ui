@@ -1,3 +1,4 @@
+import React from 'react';
 import { isComponentType, keyMap as _keyMap } from '@leafygreen-ui/lib';
 import { OptionObject } from '../Combobox.types';
 import { getNameAndValue } from './getNameAndValue';
