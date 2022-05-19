@@ -798,7 +798,7 @@ export default function Combobox<M extends boolean>({
     if (doesSelectionExist) {
       if (isMultiselect(selection)) {
         // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
-        scrollToEnd();
+        scrollInputToEnd();
       } else if (!isMultiselect(selection)) {
         // Update the text input
         const displayName =
@@ -988,7 +988,7 @@ export default function Combobox<M extends boolean>({
 
   // Fired when the wrapper gains focus
   const handleInputWrapperFocus = () => {
-    scrollToEnd();
+    scrollInputToEnd();
     openMenu();
   };
 
@@ -1316,9 +1316,10 @@ export default function Combobox<M extends boolean>({
 
   /**
    * Scrolls the combobox to the far right.
-   * Used when `overflow == 'scroll-x'`
+   * Used when `overflow == 'scroll-x'`.
+   * Has no effect otherwise
    */
-  function scrollToEnd() {
+  function scrollInputToEnd() {
     if (inputWrapperRef && inputWrapperRef.current) {
       // TODO - consider converting to .scrollTo(). This is not yet suppoted in IE or jsdom
       inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
