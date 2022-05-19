@@ -9,7 +9,7 @@
 ### Patch Changes
 
 - a526ac52: Adds `@leafygreen-ui/tokens` and `@leafygreen-ui/tooltip` to dependencies
-- e9c39305: - Updates highlighting function to fix a bug where some text would be duplicated
+- e9c39305: Updates highlighting function to fix a bug where some text would be duplicated
   - Fixes left padding when `overflow="scroll-x"`
   - Clarifies wording for `initialValue` prop docs
 - Updated dependencies [e630a889]
