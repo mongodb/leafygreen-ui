@@ -1,8 +1,7 @@
-import { isComponentType, keyMap as _keyMap } from '@leafygreen-ui/lib';
-import kebabCase from 'lodash/kebabCase';
-import React from 'react';
-import { ComboboxOptionProps, OptionObject } from '../Combobox.types';
+import { keyMap as _keyMap } from '@leafygreen-ui/lib';
 export { wrapJSX } from './wrapJSX';
+export { getNameAndValue } from './getNameAndValue';
+export { flattenChildren } from './flattenChildren';
 
 // TODO - remove this when lib/keyMap supports Backspace & Delete
 export const keyMap = {
@@ -10,66 +9,3 @@ export const keyMap = {
   Backspace: 8,
   Delete: 46,
 } as const;
-
-/**
- *
- * Returns an object with properties `value` & `displayName`
- * based on the props provided
- *
- * @property value: string
- * @property displayName: string
- */
-export const getNameAndValue = ({
-  value: valProp,
-  displayName: nameProp,
-}: ComboboxOptionProps): {
-  value: string;
-  displayName: string;
-} => {
-  return {
-    value: valProp ?? kebabCase(nameProp),
-    displayName: nameProp ?? valProp ?? '', // TODO consider adding a prop to customize displayName => startCase(valProp),
-  };
-};
-
-/**
- *
- * Flattens multiple nested ComboboxOptions into a 1D array
- *
- * @param _children
- * @returns `Array<OptionObject>`
- */
-export const flattenChildren = (
-  _children: React.ReactNode,
-): Array<OptionObject> => {
-  // TS doesn't like .reduce
-  // @ts-expect-error
-  return React.Children.toArray(_children).reduce(
-    // @ts-expect-error
-    (
-      acc: Array<OptionObject>,
-      child: React.ReactNode,
-    ): Array<OptionObject> | undefined => {
-      if (isComponentType(child, 'ComboboxOption')) {
-        const { value, displayName } = getNameAndValue(child.props);
-        const { glyph } = child.props;
-
-        return [
-          ...acc,
-          {
-            value,
-            displayName,
-            hasGlyph: !!glyph,
-          },
-        ];
-      } else if (isComponentType(child, 'ComboboxGroup')) {
-        const { children } = child.props;
-
-        if (children) {
-          return [...acc, ...flattenChildren(children)];
-        }
-      }
-    },
-    [] as Array<OptionObject>,
-  );
-};
