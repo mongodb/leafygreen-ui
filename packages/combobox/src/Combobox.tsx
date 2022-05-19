@@ -295,6 +295,10 @@ export default function Combobox<M extends boolean>({
    *
    */
 
+  /**
+   * Returns the name of the current focused element
+   * @returns "FirstChip" | "LastChip" | "MiddleChip" | "Input" | "ClearButton" | "Combobox"
+   */
   const getFocusedElementName = useCallback(() => {
     const isFocusOn = {
       Input: inputRef.current?.contains(document.activeElement),
@@ -330,6 +334,10 @@ export default function Combobox<M extends boolean>({
   }, [getChipRef, isMultiselect, selection]);
 
   type Direction = 'next' | 'prev' | 'first' | 'last';
+
+  /**
+   * Updates the highlighted menu option based on the provided direction
+   */
   const updateFocusedOption = useCallback(
     (direction: Direction) => {
       const optionsCount = visibleOptions?.length ?? 0;
@@ -386,6 +394,9 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
+  /**
+   * Updates the focused chip based on the provided direction
+   */
   const updateFocusedChip = useCallback(
     (direction: Direction | null, relativeToIndex?: number) => {
       if (isMultiselect(selection)) {
@@ -435,6 +446,9 @@ export default function Combobox<M extends boolean>({
     [getActiveChipIndex, isMultiselect, selection],
   );
 
+  /**
+   * Handles an arrow key press
+   */
   const handleArrowKey = useCallback(
     (direction: 'left' | 'right', event: React.KeyboardEvent<Element>) => {
       // Remove focus from menu
@@ -525,7 +539,8 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
-  // Update the focused option when the inputValue changes
+  // When the input value changes (or when the menu opens)
+  // Update the focused option
   useEffect(() => {
     if (inputValue !== prevValue) {
       updateFocusedOption('first');
@@ -783,7 +798,7 @@ export default function Combobox<M extends boolean>({
     if (doesSelectionExist) {
       if (isMultiselect(selection)) {
         // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
-        scrollToEnd();
+        scrollInputToEnd();
       } else if (!isMultiselect(selection)) {
         // Update the text input
         const displayName =
@@ -973,7 +988,7 @@ export default function Combobox<M extends boolean>({
 
   // Fired when the wrapper gains focus
   const handleInputWrapperFocus = () => {
-    scrollToEnd();
+    scrollInputToEnd();
     openMenu();
   };
 
@@ -1301,9 +1316,10 @@ export default function Combobox<M extends boolean>({
 
   /**
    * Scrolls the combobox to the far right.
-   * Used when `overflow == 'scroll-x'`
+   * Used when `overflow == 'scroll-x'`.
+   * Has no effect otherwise
    */
-  function scrollToEnd() {
+  function scrollInputToEnd() {
     if (inputWrapperRef && inputWrapperRef.current) {
       // TODO - consider converting to .scrollTo(). This is not yet suppoted in IE or jsdom
       inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
