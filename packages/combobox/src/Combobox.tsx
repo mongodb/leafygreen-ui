@@ -112,6 +112,7 @@ export default function Combobox<M extends boolean>({
   const [inputValue, setInputValue] = useState<string>('');
   const prevValue = usePrevious(inputValue);
   const [focusedChip, setFocusedChip] = useState<string | null>(null);
+  const viewportSize = useViewportSize();
 
   const doesSelectionExist =
     !isNull(selection) &&
@@ -121,6 +122,9 @@ export default function Combobox<M extends boolean>({
     multiselect && isArray(selection) && selection.length > 0
       ? undefined
       : placeholder;
+
+  const closeMenu = () => setOpen(false);
+  const openMenu = () => setOpen(true);
 
   /**
    * Utility function that tells Typescript whether selection is multiselect
@@ -546,9 +550,11 @@ export default function Combobox<M extends boolean>({
   }, [focusedOption, getOptionRef]);
 
   /**
-   *
    * Rendering
-   *
+   */
+
+  /**
+   * Callback to render the children as <InternalComboboxOption> elements
    */
   const renderInternalOptions = useCallback(
     (_children: React.ReactNode) => {
@@ -626,6 +632,10 @@ export default function Combobox<M extends boolean>({
     () => renderInternalOptions(children),
     [children, renderInternalOptions],
   );
+
+  /**
+   * The rendered JSX for the selection Chips
+   */
   const renderedChips = useMemo(() => {
     if (isMultiselect(selection)) {
       return selection.filter(isValueValid).map((value, index) => {
@@ -673,6 +683,9 @@ export default function Combobox<M extends boolean>({
     updateFocusedChip,
   ]);
 
+  /**
+   * The rendered JSX for the input icons (clear, warn & caret)
+   */
   const renderedInputIcons = useMemo(() => {
     const handleClearButtonClick = (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -720,7 +733,9 @@ export default function Combobox<M extends boolean>({
     isOpen,
   ]);
 
-  // Do any of the options have an icon?
+  /**
+   * Flag to determine whether the rendered options have icons
+   */
   const withIcons = useMemo(
     () => allOptions.some(opt => opt.hasGlyph),
     [allOptions],
@@ -784,7 +799,7 @@ export default function Combobox<M extends boolean>({
     }
   }, [doesSelectionExist, allOptions, isMultiselect, selection]);
 
-  // Set initialValue
+  // Set the initialValue
   useEffect(() => {
     if (initialValue) {
       if (isArray(initialValue)) {
@@ -840,17 +855,21 @@ export default function Combobox<M extends boolean>({
    * Menu management
    *
    */
-  const closeMenu = () => setOpen(false);
-  const openMenu = () => setOpen(true);
 
   const [menuWidth, setMenuWidth] = useState(0);
+
   useEffect(() => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   }, [comboboxRef, isOpen, focusedOption, selection]);
+
   const handleTransitionEnd = () => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   };
 
+  /**
+   * The rendered menu JSX contents
+   * Includes error, empty, search and default states
+   */
   const renderedMenuContents = useMemo((): JSX.Element => {
     switch (searchState) {
       case 'loading': {
@@ -892,9 +911,9 @@ export default function Combobox<M extends boolean>({
     searchState,
   ]);
 
-  const viewportSize = useViewportSize();
-
-  // Set the max height of the menu
+  /**
+   * The max height of the menu element
+   */
   const maxHeight = useMemo(() => {
     // TODO - consolidate this hook with Select/ListMenu
     const maxMenuHeight = 274;
@@ -917,11 +936,6 @@ export default function Combobox<M extends boolean>({
 
     return maxMenuHeight;
   }, [viewportSize, comboboxRef, menuRef]);
-
-  // Scroll the menu when the focus changes
-  useEffect(() => {
-    // get the focused option
-  }, [focusedOption]);
 
   /**
    *
