@@ -105,7 +105,7 @@ export default function Combobox<M extends boolean>({
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setOpen] = useState(false);
-  const prevOpenState = usePrevious(isOpen);
+  const wasOpen = usePrevious(isOpen);
   const [focusedOption, setFocusedOption] = useState<string | null>(null);
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
@@ -860,10 +860,10 @@ export default function Combobox<M extends boolean>({
 
   // when the menu closes, update the value if needed
   useEffect(() => {
-    if (!isOpen && prevOpenState) {
+    if (!isOpen && wasOpen) {
       onCloseMenu();
     }
-  }, [isOpen, prevOpenState, onCloseMenu]);
+  }, [isOpen, wasOpen, onCloseMenu]);
 
   /**
    *
