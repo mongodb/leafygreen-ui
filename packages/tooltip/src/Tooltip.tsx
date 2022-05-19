@@ -17,7 +17,10 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useUpdatedBaseFontSize,
+  bodyTypeScaleStyles,
+} from '@leafygreen-ui/typography';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
 import SvgNotch from './Notch';
@@ -58,18 +61,6 @@ const baseTypeStyle = css`
   font-weight: 400;
 `;
 
-const typeScale1 = css`
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: 0px;
-`;
-
-const typeScale2 = css`
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0px;
-`;
-
 const baseStyles = css`
   display: flex;
   align-items: center;
@@ -99,13 +90,13 @@ const colorSet = {
   },
   [Mode.Dark]: {
     tooltip: css`
-      background-color: ${palette.gray.light3};
-      color: ${uiColors.gray.dark3};
+      background-color: ${palette.gray.light2};
+      color: ${uiColors.black};
     `,
     children: css`
       color: inherit;
     `,
-    notchFill: palette.gray.light3,
+    notchFill: palette.gray.light2,
   },
 };
 
@@ -228,7 +219,7 @@ function Tooltip({
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const size = useBaseFontSize();
+  const size = useUpdatedBaseFontSize();
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =
@@ -392,7 +383,7 @@ function Tooltip({
             <div
               className={cx(
                 baseTypeStyle,
-                size === 16 ? typeScale2 : typeScale1,
+                bodyTypeScaleStyles[size],
                 colorSet[mode].children,
               )}
             >
