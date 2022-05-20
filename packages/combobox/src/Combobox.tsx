@@ -53,6 +53,7 @@ import {
   flattenChildren,
   getDisplayNameForValue,
   getNameAndValue,
+  getValueForDisplayName,
 } from './utils';
 
 /**
@@ -128,6 +129,14 @@ export default function Combobox<M extends boolean>({
   const openMenu = () => setOpen(true);
 
   /**
+   * Array of all of the options objects
+   */
+  const allOptions: Array<OptionObject> = useMemo(
+    () => flattenChildren(children),
+    [children],
+  );
+
+  /**
    * Utility function that tells Typescript whether selection is multiselect
    */
   const isMultiselect = useCallback(
@@ -200,11 +209,27 @@ export default function Combobox<M extends boolean>({
   );
 
   /**
-   * Array of all of the options objects
+   * Returns whether a given value is included in, or equal to, the current selection
    */
-  const allOptions: Array<OptionObject> = useMemo(
-    () => flattenChildren(children),
-    [children],
+  const isValueCurrentSelection = useCallback(
+    (value: string): boolean => {
+      return isMultiselect(selection)
+        ? selection.includes(value)
+        : value === selection;
+    },
+    [isMultiselect, selection],
+  );
+
+  /**
+   * Returns whether a given displayName is included in, or equal to, the current selection
+   * Similar to `isValueCurrentSelection`, but first converts `value` to `displayName`
+   */
+  const isDisplayNameCurrentSelection = useCallback(
+    (displayName: string): boolean => {
+      const value = getValueForDisplayName(displayName, allOptions);
+      return isValueCurrentSelection(value);
+    },
+    [allOptions, isValueCurrentSelection],
   );
 
   /**
@@ -219,6 +244,13 @@ export default function Combobox<M extends boolean>({
         return filteredOptions.includes(value);
       }
 
+      // If the text input value is the current selection
+      // (or included in the selection)
+      // then all options should be visible
+      if (isDisplayNameCurrentSelection(inputValue)) {
+        return true;
+      }
+
       // otherwise, we do our own filtering
       const displayName =
         typeof option === 'string'
@@ -229,12 +261,9 @@ export default function Combobox<M extends boolean>({
         .toLowerCase()
         .includes(inputValue.toLowerCase());
 
-      // if the menu has just been opened
-      // then the option should be visible regardless of the input value
-      const isNewlyOpened = isOpen && !wasOpen;
-      return isNewlyOpened || isValueInDisplayName;
+      return isValueInDisplayName;
     },
-    [filteredOptions, allOptions, inputValue, isOpen, wasOpen],
+    [filteredOptions, isDisplayNameCurrentSelection, inputValue, allOptions],
   );
 
   /**

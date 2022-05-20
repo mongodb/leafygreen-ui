@@ -615,6 +615,7 @@ describe('packages/combobox', () => {
       );
 
       test('Opening the menu when there is a selection should show all options', () => {
+        // See also: 'Pressing Down Arrow when there is a selection shows all menu options'
         const initialValue = select === 'multiple' ? ['apple'] : 'apple';
         const { comboboxEl, getMenuElements } = renderCombobox(select, {
           initialValue,
@@ -1068,6 +1069,17 @@ describe('packages/combobox', () => {
           userEvent.type(inputEl, '{arrowdown}');
           const reOpenedMenu = await findByRole('listbox');
           expect(reOpenedMenu).toBeInTheDocument();
+        });
+
+        test('Pressing Down Arrow when there is a selection shows all menu options', () => {
+          // See also: 'Opening the menu when there is a selection should show all options'
+          const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+          const { inputEl, getMenuElements } = renderCombobox(select, {
+            initialValue,
+          });
+          userEvent.type(inputEl, '{arrowdown}{arrowdown}');
+          const { optionElements } = getMenuElements();
+          expect(optionElements).toHaveLength(defaultOptions.length);
         });
       });
 

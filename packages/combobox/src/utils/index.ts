@@ -1,4 +1,7 @@
 export { wrapJSX } from './wrapJSX';
 export { getNameAndValue } from './getNameAndValue';
-export { getDisplayNameForValue } from './getDisplayNameForValue';
+export {
+  getDisplayNameForValue,
+  getValueForDisplayName,
+} from './getDisplayNameForValue';
 export { flattenChildren } from './flattenChildren';
