@@ -1029,10 +1029,10 @@ describe('packages/combobox', () => {
               initialValue,
             });
             userEvent.type(comboboxEl, '{arrowleft}');
-            const secondChip = queryChipsByIndex(1);
-            const lastChip = queryChipsByIndex(2);
-            fireEvent.keyDown(secondChip!, { keyCode: keyMap.Backspace });
-            expect(lastChip).toContainFocus();
+            const appleChip = queryChipsByIndex(0);
+            const bananaChip = queryChipsByIndex(1);
+            fireEvent.keyDown(appleChip!, { keyCode: keyMap.Backspace });
+            expect(bananaChip).toContainFocus();
           },
         );
       });
