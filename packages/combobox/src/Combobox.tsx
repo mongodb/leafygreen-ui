@@ -697,6 +697,7 @@ export default function Combobox<M extends boolean>({
    */
 
   const onCloseMenu = useCallback(() => {
+    // Single select, and no change to selection
     if (!isMultiselect(selection) && selection === prevSelection) {
       const exactMatchedOption = visibleOptions.find(
         option =>
@@ -787,7 +788,7 @@ export default function Combobox<M extends boolean>({
 
   // when the menu closes, update the value if needed
   useEffect(() => {
-    if (!isOpen && prevOpenState !== isOpen) {
+    if (!isOpen && prevOpenState) {
       onCloseMenu();
     }
   }, [isOpen, prevOpenState, onCloseMenu]);
@@ -895,6 +896,8 @@ export default function Combobox<M extends boolean>({
 
   // Set focus to the input element on click
   const handleInputWrapperClick = (e: React.MouseEvent) => {
+    // If we clicked the wrapper, not the input itself.
+    // (Focus is set automatically if the click is on the input)
     if (e.target !== inputRef.current) {
       let cursorPos = 0;
 
@@ -1059,19 +1062,44 @@ export default function Combobox<M extends boolean>({
    * Global Event Handler
    *
    */
-  // Global backdrop click handler
-  const handleBackdropClick = ({ target }: MouseEvent) => {
-    const isChildFocused =
-      menuRef.current?.contains(target as Node) ||
-      comboboxRef.current?.contains(target as Node) ||
-      false;
 
-    if (!isChildFocused) {
-      setOpen(false);
-    }
-  };
-
-  useEventListener('mousedown', handleBackdropClick);
+  /**
+   * We add two event handlers to the document to handle the backdrop click behavior.
+   * Intended behavior is to close the menu, and keep focus on the Combobox.
+   * No other click event handlers should fire on backdrop click
+   *
+   * 1. Mousedown event fires
+   * 2. We prevent `mousedown`'s default behavior, to prevent focus from being applied to the body (or other target)
+   * 3. Click event fires
+   * 4. We handle this event on _capture_, and stop propagation before the `click` event propagates all the way to any other element.
+   *  This ensures that even if we click on a button, that handler is not fired
+   * 5. Then we call `closeMenu`, setting `isOpen = false`, and rerender the component
+   */
+  useEventListener(
+    'mousedown',
+    (mousedown: MouseEvent) => {
+      if (!doesComponentContainEventTarget(mousedown)) {
+        mousedown.preventDefault(); // Prevent focus from being applied to body
+        mousedown.stopPropagation(); // Stop any other mousedown events from firing
+      }
+    },
+    {
+      enabled: isOpen,
+    },
+  );
+  useEventListener(
+    'click',
+    (click: MouseEvent) => {
+      if (!doesComponentContainEventTarget(click)) {
+        click.stopPropagation(); // Stop any other click events from firing
+        closeMenu();
+      }
+    },
+    {
+      options: { capture: true },
+      enabled: isOpen,
+    },
+  );
 
   const popoverProps = {
     popoverZIndex,
@@ -1198,4 +1226,13 @@ export default function Combobox<M extends boolean>({
       </div>
     </ComboboxContext.Provider>
   );
+
+  // Closure-dependant utils
+  function doesComponentContainEventTarget({ target }: MouseEvent): boolean {
+    return (
+      menuRef.current?.contains(target as Node) ||
+      comboboxRef.current?.contains(target as Node) ||
+      false
+    );
+  }
 }
