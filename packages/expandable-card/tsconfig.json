@@ -23,9 +23,6 @@
       "path": "../lib"
     },
     {
-      "path": "../icon-button"
-    },
-    {
       "path": "../typography"
     }
   ]
