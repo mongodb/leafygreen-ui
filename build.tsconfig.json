@@ -126,9 +126,6 @@
       "path": "./packages/text-input"
     },
     {
-      "path": "./packages/theme"
-    },
-    {
       "path": "./packages/toast"
     },
     {

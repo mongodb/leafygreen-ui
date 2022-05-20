@@ -20,9 +20,6 @@
       "path": "../palette"
     },
     {
-      "path": "../theme"
-    },
-    {
       "path": "../tooltip"
     }
   ]
