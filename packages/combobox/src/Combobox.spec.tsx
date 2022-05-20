@@ -927,7 +927,7 @@ describe('packages/combobox', () => {
         });
       });
 
-      describe.only('Backspace key', () => {
+      describe('Backspace key', () => {
         test('Deletes text when cursor is NOT at beginning of selection', () => {
           const { inputEl } = renderCombobox(select);
           userEvent.type(inputEl, 'app{backspace}');
