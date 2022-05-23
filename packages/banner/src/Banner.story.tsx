@@ -34,7 +34,8 @@ export default {
 // eslint-disable-next-line react/prop-types
 const Template: ComponentStory<typeof Banner> = ({ image, ...args }) => (
   <Banner
-    image={image ? <Icon glyph={image as unknown as string} /> : undefined}
+    // @ts-expect-error
+    image={image ? <Icon glyph={image} /> : undefined}
     {...args}
   />
 );
@@ -62,5 +63,6 @@ Info.args = {
 export const WithCustomImage = Template.bind({});
 WithCustomImage.args = {
   variant: Variant.Info,
+  // @ts-expect-error
   image: 'Copy',
 };
