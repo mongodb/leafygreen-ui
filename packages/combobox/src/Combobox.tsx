@@ -430,16 +430,21 @@ export default function Combobox<M extends boolean>({
               break;
             }
 
-            case 'LastChip': {
-              // if focus is on last chip, go to input
-              event.preventDefault();
-              setInputFocus(0);
-              updateFocusedChip(null);
-              break;
-            }
-
             case 'FirstChip':
-            case 'MiddleChip': {
+            case 'MiddleChip':
+            case 'LastChip': {
+              if (
+                focusedElementName === 'LastChip' ||
+                // the first chip is also the last chip (i.e. only one)
+                selection?.length === 1
+              ) {
+                // if focus is on last chip, go to input
+                setInputFocus(0);
+                updateFocusedChip(null);
+                event.preventDefault();
+                break;
+              }
+              // First/middle chips
               updateFocusedChip('next');
               break;
             }
@@ -601,14 +606,20 @@ export default function Combobox<M extends boolean>({
     if (isMultiselect(selection)) {
       return selection.filter(isValueValid).map((value, index) => {
         const displayName = getDisplayNameForValue(value);
-
-        const onRemove = () => {
-          updateFocusedChip('next', index);
-          updateSelection(value);
-        };
-
         const isFocused = focusedChip === value;
         const chipRef = getChipRef(value);
+        const isLastChip = index >= selection.length - 1;
+
+        const onRemove = () => {
+          if (isLastChip) {
+            // Focus the input if this is the last chip in the set
+            setInputFocus();
+            updateFocusedChip(null);
+          } else {
+            updateFocusedChip('next', index);
+          }
+          updateSelection(value);
+        };
 
         const onFocus = () => {
           setFocusedChip(value);
@@ -633,8 +644,9 @@ export default function Combobox<M extends boolean>({
     getDisplayNameForValue,
     focusedChip,
     getChipRef,
-    updateFocusedChip,
     updateSelection,
+    updateFocusedChip,
+    setInputFocus,
   ]);
 
   const renderedInputIcons = useMemo(() => {
@@ -939,6 +951,7 @@ export default function Combobox<M extends boolean>({
 
     const isFocusInComponent = isFocusOnCombobox || isFocusInMenu;
 
+    // Only run if the focus is in the component
     if (isFocusInComponent) {
       // No support for modifiers yet
       // TODO - Handle support for multiple chip selection
@@ -1006,16 +1019,17 @@ export default function Combobox<M extends boolean>({
         }
 
         case keyMap.Backspace: {
-          // Backspace key focuses last chip
-          // Delete key does not
+          // Backspace key focuses last chip if the input is focused
+          // Note: Chip removal behavior is handled in `onRemove` defined in `renderChips`
           if (
             isMultiselect(selection) &&
+            focusedElement === 'Input' &&
             inputRef.current?.selectionStart === 0
           ) {
             updateFocusedChip('last');
-          } else {
-            openMenu();
           }
+          // Open the menu regardless
+          openMenu();
           break;
         }
 
