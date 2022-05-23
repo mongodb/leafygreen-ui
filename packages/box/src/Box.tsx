@@ -85,12 +85,13 @@ InlineBox.displayName = 'InlineBox';
  *
  * It also defaults to an `<a>` tag when a `href` prop is set.
  */
-const Box = React.forwardRef(InlineBox) as InlineBox;
+// @ts-expect-error
+const Box = React.forwardRef(InlineBox) as typeof InlineBox;
 
 Box.displayName = 'Box';
 
+// @ts-expect-error
 Box.propTypes = {
-  //  @ts-expect-error
   as: PropTypes.oneOfType([
     PropTypes.elementType,
     PropTypes.element,
