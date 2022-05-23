@@ -21,13 +21,12 @@ const scrollableStyle = css`
   width: 500px;
   position: relative;
   height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-interface RefPos {
-  [key: string]: string;
-}
-
-const referenceElPositions: RefPos = {
+const referenceElPositions: {[key: string]: string} = {
   centered: css`
     position: relative;
     margin-bottom: 200vh;

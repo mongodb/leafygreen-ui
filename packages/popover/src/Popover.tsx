@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
 import {
   usePopoverPortalContainer,
-  usePopoverContext,
+  // usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import {
   useViewportSize,
@@ -85,7 +85,7 @@ function Popover({
   const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
-  const { setIsPopoverOpen } = usePopoverContext();
+  // const { setIsPopoverOpen } = usePopoverContext();
 
   let { portalContainer, scrollContainer } = usePopoverPortalContainer();
 
@@ -149,7 +149,7 @@ function Popover({
   );
 
   const contentElViewportPos = useObjectDependency(
-    getElementViewportPosition(contentNode, scrollContainer),
+    getElementViewportPosition(contentNode?.parentNode as HTMLElement, scrollContainer),
   );
 
   const referenceElDocumentPos = useObjectDependency(
@@ -174,7 +174,7 @@ function Popover({
       () => getElementDocumentPosition(contentNode),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
-        contentNode,
+        contentNode?.parentNode,
         viewportSize,
         lastTimeContentElMutated,
         active,
@@ -228,6 +228,11 @@ function Popover({
     contentElDocumentPos,
     scrollContainer,
   });
+
+  console.group();
+  console.log(contentNode?.parentNode);
+  console.log(transform, positionCSS);
+  console.groupEnd();
 
   const activeStyle = css`
     opacity: 1;

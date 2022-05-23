@@ -79,8 +79,6 @@ export function calculatePosition({
 
   const transform = getTransform(windowSafeAlign, spacing);
 
-  // const dummyTransform = 'translate3d(10px, 0, 0) scale(0.8)';
-
   // calculatePosition will run and return CSS even if getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if something is returned.
   //  Justify fit does not position itself properly in this case so we continue to return the CSS
   if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
@@ -91,6 +89,7 @@ export function calculatePosition({
         left: 0,
         top: 0,
         transform,
+        transformOrigin,
       },
     };
   }
@@ -141,21 +140,39 @@ const defaultElementPosition = {
   width: 0,
 };
 
+// the problem is that offsetWidth is rounding the untransformed width of the content
+// and boundingWidth is returning the scaledWidth, scale(0.8),
+// neither of these are correct. We need an untransformed width that is not rounded.
+
+// Why is this only happening with reference elements on the right?
+// Its because of the way the left position of the content element is set. We need the width of the content element to get the correct left postion to line it up correctly with the right end of the reference element. Setting the left will also impact the width of the content element. Becuase the content width is incorrect, the left position is incorrect and the width is now incorrect. full circle.
+
+// send help
+
+
+
 /**
  * Returns the boundingWidth if the difference between the boundingWidth and offsetWidth is less than one else the offsetWidth is returned.
  */
-const getClosestToExactWidth = (
-  boundingWidth: number,
-  offsetWidth: number,
-): number => {
-  // offsetWidth returns a rounded number of the element's layout width and height.
-  // boundingWidth returns an exact number with the rendered width and height which can include transformations.
-  // Using the boundingWidth (exact number) is a better indicator of determining if an element will fit in the window, e.g. calcLeft() uses the width to determine the left position and then that number is used to check if it is safetly within the window bounds. In some cases the offsetWidth is rounded up which means that it might not fit in the window bounds when it really can.
-  // With this we check if the difference between the boundingWidth and offsetWidth is less than one, if thats the case then the number was rounded to a whole number and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
-  const wasRounded = Math.abs(boundingWidth - offsetWidth) < 1;
+// const getClosestToExactWidth = (
+//   boundingWidth: number,
+//   offsetWidth: number,
+// ): number => {
+//   // offsetWidth returns a rounded number of the element's layout width and height.
+//   // boundingWidth returns an exact number with the rendered width and height which can include transformations.
+//   // Using the boundingWidth (exact number) is a better indicator of determining if an element will fit in the window, e.g. calcLeft() uses the width to determine the left position and then that number is used to check if it is safetly within the window bounds. In some cases the offsetWidth is rounded up which means that it might not fit in the window bounds when it really can.
+//   // With this we check if the difference between the boundingWidth and offsetWidth is less than one, if thats the case then the number was rounded to a whole number and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
+//   const wasRounded = Math.abs(boundingWidth - offsetWidth) < 1;
 
-  return wasRounded ? boundingWidth : offsetWidth;
-};
+//   return wasRounded ? boundingWidth : offsetWidth;
+// };
+
+/**
+ * Returns the floating point width of the element. This width is
+ */
+const getComputedStyleWidth = (element: HTMLElement) => {
+  return parseFloat(getComputedStyle(element).width);
+}
 
 export function getElementDocumentPosition(
   element: HTMLElement | null,
@@ -174,7 +191,16 @@ export function getElementDocumentPosition(
   } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth } = element;
 
-  const width = getClosestToExactWidth(boundingWidth, offsetWidth);
+  console.log(element.offsetWidth, element.clientWidth, parseFloat(getComputedStyle(element).width));
+
+  
+  // const width = getClosestToExactWidth(boundingWidth, parseFloat(getComputedStyle(element).width));
+
+  // We use getComputedStyle so that we can get an untransformed and floating-point(unrounded) width of the content element.
+  // We can't use offsetWidth because this returns a rounded number of the element's layout width and height
+  // We can't use boundingWidth because this returns an exact number with the rendered width and height which can include transformations
+  const width = parseFloat(getComputedStyle(element).width);
+  console.log({boundingWidth}, {offsetWidth}, {width});
 
   if (scrollContainer) {
     const { scrollTop, scrollLeft } = scrollContainer;
@@ -221,11 +247,13 @@ export function getElementViewportPosition(
     bottom,
     left,
     right,
-    width: boundingWidth,
+    // width: boundingWidth,
   } = element.getBoundingClientRect();
-  const { offsetHeight: height, offsetWidth } = element;
+  // const { offsetHeight: height, offsetWidth } = element;
+  const { offsetHeight: height } = element;
 
-  const width = getClosestToExactWidth(boundingWidth, offsetWidth);
+  // const width = getClosestToExactWidth(boundingWidth, parseFloat(getComputedStyle(element).width));
+  const width = parseFloat(getComputedStyle(element).width);
 
   if (scrollContainer) {
     const {
