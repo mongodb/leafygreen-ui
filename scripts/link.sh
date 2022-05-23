@@ -23,7 +23,7 @@ else
 fi
 INSTALLED_PACKAGES_ARRAY=()
 for d in *; do
-    if [ "$d" != "lib" ] && [ "$d" != "theme" ]; then
+    if [ "$d" != "lib" ]; then
         INSTALLED_PACKAGES_ARRAY+=($d)
     fi
 done
