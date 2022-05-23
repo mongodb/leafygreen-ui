@@ -1021,13 +1021,12 @@ export default function Combobox<M extends boolean>({
         case keyMap.Backspace: {
           // Backspace key focuses last chip if the input is focused
           // Note: Chip removal behavior is handled in `onRemove` defined in `renderChips`
-          if (isMultiselect(selection)) {
-            if (
-              focusedElement === 'Input' &&
-              inputRef.current?.selectionStart === 0
-            ) {
-              updateFocusedChip('last');
-            }
+          if (
+            isMultiselect(selection) &&
+            focusedElement === 'Input' &&
+            inputRef.current?.selectionStart === 0
+          ) {
+            updateFocusedChip('last');
           }
           // Open the menu regardless
           openMenu();
