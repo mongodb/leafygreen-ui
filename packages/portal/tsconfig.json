@@ -14,9 +14,6 @@
       "path": "../lib"
     },
     {
-      "path": "../theme"
-    },
-    {
       "path": "../../packages/hooks"
     }
   ]
