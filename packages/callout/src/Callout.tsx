@@ -250,6 +250,7 @@ Callout.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };
 
 export default Callout;

@@ -89,7 +89,7 @@ interface BadgeProps {
 }
 
 /**
- * Badge component for status indication.
+ * Badges can be used to highlight information or the status of something.
  */
 function Badge({
   children,

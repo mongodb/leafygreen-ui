@@ -1,7 +1,7 @@
 import React from 'react';
 import Box, { BoxProps } from '.';
 import { Meta, Story } from '@storybook/react';
-import IntrinsicElements from '../../../.storybook/utils/IntrinsicElements';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef
 // https://github.com/storybookjs/storybook/issues/15334
@@ -24,9 +24,7 @@ export default {
   argTypes: {
     as: {
       defaultValue: 'div',
-      options: IntrinsicElements,
-      type: { name: 'string' },
-      control: { type: 'select' },
+      ...defaultArgTypes.as,
     },
     href: {
       control: 'text',

@@ -9,6 +9,7 @@ const rootStyle = css`
   align-items: center;
   align-content: center;
   padding: 100px;
+  height: 100%;
 `;
 
 const darkModeStyle = css`

@@ -1,3 +1,5 @@
+import IntrinsicElements from '../.storybook/utils/IntrinsicElements';
+
 const defaultArgTypes = {
   darkMode: {
     description: 'Render the component in dark mode.',
@@ -18,7 +20,9 @@ const defaultArgTypes = {
   as: {
     description:
       'The component will be rendered in HTML as the element selected here',
-    control: 'none',
+    options: IntrinsicElements,
+    type: { name: 'string' },
+    control: { type: 'select' },
   },
 };
 
