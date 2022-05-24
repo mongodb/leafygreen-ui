@@ -16,7 +16,7 @@ export default {
   component: StoryTextArea,
   argTypes: {
     baseFontSize: {
-      options: [13, 16],
+      options: [undefined, 13, 16],
       control: { type: 'radio' },
     },
     lgProviderBaseFontSize: {
