@@ -1,6 +1,7 @@
 import { palette } from '.';
 
 interface HueRange {
+  dark4?: string;
   dark3: string;
   dark2?: string;
   dark1?: string;
@@ -11,7 +12,7 @@ interface HueRange {
 }
 
 const requiredKeys = new Set(['dark3', 'dark2', 'base', 'light2', 'light3']);
-const optionalKeys = new Set(['dark1', 'light1']);
+const optionalKeys = new Set(['dark4', 'dark1', 'light1']);
 
 const allColors: Array<string | HueRange> = Object.values(palette);
 
