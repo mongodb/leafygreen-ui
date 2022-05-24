@@ -14,7 +14,7 @@ import {
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import {
@@ -91,7 +91,7 @@ const colorSet = {
   [Mode.Dark]: {
     tooltip: css`
       background-color: ${palette.gray.light2};
-      color: ${uiColors.black};
+      color: ${palette.black};
     `,
     children: css`
       color: inherit;
