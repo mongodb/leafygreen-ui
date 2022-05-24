@@ -227,6 +227,7 @@ export const inputElementStyle = css`
   line-height: var(--lg-combobox-line-height);
   height: var(--lg-combobox-height);
   width: var(--lg-combobox-input-width, 0);
+  min-width: 2px;
   transition: var(--lg-combobox-input-transition);
 
   &:focus {

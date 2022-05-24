@@ -8,6 +8,7 @@ import {
   waitFor,
   queryByText,
   render,
+  fireEvent,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -23,6 +24,7 @@ import {
 } from './ComboboxTestUtils';
 import { OptionObject, wrapJSX } from './util';
 import Button from '@leafygreen-ui/button';
+import { keyMap } from './util';
 
 /**
  * Tests
@@ -827,6 +829,19 @@ describe('packages/combobox', () => {
             expect(newMenuContainerEl).toBeInTheDocument();
           });
         });
+
+        testMultiSelect('Removes Chip when one is focused', () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { comboboxEl, queryAllChips, queryChipsByName } =
+            renderCombobox(select, {
+              initialValue,
+            });
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const chip = queryChipsByName('Carrot');
+          // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
+          fireEvent.keyDown(chip!, { keyCode: keyMap.Enter });
+          expect(queryAllChips()).toHaveLength(2);
+        });
       });
 
       describe('Space key', () => {
@@ -838,6 +853,19 @@ describe('packages/combobox', () => {
           if (select === 'multiple') {
             expect(queryAllChips()).toHaveLength(0);
           }
+        });
+
+        testMultiSelect('Removes Chip when one is focused', () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { comboboxEl, queryAllChips, queryChipsByName } =
+            renderCombobox(select, {
+              initialValue,
+            });
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const chip = queryChipsByName('Carrot');
+          // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
+          fireEvent.keyDown(chip!, { keyCode: keyMap.Space });
+          waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
       });
 
@@ -957,6 +985,46 @@ describe('packages/combobox', () => {
           expect(queryAllChips()).toHaveLength(1);
           expect(queryAllChips()[0]).toContainFocus();
         });
+
+        testMultiSelect('Removes Chip when one is focused', async () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { comboboxEl, queryAllChips, queryChipsByIndex } =
+            renderCombobox(select, {
+              initialValue,
+            });
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const lastChip = queryChipsByIndex(2);
+          // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
+          fireEvent.keyDown(lastChip!, { keyCode: keyMap.Backspace });
+          expect(queryAllChips()).toHaveLength(2);
+        });
+
+        testMultiSelect('Focuses input when last chip is removed', () => {
+          const initialValue = ['apple', 'banana'];
+          const { comboboxEl, inputEl, queryChipsByIndex } = renderCombobox(
+            select,
+            { initialValue },
+          );
+          userEvent.type(comboboxEl, '{arrowleft}');
+          const lastChip = queryChipsByIndex(1);
+          fireEvent.keyDown(lastChip!, { keyCode: keyMap.Backspace });
+          expect(inputEl).toHaveFocus();
+        });
+
+        testMultiSelect(
+          'Focuses next chip when an inner chip is removed',
+          () => {
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { comboboxEl, queryChipsByIndex } = renderCombobox(select, {
+              initialValue,
+            });
+            userEvent.type(comboboxEl, '{arrowleft}');
+            const appleChip = queryChipsByIndex(0);
+            const bananaChip = queryChipsByIndex(1);
+            fireEvent.keyDown(appleChip!, { keyCode: keyMap.Backspace });
+            expect(bananaChip).toContainFocus();
+          },
+        );
       });
 
       describe('Up & Down arrow keys', () => {
@@ -1091,7 +1159,7 @@ describe('packages/combobox', () => {
         });
 
         testMultiSelect('Focuses input when focus is on last chip', () => {
-          const initialValue = ['apple', 'banana', 'carrot'];
+          const initialValue = ['apple', 'banana'];
           const { inputEl } = renderCombobox(select, {
             initialValue,
           });
@@ -1104,47 +1172,31 @@ describe('packages/combobox', () => {
           // expect(inputEl!.selectionStart).toEqual(0);
         });
 
-        testMultiSelect('Focuses next chip when focus is on a chip', () => {
-          const initialValue = ['apple', 'banana', 'carrot'];
-          const { inputEl, queryChipsByIndex } = renderCombobox(select, {
+        testMultiSelect('Focuses input when focus is on only chip', () => {
+          const initialValue = ['apple'];
+          const { inputEl } = renderCombobox(select, {
             initialValue,
           });
-          userEvent.type(inputEl!, '{arrowleft}{arrowleft}{arrowright}');
-          const lastChip = queryChipsByIndex('last');
-          expect(lastChip!).toContainFocus();
-        });
-      });
-
-      describe('Remove chips with keyboard', () => {
-        let comboboxEl: HTMLElement,
-          queryAllChips: () => Array<HTMLElement>,
-          chipButton: HTMLElement;
-
-        beforeEach(() => {
-          const initialValue = ['apple', 'banana', 'carrot'];
-          const combobox = renderCombobox(select, {
-            initialValue,
-          });
-          comboboxEl = combobox.comboboxEl;
-          userEvent.type(comboboxEl, '{arrowleft}');
-          queryAllChips = combobox.queryAllChips;
-          const chip = combobox.queryChipsByName('Carrot');
-          if (!chip) throw new Error('Carrot Chip not found');
-          chipButton = chip.querySelector('button') as HTMLElement;
+          userEvent.type(
+            inputEl!,
+            'abc{arrowleft}{arrowleft}{arrowleft}{arrowleft}{arrowright}',
+          );
+          expect(inputEl!).toHaveFocus();
+          // expect(inputEl!.selectionStart).toEqual(0);
         });
 
-        testMultiSelect('Enter key', () => {
-          userEvent.type(chipButton, '{enter}');
-          waitFor(() => expect(queryAllChips()).toHaveLength(2));
-        });
-        testMultiSelect('Backspace key', () => {
-          userEvent.type(chipButton, '{backspace}');
-          waitFor(() => expect(queryAllChips()).toHaveLength(2));
-        });
-        testMultiSelect('Space key', () => {
-          userEvent.type(chipButton, '{space}');
-          waitFor(() => expect(queryAllChips()).toHaveLength(2));
-        });
+        testMultiSelect(
+          'Focuses next chip when focus is on an inner chip',
+          () => {
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { inputEl, queryChipsByIndex } = renderCombobox(select, {
+              initialValue,
+            });
+            userEvent.type(inputEl!, '{arrowleft}{arrowleft}{arrowright}');
+            const lastChip = queryChipsByIndex('last');
+            expect(lastChip!).toContainFocus();
+          },
+        );
       });
 
       describe('Any other key', () => {
