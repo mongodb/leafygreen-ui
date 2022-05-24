@@ -3,7 +3,7 @@
  *
  * @public
  */
-interface DarkModeProps {
+export default interface DarkModeProps {
   /**
    * Renders the component with dark mode styles.
    *
@@ -16,4 +16,3 @@ export const Mode = { Light: 'light', Dark: 'dark' } as const;
 type ModeType = typeof Mode[keyof typeof Mode];
 
 export type { ModeType };
-export default DarkModeProps;
