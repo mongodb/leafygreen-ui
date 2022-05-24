@@ -1,21 +1,29 @@
 import React from 'react';
 import Code from '@leafygreen-ui/code';
 import Callout, { Variant } from '.';
+import { ComponentStory, Meta, Story } from '@storybook/react';
+import { CalloutProps } from './Callout';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/Callout',
   component: Callout,
-  parameters: { 
-    controls: { exclude: ['children'] }
-  },
   args: {
     variant: Variant.Note,
-    content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy content ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  }
-};
+    children: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy children ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  },
+  argTypes: {
+    title: {
+      control: {
+        type: 'text',
+      },
+    },
+    children: defaultArgTypes.children,
+  },
+} as Meta<typeof Callout>;
 
-const Template = ({ content, ...args }) => (
-  <Callout {...args}>{content}</Callout>
+const Template: ComponentStory<typeof Callout> = (args) => (
+  <Callout {...args} />
 )
 
 export const Note = Template.bind({})
@@ -46,7 +54,7 @@ Example.args = {
 export const WithRichContent = Template.bind({})
 WithRichContent.args = {
   title: 'Title',
-  content: (
+  children: (
     <>
       Shopping items
       <ul>
