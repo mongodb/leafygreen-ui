@@ -20,10 +20,7 @@ export default (Story, options) => {
   const darkMode = options.args.darkMode;
   return (
     <LeafyGreenProvider>
-      <div className={cx(
-          rootStyle, 
-          { [darkModeStyle]: darkMode }
-        )}>
+      <div className={cx(rootStyle, { [darkModeStyle]: darkMode })}>
         <Story darkMode={darkMode} {...options} />
       </div>
     </LeafyGreenProvider>

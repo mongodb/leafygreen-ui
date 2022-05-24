@@ -15,7 +15,7 @@ export const argTypes = {
     description: '`className` prop passed to the component',
     control: 'text',
   },
-}
+};
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

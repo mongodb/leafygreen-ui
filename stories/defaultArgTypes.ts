@@ -16,9 +16,10 @@ const defaultArgTypes = {
     control: 'text',
   },
   as: {
-    description: 'The component will be rendered in HTML as the element selected here',
+    description:
+      'The component will be rendered in HTML as the element selected here',
     control: 'none',
-  }
-}
+  },
+};
 
 export default defaultArgTypes;
