@@ -1,14 +1,14 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import TextArea from './TextArea';
 import { TextAreaProps } from './types';
 
 import { ComponentStory } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
+type LGProviderBaseFontSize = 14 | 16;
+
 export const StoryTextArea: React.FC<
-  TextAreaProps & { lgProviderBaseFontSize: 14 | 16 }
+  TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }
 > = props => <TextArea {...props} />;
 
 export default {
@@ -35,16 +35,9 @@ const Template: ComponentStory<typeof StoryTextArea> = ({
   darkMode,
   lgProviderBaseFontSize,
   ...args
-}: TextAreaProps & { lgProviderBaseFontSize: 14 | 16 }) => (
+}: TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }) => (
   <LeafygreenProvider baseFontSize={lgProviderBaseFontSize}>
-    <div
-      className={css`
-        padding: 30px;
-        background-color: ${darkMode ? palette.black : 'white'};
-      `}
-    >
-      <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
-    </div>
+    <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
   </LeafygreenProvider>
 );
 

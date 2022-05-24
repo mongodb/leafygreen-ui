@@ -27,20 +27,20 @@ import {
  * ```
 <TextArea label='Input Label' onChange={() => execute when value of input field changes}/>
 ```
- * @param props.id id associated with the TextArea component.
+ * @param props.id ID associated with the TextArea component.
  * @param props.label Text shown in bold above the input element.
  * @param props.description Text that gives more detail about the requirements for the input.
  * @param props.disabled Whether or not the field is currently disabled.
  * @param props.onChange Callback to be executed when the value of the input field changes.
  * @param props.onBlur Callback to be executed when the input stops being focused.
  * @param props.placeholder The placeholder text shown in the input field before the user begins typing.
- * @param props.errorMessage The message shown below the input field if the value is invalid.
- * @param props.state The current state of the TextArea. This can be none or error.
+ * @param props.errorMessage The error message shown below the input element if the value is invalid.
+ * @param props.state The current state of the TextArea. This can be `none` or `error`.
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
- * @param props.className className supplied to the TextArea container.
- * @param props.darkMode determines whether or not the component appears in dark mode.
+ * @param props.className ClassName supplied to the TextArea container.
+ * @param props.darkMode Determines whether or not the component appears in dark mode.
  * @param props.handleValidation Validation callback used to validate input.
- * @param props.baseFontSize Override the global `baseFontSize` set in LeafygreenProvider. This will only change the input text.
+ * @param props.baseFontSize Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description.
  */
 
 const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
