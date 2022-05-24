@@ -2,14 +2,6 @@ import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import ConfirmationModal, { Variant } from '.';
-// import {
-//   Title,
-//   Subtitle as SbSubtitle,
-//   Description,
-//   ArgsTable,
-//   Primary,
-//   PRIMARY_STORY,
-// } from '@storybook/addon-docs';
 
 export default {
   title: 'Packages/Modals/ConfirmationModal',

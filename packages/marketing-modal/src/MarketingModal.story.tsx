@@ -115,36 +115,3 @@ export const Basic = ControlledTemplate.bind({});
 Basic.args = {
   open: true,
 };
-
-// const UncontrolledTemplate: ComponentStory<typeof MarketingModal> = ({
-//   graphicStyle,
-//   darkMode,
-//   ...args
-// }) => {
-//   const graphicCenterImage = darkMode
-//     ? 'DataLake.png'
-//     : 'marketing-center-light.svg';
-//   const graphicFillImage = darkMode
-//     ? 'Realm_Rebrand_Image.png'
-//     : 'marketing-fill-light.jpg';
-
-//   return (
-//     <MarketingModal
-//       {...args}
-//       graphicStyle={graphicStyle}
-//       darkMode={darkMode}
-//       graphic={
-//         graphicStyle === GraphicStyle.Center ? (
-//           <img
-//             alt=""
-//             src={`examples/${graphicCenterImage}`}
-//             width={darkMode ? 275 : 278}
-//             height={darkMode ? 220 : 252.6}
-//           />
-//         ) : (
-//           <img alt="Marketing Modal" src={`examples/${graphicFillImage}`} />
-//         )
-//       }
-//     />
-//   );
-// };

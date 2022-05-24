@@ -8,15 +8,6 @@ import Copyable from '@leafygreen-ui/copyable';
 import Code from '@leafygreen-ui/code';
 import { ComponentStory, Meta } from '@storybook/react';
 import { ModalProps } from './Modal';
-// import {
-//   Title,
-//   Subtitle as SbSubtitle,
-//   Description,
-//   ArgsTable,
-//   Primary,
-//   Stories,
-//   PRIMARY_STORY,
-// } from '@storybook/addon-docs';
 
 export default {
   title: 'Packages/Modals/Modal',
@@ -32,19 +23,6 @@ export default {
       control: false,
     },
   },
-  // parameters: {
-  //   docs: {
-  //     page: () => (
-  //       <>
-  //         <Title />
-  //         <SbSubtitle />
-  //         <Description />
-  //         <Primary />
-  //         <ArgsTable story={PRIMARY_STORY} />
-  //       </>
-  //     )
-  //   },
-  // },
 } as Meta<typeof Modal>;
 
 const ControlledTemplate: ComponentStory<typeof Modal> = (args: ModalProps) => {
@@ -180,17 +158,3 @@ console.log(greeting('World'));
     </>
   );
 }
-
-// const UncontrolledTemplate: ComponentStory<typeof Modal> = (
-//   args: ModalProps,
-// ) => <Modal {...args} />;
-// export const Uncontrolled = UncontrolledTemplate.bind({});
-// Uncontrolled.args = {
-//   open: true,
-//   children: (
-//     <>
-//       <Subtitle>Base modal</Subtitle>
-//       <Body>Modal Content goes here.</Body>
-//     </>
-//   ),
-// };
