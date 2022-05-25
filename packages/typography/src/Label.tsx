@@ -18,7 +18,7 @@ const labelTypeScale: Record<BaseFontSize, string> = {
   `,
   [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
+    line-height: 20px;
   `,
 };
 
@@ -27,16 +27,16 @@ const labelColorStyle: Record<Mode, string> = {
     color: ${palette.black};
   `,
   [Mode.Dark]: css`
-    color: ${palette.white};
+    color: ${palette.gray.light2};
   `,
 };
 
 const disabledLabelColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${palette.gray.base};
+    color: ${palette.gray.dark1};
   `,
   [Mode.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
   `,
 };
 

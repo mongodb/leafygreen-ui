@@ -1,17 +1,28 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import TextArea, { TextAreaProps } from './TextArea';
-import { ComponentStory } from '@storybook/react';
+import TextArea from './TextArea';
+import { TextAreaProps } from './types';
 
-export const StoryTextArea: React.FC<TextAreaProps> = props => (
-  <TextArea {...props} />
-);
+import { ComponentStory } from '@storybook/react';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+
+type LGProviderBaseFontSize = 14 | 16;
+
+export const StoryTextArea: React.FC<
+  TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }
+> = props => <TextArea {...props} />;
 
 export default {
   title: 'Packages/TextArea',
   component: StoryTextArea,
   argTypes: {
+    baseFontSize: {
+      options: [undefined, 13, 16],
+      control: { type: 'radio' },
+    },
+    lgProviderBaseFontSize: {
+      options: [14, 16],
+      control: { type: 'radio' },
+    },
     darkMode: {
       control: 'boolean',
     },
@@ -20,17 +31,14 @@ export default {
 };
 
 const Template: ComponentStory<typeof StoryTextArea> = ({
+  baseFontSize,
   darkMode,
+  lgProviderBaseFontSize,
   ...args
-}: TextAreaProps) => (
-  <div
-    className={css`
-      padding: 30px;
-      background-color: ${darkMode ? palette.black : 'white'};
-    `}
-  >
-    <TextArea darkMode={darkMode} {...args} />
-  </div>
+}: TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }) => (
+  <LeafygreenProvider baseFontSize={lgProviderBaseFontSize}>
+    <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
+  </LeafygreenProvider>
 );
 
 export const Basic = Template.bind({});
@@ -38,4 +46,6 @@ Basic.args = {
   label: 'Label',
   description: 'This is a description for the textarea',
   errorMessage: 'This is an error message',
+  disabled: false,
+  placeholder: 'Placeholder',
 };
