@@ -291,7 +291,6 @@ interface BannerProps extends HTMLElementProps<'div', never> {
 }
 
 /**
- * # Banner
  *
  * Banner component
  *

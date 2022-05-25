@@ -15,6 +15,9 @@ import {
 } from './styles';
 import ButtonIcon from './ButtonIcon';
 
+/**
+ * Buttons allow users to take actions, and make choices, with a single tap.
+ */
 const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
   React.forwardRef(function Button(
     {
