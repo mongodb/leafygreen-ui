@@ -137,7 +137,7 @@ function Popover({
   );
 
   const lastTimeContentElMutated = useMutationObserver(
-    contentNode,
+    contentNode?.parentNode as HTMLElement,
     mutationOptions,
     Date.now,
     observeMutations,
@@ -149,7 +149,10 @@ function Popover({
   );
 
   const contentElViewportPos = useObjectDependency(
-    getElementViewportPosition(contentNode?.parentNode as HTMLElement, scrollContainer),
+    getElementViewportPosition(
+      contentNode?.parentNode as HTMLElement,
+      scrollContainer,
+    ),
   );
 
   const referenceElDocumentPos = useObjectDependency(
@@ -228,11 +231,6 @@ function Popover({
     contentElDocumentPos,
     scrollContainer,
   });
-
-  console.group();
-  console.log(contentNode?.parentNode);
-  console.log(transform, positionCSS);
-  console.groupEnd();
 
   const activeStyle = css`
     opacity: 1;
