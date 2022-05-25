@@ -42,6 +42,7 @@ export const textAreaStyle = css`
 `;
 
 export const errorMessageStyle = css`
+  font-family: ${fontFamilies.default};
   display: flex;
   height: 20px;
   padding-top: 5px;
