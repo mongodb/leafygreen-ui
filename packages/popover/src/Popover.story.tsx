@@ -32,6 +32,10 @@ const scrollableInnerStyle = css`
   justify-content: center;
 `;
 
+const buttonStyles = css`
+  position: relative;
+`;
+
 const referenceElPositions: { [key: string]: string } = {
   centered: css`
     position: relative;
@@ -87,7 +91,10 @@ type PopoverStoryProps = PopoverProps & { buttonText: string } & {
 export const Template = ({ buttonText, ...args }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
   return (
-    <button onClick={() => setActive(active => !active)}>
+    <button
+      className={buttonStyles}
+      onClick={() => setActive(active => !active)}
+    >
       {buttonText}
       <Popover {...args} active={active}>
         <div className={popoverStyle}>Popover content</div>
