@@ -24,6 +24,8 @@ const triggerElementStyles = css`
     text-decoration-color: ${palette.blue.light1};
     outline-color: ${palette.blue.light1};
     outline-offset: 3px;
+    outline-style: solid;
+    outline-width: 2px;
   }
 `;
 
