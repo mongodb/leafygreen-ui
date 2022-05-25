@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
 import {
   usePopoverPortalContainer,
-  // usePopoverContext,
+  usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import {
   useViewportSize,
@@ -85,7 +85,7 @@ function Popover({
   const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
-  // const { setIsPopoverOpen } = usePopoverContext();
+  const { setIsPopoverOpen } = usePopoverContext();
 
   let { portalContainer, scrollContainer } = usePopoverPortalContainer();
 
@@ -267,8 +267,8 @@ function Popover({
       mountOnEnter
       unmountOnExit
       appear
-      // onEntered={() => setIsPopoverOpen(true)}
-      // onExit={() => setIsPopoverOpen(false)}
+      onEntered={() => setIsPopoverOpen(true)}
+      onExit={() => setIsPopoverOpen(false)}
     >
       {state => (
         <>
