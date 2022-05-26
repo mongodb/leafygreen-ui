@@ -25,20 +25,6 @@ export default {
   },
 } as Meta<typeof Modal>;
 
-const UncontrolledTemplate: ComponentStory<typeof Modal> = (
-  args: ModalProps,
-) => <Modal {...args} />;
-export const Uncontrolled = UncontrolledTemplate.bind({});
-Uncontrolled.args = {
-  open: true,
-  children: (
-    <>
-      <Subtitle>Base modal</Subtitle>
-      <Body>Modal Content goes here.</Body>
-    </>
-  ),
-};
-
 const ControlledTemplate: ComponentStory<typeof Modal> = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
   return (

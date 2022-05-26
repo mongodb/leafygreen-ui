@@ -3,6 +3,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Button, { Variant, ButtonProps } from '.';
 import { BoxProps } from '@leafygreen-ui/box';
 import { Meta, Story } from '@storybook/react';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
 
@@ -34,6 +35,23 @@ export default {
       options: Object.keys(glyphs),
       control: { type: 'select' },
     },
+    onClick: {
+      control: 'none',
+    },
+    type: {
+      control: 'text',
+    },
+    className: {
+      control: 'text',
+    },
+    darkMode: {
+      control: 'boolean',
+    },
+    href: {
+      control: 'text',
+    },
+    children: defaultArgTypes.children,
+    as: defaultArgTypes.as,
   },
 } as Meta<ButtonStoryProps>;
 
