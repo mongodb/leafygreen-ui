@@ -39,7 +39,6 @@ const buttonStyles = css`
 const referenceElPositions: { [key: string]: string } = {
   centered: css`
     position: relative;
-    margin-bottom: 200vh;
   `,
   top: css`
     top: 0;

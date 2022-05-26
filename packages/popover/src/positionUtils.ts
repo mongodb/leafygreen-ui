@@ -81,7 +81,7 @@ export function calculatePosition({
 
   // calculatePosition will run and return CSS even if getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if something is returned.
   //  Justify fit does not position itself properly in this case so we continue to return the CSS
-  if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
+  if (Math.floor(contentElViewportPos.width) === 0 && justify !== Justify.Fit) {
     return {
       align,
       justify,
