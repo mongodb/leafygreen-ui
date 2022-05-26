@@ -33,6 +33,14 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
+// TODO: Remove in next major release
+export const FontSize = {
+  Body1: 13,
+  Body2: 16,
+} as const;
+
+export type FontSize = typeof FontSize[keyof typeof FontSize];
+
 interface ButtonProps {
   // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.
   // https://github.com/storybookjs/storybook/issues/14798

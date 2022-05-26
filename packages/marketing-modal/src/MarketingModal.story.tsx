@@ -1,17 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 import MarketingModal, { BlobPosition, GraphicStyle } from '.';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import Button from '@leafygreen-ui/button';
-import {
-  Title,
-  Subtitle as SbSubtitle,
-  Description,
-  ArgsTable,
-  Primary,
-  PRIMARY_STORY,
-} from '@storybook/addon-docs';
 
 export default {
   title: 'Packages/Modals/Marketing Modal',
@@ -25,50 +18,25 @@ export default {
       'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
   },
   argTypes: {
-    open: {
-      control: false,
-    },
-    setOpen: {
-      control: false,
-    },
-    onClose: {
-      control: false,
-    },
-    children: {
-      control: 'string',
-    },
-    graphic: {
-      control: false,
-    },
+    open: { control: false },
+    setOpen: { control: false },
+    onClose: { control: false },
+    graphic: { control: false },
     graphicStyle: {
       control: 'radio',
-      options: [GraphicStyle.Center, GraphicStyle.Fill],
+      options: Object.values(GraphicStyle),
     },
     closeIconColor: {
       control: 'radio',
       options: Object.values(CloseIconColor),
     },
-    showBlob: {
-      control: 'boolean',
-    },
+    showBlob: { control: 'boolean' },
     blobPosition: {
       control: 'radio',
       options: Object.values(BlobPosition),
     },
-  },
-  parameters: {
-    docs: {
-      // eslint-disable-next-line react/display-name
-      page: () => (
-        <>
-          <Title />
-          <SbSubtitle />
-          <Description />
-          <Primary />
-          <ArgsTable story={PRIMARY_STORY} />
-        </>
-      ),
-    },
+    children: defaultArgTypes.children,
+    darkMode: defaultArgTypes.darkMode,
   },
 } as Meta<typeof MarketingModal>;
 
