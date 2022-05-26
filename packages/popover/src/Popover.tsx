@@ -136,6 +136,8 @@ function Popover({
     observeMutations,
   );
 
+  // We use contentNode.parentNode since the parentNode has a transition applied to it and we want to be able to get the width of this element before it is transformed. Also as noted below, the parentNode cannot have a ref on it.
+  // Previously the contentNode was passed in but since it is a child of transformed element it was not possible to get an untransformed width.
   const lastTimeContentElMutated = useMutationObserver(
     contentNode?.parentNode as HTMLElement,
     mutationOptions,
