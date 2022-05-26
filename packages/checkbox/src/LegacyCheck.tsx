@@ -23,6 +23,7 @@ const wrapperStyle = css`
   flex-shrink: 0;
   position: relative;
   opacity: 0.9;
+  align-self: center;
 `;
 
 const checkboxStyle = css`
