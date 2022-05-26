@@ -44,7 +44,7 @@ function InlineDefinition({
   return (
     <Tooltip
       justify="middle"
-      spacing={5}
+      spacing={9}
       className={tooltipClassName}
       {...tooltipProps}
       trigger={
