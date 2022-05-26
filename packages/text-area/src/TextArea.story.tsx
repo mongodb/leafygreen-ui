@@ -44,7 +44,7 @@ const Template: ComponentStory<typeof StoryTextArea> = ({
 export const Basic = Template.bind({});
 Basic.args = {
   label: 'Label',
-  description: 'This is a description for the textarea',
+  description: 'This is a description for the text area',
   errorMessage: 'This is an error message',
   disabled: false,
   placeholder: 'Placeholder',

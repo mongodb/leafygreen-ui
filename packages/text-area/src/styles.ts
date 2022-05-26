@@ -28,7 +28,7 @@ export const textAreaStyle = css`
   border-radius: 6px;
   transition: 150ms ease-in-out;
   transition-property: border-color, box-shadow;
-  margin-top: 2px;
+  margin-top: 4px;
 
   &:focus {
     outline: none;
@@ -45,7 +45,7 @@ export const errorMessageStyle = css`
   font-family: ${fontFamilies.default};
   display: flex;
   height: 20px;
-  padding-top: 5px;
+  margin-top: 5px;
   align-items: center;
   font-weight: normal;
 `;
