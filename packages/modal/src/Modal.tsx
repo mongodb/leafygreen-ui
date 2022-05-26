@@ -74,20 +74,9 @@ export interface ModalProps {
 }
 
 /**
- * # Modal
  *
  *  Modals place content on top of main window.
  *
-```
-<Modal
-  open
-  size="large"
-  setOpen={setOpen}
-  shouldClose={() => console.log('Modal is closing now!')}
-  >
-  Modal content!
-</Modal>
-```
  * @param props.open Boolean to describe whether or not Modal is open.
  * @param props.size String to determine size of Modal. ['small', 'default', 'large']
  * @param props.setOpen Callback to change the open state of Modal.

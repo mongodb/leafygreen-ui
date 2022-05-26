@@ -4,7 +4,7 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { Variant, Size, ButtonProps, Mode, FontSize } from './types';
+import { Variant, Size, ButtonProps, Mode } from './types';
 import {
   getClassName,
   rippleColors,
@@ -14,6 +14,7 @@ import {
   buttonContentSizeStyle,
 } from './styles';
 import ButtonIcon from './ButtonIcon';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
@@ -24,7 +25,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       variant = Variant.Default,
       size = Size.Default,
       darkMode = false,
-      baseFontSize = FontSize.Body1,
+      baseFontSize = BaseFontSize.Body1,
       disabled = false,
       onClick,
       leftGlyph,
@@ -130,7 +131,7 @@ Button.displayName = 'Button';
 
 Button.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
-  baseFontSize: PropTypes.oneOf(Object.values(FontSize)),
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   size: PropTypes.oneOf(Object.values(Size)),
   darkMode: PropTypes.bool,
   disabled: PropTypes.bool,

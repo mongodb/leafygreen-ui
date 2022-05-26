@@ -277,13 +277,13 @@ Checkbox.displayName = 'Checkbox';
 
 Checkbox.propTypes = {
   darkMode: PropTypes.bool,
+  description: PropTypes.string,
   checked: PropTypes.bool,
   label: PropTypes.node,
   disabled: PropTypes.bool,
   indeterminate: PropTypes.bool,
   className: PropTypes.string,
   onChange: PropTypes.func,
-  bold: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   animate: PropTypes.bool,
 };
