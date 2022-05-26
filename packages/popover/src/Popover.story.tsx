@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Meta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -109,15 +109,13 @@ export const ScrollableContainer = ({
   ...args
 }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
-  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
-    null,
-  );
+  const portalContainer = useRef<HTMLDivElement | null>(null);
 
   const position = referenceElPositions[refButtonPosition];
 
   return (
     <div className={scrollableStyle}>
-      <div className={scrollableInnerStyle} ref={el => setPortalContainer(el)}>
+      <div className={scrollableInnerStyle} ref={portalContainer}>
         <button
           onClick={() => setActive(active => !active)}
           className={position}
@@ -127,8 +125,8 @@ export const ScrollableContainer = ({
             {...args}
             active={active}
             usePortal={true}
-            portalContainer={portalContainer}
-            scrollContainer={portalContainer}
+            portalContainer={portalContainer.current}
+            scrollContainer={portalContainer.current}
           >
             <div className={popoverStyle}>Popover content</div>
           </Popover>
@@ -136,4 +134,12 @@ export const ScrollableContainer = ({
       </div>
     </div>
   );
+};
+
+ScrollableContainer.argTypes = {
+  usePortal: { control: 'none' },
+  portalClassName: { control: 'none' },
+  refEl: { control: 'none' },
+  className: { control: 'none' },
+  active: { control: 'none' },
 };
