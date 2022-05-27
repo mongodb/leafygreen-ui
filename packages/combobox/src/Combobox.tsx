@@ -221,10 +221,10 @@ export default function Combobox<M extends boolean>({
   );
 
   /**
-   * Returns whether a given displayName is included in, or equal to, the current selection
-   * Similar to `isValueCurrentSelection`, but first converts `value` to `displayName`
+   * Returns whether given text is included in, or equal to, the current selection.
+   * Similar to `isValueCurrentSelection`, but assumes the text argument is the `displayName` for the selection
    */
-  const isDisplayNameCurrentSelection = useCallback(
+  const isTextCurrentSelection = useCallback(
     (displayName: string): boolean => {
       const value = getValueForDisplayName(displayName, allOptions);
       return isValueCurrentSelection(value);
@@ -247,7 +247,7 @@ export default function Combobox<M extends boolean>({
       // If the text input value is the current selection
       // (or included in the selection)
       // then all options should be visible
-      if (isDisplayNameCurrentSelection(inputValue)) {
+      if (isTextCurrentSelection(inputValue)) {
         return true;
       }
 
@@ -263,7 +263,7 @@ export default function Combobox<M extends boolean>({
 
       return isValueInDisplayName;
     },
-    [filteredOptions, isDisplayNameCurrentSelection, inputValue, allOptions],
+    [filteredOptions, isTextCurrentSelection, inputValue, allOptions],
   );
 
   /**
