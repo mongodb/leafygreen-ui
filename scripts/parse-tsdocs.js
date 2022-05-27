@@ -1,27 +1,53 @@
 const docgen = require('react-docgen-typescript');
 const fs = require('fs');
+const path = require('path');
+
+const skippedComponents = [];
 
 const options = {
-  savePropValueAsString: true,
+  propFilter: (prop, component) => {
+    if (skippedComponents.includes(component.name)) {
+      return false;
+    }
+
+    if (prop.declarations !== undefined && prop.declarations.length > 0) {
+      const hasPropAdditionalDescription = prop.declarations.find(
+        declaration => {
+          return !declaration.fileName.includes('node_modules');
+        },
+      );
+
+      return Boolean(hasPropAdditionalDescription);
+    }
+
+    return true;
+  },
 };
 
-const parsedPackages = ['radio-group'];
+const dirPath = path.resolve(__dirname, '../packages');
+const parsedFileNames = [];
 
-async function getFilenames() {
-  const parsedFileNames = [];
-  await parsedPackages.forEach(async pkg => {
-    const dirPath = `./packages/${pkg}/src`;
-    const dir = await fs.readdirSync(dirPath);
-    const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
-    const filenames = dir.filter(filename => regex.test(filename));
-    parsedFileNames.push(...filenames.map(fn => `${dirPath}/${fn}`));
-  });
-  return parsedFileNames;
-}
+const getFilesRecursively = directory => {
+  const filesInDirectory = fs.readdirSync(directory);
 
-getFilenames().then(filenames => {
-  const docs = docgen.parse(filenames, options);
-  // TODO: Replace log with push to CMS
-  // eslint-disable-next-line no-console
-  console.log(docs);
+  for (const file of filesInDirectory) {
+    const absolute = path.join(directory, file);
+
+    if (fs.statSync(absolute).isDirectory()) {
+      getFilesRecursively(absolute);
+    } else {
+      const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
+
+      if (regex.test(absolute)) {
+        parsedFileNames.push(absolute);
+      }
+    }
+  }
+};
+
+getFilesRecursively(dirPath);
+const docs = docgen.parse(parsedFileNames, options);
+// TODO: replace writeFile with POST request to CMS
+fs.writeFile('./parsed-docs.json', JSON.stringify(docs), err => {
+  if (err) console.error(err);
 });

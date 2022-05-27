@@ -2,6 +2,7 @@ export const white = '#FFFFFF';
 export const black = '#001E2B';
 
 export const gray = {
+  dark4: '#112733',
   dark3: '#1C2D38',
   dark2: '#3D4F58',
   dark1: '#5C6C75',
@@ -55,3 +56,24 @@ export const red = {
   light2: '#FFCDC7',
   light3: '#FFEAE5',
 } as const;
+
+/**
+ *
+ * Palette exports the latest colors used in designs following the brand refresh.
+ *
+ * If you are still using `uiColors`, refer to the [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/palette/UPGRADE.md) for additional information.
+ *
+ * @public
+ */
+const palette = {
+  white,
+  black,
+  gray,
+  green,
+  purple,
+  blue,
+  yellow,
+  red,
+};
+
+export default palette;

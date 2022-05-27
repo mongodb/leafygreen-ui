@@ -119,7 +119,7 @@ const iconSize: Record<Size, string> = {
 
 const disabledIconStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${palette.gray.light2};
+    color: ${palette.gray.light1};
   `,
   [Mode.Dark]: css`
     color: ${palette.gray.dark1};

@@ -1,4 +1,4 @@
-import { addDecorator } from '@storybook/react';
+import { addDecorator, addParameters } from '@storybook/react';
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
 import {
@@ -10,12 +10,19 @@ import {
   InlineCode,
 } from '@leafygreen-ui/typography';
 
+export const argTypes = {
+  className: {
+    description: '`className` prop passed to the component',
+    control: 'text',
+  },
+};
+
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     expanded: true,
     matchers: {
-      color: /(background|color)$/i,
+      color: /.*(c|C)olor$/,
       date: /Date$/,
     },
   },
