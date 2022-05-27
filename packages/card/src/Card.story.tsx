@@ -22,9 +22,7 @@ export default {
     children: 'This is a card component.',
   },
   argTypes: {
-    href: {
-      control: 'text',
-    },
+    href: { control: 'text' },
     as: defaultArgTypes.as,
     darkMode: defaultArgTypes.darkMode,
     children: defaultArgTypes.children,

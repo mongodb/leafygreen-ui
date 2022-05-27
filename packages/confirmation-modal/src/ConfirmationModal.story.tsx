@@ -9,9 +9,13 @@ export default {
   args: {
     title: 'Confirm Title Here',
     buttonText: 'Confirm',
-    requiredInputText: false,
     children:
       'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here. This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
+  },
+  argTypes: {
+    requiredInputText: {
+      control: 'text',
+    },
   },
 };
 

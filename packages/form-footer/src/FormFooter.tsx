@@ -48,7 +48,7 @@ const buttonStyle = css`
 
 export interface FormFooterProps {
   /**
-   * The primary (right-most) button. Defined as a <Button> element, or as an object with the shape:
+   * The primary (right-most) button. Defined as a `<Button>` element, or as an object with the shape:
    *
    * ```ts
    * interface PrimaryButtonProps {

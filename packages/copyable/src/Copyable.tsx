@@ -136,11 +136,26 @@ const iconStyle = css`
 interface CopyableProps {
   darkMode?: boolean;
   children: string;
+  /**
+   * Label text
+   */
   label?: string;
+  /**
+   * Description text
+   */
   description?: string;
   className?: string;
+  /**
+   * If `true`, there will be a copy button that will move the component's children to the user's clipboard
+   */
   copyable?: boolean;
+  /**
+   * The font size of the component's copyable children
+   */
   size?: Size;
+  /**
+   * If `true`, the tooltip rendered as feedback when the user clicks the copy button will be rendered using a portal
+   */
   shouldTooltipUsePortal?: boolean;
 }
 
@@ -279,4 +294,5 @@ Copyable.propTypes = {
   description: PropTypes.string,
   className: PropTypes.string,
   copyable: PropTypes.bool,
+  shouldTooltipUsePortal: PropTypes.bool,
 };
