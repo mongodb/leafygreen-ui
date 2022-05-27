@@ -291,13 +291,9 @@ interface BannerProps extends HTMLElementProps<'div', never> {
 }
 
 /**
- * # Banner
  *
- * Banner component
+ * Banners remain until dismissed by the user, or if the state, which caused the banner is resolved. They are usually contextual to the product or task. For guidelines on when to use Banners, refer to our [design guidelines](https://www.mongodb.design/component/banner/guidelines/).
  *
- * ```
-<Banner>Banner content goes here.</Banner>
-```
  * @param props.variant Sets the variant for the Banner.
  * @param props.image Illustration that will replace default Icon when the prop is supplied.
  * @param props.dismissible Determines whether or not the Banner is dismissible.

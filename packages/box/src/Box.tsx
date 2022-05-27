@@ -80,6 +80,11 @@ function InlineBox(props: BoxProps, ref: React.Ref<any>) {
 
 InlineBox.displayName = 'InlineBox';
 
+/**
+ * The Box component handles the `as` prop, allowing the component to be rendered using alternate HTML elements.
+ *
+ * It also defaults to an `<a>` tag when a `href` prop is set.
+ */
 // @ts-expect-error
 const Box = React.forwardRef(InlineBox) as typeof InlineBox;
 

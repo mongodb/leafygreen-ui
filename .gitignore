@@ -36,3 +36,6 @@ website/hosting/
 
 # test coverage 
 coverage/
+
+# Exported TSDocs example files
+parsed-docs.json

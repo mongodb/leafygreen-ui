@@ -27,6 +27,7 @@ import {
   onChangeType,
   SelectValueType,
   OptionObject,
+  ComboboxElement,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
@@ -52,6 +53,7 @@ import {
   flattenChildren,
   getDisplayNameForValue,
   getNameAndValue,
+  getValueForDisplayName,
 } from './utils';
 
 /**
@@ -127,6 +129,14 @@ export default function Combobox<M extends boolean>({
   const openMenu = () => setOpen(true);
 
   /**
+   * Array of all of the options objects
+   */
+  const allOptions: Array<OptionObject> = useMemo(
+    () => flattenChildren(children),
+    [children],
+  );
+
+  /**
    * Utility function that tells Typescript whether selection is multiselect
    */
   const isMultiselect = useCallback(
@@ -199,11 +209,27 @@ export default function Combobox<M extends boolean>({
   );
 
   /**
-   * Array of all of the options objects
+   * Returns whether a given value is included in, or equal to, the current selection
    */
-  const allOptions: Array<OptionObject> = useMemo(
-    () => flattenChildren(children),
-    [children],
+  const isValueCurrentSelection = useCallback(
+    (value: string): boolean => {
+      return isMultiselect(selection)
+        ? selection.includes(value)
+        : value === selection;
+    },
+    [isMultiselect, selection],
+  );
+
+  /**
+   * Returns whether given text is included in, or equal to, the current selection.
+   * Similar to `isValueCurrentSelection`, but assumes the text argument is the `displayName` for the selection
+   */
+  const isTextCurrentSelection = useCallback(
+    (displayName: string): boolean => {
+      const value = getValueForDisplayName(displayName, allOptions);
+      return isValueCurrentSelection(value);
+    },
+    [allOptions, isValueCurrentSelection],
   );
 
   /**
@@ -218,6 +244,13 @@ export default function Combobox<M extends boolean>({
         return filteredOptions.includes(value);
       }
 
+      // If the text input value is the current selection
+      // (or included in the selection)
+      // then all options should be visible
+      if (isTextCurrentSelection(inputValue)) {
+        return true;
+      }
+
       // otherwise, we do our own filtering
       const displayName =
         typeof option === 'string'
@@ -228,12 +261,9 @@ export default function Combobox<M extends boolean>({
         .toLowerCase()
         .includes(inputValue.toLowerCase());
 
-      // if the menu has just been opened
-      // then the option should be visible regardless of the input value
-      const isNewlyOpened = isOpen && !wasOpen;
-      return isNewlyOpened || isValueInDisplayName;
+      return isValueInDisplayName;
     },
-    [filteredOptions, allOptions, inputValue, isOpen, wasOpen],
+    [filteredOptions, isTextCurrentSelection, inputValue, allOptions],
   );
 
   /**
@@ -300,9 +330,9 @@ export default function Combobox<M extends boolean>({
 
   /**
    * Returns the name of the current focused element
-   * @returns "FirstChip" | "LastChip" | "MiddleChip" | "Input" | "ClearButton" | "Combobox"
+   * @returns ComboboxElement | undefined
    */
-  const getFocusedElementName = useCallback(() => {
+  const getFocusedElementName = useCallback((): ComboboxElement | undefined => {
     const isFocusOn = {
       Input: inputRef.current?.contains(document.activeElement),
       ClearButton: clearButtonRef.current?.contains(document.activeElement),
@@ -321,18 +351,18 @@ export default function Combobox<M extends boolean>({
 
     if (isMultiselect(selection) && isFocusOn.Chip) {
       if (getActiveChipIndex() === 0) {
-        return 'FirstChip';
+        return ComboboxElement.FirstChip;
       } else if (getActiveChipIndex() === selection.length - 1) {
-        return 'LastChip';
+        return ComboboxElement.LastChip;
       }
 
-      return 'MiddleChip';
+      return ComboboxElement.MiddleChip;
     } else if (isFocusOn.Input) {
-      return 'Input';
+      return ComboboxElement.Input;
     } else if (isFocusOn.ClearButton) {
-      return 'ClearButton';
+      return ComboboxElement.ClearButton;
     } else if (comboboxRef.current?.contains(document.activeElement)) {
-      return 'Combobox';
+      return ComboboxElement.Combobox;
     }
   }, [getChipRef, isMultiselect, selection]);
 
@@ -462,7 +492,7 @@ export default function Combobox<M extends boolean>({
       switch (direction) {
         case 'right':
           switch (focusedElementName) {
-            case 'Input': {
+            case ComboboxElement.Input: {
               // If cursor is at the end of the input
               if (
                 inputRef.current?.selectionEnd ===
@@ -473,11 +503,11 @@ export default function Combobox<M extends boolean>({
               break;
             }
 
-            case 'FirstChip':
-            case 'MiddleChip':
-            case 'LastChip': {
+            case ComboboxElement.FirstChip:
+            case ComboboxElement.MiddleChip:
+            case ComboboxElement.LastChip: {
               if (
-                focusedElementName === 'LastChip' ||
+                focusedElementName === ComboboxElement.LastChip ||
                 // the first chip is also the last chip (i.e. only one)
                 selection?.length === 1
               ) {
@@ -492,7 +522,7 @@ export default function Combobox<M extends boolean>({
               break;
             }
 
-            case 'ClearButton':
+            case ComboboxElement.ClearButton:
             default:
               break;
           }
@@ -500,19 +530,19 @@ export default function Combobox<M extends boolean>({
 
         case 'left':
           switch (focusedElementName) {
-            case 'ClearButton': {
+            case ComboboxElement.ClearButton: {
               event.preventDefault();
               setInputFocus(inputRef?.current?.value.length);
               break;
             }
 
-            case 'Input':
-            case 'MiddleChip':
-            case 'LastChip': {
+            case ComboboxElement.Input:
+            case ComboboxElement.MiddleChip:
+            case ComboboxElement.LastChip: {
               if (isMultiselect(selection)) {
                 // Break if cursor is not at the start of the input
                 if (
-                  focusedElementName === 'Input' &&
+                  focusedElementName === ComboboxElement.Input &&
                   inputRef.current?.selectionStart !== 0
                 ) {
                   break;
@@ -523,7 +553,7 @@ export default function Combobox<M extends boolean>({
               break;
             }
 
-            case 'FirstChip':
+            case ComboboxElement.FirstChip:
             default:
               break;
           }
@@ -1016,6 +1046,7 @@ export default function Combobox<M extends boolean>({
 
     const isFocusInComponent = isFocusOnCombobox || isFocusInMenu;
 
+    // Only run if the focus is in the component
     if (isFocusInComponent) {
       // No support for modifiers yet
       // TODO - Handle support for multiple chip selection
@@ -1083,16 +1114,18 @@ export default function Combobox<M extends boolean>({
         }
 
         case keyMap.Backspace: {
-          // Backspace key focuses last chip
-          // Delete key does not
-          if (
-            isMultiselect(selection) &&
-            inputRef.current?.selectionStart === 0
-          ) {
-            updateFocusedChip('last');
-          } else {
-            openMenu();
+          // Backspace key focuses last chip if the input is focused
+          // Note: Chip removal behavior is handled in `onRemove` defined in `renderChips`
+          if (isMultiselect(selection)) {
+            if (
+              focusedElement === 'Input' &&
+              inputRef.current?.selectionStart === 0
+            ) {
+              updateFocusedChip('last');
+            }
           }
+          // Open the menu regardless
+          openMenu();
           break;
         }
 
@@ -1329,3 +1362,7 @@ export default function Combobox<M extends boolean>({
     }
   }
 }
+/**
+ * Why'd you have to go and make things so complicated?
+ * - Avril; and also me to myself about this component
+ */

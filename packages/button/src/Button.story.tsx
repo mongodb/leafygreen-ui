@@ -3,8 +3,14 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Button, { Variant, ButtonProps } from '.';
 import { BoxProps } from '@leafygreen-ui/box';
 import { Meta, Story } from '@storybook/react';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
+
+// TODO: Ensure that TSDocs are being read from the Button component directly, not this StoryButton component
+/**
+ * Buttons allow users to take actions, and make choices, with a single tap.
+ */
 export const StoryButton: React.FC<ButtonStoryProps> = props => (
   // @ts-ignore-next-line
   <Button {...props} />
@@ -13,6 +19,7 @@ export const StoryButton: React.FC<ButtonStoryProps> = props => (
 export default {
   title: 'Packages/Button',
   component: StoryButton,
+  excludeStories: ['StoryButton'],
   args: {
     children: 'MongoDB',
   },
@@ -28,6 +35,23 @@ export default {
       options: Object.keys(glyphs),
       control: { type: 'select' },
     },
+    onClick: {
+      control: 'none',
+    },
+    type: {
+      control: 'text',
+    },
+    className: {
+      control: 'text',
+    },
+    darkMode: {
+      control: 'boolean',
+    },
+    href: {
+      control: 'text',
+    },
+    children: defaultArgTypes.children,
+    as: defaultArgTypes.as,
   },
 } as Meta<ButtonStoryProps>;
 

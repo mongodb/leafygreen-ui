@@ -42,9 +42,23 @@ export default {
   },
   argTypes: {
     language: {
-      options: Object.keys(Language),
-      control: { type: 'select' },
+      control: {
+        type: 'select',
+        options: Object.keys(Language),
+      },
     },
+    onCopy: { control: 'none' },
+    showCustomButtons: { control: 'boolean' },
+    usePortal: { control: 'boolean' },
+    copyable: { control: 'boolean' },
+    showWindowChrome: { control: 'boolean' },
+    showLineNumbers: { control: 'boolean' },
+    darkMode: { control: 'boolean' },
+    chromeTitle: { control: 'string' },
+    scrollContainer: { control: 'none' },
+    portalClassName: { control: 'string' },
+    popoverZIndex: { control: 'number' },
+    lineNumberStart: { control: 'number' },
   },
   parameters: {
     controls: { exclude: ['children', 'customActionButtons'] },

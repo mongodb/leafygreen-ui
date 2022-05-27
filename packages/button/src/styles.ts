@@ -1,8 +1,8 @@
 import { mix, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { Size, Variant, Mode, ButtonProps, FontSize } from './types';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { Size, Variant, Mode, ButtonProps } from './types';
+import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { createDataProp } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
@@ -52,6 +52,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        color: ${palette.gray.dark3};
         background-color: ${palette.white};
         box-shadow: 0 0 0 3px ${palette.gray.light2};
       }
@@ -78,6 +79,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        color: ${palette.green.dark2};
         background-color: ${transparentize(0.96, palette.green.base)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
@@ -118,6 +120,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        color: ${palette.green.dark3};
         background-color: ${mix(0.96, palette.green.base, palette.green.dark3)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
       }
@@ -217,6 +220,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
 
       &:hover,
       &:active {
+        color: ${palette.green.dark3};
         background-color: ${mix(
           0.96,
           palette.green.base,
@@ -366,13 +370,13 @@ const sizeStyle: Record<Size, string> = {
   `,
 };
 
-const fontStyles: Record<FontSize, string> = {
-  [FontSize.Body1]: css`
+const fontStyles: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     font-weight: 500; // Medium
   `,
-  [FontSize.Body2]: css`
+  [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     // Pixel pushing for optical alignment purposes
