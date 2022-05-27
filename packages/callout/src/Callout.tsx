@@ -8,6 +8,7 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Overline, Subtitle } from '@leafygreen-ui/typography';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const Variant = {
   Note: 'note',
@@ -154,14 +155,27 @@ interface ColorSet {
   border: string;
 }
 
-interface CalloutProps {
+export interface CalloutProps {
+  /**
+   * The title text rendered above children.
+   */
   title?: string;
   children: React.ReactNode;
   className?: string;
+  /**
+   * The variant of the callout that defines the icon and colors used.
+   */
   variant: Variant;
-  baseFontSize?: 13 | 16;
+  // TODO: Make sure this prop generates a Storybook control.
+  /**
+   * The base font size of the title and text rendered in children.
+   */
+  baseFontSize?: BaseFontSize;
 }
 
+/**
+ * Callouts should be used when you want to call out information to the user. Unlike banners, callouts cannot be dismissed. They’re optimized for long form copy (banners are optimized to save space).
+ */
 function Callout({
   variant,
   title,
@@ -236,6 +250,7 @@ Callout.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };
 
 export default Callout;
