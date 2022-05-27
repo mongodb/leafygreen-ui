@@ -11,12 +11,13 @@ import {
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { wrapJSX } from './utils';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 /**
  * Styles
  */
 
-const comboboxOptionStyle = () => css`
+const comboboxOptionStyle = css`
   position: relative;
   display: flex;
   align-items: center;
@@ -25,10 +26,12 @@ const comboboxOptionStyle = () => css`
   color: inherit;
   cursor: pointer;
   overflow: hidden;
+  font-family: ${fontFamilies.legacy};
   font-size: var(--lg-combobox-item-font-size);
   line-height: var(--lg-combobox-item-line-height);
   padding: var(--lg-combobox-item-padding-y) var(--lg-combobox-item-padding-x);
 
+  // Left wedge
   &:before {
     content: '';
     position: absolute;
@@ -55,6 +58,15 @@ const comboboxOptionStyle = () => css`
       background-color: var(--lg-combobox-item-wedge-color);
       transform: scaleY(1);
     }
+  }
+`;
+
+const comboboxOptionDisabledStyle = css`
+  cursor: not-allowed;
+  color: ${uiColors.gray.base};
+
+  &:hover {
+    background-color: inherit;
   }
 `;
 
@@ -86,6 +98,7 @@ const InternalComboboxOption = React.forwardRef<
       glyph,
       isSelected,
       isFocused,
+      disabled,
       setSelected,
       className,
     }: InternalComboboxOptionProps,
@@ -103,8 +116,9 @@ const InternalComboboxOption = React.forwardRef<
         // If user clicked on the option, or the checkbox
         // Ignore extra click events on the checkbox wrapper
         if (
-          e.target === optionRef.current ||
-          (e.target as Element).tagName === 'INPUT'
+          !disabled &&
+          (e.target === optionRef.current ||
+            (e.target as Element).tagName === 'INPUT')
         ) {
           setSelected();
         }
@@ -135,6 +149,7 @@ const InternalComboboxOption = React.forwardRef<
             checked={isSelected}
             tabIndex={-1}
             animate={false}
+            disabled={disabled}
           />
         );
 
@@ -186,7 +201,13 @@ const InternalComboboxOption = React.forwardRef<
         aria-selected={isFocused}
         aria-label={displayName}
         tabIndex={-1}
-        className={cx(comboboxOptionStyle(), className)}
+        className={cx(
+          comboboxOptionStyle,
+          {
+            [comboboxOptionDisabledStyle]: disabled,
+          },
+          className,
+        )}
         onClick={handleOptionClick}
         onKeyPress={handleOptionClick}
       >

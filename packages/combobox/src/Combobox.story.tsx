@@ -20,7 +20,7 @@ export default {
 const ComboboxOptions = [
   <ComboboxOption key="apple" value="apple" displayName="Apple" />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
-  <ComboboxOption key="carrot" value="carrot" displayName="Carrot" />,
+  <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
   <ComboboxOption
     key="paragraph"
     value="paragraph"
@@ -49,7 +49,7 @@ const ComboboxOptions = [
     key="pomegranate"
     value="pomegranate"
     displayName="Pomegranate"
-    glyph={<Icon glyph="Warning" />}
+    // glyph={<Icon glyph="Warning" />}
   />,
   <ComboboxGroup key="peppers" label="Peppers">
     <ComboboxOption key="cayenne" value="cayenne" displayName="Cayenne" />
@@ -57,7 +57,6 @@ const ComboboxOptions = [
       key="ghost-pepper"
       value="ghost-pepper"
       displayName="Ghost pepper"
-      disabled
     />
     <ComboboxOption key="habanero" value="habanero" displayName="Habanero" />
     <ComboboxOption key="jalapeno" value="jalapeno" displayName="Jalapeño" />

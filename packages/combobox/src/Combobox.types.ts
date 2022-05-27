@@ -316,7 +316,7 @@ export interface InternalComboboxOptionProps {
   isSelected: boolean;
   isFocused: boolean;
   setSelected: () => void;
-  isDisabled?: boolean;
+  disabled?: boolean;
   glyph?: ReactElement;
   className?: string;
   index: number;

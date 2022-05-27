@@ -611,7 +611,7 @@ export default function Combobox<M extends boolean>({
           const { value, displayName } = getNameAndValue(child.props);
 
           if (isOptionVisible(value)) {
-            const { className, glyph } = child.props;
+            const { className, glyph, disabled } = child.props;
             const index = allOptions.findIndex(opt => opt.value === value);
 
             const isFocused = focusedOption === value;
@@ -637,6 +637,7 @@ export default function Combobox<M extends boolean>({
                 displayName={displayName}
                 isFocused={isFocused}
                 isSelected={isSelected}
+                disabled={disabled}
                 setSelected={setSelected}
                 glyph={glyph}
                 className={className}

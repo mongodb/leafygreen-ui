@@ -92,8 +92,15 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
       const displayName =
         typeof option === 'string' ? undefined : option.displayName;
 
+      const isDisabled = typeof option === 'string' ? false : option.isDisabled;
+
       return (
-        <ComboboxOption key={value} value={value} displayName={displayName} />
+        <ComboboxOption
+          key={value}
+          value={value}
+          displayName={displayName}
+          disabled={isDisabled}
+        />
       );
     }
   };
