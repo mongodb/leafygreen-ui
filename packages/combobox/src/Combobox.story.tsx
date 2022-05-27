@@ -57,6 +57,7 @@ const ComboboxOptions = [
       key="ghost-pepper"
       value="ghost-pepper"
       displayName="Ghost pepper"
+      disabled
     />
     <ComboboxOption key="habanero" value="habanero" displayName="Habanero" />
     <ComboboxOption key="jalapeno" value="jalapeno" displayName="Jalapeño" />

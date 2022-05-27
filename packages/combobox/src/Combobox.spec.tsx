@@ -176,6 +176,45 @@ describe('packages/combobox', () => {
         expect(optionEl).toHaveTextContent(displayName);
       });
 
+      test('Disabled options are still rendered in the menu', () => {
+        const options: Array<OptionObject> = [
+          ...defaultOptions,
+          {
+            value: 'disabled',
+            displayName: 'Disabled',
+            isDisabled: true,
+          },
+        ];
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        expect(optionElements).toHaveLength(defaultOptions.length + 1);
+      });
+
+      test('Disabled option is not selectable', () => {
+        const options: Array<OptionObject> = [
+          ...defaultOptions,
+          {
+            value: 'disabled',
+            displayName: 'Disabled',
+            isDisabled: true,
+          },
+        ];
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const { openMenu, inputEl, queryChipsByName } = renderCombobox(select, {
+          options,
+          initialValue,
+        });
+        const { optionElements } = openMenu();
+        const disabledOption = optionElements[optionElements.length - 1];
+        userEvent.click(disabledOption);
+        if (select === 'multiple') {
+          expect(queryChipsByName('Apple')).toBeInTheDocument();
+          expect(queryChipsByName('Disabled')).not.toBeInTheDocument();
+        } else {
+          expect(inputEl).toHaveValue('Apple');
+        }
+      });
+
       // Grouped Options
       describe('Grouped Options', () => {
         test('Grouped items should render', () => {
@@ -410,7 +449,7 @@ describe('packages/combobox', () => {
         const { openMenu, queryChipsByName, inputEl } = renderCombobox(select);
         const { optionElements } = openMenu();
         expect(optionElements).not.toBeUndefined();
-        userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[2]);
+        userEvent.click(optionElements[2]);
         if (select === 'multiple') {
           expect(queryChipsByName('Carrot')).toBeInTheDocument();
         } else {

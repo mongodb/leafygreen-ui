@@ -72,10 +72,10 @@ const disallowPointer = css`
 const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
 `;
+
 /**
  * Component
  */
-
 const InternalComboboxOption = React.forwardRef<
   HTMLLIElement,
   InternalComboboxOptionProps
