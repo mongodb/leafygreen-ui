@@ -205,8 +205,8 @@ describe('packages/combobox', () => {
           initialValue,
         });
         const { optionElements } = openMenu();
-        const disabledOption = optionElements[optionElements.length - 1];
-        userEvent.click(disabledOption);
+        const disabledOption = optionElements?.[optionElements?.length - 1];
+        userEvent.click(disabledOption as HTMLLIElement);
         if (select === 'multiple') {
           expect(queryChipsByName('Apple')).toBeInTheDocument();
           expect(queryChipsByName('Disabled')).not.toBeInTheDocument();
@@ -449,7 +449,7 @@ describe('packages/combobox', () => {
         const { openMenu, queryChipsByName, inputEl } = renderCombobox(select);
         const { optionElements } = openMenu();
         expect(optionElements).not.toBeUndefined();
-        userEvent.click(optionElements[2]);
+        userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[2]);
         if (select === 'multiple') {
           expect(queryChipsByName('Carrot')).toBeInTheDocument();
         } else {

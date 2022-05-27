@@ -49,7 +49,7 @@ const ComboboxOptions = [
     key="pomegranate"
     value="pomegranate"
     displayName="Pomegranate"
-    // glyph={<Icon glyph="Warning" />}
+    glyph={<Icon glyph="Warning" />}
   />,
   <ComboboxGroup key="peppers" label="Peppers">
     <ComboboxOption key="cayenne" value="cayenne" displayName="Cayenne" />
