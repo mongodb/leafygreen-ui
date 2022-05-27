@@ -26,8 +26,8 @@ export default {
 
 type BaseFontSize = 14 | 16;
 
-// eslint-disable-next-line react/prop-types
 const Template: Story<CheckboxProps & { baseFontSize: BaseFontSize }> = ({
+  // eslint-disable-next-line react/prop-types
   baseFontSize,
   ...args
 }) => (
