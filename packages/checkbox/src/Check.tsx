@@ -33,7 +33,6 @@ const checkWrapperBaseStyle = css`
   z-index: 1;
   height: ${checkBoxSize}px;
   width: ${checkBoxSize}px;
-  // align-self: center;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
