@@ -4,14 +4,19 @@ import React from 'react';
 import Checkbox from '.';
 import { CheckboxProps } from './types';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/Checkbox',
   component: Checkbox,
-  parameters: {
-    controls: { exclude: ['children'] },
-  },
   argTypes: {
+    children: defaultArgTypes.children,
+    darkMode: defaultArgTypes.darkMode,
+    checked: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    indeterminate: { control: 'boolean' },
+    animate: { control: 'boolean', default: true },
+    onChange: { control: 'none' },
     baseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },

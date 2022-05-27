@@ -2,6 +2,7 @@
 import { BoxProps } from '@leafygreen-ui/box';
 import { Story } from '@storybook/react';
 import React from 'react';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 import LGCard, { CardProps } from './Card';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef
@@ -18,18 +19,20 @@ export default {
   component: Card,
   excludeStories: ['Card'],
   args: {
-    text: 'This is a card component.',
+    children: 'This is a card component.',
+  },
+  argTypes: {
+    href: {
+      control: 'text',
+    },
+    as: defaultArgTypes.as,
+    darkMode: defaultArgTypes.darkMode,
+    children: defaultArgTypes.children,
   },
 };
 
-const Template: Story<CardStoryProps & { text: string }> = ({
-  text,
-  as,
-  ...args
-}) => (
-  <Card as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args}>
-    {text}
-  </Card>
+const Template: Story<CardStoryProps> = ({ as, ...args }) => (
+  <Card as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );
 
 export const Basic = Template.bind({});

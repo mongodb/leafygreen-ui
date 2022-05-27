@@ -113,10 +113,16 @@ const containerStyle = css`
 
 export interface CardProps {
   className?: string;
+  /**
+   * Determines whether the Card should be styled as clickable.
+   */
   contentStyle?: ContentStyle;
   darkMode?: boolean;
 }
 
+/**
+ * Cards are used to organize information into consumable chunks.
+ */
 const Card: ExtendableBox<CardProps> = ({
   className,
   contentStyle,

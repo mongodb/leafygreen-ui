@@ -9,6 +9,7 @@ module.exports = {
     'prettier',
     'prettier/react',
     'plugin:jsx-a11y/recommended',
+    'plugin:storybook/recommended',
   ],
   parserOptions: {
     sourceType: 'module',
@@ -30,7 +31,8 @@ module.exports = {
     '@emotion/jsx-import': 'error',
     '@emotion/pkg-renaming': 'error',
     'jest/no-conditional-expect': 'off',
-    'jest/valid-title': 'off', // can't detect titles that are string variables
+    'jest/valid-title': 'off',
+    // can't detect titles that are string variables
     'react/jsx-filename-extension': [
       'error',
       {
@@ -59,12 +61,19 @@ module.exports = {
         next: ['block-like', 'const', 'let', 'case', 'if', 'while', 'return'],
       },
     ],
-    'no-redeclare': 'off', // covered by TypeScript
+    'no-redeclare': 'off',
+    // covered by TypeScript
     'no-trailing-spaces': 'error',
-    'no-undef': 'off', // covered by TypeScript
+    'no-undef': 'off',
+    // covered by TypeScript
     'no-var': 'warn',
     'prefer-const': 'warn',
-    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-console': [
+      'error',
+      {
+        allow: ['warn', 'error'],
+      },
+    ],
   },
   overrides: [
     {
@@ -84,10 +93,18 @@ module.exports = {
           },
         ],
         '@typescript-eslint/adjacent-overload-signatures': 'error',
-        '@typescript-eslint/array-type': ['error', { default: 'generic' }],
+        '@typescript-eslint/array-type': [
+          'error',
+          {
+            default: 'generic',
+          },
+        ],
         '@typescript-eslint/naming-convention': [
           'error',
-          { selector: 'class', format: ['PascalCase'] },
+          {
+            selector: 'class',
+            format: ['PascalCase'],
+          },
           {
             selector: 'interface',
             format: ['PascalCase'],
@@ -113,7 +130,9 @@ module.exports = {
     },
     {
       files: ['website/**/*.{ts,tsx}'],
-      rules: { 'react/react-in-jsx-scope': 'off' },
+      rules: {
+        'react/react-in-jsx-scope': 'off',
+      },
     },
     {
       files: ['packages/**/*.spec.{ts,tsx}'],
