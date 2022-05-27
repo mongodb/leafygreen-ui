@@ -7,9 +7,20 @@ import {
   indeterminateLight,
 } from './img';
 import { CheckProps } from './types';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 const height = 20;
 const width = 600;
+
+const wrapperStyleAlignment: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    margin-top: 0px;
+  `,
+  [BaseFontSize.Body2]: css`
+    margin-top: 3px;
+  `,
+};
 
 const wrapperStyleAnimated = css`
   transition: 300ms opacity ease-in-out;
@@ -23,7 +34,7 @@ const wrapperStyle = css`
   flex-shrink: 0;
   position: relative;
   opacity: 0.9;
-  align-self: center;
+  // align-self: center;
 `;
 
 const checkboxStyle = css`
@@ -52,6 +63,7 @@ export function LegacyCheck({
   animate,
   selector,
 }: CheckProps) {
+  const baseFontSize = useUpdatedBaseFontSize();
   const checkboxBackgroundImage = (() => {
     if (disabled) {
       if (isChecked) {
@@ -78,10 +90,15 @@ export function LegacyCheck({
 
   return (
     <div
-      className={cx(selector, wrapperStyle, {
-        [wrapperStyleChecked]: isChecked && indeterminate && !disabled,
-        [wrapperStyleAnimated]: animate && !indeterminate && !disabled,
-      })}
+      className={cx(
+        selector,
+        wrapperStyle,
+        wrapperStyleAlignment[baseFontSize],
+        {
+          [wrapperStyleChecked]: isChecked && indeterminate && !disabled,
+          [wrapperStyleAnimated]: animate && !indeterminate && !disabled,
+        },
+      )}
     >
       <div
         className={cx(checkboxStyle, checkboxBackgroundImage, {

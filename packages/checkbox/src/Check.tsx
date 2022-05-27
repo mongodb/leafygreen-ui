@@ -14,6 +14,17 @@ import SvgCheck from './SvgCheck';
 import SvgIndeterminate from './SvgIndeterminate';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { CheckProps } from './types';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
+const checkWrapperAlignment: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    margin-top: 3px;
+  `,
+  [BaseFontSize.Body2]: css`
+    margin-top: 7px;
+  `,
+};
 
 const checkWrapperBaseStyle = css`
   grid-area: check;
@@ -22,7 +33,7 @@ const checkWrapperBaseStyle = css`
   z-index: 1;
   height: ${checkBoxSize}px;
   width: ${checkBoxSize}px;
-  align-self: center;
+  // align-self: center;
   align-items: center;
   justify-content: center;
   border-radius: 3px;
@@ -140,6 +151,7 @@ export function Check({
   selector,
 }: CheckProps) {
   const { usingKeyboard } = useUsingKeyboardContext();
+  const baseFontSize = useUpdatedBaseFontSize();
 
   const CheckIcon = indeterminate ? SvgIndeterminate : SvgCheck;
   const showCheckIcon = indeterminate || isChecked;
@@ -149,11 +161,16 @@ export function Check({
   return (
     <>
       <div
-        className={cx(selector, checkWrapperBaseStyle, {
-          [checkWrapperCheckedStyle]: showCheckIcon,
-          [checkWrapperDisabledStyle]: disabled,
-          [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,
-        })}
+        className={cx(
+          selector,
+          checkWrapperBaseStyle,
+          checkWrapperAlignment[baseFontSize],
+          {
+            [checkWrapperCheckedStyle]: showCheckIcon,
+            [checkWrapperDisabledStyle]: disabled,
+            [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,
+          },
+        )}
       >
         <Transition
           in={showCheckIcon}
