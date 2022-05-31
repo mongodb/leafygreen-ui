@@ -47,6 +47,7 @@ import {
   menuMessage,
   menuStyle,
   menuWrapperStyle,
+  _tempLabelDescriptionOverrideStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
 import {
@@ -1246,11 +1247,19 @@ export default function Combobox<M extends boolean>({
       >
         <div>
           {label && (
-            <Label id={labelId} htmlFor={inputId}>
+            <Label
+              id={labelId}
+              htmlFor={inputId}
+              className={_tempLabelDescriptionOverrideStyle}
+            >
               {label}
             </Label>
           )}
-          {description && <Description>{description}</Description>}
+          {description && (
+            <Description className={_tempLabelDescriptionOverrideStyle}>
+              {description}
+            </Description>
+          )}
         </div>
 
         <InteractionRing

@@ -22,8 +22,9 @@ export type ComboboxElement =
  */
 
 export const ComboboxSize = {
-  XSmall: 'xsmall',
-  Small: 'small',
+  // TODO: add XSmall & Small variants after the refresh
+  // XSmall: 'xsmall',
+  // Small: 'small',
   Default: 'default',
   Large: 'large',
 } as const;
