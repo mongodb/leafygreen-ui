@@ -123,7 +123,7 @@ const InternalComboboxOption = React.forwardRef<
           setSelected();
         }
       },
-      [optionRef, setSelected],
+      [disabled, optionRef, setSelected],
     );
 
     const renderedIcon = useMemo(() => {
@@ -191,6 +191,7 @@ const InternalComboboxOption = React.forwardRef<
       inputValue,
       darkMode,
       optionTextId,
+      disabled,
       withIcons,
     ]);
 
