@@ -5,7 +5,6 @@ import { Tab, Tabs } from './index';
 import { TabsProps } from './Tabs';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
-
 export default {
   title: 'Packages/Tabs',
   component: Tabs,
@@ -35,8 +34,11 @@ export default {
       </Tab>,
     ],
   },
-  parameters: {
-    controls: { exclude: ['children'] },
+  argTypes: {
+    children: { control: false },
+    as: { control: false },
+    setSelected: { control: false },
+    selected: { control: 'number' },
   },
   subcomponents: { Tab },
 } as Meta<typeof Tabs>;

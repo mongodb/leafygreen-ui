@@ -47,7 +47,6 @@ export interface RadioGroupProps {
 }
 
 /**
- * # RadioGroup
  *
  * RadioGroup component
  *

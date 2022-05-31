@@ -1,43 +1,23 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import { Radio, RadioGroup } from '.';
 import { RadioGroupProps } from './RadioGroup';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/RadioGroup',
   component: RadioGroup,
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
-    darkMode: {
-      control: 'boolean',
-    },
+    children: { control: false },
+    darkMode: defaultArgTypes.darkMode,
+    onChange: { control: false },
+    name: { control: 'text' },
+    value: { control: 'text' },
   },
 } as Meta<typeof RadioGroup>;
 
-export const Uncontrolled = ({
-  className,
-  darkMode,
-  ...args
-}: RadioGroupProps) => (
-  <RadioGroup
-    name="radio-group-default"
-    darkMode={darkMode}
-    className={cx(
-      css`
-        background-color: ${darkMode ? palette.gray.dark3 : palette.white};
-        padding: 20px;
-      `,
-      className,
-    )}
-    {...args}
-  >
+export const Uncontrolled = ({ darkMode, ...args }: RadioGroupProps) => (
+  <RadioGroup name="radio-group-default" darkMode={darkMode} {...args}>
     <Radio value="1">Radio Input Copy</Radio>
     <Radio value="2">Radio Input Copy</Radio>
     <Radio default value="3">

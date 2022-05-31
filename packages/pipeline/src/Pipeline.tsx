@@ -117,18 +117,10 @@ const getStatefulStyles = (state: StateForStyles) => ({
 });
 
 /**
- * # Pipeline
  *
  * React Component to render top-level MongoDB Aggregations in a visual format.
  * Handles overflowed content gracefully by indicating how many other stages are hidden.
  *
- * ```
- * <Pipeline>
- *   <Stage>$match</Stage>
- *   <Stage>$addFields</Stage>
- *   <Stage>$limit</Stage>
- * </Pipeline>
- * ```
  * @param props.children Content that will appear inside of the Pipeline component.
  * @param props.className Classname applied to Pipeline content container.
  * @param props.size Alters the rendered size of the component.

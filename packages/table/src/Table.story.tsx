@@ -5,6 +5,7 @@ import React from 'react';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, multiRowData } from './fixtures';
 import { TableProps } from './Table';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/Table',
@@ -14,10 +15,16 @@ export default {
     withHeaders: false,
   },
   argTypes: {
-    withHeaders: 'boolean',
-  },
-  parameters: {
-    controls: { exclude: ['children', 'data', 'columns'] },
+    withHeaders: {
+      control: 'boolean',
+      description:
+        '[STORYBOOK ONLY]\n\nDetermines whether the `isHeader` prop should be passed to the first `Cell` of the story.',
+    },
+    children: { control: 'none' },
+    data: { control: 'none' },
+    columns: { control: 'none' },
+    darkMode: defaultArgTypes.darkMode,
+    ref: { control: 'none' },
   },
 } as Meta<typeof Table>;
 

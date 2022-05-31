@@ -19,6 +19,11 @@ import {
 export default {
   title: 'Packages/Logo',
   argTypes: {
+    className: {
+      table: {
+        disable: true,
+      },
+    },
     color: {
       default: SupportedColors.White,
       control: 'radio',

@@ -8,9 +8,10 @@ export default {
   title: 'Packages/RadioBoxGroup',
   component: RadioBoxGroup,
   argTypes: {
-    children: {
-      control: false,
-    },
+    children: { control: false },
+    onChange: { control: false },
+    name: { control: 'text' },
+    value: { control: 'text' },
   },
 } as Meta<typeof RadioBoxGroup>;
 
