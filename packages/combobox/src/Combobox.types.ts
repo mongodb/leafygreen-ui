@@ -22,7 +22,10 @@ export type ComboboxElement =
  */
 
 export const ComboboxSize = {
-  default: 'default',
+  XSmall: 'xsmall',
+  Small: 'small',
+  Default: 'default',
+  Large: 'large',
 } as const;
 export type ComboboxSize = typeof ComboboxSize[keyof typeof ComboboxSize];
 
