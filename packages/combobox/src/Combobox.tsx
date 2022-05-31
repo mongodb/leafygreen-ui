@@ -56,7 +56,9 @@ import {
 } from './utils';
 
 /**
- * Component
+ * Combobox is a combination of a Select and TextInput, 
+ * allowing the user to either type a value directly or select a value from the list.
+ * Can be configured to select a single or multiple options.
  */
 export default function Combobox<M extends boolean>({
   children,
