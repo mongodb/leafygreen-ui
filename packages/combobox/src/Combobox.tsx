@@ -28,6 +28,7 @@ import {
   SelectValueType,
   OptionObject,
   ComboboxElement,
+  ComboboxSize,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
@@ -67,7 +68,7 @@ export default function Combobox<M extends boolean>({
   placeholder = 'Select',
   'aria-label': ariaLabel,
   disabled = false,
-  size = 'default',
+  size = ComboboxSize.Default,
   darkMode = false,
   state = 'none',
   errorMessage,
