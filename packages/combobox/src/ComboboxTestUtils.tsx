@@ -9,8 +9,11 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxGroup, ComboboxOption } from '.';
-import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
-import { OptionObject } from './util';
+import {
+  BaseComboboxProps,
+  ComboboxMultiselectProps,
+  OptionObject,
+} from './Combobox.types';
 import { isArray, isNull } from 'lodash';
 import chalk from '@testing-library/jest-dom/node_modules/chalk';
 
