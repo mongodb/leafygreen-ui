@@ -3,12 +3,19 @@ import { Story } from '@storybook/react';
 import React from 'react';
 import Checkbox from '.';
 import { CheckboxProps } from './types';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/Checkbox',
   component: Checkbox,
-  parameters: {
-    controls: { exclude: ['children'] },
+  argTypes: {
+    children: defaultArgTypes.children,
+    darkMode: defaultArgTypes.darkMode,
+    checked: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    indeterminate: { control: 'boolean' },
+    animate: { control: 'boolean', default: true },
+    onChange: { control: 'none' },
   },
 };
 

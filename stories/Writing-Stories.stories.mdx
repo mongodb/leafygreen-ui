@@ -4,6 +4,16 @@ import BannerImage from '../.storybook/static/leafygreen-ui-banner.png';
 
 <Meta title="Overview/Writing Stories" />
 
-### Known Issues
+### Common Issues
 
-- https://github.com/storybookjs/storybook/issues/9511
+##### My new prop isn't showing up in Storybook controls
+
+Ensure that the new prop is also defined in the component's prop types. If the component is using `forwardRef`, also refer to this known [issue](https://github.com/storybookjs/storybook/issues/9511) in Storybook.
+
+##### My prop's control is showing up, but not the notes from TSDocs.
+
+Ensure that the prop is defined in the component's prop types.
+
+### Issues in Dependencies
+
+- [Props table won't be generated for TypeScript types if forwardRef used with the default export](https://github.com/storybookjs/storybook/issues/9511)

@@ -80,7 +80,6 @@ export function AllColors() {
       </div>
     );
   });
-  // const renderedRanges = 'hello world'
 
   return <div>{renderedRanges}</div>;
 }

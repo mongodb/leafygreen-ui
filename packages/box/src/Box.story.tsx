@@ -1,7 +1,7 @@
 import React from 'react';
 import Box, { BoxProps } from '.';
 import { Meta, Story } from '@storybook/react';
-import IntrinsicElements from '../../../.storybook/utils/IntrinsicElements';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef
 // https://github.com/storybookjs/storybook/issues/15334
@@ -21,43 +21,35 @@ export default {
   title: 'Packages/Box',
   component: StoryBox,
   excludeStories: ['StoryBox'],
-  parameters: {
-    controls: {
-      exclude: ['ref'],
-    },
-  },
   argTypes: {
     as: {
       defaultValue: 'div',
-      options: IntrinsicElements,
-      type: { name: 'string' },
-      control: { type: 'select' },
+      ...defaultArgTypes.as,
+    },
+    href: {
+      control: 'text',
     },
   },
 } as Meta<typeof Box>;
 
-const Template: Story<
-  BoxProps & { text: string }
-  // eslint-disable-next-line react/prop-types
-> = ({ text, as, ...args }) => (
-  <Box as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args}>
-    {text}
-  </Box>
+// eslint-disable-next-line react/prop-types
+const Template: Story<BoxProps> = ({ as, ...args }) => (
+  <Box as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );
 
 export const Basic = Template.bind({});
 Basic.args = {
-  text: 'I am a div',
+  children: 'I am a div',
 };
 
 export const Anchor = Template.bind({});
 Anchor.args = {
   href: 'https://mongodb.design',
-  text: 'I am an anchor tag',
+  children: 'I am an anchor tag',
 };
 
 export const CustomComponent = Template.bind({});
 CustomComponent.args = {
   as: 'button',
-  text: 'I am a button tag',
+  children: 'I am a button tag',
 };

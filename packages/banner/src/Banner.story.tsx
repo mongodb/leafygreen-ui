@@ -2,6 +2,7 @@ import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Banner, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/Banner',
@@ -11,23 +12,18 @@ export default {
       'To avoid disrupting majority writes, new members are now added to replica sets as priority=0, votes=0 until they reach secondary state, after which Cloud Manager automatically updates the configuration to match the priority and votes value specified in the deployment.',
   },
   argTypes: {
-    children: {
-      control: {
-        type: 'text',
-      },
-    },
     image: {
       options: Object.keys(glyphs),
       control: { type: 'select' },
     },
-    className: {
-      control: {
-        type: 'text',
-      },
+    dismissible: {
+      control: 'boolean',
     },
     onClose: {
       control: 'none',
     },
+    children: defaultArgTypes.children,
+    ref: defaultArgTypes.ref,
   },
 } as Meta<typeof Banner>;
 
