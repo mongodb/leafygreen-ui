@@ -5,6 +5,28 @@ import { Either } from '@leafygreen-ui/lib';
  * Prop Enums & Types
  */
 
+export interface OptionObject {
+  value: string;
+  displayName: string;
+  hasGlyph?: boolean;
+}
+
+export const ComboboxElement = {
+  Input: 'Input',
+  ClearButton: 'ClearButton',
+  FirstChip: 'FirstChip',
+  LastChip: 'LastChip',
+  MiddleChip: 'MiddleChip',
+  Combobox: 'Combobox',
+  Menu: 'Menu',
+} as const;
+export type ComboboxElement =
+  typeof ComboboxElement[keyof typeof ComboboxElement];
+
+/**
+ * Prop types
+ */
+
 export const ComboboxSize = {
   default: 'default',
 } as const;

@@ -1,8 +1,8 @@
 import { mix, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { Size, Variant, Mode, ButtonProps, FontSize } from './types';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { Size, Variant, Mode, ButtonProps } from './types';
+import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { createDataProp } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
@@ -370,13 +370,13 @@ const sizeStyle: Record<Size, string> = {
   `,
 };
 
-const fontStyles: Record<FontSize, string> = {
-  [FontSize.Body1]: css`
+const fontStyles: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     font-weight: 500; // Medium
   `,
-  [FontSize.Body2]: css`
+  [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     // Pixel pushing for optical alignment purposes
