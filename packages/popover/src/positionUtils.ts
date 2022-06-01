@@ -141,12 +141,23 @@ const defaultElementPosition = {
 };
 
 /**
- * Returns the unrounded, floating point width of the element which does not include transformations.
- *
- * `offsetWidth` would not work because this returns a rounded number of the element's layout width and `getBoundingClientRect.width` would also not work because it returns an exact number of the rendered width which can include transformations.
+ * Returns the width and height as well as the top, bottom, left, and right positions of an element.
  */
-const getComputedStyleWidth = (element: HTMLElement): number => {
-  return parseFloat(getComputedStyle(element).width);
+const getElementPosition = (element: HTMLElement) => {
+  const { top, bottom, left, right } = element.getBoundingClientRect();
+  const { offsetHeight: height } = element;
+  // Returns the unrounded, floating point width of the element which does not include transformations.
+  // `offsetWidth` would not work because this returns a rounded number of the element's layout width and `getBoundingClientRect.width` would also not work because it returns an exact number of the rendered width which can include transformations.
+  const width = parseFloat(getComputedStyle(element).width);
+
+  return {
+    top,
+    bottom,
+    left,
+    right,
+    height,
+    width,
+  };
 };
 
 export function getElementDocumentPosition(
@@ -157,9 +168,8 @@ export function getElementDocumentPosition(
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right } = element.getBoundingClientRect();
-  const { offsetHeight: height } = element;
-  const width = getComputedStyleWidth(element);
+  const { top, bottom, left, right, height, width } =
+    getElementPosition(element);
 
   if (scrollContainer) {
     const { scrollTop, scrollLeft } = scrollContainer;
@@ -201,9 +211,8 @@ export function getElementViewportPosition(
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right } = element.getBoundingClientRect();
-  const { offsetHeight: height } = element;
-  const width = getComputedStyleWidth(element);
+  const { top, bottom, left, right, height, width } =
+    getElementPosition(element);
 
   if (scrollContainer) {
     const {
