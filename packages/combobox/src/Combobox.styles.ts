@@ -12,7 +12,10 @@ import { ComboboxSize, Overflow, State } from './Combobox.types';
 /**
  * Width of the widest character (in px)
  */
-const maxCharWidth = 13; // TODO: update this for Size prop
+const maxCharWidth: Record<ComboboxSize, number> = {
+  [ComboboxSize.Default]: typeScales.body1.fontSize,
+  [ComboboxSize.Large]: typeScales.body2.fontSize,
+};
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
@@ -160,11 +163,13 @@ export const inputWrapperStyle = ({
   overflow,
   isOpen,
   selection,
+  size,
   value,
 }: {
   overflow: Overflow;
   isOpen: boolean;
   selection: string | Array<string> | null;
+  size: ComboboxSize;
   value?: string;
 }) => {
   const isMultiselect = isArray(selection) && selection.length > 0;
@@ -175,7 +180,7 @@ export const inputWrapperStyle = ({
     width: var(--lg-combobox-width);
 
     --lg-combobox-input-width: ${isMultiselect
-      ? `${inputLength * maxCharWidth}px`
+      ? `${inputLength * maxCharWidth[size]}px`
       : '100%'};
   `;
 

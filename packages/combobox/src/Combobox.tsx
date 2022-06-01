@@ -1294,6 +1294,7 @@ export default function Combobox<M extends boolean>({
                 overflow,
                 isOpen,
                 selection,
+                size,
                 value: inputValue,
               })}
             >
