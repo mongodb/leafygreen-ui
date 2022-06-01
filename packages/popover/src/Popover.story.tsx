@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { Meta } from '@storybook/react';
-import { css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify, PopoverProps } from '.';
 
 const popoverStyle = css`
-  border: 1px solid ${uiColors.gray.light1};
+  border: 1px solid ${palette.gray.light1};
   text-align: center;
   padding: 20px;
   max-height: 100%;
@@ -17,11 +17,21 @@ const popoverStyle = css`
   background-color: initial;
 `;
 
+const regularStyles = css`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const scrollableStyle = css`
   width: 500px;
   height: 90vh;
   background-color: #e8edeb;
   overflow: scroll;
+  position: relative;
 `;
 
 const scrollableInnerStyle = css`
@@ -83,22 +93,32 @@ export default {
   },
 } as Meta<typeof Popover>;
 
-type PopoverStoryProps = PopoverProps & { buttonText: string } & {
+type PopoverStoryProps = PopoverProps & {
+  buttonText: string;
   refButtonPosition: string;
 };
 
-export const Template = ({ buttonText, ...args }: PopoverStoryProps) => {
+export const Template = ({
+  refButtonPosition,
+  buttonText,
+  ...args
+}: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
+
+  const position = referenceElPositions[refButtonPosition];
+
   return (
-    <button
-      className={buttonStyles}
-      onClick={() => setActive(active => !active)}
-    >
-      {buttonText}
-      <Popover {...args} active={active}>
-        <div className={popoverStyle}>Popover content</div>
-      </Popover>
-    </button>
+    <div className={regularStyles}>
+      <button
+        className={cx(buttonStyles, position)}
+        onClick={() => setActive(active => !active)}
+      >
+        {buttonText}
+        <Popover {...args} active={active}>
+          <div className={popoverStyle}>Popover content</div>
+        </Popover>
+      </button>
+    </div>
   );
 };
 
@@ -120,10 +140,10 @@ export const ScrollableContainer = ({
           className={position}
         >
           {buttonText}
+          {/* @ts-expect-error */}
           <Popover
             {...args}
             active={active}
-            usePortal={true}
             portalContainer={portalContainer.current}
             scrollContainer={portalContainer.current}
           >
@@ -133,6 +153,10 @@ export const ScrollableContainer = ({
       </div>
     </div>
   );
+};
+
+ScrollableContainer.args = {
+  usePortal: true,
 };
 
 ScrollableContainer.argTypes = {
