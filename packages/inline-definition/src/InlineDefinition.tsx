@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { Mode } from '@leafygreen-ui/tokens';
 
 const triggerElementStyles = css`
   border-radius: 2px;
   text-decoration: underline dotted 2px;
-  text-decoration-color: ${palette.gray.dark1};
   text-underline-offset: 0.125em;
 
   &:hover {
-    text-decoration-color: currentColor;
-
     * {
       // Remove the Link underline styles
       background-size: 0px;
@@ -21,13 +19,33 @@ const triggerElementStyles = css`
 
   &:focus,
   &:focus-visible {
-    text-decoration-color: ${palette.blue.light1};
     outline-color: ${palette.blue.light1};
     outline-offset: 3px;
     outline-style: solid;
     outline-width: 2px;
   }
 `;
+
+const triggerElementModeStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+    text-decoration-color: ${palette.black};
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      text-decoration-color: ${palette.black};
+    }
+  `,
+  [Mode.Dark]: css`
+    text-decoration-color: ${palette.gray.light2};
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      text-decoration-color: ${palette.gray.light2};
+    }
+  `,
+};
 
 type InlineDefinitionProps = Partial<TooltipProps> & {
   definition: React.ReactNode;
@@ -39,19 +57,27 @@ function InlineDefinition({
   children,
   className,
   tooltipClassName,
+  darkMode = false,
   ...tooltipProps
 }: InlineDefinitionProps) {
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   return (
     <Tooltip
       justify="middle"
       spacing={9}
       className={tooltipClassName}
+      darkMode={darkMode}
       {...tooltipProps}
       trigger={
         <span
           // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
-          className={cx(triggerElementStyles, className)}
+          className={cx(
+            triggerElementStyles,
+            triggerElementModeStyles[mode],
+            className,
+          )}
         >
           {children}
         </span>
