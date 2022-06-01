@@ -5,7 +5,7 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { focusRing, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
 import { ComboboxSize, Overflow, State } from './Combobox.types';
 
@@ -119,11 +119,6 @@ export const comboboxStyle = css`
   transition: 150ms ease-in-out;
   transition-property: background-color, box-shadow;
 
-  &:focus-within {
-    background-color: var(--lg-combobox-background-color-focus);
-    box-shadow: var(--lg-combobox-shadow-focus);
-  }
-
   &[data-disabled='true'] {
     color: var(--lg-combobox-text-color-disabled);
     background-color: var(--lg-combobox-background-color-disabled);
@@ -137,8 +132,11 @@ export const comboboxStyle = css`
   }
 `;
 
-export const interactionRingStyle = css`
-  width: var(--lg-combobox-width);
+export const comboboxFocusStyle = css`
+  &:focus-within {
+    background-color: var(--lg-combobox-background-color-focus);
+    box-shadow: ${focusRing.light.input}, var(--lg-combobox-shadow-focus); // TODO: Darkmode
+  }
 `;
 
 export const interactionRingColor = ({
