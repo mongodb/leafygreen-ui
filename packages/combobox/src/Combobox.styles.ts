@@ -22,8 +22,8 @@ export const chipClassName = createUniqueClassName('combobox-chip');
 // TODO: Remove this during refresh update
 export const _tempLabelDescriptionOverrideStyle = css`
   font-family: ${fontFamilies.legacy};
-  font-size: inherit;
-  line-height: inherit;
+  font-size: var(--lg-combobox-font-size);
+  line-height: var(--lg-combobox-line-height);
 `;
 
 export const comboboxParentStyle = ({
@@ -254,7 +254,7 @@ export const inputElementStyle = css`
   padding: 0;
   margin: 0;
   text-overflow: ellipsis;
-  font-size: inherit;
+  font-size: var(--lg-combobox-font-size);
   line-height: var(--lg-combobox-line-height);
   height: var(--lg-combobox-height);
   width: var(--lg-combobox-input-width, 0);
