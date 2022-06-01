@@ -20,7 +20,7 @@ import InlineDefinition from '@leafygreen-ui/inline-definition';
 
 const wrapperStyles = css`
   height: 100vh;
-  padding: 0 25vw;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
