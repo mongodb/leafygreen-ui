@@ -97,7 +97,7 @@ export const comboboxParentStyle = ({
       width: var(--lg-combobox-width);
       // TODO: Clean this up 🤮
       min-width: calc(
-        ${maxCharWidth}px + var(--lg-combobox-padding-x) * 2 + 2px +
+        ${maxCharWidth[size]}px + var(--lg-combobox-padding-x) * 2 + 2px +
           var(--lg-combobox-icon-height)
       );
     `,
@@ -182,6 +182,7 @@ export const inputWrapperStyle = ({
     --lg-combobox-input-width: ${isMultiselect
       ? `${inputLength * maxCharWidth[size]}px`
       : '100%'};
+    --lg-combobox-input-min-width: ${maxCharWidth[size]}px;
   `;
 
   switch (overflow) {
@@ -258,7 +259,7 @@ export const inputElementStyle = css`
   line-height: var(--lg-combobox-line-height);
   height: var(--lg-combobox-height);
   width: var(--lg-combobox-input-width, 0);
-  min-width: ${maxCharWidth}px;
+  min-width: var(--lg-combobox-input-min-width);
   transition: var(--lg-combobox-input-transition);
 
   &:focus {
