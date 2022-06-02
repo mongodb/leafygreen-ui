@@ -3,6 +3,7 @@ import { Story } from '@storybook/react';
 import React from 'react';
 import Checkbox from '.';
 import { CheckboxProps } from './types';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
@@ -16,10 +17,24 @@ export default {
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
     onChange: { control: 'none' },
+    baseFontSize: {
+      options: [14, 16],
+      control: { type: 'radio' },
+    },
   },
 };
 
-const Template: Story<CheckboxProps> = args => <Checkbox {...args} />;
+type BaseFontSize = 14 | 16;
+
+const Template: Story<CheckboxProps & { baseFontSize: BaseFontSize }> = ({
+  // eslint-disable-next-line react/prop-types
+  baseFontSize,
+  ...args
+}) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Checkbox {...args} />
+  </LeafygreenProvider>
+);
 
 export const Basic = Template.bind({});
 Basic.args = {
