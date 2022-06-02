@@ -23,13 +23,14 @@ export const flattenChildren = (
     ): Array<OptionObject> | undefined => {
       if (isComponentType(child, 'ComboboxOption')) {
         const { value, displayName } = getNameAndValue(child.props);
-        const { glyph } = child.props;
+        const { glyph, disabled } = child.props;
 
         return [
           ...acc,
           {
             value,
             displayName,
+            isDisabled: !!disabled,
             hasGlyph: !!glyph,
           },
         ];
