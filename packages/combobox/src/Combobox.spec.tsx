@@ -167,6 +167,7 @@ describe('packages/combobox', () => {
           {
             value: 'paragraph',
             displayName,
+            isDisabled: false,
           },
         ];
 
@@ -307,6 +308,7 @@ describe('packages/combobox', () => {
             {
               value: 'paragraph',
               displayName,
+              isDisabled: false,
             },
             ...defaultOptions,
           ];

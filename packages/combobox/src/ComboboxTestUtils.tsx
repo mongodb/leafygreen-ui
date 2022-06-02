@@ -32,14 +32,17 @@ export const defaultOptions: Array<OptionObject> = [
   {
     value: 'apple',
     displayName: 'Apple',
+    isDisabled: false,
   },
   {
     value: 'banana',
     displayName: 'Banana',
+    isDisabled: false,
   },
   {
     value: 'carrot',
     displayName: 'Carrot',
+    isDisabled: false,
   },
 ];
 
@@ -50,10 +53,12 @@ export const groupedOptions: Array<NestedObject> = [
       {
         value: 'apple',
         displayName: 'Apple',
+        isDisabled: false,
       },
       {
         value: 'banana',
         displayName: 'Banana',
+        isDisabled: false,
       },
     ],
   },
@@ -63,10 +68,12 @@ export const groupedOptions: Array<NestedObject> = [
       {
         value: 'carrot',
         displayName: 'Carrot',
+        isDisabled: false,
       },
       {
         value: 'eggplant',
         displayName: 'Eggplant',
+        isDisabled: false,
       },
     ],
   },
