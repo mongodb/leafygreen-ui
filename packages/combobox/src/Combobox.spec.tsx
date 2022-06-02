@@ -231,7 +231,7 @@ describe('packages/combobox', () => {
           initialValue,
         });
         const { optionElements } = openMenu();
-        const disabledOption = optionElements?.[0];
+        const disabledOption = optionElements![0];
         userEvent.type(disabledOption, `{enter}`);
         if (select === 'multiple') {
           expect(queryChipsByName('Apple')).toBeInTheDocument();
