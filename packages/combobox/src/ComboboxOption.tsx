@@ -10,7 +10,7 @@ import {
   InternalComboboxOptionProps,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
-import { wrapJSX } from './util';
+import { wrapJSX } from './utils';
 
 /**
  * Styles
