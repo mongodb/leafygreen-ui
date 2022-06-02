@@ -29,7 +29,7 @@ const ComboboxOptions = [
   <ComboboxOption
     key="hash"
     value="hash"
-    displayName="5f4dcc3b5aa765d61d8327deb882cf99"
+    displayName="5f4dcc3b5aa765d61d8327deb882cf995f4dcc3b5aa765d61d8327deb882cf99"
   />,
   <ComboboxOption
     key="dragonfruit"

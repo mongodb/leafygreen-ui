@@ -63,6 +63,7 @@ const flexSpan = css`
   gap: 8px;
   justify-content: start;
   align-items: inherit;
+  overflow-wrap: anywhere;
 `;
 
 const disallowPointer = css`
