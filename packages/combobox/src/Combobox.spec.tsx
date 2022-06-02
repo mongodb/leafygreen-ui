@@ -190,14 +190,14 @@ describe('packages/combobox', () => {
         expect(optionElements).toHaveLength(defaultOptions.length + 1);
       });
 
-      test('Disabled option is not selectable', () => {
+      test('Disabled option is not selectable with the mouse', () => {
         const options: Array<OptionObject> = [
-          ...defaultOptions,
           {
             value: 'disabled',
             displayName: 'Disabled',
             isDisabled: true,
           },
+          ...defaultOptions,
         ];
         const initialValue = select === 'multiple' ? ['apple'] : 'apple';
         const { openMenu, inputEl, queryChipsByName } = renderCombobox(select, {
@@ -205,8 +205,33 @@ describe('packages/combobox', () => {
           initialValue,
         });
         const { optionElements } = openMenu();
-        const disabledOption = optionElements?.[optionElements?.length - 1];
+        const disabledOption = optionElements?.[0];
         userEvent.click(disabledOption as HTMLLIElement);
+        if (select === 'multiple') {
+          expect(queryChipsByName('Apple')).toBeInTheDocument();
+          expect(queryChipsByName('Disabled')).not.toBeInTheDocument();
+        } else {
+          expect(inputEl).toHaveValue('Apple');
+        }
+      });
+
+      test.only('Disabled option is not selectable with the keyboard', () => {
+        const options: Array<OptionObject> = [
+          {
+            value: 'disabled',
+            displayName: 'Disabled',
+            isDisabled: true,
+          },
+          ...defaultOptions,
+        ];
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const { openMenu, inputEl, queryChipsByName } = renderCombobox(select, {
+          options,
+          initialValue,
+        });
+        const { optionElements } = openMenu();
+        const disabledOption = optionElements?.[0];
+        userEvent.type(disabledOption, `{enter}`);
         if (select === 'multiple') {
           expect(queryChipsByName('Apple')).toBeInTheDocument();
           expect(queryChipsByName('Disabled')).not.toBeInTheDocument();

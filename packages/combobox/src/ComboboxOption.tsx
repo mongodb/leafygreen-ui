@@ -112,6 +112,9 @@ const InternalComboboxOption = React.forwardRef<
 
     const handleOptionClick = useCallback(
       (e: React.SyntheticEvent) => {
+        // stopPropagation will not stop the keyDown event (only click)
+        // since the option is never `focused`, only `aria-selected`
+        // the keyDown event does not actually fire on the option element
         e.stopPropagation();
 
         // If user clicked on the option, or the checkbox
@@ -211,7 +214,7 @@ const InternalComboboxOption = React.forwardRef<
           className,
         )}
         onClick={handleOptionClick}
-        onKeyPress={handleOptionClick}
+        onKeyDown={handleOptionClick}
       >
         {renderedChildren}
       </li>
