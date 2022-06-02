@@ -30,7 +30,7 @@ export const flattenChildren = (
           {
             value,
             displayName,
-            isDisabled: disabled,
+            isDisabled: !!disabled,
             hasGlyph: !!glyph,
           },
         ];
