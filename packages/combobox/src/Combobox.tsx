@@ -33,7 +33,8 @@ import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
 import {
-  clearButton,
+  clearButtonStyle,
+  clearButtonFocusOverrideStyles,
   comboboxFocusStyle,
   comboboxParentStyle,
   comboboxStyle,
@@ -725,7 +726,7 @@ export default function Combobox<M extends boolean>({
             ref={clearButtonRef}
             onClick={handleClearButtonClick}
             onFocus={handleClearButtonFocus}
-            className={clearButton}
+            className={cx(clearButtonStyle, clearButtonFocusOverrideStyles)}
           >
             <Icon glyph="XWithCircle" />
           </IconButton>

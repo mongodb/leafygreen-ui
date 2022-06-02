@@ -117,7 +117,7 @@ export const comboboxStyle = css`
   width: var(--lg-combobox-width);
   cursor: text;
   transition: 150ms ease-in-out;
-  transition-property: background-color, box-shadow;
+  transition-property: background-color, box-shadow, border-color;
 
   &[data-disabled='true'] {
     color: var(--lg-combobox-text-color-disabled);
@@ -134,8 +134,10 @@ export const comboboxStyle = css`
 
 export const comboboxFocusStyle = css`
   &:focus-within {
+    border-color: transparent;
     background-color: var(--lg-combobox-background-color-focus);
-    box-shadow: ${focusRing.light.input}, var(--lg-combobox-shadow-focus); // TODO: Darkmode
+    // TODO: Remove for UI refresh & Darkmode
+    box-shadow: 0 0 0 3px ${uiColors.focus}, var(--lg-combobox-shadow-focus);
   }
 `;
 
@@ -265,9 +267,20 @@ export const inputElementStyle = css`
   }
 `;
 
-export const clearButton = css`
+export const clearButtonStyle = css`
   // Add a negative margin so the button takes up the same space as the regular icons
   margin-block: calc(var(--lg-combobox-icon-height) / 2 - 100%);
+`;
+
+// Temporary styles to override redesigned icon-button
+// TODO: Remove for UI refresh
+export const clearButtonFocusOverrideStyles = css`
+  &:focus {
+    box-shadow: unset;
+    &::before {
+      background-color: ${uiColors.blue.light2};
+    }
+  }
 `;
 
 export const errorMessageStyle = css`
