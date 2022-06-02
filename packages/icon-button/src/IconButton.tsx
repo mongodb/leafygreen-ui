@@ -41,9 +41,9 @@ const baseIconButtonStyle = css`
   transition: 150ms ease-in-out;
   transition-property: color, box-shadow;
 
-  // Set background to fully-rgba(255, 255, 255, 0) white for cross-browser compatability with Safari
+  // Set background to fully-transparent white for cross-browser compatability with Safari
   //
-  // Safari treats "rgba(255, 255, 255, 0)" values in CSS as rgba(255, 255, 255, 0) black instead of white
+  // Safari treats "transparent" values in CSS as transparent black instead of white
   // which can make things render differently across browsers if not defined explicitly.
   background-color: rgba(255, 255, 255, 0);
 

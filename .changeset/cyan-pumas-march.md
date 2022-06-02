@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/inline-definition': patch
+'@leafygreen-ui/inline-definition': major
 ---
 
-Remove the white outline from the focus states
+Updates `inline-definition` for dark mode refresh and remove the white outline from the focus states.
