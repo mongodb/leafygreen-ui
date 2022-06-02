@@ -28,6 +28,7 @@ import {
   SelectValueType,
   OptionObject,
   ComboboxElement,
+  ComboboxSize,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
@@ -47,6 +48,7 @@ import {
   menuMessage,
   menuStyle,
   menuWrapperStyle,
+  _tempLabelDescriptionOverrideStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
 import {
@@ -69,7 +71,7 @@ export default function Combobox<M extends boolean>({
   placeholder = 'Select',
   'aria-label': ariaLabel,
   disabled = false,
-  size = 'default',
+  size = ComboboxSize.Default,
   darkMode = false,
   state = 'none',
   errorMessage,
@@ -1284,11 +1286,19 @@ export default function Combobox<M extends boolean>({
       >
         <div>
           {label && (
-            <Label id={labelId} htmlFor={inputId}>
+            <Label
+              id={labelId}
+              htmlFor={inputId}
+              className={_tempLabelDescriptionOverrideStyle}
+            >
               {label}
             </Label>
           )}
-          {description && <Description>{description}</Description>}
+          {description && (
+            <Description className={_tempLabelDescriptionOverrideStyle}>
+              {description}
+            </Description>
+          )}
         </div>
 
         <InteractionRing
@@ -1320,6 +1330,7 @@ export default function Combobox<M extends boolean>({
                 overflow,
                 isOpen,
                 selection,
+                size,
                 value: inputValue,
               })}
             >
