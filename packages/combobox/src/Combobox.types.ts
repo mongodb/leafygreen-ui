@@ -306,8 +306,8 @@ export type ComboboxOptionProps = Either<
 export interface OptionObject {
   value: string;
   displayName: string;
+  isDisabled: boolean;
   hasGlyph?: boolean;
-  isDisabled?: boolean;
 }
 
 export interface InternalComboboxOptionProps {
