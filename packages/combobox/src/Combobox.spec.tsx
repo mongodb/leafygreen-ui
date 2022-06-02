@@ -167,6 +167,7 @@ describe('packages/combobox', () => {
           {
             value: 'paragraph',
             displayName,
+            isDisabled: false,
           },
         ];
 
@@ -190,14 +191,14 @@ describe('packages/combobox', () => {
         expect(optionElements).toHaveLength(defaultOptions.length + 1);
       });
 
-      test('Disabled option is not selectable', () => {
+      test('Disabled option is not selectable with the mouse', () => {
         const options: Array<OptionObject> = [
-          ...defaultOptions,
           {
             value: 'disabled',
             displayName: 'Disabled',
             isDisabled: true,
           },
+          ...defaultOptions,
         ];
         const initialValue = select === 'multiple' ? ['apple'] : 'apple';
         const { openMenu, inputEl, queryChipsByName } = renderCombobox(select, {
@@ -205,8 +206,33 @@ describe('packages/combobox', () => {
           initialValue,
         });
         const { optionElements } = openMenu();
-        const disabledOption = optionElements?.[optionElements?.length - 1];
+        const disabledOption = optionElements?.[0];
         userEvent.click(disabledOption as HTMLLIElement);
+        if (select === 'multiple') {
+          expect(queryChipsByName('Apple')).toBeInTheDocument();
+          expect(queryChipsByName('Disabled')).not.toBeInTheDocument();
+        } else {
+          expect(inputEl).toHaveValue('Apple');
+        }
+      });
+
+      test('Disabled option is not selectable with the keyboard', () => {
+        const options: Array<OptionObject> = [
+          {
+            value: 'disabled',
+            displayName: 'Disabled',
+            isDisabled: true,
+          },
+          ...defaultOptions,
+        ];
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const { openMenu, inputEl, queryChipsByName } = renderCombobox(select, {
+          options,
+          initialValue,
+        });
+        const { optionElements } = openMenu();
+        const disabledOption = optionElements![0];
+        userEvent.type(disabledOption, `{enter}`);
         if (select === 'multiple') {
           expect(queryChipsByName('Apple')).toBeInTheDocument();
           expect(queryChipsByName('Disabled')).not.toBeInTheDocument();
@@ -282,6 +308,7 @@ describe('packages/combobox', () => {
             {
               value: 'paragraph',
               displayName,
+              isDisabled: false,
             },
             ...defaultOptions,
           ];
@@ -1012,9 +1039,24 @@ describe('packages/combobox', () => {
           const { inputEl, getMenuElements } = renderCombobox(select, {
             initialValue,
           });
-          userEvent.type(inputEl, '{arrowdown}{arrowdown}');
+          // First pressing escape to ensure the menu is closed
+          userEvent.type(inputEl, '{esc}{arrowdown}');
           const { optionElements } = getMenuElements();
           expect(optionElements).toHaveLength(defaultOptions.length);
+          expect(optionElements![0]).toHaveAttribute('aria-selected', 'true');
+        });
+
+        test('Pressing Up Arrow when there is a selection shows all menu options', () => {
+          // See also: 'Opening the menu when there is a selection should show all options'
+          const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+          const { inputEl, getMenuElements } = renderCombobox(select, {
+            initialValue,
+          });
+          // First pressing escape to ensure the menu is closed
+          userEvent.type(inputEl, '{esc}{arrowup}');
+          const { optionElements } = getMenuElements();
+          expect(optionElements).toHaveLength(defaultOptions.length);
+          expect(optionElements![0]).toHaveAttribute('aria-selected', 'true');
         });
       });
 
