@@ -1097,14 +1097,14 @@ export default function Combobox<M extends boolean>({
           // and the highlighted option is not disabled
           if (
             isOpen &&
-            focusedElement === ComboboxElement.Input &&
+            focusedElementName === ComboboxElement.Input &&
             !isNull(highlightedOption) &&
             !isOptionDisabled(highlightedOption)
           ) {
             updateSelection(highlightedOption);
           } else if (
             // Focused on clear button
-            focusedElement === ComboboxElement.ClearButton
+            focusedElementName === ComboboxElement.ClearButton
           ) {
             updateSelection(null);
             setInputFocus();
