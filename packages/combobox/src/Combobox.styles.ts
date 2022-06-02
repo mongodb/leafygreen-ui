@@ -5,17 +5,26 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
 import { ComboboxSize, Overflow, State } from './Combobox.types';
 
 /**
  * Width of the widest character (in px)
  */
-const charWidth = 13; // TODO: update this for Size prop
-const minWidth = charWidth;
+const maxCharWidth: Record<ComboboxSize, number> = {
+  [ComboboxSize.Default]: typeScales.body1.fontSize,
+  [ComboboxSize.Large]: typeScales.body2.fontSize,
+};
 
 export const chipClassName = createUniqueClassName('combobox-chip');
+
+// TODO: Remove this during refresh update
+export const _tempLabelDescriptionOverrideStyle = css`
+  font-family: ${fontFamilies.legacy};
+  font-size: var(--lg-combobox-font-size);
+  line-height: var(--lg-combobox-line-height);
+`;
 
 export const comboboxParentStyle = ({
   darkMode,
@@ -51,15 +60,26 @@ export const comboboxParentStyle = ({
 
   const sizeStyle = (size: ComboboxSize) => {
     switch (size) {
-      case 'default':
+      case ComboboxSize.Default:
         return css`
           --lg-combobox-padding-y: 5px;
           --lg-combobox-padding-x: 7px;
-          --lg-combobox-height: 24px;
-          --lg-combobox-font-size: 14px;
-          --lg-combobox-line-height: 20px;
-          --lg-combobox-border-radius: 3px;
-          --lg-combobox-icon-height: 16px;
+          --lg-combobox-height: calc(
+            36px - 2px - 2 * var(--lg-combobox-padding-y)
+          );
+          --lg-combobox-font-size: ${typeScales.body1.fontSize +
+          1}px; // TODO: update this for redesign
+          --lg-combobox-line-height: ${typeScales.body1.lineHeight + 1}px;
+        `;
+      case ComboboxSize.Large:
+        return css`
+          --lg-combobox-padding-y: 9px;
+          --lg-combobox-padding-x: 11px;
+          --lg-combobox-height: calc(
+            48px - 2px - 2 * var(--lg-combobox-padding-y)
+          );
+          --lg-combobox-font-size: ${typeScales.body2.fontSize}px;
+          --lg-combobox-line-height: ${typeScales.body2.lineHeight}px;
         `;
     }
   };
@@ -68,6 +88,8 @@ export const comboboxParentStyle = ({
     modeStyle(darkMode),
     sizeStyle(size),
     css`
+      --lg-combobox-icon-height: 16px;
+      --lg-combobox-border-radius: 3px;
       --lg-combobox-width: ${overflow === 'expand-x' ? 'unset' : '100%'};
       --lg-combobox-padding: var(--lg-combobox-padding-y)
         var(--lg-combobox-padding-x) var(--lg-combobox-padding-y)
@@ -75,7 +97,7 @@ export const comboboxParentStyle = ({
       width: var(--lg-combobox-width);
       // TODO: Clean this up 🤮
       min-width: calc(
-        ${minWidth}px + var(--lg-combobox-padding-x) * 2 + 2px +
+        ${maxCharWidth[size]}px + var(--lg-combobox-padding-x) * 2 + 2px +
           var(--lg-combobox-icon-height)
       );
     `,
@@ -141,11 +163,13 @@ export const inputWrapperStyle = ({
   overflow,
   isOpen,
   selection,
+  size,
   value,
 }: {
   overflow: Overflow;
   isOpen: boolean;
   selection: string | Array<string> | null;
+  size: ComboboxSize;
   value?: string;
 }) => {
   const isMultiselect = isArray(selection) && selection.length > 0;
@@ -156,8 +180,9 @@ export const inputWrapperStyle = ({
     width: var(--lg-combobox-width);
 
     --lg-combobox-input-width: ${isMultiselect
-      ? `${inputLength * charWidth}px`
+      ? `${inputLength * maxCharWidth[size]}px`
       : '100%'};
+    --lg-combobox-input-min-width: ${maxCharWidth[size]}px;
   `;
 
   switch (overflow) {
@@ -230,10 +255,11 @@ export const inputElementStyle = css`
   padding: 0;
   margin: 0;
   text-overflow: ellipsis;
+  font-size: var(--lg-combobox-font-size);
   line-height: var(--lg-combobox-line-height);
   height: var(--lg-combobox-height);
   width: var(--lg-combobox-input-width, 0);
-  min-width: ${minWidth}px;
+  min-width: var(--lg-combobox-input-min-width);
   transition: var(--lg-combobox-input-transition);
 
   &:focus {
@@ -298,16 +324,32 @@ export const menuWrapperStyle = ({
   }
 
   switch (size) {
-    case 'default':
+    case ComboboxSize.Default:
       menuSizeStyle = css`
         --lg-combobox-menu-border-radius: 4px;
         --lg-combobox-item-height: 36px;
         --lg-combobox-item-padding-y: 8px;
         --lg-combobox-item-padding-x: 12px;
-        --lg-combobox-item-font-size: 14px;
-        --lg-combobox-item-line-height: 21px;
+        --lg-combobox-item-font-size: ${typeScales.body1.fontSize +
+        1}px; // TODO: update this
+        --lg-combobox-item-line-height: ${typeScales.body1.lineHeight +
+        1}px; // TODO: update this
         --lg-combobox-item-wedge-height: 22px;
       `;
+      break;
+    case ComboboxSize.Large:
+      menuSizeStyle = css`
+        --lg-combobox-menu-border-radius: 4px;
+        --lg-combobox-item-height: 36px;
+        --lg-combobox-item-padding-y: 8px;
+        --lg-combobox-item-padding-x: 12px;
+        --lg-combobox-item-font-size: ${typeScales.body2.fontSize +
+        1}px; // TODO: update this
+        --lg-combobox-item-line-height: ${typeScales.body2.lineHeight +
+        1}px; // TODO: update this
+        --lg-combobox-item-wedge-height: 22px;
+      `;
+      break;
   }
 
   return cx(
