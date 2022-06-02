@@ -1039,9 +1039,24 @@ describe('packages/combobox', () => {
           const { inputEl, getMenuElements } = renderCombobox(select, {
             initialValue,
           });
-          userEvent.type(inputEl, '{arrowdown}{arrowdown}');
+          // First pressing escape to ensure the menu is closed
+          userEvent.type(inputEl, '{esc}{arrowdown}');
           const { optionElements } = getMenuElements();
           expect(optionElements).toHaveLength(defaultOptions.length);
+          expect(optionElements![0]).toHaveAttribute('aria-selected', 'true');
+        });
+
+        test('Pressing Up Arrow when there is a selection shows all menu options', () => {
+          // See also: 'Opening the menu when there is a selection should show all options'
+          const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+          const { inputEl, getMenuElements } = renderCombobox(select, {
+            initialValue,
+          });
+          // First pressing escape to ensure the menu is closed
+          userEvent.type(inputEl, '{esc}{arrowup}');
+          const { optionElements } = getMenuElements();
+          expect(optionElements).toHaveLength(defaultOptions.length);
+          expect(optionElements![0]).toHaveAttribute('aria-selected', 'true');
         });
       });
 

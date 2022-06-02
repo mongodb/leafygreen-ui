@@ -1167,9 +1167,11 @@ export default function Combobox<M extends boolean>({
           if (isOpen) {
             // Prevent the page from scrolling
             event.preventDefault();
+            // only change option if the menu is already open
+            updateHighlightedOption('next');
+          } else {
+            openMenu();
           }
-          openMenu();
-          updateHighlightedOption('next');
           break;
         }
 
@@ -1177,8 +1179,11 @@ export default function Combobox<M extends boolean>({
           if (isOpen) {
             // Prevent the page from scrolling
             event.preventDefault();
+            // only change option if the menu is already open
+            updateHighlightedOption('prev');
+          } else {
+            openMenu();
           }
-          updateHighlightedOption('prev');
           break;
         }
 

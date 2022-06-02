@@ -20,6 +20,9 @@
       "path": "../hooks"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../typography"
     },
     {
