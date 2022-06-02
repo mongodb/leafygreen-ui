@@ -8,3 +8,12 @@ export const getDisplayNameForValue = (
     ? options.find(opt => opt.value === value)?.displayName ?? value
     : '';
 };
+
+export const getValueForDisplayName = (
+  displayName: string | null,
+  options: Array<OptionObject>,
+): string => {
+  return displayName
+    ? options.find(opt => opt.displayName === displayName)?.value ?? displayName
+    : '';
+};

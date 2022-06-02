@@ -53,6 +53,7 @@ import {
   flattenChildren,
   getDisplayNameForValue,
   getNameAndValue,
+  getValueForDisplayName,
 } from './utils';
 
 /**
@@ -130,6 +131,14 @@ export default function Combobox<M extends boolean>({
   const openMenu = () => setOpen(true);
 
   /**
+   * Array of all of the options objects
+   */
+  const allOptions: Array<OptionObject> = useMemo(
+    () => flattenChildren(children),
+    [children],
+  );
+
+  /**
    * Utility function that tells Typescript whether selection is multiselect
    */
   const isMultiselect = useCallback(
@@ -202,11 +211,27 @@ export default function Combobox<M extends boolean>({
   );
 
   /**
-   * Array of all of the options objects
+   * Returns whether a given value is included in, or equal to, the current selection
    */
-  const allOptions: Array<OptionObject> = useMemo(
-    () => flattenChildren(children),
-    [children],
+  const isValueCurrentSelection = useCallback(
+    (value: string): boolean => {
+      return isMultiselect(selection)
+        ? selection.includes(value)
+        : value === selection;
+    },
+    [isMultiselect, selection],
+  );
+
+  /**
+   * Returns whether given text is included in, or equal to, the current selection.
+   * Similar to `isValueCurrentSelection`, but assumes the text argument is the `displayName` for the selection
+   */
+  const isTextCurrentSelection = useCallback(
+    (displayName: string): boolean => {
+      const value = getValueForDisplayName(displayName, allOptions);
+      return isValueCurrentSelection(value);
+    },
+    [allOptions, isValueCurrentSelection],
   );
 
   /**
@@ -221,19 +246,26 @@ export default function Combobox<M extends boolean>({
         return filteredOptions.includes(value);
       }
 
+      // If the text input value is the current selection
+      // (or included in the selection)
+      // then all options should be visible
+      if (isTextCurrentSelection(inputValue)) {
+        return true;
+      }
+
       // otherwise, we do our own filtering
       const displayName =
         typeof option === 'string'
           ? getDisplayNameForValue(value, allOptions)
           : option.displayName;
 
-      const isVisible = displayName
+      const isValueInDisplayName = displayName
         .toLowerCase()
         .includes(inputValue.toLowerCase());
 
-      return isVisible;
+      return isValueInDisplayName;
     },
-    [filteredOptions, allOptions, inputValue],
+    [filteredOptions, isTextCurrentSelection, inputValue, allOptions],
   );
 
   /**
@@ -1103,9 +1135,11 @@ export default function Combobox<M extends boolean>({
           if (isOpen) {
             // Prevent the page from scrolling
             event.preventDefault();
+            // only change option if the menu is already open
+            updateFocusedOption('next');
+          } else {
+            openMenu();
           }
-          openMenu();
-          updateFocusedOption('next');
           break;
         }
 
@@ -1113,8 +1147,11 @@ export default function Combobox<M extends boolean>({
           if (isOpen) {
             // Prevent the page from scrolling
             event.preventDefault();
+            // only change option if the menu is already open
+            updateFocusedOption('prev');
+          } else {
+            openMenu();
           }
-          updateFocusedOption('prev');
           break;
         }
 

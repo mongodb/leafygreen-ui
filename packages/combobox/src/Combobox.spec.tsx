@@ -480,7 +480,7 @@ describe('packages/combobox', () => {
       );
 
       testSingleSelect(
-        'Input returned to previous selection when menu closes',
+        'Input returned to previous valid selection when menu closes',
         () => {
           const initialValue = 'apple';
           const { inputEl } = renderCombobox(select, {
@@ -492,7 +492,7 @@ describe('packages/combobox', () => {
       );
 
       testSingleSelect(
-        'Clicking the combobox after making a selection should re-open the menu',
+        'Clicking after making a selection should re-open the menu',
         async () => {
           const { comboboxEl, inputEl, openMenu, getMenuElements } =
             renderCombobox(select);
@@ -501,7 +501,7 @@ describe('packages/combobox', () => {
           userEvent.click(firstOption);
           await waitForElementToBeRemoved(menuContainerEl);
           userEvent.click(comboboxEl);
-          await waitFor(() => {
+          waitFor(() => {
             const { menuContainerEl: newMenuContainerEl } = getMenuElements();
             expect(newMenuContainerEl).not.toBeNull();
             expect(newMenuContainerEl).toBeInTheDocument();
@@ -509,6 +509,17 @@ describe('packages/combobox', () => {
           });
         },
       );
+
+      test('Opening the menu when there is a selection should show all options', () => {
+        // See also: 'Pressing Down Arrow when there is a selection shows all menu options'
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const { comboboxEl, getMenuElements } = renderCombobox(select, {
+          initialValue,
+        });
+        userEvent.click(comboboxEl);
+        const { optionElements } = getMenuElements();
+        expect(optionElements).toHaveLength(defaultOptions.length);
+      });
 
       describe('Clickaway', () => {
         test('Menu closes on click-away', async () => {
@@ -575,44 +586,43 @@ describe('packages/combobox', () => {
         });
       });
 
-      /**
-       * Clicking buttons
-       */
-      test('Clicking clear all button clears selection', () => {
-        const initialValue =
-          select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
-        const { inputEl, clearButtonEl, queryAllChips } = renderCombobox(
-          select,
-          {
-            initialValue,
-          },
-        );
-        expect(clearButtonEl).not.toBeNull();
-        userEvent.click(clearButtonEl!);
-        if (select === 'multiple') {
-          expect(queryAllChips()).toHaveLength(0);
-        } else {
-          expect(inputEl).toHaveValue('');
-        }
-      });
+      describe('Click clear button', () => {
+        test('Clicking clear all button clears selection', () => {
+          const initialValue =
+            select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
+          const { inputEl, clearButtonEl, queryAllChips } = renderCombobox(
+            select,
+            {
+              initialValue,
+            },
+          );
+          expect(clearButtonEl).not.toBeNull();
+          userEvent.click(clearButtonEl!);
+          if (select === 'multiple') {
+            expect(queryAllChips()).toHaveLength(0);
+          } else {
+            expect(inputEl).toHaveValue('');
+          }
+        });
 
-      test('Clicking clear all button does nothing when disabled', () => {
-        const initialValue =
-          select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
-        const { inputEl, clearButtonEl, queryAllChips } = renderCombobox(
-          select,
-          {
-            initialValue,
-            disabled: true,
-          },
-        );
-        expect(clearButtonEl).not.toBeNull();
-        userEvent.click(clearButtonEl!);
-        if (select === 'multiple') {
-          expect(queryAllChips()).toHaveLength(initialValue.length);
-        } else {
-          expect(inputEl).toHaveValue(startCase(initialValue as string));
-        }
+        test('Clicking clear all button does nothing when disabled', () => {
+          const initialValue =
+            select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
+          const { inputEl, clearButtonEl, queryAllChips } = renderCombobox(
+            select,
+            {
+              initialValue,
+              disabled: true,
+            },
+          );
+          expect(clearButtonEl).not.toBeNull();
+          userEvent.click(clearButtonEl!);
+          if (select === 'multiple') {
+            expect(queryAllChips()).toHaveLength(initialValue.length);
+          } else {
+            expect(inputEl).toHaveValue(startCase(initialValue as string));
+          }
+        });
       });
 
       describe('Clicking chips', () => {
@@ -956,6 +966,32 @@ describe('packages/combobox', () => {
           const reOpenedMenu = await findByRole('listbox');
           expect(reOpenedMenu).toBeInTheDocument();
         });
+
+        test('Pressing Down Arrow when there is a selection shows all menu options', () => {
+          // See also: 'Opening the menu when there is a selection should show all options'
+          const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+          const { inputEl, getMenuElements } = renderCombobox(select, {
+            initialValue,
+          });
+          // First pressing escape to ensure the menu is closed
+          userEvent.type(inputEl, '{esc}{arrowdown}');
+          const { optionElements } = getMenuElements();
+          expect(optionElements).toHaveLength(defaultOptions.length);
+          expect(optionElements![0]).toHaveAttribute('aria-selected', 'true');
+        });
+
+        test('Pressing Up Arrow when there is a selection shows all menu options', () => {
+          // See also: 'Opening the menu when there is a selection should show all options'
+          const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+          const { inputEl, getMenuElements } = renderCombobox(select, {
+            initialValue,
+          });
+          // First pressing escape to ensure the menu is closed
+          userEvent.type(inputEl, '{esc}{arrowup}');
+          const { optionElements } = getMenuElements();
+          expect(optionElements).toHaveLength(defaultOptions.length);
+          expect(optionElements![0]).toHaveAttribute('aria-selected', 'true');
+        });
       });
 
       describe('Left arrow key', () => {
@@ -1139,6 +1175,14 @@ describe('packages/combobox', () => {
             });
           },
         );
+
+        test('Filters the menu options', () => {
+          // Using default options
+          const { inputEl, getMenuElements } = renderCombobox(select);
+          userEvent.type(inputEl, 'c');
+          const { optionElements } = getMenuElements();
+          expect(optionElements).toHaveLength(1); // carrot
+        });
       });
     });
 
@@ -1306,15 +1350,6 @@ describe('packages/combobox', () => {
         );
         expect(errorStateTextEl).toBeInTheDocument();
       });
-    });
-
-    // Filtering
-    test('Menu options list narrows when text is entered', async () => {
-      const { inputEl, openMenu, findAllByRole } = renderCombobox(select);
-      openMenu();
-      userEvent.type(inputEl, 'c');
-      const optionElements = await findAllByRole('option');
-      expect(optionElements.length).toEqual(1);
     });
   });
 
