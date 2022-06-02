@@ -5,7 +5,7 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import { focusRing, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
 import { ComboboxSize, Overflow, State } from './Combobox.types';
 
