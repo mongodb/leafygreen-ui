@@ -9,7 +9,11 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
 import { ComboboxSize, Overflow, State } from './Combobox.types';
 
-const minWidth = 24;
+/**
+ * Width of the widest character (in px)
+ */
+const charWidth = 13; // TODO: update this for Size prop
+const minWidth = charWidth;
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
@@ -151,7 +155,9 @@ export const inputWrapperStyle = ({
     flex-grow: 1;
     width: var(--lg-combobox-width);
 
-    --lg-combobox-input-width: ${isMultiselect ? `${inputLength}ch` : '100%'};
+    --lg-combobox-input-width: ${isMultiselect
+      ? `${inputLength * charWidth}px`
+      : '100%'};
   `;
 
   switch (overflow) {
@@ -227,7 +233,7 @@ export const inputElementStyle = css`
   line-height: var(--lg-combobox-line-height);
   height: var(--lg-combobox-height);
   width: var(--lg-combobox-input-width, 0);
-  min-width: 2px;
+  min-width: ${minWidth}px;
   transition: var(--lg-combobox-input-transition);
 
   &:focus {
