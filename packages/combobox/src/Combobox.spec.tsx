@@ -977,7 +977,7 @@ describe('packages/combobox', () => {
           userEvent.type(inputEl, '{esc}{arrowdown}');
           const { optionElements } = getMenuElements();
           expect(optionElements).toHaveLength(defaultOptions.length);
-          expect(optionElements[0]).toHaveAttribute('aria-selected', 'true');
+          expect(optionElements![0]).toHaveAttribute('aria-selected', 'true');
         });
 
         test('Pressing Up Arrow when there is a selection shows all menu options', () => {
@@ -990,7 +990,7 @@ describe('packages/combobox', () => {
           userEvent.type(inputEl, '{esc}{arrowup}');
           const { optionElements } = getMenuElements();
           expect(optionElements).toHaveLength(defaultOptions.length);
-          expect(optionElements[0]).toHaveAttribute('aria-selected', 'true');
+          expect(optionElements![0]).toHaveAttribute('aria-selected', 'true');
         });
       });
 
