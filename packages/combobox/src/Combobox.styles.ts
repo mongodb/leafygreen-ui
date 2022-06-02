@@ -5,9 +5,11 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, Mode, typeScales } from '@leafygreen-ui/tokens';
 import { isArray } from 'lodash';
 import { ComboboxSize, Overflow, State } from './Combobox.types';
+
+/** Constants */
 
 /**
  * Width of the widest character (in px)
@@ -17,16 +19,44 @@ const maxCharWidth: Record<ComboboxSize, number> = {
   [ComboboxSize.Large]: typeScales.body2.fontSize,
 };
 
+/**
+ * Size of combobox x & y padding (in px)
+ */
+const comboboxPadding: Record<ComboboxSize, { x: number; y: number }> = {
+  [ComboboxSize.Default]: { x: 7, y: 5 },
+  [ComboboxSize.Large]: { x: 11, y: 9 },
+};
+
+/**
+ * Width of the dropdown caret icon (in px)
+ */
+const caretIconSize = 16;
+
 export const chipClassName = createUniqueClassName('combobox-chip');
 
-// TODO: Remove this during refresh update
-export const _tempLabelDescriptionOverrideStyle = css`
-  font-family: ${fontFamilies.legacy};
-  font-size: var(--lg-combobox-font-size);
-  line-height: var(--lg-combobox-line-height);
-`;
+export const comboboxParentStyle = (
+  size: ComboboxSize,
+  overflow?: Overflow,
+): string => {
+  const minWidth =
+    maxCharWidth[size] + 2 * comboboxPadding[size].x + caretIconSize + 2; // + 2 for border
+  return cx(
+    css`
+      width: 100%;
+      min-width: ${minWidth}px;
+    `,
+    {
+      [css`
+        width: unset;
+      `]: overflow === Overflow.expandX,
+    },
+  );
+};
 
-export const comboboxParentStyle = ({
+/**
+ * @deprecated
+ */
+export const _comboboxParentStyle = ({
   darkMode,
   size,
   overflow,
@@ -102,6 +132,11 @@ export const comboboxParentStyle = ({
       );
     `,
   );
+};
+
+export const comboboxModeStyles: Record<Mode, string> = {
+  [Mode.Light]: css``,
+  [Mode.Dark]: css``,
 };
 
 export const comboboxStyle = css`
@@ -411,4 +446,11 @@ export const menuMessage = css`
     width: 1em;
     height: 1em;
   }
+`;
+
+// TODO: Remove this during refresh update
+export const _tempLabelDescriptionOverrideStyle = css`
+  font-family: ${fontFamilies.legacy};
+  font-size: var(--lg-combobox-font-size);
+  line-height: var(--lg-combobox-line-height);
 `;

@@ -36,7 +36,7 @@ import {
   clearButtonStyle,
   clearButtonFocusOverrideStyles,
   comboboxFocusStyle,
-  comboboxParentStyle,
+  _comboboxParentStyle,
   comboboxStyle,
   endIcon,
   errorMessageStyle,
@@ -1242,7 +1242,7 @@ export default function Combobox<M extends boolean>({
     >
       <div
         className={cx(
-          comboboxParentStyle({ darkMode, size, overflow }),
+          _comboboxParentStyle({ darkMode, size, overflow }),
           className,
         )}
         {...rest}
