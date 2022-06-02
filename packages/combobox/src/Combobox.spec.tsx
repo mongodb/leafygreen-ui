@@ -215,7 +215,7 @@ describe('packages/combobox', () => {
         }
       });
 
-      test.only('Disabled option is not selectable with the keyboard', () => {
+      test('Disabled option is not selectable with the keyboard', () => {
         const options: Array<OptionObject> = [
           {
             value: 'disabled',
