@@ -111,7 +111,9 @@ export default function Combobox<M extends boolean>({
 
   const [isOpen, setOpen] = useState(false);
   const wasOpen = usePrevious(isOpen);
-  const [focusedOption, setFocusedOption] = useState<string | null>(null);
+  const [highlightedOption, sethighlightedOption] = useState<string | null>(
+    null,
+  );
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
   const [inputValue, setInputValue] = useState<string>('');
@@ -396,11 +398,11 @@ export default function Combobox<M extends boolean>({
    * Updates the highlighted menu option based on the provided direction
    * @param direction the direction to move the focus. `'next' | 'prev' | 'first' | 'last'`
    */
-  const updateFocusedOption = useCallback(
+  const updateHighlightedOption = useCallback(
     (direction: Direction) => {
       const optionsCount = visibleOptions?.length ?? 0;
       const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
-      const indexOfFocus = getIndexOfValue(focusedOption);
+      const indexOfHighlight = getIndexOfValue(highlightedOption);
 
       // Remove focus from chip
       if (direction && isOpen) {
@@ -411,39 +413,39 @@ export default function Combobox<M extends boolean>({
       switch (direction) {
         case 'next': {
           const newValue =
-            indexOfFocus + 1 < optionsCount
-              ? getValueAtIndex(indexOfFocus + 1)
+            indexOfHighlight + 1 < optionsCount
+              ? getValueAtIndex(indexOfHighlight + 1)
               : getValueAtIndex(0);
 
-          setFocusedOption(newValue ?? null);
+          sethighlightedOption(newValue ?? null);
           break;
         }
 
         case 'prev': {
           const newValue =
-            indexOfFocus - 1 >= 0
-              ? getValueAtIndex(indexOfFocus - 1)
+            indexOfHighlight - 1 >= 0
+              ? getValueAtIndex(indexOfHighlight - 1)
               : getValueAtIndex(lastIndex);
 
-          setFocusedOption(newValue ?? null);
+          sethighlightedOption(newValue ?? null);
           break;
         }
 
         case 'last': {
           const newValue = getValueAtIndex(lastIndex);
-          setFocusedOption(newValue ?? null);
+          sethighlightedOption(newValue ?? null);
           break;
         }
 
         case 'first':
         default: {
           const newValue = getValueAtIndex(0);
-          setFocusedOption(newValue ?? null);
+          sethighlightedOption(newValue ?? null);
         }
       }
     },
     [
-      focusedOption,
+      highlightedOption,
       getIndexOfValue,
       getValueAtIndex,
       isOpen,
@@ -512,7 +514,7 @@ export default function Combobox<M extends boolean>({
   const handleArrowKey = useCallback(
     (direction: 'left' | 'right', event: React.KeyboardEvent<Element>) => {
       // Remove focus from menu
-      if (direction) setFocusedOption(null);
+      if (direction) sethighlightedOption(null);
 
       const focusedElementName = getFocusedElementName();
 
@@ -603,14 +605,14 @@ export default function Combobox<M extends boolean>({
   // Update the focused option
   useEffect(() => {
     if (inputValue !== prevValue) {
-      updateFocusedOption('first');
+      updateHighlightedOption('first');
     }
-  }, [inputValue, isOpen, prevValue, updateFocusedOption]);
+  }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
 
   // When the focused option chenges, update the menu scroll if necessary
   useEffect(() => {
-    if (focusedOption) {
-      const focusedElementRef = getOptionRef(focusedOption);
+    if (highlightedOption) {
+      const focusedElementRef = getOptionRef(highlightedOption);
 
       if (focusedElementRef && focusedElementRef.current && menuRef.current) {
         const { offsetTop: optionTop } = focusedElementRef.current;
@@ -622,7 +624,7 @@ export default function Combobox<M extends boolean>({
         }
       }
     }
-  }, [focusedOption, getOptionRef]);
+  }, [highlightedOption, getOptionRef]);
 
   /**
    * Rendering
@@ -641,13 +643,13 @@ export default function Combobox<M extends boolean>({
             const { className, glyph, disabled } = child.props;
             const index = allOptions.findIndex(opt => opt.value === value);
 
-            const isFocused = focusedOption === value;
+            const isFocused = highlightedOption === value;
             const isSelected = isMultiselect(selection)
               ? selection.includes(value)
               : selection === value;
 
             const setSelected = () => {
-              setFocusedOption(value);
+              sethighlightedOption(value);
               updateSelection(value);
               setInputFocus();
 
@@ -691,7 +693,7 @@ export default function Combobox<M extends boolean>({
     },
     [
       allOptions,
-      focusedOption,
+      highlightedOption,
       getOptionRef,
       isMultiselect,
       shouldOptionBeVisible,
@@ -938,7 +940,7 @@ export default function Combobox<M extends boolean>({
   // update the menu width
   useEffect(() => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
-  }, [comboboxRef, isOpen, focusedOption, selection]);
+  }, [comboboxRef, isOpen, highlightedOption, selection]);
 
   // Handler fired when the manu has finished transitioning in/out
   const handleTransitionEnd = () => {
@@ -1063,7 +1065,7 @@ export default function Combobox<M extends boolean>({
   };
 
   const handleClearButtonFocus = () => {
-    setFocusedOption(null);
+    sethighlightedOption(null);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -1090,7 +1092,7 @@ export default function Combobox<M extends boolean>({
             case 'Input': {
               if (!doesSelectionExist) {
                 closeMenu();
-                updateFocusedOption('first');
+                updateHighlightedOption('first');
                 updateFocusedChip(null);
               }
               // else use default behavior
@@ -1119,7 +1121,7 @@ export default function Combobox<M extends boolean>({
 
         case keyMap.Escape: {
           closeMenu();
-          updateFocusedOption('first');
+          updateHighlightedOption('first');
           break;
         }
 
@@ -1131,10 +1133,10 @@ export default function Combobox<M extends boolean>({
           if (
             isOpen &&
             focusedElement === ComboboxElement.Input &&
-            !isNull(focusedOption) &&
-            !isOptionDisabled(focusedOption)
+            !isNull(highlightedOption) &&
+            !isOptionDisabled(highlightedOption)
           ) {
-            updateSelection(focusedOption);
+            updateSelection(highlightedOption);
           } else if (
             // Focused on clear button
             focusedElement === ComboboxElement.ClearButton
@@ -1167,7 +1169,7 @@ export default function Combobox<M extends boolean>({
             event.preventDefault();
           }
           openMenu();
-          updateFocusedOption('next');
+          updateHighlightedOption('next');
           break;
         }
 
@@ -1176,7 +1178,7 @@ export default function Combobox<M extends boolean>({
             // Prevent the page from scrolling
             event.preventDefault();
           }
-          updateFocusedOption('prev');
+          updateHighlightedOption('prev');
           break;
         }
 
