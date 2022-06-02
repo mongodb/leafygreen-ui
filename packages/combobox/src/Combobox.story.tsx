@@ -20,7 +20,7 @@ export default {
 const ComboboxOptions = [
   <ComboboxOption key="apple" value="apple" displayName="Apple" />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
-  <ComboboxOption key="carrot" value="carrot" displayName="Carrot" />,
+  <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
   <ComboboxOption
     key="paragraph"
     value="paragraph"
