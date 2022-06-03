@@ -77,7 +77,6 @@ export default {
     usePortal: true,
     spacing: 10,
     adjustOnMutation: false,
-    buttonText: 'Button Text',
   },
   argTypes: {
     className: {
@@ -86,9 +85,18 @@ export default {
     children: {
       control: false,
     },
+    buttonText: {
+      type: 'string',
+      description:
+        'Storybook only prop. Used to change the reference button text',
+      defaultValue: 'Button Text',
+    },
     refButtonPosition: {
       options: ['centered', 'top', 'right', 'bottom', 'left'],
       control: { type: 'select' },
+      description:
+        'Storybook only prop. Used to change position of the reference button',
+      defaultValue: 'centered',
     },
   },
 } as Meta<typeof Popover>;
