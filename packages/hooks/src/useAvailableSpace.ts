@@ -7,13 +7,13 @@ import useViewportSize from './useViewportSize';
  * @param margin The space around the trigger
  */
 const useAvailableSpace = (
-  triggerRef: React.RefObject<HTMLElement>,
+  triggerRef?: React.RefObject<HTMLElement>,
   margin = 8,
 ) => {
   const viewportSize = useViewportSize();
 
   return useMemo(() => {
-    if (viewportSize && triggerRef.current) {
+    if (viewportSize && triggerRef && triggerRef.current) {
       // Get the top & bottom coordinates of the trigger
       const { top: triggerTop, bottom: triggerBottom } =
         triggerRef.current.getBoundingClientRect();
