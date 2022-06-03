@@ -35,9 +35,7 @@ const comboboxHeight: Record<ComboboxSize, number> = {
   [ComboboxSize.Large]: 48,
 };
 
-/**
- * Width of the dropdown caret icon (in px)
- */
+/** Width of the dropdown caret icon (in px) */
 const caretIconSize = 16;
 
 export const chipClassName = createUniqueClassName('combobox-chip');
@@ -250,7 +248,7 @@ export const inputWrapperStyle = ({
       return css`
         ${baseWrapperStyle}
         display: block;
-        height: ${getHeight(size)};
+        height: ${getHeight(size)}px;
         padding-left: ${comboboxPadding[size].x}px;
         white-space: nowrap;
         overflow-x: scroll;
@@ -282,7 +280,7 @@ export const inputWrapperStyle = ({
         gap: 4px;
         flex-wrap: nowrap;
         white-space: nowrap;
-        height: ${getHeight(size)};
+        height: ${getHeight(size)}px;
       `;
     }
 
@@ -294,7 +292,7 @@ export const inputWrapperStyle = ({
         flex-wrap: wrap;
         gap: 4px;
         overflow-x: visible;
-        min-height: ${getHeight(size)};
+        min-height: ${getHeight(size)}px;
       `;
     }
   }
@@ -309,6 +307,10 @@ export const baseInputElementStyle = css`
   padding: 0;
   margin: 0;
   text-overflow: ellipsis;
+
+  &:placeholder-shown {
+    min-width: 100%;
+  }
   &:focus {
     outline: none;
   }
@@ -317,9 +319,9 @@ export const baseInputElementStyle = css`
 export const inputElementSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.Default]: css`
     height: ${getHeight(ComboboxSize.Default)}px;
-    min-width: ${maxCharWidth[ComboboxSize.Default]}px;
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
+    min-width: ${maxCharWidth[ComboboxSize.Default]}px;
   `,
   [ComboboxSize.Large]: css``,
 };
@@ -347,7 +349,10 @@ export const multiselectInputElementStyle = (
 ) => {
   const inputLength = inputValue?.length ?? 0;
   return css`
+    max-width: 100%;
     width: ${inputLength * maxCharWidth[size]}px;
+    // TODO: This doesn't quite work. Fix this
+    max-width: calc(100% - ${caretIconSize}px);
   `;
 };
 

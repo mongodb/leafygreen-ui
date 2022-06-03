@@ -1264,7 +1264,7 @@ export default function Combobox<M extends boolean>({
     >
       <div
         className={cx(
-          _comboboxParentStyle({ darkMode, size, overflow }),
+          // _comboboxParentStyle({ darkMode, size, overflow }),
           comboboxParentStyle(size, overflow),
           className,
         )}
@@ -1302,6 +1302,7 @@ export default function Combobox<M extends boolean>({
           onKeyDown={handleKeyDown}
           onTransitionEnd={handleTransitionEnd}
           className={cx(
+            // _comboboxStyle,
             baseComboboxStyles,
             comboboxModeStyles[mode],
             comboboxSizeStyles(size),
@@ -1330,7 +1331,7 @@ export default function Combobox<M extends boolean>({
               ref={inputRef}
               id={inputId}
               className={cx(
-                _inputElementStyle,
+                // _inputElementStyle,
                 baseInputElementStyle,
                 inputElementSizeStyle[size],
                 inputElementTransitionStyles(isOpen, overflow),
@@ -1352,7 +1353,7 @@ export default function Combobox<M extends boolean>({
         {state === 'error' && errorMessage && (
           <div
             className={cx(
-              _errorMessageStyle,
+              // _errorMessageStyle,
               errorMessageModeStyle[mode],
               errorMessageSizeStyle[size],
             )}
