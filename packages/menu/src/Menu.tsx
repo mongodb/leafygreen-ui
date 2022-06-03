@@ -87,7 +87,7 @@ function Menu({
   const triggerRef = useRef<HTMLElement>(null);
   const maxMenuHeight = Math.min(
     maxHeight,
-    useAvailableSpace(refEl || triggerRef),
+    useAvailableSpace(refEl || triggerRef, spacing),
   );
 
   const { updatedChildren, refs } = React.useMemo(() => {
