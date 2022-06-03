@@ -6,8 +6,8 @@ import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies, Mode, typeScales } from '@leafygreen-ui/tokens';
-import { isArray } from 'lodash';
-import { ComboboxSize, Overflow, State } from './Combobox.types';
+import { transparentize } from 'polished';
+import { ComboboxSize, Overflow } from './Combobox.types';
 
 /** Constants */
 
@@ -28,22 +28,34 @@ const comboboxPadding: Record<ComboboxSize, { x: number; y: number }> = {
 };
 
 /**
+ * Total height of the combobox (in px)
+ */
+const comboboxHeight: Record<ComboboxSize, number> = {
+  [ComboboxSize.Default]: 36,
+  [ComboboxSize.Large]: 48,
+};
+
+/**
  * Width of the dropdown caret icon (in px)
  */
 const caretIconSize = 16;
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
+// Helper Functions
+const getMinWidth = (size: ComboboxSize) =>
+  maxCharWidth[size] + 2 * comboboxPadding[size].x + caretIconSize + 2; // + 2 for border
+const getHeight = (size: ComboboxSize) =>
+  comboboxHeight[size] - 2 * comboboxPadding[size].y - 2; // border
+
 export const comboboxParentStyle = (
   size: ComboboxSize,
   overflow?: Overflow,
 ): string => {
-  const minWidth =
-    maxCharWidth[size] + 2 * comboboxPadding[size].x + caretIconSize + 2; // + 2 for border
   return cx(
     css`
       width: 100%;
-      min-width: ${minWidth}px;
+      min-width: ${getMinWidth(size)}px;
     `,
     {
       [css`
@@ -134,21 +146,75 @@ export const _comboboxParentStyle = ({
   );
 };
 
-export const comboboxModeStyles: Record<Mode, string> = {
-  [Mode.Light]: css``,
-  [Mode.Dark]: css``,
-};
-
-export const comboboxStyle = css`
+export const baseComboboxStyles = css`
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  padding: var(--lg-combobox-padding);
+  cursor: text;
+  transition: 150ms ease-in-out;
+  transition-property: background-color, box-shadow, border-color;
+  border: 1px solid;
+  width: inherit;
+`;
+
+export const comboboxModeStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${uiColors.gray.dark3};
+    background-color: ${uiColors.gray.light3};
+    box-shadow: 0px 1px 2px ${transparentize(0.7, uiColors.black)};
+    border-color: ${uiColors.gray.base};
+  `,
+  [Mode.Dark]: css``,
+};
+
+export const comboboxSizeStyles = (size: ComboboxSize) => css`
+  padding: ${comboboxPadding[size].y}px ${comboboxPadding[size].x}px;
+  border-radius: 3px;
+`;
+
+export const comboboxDisabledStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+    box-shadow: unset;
+    cursor: not-allowed;
+    color: ${uiColors.gray.dark1};
+    background-color: ${uiColors.gray.light2};
+    border-color: ${uiColors.gray.light1};
+  `,
+  [Mode.Dark]: css``,
+};
+
+export const comboboxErrorStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+    border-color: ${uiColors.red.base};
+  `,
+  [Mode.Dark]: css``,
+};
+
+export const comboboxFocusStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    &:focus-within {
+      border-color: transparent;
+      background-color: ${uiColors.white};
+      box-shadow: 0 0 0 3px ${uiColors.focus},
+        0px 4px 4px ${transparentize(0.7, uiColors.black)};
+    }
+  `,
+  [Mode.Dark]: css``,
+};
+
+/**
+ * @deprecated
+ */
+export const _comboboxStyle = css`
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
   color: var(--lg-combobox-text-color);
   background-color: var(--lg-combobox-background-color);
   box-shadow: var(--lg-combobox-shadow);
   border: 1px solid var(--lg-combobox-border-color);
   border-radius: var(--lg-combobox-border-radius);
+  padding: var(--lg-combobox-padding);
   width: var(--lg-combobox-width);
   cursor: text;
   transition: 150ms ease-in-out;
@@ -167,76 +233,29 @@ export const comboboxStyle = css`
   }
 `;
 
-export const comboboxFocusStyle = css`
-  &:focus-within {
-    border-color: transparent;
-    background-color: var(--lg-combobox-background-color-focus);
-    // TODO: Remove for UI refresh & Darkmode
-    box-shadow: 0 0 0 3px ${uiColors.focus}, var(--lg-combobox-shadow-focus);
-  }
-`;
-
-export const interactionRingColor = ({
-  state,
-  darkMode,
-}: {
-  state: State;
-  darkMode: boolean;
-}) => {
-  if (darkMode) {
-    return {
-      hovered: state === 'error' ? uiColors.red.dark2 : undefined,
-    };
-  } else {
-    return {
-      hovered: state === 'error' ? uiColors.red.light3 : undefined,
-    };
-  }
-};
-
 export const inputWrapperStyle = ({
   overflow,
-  isOpen,
-  selection,
   size,
-  value,
 }: {
   overflow: Overflow;
-  isOpen: boolean;
-  selection: string | Array<string> | null;
   size: ComboboxSize;
-  value?: string;
 }) => {
-  const isMultiselect = isArray(selection) && selection.length > 0;
-  const inputLength = value?.length ?? 0;
-
   const baseWrapperStyle = css`
     flex-grow: 1;
-    width: var(--lg-combobox-width);
-
-    --lg-combobox-input-width: ${isMultiselect
-      ? `${inputLength * maxCharWidth[size]}px`
-      : '100%'};
-    --lg-combobox-input-min-width: ${maxCharWidth[size]}px;
+    width: inherit;
   `;
 
   switch (overflow) {
-    case 'scroll-x': {
+    case Overflow.scrollX: {
       return css`
         ${baseWrapperStyle}
         display: block;
-        height: var(--lg-combobox-height);
+        height: ${getHeight(size)};
+        padding-left: ${comboboxPadding[size].x}px;
         white-space: nowrap;
         overflow-x: scroll;
-        padding-left: var(--lg-combobox-padding-x);
         scroll-behavior: smooth;
         scrollbar-width: none;
-        /*
-         * Immediate transition in, slow transition out. 
-         * '-in' transition is handled by \`scroll-behavior\` 
-         */
-        --lg-combobox-input-transition: width ease-in-out
-          ${isOpen ? '0' : '100ms'};
 
         &::-webkit-scrollbar {
           display: none;
@@ -256,33 +275,84 @@ export const inputWrapperStyle = ({
       `;
     }
 
-    case 'expand-x': {
+    case Overflow.expandX: {
       return css`
         ${baseWrapperStyle}
         display: flex;
         gap: 4px;
         flex-wrap: nowrap;
         white-space: nowrap;
-        height: var(--lg-combobox-height);
-        --lg-combobox-input-transition: none;
+        height: ${getHeight(size)};
       `;
     }
 
     // TODO - look into animating input element height on wrap
-    case 'expand-y': {
+    case Overflow.expandY: {
       return css`
         ${baseWrapperStyle}
         display: flex;
         flex-wrap: wrap;
         gap: 4px;
         overflow-x: visible;
-        min-height: var(--lg-combobox-height);
+        min-height: ${getHeight(size)};
       `;
     }
   }
 };
 
-export const inputElementStyle = css`
+export const baseInputElementStyle = css`
+  width: 100%;
+  border: none;
+  cursor: inherit;
+  background-color: inherit;
+  box-sizing: content-box;
+  padding: 0;
+  margin: 0;
+  text-overflow: ellipsis;
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const inputElementSizeStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.Default]: css`
+    height: ${getHeight(ComboboxSize.Default)}px;
+    min-width: ${maxCharWidth[ComboboxSize.Default]}px;
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [ComboboxSize.Large]: css``,
+};
+
+// We don't transition the input width then overflow == expand-x
+export const inputElementTransitionStyles = (
+  isOpen: boolean,
+  overflow: Overflow,
+) =>
+  cx({
+    [css`
+      /*
+    * Immediate transition in, slow transition out. 
+    * '-in' transition is handled by \`scroll-behavior\` 
+    */
+      transition: width ease-in-out ${isOpen ? '0s' : '100ms'};
+    `]: overflow !== Overflow.expandX,
+  });
+
+// Previously defined in inputWrapperStyle
+/** Should only be applied to a multiselect */
+export const multiselectInputElementStyle = (
+  size: ComboboxSize,
+  inputValue?: string,
+) => {
+  const inputLength = inputValue?.length ?? 0;
+  return css`
+    width: ${inputLength * maxCharWidth[size]}px;
+  `;
+};
+
+/** @deprecated */
+export const _inputElementStyle = css`
   border: none;
   cursor: inherit;
   background-color: inherit;
@@ -304,7 +374,7 @@ export const inputElementStyle = css`
 
 export const clearButtonStyle = css`
   // Add a negative margin so the button takes up the same space as the regular icons
-  margin-block: calc(var(--lg-combobox-icon-height) / 2 - 100%);
+  margin-block: calc(${caretIconSize / 2}px - 100%);
 `;
 
 // Temporary styles to override redesigned icon-button
@@ -318,15 +388,38 @@ export const clearButtonFocusOverrideStyles = css`
   }
 `;
 
-export const errorMessageStyle = css`
+export const endIconStyle = (size: ComboboxSize) => css`
+  height: ${caretIconSize}px;
+  width: ${caretIconSize}px;
+  margin-inline-end: calc(${comboboxPadding[size].x}px / 2);
+`;
+
+export const errorMessageModeStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${uiColors.red.base};
+  `,
+  [Mode.Dark]: css``,
+};
+
+export const errorMessageSizeStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.Default]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    padding-top: ${comboboxPadding[ComboboxSize.Default].y}px;
+  `,
+  [ComboboxSize.Large]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+    padding-top: ${comboboxPadding[ComboboxSize.Large].y}px;
+  `,
+};
+
+/** @deprecated */
+export const _errorMessageStyle = css`
   font-size: var(--lg-combobox-font-size);
   line-height: var(--lg-combobox-line-height);
   color: var(--lg-combobox-color-error);
   padding-top: var(--lg-combobox-padding-y);
-`;
-
-export const endIcon = css`
-  margin-inline-end: calc(var(--lg-combobox-padding-x) / 2);
 `;
 
 const loadingIconAnimation = keyframes`
@@ -449,8 +542,16 @@ export const menuMessage = css`
 `;
 
 // TODO: Remove this during refresh update
-export const _tempLabelDescriptionOverrideStyle = css`
-  font-family: ${fontFamilies.legacy};
-  font-size: var(--lg-combobox-font-size);
-  line-height: var(--lg-combobox-line-height);
-`;
+export const _tempLabelDescriptionOverrideStyle: Record<ComboboxSize, string> =
+  {
+    [ComboboxSize.Default]: css`
+      font-family: ${fontFamilies.legacy};
+      font-size: ${typeScales.body1.fontSize}px;
+      line-height: ${typeScales.body1.lineHeight}px;
+    `,
+    [ComboboxSize.Large]: css`
+      font-family: ${fontFamilies.legacy};
+      font-size: ${typeScales.body2.fontSize}px;
+      line-height: ${typeScales.body2.lineHeight}px;
+    `,
+  };

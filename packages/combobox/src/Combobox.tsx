@@ -28,26 +28,39 @@ import {
   OptionObject,
   ComboboxElement,
   ComboboxSize,
+  State,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
 import {
-  clearButtonStyle,
-  clearButtonFocusOverrideStyles,
   comboboxFocusStyle,
   _comboboxParentStyle,
-  comboboxStyle,
-  endIcon,
-  errorMessageStyle,
-  inputElementStyle,
+  _comboboxStyle,
+  _errorMessageStyle,
   inputWrapperStyle,
-  loadingIconStyle,
+  _inputElementStyle,
   menuList,
   menuMessage,
   menuStyle,
   menuWrapperStyle,
   _tempLabelDescriptionOverrideStyle,
+  baseComboboxStyles,
+  comboboxModeStyles,
+  comboboxSizeStyles,
+  comboboxDisabledStyles,
+  comboboxErrorStyles,
+  comboboxParentStyle,
+  baseInputElementStyle,
+  inputElementSizeStyle,
+  inputElementTransitionStyles,
+  multiselectInputElementStyle,
+  clearButtonStyle,
+  clearButtonFocusOverrideStyles,
+  endIconStyle,
+  loadingIconStyle,
+  errorMessageModeStyle,
+  errorMessageSizeStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
 import {
@@ -57,6 +70,7 @@ import {
   getValueForDisplayName,
   getNameAndValue,
 } from './utils';
+import { Mode } from '@leafygreen-ui/tokens';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -97,6 +111,7 @@ export default function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
+  const mode = darkMode ? Mode.Dark : Mode.Light;
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
 
@@ -358,6 +373,8 @@ export default function Combobox<M extends boolean>({
   const [focusedElementName, trackFocusedElement] = useState<
     ComboboxElement | undefined
   >();
+  const isElementFocused = (elementName: ComboboxElement) =>
+    elementName === focusedElementName;
 
   type Direction = 'next' | 'prev' | 'first' | 'last';
 
@@ -759,9 +776,13 @@ export default function Combobox<M extends boolean>({
           </IconButton>
         )}
         {state === 'error' ? (
-          <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
+          <Icon
+            glyph="Warning"
+            color={uiColors.red.base}
+            className={endIconStyle(size)}
+          />
         ) : (
-          <Icon glyph="CaretDown" className={endIcon} />
+          <Icon glyph="CaretDown" className={endIconStyle(size)} />
         )}
       </>
     );
@@ -770,6 +791,7 @@ export default function Combobox<M extends boolean>({
     doesSelectionExist,
     disabled,
     state,
+    size,
     updateSelection,
     onClear,
     onFilter,
@@ -1243,6 +1265,7 @@ export default function Combobox<M extends boolean>({
       <div
         className={cx(
           _comboboxParentStyle({ darkMode, size, overflow }),
+          comboboxParentStyle(size, overflow),
           className,
         )}
         {...rest}
@@ -1252,13 +1275,13 @@ export default function Combobox<M extends boolean>({
             <Label
               id={labelId}
               htmlFor={inputId}
-              className={_tempLabelDescriptionOverrideStyle}
+              className={_tempLabelDescriptionOverrideStyle[size]}
             >
               {label}
             </Label>
           )}
           {description && (
-            <Description className={_tempLabelDescriptionOverrideStyle}>
+            <Description className={_tempLabelDescriptionOverrideStyle[size]}>
               {description}
             </Description>
           )}
@@ -1273,25 +1296,29 @@ export default function Combobox<M extends boolean>({
           aria-controls={menuId}
           aria-owns={menuId}
           tabIndex={-1}
-          className={cx(comboboxStyle, {
-            [comboboxFocusStyle]: focusedElementName === ComboboxElement.Input,
-          })}
           onMouseDown={handleInputWrapperMousedown}
           onClick={handleComboboxClick}
           onFocus={handleComboboxFocus}
           onKeyDown={handleKeyDown}
           onTransitionEnd={handleTransitionEnd}
-          data-disabled={disabled}
-          data-state={state}
+          className={cx(
+            baseComboboxStyles,
+            comboboxModeStyles[mode],
+            comboboxSizeStyles(size),
+            {
+              [comboboxDisabledStyles[mode]]: disabled,
+              [comboboxErrorStyles[mode]]: state === State.error,
+              [comboboxFocusStyle[mode]]: isElementFocused(
+                ComboboxElement.Input,
+              ),
+            },
+          )}
         >
           <div
             ref={inputWrapperRef}
             className={inputWrapperStyle({
-              overflow,
-              isOpen,
-              selection,
               size,
-              value: inputValue,
+              overflow,
             })}
           >
             {renderedChips}
@@ -1302,7 +1329,16 @@ export default function Combobox<M extends boolean>({
               aria-labelledby={labelId}
               ref={inputRef}
               id={inputId}
-              className={inputElementStyle}
+              className={cx(
+                _inputElementStyle,
+                baseInputElementStyle,
+                inputElementSizeStyle[size],
+                inputElementTransitionStyles(isOpen, overflow),
+                {
+                  [multiselectInputElementStyle(size, inputValue)]:
+                    isMultiselect(selection),
+                },
+              )}
               placeholder={placeholderValue}
               disabled={disabled ?? undefined}
               onChange={handleInputChange}
@@ -1314,7 +1350,15 @@ export default function Combobox<M extends boolean>({
         </div>
 
         {state === 'error' && errorMessage && (
-          <div className={errorMessageStyle}>{errorMessage}</div>
+          <div
+            className={cx(
+              _errorMessageStyle,
+              errorMessageModeStyle[mode],
+              errorMessageSizeStyle[size],
+            )}
+          >
+            {errorMessage}
+          </div>
         )}
 
         {/******* /
