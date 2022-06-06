@@ -1,4 +1,5 @@
 import React, { OlHTMLAttributes, PropsWithChildren } from 'react';
+import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Step from './InternalStep';
 import { StepStates, StepperProps } from './types';
@@ -105,6 +106,12 @@ const Stepper = ({
       </ol>
     </StepperContextProvider>
   );
+};
+
+Stepper.propTypes = {
+  currentStep: PropTypes.number,
+  maxDisplayedSteps: PropTypes.number,
+  completedStepsShown: PropTypes.number,
 };
 
 export default Stepper;

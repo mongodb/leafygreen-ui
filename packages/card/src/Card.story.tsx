@@ -9,6 +9,11 @@ import LGCard, { CardProps } from './Card';
 // https://github.com/storybookjs/storybook/issues/15334
 // eslint-disable-next-line react/jsx-props-no-spreading
 type CardStoryProps = BoxProps<'div', CardProps>;
+
+// TODO: Import below comment directly from component definition.
+/**
+ * Cards are used to organize information into consumable chunks.
+ */
 export const Card: React.FC<CardStoryProps> = props => (
   // @ts-ignore-next-line
   <LGCard {...props} />
@@ -22,9 +27,7 @@ export default {
     children: 'This is a card component.',
   },
   argTypes: {
-    href: {
-      control: 'text',
-    },
+    href: { control: 'text' },
     as: defaultArgTypes.as,
     darkMode: defaultArgTypes.darkMode,
     children: defaultArgTypes.children,

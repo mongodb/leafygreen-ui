@@ -3,20 +3,21 @@ import { Meta } from '@storybook/react';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import Icon from '@leafygreen-ui/icon';
 import { SegmentedControlProps } from './SegmentedControl';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/SegmentedControl',
   component: SegmentedControl,
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
-    darkMode: {
-      control: 'boolean',
-    },
+    children: { control: false },
+    label: { control: 'text' },
+    name: { control: 'text' },
+    defaultValue: { control: 'text' },
+    value: { control: 'text' },
+    followFocus: { control: 'boolean' },
+    'aria-controls': { control: 'text' },
+
+    darkMode: defaultArgTypes.darkMode,
   },
 } as Meta<typeof SegmentedControl>;
 

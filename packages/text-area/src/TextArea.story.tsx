@@ -1,8 +1,7 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import TextArea, { TextAreaProps } from './TextArea';
 import { ComponentStory } from '@storybook/react';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export const StoryTextArea: React.FC<TextAreaProps> = props => (
   <TextArea {...props} />
@@ -12,25 +11,17 @@ export default {
   title: 'Packages/TextArea',
   component: StoryTextArea,
   argTypes: {
-    darkMode: {
-      control: 'boolean',
-    },
+    label: { control: 'text' },
+    description: { control: 'text' },
+    errorMessage: { control: 'text' },
+    darkMode: defaultArgTypes.darkMode,
+    ref: { control: 'none' },
   },
   excludeStories: ['StoryTextArea'],
 };
 
-const Template: ComponentStory<typeof StoryTextArea> = ({
-  darkMode,
-  ...args
-}: TextAreaProps) => (
-  <div
-    className={css`
-      padding: 30px;
-      background-color: ${darkMode ? palette.black : 'white'};
-    `}
-  >
-    <TextArea darkMode={darkMode} {...args} />
-  </div>
+const Template: ComponentStory<typeof StoryTextArea> = args => (
+  <TextArea {...args} />
 );
 
 export const Basic = Template.bind({});

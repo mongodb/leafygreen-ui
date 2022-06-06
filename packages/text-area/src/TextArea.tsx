@@ -158,10 +158,25 @@ const colorSets: Record<Mode, ColorSets> = {
 type BaseTextAreaProps = HTMLElementProps<'textarea', HTMLTextAreaElement> & {
   id?: string;
   darkMode?: boolean;
+  /**
+   * Label text
+   */
   label?: string | null;
+  /**
+   * Description text
+   */
   description?: string;
+  /**
+   * Indicates whether the component should be rendered with error styles.
+   */
   state?: State;
+  /**
+   * Message rendered when the `TextArea`'s `state` prop is `error`
+   */
   errorMessage?: string;
+  /**
+   * Validation function called on value change and blur.
+   */
   handleValidation?: (value: string) => void;
   /**
    * Callback to be executed when the input stops being focused.
