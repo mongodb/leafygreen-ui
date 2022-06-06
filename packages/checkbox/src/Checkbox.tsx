@@ -58,7 +58,6 @@ const labelStyle = css`
   grid-template-columns: ${checkBoxSize}px auto;
   grid-template-areas: 'check text';
   gap: 8px;
-  align-items: baseline;
   justify-content: flex-start;
   cursor: pointer;
 `;
@@ -202,7 +201,6 @@ function Checkbox({
         className={cx(labelStyle, labelHoverStyle, {
           // TODO: Refresh - remove darkMode logic
           [css`
-            align-items: flex-start;
             ${labelHoverSelector} {
               box-shadow: unset;
             }

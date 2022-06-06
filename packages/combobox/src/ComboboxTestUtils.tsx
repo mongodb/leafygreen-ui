@@ -9,8 +9,11 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxGroup, ComboboxOption } from '.';
-import { BaseComboboxProps, ComboboxMultiselectProps } from './Combobox.types';
-import { OptionObject } from './util';
+import {
+  BaseComboboxProps,
+  ComboboxMultiselectProps,
+  OptionObject,
+} from './Combobox.types';
 import { isArray, isNull } from 'lodash';
 import chalk from '@testing-library/jest-dom/node_modules/chalk';
 
@@ -29,14 +32,17 @@ export const defaultOptions: Array<OptionObject> = [
   {
     value: 'apple',
     displayName: 'Apple',
+    isDisabled: false,
   },
   {
     value: 'banana',
     displayName: 'Banana',
+    isDisabled: false,
   },
   {
     value: 'carrot',
     displayName: 'Carrot',
+    isDisabled: false,
   },
 ];
 
@@ -47,10 +53,12 @@ export const groupedOptions: Array<NestedObject> = [
       {
         value: 'apple',
         displayName: 'Apple',
+        isDisabled: false,
       },
       {
         value: 'banana',
         displayName: 'Banana',
+        isDisabled: false,
       },
     ],
   },
@@ -60,10 +68,12 @@ export const groupedOptions: Array<NestedObject> = [
       {
         value: 'carrot',
         displayName: 'Carrot',
+        isDisabled: false,
       },
       {
         value: 'eggplant',
         displayName: 'Eggplant',
+        isDisabled: false,
       },
     ],
   },
@@ -89,8 +99,15 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
       const displayName =
         typeof option === 'string' ? undefined : option.displayName;
 
+      const isDisabled = typeof option === 'string' ? false : option.isDisabled;
+
       return (
-        <ComboboxOption key={value} value={value} displayName={displayName} />
+        <ComboboxOption
+          key={value}
+          value={value}
+          displayName={displayName}
+          disabled={isDisabled}
+        />
       );
     }
   };
