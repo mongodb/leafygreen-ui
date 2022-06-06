@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/inline-definition",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "leafyGreen UI Kit Inline Definition",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,9 +20,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^9.2.1",
-    "@leafygreen-ui/typography": "^9.1.1",
-    "@leafygreen-ui/palette": "^3.3.1",
+    "@leafygreen-ui/lib": "^9.3.0",
+    "@leafygreen-ui/typography": "^11.0.2",
+    "@leafygreen-ui/palette": "^3.4.0",
     "@leafygreen-ui/tooltip": "^7.0.0",
     "@leafygreen-ui/emotion": "^4.0.0"
   },

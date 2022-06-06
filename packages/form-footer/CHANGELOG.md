@@ -1,5 +1,18 @@
 # @leafygreen-ui/form-footer
 
+## 0.10.2
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [422dbfcd]
+- Updated dependencies [8d12b918]
+- Updated dependencies [86a7f3c3]
+  - @leafygreen-ui/banner@4.0.1
+  - @leafygreen-ui/button@15.0.2
+  - @leafygreen-ui/lib@9.3.0
+
 ## 0.10.1
 
 ### Patch Changes
