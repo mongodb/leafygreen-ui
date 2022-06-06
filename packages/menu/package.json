@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",
-    "@leafygreen-ui/hooks": "^7.0.0",
+    "@leafygreen-ui/hooks": "^7.2.0",
     "@leafygreen-ui/lib": "^9.2.1",
     "@leafygreen-ui/popover": "^8.0.0",
     "@leafygreen-ui/palette": "^3.3.2",
