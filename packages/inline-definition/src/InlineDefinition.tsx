@@ -48,9 +48,22 @@ const triggerElementModeStyles: Record<Mode, string> = {
 };
 
 type InlineDefinitionProps = Partial<TooltipProps> & {
+  /**
+   * Content that appears in the tooltip.
+   */
   definition: React.ReactNode;
+  /**
+   * Class name applied to tooltip container.
+   */
   tooltipClassName?: string;
 };
+
+/**
+ * # Inline Definition
+ *
+ * @param props.definition Content that appears in the tooltip.
+ * @param props.tooltipClassName Class name applied to tooltip container.
+ */
 
 function InlineDefinition({
   definition,
