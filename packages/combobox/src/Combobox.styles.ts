@@ -36,87 +36,6 @@ export const comboboxParentStyle = (
   );
 };
 
-/**
- * @deprecated
- */
-export const _comboboxParentStyle = ({
-  darkMode,
-  size,
-  overflow,
-}: {
-  darkMode: boolean;
-  size: ComboboxSize;
-  overflow: Overflow;
-}) => {
-  const modeStyle = (darkMode: boolean) => {
-    if (darkMode) {
-      return css``;
-    } else {
-      return css`
-        --lg-combobox-color-error: ${uiColors.red.base};
-        --lg-combobox-text-color: ${uiColors.gray.dark3};
-        --lg-combobox-text-color-disabled: ${uiColors.gray.dark1};
-
-        --lg-combobox-background-color: ${uiColors.gray.light3};
-        --lg-combobox-background-color-focus: ${uiColors.white};
-        --lg-combobox-background-color-disabled: ${uiColors.gray.light2};
-
-        --lg-combobox-border-color: ${uiColors.gray.base};
-        --lg-combobox-border-color-disabled: ${uiColors.gray.light1};
-        --lg-combobox-border-color-error: ${uiColors.red.base};
-
-        --lg-combobox-shadow: 0px 1px 2px rgba(6, 22, 33, 0.3);
-        --lg-combobox-shadow-focus: 0px 4px 4px rgba(6, 22, 33, 0.3);
-      `;
-    }
-  };
-
-  const sizeStyle = (size: ComboboxSize) => {
-    switch (size) {
-      case ComboboxSize.Default:
-        return css`
-          --lg-combobox-padding-y: 5px;
-          --lg-combobox-padding-x: 7px;
-          --lg-combobox-height: calc(
-            36px - 2px - 2 * var(--lg-combobox-padding-y)
-          );
-          --lg-combobox-font-size: ${typeScales.body1.fontSize +
-          1}px; // TODO: update this for redesign
-          --lg-combobox-line-height: ${typeScales.body1.lineHeight + 1}px;
-        `;
-      case ComboboxSize.Large:
-        return css`
-          --lg-combobox-padding-y: 9px;
-          --lg-combobox-padding-x: 11px;
-          --lg-combobox-height: calc(
-            48px - 2px - 2 * var(--lg-combobox-padding-y)
-          );
-          --lg-combobox-font-size: ${typeScales.body2.fontSize}px;
-          --lg-combobox-line-height: ${typeScales.body2.lineHeight}px;
-        `;
-    }
-  };
-
-  return cx(
-    modeStyle(darkMode),
-    sizeStyle(size),
-    css`
-      --lg-combobox-icon-height: 16px;
-      --lg-combobox-border-radius: 3px;
-      --lg-combobox-width: ${overflow === 'expand-x' ? 'unset' : '100%'};
-      --lg-combobox-padding: var(--lg-combobox-padding-y)
-        var(--lg-combobox-padding-x) var(--lg-combobox-padding-y)
-        ${overflow === 'scroll-x' ? '0' : 'var(--lg-combobox-padding-x)'};
-      width: var(--lg-combobox-width);
-      // TODO: Clean this up 🤮
-      min-width: calc(
-        ${maxCharWidth[size]}px + var(--lg-combobox-padding-x) * 2 + 2px +
-          var(--lg-combobox-icon-height)
-      );
-    `,
-  );
-};
-
 export const baseComboboxStyles = css`
   display: flex;
   flex-wrap: nowrap;
@@ -172,37 +91,6 @@ export const comboboxFocusStyle: Record<Mode, string> = {
   `,
   [Mode.Dark]: css``,
 };
-
-/**
- * @deprecated
- */
-export const _comboboxStyle = css`
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  color: var(--lg-combobox-text-color);
-  background-color: var(--lg-combobox-background-color);
-  box-shadow: var(--lg-combobox-shadow);
-  border: 1px solid var(--lg-combobox-border-color);
-  border-radius: var(--lg-combobox-border-radius);
-  padding: var(--lg-combobox-padding);
-  width: var(--lg-combobox-width);
-  cursor: text;
-  transition: 150ms ease-in-out;
-  transition-property: background-color, box-shadow, border-color;
-
-  &[data-disabled='true'] {
-    color: var(--lg-combobox-text-color-disabled);
-    background-color: var(--lg-combobox-background-color-disabled);
-    border-color: var(--lg-combobox-border-color-disabled);
-    box-shadow: unset;
-    cursor: not-allowed;
-  }
-
-  &[data-state='error'] {
-    border-color: var(--lg-combobox-border-color-error);
-  }
-`;
 
 export const inputWrapperStyle = ({
   overflow,
@@ -329,27 +217,6 @@ export const multiselectInputElementStyle = (
   `;
 };
 
-/** @deprecated */
-export const _inputElementStyle = css`
-  border: none;
-  cursor: inherit;
-  background-color: inherit;
-  box-sizing: content-box;
-  padding: 0;
-  margin: 0;
-  text-overflow: ellipsis;
-  font-size: var(--lg-combobox-font-size);
-  line-height: var(--lg-combobox-line-height);
-  height: var(--lg-combobox-height);
-  width: var(--lg-combobox-input-width, 0);
-  min-width: var(--lg-combobox-input-min-width);
-  transition: var(--lg-combobox-input-transition);
-
-  &:focus {
-    outline: none;
-  }
-`;
-
 export const clearButtonStyle = css`
   // Add a negative margin so the button takes up the same space as the regular icons
   margin-block: calc(${caretIconSize / 2}px - 100%);
@@ -392,14 +259,6 @@ export const errorMessageSizeStyle: Record<ComboboxSize, string> = {
   `,
 };
 
-/** @deprecated */
-export const _errorMessageStyle = css`
-  font-size: var(--lg-combobox-font-size);
-  line-height: var(--lg-combobox-line-height);
-  color: var(--lg-combobox-color-error);
-  padding-top: var(--lg-combobox-padding-y);
-`;
-
 const loadingIconAnimation = keyframes`
   0% {
     transform: rotate(0deg);
@@ -408,6 +267,7 @@ const loadingIconAnimation = keyframes`
     transform: rotate(360deg);
   }
 `;
+
 export const loadingIconStyle = css`
   animation: ${loadingIconAnimation} 1.5s linear infinite;
 `;

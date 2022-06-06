@@ -9,54 +9,8 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { chipClassName } from './Combobox.styles';
 import { Mode, typeScales } from '@leafygreen-ui/tokens';
 
-/**in px */
+/** in px */
 const comboboxChipPadding = 6;
-
-/** @deprecated */
-const chipWrapperStyle = ({
-  darkMode,
-  size,
-}: {
-  darkMode: boolean;
-  size: ComboboxSize;
-}) => {
-  let chipModeStyle, chipSizeStyle;
-
-  if (darkMode) {
-    chipModeStyle = css``;
-  } else {
-    chipModeStyle = css`
-      --lg-combobox-chip-text-color: ${uiColors.gray.dark3};
-      --lg-combobox-chip-icon-color: ${uiColors.gray.dark2};
-      --lg-combobox-chip-background-color: ${uiColors.gray.light2};
-      --lg-combobox-chip-hover-color: ${uiColors.gray.light1};
-      --lg-combobox-chip-focus-color: ${uiColors.blue.light2};
-    `;
-  }
-
-  switch (size) {
-    case ComboboxSize.Default:
-      chipSizeStyle = css`
-        --lg-combobox-chip-height: 24px;
-        --lg-combobox-chip-border-radius: 4px;
-        --lg-combobox-chip-font-size: 14px;
-        --lg-combobox-chip-line-height: 20px;
-        --lg-combobox-chip-padding-x: 6px;
-      `;
-      break;
-    case ComboboxSize.Large:
-      chipSizeStyle = css`
-        --lg-combobox-chip-height: 28px;
-        --lg-combobox-chip-border-radius: 4px;
-        --lg-combobox-chip-font-size: ${typeScales.body2.fontSize}px;
-        --lg-combobox-chip-line-height: ${typeScales.body2.lineHeight}px;
-        --lg-combobox-chip-padding-x: 6px;
-      `;
-      break;
-  }
-
-  return cx(chipModeStyle, chipSizeStyle, css``);
-};
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;

@@ -44,11 +44,7 @@ import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
 import {
   comboboxFocusStyle,
-  _comboboxParentStyle,
-  _comboboxStyle,
-  _errorMessageStyle,
   inputWrapperStyle,
-  _inputElementStyle,
   _tempLabelDescriptionOverrideStyle,
   baseComboboxStyles,
   comboboxModeStyles,
@@ -68,7 +64,6 @@ import {
   errorMessageSizeStyle,
 } from './Combobox.styles';
 import {
-  _menuStyle,
   popoverStyle,
   menuModeStyle,
   menuBaseStyle,
@@ -1277,11 +1272,7 @@ export default function Combobox<M extends boolean>({
       }}
     >
       <div
-        className={cx(
-          // _comboboxParentStyle({ darkMode, size, overflow }),
-          comboboxParentStyle(size, overflow),
-          className,
-        )}
+        className={cx(comboboxParentStyle(size, overflow), className)}
         {...rest}
       >
         <div>
@@ -1316,7 +1307,6 @@ export default function Combobox<M extends boolean>({
           onKeyDown={handleKeyDown}
           onTransitionEnd={handleTransitionEnd}
           className={cx(
-            // _comboboxStyle,
             baseComboboxStyles,
             comboboxModeStyles[mode],
             comboboxSizeStyles(size),
@@ -1345,7 +1335,6 @@ export default function Combobox<M extends boolean>({
               ref={inputRef}
               id={inputId}
               className={cx(
-                // _inputElementStyle,
                 baseInputElementStyle,
                 inputElementSizeStyle[size],
                 inputElementTransitionStyles(isOpen, overflow),
@@ -1367,7 +1356,6 @@ export default function Combobox<M extends boolean>({
         {state === 'error' && errorMessage && (
           <div
             className={cx(
-              // _errorMessageStyle,
               errorMessageModeStyle[mode],
               errorMessageSizeStyle[size],
             )}
@@ -1386,10 +1374,7 @@ export default function Combobox<M extends boolean>({
           justify="middle"
           refEl={comboboxRef}
           adjustOnMutation={true}
-          className={
-            // menuWrapperStyle({ darkMode, size, width: menuWidth })
-            popoverStyle(menuWidth)
-          }
+          className={popoverStyle(menuWidth)}
           {...popoverProps}
         >
           <div
@@ -1399,7 +1384,6 @@ export default function Combobox<M extends boolean>({
             aria-expanded={isOpen}
             ref={menuRef}
             className={cx(
-              // _menuStyle({ maxHeight }),
               menuBaseStyle,
               menuModeStyle[mode],
               css`
