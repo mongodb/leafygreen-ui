@@ -17,7 +17,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Mode } from '@leafygreen-ui/tokens';
@@ -68,11 +68,16 @@ import {
   errorMessageSizeStyle,
 } from './Combobox.styles';
 import {
-  menuList,
-  menuMessage,
-  menuStyle,
+  _menuStyle,
   menuWrapperStyle,
   popoverStyle,
+  menuModeStyle,
+  menuBaseStyle,
+  menuList,
+  menuMessage,
+  menuMessageBaseStyle,
+  menuMessageModeStyle,
+  menuMessageSizeStyle,
 } from './Menu.styles';
 
 /**
@@ -942,10 +947,16 @@ export default function Combobox<M extends boolean>({
    * Includes error, empty, search and default states
    */
   const renderedMenuContents = useMemo((): JSX.Element => {
+    const messageStyles = cx(
+      menuMessageBaseStyle,
+      menuMessageModeStyle[mode],
+      menuMessageSizeStyle[size],
+    );
+
     switch (searchState) {
       case 'loading': {
         return (
-          <span className={menuMessage}>
+          <span className={messageStyles}>
             <Icon
               glyph="Refresh"
               color={uiColors.blue.base}
@@ -958,7 +969,7 @@ export default function Combobox<M extends boolean>({
 
       case 'error': {
         return (
-          <span className={menuMessage}>
+          <span className={messageStyles}>
             <Icon glyph="Warning" color={uiColors.red.base} />
             {searchErrorMessage}
           </span>
@@ -971,10 +982,12 @@ export default function Combobox<M extends boolean>({
           return <ul className={menuList}>{renderedOptionsJSX}</ul>;
         }
 
-        return <span className={menuMessage}>{searchEmptyMessage}</span>;
+        return <span className={messageStyles}>{searchEmptyMessage}</span>;
       }
     }
   }, [
+    mode,
+    size,
     renderedOptionsJSX,
     searchEmptyMessage,
     searchErrorMessage,
@@ -1387,7 +1400,14 @@ export default function Combobox<M extends boolean>({
             aria-labelledby={labelId}
             aria-expanded={isOpen}
             ref={menuRef}
-            className={menuStyle({ maxHeight })}
+            className={cx(
+              // _menuStyle({ maxHeight }),
+              menuBaseStyle,
+              menuModeStyle[mode],
+              css`
+                max-height: ${maxHeight}px;
+              `,
+            )}
             onMouseDownCapture={e => e.preventDefault()}
           >
             {renderedMenuContents}

@@ -1,50 +1,23 @@
-/**
- * Styles
- */
-
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies, Mode, typeScales } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { ComboboxSize, Overflow } from './Combobox.types';
-
-/** Constants */
-
-/**
- * Width of the widest character (in px)
- */
-const maxCharWidth: Record<ComboboxSize, number> = {
-  [ComboboxSize.Default]: typeScales.body1.fontSize,
-  [ComboboxSize.Large]: typeScales.body2.fontSize,
-};
-
-/**
- * Size of combobox x & y padding (in px)
- */
-const comboboxPadding: Record<ComboboxSize, { x: number; y: number }> = {
-  [ComboboxSize.Default]: { x: 7, y: 5 },
-  [ComboboxSize.Large]: { x: 11, y: 9 },
-};
-
-/**
- * Total height of the combobox (in px)
- */
-const comboboxHeight: Record<ComboboxSize, number> = {
-  [ComboboxSize.Default]: 36,
-  [ComboboxSize.Large]: 48,
-};
-
-/** Width of the dropdown caret icon (in px) */
-const caretIconSize = 16;
+import {
+  caretIconSize,
+  comboboxPadding,
+  maxCharWidth,
+  comboboxHeight,
+} from './constants';
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
 // Helper Functions
 const getMinWidth = (size: ComboboxSize) =>
-  maxCharWidth[size] + 2 * comboboxPadding[size].x + caretIconSize + 2; // + 2 for border
+  maxCharWidth[size] + 2 * comboboxPadding[size].x + caretIconSize + 2; // + 2 for border: ;
 const getHeight = (size: ComboboxSize) =>
-  comboboxHeight[size] - 2 * comboboxPadding[size].y - 2; // border
+  comboboxHeight[size] - 2 * comboboxPadding[size].y - 2; // border: ;
 
 export const comboboxParentStyle = (
   size: ComboboxSize,
