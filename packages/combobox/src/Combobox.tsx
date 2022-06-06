@@ -1257,6 +1257,7 @@ export default function Combobox<M extends boolean>({
         size,
         withIcons,
         disabled,
+        isOpen,
         chipTruncationLocation,
         chipCharacterLimit,
         inputValue,
@@ -1365,7 +1366,7 @@ export default function Combobox<M extends boolean>({
         {/******* /
           *  Menu  *
           / *******/}
-        <Popover
+        {/* <Popover
           active={isOpen && !disabled}
           spacing={4}
           align="bottom"
@@ -1386,7 +1387,7 @@ export default function Combobox<M extends boolean>({
           >
             {renderedMenuContents}
           </div>
-        </Popover>
+        </Popover> */}
       </div>
     </ComboboxContext.Provider>
   );
