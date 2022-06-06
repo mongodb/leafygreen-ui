@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
-import { useViewportSize } from '@leafygreen-ui/hooks';
+import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import SelectContext from './SelectContext';
 import {
   colorSets,
@@ -12,7 +12,6 @@ import {
   sizeSets,
 } from './styleSets';
 import { useForwardedRef } from './utils';
-import { useMemo } from 'react';
 import { Size } from '.';
 
 const maxMenuHeight = 274;
@@ -86,27 +85,10 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     const { mode, size, disabled, open } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
-
-    const viewportSize = useViewportSize();
-
-    const maxHeight = useMemo(() => {
-      if (viewportSize && ref.current && referenceElement.current) {
-        const { top: triggerTop, bottom: triggerBottom } =
-          referenceElement.current.getBoundingClientRect();
-
-        // Find out how much space is available above or below the trigger
-        const safeSpace = Math.max(
-          viewportSize.height - triggerBottom,
-          triggerTop,
-        );
-
-        // if there's more than enough space, set to maxMenuHeight
-        // otherwise fill the space available
-        return Math.min(maxMenuHeight, safeSpace - menuMargin);
-      }
-
-      return maxMenuHeight;
-    }, [ref, referenceElement, viewportSize]);
+    const maxHeight = Math.min(
+      maxMenuHeight,
+      useAvailableSpace(referenceElement, menuMargin),
+    );
 
     const onClick = useCallback(
       (event: React.MouseEvent) => {

@@ -1,18 +1,19 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { useEventListener } from '@leafygreen-ui/hooks';
+import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import { useAvailableSpace, useEventListener } from '@leafygreen-ui/hooks';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { FocusableMenuItemElement } from './FocusableMenuItem';
 import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
+import { MenuProps } from './types';
 
 const rootMenuStyle = css`
   width: 200px;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: auto;
   padding: 14px 0;
   background-color: ${palette.black};
 `;
@@ -25,33 +26,6 @@ const scrollContainerStyle = css`
   padding-inline-start: 0px;
   padding: 0px;
 `;
-
-export interface MenuProps extends Omit<PopoverProps, 'active'> {
-  /**
-   * A slot for the element used to trigger the Menu. Passing a trigger allows
-   * Menu to control opening and closing itself internally.
-   */
-  trigger?: React.ReactElement | Function;
-
-  /**
-   * Determines the open state of the menu
-   *
-   * default: `false`
-   */
-  open?: boolean;
-
-  /**
-   * Callback to change the open state of the Menu.
-   *
-   */
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-
-  /**
-   * Callback to determine whether or not Menu should close when user tries to close it.
-   *
-   */
-  shouldClose?: () => boolean;
-}
 
 /**
  * # Menu
@@ -93,6 +67,7 @@ function Menu({
   portalContainer,
   scrollContainer,
   popoverZIndex,
+  maxHeight = 256,
   ...rest
 }: MenuProps) {
   const hasSetInitialFocus = useRef(false);
@@ -108,6 +83,12 @@ function Menu({
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
+
+  const triggerRef = useRef<HTMLElement>(null);
+  const maxMenuHeight = Math.min(
+    maxHeight,
+    useAvailableSpace(refEl || triggerRef, spacing),
+  );
 
   const { updatedChildren, refs } = React.useMemo(() => {
     if (
@@ -346,7 +327,15 @@ function Menu({
       adjustOnMutation={adjustOnMutation}
       {...popoverProps}
     >
-      <div className={cx(rootMenuStyle, className)}>
+      <div
+        className={cx(
+          rootMenuStyle,
+          css`
+            max-height: ${maxMenuHeight}px;
+          `,
+          className,
+        )}
+      >
         {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
         <ul
@@ -366,6 +355,7 @@ function Menu({
     if (typeof trigger === 'function') {
       return trigger({
         onClick: () => setOpen((curr: boolean) => !curr),
+        ref: triggerRef,
         children: popoverContent,
       });
     }
@@ -373,6 +363,7 @@ function Menu({
     const { children: triggerChildren } = trigger.props;
 
     return React.cloneElement(trigger, {
+      ref: triggerRef,
       onClick: (e: React.MouseEvent) => {
         setOpen((curr: boolean) => !curr);
 
