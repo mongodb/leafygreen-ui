@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import useViewportSize from './useViewportSize';
 
 /**
- * Returns the maximum space available above or below the a source trigger
+ * Returns the maximum space available above or below the source trigger
  * @param triggerRef The `ref` object attached to the source trigger
  * @param margin The space around the trigger
  */
