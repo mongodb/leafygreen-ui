@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 6792bc44: Adds a `maxHeight` prop. Menu will automatically restrict its height to the smallest of `maxHeight` and the available vertical space (as computed by `useAvailableSpace`).
+- 6792bc44: Adds a `maxHeight` prop. Menu will automatically restrict its height to the smallest of `maxHeight` and the available vertical space (using the hook `useAvailableSpace`).
 
 ### Patch Changes
 
