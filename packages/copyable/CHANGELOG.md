@@ -1,5 +1,22 @@
 # @leafygreen-ui/copyable
 
+## 4.0.1
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [6a89bc29]
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [6792bc44]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [9ff90d4b]
+- Updated dependencies [8d12b918]
+- Updated dependencies [86a7f3c3]
+  - @leafygreen-ui/palette@3.4.0
+  - @leafygreen-ui/button@15.0.2
+  - @leafygreen-ui/hooks@7.3.0
+  - @leafygreen-ui/typography@11.0.2
+
 ## 4.0.0
 
 ### Major Changes
