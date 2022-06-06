@@ -69,12 +69,10 @@ import {
 } from './Combobox.styles';
 import {
   _menuStyle,
-  menuWrapperStyle,
   popoverStyle,
   menuModeStyle,
   menuBaseStyle,
   menuList,
-  menuMessage,
   menuMessageBaseStyle,
   menuMessageModeStyle,
   menuMessageSizeStyle,
