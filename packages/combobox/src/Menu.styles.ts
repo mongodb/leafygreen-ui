@@ -2,9 +2,21 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { ComboboxSize } from './Combobox.types';
+
 /**
  * Menu styles
  */
+
+export const popoverStyle = (width = 384) => css`
+  border-radius: 4px;
+  width: ${width}px;
+
+  & > * {
+    border-radius: inherit;
+  }
+`;
+
+/** @deprecated */
 export const menuWrapperStyle = ({
   darkMode,
   size,

@@ -72,6 +72,7 @@ import {
   menuMessage,
   menuStyle,
   menuWrapperStyle,
+  popoverStyle,
 } from './Menu.styles';
 
 /**
@@ -1374,7 +1375,10 @@ export default function Combobox<M extends boolean>({
           justify="middle"
           refEl={comboboxRef}
           adjustOnMutation={true}
-          className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
+          className={
+            // menuWrapperStyle({ darkMode, size, width: menuWidth })
+            popoverStyle(menuWidth)
+          }
           {...popoverProps}
         >
           <div
