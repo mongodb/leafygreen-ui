@@ -6,6 +6,21 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LanguageSwitcherExample from './LanguageSwitcherExample';
 
+// TODO: Import below comment directly from component definition.
+/**
+ *
+ * React Component that outputs single-line and multi-line code blocks.
+ *
+ * ---
+ * @param props.children The string to be formatted.
+ * @param props.className An additional CSS class added to the root element of Code.
+ * @param props.language The language used for syntax highlighing.
+ * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
+ * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
+ * @param props.lineNumberStart Specifies the numbering of the first line in the block. Default: 1
+ * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
+ * @param props.onCopy Callback fired when Code is copied
+ */
 export const Code: React.FC<CodeProps> = props => <LGCode {...props} />;
 
 const jsSnippet = `
@@ -59,9 +74,8 @@ export default {
     portalClassName: { control: 'string' },
     popoverZIndex: { control: 'number' },
     lineNumberStart: { control: 'number' },
-  },
-  parameters: {
-    controls: { exclude: ['children', 'customActionButtons'] },
+    children: { control: 'none' },
+    customActionButtons: { control: 'none' },
   },
 };
 

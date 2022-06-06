@@ -28,17 +28,11 @@ const scrollContainerStyle = css`
 `;
 
 /**
- * # Menu
  *
- * Menu component
+ * Menus are used when a user needs to take an action.
  *
- * ```
-<button>
-  <Menu open={true}>
-    <MenuItem>Hello World!</MenuItem>
-  </Menu>
-</button>
-```
+ * In a menu a user takes an action (like copy/delete a property or navigate to a different section/screen).
+ *
  * @param props.children Content to appear inside of Menu.
  * @param props.open Boolean to describe whether or not Menu is open.
  * @param props.setOpen Callback to change the open state of the Menu.

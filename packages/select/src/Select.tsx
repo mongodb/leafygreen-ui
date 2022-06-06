@@ -56,17 +56,51 @@ const errorTextStyle = ({
 `;
 
 export type SelectProps = {
+  /**
+   * Children rendered inside the component. Expected to be either `<Option>` or `<OptionGroup>`.
+   */
   children: React.ReactNode;
   className?: string;
+  /**
+   * HTML `id` property used to allow Javascript, form, or label to reference the input.
+   */
   id?: string;
   darkMode?: boolean;
+  /**
+   * Determines the size in which the component will be rendered.
+   */
   size?: Size;
+  /**
+   * When present, it specifies that the drop-down list should be disabled.
+   *
+   * A `disabled` drop-down list is unusable and un-clickable.
+   */
   disabled?: boolean;
+  /**
+   * Secondary text rendered under the label to provide additional details about the select and its options.
+   */
   description?: string;
+  /**
+   * Text rendered in the Select component before a value is set.
+   */
   placeholder?: string;
+  /**
+   * The `name` attribute specifies the name for a drop-down list.
+   *
+   * The `name` attribute is used to reference elements in a JavaScript, or to reference form data after a form is submitted.
+   */
   name?: string;
+  /**
+   * Allows the user to unselect an option.
+   */
   allowDeselect?: boolean;
+  /**
+   * Error message rendered when the `state` prop is set to `error`.
+   */
   errorMessage?: string;
+  /**
+   * Determines whether the component should be rendered in an error state.
+   */
   state?: State;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
@@ -75,13 +109,22 @@ export type SelectProps = {
   (
     | // Uncontrolled
     ({
+        /**
+         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
+         */
         defaultValue?: string;
+        /**
+         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
+         */
         value?: undefined;
       } & {
         onChange?: (
           value: string,
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void;
+        /**
+         * Indicates that the component's value cannot be changed.
+         */
         readOnly?: false;
       })
     // Controlled
@@ -98,6 +141,11 @@ export type SelectProps = {
   ) &
   OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
+/**
+ * Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.
+ *
+ * In a select input where there are less than 3-4 items, consider using radio boxes, or radio inputs instead.
+ */
 export default function Select({
   children,
   darkMode = false,
@@ -659,4 +707,5 @@ Select.propTypes = {
   readOnly: PropTypes.bool,
   errorMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
+  allowDeselect: PropTypes.bool,
 };
