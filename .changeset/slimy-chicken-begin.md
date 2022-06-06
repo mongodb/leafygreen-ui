@@ -22,6 +22,9 @@
 '@leafygreen-ui/stepper': patch
 '@leafygreen-ui/table': patch
 '@leafygreen-ui/tabs': patch
+'@leafygreen-ui/text-area': patch
+'@leafygreen-ui/tokens': patch
+'@leafygreen-ui/typography': patch
 ---
 
-Updates to propTypes, TSDocs, storybook controls
+Updates to propTypes, TSDocs, and Storybook controls
