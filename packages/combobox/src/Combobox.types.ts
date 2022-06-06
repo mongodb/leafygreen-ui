@@ -5,8 +5,28 @@ import { Either } from '@leafygreen-ui/lib';
  * Prop Enums & Types
  */
 
+export const ComboboxElement = {
+  Input: 'Input',
+  ClearButton: 'ClearButton',
+  FirstChip: 'FirstChip',
+  LastChip: 'LastChip',
+  MiddleChip: 'MiddleChip',
+  Combobox: 'Combobox',
+  Menu: 'Menu',
+} as const;
+export type ComboboxElement =
+  typeof ComboboxElement[keyof typeof ComboboxElement];
+
+/**
+ * Prop types
+ */
+
 export const ComboboxSize = {
-  default: 'default',
+  // TODO: add XSmall & Small variants after the refresh
+  // XSmall: 'xsmall',
+  // Small: 'small',
+  Default: 'default',
+  Large: 'large',
 } as const;
 export type ComboboxSize = typeof ComboboxSize[keyof typeof ComboboxSize];
 
@@ -251,6 +271,7 @@ export type ComboboxProps<M extends boolean> = Either<
 /**
  * Combobox Option Props
  */
+
 interface BaseComboboxOptionProps {
   /**
    * The internal value of the option. Used as the identifier in Combobox `initialValue`, value and filteredOptions.
@@ -270,6 +291,12 @@ interface BaseComboboxOptionProps {
   glyph?: ReactElement;
 
   /**
+   * Defines whether the option is disabled.
+   * Node: disabled options are still rendered in the menu, but not selectable.
+   */
+  disabled?: boolean;
+
+  /**
    * Styling Prop
    */
   className?: string;
@@ -280,12 +307,20 @@ export type ComboboxOptionProps = Either<
   'value' | 'displayName'
 >;
 
+export interface OptionObject {
+  value: string;
+  displayName: string;
+  isDisabled: boolean;
+  hasGlyph?: boolean;
+}
+
 export interface InternalComboboxOptionProps {
   value: string;
   displayName: string;
   isSelected: boolean;
   isFocused: boolean;
   setSelected: () => void;
+  disabled?: boolean;
   glyph?: ReactElement;
   className?: string;
   index: number;

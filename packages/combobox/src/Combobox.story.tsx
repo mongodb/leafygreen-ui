@@ -4,6 +4,13 @@ import Button from '@leafygreen-ui/button';
 import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
+import {
+  ComboboxSize,
+  Overflow,
+  SearchState,
+  State,
+  TrunctationLocation,
+} from './Combobox.types';
 
 const wrapperStyle = css`
   width: 256px;
@@ -13,14 +20,102 @@ export default {
   title: 'Packages/Combobox',
   component: Combobox,
   parameters: {
-    controls: { exclude: ['children', 'setError'] },
+    controls: {
+      exclude: [
+        'children',
+        'aria-label',
+        'setError',
+        'onFilter',
+        'onClear',
+        'onChange',
+        'filteredOptions',
+        'className',
+        'usePortal',
+        'portalClassName',
+        'portalContainer',
+        'scrollContainer',
+        'popoverZIndex',
+        'initialValue',
+        'value',
+      ],
+    },
+  },
+  argTypes: {
+    multiselect: {
+      control: 'boolean',
+    },
+    disabled: {
+      control: 'boolean',
+    },
+    darkMode: {
+      control: 'boolean',
+    },
+    clearable: {
+      control: 'boolean',
+    },
+    label: {
+      control: 'text',
+    },
+    description: {
+      control: 'text',
+    },
+    placeholder: {
+      control: 'text',
+    },
+    size: {
+      options: Object.values(ComboboxSize),
+      control: 'select',
+    },
+    state: {
+      options: Object.values(State),
+      control: 'select',
+    },
+    errorMessage: {
+      control: 'text',
+      if: { arg: 'state', eq: State.error },
+    },
+    searchEmptyMessage: {
+      control: 'text',
+    },
+    searchState: {
+      options: Object.values(SearchState),
+      control: 'select',
+    },
+    searchErrorMessage: {
+      control: 'text',
+      if: { arg: 'searchState', eq: SearchState.error },
+    },
+    searchLoadingMessage: {
+      control: 'text',
+      if: { arg: 'searchState', eq: SearchState.loading },
+    },
+    chipTruncationLocation: {
+      options: Object.values(TrunctationLocation),
+      control: 'select',
+      if: { arg: 'multiselect' },
+    },
+    chipCharacterLimit: {
+      control: 'number',
+      if: { arg: 'multiselect' },
+    },
+    overflow: {
+      options: Object.values(Overflow),
+      control: 'select',
+      if: { arg: 'multiselect' },
+    },
+  },
+  args: {
+    multiselect: false,
+    darkMode: false,
+    disabled: false,
+    clearable: true,
   },
 } as ComponentMeta<typeof Combobox>;
 
 const ComboboxOptions = [
   <ComboboxOption key="apple" value="apple" displayName="Apple" />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
-  <ComboboxOption key="carrot" value="carrot" displayName="Carrot" />,
+  <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
   <ComboboxOption
     key="paragraph"
     value="paragraph"
@@ -29,7 +124,7 @@ const ComboboxOptions = [
   <ComboboxOption
     key="hash"
     value="hash"
-    displayName="5f4dcc3b5aa765d61d8327deb882cf99"
+    displayName="5f4dcc3b5aa765d61d8327deb882cf995f4dcc3b5aa765d61d8327deb882cf99"
   />,
   <ComboboxOption
     key="dragonfruit"

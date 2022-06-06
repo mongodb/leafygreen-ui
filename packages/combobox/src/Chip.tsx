@@ -5,8 +5,9 @@ import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { keyMap } from './util';
+import { keyMap } from '@leafygreen-ui/lib';
 import { chipClassName } from './Combobox.styles';
+import { typeScales } from '@leafygreen-ui/tokens';
 
 const chipWrapperStyle = ({
   darkMode,
@@ -30,12 +31,21 @@ const chipWrapperStyle = ({
   }
 
   switch (size) {
-    case 'default':
+    case ComboboxSize.Default:
       chipSizeStyle = css`
         --lg-combobox-chip-height: 24px;
         --lg-combobox-chip-border-radius: 4px;
         --lg-combobox-chip-font-size: 14px;
         --lg-combobox-chip-line-height: 20px;
+        --lg-combobox-chip-padding-x: 6px;
+      `;
+      break;
+    case ComboboxSize.Large:
+      chipSizeStyle = css`
+        --lg-combobox-chip-height: 28px;
+        --lg-combobox-chip-border-radius: 4px;
+        --lg-combobox-chip-font-size: ${typeScales.body2.fontSize}px;
+        --lg-combobox-chip-line-height: ${typeScales.body2.lineHeight}px;
         --lg-combobox-chip-padding-x: 6px;
       `;
       break;

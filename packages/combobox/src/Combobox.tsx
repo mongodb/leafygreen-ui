@@ -15,42 +15,53 @@ import {
   usePrevious,
   useViewportSize,
 } from '@leafygreen-ui/hooks';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
+import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
   getNullSelection,
   onChangeType,
   SelectValueType,
+  OptionObject,
+  ComboboxElement,
+  ComboboxSize,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
 import {
-  clearButton,
+  clearButtonStyle,
+  clearButtonFocusOverrideStyles,
+  comboboxFocusStyle,
   comboboxParentStyle,
   comboboxStyle,
   endIcon,
   errorMessageStyle,
   inputElementStyle,
   inputWrapperStyle,
-  interactionRingColor,
-  interactionRingStyle,
   loadingIconStyle,
   menuList,
   menuMessage,
   menuStyle,
   menuWrapperStyle,
+  _tempLabelDescriptionOverrideStyle,
 } from './Combobox.styles';
 import { InternalComboboxGroup } from './ComboboxGroup';
-import { flattenChildren, getNameAndValue, OptionObject, keyMap } from './util';
+import {
+  flattenChildren,
+  getOptionObjectFromValue,
+  getDisplayNameForValue,
+  getValueForDisplayName,
+  getNameAndValue,
+} from './utils';
 
 /**
- * Component
+ * Combobox is a combination of a Select and TextInput,
+ * allowing the user to either type a value directly or select a value from the list.
+ * Can be configured to select a single or multiple options.
  */
 export default function Combobox<M extends boolean>({
   children,
@@ -59,7 +70,7 @@ export default function Combobox<M extends boolean>({
   placeholder = 'Select',
   'aria-label': ariaLabel,
   disabled = false,
-  size = 'default',
+  size = ComboboxSize.Default,
   darkMode = false,
   state = 'none',
   errorMessage,
@@ -100,19 +111,40 @@ export default function Combobox<M extends boolean>({
   const menuRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setOpen] = useState(false);
-  const prevOpenState = usePrevious(isOpen);
-  const [focusedOption, setFocusedOption] = useState<string | null>(null);
+  const wasOpen = usePrevious(isOpen);
+  const [highlightedOption, sethighlightedOption] = useState<string | null>(
+    null,
+  );
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
   const [inputValue, setInputValue] = useState<string>('');
   const prevValue = usePrevious(inputValue);
   const [focusedChip, setFocusedChip] = useState<string | null>(null);
+  const viewportSize = useViewportSize();
 
   const doesSelectionExist =
     !isNull(selection) &&
     ((isArray(selection) && selection.length > 0) || isString(selection));
 
-  // Tells typescript that selection is multiselect
+  const placeholderValue =
+    multiselect && isArray(selection) && selection.length > 0
+      ? undefined
+      : placeholder;
+
+  const closeMenu = () => setOpen(false);
+  const openMenu = () => setOpen(true);
+
+  /**
+   * Array of all of the options objects
+   */
+  const allOptions: Array<OptionObject> = useMemo(
+    () => flattenChildren(children),
+    [children],
+  );
+
+  /**
+   * Utility function that tells Typescript whether selection is multiselect
+   */
   const isMultiselect = useCallback(
     <T extends string>(val?: Array<T> | T | null): val is Array<T> => {
       if (multiselect && (typeof val == 'string' || typeof val == 'number')) {
@@ -130,7 +162,10 @@ export default function Combobox<M extends boolean>({
     [multiselect],
   );
 
-  // Force focus of input box
+  /**
+   * Forces focus of input box
+   * @param cursorPos index the cursor should be set to
+   */
   const setInputFocus = useCallback(
     (cursorPos?: number) => {
       if (!disabled && inputRef && inputRef.current) {
@@ -143,7 +178,11 @@ export default function Combobox<M extends boolean>({
     [disabled],
   );
 
-  // Update selection differently in mulit & single select
+  /**
+   * Update selection.
+   * This behaves differently in multi. vs single select.
+   * @param value option value the selection should be set to
+   */
   const updateSelection = useCallback(
     (value: string | null) => {
       if (isMultiselect(selection)) {
@@ -177,33 +216,50 @@ export default function Combobox<M extends boolean>({
     [isMultiselect, onChange, selection],
   );
 
-  // Scrolls the combobox to the far right
-  // Used when `overflow == 'scroll-x'`
-  const scrollToEnd = () => {
-    if (inputWrapperRef && inputWrapperRef.current) {
-      // TODO - consider converting to .scrollTo(). This is not yet wuppoted in IE or jsdom
-      inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
+  /**
+   * Returns whether a given value is included in, or equal to, the current selection
+   * @param value the option value to check
+   */
+  const isValueCurrentSelection = useCallback(
+    (value: string): boolean => {
+      return isMultiselect(selection)
+        ? selection.includes(value)
+        : value === selection;
+    },
+    [isMultiselect, selection],
+  );
+
+  /**
+   * Returns whether given text is included in, or equal to, the current selection.
+   * Similar to `isValueCurrentSelection`, but assumes the text argument is the `displayName` for the selection
+   * @param text the text to check
+   */
+  const isTextCurrentSelection = useCallback(
+    (text: string): boolean => {
+      const value = getValueForDisplayName(text, allOptions);
+      return isValueCurrentSelection(value);
+    },
+    [allOptions, isValueCurrentSelection],
+  );
+
+  /**
+   * Returns whether the provided option is disabled
+   * @param option the option value or OptionObject to check
+   */
+  const isOptionDisabled = (option: string | OptionObject): boolean => {
+    if (typeof option === 'string') {
+      const optionObj = getOptionObjectFromValue(option, allOptions);
+      return !!optionObj?.isDisabled;
+    } else {
+      return !!option.isDisabled;
     }
   };
 
-  const placeholderValue =
-    multiselect && isArray(selection) && selection.length > 0
-      ? undefined
-      : placeholder;
-
-  const allOptions = useMemo(() => flattenChildren(children), [children]);
-
-  const getDisplayNameForValue = useCallback(
-    (value: string | null): string => {
-      return value
-        ? allOptions.find(opt => opt.value === value)?.displayName ?? value
-        : '';
-    },
-    [allOptions],
-  );
-
-  // Computes whether the option is visible based on the current input
-  const isOptionVisible = useCallback(
+  /**
+   * Computes whether the option is visible based on the current input
+   * @param option the option value or OptionObject to compute
+   */
+  const shouldOptionBeVisible = useCallback(
     (option: string | OptionObject): boolean => {
       const value = typeof option === 'string' ? option : option.value;
 
@@ -212,21 +268,40 @@ export default function Combobox<M extends boolean>({
         return filteredOptions.includes(value);
       }
 
+      // If the text input value is the current selection
+      // (or included in the selection)
+      // then all options should be visible
+      if (isTextCurrentSelection(inputValue)) {
+        return true;
+      }
+
       // otherwise, we do our own filtering
       const displayName =
         typeof option === 'string'
-          ? getDisplayNameForValue(value)
+          ? getDisplayNameForValue(value, allOptions)
           : option.displayName;
-      return displayName.toLowerCase().includes(inputValue.toLowerCase());
+
+      const isValueInDisplayName = displayName
+        .toLowerCase()
+        .includes(inputValue.toLowerCase());
+
+      return isValueInDisplayName;
     },
-    [filteredOptions, getDisplayNameForValue, inputValue],
+    [filteredOptions, isTextCurrentSelection, inputValue, allOptions],
   );
 
-  const visibleOptions = useMemo(
-    () => allOptions.filter(isOptionVisible),
-    [allOptions, isOptionVisible],
+  /**
+   * The array of visible options objects
+   */
+  const visibleOptions: Array<OptionObject> = useMemo(
+    () => allOptions.filter(shouldOptionBeVisible),
+    [allOptions, shouldOptionBeVisible],
   );
 
+  /**
+   * Returns whether the given value is in the options array
+   * @param value the value to check
+   */
   const isValueValid = useCallback(
     (value: string | null): boolean => {
       return value ? !!allOptions.find(opt => opt.value === value) : false;
@@ -234,6 +309,10 @@ export default function Combobox<M extends boolean>({
     [allOptions],
   );
 
+  /**
+   * Returns the index of a given value in the array of visible (filtered) options
+   * @param value the option value to get the index of
+   */
   const getIndexOfValue = useCallback(
     (value: string | null): number => {
       return visibleOptions
@@ -243,6 +322,10 @@ export default function Combobox<M extends boolean>({
     [visibleOptions],
   );
 
+  /**
+   * Returns the option value of a given index in the array of visible (filtered) options
+   * @param index the option index to get the value of
+   */
   const getValueAtIndex = useCallback(
     (index: number): string | undefined => {
       if (visibleOptions && visibleOptions.length >= index) {
@@ -253,6 +336,9 @@ export default function Combobox<M extends boolean>({
     [visibleOptions],
   );
 
+  /**
+   * Returns the index of the active chip in the selection array
+   */
   const getActiveChipIndex = useCallback(
     () =>
       isMultiselect(selection)
@@ -269,46 +355,21 @@ export default function Combobox<M extends boolean>({
    *
    */
 
-  const getFocusedElementName = useCallback(() => {
-    const isFocusOn = {
-      Input: inputRef.current?.contains(document.activeElement),
-      ClearButton: clearButtonRef.current?.contains(document.activeElement),
-      Chip:
-        isMultiselect(selection) &&
-        selection.some(value =>
-          getChipRef(value)?.current?.contains(document.activeElement),
-        ),
-    };
-    const getActiveChipIndex = () =>
-      isMultiselect(selection)
-        ? selection.findIndex(value =>
-            getChipRef(value)?.current?.contains(document.activeElement),
-          )
-        : -1;
-
-    if (isMultiselect(selection) && isFocusOn.Chip) {
-      if (getActiveChipIndex() === 0) {
-        return 'FirstChip';
-      } else if (getActiveChipIndex() === selection.length - 1) {
-        return 'LastChip';
-      }
-
-      return 'MiddleChip';
-    } else if (isFocusOn.Input) {
-      return 'Input';
-    } else if (isFocusOn.ClearButton) {
-      return 'ClearButton';
-    } else if (comboboxRef.current?.contains(document.activeElement)) {
-      return 'Combobox';
-    }
-  }, [getChipRef, isMultiselect, selection]);
+  const [focusedElementName, trackFocusedElement] = useState<
+    ComboboxElement | undefined
+  >();
 
   type Direction = 'next' | 'prev' | 'first' | 'last';
-  const updateFocusedOption = useCallback(
+
+  /**
+   * Updates the highlighted menu option based on the provided direction
+   * @param direction the direction to move the focus. `'next' | 'prev' | 'first' | 'last'`
+   */
+  const updateHighlightedOption = useCallback(
     (direction: Direction) => {
       const optionsCount = visibleOptions?.length ?? 0;
       const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
-      const indexOfFocus = getIndexOfValue(focusedOption);
+      const indexOfHighlight = getIndexOfValue(highlightedOption);
 
       // Remove focus from chip
       if (direction && isOpen) {
@@ -319,39 +380,39 @@ export default function Combobox<M extends boolean>({
       switch (direction) {
         case 'next': {
           const newValue =
-            indexOfFocus + 1 < optionsCount
-              ? getValueAtIndex(indexOfFocus + 1)
+            indexOfHighlight + 1 < optionsCount
+              ? getValueAtIndex(indexOfHighlight + 1)
               : getValueAtIndex(0);
 
-          setFocusedOption(newValue ?? null);
+          sethighlightedOption(newValue ?? null);
           break;
         }
 
         case 'prev': {
           const newValue =
-            indexOfFocus - 1 >= 0
-              ? getValueAtIndex(indexOfFocus - 1)
+            indexOfHighlight - 1 >= 0
+              ? getValueAtIndex(indexOfHighlight - 1)
               : getValueAtIndex(lastIndex);
 
-          setFocusedOption(newValue ?? null);
+          sethighlightedOption(newValue ?? null);
           break;
         }
 
         case 'last': {
           const newValue = getValueAtIndex(lastIndex);
-          setFocusedOption(newValue ?? null);
+          sethighlightedOption(newValue ?? null);
           break;
         }
 
         case 'first':
         default: {
           const newValue = getValueAtIndex(0);
-          setFocusedOption(newValue ?? null);
+          sethighlightedOption(newValue ?? null);
         }
       }
     },
     [
-      focusedOption,
+      highlightedOption,
       getIndexOfValue,
       getValueAtIndex,
       isOpen,
@@ -360,6 +421,11 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
+  /**
+   * Updates the focused chip based on the provided direction
+   * @param direction the direction to move the focus. `'next' | 'prev' | 'first' | 'last'`
+   * @param relativeToIndex the chip index to move focus relative to
+   */
   const updateFocusedChip = useCallback(
     (direction: Direction | null, relativeToIndex?: number) => {
       if (isMultiselect(selection)) {
@@ -409,17 +475,18 @@ export default function Combobox<M extends boolean>({
     [getActiveChipIndex, isMultiselect, selection],
   );
 
+  /**
+   * Handles an arrow key press
+   */
   const handleArrowKey = useCallback(
     (direction: 'left' | 'right', event: React.KeyboardEvent<Element>) => {
       // Remove focus from menu
-      if (direction) setFocusedOption(null);
-
-      const focusedElementName = getFocusedElementName();
+      if (direction) sethighlightedOption(null);
 
       switch (direction) {
         case 'right':
           switch (focusedElementName) {
-            case 'Input': {
+            case ComboboxElement.Input: {
               // If cursor is at the end of the input
               if (
                 inputRef.current?.selectionEnd ===
@@ -430,11 +497,11 @@ export default function Combobox<M extends boolean>({
               break;
             }
 
-            case 'FirstChip':
-            case 'MiddleChip':
-            case 'LastChip': {
+            case ComboboxElement.FirstChip:
+            case ComboboxElement.MiddleChip:
+            case ComboboxElement.LastChip: {
               if (
-                focusedElementName === 'LastChip' ||
+                focusedElementName === ComboboxElement.LastChip ||
                 // the first chip is also the last chip (i.e. only one)
                 selection?.length === 1
               ) {
@@ -449,7 +516,7 @@ export default function Combobox<M extends boolean>({
               break;
             }
 
-            case 'ClearButton':
+            case ComboboxElement.ClearButton:
             default:
               break;
           }
@@ -457,19 +524,19 @@ export default function Combobox<M extends boolean>({
 
         case 'left':
           switch (focusedElementName) {
-            case 'ClearButton': {
+            case ComboboxElement.ClearButton: {
               event.preventDefault();
               setInputFocus(inputRef?.current?.value.length);
               break;
             }
 
-            case 'Input':
-            case 'MiddleChip':
-            case 'LastChip': {
+            case ComboboxElement.Input:
+            case ComboboxElement.MiddleChip:
+            case ComboboxElement.LastChip: {
               if (isMultiselect(selection)) {
                 // Break if cursor is not at the start of the input
                 if (
-                  focusedElementName === 'Input' &&
+                  focusedElementName === ComboboxElement.Input &&
                   inputRef.current?.selectionStart !== 0
                 ) {
                   break;
@@ -480,7 +547,7 @@ export default function Combobox<M extends boolean>({
               break;
             }
 
-            case 'FirstChip':
+            case ComboboxElement.FirstChip:
             default:
               break;
           }
@@ -491,7 +558,7 @@ export default function Combobox<M extends boolean>({
       }
     },
     [
-      getFocusedElementName,
+      focusedElementName,
       isMultiselect,
       selection,
       setInputFocus,
@@ -499,17 +566,18 @@ export default function Combobox<M extends boolean>({
     ],
   );
 
-  // Update the focused option when the inputValue changes
+  // When the input value changes (or when the menu opens)
+  // Update the focused option
   useEffect(() => {
     if (inputValue !== prevValue) {
-      updateFocusedOption('first');
+      updateHighlightedOption('first');
     }
-  }, [inputValue, isOpen, prevValue, updateFocusedOption]);
+  }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
 
-  // When the focused option chenges, update the menu scroll if necessary
+  // When the focused option changes, update the menu scroll if necessary
   useEffect(() => {
-    if (focusedOption) {
-      const focusedElementRef = getOptionRef(focusedOption);
+    if (highlightedOption) {
+      const focusedElementRef = getOptionRef(highlightedOption);
 
       if (focusedElementRef && focusedElementRef.current && menuRef.current) {
         const { offsetTop: optionTop } = focusedElementRef.current;
@@ -521,12 +589,14 @@ export default function Combobox<M extends boolean>({
         }
       }
     }
-  }, [focusedOption, getOptionRef]);
+  }, [highlightedOption, getOptionRef]);
 
   /**
-   *
    * Rendering
-   *
+   */
+
+  /**
+   * Callback to render the children as <InternalComboboxOption> elements
    */
   const renderInternalOptions = useCallback(
     (_children: React.ReactNode) => {
@@ -534,17 +604,17 @@ export default function Combobox<M extends boolean>({
         if (isComponentType(child, 'ComboboxOption')) {
           const { value, displayName } = getNameAndValue(child.props);
 
-          if (isOptionVisible(value)) {
-            const { className, glyph } = child.props;
+          if (shouldOptionBeVisible(value)) {
+            const { className, glyph, disabled } = child.props;
             const index = allOptions.findIndex(opt => opt.value === value);
 
-            const isFocused = focusedOption === value;
+            const isFocused = highlightedOption === value;
             const isSelected = isMultiselect(selection)
               ? selection.includes(value)
               : selection === value;
 
             const setSelected = () => {
-              setFocusedOption(value);
+              sethighlightedOption(value);
               updateSelection(value);
               setInputFocus();
 
@@ -561,6 +631,7 @@ export default function Combobox<M extends boolean>({
                 displayName={displayName}
                 isFocused={isFocused}
                 isSelected={isSelected}
+                disabled={disabled}
                 setSelected={setSelected}
                 glyph={glyph}
                 className={className}
@@ -587,25 +658,31 @@ export default function Combobox<M extends boolean>({
     },
     [
       allOptions,
-      focusedOption,
+      highlightedOption,
       getOptionRef,
       isMultiselect,
-      isOptionVisible,
+      shouldOptionBeVisible,
       selection,
       setInputFocus,
       updateSelection,
     ],
   );
 
-  const renderedOptions = useMemo(
+  /**
+   * The rendered JSX elements for the options
+   */
+  const renderedOptionsJSX = useMemo(
     () => renderInternalOptions(children),
     [children, renderInternalOptions],
   );
 
+  /**
+   * The rendered JSX for the selection Chips
+   */
   const renderedChips = useMemo(() => {
     if (isMultiselect(selection)) {
       return selection.filter(isValueValid).map((value, index) => {
-        const displayName = getDisplayNameForValue(value);
+        const displayName = getDisplayNameForValue(value, allOptions);
         const isFocused = focusedChip === value;
         const chipRef = getChipRef(value);
         const isLastChip = index >= selection.length - 1;
@@ -641,14 +718,17 @@ export default function Combobox<M extends boolean>({
     isMultiselect,
     selection,
     isValueValid,
-    getDisplayNameForValue,
+    allOptions,
     focusedChip,
     getChipRef,
     updateSelection,
-    updateFocusedChip,
     setInputFocus,
+    updateFocusedChip,
   ]);
 
+  /**
+   * The rendered JSX for the input icons (clear, warn & caret)
+   */
   const renderedInputIcons = useMemo(() => {
     const handleClearButtonClick = (
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -673,7 +753,7 @@ export default function Combobox<M extends boolean>({
             ref={clearButtonRef}
             onClick={handleClearButtonClick}
             onFocus={handleClearButtonFocus}
-            className={clearButton}
+            className={cx(clearButtonStyle, clearButtonFocusOverrideStyles)}
           >
             <Icon glyph="XWithCircle" />
           </IconButton>
@@ -696,7 +776,9 @@ export default function Combobox<M extends boolean>({
     isOpen,
   ]);
 
-  // Do any of the options have an icon?
+  /**
+   * Flag to determine whether the rendered options have icons
+   */
   const withIcons = useMemo(
     () => allOptions.some(opt => opt.hasGlyph),
     [allOptions],
@@ -723,12 +805,15 @@ export default function Combobox<M extends boolean>({
       } else {
         // Revert the value to the previous selection
         const displayName =
-          getDisplayNameForValue(selection as SelectValueType<false>) ?? '';
+          getDisplayNameForValue(
+            selection as SelectValueType<false>,
+            allOptions,
+          ) ?? '';
         setInputValue(displayName);
       }
     }
   }, [
-    getDisplayNameForValue,
+    allOptions,
     inputValue,
     isMultiselect,
     prevSelection,
@@ -741,20 +826,23 @@ export default function Combobox<M extends boolean>({
     if (doesSelectionExist) {
       if (isMultiselect(selection)) {
         // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
-        scrollToEnd();
+        scrollInputToEnd();
       } else if (!isMultiselect(selection)) {
         // Update the text input
         const displayName =
-          getDisplayNameForValue(selection as SelectValueType<false>) ?? '';
+          getDisplayNameForValue(
+            selection as SelectValueType<false>,
+            allOptions,
+          ) ?? '';
         setInputValue(displayName);
         closeMenu();
       }
     } else {
       setInputValue('');
     }
-  }, [doesSelectionExist, getDisplayNameForValue, isMultiselect, selection]);
+  }, [doesSelectionExist, allOptions, isMultiselect, selection]);
 
-  // Set initialValue
+  // Set the initialValue
   useEffect(() => {
     if (initialValue) {
       if (isArray(initialValue)) {
@@ -800,27 +888,34 @@ export default function Combobox<M extends boolean>({
 
   // when the menu closes, update the value if needed
   useEffect(() => {
-    if (!isOpen && prevOpenState) {
+    if (!isOpen && wasOpen) {
       onCloseMenu();
     }
-  }, [isOpen, prevOpenState, onCloseMenu]);
+  }, [isOpen, wasOpen, onCloseMenu]);
 
   /**
    *
    * Menu management
    *
    */
-  const closeMenu = () => setOpen(false);
-  const openMenu = () => setOpen(true);
 
   const [menuWidth, setMenuWidth] = useState(0);
+
+  // When the menu opens, or the selection changes, or the focused option changes
+  // update the menu width
   useEffect(() => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
-  }, [comboboxRef, isOpen, focusedOption, selection]);
+  }, [comboboxRef, isOpen, highlightedOption, selection]);
+
+  // Handler fired when the manu has finished transitioning in/out
   const handleTransitionEnd = () => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   };
 
+  /**
+   * The rendered menu JSX contents
+   * Includes error, empty, search and default states
+   */
   const renderedMenuContents = useMemo((): JSX.Element => {
     switch (searchState) {
       case 'loading': {
@@ -847,24 +942,24 @@ export default function Combobox<M extends boolean>({
 
       case 'unset':
       default: {
-        if (renderedOptions && renderedOptions.length > 0) {
-          return <ul className={menuList}>{renderedOptions}</ul>;
+        if (renderedOptionsJSX && renderedOptionsJSX.length > 0) {
+          return <ul className={menuList}>{renderedOptionsJSX}</ul>;
         }
 
         return <span className={menuMessage}>{searchEmptyMessage}</span>;
       }
     }
   }, [
-    renderedOptions,
+    renderedOptionsJSX,
     searchEmptyMessage,
     searchErrorMessage,
     searchLoadingMessage,
     searchState,
   ]);
 
-  const viewportSize = useViewportSize();
-
-  // Set the max height of the menu
+  /**
+   * The max height of the menu element
+   */
   const maxHeight = useMemo(() => {
     // TODO - consolidate this hook with Select/ListMenu
     const maxMenuHeight = 274;
@@ -888,11 +983,6 @@ export default function Combobox<M extends boolean>({
     return maxMenuHeight;
   }, [viewportSize, comboboxRef, menuRef]);
 
-  // Scroll the menu when the focus changes
-  useEffect(() => {
-    // get the focused option
-  }, [focusedOption]);
-
   /**
    *
    * Event Handlers
@@ -907,7 +997,7 @@ export default function Combobox<M extends boolean>({
   };
 
   // Set focus to the input element on click
-  const handleInputWrapperClick = (e: React.MouseEvent) => {
+  const handleComboboxClick = (e: React.MouseEvent) => {
     // If we clicked the wrapper, not the input itself.
     // (Focus is set automatically if the click is on the input)
     if (e.target !== inputRef.current) {
@@ -924,10 +1014,12 @@ export default function Combobox<M extends boolean>({
     }
   };
 
-  // Fired when the wrapper gains focus
-  const handleInputWrapperFocus = () => {
-    scrollToEnd();
+  // Fired whenever the wrapper gains focus,
+  // and any time the focus within changes
+  const handleComboboxFocus = (e: React.FocusEvent) => {
+    scrollInputToEnd();
     openMenu();
+    trackFocusedElement(getNameFromElement(e.target));
   };
 
   // Fired onChange
@@ -940,7 +1032,7 @@ export default function Combobox<M extends boolean>({
   };
 
   const handleClearButtonFocus = () => {
-    setFocusedOption(null);
+    sethighlightedOption(null);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -959,15 +1051,13 @@ export default function Combobox<M extends boolean>({
         return;
       }
 
-      const focusedElement = getFocusedElementName();
-
       switch (event.keyCode) {
         case keyMap.Tab: {
-          switch (focusedElement) {
+          switch (focusedElementName) {
             case 'Input': {
               if (!doesSelectionExist) {
                 closeMenu();
-                updateFocusedOption('first');
+                updateHighlightedOption('first');
                 updateFocusedChip(null);
               }
               // else use default behavior
@@ -996,21 +1086,25 @@ export default function Combobox<M extends boolean>({
 
         case keyMap.Escape: {
           closeMenu();
-          updateFocusedOption('first');
+          updateHighlightedOption('first');
           break;
         }
 
         case keyMap.Enter: {
+          // Select the highlighed option iff
+          // the menu is open
+          // we're focused on input element,
+          // and the highlighted option is not disabled
           if (
-            // Focused on input element
-            document.activeElement === inputRef.current &&
             isOpen &&
-            !isNull(focusedOption)
+            focusedElementName === ComboboxElement.Input &&
+            !isNull(highlightedOption) &&
+            !isOptionDisabled(highlightedOption)
           ) {
-            updateSelection(focusedOption);
+            updateSelection(highlightedOption);
           } else if (
             // Focused on clear button
-            document.activeElement === clearButtonRef.current
+            focusedElementName === ComboboxElement.ClearButton
           ) {
             updateSelection(null);
             setInputFocus();
@@ -1021,12 +1115,13 @@ export default function Combobox<M extends boolean>({
         case keyMap.Backspace: {
           // Backspace key focuses last chip if the input is focused
           // Note: Chip removal behavior is handled in `onRemove` defined in `renderChips`
-          if (
-            isMultiselect(selection) &&
-            focusedElement === 'Input' &&
-            inputRef.current?.selectionStart === 0
-          ) {
-            updateFocusedChip('last');
+          if (isMultiselect(selection)) {
+            if (
+              focusedElementName === 'Input' &&
+              inputRef.current?.selectionStart === 0
+            ) {
+              updateFocusedChip('last');
+            }
           }
           // Open the menu regardless
           openMenu();
@@ -1037,9 +1132,11 @@ export default function Combobox<M extends boolean>({
           if (isOpen) {
             // Prevent the page from scrolling
             event.preventDefault();
+            // only change option if the menu is already open
+            updateHighlightedOption('next');
+          } else {
+            openMenu();
           }
-          openMenu();
-          updateFocusedOption('next');
           break;
         }
 
@@ -1047,8 +1144,11 @@ export default function Combobox<M extends boolean>({
           if (isOpen) {
             // Prevent the page from scrolling
             event.preventDefault();
+            // only change option if the menu is already open
+            updateHighlightedOption('prev');
+          } else {
+            openMenu();
           }
-          updateFocusedOption('prev');
           break;
         }
 
@@ -1149,64 +1249,69 @@ export default function Combobox<M extends boolean>({
       >
         <div>
           {label && (
-            <Label id={labelId} htmlFor={inputId}>
+            <Label
+              id={labelId}
+              htmlFor={inputId}
+              className={_tempLabelDescriptionOverrideStyle}
+            >
               {label}
             </Label>
           )}
-          {description && <Description>{description}</Description>}
+          {description && (
+            <Description className={_tempLabelDescriptionOverrideStyle}>
+              {description}
+            </Description>
+          )}
         </div>
 
-        <InteractionRing
-          className={interactionRingStyle}
-          disabled={disabled}
-          color={interactionRingColor({ state, darkMode })}
+        {/* Disable eslint: onClick sets focus. Key events would already have focus */}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+        <div
+          ref={comboboxRef}
+          role="combobox"
+          aria-expanded={isOpen}
+          aria-controls={menuId}
+          aria-owns={menuId}
+          tabIndex={-1}
+          className={cx(comboboxStyle, {
+            [comboboxFocusStyle]: focusedElementName === ComboboxElement.Input,
+          })}
+          onMouseDown={handleInputWrapperMousedown}
+          onClick={handleComboboxClick}
+          onFocus={handleComboboxFocus}
+          onKeyDown={handleKeyDown}
+          onTransitionEnd={handleTransitionEnd}
+          data-disabled={disabled}
+          data-state={state}
         >
-          {/* Disable eslint: onClick sets focus. Key events would already have focus */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <div
-            ref={comboboxRef}
-            role="combobox"
-            aria-expanded={isOpen}
-            aria-controls={menuId}
-            aria-owns={menuId}
-            tabIndex={-1}
-            className={comboboxStyle}
-            onMouseDown={handleInputWrapperMousedown}
-            onClick={handleInputWrapperClick}
-            onFocus={handleInputWrapperFocus}
-            onKeyDown={handleKeyDown}
-            onTransitionEnd={handleTransitionEnd}
-            data-disabled={disabled}
-            data-state={state}
+            ref={inputWrapperRef}
+            className={inputWrapperStyle({
+              overflow,
+              isOpen,
+              selection,
+              size,
+              value: inputValue,
+            })}
           >
-            <div
-              ref={inputWrapperRef}
-              className={inputWrapperStyle({
-                overflow,
-                isOpen,
-                selection,
-                value: inputValue,
-              })}
-            >
-              {renderedChips}
-              <input
-                aria-label={ariaLabel ?? label}
-                aria-autocomplete="list"
-                aria-controls={menuId}
-                aria-labelledby={labelId}
-                ref={inputRef}
-                id={inputId}
-                className={inputElementStyle}
-                placeholder={placeholderValue}
-                disabled={disabled ?? undefined}
-                onChange={handleInputChange}
-                value={inputValue}
-                autoComplete="off"
-              />
-            </div>
-            {renderedInputIcons}
+            {renderedChips}
+            <input
+              aria-label={ariaLabel ?? label}
+              aria-autocomplete="list"
+              aria-controls={menuId}
+              aria-labelledby={labelId}
+              ref={inputRef}
+              id={inputId}
+              className={inputElementStyle}
+              placeholder={placeholderValue}
+              disabled={disabled ?? undefined}
+              onChange={handleInputChange}
+              value={inputValue}
+              autoComplete="off"
+            />
           </div>
-        </InteractionRing>
+          {renderedInputIcons}
+        </div>
 
         {state === 'error' && errorMessage && (
           <div className={errorMessageStyle}>{errorMessage}</div>
@@ -1242,6 +1347,10 @@ export default function Combobox<M extends boolean>({
   );
 
   // Closure-dependant utils
+
+  /**
+   * Returns whether the event target is a Combobox element
+   */
   function doesComponentContainEventTarget({ target }: MouseEvent): boolean {
     return (
       menuRef.current?.contains(target as Node) ||
@@ -1249,4 +1358,48 @@ export default function Combobox<M extends boolean>({
       false
     );
   }
+
+  /**
+   * Scrolls the combobox to the far right.
+   * Used when `overflow == 'scroll-x'`.
+   * Has no effect otherwise
+   */
+  function scrollInputToEnd() {
+    if (inputWrapperRef && inputWrapperRef.current) {
+      // TODO - consider converting to .scrollTo(). This is not yet suppoted in IE or jsdom
+      inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
+    }
+  }
+
+  /**
+   * Returns the provided element as a ComboboxElement string
+   */
+  function getNameFromElement(
+    element?: Element | null,
+  ): ComboboxElement | undefined {
+    if (!element) return;
+    if (inputRef.current?.contains(element)) return ComboboxElement.Input;
+    if (clearButtonRef.current?.contains(element))
+      return ComboboxElement.ClearButton;
+
+    const activeChipIndex = isMultiselect(selection)
+      ? selection.findIndex(value =>
+          getChipRef(value)?.current?.contains(element),
+        )
+      : -1;
+
+    if (isMultiselect(selection)) {
+      if (activeChipIndex === 0) return ComboboxElement.FirstChip;
+      if (activeChipIndex === selection.length - 1)
+        return ComboboxElement.LastChip;
+      if (activeChipIndex > 0) return ComboboxElement.MiddleChip;
+    }
+
+    if (menuRef.current?.contains(element)) return ComboboxElement.Menu;
+    if (comboboxRef.current?.contains(element)) return ComboboxElement.Combobox;
+  }
 }
+/**
+ * Why'd you have to go and make things so complicated?
+ * - Avril; and also me to myself about this component
+ */
