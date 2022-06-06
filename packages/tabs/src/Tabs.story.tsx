@@ -50,8 +50,12 @@ const Template = (props: TabsProps) => (
   />
 );
 
-export const Uncontrolled = Template.bind({});
-export const Controlled = ({ selected, setSelected, ...args }: TabsProps) => {
+export const ControlledByStorybook = Template.bind({});
+export const ControlledByState = ({
+  selected,
+  setSelected,
+  ...args
+}: TabsProps) => {
   const [selectedControl, setSelectedControl] = useState(0);
   return (
     <Template
@@ -60,4 +64,7 @@ export const Controlled = ({ selected, setSelected, ...args }: TabsProps) => {
       {...args}
     />
   );
+};
+ControlledByState.argTypes = {
+  selected: { control: false },
 };

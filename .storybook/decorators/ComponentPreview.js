@@ -13,7 +13,7 @@ const rootStyle = css`
 `;
 
 const darkModeStyle = css`
-  background-color: ${palette.gray.dark2};
+  background-color: ${palette.black};
 `;
 
 // eslint-disable-next-line react/display-name

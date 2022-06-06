@@ -7,6 +7,17 @@ import { spacing, hoverRing, fontFamilies, typeScales, focusRing } from '.';
 import { Mode } from './mode';
 import { startCase } from 'lodash';
 
+export default {
+  title: 'Packages/Tokens',
+  argTypes: {
+    className: {
+      table: {
+        disable: true,
+      },
+    },
+  },
+};
+
 type HoverRingColor = keyof typeof hoverRing.dark;
 type TypeScale = keyof typeof typeScales;
 type FontFamily = keyof typeof fontFamilies;
@@ -48,10 +59,6 @@ function SpacingBlock({ space }: { space: keyof typeof spacing }) {
     </div>
   );
 }
-
-export default {
-  title: 'Packages/Tokens',
-};
 
 export const Spacing = () => (
   <div>

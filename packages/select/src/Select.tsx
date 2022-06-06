@@ -122,6 +122,9 @@ export type SelectProps = {
           value: string,
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void;
+        /**
+         * Indicates that the component's value cannot be changed.
+         */
         readOnly?: false;
       })
     // Controlled
