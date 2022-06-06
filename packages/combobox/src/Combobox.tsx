@@ -20,6 +20,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { Mode } from '@leafygreen-ui/tokens';
 import {
   ComboboxProps,
   getNullSelection,
@@ -30,7 +31,15 @@ import {
   ComboboxSize,
   State,
 } from './Combobox.types';
+import {
+  flattenChildren,
+  getOptionObjectFromValue,
+  getDisplayNameForValue,
+  getValueForDisplayName,
+  getNameAndValue,
+} from './utils';
 import { ComboboxContext } from './ComboboxContext';
+import { InternalComboboxGroup } from './ComboboxGroup';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
 import {
@@ -40,10 +49,6 @@ import {
   _errorMessageStyle,
   inputWrapperStyle,
   _inputElementStyle,
-  menuList,
-  menuMessage,
-  menuStyle,
-  menuWrapperStyle,
   _tempLabelDescriptionOverrideStyle,
   baseComboboxStyles,
   comboboxModeStyles,
@@ -62,15 +67,12 @@ import {
   errorMessageModeStyle,
   errorMessageSizeStyle,
 } from './Combobox.styles';
-import { InternalComboboxGroup } from './ComboboxGroup';
 import {
-  flattenChildren,
-  getOptionObjectFromValue,
-  getDisplayNameForValue,
-  getValueForDisplayName,
-  getNameAndValue,
-} from './utils';
-import { Mode } from '@leafygreen-ui/tokens';
+  menuList,
+  menuMessage,
+  menuStyle,
+  menuWrapperStyle,
+} from './Menu.styles';
 
 /**
  * Combobox is a combination of a Select and TextInput,
