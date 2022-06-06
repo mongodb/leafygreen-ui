@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 9.3.0
+
+### Minor Changes
+
+- 422dbfcd: Adds `Backspace` and `Delete` to `keyMap`
+
 ## 9.2.1
 
 ### Patch Changes
