@@ -71,7 +71,7 @@ export const colorSets: Record<Mode, ColorSets> = {
       background-color: ${palette.white};
       border-color: ${palette.gray.base};
 
-      &:hover:not(:disabled) {
+      &:hover:not(:disabled):not(:focus){
         border-color: ${palette.gray.base};
         box-shadow: ${hoverRing[Mode.Light].gray};
       }
@@ -90,7 +90,7 @@ export const colorSets: Record<Mode, ColorSets> = {
     errorBorder: css`
       border-color: ${palette.red.base};
 
-      &:hover:not(:disabled) {
+      &:hover:not(:disabled):not(:focus){
         border-color: ${palette.red.base};
         box-shadow: ${hoverRing[Mode.Light].red};
       }
@@ -110,7 +110,7 @@ export const colorSets: Record<Mode, ColorSets> = {
       background-color: ${palette.gray.dark3};
       border-color: ${palette.gray.base};
 
-      &:hover:not(:disabled) {
+      &:hover:not(:disabled):not(:focus){
         border-color: ${palette.gray.base};
         box-shadow: ${hoverRing[Mode.Dark].gray};
       }
@@ -129,7 +129,7 @@ export const colorSets: Record<Mode, ColorSets> = {
     errorBorder: css`
       border-color: ${palette.red.light1};
 
-      &:hover:not(:disabled) {
+      &:hover:not(:disabled):not(:focus){
         border-color: ${palette.red.light1};
         box-shadow: ${hoverRing[Mode.Dark].red};
       }
