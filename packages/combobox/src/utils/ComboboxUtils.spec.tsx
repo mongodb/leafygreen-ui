@@ -1,5 +1,9 @@
 import { render } from '@testing-library/react';
-import { wrapJSX, getNameAndValue } from '.';
+import React from 'react';
+import Icon from '@leafygreen-ui/icon';
+import { wrapJSX, getNameAndValue, flattenChildren } from '.';
+import ComboboxOption from '../ComboboxOption';
+import ComboboxGroup from '../ComboboxGroup';
 
 describe('packages/combobox/utils', () => {
   describe('wrapJSX', () => {
@@ -123,6 +127,101 @@ describe('packages/combobox/utils', () => {
         value: 'display-name',
         displayName: 'Display Name',
       });
+    });
+  });
+
+  describe('flattenChildren', () => {
+    test('returns a single option', () => {
+      const children = <ComboboxOption value="test" displayName="Test" />;
+      const flat = flattenChildren(children);
+      expect(flat).toEqual([
+        {
+          value: 'test',
+          displayName: 'Test',
+          hasGlyph: false,
+          isDisabled: false,
+        },
+      ]);
+    });
+
+    test('returns multiple options', () => {
+      const children = [
+        <ComboboxOption key="apple" value="apple" displayName="Apple" />,
+        <ComboboxOption key="banana" value="banana" displayName="Banana" />,
+      ];
+      const flat = flattenChildren(children);
+      expect(flat).toEqual([
+        {
+          value: 'apple',
+          displayName: 'Apple',
+          hasGlyph: false,
+          isDisabled: false,
+        },
+        {
+          value: 'banana',
+          displayName: 'Banana',
+          hasGlyph: false,
+          isDisabled: false,
+        },
+      ]);
+    });
+
+    test('returns hasGlyph and isDisabled', () => {
+      const children = (
+        <ComboboxOption
+          value="test"
+          displayName="Test"
+          glyph={<Icon glyph="Beaker" />}
+          disabled
+        />
+      );
+      const flat = flattenChildren(children);
+      expect(flat).toEqual([
+        {
+          value: 'test',
+          displayName: 'Test',
+          hasGlyph: true,
+          isDisabled: true,
+        },
+      ]);
+    });
+
+    test('flattens nested options', () => {
+      const children = [
+        <ComboboxOption key="apple" value="apple" displayName="Apple" />,
+        <ComboboxOption key="banana" value="banana" displayName="Banana" />,
+        <ComboboxGroup key="peppers" label="Peppers">
+          <ComboboxOption value="ghost" displayName="Ghost" />
+          <ComboboxOption value="habanero" displayName="Habanero" />
+        </ComboboxGroup>,
+      ];
+      const flat = flattenChildren(children);
+      expect(flat).toEqual([
+        {
+          value: 'apple',
+          displayName: 'Apple',
+          hasGlyph: false,
+          isDisabled: false,
+        },
+        {
+          value: 'banana',
+          displayName: 'Banana',
+          hasGlyph: false,
+          isDisabled: false,
+        },
+        {
+          value: 'ghost',
+          displayName: 'Ghost',
+          hasGlyph: false,
+          isDisabled: false,
+        },
+        {
+          value: 'habanero',
+          displayName: 'Habanero',
+          hasGlyph: false,
+          isDisabled: false,
+        },
+      ]);
     });
   });
 });

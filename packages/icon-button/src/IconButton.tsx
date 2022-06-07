@@ -227,13 +227,38 @@ interface BaseIconButtonProps
   extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
   className?: string;
   children?: React.ReactNode;
+  /**
+   * If `true`, the button will be rendered with disabled styles
+   */
   disabled?: boolean;
+  /**
+   * Size of tehe icon
+   */
   size?: Size;
   darkMode?: boolean;
+  /**
+   * If `true`, the button will be rendered with active styles
+   */
   active?: boolean;
+  /**
+   * `href` property for the button. If this value is set, the IconButton will be rendered with an anchor tag.
+   */
   href?: string;
+  /**
+   * The aria-label attribute defines a string value that labels an interactive element.
+   *
+   * [Mozilla Docs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
+   */
   'aria-label'?: string;
+  /**
+   * The aria-labelledby attribute identifies the element (or elements) that labels the element it is applied to.
+   *
+   * [Mozilla Docs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)
+   */
   'aria-labelledby'?: string;
+  /**
+   * Callback fired on click
+   */
   onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
 }
 
@@ -259,6 +284,7 @@ export const IconButton: ExtendableBox<
   ) => {
     const mode = darkMode ? 'dark' : 'light';
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const isAnchor: boolean = typeof rest.href === 'string';
 
     // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
     validateAriaLabelProps(rest, 'IconButton');
@@ -313,16 +339,8 @@ export const IconButton: ExtendableBox<
       ),
     };
 
-    if (typeof rest.href === 'string') {
-      return (
-        <Box as="a" {...iconButtonProps}>
-          <div className={iconStyle}>{processedChildren}</div>
-        </Box>
-      );
-    }
-
     return (
-      <Box as="button" {...iconButtonProps}>
+      <Box as={isAnchor ? 'a' : 'button'} {...iconButtonProps}>
         <div className={iconStyle}>{processedChildren}</div>
       </Box>
     );

@@ -1,5 +1,19 @@
 # @leafygreen-ui/inline-definition
 
+## 3.0.2
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [6a89bc29]
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [422dbfcd]
+- Updated dependencies [9ff90d4b]
+  - @leafygreen-ui/palette@3.4.0
+  - @leafygreen-ui/typography@11.0.2
+  - @leafygreen-ui/lib@9.3.0
+
 ## 3.0.1
 
 ### Patch Changes

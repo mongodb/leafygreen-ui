@@ -16,6 +16,10 @@ export default {
     children: {
       control: false,
     },
+    stages: {
+      description:
+        '[STORYBOOK ONLY]\n\nThis prop is used to generate DOM elements to render children. It is not defined in the component.',
+    },
   },
 } as Meta<typeof Pipeline>;
 

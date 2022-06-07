@@ -1,5 +1,13 @@
 # @leafygreen-ui/box
 
+## 3.0.7
+
+### Patch Changes
+
+- fd2f6de0: Updates to TSDocs, PropTypes, and Storybook files
+- Updated dependencies [422dbfcd]
+  - @leafygreen-ui/lib@9.3.0
+
 ## 3.0.6
 
 ### Patch Changes

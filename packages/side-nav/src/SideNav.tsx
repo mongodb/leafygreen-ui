@@ -32,7 +32,7 @@ const sideNavSelector = `.${sideNavClassName}`;
 export { sideNavSelector };
 
 /**
- * # SideNav
+ * The SideNav component should be used for any area of our product that has a navigational structure.
  *
  * ```
 <SideNav>

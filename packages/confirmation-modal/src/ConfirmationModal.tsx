@@ -113,15 +113,39 @@ const warningIconStyles = css`
 `;
 
 interface ConfirmationModalProps {
+  /**
+   * Text of header element
+   */
   title: string;
   children: React.ReactNode;
+  /**
+   * The component is shown when the value is set to `true`.
+   */
   open?: boolean;
+  /**
+   * Callback fired when the primary action button is clicked.
+   */
   onConfirm?: () => void;
+  /**
+   * Callback fired when the cancel button is clicked.
+   */
   onCancel?: () => void;
   className?: string;
+  /**
+   * Text rendered in the primary button. Defaults to `"Confirm"`
+   */
   buttonText: string;
+  /**
+   * Variant of the modal that represents the type of action handled by the modal.
+   */
   variant?: Variant;
+  /**
+   * If set, the user will be prompted to type the requiredInputText into an input field
+   */
   requiredInputText?: string;
+  /**
+   * If `true`, the primary action button will be disabled
+   */
   submitDisabled?: boolean;
   darkMode?: boolean;
 }

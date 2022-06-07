@@ -1,6 +1,7 @@
 import React from 'react';
 import TextArea from './TextArea';
 import { TextAreaProps } from './types';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 import { ComponentStory } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -23,9 +24,11 @@ export default {
       options: [14, 16],
       control: { type: 'radio' },
     },
-    darkMode: {
-      control: 'boolean',
-    },
+    label: { control: 'text' },
+    description: { control: 'text' },
+    errorMessage: { control: 'text' },
+    darkMode: defaultArgTypes.darkMode,
+    ref: { control: 'none' },
   },
   excludeStories: ['StoryTextArea'],
 };

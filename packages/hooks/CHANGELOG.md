@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.3.0
+
+### Minor Changes
+
+- 6792bc44: Adds `useAvailableSpace` to calculate the available vertical space between an element and the viewport
+
 ## 7.2.0
 
 ### Minor Changes

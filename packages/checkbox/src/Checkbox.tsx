@@ -58,7 +58,6 @@ const labelStyle = css`
   grid-template-columns: ${checkBoxSize}px auto;
   grid-template-areas: 'check text';
   gap: 8px;
-  align-items: baseline;
   justify-content: flex-start;
   cursor: pointer;
 `;
@@ -129,6 +128,11 @@ const disabledTextStyle = css`
   color: ${palette.gray.dark1};
 `;
 
+/**
+ * Checkboxes should be used whenever a user has an option they’d like to opt in or out of.
+ *
+ * Unlike toggles, checkboxes are used for actions, or features, that don’t immediately turn on or off. Checkboxes are usually found in forms as opposed to config pages.
+ */
 function Checkbox({
   darkMode = false,
   checked: checkedProp,
@@ -197,7 +201,6 @@ function Checkbox({
         className={cx(labelStyle, labelHoverStyle, {
           // TODO: Refresh - remove darkMode logic
           [css`
-            align-items: flex-start;
             ${labelHoverSelector} {
               box-shadow: unset;
             }

@@ -22,7 +22,9 @@ export default (Story, options) => {
   return (
     <LeafyGreenProvider>
       <div className={cx(rootStyle, { [darkModeStyle]: darkMode })}>
-        <Story darkMode={darkMode} {...options} />
+        <div>
+          <Story darkMode={darkMode} {...options} />
+        </div>
       </div>
     </LeafyGreenProvider>
   );

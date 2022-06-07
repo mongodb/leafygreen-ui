@@ -17,6 +17,7 @@ import {
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 const wrapperStyles = css`
   height: 100vh;
@@ -39,14 +40,16 @@ const displayFlex = css`
 
 export default {
   title: 'Packages/Typography',
-  component: <></>,
   argTypes: {
     baseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },
     },
-    darkMode: {
-      control: { type: 'boolean' },
+    darkMode: defaultArgTypes.darkMode,
+    className: {
+      table: {
+        disable: true,
+      },
     },
   },
 };

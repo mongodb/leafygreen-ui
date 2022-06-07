@@ -1,5 +1,17 @@
 # @leafygreen-ui/expandable-card
 
+## 0.9.5
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [422dbfcd]
+  - @leafygreen-ui/card@6.0.1
+  - @leafygreen-ui/typography@11.0.2
+  - @leafygreen-ui/lib@9.3.0
+
 ## 0.9.4
 
 ### Patch Changes

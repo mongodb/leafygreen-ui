@@ -49,11 +49,11 @@ const triggerElementModeStyles: Record<Mode, string> = {
 
 type InlineDefinitionProps = Partial<TooltipProps> & {
   /**
-   * Content that appears in the tooltip.
+   * ReactNode rendered inside the tooltip
    */
   definition: React.ReactNode;
   /**
-   * Class name applied to tooltip container.
+   * `className` prop passed to the Tooltip component instance
    */
   tooltipClassName?: string;
 };
