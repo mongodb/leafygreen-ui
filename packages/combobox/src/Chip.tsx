@@ -8,9 +8,7 @@ import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap } from '@leafygreen-ui/lib';
 import { chipClassName } from './Combobox.styles';
 import { Mode, typeScales } from '@leafygreen-ui/tokens';
-
-/** in px */
-const comboboxChipPadding = 6;
+import { comboboxChipPadding } from './constants';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;

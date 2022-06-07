@@ -37,3 +37,6 @@ export const menuItemPadding: Record<ComboboxSize, { x: number; y: number }> = {
   [ComboboxSize.Default]: { x: 12, y: 8 },
   [ComboboxSize.Large]: { x: 12, y: 8 },
 };
+
+/** The padding on a Chip (in px) */
+export const comboboxChipPadding = 6;

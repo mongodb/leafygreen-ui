@@ -54,7 +54,7 @@ export const comboboxModeStyles: Record<Mode, string> = {
     box-shadow: 0px 1px 2px ${transparentize(0.7, uiColors.black)};
     border-color: ${uiColors.gray.base};
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 export const comboboxSizeStyles = (size: ComboboxSize) => css`
@@ -70,14 +70,14 @@ export const comboboxDisabledStyles: Record<Mode, string> = {
     background-color: ${uiColors.gray.light2};
     border-color: ${uiColors.gray.light1};
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 export const comboboxErrorStyles: Record<Mode, string> = {
   [Mode.Light]: css`
     border-color: ${uiColors.red.base};
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 export const comboboxFocusStyle: Record<Mode, string> = {
@@ -89,7 +89,7 @@ export const comboboxFocusStyle: Record<Mode, string> = {
         0px 4px 4px ${transparentize(0.7, uiColors.black)};
     }
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 export const inputWrapperStyle = ({
@@ -184,7 +184,12 @@ export const inputElementSizeStyle: Record<ComboboxSize, string> = {
     line-height: ${typeScales.body1.lineHeight}px;
     min-width: ${maxCharWidth[ComboboxSize.Default]}px;
   `,
-  [ComboboxSize.Large]: css``,
+  [ComboboxSize.Large]: css`
+    height: ${getHeight(ComboboxSize.Large)}px;
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+    min-width: ${maxCharWidth[ComboboxSize.Large]}px;
+  `,
 };
 
 // We don't transition the input width then overflow == expand-x
@@ -243,7 +248,7 @@ export const errorMessageModeStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.red.base};
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 export const errorMessageSizeStyle: Record<ComboboxSize, string> = {

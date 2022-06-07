@@ -35,7 +35,7 @@ export const menuModeStyle: Record<Mode, string> = {
     background-color: ${uiColors.white};
     box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 export const menuList = css`
@@ -59,7 +59,7 @@ export const menuMessageModeStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     ${uiColors.gray.dark1}
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 export const menuMessageSizeStyle: Record<ComboboxSize, string> = {

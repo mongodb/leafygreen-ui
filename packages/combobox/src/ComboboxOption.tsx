@@ -52,7 +52,7 @@ const comboboxOptionModeStyle: Record<Mode, string> = {
       background-color: ${uiColors.gray.light2};
     }
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
@@ -80,7 +80,7 @@ const comboboxOptionActiveStyle: Record<Mode, string> = {
       transform: scaleY(1);
     }
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 const comboboxOptionDisabledStyle: Record<Mode, string> = {
@@ -92,7 +92,7 @@ const comboboxOptionDisabledStyle: Record<Mode, string> = {
       background-color: inherit;
     }
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css``, // TODO: DarkMode
 };
 
 const flexSpan = css`
