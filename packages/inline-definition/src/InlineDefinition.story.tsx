@@ -20,7 +20,10 @@ export default {
 };
 
 // eslint-disable-next-line react/prop-types
-const Template: ComponentStory<typeof InlineDefinition> = ({darkMode, ...args}) => (
+const Template: ComponentStory<typeof InlineDefinition> = ({
+  darkMode,
+  ...args
+}) => (
   <Body darkMode={darkMode}>
     <InlineDefinition darkMode={darkMode} {...args} />
   </Body>
@@ -32,7 +35,10 @@ Basic.args = {
 };
 
 // eslint-disable-next-line react/prop-types
-export const Demo: ComponentStory<typeof InlineDefinition> = ({darkMode, ...args}) => (
+export const Demo: ComponentStory<typeof InlineDefinition> = ({
+  darkMode,
+  ...args
+}) => (
   <div
     className={css`
       display: flex;
@@ -40,13 +46,18 @@ export const Demo: ComponentStory<typeof InlineDefinition> = ({darkMode, ...args
     `}
   >
     <H2 darkMode={darkMode}>
-      <InlineDefinition darkMode={darkMode} {...args}>Shard</InlineDefinition> your cluster
+      <InlineDefinition darkMode={darkMode} {...args}>
+        Shard
+      </InlineDefinition>{' '}
+      your cluster
     </H2>
 
     <Body darkMode={darkMode}>
       Base hourly rate is for a MongoDB{' '}
-      <InlineDefinition darkMode={darkMode} {...args}>replica set</InlineDefinition> with 3 data
-      bearing servers.
+      <InlineDefinition darkMode={darkMode} {...args}>
+        replica set
+      </InlineDefinition>{' '}
+      with 3 data bearing servers.
     </Body>
     <Body darkMode={darkMode}>
       MongoDB shards data at the{' '}

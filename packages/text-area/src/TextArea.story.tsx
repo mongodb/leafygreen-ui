@@ -23,7 +23,8 @@ export default {
     lgProviderBaseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },
-      description: 'Storybook prop only. This font size is passed into the LeafygreenProvider. '
+      description:
+        'Storybook prop only. This font size is passed into the LeafygreenProvider. ',
     },
     label: { control: 'text' },
     description: { control: 'text' },
@@ -52,5 +53,5 @@ Basic.args = {
   errorMessage: 'This is an error message',
   disabled: false,
   placeholder: 'Placeholder',
-  lgProviderBaseFontSize: 14
+  lgProviderBaseFontSize: 14,
 };
