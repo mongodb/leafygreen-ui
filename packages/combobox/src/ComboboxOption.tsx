@@ -7,17 +7,19 @@ import Checkbox from '@leafygreen-ui/checkbox';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import {
   ComboboxOptionProps,
+  ComboboxSize,
   InternalComboboxOptionProps,
 } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
 import { wrapJSX } from './utils';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, Mode, typeScales } from '@leafygreen-ui/tokens';
+import { menuItemPadding } from './constants';
 
 /**
  * Styles
  */
 
-const comboboxOptionStyle = css`
+const comboboxOptionBaseStyle = css`
   position: relative;
   display: flex;
   align-items: center;
@@ -27,9 +29,6 @@ const comboboxOptionStyle = css`
   cursor: pointer;
   overflow: hidden;
   font-family: ${fontFamilies.legacy};
-  font-size: var(--lg-combobox-item-font-size);
-  line-height: var(--lg-combobox-item-line-height);
-  padding: var(--lg-combobox-item-padding-y) var(--lg-combobox-item-padding-x);
 
   // Left wedge
   &:before {
@@ -37,38 +36,64 @@ const comboboxOptionStyle = css`
     position: absolute;
     left: 0;
     width: 3px;
-    height: var(--lg-combobox-item-wedge-height);
+    height: 22px;
     background-color: transparent;
     border-radius: 0 2px 2px 0;
     transform: scaleY(0.3);
     transition: 150ms ease-in-out;
     transition-property: transform, background-color;
   }
+`;
 
-  &:hover {
-    outline: none;
-    background-color: var(--lg-combobox-item-hover-color);
-  }
+const comboboxOptionModeStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    &:hover {
+      outline: none;
+      background-color: ${uiColors.gray.light2};
+    }
+  `,
+  [Mode.Dark]: css``, // TODO: DarkMode
+};
 
-  &[aria-selected='true'] {
+const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.Default]: css`
+    font-size: ${typeScales.body1.fontSize + 1}px; // TODO: update this;
+    line-height: ${typeScales.body1.lineHeight + 1}px; // TODO: update this
+    padding: ${menuItemPadding[ComboboxSize.Default].y}px
+      ${menuItemPadding[ComboboxSize.Default].x}px;
+  `,
+  [ComboboxSize.Large]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+    padding: ${menuItemPadding[ComboboxSize.Large].y}px
+      ${menuItemPadding[ComboboxSize.Large].x}px;
+  `,
+};
+
+const comboboxOptionActiveStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
     outline: none;
-    background-color: var(--lg-combobox-item-active-color);
+    background-color: ${uiColors.blue.light3};
 
     &:before {
-      background-color: var(--lg-combobox-item-wedge-color);
+      background-color: ${uiColors.blue.base};
       transform: scaleY(1);
     }
-  }
-`;
+  `,
+  [Mode.Dark]: css``, // TODO: DarkMode
+};
 
-const comboboxOptionDisabledStyle = css`
-  cursor: not-allowed;
-  color: ${uiColors.gray.base};
+const comboboxOptionDisabledStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    cursor: not-allowed;
+    color: ${uiColors.gray.base};
 
-  &:hover {
-    background-color: inherit;
-  }
-`;
+    &:hover {
+      background-color: inherit;
+    }
+  `,
+  [Mode.Dark]: css``, // TODO: DarkMode
+};
 
 const flexSpan = css`
   display: inline-flex;
@@ -105,8 +130,9 @@ const InternalComboboxOption = React.forwardRef<
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
-    const { multiselect, darkMode, withIcons, inputValue } =
+    const { multiselect, darkMode, withIcons, inputValue, size } =
       useContext(ComboboxContext);
+    const mode = darkMode ? Mode.Dark : Mode.Light;
     const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
     const optionRef = useForwardedRef(forwardedRef, null);
 
@@ -207,9 +233,12 @@ const InternalComboboxOption = React.forwardRef<
         aria-label={displayName}
         tabIndex={-1}
         className={cx(
-          comboboxOptionStyle,
+          comboboxOptionBaseStyle,
+          comboboxOptionSizeStyle[size],
+          comboboxOptionModeStyle[mode],
           {
-            [comboboxOptionDisabledStyle]: disabled,
+            [comboboxOptionActiveStyle[mode]]: isFocused,
+            [comboboxOptionDisabledStyle[mode]]: disabled,
           },
           className,
         )}

@@ -17,9 +17,10 @@ import {
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { Mode } from '@leafygreen-ui/tokens';
 import {
   ComboboxProps,
   getNullSelection,
@@ -30,20 +31,20 @@ import {
   ComboboxSize,
   State,
 } from './Combobox.types';
+import {
+  flattenChildren,
+  getOptionObjectFromValue,
+  getDisplayNameForValue,
+  getValueForDisplayName,
+  getNameAndValue,
+} from './utils';
 import { ComboboxContext } from './ComboboxContext';
+import { InternalComboboxGroup } from './ComboboxGroup';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
 import {
   comboboxFocusStyle,
-  _comboboxParentStyle,
-  _comboboxStyle,
-  _errorMessageStyle,
   inputWrapperStyle,
-  _inputElementStyle,
-  menuList,
-  menuMessage,
-  menuStyle,
-  menuWrapperStyle,
   _tempLabelDescriptionOverrideStyle,
   baseComboboxStyles,
   comboboxModeStyles,
@@ -62,15 +63,15 @@ import {
   errorMessageModeStyle,
   errorMessageSizeStyle,
 } from './Combobox.styles';
-import { InternalComboboxGroup } from './ComboboxGroup';
 import {
-  flattenChildren,
-  getOptionObjectFromValue,
-  getDisplayNameForValue,
-  getValueForDisplayName,
-  getNameAndValue,
-} from './utils';
-import { Mode } from '@leafygreen-ui/tokens';
+  popoverStyle,
+  menuModeStyle,
+  menuBaseStyle,
+  menuList,
+  menuMessageBaseStyle,
+  menuMessageModeStyle,
+  menuMessageSizeStyle,
+} from './Menu.styles';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -938,10 +939,16 @@ export default function Combobox<M extends boolean>({
    * Includes error, empty, search and default states
    */
   const renderedMenuContents = useMemo((): JSX.Element => {
+    const messageStyles = cx(
+      menuMessageBaseStyle,
+      menuMessageModeStyle[mode],
+      menuMessageSizeStyle[size],
+    );
+
     switch (searchState) {
       case 'loading': {
         return (
-          <span className={menuMessage}>
+          <span className={messageStyles}>
             <Icon
               glyph="Refresh"
               color={uiColors.blue.base}
@@ -954,7 +961,7 @@ export default function Combobox<M extends boolean>({
 
       case 'error': {
         return (
-          <span className={menuMessage}>
+          <span className={messageStyles}>
             <Icon glyph="Warning" color={uiColors.red.base} />
             {searchErrorMessage}
           </span>
@@ -967,10 +974,12 @@ export default function Combobox<M extends boolean>({
           return <ul className={menuList}>{renderedOptionsJSX}</ul>;
         }
 
-        return <span className={menuMessage}>{searchEmptyMessage}</span>;
+        return <span className={messageStyles}>{searchEmptyMessage}</span>;
       }
     }
   }, [
+    mode,
+    size,
     renderedOptionsJSX,
     searchEmptyMessage,
     searchErrorMessage,
@@ -1240,11 +1249,7 @@ export default function Combobox<M extends boolean>({
       }}
     >
       <div
-        className={cx(
-          // _comboboxParentStyle({ darkMode, size, overflow }),
-          comboboxParentStyle(size, overflow),
-          className,
-        )}
+        className={cx(comboboxParentStyle(size, overflow), className)}
         {...rest}
       >
         <div>
@@ -1279,7 +1284,6 @@ export default function Combobox<M extends boolean>({
           onKeyDown={handleKeyDown}
           onTransitionEnd={handleTransitionEnd}
           className={cx(
-            // _comboboxStyle,
             baseComboboxStyles,
             comboboxModeStyles[mode],
             comboboxSizeStyles(size),
@@ -1308,7 +1312,6 @@ export default function Combobox<M extends boolean>({
               ref={inputRef}
               id={inputId}
               className={cx(
-                // _inputElementStyle,
                 baseInputElementStyle,
                 inputElementSizeStyle[size],
                 inputElementTransitionStyles(isOpen, overflow),
@@ -1330,7 +1333,6 @@ export default function Combobox<M extends boolean>({
         {state === 'error' && errorMessage && (
           <div
             className={cx(
-              // _errorMessageStyle,
               errorMessageModeStyle[mode],
               errorMessageSizeStyle[size],
             )}
@@ -1349,7 +1351,7 @@ export default function Combobox<M extends boolean>({
           justify="middle"
           refEl={comboboxRef}
           adjustOnMutation={true}
-          className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
+          className={popoverStyle(menuWidth)}
           {...popoverProps}
         >
           <div
@@ -1358,7 +1360,13 @@ export default function Combobox<M extends boolean>({
             aria-labelledby={labelId}
             aria-expanded={isOpen}
             ref={menuRef}
-            className={menuStyle({ maxHeight })}
+            className={cx(
+              menuBaseStyle,
+              menuModeStyle[mode],
+              css`
+                max-height: ${maxHeight}px;
+              `,
+            )}
             onMouseDownCapture={e => e.preventDefault()}
           >
             {renderedMenuContents}
