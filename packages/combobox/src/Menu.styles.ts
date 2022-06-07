@@ -1,7 +1,7 @@
 import { css, keyframes } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { fontFamilies, typeScales, Mode } from '@leafygreen-ui/tokens';
-import { ComboboxSize } from './Combobox.types';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { ComboboxSize, Theme } from './Combobox.types';
 
 /** Height of a menu item (in px) */
 export const menuItemHeight = 36;
@@ -21,11 +21,11 @@ export const popoverStyle = (width = 384) => css`
   overflow: hidden;
 `;
 
-export const popoverModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const popoverThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 export const menuBaseStyle = css`
@@ -40,12 +40,12 @@ export const menuBaseStyle = css`
   min-height: ${menuItemHeight}px;
 `;
 
-export const menuModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const menuThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${uiColors.gray.dark3};
     background-color: ${uiColors.white};
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 export const menuList = css`
@@ -61,11 +61,11 @@ export const menuMessageBaseStyle = css`
   gap: 8px;
 `;
 
-export const menuMessageModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const menuMessageThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     ${uiColors.gray.dark1}
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 export const menuMessageSizeStyle: Record<ComboboxSize, string> = {

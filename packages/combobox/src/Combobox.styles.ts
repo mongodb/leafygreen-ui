@@ -1,9 +1,9 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import { fontFamilies, Mode, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
-import { ComboboxSize, Overflow } from './Combobox.types';
+import { ComboboxSize, Overflow, Theme } from './Combobox.types';
 
 /**
  * Width of the widest character (in px)
@@ -14,19 +14,19 @@ export const maxCharWidth: Record<ComboboxSize, number> = {
 };
 
 /**
- * Size of combobox x & y padding (in px)
- */
-export const comboboxPadding: Record<ComboboxSize, { x: number; y: number }> = {
-  [ComboboxSize.Default]: { x: 7, y: 5 },
-  [ComboboxSize.Large]: { x: 11, y: 9 },
-};
-
-/**
  * Total height of the combobox (in px)
  */
 export const comboboxHeight: Record<ComboboxSize, number> = {
   [ComboboxSize.Default]: 36,
   [ComboboxSize.Large]: 48,
+};
+
+/**
+ * Size of combobox x & y padding (in px)
+ */
+export const comboboxPadding: Record<ComboboxSize, { x: number; y: number }> = {
+  [ComboboxSize.Default]: { x: 7, y: 5 },
+  [ComboboxSize.Large]: { x: 11, y: 9 },
 };
 
 /** Width of the dropdown caret icon (in px) */
@@ -68,14 +68,14 @@ export const baseComboboxStyles = css`
   width: inherit;
 `;
 
-export const comboboxModeStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const comboboxThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${uiColors.gray.dark3};
     background-color: ${uiColors.gray.light3};
     box-shadow: 0px 1px 2px ${transparentize(0.7, uiColors.black)};
     border-color: ${uiColors.gray.base};
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 export const comboboxSizeStyles = (size: ComboboxSize) => css`
@@ -83,26 +83,26 @@ export const comboboxSizeStyles = (size: ComboboxSize) => css`
   border-radius: 3px;
 `;
 
-export const comboboxDisabledStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const comboboxDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     box-shadow: unset;
     cursor: not-allowed;
     color: ${uiColors.gray.dark1};
     background-color: ${uiColors.gray.light2};
     border-color: ${uiColors.gray.light1};
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
-export const comboboxErrorStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const comboboxErrorStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     border-color: ${uiColors.red.base};
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
-export const comboboxFocusStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const comboboxFocusStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     &:focus-within {
       border-color: transparent;
       background-color: ${uiColors.white};
@@ -110,7 +110,7 @@ export const comboboxFocusStyle: Record<Mode, string> = {
         0px 4px 4px ${transparentize(0.7, uiColors.black)};
     }
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 export const inputWrapperStyle = ({
@@ -265,11 +265,11 @@ export const endIconStyle = (size: ComboboxSize) => css`
   margin-inline-end: calc(${comboboxPadding[size].x}px / 2);
 `;
 
-export const errorMessageModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const errorMessageThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${uiColors.red.base};
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 export const errorMessageSizeStyle: Record<ComboboxSize, string> = {

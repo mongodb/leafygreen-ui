@@ -20,7 +20,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { Mode } from '@leafygreen-ui/tokens';
 import {
   ComboboxProps,
   getNullSelection,
@@ -38,7 +37,7 @@ import {
   getValueForDisplayName,
   getNameAndValue,
 } from './utils';
-import { ComboboxContext } from './ComboboxContext';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { InternalComboboxGroup } from './ComboboxGroup';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
@@ -47,7 +46,7 @@ import {
   inputWrapperStyle,
   _tempLabelDescriptionOverrideStyle,
   baseComboboxStyles,
-  comboboxModeStyles,
+  comboboxThemeStyles,
   comboboxSizeStyles,
   comboboxDisabledStyles,
   comboboxErrorStyles,
@@ -59,18 +58,18 @@ import {
   clearButtonStyle,
   clearButtonFocusOverrideStyles,
   endIconStyle,
-  errorMessageModeStyle,
+  errorMessageThemeStyle,
   errorMessageSizeStyle,
 } from './Combobox.styles';
 import {
   popoverStyle,
-  menuModeStyle,
+  menuThemeStyle,
   menuBaseStyle,
   menuList,
   menuMessageBaseStyle,
-  menuMessageModeStyle,
+  menuMessageThemeStyle,
   menuMessageSizeStyle,
-  popoverModeStyle,
+  popoverThemeStyle,
   menuMessageIconSizeStyle,
   loadingIconStyle,
 } from './Menu.styles';
@@ -114,7 +113,7 @@ export default function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const theme = useDarkMode(darkMode);
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
 
@@ -943,7 +942,7 @@ export default function Combobox<M extends boolean>({
   const renderedMenuContents = useMemo((): JSX.Element => {
     const messageStyles = cx(
       menuMessageBaseStyle,
-      menuMessageModeStyle[mode],
+      menuMessageThemeStyle[theme],
       menuMessageSizeStyle[size],
     );
 
@@ -984,7 +983,7 @@ export default function Combobox<M extends boolean>({
       }
     }
   }, [
-    mode,
+    theme,
     size,
     renderedOptionsJSX,
     searchEmptyMessage,
@@ -1290,12 +1289,12 @@ export default function Combobox<M extends boolean>({
           onTransitionEnd={handleTransitionEnd}
           className={cx(
             baseComboboxStyles,
-            comboboxModeStyles[mode],
+            comboboxThemeStyles[theme],
             comboboxSizeStyles(size),
             {
-              [comboboxDisabledStyles[mode]]: disabled,
-              [comboboxErrorStyles[mode]]: state === State.error,
-              [comboboxFocusStyle[mode]]: isElementFocused(
+              [comboboxDisabledStyles[theme]]: disabled,
+              [comboboxErrorStyles[theme]]: state === State.error,
+              [comboboxFocusStyle[theme]]: isElementFocused(
                 ComboboxElement.Input,
               ),
             },
@@ -1338,7 +1337,7 @@ export default function Combobox<M extends boolean>({
         {state === 'error' && errorMessage && (
           <div
             className={cx(
-              errorMessageModeStyle[mode],
+              errorMessageThemeStyle[theme],
               errorMessageSizeStyle[size],
             )}
           >
@@ -1356,7 +1355,7 @@ export default function Combobox<M extends boolean>({
           justify="middle"
           refEl={comboboxRef}
           adjustOnMutation={true}
-          className={cx(popoverStyle(menuWidth), popoverModeStyle[mode])}
+          className={cx(popoverStyle(menuWidth), popoverThemeStyle[theme])}
           {...popoverProps}
         >
           <div
@@ -1367,7 +1366,7 @@ export default function Combobox<M extends boolean>({
             ref={menuRef}
             className={cx(
               menuBaseStyle,
-              menuModeStyle[mode],
+              menuThemeStyle[theme],
               css`
                 max-height: ${maxHeight}px;
               `,

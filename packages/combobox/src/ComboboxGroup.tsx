@@ -1,17 +1,16 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Mode } from '@leafygreen-ui/tokens';
 import React, { useContext } from 'react';
-import { ComboboxGroupProps } from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
+import { ComboboxGroupProps, Theme } from './Combobox.types';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
 
-const comboboxGroupStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const comboboxGroupStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     padding-top: 8px;
     border-bottom: 1px solid ${uiColors.gray.light1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     padding-top: 8px;
     border-bottom: 1px solid ${uiColors.gray.dark1};
   `,
@@ -30,11 +29,11 @@ const comboboxGroupLabel = css`
   letter-spacing: 0.4px;
 `;
 
-const comboboxGroupLabelModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const comboboxGroupLabelThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${uiColors.gray.dark1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${uiColors.gray.light1};
   `,
 };
@@ -45,15 +44,15 @@ export function InternalComboboxGroup({
   children,
 }: ComboboxGroupProps): JSX.Element {
   const { darkMode } = useContext(ComboboxContext);
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const theme = useDarkMode(darkMode);
 
   const groupId = useIdAllocator({ prefix: 'combobox-group' });
   const childCount = React.Children.count(children);
 
   return childCount > 0 ? (
-    <div className={cx(comboboxGroupStyle[mode], className)}>
+    <div className={cx(comboboxGroupStyle[theme], className)}>
       <div
-        className={cx(comboboxGroupLabel, comboboxGroupLabelModeStyle[mode])}
+        className={cx(comboboxGroupLabel, comboboxGroupLabelThemeStyle[theme])}
         id={groupId}
       >
         {label}

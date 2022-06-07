@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { ChipProps, ComboboxSize } from './Combobox.types';
+import { ChipProps, ComboboxSize, Theme } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
-import { ComboboxContext } from './ComboboxContext';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap } from '@leafygreen-ui/lib';
 import { chipClassName } from './Combobox.styles';
-import { Mode, typeScales } from '@leafygreen-ui/tokens';
+import { typeScales } from '@leafygreen-ui/tokens';
 
 /** The padding on a Chip (in px) */
 export const comboboxChipPadding = 6;
@@ -34,8 +34,8 @@ const chipWrapperSizeStyle: Record<ComboboxSize, string> = {
   `,
 };
 
-const chipWrapperModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const chipWrapperThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${uiColors.gray.dark3};
     background-color: ${uiColors.gray.light2};
 
@@ -44,7 +44,7 @@ const chipWrapperModeStyle: Record<Mode, string> = {
       background-color: ${uiColors.blue.light2};
     }
   `,
-  [Mode.Dark]: css``,
+  [Theme.Dark]: css``,
 };
 
 const chipText = css`
@@ -74,8 +74,8 @@ const chipButtonStyle = css`
   }
 `;
 
-const chipButtonModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const chipButtonThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${uiColors.gray.dark2};
 
     &:before {
@@ -86,7 +86,7 @@ const chipButtonModeStyle: Record<Mode, string> = {
       background-color: ${uiColors.gray.light1};
     }
   `,
-  [Mode.Dark]: css``,
+  [Theme.Dark]: css``,
 };
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
@@ -98,7 +98,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
-    const mode = darkMode ? Mode.Dark : Mode.Light;
+    const theme = useDarkMode(darkMode);
 
     const isTruncated =
       !!chipCharacterLimit &&
@@ -184,7 +184,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         className={cx(
           chipClassName,
           chipWrapperBaseStyle,
-          chipWrapperModeStyle[mode],
+          chipWrapperThemeStyle[theme],
           chipWrapperSizeStyle[size],
         )}
         onClick={handleChipClick}
@@ -205,7 +205,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           aria-disabled={disabled}
           disabled={disabled}
           ref={buttonRef}
-          className={cx(chipButtonStyle, chipButtonModeStyle[mode])}
+          className={cx(chipButtonStyle, chipButtonThemeStyle[theme])}
           onClick={handleButtonClick}
         >
           <Icon glyph="X" />

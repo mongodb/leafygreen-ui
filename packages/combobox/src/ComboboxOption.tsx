@@ -9,10 +9,11 @@ import {
   ComboboxOptionProps,
   ComboboxSize,
   InternalComboboxOptionProps,
+  Theme,
 } from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { wrapJSX } from './utils';
-import { fontFamilies, Mode, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { menuItemPadding } from './Menu.styles';
 
 /**
@@ -45,14 +46,14 @@ const comboboxOptionBaseStyle = css`
   }
 `;
 
-const comboboxOptionModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const comboboxOptionThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     &:hover {
       outline: none;
       background-color: ${uiColors.gray.light2};
     }
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
@@ -70,8 +71,8 @@ const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
   `,
 };
 
-const comboboxOptionActiveStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const comboboxOptionActiveStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     outline: none;
     background-color: ${uiColors.blue.light3};
 
@@ -80,11 +81,11 @@ const comboboxOptionActiveStyle: Record<Mode, string> = {
       transform: scaleY(1);
     }
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
-const comboboxOptionDisabledStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const comboboxOptionDisabledStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     cursor: not-allowed;
     color: ${uiColors.gray.base};
 
@@ -92,7 +93,7 @@ const comboboxOptionDisabledStyle: Record<Mode, string> = {
       background-color: inherit;
     }
   `,
-  [Mode.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 const flexSpan = css`
@@ -132,7 +133,7 @@ const InternalComboboxOption = React.forwardRef<
   ) => {
     const { multiselect, darkMode, withIcons, inputValue, size } =
       useContext(ComboboxContext);
-    const mode = darkMode ? Mode.Dark : Mode.Light;
+    const theme = useDarkMode(darkMode);
     const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
     const optionRef = useForwardedRef(forwardedRef, null);
 
@@ -235,10 +236,10 @@ const InternalComboboxOption = React.forwardRef<
         className={cx(
           comboboxOptionBaseStyle,
           comboboxOptionSizeStyle[size],
-          comboboxOptionModeStyle[mode],
+          comboboxOptionThemeStyle[theme],
           {
-            [comboboxOptionActiveStyle[mode]]: isFocused,
-            [comboboxOptionDisabledStyle[mode]]: disabled,
+            [comboboxOptionActiveStyle[theme]]: isFocused,
+            [comboboxOptionDisabledStyle[theme]]: disabled,
           },
           className,
         )}
