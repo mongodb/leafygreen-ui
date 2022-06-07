@@ -11,10 +11,10 @@ const triggerElementStyles = css`
   text-underline-offset: 0.125em;
 
   &:hover {
-    * {
+    a > * {
       // Remove the Link underline styles
       &::after {
-        display: none;
+        height: 0;
       }
     }
   }

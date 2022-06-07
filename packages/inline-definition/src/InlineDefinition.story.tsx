@@ -19,8 +19,8 @@ export default {
   },
 };
 
-// eslint-disable-next-line react/prop-types
 const Template: ComponentStory<typeof InlineDefinition> = ({
+  // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
 }) => (
@@ -34,8 +34,8 @@ Basic.args = {
   children: 'Shard',
 };
 
-// eslint-disable-next-line react/prop-types
 export const Demo: ComponentStory<typeof InlineDefinition> = ({
+  // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
 }) => (

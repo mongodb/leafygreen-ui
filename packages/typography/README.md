@@ -96,12 +96,37 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `Label`         | `label` |
 | `Description`   | `p`     |
 
+# H1
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# H2
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# H3
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# Subtitle
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
 # Body
 
-| Prop     | Type                          | Description                                                                                                        | Default     |
-| -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
-| `weight` | `'regular'`, `'medium'`       | font-weight applied to typography element                                                                          | `'regular'` |
-| `as`     | `keyof JSX.IntrinsicElements` | HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `'p'`       |
+| Prop       | Type                          | Description                                                                                                        | Default     |
+| ---------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `weight`   | `'regular'`, `'medium'`       | font-weight applied to typography element                                                                          | `'regular'` |
+| `as`       | `keyof JSX.IntrinsicElements` | HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `'p'`       |
+| `darkMode` | `boolean`                     | Determines if the component renders in dark mode                                                                   | `false`     |
 
 # InlineCode
 
@@ -110,11 +135,18 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `href`     | `string`, `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
 | `darkMode` | `boolean`             | Determines if the component renders in dark mode                                                                                                         |         |
 
+# Disclaimer
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
 # Overline
 
-| Prop | Type                | Description                                                                                                                         | Default |
-| ---- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `as` | `React.ElementType` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
+| Prop       | Type                | Description                                                                                                                         | Default |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `as`       | `React.ElementType` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
+| `darkMode` | `boolean`           | Determines if the component renders in dark mode                                                                                    | `false` |
 
 # Link
 
@@ -122,6 +154,7 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | ------------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `arrowAppearance`  | `'hover'`, `'persist'`, `'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `'none'` |
 | `hideExternalIcon` | `boolean`                        | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false`  |
+| `darkMode`         | `boolean`                        | Determines if the component renders in dark mode                                                                                                                                         | `false`  |
 
 # Label
 
