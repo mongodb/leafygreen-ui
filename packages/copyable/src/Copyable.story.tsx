@@ -1,12 +1,22 @@
 import { ComponentStory } from '@storybook/react';
 import React from 'react';
 import Copyable from '.';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/Copyable',
   component: Copyable,
   args: {
-    isCopyable: true,
+    copyable: true,
+    shouldTooltipUsePortal: true,
+  },
+  argTypes: {
+    copyable: { control: 'boolean' },
+    label: { control: 'text' },
+    description: { control: 'text' },
+    shouldTooltipUsePortal: { control: 'boolean' },
+    children: defaultArgTypes.children,
+    darkMode: defaultArgTypes.darkMode,
   },
 };
 

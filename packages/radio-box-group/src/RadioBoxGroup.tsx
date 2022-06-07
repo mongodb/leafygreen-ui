@@ -43,7 +43,6 @@ export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
 }
 
 /**
- * # RadioBoxGroup
  *
  * RadioBoxGroup component
  *

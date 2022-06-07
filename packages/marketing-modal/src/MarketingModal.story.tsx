@@ -19,7 +19,6 @@ export default {
   },
   argTypes: {
     open: { control: false },
-    setOpen: { control: false },
     onClose: { control: false },
     graphic: { control: false },
     graphicStyle: {

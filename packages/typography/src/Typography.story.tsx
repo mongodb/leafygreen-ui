@@ -15,17 +15,20 @@ import {
 } from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { css } from '@leafygreen-ui/emotion';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/Typography',
-  component: <></>,
   argTypes: {
     baseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },
     },
-    darkMode: {
-      control: { type: 'boolean' },
+    darkMode: defaultArgTypes.darkMode,
+    className: {
+      table: {
+        disable: true,
+      },
     },
   },
 };

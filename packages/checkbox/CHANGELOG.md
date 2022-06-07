@@ -1,5 +1,20 @@
 # @leafygreen-ui/checkbox
 
+## 8.0.3
+
+### Patch Changes
+
+- 1356d50d: Fix to center dark mode checkbox regardless of lineheight and fix to center indeterminate checkbox in light mode.
+- fd2f6de0: Updates to TSDocs, PropTypes, and Storybook files
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [6792bc44]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [422dbfcd]
+  - @leafygreen-ui/hooks@7.3.0
+  - @leafygreen-ui/tokens@1.3.1
+  - @leafygreen-ui/typography@11.0.2
+  - @leafygreen-ui/lib@9.3.0
+
 ## 8.0.2
 
 ### Patch Changes

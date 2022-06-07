@@ -9,11 +9,11 @@ import { clone, isArray, isEqual, isNull, isString, isUndefined } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import Popover from '@leafygreen-ui/popover';
 import {
+  useAvailableSpace,
   useDynamicRefs,
   useEventListener,
   useIdAllocator,
   usePrevious,
-  useViewportSize,
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -135,7 +135,6 @@ export default function Combobox<M extends boolean>({
   const [inputValue, setInputValue] = useState<string>('');
   const prevValue = usePrevious(inputValue);
   const [focusedChip, setFocusedChip] = useState<string | null>(null);
-  const viewportSize = useViewportSize();
 
   const doesSelectionExist =
     !isNull(selection) &&
@@ -979,31 +978,8 @@ export default function Combobox<M extends boolean>({
     searchState,
   ]);
 
-  /**
-   * The max height of the menu element
-   */
-  const maxHeight = useMemo(() => {
-    // TODO - consolidate this hook with Select/ListMenu
-    const maxMenuHeight = 274;
-    const menuMargin = 8;
-
-    if (viewportSize && comboboxRef.current && menuRef.current) {
-      const { top: triggerTop, bottom: triggerBottom } =
-        comboboxRef.current.getBoundingClientRect();
-
-      // Find out how much space is available above or below the trigger
-      const safeSpace = Math.max(
-        viewportSize.height - triggerBottom,
-        triggerTop,
-      );
-
-      // if there's more than enough space, set to maxMenuHeight
-      // otherwise fill the space available
-      return Math.min(maxMenuHeight, safeSpace - menuMargin);
-    }
-
-    return maxMenuHeight;
-  }, [viewportSize, comboboxRef, menuRef]);
+  /** The max height of the menu element */
+  const maxHeight = Math.min(256, useAvailableSpace(comboboxRef));
 
   /**
    *

@@ -279,7 +279,7 @@ export interface SegmentedControlProps
 }
 
 /**
- * Component
+ * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
  */
 const SegmentedControl = React.forwardRef<
   HTMLDivElement,
