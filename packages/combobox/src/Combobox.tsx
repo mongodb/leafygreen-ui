@@ -7,9 +7,7 @@ import React, {
 } from 'react';
 import { clone, isArray, isEqual, isNull, isString, isUndefined } from 'lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
-import Popover from '@leafygreen-ui/popover';
 import {
-  useAvailableSpace,
   useDynamicRefs,
   useEventListener,
   useIdAllocator,
@@ -17,7 +15,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Mode } from '@leafygreen-ui/tokens';
@@ -59,19 +57,10 @@ import {
   clearButtonStyle,
   clearButtonFocusOverrideStyles,
   endIconStyle,
-  loadingIconStyle,
   errorMessageModeStyle,
   errorMessageSizeStyle,
 } from './Combobox.styles';
-import {
-  popoverStyle,
-  menuModeStyle,
-  menuBaseStyle,
-  menuList,
-  menuMessageBaseStyle,
-  menuMessageModeStyle,
-  menuMessageSizeStyle,
-} from './Menu.styles';
+import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -613,74 +602,75 @@ export default function Combobox<M extends boolean>({
    */
 
   /**
-   * Callback to render the children as <InternalComboboxOption> elements
+   * Callback to render a child as an <InternalComboboxOption> element
    */
-  const renderInternalOptions = useCallback(
-    (_children: React.ReactNode) => {
-      return React.Children.map(_children, child => {
-        if (isComponentType(child, 'ComboboxOption')) {
-          const { value, displayName } = getNameAndValue(child.props);
+  const renderOption = useCallback(
+    (child: React.ReactNode) => {
+      if (isComponentType(child, 'ComboboxOption')) {
+        const { value, displayName } = getNameAndValue(child.props);
 
-          if (shouldOptionBeVisible(value)) {
-            const { className, glyph, disabled } = child.props;
-            const index = allOptions.findIndex(opt => opt.value === value);
+        if (shouldOptionBeVisible(value)) {
+          const { className, glyph, disabled } = child.props;
+          const index = allOptions.findIndex(opt => opt.value === value);
 
-            const isFocused = highlightedOption === value;
-            const isSelected = isMultiselect(selection)
-              ? selection.includes(value)
-              : selection === value;
+          const isFocused = highlightedOption === value;
+          const isSelected = isMultiselect(selection)
+            ? selection.includes(value)
+            : selection === value;
 
-            const setSelected = () => {
-              sethighlightedOption(value);
-              updateSelection(value);
-              setInputFocus();
+          const setSelected = () => {
+            sethighlightedOption(value);
+            updateSelection(value);
+            setInputFocus();
 
-              if (value === selection) {
-                closeMenu();
-              }
-            };
+            if (value === selection) {
+              closeMenu();
+            }
+          };
 
-            const optionRef = getOptionRef(value);
+          const optionRef = getOptionRef(value);
 
-            return (
-              <InternalComboboxOption
-                value={value}
-                displayName={displayName}
-                isFocused={isFocused}
-                isSelected={isSelected}
-                disabled={disabled}
-                setSelected={setSelected}
-                glyph={glyph}
-                className={className}
-                index={index}
-                ref={optionRef}
-              />
-            );
-          }
-        } else if (isComponentType(child, 'ComboboxGroup')) {
-          const nestedChildren = renderInternalOptions(child.props.children);
-
-          if (nestedChildren && nestedChildren?.length > 0) {
-            return (
-              <InternalComboboxGroup
-                label={child.props.label}
-                className={child.props.className}
-              >
-                {renderInternalOptions(nestedChildren)}
-              </InternalComboboxGroup>
-            );
-          }
+          return (
+            <InternalComboboxOption
+              value={value}
+              displayName={displayName}
+              isFocused={isFocused}
+              isSelected={isSelected}
+              disabled={disabled}
+              setSelected={setSelected}
+              glyph={glyph}
+              className={className}
+              index={index}
+              ref={optionRef}
+            />
+          );
         }
-      });
+      } else if (isComponentType(child, 'ComboboxGroup')) {
+        const nestedChildren = React.Children.map(
+          child.props.children,
+          renderOption,
+        );
+
+        if (nestedChildren && nestedChildren?.length > 0) {
+          return (
+            <InternalComboboxGroup
+              label={child.props.label}
+              className={child.props.className}
+            >
+              {React.Children.map(nestedChildren, renderOption)}
+            </InternalComboboxGroup>
+          );
+        }
+      }
     },
     [
       allOptions,
-      highlightedOption,
       getOptionRef,
+      highlightedOption,
       isMultiselect,
-      shouldOptionBeVisible,
       selection,
       setInputFocus,
+      shouldOptionBeVisible,
       updateSelection,
     ],
   );
@@ -689,8 +679,8 @@ export default function Combobox<M extends boolean>({
    * The rendered JSX elements for the options
    */
   const renderedOptionsJSX = useMemo(
-    () => renderInternalOptions(children),
-    [children, renderInternalOptions],
+    () => React.Children.map(children, renderOption),
+    [children, renderOption],
   );
 
   /**
@@ -929,66 +919,10 @@ export default function Combobox<M extends boolean>({
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   }, [comboboxRef, isOpen, highlightedOption, selection]);
 
-  // Handler fired when the manu has finished transitioning in/out
+  // Handler fired when the menu has finished transitioning in/out
   const handleTransitionEnd = () => {
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   };
-
-  /**
-   * The rendered menu JSX contents
-   * Includes error, empty, search and default states
-   */
-  const renderedMenuContents = useMemo((): JSX.Element => {
-    const messageStyles = cx(
-      menuMessageBaseStyle,
-      menuMessageModeStyle[mode],
-      menuMessageSizeStyle[size],
-    );
-
-    switch (searchState) {
-      case 'loading': {
-        return (
-          <span className={messageStyles}>
-            <Icon
-              glyph="Refresh"
-              color={uiColors.blue.base}
-              className={loadingIconStyle}
-            />
-            {searchLoadingMessage}
-          </span>
-        );
-      }
-
-      case 'error': {
-        return (
-          <span className={messageStyles}>
-            <Icon glyph="Warning" color={uiColors.red.base} />
-            {searchErrorMessage}
-          </span>
-        );
-      }
-
-      case 'unset':
-      default: {
-        if (renderedOptionsJSX && renderedOptionsJSX.length > 0) {
-          return <ul className={menuList}>{renderedOptionsJSX}</ul>;
-        }
-
-        return <span className={messageStyles}>{searchEmptyMessage}</span>;
-      }
-    }
-  }, [
-    mode,
-    size,
-    renderedOptionsJSX,
-    searchEmptyMessage,
-    searchErrorMessage,
-    searchLoadingMessage,
-    searchState,
-  ]);
-
-  /** The max height of the menu element */
-  const maxHeight = Math.min(256, useAvailableSpace(comboboxRef));
 
   /**
    *
@@ -1243,6 +1177,8 @@ export default function Combobox<M extends boolean>({
         withIcons,
         disabled,
         isOpen,
+        state,
+        searchState,
         chipTruncationLocation,
         chipCharacterLimit,
         inputValue,
@@ -1344,34 +1280,20 @@ export default function Combobox<M extends boolean>({
         {/******* /
           *  Menu  *
           / *******/}
-        {/* <Popover
-          active={isOpen && !disabled}
-          spacing={4}
-          align="bottom"
-          justify="middle"
+
+        <ComboboxMenu
+          id={menuId}
+          labelId={labelId}
           refEl={comboboxRef}
-          adjustOnMutation={true}
-          className={popoverStyle(menuWidth)}
+          ref={menuRef}
+          menuWidth={menuWidth}
+          searchLoadingMessage={searchLoadingMessage}
+          searchErrorMessage={searchErrorMessage}
+          searchEmptyMessage={searchEmptyMessage}
           {...popoverProps}
         >
-          <div
-            id={menuId}
-            role="listbox"
-            aria-labelledby={labelId}
-            aria-expanded={isOpen}
-            ref={menuRef}
-            className={cx(
-              menuBaseStyle,
-              menuModeStyle[mode],
-              css`
-                max-height: ${maxHeight}px;
-              `,
-            )}
-            onMouseDownCapture={e => e.preventDefault()}
-          >
-            {renderedMenuContents}
-          </div>
-        </Popover> */}
+          {renderedOptionsJSX}
+        </ComboboxMenu>
       </div>
     </ComboboxContext.Provider>
   );

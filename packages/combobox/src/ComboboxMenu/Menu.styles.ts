@@ -1,8 +1,8 @@
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies, typeScales, Mode } from '@leafygreen-ui/tokens';
-import { ComboboxSize } from './Combobox.types';
-import { menuItemHeight, menuItemPadding } from './constants';
+import { ComboboxSize } from '../Combobox.types';
+import { menuItemHeight, menuItemPadding } from '../constants';
 
 /**
  * Menu styles
