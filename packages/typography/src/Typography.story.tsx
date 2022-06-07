@@ -12,7 +12,6 @@ import {
   Label,
   Description,
   Link,
-  ChartLabel,
 } from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
@@ -146,9 +145,6 @@ export const AllTypography = ({
         <Disclaimer darkMode={darkMode} className={displayBlock}>
           Disclaimer
         </Disclaimer>
-        <ChartLabel darkMode={darkMode} className={displayBlock}>
-          Charts Label
-        </ChartLabel>
 
         <Body darkMode={darkMode}>
           <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">

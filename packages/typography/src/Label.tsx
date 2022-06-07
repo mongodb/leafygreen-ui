@@ -18,7 +18,7 @@ const labelTypeScale: Record<BaseFontSize, string> = {
   `,
   [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
-    line-height: 20px;  // Hardcoding because it does not match body2 lineHeight
+    line-height: 20px; // Hardcoding because it does not match body2 lineHeight
   `,
 };
 

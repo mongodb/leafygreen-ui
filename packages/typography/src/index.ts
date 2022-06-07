@@ -1,6 +1,5 @@
 export { useUpdatedBaseFontSize } from './useUpdatedBaseFontSize';
 export { default as Body } from './Body';
-export { default as ChartLabel } from './ChartLabel';
 export { default as Description } from './Description';
 export { default as Disclaimer } from './Disclaimer';
 export { default as H1 } from './H1';
