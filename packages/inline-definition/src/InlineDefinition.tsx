@@ -13,7 +13,9 @@ const triggerElementStyles = css`
   &:hover {
     * {
       // Remove the Link underline styles
-      background-size: 0px;
+      &::after {
+        display: none;
+      }
     }
   }
 

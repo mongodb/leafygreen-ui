@@ -18,7 +18,7 @@ const linkStyles = css`
   align-items: center;
   text-decoration: none;
   cursor: pointer;
-  line-height: 1;
+  line-height: 13px;
 
   &:focus {
     outline: none;

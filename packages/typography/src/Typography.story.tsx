@@ -43,6 +43,7 @@ export default {
     baseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },
+      description: 'Storybook prop only. This font size is passed into the LeafygreenProvider'
     },
     darkMode: defaultArgTypes.darkMode,
     className: {
