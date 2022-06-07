@@ -128,6 +128,11 @@ const disabledTextStyle = css`
   color: ${palette.gray.dark1};
 `;
 
+/**
+ * Checkboxes should be used whenever a user has an option they’d like to opt in or out of.
+ *
+ * Unlike toggles, checkboxes are used for actions, or features, that don’t immediately turn on or off. Checkboxes are usually found in forms as opposed to config pages.
+ */
 function Checkbox({
   darkMode = false,
   checked: checkedProp,

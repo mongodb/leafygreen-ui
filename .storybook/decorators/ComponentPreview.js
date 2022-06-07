@@ -13,7 +13,7 @@ const rootStyle = css`
 `;
 
 const darkModeStyle = css`
-  background-color: ${palette.gray.dark2};
+  background-color: ${palette.black};
 `;
 
 // eslint-disable-next-line react/display-name
@@ -22,7 +22,9 @@ export default (Story, options) => {
   return (
     <LeafyGreenProvider>
       <div className={cx(rootStyle, { [darkModeStyle]: darkMode })}>
-        <Story darkMode={darkMode} {...options} />
+        <div>
+          <Story darkMode={darkMode} {...options} />
+        </div>
       </div>
     </LeafyGreenProvider>
   );

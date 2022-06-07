@@ -1,6 +1,7 @@
 import { ComponentStory } from '@storybook/react';
 import React, { SyntheticEvent, useState } from 'react';
 import ExpandableCard from '.';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/ExpandableCard',
@@ -11,6 +12,16 @@ export default {
     flagText: 'optional',
     children:
       'Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.',
+  },
+  argTypes: {
+    description: { control: 'text' },
+    flagText: { control: 'text' },
+    children: defaultArgTypes.children,
+    darkMode: defaultArgTypes.darkMode,
+    defaultOpen: { control: 'boolean' },
+    isOpen: { control: 'boolean' },
+    id: { control: 'text' },
+    contentClassName: { control: 'text' },
   },
 };
 

@@ -7,8 +7,26 @@ import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 type PortalProps = {
   children?: React.ReactNode;
 } & OneOf<
-  { container: HTMLElement; className?: never },
-  { className?: string; container?: null }
+  {
+    /**
+     * A custom container element. By default, the container will be a `div` appended to the document body.
+     */
+    container: HTMLElement;
+    /**
+     * `className` prop passed to the container element.
+     */
+    className?: never;
+  },
+  {
+    /**
+     * `className` prop passed to the container element.
+     */
+    className?: string;
+    /**
+     * A custom container element. By default, the container will be a `div` appended to the document body.
+     */
+    container?: null;
+  }
 >;
 
 function usePortalContainer(customContainer?: HTMLElement) {
@@ -36,6 +54,9 @@ function usePortalContainer(customContainer?: HTMLElement) {
   return container;
 }
 
+/**
+ * Portals transport their children to a div that is appended to the end of `document.body` to or a node that can be specified with a container prop.
+ */
 function Portal(props: PortalProps) {
   const container = usePortalContainer(props.container ?? undefined);
 

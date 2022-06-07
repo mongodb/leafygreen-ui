@@ -4,6 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '.';
 import { SelectProps } from './Select';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Packages/Select',
@@ -29,12 +30,19 @@ export default {
     ],
   },
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
+    children: { control: false },
+    placeholder: { control: 'text' },
+    disabled: { control: 'boolean' },
+    label: { control: 'text' },
+    'aria-labelledby': { control: 'text' },
+    description: { control: 'text' },
+    darkMode: defaultArgTypes.darkMode,
+    id: { control: 'text' },
+    value: { control: 'text' },
+    defaultValue: { control: 'text' },
+    readOnly: { control: 'boolean' },
+    errorMessage: { control: 'text' },
+    allowDeselect: { control: 'boolean' },
   },
 } as Meta<typeof Select>;
 
