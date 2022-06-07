@@ -1,15 +1,36 @@
-import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies, Mode, typeScales } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { ComboboxSize, Overflow } from './Combobox.types';
-import {
-  caretIconSize,
-  comboboxPadding,
-  maxCharWidth,
-  comboboxHeight,
-} from './constants';
+
+/**
+ * Width of the widest character (in px)
+ */
+export const maxCharWidth: Record<ComboboxSize, number> = {
+  [ComboboxSize.Default]: typeScales.body1.fontSize,
+  [ComboboxSize.Large]: typeScales.body2.fontSize,
+};
+
+/**
+ * Size of combobox x & y padding (in px)
+ */
+export const comboboxPadding: Record<ComboboxSize, { x: number; y: number }> = {
+  [ComboboxSize.Default]: { x: 7, y: 5 },
+  [ComboboxSize.Large]: { x: 11, y: 9 },
+};
+
+/**
+ * Total height of the combobox (in px)
+ */
+export const comboboxHeight: Record<ComboboxSize, number> = {
+  [ComboboxSize.Default]: 36,
+  [ComboboxSize.Large]: 48,
+};
+
+/** Width of the dropdown caret icon (in px) */
+export const caretIconSize = 16;
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
@@ -263,19 +284,6 @@ export const errorMessageSizeStyle: Record<ComboboxSize, string> = {
     padding-top: ${comboboxPadding[ComboboxSize.Large].y}px;
   `,
 };
-
-const loadingIconAnimation = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`;
-
-export const loadingIconStyle = css`
-  animation: ${loadingIconAnimation} 1.5s linear infinite;
-`;
 
 // TODO: Remove this during refresh update
 export const _tempLabelDescriptionOverrideStyle: Record<ComboboxSize, string> =

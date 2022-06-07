@@ -1,8 +1,15 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, keyframes } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies, typeScales, Mode } from '@leafygreen-ui/tokens';
 import { ComboboxSize } from './Combobox.types';
-import { menuItemHeight, menuItemPadding } from './constants';
+
+/** Height of a menu item (in px) */
+export const menuItemHeight = 36;
+
+export const menuItemPadding: Record<ComboboxSize, { x: number; y: number }> = {
+  [ComboboxSize.Default]: { x: 12, y: 8 },
+  [ComboboxSize.Large]: { x: 12, y: 8 },
+};
 
 /**
  * Menu styles
@@ -11,11 +18,15 @@ import { menuItemHeight, menuItemPadding } from './constants';
 export const popoverStyle = (width = 384) => css`
   border-radius: 4px;
   width: ${width}px;
-
-  & > div {
-    border-radius: inherit;
-  }
+  overflow: hidden;
 `;
+
+export const popoverModeStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+  `,
+  [Mode.Dark]: css``, // TODO: DarkMode
+};
 
 export const menuBaseStyle = css`
   position: relative;
@@ -24,7 +35,7 @@ export const menuBaseStyle = css`
   padding: 0;
   font-family: ${fontFamilies.default};
   border-radius: inherit;
-  overflow: auto;
+  overflow-y: auto;
   scroll-behavior: smooth;
   min-height: ${menuItemHeight}px;
 `;
@@ -33,7 +44,6 @@ export const menuModeStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${uiColors.gray.dark3};
     background-color: ${uiColors.white};
-    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
   `,
   [Mode.Dark]: css``, // TODO: DarkMode
 };
@@ -49,10 +59,6 @@ export const menuMessageBaseStyle = css`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  & > svg {
-    width: 1em;
-    height: 1em;
-  }
 `;
 
 export const menuMessageModeStyle: Record<Mode, string> = {
@@ -78,3 +84,27 @@ export const menuMessageSizeStyle: Record<ComboboxSize, string> = {
       ${menuItemPadding[ComboboxSize.Large].x}px;
   `,
 };
+
+export const menuMessageIconSizeStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.Default]: css`
+    height: ${typeScales.body1.fontSize + 1}px; // TODO: update this @ redesign
+    width: ${typeScales.body1.fontSize + 1}px; // TODO: update this @ redesign
+  `,
+  [ComboboxSize.Large]: css`
+    height: ${typeScales.body2.fontSize}px;
+    width: ${typeScales.body2.fontSize}px;
+  `,
+};
+
+const loadingIconAnimation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+export const loadingIconStyle = css`
+  animation: ${loadingIconAnimation} 1.5s linear infinite;
+`;

@@ -59,7 +59,6 @@ import {
   clearButtonStyle,
   clearButtonFocusOverrideStyles,
   endIconStyle,
-  loadingIconStyle,
   errorMessageModeStyle,
   errorMessageSizeStyle,
 } from './Combobox.styles';
@@ -71,6 +70,9 @@ import {
   menuMessageBaseStyle,
   menuMessageModeStyle,
   menuMessageSizeStyle,
+  popoverModeStyle,
+  menuMessageIconSizeStyle,
+  loadingIconStyle,
 } from './Menu.styles';
 
 /**
@@ -952,7 +954,7 @@ export default function Combobox<M extends boolean>({
             <Icon
               glyph="Refresh"
               color={uiColors.blue.base}
-              className={loadingIconStyle}
+              className={cx(menuMessageIconSizeStyle[size], loadingIconStyle)}
             />
             {searchLoadingMessage}
           </span>
@@ -962,7 +964,11 @@ export default function Combobox<M extends boolean>({
       case 'error': {
         return (
           <span className={messageStyles}>
-            <Icon glyph="Warning" color={uiColors.red.base} />
+            <Icon
+              glyph="Warning"
+              color={uiColors.red.base}
+              className={menuMessageIconSizeStyle[size]}
+            />
             {searchErrorMessage}
           </span>
         );
@@ -1350,7 +1356,7 @@ export default function Combobox<M extends boolean>({
           justify="middle"
           refEl={comboboxRef}
           adjustOnMutation={true}
-          className={popoverStyle(menuWidth)}
+          className={cx(popoverStyle(menuWidth), popoverModeStyle[mode])}
           {...popoverProps}
         >
           <div

@@ -13,7 +13,7 @@ import {
 import { ComboboxContext } from './ComboboxContext';
 import { wrapJSX } from './utils';
 import { fontFamilies, Mode, typeScales } from '@leafygreen-ui/tokens';
-import { menuItemPadding } from './constants';
+import { menuItemPadding } from './Menu.styles';
 
 /**
  * Styles
