@@ -1,5 +1,5 @@
 # LeafyGreen UI Kit
-
+.
 A set of CSS styles and React components built with design in mind.
 
 Check out all of the components [in action](https://www.mongodb.design/)!
