@@ -12,7 +12,7 @@ export const popoverStyle = (width = 384) => css`
   border-radius: 4px;
   width: ${width}px;
 
-  & > * {
+  & > div {
     border-radius: inherit;
   }
 `;

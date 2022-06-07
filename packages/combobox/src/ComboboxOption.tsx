@@ -39,7 +39,7 @@ const comboboxOptionBaseStyle = css`
     height: 22px;
     background-color: transparent;
     border-radius: 0 2px 2px 0;
-    transform: scaleY(0.3);
+    transform: scale3d(0, 0.3, 0);
     transition: 150ms ease-in-out;
     transition-property: transform, background-color;
   }
