@@ -20,8 +20,21 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof Tooltip> = args => (
-  <Tooltip trigger={<Button>trigger</Button>} {...args} />
+const Template: ComponentStory<typeof Tooltip> = ({
+  darkMode,
+  ...args
+}: TooltipProps) => (
+  <div
+    className={css`
+      padding: 100px;
+    `}
+  >
+    <Tooltip
+      darkMode={darkMode}
+      trigger={<Button darkMode={darkMode}>trigger</Button>}
+      {...args}
+    />
+  </div>
 );
 
 export const ControlledWithStorybook = Template.bind({});
