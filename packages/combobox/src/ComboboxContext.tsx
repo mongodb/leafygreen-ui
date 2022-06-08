@@ -3,6 +3,7 @@ import {
   ComboboxSize,
   SearchState,
   State,
+  Theme,
   TrunctationLocation,
 } from './Combobox.types';
 
@@ -30,3 +31,6 @@ export const ComboboxContext = createContext<ComboboxData>({
   state: State.none,
   searchState: SearchState.unset,
 });
+
+export const useDarkMode = (darkMode: boolean) =>
+  darkMode ? Theme.Dark : Theme.Light;
