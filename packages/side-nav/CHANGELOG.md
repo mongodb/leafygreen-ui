@@ -5,10 +5,7 @@
 ### Patch Changes
 
 - Updated dependencies [f0a357e2]
-- Updated dependencies [f0a357e2]
-  - @leafygreen-ui/typography@12.0.0
   - @leafygreen-ui/tooltip@7.0.3
-  - @leafygreen-ui/menu@13.1.1
 
 ## 9.0.2
 

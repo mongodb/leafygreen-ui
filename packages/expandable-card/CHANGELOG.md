@@ -1,12 +1,5 @@
 # @leafygreen-ui/expandable-card
 
-## 0.9.6
-
-### Patch Changes
-
-- Updated dependencies [f0a357e2]
-  - @leafygreen-ui/typography@12.0.0
-
 ## 0.9.5
 
 ### Patch Changes

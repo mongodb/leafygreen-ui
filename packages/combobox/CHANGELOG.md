@@ -5,14 +5,7 @@
 ### Patch Changes
 
 - Updated dependencies [f0a357e2]
-- Updated dependencies [f0a357e2]
-- Updated dependencies [f0a357e2]
-- Updated dependencies [f0a357e2]
-  - @leafygreen-ui/inline-definition@4.0.0
-  - @leafygreen-ui/typography@12.0.0
   - @leafygreen-ui/tooltip@7.0.3
-  - @leafygreen-ui/icon-button@12.0.0
-  - @leafygreen-ui/checkbox@8.0.4
 
 ## 1.2.0
 

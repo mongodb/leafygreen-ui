@@ -1,13 +1,5 @@
 # @leafygreen-ui/table
 
-## 4.1.2
-
-### Patch Changes
-
-- Updated dependencies [f0a357e2]
-  - @leafygreen-ui/icon-button@12.0.0
-  - @leafygreen-ui/checkbox@8.0.4
-
 ## 4.1.1
 
 ### Patch Changes

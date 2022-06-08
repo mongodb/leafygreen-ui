@@ -1,12 +1,5 @@
 # @leafygreen-ui/menu
 
-## 13.1.1
-
-### Patch Changes
-
-- Updated dependencies [f0a357e2]
-  - @leafygreen-ui/icon-button@12.0.0
-
 ## 13.1.0
 
 ### Minor Changes
