@@ -27,7 +27,7 @@ npm install @leafygreen-ui/typography
 ## Example
 
 ```js
-import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafygreen-ui/typography';
+import { H1, H2, Subtitle, Body, InlineCode, InlineKeyCode, Disclaimer, Overline } from '@leafygreen-ui/typography';
 <H1>Heading 1</H1>
 <H2>Heading 2</H2>
 <H3>Heading 3</H3>
@@ -133,7 +133,13 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | Prop       | Type                  | Description                                                                                                                                              | Default |
 | ---------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `href`     | `string`, `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
-| `darkMode` | `boolean`             | Determines if the component renders in dark mode                                                                                                         |         |
+| `darkMode` | `boolean`             | Determines if the component renders in dark mode                                                                                                         |
+
+# InlineKeyCode
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode |         |
 
 # Disclaimer
 
@@ -156,6 +162,8 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `hideExternalIcon` | `boolean`                        | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false`  |
 | `darkMode`         | `boolean`                        | Determines if the component renders in dark mode                                                                                                                                         | `false`  |
 
+_Note:_ If the current host name is different from the host of the destination URL, we will provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.
+
 # Label
 
 | Prop       | Type      | Description                                             | Default |
@@ -168,5 +176,3 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | Prop       | Type      | Description                                      | Default |
 | ---------- | --------- | ------------------------------------------------ | ------- |
 | `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
-
-_Note:_ If the current host name is different from the host of the destination URL, we will provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.
