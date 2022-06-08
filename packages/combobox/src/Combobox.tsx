@@ -60,6 +60,7 @@ import {
   endIconStyle,
   errorMessageThemeStyle,
   errorMessageSizeStyle,
+  multiselectInputElementPadding,
 } from './Combobox.styles';
 import {
   popoverStyle,
@@ -1321,6 +1322,8 @@ export default function Combobox<M extends boolean>({
                 inputElementTransitionStyles(isOpen, overflow),
                 {
                   [multiselectInputElementStyle(size, inputValue)]:
+                    isMultiselect(selection),
+                  [multiselectInputElementPadding(selection)]:
                     isMultiselect(selection),
                 },
               )}

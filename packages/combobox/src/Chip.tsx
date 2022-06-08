@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { ChipProps, ComboboxSize, Theme } from './Combobox.types';
+import { ChipProps, ComboboxSize as Size, Theme } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap } from '@leafygreen-ui/lib';
-import { chipClassName } from './Combobox.styles';
+import { chipClassName, chipWrapperPaddingY } from './Combobox.styles';
 import { typeScales } from '@leafygreen-ui/tokens';
-
-/** The padding on a Chip (in px) */
-export const comboboxChipPadding = 6;
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;
@@ -19,17 +16,17 @@ const chipWrapperBaseStyle = css`
   white-space: nowrap;
 `;
 
-const chipWrapperSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
-    height: 24px;
+const chipWrapperSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize + 1}px; // TODO: update this;
-    line-height: ${typeScales.body1.lineHeight + 1}px; // TODO: update this
+    line-height: ${typeScales.body1.lineHeight}px;
+    padding-block: ${chipWrapperPaddingY[Size.Default]}px;
     border-radius: 4px;
   `,
-  [ComboboxSize.Large]: css`
-    height: 28px;
-    font-size: ${typeScales.body2.fontSize + 1}px; // TODO: update this;
-    line-height: ${typeScales.body2.lineHeight + 1}px; // TODO: update this
+  [Size.Large]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+    padding-block: ${chipWrapperPaddingY[Size.Large]}px;
     border-radius: 4px;
   `,
 };
@@ -48,7 +45,7 @@ const chipWrapperThemeStyle: Record<Theme, string> = {
 };
 
 const chipText = css`
-  padding-inline: ${comboboxChipPadding}px;
+  padding-inline: 6px;
 `;
 
 const chipButtonStyle = css`
