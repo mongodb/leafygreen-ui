@@ -1,5 +1,18 @@
 # @leafygreen-ui/inline-definition
 
+## 4.0.0
+
+### Major Changes
+
+- f0a357e2: Updates `inline-definition` for dark mode refresh and remove the white outline from the focus states.
+
+### Patch Changes
+
+- Updated dependencies [f0a357e2]
+- Updated dependencies [f0a357e2]
+  - @leafygreen-ui/typography@12.0.0
+  - @leafygreen-ui/tooltip@7.0.3
+
 ## 3.0.2
 
 ### Patch Changes

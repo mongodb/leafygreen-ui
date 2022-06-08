@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 12.0.0
+
+### Major Changes
+
+- f0a357e2: Updates `Body`, `Disclaimer`, `H1`, `H2`, `H3`, `InlineCode`, `InlineKeyCode`, `Link`, `Overline`, and `Subtitle` for dark mode refresh.
+
 ## 11.0.2
 
 ### Patch Changes

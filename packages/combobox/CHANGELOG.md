@@ -1,5 +1,12 @@
 # @leafygreen-ui/combobox
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [f0a357e2]
+  - @leafygreen-ui/tooltip@7.0.3
+
 ## 1.2.0
 
 ### Minor Changes
