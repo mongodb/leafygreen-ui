@@ -1,19 +1,19 @@
 import React, { useContext, useMemo } from 'react';
 import Popover from '@leafygreen-ui/popover';
-import { ComboboxContext } from '../ComboboxContext';
+import { ComboboxContext, useDarkMode } from '../ComboboxContext';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
-import { loadingIconStyle } from '../Combobox.styles';
 import {
   menuBaseStyle,
   menuList,
   menuMessageBaseStyle,
-  menuMessageModeStyle,
+  menuMessageThemeStyle,
   menuMessageSizeStyle,
-  menuModeStyle,
+  menuThemeStyle,
   popoverStyle,
+  loadingIconStyle,
+  popoverThemeStyle,
 } from './Menu.styles';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Mode } from '@leafygreen-ui/tokens';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxProps } from '../Combobox.types';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -54,7 +54,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
     const { disabled, darkMode, size, isOpen, searchState } =
       useContext(ComboboxContext);
     const ref = useForwardedRef(forwardedRef, null);
-    const mode = darkMode ? Mode.Dark : Mode.Light;
+    const theme = useDarkMode(darkMode);
 
     /** The max height of the menu element */
     const maxHeight = Math.min(256, useAvailableSpace(refEl));
@@ -66,7 +66,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
     const renderedMenuContents = useMemo((): JSX.Element => {
       const messageStyles = cx(
         menuMessageBaseStyle,
-        menuMessageModeStyle[mode],
+        menuMessageThemeStyle[theme],
         menuMessageSizeStyle[size],
       );
 
@@ -108,7 +108,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
         }
       }
     }, [
-      mode,
+      theme,
       size,
       children,
       searchEmptyMessage,
@@ -125,7 +125,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
         justify="middle"
         refEl={refEl}
         adjustOnMutation={true}
-        className={popoverStyle(menuWidth)}
+        className={cx(popoverStyle(menuWidth), popoverThemeStyle[theme])}
         {...popoverProps}
       >
         <div
@@ -136,7 +136,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
           aria-expanded={isOpen}
           className={cx(
             menuBaseStyle,
-            menuModeStyle[mode],
+            menuThemeStyle[theme],
             css`
               max-height: ${maxHeight}px;
             `,
