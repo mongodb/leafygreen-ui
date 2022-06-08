@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,12 +22,12 @@
   "dependencies": {
     "@leafygreen-ui/hooks": "^7.3.0",
     "@leafygreen-ui/lib": "^9.3.0",
-    "@leafygreen-ui/checkbox": "^8.0.3",
+    "@leafygreen-ui/checkbox": "^8.0.4",
     "@leafygreen-ui/emotion": "^4.0.0",
     "@leafygreen-ui/tokens": "^1.3.1",
     "@leafygreen-ui/palette": "3.4.0",
     "@leafygreen-ui/icon": "^11.9.0",
-    "@leafygreen-ui/icon-button": "^11.0.2",
+    "@leafygreen-ui/icon-button": "^12.0.0",
     "react-transition-group": "^4.4.1",
     "lodash": "^4.17.21",
     "use-ssr": "^1.0.23"

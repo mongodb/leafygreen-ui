@@ -1,5 +1,12 @@
 # @leafygreen-ui/checkbox
 
+## 8.0.4
+
+### Patch Changes
+
+- Updated dependencies [f0a357e2]
+  - @leafygreen-ui/typography@12.0.0
+
 ## 8.0.3
 
 ### Patch Changes

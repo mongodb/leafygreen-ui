@@ -1,5 +1,16 @@
 # @leafygreen-ui/text-area
 
+## 6.0.0
+
+### Major Changes
+
+- f0a357e2: Updates `TextArea` for dark mode refresh. Remove `InteractionRing`.
+
+### Patch Changes
+
+- Updated dependencies [f0a357e2]
+  - @leafygreen-ui/typography@12.0.0
+
 ## 5.1.1
 
 ### Patch Changes
