@@ -27,7 +27,7 @@ npm install @leafygreen-ui/typography
 ## Example
 
 ```js
-import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafygreen-ui/typography';
+import { H1, H2, Subtitle, Body, InlineCode, InlineKeyCode, Disclaimer, Overline } from '@leafygreen-ui/typography';
 <H1>Heading 1</H1>
 <H2>Heading 2</H2>
 <H3>Heading 3</H3>
@@ -96,25 +96,63 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `Label`         | `label` |
 | `Description`   | `p`     |
 
+# H1
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# H2
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# H3
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# Subtitle
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
 # Body
 
-| Prop     | Type                          | Description                                                                                                        | Default     |
-| -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
-| `weight` | `'regular'`, `'medium'`       | font-weight applied to typography element                                                                          | `'regular'` |
-| `as`     | `keyof JSX.IntrinsicElements` | HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `'p'`       |
+| Prop       | Type                          | Description                                                                                                        | Default     |
+| ---------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `weight`   | `'regular'`, `'medium'`       | font-weight applied to typography element                                                                          | `'regular'` |
+| `as`       | `keyof JSX.IntrinsicElements` | HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `'p'`       |
+| `darkMode` | `boolean`                     | Determines if the component renders in dark mode                                                                   | `false`     |
 
 # InlineCode
 
 | Prop       | Type                  | Description                                                                                                                                              | Default |
 | ---------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `href`     | `string`, `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
-| `darkMode` | `boolean`             | Determines if the component renders in dark mode                                                                                                         |         |
+| `darkMode` | `boolean`             | Determines if the component renders in dark mode                                                                                                         |
+
+# InlineKeyCode
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode |         |
+
+# Disclaimer
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
 
 # Overline
 
-| Prop | Type                | Description                                                                                                                         | Default |
-| ---- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `as` | `React.ElementType` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
+| Prop       | Type                | Description                                                                                                                         | Default |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `as`       | `React.ElementType` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
+| `darkMode` | `boolean`           | Determines if the component renders in dark mode                                                                                    | `false` |
 
 # Link
 
@@ -122,6 +160,9 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | ------------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `arrowAppearance`  | `'hover'`, `'persist'`, `'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `'none'` |
 | `hideExternalIcon` | `boolean`                        | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false`  |
+| `darkMode`         | `boolean`                        | Determines if the component renders in dark mode                                                                                                                                         | `false`  |
+
+_Note:_ If the current host name is different from the host of the destination URL, we will provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.
 
 # Label
 
@@ -135,5 +176,3 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | Prop       | Type      | Description                                      | Default |
 | ---------- | --------- | ------------------------------------------------ | ------- |
 | `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
-
-_Note:_ If the current host name is different from the host of the destination URL, we will provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.
