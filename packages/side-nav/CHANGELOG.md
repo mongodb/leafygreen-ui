@@ -1,5 +1,12 @@
 # @leafygreen-ui/side-nav
 
+## 9.0.3
+
+### Patch Changes
+
+- Updated dependencies [f0a357e2]
+  - @leafygreen-ui/tooltip@7.0.3
+
 ## 9.0.2
 
 ### Patch Changes
