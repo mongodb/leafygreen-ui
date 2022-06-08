@@ -11,7 +11,7 @@ import { CommonTypographyProps, Mode } from './types';
 const h3 = css`
   font-size: 24px;
   line-height: 32px;
-  font-weight: 400;
+  font-weight: 500;
 `;
 
 type H3Props = HTMLElementProps<'h3'> & CommonTypographyProps;
