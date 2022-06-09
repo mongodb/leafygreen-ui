@@ -37,11 +37,11 @@ const comboboxOptionBaseStyle = css`
     position: absolute;
     left: 0;
     width: 4px;
-    height: calc(100% - 16px);
+    height: calc(100% - 14px);
     background-color: transparent;
     border-radius: 0 6px 6px 0;
     transform: scale3d(0, 0.3, 0);
-    transition: 150ms ease-in-out;
+    transition: 200ms ease-in-out;
     transition-property: transform, background-color;
   }
 `;
@@ -101,6 +101,10 @@ const comboboxOptionDisabledStyle: Record<Theme, string> = {
 
     &:hover {
       background-color: inherit;
+    }
+
+    &:before {
+      content: unset;
     }
   `,
   [Theme.Dark]: css``, // TODO: DarkMode
