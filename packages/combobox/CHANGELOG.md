@@ -1,5 +1,11 @@
 # @leafygreen-ui/combobox
 
+## 1.2.2
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
 ## 1.2.1
 
 ### Patch Changes

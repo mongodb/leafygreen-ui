@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 13.1.1
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
 ## 13.1.0
 
 ### Minor Changes
