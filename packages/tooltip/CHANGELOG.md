@@ -1,5 +1,11 @@
 # @leafygreen-ui/tooltip
 
+## 7.0.3
+
+### Patch Changes
+
+- f0a357e2: Minor updates to darkmode styles
+
 ## 7.0.2
 
 ### Patch Changes

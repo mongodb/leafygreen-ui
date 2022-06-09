@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { Either, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
+import { focusRing } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Light: 'light',
@@ -92,7 +93,7 @@ const iconButtonMode: Record<Mode, string> = {
 
     &:active,
     &:hover {
-      color: ${palette.gray.dark3};
+      color: ${palette.black};
 
       &:before {
         background-color: ${palette.gray.light2};
@@ -100,14 +101,14 @@ const iconButtonMode: Record<Mode, string> = {
     }
   `,
   [Mode.Dark]: css`
-    color: ${uiColors.gray.base};
+    color: ${palette.gray.light1};
 
     &:active,
     &:hover {
-      color: ${uiColors.white};
+      color: ${palette.gray.light3};
 
       &:before {
-        background-color: ${uiColors.gray.dark2};
+        background-color: ${palette.gray.dark1};
       }
     }
   `,
@@ -116,8 +117,8 @@ const iconButtonMode: Record<Mode, string> = {
 const focusStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     &:focus {
-      color: ${palette.gray.dark3};
-      box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
+      color: ${palette.black};
+      box-shadow: ${focusRing[Mode.Light].default};
 
       &:before {
         background-color: ${palette.gray.light2};
@@ -126,10 +127,11 @@ const focusStyle: Record<Mode, string> = {
   `,
   [Mode.Dark]: css`
     &:focus {
-      color: ${uiColors.blue.light1};
+      color: ${palette.gray.light3};
+      box-shadow: ${focusRing[Mode.Dark].default};
 
       &:before {
-        background-color: ${uiColors.blue.dark2};
+        background-color: ${palette.gray.dark1};
       }
     }
   `,
@@ -152,20 +154,21 @@ const disabledStyle: Record<Mode, string> = {
 
     &:focus {
       color: ${palette.gray.light1};
+
       &:before {
-        background-color: ${palette.gray.light3};
+        background-color: rgba(255, 255, 255, 0);
       }
     }
   `,
 
   [Mode.Dark]: css`
     cursor: not-allowed;
-    color: ${uiColors.gray.dark2};
+    color: ${palette.gray.dark1};
     background-color: rgba(255, 255, 255, 0);
 
     &:active,
     &:hover {
-      color: ${uiColors.gray.dark2};
+      color: ${palette.gray.dark1};
 
       &:before {
         background-color: rgba(255, 255, 255, 0);
@@ -173,10 +176,10 @@ const disabledStyle: Record<Mode, string> = {
     }
 
     &:focus {
-      color: ${uiColors.gray.dark2};
+      color: ${palette.gray.dark1};
 
       &:before {
-        background-color: ${uiColors.gray.dark1};
+        background-color: rgba(255, 255, 255, 0);
       }
     }
   `,
@@ -184,20 +187,21 @@ const disabledStyle: Record<Mode, string> = {
 
 const activeStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${uiColors.gray.dark2};
-    background-color: ${uiColors.gray.light2};
+    color: ${palette.black};
 
     &:before {
-      background-color: ${uiColors.gray.light2};
+      background-color: ${palette.gray.light2};
+      opacity: 1;
+      transform: scale(1);
     }
   `,
-
   [Mode.Dark]: css`
-    color: ${uiColors.white};
-    background-color: ${uiColors.gray.dark2};
+    color: ${palette.gray.light3};
 
     &:before {
-      background-color: ${uiColors.gray.dark2};
+      background-color: ${palette.gray.dark1};
+      opacity: 1;
+      transform: scale(1);
     }
   `,
 } as const;
@@ -328,7 +332,7 @@ export const IconButton: ExtendableBox<
         iconButtonMode[mode],
         {
           [focusStyle[mode]]: showFocus,
-          [activeStyle[mode]]: active,
+          [activeStyle[mode]]: active && !disabled,
           [disabledStyle[mode]]: disabled,
         },
         className,

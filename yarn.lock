@@ -2090,7 +2090,7 @@
     "@leafygreen-ui/ripple" "^1.1.1"
     "@leafygreen-ui/tokens" "^0.5.3"
 
-"@leafygreen-ui/icon-button@^9.1.6", "@leafygreen-ui/icon-button@^9.1.7":
+"@leafygreen-ui/icon-button@^9.1.6":
   version "9.1.7"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon-button/-/icon-button-9.1.7.tgz#32aa3784b7f93157f5b004e6cf044e150a778944"
   integrity sha512-MX9lDYzhalor+jlVgnvC9BHMoku7cUHnmF42ZeorHsmsNzAbLTQz3SS0kgqRoRh7VFdFfzdBpYiNNAth+VaRPg==
@@ -2100,17 +2100,6 @@
     "@leafygreen-ui/emotion" "^4.0.0"
     "@leafygreen-ui/lib" "^9.0.1"
     "@leafygreen-ui/palette" "^3.2.2"
-
-"@leafygreen-ui/inline-definition@^2.0.6":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/inline-definition/-/inline-definition-2.0.6.tgz#4469d05931a61f273d222f7ef4f9c10214439f8f"
-  integrity sha512-2sK4LVSmz+YGUKEAsx+tKRmX2ZIwcp4zvlroUAVlTQ/ZnTYd0ozdZtasevsPLxt0PnrKZwGmZZomr4Evou8IvA==
-  dependencies:
-    "@leafygreen-ui/emotion" "^4.0.0"
-    "@leafygreen-ui/lib" "^9.0.0"
-    "@leafygreen-ui/palette" "^3.2.2"
-    "@leafygreen-ui/tooltip" "^6.3.1"
-    "@leafygreen-ui/typography" "^8.0.4"
 
 "@leafygreen-ui/interaction-ring@^1.1.0":
   version "1.1.1"
