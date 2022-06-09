@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 12.0.0
+
+### Major Changes
+
+- f0a357e2: Updates IconButton for dark mode brand refresh
+
 ## 11.0.2
 
 ### Patch Changes
