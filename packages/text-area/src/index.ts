@@ -1,1 +1,2 @@
-export { State, default } from './TextArea';
+export { default } from './TextArea';
+export { State } from './types';

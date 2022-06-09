@@ -1,6 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
+import isNull from 'lodash/isNull';
 import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { ComboboxSize as Size, Overflow, Theme } from './Combobox.types';
@@ -14,25 +15,34 @@ export const maxCharWidth: Record<Size, number> = {
 };
 
 /**
+ * Vertical padding on a chip (in px)
+ */
+export const chipWrapperPaddingY = {
+  [Size.Default]: 2,
+  [Size.Large]: 4,
+} as const;
+
+/**
  * Height of the input element (in px)
  */
 const inputHeight: Record<Size, number> = {
-  [Size.Default]: typeScales.body1.lineHeight, // 20
-  [Size.Large]: typeScales.body2.lineHeight, // 28
+  [Size.Default]:
+    typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[Size.Default], // 20
+  [Size.Large]:
+    typeScales.body2.lineHeight + 2 * chipWrapperPaddingY[Size.Large], // 28
 };
 
 /**
  * Size of combobox x & y padding (in px)
  */
-// Subtracting 1 for borders
 export const comboboxPadding: Record<Size, { x: number; y: number }> = {
   [Size.Default]: {
-    y: (36 - inputHeight[Size.Default]) / 2 - 1,
-    x: 12 - 1,
+    y: (36 - inputHeight[Size.Default] - 2) / 2,
+    x: 8 - 1,
   },
   [Size.Large]: {
-    y: (48 - inputHeight[Size.Large]) / 2 - 1,
-    x: 12 - 1,
+    y: (48 - inputHeight[Size.Large] - 2) / 2,
+    x: 8 - 1,
   },
 };
 
@@ -203,6 +213,7 @@ export const baseInputElementStyle = css`
   padding: 0;
   margin: 0;
   text-overflow: ellipsis;
+  padding-left: 4px;
 
   &:placeholder-shown {
     min-width: 100%;
@@ -253,8 +264,23 @@ export const multiselectInputElementStyle = (
     max-width: 100%;
     width: ${inputLength * maxCharWidth[size]}px;
     // TODO: This doesn't quite work. Fix this
-    max-width: calc(100% - ${caretIconSize}px);
+    max-width: calc(100% - ${2 * caretIconSize}px);
   `;
+};
+
+// If there are chips, we remove the left padding from the input element
+export const multiselectInputElementPadding = (
+  selection: string | Array<string> | null,
+) => {
+  if (
+    typeof selection === 'object' &&
+    !isNull(selection) &&
+    selection.length > 0
+  )
+    return css`
+      padding-left: 0px;
+    `;
+  return '';
 };
 
 export const clearButtonStyle = css`

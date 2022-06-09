@@ -58,6 +58,7 @@ import {
   endIconStyle,
   errorMessageThemeStyle,
   errorMessageSizeStyle,
+  multiselectInputElementPadding,
 } from './Combobox.styles';
 import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
 
@@ -1252,6 +1253,8 @@ export default function Combobox<M extends boolean>({
                 inputElementTransitionStyles(isOpen, overflow),
                 {
                   [multiselectInputElementStyle(size, inputValue)]:
+                    isMultiselect(selection),
+                  [multiselectInputElementPadding(selection)]:
                     isMultiselect(selection),
                 },
               )}

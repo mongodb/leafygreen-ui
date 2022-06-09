@@ -1,5 +1,12 @@
 # @leafygreen-ui/stepper
 
+## 3.0.3
+
+### Patch Changes
+
+- Updated dependencies [f0a357e2]
+  - @leafygreen-ui/tooltip@7.0.3
+
 ## 3.0.2
 
 ### Patch Changes

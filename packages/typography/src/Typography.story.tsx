@@ -14,8 +14,28 @@ import {
   Link,
 } from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { css } from '@leafygreen-ui/emotion';
+import { cx, css } from '@leafygreen-ui/emotion';
+import InlineDefinition from '@leafygreen-ui/inline-definition';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
+
+const wrapperStyles = css`
+  height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+`;
+
+const displayBlock = css`
+  display: block;
+`;
+
+const displayFlex = css`
+  display: flex;
+  gap: 8px;
+`;
 
 export default {
   title: 'Packages/Typography',
@@ -23,6 +43,8 @@ export default {
     baseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },
+      description:
+        'Storybook prop only. This font size is passed into the LeafygreenProvider.',
     },
     darkMode: defaultArgTypes.darkMode,
     className: {
@@ -43,95 +65,96 @@ export const AllTypography = ({
 }) => {
   return (
     <LeafygreenProvider baseFontSize={baseFontSize}>
-      <div
-        className={css`
-          > * {
-            margin-bottom: 16px;
-          }
-        `}
-      >
-        <H1>Heading 1</H1>
-        <H2>Heading 2</H2>
-        <H3>Heading 3</H3>
-        <Subtitle>Subtitle</Subtitle>
-        <div
-          className={css`
-            display: flex;
-            > * {
-              flex: 1;
-              margin-right: 32px;
-            }
-          `}
-        >
-          <Body weight="regular">
-            <div>Body (regular)</div>
-            <div>
-              <strong>Body (Strong)</strong>
-            </div>
-            <div>
-              <em>Body (Italic)</em>
-            </div>
-            <div>
-              <strong>
-                <em>Body (Strong Italic)</em>
-              </strong>
-            </div>
-          </Body>
-          <Body weight="medium">
-            <div>Body (medium)</div>
-            <div>
-              <strong>Body (Strong)</strong>
-            </div>
-            <div>
-              <em>Body (Italic)</em>
-            </div>
-            <div>
-              <strong>
-                <em>Body (Strong Italic)</em>
-              </strong>
-            </div>
-          </Body>
-        </div>
-        <div
-          className={css`
-            display: block;
-          `}
-        >
-          <Link href="http://localhost:9001" arrowAppearance="hover">
+      <div className={cx(wrapperStyles)}>
+        <H1 darkMode={darkMode} className={displayBlock}>
+          Heading 1
+        </H1>
+        <H2 darkMode={darkMode} className={displayBlock}>
+          Heading 2
+        </H2>
+        <H3 darkMode={darkMode} className={displayBlock}>
+          Heading 3
+        </H3>
+        <Subtitle darkMode={darkMode} className={displayBlock}>
+          Subtitle
+        </Subtitle>
+
+        <Body darkMode={darkMode} className={cx(displayBlock)}>
+          <div>Body</div>
+          <div>
+            <strong>Body (Semibold)</strong>
+          </div>
+          <div>
+            <em>Body (Italic)</em>
+          </div>
+          <div>
+            <strong>
+              <em>Body (Semibold Italic)</em>
+            </strong>
+          </div>
+        </Body>
+
+        <Body className={cx(displayFlex)}>
+          <InlineCode darkMode={darkMode}>&quot;Inline Code&quot;</InlineCode>
+          <InlineCode
+            darkMode={darkMode}
+            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
+          >
+            &quot;Inline Code Link&quot;
+          </InlineCode>
+        </Body>
+
+        <div className={cx(displayFlex)}>
+          <Link
+            href="http://localhost:9001"
+            arrowAppearance="hover"
+            darkMode={darkMode}
+          >
             Local (Arrow on Hover)
           </Link>
-          <Link href="http://localhost:9001" arrowAppearance="none">
+          <Link
+            href="http://localhost:9001"
+            arrowAppearance="none"
+            darkMode={darkMode}
+          >
             Local (No Arrow)
           </Link>
-          <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
+          <Link
+            href="?path=/story/button--icon-only"
+            arrowAppearance="persist"
+            darkMode={darkMode}
+          >
             Internal (Persist Arrow)
           </Link>
           <Link
             href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
             arrowAppearance="persist"
+            darkMode={darkMode}
           >
             External
           </Link>
         </div>
-        <div>
-          <InlineCode darkMode={darkMode}>Inline Code</InlineCode>
-          <InlineCode
-            darkMode={darkMode}
-            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
-          >
-            Inline Code Link
-          </InlineCode>
-        </div>
-        <div>
-          <InlineKeyCode>CTRL</InlineKeyCode>
+
+        <Body darkMode={darkMode} className={displayBlock}>
+          <InlineKeyCode darkMode={darkMode}>CTRL</InlineKeyCode>
           <code> + </code>
-          <InlineKeyCode>C</InlineKeyCode>
-        </div>
+          <InlineKeyCode darkMode={darkMode}>C</InlineKeyCode>
+        </Body>
 
-        <Overline>Overline</Overline>
-        <Disclaimer>Disclaimer</Disclaimer>
+        <Overline darkMode={darkMode} className={displayBlock}>
+          Overline
+        </Overline>
+        <Disclaimer darkMode={darkMode} className={displayBlock}>
+          Disclaimer
+        </Disclaimer>
 
-        <div>
+        <Body darkMode={darkMode}>
+          <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
+            Inline definition
+          </InlineDefinition>{' '}
+        </Body>
+
+        <div className={cx(displayBlock)}>
           <Label darkMode={darkMode} htmlFor="id">
             This is a label
           </Label>
