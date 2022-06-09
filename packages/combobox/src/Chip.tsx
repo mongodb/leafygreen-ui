@@ -40,7 +40,14 @@ const chipWrapperThemeStyle: Record<Theme, string> = {
       background-color: ${palette.blue.light2};
     }
   `,
-  [Theme.Dark]: css``,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark2};
+
+    &:focus-within {
+      background-color: ${palette.blue.dark2};
+    }
+  `,
 };
 
 const chipTextStyle = css``;
@@ -68,30 +75,25 @@ const chipButtonStyle = css`
   background-color: transparent;
   cursor: pointer;
   transition: background-color 100ms ease-in-out;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 1px;
-  }
 `;
 
 const chipButtonThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark2};
 
-    &:before {
-      background-color: ${palette.gray.light1};
-    }
-
     &:hover {
+      color: ${palette.black};
       background-color: ${palette.gray.light1};
     }
   `,
-  [Theme.Dark]: css``,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+
+    &:hover {
+      color: ${palette.gray.light3};
+      background-color: ${palette.gray.dark1};
+    }
+  `,
 };
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(

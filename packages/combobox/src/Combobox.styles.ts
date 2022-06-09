@@ -104,7 +104,11 @@ export const comboboxThemeStyles: Record<Theme, string> = {
     background-color: ${palette.white};
     border-color: ${palette.gray.base};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark4};
+    border-color: ${palette.gray.base};
+  `,
 };
 
 export const comboboxSizeStyles = (size: Size) => css`
@@ -118,14 +122,21 @@ export const comboboxDisabledStyles: Record<Theme, string> = {
     background-color: ${palette.gray.light2};
     border-color: ${palette.gray.light1};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark1};
+    background-color: ${palette.gray.dark3};
+    border-color: ${palette.gray.dark2};
+  `,
 };
 
 export const comboboxErrorStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     border-color: ${palette.red.base};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    border-color: ${palette.red.light1};
+  `,
 };
 
 export const comboboxFocusStyle: Record<Theme, string> = {
@@ -136,7 +147,13 @@ export const comboboxFocusStyle: Record<Theme, string> = {
       box-shadow: ${focusRing[Theme.Light].input};
     }
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    &:focus-within {
+      border-color: transparent;
+      background-color: ${palette.gray.dark4};
+      box-shadow: ${focusRing[Theme.Dark].input};
+    }
+  `,
 };
 
 export const inputWrapperStyle = ({
@@ -212,6 +229,7 @@ export const baseInputElementStyle = css`
   border: none;
   cursor: inherit;
   background-color: inherit;
+  color: inherit;
   box-sizing: content-box;
   padding: 0;
   margin: 0;
@@ -224,6 +242,19 @@ export const baseInputElementStyle = css`
     outline: none;
   }
 `;
+
+export const inputElementThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &::placeholder {
+      color: ${palette.gray.dark1};
+    }
+  `,
+  [Theme.Dark]: css`
+    &::placeholder {
+      color: ${palette.gray.light1};
+    }
+  `,
+};
 
 export const inputElementSizeStyle: Record<Size, string> = {
   [Size.Default]: css`
@@ -302,7 +333,9 @@ export const errorMessageThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.red.base};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    color: ${palette.red.light1};
+  `,
 };
 
 export const errorMessageSizeStyle: Record<Size, string> = {

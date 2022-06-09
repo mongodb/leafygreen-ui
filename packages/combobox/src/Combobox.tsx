@@ -58,6 +58,7 @@ import {
   errorMessageSizeStyle,
   multiselectInputElementPadding,
   labelDescriptionContainerStyle,
+  inputElementThemeStyle,
 } from './Combobox.styles';
 import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
 
@@ -760,6 +761,7 @@ export default function Combobox<M extends boolean>({
             onClick={handleClearButtonClick}
             onFocus={handleClearButtonFocus}
             className={cx(clearButtonStyle)}
+            darkMode={darkMode}
           >
             <Icon glyph="XWithCircle" />
           </IconButton>
@@ -767,7 +769,7 @@ export default function Combobox<M extends boolean>({
         {state === 'error' ? (
           <Icon
             glyph="Warning"
-            color={palette.red.base}
+            color={darkMode ? palette.red.light1 : palette.red.base}
             className={endIconStyle(size)}
           />
         ) : (
@@ -780,6 +782,7 @@ export default function Combobox<M extends boolean>({
     doesSelectionExist,
     disabled,
     state,
+    darkMode,
     size,
     updateSelection,
     onClear,
@@ -1189,11 +1192,13 @@ export default function Combobox<M extends boolean>({
       >
         <div className={labelDescriptionContainerStyle}>
           {label && (
-            <Label id={labelId} htmlFor={inputId}>
+            <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
               {label}
             </Label>
           )}
-          {description && <Description>{description}</Description>}
+          {description && (
+            <Description darkMode={darkMode}>{description}</Description>
+          )}
         </div>
 
         {/* Disable eslint: onClick sets focus. Key events would already have focus */}
@@ -1241,6 +1246,7 @@ export default function Combobox<M extends boolean>({
               className={cx(
                 baseInputElementStyle,
                 inputElementSizeStyle[size],
+                inputElementThemeStyle[theme],
                 inputElementTransitionStyles(isOpen, overflow),
                 {
                   [multiselectInputElementStyle(size, inputValue)]:

@@ -30,7 +30,9 @@ export const popoverThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
+  `,
 };
 
 export const menuBaseStyle = css`
@@ -49,7 +51,10 @@ export const menuThemeStyle: Record<Theme, string> = {
     color: ${palette.black};
     background-color: ${palette.white};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+    background-color: ${palette.gray.dark3};
+  `,
 };
 
 export const menuSizeStyle: Record<Size, string> = {
@@ -78,7 +83,9 @@ export const menuMessageThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark3};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    color: ${palette.gray.light3};
+  `,
 };
 
 export const menuMessageSizeStyle: Record<Size, string> = {

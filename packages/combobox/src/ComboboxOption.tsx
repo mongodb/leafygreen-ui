@@ -53,7 +53,12 @@ const comboboxOptionThemeStyle: Record<Theme, string> = {
       background-color: ${palette.gray.light2};
     }
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    &:hover {
+      outline: none;
+      background-color: ${palette.gray.dark4};
+    }
+  `,
 };
 
 const comboboxOptionSizeStyle: Record<Size, string> = {
@@ -81,33 +86,54 @@ const comboboxOptionSizeStyle: Record<Size, string> = {
   `,
 };
 
+const _comboboxOptionBaseActiveStyle = css`
+  outline: none;
+
+  &:before {
+    transform: scaleY(1);
+  }
+`;
+
 const comboboxOptionActiveStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    outline: none;
+    ${_comboboxOptionBaseActiveStyle};
     background-color: ${palette.blue.light3};
 
     &:before {
       background-color: ${palette.blue.base};
-      transform: scaleY(1);
     }
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    ${_comboboxOptionBaseActiveStyle};
+    background-color: ${palette.blue.dark3};
+
+    &:before {
+      background-color: ${palette.blue.light1};
+    }
+  `,
 };
+
+const _comboboxOptionBaseDisabledStyle = css`
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: inherit;
+  }
+
+  &:before {
+    content: unset;
+  }
+`;
 
 const comboboxOptionDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    cursor: not-allowed;
+    ${_comboboxOptionBaseDisabledStyle};
     color: ${palette.gray.light1};
-
-    &:hover {
-      background-color: inherit;
-    }
-
-    &:before {
-      content: unset;
-    }
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    ${_comboboxOptionBaseDisabledStyle};
+    color: ${palette.gray.dark1};
+  `,
 };
 
 const flexSpan = css`

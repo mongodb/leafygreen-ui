@@ -80,7 +80,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
             <span className={messageStyles}>
               <Icon
                 glyph="Refresh"
-                color={palette.blue.base}
+                color={darkMode ? palette.blue.light1 : palette.blue.base}
                 className={loadingIconStyle}
               />
               {searchLoadingMessage}
@@ -91,7 +91,10 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
         case 'error': {
           return (
             <span className={messageStyles}>
-              <Icon glyph="Warning" color={palette.red.base} />
+              <Icon
+                glyph="Warning"
+                color={darkMode ? palette.red.light1 : palette.red.base}
+              />
               {searchErrorMessage}
             </span>
           );
@@ -114,11 +117,12 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
     }, [
       theme,
       size,
+      searchState,
+      darkMode,
+      searchLoadingMessage,
+      searchErrorMessage,
       children,
       searchEmptyMessage,
-      searchErrorMessage,
-      searchLoadingMessage,
-      searchState,
     ]);
 
     return (
