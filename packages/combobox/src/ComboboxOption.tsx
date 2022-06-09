@@ -7,8 +7,8 @@ import Checkbox from '@leafygreen-ui/checkbox';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import {
   ComboboxOptionProps,
-  ComboboxSize,
   InternalComboboxOptionProps,
+  ComboboxSize as Size,
   Theme,
 } from './Combobox.types';
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
@@ -38,7 +38,7 @@ const comboboxOptionBaseStyle = css`
     left: 0;
     width: 4px;
     height: calc(100% - 14px);
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0);
     border-radius: 0 6px 6px 0;
     transform: scale3d(0, 0.3, 0);
     transition: 200ms ease-in-out;
@@ -56,27 +56,27 @@ const comboboxOptionThemeStyle: Record<Theme, string> = {
   [Theme.Dark]: css``, // TODO: DarkMode
 };
 
-const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
+const comboboxOptionSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    min-height: ${menuItemHeight[ComboboxSize.Default]}px;
-    padding: ${menuItemPadding[ComboboxSize.Default].y}px
-      ${menuItemPadding[ComboboxSize.Default].x}px;
+    min-height: ${menuItemHeight[Size.Default]}px;
+    padding: ${menuItemPadding[Size.Default].y}px
+      ${menuItemPadding[Size.Default].x}px;
 
     &:before {
-      max-height: ${menuItemHeight[ComboboxSize.Default]}px;
+      max-height: ${menuItemHeight[Size.Default]}px;
     }
   `,
-  [ComboboxSize.Large]: css`
+  [Size.Large]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
-    min-height: ${menuItemHeight[ComboboxSize.Large]}px;
-    padding: ${menuItemPadding[ComboboxSize.Large].y}px
-      ${menuItemPadding[ComboboxSize.Large].x}px;
+    min-height: ${menuItemHeight[Size.Large]}px;
+    padding: ${menuItemPadding[Size.Large].y}px
+      ${menuItemPadding[Size.Large].x}px;
 
     &:before {
-      max-height: ${menuItemHeight[ComboboxSize.Large]}px;
+      max-height: ${menuItemHeight[Size.Large]}px;
     }
   `,
 };

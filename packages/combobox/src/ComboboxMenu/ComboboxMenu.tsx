@@ -16,8 +16,8 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxProps } from '../Combobox.types';
-import { uiColors } from '@leafygreen-ui/palette';
-import { isUndefined } from 'lodash';
+import { palette } from '@leafygreen-ui/palette';
+import isUndefined from 'lodash/isUndefined';
 
 type ComboboxMenuProps = {
   children?: React.ReactNode;
@@ -80,7 +80,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
             <span className={messageStyles}>
               <Icon
                 glyph="Refresh"
-                color={uiColors.blue.base}
+                color={palette.blue.base}
                 className={loadingIconStyle}
               />
               {searchLoadingMessage}
@@ -91,7 +91,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
         case 'error': {
           return (
             <span className={messageStyles}>
-              <Icon glyph="Warning" color={uiColors.red.base} />
+              <Icon glyph="Warning" color={palette.red.base} />
               {searchErrorMessage}
             </span>
           );

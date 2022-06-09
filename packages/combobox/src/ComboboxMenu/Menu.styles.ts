@@ -2,19 +2,18 @@ import { css, keyframes } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
-import { ComboboxSize, Theme } from '../Combobox.types';
+import { ComboboxSize as Size, Theme } from '../Combobox.types';
 
-export const menuItemPadding: Record<ComboboxSize, { x: number; y: number }> = {
-  [ComboboxSize.Default]: { x: 12, y: 8 },
-  [ComboboxSize.Large]: { x: 12, y: 8 },
+export const menuItemPadding: Record<Size, { x: number; y: number }> = {
+  [Size.Default]: { x: 12, y: 8 },
+  [Size.Large]: { x: 12, y: 8 },
 };
 
 /** Height of a menu item (in px) */
 export const menuItemHeight = {
-  [ComboboxSize.Default]:
-    typeScales.body1.lineHeight + 2 * menuItemPadding[ComboboxSize.Default].y,
-  [ComboboxSize.Large]:
-    typeScales.body2.lineHeight + 2 * menuItemPadding[ComboboxSize.Large].y,
+  [Size.Default]:
+    typeScales.body1.lineHeight + 2 * menuItemPadding[Size.Default].y,
+  [Size.Large]: typeScales.body2.lineHeight + 2 * menuItemPadding[Size.Large].y,
 };
 
 /**
@@ -53,12 +52,12 @@ export const menuThemeStyle: Record<Theme, string> = {
   [Theme.Dark]: css``, // TODO: DarkMode
 };
 
-export const menuSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
-    min-height: ${menuItemHeight[ComboboxSize.Default]}px;
+export const menuSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    min-height: ${menuItemHeight[Size.Default]}px;
   `,
-  [ComboboxSize.Large]: css`
-    min-height: ${menuItemHeight[ComboboxSize.Large]}px;
+  [Size.Large]: css`
+    min-height: ${menuItemHeight[Size.Large]}px;
   `,
 };
 
@@ -82,27 +81,27 @@ export const menuMessageThemeStyle: Record<Theme, string> = {
   [Theme.Dark]: css``, // TODO: DarkMode
 };
 
-export const menuMessageSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
+export const menuMessageSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    padding: ${menuItemPadding[ComboboxSize.Default].y}px
-      ${menuItemPadding[ComboboxSize.Default].x}px;
+    padding: ${menuItemPadding[Size.Default].y}px
+      ${menuItemPadding[Size.Default].x}px;
   `,
-  [ComboboxSize.Large]: css`
+  [Size.Large]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
-    padding: ${menuItemPadding[ComboboxSize.Large].y}px
-      ${menuItemPadding[ComboboxSize.Large].x}px;
+    padding: ${menuItemPadding[Size.Large].y}px
+      ${menuItemPadding[Size.Large].x}px;
   `,
 };
 
-export const menuMessageIconSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
+export const menuMessageIconSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
     height: ${typeScales.body1.fontSize}px;
     width: ${typeScales.body1.fontSize}px;
   `,
-  [ComboboxSize.Large]: css`
+  [Size.Large]: css`
     height: ${typeScales.body2.fontSize}px;
     width: ${typeScales.body2.fontSize}px;
   `,
