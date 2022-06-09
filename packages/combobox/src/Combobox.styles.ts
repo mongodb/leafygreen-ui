@@ -216,7 +216,6 @@ export const baseInputElementStyle = css`
   padding: 0;
   margin: 0;
   text-overflow: ellipsis;
-  padding-left: 4px;
 
   &:placeholder-shown {
     min-width: 100%;
@@ -232,12 +231,14 @@ export const inputElementSizeStyle: Record<Size, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     min-width: ${maxCharWidth[Size.Default]}px;
+    padding-left: 4px;
   `,
   [Size.Large]: css`
     height: ${inputHeight[Size.Large]}px;
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     min-width: ${maxCharWidth[Size.Large]}px;
+    padding-left: 6px;
   `,
 };
 
