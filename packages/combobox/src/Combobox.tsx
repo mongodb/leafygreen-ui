@@ -994,7 +994,10 @@ export default function Combobox<M extends boolean>({
   ]);
 
   /** The max height of the menu element */
-  const maxHeight = Math.min(256, useAvailableSpace(comboboxRef));
+  const availableSpace = useAvailableSpace(comboboxRef);
+  const maxHeightValue = !isUndefined(availableSpace)
+    ? `${Math.min(availableSpace, 256)}px`
+    : 'unset';
 
   /**
    *
@@ -1371,7 +1374,7 @@ export default function Combobox<M extends boolean>({
               menuBaseStyle,
               menuThemeStyle[theme],
               css`
-                max-height: ${maxHeight}px;
+                max-height: ${maxHeightValue};
               `,
             )}
             onMouseDownCapture={e => e.preventDefault()}
