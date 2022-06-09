@@ -50,6 +50,20 @@ const chipWrapperThemeStyle: Record<Theme, string> = {
   `,
 };
 
+const disabledChipWrapperStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.base};
+    background-color: ${palette.gray.light3};
+  `,
+  [Theme.Dark]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark2};
+    background-color: ${palette.gray.dark4};
+    box-shadow: inset 0 0 1px 1px ${palette.gray.dark2}; ;
+  `,
+};
+
 const chipTextStyle = css``;
 
 const chipTextSizeStyle: Record<Size, string> = {
@@ -92,6 +106,25 @@ const chipButtonThemeStyle: Record<Theme, string> = {
     &:hover {
       color: ${palette.gray.light3};
       background-color: ${palette.gray.dark1};
+    }
+  `,
+};
+
+const chipButtonDisabledStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark2};
+    &:hover {
+      color: inherit;
+      background-color: unset;
+    }
+  `,
+  [Theme.Dark]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark2};
+    &:hover {
+      color: inherit;
+      background-color: unset;
     }
   `,
 };
@@ -193,6 +226,9 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           chipWrapperBaseStyle,
           chipWrapperThemeStyle[theme],
           chipWrapperSizeStyle[size],
+          {
+            [disabledChipWrapperStyle[theme]]: disabled,
+          },
         )}
         onClick={handleChipClick}
         onKeyDown={handleKeyDown}
@@ -212,7 +248,9 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           aria-disabled={disabled}
           disabled={disabled}
           ref={buttonRef}
-          className={cx(chipButtonStyle, chipButtonThemeStyle[theme])}
+          className={cx(chipButtonStyle, chipButtonThemeStyle[theme], {
+            [chipButtonDisabledStyle[theme]]: disabled,
+          })}
           onClick={handleButtonClick}
         >
           <Icon glyph="X" />
