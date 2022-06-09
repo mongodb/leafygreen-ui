@@ -42,7 +42,6 @@ import { Chip } from './Chip';
 import {
   comboboxFocusStyle,
   inputWrapperStyle,
-  _tempLabelDescriptionOverrideStyle,
   baseComboboxStyles,
   comboboxThemeStyles,
   comboboxSizeStyles,
@@ -54,7 +53,6 @@ import {
   inputElementTransitionStyles,
   multiselectInputElementStyle,
   clearButtonStyle,
-  clearButtonFocusOverrideStyles,
   endIconStyle,
   errorMessageThemeStyle,
   errorMessageSizeStyle,
@@ -760,7 +758,7 @@ export default function Combobox<M extends boolean>({
             ref={clearButtonRef}
             onClick={handleClearButtonClick}
             onFocus={handleClearButtonFocus}
-            className={cx(clearButtonStyle, clearButtonFocusOverrideStyles)}
+            className={cx(clearButtonStyle)}
           >
             <Icon glyph="XWithCircle" />
           </IconButton>
@@ -1190,19 +1188,11 @@ export default function Combobox<M extends boolean>({
       >
         <div>
           {label && (
-            <Label
-              id={labelId}
-              htmlFor={inputId}
-              className={_tempLabelDescriptionOverrideStyle[size]}
-            >
+            <Label id={labelId} htmlFor={inputId}>
               {label}
             </Label>
           )}
-          {description && (
-            <Description className={_tempLabelDescriptionOverrideStyle[size]}>
-              {description}
-            </Description>
-          )}
+          {description && <Description>{description}</Description>}
         </div>
 
         {/* Disable eslint: onClick sets focus. Key events would already have focus */}
