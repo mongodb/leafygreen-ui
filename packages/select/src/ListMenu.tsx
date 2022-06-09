@@ -13,6 +13,7 @@ import {
 } from './styleSets';
 import { useForwardedRef } from './utils';
 import { Size } from '.';
+import isUndefined from 'lodash/isUndefined';
 
 const maxMenuHeight = 274;
 const menuMargin = 8;
@@ -85,10 +86,11 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     const { mode, size, disabled, open } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
-    const maxHeight = Math.min(
-      maxMenuHeight,
-      useAvailableSpace(referenceElement, menuMargin),
-    );
+
+    const availableSpace = useAvailableSpace(referenceElement, menuMargin);
+    const maxHeightValue = !isUndefined(availableSpace)
+      ? `${Math.min(availableSpace, maxMenuHeight)}px`
+      : 'unset';
 
     const onClick = useCallback(
       (event: React.MouseEvent) => {
@@ -130,7 +132,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
             baseMenuStyle,
             getMenuStyles(mode, size),
             css`
-              max-height: ${maxHeight}px;
+              max-height: ${maxHeightValue};
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.option.text}px;
               }
