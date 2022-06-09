@@ -9,6 +9,7 @@ import { FocusableMenuItemElement } from './FocusableMenuItem';
 import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
 import { MenuProps } from './types';
+import isUndefined from 'lodash/isUndefined';
 
 const rootMenuStyle = css`
   width: 200px;
@@ -79,10 +80,10 @@ function Menu({
   const open = controlledOpen ?? uncontrolledOpen;
 
   const triggerRef = useRef<HTMLElement>(null);
-  const maxMenuHeight = Math.min(
-    maxHeight,
-    useAvailableSpace(refEl || triggerRef, spacing),
-  );
+  const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
+  const maxMenuHeightValue = !isUndefined(availableSpace)
+    ? `${Math.min(availableSpace, maxHeight)}px`
+    : 'unset';
 
   const { updatedChildren, refs } = React.useMemo(() => {
     if (
@@ -325,7 +326,7 @@ function Menu({
         className={cx(
           rootMenuStyle,
           css`
-            max-height: ${maxMenuHeight}px;
+            max-height: ${maxMenuHeightValue};
           `,
           className,
         )}
