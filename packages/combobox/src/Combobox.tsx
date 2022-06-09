@@ -16,7 +16,7 @@ import {
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
@@ -768,7 +768,7 @@ export default function Combobox<M extends boolean>({
         {state === 'error' ? (
           <Icon
             glyph="Warning"
-            color={uiColors.red.base}
+            color={palette.red.base}
             className={endIconStyle(size)}
           />
         ) : (
