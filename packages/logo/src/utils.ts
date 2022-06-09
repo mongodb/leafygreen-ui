@@ -1,4 +1,4 @@
-import { uiColors, palette } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
 
@@ -92,7 +92,7 @@ export const getColor = ({
     if (darkMode) {
       fill = palette.white;
     } else {
-      fill = uiColors.gray.dark3;
+      fill = palette.black;
     }
   }
 
