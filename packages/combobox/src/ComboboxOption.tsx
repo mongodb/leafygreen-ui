@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import React, { useCallback, useContext, useMemo } from 'react';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Checkbox from '@leafygreen-ui/checkbox';
@@ -14,7 +14,7 @@ import {
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { wrapJSX } from './utils';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { menuItemPadding } from './ComboboxMenu/Menu.styles';
+import { menuItemHeight, menuItemPadding } from './ComboboxMenu/Menu.styles';
 
 /**
  * Styles
@@ -29,17 +29,17 @@ const comboboxOptionBaseStyle = css`
   color: inherit;
   cursor: pointer;
   overflow: hidden;
-  font-family: ${fontFamilies.legacy};
+  font-family: ${fontFamilies.default};
 
   // Left wedge
   &:before {
     content: '';
     position: absolute;
     left: 0;
-    width: 3px;
-    height: 22px;
+    width: 4px;
+    height: calc(100% - 16px);
     background-color: transparent;
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 6px 6px 0;
     transform: scale3d(0, 0.3, 0);
     transition: 150ms ease-in-out;
     transition-property: transform, background-color;
@@ -50,7 +50,7 @@ const comboboxOptionThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &:hover {
       outline: none;
-      background-color: ${uiColors.gray.light2};
+      background-color: ${palette.gray.light2};
     }
   `,
   [Theme.Dark]: css``, // TODO: DarkMode
@@ -58,26 +58,36 @@ const comboboxOptionThemeStyle: Record<Theme, string> = {
 
 const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.Default]: css`
-    font-size: ${typeScales.body1.fontSize + 1}px; // TODO: update this;
-    line-height: ${typeScales.body1.lineHeight + 1}px; // TODO: update this
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    min-height: ${menuItemHeight[ComboboxSize.Default]}px;
     padding: ${menuItemPadding[ComboboxSize.Default].y}px
       ${menuItemPadding[ComboboxSize.Default].x}px;
+
+    &:before {
+      max-height: ${menuItemHeight[ComboboxSize.Default]}px;
+    }
   `,
   [ComboboxSize.Large]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
+    min-height: ${menuItemHeight[ComboboxSize.Large]}px;
     padding: ${menuItemPadding[ComboboxSize.Large].y}px
       ${menuItemPadding[ComboboxSize.Large].x}px;
+
+    &:before {
+      max-height: ${menuItemHeight[ComboboxSize.Large]}px;
+    }
   `,
 };
 
 const comboboxOptionActiveStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     outline: none;
-    background-color: ${uiColors.blue.light3};
+    background-color: ${palette.blue.light3};
 
     &:before {
-      background-color: ${uiColors.blue.base};
+      background-color: ${palette.blue.base};
       transform: scaleY(1);
     }
   `,
@@ -87,7 +97,7 @@ const comboboxOptionActiveStyle: Record<Theme, string> = {
 const comboboxOptionDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     cursor: not-allowed;
-    color: ${uiColors.gray.base};
+    color: ${palette.gray.light1};
 
     &:hover {
       background-color: inherit;

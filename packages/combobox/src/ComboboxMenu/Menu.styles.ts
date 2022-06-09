@@ -1,14 +1,20 @@
 import { css, keyframes } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { transparentize } from 'polished';
 import { ComboboxSize, Theme } from '../Combobox.types';
-
-/** Height of a menu item (in px) */
-export const menuItemHeight = 36;
 
 export const menuItemPadding: Record<ComboboxSize, { x: number; y: number }> = {
   [ComboboxSize.Default]: { x: 12, y: 8 },
   [ComboboxSize.Large]: { x: 12, y: 8 },
+};
+
+/** Height of a menu item (in px) */
+export const menuItemHeight = {
+  [ComboboxSize.Default]:
+    typeScales.body1.lineHeight + 2 * menuItemPadding[ComboboxSize.Default].y,
+  [ComboboxSize.Large]:
+    typeScales.body2.lineHeight + 2 * menuItemPadding[ComboboxSize.Large].y,
 };
 
 /**
@@ -23,7 +29,7 @@ export const popoverStyle = (width = 384) => css`
 
 export const popoverThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
   `,
   [Theme.Dark]: css``, // TODO: DarkMode
 };
@@ -37,15 +43,23 @@ export const menuBaseStyle = css`
   border-radius: inherit;
   overflow-y: auto;
   scroll-behavior: smooth;
-  min-height: ${menuItemHeight}px;
 `;
 
 export const menuThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${uiColors.gray.dark3};
-    background-color: ${uiColors.white};
+    color: ${palette.black};
+    background-color: ${palette.white};
   `,
   [Theme.Dark]: css``, // TODO: DarkMode
+};
+
+export const menuSizeStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.Default]: css`
+    min-height: ${menuItemHeight[ComboboxSize.Default]}px;
+  `,
+  [ComboboxSize.Large]: css`
+    min-height: ${menuItemHeight[ComboboxSize.Large]}px;
+  `,
 };
 
 export const menuList = css`
@@ -63,17 +77,15 @@ export const menuMessageBaseStyle = css`
 
 export const menuMessageThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    ${uiColors.gray.dark1}
+    color: ${palette.gray.dark3};
   `,
   [Theme.Dark]: css``, // TODO: DarkMode
 };
 
 export const menuMessageSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.Default]: css`
-    font-size: ${typeScales.body1.fontSize +
-    1}px; // TODO: update this @ redesign
-    line-height: ${typeScales.body1.lineHeight +
-    1}px; // TODO: update this @ redesign
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
     padding: ${menuItemPadding[ComboboxSize.Default].y}px
       ${menuItemPadding[ComboboxSize.Default].x}px;
   `,
@@ -87,8 +99,8 @@ export const menuMessageSizeStyle: Record<ComboboxSize, string> = {
 
 export const menuMessageIconSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.Default]: css`
-    height: ${typeScales.body1.fontSize + 1}px; // TODO: update this @ redesign
-    width: ${typeScales.body1.fontSize + 1}px; // TODO: update this @ redesign
+    height: ${typeScales.body1.fontSize}px;
+    width: ${typeScales.body1.fontSize}px;
   `,
   [ComboboxSize.Large]: css`
     height: ${typeScales.body2.fontSize}px;

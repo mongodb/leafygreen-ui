@@ -8,7 +8,6 @@ import {
   spacing,
   typeScales,
 } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
 import { ComboboxSize as Size, Overflow, Theme } from './Combobox.types';
 
 /**
