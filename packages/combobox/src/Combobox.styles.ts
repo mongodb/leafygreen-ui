@@ -377,7 +377,7 @@ export const menuWrapperStyle = ({
   );
 };
 
-export const menuStyle = ({ maxHeight }: { maxHeight: number }) => css`
+export const menuStyle = css`
   position: relative;
   width: 100%;
   margin: 0;
@@ -389,7 +389,6 @@ export const menuStyle = ({ maxHeight }: { maxHeight: number }) => css`
   border-radius: inherit;
   overflow: auto;
   min-height: var(--lg-combobox-item-height);
-  max-height: ${maxHeight}px;
   scroll-behavior: smooth;
 `;
 
