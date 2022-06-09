@@ -3,7 +3,5 @@ import { NewLiveExample } from 'components/live-example';
 import Meta, { Basic } from './Badge.story';
 
 export default function BadgeLiveExample() {
-  return (
-    <NewLiveExample meta={Meta} StoryFn={Basic} />
-  );
+  return <NewLiveExample Meta={Meta} StoryFn={Basic} />;
 }

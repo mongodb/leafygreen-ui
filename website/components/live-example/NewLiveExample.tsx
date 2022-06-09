@@ -3,7 +3,6 @@
 
 import React, { useState } from 'react';
 import { transparentize } from 'polished';
-import { enforceExhaustive } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
 import Card from '@leafygreen-ui/card';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -11,6 +10,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { mq } from 'utils/mediaQuery';
 import { pageContainerWidth } from 'styles/constants';
 import NewKnob from './NewKnob';
+import { NewLiveExampleInterface, PropsType } from './types';
 
 const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, palette.black)}`;
 
@@ -62,65 +62,11 @@ const componentContainerDarkMode = css`
   border-bottom: 1px solid ${palette.gray.dark2};
 `;
 
-interface SelectConfigInterface<T> {
-  type: 'select';
-  options: Array<T | undefined>;
-  default: T;
-  isRequired?: boolean;
-  label: string;
-  shouldDisable?: (props: any) => boolean;
-}
-
-interface BooleanConfigInterface {
-  type: 'boolean';
-  options?: undefined;
-  default: boolean;
-  label: string;
-}
-
-interface NumberConfigInterface {
-  type: 'number';
-  options?: undefined;
-  default: number;
-  label: string;
-  min?: number;
-  max?: number;
-  step?: number;
-}
-
-interface TextConfigInterface {
-  type: 'text';
-  options?: undefined;
-  default: string;
-  label: string;
-}
-
-interface AreaConfigInterface {
-  type: 'area';
-  options?: undefined;
-  default: string;
-  label: string;
-}
-
-export type PropsType<T = string> =
-  | BooleanConfigInterface
-  | NumberConfigInterface
-  | TextConfigInterface
-  | AreaConfigInterface
-  | SelectConfigInterface<T>;
-
-
-interface NewLiveExampleInterface {
-  meta: any;
-  StoryFn: any;
-}
-
-function NewLiveExample({
-  meta,
-  StoryFn,
-}: NewLiveExampleInterface) {
-  const storyArgs: any = { ...meta.args, ...StoryFn.args };
-  const storyArgTypes: any = { ...meta.argTypes, ...StoryFn.argTypes };
+function NewLiveExample({ Meta, StoryFn }: NewLiveExampleInterface) {
+  const propTypes = Meta.component.propTypes;
+  console.log(propTypes);
+  const storyArgs: any = { ...Meta.args, ...StoryFn.args };
+  const storyArgTypes: any = { ...Meta.argTypes, ...StoryFn.argTypes };
   const [props, setProps] = useState<any>(storyArgs);
 
   const onChange = <T extends PropsType['default']>(
@@ -148,14 +94,16 @@ function NewLiveExample({
         >
           <StoryFn {...storyArgs} {...props} />
         </div>
-        {Object.entries(storyArgTypes).map(([propName, storyConfig]) => (
+        {/* @ts-ignore */}
+        {Object.entries(propTypes).map(([propName, { info }]) => (
           <NewKnob
-            value={props[propName]} 
-            label={(storyConfig as any).label}
-            onChange={onChange} 
-            propName={propName} 
-            storyConfig={storyConfig} 
+            value={props[propName]}
+            label={storyArgTypes[propName]?.label || propName}
+            onChange={onChange}
+            propName={propName}
+            propInfo={info}
             darkMode={props.darkMode ? props.darkMode : false}
+            isRequired={propTypes[propName].info.isRequired}
           />
         ))}
       </Card>

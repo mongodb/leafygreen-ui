@@ -109,9 +109,10 @@ const Stepper = ({
 };
 
 Stepper.propTypes = {
-  currentStep: PropTypes.number,
+  currentStep: PropTypes.number.isRequired,
   maxDisplayedSteps: PropTypes.number,
   completedStepsShown: PropTypes.number,
+  darkMode: PropTypes.bool,
 };
 
 export default Stepper;

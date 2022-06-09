@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      // "@leafygreen-ui/*": ["../packages/*"],
+      "@leafygreen-ui/*": ["../packages/*"],
       "@leafygreen-ui/logo": ["/node_modules/@leafygreen-ui/logo"]
     },
     "jsx": "preserve",

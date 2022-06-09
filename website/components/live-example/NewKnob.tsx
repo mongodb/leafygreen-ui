@@ -2,33 +2,45 @@ import React from 'react';
 import { Knob, Boolean, Text, Area, Number, Select } from './Knobs';
 
 const knobForControl = {
-  'range': 'number'
-}
+  range: 'number',
+  bool: 'boolean',
+};
 
-const getKnobType: (control: any) => string = (control) => {
+const getKnobType: (control: any) => string = control => {
   let controlType: string;
-  if(typeof control === 'object') {
+
+  if (typeof control === 'object') {
     controlType = control.type;
-  } else if (control === 'none' || !!!control) {
+  } else if (control === 'none' || !control) {
     controlType = 'none';
   } else {
     controlType = control;
   }
-  return controlType in knobForControl ? knobForControl[controlType] : controlType;
-}
+
+  return controlType in knobForControl
+    ? knobForControl[controlType]
+    : controlType;
+};
 
 interface NewKnobProps {
   value: any;
   onChange: (prop: any) => void;
   label?: string;
   propName: string;
-  storyConfig: any;
+  propInfo: any;
   darkMode: boolean;
+  isRequired: boolean;
 }
 
-
-const NewKnob = ({ value, onChange, label, propName, storyConfig, darkMode }: NewKnobProps) => {
-
+const NewKnob = ({
+  value,
+  onChange,
+  label,
+  propName,
+  propInfo,
+  darkMode,
+  isRequired,
+}: NewKnobProps) => {
   const sharedProps = {
     onChange,
     propName,
@@ -36,23 +48,22 @@ const NewKnob = ({ value, onChange, label, propName, storyConfig, darkMode }: Ne
     prop: propName,
     key: propName,
     darkMode,
+    isRequired,
   };
 
-  const knobType = getKnobType(storyConfig.control);
+  const knobType = getKnobType(propInfo.propTypeName);
 
   switch (knobType) {
     case Knob.Boolean:
-      return (
-        <Boolean {...sharedProps} value={value} />
-      );
+      return <Boolean {...sharedProps} value={value} />;
 
     case Knob.Number:
       return (
         <Number
           {...sharedProps}
           value={value}
-          min={storyConfig?.min}
-          max={storyConfig?.max}
+          min={propInfo?.min}
+          max={propInfo?.max}
           // step={knobConfig?.step}
         />
       );
@@ -67,19 +78,17 @@ const NewKnob = ({ value, onChange, label, propName, storyConfig, darkMode }: Ne
       return (
         <Select
           {...sharedProps}
-          // isRequired={knobConfig?.isRequired}
-          isRequired={true}
-          options={storyConfig?.options as Array<string>}
+          options={propInfo?.options as Array<string>}
           value={value}
           // Allows us to disable Select dropdown based on current component props
-          // disabled={storyConfig.shouldDisable?.(props)}
+          // disabled={propInfo.shouldDisable?.(props)}
         />
       );
 
     default:
       // enforceExhaustive(knobConfig);
-      return <></>
+      return <></>;
   }
-}
+};
 
 export default NewKnob;
