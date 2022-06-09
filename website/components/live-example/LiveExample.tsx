@@ -233,6 +233,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
           })}
         >
           {children(props)}
+          {/* {children} */}
         </div>
 
         {renderKnobs()}
