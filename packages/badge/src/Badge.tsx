@@ -109,7 +109,7 @@ Badge.displayName = 'Badge';
 Badge.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
-  variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
+  variant: PropTypes.oneOf(Object.values(Variant)),
 };
 
 export default Badge;

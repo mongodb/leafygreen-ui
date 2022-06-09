@@ -2090,7 +2090,7 @@
     "@leafygreen-ui/ripple" "^1.1.1"
     "@leafygreen-ui/tokens" "^0.5.3"
 
-"@leafygreen-ui/icon-button@^11.0.0", "@leafygreen-ui/icon-button@^11.0.2":
+"@leafygreen-ui/icon-button@^11.0.2":
   version "11.0.2"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon-button/-/icon-button-11.0.2.tgz#ec9856ad745063b3e61e106bd2fbe661141bf236"
   integrity sha512-gS9ziMrAGiVfbt6MIN3hV7H2JarVIy1Z1NC4LmVica7eY3yWnvgrwuIgG9+Xr70mWyXBodlVN+h0JuMok6vCsQ==
@@ -2151,33 +2151,6 @@
     "@leafygreen-ui/popover" "^7.2.2"
     react-transition-group "^4.4.1"
 
-"@leafygreen-ui/mongo-menu@*":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/mongo-menu/-/mongo-menu-3.0.3.tgz#2136f382502c304a9205dfb713d9f82142ddd32f"
-  integrity sha512-0M4acCKyxaJKX8fKmxrZRp4viJS1ubiJ+05DUqxq5ibMsPys2u0jb++uyiKAIObuK7PpBjp3vVvd30qgV1dj2g==
-
-"@leafygreen-ui/mongo-nav@*":
-  version "9.0.6"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/mongo-nav/-/mongo-nav-9.0.6.tgz#1dcaff85acbd9eea7347ce11ab211362796cea91"
-  integrity sha512-MYpIorXDlhAY7lU3PQQHZgE2OoJCIgpD1mq1KxpDArixhVlHpNkFqafY1ABIyx7hgrytJBNJ97om6zoxMkMl+g==
-  dependencies:
-    "@leafygreen-ui/a11y" "^1.2.2"
-    "@leafygreen-ui/badge" "^5.0.0"
-    "@leafygreen-ui/button" "^15.0.0"
-    "@leafygreen-ui/hooks" "^7.3.0"
-    "@leafygreen-ui/icon" "^11.9.0"
-    "@leafygreen-ui/icon-button" "^11.0.0"
-    "@leafygreen-ui/lib" "^9.2.1"
-    "@leafygreen-ui/logo" "^6.1.0"
-    "@leafygreen-ui/menu" "^13.1.0"
-    "@leafygreen-ui/palette" "^3.3.1"
-    "@leafygreen-ui/tabs" "^7.0.0"
-    "@leafygreen-ui/text-input" "^9.0.0"
-    "@leafygreen-ui/tokens" "^1.3.0"
-    "@leafygreen-ui/tooltip" "^7.0.1"
-    "@leafygreen-ui/typography" "^11.0.0"
-    lodash "^4.17.21"
-
 "@leafygreen-ui/mongo-nav@^7.2.1":
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/mongo-nav/-/mongo-nav-7.2.2.tgz#2fbea6b3424b2dc38d3f59c7582cff2c52bab58a"
@@ -2224,11 +2197,6 @@
     "@leafygreen-ui/palette" "^3.2.2"
     "@leafygreen-ui/portal" "^4.0.0"
     "@leafygreen-ui/tokens" "^0.5.3"
-
-"@leafygreen-ui/theme@*":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/theme/-/theme-3.0.1.tgz#2583d6773a73cb66362698c6930a7d6c0ad694ae"
-  integrity sha512-qSeiwXtlMozvESqjs25/ACbKKYXBk3gGu9/0Hpjrzhb9vgkZUxvSjepBAJb5hgmVWLL3BKTl2+QB6up/FH9SZQ==
 
 "@leafygreen-ui/tokens@^0.5.3":
   version "0.5.3"
