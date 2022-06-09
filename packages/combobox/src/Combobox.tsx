@@ -57,6 +57,7 @@ import {
   errorMessageThemeStyle,
   errorMessageSizeStyle,
   multiselectInputElementPadding,
+  labelDescriptionContainerStyle,
 } from './Combobox.styles';
 import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
 
@@ -1186,7 +1187,7 @@ export default function Combobox<M extends boolean>({
         className={cx(comboboxParentStyle(size, overflow), className)}
         {...rest}
       >
-        <div>
+        <div className={labelDescriptionContainerStyle}>
           {label && (
             <Label id={labelId} htmlFor={inputId}>
               {label}

@@ -317,3 +317,6 @@ export const errorMessageSizeStyle: Record<Size, string> = {
     padding-top: ${comboboxPadding[Size.Large].y}px;
   `,
 };
+export const labelDescriptionContainerStyle = css`
+  margin-bottom: 2px;
+`;
