@@ -17,6 +17,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxProps } from '../Combobox.types';
 import { uiColors } from '@leafygreen-ui/palette';
+import { isUndefined } from 'lodash';
 
 type ComboboxMenuProps = {
   children?: React.ReactNode;
@@ -57,7 +58,10 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
     const theme = useDarkMode(darkMode);
 
     /** The max height of the menu element */
-    const maxHeight = Math.min(256, useAvailableSpace(refEl));
+    const availableSpace = useAvailableSpace(refEl);
+    const maxHeightValue = !isUndefined(availableSpace)
+      ? `${Math.min(availableSpace, 256)}px`
+      : 'unset';
 
     /**
      * The rendered menu JSX contents
@@ -138,7 +142,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
             menuBaseStyle,
             menuThemeStyle[theme],
             css`
-              max-height: ${maxHeight}px;
+              max-height: ${maxHeightValue};
             `,
           )}
           onMouseDownCapture={e => e.preventDefault()}
