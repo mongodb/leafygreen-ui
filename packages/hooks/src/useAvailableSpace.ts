@@ -27,8 +27,6 @@ const useAvailableSpace = (
       // Return to fill the space available
       return safeSpace - margin;
     }
-
-    return 0;
   }, [viewportSize, triggerRef, margin]);
 };
 

@@ -17,7 +17,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import {
@@ -957,7 +957,10 @@ export default function Combobox<M extends boolean>({
   ]);
 
   /** The max height of the menu element */
-  const maxHeight = Math.min(256, useAvailableSpace(comboboxRef));
+  const availableSpace = useAvailableSpace(comboboxRef);
+  const maxHeightValue = !isUndefined(availableSpace)
+    ? `${Math.min(availableSpace, 256)}px`
+    : 'unset';
 
   /**
    *
@@ -1312,7 +1315,12 @@ export default function Combobox<M extends boolean>({
             aria-labelledby={labelId}
             aria-expanded={isOpen}
             ref={menuRef}
-            className={menuStyle({ maxHeight })}
+            className={cx(
+              menuStyle,
+              css`
+                max-height: ${maxHeightValue};
+              `,
+            )}
             onMouseDownCapture={e => e.preventDefault()}
           >
             {renderedMenuContents}
