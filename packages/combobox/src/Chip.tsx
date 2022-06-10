@@ -7,7 +7,10 @@ import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap } from '@leafygreen-ui/lib';
 import { chipClassName, chipWrapperPaddingY } from './Combobox.styles';
-import { typeScales } from '@leafygreen-ui/tokens';
+import {
+  // fontFamilies,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;
@@ -35,7 +38,7 @@ const chipWrapperThemeStyle: Record<Theme, string> = {
     color: ${palette.black};
     background-color: ${palette.gray.light2};
 
-    // TODO: - refine these styles
+    // TODO: - refine these styles with Design
     &:focus-within {
       background-color: ${palette.blue.light2};
     }
@@ -236,7 +239,11 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       >
         <span className={cx(chipTextStyle, chipTextSizeStyle[size])}>
           {truncatedName ? (
-            <InlineDefinition definition={displayName} align="bottom">
+            <InlineDefinition
+              darkMode={darkMode}
+              definition={displayName}
+              align="bottom"
+            >
               {truncatedName}
             </InlineDefinition>
           ) : (

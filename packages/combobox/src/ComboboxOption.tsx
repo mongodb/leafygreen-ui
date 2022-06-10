@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import React, { useCallback, useContext, useMemo } from 'react';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Checkbox from '@leafygreen-ui/checkbox';
@@ -250,7 +250,7 @@ const InternalComboboxOption = React.forwardRef<
           {isSelected && (
             <Icon
               glyph="Checkmark"
-              color={darkMode ? uiColors.blue.light1 : uiColors.blue.base}
+              color={darkMode ? palette.blue.light1 : palette.blue.base}
             />
           )}
         </>
