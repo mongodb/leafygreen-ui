@@ -221,6 +221,7 @@ const InternalComboboxOption = React.forwardRef<
             tabIndex={-1}
             animate={false}
             disabled={disabled}
+            darkMode={darkMode}
           />
         );
 
