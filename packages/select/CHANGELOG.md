@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 5.0.3
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
 ## 5.0.2
 
 ### Patch Changes
