@@ -147,8 +147,8 @@ export const inputModeStyles: Record<Mode, string> = {
   `,
   [Mode.Dark]: css`
     color: ${palette.gray.light3};
-    background-color: ${palette.black};
-    border: 1px solid ${palette.gray.dark1};
+    background-color: ${palette.gray.dark4};
+    border: 1px solid ${palette.gray.base};
 
     &:hover,
     &:active {
