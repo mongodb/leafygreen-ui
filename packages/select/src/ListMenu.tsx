@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
-import { useViewportSize } from '@leafygreen-ui/hooks';
+import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import SelectContext from './SelectContext';
 import {
   colorSets,
@@ -12,8 +12,8 @@ import {
   sizeSets,
 } from './styleSets';
 import { useForwardedRef } from './utils';
-import { useMemo } from 'react';
 import { Size } from '.';
+import isUndefined from 'lodash/isUndefined';
 
 const maxMenuHeight = 274;
 const menuMargin = 8;
@@ -87,26 +87,10 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
 
     const ref = useForwardedRef(forwardedRef, null);
 
-    const viewportSize = useViewportSize();
-
-    const maxHeight = useMemo(() => {
-      if (viewportSize && ref.current && referenceElement.current) {
-        const { top: triggerTop, bottom: triggerBottom } =
-          referenceElement.current.getBoundingClientRect();
-
-        // Find out how much space is available above or below the trigger
-        const safeSpace = Math.max(
-          viewportSize.height - triggerBottom,
-          triggerTop,
-        );
-
-        // if there's more than enough space, set to maxMenuHeight
-        // otherwise fill the space available
-        return Math.min(maxMenuHeight, safeSpace - menuMargin);
-      }
-
-      return maxMenuHeight;
-    }, [ref, referenceElement, viewportSize]);
+    const availableSpace = useAvailableSpace(referenceElement, menuMargin);
+    const maxHeightValue = !isUndefined(availableSpace)
+      ? `${Math.min(availableSpace, maxMenuHeight)}px`
+      : 'unset';
 
     const onClick = useCallback(
       (event: React.MouseEvent) => {
@@ -148,7 +132,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
             baseMenuStyle,
             getMenuStyles(mode, size),
             css`
-              max-height: ${maxHeight}px;
+              max-height: ${maxHeightValue};
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.option.text}px;
               }

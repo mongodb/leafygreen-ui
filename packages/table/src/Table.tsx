@@ -94,12 +94,25 @@ export interface TableRowInterface<Shape = {}> {
 }
 
 export interface TableProps<Shape> extends HTMLElementProps<'table', never> {
+  /**
+   * The array of data displayed in rows. Each array element's type is determined by the `Shape` generic.
+   */
   data: Array<Shape>;
+  /**
+   * React element to render the table's header row.
+   */
   columns:
     | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
     | React.ReactFragment;
-
+  /**
+   * A function that takes in the datum of a single row as a parameter and returns a `JSX.Element` determining how it should be rendered.
+   *
+   * Should make use of the `<Cell>` component.
+   */
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
+  /**
+   * Override the global `baseFontSize` set in LeafygreenProvider
+   */
   baseFontSize?: 14 | 16;
   darkMode?: boolean;
 }

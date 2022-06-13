@@ -1,41 +1,57 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import TextArea, { TextAreaProps } from './TextArea';
-import { ComponentStory } from '@storybook/react';
+import TextArea from './TextArea';
+import { TextAreaProps } from './types';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
-export const StoryTextArea: React.FC<TextAreaProps> = props => (
-  <TextArea {...props} />
-);
+import { ComponentStory } from '@storybook/react';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+
+type LGProviderBaseFontSize = 14 | 16;
+
+export const StoryTextArea: React.FC<
+  TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }
+> = props => <TextArea {...props} />;
 
 export default {
   title: 'Packages/TextArea',
   component: StoryTextArea,
   argTypes: {
-    darkMode: {
-      control: 'boolean',
+    baseFontSize: {
+      options: [undefined, 13, 16],
+      control: { type: 'radio' },
     },
+    lgProviderBaseFontSize: {
+      options: [14, 16],
+      control: { type: 'radio' },
+      description:
+        'Storybook prop only. This font size is passed into the LeafygreenProvider. ',
+    },
+    label: { control: 'text' },
+    description: { control: 'text' },
+    errorMessage: { control: 'text' },
+    darkMode: defaultArgTypes.darkMode,
+    ref: { control: 'none' },
   },
   excludeStories: ['StoryTextArea'],
 };
 
 const Template: ComponentStory<typeof StoryTextArea> = ({
+  baseFontSize,
   darkMode,
+  lgProviderBaseFontSize,
   ...args
-}: TextAreaProps) => (
-  <div
-    className={css`
-      padding: 30px;
-      background-color: ${darkMode ? palette.black : 'white'};
-    `}
-  >
-    <TextArea darkMode={darkMode} {...args} />
-  </div>
+}: TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }) => (
+  <LeafygreenProvider baseFontSize={lgProviderBaseFontSize}>
+    <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
+  </LeafygreenProvider>
 );
 
 export const Basic = Template.bind({});
 Basic.args = {
   label: 'Label',
-  description: 'This is a description for the textarea',
+  description: 'This is a description for the text area',
   errorMessage: 'This is an error message',
+  disabled: false,
+  placeholder: 'Placeholder',
+  lgProviderBaseFontSize: 14,
 };

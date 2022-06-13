@@ -1,5 +1,32 @@
 # @leafygreen-ui/inline-definition
 
+## 4.0.0
+
+### Major Changes
+
+- f0a357e2: Updates `inline-definition` for dark mode refresh and remove the white outline from the focus states.
+
+### Patch Changes
+
+- Updated dependencies [f0a357e2]
+- Updated dependencies [f0a357e2]
+  - @leafygreen-ui/typography@12.0.0
+  - @leafygreen-ui/tooltip@7.0.3
+
+## 3.0.2
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [6a89bc29]
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [422dbfcd]
+- Updated dependencies [9ff90d4b]
+  - @leafygreen-ui/palette@3.4.0
+  - @leafygreen-ui/typography@11.0.2
+  - @leafygreen-ui/lib@9.3.0
+
 ## 3.0.1
 
 ### Patch Changes

@@ -118,20 +118,61 @@ const footerContentStyle = css`
 `;
 
 interface MarketingModalProps {
+  /**
+   * Text of header element
+   */
   title: string;
+  /**
+   * React Element to be rendered as the modal's hero image
+   */
   graphic: React.ReactElement;
+  /**
+   * Determines the rendering style of the graphic.
+   *
+   * `fill` adds a curving effect to the bottom border of the graphic.
+   */
   graphicStyle?: GraphicStyle;
   children: React.ReactNode;
+  /**
+   * 	The component is shown when the value is set to `true`.
+   */
   open?: boolean;
+  /**
+   * 	Callback fired when the primary action button is clicked.
+   */
   onButtonClick?: () => void;
+  /**
+   * 	Callback fired when the secondary link element is clicked.
+   */
   onLinkClick?: () => void;
+  /**
+   * 	Callback fired when the modal is closed
+   */
   onClose?: () => void;
   className?: string;
+  /**
+   * 	Text of the primary CTA button
+   */
   buttonText: string;
+  /**
+   * 	Text of the secondary link element
+   */
   linkText: string;
   darkMode?: boolean;
+  /**
+   * 	Color of the close icon button
+   */
   closeIconColor?: CloseIconColor;
+  /**
+   * 	Position of the blob visual effect. Defaults to top-left.
+   *
+   *  Note: The blob is only rendered if: `showBlob` prop is `true`, and the `graphicStyle` prop is `center`.
+   *
+   */
   blobPosition?: BlobPosition;
+  /**
+   * 	Determines whether the blob should be rendered.
+   */
   showBlob?: boolean;
 }
 

@@ -1,5 +1,33 @@
 # @leafygreen-ui/menu
 
+## 13.1.1
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
+## 13.1.0
+
+### Minor Changes
+
+- 6792bc44: Adds a `maxHeight` prop. Menu will automatically restrict its height to the smallest of `maxHeight` and the available vertical space (using the hook `useAvailableSpace`).
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [6a89bc29]
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [6792bc44]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [422dbfcd]
+- Updated dependencies [9ff90d4b]
+  - @leafygreen-ui/palette@3.4.0
+  - @leafygreen-ui/box@3.0.7
+  - @leafygreen-ui/hooks@7.3.0
+  - @leafygreen-ui/icon-button@11.0.2
+  - @leafygreen-ui/tokens@1.3.1
+  - @leafygreen-ui/lib@9.3.0
+
 ## 13.0.1
 
 ### Patch Changes

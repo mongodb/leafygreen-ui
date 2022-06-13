@@ -1,5 +1,17 @@
 # @leafygreen-ui/palette
 
+## 3.4.0
+
+### Minor Changes
+
+- 9ff90d4b: Adding gray-dark-4 to palette
+
+### Patch Changes
+
+- 6a89bc29: Changing export method for palette and uiColors ts objects
+- fd2f6de0: Updates to TSDocs, PropTypes, and Storybook files
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+
 ## 3.3.2
 
 ### Patch Changes

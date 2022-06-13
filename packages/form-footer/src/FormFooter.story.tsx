@@ -8,10 +8,13 @@ import FormFooter from '.';
 export default {
   title: 'Packages/FormFooter',
   component: FormFooter,
-  parameters: {
-    controls: {
-      exclude: ['children', 'onClose', 'ref'],
-    },
+  argTypes: {
+    cancelButtonText: { control: 'text' },
+    onCancel: { control: 'none' },
+    backButtonText: { control: 'text' },
+    onBackClick: { control: 'none' },
+    errorMessage: { control: 'text' },
+    contentClassName: { control: 'text' },
   },
 } as Meta<typeof FormFooter>;
 

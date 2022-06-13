@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 6.1.1
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+
 ## 6.1.0
 
 ### Minor Changes
