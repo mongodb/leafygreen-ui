@@ -2090,6 +2090,17 @@
     "@leafygreen-ui/ripple" "^1.1.1"
     "@leafygreen-ui/tokens" "^0.5.3"
 
+"@leafygreen-ui/icon-button@^11.0.2":
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon-button/-/icon-button-11.0.2.tgz#ec9856ad745063b3e61e106bd2fbe661141bf236"
+  integrity sha512-gS9ziMrAGiVfbt6MIN3hV7H2JarVIy1Z1NC4LmVica7eY3yWnvgrwuIgG9+Xr70mWyXBodlVN+h0JuMok6vCsQ==
+  dependencies:
+    "@leafygreen-ui/a11y" "^1.2.2"
+    "@leafygreen-ui/box" "^3.0.7"
+    "@leafygreen-ui/emotion" "^4.0.0"
+    "@leafygreen-ui/lib" "^9.3.0"
+    "@leafygreen-ui/palette" "^3.4.0"
+
 "@leafygreen-ui/icon-button@^9.1.6":
   version "9.1.7"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon-button/-/icon-button-9.1.7.tgz#32aa3784b7f93157f5b004e6cf044e150a778944"
@@ -2100,6 +2111,17 @@
     "@leafygreen-ui/emotion" "^4.0.0"
     "@leafygreen-ui/lib" "^9.0.1"
     "@leafygreen-ui/palette" "^3.2.2"
+
+"@leafygreen-ui/inline-definition@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/inline-definition/-/inline-definition-3.0.2.tgz#a8fd72793c2bb2252851d1201e1594104e174495"
+  integrity sha512-Jrlq4GhtnkATfq5PqaKwI0SNj0VXNHkxfllc/3uvGKqJNvCiGzzlfdNde/XN19PtoAyqpssfX/yaw9jY3sY9zQ==
+  dependencies:
+    "@leafygreen-ui/emotion" "^4.0.0"
+    "@leafygreen-ui/lib" "^9.3.0"
+    "@leafygreen-ui/palette" "^3.4.0"
+    "@leafygreen-ui/tooltip" "^7.0.0"
+    "@leafygreen-ui/typography" "^11.0.2"
 
 "@leafygreen-ui/interaction-ring@^1.1.0":
   version "1.1.1"
@@ -2195,6 +2217,17 @@
     "@leafygreen-ui/popover" "^7.2.2"
     "@leafygreen-ui/tokens" "^0.5.3"
     lodash "^4.17.21"
+
+"@leafygreen-ui/typography@^11.0.0", "@leafygreen-ui/typography@^11.0.2":
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-11.0.2.tgz#b4747b85e1b4c5c8175698b9378a24861f884290"
+  integrity sha512-JXPpZRgwFrlIgpTWnh53i7m9OsMVLBj/jfMBCP1kpZJ+o/6Rs/OOsTbyLz8SX5WHq+HboOqlLL8PcIEk14GL3g==
+  dependencies:
+    "@leafygreen-ui/box" "^3.0.7"
+    "@leafygreen-ui/icon" "^11.9.0"
+    "@leafygreen-ui/lib" "^9.3.0"
+    "@leafygreen-ui/palette" "^3.4.0"
+    "@leafygreen-ui/tokens" "^1.3.1"
 
 "@leafygreen-ui/typography@^8.0.4":
   version "8.1.0"
