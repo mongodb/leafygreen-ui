@@ -19,7 +19,6 @@ import InlineDefinition from '@leafygreen-ui/inline-definition';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 const wrapperStyles = css`
-  height: 100vh;
   padding: 0;
   display: flex;
   flex-direction: column;
