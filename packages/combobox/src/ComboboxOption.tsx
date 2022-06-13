@@ -13,7 +13,7 @@ import {
 } from './Combobox.types';
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { wrapJSX } from './utils';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
 import { menuItemHeight, menuItemPadding } from './ComboboxMenu/Menu.styles';
 
 /**
@@ -68,6 +68,7 @@ const comboboxOptionSizeStyle: Record<Size, string> = {
     min-height: ${menuItemHeight[Size.Default]}px;
     padding: ${menuItemPadding[Size.Default].y}px
       ${menuItemPadding[Size.Default].x}px;
+    gap: ${spacing[1]}px;
 
     &:before {
       max-height: ${menuItemHeight[Size.Default]}px;
@@ -79,6 +80,7 @@ const comboboxOptionSizeStyle: Record<Size, string> = {
     min-height: ${menuItemHeight[Size.Large]}px;
     padding: ${menuItemPadding[Size.Large].y}px
       ${menuItemPadding[Size.Large].x}px;
+    gap: ${spacing[2]}px;
 
     &:before {
       max-height: ${menuItemHeight[Size.Large]}px;
@@ -133,6 +135,15 @@ const comboboxOptionDisabledStyle: Record<Theme, string> = {
   [Theme.Dark]: css`
     ${_comboboxOptionBaseDisabledStyle};
     color: ${palette.gray.dark1};
+  `,
+};
+
+const checkIconStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    min-width: ${spacing[3]}px;
+  `,
+  [Size.Large]: css`
+    min-width: ${spacing[4]}px;
   `,
 };
 
@@ -250,6 +261,7 @@ const InternalComboboxOption = React.forwardRef<
           {isSelected && (
             <Icon
               glyph="Checkmark"
+              className={checkIconStyle[size]}
               color={darkMode ? palette.blue.light1 : palette.blue.base}
             />
           )}
@@ -261,6 +273,7 @@ const InternalComboboxOption = React.forwardRef<
       isSelected,
       displayName,
       inputValue,
+      size,
       darkMode,
       optionTextId,
       disabled,
