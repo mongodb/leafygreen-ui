@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 8.0.1
+
+### Patch Changes
+
+- 3e7c00db: Adds back transition to popover open. Uses `getComputedStyle` to get content width instead of `getBoundingClientRect` and `offsetWidth`.
+
 ## 8.0.0
 
 ### Major Changes
