@@ -1,4 +1,4 @@
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
 
@@ -11,12 +11,11 @@ const SupportedColors = {
 
 type SupportedColors = typeof SupportedColors[keyof typeof SupportedColors];
 
-// TODO: Update to palette colors once new palette is released.
 const SupportedColorsMap: Record<SupportedColors, string> = {
-  [SupportedColors.White]: '#FFFFFF',
-  [SupportedColors.Black]: '#06232E',
-  [SupportedColors.GreenDark2]: '#00684A',
-  [SupportedColors.GreenBase]: '#00ED64',
+  [SupportedColors.White]: palette.white,
+  [SupportedColors.Black]: palette.black,
+  [SupportedColors.GreenDark2]: palette.green.dark2,
+  [SupportedColors.GreenBase]: palette.green.base,
 } as const;
 
 type SupportedColorsMap =
@@ -91,9 +90,9 @@ export const getColor = ({
     }
   } else {
     if (darkMode) {
-      fill = uiColors.white;
+      fill = palette.white;
     } else {
-      fill = uiColors.gray.dark3;
+      fill = palette.black;
     }
   }
 
