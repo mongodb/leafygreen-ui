@@ -8,7 +8,11 @@ afterAll(cleanup);
 describe('packages/leafygreen-provider/DarkModeContext', () => {
   const TestComponent = () => {
     const { darkMode, colorScheme } = useDarkModeContext();
-    return <div>{`${darkMode.toString()} - colorScheme: ${colorScheme}`}</div>;
+    return (
+      <div>{`${
+        darkMode?.toString() || 'undefined'
+      } - colorScheme: ${colorScheme}`}</div>
+    );
   };
 
   test('without a provider, by default useDarkMode returns false', () => {
