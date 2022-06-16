@@ -4,12 +4,12 @@ import { DarkModeProps, Mode } from '@leafygreen-ui/lib';
 import type { ModeType } from 'packages/lib/src/DarkModeProps';
 
 type DarkModeContextProps = DarkModeProps & {
-  colorScheme?: ModeType;
+  theme?: ModeType;
 };
 
 const DarkModeContext = createContext<DarkModeContextProps>({
   darkMode: false,
-  colorScheme: Mode.Light,
+  theme: Mode.Light,
 });
 export const useDarkModeContext = () => useContext(DarkModeContext);
 
@@ -21,7 +21,7 @@ function DarkModeProvider({
     <DarkModeContext.Provider
       value={{
         darkMode,
-        colorScheme: darkMode ? Mode.Dark : Mode.Light,
+        theme: darkMode ? Mode.Dark : Mode.Light,
       }}
     >
       {children}
