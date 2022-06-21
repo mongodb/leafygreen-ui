@@ -1,6 +1,6 @@
 import { css, keyframes } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { ComboboxSize as Size, Theme } from '../Combobox.types';
 
@@ -21,17 +21,20 @@ export const menuItemHeight = {
  */
 
 export const popoverStyle = (width = 384) => css`
-  border-radius: 4px;
   width: ${width}px;
   overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid;
 `;
 
 export const popoverThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
+    border-color: ${palette.gray.light2};
   `,
   [Theme.Dark]: css`
     box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
+    border-color: ${palette.gray.dark3};
   `,
 };
 
@@ -39,7 +42,7 @@ export const menuBaseStyle = css`
   position: relative;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: ${spacing[2]}px 0;
   font-family: ${fontFamilies.default};
   border-radius: inherit;
   overflow-y: auto;

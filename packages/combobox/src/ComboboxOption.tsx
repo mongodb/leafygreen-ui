@@ -225,14 +225,18 @@ const InternalComboboxOption = React.forwardRef<
       if (multiselect) {
         const checkbox = (
           <Checkbox
-            // Using empty label due to this bug: https://jira.mongodb.org/browse/PD-1681
-            label=""
             aria-labelledby={optionTextId}
             checked={isSelected}
             tabIndex={-1}
-            animate={false}
             disabled={disabled}
             darkMode={darkMode}
+            className={css`
+              // TODO: Remove when this is resolved:
+              // https://jira.mongodb.org/browse/PD-2171
+              & > label > div {
+                margin-top: 0;
+              }
+            `}
           />
         );
 

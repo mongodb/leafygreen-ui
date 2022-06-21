@@ -5,6 +5,7 @@ import isNull from 'lodash/isNull';
 import {
   focusRing,
   fontFamilies,
+  hoverRing,
   spacing,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -103,11 +104,19 @@ export const comboboxThemeStyles: Record<Theme, string> = {
     color: ${palette.gray.dark3};
     background-color: ${palette.white};
     border-color: ${palette.gray.base};
+
+    &:hover {
+      box-shadow: ${hoverRing[Theme.Light].gray};
+    }
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.light2};
     background-color: ${palette.gray.dark4};
     border-color: ${palette.gray.base};
+
+    &:hover {
+      box-shadow: ${hoverRing[Theme.Dark].gray};
+    }
   `,
 };
 
