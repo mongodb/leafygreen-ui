@@ -5,7 +5,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { clone, isArray, isEqual, isNull, isString, isUndefined } from 'lodash';
+import {
+  clone,
+  isArray,
+  isEqual,
+  isNull,
+  isString,
+  isUndefined,
+} from './utils/lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import {
   useDynamicRefs,

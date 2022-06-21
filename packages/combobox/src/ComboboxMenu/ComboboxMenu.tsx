@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import Popover from '@leafygreen-ui/popover';
+import { isUndefined } from '../utils/lodash';
 import { ComboboxContext, useDarkMode } from '../ComboboxContext';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
 import {
@@ -17,7 +18,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxProps } from '../Combobox.types';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isUndefined } from 'lodash';
 
 type ComboboxMenuProps = {
   children?: React.ReactNode;

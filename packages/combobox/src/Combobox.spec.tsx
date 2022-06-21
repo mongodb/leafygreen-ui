@@ -12,7 +12,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { flatten, isUndefined, startCase } from 'lodash';
+import { flatten, isUndefined, startCase } from './utils/lodash';
 import {
   defaultOptions,
   getComboboxJSX,

@@ -14,7 +14,7 @@ import {
   ComboboxMultiselectProps,
   OptionObject,
 } from './Combobox.types';
-import { isArray, isNull } from 'lodash';
+import { isArray, isNull } from './utils/lodash';
 import chalk from '@testing-library/jest-dom/node_modules/chalk';
 
 export interface NestedObject {
