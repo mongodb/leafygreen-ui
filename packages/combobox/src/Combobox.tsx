@@ -1,3 +1,9 @@
+import clone from 'lodash/clone';
+import isArray from 'lodash/isArray';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
 import React, {
   useCallback,
   useEffect,
@@ -5,14 +11,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  clone,
-  isArray,
-  isEqual,
-  isNull,
-  isString,
-  isUndefined,
-} from './utils/lodash';
 import { Description, Label } from '@leafygreen-ui/typography';
 import {
   useDynamicRefs,

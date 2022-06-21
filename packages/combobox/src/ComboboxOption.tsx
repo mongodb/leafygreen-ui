@@ -1,10 +1,11 @@
-import { css, cx } from '@leafygreen-ui/emotion';
 import React, { useCallback, useContext, useMemo } from 'react';
-import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Checkbox from '@leafygreen-ui/checkbox';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
+import { isComponentType } from '@leafygreen-ui/lib';
+import { uiColors } from '@leafygreen-ui/palette';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import {
   ComboboxOptionProps,
   ComboboxSize,
@@ -13,7 +14,6 @@ import {
 } from './Combobox.types';
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { wrapJSX } from './utils';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { menuItemPadding } from './ComboboxMenu/Menu.styles';
 
 /**

@@ -1,3 +1,5 @@
+import isArray from 'lodash/isArray';
+import isNull from 'lodash/isNull';
 import React from 'react';
 import {
   render,
@@ -7,6 +9,7 @@ import {
   queryAllByTestId,
   queryAllByAttribute,
 } from '@testing-library/react';
+import chalk from '@testing-library/jest-dom/node_modules/chalk';
 import userEvent from '@testing-library/user-event';
 import { Combobox, ComboboxGroup, ComboboxOption } from '.';
 import {
@@ -14,8 +17,6 @@ import {
   ComboboxMultiselectProps,
   OptionObject,
 } from './Combobox.types';
-import { isArray, isNull } from './utils/lodash';
-import chalk from '@testing-library/jest-dom/node_modules/chalk';
 
 export interface NestedObject {
   label: string;

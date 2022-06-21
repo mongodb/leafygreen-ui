@@ -1,7 +1,7 @@
+import isNull from 'lodash/isNull';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isNull } from './utils/lodash';
 import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { ComboboxSize as Size, Overflow, Theme } from './Combobox.types';

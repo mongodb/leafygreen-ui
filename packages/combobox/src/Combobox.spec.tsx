@@ -1,6 +1,9 @@
 /* eslint-disable jest/no-disabled-tests */
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
+import flatten from 'lodash/flatten';
+import isUndefined from 'lodash/isUndefined';
+import startCase from 'lodash/startCase';
 import React from 'react';
 import {
   waitForElementToBeRemoved,
@@ -12,7 +15,6 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { flatten, isUndefined, startCase } from './utils/lodash';
 import {
   defaultOptions,
   getComboboxJSX,

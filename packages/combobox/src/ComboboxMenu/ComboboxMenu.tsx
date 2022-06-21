@@ -1,6 +1,6 @@
+import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useMemo } from 'react';
 import Popover from '@leafygreen-ui/popover';
-import { isUndefined } from '../utils/lodash';
 import { ComboboxContext, useDarkMode } from '../ComboboxContext';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
 import {
