@@ -1,9 +1,12 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { registerRipple } from '@leafygreen-ui/ripple';
-import { useDarkModeContext, useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useDarkModeContext,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps, Mode } from './types';
 import {
   getClassName,
@@ -15,6 +18,7 @@ import {
 } from './styles';
 import ButtonIcon from './ButtonIcon';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { useGlobalDarkMode } from '@leafygreen-ui/hooks';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
@@ -39,9 +43,10 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     forwardRef,
   ) {
     const { usingKeyboard } = useUsingKeyboardContext();
-    const { globalDarkMode } = useDarkModeContext();
-    const [darkMode,] = useState<boolean>(darkModeParam || globalDarkMode);
     const rippleRef = useRef<HTMLDivElement | null>(null);
+
+    const { globalDarkMode } = useDarkModeContext();
+    const darkMode = useGlobalDarkMode(globalDarkMode, darkModeParam);
 
     useEffect(() => {
       let unregisterRipple: (() => void) | undefined;

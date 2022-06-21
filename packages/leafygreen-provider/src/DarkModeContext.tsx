@@ -6,7 +6,7 @@ import type { ThemeType } from 'packages/lib/src/DarkModeProps';
 interface DarkModeContextProps {
   globalDarkMode: boolean;
   theme?: ThemeType;
-};
+}
 
 const DarkModeContext = createContext<DarkModeContextProps>({
   globalDarkMode: false,
