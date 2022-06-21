@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
-import { fontFamilies, focusRing } from '@leafygreen-ui/tokens';
+import { fontFamilies, focusRing, typeScales } from '@leafygreen-ui/tokens';
 
 export const ContentStyle = {
   None: 'none',
@@ -97,8 +97,8 @@ const containerStyle = css`
   transition-property: border, box-shadow;
   border-radius: 24px;
   font-family: ${fontFamilies.default};
-  font-size: 13px;
-  line-height: 20px;
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
   padding: 24px;
   min-height: 68px; // 48px + 20px (padding + line-height)
 `;
