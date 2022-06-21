@@ -61,6 +61,14 @@ export const UncontrolledTemplate = ({
         <MenuItem size={size} href="http://mongodb.design">
           I am a link!
         </MenuItem>
+        <MenuItem size={size}>Lorem</MenuItem>
+        <MenuItem size={size}>Ipsum</MenuItem>
+        <MenuItem size={size}>Adipiscing</MenuItem>
+        <MenuItem size={size}>Cursus</MenuItem>
+        <MenuItem size={size}>Ullamcorper</MenuItem>
+        <MenuItem size={size}>Vulputate</MenuItem>
+        <MenuItem size={size}>Inceptos</MenuItem>
+        <MenuItem size={size}>Risus</MenuItem>
       </Menu>
     </LeafyGreenProvider>
   );

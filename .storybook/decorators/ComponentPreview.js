@@ -6,14 +6,14 @@ import { palette } from '@leafygreen-ui/palette';
 const rootStyle = css`
   display: flex;
   justify-content: center;
-  align-items: center;
   align-content: center;
   padding: 100px;
   height: 100%;
+  overflow: auto;
 `;
 
 const darkModeStyle = css`
-  background-color: ${palette.gray.dark2};
+  background-color: ${palette.black};
 `;
 
 // eslint-disable-next-line react/display-name
@@ -22,7 +22,9 @@ export default (Story, options) => {
   return (
     <LeafyGreenProvider>
       <div className={cx(rootStyle, { [darkModeStyle]: darkMode })}>
-        <Story darkMode={darkMode} {...options} />
+        <div>
+          <Story darkMode={darkMode} {...options} />
+        </div>
       </div>
     </LeafyGreenProvider>
   );

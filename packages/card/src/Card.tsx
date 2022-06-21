@@ -112,6 +112,9 @@ const containerStyle = css`
 `;
 
 export interface CardProps {
+  /**
+   * className prop passed to the component
+   */
   className?: string;
   /**
    * Determines whether the Card should be styled as clickable.

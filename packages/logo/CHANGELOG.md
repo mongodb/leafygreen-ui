@@ -1,5 +1,17 @@
 # @leafygreen-ui/logo
 
+## 6.1.2
+
+### Patch Changes
+
+- 2b6f86d2: Update SupportedColorsMap to pull from palette and remove all instances of uiColors
+
+## 6.1.1
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+
 ## 6.1.0
 
 ### Minor Changes

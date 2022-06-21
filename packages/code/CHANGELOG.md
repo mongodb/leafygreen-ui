@@ -1,5 +1,25 @@
 # @leafygreen-ui/code
 
+## 11.0.1
+
+### Patch Changes
+
+- fd2f6de0: Updates to TSDocs, PropTypes, and Storybook files
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [6a89bc29]
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [6792bc44]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [422dbfcd]
+- Updated dependencies [9ff90d4b]
+- Updated dependencies [6792bc44]
+  - @leafygreen-ui/palette@3.4.0
+  - @leafygreen-ui/hooks@7.3.0
+  - @leafygreen-ui/icon-button@11.0.2
+  - @leafygreen-ui/select@5.0.2
+  - @leafygreen-ui/tokens@1.3.1
+  - @leafygreen-ui/lib@9.3.0
+
 ## 11.0.0
 
 ### Major Changes

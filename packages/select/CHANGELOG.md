@@ -1,5 +1,32 @@
 # @leafygreen-ui/select
 
+## 5.0.3
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
+## 5.0.2
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- 6792bc44: Refactors Combobox and Select to use the new `useAvailableSpace` hook to calculate the max menu height
+- Updated dependencies [6a89bc29]
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [6792bc44]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [422dbfcd]
+- Updated dependencies [9ff90d4b]
+- Updated dependencies [8d12b918]
+- Updated dependencies [86a7f3c3]
+  - @leafygreen-ui/palette@3.4.0
+  - @leafygreen-ui/button@15.0.2
+  - @leafygreen-ui/hooks@7.3.0
+  - @leafygreen-ui/tokens@1.3.1
+  - @leafygreen-ui/typography@11.0.2
+  - @leafygreen-ui/lib@9.3.0
+
 ## 5.0.1
 
 ### Patch Changes

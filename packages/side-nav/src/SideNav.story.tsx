@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ComponentMeta } from '@storybook/react';
-import { css } from '@leafygreen-ui/emotion';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -9,6 +9,36 @@ import { palette } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import { SideNav, SideNavItem, SideNavGroup } from '.';
 import { Body, H1 } from '@leafygreen-ui/typography';
+import { SideNavProps } from './types';
+
+export default {
+  title: 'Packages/SideNav',
+  component: SideNav,
+} as ComponentMeta<typeof SideNav>;
+
+const basicStyles = css`
+  height: 100vw;
+`;
+
+export const Basic: ComponentStory<typeof SideNav> = ({
+  className,
+  ...args
+}: SideNavProps) => {
+  return (
+    <SideNav className={cx(basicStyles, className)} {...args}>
+      <SideNavGroup glyph={<Icon glyph="Support" />} header="Header text">
+        <SideNavItem active>Active State</SideNavItem>
+        <SideNavItem disabled>Disabled State</SideNavItem>
+      </SideNavGroup>
+
+      <SideNavGroup header="Test">
+        <SideNavItem>Default root element</SideNavItem>
+        <SideNavItem href="#">Anchor root element</SideNavItem>
+        <SideNavItem>Another item</SideNavItem>
+      </SideNavGroup>
+    </SideNav>
+  );
+};
 
 const appContainer = css`
   display: grid;
@@ -77,17 +107,7 @@ const content = (
   </Body>
 );
 
-export default {
-  title: 'Packages/SideNav',
-  component: SideNav,
-  parameters: {
-    controls: {
-      exclude: ['children', 'id', 'className'],
-    },
-  },
-} as ComponentMeta<typeof SideNav>;
-
-export const Basic = ({
+export const InLayout = ({
   isCollapsible,
   isDisabled,
   groupHeaderText,
@@ -141,7 +161,7 @@ export const Basic = ({
     </LeafyGreenProvider>
   );
 };
-Basic.args = {
+InLayout.args = {
   isCollapsible: true,
   isDisabled: false,
   groupHeaderText: 'Header text',

@@ -54,6 +54,13 @@ function ColorBlock({ color, name }: ColorBlockProps) {
 
 export default {
   title: 'Packages/Palette',
+  argTypes: {
+    className: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 };
 
 export function AllColors() {

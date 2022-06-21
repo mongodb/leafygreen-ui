@@ -1,5 +1,52 @@
 # @leafygreen-ui/combobox
 
+## 1.2.2
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [f0a357e2]
+  - @leafygreen-ui/tooltip@7.0.3
+
+## 1.2.0
+
+### Minor Changes
+
+- 8ab46ed4: Adds `Large` size variant to Combobox. Additionally, restores legacy font in Label & Description
+- d241af9e: Adds a `disabled` prop to ComboboxOptions. Note, disabled options will still be rendered in the menu, but not selectable
+
+### Patch Changes
+
+- d5c12b77: Updates filtering behavior. Now when opening the menu all options will be displayed, regardless of whether a selection has already been made
+- a5d19177: Updates backdrop click behavior to match native `<select>`. Now, when clicking away from an open menu to close it, the Combobox will retain focus and no click handlers should fire on clicked elements until the menu is closed
+- 8f7f8555: Updates combobox focus ring behavior. The combobox will now display a focus ring whenever the user is able to type in thy combobox. The outer focus ring will not render if a chip or the clear button is focused.
+- 4f2ff237: - Updates min-width of the input to fit all characters (previously wide characters would be cut off).
+  - Updates text wrapping of menu items so long unbroken strings (like ids) won't overflow, but wrap.
+- d241af9e: Restores menu font to legacy Akzidenz font
+- 6792bc44: Refactors Combobox and Select to use the new `useAvailableSpace` hook to calculate the max menu height
+- 266e0d8e: Ensures the focus remains in the combobox when a chip is removed. Focus is set to either the input, or the next chip to the right, whichever is relevant
+- 422dbfcd: Adds additional tests for internal Combobox utilities
+- Updated dependencies [1356d50d]
+- Updated dependencies [6a89bc29]
+- Updated dependencies [fd2f6de0]
+- Updated dependencies [6792bc44]
+- Updated dependencies [96d1ff9c]
+- Updated dependencies [422dbfcd]
+- Updated dependencies [9ff90d4b]
+  - @leafygreen-ui/checkbox@8.0.3
+  - @leafygreen-ui/palette@3.4.0
+  - @leafygreen-ui/hooks@7.3.0
+  - @leafygreen-ui/icon-button@11.0.2
+  - @leafygreen-ui/inline-definition@3.0.2
+  - @leafygreen-ui/tokens@1.3.1
+  - @leafygreen-ui/typography@11.0.2
+  - @leafygreen-ui/lib@9.3.0
+
 ## 1.1.0
 
 ### Minor Changes

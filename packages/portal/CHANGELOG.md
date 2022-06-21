@@ -1,5 +1,15 @@
 # @leafygreen-ui/portal
 
+## 4.0.3
+
+### Patch Changes
+
+- 96d1ff9c: Updates to propTypes, TSDocs, and Storybook controls
+- Updated dependencies [6792bc44]
+- Updated dependencies [422dbfcd]
+  - @leafygreen-ui/hooks@7.3.0
+  - @leafygreen-ui/lib@9.3.0
+
 ## 4.0.2
 
 ### Patch Changes

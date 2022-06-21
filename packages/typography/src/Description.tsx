@@ -20,7 +20,7 @@ const descriptionTypeScale: Record<BaseFontSize, string> = {
   `,
   [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
+    line-height: 20px; // Hardcoding because it does not match body2 lineHeight
   `,
 };
 
@@ -35,10 +35,10 @@ const descriptionColorStyle: Record<Mode, string> = {
 
 const disabledDescriptionColorStyle: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${palette.gray.base};
+    color: ${palette.gray.dark1};
   `,
   [Mode.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
   `,
 };
 
