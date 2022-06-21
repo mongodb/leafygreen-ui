@@ -78,6 +78,11 @@ export const baseInputStyle = css`
   transition: 150ms ease-in-out;
   transition-property: border-color, box-shadow;
 
+  // Autofill hack -- not sure why this works but without it the white auotfill background color is shown
+  &:-webkit-autofill {
+    transition: background-color 600s 0s, color 600s 0s;
+  }
+
   &:disabled {
     cursor: not-allowed;
 
@@ -110,9 +115,12 @@ export const baseInputStyle = css`
 
 export const inputModeStyles: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: ${palette.black};
-    background-color: ${palette.white};
-    border: 1px solid ${palette.gray.base};
+    &,
+    &:-webkit-autofill {
+      color: ${palette.black};
+      background-color: ${palette.white};
+      border: 1px solid ${palette.gray.base};
+    }
 
     &::placeholder {
       color: ${palette.gray.light1};
@@ -146,9 +154,12 @@ export const inputModeStyles: Record<Mode, string> = {
     }
   `,
   [Mode.Dark]: css`
-    color: ${palette.gray.light3};
-    background-color: ${palette.gray.dark4};
-    border: 1px solid ${palette.gray.base};
+    &,
+    &:-webkit-autofill {
+      color: ${palette.gray.light3};
+      background-color: ${palette.gray.dark4};
+      border: 1px solid ${palette.gray.base};
+    }
 
     &:hover,
     &:active {
