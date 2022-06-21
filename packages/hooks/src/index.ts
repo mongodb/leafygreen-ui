@@ -10,5 +10,4 @@ export { default as useIdAllocator } from './useIdAllocator';
 export { default as useValidation } from './useValidation';
 export { default as useDynamicRefs } from './useDynamicRefs';
 export { default as useAvailableSpace } from './useAvailableSpace';
-export { default as useGlobalDarkMode } from './useGlobalDarkMode';
 export { useObservedRef, useForwardedRef } from './useForwardedRef';

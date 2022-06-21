@@ -1,11 +1,12 @@
 import React from 'react';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { ButtonProps, Variant, Size, Mode } from './types';
+import { ButtonProps, Variant, Size } from './types';
 import { ButtonDataProp } from './styles';
+import { getTheme, Theme, ThemeType } from '@leafygreen-ui/lib';
 
-const baseIconStyle: Record<Mode, Record<Variant, string>> = {
-  [Mode.Light]: {
+const baseIconStyle: Record<ThemeType, Record<Variant, string>> = {
+  [Theme.Light]: {
     [Variant.Default]: css`
       color: ${palette.gray.base};
     `,
@@ -26,7 +27,7 @@ const baseIconStyle: Record<Mode, Record<Variant, string>> = {
     `,
   },
 
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     [Variant.Default]: css`
       color: ${palette.gray.light2};
     `,
@@ -48,8 +49,8 @@ const baseIconStyle: Record<Mode, Record<Variant, string>> = {
   },
 };
 
-const onlyIconStyle: Record<Mode, Record<Variant, string>> = {
-  [Mode.Light]: {
+const onlyIconStyle: Record<ThemeType, Record<Variant, string>> = {
+  [Theme.Light]: {
     [Variant.Default]: css`
       color: ${palette.gray.dark1};
     `,
@@ -69,7 +70,7 @@ const onlyIconStyle: Record<Mode, Record<Variant, string>> = {
       color: ${palette.green.dark2};
     `,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     [Variant.Default]: css`
       color: ${palette.gray.light3};
     `,
@@ -117,11 +118,11 @@ const iconSize: Record<Size, string> = {
   `,
 };
 
-const disabledIconStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const disabledIconStyle: Record<ThemeType, string> = {
+  [Theme.Light]: css`
     color: ${palette.gray.light1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.dark1};
   `,
 };
@@ -149,15 +150,15 @@ function ButtonIcon({
     role: 'presentation',
   };
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const theme = getTheme(darkMode);
   const iconStyle = isIconOnlyButton ? onlyIconStyle : baseIconStyle;
 
   return React.cloneElement(glyph, {
     className: cx(
-      iconStyle[mode][variant],
+      iconStyle[theme][variant],
       iconSize[size],
       {
-        [disabledIconStyle[mode]]: disabled,
+        [disabledIconStyle[theme]]: disabled,
         [onlyIconStyleHover]: isIconOnlyButton,
         [disabledIconOnlyStyle]: !darkMode && disabled && isIconOnlyButton,
       },

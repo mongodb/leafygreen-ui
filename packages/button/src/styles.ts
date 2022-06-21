@@ -1,9 +1,9 @@
 import { mix, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { Size, Variant, Mode, ButtonProps } from './types';
+import { Size, Variant, ButtonProps } from './types';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, Theme, ThemeType } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 
@@ -43,8 +43,8 @@ const baseButtonStyles = css`
   }
 `;
 
-const colorSet: Record<Mode, Record<Variant, string>> = {
-  [Mode.Light]: {
+const colorSet: Record<ThemeType, Record<Variant, string>> = {
+  [Theme.Light]: {
     [Variant.Default]: css`
       background-color: ${palette.gray.light3};
       border-color: ${palette.gray.base};
@@ -126,7 +126,7 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
       }
     `,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     [Variant.Default]: css`
       background-color: ${palette.gray.dark2};
       border-color: ${palette.gray.base};
@@ -233,8 +233,8 @@ const colorSet: Record<Mode, Record<Variant, string>> = {
   },
 };
 
-const focusStyle: Record<Mode, Record<Variant, string>> = {
-  [Mode.Light]: {
+const focusStyle: Record<ThemeType, Record<Variant, string>> = {
+  [Theme.Light]: {
     [Variant.Default]: css`
       &:focus {
         background-color: ${palette.white};
@@ -273,7 +273,7 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
       }
     `,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     [Variant.Default]: css`
       &:focus {
         background-color: ${palette.gray.dark1};
@@ -315,8 +315,8 @@ const focusStyle: Record<Mode, Record<Variant, string>> = {
   },
 };
 
-const disabledStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const disabledStyle: Record<ThemeType, string> = {
+  [Theme.Light]: css`
     &,
     &:hover {
       background-color: ${palette.gray.light2};
@@ -330,7 +330,7 @@ const disabledStyle: Record<Mode, string> = {
     }
   `,
 
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     &,
     &:hover {
       background-color: ${palette.gray.dark3};
@@ -400,7 +400,7 @@ export function getClassName({
     'baseFontSize' | 'variant' | 'size' | 'darkMode' | 'disabled'
   > & { usingKeyboard: boolean }
 >) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const mode = darkMode ? Theme.Dark : Theme.Light;
   const color = colorSet[mode][variant];
   const focus = focusStyle[mode][variant];
   const size = sizeStyle[sizeProp];
@@ -418,8 +418,8 @@ export function getClassName({
 
 const rippleOpacity = 0.76;
 
-export const rippleColors: Record<Mode, Record<Variant, string>> = {
-  [Mode.Light]: {
+export const rippleColors: Record<ThemeType, Record<Variant, string>> = {
+  [Theme.Light]: {
     [Variant.Default]: palette.gray.light2,
     [Variant.Primary]: palette.green.dark1,
     [Variant.PrimaryOutline]: transparentize(rippleOpacity, palette.green.base),
@@ -427,7 +427,7 @@ export const rippleColors: Record<Mode, Record<Variant, string>> = {
     [Variant.DangerOutline]: transparentize(rippleOpacity, palette.red.base),
     [Variant.BaseGreen]: palette.green.light1,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     [Variant.Default]: palette.gray.base,
     [Variant.Primary]: palette.green.dark1,
     [Variant.PrimaryOutline]: transparentize(rippleOpacity, palette.green.base),

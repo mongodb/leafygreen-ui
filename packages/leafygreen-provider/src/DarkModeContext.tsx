@@ -1,22 +1,20 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Theme } from '@leafygreen-ui/lib';
-import type { ThemeType } from 'packages/lib/src/DarkModeProps';
 
 interface DarkModeContextProps {
   globalDarkMode: boolean;
-  theme?: ThemeType;
-  getTheme: (darkMode: boolean) => ThemeType;
 }
-
-const getTheme = (darkMode: boolean) => (darkMode ? Theme.Dark : Theme.Light);
 
 const DarkModeContext = createContext<DarkModeContextProps>({
   globalDarkMode: false,
-  theme: Theme.Light,
-  getTheme,
 });
 export const useDarkModeContext = () => useContext(DarkModeContext);
+export const useDefaultDarkMode: (
+  componentDarkMode?: boolean,
+) => boolean = componentDarkMode => {
+  const { globalDarkMode } = useDarkModeContext();
+  return componentDarkMode ?? globalDarkMode;
+};
 
 function DarkModeProvider({
   children,
@@ -26,8 +24,6 @@ function DarkModeProvider({
     <DarkModeContext.Provider
       value={{
         globalDarkMode,
-        theme: getTheme(globalDarkMode),
-        getTheme,
       }}
     >
       {children}

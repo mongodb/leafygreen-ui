@@ -4,7 +4,7 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import {
-  useDarkModeContext,
+  useDefaultDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
@@ -18,7 +18,7 @@ import {
 } from './styles';
 import ButtonIcon from './ButtonIcon';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { useGlobalDarkMode } from '@leafygreen-ui/hooks';
+import { getTheme } from '@leafygreen-ui/lib';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
@@ -28,8 +28,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     {
       variant = Variant.Default,
       size = Size.Default,
-      darkMode: darkModeParam,
-      // darkMode = false,
+      darkMode: darkModeProp,
       baseFontSize = BaseFontSize.Body1,
       disabled = false,
       onClick,
@@ -46,8 +45,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     const { usingKeyboard } = useUsingKeyboardContext();
     const rippleRef = useRef<HTMLDivElement | null>(null);
 
-    const { globalDarkMode, getTheme } = useDarkModeContext();
-    const darkMode = useGlobalDarkMode(globalDarkMode, darkModeParam);
+    const darkMode = useDefaultDarkMode(darkModeProp);
 
     useEffect(() => {
       let unregisterRipple: (() => void) | undefined;
@@ -60,7 +58,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       }
 
       return unregisterRipple;
-    }, [rippleRef, variant, darkMode, disabled, getTheme]);
+    }, [rippleRef, variant, darkMode, disabled]);
 
     const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
 

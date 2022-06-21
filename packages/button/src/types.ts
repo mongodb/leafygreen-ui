@@ -101,4 +101,4 @@ interface ButtonProps {
   as?: keyof JSX.IntrinsicElements;
 }
 
-export { Variant, Size, Mode, ButtonProps };
+export { Variant, Size, ButtonProps };

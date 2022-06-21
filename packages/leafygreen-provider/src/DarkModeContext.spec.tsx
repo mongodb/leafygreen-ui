@@ -7,9 +7,11 @@ afterAll(cleanup);
 
 describe('packages/leafygreen-provider/DarkModeContext', () => {
   const TestComponent = () => {
-    const { darkMode, theme } = useDarkModeContext();
+    const { globalDarkMode, theme } = useDarkModeContext();
     return (
-      <div>{`${darkMode?.toString() || 'undefined'} - theme: ${theme}`}</div>
+      <div>{`${
+        globalDarkMode?.toString() || 'undefined'
+      } - theme: ${theme}`}</div>
     );
   };
 
@@ -45,7 +47,7 @@ describe('packages/leafygreen-provider/DarkModeContext', () => {
 
   test(`when darkMode prop is set to true, useDarkMode returns true`, () => {
     const { container } = render(
-      <LeafyGreenProvider darkMode={true}>
+      <LeafyGreenProvider globalDarkMode={true}>
         <TestComponent />
       </LeafyGreenProvider>,
     );
@@ -55,7 +57,7 @@ describe('packages/leafygreen-provider/DarkModeContext', () => {
 
   test(`when darkMode prop is set to true, theme returns dark`, () => {
     const { container } = render(
-      <LeafyGreenProvider darkMode={true}>
+      <LeafyGreenProvider globalDarkMode={true}>
         <TestComponent />
       </LeafyGreenProvider>,
     );

@@ -3,8 +3,9 @@ import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme, ThemeType } from './DarkModeProps';
+import getTheme from './getTheme';
 
-export { typeIs, createUniqueClassName, getNodeTextContent, Theme };
+export { typeIs, createUniqueClassName, getNodeTextContent, Theme, getTheme };
 export type { DarkModeProps, ThemeType };
 
 /** Helper type to extract an HTML element's valid props */
