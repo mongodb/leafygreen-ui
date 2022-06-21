@@ -1,4 +1,4 @@
-import { once } from 'lodash';
+import once from 'lodash/once';
 import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
