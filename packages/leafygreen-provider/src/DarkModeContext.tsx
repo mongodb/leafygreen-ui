@@ -1,6 +1,6 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { DarkModeProps, Mode } from '@leafygreen-ui/lib';
+import { DarkModeProps, Theme } from '@leafygreen-ui/lib';
 import type { ModeType } from 'packages/lib/src/DarkModeProps';
 
 type DarkModeContextProps = DarkModeProps & {
@@ -9,7 +9,7 @@ type DarkModeContextProps = DarkModeProps & {
 
 const DarkModeContext = createContext<DarkModeContextProps>({
   darkMode: false,
-  theme: Mode.Light,
+  theme: Theme.Light,
 });
 export const useDarkModeContext = () => useContext(DarkModeContext);
 
@@ -21,7 +21,7 @@ function DarkModeProvider({
     <DarkModeContext.Provider
       value={{
         darkMode,
-        theme: darkMode ? Mode.Dark : Mode.Light,
+        theme: darkMode ? Theme.Dark : Theme.Light,
       }}
     >
       {children}
