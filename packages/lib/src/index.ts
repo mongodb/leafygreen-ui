@@ -2,19 +2,19 @@ import { once } from 'lodash';
 import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
-import DarkModeProps, { Mode } from './DarkModeProps';
+import DarkModeProps, { Theme, ThemeType } from './DarkModeProps';
 
-export { typeIs, createUniqueClassName, getNodeTextContent, Mode };
-export type { DarkModeProps };
+export { typeIs, createUniqueClassName, getNodeTextContent, Theme };
+export type { DarkModeProps, ThemeType };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
   Element extends keyof JSX.IntrinsicElements,
   RefType extends HTMLElement = never,
-> = Omit<JSX.IntrinsicElements[Element], 'ref'> & {
-  ref?: [RefType] extends [never] ? never : React.Ref<RefType>;
-  key?: React.Key | null;
-};
+  > = Omit<JSX.IntrinsicElements[Element], 'ref'> & {
+    ref?: [RefType] extends [never] ? never : React.Ref<RefType>;
+    key?: React.Key | null;
+  };
 
 /**
  * Helper that constructs a type requiring at least one of the passed keys
@@ -138,14 +138,14 @@ export type AriaCurrentValue =
  */
 export type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends Array<infer U>
-    ? Array<RecursivePartial<U>>
-    : T[P] extends object
-    ? RecursivePartial<T[P]>
-    : T[P] extends infer U | undefined
-    ? RecursivePartial<U> | undefined
-    : T[P] extends infer U | null
-    ? RecursivePartial<U> | null
-    : T[P];
+  ? Array<RecursivePartial<U>>
+  : T[P] extends object
+  ? RecursivePartial<T[P]>
+  : T[P] extends infer U | undefined
+  ? RecursivePartial<U> | undefined
+  : T[P] extends infer U | null
+  ? RecursivePartial<U> | null
+  : T[P];
 };
 
 /**
