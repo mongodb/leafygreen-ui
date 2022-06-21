@@ -9,9 +9,7 @@ const DarkModeContext = createContext<DarkModeContextProps>({
   globalDarkMode: false,
 });
 export const useDarkModeContext = () => useContext(DarkModeContext);
-export const useDefaultDarkMode: (
-  componentDarkMode?: boolean,
-) => boolean = componentDarkMode => {
+export const useDefaultDarkMode = (componentDarkMode?: boolean) => {
   const { globalDarkMode } = useDarkModeContext();
   return componentDarkMode ?? globalDarkMode;
 };
