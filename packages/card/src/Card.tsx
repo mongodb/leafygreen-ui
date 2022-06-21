@@ -43,7 +43,7 @@ const colorSet: Record<Mode, ColorSet> = {
     containerStyle: css`
       border: 1px solid ${palette.gray.light2};
       box-shadow: ${lightBaseBoxShadow};
-      background-color: white;
+      background-color: ${palette.white};
       color: ${palette.gray.dark3};
     `,
     clickableStyle: css`
