@@ -6,11 +6,15 @@ import type { ThemeType } from 'packages/lib/src/DarkModeProps';
 interface DarkModeContextProps {
   globalDarkMode: boolean;
   theme?: ThemeType;
+  getTheme: (darkMode: boolean) => ThemeType;
 }
+
+const getTheme = (darkMode: boolean) => (darkMode ? Theme.Dark : Theme.Light);
 
 const DarkModeContext = createContext<DarkModeContextProps>({
   globalDarkMode: false,
   theme: Theme.Light,
+  getTheme,
 });
 export const useDarkModeContext = () => useContext(DarkModeContext);
 
@@ -22,7 +26,8 @@ function DarkModeProvider({
     <DarkModeContext.Provider
       value={{
         globalDarkMode,
-        theme: globalDarkMode ? Theme.Dark : Theme.Light,
+        theme: getTheme(globalDarkMode),
+        getTheme,
       }}
     >
       {children}

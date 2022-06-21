@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 
 const useGlobalDarkMode = (
   globalDarkMode: boolean,
-  darkModeParam?: boolean,
+  componentDarkMode?: boolean,
 ) => {
   const [darkMode, setDarkMode] = useState<boolean>(
-    darkModeParam !== undefined ? darkModeParam : globalDarkMode,
+    componentDarkMode !== undefined ? componentDarkMode : globalDarkMode,
   );
 
   useEffect(() => {
-    setDarkMode(darkModeParam !== undefined ? darkModeParam : globalDarkMode);
-  }, [darkModeParam, globalDarkMode]);
+    setDarkMode(
+      componentDarkMode !== undefined ? componentDarkMode : globalDarkMode,
+    );
+  }, [componentDarkMode, globalDarkMode]);
 
   return darkMode;
 };

@@ -7,7 +7,7 @@ import {
   useDarkModeContext,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Variant, Size, ButtonProps, Mode } from './types';
+import { Variant, Size, ButtonProps } from './types';
 import {
   getClassName,
   rippleColors,
@@ -29,6 +29,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       variant = Variant.Default,
       size = Size.Default,
       darkMode: darkModeParam,
+      // darkMode = false,
       baseFontSize = BaseFontSize.Body1,
       disabled = false,
       onClick,
@@ -45,13 +46,12 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     const { usingKeyboard } = useUsingKeyboardContext();
     const rippleRef = useRef<HTMLDivElement | null>(null);
 
-    const { globalDarkMode } = useDarkModeContext();
+    const { globalDarkMode, getTheme } = useDarkModeContext();
     const darkMode = useGlobalDarkMode(globalDarkMode, darkModeParam);
 
     useEffect(() => {
       let unregisterRipple: (() => void) | undefined;
-      const backgroundColor =
-        rippleColors[darkMode ? Mode.Dark : Mode.Light][variant];
+      const backgroundColor = rippleColors[getTheme(darkMode)][variant];
 
       if (rippleRef.current != null && !disabled) {
         unregisterRipple = registerRipple(rippleRef.current, {
@@ -60,7 +60,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       }
 
       return unregisterRipple;
-    }, [rippleRef, variant, darkMode, disabled]);
+    }, [rippleRef, variant, darkMode, disabled, getTheme]);
 
     const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
 
