@@ -1,27 +1,28 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { DarkModeProps, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 import type { ThemeType } from 'packages/lib/src/DarkModeProps';
 
-type DarkModeContextProps = DarkModeProps & {
+interface DarkModeContextProps {
+  globalDarkMode: boolean;
   theme?: ThemeType;
 };
 
 const DarkModeContext = createContext<DarkModeContextProps>({
-  darkMode: false,
+  globalDarkMode: false,
   theme: Theme.Light,
 });
 export const useDarkModeContext = () => useContext(DarkModeContext);
 
 function DarkModeProvider({
   children,
-  darkMode = false,
-}: PropsWithChildren<DarkModeProps>) {
+  globalDarkMode = false,
+}: PropsWithChildren<DarkModeContextProps>) {
   return (
     <DarkModeContext.Provider
       value={{
-        darkMode,
-        theme: darkMode ? Theme.Dark : Theme.Light,
+        globalDarkMode,
+        theme: globalDarkMode ? Theme.Dark : Theme.Light,
       }}
     >
       {children}
@@ -33,7 +34,7 @@ DarkModeProvider.displayName = 'DarkModeProvider';
 
 DarkModeProvider.propTypes = {
   children: PropTypes.node,
-  darkMode: PropTypes.bool,
+  globalDarkMode: PropTypes.bool,
 };
 
 export default DarkModeProvider;
