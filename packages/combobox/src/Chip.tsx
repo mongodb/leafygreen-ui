@@ -232,7 +232,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         onKeyDown={handleKeyDown}
         tabIndex={-1}
       >
-        <span className={cx(chipTextStyle, chipTextSizeStyle[size])}>
+        <span className={cx(chipTextSizeStyle[size])}>
           {truncatedName ? (
             <InlineDefinition
               darkMode={darkMode}
