@@ -1,14 +1,19 @@
 import { css, keyframes } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { ComboboxSize, Theme } from '../Combobox.types';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
+import { transparentize } from 'polished';
+import { ComboboxSize as Size, Theme } from '../Combobox.types';
+
+export const menuItemPadding: Record<Size, { x: number; y: number }> = {
+  [Size.Default]: { x: 12, y: 8 },
+  [Size.Large]: { x: 12, y: 8 },
+};
 
 /** Height of a menu item (in px) */
-export const menuItemHeight = 36;
-
-export const menuItemPadding: Record<ComboboxSize, { x: number; y: number }> = {
-  [ComboboxSize.Default]: { x: 12, y: 8 },
-  [ComboboxSize.Large]: { x: 12, y: 8 },
+export const menuItemHeight = {
+  [Size.Default]:
+    typeScales.body1.lineHeight + 2 * menuItemPadding[Size.Default].y,
+  [Size.Large]: typeScales.body2.lineHeight + 2 * menuItemPadding[Size.Large].y,
 };
 
 /**
@@ -16,36 +21,52 @@ export const menuItemPadding: Record<ComboboxSize, { x: number; y: number }> = {
  */
 
 export const popoverStyle = (width = 384) => css`
-  border-radius: 4px;
   width: ${width}px;
   overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid;
 `;
 
 export const popoverThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
+    border-color: ${palette.gray.light2};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
+    border-color: ${palette.gray.dark3};
+  `,
 };
 
 export const menuBaseStyle = css`
   position: relative;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: ${spacing[2]}px 0;
   font-family: ${fontFamilies.default};
   border-radius: inherit;
   overflow-y: auto;
   scroll-behavior: smooth;
-  min-height: ${menuItemHeight}px;
 `;
 
 export const menuThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${uiColors.gray.dark3};
-    background-color: ${uiColors.white};
+    color: ${palette.black};
+    background-color: ${palette.white};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+    background-color: ${palette.gray.dark3};
+  `,
+};
+
+export const menuSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    min-height: ${menuItemHeight[Size.Default]}px;
+  `,
+  [Size.Large]: css`
+    min-height: ${menuItemHeight[Size.Large]}px;
+  `,
 };
 
 export const menuList = css`
@@ -63,34 +84,34 @@ export const menuMessageBaseStyle = css`
 
 export const menuMessageThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    ${uiColors.gray.dark1}
+    color: ${palette.gray.dark3};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    color: ${palette.gray.light3};
+  `,
 };
 
-export const menuMessageSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
-    font-size: ${typeScales.body1.fontSize +
-    1}px; // TODO: update this @ redesign
-    line-height: ${typeScales.body1.lineHeight +
-    1}px; // TODO: update this @ redesign
-    padding: ${menuItemPadding[ComboboxSize.Default].y}px
-      ${menuItemPadding[ComboboxSize.Default].x}px;
+export const menuMessageSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    padding: ${menuItemPadding[Size.Default].y}px
+      ${menuItemPadding[Size.Default].x}px;
   `,
-  [ComboboxSize.Large]: css`
+  [Size.Large]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
-    padding: ${menuItemPadding[ComboboxSize.Large].y}px
-      ${menuItemPadding[ComboboxSize.Large].x}px;
+    padding: ${menuItemPadding[Size.Large].y}px
+      ${menuItemPadding[Size.Large].x}px;
   `,
 };
 
-export const menuMessageIconSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
-    height: ${typeScales.body1.fontSize + 1}px; // TODO: update this @ redesign
-    width: ${typeScales.body1.fontSize + 1}px; // TODO: update this @ redesign
+export const menuMessageIconSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    height: ${typeScales.body1.fontSize}px;
+    width: ${typeScales.body1.fontSize}px;
   `,
-  [ComboboxSize.Large]: css`
+  [Size.Large]: css`
     height: ${typeScales.body2.fontSize}px;
     width: ${typeScales.body2.fontSize}px;
   `,

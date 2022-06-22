@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import React, { useContext } from 'react';
 import { ComboboxGroupProps, Theme } from './Combobox.types';
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
@@ -8,11 +8,9 @@ import { ComboboxContext, useDarkMode } from './ComboboxContext';
 const comboboxGroupStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     padding-top: 8px;
-    border-bottom: 1px solid ${uiColors.gray.light1};
   `,
   [Theme.Dark]: css`
     padding-top: 8px;
-    border-bottom: 1px solid ${uiColors.gray.dark1};
   `,
 };
 
@@ -31,10 +29,10 @@ const comboboxGroupLabel = css`
 
 const comboboxGroupLabelThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${uiColors.gray.dark1};
+    color: ${palette.gray.dark1};
   `,
   [Theme.Dark]: css`
-    color: ${uiColors.gray.light1};
+    color: ${palette.gray.light1};
   `,
 };
 
