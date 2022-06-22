@@ -78,11 +78,6 @@ export const baseInputStyle = css`
   transition: 150ms ease-in-out;
   transition-property: border-color, box-shadow;
 
-  // Autofill hack -- not sure why this works but without it the white auotfill background color is shown
-  &:-webkit-autofill {
-    transition: background-color 600s 0s, color 600s 0s;
-  }
-
   &:disabled {
     cursor: not-allowed;
 
@@ -115,11 +110,27 @@ export const baseInputStyle = css`
 
 export const inputModeStyles: Record<Mode, string> = {
   [Mode.Light]: css`
-    &,
+    color: ${palette.black};
+    background-color: ${palette.white};
+    border: 1px solid ${palette.gray.base};
+
     &:-webkit-autofill {
-      color: ${palette.black};
-      background-color: ${palette.white};
       border: 1px solid ${palette.gray.base};
+      color: ${palette.black};
+      background: ${palette.white};
+      -webkit-text-fill-color: ${palette.black};
+      box-shadow: 0 0 0 1000px ${palette.white} inset;
+
+      &:focus {
+        box-shadow: 0 0 0 1000px ${palette.white} inset,
+          0 0 0 2px ${palette.blue.light1};
+        border-color: ${palette.blue.light1};
+      }
+
+      &:hover:not(:focus) {
+        box-shadow: 0 0 0 1000px ${palette.white} inset,
+          0 0 0 3px ${palette.gray.light2};
+      }
     }
 
     &::placeholder {
@@ -154,11 +165,27 @@ export const inputModeStyles: Record<Mode, string> = {
     }
   `,
   [Mode.Dark]: css`
-    &,
+    color: ${palette.gray.light3};
+    background-color: ${palette.gray.dark4};
+    border: 1px solid ${palette.gray.base};
+
     &:-webkit-autofill {
-      color: ${palette.gray.light3};
-      background-color: ${palette.gray.dark4};
       border: 1px solid ${palette.gray.base};
+      color: ${palette.gray.light3};
+      background: ${palette.gray.dark4};
+      -webkit-text-fill-color: ${palette.gray.light3};
+      box-shadow: 0 0 0 1000px ${palette.gray.dark4} inset;
+
+      &:focus {
+        box-shadow: 0 0 0 1000px ${palette.gray.dark4} inset,
+          0 0 0 2px ${palette.blue.light1};
+        border-color: ${palette.blue.light1};
+      }
+
+      &:hover:not(:focus) {
+        box-shadow: 0 0 0 1000px ${palette.gray.dark4} inset,
+          0 0 0 3px ${palette.gray.dark2};
+      }
     }
 
     &:hover,
