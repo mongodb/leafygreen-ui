@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import PropTypes from 'prop-types';
 import UsingKeyboardProvider from './UsingKeyboardContext';
 import TypographyProvider, {
   TypographyProviderProps,
 } from './TypographyContext';
 import PortalContextProvider, { PortalContextValues } from './PortalContext';
+import DarkModeProvider from './DarkModeContext';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 type LeafyGreenProviderProps = {
-  children: React.ReactNode;
   popoverPortalContainer?: PortalContextValues['popover'];
-} & TypographyProviderProps;
+} & TypographyProviderProps &
+  DarkModeProps;
 
 function LeafyGreenProvider({
   children,
   baseFontSize,
   popoverPortalContainer,
-}: LeafyGreenProviderProps) {
+  darkMode,
+}: PropsWithChildren<LeafyGreenProviderProps>) {
   return (
     <UsingKeyboardProvider>
       <PortalContextProvider popover={popoverPortalContainer}>
         <TypographyProvider baseFontSize={baseFontSize}>
-          {children}
+          <DarkModeProvider darkMode={darkMode}>{children}</DarkModeProvider>
         </TypographyProvider>
       </PortalContextProvider>
     </UsingKeyboardProvider>

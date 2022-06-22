@@ -38,11 +38,11 @@ const inputHeight: Record<Size, number> = {
 export const comboboxPadding: Record<Size, { x: number; y: number }> = {
   [Size.Default]: {
     y: (36 - inputHeight[Size.Default] - 2) / 2,
-    x: 8 - 1,
+    x: spacing[2] - 1,
   },
   [Size.Large]: {
     y: (48 - inputHeight[Size.Large] - 2) / 2,
-    x: 8 - 1,
+    x: spacing[2] - 1,
   },
 };
 

@@ -6,10 +6,10 @@ import { palette } from '@leafygreen-ui/palette';
 const rootStyle = css`
   display: flex;
   justify-content: center;
-  align-items: center;
   align-content: center;
   padding: 100px;
   height: 100%;
+  overflow: auto;
 `;
 
 const darkModeStyle = css`
