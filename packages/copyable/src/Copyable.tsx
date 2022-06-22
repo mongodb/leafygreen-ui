@@ -70,7 +70,7 @@ const codeStyle = css`
   height: 100%;
   width: 100%;
   padding-left: 12px;
-  border: 1px solid;
+  // border: 1px solid;
   border-radius: 6px;
   white-space: nowrap;
   overflow: hidden;
@@ -80,6 +80,7 @@ const codeStyle = css`
 
 const largeCodeStyle = css`
   font-size: 15px;
+  line-height: 24px;
 `;
 
 const noButtonCodeStyle = css`
@@ -87,9 +88,9 @@ const noButtonCodeStyle = css`
 `;
 
 const codeStyleColor = (mode: Mode) => css`
-  color: ${colorSets[mode].code.text};
-  background-color: ${colorSets[mode].code.background};
-  border-color: ${colorSets[mode].code.border};
+  // color: ${colorSets[mode].code.text};
+  // background-color: ${colorSets[mode].code.background};
+  // border-color: ${colorSets[mode].code.border};
 `;
 
 const buttonWrapperStyle = css`
@@ -257,16 +258,10 @@ export default function Copyable({
         )}
       >
         <InlineCode
+          darkMode={darkMode}
           id={codeId}
           className={cx(codeStyle, codeStyleColor(mode), {
             [largeCodeStyle]: size === Size.Large,
-            // TODO: Refresh - remove dark mode logic
-            [css`
-              font-size: 14px;
-            `]: darkMode,
-            [css`
-              font-size: 16px;
-            `]: darkMode && size === Size.Large,
           })}
         >
           {children}

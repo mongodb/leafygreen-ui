@@ -26,7 +26,7 @@
     "@leafygreen-ui/icon": "^11.9.0",
     "@leafygreen-ui/palette": "^3.4.0",
     "@leafygreen-ui/tooltip": "^7.0.3",
-    "@leafygreen-ui/typography": "^11.0.2",
+    "@leafygreen-ui/typography": "^12.0.0",
     "clipboard": "^2.0.6"
   },
   "peerDependencies": {
