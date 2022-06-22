@@ -14,7 +14,7 @@ import {
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { wrapJSX } from './utils';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { menuItemPadding } from './Menu.styles';
+import { menuItemPadding } from './ComboboxMenu/Menu.styles';
 
 /**
  * Styles
