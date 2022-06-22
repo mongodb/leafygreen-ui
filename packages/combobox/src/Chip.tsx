@@ -1,85 +1,54 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { ChipProps, ComboboxSize } from './Combobox.types';
+import { ChipProps, ComboboxSize as Size, Theme } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
-import { ComboboxContext } from './ComboboxContext';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap } from '@leafygreen-ui/lib';
-import { chipClassName } from './Combobox.styles';
+import { chipClassName, chipWrapperPaddingY } from './Combobox.styles';
 import { typeScales } from '@leafygreen-ui/tokens';
 
-const chipWrapperStyle = ({
-  darkMode,
-  size,
-}: {
-  darkMode: boolean;
-  size: ComboboxSize;
-}) => {
-  let chipModeStyle, chipSizeStyle;
+const chipWrapperBaseStyle = css`
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+`;
 
-  if (darkMode) {
-    chipModeStyle = css``;
-  } else {
-    chipModeStyle = css`
-      --lg-combobox-chip-text-color: ${uiColors.gray.dark3};
-      --lg-combobox-chip-icon-color: ${uiColors.gray.dark2};
-      --lg-combobox-chip-background-color: ${uiColors.gray.light2};
-      --lg-combobox-chip-hover-color: ${uiColors.gray.light1};
-      --lg-combobox-chip-focus-color: ${uiColors.blue.light2};
-    `;
-  }
+const chipWrapperSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    font-size: ${typeScales.body1.fontSize + 1}px; // TODO: update this;
+    line-height: ${typeScales.body1.lineHeight}px;
+    padding-block: ${chipWrapperPaddingY[Size.Default]}px;
+    border-radius: 4px;
+  `,
+  [Size.Large]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+    padding-block: ${chipWrapperPaddingY[Size.Large]}px;
+    border-radius: 4px;
+  `,
+};
 
-  switch (size) {
-    case ComboboxSize.Default:
-      chipSizeStyle = css`
-        --lg-combobox-chip-height: 24px;
-        --lg-combobox-chip-border-radius: 4px;
-        --lg-combobox-chip-font-size: 14px;
-        --lg-combobox-chip-line-height: 20px;
-        --lg-combobox-chip-padding-x: 6px;
-      `;
-      break;
-    case ComboboxSize.Large:
-      chipSizeStyle = css`
-        --lg-combobox-chip-height: 28px;
-        --lg-combobox-chip-border-radius: 4px;
-        --lg-combobox-chip-font-size: ${typeScales.body2.fontSize}px;
-        --lg-combobox-chip-line-height: ${typeScales.body2.lineHeight}px;
-        --lg-combobox-chip-padding-x: 6px;
-      `;
-      break;
-  }
+const chipWrapperThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${uiColors.gray.dark3};
+    background-color: ${uiColors.gray.light2};
 
-  return cx(
-    chipModeStyle,
-    chipSizeStyle,
-    css`
-      display: inline-flex;
-      align-items: center;
-      overflow: hidden;
-      white-space: nowrap;
-      height: var(--lg-combobox-chip-height);
-      font-size: var(--lg-combobox-chip-font-size);
-      line-height: var(--lg-combobox-chip-line-height);
-      border-radius: var(--lg-combobox-chip-border-radius);
-      color: var(--lg-combobox-chip-text-color);
-      background-color: var(--lg-combobox-chip-background-color);
-
-      // TODO - refine these styles
-      /* &:focus, */
-      &:focus-within {
-        background-color: var(--lg-combobox-chip-focus-color);
-      }
-    `,
-  );
+    // TODO: - refine these styles
+    &:focus-within {
+      background-color: ${uiColors.blue.light2};
+    }
+  `,
+  [Theme.Dark]: css``,
 };
 
 const chipText = css`
-  padding-inline: var(--lg-combobox-chip-padding-x);
+  padding-inline: 6px;
 `;
 
-const chipButton = css`
+const chipButtonStyle = css`
   position: relative;
   display: flex;
   align-items: center;
@@ -89,7 +58,6 @@ const chipButton = css`
   outline: none;
   border: none;
   background-color: transparent;
-  color: var(--lg-combobox-chip-icon-color);
   cursor: pointer;
   transition: background-color 100ms ease-in-out;
 
@@ -100,13 +68,23 @@ const chipButton = css`
     left: 0;
     height: 100%;
     width: 1px;
-    background-color: var(--lg-combobox-chip-hover-color);
-  }
-
-  &:hover {
-    background-color: var(--lg-combobox-chip-hover-color);
   }
 `;
+
+const chipButtonThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${uiColors.gray.dark2};
+
+    &:before {
+      background-color: ${uiColors.gray.light1};
+    }
+
+    &:hover {
+      background-color: ${uiColors.gray.light1};
+    }
+  `,
+  [Theme.Dark]: css``,
+};
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
@@ -117,6 +95,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
+    const theme = useDarkMode(darkMode);
 
     const isTruncated =
       !!chipCharacterLimit &&
@@ -199,7 +178,12 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         aria-selected={isFocused}
         data-testid="lg-combobox-chip"
         ref={forwardedRef}
-        className={cx(chipClassName, chipWrapperStyle({ darkMode, size }))}
+        className={cx(
+          chipClassName,
+          chipWrapperBaseStyle,
+          chipWrapperThemeStyle[theme],
+          chipWrapperSizeStyle[size],
+        )}
         onClick={handleChipClick}
         onKeyDown={handleKeyDown}
         tabIndex={-1}
@@ -218,7 +202,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           aria-disabled={disabled}
           disabled={disabled}
           ref={buttonRef}
-          className={chipButton}
+          className={cx(chipButtonStyle, chipButtonThemeStyle[theme])}
           onClick={handleButtonClick}
         >
           <Icon glyph="X" />

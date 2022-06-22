@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { ComboboxSize, TrunctationLocation } from './Combobox.types';
+import { ComboboxSize, Theme, TrunctationLocation } from './Combobox.types';
 
 interface ComboboxData {
   multiselect: boolean;
@@ -19,3 +19,6 @@ export const ComboboxContext = createContext<ComboboxData>({
   withIcons: false,
   disabled: false,
 });
+
+export const useDarkMode = (darkMode: boolean) =>
+  darkMode ? Theme.Dark : Theme.Light;

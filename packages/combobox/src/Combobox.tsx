@@ -28,28 +28,8 @@ import {
   OptionObject,
   ComboboxElement,
   ComboboxSize,
+  State,
 } from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
-import { InternalComboboxOption } from './ComboboxOption';
-import { Chip } from './Chip';
-import {
-  clearButtonStyle,
-  clearButtonFocusOverrideStyles,
-  comboboxFocusStyle,
-  comboboxParentStyle,
-  comboboxStyle,
-  endIcon,
-  errorMessageStyle,
-  inputElementStyle,
-  inputWrapperStyle,
-  loadingIconStyle,
-  menuList,
-  menuMessage,
-  menuStyle,
-  menuWrapperStyle,
-  _tempLabelDescriptionOverrideStyle,
-} from './Combobox.styles';
-import { InternalComboboxGroup } from './ComboboxGroup';
 import {
   flattenChildren,
   getOptionObjectFromValue,
@@ -57,6 +37,43 @@ import {
   getValueForDisplayName,
   getNameAndValue,
 } from './utils';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
+import { InternalComboboxGroup } from './ComboboxGroup';
+import { InternalComboboxOption } from './ComboboxOption';
+import { Chip } from './Chip';
+import {
+  comboboxFocusStyle,
+  inputWrapperStyle,
+  _tempLabelDescriptionOverrideStyle,
+  baseComboboxStyles,
+  comboboxThemeStyles,
+  comboboxSizeStyles,
+  comboboxDisabledStyles,
+  comboboxErrorStyles,
+  comboboxParentStyle,
+  baseInputElementStyle,
+  inputElementSizeStyle,
+  inputElementTransitionStyles,
+  multiselectInputElementStyle,
+  clearButtonStyle,
+  clearButtonFocusOverrideStyles,
+  endIconStyle,
+  errorMessageThemeStyle,
+  errorMessageSizeStyle,
+  multiselectInputElementPadding,
+} from './Combobox.styles';
+import {
+  popoverStyle,
+  menuThemeStyle,
+  menuBaseStyle,
+  menuList,
+  menuMessageBaseStyle,
+  menuMessageThemeStyle,
+  menuMessageSizeStyle,
+  popoverThemeStyle,
+  menuMessageIconSizeStyle,
+  loadingIconStyle,
+} from './Menu.styles';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -97,6 +114,7 @@ export default function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
+  const theme = useDarkMode(darkMode);
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
 
@@ -357,6 +375,8 @@ export default function Combobox<M extends boolean>({
   const [focusedElementName, trackFocusedElement] = useState<
     ComboboxElement | undefined
   >();
+  const isElementFocused = (elementName: ComboboxElement) =>
+    elementName === focusedElementName;
 
   type Direction = 'next' | 'prev' | 'first' | 'last';
 
@@ -758,9 +778,13 @@ export default function Combobox<M extends boolean>({
           </IconButton>
         )}
         {state === 'error' ? (
-          <Icon glyph="Warning" color={uiColors.red.base} className={endIcon} />
+          <Icon
+            glyph="Warning"
+            color={uiColors.red.base}
+            className={endIconStyle(size)}
+          />
         ) : (
-          <Icon glyph="CaretDown" className={endIcon} />
+          <Icon glyph="CaretDown" className={endIconStyle(size)} />
         )}
       </>
     );
@@ -769,6 +793,7 @@ export default function Combobox<M extends boolean>({
     doesSelectionExist,
     disabled,
     state,
+    size,
     updateSelection,
     onClear,
     onFilter,
@@ -916,14 +941,20 @@ export default function Combobox<M extends boolean>({
    * Includes error, empty, search and default states
    */
   const renderedMenuContents = useMemo((): JSX.Element => {
+    const messageStyles = cx(
+      menuMessageBaseStyle,
+      menuMessageThemeStyle[theme],
+      menuMessageSizeStyle[size],
+    );
+
     switch (searchState) {
       case 'loading': {
         return (
-          <span className={menuMessage}>
+          <span className={messageStyles}>
             <Icon
               glyph="Refresh"
               color={uiColors.blue.base}
-              className={loadingIconStyle}
+              className={cx(menuMessageIconSizeStyle[size], loadingIconStyle)}
             />
             {searchLoadingMessage}
           </span>
@@ -932,8 +963,12 @@ export default function Combobox<M extends boolean>({
 
       case 'error': {
         return (
-          <span className={menuMessage}>
-            <Icon glyph="Warning" color={uiColors.red.base} />
+          <span className={messageStyles}>
+            <Icon
+              glyph="Warning"
+              color={uiColors.red.base}
+              className={menuMessageIconSizeStyle[size]}
+            />
             {searchErrorMessage}
           </span>
         );
@@ -945,10 +980,12 @@ export default function Combobox<M extends boolean>({
           return <ul className={menuList}>{renderedOptionsJSX}</ul>;
         }
 
-        return <span className={menuMessage}>{searchEmptyMessage}</span>;
+        return <span className={messageStyles}>{searchEmptyMessage}</span>;
       }
     }
   }, [
+    theme,
+    size,
     renderedOptionsJSX,
     searchEmptyMessage,
     searchErrorMessage,
@@ -1220,10 +1257,7 @@ export default function Combobox<M extends boolean>({
       }}
     >
       <div
-        className={cx(
-          comboboxParentStyle({ darkMode, size, overflow }),
-          className,
-        )}
+        className={cx(comboboxParentStyle(size, overflow), className)}
         {...rest}
       >
         <div>
@@ -1231,13 +1265,13 @@ export default function Combobox<M extends boolean>({
             <Label
               id={labelId}
               htmlFor={inputId}
-              className={_tempLabelDescriptionOverrideStyle}
+              className={_tempLabelDescriptionOverrideStyle[size]}
             >
               {label}
             </Label>
           )}
           {description && (
-            <Description className={_tempLabelDescriptionOverrideStyle}>
+            <Description className={_tempLabelDescriptionOverrideStyle[size]}>
               {description}
             </Description>
           )}
@@ -1252,25 +1286,29 @@ export default function Combobox<M extends boolean>({
           aria-controls={menuId}
           aria-owns={menuId}
           tabIndex={-1}
-          className={cx(comboboxStyle, {
-            [comboboxFocusStyle]: focusedElementName === ComboboxElement.Input,
-          })}
           onMouseDown={handleInputWrapperMousedown}
           onClick={handleComboboxClick}
           onFocus={handleComboboxFocus}
           onKeyDown={handleKeyDown}
           onTransitionEnd={handleTransitionEnd}
-          data-disabled={disabled}
-          data-state={state}
+          className={cx(
+            baseComboboxStyles,
+            comboboxThemeStyles[theme],
+            comboboxSizeStyles(size),
+            {
+              [comboboxDisabledStyles[theme]]: disabled,
+              [comboboxErrorStyles[theme]]: state === State.error,
+              [comboboxFocusStyle[theme]]: isElementFocused(
+                ComboboxElement.Input,
+              ),
+            },
+          )}
         >
           <div
             ref={inputWrapperRef}
             className={inputWrapperStyle({
-              overflow,
-              isOpen,
-              selection,
               size,
-              value: inputValue,
+              overflow,
             })}
           >
             {renderedChips}
@@ -1281,7 +1319,17 @@ export default function Combobox<M extends boolean>({
               aria-labelledby={labelId}
               ref={inputRef}
               id={inputId}
-              className={inputElementStyle}
+              className={cx(
+                baseInputElementStyle,
+                inputElementSizeStyle[size],
+                inputElementTransitionStyles(isOpen, overflow),
+                {
+                  [multiselectInputElementStyle(size, inputValue)]:
+                    isMultiselect(selection),
+                  [multiselectInputElementPadding(selection)]:
+                    isMultiselect(selection),
+                },
+              )}
               placeholder={placeholderValue}
               disabled={disabled ?? undefined}
               onChange={handleInputChange}
@@ -1293,7 +1341,14 @@ export default function Combobox<M extends boolean>({
         </div>
 
         {state === 'error' && errorMessage && (
-          <div className={errorMessageStyle}>{errorMessage}</div>
+          <div
+            className={cx(
+              errorMessageThemeStyle[theme],
+              errorMessageSizeStyle[size],
+            )}
+          >
+            {errorMessage}
+          </div>
         )}
 
         {/******* /
@@ -1306,7 +1361,7 @@ export default function Combobox<M extends boolean>({
           justify="middle"
           refEl={comboboxRef}
           adjustOnMutation={true}
-          className={menuWrapperStyle({ darkMode, size, width: menuWidth })}
+          className={cx(popoverStyle(menuWidth), popoverThemeStyle[theme])}
           {...popoverProps}
         >
           <div
@@ -1316,7 +1371,8 @@ export default function Combobox<M extends boolean>({
             aria-expanded={isOpen}
             ref={menuRef}
             className={cx(
-              menuStyle,
+              menuBaseStyle,
+              menuThemeStyle[theme],
               css`
                 max-height: ${maxHeightValue};
               `,
