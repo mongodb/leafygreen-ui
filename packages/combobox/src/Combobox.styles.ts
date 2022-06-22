@@ -1,9 +1,14 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import isNull from 'lodash/isNull';
-import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
+import {
+  focusRing,
+  fontFamilies,
+  hoverRing,
+  spacing,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 import { ComboboxSize as Size, Overflow, Theme } from './Combobox.types';
 
 /**
@@ -70,6 +75,7 @@ export const comboboxParentStyle = (
 ): string => {
   return cx(
     css`
+      font-family: ${fontFamilies.default};
       width: 100%;
       min-width: ${minWidth[size]}px;
     `,
@@ -90,51 +96,73 @@ export const baseComboboxStyles = css`
   transition-property: background-color, box-shadow, border-color;
   border: 1px solid;
   width: inherit;
+  border-radius: 6px;
 `;
 
 export const comboboxThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${uiColors.gray.dark3};
-    background-color: ${uiColors.gray.light3};
-    box-shadow: 0px 1px 2px ${transparentize(0.7, uiColors.black)};
-    border-color: ${uiColors.gray.base};
+    color: ${palette.gray.dark3};
+    background-color: ${palette.white};
+    border-color: ${palette.gray.base};
+
+    &:hover {
+      box-shadow: ${hoverRing[Theme.Light].gray};
+    }
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark4};
+    border-color: ${palette.gray.base};
+
+    &:hover {
+      box-shadow: ${hoverRing[Theme.Dark].gray};
+    }
+  `,
 };
 
 export const comboboxSizeStyles = (size: Size) => css`
   padding: ${comboboxPadding[size].y}px ${comboboxPadding[size].x}px;
-  border-radius: 3px;
 `;
 
 export const comboboxDisabledStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    box-shadow: unset;
     cursor: not-allowed;
-    color: ${uiColors.gray.dark1};
-    background-color: ${uiColors.gray.light2};
-    border-color: ${uiColors.gray.light1};
+    color: ${palette.gray.dark1};
+    background-color: ${palette.gray.light2};
+    border-color: ${palette.gray.light1};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark1};
+    background-color: ${palette.gray.dark3};
+    border-color: ${palette.gray.dark2};
+  `,
 };
 
 export const comboboxErrorStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    border-color: ${uiColors.red.base};
+    border-color: ${palette.red.base};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    border-color: ${palette.red.light1};
+  `,
 };
 
 export const comboboxFocusStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &:focus-within {
       border-color: transparent;
-      background-color: ${uiColors.white};
-      box-shadow: 0 0 0 3px ${uiColors.focus},
-        0px 4px 4px ${transparentize(0.7, uiColors.black)};
+      background-color: ${palette.white};
+      box-shadow: ${focusRing[Theme.Light].input};
     }
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    &:focus-within {
+      border-color: transparent;
+      background-color: ${palette.gray.dark4};
+      box-shadow: ${focusRing[Theme.Dark].input};
+    }
+  `,
 };
 
 export const inputWrapperStyle = ({
@@ -205,15 +233,16 @@ export const inputWrapperStyle = ({
 };
 
 export const baseInputElementStyle = css`
+  font-family: ${fontFamilies.default};
   width: 100%;
   border: none;
   cursor: inherit;
   background-color: inherit;
+  color: inherit;
   box-sizing: content-box;
   padding: 0;
   margin: 0;
   text-overflow: ellipsis;
-  padding-left: 4px;
 
   &:placeholder-shown {
     min-width: 100%;
@@ -223,18 +252,33 @@ export const baseInputElementStyle = css`
   }
 `;
 
+export const inputElementThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &::placeholder {
+      color: ${palette.gray.dark1};
+    }
+  `,
+  [Theme.Dark]: css`
+    &::placeholder {
+      color: ${palette.gray.light1};
+    }
+  `,
+};
+
 export const inputElementSizeStyle: Record<Size, string> = {
   [Size.Default]: css`
     height: ${inputHeight[Size.Default]}px;
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     min-width: ${maxCharWidth[Size.Default]}px;
+    padding-left: 4px;
   `,
   [Size.Large]: css`
     height: ${inputHeight[Size.Large]}px;
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     min-width: ${maxCharWidth[Size.Large]}px;
+    padding-left: 6px;
   `,
 };
 
@@ -288,17 +332,6 @@ export const clearButtonStyle = css`
   margin-block: calc(${caretIconSize / 2}px - 100%);
 `;
 
-// Temporary styles to override redesigned icon-button
-// TODO: Remove for UI refresh
-export const clearButtonFocusOverrideStyles = css`
-  &:focus {
-    box-shadow: unset;
-    &::before {
-      background-color: ${uiColors.blue.light2};
-    }
-  }
-`;
-
 export const endIconStyle = (size: Size) => css`
   height: ${caretIconSize}px;
   width: ${caretIconSize}px;
@@ -307,9 +340,11 @@ export const endIconStyle = (size: Size) => css`
 
 export const errorMessageThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${uiColors.red.base};
+    color: ${palette.red.base};
   `,
-  [Theme.Dark]: css``, // TODO: DarkMode
+  [Theme.Dark]: css`
+    color: ${palette.red.light1};
+  `,
 };
 
 export const errorMessageSizeStyle: Record<Size, string> = {
@@ -324,17 +359,6 @@ export const errorMessageSizeStyle: Record<Size, string> = {
     padding-top: ${comboboxPadding[Size.Large].y}px;
   `,
 };
-
-// TODO: Remove this during refresh update
-export const _tempLabelDescriptionOverrideStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    font-family: ${fontFamilies.legacy};
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-  `,
-  [Size.Large]: css`
-    font-family: ${fontFamilies.legacy};
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
-  `,
-};
+export const labelDescriptionContainerStyle = css`
+  margin-bottom: 2px;
+`;
