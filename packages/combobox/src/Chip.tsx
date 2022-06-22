@@ -7,10 +7,7 @@ import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap } from '@leafygreen-ui/lib';
 import { chipClassName, chipWrapperPaddingY } from './Combobox.styles';
-import {
-  // fontFamilies,
-  typeScales,
-} from '@leafygreen-ui/tokens';
+import { typeScales } from '@leafygreen-ui/tokens';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;
@@ -66,8 +63,6 @@ const disabledChipWrapperStyle: Record<Theme, string> = {
     box-shadow: inset 0 0 1px 1px ${palette.gray.dark2}; ;
   `,
 };
-
-const chipTextStyle = css``;
 
 const chipTextSizeStyle: Record<Size, string> = {
   [Size.Default]: css`
