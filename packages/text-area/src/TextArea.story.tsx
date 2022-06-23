@@ -13,7 +13,7 @@ export const StoryTextArea: React.FC<
 > = props => <TextArea {...props} />;
 
 export default {
-  title: 'Packages/TextArea',
+  title: 'Components/TextArea',
   component: StoryTextArea,
   argTypes: {
     baseFontSize: {

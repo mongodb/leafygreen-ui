@@ -19,7 +19,7 @@ const wrapperStyle = css`
 `;
 
 export default {
-  title: 'Packages/Combobox',
+  title: 'Components/Combobox',
   component: Combobox,
   parameters: {
     controls: {

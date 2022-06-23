@@ -6,7 +6,7 @@ import { TabsProps } from './Tabs';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
 export default {
-  title: 'Packages/Tabs',
+  title: 'Components/Tabs',
   component: Tabs,
   args: {
     children: [

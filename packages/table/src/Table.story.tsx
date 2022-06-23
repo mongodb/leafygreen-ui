@@ -8,7 +8,7 @@ import { TableProps } from './Table';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Table',
+  title: 'Components/Table',
   component: Table,
   args: {
     data: defaultData,

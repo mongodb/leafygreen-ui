@@ -6,7 +6,7 @@ import { ComponentStory } from '@storybook/react';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/InlineDefinition',
+  title: 'Components/InlineDefinition',
   component: InlineDefinition,
   args: {
     definition:
