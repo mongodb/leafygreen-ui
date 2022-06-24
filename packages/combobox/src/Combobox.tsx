@@ -21,7 +21,7 @@ import {
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import {
   ComboboxProps,
@@ -47,7 +47,6 @@ import { Chip } from './Chip';
 import {
   comboboxFocusStyle,
   inputWrapperStyle,
-  _tempLabelDescriptionOverrideStyle,
   baseComboboxStyles,
   comboboxThemeStyles,
   comboboxSizeStyles,
@@ -59,11 +58,12 @@ import {
   inputElementTransitionStyles,
   multiselectInputElementStyle,
   clearButtonStyle,
-  clearButtonFocusOverrideStyles,
   endIconStyle,
   errorMessageThemeStyle,
   errorMessageSizeStyle,
   multiselectInputElementPadding,
+  labelDescriptionContainerStyle,
+  inputElementThemeStyle,
 } from './Combobox.styles';
 import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
 
@@ -765,7 +765,8 @@ export default function Combobox<M extends boolean>({
             ref={clearButtonRef}
             onClick={handleClearButtonClick}
             onFocus={handleClearButtonFocus}
-            className={cx(clearButtonStyle, clearButtonFocusOverrideStyles)}
+            className={cx(clearButtonStyle)}
+            darkMode={darkMode}
           >
             <Icon glyph="XWithCircle" />
           </IconButton>
@@ -773,7 +774,7 @@ export default function Combobox<M extends boolean>({
         {state === 'error' ? (
           <Icon
             glyph="Warning"
-            color={uiColors.red.base}
+            color={darkMode ? palette.red.light1 : palette.red.base}
             className={endIconStyle(size)}
           />
         ) : (
@@ -786,6 +787,7 @@ export default function Combobox<M extends boolean>({
     doesSelectionExist,
     disabled,
     state,
+    darkMode,
     size,
     updateSelection,
     onClear,
@@ -1193,20 +1195,14 @@ export default function Combobox<M extends boolean>({
         className={cx(comboboxParentStyle(size, overflow), className)}
         {...rest}
       >
-        <div>
+        <div className={labelDescriptionContainerStyle}>
           {label && (
-            <Label
-              id={labelId}
-              htmlFor={inputId}
-              className={_tempLabelDescriptionOverrideStyle[size]}
-            >
+            <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
               {label}
             </Label>
           )}
           {description && (
-            <Description className={_tempLabelDescriptionOverrideStyle[size]}>
-              {description}
-            </Description>
+            <Description darkMode={darkMode}>{description}</Description>
           )}
         </div>
 
@@ -1255,6 +1251,7 @@ export default function Combobox<M extends boolean>({
               className={cx(
                 baseInputElementStyle,
                 inputElementSizeStyle[size],
+                inputElementThemeStyle[theme],
                 inputElementTransitionStyles(isOpen, overflow),
                 {
                   [multiselectInputElementStyle(size, inputValue)]:

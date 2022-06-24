@@ -14,6 +14,8 @@ import {
 
 const wrapperStyle = css`
   width: 256px;
+  height: 100vh;
+  padding-block: 64px;
 `;
 
 export default {

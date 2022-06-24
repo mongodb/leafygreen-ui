@@ -76,6 +76,12 @@ function checkPixelValue(actual: string | number, expected: number) {
   }
 }
 
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    width: '0px',
+  }),
+});
+
 describe('positionUtils', () => {
   describe('calculatePosition', () => {
     test('returns an object with three key-value pairs', () => {

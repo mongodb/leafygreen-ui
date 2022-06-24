@@ -1,4 +1,3 @@
-import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useMemo } from 'react';
 import Popover from '@leafygreen-ui/popover';
 import { ComboboxContext, useDarkMode } from '../ComboboxContext';
@@ -17,7 +16,8 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { ComboboxProps } from '../Combobox.types';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
+import isUndefined from 'lodash/isUndefined';
 
 type ComboboxMenuProps = {
   children?: React.ReactNode;
@@ -80,7 +80,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
             <span className={messageStyles}>
               <Icon
                 glyph="Refresh"
-                color={uiColors.blue.base}
+                color={darkMode ? palette.blue.light1 : palette.blue.base}
                 className={loadingIconStyle}
               />
               {searchLoadingMessage}
@@ -91,7 +91,10 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
         case 'error': {
           return (
             <span className={messageStyles}>
-              <Icon glyph="Warning" color={uiColors.red.base} />
+              <Icon
+                glyph="Warning"
+                color={darkMode ? palette.red.light1 : palette.red.base}
+              />
               {searchErrorMessage}
             </span>
           );
@@ -114,11 +117,12 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
     }, [
       theme,
       size,
+      searchState,
+      darkMode,
+      searchLoadingMessage,
+      searchErrorMessage,
       children,
       searchEmptyMessage,
-      searchErrorMessage,
-      searchLoadingMessage,
-      searchState,
     ]);
 
     return (
