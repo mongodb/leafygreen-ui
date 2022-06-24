@@ -61,7 +61,7 @@ export const globalStyles = css`
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Semibold.ttf')
         format('truetype');
-    font-weight: 700, bold;
+    font-weight: 700;
     font-style: normal;
   }
 
@@ -74,7 +74,7 @@ export const globalStyles = css`
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-SemiboldItalic.ttf')
         format('truetype');
-    font-weight: 700, bold;
+    font-weight: 700;
     font-style: italic;
   }
 
