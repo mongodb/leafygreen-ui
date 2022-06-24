@@ -55,7 +55,7 @@ async function slackbot(botToken) {
       const { fullName, changelogUrl } = generateOutputStrings(component);
       return `<${changelogUrl} | ${fullName}>`;
     })
-    .join(', ');
+    .join('\n');
 
   let updatesString = '';
   if (majorUpdatesString.length > 0)
