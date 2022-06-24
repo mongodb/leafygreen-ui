@@ -61,7 +61,7 @@ export const globalStyles = css`
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Semibold.ttf')
         format('truetype');
-    font-weight: 700, bold;
+    font-weight: 700;
     font-style: normal;
   }
 
@@ -74,7 +74,7 @@ export const globalStyles = css`
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-SemiboldItalic.ttf')
         format('truetype');
-    font-weight: 700, bold;
+    font-weight: 700;
     font-style: italic;
   }
 
@@ -113,7 +113,7 @@ export const globalStyles = css`
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-Regular.ttf')
         format('truetype');
-    font-weight: 400, normal;
+    font-weight: 400;
     font-style: normal;
   }
 
@@ -126,7 +126,7 @@ export const globalStyles = css`
         format('woff2'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/euclid-circular/EuclidCircularA-RegularItalic.ttf')
         format('truetype');
-    font-weight: 400, normal;
+    font-weight: 400;
     font-style: italic;
   }
 
@@ -137,7 +137,7 @@ export const globalStyles = css`
   /* Bold */
   @font-face {
     font-family: 'MongoDB Value Serif';
-    font-weight: 700, bold;
+    font-weight: 700;
     src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Bold.woff')
         format('woff'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Bold.woff2')
@@ -161,7 +161,7 @@ export const globalStyles = css`
   /* Normal */
   @font-face {
     font-family: 'MongoDB Value Serif';
-    font-weight: 400, normal;
+    font-weight: 400;
     src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Regular.woff')
         format('woff'),
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Regular.woff2')
@@ -171,7 +171,8 @@ export const globalStyles = css`
   }
 
   html {
-    font-family: 'Akzidenz', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Euclid Circular A', 'Akzidenz', 'Helvetica Neue', Helvetica,
+      Arial, sans-serif;
     font-weight: normal;
     font-style: normal;
   }
