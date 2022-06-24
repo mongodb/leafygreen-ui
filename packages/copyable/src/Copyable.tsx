@@ -6,7 +6,7 @@ import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
 import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
@@ -28,24 +28,18 @@ export type Size = typeof Size[keyof typeof Size];
 interface ColorSet {
   code: {
     text: string;
-    background: string;
-    border: string;
   };
 }
 
 const colorSets: Record<Mode, ColorSet> = {
   [Mode.Light]: {
     code: {
-      text: palette.gray.dark3,
-      background: palette.gray.light3,
-      border: palette.gray.light2,
+      text: palette.black,
     },
   },
   [Mode.Dark]: {
     code: {
-      text: uiColors.white,
-      background: uiColors.black,
-      border: uiColors.black,
+      text: palette.gray.light2,
     },
   },
 };
@@ -70,12 +64,15 @@ const codeStyle = css`
   height: 100%;
   width: 100%;
   padding-left: 12px;
-  // border: 1px solid;
   border-radius: 6px;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: auto;
   grid-column: 1/-1;
   grid-row: 1/2;
+`;
+
+const codeNoButtonStyles = css`
+  border: 0;
 `;
 
 const largeCodeStyle = css`
@@ -83,14 +80,29 @@ const largeCodeStyle = css`
   line-height: 24px;
 `;
 
-const noButtonCodeStyle = css`
+const largeCodeFontSize = css`
+  font-size: 18px;
+  line-height: 24px;
+`;
+
+const copyableButtonCodeStyle = css`
   overflow: hidden;
 `;
 
+// When there is no button, remove the border from the code component and add to the parent so it sits above the box-shadow
+const copyableButtonCodeModeStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    border-radius: 6px;
+    border: 1px solid ${palette.gray.light2};
+  `,
+  [Mode.Dark]: css`
+    border-radius: 6px;
+    border: 1px solid ${palette.gray.dark1};
+  `,
+};
+
 const codeStyleColor = (mode: Mode) => css`
-  // color: ${colorSets[mode].code.text};
-  // background-color: ${colorSets[mode].code.background};
-  // border-color: ${colorSets[mode].code.border};
+  color: ${colorSets[mode].code.text};
 `;
 
 const buttonWrapperStyle = css`
@@ -111,15 +123,29 @@ const copyableButtonShadowStyle = css`
     left: 0px;
     top: 3px;
     border-radius: 100%;
-    box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
     transition: box-shadow 100ms ease-in-out;
-  }
-
-  &:hover:before {
-    box-shadow: 0 0 12px 0 ${transparentize(0.6, palette.gray.dark1)};
   }
 `;
 
+const copyableButtonShadowThemeStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    &:before {
+      box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
+    }
+
+    &:hover:before {
+      box-shadow: 0 0 12px 0 ${transparentize(0.6, palette.gray.dark1)};
+    }
+  `,
+  [Mode.Dark]: css`
+    &:before {
+      box-shadow: -10px 0 10px 0 ${transparentize(0.4, palette.black)};
+    }
+
+    &:hover:before {
+      box-shadow: -12px 0 10px 0 ${transparentize(0.4, palette.black)};
+    `,
+};
 const buttonStyle = css`
   height: 100%;
   border-radius: 0 6px 6px 0;
@@ -239,12 +265,25 @@ export default function Copyable({
   return (
     <>
       {label && (
-        <Label darkMode={darkMode} htmlFor={codeId}>
+        <Label
+          darkMode={darkMode}
+          htmlFor={codeId}
+          className={cx({
+            [largeCodeFontSize]: !showCopyButton,
+          })}
+        >
           {label}
         </Label>
       )}
       {description && (
-        <Description darkMode={darkMode}>{description}</Description>
+        <Description
+          darkMode={darkMode}
+          className={cx({
+            [largeCodeFontSize]: !showCopyButton,
+          })}
+        >
+          {description}
+        </Description>
       )}
 
       <div
@@ -252,7 +291,8 @@ export default function Copyable({
           containerStyle,
           {
             [copyableContainerStyle]: showCopyButton,
-            [noButtonCodeStyle]: !showCopyButton,
+            [copyableButtonCodeStyle]: !showCopyButton,
+            [copyableButtonCodeModeStyle[mode]]: !showCopyButton,
           },
           className,
         )}
@@ -261,15 +301,18 @@ export default function Copyable({
           darkMode={darkMode}
           id={codeId}
           className={cx(codeStyle, codeStyleColor(mode), {
+            [codeNoButtonStyles]: !showCopyButton,
             [largeCodeStyle]: size === Size.Large,
           })}
         >
           {children}
         </InlineCode>
+        {/* Using span because adding shadows directly to the button blends together with the hover box-shadow */}
         <span
           className={cx(buttonWrapperStyle, {
             // TODO: Toggle these styles on only when the content extends beyond the edge of the container
             [copyableButtonShadowStyle]: true,
+            [copyableButtonShadowThemeStyle[mode]]: true,
           })}
         >
           {copyButton}
@@ -291,3 +334,5 @@ Copyable.propTypes = {
   copyable: PropTypes.bool,
   shouldTooltipUsePortal: PropTypes.bool,
 };
+
+// TRY BOX SHADOW AGAIN
