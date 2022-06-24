@@ -61,11 +61,11 @@ const codeStyle = css`
   grid-row: 1/2;
 `;
 
-const codeNoButtonStyles = css`
+const codeStyleNoButton = css`
   border: 0;
 `;
 
-const largeCodeStyle = css`
+const codeStyleLarge = css`
   font-size: 15px;
   line-height: 24px;
 `;
@@ -287,8 +287,8 @@ export default function Copyable({
           darkMode={darkMode}
           id={codeId}
           className={cx(codeStyle, codeStyleColor[mode], {
-            [codeNoButtonStyles]: !showCopyButton,
-            [largeCodeStyle]: size === Size.Large,
+            [codeStyleNoButton]: !showCopyButton,
+            [codeStyleLarge]: size === Size.Large,
           })}
         >
           {children}
