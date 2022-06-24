@@ -44,7 +44,7 @@ const containerStyle = css`
   margin: 2px 0;
 `;
 
-const copyableContainerStyle = css`
+const buttonContainerStyle = css`
   height: 36px;
 `;
 
@@ -75,12 +75,12 @@ const largeLabelFontSize = css`
   line-height: 24px;
 `;
 
-const copyableContainerStyleNoButton = css`
+const noButtonContainerStyle = css`
   overflow: hidden;
 `;
 
 // When there is no button, remove the border from the code component and add to the parent so it sits above the box-shadow
-const copyableContainerStyleNoButtonMode: Record<Mode, string> = {
+const noButtonContainerStyleMode: Record<Mode, string> = {
   [Mode.Light]: css`
     border-radius: 6px;
     border: 1px solid ${palette.gray.light2};
@@ -276,9 +276,9 @@ export default function Copyable({
         className={cx(
           containerStyle,
           {
-            [copyableContainerStyle]: showCopyButton,
-            [copyableContainerStyleNoButton]: !showCopyButton,
-            [copyableContainerStyleNoButtonMode[mode]]: !showCopyButton,
+            [buttonContainerStyle]: showCopyButton,
+            [noButtonContainerStyle]: !showCopyButton,
+            [noButtonContainerStyleMode[mode]]: !showCopyButton,
           },
           className,
         )}
