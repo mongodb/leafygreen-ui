@@ -70,17 +70,17 @@ const codeStyleLarge = css`
   line-height: 24px;
 `;
 
-const largeCodeFontSize = css`
+const largeLabelFontSize = css`
   font-size: 18px;
   line-height: 24px;
 `;
 
-const copyableButtonCodeStyle = css`
+const copyableContainerStyleNoButton = css`
   overflow: hidden;
 `;
 
 // When there is no button, remove the border from the code component and add to the parent so it sits above the box-shadow
-const copyableButtonCodeModeStyle: Record<Mode, string> = {
+const copyableContainerStyleNoButtonMode: Record<Mode, string> = {
   [Mode.Light]: css`
     border-radius: 6px;
     border: 1px solid ${palette.gray.light2};
@@ -99,7 +99,7 @@ const buttonWrapperStyle = css`
   grid-row: 1/2;
 `;
 
-const copyableButtonShadowStyle = css`
+const buttonWrapperStyleShadow = css`
   &:before {
     content: '';
     display: block;
@@ -113,7 +113,7 @@ const copyableButtonShadowStyle = css`
   }
 `;
 
-const copyableButtonShadowThemeStyle: Record<Mode, string> = {
+const buttonWrapperStyleShadowMode: Record<Mode, string> = {
   [Mode.Light]: css`
     &:before {
       box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
@@ -255,7 +255,7 @@ export default function Copyable({
           darkMode={darkMode}
           htmlFor={codeId}
           className={cx({
-            [largeCodeFontSize]: !showCopyButton,
+            [largeLabelFontSize]: !showCopyButton,
           })}
         >
           {label}
@@ -265,7 +265,7 @@ export default function Copyable({
         <Description
           darkMode={darkMode}
           className={cx({
-            [largeCodeFontSize]: !showCopyButton,
+            [largeLabelFontSize]: !showCopyButton,
           })}
         >
           {description}
@@ -277,8 +277,8 @@ export default function Copyable({
           containerStyle,
           {
             [copyableContainerStyle]: showCopyButton,
-            [copyableButtonCodeStyle]: !showCopyButton,
-            [copyableButtonCodeModeStyle[mode]]: !showCopyButton,
+            [copyableContainerStyleNoButton]: !showCopyButton,
+            [copyableContainerStyleNoButtonMode[mode]]: !showCopyButton,
           },
           className,
         )}
@@ -297,8 +297,8 @@ export default function Copyable({
         <span
           className={cx(buttonWrapperStyle, {
             // TODO: Toggle these styles on only when the content extends beyond the edge of the container
-            [copyableButtonShadowStyle]: true,
-            [copyableButtonShadowThemeStyle[mode]]: true,
+            [buttonWrapperStyleShadow]: true,
+            [buttonWrapperStyleShadowMode[mode]]: true,
           })}
         >
           {copyButton}
