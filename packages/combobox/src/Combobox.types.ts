@@ -1,6 +1,13 @@
 import { ReactElement, ReactNode } from 'react';
 import { Either } from '@leafygreen-ui/lib';
 
+export const Theme = {
+  Dark: 'dark',
+  Light: 'light',
+} as const;
+
+export type Theme = typeof Theme[keyof typeof Theme];
+
 /**
  * Prop Enums & Types
  */

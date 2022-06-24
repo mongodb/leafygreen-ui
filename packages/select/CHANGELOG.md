@@ -1,5 +1,18 @@
 # @leafygreen-ui/select
 
+## 6.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/button@16.0.0
+  - @leafygreen-ui/interaction-ring@4.0.0
+  - @leafygreen-ui/popover@9.0.0
+  - @leafygreen-ui/typography@13.0.0
+
 ## 5.0.3
 
 ### Patch Changes
