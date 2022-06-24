@@ -63,7 +63,7 @@ async function slackbot(botToken) {
   if (minorUpdatesString.length > 0)
     updatesString += `\n\n*Minor Changes*\n${minorUpdatesString}`;
   if (patchUpdatesString.length > 0)
-    updatesString += `\n\n*Patche Changes*\n${patchUpdatesString}`;
+    updatesString += `\n\n*Patch Changes*\n${patchUpdatesString}`;
 
   const web = new WebClient(botToken);
 
