@@ -61,6 +61,7 @@ const codeStyle = css`
   grid-row: 1/2;
 `;
 
+// Border is removed from the code component and added to the parent
 const codeStyleNoButton = css`
   border: 0;
 `;
@@ -77,9 +78,10 @@ const largeLabelFontSize = css`
 
 const noButtonContainerStyle = css`
   overflow: hidden;
+  border-radius: 12px;
 `;
 
-// When there is no button, remove the border from the code component and add to the parent so it sits above the box-shadow
+// When there is no button, remove the border from the code component and add to this component so it sits above the button wrapper box-shadow
 const noButtonContainerStyleMode: Record<Mode, string> = {
   [Mode.Light]: css`
     border-radius: 6px;
@@ -277,8 +279,8 @@ export default function Copyable({
           containerStyle,
           {
             [buttonContainerStyle]: showCopyButton,
-            [noButtonContainerStyle]: !showCopyButton,
             [noButtonContainerStyleMode[mode]]: !showCopyButton,
+            [noButtonContainerStyle]: !showCopyButton,
           },
           className,
         )}
