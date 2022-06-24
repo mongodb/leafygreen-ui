@@ -81,7 +81,7 @@ const noButtonContainerStyle = css`
   border-radius: 12px;
 `;
 
-// When there is no button, remove the border from the code component and add to this component so it sits above the button wrapper box-shadow
+// When there is no button, remove the border from the code component and add to this component so it sits above the button wrapper box shadow
 const noButtonContainerStyleMode: Record<Mode, string> = {
   [Mode.Light]: css`
     border-radius: 6px;
@@ -322,5 +322,3 @@ Copyable.propTypes = {
   copyable: PropTypes.bool,
   shouldTooltipUsePortal: PropTypes.bool,
 };
-
-// TRY BOX SHADOW AGAIN
