@@ -17,7 +17,7 @@ With prefix `ComponentName`, `createUniqueClassName('ComponentName')` returns:
 
 #### Why does this exist?
 
-Emotion no longer supports using the return value from `css` within other styles, which limits the ability to use things like well-scoped sibling and child selectors. The original use of selectors generated outside of emotion to workaround this limitation was actually given to us by the maintainers of Emotion themselves, as they know this is a limitation of the library.
+Emotion no longer supports using the return value from `css` as a selector within other styles, which limits the ability to use things like well-scoped sibling and child selectors. The original use of selectors generated outside of emotion to workaround this limitation was actually given to us by the maintainers of Emotion themselves, as they know this is a limitation of the library.
 Traditionally we’ve used statically-named `data-` attributes to use within emotion css declarations. The intent here is to move to more performant selectors (though admittedly, that was a marginal consideration here, as are the performance benefits) that are less prone to accidental duplication.
 
 #### How it should be used
