@@ -25,23 +25,13 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-interface ColorSet {
-  code: {
-    text: string;
-  };
-}
-
-const colorSets: Record<Mode, ColorSet> = {
-  [Mode.Light]: {
-    code: {
-      text: palette.black,
-    },
-  },
-  [Mode.Dark]: {
-    code: {
-      text: palette.gray.light2,
-    },
-  },
+const codeStyleColor: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: palette.black;
+  `,
+  [Mode.Dark]: css`
+    color: palette.gray.light2;
+  `,
 };
 
 const containerStyle = css`
@@ -100,10 +90,6 @@ const copyableButtonCodeModeStyle: Record<Mode, string> = {
     border: 1px solid ${palette.gray.dark1};
   `,
 };
-
-const codeStyleColor = (mode: Mode) => css`
-  color: ${colorSets[mode].code.text};
-`;
 
 const buttonWrapperStyle = css`
   position: relative;
@@ -300,7 +286,7 @@ export default function Copyable({
         <InlineCode
           darkMode={darkMode}
           id={codeId}
-          className={cx(codeStyle, codeStyleColor(mode), {
+          className={cx(codeStyle, codeStyleColor[mode], {
             [codeNoButtonStyles]: !showCopyButton,
             [largeCodeStyle]: size === Size.Large,
           })}
