@@ -27,10 +27,10 @@ export type Size = typeof Size[keyof typeof Size];
 
 const codeStyleColor: Record<Mode, string> = {
   [Mode.Light]: css`
-    color: palette.black;
+    color: ${palette.black};
   `,
   [Mode.Dark]: css`
-    color: palette.gray.light2;
+    color: ${palette.gray.light2};
   `,
 };
 
