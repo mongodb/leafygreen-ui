@@ -2,4 +2,4 @@
 '@leafygreen-ui/tabs': major
 ---
 
-Updates `Tabs` for drak mode brand refresh
+Updates `Tabs` for dark mode brand refresh
