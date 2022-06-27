@@ -39,6 +39,7 @@ export const parameters = {
       h2: H2,
       h3: H3,
       h4: Subtitle,
+      h5: Subtitle,
       p: Body,
       code: InlineCode,
     },
