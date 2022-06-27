@@ -13,6 +13,10 @@ export default {
     placeholder: 'Select',
     disabled: false,
     children: [
+      <Option key="long" value="long">
+        Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
+        risus varius blandit sit amet non magna.
+      </Option>,
       <OptionGroup key="Common" label="Common">
         <Option value="dog">Dog</Option>
         <Option value="cat">Cat</Option>
@@ -51,6 +55,7 @@ export const Uncontrolled = ({ className, ...args }: SelectProps) => (
     className={cx(
       css`
         min-width: 200px;
+        max-width: 400px;
       `,
       className,
     )}
