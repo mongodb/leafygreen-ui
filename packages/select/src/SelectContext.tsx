@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { Mode, Size } from './styleSets';
+import { Mode, Size } from './types';
 
 interface SelectData {
   mode: Mode;

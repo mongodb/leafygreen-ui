@@ -1,15 +1,15 @@
 import React, { useCallback, useContext } from 'react';
-import Button, { Size, Variant } from '@leafygreen-ui/button';
+import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
+import { Mode, State } from './types';
+import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
-import { State } from '.';
 
 const menuButtonStyleOverrides = css`
   text-transform: unset;
@@ -180,7 +180,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,
           [css`
             letter-spacing: initial;
-          `]: size === Size.XSmall,
+          `]: size === ButtonSize.XSmall,
         },
         css`
           width: 100%;
