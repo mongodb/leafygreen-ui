@@ -6,7 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Button, { ButtonProps } from '@leafygreen-ui/button';
-import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
+import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { Select, Option } from '@leafygreen-ui/select';
 import { LanguageOption, PopoverProps } from './types';
 import { palette, uiColors } from '@leafygreen-ui/palette';
@@ -155,7 +155,7 @@ function LanguageSwitcher({
   );
 
   // Placeholder for file icon
-  let renderedLogo = <CopyIcon className={iconStyle} />;
+  let renderedLogo = <FileIcon className={iconStyle} />;
 
   if (language.image != null) {
     if (isLeafyGreenIcon(language.image)) {
