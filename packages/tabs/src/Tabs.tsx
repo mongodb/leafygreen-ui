@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { keyMap, isComponentType, Either } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
@@ -24,7 +24,7 @@ const modeColors = {
 
   [Mode.Dark]: {
     underlineColor: css`
-      border-bottom: 1px solid ${uiColors.gray.dark2};
+      border-bottom: 1px solid ${palette.gray.dark2};
     `,
   },
 };
