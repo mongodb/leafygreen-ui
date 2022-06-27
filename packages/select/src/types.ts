@@ -1,5 +1,5 @@
-import { OneOf } from '@leafygreen-ui/lib';
-import { PopoverProps } from "@leafygreen-ui/popover";
+import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+import { PopoverProps } from '@leafygreen-ui/popover';
 
 export const Size = {
   XSmall: 'xsmall',
@@ -20,7 +20,6 @@ export const Mode = {
   Light: 'light',
 } as const;
 export type Mode = typeof Mode[keyof typeof Mode];
-
 
 export type SelectProps = {
   /**
@@ -106,4 +105,5 @@ export type SelectProps = {
         | { readOnly: true; onChange?: undefined }
       ))
   ) &
-  OneOf<{ label: string }, { 'aria-labelledby': string }>;
+  OneOf<{ label: string }, { 'aria-labelledby': string }> &
+  Omit<HTMLElementProps<'button', HTMLButtonElement>, 'onChange'>;

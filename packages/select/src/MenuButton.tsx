@@ -191,6 +191,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         `,
       );
 
+  const testId =
+    (rest as any)['data-testid'] ?? 'leafygreen-ui-select-menubutton';
   return (
     <Component
       {...rest}
@@ -203,7 +205,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       darkMode={mode === Mode.Dark}
       rightGlyph={<CaretDownIcon />}
       size={size}
-      data-testid="leafygreen-ui-select-menubutton"
+      data-testid={testId}
       className={buttonClassName}
     >
       <div className={menuButtonTextWrapperStyle}>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '.';
-import { SelectProps } from './Select';
+import { SelectProps } from './types';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
@@ -48,6 +48,7 @@ export default {
 
 export const Uncontrolled = ({ className, ...args }: SelectProps) => (
   <Select
+    data-test="hello-world"
     className={cx(
       css`
         min-width: 200px;

@@ -77,6 +77,7 @@ export default function Select({
   errorMessage = 'error message right here',
   state = State.None,
   __INTERNAL__menuButtonSlot__,
+  ...rest
 }: SelectProps) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
   const labelId = useMemo(
@@ -532,6 +533,7 @@ export default function Select({
 
       <SelectContext.Provider value={providerData}>
         <MenuButton
+          {...rest}
           id={menuButtonId}
           ref={menuButtonRef}
           name={name}
