@@ -46,8 +46,8 @@ const errorTextStyle = ({
   darkMode: boolean;
   sizeSet: SizeSet;
 }) => css`
-  font-family: ${darkMode ? fontFamilies.legacy : fontFamilies.default};
-  color: ${darkMode ? '#F97216' : palette.red.base};
+  font-family: ${fontFamilies.default};
+  color: ${darkMode ? palette.red.light1 : palette.red.base};
   font-size: ${sizeSet.text}px;
   margin-top: ${spacing[1]}px;
   padding-left: 2px;

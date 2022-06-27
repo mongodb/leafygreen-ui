@@ -22,7 +22,7 @@ const baseMenuStyle = css`
   position: relative;
   text-align: left;
   width: 100%;
-  border-radius: 3px; //
+  border-radius: 3px;
   line-height: 16px;
   list-style: none;
   margin: 0;
@@ -37,22 +37,22 @@ const getMenuStyles = (mode: Mode, size: Size) => {
 
   return cx(
     css`
+      font-family: ${fontFamilies.default};
       font-size: ${sizeSet.option.text}px;
       min-height: ${sizeSet.height}px;
       background-color: ${colorSet.option.background.base};
+      border-radius: 12px;
     `,
     {
       // TODO: Refresh - remove dark mode logic
       [css`
-        font-family: ${fontFamilies.default};
+        
         border: 1px solid ${colorSet.menu.border};
-        border-radius: 12px;
+        
         box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
         padding: 8px 0;
       `]: mode === Mode.Light,
       [css`
-        font-family: ${fontFamilies.legacy};
-        border-radius: 3px;
         box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
       `]: mode === Mode.Dark,
     },

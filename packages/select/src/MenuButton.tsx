@@ -38,6 +38,7 @@ const menuButtonModeOverrides: Record<Mode, string> = {
   `,
   [Mode.Dark]: css`
     border-color: transparent;
+    background-color: ${palette.gray.dark2};
   `,
 };
 
