@@ -430,6 +430,7 @@ export default function Select({
           const disabled = isOptionDisabled(option, group);
 
           return {
+            ...option.props,
             className: option.props.className,
             glyph: option.props.glyph,
             selected,

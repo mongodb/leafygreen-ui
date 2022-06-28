@@ -151,15 +151,30 @@ describe('packages/select', () => {
     });
   });
 
-  test('trigger & option pass data props', () => {
+  test('trigger passes through data props', () => {
     const result = render(
       <Select label="Label" data-testid="lg-select">
-        <Option data-testid="lg-option">Option</Option>
+        <Option>Option</Option>
       </Select>,
     );
     const select = result.queryByTestId('lg-select');
-    const option = result.queryByTestId('lg-option');
     expect(select).toBeInTheDocument();
+  });
+
+  test('option & group passes through data props', () => {
+    const result = render(
+      <Select label="Label">
+        <OptionGroup label="Group" data-testid="lg-group">
+          <Option data-testid="lg-option">Option</Option>
+        </OptionGroup>
+      </Select>,
+    );
+    const trigger = result.getByRole('button');
+    userEvent.click(trigger);
+
+    const group = result.queryByTestId('lg-group');
+    const option = result.queryByTestId('lg-option');
+    expect(group).toBeInTheDocument();
     expect(option).toBeInTheDocument();
   });
 

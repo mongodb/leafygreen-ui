@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
@@ -56,7 +56,7 @@ const glyphFocusStyle = css`
   }
 `;
 
-export interface InternalProps {
+export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
   children: React.ReactNode;
   className: string | undefined;
   glyph: LGGlyph.Element | undefined;
@@ -82,6 +82,7 @@ export function InternalOption({
   isDeselection,
   triggerScrollIntoView,
   hasGlyphs,
+  ...rest
 }: InternalProps) {
   const { mode } = useContext(SelectContext);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -238,6 +239,7 @@ export function InternalOption({
   return (
     <li
       {...option.prop}
+      {...rest}
       role="option"
       aria-selected={selected}
       tabIndex={-1}
@@ -288,7 +290,7 @@ export function InternalOption({
 
 InternalOption.displayName = 'Option';
 
-interface Props {
+interface Props extends HTMLElementProps<'li', HTMLLIElement> {
   className?: string;
   glyph?: LGGlyph.Element;
   disabled?: boolean;
