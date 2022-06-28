@@ -5,7 +5,7 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 
 export default {
-  title: 'Packages/Tooltip',
+  title: 'Components/Tooltip',
   component: Tooltip,
   args: {
     children: 'I am a tooltip!',

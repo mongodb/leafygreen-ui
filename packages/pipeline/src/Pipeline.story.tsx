@@ -4,7 +4,7 @@ import { Pipeline, Stage } from '.';
 import { PipelineProps } from './Pipeline';
 
 export default {
-  title: 'Packages/Pipeline',
+  title: 'Components/Pipeline',
   component: Pipeline,
   args: {
     stages: ['$match', '$group', '$project', '$addFields', '$limit'].join(','),
