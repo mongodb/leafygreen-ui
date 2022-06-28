@@ -28,7 +28,7 @@ describe('packages/leafygreen-provider/DarkModeContext', () => {
 
   test(`when darkMode prop is set to true, useDarkMode returns true`, () => {
     const { container } = render(
-      <LeafyGreenProvider globalDarkMode={true}>
+      <LeafyGreenProvider darkMode={true}>
         <TestComponent />
       </LeafyGreenProvider>,
     );

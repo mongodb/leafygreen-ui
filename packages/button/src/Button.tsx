@@ -4,7 +4,7 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import {
-  useDefaultDarkMode,
+  useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
@@ -45,7 +45,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     const { usingKeyboard } = useUsingKeyboardContext();
     const rippleRef = useRef<HTMLDivElement | null>(null);
 
-    const darkMode = useDefaultDarkMode(darkModeProp);
+    const { darkMode } = useDarkMode(darkModeProp);
 
     useEffect(() => {
       let unregisterRipple: (() => void) | undefined;

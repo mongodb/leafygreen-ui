@@ -101,7 +101,7 @@ BaseGreen.args = {
 };
 
 export const WithGlobalDarkMode: Story<ButtonStoryProps> = args => (
-  <LeafygreenProvider globalDarkMode={true}>
+  <LeafygreenProvider darkMode={true}>
     <Button {...args}>Test</Button>
   </LeafygreenProvider>
 );

@@ -8,7 +8,7 @@ import PortalContextProvider, { PortalContextValues } from './PortalContext';
 import DarkModeProvider from './DarkModeContext';
 
 type LeafyGreenProviderProps = {
-  globalDarkMode?: boolean;
+  darkMode?: boolean;
   popoverPortalContainer?: PortalContextValues['popover'];
 } & TypographyProviderProps;
 
@@ -16,13 +16,13 @@ function LeafyGreenProvider({
   children,
   baseFontSize,
   popoverPortalContainer,
-  globalDarkMode,
+  darkMode,
 }: PropsWithChildren<LeafyGreenProviderProps>) {
   return (
     <UsingKeyboardProvider>
       <PortalContextProvider popover={popoverPortalContainer}>
         <TypographyProvider baseFontSize={baseFontSize}>
-          <DarkModeProvider globalDarkMode={globalDarkMode || false}>
+          <DarkModeProvider globalDarkMode={darkMode}>
             {children}
           </DarkModeProvider>
         </TypographyProvider>
