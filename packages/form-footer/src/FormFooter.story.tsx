@@ -6,7 +6,7 @@ import Icon from '@leafygreen-ui/icon';
 import FormFooter from '.';
 
 export default {
-  title: 'Packages/FormFooter',
+  title: 'Components/FormFooter',
   component: FormFooter,
   argTypes: {
     cancelButtonText: { control: 'text' },

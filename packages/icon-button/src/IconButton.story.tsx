@@ -5,7 +5,7 @@ import IconButton from './IconButton';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/IconButton',
+  title: 'Components/IconButton',
   component: IconButton,
   argTypes: {
     href: { control: 'string' },

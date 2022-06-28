@@ -6,7 +6,7 @@ import { SegmentedControlProps } from './SegmentedControl';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/SegmentedControl',
+  title: 'Components/SegmentedControl',
   component: SegmentedControl,
   argTypes: {
     children: { control: false },
