@@ -8,7 +8,14 @@ import {
   Subtitle,
   Body,
   InlineCode,
+  Link,
 } from '@leafygreen-ui/typography';
+
+const H6 = ({ children, ...rest }) => (
+  <Body {...rest}>
+    <strong>{children}</strong>
+  </Body>
+);
 
 export const argTypes = {
   className: {
@@ -40,7 +47,9 @@ export const parameters = {
       h3: H3,
       h4: Subtitle,
       h5: Subtitle,
+      h6: H6,
       p: Body,
+      a: Link,
       code: InlineCode,
     },
   },
