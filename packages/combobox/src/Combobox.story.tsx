@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Icon from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
-import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
+import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import {
   ComboboxSize,
   Overflow,
