@@ -7,7 +7,7 @@ export const StoryTextInput: React.FC<TextInputProps> = props => (
 );
 
 export default {
-  title: 'Packages/TextInput',
+  title: 'Components/TextInput',
   component: StoryTextInput,
   args: {
     label: 'Label',

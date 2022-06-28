@@ -5,7 +5,7 @@ import ConfirmationModal, { Variant } from '.';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Modals/ConfirmationModal',
+  title: 'Components/Modals/ConfirmationModal',
   component: ConfirmationModal,
   args: {
     title: 'Confirm Title Here',

@@ -7,7 +7,7 @@ import Button from '@leafygreen-ui/button';
 import { Size } from './types';
 
 export default {
-  title: 'Packages/Menu',
+  title: 'Components/Menu',
   component: Menu,
   args: {
     open: true,

@@ -5,7 +5,7 @@ import { RadioGroupProps } from './RadioGroup';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/RadioGroup',
+  title: 'Components/RadioGroup',
   component: RadioGroup,
   argTypes: {
     children: { control: false },

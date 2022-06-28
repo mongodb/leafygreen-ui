@@ -12,7 +12,7 @@ import { Body, H1 } from '@leafygreen-ui/typography';
 import { SideNavProps } from './types';
 
 export default {
-  title: 'Packages/SideNav',
+  title: 'Components/SideNav',
   component: SideNav,
 } as ComponentMeta<typeof SideNav>;
 

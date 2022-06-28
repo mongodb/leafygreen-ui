@@ -17,7 +17,7 @@ import {
 } from '.';
 
 export default {
-  title: 'Packages/Logo',
+  title: 'Components/Logo',
   argTypes: {
     className: {
       table: {
