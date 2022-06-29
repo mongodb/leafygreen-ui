@@ -18,7 +18,6 @@ import {
 } from './styles';
 import ButtonIcon from './ButtonIcon';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { getTheme } from '@leafygreen-ui/lib';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
@@ -45,11 +44,11 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     const { usingKeyboard } = useUsingKeyboardContext();
     const rippleRef = useRef<HTMLDivElement | null>(null);
 
-    const { darkMode } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
 
     useEffect(() => {
       let unregisterRipple: (() => void) | undefined;
-      const backgroundColor = rippleColors[getTheme(darkMode)][variant];
+      const backgroundColor = rippleColors[theme][variant];
 
       if (rippleRef.current != null && !disabled) {
         unregisterRipple = registerRipple(rippleRef.current, {
@@ -58,7 +57,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       }
 
       return unregisterRipple;
-    }, [rippleRef, variant, darkMode, disabled]);
+    }, [rippleRef, variant, darkMode, disabled, theme]);
 
     const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
 
