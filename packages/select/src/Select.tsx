@@ -7,19 +7,11 @@ import {
   useEventListener,
 } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
-import { OneOf, keyMap } from '@leafygreen-ui/lib';
-import { PopoverProps } from '@leafygreen-ui/popover';
+import { keyMap } from '@leafygreen-ui/lib';
 import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
-import {
-  legacySizeSets,
-  mobileSizeSet,
-  sizeSets,
-  Mode,
-  Size,
-  State,
-  SizeSet,
-} from './styleSets';
+import { legacySizeSets, mobileSizeSet, sizeSets, SizeSet } from './styleSets';
+import { Mode, SelectProps, Size, State } from './types';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
 import SelectContext from './SelectContext';
@@ -55,92 +47,6 @@ const errorTextStyle = ({
   transition-delay: 100ms;
 `;
 
-export type SelectProps = {
-  /**
-   * Children rendered inside the component. Expected to be either `<Option>` or `<OptionGroup>`.
-   */
-  children: React.ReactNode;
-  className?: string;
-  /**
-   * HTML `id` property used to allow Javascript, form, or label to reference the input.
-   */
-  id?: string;
-  darkMode?: boolean;
-  /**
-   * Determines the size in which the component will be rendered.
-   */
-  size?: Size;
-  /**
-   * When present, it specifies that the drop-down list should be disabled.
-   *
-   * A `disabled` drop-down list is unusable and un-clickable.
-   */
-  disabled?: boolean;
-  /**
-   * Secondary text rendered under the label to provide additional details about the select and its options.
-   */
-  description?: string;
-  /**
-   * Text rendered in the Select component before a value is set.
-   */
-  placeholder?: string;
-  /**
-   * The `name` attribute specifies the name for a drop-down list.
-   *
-   * The `name` attribute is used to reference elements in a JavaScript, or to reference form data after a form is submitted.
-   */
-  name?: string;
-  /**
-   * Allows the user to unselect an option.
-   */
-  allowDeselect?: boolean;
-  /**
-   * Error message rendered when the `state` prop is set to `error`.
-   */
-  errorMessage?: string;
-  /**
-   * Determines whether the component should be rendered in an error state.
-   */
-  state?: State;
-  __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
-    React.RefAttributes<unknown>
-  >;
-} & Omit<PopoverProps, 'active' | 'spacing'> &
-  (
-    | // Uncontrolled
-    ({
-        /**
-         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
-         */
-        defaultValue?: string;
-        /**
-         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
-         */
-        value?: undefined;
-      } & {
-        onChange?: (
-          value: string,
-          event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
-        ) => void;
-        /**
-         * Indicates that the component's value cannot be changed.
-         */
-        readOnly?: false;
-      })
-    // Controlled
-    | ({ value: string; defaultValue?: undefined } & (
-        | {
-            onChange: (
-              value: string,
-              event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
-            ) => void;
-            readOnly?: false;
-          }
-        | { readOnly: true; onChange?: undefined }
-      ))
-  ) &
-  OneOf<{ label: string }, { 'aria-labelledby': string }>;
-
 /**
  * Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.
  *
@@ -171,6 +77,7 @@ export default function Select({
   errorMessage = 'error message right here',
   state = State.None,
   __INTERNAL__menuButtonSlot__,
+  ...rest
 }: SelectProps) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
   const labelId = useMemo(
@@ -523,6 +430,7 @@ export default function Select({
           const disabled = isOptionDisabled(option, group);
 
           return {
+            ...option.props,
             className: option.props.className,
             glyph: option.props.glyph,
             selected,
@@ -626,6 +534,7 @@ export default function Select({
 
       <SelectContext.Provider value={providerData}>
         <MenuButton
+          {...rest}
           id={menuButtonId}
           ref={menuButtonRef}
           name={name}
