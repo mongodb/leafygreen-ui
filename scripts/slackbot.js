@@ -44,17 +44,11 @@ async function slackbot(botToken) {
   ).join('\n');
 
   const minorUpdatesString = sortedUpdates.minor
-    .map(component => {
-      const { fullName, changelogUrl } = generateOutputStrings(component);
-      return `*<${changelogUrl} | ${fullName}>*`;
-    })
+    .map(parseMinorChangeString)
     .join('\n');
 
   const patchUpdatesString = sortedUpdates.patch
-    .map(component => {
-      const { fullName, changelogUrl } = generateOutputStrings(component);
-      return `<${changelogUrl} | ${fullName}>`;
-    })
+    .map(parsePatchChangeString)
     .join('\n');
 
   let updatesString = '';
@@ -140,6 +134,16 @@ function generateOutputStrings({ name, version }) {
     changelogUrl,
     fullName,
   };
+}
+
+function parseMinorChangeString(component) {
+  const { fullName, changelogUrl } = generateOutputStrings(component);
+  return `*<${changelogUrl} | ${fullName}>*`;
+}
+
+function parsePatchChangeString(component) {
+  const { fullName, changelogUrl } = generateOutputStrings(component);
+  return `*<${changelogUrl} | ${fullName}>*`;
 }
 
 // eslint-disable-next-line no-unused-vars
