@@ -8,11 +8,10 @@ import {
   colorSets,
   legacySizeSets,
   mobileSizeSet,
-  Mode,
   sizeSets,
 } from './styleSets';
 import { useForwardedRef } from './utils';
-import { Size } from '.';
+import { Mode, Size } from './types';
 import isUndefined from 'lodash/isUndefined';
 
 const maxMenuHeight = 274;
