@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Size, Variant, ButtonProps } from './types';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { createDataProp, Theme } from '@leafygreen-ui/lib';
+import { createDataProp, getTheme, Theme } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 
@@ -400,9 +400,9 @@ export function getClassName({
     'baseFontSize' | 'variant' | 'size' | 'darkMode' | 'disabled'
   > & { usingKeyboard: boolean }
 >) {
-  const mode = darkMode ? Theme.Dark : Theme.Light;
-  const color = colorSet[mode][variant];
-  const focus = focusStyle[mode][variant];
+  const theme = getTheme(darkMode);
+  const color = colorSet[theme][variant];
+  const focus = focusStyle[theme][variant];
   const size = sizeStyle[sizeProp];
   const fontSize = fontStyles[baseFontSize];
 
@@ -412,7 +412,7 @@ export function getClassName({
     fontSize,
     size,
     { [focus]: usingKeyboard && !disabled },
-    { [disabledStyle[mode]]: disabled },
+    { [disabledStyle[theme]]: disabled },
   );
 }
 
