@@ -12,12 +12,12 @@ import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
 
 const menuButtonStyleOverrides = css`
-  text-transform: unset;
-  font-weight: 400;
   // Override button defaults
   > *:last-child {
     grid-template-columns: 1fr 16px;
     padding: 0 12px;
+    justify-content: flex-start;
+
     > svg {
       justify-self: right;
       width: 16px;
@@ -71,6 +71,7 @@ const menuButtonTextWrapperStyle = css`
   align-items: center;
   flex-grow: 1;
   gap: ${spacing[1]}px;
+  overflow: hidden;
 `;
 
 const menuButtonTextStyle = css`
@@ -172,8 +173,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   const buttonClassName = __INTERNAL__menuButtonSlot__
     ? ''
     : cx(
-        menuButtonStyleOverrides, // TODO: Refresh - remove overrides
-        menuButtonModeOverrides[mode], // TODO: Refresh - remove overrides
+        menuButtonStyleOverrides,
+        menuButtonModeOverrides[mode],
         {
           [menuButtonDeselectedStyles[mode]]: deselected,
           [menuButtonDisabledStyles[mode]]: disabled,
