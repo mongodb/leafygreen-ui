@@ -4,7 +4,7 @@ import ExpandableCard from '.';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/ExpandableCard',
+  title: 'Components/ExpandableCard',
   component: ExpandableCard,
   args: {
     title: 'Title',

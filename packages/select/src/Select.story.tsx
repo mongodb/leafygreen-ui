@@ -7,7 +7,7 @@ import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Select',
+  title: 'Components/Select',
   component: Select,
   args: {
     placeholder: 'Select',

@@ -18,7 +18,7 @@ function getRoot() {
 }
 
 export default {
-  title: 'Packages/Portal',
+  title: 'Components/Portal',
   component: Portal,
   args: {
     container: getRoot(),

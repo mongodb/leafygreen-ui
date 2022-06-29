@@ -48,7 +48,7 @@ console.log(greeting('World'));
 `;
 
 export default {
-  title: 'Packages/Code',
+  title: 'Components/Code',
   component: Code,
   excludeStories: ['Code'],
   args: {

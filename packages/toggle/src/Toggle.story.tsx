@@ -5,7 +5,7 @@ import { palette } from '@leafygreen-ui/palette';
 import Toggle from '.';
 
 export default {
-  title: 'Packages/Toggle',
+  title: 'Components/Toggle',
   component: Toggle,
   argTypes: {
     darkMode: {

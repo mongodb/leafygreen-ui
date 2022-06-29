@@ -5,7 +5,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Callout',
+  title: 'Components/Callout',
   component: Callout,
   args: {
     variant: Variant.Note,
