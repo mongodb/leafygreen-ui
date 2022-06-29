@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 14.0.1
+
+### Patch Changes
+
+- c897e216: Removes flicker in the active wedge
+
 ## 14.0.0
 
 ### Patch Changes

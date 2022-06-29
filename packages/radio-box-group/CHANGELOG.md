@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 9.0.1
+
+### Patch Changes
+
+- 1d471e2c: Removes stacking context from Radio Box
+
 ## 9.0.0
 
 ### Patch Changes
