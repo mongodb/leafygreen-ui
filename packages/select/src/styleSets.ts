@@ -15,11 +15,12 @@ interface ColorSet {
   menu: {
     shadow: string;
     border?: string;
+    hovered?: string;
+    focused?: string;
   };
   option: {
     group: {
       label: string;
-      border: string;
     };
     background: {
       base: string;
@@ -55,7 +56,6 @@ export const colorSets: Record<Mode, ColorSet> = {
     option: {
       group: {
         label: palette.gray.dark1,
-        border: palette.white,
       },
       background: {
         base: palette.white,
@@ -81,26 +81,28 @@ export const colorSets: Record<Mode, ColorSet> = {
 
   [Mode.Dark]: {
     text: {
-      deselected: uiColors.gray.light1,
+      deselected: palette.gray.light2,
     },
     menu: {
+      border: palette.gray.dark3,
       shadow: transparentize(0.2, uiColors.black),
+      hovered: palette.gray.dark4,
+      focused: palette.gray.dark4,
     },
     option: {
       group: {
-        label: uiColors.gray.light1,
-        border: uiColors.gray.dark1,
+        label: palette.gray.base,
       },
       background: {
-        base: uiColors.gray.dark2,
-        hovered: uiColors.gray.dark1,
-        focused: uiColors.blue.base,
+        base: palette.gray.dark3,
+        hovered: palette.gray.dark4,
+        focused: palette.blue.dark2,
       },
       text: {
-        base: uiColors.white,
-        selected: '#9DD0E7',
-        disabled: uiColors.gray.base,
-        focused: uiColors.white,
+        base: palette.gray.light2,
+        selected: palette.gray.light2,
+        disabled: palette.gray.dark2,
+        focused: palette.white, //TODO: find this out
       },
       icon: {
         base: uiColors.gray.light1,

@@ -42,20 +42,10 @@ const getMenuStyles = (mode: Mode, size: Size) => {
       min-height: ${sizeSet.height}px;
       background-color: ${colorSet.option.background.base};
       border-radius: 12px;
-    `,
-    {
-      // TODO: Refresh - remove dark mode logic
-      [css`
-        
-        border: 1px solid ${colorSet.menu.border};
-        
-        box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
-        padding: 8px 0;
-      `]: mode === Mode.Light,
-      [css`
-        box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
-      `]: mode === Mode.Dark,
-    },
+      border: 1px solid ${colorSet.menu.border};
+      box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
+      padding: 8px 0;
+    `
   );
 };
 

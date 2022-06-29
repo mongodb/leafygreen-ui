@@ -10,6 +10,7 @@ import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
 import { State } from '.';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuButtonStyleOverrides = css`
   text-transform: unset;
@@ -37,10 +38,24 @@ const menuButtonModeOverrides: Record<Mode, string> = {
     }
   `,
   [Mode.Dark]: css`
-    border-color: transparent;
-    background-color: ${palette.gray.dark2};
+    border-color: ${palette.gray.base};
+    background-color: ${palette.gray.dark4};
+
+    &:hover {
+      background-color: ${colorSets['dark'].menu.hovered};
+    }
   `,
 };
+
+const menuButtonFocusStyle: Record<Mode, string> = {
+  [Mode.Light]: css``,
+  [Mode.Dark]: css`
+    &:focus {
+      background-color: ${colorSets['dark'].menu.focused};
+    }
+    
+  `
+}
 
 const menuButtonDeselectedStyles: Record<Mode, string> = {
   [Mode.Light]: css`
@@ -151,6 +166,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   }: Props,
   forwardedRef,
 ) {
+  const { usingKeyboard } = useUsingKeyboardContext();
+
   const { mode, open, size, disabled } = useContext(SelectContext);
 
   const ref = useForwardedRef(forwardedRef, null);
@@ -176,6 +193,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         menuButtonStyleOverrides, // TODO: Refresh - remove overrides
         menuButtonModeOverrides[mode], // TODO: Refresh - remove overrides
         {
+          [menuButtonFocusStyle[mode]]: usingKeyboard,
           [menuButtonDeselectedStyles[mode]]: deselected,
           [menuButtonDisabledStyles[mode]]: disabled,
           [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,

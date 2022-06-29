@@ -12,6 +12,7 @@ export default {
   args: {
     placeholder: 'Select',
     disabled: false,
+    allowDeselect: false,
     children: [
       <OptionGroup key="Common" label="Common">
         <Option value="dog">Dog</Option>

@@ -45,9 +45,6 @@ export function InternalOptionGroup({
     <div
       className={cx(
         optionGroupStyle,
-        css`
-          border-bottom: 1px solid ${colorSet.group.border};
-        `,
         className,
       )}
     >
