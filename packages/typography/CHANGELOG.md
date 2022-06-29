@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 13.0.1
+
+### Patch Changes
+
+- 13a4adcc: Style updates to the `Disclaimer` component
+
 ## 13.0.0
 
 ### Patch Changes

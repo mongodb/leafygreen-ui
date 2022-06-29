@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-box-group",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "leafyGreen UI Kit RadioBoxGroup",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
