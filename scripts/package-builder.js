@@ -144,7 +144,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import ${PACKAGE_UC} from '.';
 
-storiesOf('Packages/${PACKAGE_UC}', module)
+storiesOf('Components/${PACKAGE_UC}', module)
   .add('Default', () => (
     <${PACKAGE_UC} />
   ))

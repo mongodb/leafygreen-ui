@@ -6,11 +6,15 @@ import TypographyProvider, {
 } from './TypographyContext';
 import PortalContextProvider, { PortalContextValues } from './PortalContext';
 import DarkModeProvider from './DarkModeContext';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 type LeafyGreenProviderProps = {
-  darkMode?: boolean;
+  /**
+   * Define a container HTMLElement for components that utilize the `Portal` component
+   */
   popoverPortalContainer?: PortalContextValues['popover'];
-} & TypographyProviderProps;
+} & TypographyProviderProps &
+  DarkModeProps;
 
 function LeafyGreenProvider({
   children,
@@ -33,6 +37,15 @@ function LeafyGreenProvider({
 
 LeafyGreenProvider.displayName = 'LeafyGreenProvider';
 
-LeafyGreenProvider.propTypes = { children: PropTypes.node };
+LeafyGreenProvider.propTypes = {
+  popoverPortalContainer: PropTypes.shape({
+    popover: PropTypes.shape({
+      portalContainer: PropTypes.instanceOf(HTMLElement),
+      scrollContainer: PropTypes.instanceOf(HTMLElement),
+    }),
+  }),
+  baseFontSize: PropTypes.oneOf([14, 16]),
+  darkMode: PropTypes.bool,
+};
 
 export default LeafyGreenProvider;

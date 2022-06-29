@@ -8,7 +8,7 @@ import { Mode } from './mode';
 import { startCase } from 'lodash';
 
 export default {
-  title: 'Packages/Tokens',
+  title: 'Components/Tokens',
   argTypes: {
     className: {
       table: {

@@ -7,7 +7,7 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Checkbox',
+  title: 'Components/Checkbox',
   component: Checkbox,
   argTypes: {
     children: defaultArgTypes.children,

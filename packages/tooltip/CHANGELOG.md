@@ -1,5 +1,14 @@
 # @leafygreen-ui/tooltip
 
+## 7.0.4
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/popover@9.0.0
+
 ## 7.0.3
 
 ### Patch Changes

@@ -61,9 +61,6 @@ export const menuItemContainerStyle = css`
 
   &:active {
     background-color: ${palette.black};
-    &:before {
-      background-color: ${palette.green.base};
-    }
   }
 `;
 

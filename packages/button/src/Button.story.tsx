@@ -18,7 +18,7 @@ export const StoryButton: React.FC<ButtonStoryProps> = props => (
 );
 
 export default {
-  title: 'Packages/Button',
+  title: 'Components/Button',
   component: StoryButton,
   excludeStories: ['StoryButton'],
   args: {

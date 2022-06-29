@@ -1,20 +1,18 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import React, { useContext } from 'react';
-import { ComboboxGroupProps } from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
+import { ComboboxGroupProps, Theme } from './Combobox.types';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
 
-const comboboxGroupStyle = (darkMode: boolean) => css`
-  --lg-combobox-group-label-color: ${darkMode
-    ? uiColors.gray.light1
-    : uiColors.gray.dark1};
-  --lg-combobox-group-border-color: ${darkMode
-    ? uiColors.gray.dark1
-    : uiColors.gray.light1};
-  padding-top: 8px;
-  border-bottom: 1px solid var(--lg-combobox-group-border-color);
-`;
+const comboboxGroupStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    padding-top: 8px;
+  `,
+  [Theme.Dark]: css`
+    padding-top: 8px;
+  `,
+};
 
 const comboboxGroupLabel = css`
   cursor: default;
@@ -27,8 +25,16 @@ const comboboxGroupLabel = css`
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  color: var(--lg-combobox-group-label-color);
 `;
+
+const comboboxGroupLabelThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+  `,
+};
 
 export function InternalComboboxGroup({
   label,
@@ -36,13 +42,17 @@ export function InternalComboboxGroup({
   children,
 }: ComboboxGroupProps): JSX.Element {
   const { darkMode } = useContext(ComboboxContext);
+  const theme = useDarkMode(darkMode);
 
   const groupId = useIdAllocator({ prefix: 'combobox-group' });
   const childCount = React.Children.count(children);
 
   return childCount > 0 ? (
-    <div className={cx(comboboxGroupStyle(darkMode), className)}>
-      <div className={comboboxGroupLabel} id={groupId}>
+    <div className={cx(comboboxGroupStyle[theme], className)}>
+      <div
+        className={cx(comboboxGroupLabel, comboboxGroupLabelThemeStyle[theme])}
+        id={groupId}
+      >
         {label}
       </div>
       <div role="group" aria-labelledby={groupId}>

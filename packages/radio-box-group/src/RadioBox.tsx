@@ -51,7 +51,6 @@ const getRadioDisplayStyles = ({
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2;
 
       padding: 16px 24px;
 
@@ -110,11 +109,6 @@ export const radioWrapper = css`
   font-family: ${fontFamilies.default};
   display: flex;
   position: relative;
-
-  // Establishes the root element as a new stacking context
-  // so that the z-index of the span within the button doesn't
-  // appear above other elements on the page that it shouldn't.
-  z-index: 0;
 
   &:not(:last-of-type) {
     margin-right: 12px;
