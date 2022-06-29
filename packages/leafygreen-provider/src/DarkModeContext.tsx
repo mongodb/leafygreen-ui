@@ -1,6 +1,6 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { getTheme, ThemeType } from '@leafygreen-ui/lib';
+import { getTheme, Theme } from '@leafygreen-ui/lib';
 
 interface DarkModeContextProps {
   globalDarkMode?: boolean;
@@ -12,7 +12,7 @@ const DarkModeContext = createContext<DarkModeContextProps>({
 export const useDarkModeContext = () => useContext(DarkModeContext);
 export const useDarkMode: (componentDarkMode?: boolean) => {
   darkMode: boolean;
-  theme: ThemeType;
+  theme: Theme;
 } = componentDarkMode => {
   const { globalDarkMode } = useDarkModeContext();
   const darkMode = componentDarkMode ?? globalDarkMode ?? false;

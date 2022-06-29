@@ -3,9 +3,9 @@ import { uiColors, palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ButtonProps, Variant, Size } from './types';
 import { ButtonDataProp } from './styles';
-import { getTheme, Theme, ThemeType } from '@leafygreen-ui/lib';
+import { getTheme, Theme } from '@leafygreen-ui/lib';
 
-const baseIconStyle: Record<ThemeType, Record<Variant, string>> = {
+const baseIconStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: css`
       color: ${palette.gray.base};
@@ -49,7 +49,7 @@ const baseIconStyle: Record<ThemeType, Record<Variant, string>> = {
   },
 };
 
-const onlyIconStyle: Record<ThemeType, Record<Variant, string>> = {
+const onlyIconStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: css`
       color: ${palette.gray.dark1};
@@ -118,7 +118,7 @@ const iconSize: Record<Size, string> = {
   `,
 };
 
-const disabledIconStyle: Record<ThemeType, string> = {
+const disabledIconStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.light1};
   `,

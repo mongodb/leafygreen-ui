@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Size, Variant, ButtonProps } from './types';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { createDataProp, Theme, ThemeType } from '@leafygreen-ui/lib';
+import { createDataProp, Theme } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 
@@ -43,7 +43,7 @@ const baseButtonStyles = css`
   }
 `;
 
-const colorSet: Record<ThemeType, Record<Variant, string>> = {
+const colorSet: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: css`
       background-color: ${palette.gray.light3};
@@ -233,7 +233,7 @@ const colorSet: Record<ThemeType, Record<Variant, string>> = {
   },
 };
 
-const focusStyle: Record<ThemeType, Record<Variant, string>> = {
+const focusStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: css`
       &:focus {
@@ -315,7 +315,7 @@ const focusStyle: Record<ThemeType, Record<Variant, string>> = {
   },
 };
 
-const disabledStyle: Record<ThemeType, string> = {
+const disabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &,
     &:hover {
@@ -418,7 +418,7 @@ export function getClassName({
 
 const rippleOpacity = 0.76;
 
-export const rippleColors: Record<ThemeType, Record<Variant, string>> = {
+export const rippleColors: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: palette.gray.light2,
     [Variant.Primary]: palette.green.dark1,
