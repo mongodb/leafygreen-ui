@@ -23,7 +23,6 @@ export const textAreaStyle = css`
   font-size: 14px;
   font-weight: normal;
   line-height: 16px;
-  z-index: 1;
   border: 1px solid;
   border-radius: 6px;
   transition: 150ms ease-in-out;

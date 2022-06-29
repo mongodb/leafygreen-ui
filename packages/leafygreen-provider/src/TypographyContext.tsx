@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 // TODO: Refresh - update to 13 | 16
 type FontSize = 14 | 16;
 export interface TypographyProviderProps {
+  /**
+   * The base font size of all LeafyGreen components unless overridden.
+   */
   baseFontSize?: FontSize;
 }
 

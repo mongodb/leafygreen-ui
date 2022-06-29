@@ -37,7 +37,7 @@ const displayFlex = css`
 `;
 
 export default {
-  title: 'Packages/Typography',
+  title: 'Components/Typography',
   argTypes: {
     baseFontSize: {
       options: [14, 16],

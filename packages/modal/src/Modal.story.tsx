@@ -10,7 +10,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 import { ModalProps } from './Modal';
 
 export default {
-  title: 'Packages/Modals/Modal',
+  title: 'Components/Modals/Modal',
   component: Modal,
   argTypes: {
     open: {

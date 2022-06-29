@@ -69,7 +69,7 @@ const referenceElPositions: { [key: string]: string } = {
 };
 
 export default {
-  title: 'Packages/Popover',
+  title: 'Components/Popover',
   component: Popover,
   args: {
     align: Align.Top,
