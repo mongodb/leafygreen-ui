@@ -6,7 +6,6 @@ import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import SelectContext from './SelectContext';
 import {
   colorSets,
-  legacySizeSets,
   mobileSizeSet,
   Mode,
   sizeSets,
@@ -31,7 +30,7 @@ const baseMenuStyle = css`
 `;
 
 const getMenuStyles = (mode: Mode, size: Size) => {
-  const sizeSet = mode === Mode.Dark ? legacySizeSets[size] : sizeSets[size];
+  const sizeSet = sizeSets[size];
 
   const colorSet = colorSets[mode];
 

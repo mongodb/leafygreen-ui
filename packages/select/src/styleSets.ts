@@ -1,5 +1,5 @@
 import { transparentize } from 'polished';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 
 export const Mode = {
   Dark: 'dark',
@@ -85,7 +85,7 @@ export const colorSets: Record<Mode, ColorSet> = {
     },
     menu: {
       border: palette.gray.dark3,
-      shadow: transparentize(0.2, uiColors.black),
+      shadow: transparentize(0.2, palette.black),
       hovered: palette.gray.dark4,
       focused: palette.gray.dark4,
     },
@@ -96,21 +96,21 @@ export const colorSets: Record<Mode, ColorSet> = {
       background: {
         base: palette.gray.dark3,
         hovered: palette.gray.dark4,
-        focused: palette.blue.dark2,
+        focused: palette.blue.dark3,
       },
       text: {
         base: palette.gray.light2,
         selected: palette.gray.light2,
         disabled: palette.gray.dark2,
-        focused: palette.white, //TODO: find this out
+        focused: palette.blue.light3,
       },
       icon: {
-        base: uiColors.gray.light1,
-        selected: '#9DD0E7',
-        disabled: uiColors.gray.base,
+        base: palette.gray.base,
+        selected: palette.gray.base,
+        disabled: palette.gray.dark1,
       },
       indicator: {
-        focused: uiColors.white,
+        focused: palette.blue.light1,
       },
     },
   },
@@ -174,7 +174,7 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.Large]: {
     height: 48,
     text: 18,
-    lineHeight: 22,
+    lineHeight: 23,
     option: {
       text: 16,
     },
@@ -183,72 +183,72 @@ export const sizeSets: Record<Size, SizeSet> = {
 };
 
 // TODO: Refresh - used for dark mode
-export const legacySizeSets: Record<Size, SizeSet> = {
-  [Size.XSmall]: {
-    height: 22,
-    text: 12,
-    option: {
-      text: 14,
-    },
-    warningIcon: 12,
-    label: {
-      text: 14,
-      lineHeight: 16,
-    },
-    description: {
-      text: 14,
-      lineHeight: 16,
-    },
-  },
-  [Size.Small]: {
-    height: 28,
-    text: 14,
-    option: {
-      text: 14,
-    },
-    warningIcon: 14,
-    label: {
-      text: 14,
-      lineHeight: 16,
-    },
-    description: {
-      text: 14,
-      lineHeight: 16,
-    },
-  },
-  [Size.Default]: {
-    height: 36,
-    text: 14,
-    option: {
-      text: 14,
-    },
-    warningIcon: 14,
-    label: {
-      text: 14,
-      lineHeight: 16,
-    },
-    description: {
-      text: 14,
-      lineHeight: 20,
-    },
-  },
-  [Size.Large]: {
-    height: 48,
-    text: 18,
-    option: {
-      text: 16,
-    },
-    warningIcon: 17.5,
-    label: {
-      text: 18,
-      lineHeight: 21,
-    },
-    description: {
-      text: 18,
-      lineHeight: 24,
-    },
-  },
-};
+// export const legacySizeSets: Record<Size, SizeSet> = {
+//   [Size.XSmall]: {
+//     height: 22,
+//     text: 12,
+//     option: {
+//       text: 14,
+//     },
+//     warningIcon: 12,
+//     label: {
+//       text: 14,
+//       lineHeight: 16,
+//     },
+//     description: {
+//       text: 14,
+//       lineHeight: 16,
+//     },
+//   },
+//   [Size.Small]: {
+//     height: 28,
+//     text: 14,
+//     option: {
+//       text: 14,
+//     },
+//     warningIcon: 14,
+//     label: {
+//       text: 14,
+//       lineHeight: 16,
+//     },
+//     description: {
+//       text: 14,
+//       lineHeight: 16,
+//     },
+//   },
+//   [Size.Default]: {
+//     height: 36,
+//     text: 14,
+//     option: {
+//       text: 14,
+//     },
+//     warningIcon: 14,
+//     label: {
+//       text: 14,
+//       lineHeight: 16,
+//     },
+//     description: {
+//       text: 14,
+//       lineHeight: 20,
+//     },
+//   },
+//   [Size.Large]: {
+//     height: 48,
+//     text: 18,
+//     option: {
+//       text: 16,
+//     },
+//     warningIcon: 17.5,
+//     label: {
+//       text: 18,
+//       lineHeight: 21,
+//     },
+//     description: {
+//       text: 18,
+//       lineHeight: 24,
+//     },
+//   },
+// };
 
 interface MobileSizeSet {
   height: number;

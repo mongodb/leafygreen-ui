@@ -12,7 +12,6 @@ import { PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
 import {
-  legacySizeSets,
   mobileSizeSet,
   sizeSets,
   Mode,
@@ -194,7 +193,7 @@ export default function Select({
   const listMenuRef = useStateRef<HTMLUListElement | null>(null);
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const sizeSet = darkMode ? legacySizeSets[size] : sizeSets[size];
+  const sizeSet = sizeSets[size];
 
   const providerData = useMemo(() => {
     return { mode, size, open, disabled };
@@ -584,14 +583,6 @@ export default function Select({
                 line-height: ${mobileSizeSet.label.lineHeight}px;
               }
             `,
-            {
-              [css`
-                font-size: ${legacySizeSets[size].label!.text}px;
-                line-height: ${legacySizeSets[size].label!.lineHeight}px;
-                padding-bottom: 0;
-                margin-bottom: 2px;
-              `]: mode === Mode.Dark, // TODO: Refresh - remove conditional logic
-            },
           )}
         >
           {label}
@@ -610,14 +601,6 @@ export default function Select({
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
             `,
-            {
-              [css`
-                font-size: ${legacySizeSets[size].description!.text}px;
-                line-height: ${legacySizeSets[size].description!.lineHeight}px;
-                padding-bottom: 0;
-                margin-bottom: 2px;
-              `]: mode === Mode.Dark, // TODO: Refresh - remove conditional logic
-            },
           )}
         >
           {description}

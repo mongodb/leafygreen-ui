@@ -3,7 +3,7 @@ import Button, { Size, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
@@ -98,7 +98,7 @@ const menuButtonTextStyle = css`
 
 const errorColor: Record<Mode, string> = {
   [Mode.Light]: palette.red.base,
-  [Mode.Dark]: '#F97216',
+  [Mode.Dark]: '#FF6960', // TODO: palette.red.light1 was updated recently to #FF6960 which does not match react
 };
 
 const menuButtonErrorStyle: Record<Mode, string> = {
@@ -112,14 +112,12 @@ const menuButtonErrorStyle: Record<Mode, string> = {
     }
   `,
   [Mode.Dark]: css`
-    border-color: ${errorColor[Mode.Dark]}; // off palette
-    box-shadow: 0px 1px 2px rgba(87, 11, 8, 0.3);
+    border-color: ${errorColor[Mode.Dark]};
 
     &:hover,
     &:active {
-      border-color: ${errorColor[Mode.Dark]}; // off palette
-      box-shadow: 0px 4px 4px rgba(87, 11, 8, 0.3),
-        0px 0px 0px 3px ${uiColors.red.light3};
+      border-color: ${errorColor[Mode.Dark]};
+      box-shadow: 0px 0px 0px 3px ${palette.yellow.dark3};
     }
   `,
 };

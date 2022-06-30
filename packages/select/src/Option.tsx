@@ -245,10 +245,6 @@ export function InternalOption({
           color: ${colorSet.text.base};
         `,
         {
-          // TODO: Refresh - remove dark mode conditional styles
-          [css`
-            padding: 10px 12px;
-          `]: mode === Mode.Dark,
           [css`
             &:hover {
               background-color: ${colorSet.background.hovered};
