@@ -1,5 +1,17 @@
 # @leafygreen-ui/select
 
+## 6.1.0
+
+### Minor Changes
+
+- 828c895d: Passes through all valid `button`, `li` and `div` attriutes (including `data-*` attributes) to `Select`, `Option` and `OptionGroup` respectively
+
+### Patch Changes
+
+- b22cc41f: Fixes a bug where long values, when selected, would overflow outside the Select trigger.
+- Updated dependencies [13a4adcc]
+  - @leafygreen-ui/typography@13.0.1
+
 ## 6.0.0
 
 ### Patch Changes

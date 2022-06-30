@@ -26,13 +26,6 @@ const Size = {
 
 type Size = typeof Size[keyof typeof Size];
 
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
-
 // TODO: Remove in next major release
 export const FontSize = {
   Body1: 13,
@@ -108,4 +101,4 @@ interface ButtonProps {
   as?: keyof JSX.IntrinsicElements;
 }
 
-export { Variant, Size, Mode, ButtonProps };
+export { Variant, Size, ButtonProps };

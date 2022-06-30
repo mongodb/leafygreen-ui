@@ -1,5 +1,13 @@
 # @leafygreen-ui/combobox
 
+## 2.0.1
+
+### Patch Changes
+
+- 5f82468e: Updates lodash imports in combobox. Lodash functions are now imported individually to reduce bundle size
+- Updated dependencies [13a4adcc]
+  - @leafygreen-ui/typography@13.0.1
+
 ## 2.0.0
 
 ### Major Changes

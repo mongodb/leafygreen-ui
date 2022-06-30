@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { WebClient } = require('@slack/web-api');
 const { sample } = require('lodash');
+const fetch = require('node-fetch');
 
 const updatesArray = JSON.parse(process.argv[2]);
 // const channel = 'C02JA6UG886'; // design-system-testing
@@ -11,28 +12,7 @@ try {
   const botToken = process.env.SLACK_BOT_TOKEN;
 
   if (exists(botToken) && exists(updatesArray)) {
-    const greeting = getGreeting(updatesArray.length);
-
-    const updatesString = updatesArray
-      .map(({ name, version }) => {
-        const shortName = name.split('/')[1];
-        const changelogUrl = `https://github.com/mongodb/leafygreen-ui/blob/main/packages/${shortName}/CHANGELOG.md`;
-        const fullName = `${name}@${version}`;
-        return `*<${changelogUrl} | ${fullName}>*`;
-      })
-      .join('\n\n');
-    const web = new WebClient(botToken);
-
-    const text = `${greeting}\n\n${updatesString}`;
-
-    if (exists(text)) {
-      // post message
-      web.chat.postMessage({ text, channel });
-      // eslint-disable-next-line no-console
-      console.log(`Sent message to ${channel}`);
-    } else {
-      console.warn('Missing message text. Did not send message.');
-    }
+    slackbot(botToken);
   } else {
     console.warn(
       exists(botToken) ? 'Updates array not found' : 'Bot token not found',
@@ -41,6 +21,59 @@ try {
 } catch (error) {
   console.error(`Error:`, error.message);
 }
+
+async function slackbot(botToken) {
+  const greeting = getGreeting(updatesArray.length);
+
+  const sortedUpdates = updatesArray.reduce(
+    (updates, component) => {
+      if (component.version.endsWith('.0.0')) updates.major.push(component);
+      else if (component.version.endsWith('.0')) updates.minor.push(component);
+      else updates.patch.push(component);
+      return updates;
+    },
+    {
+      major: [],
+      minor: [],
+      patch: [],
+    },
+  );
+
+  const majorUpdatesString = (
+    await Promise.all(sortedUpdates.major.map(parseMajorChangeString))
+  ).join('\n');
+
+  const minorUpdatesString = sortedUpdates.minor
+    .map(parseMinorChangeString)
+    .join('\n');
+
+  const patchUpdatesString = sortedUpdates.patch
+    .map(parsePatchChangeString)
+    .join('\n');
+
+  let updatesString = '';
+  if (majorUpdatesString.length > 0)
+    updatesString += `*Major Changes*\n${majorUpdatesString}`;
+  if (minorUpdatesString.length > 0)
+    updatesString += `\n\n*Minor Changes*\n${minorUpdatesString}`;
+  if (patchUpdatesString.length > 0)
+    updatesString += `\n\n*Patch Changes*\n${patchUpdatesString}`;
+
+  const web = new WebClient(botToken);
+
+  const text = `${greeting}\n\n${updatesString}`;
+
+  if (exists(text)) {
+    // post message
+    web.chat.postMessage({ text, channel });
+    // eslint-disable-next-line no-console
+    console.log(`Sent message to ${channel}`);
+  } else {
+    console.warn('Missing message text. Did not send message.');
+  }
+}
+
+/* UTILS */
 
 function exists(arg) {
   return !!arg && arg.length > 0;
@@ -89,4 +122,49 @@ function getTimeOfDay(time) {
   if (time <= 12) return 'morning';
   else if (time <= 18) return 'afternoon';
   else return 'evening';
+}
+
+function generateOutputStrings({ name, version }) {
+  const shortName = name.split('/')[1];
+  const changelogUrl = `https://github.com/mongodb/leafygreen-ui/blob/main/packages/${shortName}/CHANGELOG.md`;
+  const fullName = `${name}@${version}`;
+
+  return {
+    shortName,
+    changelogUrl,
+    fullName,
+  };
+}
+
+function parseMinorChangeString(component) {
+  const { fullName, changelogUrl } = generateOutputStrings(component);
+  return `*<${changelogUrl} | ${fullName}>*`;
+}
+
+function parsePatchChangeString(component) {
+  const { fullName, changelogUrl } = generateOutputStrings(component);
+  return `*<${changelogUrl} | ${fullName}>*`;
+}
+
+// eslint-disable-next-line no-unused-vars
+async function fetchChangelogText(component) {
+  const { shortName } = generateOutputStrings(component);
+  const rawChangelogUrl = `https://raw.githubusercontent.com/mongodb/leafygreen-ui/main/packages/${shortName}/CHANGELOG.md`;
+  const response = await fetch(rawChangelogUrl);
+  return await response.text();
+}
+
+async function parseMajorChangeString(component) {
+  const { fullName, changelogUrl } = generateOutputStrings(component);
+  // TODO: decide how we want to format the changelog text
+  // const changelogText = await fetchChangelogText(component)
+  // copy until the second H2
+  // const startIndex = changelogText.indexOf(component.version) + component.version.length
+  // const relevantChangelog = changelogText.substring(
+  //   startIndex,
+  //   changelogText.indexOf('\n## ', startIndex)
+  // )
+  // .replace(/###/, '')
+  // .trim()
+  return `*<${changelogUrl} | ${fullName}>*`;
 }

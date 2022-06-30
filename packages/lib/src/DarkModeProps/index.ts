@@ -13,6 +13,4 @@ export default interface DarkModeProps {
 }
 
 export const Theme = { Light: 'light', Dark: 'dark' } as const;
-type ThemeType = typeof Theme[keyof typeof Theme];
-
-export type { ThemeType };
+export type Theme = typeof Theme[keyof typeof Theme];
