@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import Button, { Size, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
-import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { breakpoints, focusRing, spacing } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
@@ -52,11 +52,19 @@ const menuButtonModeOverrides: Record<Mode, string> = {
   `,
 };
 
+// Override default button focus styles
 const menuButtonFocusStyle: Record<Mode, string> = {
-  [Mode.Light]: css``,
+  [Mode.Light]: css`
+    &:focus {
+      box-shadow: ${focusRing['light'].input};
+      border-color: transparent;
+    }
+  `,
   [Mode.Dark]: css`
     &:focus {
       background-color: ${colorSets['dark'].menu.focused};
+      box-shadow: ${focusRing['dark'].input};
+      border-color: transparent;
     }
   `
 }
