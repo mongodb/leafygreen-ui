@@ -1,8 +1,8 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps, ThemedStyles } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { baseTypographyStyles } from './styles';
-import { CommonTypographyProps, Theme } from './types';
+import { CommonTypographyProps } from './types';
 import { palette } from '@leafygreen-ui/palette';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -16,7 +16,7 @@ const disclaimer = css`
   letter-spacing: 0.2px;
 `;
 
-export const disclaimerTextColor: ThemedStyles = {
+export const disclaimerTextColor: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,

@@ -1,8 +1,7 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps, ThemedStyles } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { Theme } from './types';
 import { palette } from '@leafygreen-ui/palette';
 import { useUpdatedBaseFontSize } from './useUpdatedBaseFontSize';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -25,7 +24,7 @@ const descriptionTypeScale: Record<BaseFontSize, string> = {
   `,
 };
 
-const descriptionColorStyle: ThemedStyles = {
+const descriptionColorStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,
@@ -34,7 +33,7 @@ const descriptionColorStyle: ThemedStyles = {
   `,
 };
 
-const disabledDescriptionColorStyle: ThemedStyles = {
+const disabledDescriptionColorStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,

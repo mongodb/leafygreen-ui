@@ -3,9 +3,9 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, ThemedStyles } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { baseTypographyStyles } from './styles';
-import { CommonTypographyProps, Theme } from './types';
+import { CommonTypographyProps } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
@@ -18,7 +18,7 @@ const h2 = css`
   font-family: ${fontFamilies.serif};
 `;
 
-const h2Color: ThemedStyles = {
+const h2Color: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.green.dark2};
   `,

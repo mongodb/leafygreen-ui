@@ -2,9 +2,9 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, ThemedStyles } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { codeTypeScaleStyles } from './styles';
-import { CommonTypographyProps, Theme } from './types';
+import { CommonTypographyProps } from './types';
 import { useUpdatedBaseFontSize } from '.';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -19,7 +19,7 @@ const inlineKeyCode = css`
   padding-right: 5px;
 `;
 
-const inlineKeyCodeColor: ThemedStyles = {
+const inlineKeyCodeColor: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.black};
     border-color: ${palette.gray.dark3};

@@ -8,10 +8,10 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 import {
   HTMLElementProps,
   createUniqueClassName,
-  ThemedStyles,
+  Theme,
 } from '@leafygreen-ui/lib';
 import { bodyTypeScaleStyles } from './styles';
-import { Theme, CommonTypographyProps } from './types';
+import { CommonTypographyProps } from './types';
 import { useUpdatedBaseFontSize } from '.';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -30,7 +30,7 @@ const linkStyles = css`
   }
 `;
 
-const linkModeStyles: ThemedStyles = {
+const linkModeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.blue.base};
     font-weight: 400;
@@ -60,7 +60,7 @@ const underlineStyles = css`
   }
 `;
 
-const underlineModeStyles: ThemedStyles = {
+const underlineModeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     .${anchorClassName}:hover & {
       &::after {

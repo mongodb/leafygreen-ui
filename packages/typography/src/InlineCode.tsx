@@ -6,14 +6,14 @@ import {
   HTMLElementProps,
   OneOf,
   createUniqueClassName,
-  ThemedStyles,
+  Theme,
 } from '@leafygreen-ui/lib';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { codeTypeScaleStyles } from './styles';
-import { CommonTypographyProps, Theme } from './types';
+import { CommonTypographyProps } from './types';
 import { useUpdatedBaseFontSize } from '.';
 
 const anchorClassName = createUniqueClassName();
@@ -33,7 +33,7 @@ const code = css`
   }
 `;
 
-const codeModes: ThemedStyles = {
+const codeModes: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.gray.light3};
     border: 1px solid ${palette.gray.light2};
@@ -57,7 +57,7 @@ const codeModes: ThemedStyles = {
   `,
 };
 
-const codeFocusModes: ThemedStyles = {
+const codeFocusModes: Record<Theme, string> = {
   [Theme.Light]: css`
     .${anchorClassName}:focus > & {
       box-shadow: ${focusRing[Theme.Light].default};
@@ -73,7 +73,7 @@ const codeFocusModes: ThemedStyles = {
   `,
 };
 
-const codeLinkStyleModes: ThemedStyles = {
+const codeLinkStyleModes: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.blue.base};
   `,

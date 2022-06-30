@@ -1,10 +1,3 @@
-export const Theme = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export type Theme = typeof Theme[keyof typeof Theme];
-
-export interface CommonTypographyProps {
-  darkMode?: boolean;
-}
+export type CommonTypographyProps = DarkModeProps;

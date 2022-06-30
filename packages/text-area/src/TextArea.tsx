@@ -9,7 +9,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 import Warning from '@leafygreen-ui/icon/dist/Warning';
-import { State, TextAreaProps, Mode } from './types';
+import { State, TextAreaProps } from './types';
 import {
   containerStyles,
   textAreaStyle,
@@ -18,6 +18,7 @@ import {
   errorIconStyle,
   errorMessageLabelStyles,
 } from './styles';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * # TextArea
@@ -38,7 +39,7 @@ import {
  * @param props.state The current state of the TextArea. This can be `none` or `error`.
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
  * @param props.className ClassName supplied to the TextArea container.
- * @param props.darkMode Determines whether or not the component appears in dark mode.
+ * @param props.darkMode Determines whether or not the component appears in dark theme.
  * @param props.handleValidation Validation callback used to validate input.
  * @param props.baseFontSize Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description.
  */
@@ -50,7 +51,7 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
       description,
       className,
       errorMessage,
-      darkMode = false,
+      darkMode: darkModeProp,
       disabled = false,
       state = State.None,
       id: idProp,
@@ -67,7 +68,7 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const errorBaseFontSize = useUpdatedBaseFontSize();
     const id = useIdAllocator({ prefix: 'textarea', id: idProp });
-    const mode = darkMode ? Mode.Dark : Mode.Light;
+    const { darkMode, theme } = useDarkMode(darkModeProp);
 
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
@@ -122,9 +123,10 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
           className={cx(
             textAreaStyle,
             bodyTypeScaleStyles[baseFontSize],
-            colorSets[mode].textArea,
+            colorSets[theme].textArea,
             {
-              [colorSets[mode].errorBorder]: state === State.Error && !disabled,
+              [colorSets[theme].errorBorder]:
+                state === State.Error && !disabled,
             },
           )}
           disabled={disabled}
@@ -133,7 +135,7 @@ const TextArea: React.ComponentType<React.PropsWithRef<TextAreaProps>> =
           value={value}
         />
         {!disabled && state === State.Error && errorMessage && (
-          <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
+          <div className={cx(errorMessageStyle, colorSets[theme].errorMessage)}>
             <Warning className={errorIconStyle} />
             <label
               className={cx(
