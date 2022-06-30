@@ -14,3 +14,4 @@ export default interface DarkModeProps {
 
 export const Theme = { Light: 'light', Dark: 'dark' } as const;
 export type Theme = typeof Theme[keyof typeof Theme];
+export type ThemedStyles = Record<Theme, string>;
