@@ -42,12 +42,7 @@ export function InternalOptionGroup({
   const groupId = useIdAllocator({ prefix: 'select-option-group' });
 
   return (
-    <div
-      className={cx(
-        optionGroupStyle,
-        className,
-      )}
-    >
+    <div className={cx(optionGroupStyle, className)}>
       <div
         id={groupId}
         className={cx(

@@ -46,7 +46,10 @@ const errorTextStyle = ({
   sizeSet: SizeSet;
 }) => css`
   font-family: ${fontFamilies.default};
-  color: ${darkMode ? '#FF6960' : palette.red.base}; // TODO: palette.red.light1 was updated recently to #FF6960 which does not match react
+  color: ${darkMode
+    ? '#FF6960'
+    : palette.red
+        .base}; // TODO: palette.red.light1 was updated recently to #FF6960 which does not match react
   font-size: ${sizeSet.text}px;
   margin-top: ${spacing[1]}px;
   padding-left: 2px;

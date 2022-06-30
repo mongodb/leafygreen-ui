@@ -28,27 +28,29 @@ const menuButtonStyleOverrides = css`
 
 const menuButtonModeOverrides: Record<Mode, string> = {
   [Mode.Light]: css`
-    background-color: ${palette.white};
+    background-color: ${colorSets['light'].menu.background};
     // Override button default color
     > *:last-child {
       > svg {
-        color: ${palette.gray.dark2};
+        color: ${colorSets['light'].menu.caret};
       }
     }
   `,
   [Mode.Dark]: css`
-    border-color: ${palette.gray.base};
-    background-color: ${palette.gray.dark4};
-    color: ${palette.gray.light3};
+    border-color: ${colorSets['dark'].menu.border};
+    background-color: ${colorSets['dark'].menu.background};
+    color: ${colorSets['dark'].menu.color};
 
     // Override button default color
     > *:last-child {
       > svg {
-        color: ${palette.gray.light1};
+        color: ${colorSets['dark'].menu.caret};
       }
     }
 
-    &:hover, &:active {
+    &:hover,
+    &:active,
+    &:focus {
       background-color: ${colorSets['dark'].menu.hovered};
       color: ${palette.gray.light3};
     }
@@ -69,8 +71,8 @@ const menuButtonFocusStyle: Record<Mode, string> = {
       box-shadow: ${focusRing['dark'].input};
       border-color: rgba(255, 255, 255, 0);
     }
-  `
-}
+  `,
+};
 
 const menuButtonDeselectedStyles: Record<Mode, string> = {
   [Mode.Light]: css`
@@ -78,8 +80,10 @@ const menuButtonDeselectedStyles: Record<Mode, string> = {
   `,
   [Mode.Dark]: css`
     color: ${colorSets['dark'].text.deselected};
-    
-    &:hover, &:active, &:focus {
+
+    &:hover,
+    &:active,
+    &:focus {
       color: ${palette.gray.light1};
     }
   `,
@@ -87,31 +91,31 @@ const menuButtonDeselectedStyles: Record<Mode, string> = {
 
 const menuButtonDisabledStyles: Record<Mode, string> = {
   [Mode.Light]: css`
-  &:disabled {
-    background-color: ${palette.gray.light2};
-    color: ${palette.gray.base};
-    cursor: not-allowed;
+    &:disabled {
+      background-color: ${colorSets['light'].menuDisabled.background};
+      color: ${colorSets['light'].menuDisabled.color};
+      cursor: not-allowed;
 
-    > *:last-child {
-      > svg {
-        color: ${palette.gray.base};
+      > *:last-child {
+        > svg {
+          color: ${colorSets['light'].menuDisabled.caret};
+        }
       }
     }
-  }
   `,
   [Mode.Dark]: css`
-  &:disabled {
-    background-color: ${palette.gray.dark3};
-    color: ${palette.gray.dark2};
-    cursor: not-allowed;
-    border-color: ${palette.gray.dark2};
+    &:disabled {
+      background-color: ${colorSets['dark'].menuDisabled.background};
+      color: ${colorSets['dark'].menuDisabled.color};
+      cursor: not-allowed;
+      border-color: ${colorSets['dark'].menuDisabled.border};
 
-    > *:last-child {
-      > svg {
-        color: ${palette.gray.dark2};
+      > *:last-child {
+        > svg {
+          color: ${colorSets['dark'].menuDisabled.caret};
+        }
       }
     }
-  }
   `,
 };
 

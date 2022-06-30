@@ -4,12 +4,7 @@ import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import SelectContext from './SelectContext';
-import {
-  colorSets,
-  mobileSizeSet,
-  Mode,
-  sizeSets,
-} from './styleSets';
+import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
 import { Size } from '.';
 import isUndefined from 'lodash/isUndefined';
@@ -44,7 +39,7 @@ const getMenuStyles = (mode: Mode, size: Size) => {
       border: 1px solid ${colorSet.menu.border};
       box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
       padding: 8px 0;
-    `
+    `,
   );
 };
 

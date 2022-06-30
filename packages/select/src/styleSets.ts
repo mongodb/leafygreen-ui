@@ -17,6 +17,15 @@ interface ColorSet {
     border?: string;
     hovered?: string;
     focused?: string;
+    background?: string;
+    color?: string;
+    caret: string;
+  };
+  menuDisabled: {
+    background?: string;
+    color?: string;
+    border?: string;
+    caret: string;
   };
   option: {
     group: {
@@ -50,8 +59,15 @@ export const colorSets: Record<Mode, ColorSet> = {
       deselected: palette.gray.dark1,
     },
     menu: {
+      background: palette.white,
       border: palette.gray.light2,
       shadow: transparentize(0.75, palette.black),
+      caret: palette.gray.dark2,
+    },
+    menuDisabled: {
+      background: palette.gray.light2,
+      color: palette.gray.base,
+      caret: palette.gray.base,
     },
     option: {
       group: {
@@ -84,10 +100,19 @@ export const colorSets: Record<Mode, ColorSet> = {
       deselected: palette.gray.light1,
     },
     menu: {
-      border: palette.gray.dark3,
+      background: palette.gray.dark4,
+      border: palette.gray.base,
       shadow: transparentize(0.2, palette.black),
       hovered: palette.gray.dark4,
       focused: palette.gray.dark4,
+      color: palette.gray.light3,
+      caret: palette.gray.light1,
+    },
+    menuDisabled: {
+      background: palette.gray.dark3,
+      color: palette.gray.dark2,
+      border: palette.gray.dark2,
+      caret: palette.gray.dark2,
     },
     option: {
       group: {
