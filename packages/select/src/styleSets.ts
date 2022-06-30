@@ -106,7 +106,7 @@ export const colorSets: Record<Mode, ColorSet> = {
       },
       icon: {
         base: palette.gray.base,
-        selected: palette.gray.base,
+        selected: palette.blue.light1,
         disabled: palette.gray.dark1,
       },
       indicator: {

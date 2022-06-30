@@ -6,7 +6,7 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 import { createDataProp } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
-import { colorSets, Mode } from './styleSets';
+import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 

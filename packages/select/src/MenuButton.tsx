@@ -13,8 +13,6 @@ import { State } from '.';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuButtonStyleOverrides = css`
-  text-transform: unset;
-  font-weight: 400;
   // Override button defaults
   > *:last-child {
     grid-template-columns: 1fr 16px;
@@ -41,6 +39,13 @@ const menuButtonModeOverrides: Record<Mode, string> = {
     border-color: ${palette.gray.base};
     background-color: ${palette.gray.dark4};
 
+    // Override button default color
+    > *:last-child {
+      > svg {
+        color: ${palette.gray.light1};
+      }
+    }
+
     &:hover {
       background-color: ${colorSets['dark'].menu.hovered};
     }
@@ -53,7 +58,6 @@ const menuButtonFocusStyle: Record<Mode, string> = {
     &:focus {
       background-color: ${colorSets['dark'].menu.focused};
     }
-    
   `
 }
 
@@ -68,6 +72,7 @@ const menuButtonDeselectedStyles: Record<Mode, string> = {
 
 const menuButtonDisabledStyles: Record<Mode, string> = {
   [Mode.Light]: css`
+  &:disabled {
     background-color: ${palette.gray.light2};
     color: ${palette.gray.base};
     cursor: not-allowed;
@@ -77,8 +82,22 @@ const menuButtonDisabledStyles: Record<Mode, string> = {
         color: ${palette.gray.base};
       }
     }
+  }
   `,
-  [Mode.Dark]: css``,
+  [Mode.Dark]: css`
+  &:disabled {
+    background-color: ${palette.gray.dark3};
+    color: ${palette.gray.dark2};
+    cursor: not-allowed;
+    border-color: ${palette.gray.dark2};
+
+    > *:last-child {
+      > svg {
+        color: ${palette.gray.dark2};
+      }
+    }
+  }
+  `,
 };
 
 const menuButtonTextWrapperStyle = css`
@@ -98,7 +117,7 @@ const menuButtonTextStyle = css`
 
 const errorColor: Record<Mode, string> = {
   [Mode.Light]: palette.red.base,
-  [Mode.Dark]: '#FF6960', // TODO: palette.red.light1 was updated recently to #FF6960 which does not match react
+  [Mode.Dark]: '#FF6960', // TODO: palette.red.light1 is different in figma(#FF6960) which does not match react(#EF5752)
 };
 
 const menuButtonErrorStyle: Record<Mode, string> = {
@@ -188,8 +207,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   const buttonClassName = __INTERNAL__menuButtonSlot__
     ? ''
     : cx(
-        menuButtonStyleOverrides, // TODO: Refresh - remove overrides
-        menuButtonModeOverrides[mode], // TODO: Refresh - remove overrides
+        menuButtonStyleOverrides,
+        menuButtonModeOverrides[mode],
         {
           [menuButtonFocusStyle[mode]]: usingKeyboard,
           [menuButtonDeselectedStyles[mode]]: deselected,
