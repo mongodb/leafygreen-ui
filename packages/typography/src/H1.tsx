@@ -3,9 +3,10 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, ThemedStyles } from '@leafygreen-ui/lib';
 import { baseTypographyStyles } from './styles';
-import { CommonTypographyProps, Mode } from './types';
+import { CommonTypographyProps, Theme } from './types';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * H1
@@ -17,11 +18,11 @@ const h1 = css`
   font-family: ${fontFamilies.serif};
 `;
 
-const h1Color: Record<Mode, string> = {
-  [Mode.Light]: css`
+const h1Color: ThemedStyles = {
+  [Theme.Light]: css`
     color: ${palette.green.dark2};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.green.light1};
   `,
 };
@@ -29,16 +30,15 @@ const h1Color: Record<Mode, string> = {
 type H1Props = HTMLElementProps<'h1'> & CommonTypographyProps;
 
 const H1: ExtendableBox<H1Props, 'h1'> = ({
-  darkMode,
+  darkMode: darkModeProp,
   className,
   ...rest
 }: H1Props) => {
-  // TODO: Replace with context
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
   return (
     <Box
       as="h1"
-      className={cx(baseTypographyStyles, h1, h1Color[mode], className)}
+      className={cx(baseTypographyStyles, h1, h1Color[theme], className)}
       {...rest}
     />
   );

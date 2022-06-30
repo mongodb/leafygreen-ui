@@ -6,10 +6,14 @@ import {
   HTMLElementProps,
   OneOf,
   createUniqueClassName,
+  ThemedStyles,
 } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import { codeTypeScaleStyles } from './styles';
-import { CommonTypographyProps, Mode } from './types';
+import { CommonTypographyProps, Theme } from './types';
 import { useUpdatedBaseFontSize } from '.';
 
 const anchorClassName = createUniqueClassName();
@@ -29,8 +33,8 @@ const code = css`
   }
 `;
 
-const codeModes: Record<Mode, string> = {
-  [Mode.Light]: css`
+const codeModes: ThemedStyles = {
+  [Theme.Light]: css`
     background-color: ${palette.gray.light3};
     border: 1px solid ${palette.gray.light2};
     color: ${palette.gray.dark3};
@@ -41,7 +45,7 @@ const codeModes: Record<Mode, string> = {
     }
   `,
 
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     background-color: transparent;
     border: 1px solid ${palette.gray.dark2};
     color: ${palette.gray.light1};
@@ -53,27 +57,27 @@ const codeModes: Record<Mode, string> = {
   `,
 };
 
-const codeFocusModes: Record<Mode, string> = {
-  [Mode.Light]: css`
+const codeFocusModes: ThemedStyles = {
+  [Theme.Light]: css`
     .${anchorClassName}:focus > & {
-      box-shadow: ${focusRing[Mode.Light].default};
+      box-shadow: ${focusRing[Theme.Light].default};
       border: 1px solid ${palette.blue.base};
     }
   `,
 
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     .${anchorClassName}:focus > & {
-      box-shadow: ${focusRing[Mode.Dark].default};
+      box-shadow: ${focusRing[Theme.Dark].default};
       border: 1px solid ${palette.blue.base};
     }
   `,
 };
 
-const codeLinkStyleModes: Record<Mode, string> = {
-  [Mode.Light]: css`
+const codeLinkStyleModes: ThemedStyles = {
+  [Theme.Light]: css`
     color: ${palette.blue.base};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.blue.light1};
   `,
 };
@@ -109,12 +113,12 @@ export type InlineCodeProps = OneOf<
 function InlineCode({
   children,
   className,
-  darkMode,
+  darkMode: darkModeProp,
   ...rest
 }: InlineCodeProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const baseFontSize = useUpdatedBaseFontSize();
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
   const whiteSpace =
     ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <= 30
       ? nowrap
@@ -126,11 +130,11 @@ function InlineCode({
       className={cx(
         codeTypeScaleStyles[baseFontSize],
         code,
-        codeModes[mode],
+        codeModes[theme],
         whiteSpace,
         {
-          [codeLinkStyleModes[mode]]: isAnchor,
-          [codeFocusModes[mode]]: showFocus,
+          [codeLinkStyleModes[theme]]: isAnchor,
+          [codeFocusModes[theme]]: showFocus,
         },
         className,
       )}

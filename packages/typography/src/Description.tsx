@@ -1,10 +1,11 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, ThemedStyles } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { Mode } from './types';
+import { Theme } from './types';
 import { palette } from '@leafygreen-ui/palette';
 import { useUpdatedBaseFontSize } from './useUpdatedBaseFontSize';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const descriptionStyle = css`
   font-family: ${fontFamilies.default};
@@ -24,20 +25,20 @@ const descriptionTypeScale: Record<BaseFontSize, string> = {
   `,
 };
 
-const descriptionColorStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const descriptionColorStyle: ThemedStyles = {
+  [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light1};
   `,
 };
 
-const disabledDescriptionColorStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const disabledDescriptionColorStyle: ThemedStyles = {
+  [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.base};
   `,
 };
@@ -48,23 +49,23 @@ type DescriptionProps = HTMLElementProps<'p', never> & {
 };
 
 export const Description = ({
-  darkMode = false,
+  darkMode: darkModeProp,
   disabled = false,
   children,
   className,
   ...rest
 }: DescriptionProps) => {
   const baseFontSize = useUpdatedBaseFontSize();
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
 
   return (
     <p
       className={cx(
         descriptionStyle,
-        descriptionColorStyle[mode],
+        descriptionColorStyle[theme],
         descriptionTypeScale[baseFontSize],
         {
-          [disabledDescriptionColorStyle[mode]]: disabled,
+          [disabledDescriptionColorStyle[theme]]: disabled,
         },
         className,
       )}
