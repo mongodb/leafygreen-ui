@@ -23,8 +23,6 @@ try {
 }
 
 async function slackbot(botToken) {
-  const greeting = getGreeting(updatesArray.length);
-
   const sortedUpdates = updatesArray.reduce(
     (updates, component) => {
       if (component.version.endsWith('.0.0')) updates.major.push(component);
@@ -51,17 +49,19 @@ async function slackbot(botToken) {
     .map(parsePatchChangeString)
     .join('\n');
 
-  let updatesString = '';
+  const greeting = getGreeting(updatesArray.length);
+  const allUpdateStrings = [greeting];
+
   if (majorUpdatesString.length > 0)
-    updatesString += `*Major Changes*\n${majorUpdatesString}`;
+    allUpdateStrings.push(`*Major Changes*\n${majorUpdatesString}`);
   if (minorUpdatesString.length > 0)
-    updatesString += `\n\n*Minor Changes*\n${minorUpdatesString}`;
+    allUpdateStrings.push(`*Minor Changes*\n${minorUpdatesString}`);
   if (patchUpdatesString.length > 0)
-    updatesString += `\n\n*Patch Changes*\n${patchUpdatesString}`;
+    allUpdateStrings.push(`*Patch Changes*\n${patchUpdatesString}`);
 
   const web = new WebClient(botToken);
 
-  const text = `${greeting}\n\n${updatesString}`;
+  const text = allUpdateStrings.join('\n\n');
 
   if (exists(text)) {
     // post message
