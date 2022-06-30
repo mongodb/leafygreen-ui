@@ -6,7 +6,7 @@ import { Meta } from '@storybook/addon-docs';
 
 `DarkModeProps` exports interface to support ```darkMode?: boolean``` that should be extended by all components supporting dark mode.
 
-It also exports `Theme` and `ThemeType` that allow you to utilize `darkMode` as a enum to more elegantly style components using `cx`.
+It also exports `Theme` and `Theme` that allow you to utilize `darkMode` as a enum to more elegantly style components using `cx`.
 
 #### How it should be used
 
@@ -17,7 +17,7 @@ interface ComponentProps extends DarkModeProps {
   ...
 }
 
-const styles: Record<ThemeType, string> = {
+const styles: Record<Theme, string> = {
   [Theme.Light]: css`
     /* styles here */
   `,

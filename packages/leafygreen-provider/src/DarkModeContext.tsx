@@ -1,27 +1,33 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { DarkModeProps, Theme } from '@leafygreen-ui/lib';
-import type { ThemeType } from 'packages/lib/src/DarkModeProps';
+import { getTheme, Theme } from '@leafygreen-ui/lib';
 
-type DarkModeContextProps = DarkModeProps & {
-  theme?: ThemeType;
-};
+interface DarkModeContextProps {
+  globalDarkMode?: boolean;
+}
 
 const DarkModeContext = createContext<DarkModeContextProps>({
-  darkMode: false,
-  theme: Theme.Light,
+  globalDarkMode: false,
 });
 export const useDarkModeContext = () => useContext(DarkModeContext);
+export const useDarkMode: (componentDarkMode?: boolean) => {
+  darkMode: boolean;
+  theme: Theme;
+} = componentDarkMode => {
+  const { globalDarkMode } = useDarkModeContext();
+  const darkMode = componentDarkMode ?? globalDarkMode ?? false;
+  const theme = getTheme(darkMode);
+  return { darkMode, theme };
+};
 
 function DarkModeProvider({
   children,
-  darkMode = false,
-}: PropsWithChildren<DarkModeProps>) {
+  globalDarkMode = false,
+}: PropsWithChildren<DarkModeContextProps>) {
   return (
     <DarkModeContext.Provider
       value={{
-        darkMode,
-        theme: darkMode ? Theme.Dark : Theme.Light,
+        globalDarkMode,
       }}
     >
       {children}
@@ -33,7 +39,7 @@ DarkModeProvider.displayName = 'DarkModeProvider';
 
 DarkModeProvider.propTypes = {
   children: PropTypes.node,
-  darkMode: PropTypes.bool,
+  globalDarkMode: PropTypes.bool,
 };
 
 export default DarkModeProvider;
