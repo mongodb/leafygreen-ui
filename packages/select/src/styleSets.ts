@@ -81,7 +81,7 @@ export const colorSets: Record<Mode, ColorSet> = {
 
   [Mode.Dark]: {
     text: {
-      deselected: palette.gray.light2,
+      deselected: palette.gray.light1,
     },
     menu: {
       border: palette.gray.dark3,

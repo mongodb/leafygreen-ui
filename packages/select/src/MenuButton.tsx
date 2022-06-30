@@ -38,6 +38,7 @@ const menuButtonModeOverrides: Record<Mode, string> = {
   [Mode.Dark]: css`
     border-color: ${palette.gray.base};
     background-color: ${palette.gray.dark4};
+    color: ${palette.gray.light3};
 
     // Override button default color
     > *:last-child {
@@ -48,6 +49,7 @@ const menuButtonModeOverrides: Record<Mode, string> = {
 
     &:hover {
       background-color: ${colorSets['dark'].menu.hovered};
+      color: ${palette.gray.light3};
     }
   `,
 };
@@ -57,14 +59,14 @@ const menuButtonFocusStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     &:focus {
       box-shadow: ${focusRing['light'].input};
-      border-color: transparent;
+      border-color: rgba(255, 255, 255, 0);
     }
   `,
   [Mode.Dark]: css`
     &:focus {
       background-color: ${colorSets['dark'].menu.focused};
       box-shadow: ${focusRing['dark'].input};
-      border-color: transparent;
+      border-color: rgba(255, 255, 255, 0);
     }
   `
 }
@@ -75,6 +77,10 @@ const menuButtonDeselectedStyles: Record<Mode, string> = {
   `,
   [Mode.Dark]: css`
     color: ${colorSets['dark'].text.deselected};
+
+    &:hover {
+      color: ${palette.gray.light1};
+    }
   `,
 };
 
