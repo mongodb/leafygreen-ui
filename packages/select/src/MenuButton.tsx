@@ -14,6 +14,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuButtonStyleOverrides = css`
   // Override button defaults
+  font-weight: 400;
   > *:last-child {
     grid-template-columns: 1fr 16px;
     padding: 0 12px;
@@ -47,7 +48,7 @@ const menuButtonModeOverrides: Record<Mode, string> = {
       }
     }
 
-    &:hover {
+    &:hover, &:active {
       background-color: ${colorSets['dark'].menu.hovered};
       color: ${palette.gray.light3};
     }
@@ -77,8 +78,8 @@ const menuButtonDeselectedStyles: Record<Mode, string> = {
   `,
   [Mode.Dark]: css`
     color: ${colorSets['dark'].text.deselected};
-
-    &:hover {
+    
+    &:hover, &:active, &:focus {
       color: ${palette.gray.light1};
     }
   `,
