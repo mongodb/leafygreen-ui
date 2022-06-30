@@ -1,13 +1,12 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import LeafyGreenProvider from '.';
-import { useDarkModeContext } from './DarkModeContext';
+import LeafyGreenProvider, { useDarkMode } from '.';
 
 afterAll(cleanup);
 
 describe('packages/leafygreen-provider/DarkModeContext', () => {
   const TestComponent = () => {
-    const { darkMode, theme } = useDarkModeContext();
+    const { darkMode, theme } = useDarkMode();
     return (
       <div>{`${darkMode?.toString() || 'undefined'} - theme: ${theme}`}</div>
     );

@@ -26,7 +26,9 @@ function LeafyGreenProvider({
     <UsingKeyboardProvider>
       <PortalContextProvider popover={popoverPortalContainer}>
         <TypographyProvider baseFontSize={baseFontSize}>
-          <DarkModeProvider darkMode={darkMode}>{children}</DarkModeProvider>
+          <DarkModeProvider globalDarkMode={darkMode}>
+            {children}
+          </DarkModeProvider>
         </TypographyProvider>
       </PortalContextProvider>
     </UsingKeyboardProvider>
