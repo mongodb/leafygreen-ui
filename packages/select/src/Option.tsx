@@ -88,8 +88,6 @@ export function InternalOption({
 
   const ref = useRef<HTMLLIElement>(null);
 
-  const showDeselectionStyle = selected;
-
   const scrollIntoView = useCallback(() => {
     if (ref.current == null) {
       return null;
@@ -132,7 +130,7 @@ export function InternalOption({
       className={cx(optionTextStyle, {
         [css`
           font-weight: bold;
-        `]: showDeselectionStyle,
+        `]: selected,
       })}
     >
       {children}
@@ -177,7 +175,7 @@ export function InternalOption({
     }
   }
 
-  const checkmark = showDeselectionStyle ? (
+  const checkmark = selected ? (
     <CheckmarkIcon
       key="checkmark"
       className={cx(
