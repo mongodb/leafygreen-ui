@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { keyMap, isComponentType, Either } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
@@ -15,16 +15,25 @@ type Mode = typeof Mode[keyof typeof Mode];
 
 export { Mode };
 
+// Using a background allows the "border" to appear underneath the individual tab color
 const modeColors = {
   [Mode.Light]: {
     underlineColor: css`
-      border-bottom: 1px solid ${palette.gray.light2};
+      background: linear-gradient(
+        0deg,
+        ${palette.gray.light2} 1px,
+        rgb(255 255 255 / 0%) 1px
+      );
     `,
   },
 
   [Mode.Dark]: {
     underlineColor: css`
-      border-bottom: 1px solid ${uiColors.gray.dark2};
+      background: linear-gradient(
+        0deg,
+        ${palette.gray.dark2} 1px,
+        rgb(255 255 255 / 0%) 1px
+      );
     `,
   },
 };
@@ -46,10 +55,6 @@ const listStyle = css`
   -ms-overflow-style: none; /* IE */
   scrollbar-width: none; /* Firefox */
 `;
-
-// const disabledStyle = css`
-//   cursor: not-allowed;
-// `;
 
 type ReactEmpty = null | undefined | false | '';
 
