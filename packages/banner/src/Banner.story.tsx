@@ -5,7 +5,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Banner',
+  title: 'Components/Banner',
   component: Banner,
   args: {
     children:

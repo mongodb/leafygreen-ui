@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Icon from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
-import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
+import { Combobox, ComboboxOption, ComboboxGroup } from '.';
 import {
   ComboboxSize,
   Overflow,
@@ -14,10 +14,12 @@ import {
 
 const wrapperStyle = css`
   width: 256px;
+  height: 100vh;
+  padding-block: 64px;
 `;
 
 export default {
-  title: 'Packages/Combobox',
+  title: 'Components/Combobox',
   component: Combobox,
   parameters: {
     controls: {

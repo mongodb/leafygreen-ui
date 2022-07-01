@@ -114,6 +114,25 @@ export const inputModeStyles: Record<Mode, string> = {
     background-color: ${palette.white};
     border: 1px solid ${palette.gray.base};
 
+    &:-webkit-autofill {
+      border: 1px solid ${palette.gray.base};
+      color: ${palette.black};
+      background: ${palette.white};
+      -webkit-text-fill-color: ${palette.black};
+      box-shadow: 0 0 0 1000px ${palette.white} inset;
+
+      &:focus {
+        box-shadow: 0 0 0 1000px ${palette.white} inset,
+          0 0 0 2px ${palette.blue.light1};
+        border-color: ${palette.blue.light1};
+      }
+
+      &:hover:not(:focus) {
+        box-shadow: 0 0 0 1000px ${palette.white} inset,
+          0 0 0 3px ${palette.gray.light2};
+      }
+    }
+
     &::placeholder {
       color: ${palette.gray.light1};
       font-weight: normal;
@@ -147,8 +166,27 @@ export const inputModeStyles: Record<Mode, string> = {
   `,
   [Mode.Dark]: css`
     color: ${palette.gray.light3};
-    background-color: ${palette.black};
-    border: 1px solid ${palette.gray.dark1};
+    background-color: ${palette.gray.dark4};
+    border: 1px solid ${palette.gray.base};
+
+    &:-webkit-autofill {
+      border: 1px solid ${palette.gray.base};
+      color: ${palette.gray.light3};
+      background: ${palette.gray.dark4};
+      -webkit-text-fill-color: ${palette.gray.light3};
+      box-shadow: 0 0 0 1000px ${palette.gray.dark4} inset;
+
+      &:focus {
+        box-shadow: 0 0 0 1000px ${palette.gray.dark4} inset,
+          0 0 0 2px ${palette.blue.light1};
+        border-color: ${palette.blue.light1};
+      }
+
+      &:hover:not(:focus) {
+        box-shadow: 0 0 0 1000px ${palette.gray.dark4} inset,
+          0 0 0 3px ${palette.gray.dark2};
+      }
+    }
 
     &:hover,
     &:active {

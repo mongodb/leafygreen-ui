@@ -1,5 +1,25 @@
 # @leafygreen-ui/code
 
+## 12.0.1
+
+### Patch Changes
+
+- cfb82f90: Swap default icon from 'Copy' to 'File'
+- Updated dependencies [b22cc41f]
+- Updated dependencies [828c895d]
+  - @leafygreen-ui/select@6.1.0
+
+## 12.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/icon-button@13.0.0
+  - @leafygreen-ui/select@6.0.0
+
 ## 11.0.1
 
 ### Patch Changes

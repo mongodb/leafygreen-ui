@@ -1,5 +1,11 @@
 import { createContext } from 'react';
-import { ComboboxSize, TrunctationLocation } from './Combobox.types';
+import {
+  ComboboxSize,
+  SearchState,
+  State,
+  Theme,
+  TrunctationLocation,
+} from './Combobox.types';
 
 interface ComboboxData {
   multiselect: boolean;
@@ -7,6 +13,9 @@ interface ComboboxData {
   size: ComboboxSize;
   withIcons: boolean;
   disabled: boolean;
+  isOpen: boolean;
+  state: State;
+  searchState: SearchState;
   chipTruncationLocation?: TrunctationLocation;
   chipCharacterLimit?: number;
   inputValue?: string;
@@ -18,4 +27,10 @@ export const ComboboxContext = createContext<ComboboxData>({
   size: ComboboxSize.Default,
   withIcons: false,
   disabled: false,
+  isOpen: false,
+  state: State.none,
+  searchState: SearchState.unset,
 });
+
+export const useDarkMode = (darkMode: boolean) =>
+  darkMode ? Theme.Dark : Theme.Light;

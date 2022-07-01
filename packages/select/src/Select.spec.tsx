@@ -11,7 +11,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { Option, OptionGroup, Select, State } from '.';
+import { State } from './types';
+import { Option, OptionGroup, Select } from '.';
 import { keyMap } from '@leafygreen-ui/lib';
 
 const Color = {
@@ -148,6 +149,33 @@ describe('packages/select', () => {
         );
       }).toThrowError('`OptionGroup` must be a child of a `Select` instance');
     });
+  });
+
+  test('trigger passes through data props', () => {
+    const result = render(
+      <Select label="Label" data-testid="lg-select">
+        <Option>Option</Option>
+      </Select>,
+    );
+    const select = result.queryByTestId('lg-select');
+    expect(select).toBeInTheDocument();
+  });
+
+  test('option & group passes through data props', () => {
+    const result = render(
+      <Select label="Label">
+        <OptionGroup label="Group" data-testid="lg-group">
+          <Option data-testid="lg-option">Option</Option>
+        </OptionGroup>
+      </Select>,
+    );
+    const trigger = result.getByRole('button');
+    userEvent.click(trigger);
+
+    const group = result.queryByTestId('lg-group');
+    const option = result.queryByTestId('lg-option');
+    expect(group).toBeInTheDocument();
+    expect(option).toBeInTheDocument();
   });
 
   describe('tab order', () => {

@@ -3,7 +3,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 import Stepper, { Step, StepperProps } from '.';
 
 export default {
-  title: 'Packages/Stepper',
+  title: 'Components/Stepper',
   component: Stepper,
   args: {},
   argTypes: {

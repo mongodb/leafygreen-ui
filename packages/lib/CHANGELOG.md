@@ -1,5 +1,15 @@
 # @leafygreen-ui/lib
 
+## 9.4.0
+
+### Minor Changes
+
+- 99e20bb9: Reusable DarkModeProps and darkMode prop for LeafygreenProvider
+
+### Patch Changes
+
+- 85d46871: Adds `lodash` as an explicit dependency of `lib`. Imports `lodash` utility in a tree-shakable way
+
 ## 9.3.0
 
 ### Minor Changes

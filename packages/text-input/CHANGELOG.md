@@ -1,5 +1,16 @@
 # @leafygreen-ui/text-input
 
+## 10.0.0
+
+### Patch Changes
+
+- e317392f: Minor darkmode style updates, remove interaction ring from dependencies, and bump up `Typography` version.
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/typography@13.0.0
+
 ## 9.0.0
 
 ### Major Changes

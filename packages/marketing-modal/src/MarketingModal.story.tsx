@@ -7,7 +7,7 @@ import { CloseIconColor } from '@leafygreen-ui/modal';
 import Button from '@leafygreen-ui/button';
 
 export default {
-  title: 'Packages/Modals/Marketing Modal',
+  title: 'Components/Modals/Marketing Modal',
   component: MarketingModal,
   args: {
     buttonText: 'Button Text',

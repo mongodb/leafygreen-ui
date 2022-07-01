@@ -1,5 +1,23 @@
 # @leafygreen-ui/text-area
 
+## 6.0.2
+
+### Patch Changes
+
+- f4cacd36: Remove z-index from textarea
+- Updated dependencies [13a4adcc]
+  - @leafygreen-ui/typography@13.0.1
+
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/interaction-ring@4.0.0
+  - @leafygreen-ui/typography@13.0.0
+
 ## 6.0.0
 
 ### Major Changes

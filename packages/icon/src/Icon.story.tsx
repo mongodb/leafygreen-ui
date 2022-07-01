@@ -6,7 +6,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 import { palette } from '@leafygreen-ui/palette';
 
 export default {
-  title: 'Packages/Icons',
+  title: 'Components/Icons',
   component: Icon,
 } as Meta<typeof Icon>;
 
