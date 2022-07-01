@@ -26,7 +26,6 @@ const baseMenuStyle = css`
 
 const getMenuStyles = (mode: Mode, size: Size) => {
   const sizeSet = sizeSets[size];
-
   const colorSet = colorSets[mode];
 
   return cx(
@@ -36,7 +35,6 @@ const getMenuStyles = (mode: Mode, size: Size) => {
       min-height: ${sizeSet.height}px;
       background-color: ${colorSet.option.background.base};
       border-radius: 12px;
-      border: 1px solid ${colorSet.menu.border};
       box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
       padding: 8px 0;
     `,

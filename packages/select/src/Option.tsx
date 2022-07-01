@@ -78,7 +78,6 @@ export function InternalOption({
   disabled,
   onClick,
   onFocus,
-  // isDeselection, // TODO: check why this is needed
   triggerScrollIntoView,
   hasGlyphs,
 }: InternalProps) {
@@ -89,8 +88,6 @@ export function InternalOption({
 
   const ref = useRef<HTMLLIElement>(null);
 
-  // const showDeselectionStyle =
-  //   selected && (mode === Mode.Light || !isDeselection);
   const showDeselectionStyle = selected;
 
   const scrollIntoView = useCallback(() => {

@@ -9,7 +9,12 @@ import {
 import { palette } from '@leafygreen-ui/palette';
 import { OneOf, keyMap } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
-import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  breakpoints,
+  spacing,
+  BaseFontSize,
+} from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
 import {
   mobileSizeSet,
@@ -104,6 +109,10 @@ export type SelectProps = {
    * Determines whether the component should be rendered in an error state.
    */
   state?: State;
+  /**
+   *  determines the base font size if sizeVariant is set to default.
+   */
+  baseFontSize?: BaseFontSize;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
@@ -172,6 +181,7 @@ export default function Select({
   popoverZIndex,
   errorMessage = 'error message right here',
   state = State.None,
+  baseFontSize = BaseFontSize.Body1,
   __INTERNAL__menuButtonSlot__,
 }: SelectProps) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
@@ -632,6 +642,7 @@ export default function Select({
           aria-invalid={state === State.Error}
           errorMessage={errorMessage}
           state={state}
+          baseFontSize={baseFontSize}
           __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
         >
           <ListMenu
@@ -694,4 +705,5 @@ Select.propTypes = {
   errorMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
   allowDeselect: PropTypes.bool,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };
