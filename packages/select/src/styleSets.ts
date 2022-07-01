@@ -9,9 +9,6 @@ export const Mode = {
 export type Mode = typeof Mode[keyof typeof Mode];
 
 interface ColorSet {
-  text: {
-    deselected: string;
-  };
   menu: {
     shadow: string;
     border?: string;
@@ -44,9 +41,6 @@ interface ColorSet {
 
 export const colorSets: Record<Mode, ColorSet> = {
   [Mode.Light]: {
-    text: {
-      deselected: palette.gray.dark1,
-    },
     menu: {
       border: palette.gray.light2,
       shadow: transparentize(0.75, palette.black),
@@ -78,9 +72,6 @@ export const colorSets: Record<Mode, ColorSet> = {
   },
 
   [Mode.Dark]: {
-    text: {
-      deselected: palette.gray.light1,
-    },
     menu: {
       border: palette.gray.base,
       shadow: transparentize(0.2, palette.black),
@@ -143,7 +134,6 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.XSmall]: {
     height: 22,
     text: 13,
-    lineHeight: 20,
     option: {
       text: 13,
     },
@@ -152,7 +142,6 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.Small]: {
     height: 28,
     text: 13,
-    lineHeight: 20,
     option: {
       text: 13,
     },
@@ -161,7 +150,6 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.Default]: {
     height: 36,
     text: 13,
-    lineHeight: 20,
     option: {
       text: 13,
     },
@@ -170,7 +158,6 @@ export const sizeSets: Record<Size, SizeSet> = {
   [Size.Large]: {
     height: 48,
     text: 18,
-    lineHeight: 23,
     option: {
       text: 16,
     },
