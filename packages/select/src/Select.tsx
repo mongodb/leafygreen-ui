@@ -41,6 +41,16 @@ import {
 const wrapperStyle = css`
   display: flex;
   flex-direction: column;
+
+  > label + button,
+  > p + button {
+    margin-top: 3px;
+  }
+`;
+
+const largeLabelStyles = css`
+  font-size: 18px;
+  line-height: 22px;
 `;
 
 const errorTextStyle = ({
@@ -54,7 +64,7 @@ const errorTextStyle = ({
   color: ${darkMode
     ? '#FF6960'
     : palette.red
-        .base}; // TODO: palette.red.light1 was updated recently to #FF6960 which does not match react
+        .base}; // TODO:palette.red.light1 is different in figma(#FF6960) which does not match react(#EF5752)
   font-size: ${sizeSet.text}px;
   margin-top: ${spacing[1]}px;
   padding-left: 2px;
@@ -586,6 +596,13 @@ export default function Select({
           darkMode={darkMode}
           disabled={disabled}
           className={cx(
+            {
+              [largeLabelStyles]: size === Size.Large,
+              [css`
+                font-size: ${baseFontSize}px;
+                line-height: 20px;
+              `]: size === Size.Default,
+            },
             css`
               // Prevent hover state from showing when hovering label
               pointer-events: none;
@@ -608,6 +625,13 @@ export default function Select({
           darkMode={darkMode}
           disabled={disabled}
           className={cx(
+            {
+              [largeLabelStyles]: size === Size.Large,
+              [css`
+                font-size: ${baseFontSize}px;
+                line-height: 20px;
+              `]: size === Size.Default,
+            },
             css`
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;

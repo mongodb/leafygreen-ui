@@ -94,7 +94,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     return (
       <Popover
         active={open && !disabled}
-        spacing={mode === 'dark' ? 4 : 8}
+        spacing={8}
         align={Align.Bottom}
         justify={Justify.Middle}
         adjustOnMutation
