@@ -2,4 +2,4 @@
 '@leafygreen-ui/icon': patch
 ---
 
-Update folder icon SVG
+Updated `Folder` SVG
