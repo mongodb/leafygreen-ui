@@ -2,12 +2,51 @@ import React from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { Global } from '@emotion/react';
+import { MDXProvider } from '@mdx-js/react';
+import { css, Global } from '@emotion/react';
+import styled from '@emotion/styled';
 import { globalStyles } from 'styles/globals';
 import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';
 import metaTagKey from 'utils/metaTagKey';
 import FoundationLayout from 'layouts/FoundationLayout';
+import { Body, H2, H3, InlineCode, Link } from '@leafygreen-ui/typography';
+
+const headerStyle = css`
+  margin-block: 0.5em;
+  a,
+  p {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+`;
+
+const MDXComponentMap = {
+  h1: styled(H2 as any)`
+    ${headerStyle}
+  `,
+  h2: styled(H2 as any)`
+    ${headerStyle}
+  `,
+  h3: styled(H3 as any)`
+    ${headerStyle}
+  `,
+  code: InlineCode,
+  p: styled(Body as any)`
+    margin-block: 0.25em;
+
+    code {
+      display: inline-block;
+    }
+  `,
+  a: styled(Link as any)`
+    span {
+      display: inline-block;
+    }
+  `,
+};
 
 function DefaultLayout({ children }) {
   return children;
@@ -33,7 +72,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <>
+    /// @ts-expect-error
+    <MDXProvider components={MDXComponentMap}>
       <Head>
         <title>Home – LeafyGreen Design System | MongoDB</title>
         <meta
@@ -75,7 +115,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </SubLayout>
       </BaseLayout>
-    </>
+    </MDXProvider>
   );
 }
 

@@ -5,7 +5,8 @@ import nextMdx from '@next/mdx';
 const withMDX = nextMdx({
   extension: /\.mdx?$/,
   options: {
-    rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }]],
+    rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'wrap' }], ],
+    providerImportSource: '@mdx-js/react',
   },
 });
 
