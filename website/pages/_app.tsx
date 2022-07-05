@@ -10,7 +10,7 @@ import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';
 import metaTagKey from 'utils/metaTagKey';
 import FoundationLayout from 'layouts/FoundationLayout';
-import { Body, H2, H3, InlineCode, Link } from '@leafygreen-ui/typography';
+import { Body, H1, H2, H3, InlineCode, Link } from '@leafygreen-ui/typography';
 
 const headerStyle = css`
   margin-block: 0.5em;
@@ -24,7 +24,7 @@ const headerStyle = css`
 `;
 
 const MDXComponentMap = {
-  h1: styled(H2 as any)`
+  h1: styled(H1 as any)`
     ${headerStyle}
   `,
   h2: styled(H2 as any)`
@@ -35,7 +35,7 @@ const MDXComponentMap = {
   `,
   code: InlineCode,
   p: styled(Body as any)`
-    margin-block: 0.25em;
+    margin-block: 1em;
 
     code {
       display: inline-block;
