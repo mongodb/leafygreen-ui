@@ -6,14 +6,17 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
   menuItemContainerStyle,
+  menuItemContainerThemeStyle,
   activeMenuItemContainerStyle,
   disabledMenuItemContainerStyle,
+  disabledMenuItemContainerThemeStyle,
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
   mainIconStyle,
   activeIconStyle,
   titleTextStyle,
+  titleTextThemeStyle,
   activeTitleTextStyle,
   descriptionTextStyle,
   linkDescriptionTextStyle,
@@ -24,6 +27,7 @@ import {
   getHoverStyles,
 } from './styles';
 import { Size } from './types';
+import { Mode } from '@leafygreen-ui/tokens';
 
 const menuItemContainer = createDataProp('menu-item-container');
 interface BaseMenuItemProps {
@@ -63,6 +67,13 @@ interface BaseMenuItemProps {
   children?: React.ReactNode;
 
   href?: string;
+
+  /**
+   * Determines whether or not the component will be rendered in dark mode.
+   *
+   * default: `false`
+   */
+     darkMode?: boolean;
 }
 
 const MenuItem: ExtendableBox<
@@ -78,6 +89,7 @@ const MenuItem: ExtendableBox<
       children,
       description,
       glyph,
+      darkMode,
       ...rest
     }: BaseMenuItemProps,
     ref: React.Ref<any>,
@@ -85,6 +97,9 @@ const MenuItem: ExtendableBox<
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(menuItemContainer.selector);
     const focusStyles = getFocusedStyles(menuItemContainer.selector);
+
+    // TODO: dark mode context
+    const theme = darkMode ? Mode.Dark : Mode.Light;
 
     const isAnchor = typeof rest.href === 'string';
 
@@ -95,7 +110,7 @@ const MenuItem: ExtendableBox<
         className: cx(
           mainIconStyle,
           {
-            [activeIconStyle]: active,
+            [activeIconStyle[theme]]: active,
             [focusStyles.iconStyle]: showFocus,
           },
           glyph.props?.className,
@@ -127,9 +142,9 @@ const MenuItem: ExtendableBox<
           <div
             // Add text as data attribute to ensure no layout shift on hover
             data-text={getNodeTextContent(children)}
-            className={cx(titleTextStyle, hoverStyles.text, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
+            className={cx(titleTextStyle, titleTextThemeStyle[theme], hoverStyles.text, {
+              [activeTitleTextStyle[theme]]: active,
+              [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
             })}
           >
@@ -138,8 +153,8 @@ const MenuItem: ExtendableBox<
           {description && (
             <div
               className={cx(descriptionTextStyle, {
-                [activeDescriptionTextStyle]: active,
-                [disabledTextStyle]: disabled,
+                [activeDescriptionTextStyle[theme]]: active,
+                [disabledTextStyle[theme]]: disabled,
                 [focusStyles.descriptionStyle]: showFocus,
                 [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
@@ -152,7 +167,6 @@ const MenuItem: ExtendableBox<
     );
 
     const as = isAnchor ? 'a' : 'button';
-
     return (
       <li role="none">
         <Box
@@ -162,11 +176,13 @@ const MenuItem: ExtendableBox<
           {...rest}
           className={cx(
             menuItemContainerStyle,
+            menuItemContainerThemeStyle[theme],
             menuItemHeight(size),
             linkStyle,
             {
-              [activeMenuItemContainerStyle]: active,
+              [activeMenuItemContainerStyle[theme]]: active,
               [disabledMenuItemContainerStyle]: disabled,
+              [disabledMenuItemContainerThemeStyle[theme]]: disabled,
               [focusedMenuItemContainerStyle]: showFocus,
             },
             className,

@@ -19,7 +19,7 @@ FocusableMenuItem.displayName = 'FocusableMenuItem';
 
 FocusableMenuItem.propTypes = {
   children: PropTypes.element.isRequired,
-  onFocus: PropTypes.func,
+  onFocus: PropTypes.func
 };
 
 export default FocusableMenuItem;

@@ -52,7 +52,7 @@ export const UncontrolledTemplate = ({
   return (
     <LeafyGreenProvider>
       <Menu open={open} trigger={trigger} {...args}>
-        <MenuItem active size={size} glyph={<CloudIcon />}>
+        <MenuItem description="I am also an active description" active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
         <MenuItem description="I am also a description" size={size}>

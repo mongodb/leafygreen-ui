@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, Mode } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import { Size } from './types';
 
@@ -31,10 +31,9 @@ export const menuItemContainerStyle = css`
   font-size: 13px;
   text-align: left;
   text-decoration: none;
-  color: ${palette.white};
   cursor: pointer;
   border: none;
-  background-color: ${palette.black};
+  
   transition: background-color 150ms ease-in-out;
 
   &:focus {
@@ -64,6 +63,17 @@ export const menuItemContainerStyle = css`
   }
 `;
 
+export const menuItemContainerThemeStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${palette.white};
+    background-color: ${palette.black};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.black};
+    background-color: ${palette.gray.light2};
+  `,
+}
+
 export const menuItemHeight = (size: Size) => {
   return css`
     min-height: ${minMenuContent + 2 * menuBlockPadding[size]}px;
@@ -90,7 +100,6 @@ export const titleTextStyle = css`
   width: 100%;
   font-size: 13px;
   font-weight: 500;
-  color: ${palette.white};
 
   // We create a pseudo element that's the width of the bolded text
   // This way there's no layout shift on hover when the text is bolded.
@@ -104,6 +113,15 @@ export const titleTextStyle = css`
     pointer-events: none;
   }
 `;
+
+export const titleTextThemeStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${palette.white};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.black};
+  `,
+}
 
 export const descriptionTextStyle = css`
   font-size: 13px;
@@ -133,32 +151,67 @@ export const getHoverStyles = (container: string) => ({
 /**
  * Active styles
  */
-export const activeMenuItemContainerStyle = css`
-  background-color: ${palette.black};
-
-  &:before {
-    background-color: ${palette.green.base};
-  }
-
-  &:hover {
-    color: ${palette.green.base};
+export const activeMenuItemContainerStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    background-color: ${palette.black};
 
     &:before {
       background-color: ${palette.green.base};
     }
-  }
-`;
 
-export const activeTitleTextStyle = css`
+    &:hover {
+      color: ${palette.green.base};
+
+      &:before {
+        background-color: ${palette.green.base};
+      }
+    }
+  `,
+  [Mode.Dark]: css`
+    background-color: ${palette.gray.light2};
+
+    &:before {
+      background-color: ${palette.green.dark2};
+    }
+
+    &:hover {
+      color: ${palette.green.dark3};
+
+      &:before {
+        background-color: ${palette.gray.light1};
+      }
+    }
+  `,
+}
+
+export const activeTitleTextStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
   font-weight: bold;
   color: ${palette.green.base};
-`;
-export const activeDescriptionTextStyle = css`
-  color: ${palette.gray.light1};
-`;
-export const activeIconStyle = css`
-  color: ${palette.green.base};
-`;
+  `,
+  [Mode.Dark]: css`
+  font-weight: bold;
+  color: ${palette.green.dark2};
+  `,
+}
+
+export const activeDescriptionTextStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.gray.dark2};
+  `
+};
+
+export const activeIconStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+  color: ${palette.green.dark2};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.green.dark2};
+  `
+};
 
 /**
  * Disabled styles
@@ -172,10 +225,25 @@ export const disabledMenuItemContainerStyle = css`
   }
 `;
 
-export const disabledTextStyle = css`
+export const disabledMenuItemContainerThemeStyle: Record<Mode, string> = {
+  [Mode.Dark]: css`
+    background-color: ${palette.gray.light2};
+  `,
+  [Mode.Light]: css`
+    background-color: ${palette.black};
+  `,
+};
+
+export const disabledTextStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
   color: ${palette.gray.dark1};
   font-weight: 400;
-`;
+  `,
+  [Mode.Dark]: css`
+  color: ${palette.gray.light1};
+  font-weight: 400;
+  `
+};
 
 /**
  * Focused styles

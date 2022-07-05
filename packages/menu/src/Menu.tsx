@@ -114,7 +114,7 @@ function Menu({
 
     function updateChildren(children: React.ReactNode): React.ReactNode {
       return React.Children.map(children, child => {
-        if (!React.isValidElement(child) || child.props?.disabled) {
+        if (!React.isValidElement(child)) {
           return child;
         }
 
@@ -187,6 +187,7 @@ function Menu({
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
+            darkMode
           });
         }
 
@@ -195,7 +196,7 @@ function Menu({
         ) {
           return React.cloneElement(child, {
             ref: setRef,
-            onFocus,
+            onFocus
           });
         }
 
@@ -212,7 +213,7 @@ function Menu({
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, currentSubMenu, open]);
+  }, [children, currentSubMenu, open, darkMode]);
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
