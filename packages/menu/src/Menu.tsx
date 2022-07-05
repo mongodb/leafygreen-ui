@@ -10,14 +10,24 @@ import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
 import { MenuProps } from './types';
 import isUndefined from 'lodash/isUndefined';
+import { Mode } from '@leafygreen-ui/tokens';
 
 const rootMenuStyle = css`
   width: 200px;
   border-radius: 12px;
   overflow: auto;
   padding: 14px 0;
-  background-color: ${palette.black};
+  
 `;
+
+const rootMenuThemeStyles: Record<Mode, string> = {
+  [Mode.Light]: css`
+  background-color: ${palette.black};
+  `,
+  [Mode.Dark]: css`
+  background-color: ${palette.gray.light2};
+  `
+};
 
 const scrollContainerStyle = css`
   overflow: auto;
@@ -44,6 +54,7 @@ const scrollContainerStyle = css`
  * @param props.refEl Reference element that Menu should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
+ * @param props.darkMode Determines whether or not the component will be rendered in dark mode.
  */
 function Menu({
   align = Align.Bottom,
@@ -63,8 +74,13 @@ function Menu({
   scrollContainer,
   popoverZIndex,
   maxHeight = 256,
+  darkMode = false,
   ...rest
 }: MenuProps) {
+
+  // TODO: dark mode context
+  const theme = darkMode ? Mode.Dark : Mode.Light;
+
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
 
@@ -325,6 +341,7 @@ function Menu({
       <div
         className={cx(
           rootMenuStyle,
+          rootMenuThemeStyles[theme],
           css`
             max-height: ${maxMenuHeightValue};
           `,
@@ -397,6 +414,7 @@ Menu.propTypes = {
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  darkMode: PropTypes.bool,
 };
 
 export default Menu;

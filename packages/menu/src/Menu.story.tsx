@@ -37,6 +37,9 @@ export default {
     className: {
       type: 'string',
     },
+    darkMode: {
+      control: 'boolean',
+    },
   },
 };
 
