@@ -202,7 +202,7 @@ function Menu({
 
   const [popoverNode, setPopoverNode] = useState<HTMLUListElement | null>(null);
 
-  const setFocus = (el: HTMLElement) => {
+  const setFocus = (el: HTMLElement | null) => {
     if (el == null) {
       return;
     }
@@ -286,6 +286,7 @@ function Menu({
 
       case keyMap.Escape:
         handleClose();
+        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
         break;
 
       case keyMap.Space:

@@ -8,6 +8,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
 import { mq } from 'utils/mediaQuery';
@@ -158,7 +159,9 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
           name="Design Guidelines"
           onClick={() => router.push(`/component/${componentName}/guidelines`)}
         >
-          <div className={componentGuidelineStyles}>{children}</div>
+          <LeafyGreenProvider baseFontSize={16}>
+            <div className={componentGuidelineStyles}>{children}</div>
+          </LeafyGreenProvider>
         </Tab>
         <Tab
           name={
