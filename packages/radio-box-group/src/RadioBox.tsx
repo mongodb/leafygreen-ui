@@ -5,7 +5,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { getTooltipTriggerHandlers } from '@leafygreen-ui/tooltip';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Size from './Size';
 import { useRadioBoxGroupContext, RadioBoxGroupContext } from './context';
@@ -202,6 +201,11 @@ export default function RadioBox({
   size: sizeProp = Size.Default,
   children,
   name: nameProp,
+  onMouseEnter,
+  onMouseLeave,
+  onFocus,
+  onBlur,
+  onClick,
   ...rest
 }: ExtendedRadioBoxProps) {
   const radioBoxGroupContext = useRadioBoxGroupContext();
@@ -237,9 +241,13 @@ export default function RadioBox({
     showFocus,
   });
 
-  const tooltipTriggerHandlers = getTooltipTriggerHandlers<HTMLLabelElement>(
-    rest as HTMLProps<HTMLLabelElement>,
-  );
+  const tooltipTriggerHandlers = {
+    onMouseEnter,
+    onMouseLeave,
+    onFocus,
+    onBlur,
+    onClick,
+  } as HTMLProps<HTMLLabelElement>;
 
   return (
     <label
