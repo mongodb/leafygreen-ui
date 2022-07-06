@@ -47,8 +47,8 @@ export const menuItemContainerStyle = css`
     position: absolute;
     width: ${wedgeWidth}px;
     left: 0px;
-    height: calc(100% - 8px);
-    max-height: 32px;
+    // height: calc(100% - 8px);
+    // max-height: 32px;
     border-radius: 0 ${wedgeWidth}px ${wedgeWidth}px 0;
     background-color: transparent;
     transition: background-color 150ms ease-in-out;
@@ -84,7 +84,12 @@ export const menuItemContainerThemeStyle: Record<Mode, string> = {
 
 export const menuItemHeight = (size: Size) => {
   return css`
-    min-height: ${minMenuContent + 2 * menuBlockPadding[size]}px;
+    // min-height: ${minMenuContent + 2 * menuBlockPadding[size]}px;
+    min-height: ${size === Size.Default ? 36 : 45}px;
+
+    &:before {
+      height: ${size === Size.Default ? 22 : 36}px;
+    }
   `;
 };
 

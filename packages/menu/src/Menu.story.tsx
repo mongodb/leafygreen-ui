@@ -113,6 +113,7 @@ export const SubMenuExample = ({
           glyph={<CloudIcon size="large" />}
           active={true}
           href="http://mongodb.design"
+          size={size}
         >
           <MenuItem active>SubMenu Item 1</MenuItem>
           <MenuItem>SubMenu Item 2</MenuItem>
@@ -121,6 +122,7 @@ export const SubMenuExample = ({
         <SubMenu
           title="Menu Item 2"
           description="Sed posuere consectetur"
+          size={size}
           // glyph={<LaptopIcon size="large" />}
         >
           <MenuItem>Support 1</MenuItem>

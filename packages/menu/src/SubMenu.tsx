@@ -33,6 +33,7 @@ import {
   menuItemContainerThemeStyle,
 } from './styles';
 import { Mode } from '@leafygreen-ui/tokens';
+import { Size } from './types';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
@@ -41,7 +42,7 @@ const subMenuContainerHeight = 56;
 const iconButtonContainerSize = 28;
 
 const subMenuStyle = css`
-  min-height: 56px;
+  // min-height: 56px;
   padding-right: ${iconButtonContainerSize + 16}px;
   align-items: center;
   justify-content: flex-start;
@@ -330,6 +331,11 @@ interface SubMenuProps {
    * default: `false`
    */
    darkMode?: boolean;
+
+   /**
+   * Size of the MenuItem component, can be `default` or `large`
+   */
+  size?: Size;
 }
 
 const SubMenu: ExtendableBox<
@@ -350,6 +356,7 @@ const SubMenu: ExtendableBox<
       active = false,
       disabled = false,
       darkMode,
+      size = Size.Default,
       ...rest
     }: SubMenuProps,
     ref: React.Ref<any>,
@@ -478,7 +485,7 @@ const SubMenu: ExtendableBox<
           className={cx(
             menuItemContainerStyle,
             menuItemContainerThemeStyle[theme],
-            menuItemHeight('default'),
+            menuItemHeight(size),
             linkStyle,
             subMenuThemeStyle[theme],
             {
@@ -545,6 +552,7 @@ const SubMenu: ExtendableBox<
                 (child, index) => {
                   const { className, ...rest } = child.props;
                   return React.cloneElement(child, {
+                    size: Size.Default,
                     children: (
                       <>
                         <div className={menuItemBorder} />

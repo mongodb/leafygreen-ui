@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
-import { cx } from '@leafygreen-ui/emotion';
+import { cx, css } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
@@ -167,6 +167,7 @@ const MenuItem: ExtendableBox<
     );
 
     const as = isAnchor ? 'a' : 'button';
+
     return (
       <li role="none">
         <Box
