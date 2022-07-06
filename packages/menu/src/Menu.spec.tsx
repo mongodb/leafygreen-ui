@@ -7,9 +7,11 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { Menu, MenuSeparator, MenuItem, SubMenu } from '.';
+import userEvent from '@testing-library/user-event';
 
 const menuTestId = 'menu-test-id';
 const className = 'menu-item-class-name';
+const trigger = <button>trigger</button>;
 const onClick = jest.fn();
 
 function renderMenu(props = {}) {
@@ -96,6 +98,65 @@ describe('packages/menu', () => {
       fireEvent.click(button);
 
       await waitForElementToBeRemoved(menuItem);
+    });
+  });
+
+  describe('Mouse interaction', () => {
+    test('Clicking trigger opens menu', () => {
+      const { getByRole, getByTestId } = renderMenu({
+        trigger,
+      });
+      const button = getByRole('button');
+
+      userEvent.click(button);
+      const menu = getByTestId(menuTestId);
+
+      waitFor(() => {
+        expect(menu).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Keyboard Interaction', () => {
+    describe('Escape key', () => {
+      test('Closes menu', async () => {
+        const { getByRole, getByTestId } = renderMenu({
+          trigger,
+        });
+        const button = getByRole('button');
+
+        userEvent.click(button);
+        const menu = getByTestId(menuTestId);
+        userEvent.type(menu, '{esc}');
+
+        await waitForElementToBeRemoved(menu);
+        expect(menu).not.toBeInTheDocument();
+      });
+      test('Returns focus to trigger {usePortal: true}', async () => {
+        const { getByRole, getByTestId } = renderMenu({
+          trigger,
+          usePortal: true,
+        });
+        const button = getByRole('button');
+        userEvent.click(button);
+        const menu = getByTestId(menuTestId);
+        userEvent.type(menu, '{esc}');
+        await waitForElementToBeRemoved(menu);
+        expect(button).toHaveFocus();
+      });
+
+      test('Returns focus to trigger {usePortal: false}', async () => {
+        const { getByRole, getByTestId } = renderMenu({
+          trigger,
+          usePortal: false,
+        });
+        const button = getByRole('button');
+        userEvent.click(button);
+        const menu = getByTestId(menuTestId);
+        userEvent.type(menu, '{esc}');
+        await waitForElementToBeRemoved(menu);
+        expect(button).toHaveFocus();
+      });
     });
   });
 });
