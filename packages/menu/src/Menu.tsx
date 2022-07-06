@@ -180,6 +180,7 @@ function Menu({
             onExited: () => {
               setClosed(curr => !curr);
             },
+            darkMode
           });
         }
 

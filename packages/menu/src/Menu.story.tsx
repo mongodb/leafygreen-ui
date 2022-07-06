@@ -55,7 +55,7 @@ export const UncontrolledTemplate = ({
         <MenuItem description="I am also an active description" active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description" size={size}>
+        <MenuItem description="I am also a description" size={size} glyph={<CloudIcon />}>
           Menu Item With Description
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
@@ -88,7 +88,7 @@ export const SubMenuExample = ({
         <MenuItem active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description" size={size}>
+        <MenuItem description="I am also a description" size={size} glyph={<CloudIcon />}>
           Menu Item With Description
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
@@ -104,8 +104,9 @@ export const SubMenuExample = ({
           active={true}
           href="http://mongodb.design"
         >
-          <MenuItem>SubMenu Item 1</MenuItem>
-          <MenuItem>SubMenu Item 2</MenuItem>
+          <MenuItem active glyph={<CloudIcon />}>SubMenu Item 1</MenuItem>
+          <MenuItem glyph={<CloudIcon />}>SubMenu Item 2</MenuItem>
+          <MenuItem>SubMenu Item 3</MenuItem>
         </SubMenu>
         <SubMenu
           title="Menu Item 2"

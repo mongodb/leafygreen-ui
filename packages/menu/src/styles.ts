@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { fontFamilies, Mode } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import { Size } from './types';
@@ -55,7 +55,6 @@ export const menuItemContainerStyle = css`
 
   &:hover {
     text-decoration: none;
-    background-color: ${palette.gray.dark3};
   }
 
   &:active {
@@ -67,10 +66,18 @@ export const menuItemContainerThemeStyle: Record<Mode, string> = {
   [Mode.Light]: css`
     color: ${palette.white};
     background-color: ${palette.black};
+
+    &:hover {
+      background-color: ${palette.gray.dark3};
+    }
   `,
   [Mode.Dark]: css`
     color: ${palette.black};
     background-color: ${palette.gray.light2};
+
+    &:hover {
+      background-color: ${palette.gray.light1};
+    }
   `,
 }
 
@@ -92,7 +99,7 @@ export const mainIconStyle = css`
   flex-shrink: 0;
 `;
 
-export const titleTextStyle = css`
+const titleTextStyle = css`
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
@@ -115,20 +122,37 @@ export const titleTextStyle = css`
 `;
 
 export const titleTextThemeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+  [Mode.Light]: cx(
+    titleTextStyle,
+    css`
     color: ${palette.white};
-  `,
-  [Mode.Dark]: css`
+  `),
+  [Mode.Dark]: cx(
+    titleTextStyle,
+    css`
     color: ${palette.black};
-  `,
+  `),
 }
 
-export const descriptionTextStyle = css`
+const descriptionTextStyle = css`
   font-size: 13px;
   font-weight: normal;
   line-height: 16px;
   color: ${palette.gray.light1};
 `;
+
+export const descriptionTextThemeStyle: Record<Mode, string> = {
+  [Mode.Light]: cx(
+    descriptionTextStyle,
+    css`
+    color: ${palette.white};
+  `),
+  [Mode.Dark]: cx(
+    descriptionTextStyle,
+    css`
+    color: ${palette.gray.dark2};
+  `),
+}
 
 export const linkDescriptionTextStyle = css`
   white-space: nowrap;
@@ -178,7 +202,7 @@ export const activeMenuItemContainerStyle: Record<Mode, string> = {
       color: ${palette.green.dark3};
 
       &:before {
-        background-color: ${palette.gray.light1};
+        background-color: ${palette.green.dark2};
       }
     }
   `,
@@ -216,7 +240,7 @@ export const activeIconStyle: Record<Mode, string> = {
 /**
  * Disabled styles
  */
-export const disabledMenuItemContainerStyle = css`
+const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
   pointer-events: none;
 
@@ -226,12 +250,16 @@ export const disabledMenuItemContainerStyle = css`
 `;
 
 export const disabledMenuItemContainerThemeStyle: Record<Mode, string> = {
-  [Mode.Dark]: css`
+  [Mode.Dark]: cx(
+    disabledMenuItemContainerStyle,
+    css`
     background-color: ${palette.gray.light2};
-  `,
-  [Mode.Light]: css`
+  `),
+  [Mode.Light]: cx(
+    disabledMenuItemContainerStyle,
+    css`
     background-color: ${palette.black};
-  `,
+  `),
 };
 
 export const disabledTextStyle: Record<Mode, string> = {

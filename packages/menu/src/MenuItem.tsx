@@ -8,17 +8,15 @@ import {
   menuItemContainerStyle,
   menuItemContainerThemeStyle,
   activeMenuItemContainerStyle,
-  disabledMenuItemContainerStyle,
   disabledMenuItemContainerThemeStyle,
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
   mainIconStyle,
   activeIconStyle,
-  titleTextStyle,
   titleTextThemeStyle,
   activeTitleTextStyle,
-  descriptionTextStyle,
+  descriptionTextThemeStyle,
   linkDescriptionTextStyle,
   activeDescriptionTextStyle,
   textContainer,
@@ -73,7 +71,7 @@ interface BaseMenuItemProps {
    *
    * default: `false`
    */
-     darkMode?: boolean;
+  darkMode?: boolean;
 }
 
 const MenuItem: ExtendableBox<
@@ -142,7 +140,7 @@ const MenuItem: ExtendableBox<
           <div
             // Add text as data attribute to ensure no layout shift on hover
             data-text={getNodeTextContent(children)}
-            className={cx(titleTextStyle, titleTextThemeStyle[theme], hoverStyles.text, {
+            className={cx(titleTextThemeStyle[theme], hoverStyles.text, {
               [activeTitleTextStyle[theme]]: active,
               [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
@@ -152,7 +150,7 @@ const MenuItem: ExtendableBox<
           </div>
           {description && (
             <div
-              className={cx(descriptionTextStyle, {
+              className={cx(descriptionTextThemeStyle[theme], {
                 [activeDescriptionTextStyle[theme]]: active,
                 [disabledTextStyle[theme]]: disabled,
                 [focusStyles.descriptionStyle]: showFocus,
@@ -181,7 +179,6 @@ const MenuItem: ExtendableBox<
             linkStyle,
             {
               [activeMenuItemContainerStyle[theme]]: active,
-              [disabledMenuItemContainerStyle]: disabled,
               [disabledMenuItemContainerThemeStyle[theme]]: disabled,
               [focusedMenuItemContainerStyle]: showFocus,
             },

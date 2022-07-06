@@ -13,15 +13,15 @@ import { ExitHandler } from 'react-transition-group/Transition';
 import {
   menuItemContainerStyle,
   activeMenuItemContainerStyle,
-  disabledMenuItemContainerStyle,
+  disabledMenuItemContainerThemeStyle,
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
   mainIconStyle,
   activeIconStyle,
-  titleTextStyle,
+  titleTextThemeStyle,
   activeTitleTextStyle,
-  descriptionTextStyle,
+  descriptionTextThemeStyle,
   linkDescriptionTextStyle,
   activeDescriptionTextStyle,
   textContainer,
@@ -29,7 +29,9 @@ import {
   getHoverStyles,
   menuItemHeight,
   paddingLeft,
+  menuItemContainerThemeStyle,
 } from './styles';
+import { Mode } from '@leafygreen-ui/tokens';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
@@ -39,34 +41,81 @@ const iconButtonContainerSize = 28;
 
 const subMenuStyle = css`
   min-height: 56px;
-  background-color: ${palette.black};
   padding-right: ${iconButtonContainerSize + 16}px;
   align-items: center;
   justify-content: flex-start;
 `;
 
-const subMenuOpenStyle = css`
-  background-color: transparent;
+const subMenuThemeStyle: Record<Mode, string> = {
+  [Mode.Light]: cx(
+    subMenuStyle,
+    css`
+    background-color: ${palette.black};
+  `),
+  [Mode.Dark]: cx(
+    subMenuStyle,
+    css`
+    background-color: ${palette.gray.light2};
+  `),
+}
+
+const subMenuOpenStyle: Record<Mode, string> = {
+  [Mode.Light]:
+    css`
+    background-color: transparent;
 
   &:hover {
     background-color: ${palette.gray.dark3};
   }
-`;
+  `,
+  [Mode.Dark]:
+    css`
+    background-color: transparent;
 
-const focusedIconStyle = css`
-  ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
-    color: ${palette.white};
-  }
-`;
+    &:hover {
+      background-color: ${palette.gray.light1};
+    }
+  `,
+}
 
-const closedIconStyle = css`
-  transition: color 200ms ease-in-out;
+const focusedIconStyle: Record<Mode, string> = {
+  [Mode.Light]:
+    css`
+    ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
+      color: ${palette.white};
+    }
+  `,
+  [Mode.Dark]:
+    css`
+    ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
+      color: ${palette.white};
+    }
+  `,
+}
+
+const closedIconStyle: Record<Mode, string> = {
+  [Mode.Light]:
+    css`
+    transition: color 200ms ease-in-out;
   color: ${palette.gray.light1};
-`;
-
-const openIconStyle = css`
+  `,
+  [Mode.Dark]:
+    css`
+    transition: color 200ms ease-in-out;
   color: ${palette.gray.light1};
-`;
+  `,
+}
+
+const openIconStyle: Record<Mode, string> = {
+  [Mode.Light]:
+    css`
+    color: ${palette.gray.light1}
+  `,
+  [Mode.Dark]:
+    css`
+    color: ${palette.gray.dark2}
+  `,
+}
 
 const iconButtonStyle = css`
   position: absolute;
@@ -74,8 +123,13 @@ const iconButtonStyle = css`
   right: 8px;
   top: ${subMenuContainerHeight / 2 - iconButtonContainerSize / 2}px;
   margin: auto;
-  background-color: ${palette.black};
   transition: background-color 150ms ease-in-out;
+`;
+
+const iconButtonThemeStyle: Record<Mode, string> = {
+  [Mode.Light]:
+    css`
+    background-color: ${palette.black};
 
   &:hover {
     background-color: ${palette.gray.dark2};
@@ -84,7 +138,20 @@ const iconButtonStyle = css`
   ${subMenuContainer.selector}:hover + & {
     background-color: ${palette.gray.dark3};
   }
-`;
+  `,
+  [Mode.Dark]:
+    css`
+    background-color: ${palette.gray.light2};
+
+  &:hover {
+    background-color: ${palette.gray.dark2};
+  }
+
+  ${subMenuContainer.selector}:hover + & {
+    background-color: ${palette.gray.dark3};
+  }
+  `,
+}
 
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
@@ -96,9 +163,16 @@ const iconButtonFocusedStyle = css`
   }
 `;
 
-const openIconButtonStyle = css`
-  background-color: ${palette.black};
-`;
+const openIconButtonStyle: Record<Mode, string> = {
+  [Mode.Light]:
+    css`
+    background-color: ${palette.black};
+  `,
+  [Mode.Dark]:
+    css`
+    background-color: ${palette.gray.light2};
+  `,
+}
 
 const ulStyle = css`
   list-style: none;
@@ -190,6 +264,13 @@ interface SubMenuProps {
   onExited?: ExitHandler<HTMLElement>;
 
   href?: string;
+
+  /**
+   * Determines whether or not the component will be rendered in dark mode.
+   *
+   * default: `false`
+   */
+   darkMode?: boolean;
 }
 
 const SubMenu: ExtendableBox<
@@ -209,6 +290,7 @@ const SubMenu: ExtendableBox<
       open = false,
       active = false,
       disabled = false,
+      darkMode,
       ...rest
     }: SubMenuProps,
     ref: React.Ref<any>,
@@ -216,6 +298,9 @@ const SubMenu: ExtendableBox<
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(subMenuContainer.selector);
     const focusStyles = getFocusedStyles(subMenuContainer.selector);
+
+    // TODO: dark mode context
+    const theme = darkMode ? Mode.Dark : Mode.Light;
 
     const nodeRef = React.useRef(null);
 
@@ -240,9 +325,9 @@ const SubMenu: ExtendableBox<
 
     const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
     const chevronIconStyles = cx({
-      [openIconStyle]: open,
-      [closedIconStyle]: !open,
-      [focusedIconStyle]: showFocus,
+      [openIconStyle[theme]]: open,
+      [closedIconStyle[theme]]: !open,
+      [focusedIconStyle[theme]]: showFocus,
     });
 
     const handleChevronClick = (e: React.MouseEvent) => {
@@ -266,7 +351,7 @@ const SubMenu: ExtendableBox<
         className: cx(
           mainIconStyle,
           {
-            [activeIconStyle]: active,
+            [activeIconStyle[theme]]: active,
             [focusStyles.iconStyle]: showFocus,
           },
           glyph.props?.className,
@@ -298,9 +383,9 @@ const SubMenu: ExtendableBox<
         <div className={textContainer}>
           <div
             data-text={getNodeTextContent(children)}
-            className={cx(titleTextStyle, hoverStyles.text, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
+            className={cx(titleTextThemeStyle[theme], hoverStyles.text, {
+              [activeTitleTextStyle[theme]]: active,
+              [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
             })}
           >
@@ -308,9 +393,9 @@ const SubMenu: ExtendableBox<
           </div>
           {description && (
             <div
-              className={cx(descriptionTextStyle, {
-                [activeDescriptionTextStyle]: active,
-                [disabledTextStyle]: disabled,
+              className={cx(descriptionTextThemeStyle[theme], {
+                [activeDescriptionTextStyle[theme]]: active,
+                [disabledTextStyle[theme]]: disabled,
                 [focusStyles.descriptionStyle]: showFocus,
                 [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
@@ -333,14 +418,15 @@ const SubMenu: ExtendableBox<
           {...rest}
           className={cx(
             menuItemContainerStyle,
+            menuItemContainerThemeStyle[theme],
             menuItemHeight('default'),
             linkStyle,
-            subMenuStyle,
+            subMenuThemeStyle[theme],
             {
-              [activeMenuItemContainerStyle]: active,
-              [disabledMenuItemContainerStyle]: disabled,
+              [activeMenuItemContainerStyle[theme]]: active,
+              [disabledMenuItemContainerThemeStyle[theme]]: disabled,
               [focusedMenuItemContainerStyle]: showFocus,
-              [subMenuOpenStyle]: open,
+              [subMenuOpenStyle[theme]]: open,
             },
             className,
           )}
@@ -352,8 +438,8 @@ const SubMenu: ExtendableBox<
             darkMode={true}
             ref={setIconButtonElement}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-            className={cx(iconButtonStyle, {
-              [openIconButtonStyle]: open,
+            className={cx(iconButtonStyle, iconButtonThemeStyle[theme], {
+              [openIconButtonStyle[theme]]: open,
               [iconButtonFocusedStyle]: showFocus,
             })}
             onClick={handleChevronClick}
