@@ -180,7 +180,39 @@ const ulStyle = css`
   height: 0;
   overflow: hidden;
   transition: height 150ms ease-in-out;
+  position: relative;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    right: 0;
+    z-index: 1;
+  }
+
+  &::before {
+    top: 0;
+  }
+
+  &::after {
+    bottom: 0;
+  }
 `;
+
+const ulThemeStyles: Record<Mode, string> = {
+  [Mode.Light]:
+    css`
+    &::before, &::after {
+      background-color: ${palette.gray.dark2};
+    }
+    `,
+  [Mode.Dark]:
+    css`
+    &::before, &::after {
+      background-color: ${palette.gray.light1};
+    }
+  `,
+}
 
 const menuItemText = css`
   width: 100%;
@@ -209,7 +241,31 @@ const subItemStyle = css`
   // Reassign the variable for specificity
   --lg-menu-item-text-color: ${palette.gray.light1};
   position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    right: 0;
+    z-index: 1;
+    bottom: 0;
+  }
 `;
+
+const subItemThemeStyle: Record<Mode, string> = {
+  [Mode.Light]:
+    css`
+    &::after {
+      background-color: ${palette.gray.dark2};
+    }
+  `,
+  [Mode.Dark]:
+    css`
+    &::after {
+      background-color: ${palette.gray.light1};
+    }
+  `,
+}
 
 const subMenuItemHeight = 36;
 
@@ -466,7 +522,13 @@ const SubMenu: ExtendableBox<
           {(state: string) => (
             <ul
               ref={nodeRef}
-              className={cx(ulStyle, {
+              className={cx(ulStyle, ulThemeStyles[theme],
+                css`
+                  &::before, &::after {
+                    width: calc(100% - ${glyph ? paddingLeft : 28}px);
+                  }
+                `,
+                {
                 [css`
                   height: ${subMenuItemHeight * numberOfMenuItems}px;
                 `]: state === 'entered',
@@ -492,8 +554,12 @@ const SubMenu: ExtendableBox<
                     ),
                     className: cx(
                       subItemStyle,
+                      subItemThemeStyle[theme],
                       css`
                         padding-left: ${glyph ? paddingLeft : 28}px;
+                        &::after {
+                          width: calc(100% - ${glyph ? paddingLeft : 28}px);
+                        }
                       `,
                       child.props.className,
                     ),

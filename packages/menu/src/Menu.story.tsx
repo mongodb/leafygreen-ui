@@ -111,7 +111,7 @@ export const SubMenuExample = ({
         <SubMenu
           title="Menu Item 2"
           description="Sed posuere consectetur"
-          glyph={<LaptopIcon size="large" />}
+          // glyph={<LaptopIcon size="large" />}
         >
           <MenuItem>Support 1</MenuItem>
         </SubMenu>
