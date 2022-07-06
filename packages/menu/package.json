@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "14.0.1",
+  "version": "14.0.2",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "^11.9.0"
+    "@leafygreen-ui/icon": "^11.10.1"
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",
