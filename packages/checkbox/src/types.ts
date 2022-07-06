@@ -21,9 +21,17 @@ interface InternalCheckboxProps extends HTMLElementProps<'input', never> {
   /**
    * Whether the checkbox is disabled
    *
-   * default: `false`
+   * @default false
    */
   disabled?: boolean;
+
+  /**
+   * Whether the label's font-weight is bold or regular.
+   * Default `true` if there is a description.
+   * Otherwise defaults to `false`
+   *
+   */
+  bold?: boolean;
   /**
    * If `true`, the indeterminate icon will be rendered regardless of the `checked` prop.
    *

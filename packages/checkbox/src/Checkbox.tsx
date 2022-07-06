@@ -93,16 +93,18 @@ const inputFocusStyles = css`
 
 // TODO: Refresh - remove when darkmode is updated
 const inputFocusStylesDarkMode = css`
-  &:focus + .${checkClassName}:after {
-    content: '';
-    bottom: 0;
-    left: 3px;
-    right: 3px;
-    height: 2px;
-    position: absolute;
-    background-color: #43b1e5;
-    border-radius: 2px;
-    box-shadow: unset;
+  &:focus + .${checkClassName} {
+    & :after {
+      content: '';
+      bottom: 0;
+      left: 3px;
+      right: 3px;
+      height: 2px;
+      position: absolute;
+      background-color: #43b1e5;
+      border-radius: 2px;
+      box-shadow: unset;
+    }
   }
 `;
 
@@ -139,6 +141,7 @@ function Checkbox({
   label = '',
   description,
   disabled = false,
+  bold: boldProp,
   indeterminate: indeterminateProp,
   animate = true,
   className,
@@ -159,6 +162,10 @@ function Checkbox({
 
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
   const labelId = `${checkboxId}-label`;
+
+  // If a prop is passed, use the prop
+  // otherwise default bold if there's a description
+  const bold = boldProp ?? !!description;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChangeProp) {
@@ -251,6 +258,9 @@ function Checkbox({
           <span
             className={cx(labelTextStyle, labelTextColorStyle[mode], {
               [disabledTextStyle]: disabled,
+              [css`
+                font-weight: 400;
+              `]: !bold,
               // TODO: Refresh - remove dark mode styles
               [css`
                 font-family: ${fontFamilies.legacy};
