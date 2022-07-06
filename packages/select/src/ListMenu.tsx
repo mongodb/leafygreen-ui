@@ -3,10 +3,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
+import { Theme } from '@leafygreen-ui/lib';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
-import { Mode, Size } from './types';
+import { Size } from './types';
 import isUndefined from 'lodash/isUndefined';
 
 const maxMenuHeight = 274;
@@ -24,9 +25,9 @@ const baseMenuStyle = css`
   overflow: auto;
 `;
 
-const getMenuStyles = (mode: Mode, size: Size) => {
+const getMenuStyles = (theme: Theme, size: Size) => {
   const sizeSet = sizeSets[size];
-  const colorSet = colorSets[mode];
+  const colorSet = colorSets[theme];
 
   return cx(
     css`

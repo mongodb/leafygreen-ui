@@ -1,6 +1,7 @@
 import { transparentize } from 'polished';
 import { palette } from '@leafygreen-ui/palette';
-import { Size, Mode } from './types';
+import { Theme } from '@leafygreen-ui/lib';
+import { Size } from './types';
 
 interface ColorSet {
   menu: {
@@ -33,8 +34,8 @@ interface ColorSet {
   };
 }
 
-export const colorSets: Record<Mode, ColorSet> = {
-  [Mode.Light]: {
+export const colorSets: Record<Theme, ColorSet> = {
+  [Theme.Light]: {
     menu: {
       border: palette.gray.light2,
       shadow: transparentize(0.75, palette.black),
@@ -65,7 +66,7 @@ export const colorSets: Record<Mode, ColorSet> = {
     },
   },
 
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     menu: {
       border: palette.gray.base,
       shadow: transparentize(0.2, palette.black),

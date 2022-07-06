@@ -16,12 +16,6 @@ export const State = {
 } as const;
 export type State = typeof State[keyof typeof State];
 
-export const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-} as const;
-export type Mode = typeof Mode[keyof typeof Mode];
-
 export type SelectProps = {
   /**
    * Children rendered inside the component. Expected to be either `<Option>` or `<OptionGroup>`.
