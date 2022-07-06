@@ -10,11 +10,11 @@ import {
 } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { mobileSizeSet, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
-import { Mode, State } from './types';
+import { State } from './types';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuButtonStyleOverrides = css`
@@ -33,8 +33,8 @@ const menuButtonStyleOverrides = css`
   }
 `;
 
-const menuButtonModeOverrides: Record<Mode, string> = {
-  [Mode.Light]: css`
+const menuButtonModeOverrides: Record<Theme, string> = {
+  [Theme.Light]: css`
     background-color: ${palette.white};
     // Override button default color
     > *:last-child {
@@ -43,7 +43,7 @@ const menuButtonModeOverrides: Record<Mode, string> = {
       }
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     border-color: ${palette.gray.base};
     background-color: ${palette.gray.dark4};
     color: ${palette.gray.light3};
@@ -65,14 +65,14 @@ const menuButtonModeOverrides: Record<Mode, string> = {
 };
 
 // Override default button focus styles
-const menuButtonFocusStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const menuButtonFocusStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     &:focus {
       box-shadow: ${focusRing['light'].input};
       border-color: rgba(255, 255, 255, 0);
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     &:focus {
       background-color: ${palette.gray.dark4};
       box-shadow: ${focusRing['dark'].input};
@@ -81,11 +81,11 @@ const menuButtonFocusStyle: Record<Mode, string> = {
   `,
 };
 
-const menuButtonDeselectedStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+const menuButtonDeselectedStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light1};
 
     &:hover,
@@ -96,8 +96,8 @@ const menuButtonDeselectedStyles: Record<Mode, string> = {
   `,
 };
 
-const menuButtonDisabledStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+const menuButtonDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     &:disabled {
       background-color: ${palette.gray.light2};
       color: ${palette.gray.base};
@@ -110,7 +110,7 @@ const menuButtonDisabledStyles: Record<Mode, string> = {
       }
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     &:disabled {
       background-color: ${palette.gray.dark3};
       color: ${palette.gray.dark2};
@@ -142,14 +142,14 @@ const menuButtonTextStyle = css`
   max-width: 100%;
 `;
 
-const errorColor: Record<Mode, string> = {
-  [Mode.Light]: palette.red.base,
-  [Mode.Dark]: '#FF6960', // TODO: palette.red.light1 is different in figma(#FF6960) which does not match react(#EF5752)
+const errorColor: Record<Theme, string> = {
+  [Theme.Light]: palette.red.base,
+  [Theme.Dark]: '#FF6960', // TODO: palette.red.light1 is different in figma(#FF6960) which does not match react(#EF5752)
 };
 
-const menuButtonErrorStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    border-color: ${errorColor[Mode.Light]};
+const menuButtonErrorStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    border-color: ${errorColor[Theme.Light]};
     background-color: ${palette.white};
 
     &:hover,
@@ -157,12 +157,12 @@ const menuButtonErrorStyle: Record<Mode, string> = {
       box-shadow: 0 0 0 3px #f9d5c5; // Between light2 & light3
     }
   `,
-  [Mode.Dark]: css`
-    border-color: ${errorColor[Mode.Dark]};
+  [Theme.Dark]: css`
+    border-color: ${errorColor[Theme.Dark]};
 
     &:hover,
     &:active {
-      border-color: ${errorColor[Mode.Dark]};
+      border-color: ${errorColor[Theme.Dark]};
       box-shadow: 0px 0px 0px 3px ${palette.yellow.dark3};
     }
   `,
@@ -214,7 +214,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 ) {
   const { usingKeyboard } = useUsingKeyboardContext();
 
-  const { mode, open, size, disabled } = useContext(SelectContext);
+  const { theme, open, size, disabled } = useContext(SelectContext);
 
   const ref = useForwardedRef(forwardedRef, null);
 
@@ -237,12 +237,13 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     ? ''
     : cx(
         menuButtonStyleOverrides,
-        menuButtonModeOverrides[mode],
+        menuButtonModeOverrides[theme],
         {
-          [menuButtonFocusStyle[mode]]: usingKeyboard,
-          [menuButtonDeselectedStyles[mode]]: deselected,
-          [menuButtonDisabledStyles[mode]]: disabled,
-          [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,
+          [menuButtonFocusStyle[theme]]: usingKeyboard,
+          [menuButtonDeselectedStyles[theme]]: deselected,
+          [menuButtonDisabledStyles[theme]]: disabled,
+          [menuButtonErrorStyle[theme]]:
+            state === State.Error && !!errorMessage,
           [css`
             letter-spacing: initial;
           `]: size === ButtonSize.XSmall,
@@ -267,7 +268,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       disabled={disabled}
       onClick={onClick}
       variant={Variant.Default}
-      darkMode={mode === Mode.Dark}
+      darkMode={theme === Theme.Dark}
       rightGlyph={<CaretDownIcon />}
       size={size}
       data-testid={testId}
@@ -283,7 +284,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           <WarningIcon
             role="presentation"
             className={css`
-              color: ${errorColor[mode]};
+              color: ${errorColor[theme]};
             `}
             size={sizeSet.warningIcon}
           />

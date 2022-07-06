@@ -72,7 +72,7 @@ export type SelectProps = {
   /**
    *  determines the base font size if sizeVariant is set to default.
    */
-   baseFontSize?: BaseFontSize;
+  baseFontSize?: BaseFontSize;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;

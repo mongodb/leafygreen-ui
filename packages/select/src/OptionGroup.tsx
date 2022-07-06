@@ -38,8 +38,8 @@ export function InternalOptionGroup({
   children,
   ...rest
 }: InternalProps) {
-  const { mode } = useContext(SelectContext);
-  const colorSet = colorSets[mode].option;
+  const { theme } = useContext(SelectContext);
+  const colorSet = colorSets[theme].option;
 
   const groupId = useIdAllocator({ prefix: 'select-option-group' });
 

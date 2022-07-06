@@ -65,7 +65,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     }: ListMenuProps,
     forwardedRef,
   ) {
-    const { mode, size, disabled, open } = useContext(SelectContext);
+    const { theme, size, disabled, open } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
 
@@ -112,7 +112,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
           onClick={onClick}
           className={cx(
             baseMenuStyle,
-            getMenuStyles(mode, size),
+            getMenuStyles(theme, size),
             css`
               max-height: ${maxHeightValue};
               @media only screen and (max-width: ${breakpoints.Desktop}px) {

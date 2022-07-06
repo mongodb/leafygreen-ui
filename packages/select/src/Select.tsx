@@ -15,12 +15,9 @@ import {
   BaseFontSize,
 } from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
-import {
-  mobileSizeSet,
-  sizeSets,
-  SizeSet,
-} from './styleSets';
-import { Mode, SelectProps, Size, State } from './types';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { mobileSizeSet, sizeSets, SizeSet } from './styleSets';
+import { SelectProps, Size, State } from './types';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
 import SelectContext from './SelectContext';
@@ -76,7 +73,7 @@ const errorTextStyle = ({
  */
 export default function Select({
   children,
-  darkMode = false,
+  darkMode: darkModeProp,
   size = Size.Default,
   disabled = false,
   allowDeselect = true,
@@ -114,6 +111,8 @@ export default function Select({
     );
   }
 
+  const { darkMode, theme } = useDarkMode(darkModeProp);
+
   const descriptionId = `${id}-description`;
   const menuId = `${id}-menu`;
 
@@ -123,12 +122,11 @@ export default function Select({
   const menuButtonId = useIdAllocator({ prefix: 'select' });
   const listMenuRef = useStateRef<HTMLUListElement | null>(null);
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
   const sizeSet = sizeSets[size];
 
   const providerData = useMemo(() => {
-    return { mode, size, open, disabled };
-  }, [mode, size, open, disabled]);
+    return { theme, size, open, disabled };
+  }, [theme, size, open, disabled]);
 
   useEffect(() => {
     if (value !== undefined && onChange === undefined && readOnly !== true) {

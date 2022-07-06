@@ -82,10 +82,10 @@ export function InternalOption({
   hasGlyphs,
   ...rest
 }: InternalProps) {
-  const { mode } = useContext(SelectContext);
+  const { theme } = useContext(SelectContext);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const { option: colorSet } = colorSets[mode];
+  const { option: colorSet } = colorSets[theme];
 
   const ref = useRef<HTMLLIElement>(null);
 
