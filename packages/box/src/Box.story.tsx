@@ -18,7 +18,7 @@ export const StoryBox: React.FC<BoxProps> = props => (
 );
 
 export default {
-  title: 'Packages/Box',
+  title: 'Components/Box',
   component: StoryBox,
   excludeStories: ['StoryBox'],
   argTypes: {

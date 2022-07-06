@@ -4,9 +4,9 @@ import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import SelectContext from './SelectContext';
-import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
+import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
-import { Size } from '.';
+import { Mode, Size } from './types';
 import isUndefined from 'lodash/isUndefined';
 
 const maxMenuHeight = 274;

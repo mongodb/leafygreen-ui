@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import React, { useCallback, useContext, useMemo } from 'react';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Checkbox from '@leafygreen-ui/checkbox';
@@ -8,16 +8,19 @@ import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import {
   ComboboxOptionProps,
   InternalComboboxOptionProps,
+  ComboboxSize as Size,
+  Theme,
 } from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import { wrapJSX } from './utils';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
+import { menuItemHeight, menuItemPadding } from './ComboboxMenu/Menu.styles';
 
 /**
  * Styles
  */
 
-const comboboxOptionStyle = css`
+const comboboxOptionBaseStyle = css`
   position: relative;
   display: flex;
   align-items: center;
@@ -26,49 +29,123 @@ const comboboxOptionStyle = css`
   color: inherit;
   cursor: pointer;
   overflow: hidden;
-  font-family: ${fontFamilies.legacy};
-  font-size: var(--lg-combobox-item-font-size);
-  line-height: var(--lg-combobox-item-line-height);
-  padding: var(--lg-combobox-item-padding-y) var(--lg-combobox-item-padding-x);
+  font-family: ${fontFamilies.default};
 
   // Left wedge
   &:before {
     content: '';
     position: absolute;
     left: 0;
-    width: 3px;
-    height: var(--lg-combobox-item-wedge-height);
-    background-color: transparent;
-    border-radius: 0 2px 2px 0;
-    transform: scaleY(0.3);
-    transition: 150ms ease-in-out;
+    width: 4px;
+    height: calc(100% - 14px);
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 0 6px 6px 0;
+    transform: scale3d(0, 0.3, 0);
+    transition: 200ms ease-in-out;
     transition-property: transform, background-color;
-  }
-
-  &:hover {
-    outline: none;
-    background-color: var(--lg-combobox-item-hover-color);
-  }
-
-  &[aria-selected='true'] {
-    outline: none;
-    background-color: var(--lg-combobox-item-active-color);
-
-    &:before {
-      background-color: var(--lg-combobox-item-wedge-color);
-      transform: scaleY(1);
-    }
   }
 `;
 
-const comboboxOptionDisabledStyle = css`
+const comboboxOptionThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:hover {
+      outline: none;
+      background-color: ${palette.gray.light2};
+    }
+  `,
+  [Theme.Dark]: css`
+    &:hover {
+      outline: none;
+      background-color: ${palette.gray.dark4};
+    }
+  `,
+};
+
+const comboboxOptionSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    min-height: ${menuItemHeight[Size.Default]}px;
+    padding: ${menuItemPadding[Size.Default].y}px
+      ${menuItemPadding[Size.Default].x}px;
+    gap: ${spacing[1]}px;
+
+    &:before {
+      max-height: ${menuItemHeight[Size.Default]}px;
+    }
+  `,
+  [Size.Large]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+    min-height: ${menuItemHeight[Size.Large]}px;
+    padding: ${menuItemPadding[Size.Large].y}px
+      ${menuItemPadding[Size.Large].x}px;
+    gap: ${spacing[2]}px;
+
+    &:before {
+      max-height: ${menuItemHeight[Size.Large]}px;
+    }
+  `,
+};
+
+const _comboboxOptionBaseActiveStyle = css`
+  outline: none;
+
+  &:before {
+    transform: scaleY(1);
+  }
+`;
+
+const comboboxOptionActiveStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    ${_comboboxOptionBaseActiveStyle};
+    background-color: ${palette.blue.light3};
+
+    &:before {
+      background-color: ${palette.blue.base};
+    }
+  `,
+  [Theme.Dark]: css`
+    ${_comboboxOptionBaseActiveStyle};
+    background-color: ${palette.blue.dark3};
+
+    &:before {
+      background-color: ${palette.blue.light1};
+    }
+  `,
+};
+
+const _comboboxOptionBaseDisabledStyle = css`
   cursor: not-allowed;
-  color: ${uiColors.gray.base};
 
   &:hover {
     background-color: inherit;
   }
+
+  &:before {
+    content: unset;
+  }
 `;
+
+const comboboxOptionDisabledStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    ${_comboboxOptionBaseDisabledStyle};
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    ${_comboboxOptionBaseDisabledStyle};
+    color: ${palette.gray.dark1};
+  `,
+};
+
+const checkIconStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    min-width: ${spacing[3]}px;
+  `,
+  [Size.Large]: css`
+    min-width: ${spacing[4]}px;
+  `,
+};
 
 const flexSpan = css`
   display: inline-flex;
@@ -105,8 +182,9 @@ const InternalComboboxOption = React.forwardRef<
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
-    const { multiselect, darkMode, withIcons, inputValue } =
+    const { multiselect, darkMode, withIcons, inputValue, size } =
       useContext(ComboboxContext);
+    const theme = useDarkMode(darkMode);
     const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
     const optionRef = useForwardedRef(forwardedRef, null);
 
@@ -147,13 +225,18 @@ const InternalComboboxOption = React.forwardRef<
       if (multiselect) {
         const checkbox = (
           <Checkbox
-            // Using empty label due to this bug: https://jira.mongodb.org/browse/PD-1681
-            label=""
             aria-labelledby={optionTextId}
             checked={isSelected}
             tabIndex={-1}
-            animate={false}
             disabled={disabled}
+            darkMode={darkMode}
+            className={css`
+              // TODO: Remove when this is resolved:
+              // https://jira.mongodb.org/browse/PD-2171
+              & > label > div {
+                margin-top: 0;
+              }
+            `}
           />
         );
 
@@ -182,7 +265,8 @@ const InternalComboboxOption = React.forwardRef<
           {isSelected && (
             <Icon
               glyph="Checkmark"
-              color={darkMode ? uiColors.blue.light1 : uiColors.blue.base}
+              className={checkIconStyle[size]}
+              color={darkMode ? palette.blue.light1 : palette.blue.base}
             />
           )}
         </>
@@ -193,6 +277,7 @@ const InternalComboboxOption = React.forwardRef<
       isSelected,
       displayName,
       inputValue,
+      size,
       darkMode,
       optionTextId,
       disabled,
@@ -207,9 +292,12 @@ const InternalComboboxOption = React.forwardRef<
         aria-label={displayName}
         tabIndex={-1}
         className={cx(
-          comboboxOptionStyle,
+          comboboxOptionBaseStyle,
+          comboboxOptionSizeStyle[size],
+          comboboxOptionThemeStyle[theme],
           {
-            [comboboxOptionDisabledStyle]: disabled,
+            [comboboxOptionActiveStyle[theme]]: isFocused,
+            [comboboxOptionDisabledStyle[theme]]: disabled,
           },
           className,
         )}

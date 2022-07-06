@@ -1,10 +1,12 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 // TODO: Refresh - update to 13 | 16
 type FontSize = 14 | 16;
 export interface TypographyProviderProps {
-  children: React.ReactNode;
+  /**
+   * The base font size of all LeafyGreen components unless overridden.
+   */
   baseFontSize?: FontSize;
 }
 
@@ -17,7 +19,7 @@ export function useBaseFontSize() {
 function TypographyProvider({
   children,
   baseFontSize = 14,
-}: TypographyProviderProps) {
+}: PropsWithChildren<TypographyProviderProps>) {
   return (
     <BaseFontSizeContext.Provider value={baseFontSize}>
       {children}

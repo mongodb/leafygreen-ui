@@ -4,7 +4,7 @@ import Copyable from '.';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Copyable',
+  title: 'Components/Copyable',
   component: Copyable,
   args: {
     copyable: true,

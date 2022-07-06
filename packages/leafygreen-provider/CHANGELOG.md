@@ -1,5 +1,17 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 2.3.0
+
+### Minor Changes
+
+- 99e20bb9: Reusable DarkModeProps and darkMode prop for LeafygreenProvider
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+
 ## 2.2.0
 
 ### Minor Changes

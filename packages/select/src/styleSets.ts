@@ -1,12 +1,6 @@
 import { transparentize } from 'polished';
 import { palette } from '@leafygreen-ui/palette';
-
-export const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-} as const;
-
-export type Mode = typeof Mode[keyof typeof Mode];
+import { Size, Mode } from './types';
 
 interface ColorSet {
   menu: {
@@ -103,15 +97,6 @@ export const colorSets: Record<Mode, ColorSet> = {
   },
 };
 
-export const Size = {
-  XSmall: 'xsmall',
-  Small: 'small',
-  Default: 'default',
-  Large: 'large',
-} as const;
-
-export type Size = typeof Size[keyof typeof Size];
-
 export interface SizeSet {
   height: number;
   text: number;
@@ -198,10 +183,3 @@ export const mobileSizeSet: MobileSizeSet = {
   },
   warningIcon: 14,
 };
-
-export const State = {
-  None: 'none',
-  Error: 'error',
-} as const;
-
-export type State = typeof State[keyof typeof State];

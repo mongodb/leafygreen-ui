@@ -1,5 +1,22 @@
 # @leafygreen-ui/menu
 
+## 14.0.1
+
+### Patch Changes
+
+- c897e216: Removes flicker in the active wedge
+
+## 14.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/icon-button@13.0.0
+  - @leafygreen-ui/popover@9.0.0
+
 ## 13.1.1
 
 ### Patch Changes

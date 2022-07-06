@@ -4,6 +4,7 @@ import Button, { Variant, ButtonProps } from '.';
 import { BoxProps } from '@leafygreen-ui/box';
 import { Meta, Story } from '@storybook/react';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
 
@@ -17,7 +18,7 @@ export const StoryButton: React.FC<ButtonStoryProps> = props => (
 );
 
 export default {
-  title: 'Packages/Button',
+  title: 'Components/Button',
   component: StoryButton,
   excludeStories: ['StoryButton'],
   args: {
@@ -98,3 +99,9 @@ export const BaseGreen = Template.bind({});
 BaseGreen.args = {
   variant: Variant.BaseGreen,
 };
+
+export const WithGlobalDarkMode: Story<ButtonStoryProps> = args => (
+  <LeafygreenProvider darkMode={true}>
+    <Button {...args}>Test</Button>
+  </LeafygreenProvider>
+);

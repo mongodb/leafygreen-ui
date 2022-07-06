@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import Button, { Size, Variant } from '@leafygreen-ui/button';
+import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import {
@@ -11,10 +11,10 @@ import {
 import { palette } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { mobileSizeSet, Mode, sizeSets } from './styleSets';
+import { mobileSizeSet, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
-import { State } from '.';
+import { Mode, State } from './types';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuButtonStyleOverrides = css`
@@ -23,6 +23,8 @@ const menuButtonStyleOverrides = css`
   > *:last-child {
     grid-template-columns: 1fr 16px;
     padding: 0 12px;
+    justify-content: flex-start;
+
     > svg {
       justify-self: right;
       width: 16px;
@@ -130,6 +132,7 @@ const menuButtonTextWrapperStyle = css`
   align-items: center;
   flex-grow: 1;
   gap: ${spacing[1]}px;
+  overflow: hidden;
 `;
 
 const menuButtonTextStyle = css`
@@ -242,7 +245,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           [menuButtonErrorStyle[mode]]: state === State.Error && !!errorMessage,
           [css`
             letter-spacing: initial;
-          `]: size === Size.XSmall,
+          `]: size === ButtonSize.XSmall,
         },
         css`
           width: 100%;
@@ -253,6 +256,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         `,
       );
 
+  const testId =
+    (rest as any)['data-testid'] ?? 'leafygreen-ui-select-menubutton';
   return (
     <Component
       {...rest}
@@ -265,11 +270,11 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       darkMode={mode === Mode.Dark}
       rightGlyph={<CaretDownIcon />}
       size={size}
-      data-testid="leafygreen-ui-select-menubutton"
+      data-testid={testId}
       className={cx(buttonClassName, {
         [css`
           font-size: ${baseFontSize}px;
-        `]: size === Size.Default,
+        `]: size === ButtonSize.Default,
       })}
     >
       <div className={menuButtonTextWrapperStyle}>

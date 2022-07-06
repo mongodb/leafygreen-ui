@@ -3,7 +3,7 @@ import { ComponentStory } from '@storybook/react';
 import Toast, { Variant } from '.';
 
 export default {
-  title: 'Packages/Toast',
+  title: 'Components/Toast',
   component: Toast,
   args: {
     title: 'Velit ea exercitation qui aute dolor proident.',

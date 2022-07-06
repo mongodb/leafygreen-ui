@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '.';
-import { SelectProps } from './Select';
+import { SelectProps } from './types';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Select',
+  title: 'Components/Select',
   component: Select,
   args: {
     placeholder: 'Select',
     disabled: false,
     allowDeselect: false,
     children: [
+      <Option key="long" value="long">
+        Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
+        risus varius blandit sit amet non magna.
+      </Option>,
       <OptionGroup key="Common" label="Common">
         <Option value="dog">Dog</Option>
         <Option value="cat">Cat</Option>
@@ -49,9 +53,11 @@ export default {
 
 export const Uncontrolled = ({ className, ...args }: SelectProps) => (
   <Select
+    data-test="hello-world"
     className={cx(
       css`
         min-width: 200px;
+        max-width: 400px;
       `,
       className,
     )}

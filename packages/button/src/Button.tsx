@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { registerRipple } from '@leafygreen-ui/ripple';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { Variant, Size, ButtonProps, Mode } from './types';
+import {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
+import { Variant, Size, ButtonProps } from './types';
 import {
   getClassName,
   rippleColors,
@@ -24,7 +27,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     {
       variant = Variant.Default,
       size = Size.Default,
-      darkMode = false,
+      darkMode: darkModeProp,
       baseFontSize = BaseFontSize.Body1,
       disabled = false,
       onClick,
@@ -41,10 +44,11 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     const { usingKeyboard } = useUsingKeyboardContext();
     const rippleRef = useRef<HTMLDivElement | null>(null);
 
+    const { darkMode, theme } = useDarkMode(darkModeProp);
+
     useEffect(() => {
       let unregisterRipple: (() => void) | undefined;
-      const backgroundColor =
-        rippleColors[darkMode ? Mode.Dark : Mode.Light][variant];
+      const backgroundColor = rippleColors[theme][variant];
 
       if (rippleRef.current != null && !disabled) {
         unregisterRipple = registerRipple(rippleRef.current, {
@@ -53,7 +57,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       }
 
       return unregisterRipple;
-    }, [rippleRef, variant, darkMode, disabled]);
+    }, [rippleRef, variant, darkMode, disabled, theme]);
 
     const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
 

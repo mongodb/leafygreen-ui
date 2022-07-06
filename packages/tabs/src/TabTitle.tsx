@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, RefObject } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { fontFamilies } from '@leafygreen-ui/tokens';
@@ -19,9 +19,6 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
   light: {
     base: css`
       color: ${palette.gray.dark1};
-      font-weight: 500;
-      font-family: ${fontFamilies.default};
-      font-size: 13px;
     `,
     hover: css`
       &:hover {
@@ -35,7 +32,6 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
     focus: css`
       &:focus {
         color: ${palette.blue.base};
-        font-weight: 700;
 
         &:after {
           background-color: ${palette.blue.light1};
@@ -68,59 +64,56 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
 
   dark: {
     base: css`
-      color: ${uiColors.gray.light1};
-      font-weight: 600;
-      font-family: ${fontFamilies.legacy};
-      font-size: 16px;
+      color: ${palette.gray.light1};
     `,
     hover: css`
       &:hover {
         cursor: pointer;
+        color: ${palette.white};
 
-        &:not(:focus) {
-          color: ${uiColors.white};
-
-          &:after {
-            background-color: ${uiColors.gray.dark1};
-          }
+        &:after {
+          background-color: ${palette.gray.dark2};
         }
       }
     `,
     focus: css`
       &:focus {
-        color: ${uiColors.blue.light1};
+        color: ${palette.blue.light1};
 
         &:after {
-          background-color: ${uiColors.focus};
+          background-color: ${palette.blue.light1};
         }
       }
     `,
     selected: css`
-      color: ${uiColors.green.light2};
+      color: ${palette.green.base};
+      font-weight: 700;
 
       &:after {
         transform: scaleX(1);
-        background-color: ${uiColors.green.base};
+        background-color: ${palette.green.dark1};
       }
 
       &:hover {
-        color: ${uiColors.green.light2};
-        font-weight: 700;
+        color: ${palette.green.base};
 
         &:after {
           transform: scaleX(1);
-          background-color: ${uiColors.green.base};
+          background-color: ${palette.green.dark1};
         }
       }
     `,
     disabled: css`
       cursor: not-allowed;
-      color: ${uiColors.gray.dark1};
+      color: ${palette.gray.dark2};
     `,
   },
 };
 
 const listTitleStyles = css`
+  font-family: ${fontFamilies.default};
+  font-size: 13px;
+  font-weight: 500;
   position: relative;
   display: inline-flex;
   flex-direction: column;
@@ -130,6 +123,7 @@ const listTitleStyles = css`
   padding: 12px 16px;
   background-color: transparent;
   border: 0px;
+  margin: 0;
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
@@ -138,6 +132,7 @@ const listTitleStyles = css`
 
   &:focus {
     outline: none;
+    font-weight: 700;
   }
 
   // We create a pseudo element that's the width of the bolded text

@@ -5,7 +5,7 @@ import RadioBoxGroup, { RadioBoxGroupProps } from './RadioBoxGroup';
 import RadioBox from './RadioBox';
 
 export default {
-  title: 'Packages/RadioBoxGroup',
+  title: 'Components/RadioBoxGroup',
   component: RadioBoxGroup,
   argTypes: {
     children: { control: false },

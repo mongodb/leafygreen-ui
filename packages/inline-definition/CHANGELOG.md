@@ -1,5 +1,15 @@
 # @leafygreen-ui/inline-definition
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/typography@13.0.0
+  - @leafygreen-ui/tooltip@7.0.4
+
 ## 4.0.0
 
 ### Major Changes
