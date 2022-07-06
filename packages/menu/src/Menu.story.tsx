@@ -40,6 +40,10 @@ export default {
     darkMode: {
       control: 'boolean',
     },
+    size: {
+      options: Object.values(Size),
+      control: 'select',
+    }
   },
 };
 
@@ -94,8 +98,14 @@ export const SubMenuExample = ({
         <MenuItem disabled description="I am a description" size={size}>
           Disabled Menu Item
         </MenuItem>
+        <MenuItem disabled description="I am a description" size={size} glyph={<CloudIcon />}>
+          Disabled Menu Item
+        </MenuItem>
         <MenuItem size={size} href="http://mongodb.design">
           I am a link!
+        </MenuItem>
+        <MenuItem active size={size}>
+          I am active
         </MenuItem>
         <SubMenu
           title="Menu Item 1"
@@ -104,8 +114,8 @@ export const SubMenuExample = ({
           active={true}
           href="http://mongodb.design"
         >
-          <MenuItem active glyph={<CloudIcon />}>SubMenu Item 1</MenuItem>
-          <MenuItem glyph={<CloudIcon />}>SubMenu Item 2</MenuItem>
+          <MenuItem active>SubMenu Item 1</MenuItem>
+          <MenuItem>SubMenu Item 2</MenuItem>
           <MenuItem>SubMenu Item 3</MenuItem>
         </SubMenu>
         <SubMenu

@@ -28,6 +28,7 @@ import {
   getFocusedStyles,
   getHoverStyles,
   menuItemHeight,
+  paddingLeftBorder,
   paddingLeft,
   menuItemContainerThemeStyle,
 } from './styles';
@@ -102,7 +103,7 @@ const closedIconStyle: Record<Mode, string> = {
   [Mode.Dark]:
     css`
     transition: color 200ms ease-in-out;
-  color: ${palette.gray.light1};
+  color: ${palette.gray.dark1};
   `,
 }
 
@@ -113,7 +114,7 @@ const openIconStyle: Record<Mode, string> = {
   `,
   [Mode.Dark]:
     css`
-    color: ${palette.gray.dark2}
+    color: ${palette.gray.dark1}
   `,
 }
 
@@ -121,7 +122,9 @@ const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
   right: 8px;
-  top: ${subMenuContainerHeight / 2 - iconButtonContainerSize / 2}px;
+  // top: ${subMenuContainerHeight / 2 - iconButtonContainerSize / 2}px;
+  top: 0;
+  bottom: 0;
   margin: auto;
   transition: background-color 150ms ease-in-out;
 `;
@@ -525,7 +528,8 @@ const SubMenu: ExtendableBox<
               className={cx(ulStyle, ulThemeStyles[theme],
                 css`
                   &::before, &::after {
-                    width: calc(100% - ${glyph ? paddingLeft : 28}px);
+                    // this is the width for the UL border
+                    width: calc(100% - ${glyph ? paddingLeftBorder : 20}px);
                   }
                 `,
                 {
@@ -556,9 +560,11 @@ const SubMenu: ExtendableBox<
                       subItemStyle,
                       subItemThemeStyle[theme],
                       css`
-                        padding-left: ${glyph ? paddingLeft : 28}px;
+                        // padding-left of the button
+                        padding-left: ${glyph ? paddingLeft : 36}px;
                         &::after {
-                          width: calc(100% - ${glyph ? paddingLeft : 28}px);
+                          // this is the width for the button bottom border
+                          width: calc(100% - ${glyph ? paddingLeftBorder : 20}px);
                         }
                       `,
                       child.props.className,

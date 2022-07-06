@@ -13,11 +13,10 @@ import isUndefined from 'lodash/isUndefined';
 import { Mode } from '@leafygreen-ui/tokens';
 
 const rootMenuStyle = css`
-  width: 200px;
+  width: 210px;
   border-radius: 12px;
   overflow: auto;
   padding: 14px 0;
-  
 `;
 
 const rootMenuThemeStyles: Record<Mode, string> = {

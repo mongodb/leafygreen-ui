@@ -5,8 +5,9 @@ import { Size } from './types';
 
 export const svgWidth = 24;
 export const menuItemPadding = 15;
-export const paddingLeft = 52;
-const indentation = 16;
+export const paddingLeftBorder = 54;
+export const paddingLeft = 70;
+const indentation = 20;
 const wedgeWidth = 4;
 const minMenuContent = 32;
 const menuBlockPadding: Record<Size, number> = {
@@ -95,7 +96,7 @@ export const textContainer = css`
 
 export const mainIconStyle = css`
   color: ${palette.gray.dark1};
-  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
+  margin-right: ${paddingLeftBorder - svgWidth - menuItemPadding}px;
   flex-shrink: 0;
 `;
 
@@ -240,6 +241,15 @@ export const activeIconStyle: Record<Mode, string> = {
 /**
  * Disabled styles
  */
+ export const disabledIconStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
+    color: ${palette.gray.dark2};
+  `,
+  [Mode.Dark]: css`
+    color: ${palette.gray.light1};
+  `
+};
+
 const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
   pointer-events: none;

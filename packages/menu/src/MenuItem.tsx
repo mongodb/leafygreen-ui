@@ -14,6 +14,7 @@ import {
   disabledTextStyle,
   mainIconStyle,
   activeIconStyle,
+  disabledIconStyle,
   titleTextThemeStyle,
   activeTitleTextStyle,
   descriptionTextThemeStyle,
@@ -110,6 +111,7 @@ const MenuItem: ExtendableBox<
           {
             [activeIconStyle[theme]]: active,
             [focusStyles.iconStyle]: showFocus,
+            [disabledIconStyle[theme]]: disabled,
           },
           glyph.props?.className,
         ),
