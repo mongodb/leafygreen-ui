@@ -5,13 +5,7 @@ import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
 import { mq } from 'utils/mediaQuery';
 
-<Body
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Text inputs let users enter and edit text.
-</Body>
+Text inputs let users enter and edit text.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-1@3x.png`}
@@ -21,26 +15,16 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  We’ve optimized the structure of text inputs to be used in forms since these
-  are a large part of our products. Unlike config or settings pages, form
-  completion is a linear task that takes a user from one form element to the
-  next.
-</Body>
+We've optimized the structure of text inputs to be used in forms since these
+are a large part of our products. Unlike config or settings pages, form
+completion is a linear task that takes a user from one form element to the
+next.
 
-<Body
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Since a user's goal on a configuration page is usually to modify specific
-  items, having only labels on the left allows them to scan only the labels
-  until they find what they want to modify.{' '}
-</Body>
+Since a user's goal on a configuration page is usually to modify specific
+items, having only labels on the left allows them to scan only the labels
+until they find what they want to modify.
 
-<Link href="https://www.uxmatters.com/mt/archives/2006/07/label-placement-in-forms.php">
-  Learn more about the difference between config pages and forms.
-</Link>
+[Learn more about the difference between config pages and forms.](https://www.uxmatters.com/mt/archives/2006/07/label-placement-in-forms.php)
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-2@3x.png`}
@@ -52,13 +36,11 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Subtitle>Text input info sprinkles</Subtitle>
-<Body>
-  Should be used sparingly. If you need to explain in greater depth a field
-  label consider using the description section, and not an info sprinkle. A user
-  should be able to readily reference information describing what should be
-  entered in the input.
-</Body>
+### Text input info sprinkles
+
+Should be used sparingly. If you need to explain in greater depth a field label consider
+using the description section, and not an info sprinkle. A user should be able to
+readily reference information describing what should be entered in the input.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-3@3x.png`}
@@ -68,9 +50,9 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Subtitle>Alignment & spacing</Subtitle>
+### Alignment & spacing
 
-<Body>Ensure that text inputs are aligned on a 4px baseline grid.</Body>
+Ensure that text inputs are aligned on a 4px baseline grid.
 
 <Callout variant="note">
   Elements contained within the input fields, like input text or the error icon,
@@ -85,11 +67,9 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  Don’t extend the width of the input across the entire screen. We recommend
-  trying to keep a max-width of around 400px. Ideally, the input width should
-  reflect the length of its content/entry.
-</Body>
+Don't extend the width of the input across the entire screen. We recommend
+trying to keep a max-width of around 400px. Ideally, the input width should
+reflect the length of its content/entry.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-5@3x.png`}
@@ -101,13 +81,11 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  We recommend spacing text inputs by 40px (top and bottom) within a form. This
-  spacing allows for a single line error message to be included under the input.
-  As soon as the error message extends more than a single line, the form will
-  need to shift and animate in order to accommodate the extra error message
-  content.
-</Body>
+We recommend spacing text inputs by 40px (top and bottom) within a form. This
+spacing allows for a single line error message to be included under the input.
+As soon as the error message extends more than a single line, the form will
+need to shift and animate in order to accommodate the extra error message
+content.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-6@3x.png`}
@@ -117,25 +95,17 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Subtitle>Labels</Subtitle>
-<Body>
-  Labels should be concise, but more importantly accurate to the desired
-  content. They should not be longer than a single line.
-</Body>
+### Labels
 
-<Subtitle
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Description
-</Subtitle>
-<Body>
-  Descriptions are not necessary for all fields. Consider linking to a page that
-  contains a more thorough description if the description you’re adding is
-  longer than 1-2 lines. Do not extended the description or error message beyond
-  the width of the input.
-</Body>
+Labels should be concise, but more importantly accurate to the desired content. They
+should not be longer than a single line.
+
+### Description
+
+Descriptions are not necessary for all fields. Consider linking to a page that
+contains a more thorough description if the description you’re adding is
+longer than 1-2 lines. Do not extended the description or error message beyond
+the width of the input.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-7@3x.png`}
@@ -145,8 +115,9 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Subtitle>Optional Field State</Subtitle>
-<Body>Call out optional fields instead of required ones in a form.</Body>
+### Optional Field State
+
+Call out optional fields instead of required ones in a form.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-8@3x.png`}
@@ -156,45 +127,23 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Subtitle>Error Messages</Subtitle>
+### Error Messages
 
-<Body>
-  Error messages should be concise, and provide accurate context to the user as
-  to why there’s an error.
-</Body>
-<Body
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Try to limit the error message width to the size of the input width.
-</Body>
-<Body
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Aim for inline error messages whenever possible, but don’t prematurely show
-  errors to the user. Wait until they’ve clearly finished entering information,
-  and have clicked out of the input, prior to showing them an error related to
-  said information.
-</Body>
-<Body
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Error messages should be accompanied by an icon so that those who have visual
-  impairments can still derive the intent of the message at a glance.
-</Body>
-<Body
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Ideally, error messages for form fields should appear directly under the
-  associated field where the problem in the form is.
-</Body>
+Error messages should be concise, and provide accurate context to the user as
+to why there’s an error.
+
+Try to limit the error message width to the size of the input width.
+
+Aim for inline error messages whenever possible, but don’t prematurely show
+errors to the user. Wait until they’ve clearly finished entering information,
+and have clicked out of the input, prior to showing them an error related to
+said information.
+
+Error messages should be accompanied by an icon so that those who have visual
+impairments can still derive the intent of the message at a glance.
+
+Ideally, error messages for form fields should appear directly under the
+associated field where the problem in the form is.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-9@3x.png`}
@@ -204,12 +153,11 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Subtitle>Placeholder Text</Subtitle>
-<Body>
-  Placeholder text is not a necessity for all form fields, and should be omitted
-  for most. Placeholder text can be beneficial when used to show an example of a
-  complex input, like IP Address, or CIDR block.
-</Body>
+### Placeholder Text
+
+Placeholder text is not a necessity for all form fields, and should be omitted
+for most. Placeholder text can be beneficial when used to show an example of a
+complex input, like IP Address, or CIDR block.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-10@3x.png`}
@@ -219,17 +167,15 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Subtitle>Validation</Subtitle>
+### Validation
 
-<Body>
-  Indicate successful entry for complex fields. “However, don’t go overboard
-  with success indicators. Success indicators shouldn’t distract users from
-  filling out forms and should only be used when the additional context helps
-  complete the form faster or more accurately. For example, you don’t need to
-  show a success message when the only requirement on the field is that it is
-  filled in, as that message won’t provide much additional context to your
-  user.”
-</Body>
+Indicate successful entry for complex fields. “However, don’t go overboard
+with success indicators. Success indicators shouldn’t distract users from
+filling out forms and should only be used when the additional context helps
+complete the form faster or more accurately. For example, you don’t need to
+show a success message when the only requirement on the field is that it is
+filled in, as that message won’t provide much additional context to your
+user.”
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/textInput/textInput-guidelines-11@3x.png`}
@@ -239,31 +185,10 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Subtitle>Further Reading</Subtitle>
-<ul>
-  <li>
-    <Link href="https://www.lukew.com/ff/entry.asp?571">
-      Primary & Secondary Actions in Web Forms
-    </Link>
-  </li>
-  <li>
-    <Link href="https://www.nngroup.com/articles/errors-forms-design-guidelines/">
-      How to Report Errors in Forms: 10 Design Guidelines
-    </Link>
-  </li>
-  <li>
-    <Link href="https://www.nngroup.com/articles/form-design-placeholders/">
-      Placeholders in Form Fields Are Harmful
-    </Link>
-  </li>
-  <li>
-    <Link href="https://www.uxmatters.com/mt/archives/2006/07/label-placement-in-forms.php">
-      Label Placement in Forms
-    </Link>
-  </li>
-  <li>
-    <Link href="https://www.nngroup.com/articles/error-message-guidelines/">
-      Error Message Guidelines
-    </Link>
-  </li>
-</ul>
+### Further Reading
+
+- [Primary & Secondary Actions in Web Forms](https://www.lukew.com/ff/entry.asp?571)
+- [How to Report Errors in Forms: 10 Design Guidelines](https://www.nngroup.com/articles/errors-forms-design-guidelines/)
+- [Placeholders in Form Fields Are Harmful](https://www.nngroup.com/articles/form-design-placeholders/)
+- [Label Placement in Forms](https://www.uxmatters.com/mt/archives/2006/07/label-placement-in-forms.php)
+- [Error Message Guidelines](https://www.nngroup.com/articles/error-message-guidelines/)

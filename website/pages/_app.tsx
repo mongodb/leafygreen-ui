@@ -36,14 +36,15 @@ const MDXComponentMap = {
   code: InlineCode,
   p: styled(Body as any)`
     margin-block: 1em;
-
+    // Keep inline code inline
     code {
-      display: inline-block;
+      display: inline;
     }
   `,
   a: styled(Link as any)`
-    span {
-      display: inline-block;
+    span,
+    p {
+      display: inline;
     }
   `,
 };

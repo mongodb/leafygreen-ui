@@ -7,25 +7,12 @@ import GuidelineImage from 'components/GuidelineImage';
 import { CDN } from 'utils/routes';
 import { mq } from 'utils/mediaQuery';
 
-<Body
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Toasts are a form of notification. They should be used fairly sparingly, since
-  they animate and can become overwhelming to users if used to confirm every
-  action.
-</Body>
+Toasts are a form of notification. They should be used fairly sparingly, since
+they animate and can become overwhelming to users if used to confirm every
+action.
 
-<Body
-  className={css`
-    margin-top: 24px;
-    margin-bottom: 36px;
-  `}
->
-  Below is a table to help you choose when to pick which pattern for
-  notifications.
-</Body>
+Below is a table to help you choose when to pick which pattern for
+notifications.
 
 <Card
   className={css`
@@ -97,16 +84,10 @@ import { mq } from 'utils/mediaQuery';
   </Table>
 </Card>
 
-<Body>Toasts are always placed at the bottom left of a screen.</Body>
+Toasts are always placed at the bottom left of a screen.
 
-<Body
-  className={css`
-    margin-top: 24px;
-  `}
->
-  Toasts can be used to confirm an action. For example, here’s a confirmation
-  toast that shows up after an email has been sent.
-</Body>
+Toasts can be used to confirm an action. For example, here’s a confirmation
+toast that shows up after an email has been sent.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-1@3x.png`}
@@ -118,9 +99,7 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  They can be used to indicate something important may need to be addressed.
-</Body>
+They can be used to indicate something important may need to be addressed.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-2@3x.png`}
@@ -132,9 +111,7 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  They can be used to show general information that may be helpful to the user.
-</Body>
+They can be used to show general information that may be helpful to the user.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-3@3x.png`}
@@ -146,12 +123,10 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  Toasts can either be dismissable (via the top "X"), or can disappear
-  automatically after a set amount of time — to figure out this time, factor for
-  a reading speed of 150 words per minute, plus allow for another second or so
-  to allow for enough time for the user to read the toast content).
-</Body>
+Toasts can either be dismissable (via the top "X"), or can disappear
+automatically after a set amount of time — to figure out this time, factor for
+a reading speed of 150 words per minute, plus allow for another second or so
+to allow for enough time for the user to read the toast content).
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-4@3x.png`}
@@ -163,14 +138,8 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  Do not use toasts for components that have notifications integrated into their
-  designs like{' '}
-  <Link href="https://www.mongodb.design/component/copyable/example/">
-    copyable
-  </Link>
-  .
-</Body>
+Do not use toasts for components that have notifications integrated into their
+designs like [copyable](https://www.mongodb.design/component/copyable/example/).
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-5@3x.png`}
@@ -182,11 +151,9 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  Toasts can also be used to show status of longer ongoing processes (lasting
-  more than 4-5 seconds). When doing so, try to add an estimate of the time the
-  process will take to complete, or where in the process the user is.
-</Body>
+Toasts can also be used to show status of longer ongoing processes (lasting
+more than 4-5 seconds). When doing so, try to add an estimate of the time the
+process will take to complete, or where in the process the user is.
 
 <GuidelineImage
   imageURL={`${CDN}/images/new-guidelines/toast/toast-guidelines-6@3x.png`}
@@ -198,8 +165,6 @@ import { mq } from 'utils/mediaQuery';
   `}
 />
 
-<Body>
-  Do not nest actions within toasts. Our progress toast allows for an action to
-  be contained within it, such as for viewing the current progress of a cluster
-  rebuild or pausing the current process.
-</Body>
+Do not nest actions within toasts. Our progress toast allows for an action to
+be contained within it, such as for viewing the current progress of a cluster
+rebuild or pausing the current process.
