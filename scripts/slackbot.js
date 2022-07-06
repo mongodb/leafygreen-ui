@@ -168,3 +168,6 @@ async function parseMajorChangeString(component) {
   // .trim()
   return `*<${changelogUrl} | ${fullName}>*`;
 }
+
+
+var js = [{"name": "@leafygreen-ui/icon", "version": "11.10.1"},{"name": "@leafygreen-ui/menu", "version": "14.0.2"}]
