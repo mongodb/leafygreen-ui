@@ -2,4 +2,4 @@
 '@leafygreen-ui/select': major
 ---
 
-Updates 'Select' for dark mode refresh
+Updates 'Select' for dark mode refresh. Adds `baseFontSize` prop.
