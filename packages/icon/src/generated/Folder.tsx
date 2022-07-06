@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 252783398afac591317ac483bbfcf384
+ * @checksum 2a9ff3a6b8b82526ffa33853f432f626
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -49,7 +49,7 @@ const Folder = ({
       viewBox="0 0 16 16"
     >
       <path
-        d="M2 1C1.44772 1 1 1.44772 1 2V12C1 12.5523 1.44772 13 2 13H14C14.5523 13 15 12.5523 15 12V4C15 3.44772 14.5523 3 14 3H8C7.44772 3 7 2.55228 7 2C7 1.44772 6.55228 1 6 1H2Z"
+        d="M2 2C1.44772 2 1 2.44772 1 3V13C1 13.5523 1.44772 14 2 14H14C14.5523 14 15 13.5523 15 13V5C15 4.44772 14.5523 4 14 4H8C7.44772 4 7 3.55228 7 3C7 2.44772 6.55228 2 6 2H2Z"
         fill={'currentColor'}
       />
     </svg>
