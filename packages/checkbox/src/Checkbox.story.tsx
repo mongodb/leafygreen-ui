@@ -48,8 +48,8 @@ Basic.args = {
   `,
 };
 
-export const LabelOnly = Template.bind({});
-LabelOnly.args = {
+export const NoDescription = Template.bind({});
+NoDescription.args = {
   label:
     'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.',
 };
@@ -61,4 +61,8 @@ WrappedLabel.args = {
   className: css`
     max-width: 256px;
   `,
+};
+export const CheckOnly = Template.bind({});
+CheckOnly.args = {
+  'aria-label': 'Label',
 };

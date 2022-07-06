@@ -5,8 +5,11 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "../../typings/*"],
+  "include": ["src/**/*", "../../typings/*", "../a11y/src/useReducedMotionQuery.ts"],
   "references": [
+    {
+      "path": "../a11y"
+    },
     {
       "path": "../emotion"
     },
