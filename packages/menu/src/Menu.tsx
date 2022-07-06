@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { useAvailableSpace, useEventListener } from '@leafygreen-ui/hooks';
-import { isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { FocusableMenuItemElement } from './FocusableMenuItem';
@@ -10,7 +10,9 @@ import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
 import { MenuProps } from './types';
 import isUndefined from 'lodash/isUndefined';
-import { Mode } from '@leafygreen-ui/tokens';
+import {
+  useDarkMode
+} from '@leafygreen-ui/leafygreen-provider';
 
 const rootMenuStyle = css`
   width: 210px;
@@ -19,11 +21,11 @@ const rootMenuStyle = css`
   padding: 14px 0;
 `;
 
-const rootMenuThemeStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+const rootMenuThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
   background-color: ${palette.black};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
   background-color: ${palette.gray.light2};
   `
 };
@@ -53,7 +55,7 @@ const scrollContainerStyle = css`
  * @param props.refEl Reference element that Menu should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
- * @param props.darkMode Determines whether or not the component will be rendered in dark mode.
+ * @param props.darkMode Determines whether or not the component will be rendered in dark theme.
  */
 function Menu({
   align = Align.Bottom,
@@ -73,12 +75,11 @@ function Menu({
   scrollContainer,
   popoverZIndex,
   maxHeight = 256,
-  darkMode = false,
+  darkMode: darkModeProp,
   ...rest
 }: MenuProps) {
 
-  // TODO: dark mode context
-  const theme = darkMode ? Mode.Dark : Mode.Light;
+  const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);

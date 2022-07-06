@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
-import { cx, css } from '@leafygreen-ui/emotion';
+import { createDataProp, getNodeTextContent, Theme } from '@leafygreen-ui/lib';
+import { cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
@@ -26,7 +26,6 @@ import {
   getHoverStyles,
 } from './styles';
 import { Size } from './types';
-import { Mode } from '@leafygreen-ui/tokens';
 
 const menuItemContainer = createDataProp('menu-item-container');
 interface BaseMenuItemProps {
@@ -96,9 +95,7 @@ const MenuItem: ExtendableBox<
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(menuItemContainer.selector);
     const focusStyles = getFocusedStyles(menuItemContainer.selector);
-
-    // TODO: dark mode context
-    const theme = darkMode ? Mode.Dark : Mode.Light;
+    const theme = darkMode ? Theme.Dark : Theme.Light;
 
     const isAnchor = typeof rest.href === 'string';
 

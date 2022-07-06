@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuProps, SubMenu, MenuItem } from '.';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
 import Button from '@leafygreen-ui/button';
 import { Size } from './types';
 
@@ -123,7 +122,6 @@ export const SubMenuExample = ({
           title="Menu Item 2"
           description="Sed posuere consectetur"
           size={size}
-          // glyph={<LaptopIcon size="large" />}
         >
           <MenuItem>Support 1</MenuItem>
         </SubMenu>

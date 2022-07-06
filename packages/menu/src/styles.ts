@@ -1,6 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies, Mode } from '@leafygreen-ui/tokens';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
+import { Theme } from '@leafygreen-ui/lib';
 import { Size } from './types';
 
 export const svgWidth = 24;
@@ -63,8 +64,8 @@ export const menuItemContainerStyle = css`
   }
 `;
 
-export const menuItemContainerThemeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const menuItemContainerThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.white};
     background-color: ${palette.black};
 
@@ -72,7 +73,7 @@ export const menuItemContainerThemeStyle: Record<Mode, string> = {
       background-color: ${palette.gray.dark3};
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.black};
     background-color: ${palette.gray.light2};
 
@@ -127,13 +128,13 @@ const titleTextStyle = css`
   }
 `;
 
-export const titleTextThemeStyle: Record<Mode, string> = {
-  [Mode.Light]: cx(
+export const titleTextThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: cx(
     titleTextStyle,
     css`
     color: ${palette.white};
   `),
-  [Mode.Dark]: cx(
+  [Theme.Dark]: cx(
     titleTextStyle,
     css`
     color: ${palette.black};
@@ -147,13 +148,13 @@ const descriptionTextStyle = css`
   color: ${palette.gray.light1};
 `;
 
-export const descriptionTextThemeStyle: Record<Mode, string> = {
-  [Mode.Light]: cx(
+export const descriptionTextThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: cx(
     descriptionTextStyle,
     css`
     color: ${palette.white};
   `),
-  [Mode.Dark]: cx(
+  [Theme.Dark]: cx(
     descriptionTextStyle,
     css`
     color: ${palette.gray.dark2};
@@ -181,8 +182,8 @@ export const getHoverStyles = (container: string) => ({
 /**
  * Active styles
  */
-export const activeMenuItemContainerStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const activeMenuItemContainerStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     background-color: ${palette.black};
 
     &:before {
@@ -197,7 +198,7 @@ export const activeMenuItemContainerStyle: Record<Mode, string> = {
       }
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     background-color: ${palette.gray.light2};
 
     &:before {
@@ -214,31 +215,31 @@ export const activeMenuItemContainerStyle: Record<Mode, string> = {
   `,
 }
 
-export const activeTitleTextStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const activeTitleTextStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
   font-weight: bold;
   color: ${palette.green.base};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
   font-weight: bold;
   color: ${palette.green.dark2};
   `,
 }
 
-export const activeDescriptionTextStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const activeDescriptionTextStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.gray.light1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.dark2};
   `
 };
 
-export const activeIconStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const activeIconStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
   color: ${palette.green.dark2};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.green.dark2};
   `
 };
@@ -246,11 +247,11 @@ export const activeIconStyle: Record<Mode, string> = {
 /**
  * Disabled styles
  */
- export const disabledIconStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+ export const disabledIconStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.gray.dark2};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light1};
   `
 };
@@ -264,25 +265,25 @@ const disabledMenuItemContainerStyle = css`
   }
 `;
 
-export const disabledMenuItemContainerThemeStyle: Record<Mode, string> = {
-  [Mode.Dark]: cx(
+export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
+  [Theme.Dark]: cx(
     disabledMenuItemContainerStyle,
     css`
     background-color: ${palette.gray.light2};
   `),
-  [Mode.Light]: cx(
+  [Theme.Light]: cx(
     disabledMenuItemContainerStyle,
     css`
     background-color: ${palette.black};
   `),
 };
 
-export const disabledTextStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const disabledTextStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
   color: ${palette.gray.dark1};
   font-weight: 400;
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
   color: ${palette.gray.light1};
   font-weight: 400;
   `

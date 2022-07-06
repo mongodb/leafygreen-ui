@@ -7,7 +7,7 @@ import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
+import { createDataProp, getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { ExitHandler } from 'react-transition-group/Transition';
 import {
@@ -32,7 +32,6 @@ import {
   paddingLeft,
   menuItemContainerThemeStyle,
 } from './styles';
-import { Mode } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 const subMenuContainer = createDataProp('sub-menu-container');
@@ -48,21 +47,21 @@ const subMenuStyle = css`
   justify-content: flex-start;
 `;
 
-const subMenuThemeStyle: Record<Mode, string> = {
-  [Mode.Light]: cx(
+const subMenuThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: cx(
     subMenuStyle,
     css`
     background-color: ${palette.black};
   `),
-  [Mode.Dark]: cx(
+  [Theme.Dark]: cx(
     subMenuStyle,
     css`
     background-color: ${palette.gray.light2};
   `),
 }
 
-const subMenuOpenStyle: Record<Mode, string> = {
-  [Mode.Light]:
+const subMenuOpenStyle: Record<Theme, string> = {
+  [Theme.Light]:
     css`
     background-color: transparent;
 
@@ -70,7 +69,7 @@ const subMenuOpenStyle: Record<Mode, string> = {
     background-color: ${palette.gray.dark3};
   }
   `,
-  [Mode.Dark]:
+  [Theme.Dark]:
     css`
     background-color: transparent;
 
@@ -80,14 +79,14 @@ const subMenuOpenStyle: Record<Mode, string> = {
   `,
 }
 
-const focusedIconStyle: Record<Mode, string> = {
-  [Mode.Light]:
+const focusedIconStyle: Record<Theme, string> = {
+  [Theme.Light]:
     css`
     ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
       color: ${palette.white};
     }
   `,
-  [Mode.Dark]:
+  [Theme.Dark]:
     css`
     ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
       color: ${palette.white};
@@ -95,25 +94,25 @@ const focusedIconStyle: Record<Mode, string> = {
   `,
 }
 
-const closedIconStyle: Record<Mode, string> = {
-  [Mode.Light]:
+const closedIconStyle: Record<Theme, string> = {
+  [Theme.Light]:
     css`
     transition: color 200ms ease-in-out;
   color: ${palette.gray.light1};
   `,
-  [Mode.Dark]:
+  [Theme.Dark]:
     css`
     transition: color 200ms ease-in-out;
   color: ${palette.gray.dark1};
   `,
 }
 
-const openIconStyle: Record<Mode, string> = {
-  [Mode.Light]:
+const openIconStyle: Record<Theme, string> = {
+  [Theme.Light]:
     css`
     color: ${palette.gray.light1}
   `,
-  [Mode.Dark]:
+  [Theme.Dark]:
     css`
     color: ${palette.gray.dark1}
   `,
@@ -130,8 +129,8 @@ const iconButtonStyle = css`
   transition: background-color 150ms ease-in-out;
 `;
 
-const iconButtonThemeStyle: Record<Mode, string> = {
-  [Mode.Light]:
+const iconButtonThemeStyle: Record<Theme, string> = {
+  [Theme.Light]:
     css`
     background-color: ${palette.black};
 
@@ -143,7 +142,7 @@ const iconButtonThemeStyle: Record<Mode, string> = {
     background-color: ${palette.gray.dark3};
   }
   `,
-  [Mode.Dark]:
+  [Theme.Dark]:
     css`
     background-color: ${palette.gray.light2};
 
@@ -167,12 +166,12 @@ const iconButtonFocusedStyle = css`
   }
 `;
 
-const openIconButtonStyle: Record<Mode, string> = {
-  [Mode.Light]:
+const openIconButtonStyle: Record<Theme, string> = {
+  [Theme.Light]:
     css`
     background-color: ${palette.black};
   `,
-  [Mode.Dark]:
+  [Theme.Dark]:
     css`
     background-color: ${palette.gray.light2};
   `,
@@ -203,14 +202,14 @@ const ulStyle = css`
   }
 `;
 
-const ulThemeStyles: Record<Mode, string> = {
-  [Mode.Light]:
+const ulThemeStyles: Record<Theme, string> = {
+  [Theme.Light]:
     css`
     &::before, &::after {
       background-color: ${palette.gray.dark2};
     }
     `,
-  [Mode.Dark]:
+  [Theme.Dark]:
     css`
     &::before, &::after {
       background-color: ${palette.gray.light1};
@@ -256,14 +255,14 @@ const subItemStyle = css`
   }
 `;
 
-const subItemThemeStyle: Record<Mode, string> = {
-  [Mode.Light]:
+const subItemThemeStyle: Record<Theme, string> = {
+  [Theme.Light]:
     css`
     &::after {
       background-color: ${palette.gray.dark2};
     }
   `,
-  [Mode.Dark]:
+  [Theme.Dark]:
     css`
     &::after {
       background-color: ${palette.gray.light1};
@@ -326,7 +325,7 @@ interface SubMenuProps {
   href?: string;
 
   /**
-   * Determines whether or not the component will be rendered in dark mode.
+   * Determines whether or not the component will be rendered in dark Theme.
    *
    * default: `false`
    */
@@ -364,9 +363,7 @@ const SubMenu: ExtendableBox<
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(subMenuContainer.selector);
     const focusStyles = getFocusedStyles(subMenuContainer.selector);
-
-    // TODO: dark mode context
-    const theme = darkMode ? Mode.Dark : Mode.Light;
+    const theme = darkMode ? Theme.Dark : Theme.Light;
 
     const nodeRef = React.useRef(null);
 
