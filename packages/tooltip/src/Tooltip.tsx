@@ -68,7 +68,7 @@ const baseStyles = css`
   padding: 12px ${borderRadius}px;
   box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
   cursor: default;
-  overflow-wrap: break-word;
+  word-break: break-all;
   width: fit-content;
   max-width: 256px;
 `;
