@@ -21,6 +21,18 @@ export const Mode = {
 } as const;
 export type Mode = typeof Mode[keyof typeof Mode];
 
+type onChangeProp = {
+  /**
+   * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
+   * 
+   * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
+   */
+  onChange?: (
+    value: string,
+    event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
+  ) => void;
+}
+
 export type SelectProps = {
   /**
    * Children rendered inside the component. Expected to be either `<Option>` or `<OptionGroup>`.
@@ -75,35 +87,27 @@ export type SelectProps = {
   (
     | // Uncontrolled
     ({
-        /**
-         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
-         */
-        defaultValue?: string;
-        /**
-         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
-         */
-        value?: undefined;
-      } & {
-        onChange?: (
-          value: string,
-          event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
-        ) => void;
-        /**
-         * Indicates that the component's value cannot be changed.
-         */
-        readOnly?: false;
-      })
+      /**
+       * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
+       */
+      defaultValue?: string;
+      /**
+       * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
+       */
+      value?: undefined;
+    } & onChangeProp & {
+      /**
+       * Indicates that the component's value cannot be changed.
+       */
+      readOnly?: false;
+    })
     // Controlled
     | ({ value: string; defaultValue?: undefined } & (
-        | {
-            onChange: (
-              value: string,
-              event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
-            ) => void;
-            readOnly?: false;
-          }
-        | { readOnly: true; onChange?: undefined }
-      ))
+      | onChangeProp & {
+        readOnly?: false;
+      }
+      | { readOnly: true; onChange?: undefined }
+    ))
   ) &
   OneOf<{ label: string }, { 'aria-labelledby': string }> &
   Omit<HTMLElementProps<'button', HTMLButtonElement>, 'onChange'>;
