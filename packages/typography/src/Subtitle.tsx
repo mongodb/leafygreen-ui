@@ -3,7 +3,8 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { baseTypographyStyles, defaultTextColor } from './styles';
-import { CommonTypographyProps, Mode } from './types';
+import { CommonTypographyProps } from './types';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Subtitle
@@ -17,19 +18,18 @@ const subtitle = css`
 type SubtitleProps = HTMLElementProps<'h6'> & CommonTypographyProps;
 
 const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
-  darkMode,
+  darkMode: darkModeProp,
   className,
   ...rest
 }: SubtitleProps) => {
-  // TODO: Replace with context
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
   return (
     <Box
       as="h6"
       className={cx(
         baseTypographyStyles,
         subtitle,
-        defaultTextColor[mode],
+        defaultTextColor[theme],
         className,
       )}
       {...rest}

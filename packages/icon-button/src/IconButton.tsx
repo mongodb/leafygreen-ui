@@ -1,270 +1,25 @@
 import React from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { Either, isComponentType } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { palette } from '@leafygreen-ui/palette';
+import { isComponentType } from '@leafygreen-ui/lib';
+import {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import { focusRing } from '@leafygreen-ui/tokens';
-
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
-
-const Size = {
-  Default: 'default',
-  Large: 'large',
-  XLarge: 'xlarge',
-} as const;
-
-type Size = typeof Size[keyof typeof Size];
-
-export { Size };
-
-const removeButtonStyle = css`
-  border: none;
-  -webkit-appearance: unset;
-  padding: unset;
-`;
-
-const baseIconButtonStyle = css`
-  display: inline-block;
-  border-radius: 100px;
-  position: relative;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: 150ms ease-in-out;
-  transition-property: color, box-shadow;
-
-  // Set background to fully-transparent white for cross-browser compatability with Safari
-  //
-  // Safari treats "transparent" values in CSS as transparent black instead of white
-  // which can make things render differently across browsers if not defined explicitly.
-  background-color: rgba(255, 255, 255, 0);
-
-  &:before {
-    content: '';
-    transition: 150ms all ease-in-out;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 100%;
-    opacity: 0;
-    transform: scale(0.8);
-  }
-
-  &:active:before,
-  &:hover:before,
-  &:focus:before {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const iconButtonSizes = {
-  [Size.Default]: css`
-    height: 28px;
-    width: 28px;
-  `,
-  [Size.Large]: css`
-    height: 36px;
-    width: 36px;
-  `,
-  [Size.XLarge]: css`
-    height: 42px;
-    width: 42px;
-  `,
-} as const;
-
-const iconButtonMode: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.gray.base};
-
-    &:active,
-    &:hover {
-      color: ${palette.black};
-
-      &:before {
-        background-color: ${palette.gray.light2};
-      }
-    }
-  `,
-  [Mode.Dark]: css`
-    color: ${palette.gray.light1};
-
-    &:active,
-    &:hover {
-      color: ${palette.gray.light3};
-
-      &:before {
-        background-color: ${palette.gray.dark1};
-      }
-    }
-  `,
-};
-
-const focusStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    &:focus {
-      color: ${palette.black};
-      box-shadow: ${focusRing[Mode.Light].default};
-
-      &:before {
-        background-color: ${palette.gray.light2};
-      }
-    }
-  `,
-  [Mode.Dark]: css`
-    &:focus {
-      color: ${palette.gray.light3};
-      box-shadow: ${focusRing[Mode.Dark].default};
-
-      &:before {
-        background-color: ${palette.gray.dark1};
-      }
-    }
-  `,
-} as const;
-
-const disabledStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.light1};
-    background-color: rgba(255, 255, 255, 0);
-
-    &:active,
-    &:hover {
-      color: ${palette.gray.light1};
-
-      &:before {
-        background-color: rgba(255, 255, 255, 0);
-      }
-    }
-
-    &:focus {
-      color: ${palette.gray.light1};
-
-      &:before {
-        background-color: rgba(255, 255, 255, 0);
-      }
-    }
-  `,
-
-  [Mode.Dark]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark1};
-    background-color: rgba(255, 255, 255, 0);
-
-    &:active,
-    &:hover {
-      color: ${palette.gray.dark1};
-
-      &:before {
-        background-color: rgba(255, 255, 255, 0);
-      }
-    }
-
-    &:focus {
-      color: ${palette.gray.dark1};
-
-      &:before {
-        background-color: rgba(255, 255, 255, 0);
-      }
-    }
-  `,
-} as const;
-
-const activeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    color: ${palette.black};
-
-    &:before {
-      background-color: ${palette.gray.light2};
-      opacity: 1;
-      transform: scale(1);
-    }
-  `,
-  [Mode.Dark]: css`
-    color: ${palette.gray.light3};
-
-    &:before {
-      background-color: ${palette.gray.dark1};
-      opacity: 1;
-      transform: scale(1);
-    }
-  `,
-} as const;
-
-const iconStyle = css`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-// Since applications can't yet tree-shake, we're duplicating this interface from the types in the namespaces within the Icon package rather than importing the Icon package.
-interface IconProps extends React.SVGProps<SVGSVGElement> {
-  glyph: string;
-  size?: Size | number;
-  title?: string | null | boolean;
-}
-interface BaseIconButtonProps
-  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
-  className?: string;
-  children?: React.ReactNode;
-  /**
-   * If `true`, the button will be rendered with disabled styles
-   */
-  disabled?: boolean;
-  /**
-   * Size of tehe icon
-   */
-  size?: Size;
-  darkMode?: boolean;
-  /**
-   * If `true`, the button will be rendered with active styles
-   */
-  active?: boolean;
-  /**
-   * `href` property for the button. If this value is set, the IconButton will be rendered with an anchor tag.
-   */
-  href?: string;
-  /**
-   * The aria-label attribute defines a string value that labels an interactive element.
-   *
-   * [Mozilla Docs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
-   */
-  'aria-label'?: string;
-  /**
-   * The aria-labelledby attribute identifies the element (or elements) that labels the element it is applied to.
-   *
-   * [Mozilla Docs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)
-   */
-  'aria-labelledby'?: string;
-  /**
-   * Callback fired on click
-   */
-  onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
-}
-
-type AriaLabels = 'aria-label' | 'aria-labelledby';
-
-type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
+import { AccessibleIconButtonProps, IconProps, Size } from './types';
+import {
+  activeStyle,
+  baseIconButtonStyle,
+  disabledStyle,
+  focusStyle,
+  iconButtonMode,
+  iconButtonSizes,
+  iconStyle,
+  removeButtonStyle,
+} from './styles';
 
 export const IconButton: ExtendableBox<
   AccessibleIconButtonProps & { ref?: React.Ref<any> },
@@ -273,7 +28,7 @@ export const IconButton: ExtendableBox<
   (
     {
       size = Size.Default,
-      darkMode = false,
+      darkMode: darkModeProp,
       disabled = false,
       active = false,
       className,
@@ -282,7 +37,7 @@ export const IconButton: ExtendableBox<
     }: AccessibleIconButtonProps,
     ref: React.Ref<any>,
   ) => {
-    const mode = darkMode ? 'dark' : 'light';
+    const { theme } = useDarkMode(darkModeProp);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const isAnchor: boolean = typeof rest.href === 'string';
 
@@ -329,11 +84,11 @@ export const IconButton: ExtendableBox<
         removeButtonStyle,
         baseIconButtonStyle,
         iconButtonSizes[size],
-        iconButtonMode[mode],
+        iconButtonMode[theme],
         {
-          [focusStyle[mode]]: showFocus,
-          [activeStyle[mode]]: active && !disabled,
-          [disabledStyle[mode]]: disabled,
+          [focusStyle[theme]]: showFocus,
+          [activeStyle[theme]]: active && !disabled,
+          [disabledStyle[theme]]: disabled,
         },
         className,
       ),

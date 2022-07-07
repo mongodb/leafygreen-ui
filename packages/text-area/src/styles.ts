@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   spacing,
@@ -6,7 +7,6 @@ import {
   focusRing,
   hoverRing,
 } from '@leafygreen-ui/tokens';
-import { Mode } from './types';
 
 export const containerStyles = css`
   display: flex;
@@ -32,7 +32,7 @@ export const textAreaStyle = css`
   &:focus {
     outline: none;
     border-color: transparent;
-    box-shadow: ${focusRing[Mode.Light].input};
+    box-shadow: ${focusRing[Theme.Light].input};
   }
 
   &:disabled {
@@ -63,8 +63,8 @@ interface ColorSets {
   errorMessage: string;
 }
 
-export const colorSets: Record<Mode, ColorSets> = {
-  [Mode.Light]: {
+export const colorSets: Record<Theme, ColorSets> = {
+  [Theme.Light]: {
     textArea: css`
       color: ${palette.gray.dark3};
       background-color: ${palette.white};
@@ -72,7 +72,7 @@ export const colorSets: Record<Mode, ColorSets> = {
 
       &:hover:not(:disabled):not(:focus) {
         border-color: ${palette.gray.base};
-        box-shadow: ${hoverRing[Mode.Light].gray};
+        box-shadow: ${hoverRing[Theme.Light].gray};
       }
 
       &:disabled {
@@ -91,7 +91,7 @@ export const colorSets: Record<Mode, ColorSets> = {
 
       &:hover:not(:disabled):not(:focus) {
         border-color: ${palette.red.base};
-        box-shadow: ${hoverRing[Mode.Light].red};
+        box-shadow: ${hoverRing[Theme.Light].red};
       }
 
       &:disabled {
@@ -103,7 +103,7 @@ export const colorSets: Record<Mode, ColorSets> = {
       color: ${palette.red.base};
     `,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     textArea: css`
       color: ${palette.gray.light3};
       background-color: ${palette.gray.dark3};
@@ -111,7 +111,7 @@ export const colorSets: Record<Mode, ColorSets> = {
 
       &:hover:not(:disabled):not(:focus) {
         border-color: ${palette.gray.base};
-        box-shadow: ${hoverRing[Mode.Dark].gray};
+        box-shadow: ${hoverRing[Theme.Dark].gray};
       }
 
       &:disabled {
@@ -130,7 +130,7 @@ export const colorSets: Record<Mode, ColorSets> = {
 
       &:hover:not(:disabled):not(:focus) {
         border-color: ${palette.red.light1};
-        box-shadow: ${hoverRing[Mode.Dark].red};
+        box-shadow: ${hoverRing[Theme.Dark].red};
       }
 
       &:disabled {
