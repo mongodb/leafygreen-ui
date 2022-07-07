@@ -27,8 +27,7 @@ interface InternalCheckboxProps extends HTMLElementProps<'input', never> {
 
   /**
    * Whether the label's font-weight is bold or regular.
-   * Default `true` if there is a description.
-   * Otherwise defaults to `false`
+   * If left `undefined` this prop will default to `true` if a description is provided, otherwise defaults to `false`
    *
    */
   bold?: boolean;
