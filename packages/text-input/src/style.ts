@@ -1,8 +1,8 @@
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { Mode, SizeVariant, State } from './types';
+import { SizeVariant, State } from './types';
 
 export const iconClassName = createUniqueClassName('icon-selector');
 
@@ -108,8 +108,8 @@ export const baseInputStyle = css`
   }
 `;
 
-export const inputModeStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const inputModeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.black};
     background-color: ${palette.white};
     border: 1px solid ${palette.gray.base};
@@ -164,7 +164,7 @@ export const inputModeStyles: Record<Mode, string> = {
       }
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light3};
     background-color: ${palette.gray.dark4};
     border: 1px solid ${palette.gray.base};
@@ -247,9 +247,9 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
   `,
 };
 
-export const inputStateStyles: Record<State, Record<Mode, string>> = {
+export const inputStateStyles: Record<State, Record<Theme, string>> = {
   [State.Valid]: {
-    [Mode.Light]: css`
+    [Theme.Light]: css`
       &:not(:disabled) {
         border-color: ${palette.green.dark1};
 
@@ -259,7 +259,7 @@ export const inputStateStyles: Record<State, Record<Mode, string>> = {
         }
       }
     `,
-    [Mode.Dark]: css`
+    [Theme.Dark]: css`
       &:not(:disabled) {
         border-color: ${palette.green.dark1};
 
@@ -271,7 +271,7 @@ export const inputStateStyles: Record<State, Record<Mode, string>> = {
     `,
   },
   [State.Error]: {
-    [Mode.Light]: css`
+    [Theme.Light]: css`
       &:not(:disabled) {
         border-color: ${palette.red.base};
 
@@ -281,7 +281,7 @@ export const inputStateStyles: Record<State, Record<Mode, string>> = {
         }
       }
     `,
-    [Mode.Dark]: css`
+    [Theme.Dark]: css`
       &:not(:disabled) {
         border-color: ${palette.red.light1};
 
@@ -294,8 +294,8 @@ export const inputStateStyles: Record<State, Record<Mode, string>> = {
     `,
   },
   [State.None]: {
-    [Mode.Light]: css``,
-    [Mode.Dark]: css``,
+    [Theme.Light]: css``,
+    [Theme.Dark]: css``,
   },
 };
 
@@ -327,21 +327,21 @@ export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
 
 export const stateIndicatorStyles: Record<
   'valid' | 'error',
-  Record<Mode, string>
+  Record<Theme, string>
 > = {
   [State.Valid]: {
-    [Mode.Light]: css`
+    [Theme.Light]: css`
       color: ${palette.green.dark1};
     `,
-    [Mode.Dark]: css`
+    [Theme.Dark]: css`
       color: ${palette.green.base};
     `,
   },
   [State.Error]: {
-    [Mode.Light]: css`
+    [Theme.Light]: css`
       color: ${palette.red.base};
     `,
-    [Mode.Dark]: css`
+    [Theme.Dark]: css`
       color: ${palette.red.light1};
     `,
   },
@@ -351,7 +351,7 @@ export const optionalTextStyle = css`
   font-size: 12px;
   font-style: italic;
   font-weight: normal;
-  color: ${palette.gray.dark1}; // Same in light & dark mode
+  color: ${palette.gray.dark1}; // Same in light & dark theme
 `;
 
 export const errorMessageStyle = css`
@@ -361,11 +361,11 @@ export const errorMessageStyle = css`
   font-weight: normal;
 `;
 
-export const errorMessageModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const errorMessageModeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.red.base};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.red.light1};
   `,
 };
