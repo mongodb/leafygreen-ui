@@ -16,7 +16,7 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
+import { HTMLElementProps, isComponentType, Theme } from '@leafygreen-ui/lib';
 import {
   useUpdatedBaseFontSize,
   bodyTypeScaleStyles,
@@ -25,6 +25,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
 import SvgNotch from './Notch';
 import { borderRadius, notchWidth } from './tooltipConstants';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -32,13 +33,6 @@ export const TriggerEvent = {
 } as const;
 
 type TriggerEvent = typeof TriggerEvent[keyof typeof TriggerEvent];
-
-export const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-export type Mode = typeof Mode[keyof typeof Mode];
 
 export const Align = {
   Top: PopoverAlign.Top,
@@ -78,7 +72,7 @@ const positionRelative = css`
 `;
 
 const colorSet = {
-  [Mode.Light]: {
+  [Theme.Light]: {
     tooltip: css`
       background-color: ${palette.black};
       color: ${palette.gray.light1};
@@ -88,7 +82,7 @@ const colorSet = {
     `,
     notchFill: palette.black,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     tooltip: css`
       background-color: ${palette.gray.light2};
       color: ${palette.black};
@@ -202,7 +196,7 @@ function Tooltip({
   children,
   trigger,
   triggerEvent = TriggerEvent.Hover,
-  darkMode = false,
+  darkMode: darkThemeProp,
   enabled = true,
   align = 'top',
   justify = 'start',
@@ -229,6 +223,7 @@ function Tooltip({
 
   const existingId = id ?? tooltipNode?.id;
   const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });
+  const { theme } = useDarkMode(darkThemeProp);
 
   useEffect(() => {
     // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
@@ -332,7 +327,6 @@ function Tooltip({
       : { spacing, usePortal }),
   };
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
   const active = enabled && open;
   const isLeftOrRightAligned = ['left', 'right'].includes(align);
 
@@ -372,7 +366,7 @@ function Tooltip({
             className={cx(
               baseStyles,
               tooltipNotchStyle,
-              colorSet[mode].tooltip,
+              colorSet[theme].tooltip,
               {
                 [minHeightStyle]: isLeftOrRightAligned,
               },
@@ -384,7 +378,7 @@ function Tooltip({
               className={cx(
                 baseTypeStyle,
                 bodyTypeScaleStyles[size],
-                colorSet[mode].children,
+                colorSet[theme].children,
               )}
             >
               {children}
@@ -393,7 +387,7 @@ function Tooltip({
             <div className={notchContainerStyle}>
               <SvgNotch
                 className={cx(notchStyle)}
-                fill={colorSet[mode].notchFill}
+                fill={colorSet[theme].notchFill}
               />
             </div>
           </div>

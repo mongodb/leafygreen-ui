@@ -5,10 +5,15 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, createUniqueClassName } from '@leafygreen-ui/lib';
+import {
+  HTMLElementProps,
+  createUniqueClassName,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { bodyTypeScaleStyles } from './styles';
-import { Mode, CommonTypographyProps } from './types';
+import { CommonTypographyProps } from './types';
 import { useUpdatedBaseFontSize } from '.';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const anchorClassName = createUniqueClassName();
 
@@ -25,12 +30,12 @@ const linkStyles = css`
   }
 `;
 
-const linkModeStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+const linkModeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.blue.base};
     font-weight: 400;
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.blue.light1};
     font-weight: 700;
   `,
@@ -55,15 +60,15 @@ const underlineStyles = css`
   }
 `;
 
-const underlineModeStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+const underlineModeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     .${anchorClassName}:hover & {
       &::after {
         background-color: ${palette.gray.light2};
       }
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     .${anchorClassName}:hover & {
       &::after {
         background-color: ${palette.gray.dark2};
@@ -118,7 +123,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   target: targetProp,
   arrowAppearance = ArrowAppearance.None,
   hideExternalIcon = false,
-  darkMode = false,
+  darkMode: darkModeProp,
   ...rest
 }: LinkProps) => {
   const [currentHostname, setCurrentHostname] = useState('');
@@ -126,8 +131,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     setCurrentHostname(window.location.hostname);
   }, []);
 
-  // TODO: Replace with context
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
 
   const hrefHostname = useMemo(() => {
     if (!href) return;
@@ -177,13 +181,13 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
         anchorClassName,
         bodyTypeScaleStyles[baseFontSize],
         linkStyles,
-        linkModeStyles[mode],
+        linkModeStyles[theme],
         className,
       )}
       {...elementProps}
       {...rest}
     >
-      <span className={cx(underlineStyles, underlineModeStyles[mode])}>
+      <span className={cx(underlineStyles, underlineModeStyles[theme])}>
         {children}
       </span>
       {icon}
