@@ -243,22 +243,21 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'warn'), spy => {
       spy.mockImplementation();
 
-      // @ts-expect-error
       render(<Select {...defaultProps} value="" />);
 
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(
         'You provided a `value` prop to a form field without an `onChange` handler. ' +
-          'This will render a read-only field. ' +
-          'If the field should be mutable use `defaultValue`. ' +
-          'Otherwise, set either `onChange` or `readOnly`.',
+        'This will render a read-only field. ' +
+        'If the field should be mutable use `defaultValue`. ' +
+        'Otherwise, set either `onChange` or `readOnly`.',
       );
 
       spy.mockClear();
 
       render(<Select {...defaultProps} defaultValue="" />);
       render(<Select {...defaultProps} value="" readOnly />);
-      render(<Select {...defaultProps} value="" onChange={() => {}} />);
+      render(<Select {...defaultProps} value="" onChange={() => { }} />);
 
       expect(spy).not.toHaveBeenCalled();
     });
@@ -329,7 +328,7 @@ describe('packages/select', () => {
             <Select {...defaultProps} darkMode={darkMode}>
               {defaultProps.children}
               <></>
-              {}
+              { }
               {''}
               {false}
               {null}
