@@ -14,11 +14,15 @@ export function usePrefersReducedMotion(): boolean {
   };
 
   useEffect(() => {
-    const MQ = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPreference(MQ.matches);
-    MQ.addEventListener('change', handler);
 
-    return () => MQ.removeEventListener('change', handler);
+    if (window && window.matchMedia && typeof window.matchMedia === 'function') {
+      const MQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+      setPreference(MQ.matches);
+      MQ.addEventListener('change', handler);
+
+      return () => MQ.removeEventListener('change', handler);
+    }
+
   }, []);
 
   return prefersReducedMotion;
