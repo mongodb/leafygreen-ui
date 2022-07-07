@@ -14,7 +14,7 @@ import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { mobileSizeSet, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
-import { State } from './types';
+import { State, Size } from './types';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuButtonStyleOverrides = css`
@@ -22,7 +22,6 @@ const menuButtonStyleOverrides = css`
   font-weight: 400;
   > *:last-child {
     grid-template-columns: 1fr 16px;
-    padding: 0 12px;
     justify-content: flex-start;
 
     > svg {
@@ -32,6 +31,29 @@ const menuButtonStyleOverrides = css`
     }
   }
 `;
+
+const menuButtonSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    > *:last-child {
+      padding: 0 4px 0 12px;
+    }
+  `,
+  [Size.Large]: css`
+    > *:last-child {
+      padding: 0 8px 0 16px;
+    }
+  `,
+  [Size.Small]: css`
+    > *:last-child {
+      padding: 0 4px 0 10px;
+    }
+  `,
+  [Size.XSmall]: css`
+    > *:last-child {
+      padding: 0 4px 0 10px;
+    }
+  `,
+};
 
 const menuButtonModeOverrides: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -238,6 +260,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     : cx(
         menuButtonStyleOverrides,
         menuButtonModeOverrides[theme],
+        menuButtonSizeStyle[size],
         {
           [menuButtonFocusStyle[theme]]: usingKeyboard,
           [menuButtonDeselectedStyles[theme]]: deselected,
