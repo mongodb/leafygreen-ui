@@ -134,24 +134,26 @@ const iconButtonThemeStyle: Record<Theme, string> = {
     css`
     background-color: ${palette.black};
 
-  &:hover {
-    background-color: ${palette.gray.dark2};
-  }
+    &:hover {
+      background-color: ${palette.gray.dark2};
+    }
 
-  ${subMenuContainer.selector}:hover + & {
-    background-color: ${palette.gray.dark3};
-  }
+    ${subMenuContainer.selector}:hover + & {
+      background-color: ${palette.gray.dark3};
+    }
   `,
   [Theme.Dark]:
     css`
     background-color: ${palette.gray.light2};
 
   &:hover {
-    background-color: ${palette.gray.dark2};
+    &:before {
+      background-color: ${palette.gray.light3};
+    }
   }
 
   ${subMenuContainer.selector}:hover + & {
-    background-color: ${palette.gray.dark3};
+    background-color: ${palette.gray.light2};
   }
   `,
 }
