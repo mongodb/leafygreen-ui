@@ -11,13 +11,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import {
-  TextInputProps,
-  Mode,
-  SizeVariant,
-  State,
-  TextInputType,
-} from './types';
+import { TextInputProps, SizeVariant, State, TextInputType } from './types';
 import {
   iconClassName,
   wrapperStyle,
@@ -36,6 +30,7 @@ import {
   inputIndicatorSizeStyle,
   inheritTypeScale,
 } from './style';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * # TextInput
@@ -57,7 +52,7 @@ import {
  * @param props.state The current state of the TextInput. This can be none, valid, or error.
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
  * @param props.className className supplied to the TextInput container.
- * @param props.darkMode determines whether or not the component appears in dark mode.
+ * @param props.darkMode determines whether or not the component appears in dark theme.
  * @param props.sizeVariant determines the size of the text and the height of the input.
  */
 const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
@@ -77,7 +72,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
         id: propsId,
         value: controlledValue,
         className,
-        darkMode = false,
+        darkMode: darkModeProp,
         sizeVariant = SizeVariant.Default,
         'aria-labelledby': ariaLabelledby,
         handleValidation,
@@ -86,7 +81,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
       }: TextInputProps,
       forwardRef: React.Ref<HTMLInputElement>,
     ) => {
-      const mode = darkMode ? Mode.Dark : Mode.Light;
+      const { darkMode, theme } = useDarkMode(darkModeProp);
       const isControlled = typeof controlledValue === 'string';
       const [uncontrolledValue, setValue] = useState('');
       const value = isControlled ? controlledValue : uncontrolledValue;
@@ -166,9 +161,9 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
               type={type}
               className={cx(
                 baseInputStyle,
-                inputModeStyles[mode],
+                inputModeStyles[theme],
                 inputSizeStyles[sizeVariant],
-                inputStateStyles[state][mode],
+                inputStateStyles[state][theme],
                 inputFocusStyles, // Always show focus styles
                 {
                   [css`
@@ -199,14 +194,14 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
               {state === State.Valid && (
                 <RenderedCheckmarkIcon
                   role="presentation"
-                  className={stateIndicatorStyles.valid[mode]}
+                  className={stateIndicatorStyles.valid[theme]}
                 />
               )}
 
               {state === State.Error && (
                 <WarningIcon
                   role="presentation"
-                  className={stateIndicatorStyles.error[mode]}
+                  className={stateIndicatorStyles.error[theme]}
                 />
               )}
 
@@ -218,7 +213,9 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
             </div>
           </div>
           {state === State.Error && errorMessage && (
-            <div className={cx(errorMessageStyle, errorMessageModeStyle[mode])}>
+            <div
+              className={cx(errorMessageStyle, errorMessageModeStyle[theme])}
+            >
               <span>{errorMessage}</span>
             </div>
           )}

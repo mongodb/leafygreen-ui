@@ -1,10 +1,11 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { Mode } from './types';
+
 import { palette } from '@leafygreen-ui/palette';
 import { useUpdatedBaseFontSize } from './useUpdatedBaseFontSize';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const labelStyle = css`
   font-family: ${fontFamilies.default};
@@ -22,20 +23,20 @@ const labelTypeScale: Record<BaseFontSize, string> = {
   `,
 };
 
-const labelColorStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const labelColorStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.black};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light2};
   `,
 };
 
-const disabledLabelColorStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const disabledLabelColorStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.base};
   `,
 };
@@ -47,22 +48,22 @@ type LabelProps = HTMLElementProps<'label', never> & {
 };
 
 export const Label = ({
-  darkMode = false,
+  darkMode: darkModeProp,
   className,
   children,
   disabled = false,
   ...rest
 }: LabelProps) => {
   const baseFontSize = useUpdatedBaseFontSize();
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
 
   return (
     <label
       className={cx(
         labelStyle,
-        labelColorStyle[mode],
+        labelColorStyle[theme],
         labelTypeScale[baseFontSize],
-        { [disabledLabelColorStyle[mode]]: disabled },
+        { [disabledLabelColorStyle[theme]]: disabled },
         className,
       )}
       {...rest}

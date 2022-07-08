@@ -7,8 +7,9 @@ import {
   bodyTypeScaleStyles,
   defaultTextColor,
 } from './styles';
-import { CommonTypographyProps, Mode } from './types';
+import { CommonTypographyProps } from './types';
 import { useUpdatedBaseFontSize } from '.';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Body
@@ -40,14 +41,13 @@ const fontWeights: Record<
 } as const;
 
 export function Body<T extends keyof JSX.IntrinsicElements>({
-  darkMode,
+  darkMode: darkModeProp,
   className,
   weight = 'regular',
   as = 'p' as T,
   ...rest
 }: BodyProps<T>) {
-  // TODO: Replace with context
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize();
 
   // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
@@ -65,7 +65,7 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
       className={cx(
         baseTypographyStyles,
         bodyTypeScaleStyles[baseFontSize],
-        defaultTextColor[mode],
+        defaultTextColor[theme],
         fontWeight,
         className,
       )}

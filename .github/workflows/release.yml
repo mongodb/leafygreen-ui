@@ -37,8 +37,12 @@ jobs:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
 
-      - name: Push Changeset Updates to Submodules
-        run: git submodule foreach 'git checkout -B changesets && git add . && git commit -m "changeset update" && git push -f origin changesets'
+      - name: Notify Slack channel of new releases
+        if: steps.changesets.outputs.published == 'true'
+        id: slackbot
+        run: yarn slackbot '${{steps.changesets.outputs.publishedPackages}}'
+        env:
+          SLACK_BOT_TOKEN: '${{secrets.SLACK_BOT_TOKEN}}'
 
       - name: Publish storybook with package updates
         if: steps.changesets.outputs.published == 'true'
@@ -48,9 +52,3 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         run: yarn publish:website
 
-      - name: Notify Slack channel of new releases
-        if: steps.changesets.outputs.published == 'true'
-        id: slackbot
-        run: yarn slackbot '${{steps.changesets.outputs.publishedPackages}}'
-        env:
-          SLACK_BOT_TOKEN: '${{secrets.SLACK_BOT_TOKEN}}'
