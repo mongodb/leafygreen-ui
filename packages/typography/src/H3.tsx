@@ -3,7 +3,8 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { baseTypographyStyles, defaultTextColor } from './styles';
-import { CommonTypographyProps, Mode } from './types';
+import { CommonTypographyProps } from './types';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * H3
@@ -17,19 +18,18 @@ const h3 = css`
 type H3Props = HTMLElementProps<'h3'> & CommonTypographyProps;
 
 const H3: ExtendableBox<H3Props, 'h3'> = ({
-  darkMode,
+  darkMode: darkModeProp,
   className,
   ...rest
 }: H3Props) => {
-  // TODO: Replace with context
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
   return (
     <Box
       as="h3"
       className={cx(
         baseTypographyStyles,
         h3,
-        defaultTextColor[mode],
+        defaultTextColor[theme],
         className,
       )}
       {...rest}

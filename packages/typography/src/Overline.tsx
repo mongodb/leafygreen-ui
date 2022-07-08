@@ -3,7 +3,8 @@ import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { baseTypographyStyles, defaultTextColor } from './styles';
-import { CommonTypographyProps, Mode } from './types';
+import { CommonTypographyProps } from './types';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Overline
@@ -19,18 +20,17 @@ const overline = css`
 type OverlineProps = HTMLElementProps<'div'> & CommonTypographyProps;
 
 export const Overline: ExtendableBox<OverlineProps, 'div'> = ({
-  darkMode,
+  darkMode: darkModeProp,
   className,
   ...rest
 }: OverlineProps) => {
-  // TODO: Replace with context
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
   return (
     <Box
       className={cx(
         baseTypographyStyles,
         overline,
-        defaultTextColor[mode],
+        defaultTextColor[theme],
         className,
       )}
       {...rest}
