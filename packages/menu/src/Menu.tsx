@@ -8,6 +8,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { FocusableMenuItemElement } from './FocusableMenuItem';
 import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
+import MenuSeparator, {MenuSeparatorElement} from './MenuSeparator';
 import { MenuProps } from './types';
 import isUndefined from 'lodash/isUndefined';
 import {
@@ -192,6 +193,14 @@ function Menu({
           });
         }
 
+        if (isComponentType<MenuItemElement>(child, 'MenuItem')) {
+          return React.cloneElement(child, {
+            ref: setRef,
+            onFocus,
+            darkMode
+          });
+        }
+
         if (
           isComponentType<FocusableMenuItemElement>(child, 'FocusableMenuItem')
         ) {
@@ -199,6 +208,15 @@ function Menu({
             ref: setRef,
             onFocus
           });
+        }
+
+        if (
+          isComponentType<MenuSeparatorElement>(child, 'MenuSeparator')
+        ) {
+          // return React.cloneElement(child, {
+          //   darkMode: darkMode,
+          // });
+          return <MenuSeparator {...props} darkMode={darkMode} />
         }
 
         if (props?.children) {

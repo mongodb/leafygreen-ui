@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Menu, MenuProps, SubMenu, MenuItem } from '.';
+import { Menu, MenuProps, SubMenu, MenuItem, MenuSeparator } from '.';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import Button from '@leafygreen-ui/button';
 import { Size } from './types';
@@ -92,7 +92,7 @@ export const SubMenuExample = ({
           Active Menu Item
         </MenuItem>
         <MenuItem description="I am also a description" size={size} glyph={<CloudIcon />}>
-          Menu Item With Description
+          Menu Item
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
           Disabled Menu Item
@@ -100,6 +100,7 @@ export const SubMenuExample = ({
         <MenuItem disabled description="I am a description" size={size} glyph={<CloudIcon />}>
           Disabled Menu Item
         </MenuItem>
+        <MenuSeparator />
         <MenuItem size={size} href="http://mongodb.design">
           I am a link!
         </MenuItem>
@@ -120,7 +121,7 @@ export const SubMenuExample = ({
         </SubMenu>
         <SubMenu
           title="Menu Item 2"
-          description="Sed posuere consectetur"
+          description="Sed posuere"
           size={size}
         >
           <MenuItem>Support 1</MenuItem>
