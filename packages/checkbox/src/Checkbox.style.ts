@@ -1,8 +1,8 @@
-import { css } from "@leafygreen-ui/emotion";
-import { createUniqueClassName, Theme } from "@leafygreen-ui/lib";
-import { palette } from "@leafygreen-ui/palette";
-import { focusRing, hoverRing } from "@leafygreen-ui/tokens";
-import { checkBoxSize } from "./constants";
+import { css } from '@leafygreen-ui/emotion';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
+import { checkBoxSize } from './constants';
 
 export const checkWrapperClassName = createUniqueClassName('check-wrapper');
 export const inputClassName = createUniqueClassName('input');
@@ -68,12 +68,14 @@ export const inputFocusStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     &:focus + .${checkWrapperClassName} {
       box-shadow: ${focusRing.light.default};
-    }`,
+    }
+  `,
   [Theme.Dark]: css`
     &:focus + .${checkWrapperClassName} {
       box-shadow: ${focusRing.dark.default};
-    }`,
-}
+    }
+  `,
+};
 
 export const labelTextStyle = css`
   align-self: baseline;

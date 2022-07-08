@@ -152,13 +152,13 @@ export const rippleBaseStyles = css`
 `;
 
 export const rippleThemeStyles: Record<Theme, string> = {
- [Theme.Light]: css`
+  [Theme.Light]: css`
     background-color: ${palette.blue.dark1};
- `,
- [Theme.Dark]: css`
-  background-color: ${palette.blue.light2};
- `,
-}
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.blue.light2};
+  `,
+};
 
 export const rippleCheckedStyles = css`
   // only animate ripple on enter
