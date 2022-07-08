@@ -37,7 +37,7 @@ const disabledLabelColorStyle: Record<Theme, string> = {
     color: ${palette.gray.dark1};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.base};
+    color: ${palette.gray.dark1};
   `,
 };
 
