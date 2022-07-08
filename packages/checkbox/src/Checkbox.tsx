@@ -14,13 +14,11 @@ import {
   containerStyle,
   descriptionStyle,
   disabledContainerStyle,
-  disabledTextStyle,
   inputClassName,
   inputFocusStyles,
   inputStyle,
   labelHoverStyle,
   labelStyle,
-  labelTextColorStyle,
   labelTextStyle,
 } from './Checkbox.style';
 
