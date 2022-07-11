@@ -131,16 +131,11 @@ function Checkbox({
 
         {label && (
           <span
-            className={cx(
-              labelTextStyle,
-              // labelTextColorStyle[theme],
-              {
-                // [disabledTextStyle]: disabled,
-                [css`
-                  font-weight: 400;
-                `]: !bold,
-              },
-            )}
+            className={cx(labelTextStyle, {
+              [css`
+                font-weight: 400;
+              `]: !bold,
+            })}
           >
             {label}
           </span>
