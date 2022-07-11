@@ -14,17 +14,20 @@ import SvgCheck from './SvgCheck';
 import SvgIndeterminate from './SvgIndeterminate';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { CheckProps } from './types';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 
-const checkWrapperAlignment: Record<BaseFontSize, string> = {
-  [BaseFontSize.Body1]: css`
-    margin-top: 3px;
-  `,
-  [BaseFontSize.Body2]: css`
-    margin-top: 7px;
-  `,
-};
+const rippleClassName = createUniqueClassName('ripple');
+const checkBorderSizePx = 2;
+
+const disableAnimation = css`
+  &,
+  &:before {
+    transition: unset;
+    transition-delay: 0ms;
+    transition-duration: 0ms;
+  }
+`;
 
 const checkWrapperBaseStyle = css`
   grid-area: check;
@@ -36,14 +39,14 @@ const checkWrapperBaseStyle = css`
   align-items: center;
   justify-content: center;
   border-radius: 3px;
-  border: 2px solid ${palette.gray.dark2};
+  border: ${checkBorderSizePx}px solid ${palette.gray.dark2};
   overflow: hidden;
   background-color: transparent;
   transition: box-shadow 100ms ease-in-out, background-color 0ms linear,
     border-color 0ms linear;
 
   // delay border-color out
-  transition-delay: 0ms, 0ms, var(--lg-checkbox-base-duration);
+  transition-delay: 0ms, 0ms, ${checkAnimationDuration}ms;
 
   /**
    * The animated background circle
@@ -57,8 +60,8 @@ const checkWrapperBaseStyle = css`
     background-color: ${palette.blue.base};
     transform: scale(0);
     transform-origin: center center;
-    transition: transform var(--lg-checkbox-base-duration) ease-in-out;
-    transition-delay: calc(var(--lg-checkbox-base-duration) / 2);
+    transition: transform ${checkAnimationDuration}ms ease-in-out;
+    transition-delay: ${checkAnimationDuration / 2}ms;
   }
 `;
 
@@ -66,7 +69,7 @@ const checkWrapperCheckedStyle = css`
   background-color: ${palette.blue.base};
   border-color: ${palette.blue.base};
   // Delay background transition in
-  transition-delay: 0ms, var(--lg-checkbox-base-duration), 0ms;
+  transition-delay: 0ms, ${checkAnimationDuration}ms, 0ms;
 
   &:before {
     transform: scale(1);
@@ -95,6 +98,8 @@ const checkWrapperCheckedDisabledStyle = css`
 
 const rippleStyles = css`
   grid-area: check;
+  position: relative;
+  top: ${checkBorderSizePx}px;
   height: ${checkBoxSize}px;
   width: ${checkBoxSize}px;
   z-index: 0;
@@ -109,12 +114,8 @@ const rippleStyles = css`
 
 const rippleStylesChecked = css`
   // only animate ripple on enter
-  transition-duration: calc(
-    ${rippleTransitionScale} * var(--lg-checkbox-base-duration)
-  );
-  transition-delay: calc(
-    ${rippleTransitionDelay} * var(--lg-checkbox-base-duration)
-  );
+  transition-duration: ${rippleTransitionScale * checkAnimationDuration}ms;
+  transition-delay: ${rippleTransitionDelay * checkAnimationDuration}ms;
   transform: scale(${rippleScale});
   opacity: 0;
 `;
@@ -122,12 +123,12 @@ const rippleStylesChecked = css`
 const checkIconStyles = css`
   z-index: 1;
   transform-origin: center;
-  transition: transform var(--lg-checkbox-base-duration) ease-in-out;
+  transition: transform ${checkAnimationDuration}ms ease-in-out;
 `;
 
 const checkInStyles = css`
   transform: scale(1) rotate(0);
-  transition-delay: calc(var(--lg-checkbox-base-duration) / 8);
+  transition-delay: ${checkAnimationDuration / 8}ms;
 `;
 
 const checkOutStyles = css`
@@ -150,45 +151,44 @@ export function Check({
   selector,
 }: CheckProps) {
   const { usingKeyboard } = useUsingKeyboardContext();
-  const baseFontSize = useUpdatedBaseFontSize();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const CheckIcon = indeterminate ? SvgIndeterminate : SvgCheck;
   const showCheckIcon = indeterminate || isChecked;
   const checkIconColor = disabled ? palette.gray.light3 : palette.white;
-  const shouldAnimate = animate && !indeterminate;
+  const shouldAnimate = animate && !indeterminate && !prefersReducedMotion;
 
   return (
     <>
       <div
-        className={cx(
-          selector,
-          checkWrapperBaseStyle,
-          checkWrapperAlignment[baseFontSize],
-          {
-            [checkWrapperCheckedStyle]: showCheckIcon,
-            [checkWrapperDisabledStyle]: disabled,
-            [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,
-          },
-        )}
+        className={cx(selector, checkWrapperBaseStyle, {
+          [checkWrapperCheckedStyle]: showCheckIcon,
+          [checkWrapperDisabledStyle]: disabled,
+          [checkWrapperCheckedDisabledStyle]: disabled && showCheckIcon,
+          [disableAnimation]: !shouldAnimate,
+        })}
       >
         <Transition
           in={showCheckIcon}
-          timeout={checkAnimationDuration}
+          timeout={prefersReducedMotion ? 0 : checkAnimationDuration}
           enter={shouldAnimate}
           exit={shouldAnimate}
         >
           {state => (
             <CheckIcon
               stroke={checkIconColor}
-              className={cx(checkIconStyles, checkIconTransitionStyles[state])}
+              className={cx(checkIconStyles, checkIconTransitionStyles[state], {
+                [disableAnimation]: !shouldAnimate,
+              })}
             />
           )}
         </Transition>
       </div>
       {!usingKeyboard && (
         <div
-          className={cx(rippleStyles, {
+          className={cx(rippleClassName, rippleStyles, {
             [rippleStylesChecked]: isChecked && shouldAnimate,
+            [disableAnimation]: !shouldAnimate,
           })}
         />
       )}
