@@ -14,6 +14,7 @@ export default {
     darkMode: defaultArgTypes.darkMode,
     checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
     onChange: { control: 'none' },
@@ -45,4 +46,23 @@ Basic.args = {
   className: css`
     max-width: 700px;
   `,
+};
+
+export const NoDescription = Template.bind({});
+NoDescription.args = {
+  label:
+    'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.',
+};
+
+export const WrappedLabel = Template.bind({});
+WrappedLabel.args = {
+  label:
+    'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.',
+  className: css`
+    max-width: 256px;
+  `,
+};
+export const CheckOnly = Template.bind({});
+CheckOnly.args = {
+  'aria-label': 'Label',
 };
