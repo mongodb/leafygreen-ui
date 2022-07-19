@@ -7,11 +7,10 @@ import { useMemo } from 'react';
 // eslint-disable-next-line no-console
 console.clear();
 
-const _SHOW_GRID = true;
+const _SHOW_GRID = false;
 
 export default function Blob({ shape }: BlobProps) {
   const path = useMemo(() => generateBlobPath(shape), [shape]);
-  // console.log(path);
 
   return (
     <svg viewBox="0 0 8 8" width="500" height="500">
@@ -58,9 +57,9 @@ export default function Blob({ shape }: BlobProps) {
       )}
       <path
         d={path}
-        fill={palette.green.light3}
-        stroke={palette.green.dark1}
-        strokeWidth={0.05}
+        fill={palette.green.base}
+        // stroke={palette.green.dark1}
+        // strokeWidth={0.05}
       />
     </svg>
   );
