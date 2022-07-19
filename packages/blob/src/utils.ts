@@ -1,8 +1,8 @@
-import { blobCode, Coordinate, ExtendedDirection } from './types';
+import { blobCode, CardinalDirection, Coordinate, DirectionName } from './types';
 
-export const makeClosureDependentUtils = (shape: blobCode) => {
+export const makeBlobUtils = (shape: blobCode) => {
   function hasAdjacency([row, col]: Coordinate) {
-    return (direction: ExtendedDirection) => {
+    return (direction: DirectionName) => {
       if (!shape) return;
 
       // For small Dots
@@ -109,3 +109,25 @@ export const makeClosureDependentUtils = (shape: blobCode) => {
     findStart,
   };
 };
+
+export const adjacentRowColumnCoordinates = ([row, col]: Coordinate): Record<DirectionName, Coordinate> => {
+  return {
+    'top': [row - 1, col],
+    'topRight': [row - 1, col + 1],
+    'right': [row, col + 1],
+    'bottomRight': [row + 1, col + 1],
+    'bottom': [row + 1, col],
+    'bottomLeft': [row + 1, col - 1],
+    'left': [row, col - 1],
+    'topLeft': [row - 1, col - 1],
+  }
+}
+
+export const vertexCoordinatesForCenterPoint = ([x, y]: Coordinate): Record<CardinalDirection, Coordinate> => {
+  return {
+    'top': [x, y - 1],
+    'right': [x + 1, y],
+    'bottom': [x, y + 1],
+    'left': [x - 1, y],
+  }
+}
