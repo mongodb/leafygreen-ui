@@ -1,7 +1,7 @@
-
 # Blob
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/blob.svg)
+
 #### [View on MongoDB.design](https://www.mongodb.design/component/blob/example/)
 
 ## Installation
@@ -26,4 +26,3 @@ npm install @leafygreen-ui/blob
 
 | Prop | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
-
