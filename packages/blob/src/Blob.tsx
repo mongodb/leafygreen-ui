@@ -11,10 +11,10 @@ const _SHOW_GRID = true;
 
 export default function Blob({ shape }: BlobProps) {
   const path = useMemo(() => generateBlobPath(shape), [shape]);
+  // console.log(path);
 
   return (
     <svg viewBox="0 0 8 8" width="500" height="500">
-      {/* <path d={path} /> */}
       {/* DEBUG */}
       {_SHOW_GRID && (
         <g>
@@ -56,6 +56,12 @@ export default function Blob({ shape }: BlobProps) {
           ))}
         </g>
       )}
+      <path
+        d={path}
+        fill={palette.green.light3}
+        stroke={palette.green.dark1}
+        strokeWidth={0.05}
+      />
     </svg>
   );
 }
