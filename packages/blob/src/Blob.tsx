@@ -10,6 +10,8 @@ console.clear();
 const _SHOW_GRID = false;
 
 export default function Blob({ shape }: BlobProps) {
+  // console.log(shape);
+
   const path = useMemo(() => generateBlobPath(shape), [shape]);
 
   return (

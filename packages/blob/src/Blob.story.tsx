@@ -1,14 +1,28 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Blob from '.';
+import { BlobProps } from './types';
 
-storiesOf('Components/Blob', module).add('Default', () => (
-  <Blob
-    shape={[
-      ['o', '_', 'o', 'o'],
-      ['_', 'o', '_', '_'],
-      ['_', 'o', '_', '_'],
-      ['o', '_', 'o', 'o'],
-    ]}
-  />
-));
+export default {
+  title: 'Components/Blob',
+  component: Blob,
+  parameters: {
+    controls: {
+      exclude: ['children', 'className'],
+    },
+  },
+} as Meta<Blob>;
+
+const Template: Story<BlobProps> = ({ shape }: BlobProps) => (
+  <Blob shape={shape} />
+);
+
+export const Basic = Template.bind({});
+Basic.args = {
+  shape: [
+    ['o', '_', 'o', 'o'],
+    ['_', 'o', '_', '_'],
+    ['_', 'o', '_', '_'],
+    ['o', '_', 'o', 'o'],
+  ],
+};

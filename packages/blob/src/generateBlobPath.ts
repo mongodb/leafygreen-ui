@@ -13,6 +13,7 @@ import {
   countDirections,
   Vertex,
 } from './types';
+import { isUndefined } from 'lodash';
 
 const bezierDist = 0.5525;
 
@@ -26,12 +27,19 @@ export function generateBlobPath(shape: blobCode) {
   // console.log(points);
 
   // Convert path points to a path string
-  const path = "M " + points.map(
-    ({ x, y, b1x, b1y, b2x, b2y }) => `${x},${y}\n C ${b1x},${b1y} ${b2x},${b2y}`).join(' ')
-  + ` ${points[0].x},${points[0].y}` + "\nZ"
+  const path =
+    'M ' +
+    points
+      .map(
+        ({ x, y, b1x, b1y, b2x, b2y }) =>
+          `${x},${y}\n C ${b1x},${b1y} ${b2x},${b2y}`,
+      )
+      .join(' ') +
+    ` ${points[0].x},${points[0].y}` +
+    '\nZ';
 
   // console.log(path)
-  return path
+  return path;
 }
 
 /**
@@ -41,7 +49,7 @@ export function generateBlobPath(shape: blobCode) {
  */
 function isValidShape(shape: blobCode): boolean {
   // TODO: Validate shape
-  return true;
+  return !isUndefined(shape);
 }
 
 /**
@@ -156,7 +164,7 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
 function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
   return vertexes.map(({ x, y, face }, i) => {
     const nextVertex = vertexes[i + 1] || vertexes[0];
-    const { x: xNext, y: yNext } = nextVertex
+    const { x: xNext, y: yNext } = nextVertex;
 
     switch (face) {
       case 'top': {
@@ -166,7 +174,12 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
           b1x: x + bezierDist,
           b1y: y,
           b2x: xNext,
-          b2y: yNext === y ? y : (yNext > y) ? yNext - bezierDist : yNext + bezierDist, // next v is ? below : above
+          b2y:
+            yNext === y
+              ? y
+              : yNext > y
+              ? yNext - bezierDist
+              : yNext + bezierDist, // next v is ? below : above
         };
       }
 
@@ -176,7 +189,12 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
           y,
           b1x: x,
           b1y: y + bezierDist,
-          b2x: xNext === x ? x : (xNext > x) ? xNext - bezierDist : xNext + bezierDist, // next v is ? right : left: ;
+          b2x:
+            xNext === x
+              ? x
+              : xNext > x
+              ? xNext - bezierDist
+              : xNext + bezierDist, // next v is ? right : left: ;
           b2y: yNext,
         };
       }
@@ -188,7 +206,12 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
           b1x: x - bezierDist,
           b1y: y,
           b2x: xNext,
-          b2y: yNext === y ? y : (yNext > y) ? yNext - bezierDist : yNext + bezierDist, // next v is ? below : above
+          b2y:
+            yNext === y
+              ? y
+              : yNext > y
+              ? yNext - bezierDist
+              : yNext + bezierDist, // next v is ? below : above
         };
       }
 
@@ -199,7 +222,12 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
           y,
           b1x: x,
           b1y: y - bezierDist,
-          b2x: xNext === x ? x : (xNext > x) ? xNext - bezierDist : xNext + bezierDist, // next v is ? right : left: ;
+          b2x:
+            xNext === x
+              ? x
+              : xNext > x
+              ? xNext - bezierDist
+              : xNext + bezierDist, // next v is ? right : left: ;
           b2y: yNext,
         };
       }
