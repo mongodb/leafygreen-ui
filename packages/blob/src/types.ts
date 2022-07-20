@@ -81,3 +81,5 @@ export const NextDirection: Record<Direction, Direction> = {
   left: 'topLeft',
   topLeft: 'top',
 } as const;
+
+export type CircleSize = 'small' | 'large'

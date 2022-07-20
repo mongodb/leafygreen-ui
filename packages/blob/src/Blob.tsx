@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 // eslint-disable-next-line no-console
 console.clear();
 
-const _SHOW_GRID = false;
+const _SHOW_GRID = true;
 
 export default function Blob({ shape }: BlobProps) {
   // console.log(shape);

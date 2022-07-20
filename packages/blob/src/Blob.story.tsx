@@ -31,8 +31,8 @@ export const WithLarge = Template.bind({});
 WithLarge.args = {
   shape: [
     ['O', 'O', '_', '_'],
-    ['O', 'O', 'O', 'O'],
-    ['_', '_', 'O', 'O'],
+    ['O', 'O', '_', '_'],
+    ['_', '_', 'o', 'o'],
     ['_', '_', '_', 'o'],
   ],
 };
