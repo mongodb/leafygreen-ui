@@ -12,6 +12,7 @@ import {
   InverseDirection,
   countDirections,
   Vertex,
+  Coordinate,
 } from './types';
 import { isUndefined } from 'lodash';
 
@@ -21,8 +22,9 @@ export function generateBlobPath(shape: blobCode) {
   if (!isValidShape(shape)) return;
 
   const vertexes = calcVertexes(shape);
-  // console.log(vertexes);
+  console.log(vertexes);
   // Convert vertexes into path points
+
   const points = generateBezierPoints(vertexes);
   // console.log(points);
 
@@ -65,6 +67,7 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
     isEmpty,
     isSmallDot,
     isLargeDot,
+    getLargeCircleSiblingIndex
   } = makeBlobUtils(shape);
 
   // Append new vertexes to this array
@@ -92,7 +95,7 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
     startFace: Direction = Direction.Top,
     _depth = 0,
   ) {
-    const circleAtIndexHasAdjacency = hasAdjacency([row, col]);
+    const indexHasAdjacencyInDirectionOf = hasAdjacency([row, col]);
     const rowColPair = `${row},${col}` as `${number},${number}`;
 
     // If we've traversed this dot already, ignore it
@@ -113,7 +116,7 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
 
       // Cycle through all directions (cardinal & diagonal)
       for (let i = 0; i < countDirections; i++) {
-        if (circleAtIndexHasAdjacency(currentFace)) {
+        if (indexHasAdjacencyInDirectionOf(currentFace)) {
           // If there's an adjacent dot we add it
           const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
           const adjacentCoordinatesForFace = adjacentCoordinates[currentFace];
@@ -125,8 +128,8 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
           );
         } else if (isCardinalDirection(currentFace)) {
           // otherwise add a vertex
-          const [x, y] = [col * 2 + 1, row * 2 + 1]; // The center coordinates for the column/row dot
-          const [vertexX, vertexY] = vertexCoordinatesForCenterPoint([x, y])[
+          const centerPoint = [col * 2 + 1, row * 2 + 1] as Coordinate;
+          const [vertexX, vertexY] = vertexCoordinatesForCenterPoint(centerPoint)[
             currentFace
           ];
 
@@ -142,7 +145,7 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
     }
 
     if (isLargeDot(row, col)) {
-      const currentFace = startFace;
+      let currentFace = startFace;
 
       /**
        * Cycle through all directions (same as Small dot),
@@ -150,7 +153,55 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
        * i.e. a large dot can have two small dots above it etc.
        */
       for (let i = 0; i < countDirections; i++) {
-        // If there's a single adjacency we need to treat this index like a small circle
+
+        // E.g.
+        // if currentFace is top and there's a top adjacency
+        // OR whichever left/right adjacency that is part of this large circle has a top adjacency
+        // add a circle there
+        const indexHasImmediateAdjacency = indexHasAdjacencyInDirectionOf(currentFace)
+        const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
+        const adjacentCoordinatesForFace = adjacentCoordinates[currentFace];
+
+        const siblingCoordinates = getLargeCircleSiblingIndex(currentFace, [row, col]);
+        const sibilingHasAdjacency = hasAdjacency(siblingCoordinates);
+        const siblingHasImmediateAdjacency = sibilingHasAdjacency(currentFace)
+        const siblingAdjacencyCoordinates = adjacentRowColumnCoordinates(siblingCoordinates)
+        const siblingAdjacencyCoordinatesForFace = siblingAdjacencyCoordinates[currentFace]
+
+        if (indexHasImmediateAdjacency) {
+          addCircle(
+            ...adjacentCoordinatesForFace,
+            InverseDirection[currentFace],
+            _depth + 1,
+          );
+        } else if (siblingHasImmediateAdjacency) {
+          addCircle(
+            ...siblingAdjacencyCoordinatesForFace,
+            InverseDirection[currentFace],
+            _depth + 1
+          )
+        } else if (isCardinalDirection(currentFace)) {
+          /**
+           * e.g. currentFace is top
+           * There is no circle above this index, or above the sibling index
+           */
+
+          // The center point of the Large circle this index is a part of
+          const [sibRow, sibCol] = siblingCoordinates;
+          const centerPoint = [
+            col + sibCol + 1,
+            row + sibRow + 1
+          ] as Coordinate
+          const [vertexX, vertexY] = vertexCoordinatesForCenterPoint(centerPoint, 'large')[currentFace]
+
+          vertexes.push({
+            face: currentFace,
+            x: vertexX,
+            y: vertexY,
+          });
+        }
+
+        currentFace = NextDirection[currentFace];
       }
     }
 

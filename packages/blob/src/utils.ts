@@ -1,6 +1,7 @@
 import {
   blobCode,
   CardinalDirection,
+  CircleSize,
   Coordinate,
   Direction,
   isCardinalDirection,
@@ -21,13 +22,9 @@ export const makeBlobUtils = (shape: blobCode) => {
     return (direction: Direction): boolean => {
       if (!shape) return false;
 
-      if (isLargeDot(row, col) && isCardinalDirection(direction)) {
-        // For large dots we need to check both adjacencies in each cardinal direction
-
-      } else {
-        const coords = adjacentRowColumnCoordinates([row, col])[direction];
-        return isNotEmpty(...coords);
-      }
+      const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
+      const coords = adjacentCoordinates[direction];
+      return isNotEmpty(...coords);
     };
   }
 
@@ -78,6 +75,93 @@ export const makeBlobUtils = (shape: blobCode) => {
     }
   }
 
+  /**
+   * Determines which of the 4 corners this index is
+   * i.e. which of these are we looking at:
+   *
+   * ◜◝
+   * ◟◞
+   */
+  // function getLargeCircleCorner(
+  //   row: number,
+  //   col: number,
+  // ): Direction | undefined {
+  //   const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
+
+  //   if (
+  //     isLargeDot(...adjacentCoordinates['right']) &&
+  //     isLargeDot(...adjacentCoordinates['bottomRight']) &&
+  //     isLargeDot(...adjacentCoordinates['bottom'])
+  //   ) {
+  //     return Direction.TopLeft;
+  //   } else if (
+  //     isLargeDot(...adjacentCoordinates['left']) &&
+  //     isLargeDot(...adjacentCoordinates['bottomLeft']) &&
+  //     isLargeDot(...adjacentCoordinates['bottom'])
+  //   ) {
+  //     return Direction.TopRight;
+  //   } else if (
+  //     isLargeDot(...adjacentCoordinates['right']) &&
+  //     isLargeDot(...adjacentCoordinates['topRight']) &&
+  //     isLargeDot(...adjacentCoordinates['top'])
+  //   ) {
+  //     return Direction.BottomRight;
+  //   } else if (
+  //     isLargeDot(...adjacentCoordinates['left']) &&
+  //     isLargeDot(...adjacentCoordinates['topLeft']) &&
+  //     isLargeDot(...adjacentCoordinates['top'])
+  //   ) {
+  //     return Direction.BottomRight;
+  //   }
+  // }
+
+  /**
+   * Returns the coordinates for the quarter circle that shares the given face
+   * i.e. given `top`, returns coordinates of either ◜ or ◝
+   */
+  function getLargeCircleSiblingIndex(
+    face: Direction,
+    [row, col]: Coordinate,
+  ): Coordinate {
+    const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
+
+    switch (face) {
+      case Direction.Top:
+      case Direction.Bottom: {
+        // Is the index to the left part of the large circle?
+        if (isLargeDot(...adjacentCoordinates['left'])) {
+          return adjacentCoordinates['left'];
+        }
+
+        // index to the right?
+        if (isLargeDot(...adjacentCoordinates['right'])) {
+          return adjacentCoordinates['right'];
+        }
+
+        // Not in large circle, or code error
+        return [row, col]
+      }
+
+      case Direction.Right:
+      case Direction.Left: {
+        // Is the index to the top part of the large circle?
+        if (isLargeDot(...adjacentCoordinates['top'])) {
+          return adjacentCoordinates['top'];
+        }
+
+        // index to the bottom?
+        if (isLargeDot(...adjacentCoordinates['bottom'])) {
+          return adjacentCoordinates['bottom'];
+        }
+
+        // Not in large circle, or code error
+        return [row, col]
+      }
+    }
+
+    return [row, col]
+  }
+
   return {
     hasAdjacency,
     indexExists,
@@ -85,6 +169,7 @@ export const makeBlobUtils = (shape: blobCode) => {
     isSmallDot,
     isLargeDot,
     findStart,
+    getLargeCircleSiblingIndex,
   };
 };
 
@@ -110,10 +195,20 @@ export const adjacentRowColumnCoordinates = ([row, col]: Coordinate): Record<
 /**
  * Generates a record of all the vertexes of a small circle given a center point
  */
-export const vertexCoordinatesForCenterPoint = ([x, y]: Coordinate): Record<
+export const vertexCoordinatesForCenterPoint = ([x, y]: Coordinate, size: CircleSize = 'small'): Record<
   CardinalDirection,
   Coordinate
 > => {
+
+  if (size === 'large') {
+    return {
+      top: [x, y - 1],
+      right: [x + 1, y],
+      bottom: [x, y + 1],
+      left: [x - 1, y],
+    };
+  }
+
   return {
     top: [x, y - 1],
     right: [x + 1, y],
