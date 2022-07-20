@@ -4,14 +4,9 @@ import { BlobProps } from './types';
 import { generateBlobPath } from './generateBlobPath';
 import { useMemo } from 'react';
 
-// eslint-disable-next-line no-console
-console.clear();
-
 const _SHOW_GRID = true;
 
 export default function Blob({ shape }: BlobProps) {
-  // console.log(shape);
-
   const path = useMemo(() => generateBlobPath(shape), [shape]);
 
   return (

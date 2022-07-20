@@ -4,7 +4,6 @@ import {
   CircleSize,
   Coordinate,
   Direction,
-  isCardinalDirection,
 } from './types';
 
 /**
@@ -39,7 +38,7 @@ export const makeBlobUtils = (shape: blobCode) => {
    * Returns whether the provided (row, column) pair DOES NOT have a circle
    */
   function isEmpty(row: number, col: number) {
-    return indexExists(row, col) && shape[row][col] === '_';
+    return indexExists(row, col) && shape[row][col] === ' ';
   }
 
   function isNotEmpty(row: number, col: number) {
@@ -139,7 +138,7 @@ export const makeBlobUtils = (shape: blobCode) => {
         }
 
         // Not in large circle, or code error
-        return [row, col]
+        return [row, col];
       }
 
       case Direction.Right:
@@ -155,11 +154,11 @@ export const makeBlobUtils = (shape: blobCode) => {
         }
 
         // Not in large circle, or code error
-        return [row, col]
+        return [row, col];
       }
     }
 
-    return [row, col]
+    return [row, col];
   }
 
   return {
@@ -195,11 +194,10 @@ export const adjacentRowColumnCoordinates = ([row, col]: Coordinate): Record<
 /**
  * Generates a record of all the vertexes of a small circle given a center point
  */
-export const vertexCoordinatesForCenterPoint = ([x, y]: Coordinate, size: CircleSize = 'small'): Record<
-  CardinalDirection,
-  Coordinate
-> => {
-
+export const vertexCoordinatesForCenterPoint = (
+  [x, y]: Coordinate,
+  size: CircleSize = 'small',
+): Record<CardinalDirection, Coordinate> => {
   if (size === 'large') {
     return {
       top: [x, y - 1],

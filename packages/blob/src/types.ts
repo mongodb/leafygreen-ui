@@ -1,4 +1,4 @@
-type blobChar = 'o' | 'O' | '_';
+type blobChar = 'o' | 'O' | ' ';
 type blobRow = [blobChar, blobChar, blobChar, blobChar];
 export type blobCode = [blobRow, blobRow, blobRow, blobRow];
 
@@ -60,6 +60,9 @@ export interface PathPoint extends Vertex {
   b2y: number;
 }
 
+/**
+ * Map of opposite directions
+ */
 export const InverseDirection: Record<Direction, Direction> = {
   top: 'bottom',
   topRight: 'bottomLeft',
@@ -71,6 +74,9 @@ export const InverseDirection: Record<Direction, Direction> = {
   topLeft: 'bottomRight',
 } as const;
 
+/**
+ * Maps directions to the next direction (rotating clockwise)
+ */
 export const NextDirection: Record<Direction, Direction> = {
   top: 'topRight',
   topRight: 'right',
@@ -82,4 +88,18 @@ export const NextDirection: Record<Direction, Direction> = {
   topLeft: 'top',
 } as const;
 
-export type CircleSize = 'small' | 'large'
+/**
+ * Maps directions to the previous direction (rotating clockwise)
+ */
+export const PrevDirection: Record<Direction, Direction> = {
+  top: 'topLeft',
+  topRight: 'top',
+  right: 'topRight',
+  bottomRight: 'right',
+  bottom: 'bottomRight',
+  bottomLeft: 'bottom',
+  left: 'bottomLeft',
+  topLeft: 'left',
+} as const;
+
+export type CircleSize = 'small' | 'large';
