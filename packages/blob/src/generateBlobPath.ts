@@ -5,7 +5,7 @@ import {
 } from './utils';
 import {
   blobCode,
-  DirectionName,
+  Direction,
   PathPoint,
   isCardinalDirection,
   NextDirection,
@@ -32,11 +32,11 @@ export function generateBlobPath(shape: blobCode) {
     points
       .map(
         ({ x, y, b1x, b1y, b2x, b2y }) =>
-          `${x},${y}\n C ${b1x},${b1y} ${b2x},${b2y}`,
+          `${x},${y} C ${b1x},${b1y} ${b2x},${b2y}`,
       )
       .join(' ') +
     ` ${points[0].x},${points[0].y}` +
-    '\nZ';
+    ' Z';
 
   // console.log(path)
   return path;
@@ -75,7 +75,7 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
   const traversedDots = new Map<`${number},${number}`, boolean>();
 
   const startRowCol = findStart();
-  addDot(...startRowCol);
+  addCircle(...startRowCol);
 
   return vertexes;
 
@@ -86,14 +86,13 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
    * Add vertexes for this dot otherwise.
    */
 
-  function addDot(
+  function addCircle(
     row: number,
     col: number,
-    startFace: DirectionName = 'top',
+    startFace: Direction = Direction.Top,
     _depth = 0,
   ) {
-    //  const _consolePrefix = new Array(_depth).fill('\t').join('|')
-    const dotHasAdjacency = hasAdjacency([row, col]);
+    const circleAtIndexHasAdjacency = hasAdjacency([row, col]);
     const rowColPair = `${row},${col}` as `${number},${number}`;
 
     // If we've traversed this dot already, ignore it
@@ -101,30 +100,26 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
       return;
     }
 
-    // console.log(`${_consolePrefix}Adding Dot at (${rowColPair})`)
-
     traversedDots.set(rowColPair, true);
 
-    // Small circle
     if (isSmallDot(row, col)) {
-      // Go Clockwise around the dot, starting from where the previous adjacency was
-      // If there's an adjacent dot, add that dot,
-      // Otherwise add a vertex for this dot
+      /**
+       * Go Clockwise around the dot, starting from where the previous adjacency was
+       * If there's an adjacent dot, add that dot,
+       * Otherwise add a vertex for this dot
+       */
 
       let currentFace = startFace;
 
-      // Cycle through all directions
+      // Cycle through all directions (cardinal & diagonal)
       for (let i = 0; i < countDirections; i++) {
-        const adjacentCoordinates = adjacentRowColumnCoordinates([row, col])[
-          currentFace
-        ];
+        if (circleAtIndexHasAdjacency(currentFace)) {
+          // If there's an adjacent dot we add it
+          const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
+          const adjacentCoordinatesForFace = adjacentCoordinates[currentFace];
 
-        // console.log(`${_consolePrefix}|\tChecking ${currentFace} adjacency`, ...adjacentCoordinates)
-
-        // If there's an adjacent dot
-        if (dotHasAdjacency(currentFace)) {
-          addDot(
-            ...adjacentCoordinates,
+          addCircle(
+            ...adjacentCoordinatesForFace,
             InverseDirection[currentFace],
             _depth + 1,
           );
@@ -134,8 +129,6 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
           const [vertexX, vertexY] = vertexCoordinatesForCenterPoint([x, y])[
             currentFace
           ];
-
-          // console.log(`${_consolePrefix}|\t\tAdding vertex at`, {x: vertexX, y:vertexY});
 
           vertexes.push({
             face: currentFace,
@@ -149,11 +142,20 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
     }
 
     if (isLargeDot(row, col)) {
-      // TODO:
+      const currentFace = startFace;
+
+      /**
+       * Cycle through all directions (same as Small dot),
+       * but this time we need to check for 2 adjacencies for each of the cardinal directions
+       * i.e. a large dot can have two small dots above it etc.
+       */
+      for (let i = 0; i < countDirections; i++) {
+        // If there's a single adjacency we need to treat this index like a small circle
+      }
     }
 
     if (isEmpty(row, col)) {
-      addDot(row, col + 1);
+      addCircle(row, col + 1);
     }
   }
 }

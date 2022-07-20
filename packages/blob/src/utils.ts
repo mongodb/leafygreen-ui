@@ -2,96 +2,69 @@ import {
   blobCode,
   CardinalDirection,
   Coordinate,
-  DirectionName,
+  Direction,
+  isCardinalDirection,
 } from './types';
 
+/**
+ * Generates utility functions dependent on the provided `blobCode`
+ */
 export const makeBlobUtils = (shape: blobCode) => {
+  /**
+   * Returns a function that accepts a direction.
+   * That function returns whether the provided coordinate has an adjacency in the provided direction
+   */
   function hasAdjacency([row, col]: Coordinate) {
-    return (direction: DirectionName) => {
-      if (!shape) return;
+    /**
+     * Returns whether the rovided coordinate has an adjacency in the provided direction
+     */
+    return (direction: Direction): boolean => {
+      if (!shape) return false;
 
-      // For small Dots
-      switch (direction) {
-        case 'top': {
-          const hasAdjacency = indexExists(row - 1, col)
-            ? shape[row - 1][col] !== '_'
-            : false;
-          return hasAdjacency;
-        }
+      if (isLargeDot(row, col) && isCardinalDirection(direction)) {
+        // For large dots we need to check both adjacencies in each cardinal direction
 
-        case 'topRight': {
-          const hasAdjacency = indexExists(row - 1, col + 1)
-            ? shape[row - 1][col + 1] !== '_'
-            : false;
-          return hasAdjacency;
-        }
-
-        case 'right': {
-          const hasAdjacency = indexExists(row, col + 1)
-            ? shape[row][col + 1] !== '_'
-            : false;
-          return hasAdjacency;
-        }
-
-        case 'bottomRight': {
-          const hasAdjacency = indexExists(row + 1, col + 1)
-            ? shape[row + 1][col + 1] !== '_'
-            : false;
-          return hasAdjacency;
-        }
-
-        case 'bottom': {
-          const hasAdjacency = indexExists(row + 1, col)
-            ? shape[row + 1][col] !== '_'
-            : false;
-          return hasAdjacency;
-        }
-
-        case 'bottomLeft': {
-          const hasAdjacency = indexExists(row + 1, col - 1)
-            ? shape[row + 1][col - 1] !== '_'
-            : false;
-          return hasAdjacency;
-        }
-
-        case 'left': {
-          const hasAdjacency = indexExists(row, col - 1)
-            ? shape[row][col - 1] !== '_'
-            : false;
-          return hasAdjacency;
-        }
-
-        case 'topLeft': {
-          const hasAdjacency = indexExists(row - 1, col - 1)
-            ? shape[row - 1][col - 1] !== '_'
-            : false;
-          return hasAdjacency;
-        }
-
-        default:
-          break;
+      } else {
+        const coords = adjacentRowColumnCoordinates([row, col])[direction];
+        return isNotEmpty(...coords);
       }
     };
   }
 
+  /**
+   * Returns whether the provided (row, column) pair is valid
+   */
   function indexExists(row: number, col: number) {
     return shape && shape[row] && shape[row][col];
   }
 
+  /**
+   * Returns whether the provided (row, column) pair DOES NOT have a circle
+   */
   function isEmpty(row: number, col: number) {
     return indexExists(row, col) && shape[row][col] === '_';
   }
 
+  function isNotEmpty(row: number, col: number) {
+    return isSmallDot(row, col) || isLargeDot(row, col);
+  }
+
+  /**
+   * Returns whether the provided (row, column) pair has a small circle
+   */
   function isSmallDot(row: number, col: number) {
     return indexExists(row, col) && shape[row][col] === 'o';
   }
 
+  /**
+   * Returns whether the provided (row, column) pair has a large circle
+   */
   function isLargeDot(row: number, col: number) {
     return indexExists(row, col) && shape[row][col] === 'O';
   }
 
   /**
-   * Finds the top-right-most dot
+   * Returns the coordinates of the top-left-most dot to the provided (row, column) pair
    */
   function findStart(row = 0, col = 0): [number, number] {
     if (isSmallDot(row, col) || isLargeDot(row, col)) {
@@ -115,8 +88,11 @@ export const makeBlobUtils = (shape: blobCode) => {
   };
 };
 
+/**
+ * Generates a record of the (row,column) pairs for each adjacent direction.
+ */
 export const adjacentRowColumnCoordinates = ([row, col]: Coordinate): Record<
-  DirectionName,
+  Direction,
   Coordinate
 > => {
   return {
@@ -131,6 +107,9 @@ export const adjacentRowColumnCoordinates = ([row, col]: Coordinate): Record<
   };
 };
 
+/**
+ * Generates a record of all the vertexes of a small circle given a center point
+ */
 export const vertexCoordinatesForCenterPoint = ([x, y]: Coordinate): Record<
   CardinalDirection,
   Coordinate

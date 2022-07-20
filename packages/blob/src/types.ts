@@ -16,19 +16,28 @@ export interface BlobProps {
 
 export type Coordinate = [number, number];
 
-export type CardinalDirection = 'top' | 'bottom' | 'left' | 'right';
-export const isCardinalDirection = (
-  dir: DirectionName,
-): dir is CardinalDirection => ['top', 'right', 'left', 'bottom'].includes(dir);
+export const CardinalDirection = {
+  Top: 'top',
+  Bottom: 'bottom',
+  Left: 'left',
+  Right: 'right',
+} as const;
+export type CardinalDirection =
+  typeof CardinalDirection[keyof typeof CardinalDirection];
 
-export type DirectionName =
-  | CardinalDirection
-  | 'topRight'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'topLeft';
+export const isCardinalDirection = (dir: Direction): dir is CardinalDirection =>
+  Object.values(CardinalDirection).includes(dir as any);
 
-export const countDirections = 8;
+export const Direction = {
+  ...CardinalDirection,
+  TopRight: 'topRight',
+  BottomRight: 'bottomRight',
+  BottomLeft: 'bottomLeft',
+  TopLeft: 'topLeft',
+} as const;
+export type Direction = typeof Direction[keyof typeof Direction];
+
+export const countDirections = Object.keys(Direction).length;
 
 export interface Vertex {
   /**
@@ -51,7 +60,7 @@ export interface PathPoint extends Vertex {
   b2y: number;
 }
 
-export const InverseDirection: Record<DirectionName, DirectionName> = {
+export const InverseDirection: Record<Direction, Direction> = {
   top: 'bottom',
   topRight: 'bottomLeft',
   right: 'left',
@@ -62,7 +71,7 @@ export const InverseDirection: Record<DirectionName, DirectionName> = {
   topLeft: 'bottomRight',
 } as const;
 
-export const NextDirection: Record<DirectionName, DirectionName> = {
+export const NextDirection: Record<Direction, Direction> = {
   top: 'topRight',
   topRight: 'right',
   right: 'bottomRight',
@@ -71,4 +80,4 @@ export const NextDirection: Record<DirectionName, DirectionName> = {
   bottomLeft: 'left',
   left: 'topLeft',
   topLeft: 'top',
-};
+} as const;
