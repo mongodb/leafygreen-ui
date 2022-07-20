@@ -8,8 +8,9 @@ import {
   Direction,
   PathPoint,
   isCardinalDirection,
-  NextDirection,
   InverseDirection,
+  NextDirection,
+  PrevDirection,
   countDirections,
   Vertex,
   Coordinate,
@@ -26,7 +27,7 @@ export function generateBlobPath(shape: blobCode) {
   // Convert vertexes into path points
 
   const points = generateBezierPoints(vertexes);
-  console.log(points);
+  // console.log(points);
 
   // Convert path points to a path string
   const path =
@@ -64,10 +65,9 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
     indexExists,
     hasAdjacency,
     findStart,
-    isEmpty,
     isSmallDot,
     isLargeDot,
-    getLargeCircleSiblingIndex
+    getLargeCircleSiblingIndex,
   } = makeBlobUtils(shape);
 
   // Append new vertexes to this array
@@ -129,9 +129,8 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
         } else if (isCardinalDirection(currentFace)) {
           // otherwise add a vertex
           const centerPoint = [col * 2 + 1, row * 2 + 1] as Coordinate;
-          const [vertexX, vertexY] = vertexCoordinatesForCenterPoint(centerPoint)[
-            currentFace
-          ];
+          const [vertexX, vertexY] =
+            vertexCoordinatesForCenterPoint(centerPoint)[currentFace];
 
           vertexes.push({
             face: currentFace,
@@ -153,20 +152,25 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
        * i.e. a large dot can have two small dots above it etc.
        */
       for (let i = 0; i < countDirections; i++) {
-
         // E.g.
         // if currentFace is top and there's a top adjacency
         // OR whichever left/right adjacency that is part of this large circle has a top adjacency
         // add a circle there
-        const indexHasImmediateAdjacency = indexHasAdjacencyInDirectionOf(currentFace)
+        const indexHasImmediateAdjacency =
+          indexHasAdjacencyInDirectionOf(currentFace);
         const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
         const adjacentCoordinatesForFace = adjacentCoordinates[currentFace];
 
-        const siblingCoordinates = getLargeCircleSiblingIndex(currentFace, [row, col]);
+        const siblingCoordinates = getLargeCircleSiblingIndex(currentFace, [
+          row,
+          col,
+        ]);
         const sibilingHasAdjacency = hasAdjacency(siblingCoordinates);
-        const siblingHasImmediateAdjacency = sibilingHasAdjacency(currentFace)
-        const siblingAdjacencyCoordinates = adjacentRowColumnCoordinates(siblingCoordinates)
-        const siblingAdjacencyCoordinatesForFace = siblingAdjacencyCoordinates[currentFace]
+        const siblingHasImmediateAdjacency = sibilingHasAdjacency(currentFace);
+        const siblingAdjacencyCoordinates =
+          adjacentRowColumnCoordinates(siblingCoordinates);
+        const siblingAdjacencyCoordinatesForFace =
+          siblingAdjacencyCoordinates[currentFace];
 
         if (indexHasImmediateAdjacency) {
           addCircle(
@@ -178,35 +182,52 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
           addCircle(
             ...siblingAdjacencyCoordinatesForFace,
             InverseDirection[currentFace],
-            _depth + 1
-          )
+            _depth + 1,
+          );
         } else if (isCardinalDirection(currentFace)) {
-          /**
-           * e.g. currentFace is top
-           * There is no circle above this index, or above the sibling index
-           */
+          if (
+            // If there's a small circle in a related direction
+            // (i.e.) right => topRight or bottomRight
+            indexHasAdjacencyInDirectionOf(NextDirection[currentFace]) ||
+            indexHasAdjacencyInDirectionOf(PrevDirection[currentFace])
+          ) {
+            // Add vertexes as if this circle is a small circle
+            const centerPoint = [col * 2 + 1, row * 2 + 1] as Coordinate;
+            const [vertexX, vertexY] =
+              vertexCoordinatesForCenterPoint(centerPoint)[currentFace];
 
-          // The center point of the Large circle this index is a part of
-          const [sibRow, sibCol] = siblingCoordinates;
-          const centerPoint = [
-            col + sibCol + 1,
-            row + sibRow + 1
-          ] as Coordinate
-          const [vertexX, vertexY] = vertexCoordinatesForCenterPoint(centerPoint, 'large')[currentFace]
+            vertexes.push({
+              face: currentFace,
+              x: vertexX,
+              y: vertexY,
+            });
+          } else {
+            /**
+             * e.g. currentFace is top
+             * There is no circle above this index, or above the sibling index
+             */
 
-          vertexes.push({
-            face: currentFace,
-            x: vertexX,
-            y: vertexY,
-          });
+            // The center point of the Large circle this index is a part of
+            const [sibRow, sibCol] = siblingCoordinates;
+            const centerPoint = [
+              col + sibCol + 1,
+              row + sibRow + 1,
+            ] as Coordinate;
+            const [vertexX, vertexY] = vertexCoordinatesForCenterPoint(
+              centerPoint,
+              'large',
+            )[currentFace];
+
+            vertexes.push({
+              face: currentFace,
+              x: vertexX,
+              y: vertexY,
+            });
+          }
         }
 
         currentFace = NextDirection[currentFace];
       }
-    }
-
-    if (isEmpty(row, col)) {
-      addCircle(row, col + 1);
     }
   }
 }
@@ -218,11 +239,8 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
   return vertexes.map(({ x, y, face }, i) => {
     const nextVertex = vertexes[i + 1] || vertexes[0];
     const { x: xNext, y: yNext } = nextVertex;
-    const [ xDiff, yDiff ] = [
-      Math.abs(x - xNext),
-      Math.abs(y - yNext)
-    ]
-    const [ bezX, bezY ] = [ bezierDistance * xDiff, bezierDistance * yDiff ]
+    const [xDiff, yDiff] = [Math.abs(x - xNext), Math.abs(y - yNext)];
+    const [bezX, bezY] = [bezierDistance * xDiff, bezierDistance * yDiff];
 
     switch (face) {
       case 'top': {
@@ -232,12 +250,7 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
           b1x: x + bezX,
           b1y: y,
           b2x: xNext,
-          b2y:
-            yNext === y
-              ? y
-              : yNext > y
-              ? yNext - bezY
-              : yNext + bezY, // next v is ? below : above
+          b2y: yNext === y ? y : yNext > y ? yNext - bezY : yNext + bezY, // next v is ? below : above
         };
       }
 
@@ -247,12 +260,7 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
           y,
           b1x: x,
           b1y: y + bezY,
-          b2x:
-            xNext === x
-              ? x
-              : xNext > x
-              ? xNext - bezX
-              : xNext + bezX, // next v is ? right : left: ;
+          b2x: xNext === x ? x : xNext > x ? xNext - bezX : xNext + bezX, // next v is ? right : left: ;
           b2y: yNext,
         };
       }
@@ -264,12 +272,7 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
           b1x: x - bezX,
           b1y: y,
           b2x: xNext,
-          b2y:
-            yNext === y
-              ? y
-              : yNext > y
-              ? yNext - bezY
-              : yNext + bezY, // next v is ? below : above
+          b2y: yNext === y ? y : yNext > y ? yNext - bezY : yNext + bezY, // next v is ? below : above
         };
       }
 
@@ -280,12 +283,7 @@ function generateBezierPoints(vertexes: Array<Vertex>): Array<PathPoint> {
           y,
           b1x: x,
           b1y: y - bezY,
-          b2x:
-            xNext === x
-              ? x
-              : xNext > x
-              ? xNext - bezX
-              : xNext + bezX, // next v is ? right : left: ;
+          b2x: xNext === x ? x : xNext > x ? xNext - bezX : xNext + bezX, // next v is ? right : left: ;
           b2y: yNext,
         };
       }
