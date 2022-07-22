@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   adjacentRowColumnCoordinates,
   makeBlobUtils,
@@ -10,16 +11,18 @@ import {
   isCardinalDirection,
   InverseDirection,
   NextDirection,
-  PrevDirection,
   countDirections,
   Vertex,
   Coordinate,
 } from './types';
 import { isUndefined } from 'lodash';
 
+const _DEBUG = false;
+_DEBUG && console.clear();
+
 const bezierDistance = 0.5525;
 
-export function generateBlobPath(shape: blobCode) {
+export function generateBlobPath(shape: blobCode, _DEBUG = false) {
   if (!isValidShape(shape)) return;
 
   const vertexes = calcVertexes(shape);
@@ -68,6 +71,7 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
     isSmallDot,
     isLargeDot,
     getLargeCircleSiblingIndex,
+    indexHasDiagonalAdjacencies,
   } = makeBlobUtils(shape);
 
   // Append new vertexes to this array
@@ -78,7 +82,7 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
   const traversedDots = new Map<`${number},${number}`, boolean>();
 
   const startRowCol = findStart();
-  addCircle(...startRowCol);
+  addCircle(...startRowCol); // Modifies `vertexes`
 
   return vertexes;
 
@@ -88,14 +92,14 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
    * Recursively add adjacent dots if there's an adjacent dot
    * Add vertexes for this dot otherwise.
    */
-
   function addCircle(
     row: number,
     col: number,
     startFace: Direction = Direction.Top,
     _depth = 0,
   ) {
-    const indexHasAdjacencyInDirectionOf = hasAdjacency([row, col]);
+    const _consolePrefix = new Array(_depth).fill('\t').join('|');
+    const indexHasAdjacencyForFace = hasAdjacency([row, col]);
     const rowColPair = `${row},${col}` as `${number},${number}`;
 
     // If we've traversed this dot already, ignore it
@@ -103,130 +107,125 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
       return;
     }
 
+    _DEBUG && console.log(`${_consolePrefix}Adding Dot at (${rowColPair})`);
+
     traversedDots.set(rowColPair, true);
 
-    if (isSmallDot(row, col)) {
-      /**
-       * Go Clockwise around the dot, starting from where the previous adjacency was
-       * If there's an adjacent dot, add that dot,
-       * Otherwise add a vertex for this dot
-       */
+    let currentFace = startFace;
 
-      let currentFace = startFace;
+    /**
+     * Cycle clockwise looking for adjacent circles, starting from where the last circle was
+     * If there's an adjacent circle, add that circle,
+     * Otherwise add the vertex at the current face
+     *
+     * For large circles we need to check for 2 adjacencies for each of the cardinal directions
+     * i.e. a large dot can have two small dots above it etc.
+     */
+    for (let i = 0; i < countDirections; i++) {
+      const indexHasAdjacency = indexHasAdjacencyForFace(currentFace);
 
-      // Cycle through all directions (cardinal & diagonal)
-      for (let i = 0; i < countDirections; i++) {
-        if (indexHasAdjacencyInDirectionOf(currentFace)) {
-          // If there's an adjacent dot we add it
-          const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
-          const adjacentCoordinatesForFace = adjacentCoordinates[currentFace];
+      // For large circles we add sibling circles' adjacencies as well
+      // E.g.
+      // if currentFace is `top`
+      // AND whichever left/right adjacency that is part of this large circle has a top adjacency
+      // -> add a circle there
+      const siblingCoordinates = getLargeCircleSiblingIndex(currentFace, [
+        row,
+        col,
+      ]);
 
-          addCircle(
-            ...adjacentCoordinatesForFace,
-            InverseDirection[currentFace],
-            _depth + 1,
-          );
-        } else if (isCardinalDirection(currentFace)) {
-          // otherwise add a vertex
+      _DEBUG &&
+        console.log(
+          `${_consolePrefix}|\tChecking ${currentFace} adjacency: ${indexHasAdjacency}`,
+        );
+
+      if (indexHasAdjacency) {
+        const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
+        const adjacentCoordinatesForFace = adjacentCoordinates[currentFace];
+        addCircle(
+          ...adjacentCoordinatesForFace,
+          NextDirection[InverseDirection[currentFace]],
+          _depth + 1,
+        );
+      } else if (isCardinalDirection(currentFace)) {
+        const diagonalAdjacencies = indexHasDiagonalAdjacencies([row, col]);
+
+        _DEBUG &&
+          console.log(`${_consolePrefix}|\tChecking for diagonal adjacencies`, {
+            diagonalAdjacencies,
+          });
+
+        // If there's a small circle in a related direction
+        if (isSmallDot(row, col) || diagonalAdjacencies) {
+          // Add small circle vertexes
           const centerPoint = [col * 2 + 1, row * 2 + 1] as Coordinate;
           const [vertexX, vertexY] =
             vertexCoordinatesForCenterPoint(centerPoint)[currentFace];
 
-          vertexes.push({
+          addVertex({
+            face: currentFace,
+            x: vertexX,
+            y: vertexY,
+          });
+        } else {
+          /**
+           * e.g. currentFace is top
+           * There is no circle above this index, or above the sibling index
+           */
+          // The center point of the Large circle this index is a part of
+          const [sibRow, sibCol] = siblingCoordinates;
+          const centerPoint = [
+            col + sibCol + 1,
+            row + sibRow + 1,
+          ] as Coordinate;
+          const [vertexX, vertexY] = vertexCoordinatesForCenterPoint(
+            centerPoint,
+            'large',
+          )[currentFace];
+
+          addVertex({
             face: currentFace,
             x: vertexX,
             y: vertexY,
           });
         }
-
-        currentFace = NextDirection[currentFace];
       }
-    }
 
-    if (isLargeDot(row, col)) {
-      let currentFace = startFace;
+      if (isLargeDot(row, col)) {
+        const sibilingHasAdjacencyForFace = hasAdjacency(siblingCoordinates);
+        const siblingHasAdjacency = sibilingHasAdjacencyForFace(currentFace);
 
-      /**
-       * Cycle through all directions (same as Small dot),
-       * but this time we need to check for 2 adjacencies for each of the cardinal directions
-       * i.e. a large dot can have two small dots above it etc.
-       */
-      for (let i = 0; i < countDirections; i++) {
-        // E.g.
-        // if currentFace is top and there's a top adjacency
-        // OR whichever left/right adjacency that is part of this large circle has a top adjacency
-        // add a circle there
-        const indexHasImmediateAdjacency =
-          indexHasAdjacencyInDirectionOf(currentFace);
-        const adjacentCoordinates = adjacentRowColumnCoordinates([row, col]);
-        const adjacentCoordinatesForFace = adjacentCoordinates[currentFace];
-
-        const siblingCoordinates = getLargeCircleSiblingIndex(currentFace, [
-          row,
-          col,
-        ]);
-        const sibilingHasAdjacency = hasAdjacency(siblingCoordinates);
-        const siblingHasImmediateAdjacency = sibilingHasAdjacency(currentFace);
-        const siblingAdjacencyCoordinates =
-          adjacentRowColumnCoordinates(siblingCoordinates);
-        const siblingAdjacencyCoordinatesForFace =
-          siblingAdjacencyCoordinates[currentFace];
-
-        if (indexHasImmediateAdjacency) {
-          addCircle(
-            ...adjacentCoordinatesForFace,
-            InverseDirection[currentFace],
-            _depth + 1,
-          );
-        } else if (siblingHasImmediateAdjacency) {
+        if (siblingHasAdjacency) {
+          const siblingAdjacencyCoordinates =
+            adjacentRowColumnCoordinates(siblingCoordinates);
+          const siblingAdjacencyCoordinatesForFace =
+            siblingAdjacencyCoordinates[currentFace];
           addCircle(
             ...siblingAdjacencyCoordinatesForFace,
-            InverseDirection[currentFace],
+            NextDirection[InverseDirection[currentFace]],
             _depth + 1,
           );
-        } else if (isCardinalDirection(currentFace)) {
-          if (
-            // If there's a small circle in a related direction
-            // (i.e.) right => topRight or bottomRight
-            indexHasAdjacencyInDirectionOf(NextDirection[currentFace]) ||
-            indexHasAdjacencyInDirectionOf(PrevDirection[currentFace])
-          ) {
-            // Add vertexes as if this circle is a small circle
-            const centerPoint = [col * 2 + 1, row * 2 + 1] as Coordinate;
-            const [vertexX, vertexY] =
-              vertexCoordinatesForCenterPoint(centerPoint)[currentFace];
-
-            vertexes.push({
-              face: currentFace,
-              x: vertexX,
-              y: vertexY,
-            });
-          } else {
-            /**
-             * e.g. currentFace is top
-             * There is no circle above this index, or above the sibling index
-             */
-
-            // The center point of the Large circle this index is a part of
-            const [sibRow, sibCol] = siblingCoordinates;
-            const centerPoint = [
-              col + sibCol + 1,
-              row + sibRow + 1,
-            ] as Coordinate;
-            const [vertexX, vertexY] = vertexCoordinatesForCenterPoint(
-              centerPoint,
-              'large',
-            )[currentFace];
-
-            vertexes.push({
-              face: currentFace,
-              x: vertexX,
-              y: vertexY,
-            });
-          }
         }
+      }
 
-        currentFace = NextDirection[currentFace];
+      // Move on to the next direction
+      currentFace = NextDirection[currentFace];
+    }
+
+    function addVertex({ face, x, y }: Vertex) {
+      if (
+        // Check if this vertex is already added
+        !vertexes.some(v => {
+          return face == v.face && x == v.x && y == v.y;
+        })
+      ) {
+        _DEBUG &&
+          console.log(`${_consolePrefix}|\t\tAdding vertex at`, { x, y, face });
+        vertexes.push({
+          face,
+          x,
+          y,
+        });
       }
     }
   }

@@ -20,10 +20,10 @@ const Template: Story<BlobProps> = ({ shape }: BlobProps) => (
 export const Basic = Template.bind({});
 Basic.args = {
   shape: [
-    [' ', ' ', 'o', 'o'],
-    ['o', 'o', ' ', ' '],
-    ['o', 'o', ' ', 'o'],
-    [' ', 'o', 'o', 'o'],
+    [' ', ' ', ' ', ' '],
+    [' ', 'o', 'o', ' '],
+    [' ', 'o', 'o', ' '],
+    [' ', ' ', ' ', 'o'],
   ],
 };
 
@@ -31,8 +31,8 @@ export const WithLarge = Template.bind({});
 WithLarge.args = {
   shape: [
     ['O', 'O', ' ', ' '],
-    ['O', 'O', ' ', ' '],
+    ['O', 'O', 'O', 'O'],
     [' ', ' ', 'O', 'O'],
-    [' ', ' ', 'O', 'O'],
+    [' ', ' ', ' ', ' '],
   ],
 };
