@@ -1,15 +1,24 @@
+import { isUndefined } from 'lodash';
 import {
   blobCode,
+  blobRow,
   CardinalDirection,
   CircleSize,
   Coordinate,
   Direction,
+  isCharEmpty,
+  isCharLarge,
 } from './types';
 
 /**
  * Generates utility functions dependent on the provided `blobCode`
  */
 export const makeBlobUtils = (shape: blobCode) => {
+  const circleCount = shape.reduce((count, row) => {
+    count += row.filter(circle => !isCharEmpty(circle)).length;
+    return count;
+  }, 0);
+
   /**
    * Returns a function that accepts a direction.
    * That function returns whether the provided coordinate has an adjacency in the provided direction
@@ -63,12 +72,16 @@ export const makeBlobUtils = (shape: blobCode) => {
    * Returns the coordinates of the top-left-most dot to the provided (row, column) pair
    */
   function findStart(row = 0, col = 0): [number, number] | undefined {
-    if (!indexExists(row,col)) return;
+    if (!indexExists(row, col)) return;
 
     if (isSmallDot(row, col) || isLargeDot(row, col)) {
       return [row, col];
     } else {
-      return findStart(row + 1, col + 1) || findStart(row, col + 1) ||  findStart(row + 1, col);
+      return (
+        findStart(row + 1, col + 1) ||
+        findStart(row, col + 1) ||
+        findStart(row + 1, col)
+      );
     }
   }
 
@@ -246,9 +259,11 @@ export const makeBlobUtils = (shape: blobCode) => {
   }
 
   return {
+    circleCount,
     hasAdjacency,
     indexExists,
     isEmpty,
+    isNotEmpty,
     isSmallDot,
     isLargeDot,
     findStart,
@@ -299,3 +314,54 @@ export const vertexCoordinatesForCenterPoint = (
     left: [x - 1, y],
   };
 };
+
+/**
+ * - no enclaves
+ * - no exclaves
+ * - Ensure large circles are complete
+ */
+export function isValidShape(shape: blobCode): boolean {
+  const { circleCount, isEmpty, isNotEmpty, hasAdjacency } =
+    makeBlobUtils(shape);
+
+  const countOfLargeChars = shape.reduce((count, row) => {
+    count += row.filter(char => isCharLarge(char)).length;
+    return count;
+  }, 0);
+
+  return (
+    !isUndefined(shape) &&
+    countOfLargeChars % 4 == 0 &&
+    !shapeIsAllEmpty(shape) &&
+    !shapeHasExclaves(shape) &&
+    !shapeHasEnclaves(shape)
+  );
+
+  function shapeIsAllEmpty(shape: blobCode): boolean {
+    return shape.every((row, r) => row.every((_, c) => isEmpty(r, c)));
+  }
+
+  function shapeHasExclaves(shape: blobCode): boolean {
+    // TODO: Account for exclaves larget than 1
+    return (
+      circleCount > 1 &&
+      shape.some((row, r) =>
+        row.some((_, c) => {
+          const indexHasAdjacency = hasAdjacency([r, c]);
+          return (
+            isNotEmpty(r, c) &&
+            Object.values(Direction).every(dir => {
+              // This index has no adjacencies in every direction
+              return !indexHasAdjacency(dir);
+            })
+          );
+        }),
+      )
+    );
+  }
+
+  function shapeHasEnclaves(shape: blobCode): boolean {
+    // TODO: Ensure no enclaves
+    return !!shape;
+  }
+}

@@ -27,7 +27,11 @@ export default function Blob({
                   r={1}
                   cx={c * 2 + 1}
                   cy={r * 2 + 1}
-                  fill={palette.gray.light2}
+                  fill={
+                    shape[r][c] === ' '
+                      ? palette.gray.light2
+                      : palette.red.light2 // Highlight outliers
+                  }
                   onClick={() =>
                     mode === 'interactive' && onGridCircleClick?.([r, c])
                   }

@@ -1,6 +1,11 @@
 type blobChar = 'o' | 'O' | ' ';
-type blobRow = [blobChar, blobChar, blobChar, blobChar];
+export type blobRow = [blobChar, blobChar, blobChar, blobChar];
 export type blobCode = [blobRow, blobRow, blobRow, blobRow];
+
+export const isCharEmpty = (char: blobChar): char is ' ' => char === ' ';
+export const isCharSmall = (char: blobChar): char is 'o' => char === 'o';
+export const isCharLarge = (char: blobChar): char is 'O' => char === 'O';
+
 type BlobMode = 'debug' | 'interactive' | 'production';
 
 export interface BlobProps {
