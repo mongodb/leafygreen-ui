@@ -62,14 +62,13 @@ export const makeBlobUtils = (shape: blobCode) => {
   /**
    * Returns the coordinates of the top-left-most dot to the provided (row, column) pair
    */
-  function findStart(row = 0, col = 0): [number, number] {
+  function findStart(row = 0, col = 0): [number, number] | undefined {
+    if (!indexExists(row,col)) return;
+
     if (isSmallDot(row, col) || isLargeDot(row, col)) {
       return [row, col];
     } else {
-      if (indexExists(row, col + 1)) return findStart(row, col + 1);
-      if (indexExists(row + 1, col)) return findStart(row + 1, col);
-      if (indexExists(row + 1, col + 1)) return findStart(row + 1, col + 1);
-      return [-1, -1];
+      return findStart(row + 1, col + 1) || findStart(row, col + 1) ||  findStart(row + 1, col);
     }
   }
 

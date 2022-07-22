@@ -54,8 +54,14 @@ export function generateBlobPath(shape: blobCode, _DEBUG = false) {
  * - Ensure large circles are complete
  */
 function isValidShape(shape: blobCode): boolean {
+
+  const {
+    isEmpty,
+  } = makeBlobUtils(shape);
+
   // TODO: Validate shape
-  return !isUndefined(shape);
+  return !isUndefined(shape) &&
+    !shape.every((row, r) => row.every((_, c) => isEmpty(r, c))) // not valid if all dots are empty
 }
 
 /**
@@ -81,8 +87,10 @@ function calcVertexes(shape: blobCode): Array<Vertex> {
   // const traversedDots = new Array(4).fill(new Array(4).fill(false));
   const traversedDots = new Map<`${number},${number}`, boolean>();
 
-  const startRowCol = findStart();
-  addCircle(...startRowCol); // Modifies `vertexes`
+  const startIndex = findStart();
+  if (!startIndex) return vertexes;
+
+  addCircle(...startIndex); // Modifies `vertexes`
 
   return vertexes;
 

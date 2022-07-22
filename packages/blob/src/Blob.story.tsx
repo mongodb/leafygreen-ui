@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import Blob from '.';
-import { BlobProps } from './types';
+import { blobCode, BlobProps } from './types';
+import { cloneDeep } from 'lodash';
 
 export default {
   title: 'Components/Blob',
@@ -35,4 +36,29 @@ WithLarge.args = {
     [' ', ' ', 'O', 'O'],
     [' ', ' ', ' ', ' '],
   ],
+};
+
+export const Interactive = () => {
+  const [shape, setShape] = useState<blobCode>([
+    ['o', ' ', ' ', ' '],
+    [' ', 'o', ' ', ' '],
+    [' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' '],
+  ]);
+
+  // console.log(shape);
+
+  return (
+    <Blob
+      shape={shape}
+      mode="interactive"
+      onGridCircleClick={([r, c]) => {
+        const current = shape[r][c];
+        const next = current === ' ' ? 'o' : ' ';
+        const newShape = cloneDeep(shape);
+        newShape[r][c] = next;
+        setShape(newShape);
+      }}
+    />
+  );
 };
