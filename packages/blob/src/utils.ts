@@ -1,7 +1,6 @@
 import { isUndefined } from 'lodash';
 import {
   blobCode,
-  blobRow,
   CardinalDirection,
   CircleSize,
   Coordinate,
@@ -362,6 +361,6 @@ export function isValidShape(shape: blobCode): boolean {
 
   function shapeHasEnclaves(shape: blobCode): boolean {
     // TODO: Ensure no enclaves
-    return !!shape;
+    return !shape;
   }
 }

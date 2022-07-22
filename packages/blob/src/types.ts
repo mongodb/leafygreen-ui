@@ -1,4 +1,4 @@
-type blobChar = 'o' | 'O' | ' ';
+export type blobChar = 'o' | 'O' | ' ';
 export type blobRow = [blobChar, blobChar, blobChar, blobChar];
 export type blobCode = [blobRow, blobRow, blobRow, blobRow];
 
@@ -20,11 +20,16 @@ export interface BlobProps {
   /**
    * Click handler on the grey grid circles. Used in interactive mode
    */
-  onGridCircleClick?: (coords: Coordinate) => void;
+  onGridCircleClick?: (event: React.MouseEvent<SVGCircleElement, MouseEvent>, coords: Coordinate) => void;
   /**
    * Switch between debug mode, interactive mode and production (static) mode
    */
   mode?: BlobMode;
+
+  /**
+   * CSS Class name
+   */
+  className?: string
 }
 
 /**
