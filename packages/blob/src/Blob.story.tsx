@@ -3,7 +3,8 @@ import { cloneDeep } from 'lodash';
 import { Meta, Story } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { H1, H2 } from '@leafygreen-ui/typography';
+import { Description, H1, H2 } from '@leafygreen-ui/typography';
+import Button from '@leafygreen-ui/button';
 import Code, { Language, LanguageOption } from '@leafygreen-ui/code';
 import Blob from '.';
 import { generateBlobPath } from './generateBlobPath';
@@ -32,10 +33,10 @@ const Template: Story<BlobProps> = ({ shape }: BlobProps) => (
 export const Basic = Template.bind({});
 Basic.args = {
   shape: [
-    [' ', ' ', ' ', ' '],
+    ['o', ' ', ' ', ' '],
+    [' ', 'o', ' ', ' '],
     [' ', 'o', 'o', ' '],
-    [' ', 'o', 'o', ' '],
-    [' ', ' ', ' ', 'o'],
+    ['o', ' ', ' ', 'o'],
   ],
 };
 
@@ -45,7 +46,7 @@ WithLarge.args = {
     ['O', 'O', ' ', ' '],
     ['O', 'O', 'O', 'O'],
     [' ', ' ', 'O', 'O'],
-    [' ', ' ', ' ', ' '],
+    [' ', ' ', 'o', ' '],
   ],
 };
 
@@ -89,7 +90,7 @@ export const Interactive = () => {
       language: Language.JavaScript,
     },
     {
-      displayName: 'HTML',
+      displayName: 'SVG',
       language: Language.Xml,
     },
   ];
@@ -162,6 +163,32 @@ export const Interactive = () => {
             {language.language === 'javascript' ? blobcode : svgCode}
           </Code>
         </div>
+      </div>
+      <div
+        className={css`
+          display: flex;
+          gap: 16px;
+          align-items: baseline;
+        `}
+      >
+        <Description>
+          Red circles mean there&apos;s likely an error in the pattern. Use the
+          generated code to help resolve any errors, or:
+        </Description>
+        <Button
+          size="small"
+          variant="dangerOutline"
+          onClick={() =>
+            setShape([
+              [' ', ' ', ' ', ' '],
+              [' ', ' ', ' ', ' '],
+              [' ', ' ', ' ', ' '],
+              [' ', ' ', ' ', ' '],
+            ])
+          }
+        >
+          Clear all
+        </Button>
       </div>
     </div>
   );
