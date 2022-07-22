@@ -11,11 +11,12 @@ export default function Blob({
   fill = palette.green.base,
   mode = 'production',
   onGridCircleClick,
+  className,
 }: BlobProps) {
   const path = useMemo(() => generateBlobPath(shape), [shape]);
 
   return (
-    <svg viewBox="0 0 8 8" width="100%" height="100%">
+    <svg viewBox="0 0 8 8" width="100%" height="100%" className={className}>
       {/* DEBUG */}
       {mode !== 'production' && (
         <g>
@@ -28,12 +29,12 @@ export default function Blob({
                   cx={c * 2 + 1}
                   cy={r * 2 + 1}
                   fill={
-                    shape[r][c] === ' '
-                      ? palette.gray.light2
-                      : palette.red.light2 // Highlight outliers
+                    shape[r][c] === 'o'
+                      ? palette.red.light2 // Highlights outliers
+                      : palette.gray.light2
                   }
-                  onClick={() =>
-                    mode === 'interactive' && onGridCircleClick?.([r, c])
+                  onClick={event =>
+                    mode === 'interactive' && onGridCircleClick?.(event, [r, c])
                   }
                   className={css`
                     cursor: ${mode === 'interactive' ? 'pointer' : 'default'};

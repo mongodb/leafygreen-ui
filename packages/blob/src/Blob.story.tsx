@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
-import Blob from '.';
-import { blobCode, BlobProps } from './types';
 import { cloneDeep } from 'lodash';
+import { Meta, Story } from '@storybook/react';
+import { css } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
+import { H1, H2 } from '@leafygreen-ui/typography';
+import Code, { Language, LanguageOption } from '@leafygreen-ui/code';
+import Blob from '.';
+import { generateBlobPath } from './generateBlobPath';
+import {
+  blobCode,
+  BlobProps,
+  Coordinate,
+  isCharEmpty,
+  isCharLarge,
+} from './types';
 
 export default {
   title: 'Components/Blob',
@@ -46,19 +57,112 @@ export const Interactive = () => {
     [' ', ' ', ' ', ' '],
   ]);
 
-  // console.log(shape);
+  const handleClick = (
+    e: React.MouseEvent<SVGCircleElement, MouseEvent>,
+    [r, c]: Coordinate,
+  ) => {
+    const current = shape[r][c];
+    const newShape = cloneDeep(shape);
+
+    if (isCharLarge(current) && r < 3 && c < 3) {
+      // zero out this and relevant adjacencies
+      newShape[r][c] = ' ';
+      newShape[r + 1][c] = ' ';
+      newShape[r][c + 1] = ' ';
+      newShape[r + 1][c + 1] = ' ';
+    } else if (e.shiftKey && r < 3 && c < 3) {
+      // Set this and relevant adjacencies to "O"
+      newShape[r][c] = 'O';
+      newShape[r + 1][c] = 'O';
+      newShape[r][c + 1] = 'O';
+      newShape[r + 1][c + 1] = 'O';
+    } else {
+      const next = isCharEmpty(current) ? 'o' : ' ';
+      newShape[r][c] = next;
+    }
+    setShape(newShape);
+  };
+
+  const languageOptions = [
+    {
+      displayName: 'React',
+      language: Language.JavaScript,
+    },
+    {
+      displayName: 'HTML',
+      language: Language.Xml,
+    },
+  ];
+
+  const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
+
+  const handleLangChange = (languageObject: LanguageOption) => {
+    setLanguage(languageObject);
+  };
+
+  const path = generateBlobPath(shape);
+  const blobcode = `<Blob \n  shape={${JSON.stringify(shape)
+    .replace(/\[\[/g, '[\n  [')
+    .replace(/]]/g, ']\n  ]')
+    .replace(/\["/g, '  ["')
+    .replace(/],/g, '],\n  ')}}\n/>`;
+  const svgCode = `<svg viewBox="0 0 8 8><path d="${JSON.stringify(
+    path,
+    null,
+    2,
+  )}" fill={${palette.green.base}}/></svg>`
+    .replace(/>/g, '>\n')
+    .replace('<path', '  <path');
 
   return (
-    <Blob
-      shape={shape}
-      mode="interactive"
-      onGridCircleClick={([r, c]) => {
-        const current = shape[r][c];
-        const next = current === ' ' ? 'o' : ' ';
-        const newShape = cloneDeep(shape);
-        newShape[r][c] = next;
-        setShape(newShape);
-      }}
-    />
+    <div
+      className={css`
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        top: 0;
+        left: 0;
+        padding: 72px;
+      `}
+    >
+      <div>
+        <H1>MongoDB Brand Shape Generator</H1>
+        <H2>Click to add or remove a circle.</H2>
+        <H2>Shift-click to add a large (2x2) circle.</H2>
+      </div>
+      <div
+        className={css`
+          display: flex;
+          flex-direction: row;
+          gap: 32px;
+          align-items: center;
+        `}
+      >
+        <Blob
+          shape={shape}
+          mode="interactive"
+          onGridCircleClick={handleClick}
+          className={css`
+            width: 512px;
+          `}
+        />
+        <div
+          className={css`
+            width: 256px;
+          `}
+        >
+          <Code
+            language={language.displayName}
+            onChange={handleLangChange}
+            languageOptions={languageOptions}
+          >
+            {language.language === 'javascript' ? blobcode : svgCode}
+          </Code>
+        </div>
+      </div>
+    </div>
   );
 };
