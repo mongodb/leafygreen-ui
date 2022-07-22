@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import {
   adjacentRowColumnCoordinates,
+  isValidShape,
   makeBlobUtils,
   vertexCoordinatesForCenterPoint,
 } from './utils';
@@ -15,7 +16,6 @@ import {
   Vertex,
   Coordinate,
 } from './types';
-import { isUndefined } from 'lodash';
 
 const _DEBUG = false;
 _DEBUG && console.clear();
@@ -46,22 +46,6 @@ export function generateBlobPath(shape: blobCode, _DEBUG = false) {
 
   // console.log(path)
   return path;
-}
-
-/**
- * - no enclaves
- * - no exclaves
- * - Ensure large circles are complete
- */
-function isValidShape(shape: blobCode): boolean {
-
-  const {
-    isEmpty,
-  } = makeBlobUtils(shape);
-
-  // TODO: Validate shape
-  return !isUndefined(shape) &&
-    !shape.every((row, r) => row.every((_, c) => isEmpty(r, c))) // not valid if all dots are empty
 }
 
 /**
