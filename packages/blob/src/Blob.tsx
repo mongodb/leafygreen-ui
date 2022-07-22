@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { BlobProps } from './types';
 import { generateBlobPath } from './generateBlobPath';
@@ -14,10 +15,9 @@ export default function Blob({ shape }: BlobProps) {
       {/* DEBUG */}
       {_SHOW_GRID && (
         <g>
-          {new Array(4)
-            .fill(new Array(4).fill(null))
-            .map((_, r) =>
-              _.map((__: any, c: number) => (
+          {new Array(4).fill(new Array(4).fill(null)).map((_, r) =>
+            _.map((__: any, c: number) => (
+              <>
                 <circle
                   key={c + r}
                   r={1}
@@ -25,14 +25,25 @@ export default function Blob({ shape }: BlobProps) {
                   cy={r * 2 + 1}
                   fill={palette.gray.light2}
                 />
-              )),
-            )}
+                <text
+                  x={c * 2 + 1}
+                  y={r * 2 + 1}
+                  className={css`
+                    font-size: 0.25px;
+                  `}
+                  fill={palette.gray.base}
+                >
+                  ({r},{c})
+                </text>
+              </>
+            )),
+          )}
 
           {new Array(9).fill(null).map((_, i) => (
             <>
               <line
                 key={i + 'vert'}
-                stroke={palette.red.light1}
+                stroke={i % 2 ? palette.red.light2 : palette.red.base}
                 x1={i}
                 x2={i}
                 y1={0}
@@ -41,7 +52,7 @@ export default function Blob({ shape }: BlobProps) {
               />
               <line
                 key={i + 'horiz'}
-                stroke={palette.red.light1}
+                stroke={i % 2 ? palette.red.light2 : palette.red.base}
                 x1={0}
                 x2={8}
                 y1={i}
@@ -55,8 +66,8 @@ export default function Blob({ shape }: BlobProps) {
       <path
         d={path}
         fill={palette.green.base}
-        // stroke={palette.green.dark1}
-        // strokeWidth={0.05}
+        stroke={palette.green.dark1}
+        strokeWidth={0.05}
       />
     </svg>
   );
