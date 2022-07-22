@@ -1,9 +1,25 @@
 type blobChar = 'o' | 'O' | ' ';
 type blobRow = [blobChar, blobChar, blobChar, blobChar];
 export type blobCode = [blobRow, blobRow, blobRow, blobRow];
+type BlobMode = 'debug' | 'interactive' | 'production';
 
 export interface BlobProps {
+  /**
+   * The 2D array defining the blob's shape
+   */
   shape: blobCode;
+  /**
+   * The color of the shape
+   */
+  fill?: string;
+  /**
+   * Click handler on the grey grid circles. Used in interactive mode
+   */
+  onGridCircleClick?: (coords: Coordinate) => void;
+  /**
+   * Switch between debug mode, interactive mode and production (static) mode
+   */
+  mode?: BlobMode;
 }
 
 /**
