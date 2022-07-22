@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, upperFirst } from 'lodash';
 import { Meta, Story } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Description, H1, H2 } from '@leafygreen-ui/typography';
 import Button from '@leafygreen-ui/button';
+import {
+  SegmentedControl,
+  SegmentedControlOption,
+} from '@leafygreen-ui/segmented-control';
 import Code, { Language, LanguageOption } from '@leafygreen-ui/code';
 import Blob from '.';
 import { generateBlobPath } from './generateBlobPath';
@@ -48,6 +52,47 @@ WithLarge.args = {
     [' ', ' ', 'O', 'O'],
     [' ', ' ', 'o', ' '],
   ],
+};
+
+export const Transitions = () => {
+  const productBlobs = {
+    atlas: [
+      ['o', ' ', ' ', ' '],
+      ['o', 'o', 'o', 'o'],
+      [' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' '],
+    ] as blobCode,
+    appServices: [
+      ['o', ' ', ' ', ' '],
+      [' ', 'O', 'O', ' '],
+      [' ', 'O', 'O', ' '],
+      [' ', ' ', ' ', ' '],
+    ] as blobCode,
+    charts: [
+      ['o', ' ', 'o', 'o'],
+      [' ', 'o', 'o', 'o'],
+      [' ', 'o', ' ', ' '],
+      [' ', ' ', ' ', ' '],
+    ] as blobCode,
+  } as const;
+
+  const [product, setProduct] = useState<keyof typeof productBlobs>('atlas');
+
+  return (
+    <div>
+      <Blob shape={productBlobs[product]} />
+      <SegmentedControl
+        value={product}
+        onChange={(val: any) => setProduct(val)}
+      >
+        {Object.keys(productBlobs).map(name => (
+          <SegmentedControlOption key={name} value={name}>
+            {upperFirst(name)}
+          </SegmentedControlOption>
+        ))}
+      </SegmentedControl>
+    </div>
+  );
 };
 
 export const Interactive = () => {

@@ -187,5 +187,8 @@
     "packages/*",
     "website"
   ],
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": {
+    "react-spring": "^9.5.1"
+  }
 }
