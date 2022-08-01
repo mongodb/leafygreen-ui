@@ -53,6 +53,10 @@ export const labelHoverStyle: Record<Theme, string> = {
   `,
 };
 
+export const disabledLabelDarkThemeOverrideStyle = css`
+  color: ${palette.gray.dark1};
+`
+
 export const inputStyle = css`
   margin: 0;
   position: absolute;
