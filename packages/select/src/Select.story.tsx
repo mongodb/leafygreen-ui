@@ -12,6 +12,7 @@ export default {
   args: {
     placeholder: 'Select',
     disabled: false,
+    allowDeselect: false,
     children: [
       <Option key="long" value="long">
         Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget

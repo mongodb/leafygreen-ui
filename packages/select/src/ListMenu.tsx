@@ -3,15 +3,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
+import { Theme } from '@leafygreen-ui/lib';
 import SelectContext from './SelectContext';
-import {
-  colorSets,
-  legacySizeSets,
-  mobileSizeSet,
-  sizeSets,
-} from './styleSets';
+import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
-import { Mode, Size } from './types';
+import { Size } from './types';
 import isUndefined from 'lodash/isUndefined';
 
 const maxMenuHeight = 274;
@@ -21,7 +17,7 @@ const baseMenuStyle = css`
   position: relative;
   text-align: left;
   width: 100%;
-  border-radius: 3px; //
+  border-radius: 3px;
   line-height: 16px;
   list-style: none;
   margin: 0;
@@ -29,32 +25,20 @@ const baseMenuStyle = css`
   overflow: auto;
 `;
 
-const getMenuStyles = (mode: Mode, size: Size) => {
-  const sizeSet = mode === Mode.Dark ? legacySizeSets[size] : sizeSets[size];
-
-  const colorSet = colorSets[mode];
+const getMenuStyles = (theme: Theme, size: Size) => {
+  const sizeSet = sizeSets[size];
+  const colorSet = colorSets[theme];
 
   return cx(
     css`
+      font-family: ${fontFamilies.default};
       font-size: ${sizeSet.option.text}px;
       min-height: ${sizeSet.height}px;
       background-color: ${colorSet.option.background.base};
+      border-radius: 12px;
+      box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
+      padding: 8px 0;
     `,
-    {
-      // TODO: Refresh - remove dark mode logic
-      [css`
-        font-family: ${fontFamilies.default};
-        border: 1px solid ${colorSet.menu.border};
-        border-radius: 12px;
-        box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
-        padding: 8px 0;
-      `]: mode === Mode.Light,
-      [css`
-        font-family: ${fontFamilies.legacy};
-        border-radius: 3px;
-        box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
-      `]: mode === Mode.Dark,
-    },
   );
 };
 
@@ -82,7 +66,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     }: ListMenuProps,
     forwardedRef,
   ) {
-    const { mode, size, disabled, open } = useContext(SelectContext);
+    const { theme, size, disabled, open } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
 
@@ -111,7 +95,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     return (
       <Popover
         active={open && !disabled}
-        spacing={mode === 'dark' ? 4 : 8}
+        spacing={8}
         align={Align.Bottom}
         justify={Justify.Middle}
         adjustOnMutation
@@ -129,7 +113,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
           onClick={onClick}
           className={cx(
             baseMenuStyle,
-            getMenuStyles(mode, size),
+            getMenuStyles(theme, size),
             css`
               max-height: ${maxHeightValue};
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
