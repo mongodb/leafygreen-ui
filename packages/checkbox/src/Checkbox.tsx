@@ -9,11 +9,11 @@ import { palette, uiColors } from '@leafygreen-ui/palette';
 import { LegacyCheck } from './LegacyCheck';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { Check } from './Check';
-import { checkAnimationDuration, checkBoxSize } from './constants';
+import { checkBoxSize } from './constants';
 import { CheckboxProps } from './types';
 
-const checkClassName = createUniqueClassName();
-const inputClassName = createUniqueClassName();
+const checkWrapperClassName = createUniqueClassName('check-wrapper');
+const inputClassName = createUniqueClassName('input');
 
 const Mode = {
   Light: 'light',
@@ -23,7 +23,6 @@ const Mode = {
 type Mode = typeof Mode[keyof typeof Mode];
 
 const containerStyle = css`
-  --lg-checkbox-base-duration: 0ms;
   display: grid;
   grid-template-columns: ${checkBoxSize}px auto;
   grid-template-areas: 'label label' '. description';
@@ -32,19 +31,6 @@ const containerStyle = css`
   align-items: center;
   justify-content: flex-start;
   z-index: 0;
-`;
-
-// Toggles on the animation timing
-const enableAnimationStyles = css`
-  // if there is no motion preference
-  @media (prefers-reduced-motion: no-preference) {
-    --lg-checkbox-base-duration: ${checkAnimationDuration}ms;
-    // Enable var access in pseudo elements
-    *:before,
-    *:after {
-      --lg-checkbox-base-duration: ${checkAnimationDuration}ms;
-    }
-  }
 `;
 
 /** &:disabled won't work and [disabled] isn't a valid property because this isn't an input */
@@ -59,13 +45,14 @@ const labelStyle = css`
   grid-template-areas: 'check text';
   gap: 8px;
   justify-content: flex-start;
+  align-items: baseline;
   cursor: pointer;
 `;
 
 const labelHoverSelector = `
   &:hover:not(:focus-within)
     > .${inputClassName}:not([disabled])
-      + .${checkClassName}
+      + .${checkWrapperClassName}
 `;
 
 const labelHoverStyle = css`
@@ -86,23 +73,25 @@ const inputStyle = css`
 `;
 
 const inputFocusStyles = css`
-  &:focus + .${checkClassName} {
+  &:focus + .${checkWrapperClassName} {
     box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
   }
 `;
 
 // TODO: Refresh - remove when darkmode is updated
 const inputFocusStylesDarkMode = css`
-  &:focus + .${checkClassName}:after {
-    content: '';
-    bottom: 0;
-    left: 3px;
-    right: 3px;
-    height: 2px;
-    position: absolute;
-    background-color: #43b1e5;
-    border-radius: 2px;
-    box-shadow: unset;
+  &:focus + .${checkWrapperClassName} {
+    & :after {
+      content: '';
+      bottom: 0;
+      left: 3px;
+      right: 3px;
+      height: 2px;
+      position: absolute;
+      background-color: #43b1e5;
+      border-radius: 2px;
+      box-shadow: unset;
+    }
   }
 `;
 
@@ -139,6 +128,7 @@ function Checkbox({
   label = '',
   description,
   disabled = false,
+  bold: boldProp,
   indeterminate: indeterminateProp,
   animate = true,
   className,
@@ -159,6 +149,10 @@ function Checkbox({
 
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
   const labelId = `${checkboxId}-label`;
+
+  // If a prop is passed, use the prop
+  // otherwise default bold if there's a description
+  const bold = boldProp ?? !!description;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChangeProp) {
@@ -191,7 +185,6 @@ function Checkbox({
         containerStyle,
         {
           [disabledContainerStyle]: disabled,
-          [enableAnimationStyles]: animate,
         },
         className,
       )}
@@ -235,7 +228,7 @@ function Checkbox({
             indeterminate={indeterminateProp}
             disabled={disabled}
             animate={animate}
-            selector={checkClassName}
+            selector={checkWrapperClassName}
           />
         ) : (
           <Check
@@ -243,7 +236,7 @@ function Checkbox({
             indeterminate={indeterminateProp}
             disabled={disabled}
             animate={animate}
-            selector={checkClassName}
+            selector={checkWrapperClassName}
           />
         )}
 
@@ -251,6 +244,9 @@ function Checkbox({
           <span
             className={cx(labelTextStyle, labelTextColorStyle[mode], {
               [disabledTextStyle]: disabled,
+              [css`
+                font-weight: 400;
+              `]: !bold,
               // TODO: Refresh - remove dark mode styles
               [css`
                 font-family: ${fontFamilies.legacy};
