@@ -73,7 +73,7 @@ function Menu({
   portalContainer,
   scrollContainer,
   popoverZIndex,
-  maxHeight = 256,
+  maxHeight = 344,
   darkMode: darkModeProp,
   ...rest
 }: MenuProps) {
