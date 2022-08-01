@@ -51,72 +51,66 @@ const subMenuThemeStyle: Record<Theme, string> = {
   [Theme.Light]: cx(
     subMenuStyle,
     css`
-    background-color: ${palette.black};
-  `),
+      background-color: ${palette.black};
+    `,
+  ),
   [Theme.Dark]: cx(
     subMenuStyle,
     css`
-    background-color: ${palette.gray.light2};
-  `),
-}
+      background-color: ${palette.gray.light2};
+    `,
+  ),
+};
 
 const subMenuOpenStyle: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
+  [Theme.Light]: css`
     background-color: transparent;
 
-  &:hover {
-    background-color: ${palette.gray.dark3};
-  }
+    &:hover {
+      background-color: ${palette.gray.dark3};
+    }
   `,
-  [Theme.Dark]:
-    css`
+  [Theme.Dark]: css`
     background-color: transparent;
 
     &:hover {
       background-color: ${palette.gray.light1};
     }
   `,
-}
+};
 
 const focusedIconStyle: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
+  [Theme.Light]: css`
     ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
       color: ${palette.white};
     }
   `,
-  [Theme.Dark]:
-    css`
+  [Theme.Dark]: css`
     ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
       color: ${palette.white};
     }
   `,
-}
+};
 
 const closedIconStyle: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
+  [Theme.Light]: css`
     transition: color 200ms ease-in-out;
-  color: ${palette.gray.light1};
+    color: ${palette.gray.light1};
   `,
-  [Theme.Dark]:
-    css`
+  [Theme.Dark]: css`
     transition: color 200ms ease-in-out;
-  color: ${palette.gray.dark1};
+    color: ${palette.gray.dark1};
   `,
-}
+};
 
 const openIconStyle: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
-    color: ${palette.gray.light1}
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
   `,
-  [Theme.Dark]:
-    css`
-    color: ${palette.gray.dark1}
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
   `,
-}
+};
 
 const iconButtonStyle = css`
   position: absolute;
@@ -130,8 +124,7 @@ const iconButtonStyle = css`
 `;
 
 const iconButtonThemeStyle: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
+  [Theme.Light]: css`
     background-color: ${palette.black};
 
     &:hover {
@@ -142,21 +135,20 @@ const iconButtonThemeStyle: Record<Theme, string> = {
       background-color: ${palette.gray.dark3};
     }
   `,
-  [Theme.Dark]:
-    css`
+  [Theme.Dark]: css`
     background-color: ${palette.gray.light2};
 
-  &:hover {
-    &:before {
-      background-color: ${palette.gray.light3};
+    &:hover {
+      &:before {
+        background-color: ${palette.gray.light3};
+      }
     }
-  }
 
-  ${subMenuContainer.selector}:hover + & {
-    background-color: ${palette.gray.light2};
-  }
+    ${subMenuContainer.selector}:hover + & {
+      background-color: ${palette.gray.light2};
+    }
   `,
-}
+};
 
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
@@ -169,15 +161,13 @@ const iconButtonFocusedStyle = css`
 `;
 
 const openIconButtonStyle: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
+  [Theme.Light]: css`
     background-color: ${palette.black};
   `,
-  [Theme.Dark]:
-    css`
+  [Theme.Dark]: css`
     background-color: ${palette.gray.light2};
   `,
-}
+};
 
 const ulStyle = css`
   list-style: none;
@@ -187,7 +177,8 @@ const ulStyle = css`
   transition: height 150ms ease-in-out;
   position: relative;
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     height: 1px;
@@ -205,19 +196,19 @@ const ulStyle = css`
 `;
 
 const ulThemeStyles: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
-    &::before, &::after {
+  [Theme.Light]: css`
+    &::before,
+    &::after {
       background-color: ${palette.gray.dark2};
     }
-    `,
-  [Theme.Dark]:
-    css`
-    &::before, &::after {
+  `,
+  [Theme.Dark]: css`
+    &::before,
+    &::after {
       background-color: ${palette.gray.light1};
     }
   `,
-}
+};
 
 const menuItemText = css`
   width: 100%;
@@ -246,6 +237,7 @@ const subItemStyle = css`
   // Reassign the variable for specificity
   --lg-menu-item-text-color: ${palette.gray.light1};
   position: relative;
+  min-height: 32px;
 
   &::after {
     content: '';
@@ -258,21 +250,19 @@ const subItemStyle = css`
 `;
 
 const subItemThemeStyle: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
+  [Theme.Light]: css`
     &::after {
       background-color: ${palette.gray.dark2};
     }
   `,
-  [Theme.Dark]:
-    css`
+  [Theme.Dark]: css`
     &::after {
       background-color: ${palette.gray.light1};
     }
   `,
-}
+};
 
-const subMenuItemHeight = 36;
+const subMenuItemHeight = 32;
 
 interface SubMenuProps {
   /**
@@ -331,9 +321,9 @@ interface SubMenuProps {
    *
    * default: `false`
    */
-   darkMode?: boolean;
+  darkMode?: boolean;
 
-   /**
+  /**
    * Size of the MenuItem component, can be `default` or `large`
    */
   size?: Size;
@@ -531,18 +521,22 @@ const SubMenu: ExtendableBox<
           {(state: string) => (
             <ul
               ref={nodeRef}
-              className={cx(ulStyle, ulThemeStyles[theme],
+              className={cx(
+                ulStyle,
+                ulThemeStyles[theme],
                 css`
-                  &::before, &::after {
+                  &::before,
+                  &::after {
                     // this is the width for the UL border
                     width: calc(100% - ${glyph ? paddingLeftBorder : 20}px);
                   }
                 `,
                 {
-                [css`
-                  height: ${subMenuItemHeight * numberOfMenuItems}px;
-                `]: state === 'entered',
-              })}
+                  [css`
+                    height: ${subMenuItemHeight * numberOfMenuItems}px;
+                  `]: state === 'entered',
+                },
+              )}
               role="menu"
               aria-label={title}
             >
@@ -571,7 +565,9 @@ const SubMenu: ExtendableBox<
                         padding-left: ${glyph ? paddingLeft : 36}px;
                         &::after {
                           // this is the width for the button bottom border
-                          width: calc(100% - ${glyph ? paddingLeftBorder : 20}px);
+                          width: calc(
+                            100% - ${glyph ? paddingLeftBorder : 20}px
+                          );
                         }
                       `,
                       child.props.className,

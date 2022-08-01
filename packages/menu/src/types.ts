@@ -42,5 +42,5 @@ export interface MenuProps extends Omit<PopoverProps, 'active'> {
    *
    * default: `false`
    */
-   darkMode?: boolean;
+  darkMode?: boolean;
 }

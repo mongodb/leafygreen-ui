@@ -8,12 +8,10 @@ import { palette } from '@leafygreen-ui/palette';
 import { FocusableMenuItemElement } from './FocusableMenuItem';
 import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
-import MenuSeparator, {MenuSeparatorElement} from './MenuSeparator';
+import MenuSeparator, { MenuSeparatorElement } from './MenuSeparator';
 import { MenuProps } from './types';
 import isUndefined from 'lodash/isUndefined';
-import {
-  useDarkMode
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const rootMenuStyle = css`
   width: 210px;
@@ -24,11 +22,11 @@ const rootMenuStyle = css`
 
 const rootMenuThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-  background-color: ${palette.black};
+    background-color: ${palette.black};
   `,
   [Theme.Dark]: css`
-  background-color: ${palette.gray.light2};
-  `
+    background-color: ${palette.gray.light2};
+  `,
 };
 
 const scrollContainerStyle = css`
@@ -79,7 +77,6 @@ function Menu({
   darkMode: darkModeProp,
   ...rest
 }: MenuProps) {
-
   const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const hasSetInitialFocus = useRef(false);
@@ -181,7 +178,7 @@ function Menu({
             onExited: () => {
               setClosed(curr => !curr);
             },
-            darkMode
+            darkMode,
           });
         }
 
@@ -189,7 +186,7 @@ function Menu({
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
-            darkMode
+            darkMode,
           });
         }
 
@@ -197,7 +194,7 @@ function Menu({
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
-            darkMode
+            darkMode,
           });
         }
 
@@ -206,17 +203,15 @@ function Menu({
         ) {
           return React.cloneElement(child, {
             ref: setRef,
-            onFocus
+            onFocus,
           });
         }
 
-        if (
-          isComponentType<MenuSeparatorElement>(child, 'MenuSeparator')
-        ) {
+        if (isComponentType<MenuSeparatorElement>(child, 'MenuSeparator')) {
           // return React.cloneElement(child, {
           //   darkMode: darkMode,
           // });
-          return <MenuSeparator {...props} darkMode={darkMode} />
+          return <MenuSeparator {...props} darkMode={darkMode} />;
         }
 
         if (props?.children) {

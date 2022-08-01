@@ -42,7 +42,7 @@ export default {
     size: {
       options: Object.values(Size),
       control: 'select',
-    }
+    },
   },
 };
 
@@ -55,10 +55,19 @@ export const UncontrolledTemplate = ({
   return (
     <LeafyGreenProvider>
       <Menu open={open} trigger={trigger} {...args}>
-        <MenuItem description="I am also an active description" active size={size} glyph={<CloudIcon />}>
+        <MenuItem
+          description="I am also an active description"
+          active
+          size={size}
+          glyph={<CloudIcon />}
+        >
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description" size={size} glyph={<CloudIcon />}>
+        <MenuItem
+          description="I am also a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
           Menu Item With Description
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
@@ -91,13 +100,22 @@ export const SubMenuExample = ({
         <MenuItem active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description" size={size} glyph={<CloudIcon />}>
+        <MenuItem
+          description="I am also a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
           Menu Item
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
           Disabled Menu Item
         </MenuItem>
-        <MenuItem disabled description="I am a description" size={size} glyph={<CloudIcon />}>
+        <MenuItem
+          disabled
+          description="I am a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
           Disabled Menu Item
         </MenuItem>
         <MenuSeparator />
@@ -119,11 +137,7 @@ export const SubMenuExample = ({
           <MenuItem>SubMenu Item 2</MenuItem>
           <MenuItem>SubMenu Item 3</MenuItem>
         </SubMenu>
-        <SubMenu
-          title="Menu Item 2"
-          description="Sed posuere"
-          size={size}
-        >
+        <SubMenu title="Menu Item 2" description="Sed posuere" size={size}>
           <MenuItem>Support 1</MenuItem>
         </SubMenu>
       </Menu>

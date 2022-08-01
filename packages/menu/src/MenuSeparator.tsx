@@ -3,35 +3,59 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
 
-const borderStyle: Record<Theme, string> = {
-  [Theme.Light]:
-    css`
-    border-top: 1px solid ${palette.gray.dark2};
+const borderStyle = css`
+  height: 16px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+`;
+
+const borderThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &::before {
+      background-color: ${palette.gray.dark2};
+    }
   `,
-  [Theme.Dark]:
-    css`
-    border-top: 1px solid ${palette.gray.light1};
+  [Theme.Dark]: css`
+    &::before {
+      background-color: ${palette.gray.light1};
+    }
   `,
-}
+};
 
 interface MenuSeparatorProps {
   /**
    * className applied to `MenuSeparator` li
    */
-   className?: string;
+  className?: string;
   /**
    * Determines whether or not the component will be rendered in dark theme
    */
-   darkMode?: boolean;
+  darkMode?: boolean;
 }
 
 function MenuSeparator({ className, darkMode }: MenuSeparatorProps) {
   const theme = darkMode ? Theme.Dark : Theme.Light;
-  return <li role="separator" className={cx(borderStyle[theme], className)} />;
+  return (
+    <li
+      role="separator"
+      className={cx(borderStyle, borderThemeStyle[theme], className)}
+    />
+  );
 }
 
 MenuSeparator.displayName = 'MenuSeparator';
 
 export default MenuSeparator;
 
-export type MenuSeparatorElement = React.ReactComponentElement<typeof MenuSeparator>;
+export type MenuSeparatorElement = React.ReactComponentElement<
+  typeof MenuSeparator
+>;
