@@ -49,6 +49,9 @@ const menuButtonSizeStyle: Record<Size, string> = {
     }
   `,
   [Size.XSmall]: css`
+    text-transform: none;
+    font-size: 13px;
+    line-height: 20px;
     > *:last-child {
       padding: 0 4px 0 10px;
     }
