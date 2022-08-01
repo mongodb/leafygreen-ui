@@ -190,14 +190,6 @@ function Menu({
           });
         }
 
-        if (isComponentType<MenuItemElement>(child, 'MenuItem')) {
-          return React.cloneElement(child, {
-            ref: setRef,
-            onFocus,
-            darkMode,
-          });
-        }
-
         if (
           isComponentType<FocusableMenuItemElement>(child, 'FocusableMenuItem')
         ) {
@@ -208,9 +200,6 @@ function Menu({
         }
 
         if (isComponentType<MenuSeparatorElement>(child, 'MenuSeparator')) {
-          // return React.cloneElement(child, {
-          //   darkMode: darkMode,
-          // });
           return <MenuSeparator {...props} darkMode={darkMode} />;
         }
 
