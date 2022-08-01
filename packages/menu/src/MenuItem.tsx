@@ -82,7 +82,7 @@ const MenuItem: ExtendableBox<
     {
       disabled = false,
       active = false,
-      size = 'default',
+      size = Size.Default,
       className,
       children,
       description,
@@ -95,6 +95,8 @@ const MenuItem: ExtendableBox<
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(menuItemContainer.selector);
     const focusStyles = getFocusedStyles(menuItemContainer.selector);
+
+    // Darkmode is passed from the `Menu` component which is using the `useDarkMode` hook
     const theme = darkMode ? Theme.Dark : Theme.Light;
 
     const isAnchor = typeof rest.href === 'string';

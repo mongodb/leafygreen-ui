@@ -41,7 +41,6 @@ const subMenuContainerHeight = 56;
 const iconButtonContainerSize = 28;
 
 const subMenuStyle = css`
-  // min-height: 56px;
   padding-right: ${iconButtonContainerSize + 16}px;
   align-items: center;
   justify-content: flex-start;
@@ -116,7 +115,6 @@ const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
   right: 8px;
-  // top: ${subMenuContainerHeight / 2 - iconButtonContainerSize / 2}px;
   top: 0;
   bottom: 0;
   margin: auto;

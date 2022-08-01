@@ -48,8 +48,6 @@ export const menuItemContainerStyle = css`
     position: absolute;
     width: ${wedgeWidth}px;
     left: 0px;
-    // height: calc(100% - 8px);
-    // max-height: 32px;
     border-radius: 0 ${wedgeWidth}px ${wedgeWidth}px 0;
     background-color: transparent;
     transition: background-color 150ms ease-in-out;
