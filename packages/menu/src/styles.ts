@@ -82,7 +82,6 @@ export const menuItemContainerThemeStyle: Record<Theme, string> = {
 
 export const menuItemHeight = (size: Size) => {
   return css`
-    // min-height: ${minMenuContent + 2 * menuBlockPadding[size]}px;
     min-height: ${size === Size.Default ? 36 : 45}px;
 
     &:before {
