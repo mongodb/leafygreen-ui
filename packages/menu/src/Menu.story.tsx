@@ -42,6 +42,7 @@ export default {
     size: {
       options: Object.values(Size),
       control: 'select',
+      description: 'Size of the `MenuItem` component, can be `default` or `large`',
     },
   },
 };
