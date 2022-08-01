@@ -166,7 +166,7 @@ const menuButtonTextStyle = css`
 
 const errorColor: Record<Theme, string> = {
   [Theme.Light]: palette.red.base,
-  [Theme.Dark]: '#FF6960', // TODO: palette.red.light1 is different in figma(#FF6960) which does not match react(#EF5752)
+  [Theme.Dark]: '#FF6960', // TODO: palette.red.light1 is different in figma(#FF6960) which does not match react(#EF5752) but will be updated with this ticket https://jira.mongodb.org/browse/PD-2206
 };
 
 const menuButtonErrorStyle: Record<Theme, string> = {
