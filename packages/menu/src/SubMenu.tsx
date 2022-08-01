@@ -28,8 +28,8 @@ import {
   getFocusedStyles,
   getHoverStyles,
   menuItemHeight,
-  paddingLeftBorder,
-  paddingLeft,
+  paddingLeftWithGlyph,
+  paddingLeftWithoutGlyph,
   menuItemContainerThemeStyle,
 } from './styles';
 import { Size } from './types';
@@ -37,7 +37,6 @@ import { Size } from './types';
 const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
 
-const subMenuContainerHeight = 56;
 const iconButtonContainerSize = 28;
 
 const subMenuStyle = css`
@@ -175,8 +174,7 @@ const ulStyle = css`
   transition: height 150ms ease-in-out;
   position: relative;
 
-  &::before,
-  &::after {
+  &::before {
     content: '';
     position: absolute;
     height: 1px;
@@ -236,6 +234,10 @@ const subItemStyle = css`
   --lg-menu-item-text-color: ${palette.gray.light1};
   position: relative;
   min-height: 32px;
+
+  > div {
+    padding-left: 16px;
+  }
 
   &::after {
     content: '';
@@ -523,10 +525,14 @@ const SubMenu: ExtendableBox<
                 ulStyle,
                 ulThemeStyles[theme],
                 css`
-                  &::before,
-                  &::after {
+                  &::before {
                     // this is the width for the UL border
-                    width: calc(100% - ${glyph ? paddingLeftBorder : 20}px);
+                    width: calc(
+                      100% -
+                        ${glyph
+                          ? paddingLeftWithGlyph
+                          : paddingLeftWithoutGlyph}px
+                    );
                   }
                 `,
                 {
@@ -560,14 +566,28 @@ const SubMenu: ExtendableBox<
                       subItemThemeStyle[theme],
                       css`
                         // padding-left of the button
-                        padding-left: ${glyph ? paddingLeft : 36}px;
+                        padding-left: ${glyph
+                          ? paddingLeftWithGlyph
+                          : paddingLeftWithoutGlyph}px;
                         &::after {
                           // this is the width for the button bottom border
                           width: calc(
-                            100% - ${glyph ? paddingLeftBorder : 20}px
+                            100% -
+                              ${glyph
+                                ? paddingLeftWithGlyph
+                                : paddingLeftWithoutGlyph}px
                           );
                         }
                       `,
+                      {
+                        [css`
+                          &:focus {
+                            &::after {
+                              background-color: ${palette.blue.dark3};
+                            }
+                          }
+                        `]: showFocus,
+                      },
                       child.props.className,
                     ),
                     onClick: (

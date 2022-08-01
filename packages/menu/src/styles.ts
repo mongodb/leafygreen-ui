@@ -5,9 +5,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { Size } from './types';
 
 export const svgWidth = 24;
-export const menuItemPadding = 15;
-export const paddingLeftBorder = 54;
-export const paddingLeft = 70;
+export const paddingLeftWithGlyph = 54;
+export const paddingLeftWithoutGlyph = 20;
 const indentation = 20;
 const wedgeWidth = 4;
 const minMenuContent = 32;
@@ -100,7 +99,7 @@ export const textContainer = css`
 
 export const mainIconStyle = css`
   color: ${palette.gray.dark1};
-  margin-right: ${paddingLeftBorder - svgWidth - menuItemPadding}px;
+  margin-right: 16px;
   flex-shrink: 0;
 `;
 
