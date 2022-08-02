@@ -113,7 +113,7 @@ function Menu({
 
     function updateChildren(children: React.ReactNode): React.ReactNode {
       return React.Children.map(children, child => {
-        if (!React.isValidElement(child)) {
+        if (!React.isValidElement(child) || child.props?.disabled) {
           return child;
         }
 
