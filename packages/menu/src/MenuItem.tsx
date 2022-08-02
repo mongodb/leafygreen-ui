@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp, getNodeTextContent, Theme } from '@leafygreen-ui/lib';
+import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
 import { cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
