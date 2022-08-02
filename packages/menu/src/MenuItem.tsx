@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { cx } from '@leafygreen-ui/emotion';
@@ -26,6 +26,7 @@ import {
   getHoverStyles,
 } from './styles';
 import { Size } from './types';
+import MenuContext from './MenuContext';
 
 const menuItemContainer = createDataProp('menu-item-container');
 interface BaseMenuItemProps {
@@ -65,13 +66,6 @@ interface BaseMenuItemProps {
   children?: React.ReactNode;
 
   href?: string;
-
-  /**
-   * Determines whether or not the component will be rendered in dark mode.
-   *
-   * default: `false`
-   */
-  darkMode?: boolean;
 }
 
 const MenuItem: ExtendableBox<
@@ -87,7 +81,6 @@ const MenuItem: ExtendableBox<
       children,
       description,
       glyph,
-      darkMode,
       ...rest
     }: BaseMenuItemProps,
     ref: React.Ref<any>,
@@ -95,9 +88,7 @@ const MenuItem: ExtendableBox<
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(menuItemContainer.selector);
     const focusStyles = getFocusedStyles(menuItemContainer.selector);
-
-    // Darkmode is passed from the `Menu` component which is using the `useDarkMode` hook
-    const theme = darkMode ? Theme.Dark : Theme.Light;
+    const { theme } = useContext(MenuContext);
 
     const isAnchor = typeof rest.href === 'string';
 

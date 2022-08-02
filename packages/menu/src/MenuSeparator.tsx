@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
+import MenuContext from './MenuContext';
 
 const borderStyle = css`
   height: 16px;
@@ -36,14 +37,10 @@ interface MenuSeparatorProps {
    * className applied to `MenuSeparator` li
    */
   className?: string;
-  /**
-   * Determines whether or not the component will be rendered in dark theme
-   */
-  darkMode?: boolean;
 }
 
-function MenuSeparator({ className, darkMode }: MenuSeparatorProps) {
-  const theme = darkMode ? Theme.Dark : Theme.Light;
+function MenuSeparator({ className }: MenuSeparatorProps) {
+  const { theme } = useContext(MenuContext);
   return (
     <li
       role="separator"

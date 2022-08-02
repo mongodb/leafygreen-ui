@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -33,6 +33,7 @@ import {
   menuItemContainerThemeStyle,
 } from './styles';
 import { Size } from './types';
+import MenuContext from './MenuContext';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
@@ -319,13 +320,6 @@ interface SubMenuProps {
   href?: string;
 
   /**
-   * Determines whether or not the component will be rendered in dark Theme.
-   *
-   * default: `false`
-   */
-  darkMode?: boolean;
-
-  /**
    * Size of the MenuItem component, can be `default` or `large`
    */
   size?: Size;
@@ -348,7 +342,6 @@ const SubMenu: ExtendableBox<
       open = false,
       active = false,
       disabled = false,
-      darkMode,
       size = Size.Default,
       ...rest
     }: SubMenuProps,
@@ -357,7 +350,7 @@ const SubMenu: ExtendableBox<
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(subMenuContainer.selector);
     const focusStyles = getFocusedStyles(subMenuContainer.selector);
-    const theme = darkMode ? Theme.Dark : Theme.Light;
+    const { theme } = useContext(MenuContext);
 
     const nodeRef = React.useRef(null);
 

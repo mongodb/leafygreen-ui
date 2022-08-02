@@ -3,6 +3,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuProps, SubMenu, MenuItem, MenuSeparator } from '.';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import Button from '@leafygreen-ui/button';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 import { Size } from './types';
 
 export default {
@@ -36,9 +37,7 @@ export default {
     className: {
       type: 'string',
     },
-    darkMode: {
-      control: 'boolean',
-    },
+    darkMode: defaultArgTypes.darkMode,
     size: {
       options: Object.values(Size),
       control: 'select',

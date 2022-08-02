@@ -12,6 +12,7 @@ import MenuSeparator, { MenuSeparatorElement } from './MenuSeparator';
 import { MenuProps } from './types';
 import isUndefined from 'lodash/isUndefined';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { MenuContext } from './MenuContext';
 
 const rootMenuStyle = css`
   width: 210px;
@@ -77,7 +78,7 @@ function Menu({
   darkMode: darkModeProp,
   ...rest
 }: MenuProps) {
-  const { darkMode, theme } = useDarkMode(darkModeProp);
+  const { theme } = useDarkMode(darkModeProp);
 
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
@@ -178,7 +179,6 @@ function Menu({
             onExited: () => {
               setClosed(curr => !curr);
             },
-            darkMode,
           });
         }
 
@@ -186,7 +186,6 @@ function Menu({
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
-            darkMode,
           });
         }
 
@@ -200,7 +199,7 @@ function Menu({
         }
 
         if (isComponentType<MenuSeparatorElement>(child, 'MenuSeparator')) {
-          return <MenuSeparator {...props} darkMode={darkMode} />;
+          return <MenuSeparator {...props} />;
         }
 
         if (props?.children) {
@@ -216,7 +215,7 @@ function Menu({
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, currentSubMenu, open, darkMode]);
+  }, [children, currentSubMenu, open]);
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
@@ -332,39 +331,45 @@ function Menu({
       : { spacing, usePortal }),
   };
 
+  const providerData = useMemo(() => {
+    return { theme };
+  }, [theme]);
+
   const popoverContent = (
-    <Popover
-      key="popover"
-      active={open}
-      align={align}
-      justify={justify}
-      refEl={refEl}
-      adjustOnMutation={adjustOnMutation}
-      {...popoverProps}
-    >
-      <div
-        className={cx(
-          rootMenuStyle,
-          rootMenuThemeStyles[theme],
-          css`
-            max-height: ${maxMenuHeightValue};
-          `,
-          className,
-        )}
+    <MenuContext.Provider value={providerData}>
+      <Popover
+        key="popover"
+        active={open}
+        align={align}
+        justify={justify}
+        refEl={refEl}
+        adjustOnMutation={adjustOnMutation}
+        {...popoverProps}
       >
-        {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-        <ul
-          {...rest}
-          className={scrollContainerStyle}
-          role="menu"
-          ref={setPopoverNode}
-          onClick={e => e.stopPropagation()}
+        <div
+          className={cx(
+            rootMenuStyle,
+            rootMenuThemeStyles[theme],
+            css`
+              max-height: ${maxMenuHeightValue};
+            `,
+            className,
+          )}
         >
-          {updatedChildren}
-        </ul>
-      </div>
-    </Popover>
+          {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+          <ul
+            {...rest}
+            className={scrollContainerStyle}
+            role="menu"
+            ref={setPopoverNode}
+            onClick={e => e.stopPropagation()}
+          >
+            {updatedChildren}
+          </ul>
+        </div>
+      </Popover>
+    </MenuContext.Provider>
   );
 
   if (trigger) {
