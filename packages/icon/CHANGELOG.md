@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.10.1
+
+### Patch Changes
+
+- 31f1cf8f: Updated `Folder` SVG
+
 ## 11.10.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 14.0.2
+
+### Patch Changes
+
+- f9846f68: When a menu is closed with the `Escape` key, the trigger will regain focus
+
 ## 14.0.1
 
 ### Patch Changes

@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Story } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
 import React from 'react';
 import Checkbox from '.';
 import { CheckboxProps } from './types';
@@ -9,20 +9,26 @@ import defaultArgTypes from '../../../stories/defaultArgTypes';
 export default {
   title: 'Components/Checkbox',
   component: Checkbox,
+  parameters: {
+    controls: {
+      exclude: ['children', 'className', 'aria-label', 'onChange'],
+    },
+  },
   argTypes: {
-    children: defaultArgTypes.children,
+    label: { control: 'text' },
+    description: { control: 'text' },
     darkMode: defaultArgTypes.darkMode,
     checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
-    onChange: { control: 'none' },
     baseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },
     },
   },
-};
+} as ComponentMeta<typeof Checkbox>;
 
 type BaseFontSize = 14 | 16;
 
@@ -45,4 +51,23 @@ Basic.args = {
   className: css`
     max-width: 700px;
   `,
+};
+
+export const NoDescription = Template.bind({});
+NoDescription.args = {
+  label:
+    'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.',
+};
+
+export const WrappedLabel = Template.bind({});
+WrappedLabel.args = {
+  label:
+    'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.',
+  className: css`
+    max-width: 256px;
+  `,
+};
+export const CheckOnly = Template.bind({});
+CheckOnly.args = {
+  'aria-label': 'Label',
 };

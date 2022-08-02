@@ -8,13 +8,6 @@ export const State = {
 
 export type State = typeof State[keyof typeof State];
 
-export const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-export type Mode = typeof Mode[keyof typeof Mode];
-
 export type BaseTextAreaProps = HTMLElementProps<
   'textarea',
   HTMLTextAreaElement
@@ -25,7 +18,7 @@ export type BaseTextAreaProps = HTMLElementProps<
   id?: string;
 
   /**
-   * Determines whether or not the component appears in dark mode.
+   * Determines whether or not the component appears in dark theme.
    * @default: false
    */
   darkMode?: boolean;

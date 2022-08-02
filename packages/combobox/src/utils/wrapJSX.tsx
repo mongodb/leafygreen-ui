@@ -1,4 +1,5 @@
 import React, { ReactChild } from 'react';
+import escapeRegExp from 'lodash/escapeRegExp';
 
 /**
  *
@@ -17,7 +18,8 @@ export const wrapJSX = (
   element?: keyof HTMLElementTagNameMap,
 ): JSX.Element => {
   if (wrap && element) {
-    const regex = new RegExp(wrap, 'gi');
+    const cleanWrap = escapeRegExp(wrap);
+    const regex = new RegExp(cleanWrap, 'gi');
     const matches = str.matchAll(regex);
 
     if (matches) {
