@@ -93,6 +93,29 @@ describe('packages/combobox/utils', () => {
       expect(container).toHaveTextContent(`Apple`);
     });
 
+    // Sanitization
+    test('Wraps a string that contains a Regex special character', () => {
+      const JSX = wrapJSX('*(foo)', '*(', 'em');
+      const { container } = render(JSX);
+      const ems = container.querySelectorAll('em');
+      expect(ems).toHaveLength(1);
+      expect(ems[0]).toHaveTextContent('*(');
+      expect(container).toHaveTextContent('*(foo');
+    });
+    test('Wraps a string that contains a long Regex string', () => {
+      const JSX = wrapJSX(
+        '^(([a-z])+.)+[A-Z]([a-z])+$',
+        '^(([a-z])+.)+[A-Z]([a-z])+$',
+        'em',
+      );
+      const { container } = render(JSX);
+      const ems = container.querySelectorAll('em');
+      expect(ems).toHaveLength(1);
+      expect(ems[0]).toHaveTextContent('^(([a-z])+.)+[A-Z]([a-z])+$');
+      expect(container).toHaveTextContent('^(([a-z])+.)+[A-Z]([a-z])+$');
+    });
+
+    // Multiple calls
     test('Updates after a second call', () => {
       const JSX = wrapJSX('Apple', 'p', 'em');
       const { container, rerender } = render(JSX);
