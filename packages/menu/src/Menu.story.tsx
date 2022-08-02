@@ -123,7 +123,6 @@ export const SubMenuExample = ({
         <MenuItem size={size} href="http://mongodb.design">
           I am a link!
         </MenuItem>
-        <MenuItem size={size}>I am active</MenuItem>
         <SubMenu
           title="Menu Item 1"
           description=".design"
