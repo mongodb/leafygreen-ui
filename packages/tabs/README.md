@@ -106,3 +106,27 @@ _Any other properties supplied will be spread on the root element._
 | `to`              | `string`                                           | Destination when Tab's `name` in the list should be rendered as a `Link` tag.                                             |         |
 | `children`        | `node`                                             | Content that appears inside the `<Tab />` component                                                                       |         |
 | ...               | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                                                        |         |
+
+## Reference
+
+### Usage with NextJS Link components
+
+Tabs may not render with the correct tags or styles if the NextJS Link component is passed to the `as` prop directly, given how NextJS handles default rendering of the component based on the `href` prop. To work around this, pass the NextJS Link as shown below.
+
+```
+import NextLink from 'next/link';
+
+function Linker({ href, children, ...props }) {
+  return (
+    <NextLink href={href}>
+      <a {...props}>
+        {children}
+      </a>
+    </NextLink>
+  );
+}
+
+<Tabs aria-label="Profile Sections" as={Linker}>
+...
+</Tabs>
+```
