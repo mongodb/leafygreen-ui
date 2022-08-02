@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Story } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
 import React from 'react';
 import Checkbox from '.';
 import { CheckboxProps } from './types';
@@ -9,21 +9,26 @@ import defaultArgTypes from '../../../stories/defaultArgTypes';
 export default {
   title: 'Components/Checkbox',
   component: Checkbox,
+  parameters: {
+    controls: {
+      exclude: ['children', 'className', 'aria-label', 'onChange'],
+    },
+  },
   argTypes: {
-    children: defaultArgTypes.children,
+    label: { control: 'text' },
+    description: { control: 'text' },
     darkMode: defaultArgTypes.darkMode,
     checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
     bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
-    onChange: { control: 'none' },
     baseFontSize: {
       options: [14, 16],
       control: { type: 'radio' },
     },
   },
-};
+} as ComponentMeta<typeof Checkbox>;
 
 type BaseFontSize = 14 | 16;
 
