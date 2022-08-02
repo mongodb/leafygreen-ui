@@ -19,7 +19,7 @@ import {
   disabledTextStyle,
   mainIconStyle,
   activeIconStyle,
-  titleTextThemeStyle,
+  titleTextStyle,
   activeTitleTextStyle,
   descriptionTextThemeStyle,
   linkDescriptionTextStyle,
@@ -251,11 +251,13 @@ const subItemStyle = css`
 
 const subItemThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
+    color: ${palette.gray.light1};
     &::after {
       background-color: ${palette.gray.dark2};
     }
   `,
   [Theme.Dark]: css`
+    color: ${palette.gray.dark2};
     &::after {
       background-color: ${palette.gray.light1};
     }
@@ -438,7 +440,7 @@ const SubMenu: ExtendableBox<
         <div className={textContainer}>
           <div
             data-text={getNodeTextContent(children)}
-            className={cx(titleTextThemeStyle[theme], hoverStyles.text, {
+            className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle[theme]]: active,
               [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,

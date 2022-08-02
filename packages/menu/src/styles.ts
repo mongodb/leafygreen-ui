@@ -9,11 +9,6 @@ export const paddingLeftWithGlyph = 54;
 export const paddingLeftWithoutGlyph = 20;
 const indentation = 20;
 const wedgeWidth = 4;
-const minMenuContent = 32;
-const menuBlockPadding: Record<Size, number> = {
-  [Size.Default]: 2,
-  [Size.Large]: 6.5,
-};
 
 /**
  * Base styles
@@ -102,7 +97,7 @@ export const mainIconStyle = css`
   flex-shrink: 0;
 `;
 
-const titleTextStyle = css`
+export const titleTextStyle = css`
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
@@ -124,21 +119,6 @@ const titleTextStyle = css`
   }
 `;
 
-export const titleTextThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: cx(
-    titleTextStyle,
-    css`
-      color: ${palette.white};
-    `,
-  ),
-  [Theme.Dark]: cx(
-    titleTextStyle,
-    css`
-      color: ${palette.black};
-    `,
-  ),
-};
-
 const descriptionTextStyle = css`
   font-size: 13px;
   font-weight: normal;
@@ -150,7 +130,7 @@ export const descriptionTextThemeStyle: Record<Theme, string> = {
   [Theme.Light]: cx(
     descriptionTextStyle,
     css`
-      color: ${palette.white};
+      color: ${palette.gray.light1};
     `,
   ),
   [Theme.Dark]: cx(
@@ -332,5 +312,4 @@ export const getFocusedStyles = (selector: string) => {
 
 export const linkStyle = css`
   text-decoration: none;
-  color: inherit;
 `;

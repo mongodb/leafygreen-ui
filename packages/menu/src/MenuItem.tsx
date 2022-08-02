@@ -15,7 +15,7 @@ import {
   mainIconStyle,
   activeIconStyle,
   disabledIconStyle,
-  titleTextThemeStyle,
+  titleTextStyle,
   activeTitleTextStyle,
   descriptionTextThemeStyle,
   linkDescriptionTextStyle,
@@ -141,7 +141,7 @@ const MenuItem: ExtendableBox<
           <div
             // Add text as data attribute to ensure no layout shift on hover
             data-text={getNodeTextContent(children)}
-            className={cx(titleTextThemeStyle[theme], hoverStyles.text, {
+            className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle[theme]]: active,
               [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
