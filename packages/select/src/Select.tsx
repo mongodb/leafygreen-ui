@@ -572,6 +572,7 @@ export default function Select({
           aria-expanded={open}
           aria-describedby={descriptionId}
           aria-invalid={state === State.Error}
+          aria-disabled={disabled}
           errorMessage={errorMessage}
           state={state}
           baseFontSize={baseFontSize}

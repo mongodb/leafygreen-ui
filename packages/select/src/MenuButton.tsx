@@ -121,34 +121,50 @@ const menuButtonDeselectedStyles: Record<Theme, string> = {
   `,
 };
 
-const menuButtonDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &:disabled {
-      background-color: ${palette.gray.light2};
-      color: ${palette.gray.base};
-      cursor: not-allowed;
+const menuButtonDisabledStyles = css`
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: unset;
+    box-shadow: unset;
 
-      > *:last-child {
-        > svg {
-          color: ${palette.gray.base};
+    &:active {
+      pointer-events: none;
+    }
+  }
+`;
+
+const menuButtonDisabledThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: cx(
+    menuButtonDisabledStyles,
+    css`
+      &:disabled {
+        background-color: ${palette.gray.light2};
+        color: ${palette.gray.base};
+
+        > *:last-child {
+          > svg {
+            color: ${palette.gray.base};
+          }
         }
       }
-    }
-  `,
-  [Theme.Dark]: css`
-    &:disabled {
-      background-color: ${palette.gray.dark3};
-      color: ${palette.gray.dark2};
-      cursor: not-allowed;
-      border-color: ${palette.gray.dark2};
+    `,
+  ),
+  [Theme.Dark]: cx(
+    menuButtonDisabledStyles,
+    css`
+      &:disabled {
+        background-color: ${palette.gray.dark3};
+        color: ${palette.gray.dark2};
+        border-color: ${palette.gray.dark2};
 
-      > *:last-child {
-        > svg {
-          color: ${palette.gray.dark2};
+        > *:last-child {
+          > svg {
+            color: ${palette.gray.dark2};
+          }
         }
       }
-    }
-  `,
+    `,
+  ),
 };
 
 const menuButtonTextWrapperStyle = css`
@@ -267,7 +283,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         {
           [menuButtonFocusStyle[theme]]: usingKeyboard,
           [menuButtonDeselectedStyles[theme]]: deselected,
-          [menuButtonDisabledStyles[theme]]: disabled,
+          [menuButtonDisabledThemeStyles[theme]]: disabled,
           [menuButtonErrorStyle[theme]]:
             state === State.Error && !!errorMessage,
           [css`
