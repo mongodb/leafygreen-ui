@@ -280,11 +280,13 @@ function Menu({
 
     switch (e.keyCode) {
       case keyMap.ArrowDown:
+        e.preventDefault(); // Prevents page scrolling
         refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
         setFocus(refToFocus);
         break;
 
       case keyMap.ArrowUp:
+        e.preventDefault(); // Prevents page scrolling
         refToFocus =
           refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
         setFocus(refToFocus);
