@@ -62,7 +62,7 @@ function Menu({
   justify = Justify.End,
   adjustOnMutation = false,
   shouldClose = () => true,
-  spacing,
+  spacing = 6,
   open: controlledOpen,
   setOpen: controlledSetOpen,
   children,

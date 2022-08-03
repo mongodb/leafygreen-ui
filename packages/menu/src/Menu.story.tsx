@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuProps, SubMenu, MenuItem, MenuSeparator } from '.';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import Button from '@leafygreen-ui/button';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 import { Size } from './types';
@@ -13,7 +14,6 @@ export default {
     open: true,
     align: 'bottom',
     usePortal: true,
-    trigger: <Button rightGlyph={<CloudIcon />} />,
   },
   argTypes: {
     open: {
@@ -50,12 +50,17 @@ export default {
 export const UncontrolledTemplate = ({
   size,
   open,
-  trigger,
+  darkMode,
   ...args
 }: MenuProps & { size: Size }) => {
   return (
     <LeafyGreenProvider>
-      <Menu open={open} trigger={trigger} {...args}>
+      <Menu
+        open={open}
+        trigger={<Button darkMode={darkMode} rightGlyph={<EllipsisIcon />} />}
+        darkMode={darkMode}
+        {...args}
+      >
         <MenuItem
           description="I am also an active description"
           active
@@ -93,11 +98,16 @@ UncontrolledTemplate.storyName = 'Uncontrolled';
 
 export const SubMenuExample = ({
   size,
+  darkMode,
   ...args
 }: MenuProps & { size: Size }) => {
   return (
     <LeafyGreenProvider>
-      <Menu {...args}>
+      <Menu
+        darkMode={darkMode}
+        trigger={<Button darkMode={darkMode} rightGlyph={<EllipsisIcon />} />}
+        {...args}
+      >
         <MenuItem active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
@@ -148,6 +158,7 @@ export const Controlled = ({
   size,
   open,
   trigger,
+  darkMode,
   ...args
 }: MenuProps & { size: Size }) => {
   const [isOpen, setIsOpen] = useState(open);
@@ -155,8 +166,13 @@ export const Controlled = ({
     size,
     open: isOpen,
     trigger: (
-      <Button onClick={() => setIsOpen(o => !o)} rightGlyph={<CloudIcon />} />
+      <Button
+        onClick={() => setIsOpen(o => !o)}
+        rightGlyph={<EllipsisIcon />}
+        darkMode={darkMode}
+      />
     ),
+    darkMode,
     ...args,
   });
 };

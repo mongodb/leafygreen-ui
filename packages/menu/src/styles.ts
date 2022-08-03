@@ -153,7 +153,7 @@ export const linkDescriptionTextStyle = css`
 
 export const getHoverStyles = (container: string) => ({
   text: css`
-    ${container}:hover & {
+    ${container}:not(:disabled):hover & {
       font-weight: 700;
     }
   `,
@@ -238,10 +238,16 @@ export const disabledIconStyle: Record<Theme, string> = {
 
 const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
-  pointer-events: none;
 
-  &:hover:before {
-    background-color: unset;
+  &:active {
+    pointer-events: none;
+  }
+
+  &:hover {
+    &,
+    &:before {
+      background-color: unset;
+    }
   }
 `;
 
