@@ -3,6 +3,7 @@ import { ComponentStory } from '@storybook/react';
 import Tooltip, { Align, Justify, TooltipProps } from '.';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Components/Tooltip',
@@ -11,12 +12,9 @@ export default {
     children: 'I am a tooltip!',
   },
   argTypes: {
-    darkMode: {
-      control: 'boolean',
-    },
-    children: {
-      control: 'none',
-    },
+    open: { control: 'boolean' },
+    darkMode: defaultArgTypes.darkMode,
+    children: defaultArgTypes.children,
   },
 };
 
@@ -74,4 +72,10 @@ export const Test = ({ darkMode, ...args }: TooltipProps) => {
       )}
     </div>
   );
+};
+
+export const LongText = Template.bind({});
+LongText.args = {
+  children:
+    '5hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf95hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf9',
 };
