@@ -84,6 +84,11 @@ export type SelectProps = {
          */
         value?: undefined;
       } & {
+        /**
+         * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
+         *
+         * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
+         */
         onChange?: (
           value: string,
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
@@ -96,6 +101,11 @@ export type SelectProps = {
     // Controlled
     | ({ value: string; defaultValue?: undefined } & (
         | {
+            /**
+             * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
+             *
+             * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
+             */
             onChange: (
               value: string,
               event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,

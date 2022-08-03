@@ -2,6 +2,7 @@ import {
   createUniqueClassName,
   Either,
   HTMLElementProps,
+  Theme,
 } from '@leafygreen-ui/lib';
 
 interface InternalCheckboxProps extends HTMLElementProps<'input', never> {
@@ -58,6 +59,7 @@ export type CheckboxProps = Either<
 >;
 
 export interface CheckProps {
+  theme: Theme;
   isChecked: boolean;
   disabled: boolean;
   animate: boolean;
