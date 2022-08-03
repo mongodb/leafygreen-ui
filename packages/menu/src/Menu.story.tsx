@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Menu, MenuProps, SubMenu, MenuItem } from '.';
+import { Menu, MenuProps, SubMenu, MenuItem, MenuSeparator } from '.';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
 import Button from '@leafygreen-ui/button';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 import { Size } from './types';
 
 export default {
@@ -37,6 +37,13 @@ export default {
     className: {
       type: 'string',
     },
+    darkMode: defaultArgTypes.darkMode,
+    size: {
+      options: Object.values(Size),
+      control: 'select',
+      description:
+        'Size of the `MenuItem` component, can be `default` or `large`',
+    },
   },
 };
 
@@ -49,10 +56,19 @@ export const UncontrolledTemplate = ({
   return (
     <LeafyGreenProvider>
       <Menu open={open} trigger={trigger} {...args}>
-        <MenuItem active size={size} glyph={<CloudIcon />}>
+        <MenuItem
+          description="I am also an active description"
+          active
+          size={size}
+          glyph={<CloudIcon />}
+        >
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description" size={size}>
+        <MenuItem
+          description="I am also a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
           Menu Item With Description
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
@@ -85,12 +101,25 @@ export const SubMenuExample = ({
         <MenuItem active size={size} glyph={<CloudIcon />}>
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description" size={size}>
-          Menu Item With Description
+        <MenuItem
+          description="I am also a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
+          Menu Item
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
           Disabled Menu Item
         </MenuItem>
+        <MenuItem
+          disabled
+          description="I am a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
+          Disabled Menu Item
+        </MenuItem>
+        <MenuSeparator />
         <MenuItem size={size} href="http://mongodb.design">
           I am a link!
         </MenuItem>
@@ -100,15 +129,13 @@ export const SubMenuExample = ({
           glyph={<CloudIcon size="large" />}
           active={true}
           href="http://mongodb.design"
+          size={size}
         >
-          <MenuItem>SubMenu Item 1</MenuItem>
+          <MenuItem active>SubMenu Item 1</MenuItem>
           <MenuItem>SubMenu Item 2</MenuItem>
+          <MenuItem>SubMenu Item 3</MenuItem>
         </SubMenu>
-        <SubMenu
-          title="Menu Item 2"
-          description="Sed posuere consectetur"
-          glyph={<LaptopIcon size="large" />}
-        >
+        <SubMenu title="Menu Item 2" description="Sed posuere" size={size}>
           <MenuItem>Support 1</MenuItem>
         </SubMenu>
       </Menu>
