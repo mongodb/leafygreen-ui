@@ -125,9 +125,6 @@ const listTitleStyles = css`
   border: 0px;
   margin: 0;
   text-decoration: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   transition: 150ms color ease-in-out;
 
   &:focus {
@@ -169,16 +166,20 @@ const listTitleStyles = css`
       transform: scaleX(1);
     }
   }
-
-  > * {
-    vertical-align: middle;
-  }
 `;
 
 const listTitleChildrenStyles = css`
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  // Cannot use flexbox here to center children because it breaks text-overflow: ellipsis
+
+  > svg {
+    vertical-align: text-bottom;
+    margin-right: 4px;
+  }
 `;
 
 interface BaseTabTitleProps {
