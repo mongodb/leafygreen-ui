@@ -1,5 +1,18 @@
 # @leafygreen-ui/tooltip
 
+## 7.1.0
+
+### Minor Changes
+
+- 65c86281: Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set
+
+### Patch Changes
+
+- 4ad8cbc0: Adds missing @leafygreen-ui/typography dependency to package.json.
+- 9cb53590: Word break bug fixed for Tooltip
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/typography@13.1.0
+
 ## 7.0.4
 
 ### Patch Changes

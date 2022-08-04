@@ -1,5 +1,22 @@
 # @leafygreen-ui/combobox
 
+## 2.0.2
+
+### Patch Changes
+
+- bf320048: Updates the highlighting function (wrapJSX) to ensure all values are accepted, including regex special characters
+- bf320048: Adds missing `leafygreen-provider` as a peer dependency
+- Updated dependencies [65c86281]
+- Updated dependencies [4ad8cbc0]
+- Updated dependencies [9cb53590]
+- Updated dependencies [bac1e809]
+- Updated dependencies [bac1e809]
+- Updated dependencies [9dafe83a]
+  - @leafygreen-ui/icon-button@13.1.0
+  - @leafygreen-ui/tooltip@7.1.0
+  - @leafygreen-ui/typography@13.1.0
+  - @leafygreen-ui/checkbox@10.0.0
+
 ## 2.0.1
 
 ### Patch Changes
