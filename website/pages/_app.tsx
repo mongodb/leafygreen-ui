@@ -10,7 +10,15 @@ import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';
 import metaTagKey from 'utils/metaTagKey';
 import FoundationLayout from 'layouts/FoundationLayout';
-import { Body, H1, H2, H3, InlineCode, Link, Subtitle } from '@leafygreen-ui/typography';
+import {
+  Body,
+  H1,
+  H2,
+  H3,
+  InlineCode,
+  Link,
+  Subtitle,
+} from '@leafygreen-ui/typography';
 
 const headerStyle = css`
   margin-block: 0.5em;
@@ -57,7 +65,7 @@ const MDXComponentMap = {
     ${headerStyle}
   `,
   h5: styled.h5`
-    ${headerStyle}  
+    ${headerStyle}
   `,
   h6: styled.h6`
     ${headerStyle}
@@ -79,7 +87,7 @@ const MDXComponentMap = {
   li: styled.li`
     margin: 12px 0;
     line-height: 1.6;
-  `
+  `,
 };
 
 function DefaultLayout({ children }) {
