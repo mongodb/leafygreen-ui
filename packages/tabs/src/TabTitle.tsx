@@ -166,10 +166,6 @@ const listTitleStyles = css`
       transform: scaleX(1);
     }
   }
-
-  > * {
-    vertical-align: middle;
-  }
 `;
 
 const listTitleChildrenStyles = css`
@@ -178,8 +174,10 @@ const listTitleChildrenStyles = css`
   overflow: hidden;
   text-overflow: ellipsis;
 
+  // Cannot use flexbox here to center children because it breaks text-overflow: ellipsis
+
   > svg {
-    vertical-align: bottom;
+    vertical-align: text-bottom;
     margin-right: 4px;
   }
 `;
