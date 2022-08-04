@@ -67,6 +67,11 @@ function renderSubMenuItem(props = {}) {
 }
 
 describe('packages/menu', () => {
+  test.todo('trigger renders as a function');
+  test.todo('trigger renders as a JSX element');
+  test.todo('menu appears when trigger is a function');
+  test.todo('menu appears when trigger is a JSX element');
+
   test('menu appears on DOM when the "open" prop is set', () => {
     const { getByTestId } = renderMenu({ open: true });
     const menu = getByTestId(menuTestId);
