@@ -189,7 +189,7 @@ interface CopyableProps {
    */
   copyable?: boolean;
   /**
-   * The font size of the component's copyable children
+   * The font size of the label, description, and copyable children
    */
   size?: Size;
   /**
@@ -215,6 +215,7 @@ export default function Copyable({
 
   const { portalContainer } = usePopoverPortalContainer();
 
+  // TODO: should API change to use number values instead of 'large and default' for component size?
   // Normalize the size so that we can use the baseFontSize from the provider if the size is not set by the component
   const normalizedSize = size
     ? size === Size.Default
