@@ -1,5 +1,11 @@
 # @leafygreen-ui/a11y
 
+## 1.3.0
+
+### Minor Changes
+
+- bac1e809: Adds new `usePrefersReducedMotion` hook to return whether the user has this preference set
+
 ## 1.2.2
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @leafygreen-ui/icon-button
 
+## 13.1.0
+
+### Minor Changes
+
+- 65c86281: Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set
+
+### Patch Changes
+
+- Updated dependencies [bac1e809]
+  - @leafygreen-ui/a11y@1.3.0
+
 ## 13.0.0
 
 ### Patch Changes
