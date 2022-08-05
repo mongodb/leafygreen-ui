@@ -10,7 +10,15 @@ import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';
 import metaTagKey from 'utils/metaTagKey';
 import FoundationLayout from 'layouts/FoundationLayout';
-import { Body, H1, H2, H3, InlineCode, Link } from '@leafygreen-ui/typography';
+import {
+  Body,
+  H1,
+  H2,
+  H3,
+  InlineCode,
+  Link,
+  Subtitle,
+} from '@leafygreen-ui/typography';
 
 const headerStyle = css`
   margin-block: 0.5em;
@@ -20,6 +28,26 @@ const headerStyle = css`
     font-size: inherit;
     line-height: inherit;
     color: inherit;
+  }
+
+  & > a {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+
+    :after {
+      content: url(/connect.svg);
+      position: absolute;
+      left: 100%;
+      top: 2px;
+      margin-left: 8px;
+      opacity: 0;
+    }
+
+    &:hover:after {
+      opacity: 1;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -31,6 +59,15 @@ const MDXComponentMap = {
     ${headerStyle}
   `,
   h3: styled(H3 as any)`
+    ${headerStyle}
+  `,
+  h4: styled(Subtitle as any)`
+    ${headerStyle}
+  `,
+  h5: styled.h5`
+    ${headerStyle}
+  `,
+  h6: styled.h6`
     ${headerStyle}
   `,
   code: InlineCode,
@@ -46,6 +83,10 @@ const MDXComponentMap = {
     p {
       display: inline;
     }
+  `,
+  li: styled.li`
+    margin: 12px 0;
+    line-height: 1.6;
   `,
 };
 

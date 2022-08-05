@@ -1,5 +1,21 @@
 # @leafygreen-ui/checkbox
 
+## 10.0.0
+
+### Major Changes
+
+- 9dafe83a: Updates Checkbox Dark Mode for brand refresh
+
+### Minor Changes
+
+- bac1e809: Restores `bold` prop. If left `undefined` this prop will default to `true` if a description is provided, otherwise defaults to `false`
+
+### Patch Changes
+
+- bac1e809: Improves ripple animation on checkbox click
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/typography@13.1.0
+
 ## 9.0.0
 
 ### Patch Changes

@@ -53,6 +53,8 @@ const baseTypeStyle = css`
   font-family: ${fontFamilies.default};
   color: ${palette.gray.light1};
   font-weight: 400;
+  width: 100%;
+  overflow-wrap: anywhere;
 `;
 
 const baseStyles = css`
@@ -62,7 +64,6 @@ const baseStyles = css`
   padding: 12px ${borderRadius}px;
   box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
   cursor: default;
-  overflow-wrap: break-word;
   width: fit-content;
   max-width: 256px;
 `;
