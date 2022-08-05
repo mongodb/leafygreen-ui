@@ -14,6 +14,7 @@ export default {
     open: true,
     align: 'bottom',
     usePortal: true,
+    darkMode: false,
   },
   argTypes: {
     open: {
