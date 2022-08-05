@@ -217,7 +217,7 @@ export const activeDescriptionTextStyle: Record<Theme, string> = {
 
 export const activeIconStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.green.dark2};
+    color: ${palette.green.base};
   `,
   [Theme.Dark]: css`
     color: ${palette.green.dark2};
