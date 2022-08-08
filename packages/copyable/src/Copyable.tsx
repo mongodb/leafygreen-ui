@@ -8,15 +8,18 @@ import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
-import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
-import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
-
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
+import {
+  Description,
+  InlineCode,
+  Label,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
+import {
+  useDarkMode,
+  usePopoverPortalContainer,
+} from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize, typeScales } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
 
 export const Size = {
   Default: 'default',
@@ -25,11 +28,11 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-const codeStyleColor: Record<Mode, string> = {
-  [Mode.Light]: css`
+const codeStyleColor: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.black};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light2};
   `,
 };
@@ -66,15 +69,32 @@ const codeStyleNoButton = css`
   border: 0;
 `;
 
-const codeStyleLarge = css`
-  font-size: 15px;
-  line-height: 24px;
-`;
-
-const largeLabelFontSize = css`
+const labelNoButtonStyle = css`
   font-size: 18px;
   line-height: 24px;
 `;
+
+const labelFontStyle: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: 20px; // Hardcoding because it does not match body2 lineHeight
+  `,
+};
+
+const codeFontStyle: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.code1.fontSize}px;
+    line-height: ${typeScales.code1.lineHeight}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.code2.fontSize}px;
+    line-height: ${typeScales.code2.lineHeight}px;
+  `,
+};
 
 const noButtonContainerStyle = css`
   overflow: hidden;
@@ -82,12 +102,12 @@ const noButtonContainerStyle = css`
 `;
 
 // When there is no button, remove the border from the code component and add to this component so it sits above the button wrapper box shadow
-const noButtonContainerStyleMode: Record<Mode, string> = {
-  [Mode.Light]: css`
+const noButtonContainerStyleMode: Record<Theme, string> = {
+  [Theme.Light]: css`
     border-radius: 6px;
     border: 1px solid ${palette.gray.light2};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     border-radius: 6px;
     border: 1px solid ${palette.gray.dark1};
   `,
@@ -115,8 +135,8 @@ const buttonWrapperStyleShadow = css`
   }
 `;
 
-const buttonWrapperStyleShadowMode: Record<Mode, string> = {
-  [Mode.Light]: css`
+const buttonWrapperStyleShadowTheme: Record<Theme, string> = {
+  [Theme.Light]: css`
     &:before {
       box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
     }
@@ -125,7 +145,7 @@ const buttonWrapperStyleShadowMode: Record<Mode, string> = {
       box-shadow: 0 0 12px 0 ${transparentize(0.6, palette.gray.dark1)};
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     &:before {
       box-shadow: -10px 0 10px 0 ${transparentize(0.4, palette.black)};
     }
@@ -149,6 +169,10 @@ const iconStyle = css`
 `;
 
 interface CopyableProps {
+  /**
+   * Determines whether or not the component appears in dark theme.
+   * @default: false
+   */
   darkMode?: boolean;
   children: string;
   /**
@@ -165,7 +189,7 @@ interface CopyableProps {
    */
   copyable?: boolean;
   /**
-   * The font size of the component's copyable children
+   * The font size of the label, description, and copyable children
    */
   size?: Size;
   /**
@@ -175,22 +199,30 @@ interface CopyableProps {
 }
 
 export default function Copyable({
-  darkMode = false,
+  darkMode: darkModeProp,
   children,
   label,
   description,
   className,
   copyable = true,
-  size = Size.Default,
+  size,
   shouldTooltipUsePortal = true,
 }: CopyableProps) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
-
+  const { theme, darkMode } = useDarkMode(darkModeProp);
   const [copied, setCopied] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
   const [buttonRef, setButtonRef] = useState<HTMLButtonElement>();
 
   const { portalContainer } = usePopoverPortalContainer();
+
+  // TODO: should API change to use number values instead of 'large and default' for component size?
+  // Normalize the size so that we can use the baseFontSize from the provider if the size is not set by the component
+  const normalizedSize = size
+    ? size === Size.Default
+      ? BaseFontSize.Body1
+      : BaseFontSize.Body2
+    : size;
+  const baseFontSize = useUpdatedBaseFontSize(normalizedSize);
 
   useEffect(() => {
     setShowCopyButton(copyable && ClipboardJS.isSupported());
@@ -256,8 +288,8 @@ export default function Copyable({
         <Label
           darkMode={darkMode}
           htmlFor={codeId}
-          className={cx({
-            [largeLabelFontSize]: !showCopyButton,
+          className={cx(labelFontStyle[baseFontSize], {
+            [labelNoButtonStyle]: !showCopyButton,
           })}
         >
           {label}
@@ -266,8 +298,8 @@ export default function Copyable({
       {description && (
         <Description
           darkMode={darkMode}
-          className={cx({
-            [largeLabelFontSize]: !showCopyButton,
+          className={cx(labelFontStyle[baseFontSize], {
+            [labelNoButtonStyle]: !showCopyButton,
           })}
         >
           {description}
@@ -279,7 +311,7 @@ export default function Copyable({
           containerStyle,
           {
             [buttonContainerStyle]: showCopyButton,
-            [noButtonContainerStyleMode[mode]]: !showCopyButton,
+            [noButtonContainerStyleMode[theme]]: !showCopyButton,
             [noButtonContainerStyle]: !showCopyButton,
           },
           className,
@@ -288,10 +320,14 @@ export default function Copyable({
         <InlineCode
           darkMode={darkMode}
           id={codeId}
-          className={cx(codeStyle, codeStyleColor[mode], {
-            [codeStyleNoButton]: !showCopyButton,
-            [codeStyleLarge]: size === Size.Large,
-          })}
+          className={cx(
+            codeStyle,
+            codeStyleColor[theme],
+            [codeFontStyle[baseFontSize]],
+            {
+              [codeStyleNoButton]: !showCopyButton,
+            },
+          )}
         >
           {children}
         </InlineCode>
@@ -300,7 +336,7 @@ export default function Copyable({
           className={cx(buttonWrapperStyle, {
             // TODO: Toggle these styles on only when the content extends beyond the edge of the container
             [buttonWrapperStyleShadow]: true,
-            [buttonWrapperStyleShadowMode[mode]]: true,
+            [buttonWrapperStyleShadowTheme[theme]]: true,
           })}
         >
           {copyButton}
