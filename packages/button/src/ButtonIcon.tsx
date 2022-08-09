@@ -52,7 +52,7 @@ const baseIconStyle: Record<Theme, Record<Variant, string>> = {
 const onlyIconStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: css`
-      color: ${palette.gray.dark1};
+      color: ${palette.black};
     `,
     [Variant.Primary]: css`
       color: ${palette.green.light3};
