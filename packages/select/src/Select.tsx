@@ -55,10 +55,7 @@ const errorTextStyle = ({
   sizeSet: SizeSet;
 }) => css`
   font-family: ${fontFamilies.default};
-  color: ${darkMode
-    ? '#FF6960'
-    : palette.red
-        .base}; // TODO:palette.red.light1 is different in figma(#FF6960) which does not match react(#EF5752)
+  color: ${darkMode ? palette.red.light1 : palette.red.base};
   font-size: ${sizeSet.text}px;
   margin-top: ${spacing[1]}px;
   padding-left: 2px;

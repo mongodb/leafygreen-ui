@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 
 interface ListTitleMode {
@@ -111,7 +111,7 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
 
 const listTitleStyles = css`
   font-family: ${fontFamilies.default};
-  font-size: 13px;
+  font-size: ${typeScales.body1.fontSize};
   font-weight: 500;
   position: relative;
   display: inline-flex;
