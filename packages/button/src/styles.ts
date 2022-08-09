@@ -52,7 +52,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
 
       &:hover,
       &:active {
-        color: ${palette.gray.dark3};
+        color: ${palette.black};
         background-color: ${palette.white};
         box-shadow: 0 0 0 3px ${palette.gray.light2};
       }

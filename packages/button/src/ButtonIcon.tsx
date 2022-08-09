@@ -1,5 +1,5 @@
 import React from 'react';
-import { uiColors, palette } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ButtonProps, Variant, Size } from './types';
 import { ButtonDataProp } from './styles';
@@ -44,7 +44,7 @@ const baseIconStyle: Record<Theme, Record<Variant, string>> = {
       color: ${palette.red.light1};
     `,
     [Variant.BaseGreen]: css`
-      color: ${uiColors.green.dark3};
+      color: ${palette.green.dark2};
     `,
   },
 };
@@ -55,39 +55,39 @@ const onlyIconStyle: Record<Theme, Record<Variant, string>> = {
       color: ${palette.black};
     `,
     [Variant.Primary]: css`
-      color: ${palette.green.light3};
+      color: ${palette.white};
     `,
     [Variant.PrimaryOutline]: css`
       color: ${palette.green.dark2};
     `,
     [Variant.Danger]: css`
-      color: ${palette.red.light3};
+      color: ${palette.white};
     `,
     [Variant.DangerOutline]: css`
-      color: ${palette.red.light1};
+      color: ${palette.red.base};
     `,
     [Variant.BaseGreen]: css`
-      color: ${palette.green.dark2};
+      color: ${palette.green.dark3};
     `,
   },
   [Theme.Dark]: {
     [Variant.Default]: css`
-      color: ${palette.gray.light3};
+      color: ${palette.white};
     `,
     [Variant.Primary]: css`
-      color: ${palette.green.light3};
+      color: ${palette.white};
     `,
     [Variant.PrimaryOutline]: css`
       color: ${palette.green.base};
     `,
     [Variant.Danger]: css`
-      color: ${palette.red.light3};
+      color: ${palette.white};
     `,
     [Variant.DangerOutline]: css`
       color: ${palette.red.light1};
     `,
     [Variant.BaseGreen]: css`
-      color: ${uiColors.green.dark3};
+      color: ${palette.green.dark3};
     `,
   },
 };
