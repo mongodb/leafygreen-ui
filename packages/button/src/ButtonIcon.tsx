@@ -127,9 +127,14 @@ const disabledIconStyle: Record<Theme, string> = {
   `,
 };
 
-const disabledIconOnlyStyle = css`
-  color: ${palette.gray.light1};
-`;
+const disabledIconOnlyStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark2};
+  `,
+};
 
 function ButtonIcon({
   glyph,
@@ -160,7 +165,7 @@ function ButtonIcon({
       {
         [disabledIconStyle[theme]]: disabled,
         [onlyIconStyleHover]: isIconOnlyButton,
-        [disabledIconOnlyStyle]: !darkMode && disabled && isIconOnlyButton,
+        [disabledIconOnlyStyle[theme]]: disabled && isIconOnlyButton,
       },
       className,
     ),
