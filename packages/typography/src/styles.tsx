@@ -40,7 +40,7 @@ export const defaultTextColor: Record<Theme, string> = {
   `,
 };
 
-export const labelTypeScale: Record<BaseFontSize, string> = {
+export const labelTypeScaleStyles: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;

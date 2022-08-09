@@ -13,6 +13,7 @@ import {
   InlineCode,
   Label,
   useUpdatedBaseFontSize,
+  labelTypeScaleStyles,
 } from '@leafygreen-ui/typography';
 import {
   useDarkMode,
@@ -73,17 +74,6 @@ const labelNoButtonStyle = css`
   font-size: 18px;
   line-height: 24px;
 `;
-
-const labelFontStyle: Record<BaseFontSize, string> = {
-  [BaseFontSize.Body1]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-  `,
-  [BaseFontSize.Body2]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: 20px; // Hardcoding because it does not match body2 lineHeight
-  `,
-};
 
 const codeFontStyle: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
@@ -215,13 +205,13 @@ export default function Copyable({
 
   const { portalContainer } = usePopoverPortalContainer();
 
-  // TODO: should API change to use number values instead of 'large and default' for component size?
   // Normalize the size so that we can use the baseFontSize from the provider if the size is not set by the component
   const normalizedSize = size
     ? size === Size.Default
       ? BaseFontSize.Body1
       : BaseFontSize.Body2
     : size;
+
   const baseFontSize = useUpdatedBaseFontSize(normalizedSize);
 
   useEffect(() => {
@@ -288,7 +278,7 @@ export default function Copyable({
         <Label
           darkMode={darkMode}
           htmlFor={codeId}
-          className={cx(labelFontStyle[baseFontSize], {
+          className={cx(labelTypeScaleStyles[baseFontSize], {
             [labelNoButtonStyle]: !showCopyButton,
           })}
         >
@@ -298,7 +288,7 @@ export default function Copyable({
       {description && (
         <Description
           darkMode={darkMode}
-          className={cx(labelFontStyle[baseFontSize], {
+          className={cx(labelTypeScaleStyles[baseFontSize], {
             [labelNoButtonStyle]: !showCopyButton,
           })}
         >
