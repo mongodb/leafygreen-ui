@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 9.4.1
+
+### Patch Changes
+
+- 95f1e63a: Fixes a bad build where `getTheme` was not properly exported
+
 ## 9.4.0
 
 ### Minor Changes
