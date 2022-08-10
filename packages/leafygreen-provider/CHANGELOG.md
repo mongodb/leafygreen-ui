@@ -1,5 +1,11 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 2.3.1
+
+### Patch Changes
+
+- a8be50d8: Fixes a bad build that dropped `useDarkMode` from exports
+
 ## 2.3.0
 
 ### Minor Changes
