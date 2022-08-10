@@ -75,15 +75,20 @@ const labelNoButtonStyle = css`
   line-height: 24px;
 `;
 
-const codeFontStyle: Record<BaseFontSize, string> = {
-  [BaseFontSize.Body1]: css`
+const codeFontStyle: Record<Size, string> = {
+  [Size.Default]: css`
     font-size: ${typeScales.code1.fontSize}px;
     line-height: ${typeScales.code1.lineHeight}px;
   `,
-  [BaseFontSize.Body2]: css`
+  [Size.Large]: css`
     font-size: ${typeScales.code2.fontSize}px;
     line-height: ${typeScales.code2.lineHeight}px;
   `,
+};
+
+const labelFontStyle: Record<Size, string> = {
+  [Size.Default]: labelTypeScaleStyles[BaseFontSize.Body1],
+  [Size.Large]: labelTypeScaleStyles[BaseFontSize.Body2],
 };
 
 const noButtonContainerStyle = css`
@@ -195,7 +200,7 @@ export default function Copyable({
   description,
   className,
   copyable = true,
-  size,
+  size: SizeProp,
   shouldTooltipUsePortal = true,
 }: CopyableProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -205,14 +210,14 @@ export default function Copyable({
 
   const { portalContainer } = usePopoverPortalContainer();
 
-  // Normalize the size so that we can use the baseFontSize from the provider if the size is not set by the component
-  const normalizedSize = size
-    ? size === Size.Default
-      ? BaseFontSize.Body1
-      : BaseFontSize.Body2
-    : size;
+  const baseFontSize = useUpdatedBaseFontSize();
 
-  const baseFontSize = useUpdatedBaseFontSize(normalizedSize);
+  // If there is a size use that Size, if not then use the baseFontSize to set the size
+  const size = SizeProp
+    ? SizeProp
+    : baseFontSize === BaseFontSize.Body1
+    ? Size.Default
+    : Size.Large;
 
   useEffect(() => {
     setShowCopyButton(copyable && ClipboardJS.isSupported());
@@ -278,7 +283,7 @@ export default function Copyable({
         <Label
           darkMode={darkMode}
           htmlFor={codeId}
-          className={cx(labelTypeScaleStyles[baseFontSize], {
+          className={cx(labelFontStyle[size], {
             [labelNoButtonStyle]: !showCopyButton,
           })}
         >
@@ -288,7 +293,7 @@ export default function Copyable({
       {description && (
         <Description
           darkMode={darkMode}
-          className={cx(labelTypeScaleStyles[baseFontSize], {
+          className={cx(labelFontStyle[size], {
             [labelNoButtonStyle]: !showCopyButton,
           })}
         >
@@ -313,7 +318,7 @@ export default function Copyable({
           className={cx(
             codeStyle,
             codeStyleColor[theme],
-            [codeFontStyle[baseFontSize]],
+            [codeFontStyle[size]],
             {
               [codeStyleNoButton]: !showCopyButton,
             },
