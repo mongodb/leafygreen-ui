@@ -85,10 +85,10 @@ const MenuItem: ExtendableBox<
     }: BaseMenuItemProps,
     ref: React.Ref<any>,
   ) => {
+    const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(menuItemContainer.selector);
-    const focusStyles = getFocusedStyles(menuItemContainer.selector);
-    const { theme } = useContext(MenuContext);
+    const focusStyles = getFocusedStyles(menuItemContainer.selector, theme);
 
     const isAnchor = typeof rest.href === 'string';
 
@@ -173,7 +173,7 @@ const MenuItem: ExtendableBox<
             {
               [activeMenuItemContainerStyle[theme]]: active,
               [disabledMenuItemContainerThemeStyle[theme]]: disabled,
-              [focusedMenuItemContainerStyle]: showFocus,
+              [focusedMenuItemContainerStyle[theme]]: showFocus,
             },
             className,
           )}

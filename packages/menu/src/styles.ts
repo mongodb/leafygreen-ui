@@ -280,37 +280,54 @@ export const disabledTextStyle: Record<Theme, string> = {
 /**
  * Focused styles
  */
-export const focusedMenuItemContainerStyle = css`
-  &:focus {
-    text-decoration: none;
-    background-color: ${palette.blue.dark3};
-    color: ${palette.white};
-
-    &:before {
-      background-color: ${palette.blue.light1};
+export const focusedMenuItemContainerStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:focus {
+      text-decoration: none;
+      background-color: ${palette.blue.dark3};
+      color: ${palette.white};
+  
+      &:before {
+        background-color: ${palette.blue.light1};
+      }
     }
-  }
+  
+    &::-moz-focus-inner {
+      border: 0;
+    }
+  `,
+  [Theme.Dark]: css`
+    &:focus {
+      text-decoration: none;
+      background-color: ${palette.blue.light2};
+      color: ${palette.white};
 
-  &::-moz-focus-inner {
-    border: 0;
-  }
-`;
+      &:before {
+        background-color: ${palette.blue.base};
+      }
+    }
 
-export const getFocusedStyles = (selector: string) => {
+    &::-moz-focus-inner {
+      border: 0;
+    }
+  `,
+};
+
+export const getFocusedStyles = (selector: string, theme: Theme) => {
   return {
     textStyle: css`
       ${selector}:focus & {
-        color: ${palette.white};
+        color: ${theme === Theme.Light ? palette.white : palette.blue.dark1};
       }
     `,
     descriptionStyle: css`
       ${selector}:focus & {
-        color: ${palette.blue.light3};
+        color: ${theme === Theme.Light ? palette.blue.light3 : palette.blue.dark1};
       }
     `,
     iconStyle: css`
       ${selector}:focus > & {
-        color: ${palette.blue.light3};
+        color: ${theme === Theme.Light ? palette.blue.light3 : palette.blue.base};
       }
     `,
   };
@@ -319,3 +336,21 @@ export const getFocusedStyles = (selector: string) => {
 export const linkStyle = css`
   text-decoration: none;
 `;
+
+
+export const focusedSubMenuItemBorderStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+  &:focus {
+    &::after {
+      background-color: ${palette.blue.dark3};
+    }
+  }
+  `,
+  [Theme.Dark]: css`
+  &:focus {
+    &::after {
+      background-color: ${palette.blue.light2};
+    }
+  }
+  `,
+};
