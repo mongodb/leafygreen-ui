@@ -1,4 +1,4 @@
-import { rgba, transparentize } from 'polished';
+import { transparentize } from 'polished';
 import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
 import { Size } from './types';
