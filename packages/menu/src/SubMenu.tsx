@@ -254,12 +254,18 @@ const subItemStyle = css`
 const subItemThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.light1};
+
     &::after {
       background-color: ${palette.gray.dark2};
     }
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.dark2};
+
+    &:hover {
+      color: ${palette.black};
+    }
+
     &::after {
       background-color: ${palette.gray.light1};
     }
