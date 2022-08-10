@@ -1,5 +1,6 @@
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { HTMLProps } from 'react';
+import React, { HTMLProps } from 'react';
+import NextLink from './NextLink.type'
 
 const Variant = {
   Default: 'default',
@@ -35,6 +36,9 @@ export const FontSize = {
 export type FontSize = typeof FontSize[keyof typeof FontSize];
 
 interface ButtonProps {
+  as?: keyof JSX.IntrinsicElements | NextLink;
+
+
   // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.
   // https://github.com/storybookjs/storybook/issues/14798
 
@@ -92,13 +96,15 @@ interface ButtonProps {
    * Default: `undefined`
    */
   rightGlyph?: React.ReactElement;
+
   /**
    * A `href` prop that will make the Button render as an anchor tag.
    *
    * Default: `undefined`
    */
   href?: string;
-  as?: keyof JSX.IntrinsicElements;
 }
+
+
 
 export { Variant, Size, ButtonProps };
