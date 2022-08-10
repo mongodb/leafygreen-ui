@@ -7,7 +7,6 @@ import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
-import { Mode } from './types';
 import SelectContext from './SelectContext';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 
@@ -79,20 +78,16 @@ export function InternalOption({
   disabled,
   onClick,
   onFocus,
-  isDeselection,
   triggerScrollIntoView,
   hasGlyphs,
   ...rest
 }: InternalProps) {
-  const { mode } = useContext(SelectContext);
+  const { theme } = useContext(SelectContext);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const { option: colorSet } = colorSets[mode];
+  const { option: colorSet } = colorSets[theme];
 
   const ref = useRef<HTMLLIElement>(null);
-
-  const showDeselectionStyle =
-    selected && (mode === Mode.Light || !isDeselection);
 
   const scrollIntoView = useCallback(() => {
     if (ref.current == null) {
@@ -136,11 +131,7 @@ export function InternalOption({
       className={cx(optionTextStyle, {
         [css`
           font-weight: bold;
-        `]: showDeselectionStyle,
-        // TODO: Refresh - remove darkMode logic
-        [css`
-          font-family: ${fontFamilies.legacy};
-        `]: mode === Mode.Dark,
+        `]: selected,
       })}
     >
       {children}
@@ -185,7 +176,7 @@ export function InternalOption({
     }
   }
 
-  const checkmark = showDeselectionStyle ? (
+  const checkmark = selected ? (
     <CheckmarkIcon
       key="checkmark"
       className={cx(
@@ -251,10 +242,6 @@ export function InternalOption({
           color: ${colorSet.text.base};
         `,
         {
-          // TODO: Refresh - remove dark mode conditional styles
-          [css`
-            padding: 10px 12px;
-          `]: mode === Mode.Dark,
           [css`
             &:hover {
               background-color: ${colorSet.background.hovered};
