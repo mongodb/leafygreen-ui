@@ -1,12 +1,5 @@
 # @leafygreen-ui/code
 
-## 12.0.2
-
-### Patch Changes
-
-- Updated dependencies [5aba12f1]
-  - @leafygreen-ui/select@7.0.0
-
 ## 12.0.1
 
 ### Patch Changes

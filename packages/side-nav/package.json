@@ -26,7 +26,7 @@
     "@leafygreen-ui/hooks": "^7.3.0",
     "@leafygreen-ui/icon": "^11.10.0",
     "@leafygreen-ui/lib": "^9.4.0",
-    "@leafygreen-ui/menu": "^15.0.0",
+    "@leafygreen-ui/menu": "^14.0.0",
     "@leafygreen-ui/palette": "^3.4.0",
     "@leafygreen-ui/portal": "^4.0.3",
     "@leafygreen-ui/tooltip": "^7.0.4",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/mongo-nav": "^7.2.1",
-    "@leafygreen-ui/select": "^7.0.0",
+    "@leafygreen-ui/select": "^6.0.0",
     "@leafygreen-ui/icon-button": "^13.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
