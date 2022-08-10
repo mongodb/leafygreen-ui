@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- ee3586c9: Resolves a ReferenceError
+- ee3586c9: Resolves a ReferenceError in PopoverContext
 - Updated dependencies [95f1e63a]
   - @leafygreen-ui/lib@9.4.1
 
