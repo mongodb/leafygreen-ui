@@ -184,7 +184,7 @@ interface CopyableProps {
    */
   copyable?: boolean;
   /**
-   * The font size of the label, description, and copyable children
+   * The display size of the label, description, and copyable children
    */
   size?: Size;
   /**
