@@ -126,7 +126,7 @@ const listTitleStyles = css`
   text-decoration: none;
   transition: 150ms color ease-in-out;
 
-  &:focus {
+  &:focus:not(:disabled) {
     outline: none;
     font-weight: 700;
   }
@@ -245,6 +245,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     ['aria-selected']: selected,
     name: nodeText,
     ['data-text']: nodeText,
+    disabled
   } as const;
 
   if (typeof rest.href === 'string') {
