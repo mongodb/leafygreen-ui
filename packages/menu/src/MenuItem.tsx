@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
 import { cx } from '@leafygreen-ui/emotion';
@@ -6,16 +6,18 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
   menuItemContainerStyle,
+  menuItemContainerThemeStyle,
   activeMenuItemContainerStyle,
-  disabledMenuItemContainerStyle,
+  disabledMenuItemContainerThemeStyle,
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
   mainIconStyle,
   activeIconStyle,
+  disabledIconStyle,
   titleTextStyle,
   activeTitleTextStyle,
-  descriptionTextStyle,
+  descriptionTextThemeStyle,
   linkDescriptionTextStyle,
   activeDescriptionTextStyle,
   textContainer,
@@ -24,6 +26,7 @@ import {
   getHoverStyles,
 } from './styles';
 import { Size } from './types';
+import MenuContext from './MenuContext';
 
 const menuItemContainer = createDataProp('menu-item-container');
 interface BaseMenuItemProps {
@@ -73,7 +76,7 @@ const MenuItem: ExtendableBox<
     {
       disabled = false,
       active = false,
-      size = 'default',
+      size = Size.Default,
       className,
       children,
       description,
@@ -82,9 +85,10 @@ const MenuItem: ExtendableBox<
     }: BaseMenuItemProps,
     ref: React.Ref<any>,
   ) => {
+    const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(menuItemContainer.selector);
-    const focusStyles = getFocusedStyles(menuItemContainer.selector);
+    const hoverStyles = getHoverStyles(menuItemContainer.selector, theme);
+    const focusStyles = getFocusedStyles(menuItemContainer.selector, theme);
 
     const isAnchor = typeof rest.href === 'string';
 
@@ -95,8 +99,9 @@ const MenuItem: ExtendableBox<
         className: cx(
           mainIconStyle,
           {
-            [activeIconStyle]: active,
+            [activeIconStyle[theme]]: active,
             [focusStyles.iconStyle]: showFocus,
+            [disabledIconStyle[theme]]: disabled,
           },
           glyph.props?.className,
         ),
@@ -128,8 +133,9 @@ const MenuItem: ExtendableBox<
             // Add text as data attribute to ensure no layout shift on hover
             data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
+              [activeTitleTextStyle[theme]]: active,
+              [hoverStyles.activeText]: active,
+              [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
             })}
           >
@@ -137,9 +143,9 @@ const MenuItem: ExtendableBox<
           </div>
           {description && (
             <div
-              className={cx(descriptionTextStyle, {
-                [activeDescriptionTextStyle]: active,
-                [disabledTextStyle]: disabled,
+              className={cx(descriptionTextThemeStyle[theme], {
+                [activeDescriptionTextStyle[theme]]: active,
+                [disabledTextStyle[theme]]: disabled,
                 [focusStyles.descriptionStyle]: showFocus,
                 [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
@@ -162,12 +168,13 @@ const MenuItem: ExtendableBox<
           {...rest}
           className={cx(
             menuItemContainerStyle,
+            menuItemContainerThemeStyle[theme],
             menuItemHeight(size),
             linkStyle,
             {
-              [activeMenuItemContainerStyle]: active,
-              [disabledMenuItemContainerStyle]: disabled,
-              [focusedMenuItemContainerStyle]: showFocus,
+              [activeMenuItemContainerStyle[theme]]: active,
+              [disabledMenuItemContainerThemeStyle[theme]]: disabled,
+              [focusedMenuItemContainerStyle[theme]]: showFocus,
             },
             className,
           )}

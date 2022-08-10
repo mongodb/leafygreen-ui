@@ -2,9 +2,11 @@ import React from 'react';
 import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, focusRing, typeScales } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export const ContentStyle = {
   None: 'none',
@@ -12,13 +14,6 @@ export const ContentStyle = {
 } as const;
 
 export type ContentStyle = typeof ContentStyle[keyof typeof ContentStyle];
-
-const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
 
 interface ColorSet {
   containerStyle: string;
@@ -33,28 +28,18 @@ const lightHoverBoxShadow = `0 4px 20px -4px ${transparentize(
   0.8,
   palette.black,
 )}`;
-const lightFocusBoxShadow = `
-  0 0 0 2px ${palette.white},
-  0 0 0 4px ${palette.blue.light1}
-`;
-const darkBaseBoxShadow = `0 4px 20px -4px  ${transparentize(0.3, '#000')}`;
-const darkHoverBoxShadow = `0 2px 12px -2px ${transparentize(0.1, '#000')}`;
-const darkFocusBoxShadow = `0 0 0 3px ${uiColors.focus}`;
+const lightFocusBoxShadow = focusRing['light'].default;
+const darkBaseBoxShadow = `0 4px 10px -4px  ${transparentize(0.4, '#000D13')}`;
+const darkHoverBoxShadow = `0 4px 20px -4px ${transparentize(0.3, '#000000')}`;
+const darkFocusBoxShadow = focusRing['dark'].default;
 
-const colorSet: Record<Mode, ColorSet> = {
-  [Mode.Light]: {
+const colorSet: Record<Theme, ColorSet> = {
+  [Theme.Light]: {
     containerStyle: css`
       border: 1px solid ${palette.gray.light2};
       box-shadow: ${lightBaseBoxShadow};
-      background-color: white;
+      background-color: ${palette.white};
       color: ${palette.gray.dark3};
-      // TODO: Refresh - remove properties from mode logic
-      border-radius: 24px;
-      font-family: ${fontFamilies.default};
-      font-size: 13px;
-      line-height: 20px;
-      padding: 24px;
-      min-height: 68px; // 48px + 20px (padding + line-height)
     `,
     clickableStyle: css`
       cursor: pointer;
@@ -75,16 +60,12 @@ const colorSet: Record<Mode, ColorSet> = {
       }
     `,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     containerStyle: css`
-      border: 1px solid ${uiColors.gray.dark2};
+      border: 1px solid ${palette.gray.dark2};
       box-shadow: ${darkBaseBoxShadow};
-      background-color: ${uiColors.gray.dark2};
-      color: ${uiColors.white};
-      // TODO: Refresh - remove properties from dark mode logic
-      border-radius: 7px;
-      font-family: ${fontFamilies.legacy};
-      padding: 16px;
+      background-color: ${palette.black};
+      color: ${palette.white};
     `,
     clickableStyle: css`
       cursor: pointer;
@@ -109,6 +90,12 @@ const containerStyle = css`
   position: relative;
   transition: 150ms ease-in-out;
   transition-property: border, box-shadow;
+  border-radius: 24px;
+  font-family: ${fontFamilies.default};
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
+  padding: 24px;
+  min-height: 68px; // 48px + 20px (padding + line-height)
 `;
 
 export interface CardProps {
@@ -140,16 +127,16 @@ const Card: ExtendableBox<CardProps> = ({
     contentStyle = ContentStyle.Clickable;
   }
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkMode);
 
   return (
     <Box
       // @ts-expect-error
       className={cx(
         containerStyle,
-        colorSet[mode].containerStyle,
+        colorSet[theme].containerStyle,
         {
-          [colorSet[mode].clickableStyle]:
+          [colorSet[theme].clickableStyle]:
             contentStyle === ContentStyle.Clickable,
         },
         className,

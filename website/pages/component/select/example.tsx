@@ -8,6 +8,7 @@ import {
   Size,
   State,
 } from '@leafygreen-ui/select';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
@@ -21,6 +22,7 @@ const knobsConfig: KnobsConfigInterface<{
   allowDeselect: boolean;
   state: State;
   errorMessage: string;
+  baseFontSize: BaseFontSize;
 }> = {
   darkMode: {
     type: 'boolean',
@@ -75,6 +77,12 @@ const knobsConfig: KnobsConfigInterface<{
     default: 'This is the error message',
     label: 'Error message',
   },
+  baseFontSize: {
+    type: 'select',
+    options: [13, 16],
+    default: 13,
+    label: 'Base Font Size',
+  },
 };
 
 export default function SelectLiveExample() {
@@ -91,6 +99,7 @@ export default function SelectLiveExample() {
         allowDeselect,
         errorMessage,
         state,
+        baseFontSize,
       }) => (
         <div>
           <Select
@@ -108,6 +117,7 @@ export default function SelectLiveExample() {
             `}
             state={state}
             errorMessage={errorMessage}
+            baseFontSize={baseFontSize}
           >
             <OptionGroup label="Primary">
               <Option
