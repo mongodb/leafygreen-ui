@@ -30,12 +30,15 @@ done
 cd $LEAFYGREEN_HOME
 yarn
 set +e
-yarn run link-all-packages
+yarn run link:all
 set -e
 cd $LEAFYGREEN_HOME
-yarn build
+if [$2 != "--no-build"]; then
+    yarn build
+fi
 cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
     yarn link @leafygreen-ui/$f
 done
 
+exit 0;
