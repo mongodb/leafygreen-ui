@@ -1,23 +1,17 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { UrlObject } from 'url';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { registerRipple } from '@leafygreen-ui/ripple';
+import { cx } from '@leafygreen-ui/emotion';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
-import {
-  getClassName,
-  rippleColors,
-  ButtonDataProp,
-  rippleStyle,
-  buttonContentStyle,
-  buttonContentSizeStyle,
-} from './styles';
-import ButtonIcon from './ButtonIcon';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { getClassName, ButtonDataProp } from './styles';
+import { isUndefined } from 'lodash';
+import { ButtonContent } from './ButtonContent';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
@@ -42,24 +36,8 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     forwardRef,
   ) {
     const { usingKeyboard } = useUsingKeyboardContext();
-    const rippleRef = useRef<HTMLDivElement | null>(null);
 
-    const { darkMode, theme } = useDarkMode(darkModeProp);
-
-    useEffect(() => {
-      let unregisterRipple: (() => void) | undefined;
-      const backgroundColor = rippleColors[theme][variant];
-
-      if (rippleRef.current != null && !disabled) {
-        unregisterRipple = registerRipple(rippleRef.current, {
-          backgroundColor,
-        });
-      }
-
-      return unregisterRipple;
-    }, [rippleRef, variant, darkMode, disabled, theme]);
-
-    const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
+    const { darkMode } = useDarkMode(darkModeProp);
 
     const buttonClassName = getClassName({
       variant,
@@ -72,63 +50,55 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
 
     const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
 
-    const buttonProps = {
+    const buttonContent = (
+      <ButtonContent
+        {...{
+          rightGlyph,
+          leftGlyph,
+          darkMode,
+          disabled,
+          variant,
+          size,
+        }}
+      >
+        {children}
+      </ButtonContent>
+    );
+
+    const boxProps = {
       type: isAnchor ? undefined : type || 'button',
       className: cx(buttonClassName, className),
       ref: forwardRef,
-      // Provide a default value for the as prop
-      // If consuming application passes a value for as, it will override the default set here
-      as: as
-        ? as
-        : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
-      // only add a disabled prop if not an anchor
-      ...(typeof rest.href !== 'string' && { disabled }),
       'aria-disabled': disabled,
-      onClick: !disabled ? onClick : undefined,
       ...ButtonDataProp.prop,
-      ...rest,
     } as const;
 
-    const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
+    const rootProps = {
+      ...rest,
+      href: disabled ? '' : (rest.href as string | UrlObject),
+      onClick: !disabled ? onClick : undefined,
+      // only add the disabled prop if this is a button
+      ...(!isAnchor && { disabled }),
+    } as const;
 
-    const content = (
-      <>
-        {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
-        <div className={cx(rippleStyle)} ref={rippleRef} />
+    const isComponent = !isUndefined(as) && typeof as !== 'string';
 
-        <div
-          className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
-            [css`
-              justify-content: space-between;
-            `]: !!rightGlyph && darkMode,
-          })}
-        >
-          {leftGlyph && (
-            <ButtonIcon
-              glyph={leftGlyph}
-              className={css`
-                justify-self: right;
-              `}
-              {...iconProps}
-            />
-          )}
-
-          {children}
-
-          {rightGlyph && (
-            <ButtonIcon
-              glyph={rightGlyph}
-              className={css`
-                justify-self: left;
-              `}
-              {...iconProps}
-            />
-          )}
-        </div>
-      </>
-    );
-
-    return <Box {...buttonProps}>{content}</Box>;
+    if (isComponent) {
+      const AsComponent = as;
+      return (
+        <AsComponent {...rootProps}>
+          <Box as={'a'} {...boxProps}>
+            {buttonContent}
+          </Box>
+        </AsComponent>
+      );
+    } else {
+      return (
+        <Box as={isAnchor ? 'a' : 'button'} {...rootProps} {...boxProps}>
+          {buttonContent}
+        </Box>
+      );
+    }
   });
 
 Button.displayName = 'Button';
@@ -142,6 +112,12 @@ Button.propTypes = {
   leftGlyph: PropTypes.element,
   rightGlyph: PropTypes.element,
   href: PropTypes.string,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  as: PropTypes.any,
+  type: PropTypes.string,
 };
 
 export default Button;
