@@ -245,7 +245,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     ['aria-selected']: selected,
     name: nodeText,
     ['data-text']: nodeText,
-    disabled
+    disabled,
   } as const;
 
   if (typeof rest.href === 'string') {
