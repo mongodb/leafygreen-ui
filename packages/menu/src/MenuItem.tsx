@@ -87,7 +87,7 @@ const MenuItem: ExtendableBox<
   ) => {
     const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(menuItemContainer.selector);
+    const hoverStyles = getHoverStyles(menuItemContainer.selector, theme);
     const focusStyles = getFocusedStyles(menuItemContainer.selector, theme);
 
     const isAnchor = typeof rest.href === 'string';
@@ -134,6 +134,7 @@ const MenuItem: ExtendableBox<
             data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle[theme]]: active,
+              [hoverStyles.activeText]: active,
               [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
             })}

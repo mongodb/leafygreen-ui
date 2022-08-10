@@ -151,10 +151,17 @@ export const linkDescriptionTextStyle = css`
  * Hover Styles
  */
 
-export const getHoverStyles = (container: string) => ({
+export const getHoverStyles = (container: string, theme: Theme) => ({
   text: css`
     ${container}:not(:disabled):hover & {
       font-weight: 700;
+    }
+  `,
+  activeText: css`
+    ${container}:not(:disabled):hover & {
+      color: ${theme === Theme.Light
+        ? palette.green.base
+        : palette.green.dark3};
     }
   `,
 });
@@ -286,12 +293,12 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
       text-decoration: none;
       background-color: ${palette.blue.dark3};
       color: ${palette.white};
-  
+
       &:before {
         background-color: ${palette.blue.light1};
       }
     }
-  
+
     &::-moz-focus-inner {
       border: 0;
     }
@@ -322,12 +329,16 @@ export const getFocusedStyles = (selector: string, theme: Theme) => {
     `,
     descriptionStyle: css`
       ${selector}:focus & {
-        color: ${theme === Theme.Light ? palette.blue.light3 : palette.blue.dark1};
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.dark1};
       }
     `,
     iconStyle: css`
       ${selector}:focus > & {
-        color: ${theme === Theme.Light ? palette.blue.light3 : palette.blue.base};
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.base};
       }
     `,
   };
@@ -337,20 +348,19 @@ export const linkStyle = css`
   text-decoration: none;
 `;
 
-
 export const focusedSubMenuItemBorderStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-  &:focus {
-    &::after {
-      background-color: ${palette.blue.dark3};
+    &:focus {
+      &::after {
+        background-color: ${palette.blue.dark3};
+      }
     }
-  }
   `,
   [Theme.Dark]: css`
-  &:focus {
-    &::after {
-      background-color: ${palette.blue.light2};
+    &:focus {
+      &::after {
+        background-color: ${palette.blue.light2};
+      }
     }
-  }
   `,
 };

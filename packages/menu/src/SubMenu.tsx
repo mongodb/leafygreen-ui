@@ -350,7 +350,7 @@ const SubMenu: ExtendableBox<
   ) => {
     const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(subMenuContainer.selector);
+    const hoverStyles = getHoverStyles(subMenuContainer.selector, theme);
     const focusStyles = getFocusedStyles(subMenuContainer.selector, theme);
 
     const nodeRef = React.useRef(null);
@@ -436,6 +436,7 @@ const SubMenu: ExtendableBox<
             data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle[theme]]: active,
+              [hoverStyles.activeText]: active,
               [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
             })}
