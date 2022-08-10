@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 13.1.1
+
+### Patch Changes
+
+- 5aba12f1: Export and combine `Label` and `Description` styles.
+
 ## 13.1.0
 
 ### Minor Changes
