@@ -1,4 +1,5 @@
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { isUndefined } from 'lodash';
 import React, { HTMLProps } from 'react';
 import NextLink from './NextLink.type'
 
@@ -105,6 +106,10 @@ interface ButtonProps {
   href?: string;
 }
 
+/** Identifies whether the `as` prop is included in JSX.IntrinsicElements */
+export const isJSXIntrinsicElement = (as?: keyof JSX.IntrinsicElements | NextLink): as is keyof JSX.IntrinsicElements => !isUndefined(as) && typeof as === 'string';
 
+/** Identifies whether the `as` prop is a Component */
+export const isAsComponent = (as?: keyof JSX.IntrinsicElements | NextLink): as is NextLink => !isUndefined(as) && typeof as !== 'string';
 
 export { Variant, Size, ButtonProps };

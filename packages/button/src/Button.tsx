@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { UrlObject } from 'url';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
@@ -8,9 +8,14 @@ import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Variant, Size, ButtonProps } from './types';
+import {
+  Variant,
+  Size,
+  ButtonProps,
+  isJSXIntrinsicElement,
+  isAsComponent,
+} from './types';
 import { getClassName, ButtonDataProp } from './styles';
-import { isUndefined } from 'lodash';
 import { ButtonContent } from './ButtonContent';
 
 /**
@@ -50,28 +55,15 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
 
     const isAnchor: boolean = (!!rest.href || asProp === 'a') && !disabled;
 
-    const buttonContent = (
-      <ButtonContent
-        {...{
-          rightGlyph,
-          leftGlyph,
-          darkMode,
-          disabled,
-          variant,
-          size,
-        }}
-      >
-        {children}
-      </ButtonContent>
-    );
-
-    const boxProps = {
-      type: isAnchor ? undefined : type || 'button',
-      className: cx(buttonClassName, className),
-      ref: forwardRef,
-      'aria-disabled': disabled,
-      ...ButtonDataProp.prop,
-    } as const;
+    const finalAsProp = useMemo(() => {
+      if (isJSXIntrinsicElement(asProp)) {
+        return asProp;
+      } else if (isAsComponent(asProp)) {
+        return 'a';
+      } else {
+        return isAnchor ? 'a' : 'button';
+      }
+    }, [asProp, isAnchor]);
 
     const rootProps = {
       ...rest,
@@ -81,28 +73,41 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       ...(typeof rest.href !== 'string' && { disabled }),
     } as const;
 
-    const isComponent = !isUndefined(asProp) && typeof asProp !== 'string';
+    const boxProps = {
+      type: isAnchor ? undefined : type || 'button',
+      className: cx(buttonClassName, className),
+      ref: forwardRef,
+      'aria-disabled': disabled,
+      as: finalAsProp,
+      ...ButtonDataProp.prop,
+      // If this is not a Component, then the Box is also the root
+      ...(!isAsComponent(asProp) && rootProps),
+    } as const;
 
-    if (isComponent) {
-      const AsComponent = asProp;
-      return (
-        <AsComponent {...rootProps}>
-          <Box as={'a'} {...boxProps}>
-            {buttonContent}
-          </Box>
-        </AsComponent>
+    const contentProps = {
+      rightGlyph,
+      leftGlyph,
+      darkMode,
+      disabled,
+      variant,
+      size,
+    } as const;
+
+    const WrapperComponent = ({ ...props }) =>
+      isAsComponent(asProp) ? (
+        React.createElement(asProp, { href: props.href, ...props })
+      ) : (
+        <>{props.children}</>
       );
-    } else {
-      return (
-        <Box
-          as={asProp ? asProp : isAnchor ? 'a' : 'button'}
-          {...rootProps}
-          {...boxProps}
-        >
-          {buttonContent}
+
+    return (
+      // If WrapperComponent is a Fragment then is ignored, and rootProps gets applied to the Box
+      <WrapperComponent {...rootProps}>
+        <Box {...boxProps}>
+          <ButtonContent {...contentProps}>{children}</ButtonContent>
         </Box>
-      );
-    }
+      </WrapperComponent>
+    );
   });
 
 Button.displayName = 'Button';
