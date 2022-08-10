@@ -33,6 +33,7 @@ set +e
 yarn run link:all
 set -e
 cd $LEAFYGREEN_HOME
+# Add `--no-build` to the end of the command to skip the build step
 if [$2 != "--no-build"]; then
     yarn build
 fi
