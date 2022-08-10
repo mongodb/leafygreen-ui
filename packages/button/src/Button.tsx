@@ -29,7 +29,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       rightGlyph,
       children,
       className,
-      as,
+      as: asProp,
       type,
       ...rest
     }: ButtonProps,
@@ -48,7 +48,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       usingKeyboard,
     });
 
-    const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
+    const isAnchor: boolean = (!!rest.href || asProp === 'a') && !disabled;
 
     const buttonContent = (
       <ButtonContent
@@ -78,13 +78,13 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       href: disabled ? '' : (rest.href as string | UrlObject),
       onClick: !disabled ? onClick : undefined,
       // only add the disabled prop if this is a button
-      ...(!isAnchor && { disabled }),
+      ...(typeof rest.href !== 'string' && { disabled }),
     } as const;
 
-    const isComponent = !isUndefined(as) && typeof as !== 'string';
+    const isComponent = !isUndefined(asProp) && typeof asProp !== 'string';
 
     if (isComponent) {
-      const AsComponent = as;
+      const AsComponent = asProp;
       return (
         <AsComponent {...rootProps}>
           <Box as={'a'} {...boxProps}>
@@ -94,7 +94,11 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       );
     } else {
       return (
-        <Box as={isAnchor ? 'a' : 'button'} {...rootProps} {...boxProps}>
+        <Box
+          as={asProp ? asProp : isAnchor ? 'a' : 'button'}
+          {...rootProps}
+          {...boxProps}
+        >
           {buttonContent}
         </Box>
       );
