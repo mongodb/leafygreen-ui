@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
@@ -6,8 +7,10 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import IconButton from '@leafygreen-ui/icon-button';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 
 const Variant = {
   Info: 'info',
@@ -30,9 +33,9 @@ const baseBannerStyles = css`
   border-width: 1px 1px 1px 0px;
   border-style: solid;
   border-radius: 12px;
-  font-size: 13px;
-  line-height: 20px;
-  font-family: 'Euclid Circular A', Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
+  font-family: ${fontFamilies.default};
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
 
   &:before {
     content: '';
@@ -42,15 +45,6 @@ const baseBannerStyles = css`
     bottom: -1px;
     left: 0px;
     border-radius: 12px 0px 0px 12px;
-  }
-`;
-
-//TODO: refresh - remove when IconButton focus styles are updated
-const baseDismissButtonStyles = css`
-  &:focus {
-    color: ${palette.gray.dark3};
-    outline: 2px solid ${palette.blue.light1};
-    border: 2px solid ${palette.white};
   }
 `;
 
@@ -74,158 +68,309 @@ const renderedImageStyles = css`
 
 type StyledElements = 'body' | 'dismissButton';
 
-const bannerVariantStyles: Record<Variant, Record<StyledElements, string>> = {
-  [Variant.Info]: {
-    body: css`
-      color: ${palette.blue.dark2};
-      border-color: ${palette.blue.light2};
-      border-left-color: ${palette.blue.base};
-      background-color: ${palette.blue.light3};
-
-      &:before {
-        background: linear-gradient(
-          to left,
-          transparent 6px,
-          ${palette.blue.base} 6px
-        );
-      }
-    `,
-    dismissButton: css`
-      color: ${palette.blue.dark2};
-
-      &:active,
-      &:hover {
+const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, string>>> = {
+  [Theme.Dark] : {
+    [Variant.Info]: {
+      body: css`
+        color: ${palette.blue.light2};
+        border-color: ${palette.blue.dark2};
+        border-left-color: ${palette.blue.light1};
+        background-color: ${palette.blue.dark3};
+  
+        &:before {
+          background: linear-gradient(
+            to left,
+            transparent 6px,
+            ${palette.blue.light1} 6px
+          );
+        }
+      `,
+      dismissButton: css`
+        color: ${palette.blue.light2};
+  
+        &:active,
+        &:hover {
+          color: ${palette.blue.dark2};
+  
+          &:before {
+            background-color: ${palette.blue.light2};
+          }
+        }
+  
+        &:focus {
+          &:before {
+            background-color: ${palette.blue.light2};
+          }
+        }
+      `,
+    },
+    [Variant.Warning]: {
+      body: css`
+        color: ${palette.yellow.light2};
+        border-color: ${palette.yellow.dark2};
+        border-left-color: ${palette.yellow.dark2};
+        background-color: ${palette.yellow.dark3};
+  
+        &:before {
+          background: linear-gradient(
+            to left,
+            transparent 6px,
+            ${palette.yellow.dark2} 6px
+          );
+        }
+      `,
+      dismissButton: css`
+        color: ${palette.yellow.light2};
+  
+        &:active,
+        &:hover {
+          color: ${palette.yellow.dark2};
+  
+          &:before {
+            background-color: ${palette.yellow.light2};
+          }
+        }
+  
+        &:focus {
+          &:before {
+            background-color: ${palette.yellow.light2};
+          }
+        }
+      `,
+    },
+    [Variant.Danger]: {
+      body: css`
+        color: ${palette.red.light2};
+        border-color: ${palette.red.dark2};
+        border-left-color: ${palette.red.base};
+        background-color: ${palette.red.dark3};
+  
+        &:before {
+          background: linear-gradient(
+            to left,
+            transparent 6px,
+            ${palette.red.base} 6px
+          );
+        }
+      `,
+      dismissButton: css`
+        color: ${palette.red.light2};
+  
+        &:active,
+        &:hover {
+          color: ${palette.red.dark2};
+  
+          &:before {
+            background-color: ${palette.red.light2};
+          }
+        }
+  
+        &:focus {
+          &:before {
+            background-color: ${palette.red.light2};
+          }
+        }
+      `,
+    },
+    [Variant.Success]: {
+      body: css`
+        color: ${palette.green.light2};
+        border-color: ${palette.green.dark2};
+        border-left-color: ${palette.green.base};
+        background-color: ${palette.green.dark3};
+  
+        &:before {
+          background: linear-gradient(
+            to left,
+            transparent 6px,
+            ${palette.green.base} 6px
+          );
+        }
+      `,
+      dismissButton: css`
+        color: ${palette.green.light2};
+  
+        &:active,
+        &:hover {
+          color: ${palette.green.dark2};
+  
+          &:before {
+            background-color: ${palette.green.light2};
+          }
+        }
+  
+        &:focus {
+          &:before {
+            background-color: ${palette.green.light2};
+          }
+        }
+      `,
+    },
+  },
+  [Theme.Light] : {
+    [Variant.Info]: {
+      body: css`
         color: ${palette.blue.dark2};
-
+        border-color: ${palette.blue.light2};
+        border-left-color: ${palette.blue.base};
+        background-color: ${palette.blue.light3};
+  
         &:before {
-          background-color: ${palette.blue.light2};
+          background: linear-gradient(
+            to left,
+            transparent 6px,
+            ${palette.blue.base} 6px
+          );
         }
-      }
-
-      &:focus {
-        &:before {
-          background-color: ${palette.blue.light2};
+      `,
+      dismissButton: css`
+        color: ${palette.blue.dark2};
+  
+        &:active,
+        &:hover {
+          color: ${palette.blue.dark2};
+  
+          &:before {
+            background-color: ${palette.blue.light2};
+          }
         }
-      }
-    `,
-  },
-
-  [Variant.Warning]: {
-    body: css`
-      color: ${palette.yellow.dark2};
-      border-color: ${palette.yellow.light2};
-      border-left-color: ${palette.yellow.base};
-      background-color: ${palette.yellow.light3};
-
-      &:before {
-        background: linear-gradient(
-          to left,
-          transparent 6px,
-          ${palette.yellow.base} 6px
-        );
-      }
-    `,
-    dismissButton: css`
-      color: ${palette.yellow.dark2};
-
-      &:active,
-      &:hover {
+  
+        &:focus {
+          &:before {
+            background-color: ${palette.blue.light2};
+          }
+        }
+      `,
+    },
+    [Variant.Warning]: {
+      body: css`
         color: ${palette.yellow.dark2};
-
+        border-color: ${palette.yellow.light2};
+        border-left-color: ${palette.yellow.base};
+        background-color: ${palette.yellow.light3};
+  
         &:before {
-          background-color: ${palette.yellow.light2};
+          background: linear-gradient(
+            to left,
+            transparent 6px,
+            ${palette.yellow.base} 6px
+          );
         }
-      }
-
-      &:focus {
-        &:before {
-          background-color: ${palette.yellow.light2};
+      `,
+      dismissButton: css`
+        color: ${palette.yellow.dark2};
+  
+        &:active,
+        &:hover {
+          color: ${palette.yellow.dark2};
+  
+          &:before {
+            background-color: ${palette.yellow.light2};
+          }
         }
-      }
-    `,
-  },
-
-  [Variant.Danger]: {
-    body: css`
-      color: ${palette.red.dark2};
-      border-color: ${palette.red.light2};
-      border-left-color: ${palette.red.base};
-      background-color: ${palette.red.light3};
-
-      &:before {
-        background: linear-gradient(
-          to left,
-          transparent 6px,
-          ${palette.red.base} 6px
-        );
-      }
-    `,
-    dismissButton: css`
-      color: ${palette.red.dark2};
-
-      &:active,
-      &:hover {
+  
+        &:focus {
+          &:before {
+            background-color: ${palette.yellow.light2};
+          }
+        }
+      `,
+    },
+    [Variant.Danger]: {
+      body: css`
         color: ${palette.red.dark2};
-
+        border-color: ${palette.red.light2};
+        border-left-color: ${palette.red.base};
+        background-color: ${palette.red.light3};
+  
         &:before {
-          background-color: ${palette.red.light2};
+          background: linear-gradient(
+            to left,
+            transparent 6px,
+            ${palette.red.base} 6px
+          );
         }
-      }
-
-      &:focus {
-        &:before {
-          background-color: ${palette.red.light2};
+      `,
+      dismissButton: css`
+        color: ${palette.red.dark2};
+  
+        &:active,
+        &:hover {
+          color: ${palette.red.dark2};
+  
+          &:before {
+            background-color: ${palette.red.light2};
+          }
         }
-      }
-    `,
-  },
-
-  [Variant.Success]: {
-    body: css`
-      color: ${palette.green.dark2};
-      border-color: ${palette.green.light2};
-      border-left-color: ${palette.green.base};
-      background-color: ${palette.green.light3};
-
-      &:before {
-        background: linear-gradient(
-          to left,
-          transparent 6px,
-          ${palette.green.dark1} 6px
-        );
-      }
-    `,
-    dismissButton: css`
-      color: ${palette.green.dark2};
-
-      &:active,
-      &:hover {
+  
+        &:focus {
+          &:before {
+            background-color: ${palette.red.light2};
+          }
+        }
+      `,
+    },
+    [Variant.Success]: {
+      body: css`
         color: ${palette.green.dark2};
-
+        border-color: ${palette.green.light2};
+        border-left-color: ${palette.green.base};
+        background-color: ${palette.green.light3};
+  
         &:before {
-          background-color: ${palette.green.light2};
+          background: linear-gradient(
+            to left,
+            transparent 6px,
+            ${palette.green.dark1} 6px
+          );
         }
-      }
-
-      &:focus {
-        &:before {
-          background-color: ${palette.green.light2};
+      `,
+      dismissButton: css`
+        color: ${palette.green.dark2};
+  
+        &:active,
+        &:hover {
+          color: ${palette.green.dark2};
+  
+          &:before {
+            background-color: ${palette.green.light2};
+          }
         }
-      }
-    `,
-  },
+  
+        &:focus {
+          &:before {
+            background-color: ${palette.green.light2};
+          }
+        }
+      `,
+    },
+  }
 } as const;
 
-const map = {
-  [Variant.Info]: { color: palette.blue.base, icon: InfoWithCircleIcon },
-  [Variant.Warning]: {
-    color: palette.yellow.dark2,
-    icon: ImportantWithCircleIcon,
+const map: Record<Theme, Record<Variant, {color: string, icon: React.ComponentType<any>}>> = {
+  [Theme.Dark] : {
+    [Variant.Info]: { color: palette.blue.light1, icon: InfoWithCircleIcon },
+    [Variant.Warning]: {
+      color: palette.yellow.base,
+      icon: ImportantWithCircleIcon,
+    },
+    [Variant.Danger]: { color: palette.red.light1, icon: WarningIcon },
+    [Variant.Success]: {
+      color: palette.green.base,
+      icon: CheckmarkWithCircleIcon,
+    },
   },
-  [Variant.Danger]: { color: palette.red.base, icon: WarningIcon },
-  [Variant.Success]: {
-    color: palette.green.dark1,
-    icon: CheckmarkWithCircleIcon,
+  [Theme.Light] : {
+    [Variant.Info]: { color: palette.blue.base, icon: InfoWithCircleIcon },
+    [Variant.Warning]: {
+      color: palette.yellow.dark2,
+      icon: ImportantWithCircleIcon,
+    },
+    [Variant.Danger]: { color: palette.red.base, icon: WarningIcon },
+    [Variant.Success]: {
+      color: palette.green.dark1,
+      icon: CheckmarkWithCircleIcon,
+    },
   },
 };
 
@@ -288,6 +433,13 @@ interface BannerProps extends HTMLElementProps<'div', never> {
    * Default: `() => {}`
    */
   onClose?: React.MouseEventHandler;
+
+  /**
+   * Determines whether or not the component will be rendered in dark mode.
+   *
+   * default: `false`
+   */
+   darkMode?: boolean;
 }
 
 /**
@@ -298,6 +450,7 @@ interface BannerProps extends HTMLElementProps<'div', never> {
  * @param props.image Illustration that will replace default Icon when the prop is supplied.
  * @param props.dismissible Determines whether or not the Banner is dismissible.
  * @param props.onClose Callback fired when dismiss button is clicked.
+ * @param props.darkMode Determines whether or not the component will be rendered in dark mode.
  */
 export default function Banner({
   variant = Variant.Info,
@@ -306,9 +459,11 @@ export default function Banner({
   image,
   children,
   className,
+  darkMode: darkModeProp,
   ...rest
 }: BannerProps) {
-  const { icon: Icon, color } = map[variant];
+  const { theme, darkMode } = useDarkMode(darkModeProp);
+  const { icon: Icon, color } = map[theme][variant];
 
   const renderIcon = image ? (
     React.cloneElement(image, {
@@ -331,7 +486,7 @@ export default function Banner({
       role="alert"
       className={cx(
         baseBannerStyles,
-        bannerVariantStyles[variant].body,
+        bannerVariantStyles[theme][variant].body,
         className,
       )}
       {...rest}
@@ -347,11 +502,11 @@ export default function Banner({
               margin-top: -3px;
               left: 8px;
             `,
-            bannerVariantStyles[variant].dismissButton,
-            baseDismissButtonStyles,
+            bannerVariantStyles[theme][variant].dismissButton,
           )}
           aria-label="Close Message"
           onClick={onClose}
+          darkMode={darkMode}
         >
           <XIcon />
         </IconButton>
@@ -359,3 +514,13 @@ export default function Banner({
     </div>
   );
 }
+
+Banner.displayName = 'Banner';
+
+Banner.propTypes = {
+  darkMode: PropTypes.bool,
+  variant: PropTypes.oneOf(Object.values(Variant)),
+  onClose: PropTypes.func,
+  dismissable: PropTypes.bool,
+  image: PropTypes.element
+};

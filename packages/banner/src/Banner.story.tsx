@@ -10,6 +10,7 @@ export default {
   args: {
     children:
       'To avoid disrupting majority writes, new members are now added to replica sets as priority=0, votes=0 until they reach secondary state, after which Cloud Manager automatically updates the configuration to match the priority and votes value specified in the deployment.',
+    darkMode: false,
   },
   argTypes: {
     image: {
@@ -24,6 +25,7 @@ export default {
     },
     children: defaultArgTypes.children,
     ref: defaultArgTypes.ref,
+    darkMode: defaultArgTypes.darkMode
   },
 } as Meta<typeof Banner>;
 
