@@ -36,4 +36,11 @@ export interface MenuProps extends Omit<PopoverProps, 'active'> {
    * The max height of the menu (in px). Defaults to 256
    */
   maxHeight?: number;
+
+  /**
+   * Determines whether or not the component will be rendered in dark mode.
+   *
+   * default: `false`
+   */
+  darkMode?: boolean;
 }
