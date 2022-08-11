@@ -1,4 +1,13 @@
+import React from 'react';
 import createUniqueClassName from '.';
+import {TestComponent} from './testComponent'
+import { render } from '@testing-library/react';
+
+const renderTestComponent = () => {
+  return render(
+    React.createElement(TestComponent)
+  )
+}
 
 describe('packages/lib/createUniqueClassName', () => {
   describe('createUniqueClassName', () => {
@@ -26,4 +35,15 @@ describe('packages/lib/createUniqueClassName', () => {
       expect(res1.valueOf() == res2.valueOf()).not.toBe(true);
     });
   });
+
+  describe('rendering', () => {
+    test('Separate classNames in a component are unique', () => {
+      const renderedTestComponent = renderTestComponent()
+      const element1 = renderedTestComponent.getByTestId('el-1')
+      const element2 = renderedTestComponent.getByTestId('el-2')
+      const className1 = element1.classList.value
+      const className2 = element2.classList.value
+      expect(className1).not.toEqual(className2)
+    })
+  })
 });
