@@ -3,11 +3,11 @@
 exports[`packages/lib/createUniqueClassName rendering Classnames persist in snapshot tests 1`] = `
 <div>
   <div
-    class="lg-ui-2a0d21fb"
+    class="lg-ui-0000"
     data-testid="el-1"
   >
     <div
-      class="lg-ui-9222cd7a"
+      class="lg-ui-0001"
       data-testid="el-2"
     />
   </div>

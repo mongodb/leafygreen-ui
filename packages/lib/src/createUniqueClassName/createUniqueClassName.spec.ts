@@ -22,7 +22,7 @@ describe('packages/lib/createUniqueClassName', () => {
     test('Two generated classNames are not equal.', () => {
       const res1 = createUniqueClassName();
       const res2 = createUniqueClassName();
-      expect(res1.valueOf() == res2.valueOf()).not.toBe(true);
+      expect(res1.valueOf()).not.toEqual(res2.valueOf());
     });
 
     test('Prefixes are correctly applied.', () => {
@@ -32,7 +32,7 @@ describe('packages/lib/createUniqueClassName', () => {
       const res2 = createUniqueClassName(customPrefix);
       expect(res1.startsWith(lgPrefix + customPrefix + '-')).toBe(true);
       expect(res2.startsWith(lgPrefix + customPrefix + '-')).toBe(true);
-      expect(res1.valueOf() == res2.valueOf()).not.toBe(true);
+      expect(res1.valueOf()).not.toEqual(res2.valueOf());
     });
   });
 
