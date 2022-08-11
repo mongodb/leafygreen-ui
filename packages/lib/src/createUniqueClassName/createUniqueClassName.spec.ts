@@ -1,7 +1,7 @@
 import React from 'react';
 import createUniqueClassName from '.';
 import {TestComponent} from './testComponent'
-import { render } from '@testing-library/react';
+import { getByTestId, render } from '@testing-library/react';
 
 const renderTestComponent = () => {
   return render(
@@ -44,6 +44,37 @@ describe('packages/lib/createUniqueClassName', () => {
       const className1 = element1.classList.value
       const className2 = element2.classList.value
       expect(className1).not.toEqual(className2)
+    })
+
+    test('Classnames persist on re-render', () => { 
+      const renderedTestComponent = renderTestComponent()
+      const element1 = renderedTestComponent.getByTestId('el-1')
+      const element2 = renderedTestComponent.getByTestId('el-2')
+      const className1 = element1.classList.value
+      const className2 = element2.classList.value
+      renderedTestComponent.rerender(React.createElement(TestComponent))
+      expect(element1.classList.value).toEqual(className1)
+      expect(element2.classList.value).toEqual(className2)
+    })
+
+    test('Classnames persist when dynamically imported', async () => {
+      const {TestComponent: TestComponentA} = await import('./testComponent')
+      const {container: containerA} = render(React.createElement(TestComponentA))
+      const elementA1 = getByTestId(containerA, 'el-1')
+      const elementA2 = getByTestId(containerA, 'el-2')
+
+      const {TestComponent: TestComponentB} = await import('./testComponent')
+      const {container: containerB} = render(React.createElement(TestComponentB))
+      const elementB1 = getByTestId(containerB, 'el-1')
+      const elementB2 = getByTestId(containerB, 'el-2')
+
+      expect(elementA1.classList.value).toEqual(elementB1.classList.value)
+      expect(elementA2.classList.value).toEqual(elementB2.classList.value)
+    })
+
+    test('Classnames persist in snapshot tests', () => {
+      const {container} = render(React.createElement(TestComponent))
+      expect(container).toMatchSnapshot();
     })
   })
 });
