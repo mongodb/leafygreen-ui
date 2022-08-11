@@ -248,6 +248,7 @@ const disabledMenuItemContainerStyle = css`
 
   &:active {
     pointer-events: none;
+    background-color: unset;
   }
 
   &:hover {
