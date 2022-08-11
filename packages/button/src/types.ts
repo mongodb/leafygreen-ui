@@ -1,7 +1,6 @@
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { isUndefined } from 'lodash';
 import React, { HTMLProps } from 'react';
-import NextLink from './NextLink.type'
 
 const Variant = {
   Default: 'default',
@@ -40,7 +39,6 @@ type AsPropType = keyof JSX.IntrinsicElements | React.ExoticComponent<any>;
 
 interface ButtonProps {
   as?: AsPropType;
-
 
   // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.
   // https://github.com/storybookjs/storybook/issues/14798
@@ -109,9 +107,15 @@ interface ButtonProps {
 }
 
 /** Identifies whether the `as` prop is included in JSX.IntrinsicElements */
-export const isJSXIntrinsicElement = (as?: AsPropType): as is keyof JSX.IntrinsicElements => !isUndefined(as) && typeof as === 'string';
+export const isJSXIntrinsicElement = (
+  as?: AsPropType,
+): as is keyof JSX.IntrinsicElements =>
+  !isUndefined(as) && typeof as === 'string';
 
 /** Identifies whether the `as` prop is a Component */
-export const isAsComponent = (as?: AsPropType): as is React.ExoticComponent<any> => !isUndefined(as) && typeof as !== 'string';
+export const isAsComponent = (
+  as?: AsPropType,
+): as is React.ExoticComponent<any> =>
+  !isUndefined(as) && typeof as !== 'string';
 
 export { Variant, Size, ButtonProps };
