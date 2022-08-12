@@ -73,7 +73,7 @@ export const comboboxParentStyle = (size: Size): string => {
     font-family: ${fontFamilies.default};
     width: 100%;
     min-width: ${minWidth[size]}px;
-  `
+  `;
 };
 
 export const baseComboboxStyles = css`

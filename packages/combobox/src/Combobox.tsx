@@ -32,7 +32,6 @@ import {
   ComboboxElement,
   ComboboxSize,
   State,
-  Overflow,
 } from './Combobox.types';
 import {
   flattenChildren,
