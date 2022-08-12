@@ -47,7 +47,13 @@ export type TrunctationLocation =
   typeof TrunctationLocation[keyof typeof TrunctationLocation];
 
 export const Overflow = {
+  /**
+   * Combobox will be set to a fixed width, and will expand its height based on the number of Chips selected
+   */
   expandY: 'expand-y',
+  /**
+   * Combobox will be set to a fixed height and width (default 100% of container). Chips will be scrollable left-right
+   */
   scrollX: 'scroll-x',
 } as const;
 export type Overflow = typeof Overflow[keyof typeof Overflow];
