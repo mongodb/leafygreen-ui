@@ -1,7 +1,6 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import isNull from 'lodash/isNull';
 import {
   focusRing,
   fontFamilies,
@@ -286,21 +285,6 @@ export const multiselectInputElementStyle = (
     // TODO: This doesn't quite work. Fix this
     max-width: calc(100% - ${2 * caretIconSize}px);
   `;
-};
-
-// If there are chips, we remove the left padding from the input element
-export const multiselectInputElementPadding = (
-  selection: string | Array<string> | null,
-) => {
-  if (
-    typeof selection === 'object' &&
-    !isNull(selection) &&
-    selection.length > 0
-  )
-    return css`
-      /* padding-left: 0px; */
-    `;
-  return '';
 };
 
 export const clearButtonStyle = css`
