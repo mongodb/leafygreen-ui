@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import isUndefined from 'lodash/isUndefined';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
@@ -230,7 +236,7 @@ function Menu({
     el.focus();
   };
 
-  useMemo(() => {
+  useEffect(() => {
     if (open) {
       hasSetInitialFocus.current = false;
       hasSetInitialOpen.current = false;
@@ -376,9 +382,22 @@ function Menu({
   );
 
   if (trigger) {
+    const triggerClickHandler = (e?: React.MouseEvent) => {
+      setOpen((curr: boolean) => !curr);
+
+      if (trigger && typeof trigger !== 'function') {
+        trigger.props?.onClick?.(e);
+      }
+
+      // We stop the native event from bubbling, but allow the React.Synthetic event to bubble
+      // This way click handlers on parent components will still fire,
+      // but this click event won't propagate up to the document and immediately close the menu
+      e?.nativeEvent.stopPropagation();
+    };
+
     if (typeof trigger === 'function') {
       return trigger({
-        onClick: () => setOpen((curr: boolean) => !curr),
+        onClick: triggerClickHandler,
         ref: triggerRef,
         children: popoverContent,
       });
@@ -386,15 +405,9 @@ function Menu({
 
     const { children: triggerChildren } = trigger.props;
 
-    return React.cloneElement(trigger, {
+    const renderedTrigger = React.cloneElement(trigger, {
       ref: triggerRef,
-      onClick: (e: React.MouseEvent) => {
-        setOpen((curr: boolean) => !curr);
-
-        if (trigger.props.onClick) {
-          trigger.props.onClick(e);
-        }
-      },
+      onClick: triggerClickHandler,
       children: triggerChildren
         ? [
             ...(triggerChildren instanceof Array
@@ -404,6 +417,8 @@ function Menu({
           ]
         : popoverContent,
     });
+
+    return renderedTrigger;
   }
 
   return popoverContent;
