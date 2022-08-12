@@ -1,5 +1,6 @@
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const Size = {
   XSmall: 'xsmall',
@@ -14,12 +15,6 @@ export const State = {
   Error: 'error',
 } as const;
 export type State = typeof State[keyof typeof State];
-
-export const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-} as const;
-export type Mode = typeof Mode[keyof typeof Mode];
 
 export type SelectProps = {
   /**
@@ -68,6 +63,10 @@ export type SelectProps = {
    * Determines whether the component should be rendered in an error state.
    */
   state?: State;
+  /**
+   *  determines the base font size if sizeVariant is set to default.
+   */
+  baseFontSize?: BaseFontSize;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;

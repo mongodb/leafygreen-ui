@@ -38,22 +38,13 @@ export function InternalOptionGroup({
   children,
   ...rest
 }: InternalProps) {
-  const { mode } = useContext(SelectContext);
-  const colorSet = colorSets[mode].option;
+  const { theme } = useContext(SelectContext);
+  const colorSet = colorSets[theme].option;
 
   const groupId = useIdAllocator({ prefix: 'select-option-group' });
 
   return (
-    <div
-      className={cx(
-        optionGroupStyle,
-        css`
-          border-bottom: 1px solid ${colorSet.group.border};
-        `,
-        className,
-      )}
-      {...rest}
-    >
+    <div className={cx(optionGroupStyle, className)} {...rest}>
       <div
         id={groupId}
         className={cx(

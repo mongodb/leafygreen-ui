@@ -24,6 +24,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

@@ -1,5 +1,12 @@
 # @leafygreen-ui/tabs
 
+## 9.0.0
+
+### Major Changes
+
+- 5aba12f1: - Updates `Tabs` for dark mode brand refresh
+  - Adds `disabled` to `TabTitle` props
+
 ## 8.0.0
 
 ### Patch Changes

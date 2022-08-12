@@ -1,5 +1,17 @@
 # @leafygreen-ui/typography
 
+## 13.1.1
+
+### Patch Changes
+
+- 5aba12f1: Export and combine `Label` and `Description` styles.
+
+## 13.1.0
+
+### Minor Changes
+
+- 65c86281: Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set
+
 ## 13.0.1
 
 ### Patch Changes

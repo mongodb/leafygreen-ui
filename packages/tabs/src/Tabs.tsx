@@ -1,30 +1,31 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
-import { keyMap, isComponentType, Either } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { keyMap, isComponentType, Either, Theme } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
-
-export { Mode };
-
+// Using a background allows the "border" to appear underneath the individual tab color
 const modeColors = {
-  [Mode.Light]: {
+  [Theme.Light]: {
     underlineColor: css`
-      border-bottom: 1px solid ${palette.gray.light2};
+      background: linear-gradient(
+        0deg,
+        ${palette.gray.light2} 1px,
+        rgb(255 255 255 / 0%) 1px
+      );
     `,
   },
 
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     underlineColor: css`
-      border-bottom: 1px solid ${uiColors.gray.dark2};
+      background: linear-gradient(
+        0deg,
+        ${palette.gray.dark2} 1px,
+        rgb(255 255 255 / 0%) 1px
+      );
     `,
   },
 };
@@ -46,10 +47,6 @@ const listStyle = css`
   -ms-overflow-style: none; /* IE */
   scrollbar-width: none; /* Firefox */
 `;
-
-// const disabledStyle = css`
-//   cursor: not-allowed;
-// `;
 
 type ReactEmpty = null | undefined | false | '';
 
@@ -125,13 +122,14 @@ function Tabs(props: AccessibleTabsProps) {
     setSelected: setControlledSelected,
     selected: controlledSelected,
     className,
-    darkMode = false,
+    darkMode: darkModeProp,
     as = 'button',
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest
   } = props;
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const [tabNode, setTabNode] = useState<HTMLDivElement | null>(null);
   const [panelNode, setPanelNode] = useState<HTMLDivElement | null>(null);
@@ -231,7 +229,7 @@ function Tabs(props: AccessibleTabsProps) {
     <div {...rest} className={className}>
       {renderedChildren}
       <div
-        className={cx(listStyle, modeColors[mode].underlineColor)}
+        className={cx(listStyle, modeColors[theme].underlineColor)}
         role="tablist"
         ref={setTabNode}
         aria-orientation="horizontal"
