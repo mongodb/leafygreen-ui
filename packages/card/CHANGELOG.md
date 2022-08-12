@@ -1,5 +1,12 @@
 # @leafygreen-ui/card
 
+## 7.0.0
+
+### Major Changes
+
+- 5aba12f1: - Updates 'Card' for dark mode brand refresh.
+  - Consumes darkMode from the `LeafyGreenProvider` if the `darkMode` prop is not set.
+
 ## 6.0.1
 
 ### Patch Changes

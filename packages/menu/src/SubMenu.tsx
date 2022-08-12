@@ -31,6 +31,7 @@ import {
   paddingLeftWithGlyph,
   paddingLeftWithoutGlyph,
   menuItemContainerThemeStyle,
+  focusedSubMenuItemBorderStyles,
 } from './styles';
 import { Size } from './types';
 import MenuContext from './MenuContext';
@@ -253,12 +254,18 @@ const subItemStyle = css`
 const subItemThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.light1};
+
     &::after {
       background-color: ${palette.gray.dark2};
     }
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.dark2};
+
+    &:hover {
+      color: ${palette.black};
+    }
+
     &::after {
       background-color: ${palette.gray.light1};
     }
@@ -347,10 +354,10 @@ const SubMenu: ExtendableBox<
     }: SubMenuProps,
     ref: React.Ref<any>,
   ) => {
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(subMenuContainer.selector);
-    const focusStyles = getFocusedStyles(subMenuContainer.selector);
     const { theme } = useContext(MenuContext);
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const hoverStyles = getHoverStyles(subMenuContainer.selector, theme);
+    const focusStyles = getFocusedStyles(subMenuContainer.selector, theme);
 
     const nodeRef = React.useRef(null);
 
@@ -435,6 +442,7 @@ const SubMenu: ExtendableBox<
             data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
               [activeTitleTextStyle[theme]]: active,
+              [hoverStyles.activeText]: active,
               [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
             })}
@@ -475,7 +483,7 @@ const SubMenu: ExtendableBox<
             {
               [activeMenuItemContainerStyle[theme]]: active,
               [disabledMenuItemContainerThemeStyle[theme]]: disabled,
-              [focusedMenuItemContainerStyle]: showFocus,
+              [focusedMenuItemContainerStyle[theme]]: showFocus,
               [subMenuOpenStyle[theme]]: open,
             },
             className,
@@ -575,13 +583,7 @@ const SubMenu: ExtendableBox<
                         }
                       `,
                       {
-                        [css`
-                          &:focus {
-                            &::after {
-                              background-color: ${palette.blue.dark3};
-                            }
-                          }
-                        `]: showFocus,
+                        [focusedSubMenuItemBorderStyles[theme]]: showFocus,
                       },
                       child.props.className,
                     ),

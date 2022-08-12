@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { Mode } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const triggerElementStyles = css`
   border-radius: 2px;
@@ -28,8 +29,8 @@ const triggerElementStyles = css`
   }
 `;
 
-const triggerElementModeStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+const triggerElementModeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     text-decoration-color: ${palette.black};
 
     &:hover,
@@ -38,7 +39,7 @@ const triggerElementModeStyles: Record<Mode, string> = {
       text-decoration-color: ${palette.black};
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     text-decoration-color: ${palette.gray.light2};
 
     &:hover,
@@ -72,10 +73,10 @@ function InlineDefinition({
   children,
   className,
   tooltipClassName,
-  darkMode = false,
+  darkMode: darkModeProp,
   ...tooltipProps
 }: InlineDefinitionProps) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   return (
     <Tooltip
@@ -90,7 +91,7 @@ function InlineDefinition({
           tabIndex={0}
           className={cx(
             triggerElementStyles,
-            triggerElementModeStyles[mode],
+            triggerElementModeStyles[theme],
             className,
           )}
         >

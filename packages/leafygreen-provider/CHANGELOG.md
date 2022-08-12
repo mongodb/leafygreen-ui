@@ -1,5 +1,19 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 2.3.2
+
+### Patch Changes
+
+- ee3586c9: Resolves a ReferenceError in PopoverContext
+- Updated dependencies [95f1e63a]
+  - @leafygreen-ui/lib@9.4.1
+
+## 2.3.1
+
+### Patch Changes
+
+- a8be50d8: Fixes a bad build that dropped `useDarkMode` from exports
+
 ## 2.3.0
 
 ### Minor Changes

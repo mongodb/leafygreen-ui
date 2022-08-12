@@ -10,6 +10,7 @@ export default {
   title: 'Components/Tabs',
   component: Tabs,
   args: {
+    darkMode: false,
     children: [
       <Tab key="Tab 1" default name="Tab 1">
         Tab 1 Content

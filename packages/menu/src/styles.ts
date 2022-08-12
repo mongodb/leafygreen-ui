@@ -151,10 +151,17 @@ export const linkDescriptionTextStyle = css`
  * Hover Styles
  */
 
-export const getHoverStyles = (container: string) => ({
+export const getHoverStyles = (container: string, theme: Theme) => ({
   text: css`
     ${container}:not(:disabled):hover & {
       font-weight: 700;
+    }
+  `,
+  activeText: css`
+    ${container}:not(:disabled):hover & {
+      color: ${theme === Theme.Light
+        ? palette.green.base
+        : palette.green.dark3};
     }
   `,
 });
@@ -217,7 +224,7 @@ export const activeDescriptionTextStyle: Record<Theme, string> = {
 
 export const activeIconStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.green.dark2};
+    color: ${palette.green.base};
   `,
   [Theme.Dark]: css`
     color: ${palette.green.dark2};
@@ -280,37 +287,58 @@ export const disabledTextStyle: Record<Theme, string> = {
 /**
  * Focused styles
  */
-export const focusedMenuItemContainerStyle = css`
-  &:focus {
-    text-decoration: none;
-    background-color: ${palette.blue.dark3};
-    color: ${palette.white};
+export const focusedMenuItemContainerStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:focus {
+      text-decoration: none;
+      background-color: ${palette.blue.dark3};
+      color: ${palette.white};
 
-    &:before {
-      background-color: ${palette.blue.light1};
+      &:before {
+        background-color: ${palette.blue.light1};
+      }
     }
-  }
 
-  &::-moz-focus-inner {
-    border: 0;
-  }
-`;
+    &::-moz-focus-inner {
+      border: 0;
+    }
+  `,
+  [Theme.Dark]: css`
+    &:focus {
+      text-decoration: none;
+      background-color: ${palette.blue.light2};
+      color: ${palette.white};
 
-export const getFocusedStyles = (selector: string) => {
+      &:before {
+        background-color: ${palette.blue.base};
+      }
+    }
+
+    &::-moz-focus-inner {
+      border: 0;
+    }
+  `,
+};
+
+export const getFocusedStyles = (selector: string, theme: Theme) => {
   return {
     textStyle: css`
       ${selector}:focus & {
-        color: ${palette.white};
+        color: ${theme === Theme.Light ? palette.white : palette.blue.dark1};
       }
     `,
     descriptionStyle: css`
       ${selector}:focus & {
-        color: ${palette.blue.light3};
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.dark1};
       }
     `,
     iconStyle: css`
       ${selector}:focus > & {
-        color: ${palette.blue.light3};
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.base};
       }
     `,
   };
@@ -319,3 +347,20 @@ export const getFocusedStyles = (selector: string) => {
 export const linkStyle = css`
   text-decoration: none;
 `;
+
+export const focusedSubMenuItemBorderStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:focus {
+      &::after {
+        background-color: ${palette.blue.dark3};
+      }
+    }
+  `,
+  [Theme.Dark]: css`
+    &:focus {
+      &::after {
+        background-color: ${palette.blue.light2};
+      }
+    }
+  `,
+};

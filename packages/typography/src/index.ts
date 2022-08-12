@@ -11,4 +11,4 @@ export { default as Label } from './Label';
 export { default as Link } from './Link';
 export { default as Overline } from './Overline';
 export { default as Subtitle } from './Subtitle';
-export { bodyTypeScaleStyles } from './styles';
+export { bodyTypeScaleStyles, labelTypeScaleStyles } from './styles';

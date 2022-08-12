@@ -5,6 +5,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import { fontFamilies, focusRing, typeScales } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export const ContentStyle = {
   None: 'none',
@@ -12,13 +14,6 @@ export const ContentStyle = {
 } as const;
 
 export type ContentStyle = typeof ContentStyle[keyof typeof ContentStyle];
-
-const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
 
 interface ColorSet {
   containerStyle: string;
@@ -38,8 +33,8 @@ const darkBaseBoxShadow = `0 4px 10px -4px  ${transparentize(0.4, '#000D13')}`;
 const darkHoverBoxShadow = `0 4px 20px -4px ${transparentize(0.3, '#000000')}`;
 const darkFocusBoxShadow = focusRing['dark'].default;
 
-const colorSet: Record<Mode, ColorSet> = {
-  [Mode.Light]: {
+const colorSet: Record<Theme, ColorSet> = {
+  [Theme.Light]: {
     containerStyle: css`
       border: 1px solid ${palette.gray.light2};
       box-shadow: ${lightBaseBoxShadow};
@@ -65,7 +60,7 @@ const colorSet: Record<Mode, ColorSet> = {
       }
     `,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     containerStyle: css`
       border: 1px solid ${palette.gray.dark2};
       box-shadow: ${darkBaseBoxShadow};
@@ -132,16 +127,16 @@ const Card: ExtendableBox<CardProps> = ({
     contentStyle = ContentStyle.Clickable;
   }
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkMode);
 
   return (
     <Box
       // @ts-expect-error
       className={cx(
         containerStyle,
-        colorSet[mode].containerStyle,
+        colorSet[theme].containerStyle,
         {
-          [colorSet[mode].clickableStyle]:
+          [colorSet[theme].clickableStyle]:
             contentStyle === ContentStyle.Clickable,
         },
         className,

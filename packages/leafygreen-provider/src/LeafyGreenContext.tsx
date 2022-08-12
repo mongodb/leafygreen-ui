@@ -40,8 +40,8 @@ LeafyGreenProvider.displayName = 'LeafyGreenProvider';
 LeafyGreenProvider.propTypes = {
   popoverPortalContainer: PropTypes.shape({
     popover: PropTypes.shape({
-      portalContainer: PropTypes.instanceOf(HTMLElement),
-      scrollContainer: PropTypes.instanceOf(HTMLElement),
+      portalContainer: PropTypes.elementType,
+      scrollContainer: PropTypes.elementType,
     }),
   }),
   baseFontSize: PropTypes.oneOf([14, 16]),

@@ -1,5 +1,13 @@
 # @leafygreen-ui/table
 
+## 5.0.1
+
+### Patch Changes
+
+- 8892dd16: Remove checkbox dependency
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/icon-button@13.1.0
+
 ## 5.0.0
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @leafygreen-ui/text-area
 
+## 6.1.0
+
+### Minor Changes
+
+- 65c86281: Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set
+
+### Patch Changes
+
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/typography@13.1.0
+
 ## 6.0.2
 
 ### Patch Changes

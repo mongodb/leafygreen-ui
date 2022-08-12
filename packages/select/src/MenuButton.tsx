@@ -7,6 +7,7 @@ import {
   breakpoints,
   focusRing,
   spacing,
+  hoverRing,
 } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
@@ -185,7 +186,7 @@ const menuButtonTextStyle = css`
 
 const errorColor: Record<Theme, string> = {
   [Theme.Light]: palette.red.base,
-  [Theme.Dark]: '#FF6960', // TODO: palette.red.light1 is different in figma(#FF6960) which does not match react(#EF5752) but will be updated with this ticket https://jira.mongodb.org/browse/PD-2206
+  [Theme.Dark]: palette.red.light1,
 };
 
 const menuButtonErrorStyle: Record<Theme, string> = {
@@ -195,7 +196,7 @@ const menuButtonErrorStyle: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      box-shadow: 0 0 0 3px #f9d5c5; // Between light2 & light3
+      box-shadow: ${hoverRing.light.red};
     }
   `,
   [Theme.Dark]: css`
@@ -204,7 +205,7 @@ const menuButtonErrorStyle: Record<Theme, string> = {
     &:hover,
     &:active {
       border-color: ${errorColor[Theme.Dark]};
-      box-shadow: 0px 0px 0px 3px ${palette.yellow.dark3};
+      box-shadow: ${hoverRing.dark.red};
     }
   `,
 };

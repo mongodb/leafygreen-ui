@@ -95,7 +95,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     return (
       <Popover
         active={open && !disabled}
-        spacing={8}
+        spacing={6}
         align={Align.Bottom}
         justify={Justify.Middle}
         adjustOnMutation

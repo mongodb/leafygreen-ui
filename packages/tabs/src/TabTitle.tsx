@@ -3,9 +3,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
-import { Mode } from './Tabs';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 
 interface ListTitleMode {
   base: string;
@@ -15,7 +14,7 @@ interface ListTitleMode {
   disabled: string;
 }
 
-const listTitleModeStyles: Record<Mode, ListTitleMode> = {
+const listTitleModeStyles: Record<Theme, ListTitleMode> = {
   light: {
     base: css`
       color: ${palette.gray.dark1};
@@ -112,7 +111,7 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
 
 const listTitleStyles = css`
   font-family: ${fontFamilies.default};
-  font-size: 13px;
+  font-size: ${typeScales.body1.fontSize};
   font-weight: 500;
   position: relative;
   display: inline-flex;
@@ -127,7 +126,7 @@ const listTitleStyles = css`
   text-decoration: none;
   transition: 150ms color ease-in-out;
 
-  &:focus {
+  &:focus:not(:disabled) {
     outline: none;
     font-weight: 700;
   }
@@ -206,7 +205,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const theme = darkMode ? Theme.Dark : Theme.Light;
 
   // Checks to see if the current activeElement is a part of the same tab set
   // as the current TabTitle. If so, and the current TabTitle is not disabled
@@ -232,12 +231,12 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     ...rest,
     className: cx(
       listTitleStyles,
-      listTitleModeStyles[mode].base,
+      listTitleModeStyles[theme].base,
       {
-        [listTitleModeStyles[mode].selected]: selected,
-        [listTitleModeStyles[mode].focus]: showFocus,
-        [listTitleModeStyles[mode].hover]: !disabled && !selected,
-        [listTitleModeStyles[mode].disabled]: disabled,
+        [listTitleModeStyles[theme].selected]: selected,
+        [listTitleModeStyles[theme].focus]: showFocus,
+        [listTitleModeStyles[theme].hover]: !disabled && !selected,
+        [listTitleModeStyles[theme].disabled]: disabled,
       },
       className,
     ),
@@ -246,6 +245,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     ['aria-selected']: selected,
     name: nodeText,
     ['data-text']: nodeText,
+    disabled,
   } as const;
 
   if (typeof rest.href === 'string') {
