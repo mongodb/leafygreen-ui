@@ -13,7 +13,7 @@ import { SizeVariant, State } from './types';
 /**
  * Adds an inset box shadow to hide the UA background styles for autofilled inputs
  */
-const autofillShadowOverride = (color: string) => `0 0 0 100% ${color} inset`;
+const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
 export const iconClassName = createUniqueClassName('icon-selector');
 
