@@ -30,7 +30,7 @@ export const chipWrapperPaddingY = {
 /**
  * Height of the input element (in px)
  */
-const inputHeight: Record<Size, number> = {
+export const inputHeight: Record<Size, number> = {
   [Size.Default]:
     typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[Size.Default], // 20
   [Size.Large]:
@@ -69,22 +69,12 @@ const minWidth: Record<Size, number> = {
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
-export const comboboxParentStyle = (
-  size: Size,
-  overflow?: Overflow,
-): string => {
-  return cx(
-    css`
-      font-family: ${fontFamilies.default};
-      width: 100%;
-      min-width: ${minWidth[size]}px;
-    `,
-    {
-      [css`
-        width: unset;
-      `]: overflow === Overflow.expandX,
-    },
-  );
+export const comboboxParentStyle = (size: Size): string => {
+  return css`
+    font-family: ${fontFamilies.default};
+    width: 100%;
+    min-width: ${minWidth[size]}px;
+  `
 };
 
 export const baseComboboxStyles = css`
@@ -183,7 +173,6 @@ export const inputWrapperStyle = ({
         ${baseWrapperStyle}
         display: block;
         height: ${inputHeight[size]}px;
-        padding-left: ${comboboxPadding[size].x}px;
         white-space: nowrap;
         overflow-x: scroll;
         scroll-behavior: smooth;
@@ -204,17 +193,6 @@ export const inputWrapperStyle = ({
             margin-inline-end: 0;
           }
         }
-      `;
-    }
-
-    case Overflow.expandX: {
-      return css`
-        ${baseWrapperStyle}
-        display: flex;
-        gap: 4px;
-        flex-wrap: nowrap;
-        white-space: nowrap;
-        height: ${inputHeight[size]}px;
       `;
     }
 
@@ -271,31 +249,29 @@ export const inputElementSizeStyle: Record<Size, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     min-width: ${maxCharWidth[Size.Default]}px;
-    padding-left: 4px;
+    // Only add padding if there are chips
+    &:not(:first-child) {
+      padding-left: 4px;
+    }
   `,
   [Size.Large]: css`
     height: ${inputHeight[Size.Large]}px;
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     min-width: ${maxCharWidth[Size.Large]}px;
-    padding-left: 6px;
+    &:not(:first-child) {
+      padding-left: 6px;
+    }
   `,
 };
 
-// We don't transition the input width then overflow == expand-x
-export const inputElementTransitionStyles = (
-  isOpen: boolean,
-  overflow: Overflow,
-) =>
-  cx({
-    [css`
-      /*
-    * Immediate transition in, slow transition out. 
-    * '-in' transition is handled by \`scroll-behavior\` 
-    */
-      transition: width ease-in-out ${isOpen ? '0s' : '100ms'};
-    `]: overflow !== Overflow.expandX,
-  });
+export const inputElementTransitionStyles = (isOpen: boolean) => css`
+  /*
+  * Immediate transition in, slow transition out. 
+  * '-in' transition is handled by \`scroll-behavior\` 
+  */
+  transition: width ease-in-out ${isOpen ? '0s' : '100ms'};
+`;
 
 // Previously defined in inputWrapperStyle
 /** Should only be applied to a multiselect */
@@ -322,7 +298,7 @@ export const multiselectInputElementPadding = (
     selection.length > 0
   )
     return css`
-      padding-left: 0px;
+      /* padding-left: 0px; */
     `;
   return '';
 };
