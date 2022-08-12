@@ -50,7 +50,7 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
 
     const callback = (e: DocumentEventMap[Type]) => {
       memoizedEventCallback.current(e);
-    }
+    };
 
     const eventListenerOptions = {
       ...options,
