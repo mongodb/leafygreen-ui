@@ -54,4 +54,5 @@ npm install @leafygreen-ui/banner
 | `dismissible` | `boolean`                                      | Determines whether or not the Banner is dismissible                   | `false`    |
 | `onClose`     | `React.MouseEventHandler`                      | Callback fired when dismiss button is clicked                         | `() => {}` |
 | `image`       | `React.ReactElement`                           | Illustration that will replace default Icon when the prop is supplied |            |
+| `baseFontSize` | `13`, `16`                                    | Determines `font-size` for body copy in Callout component | `13`    |
 | ...           | native `div` attributes                        | Any other props will be spread on the root `div` element              |            |
