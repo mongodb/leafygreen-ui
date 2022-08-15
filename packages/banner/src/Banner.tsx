@@ -58,7 +58,7 @@ const dismissibleIconStyles = css`
   width: 24px;
   height: 24px;
   position: absolute;
-  right: 4px;
+  right: 8px; // Icon is 24px(its 24px to include hover background), in figma its 16px() (24px - 16px)/2 = 4. The spacing is 12px from the right, 12px - 4px = 8px
   top: 8px;
   flex-shrink: 0;
   cursor: pointer;
@@ -100,17 +100,12 @@ const bannerVariantStyles: Record<
         color: ${palette.blue.light2};
 
         &:active,
-        &:hover {
-          color: ${palette.blue.dark2};
+        &:hover,
+        &:focus-visible {
+          color: ${palette.blue.light2};
 
           &:before {
-            background-color: ${palette.blue.light2};
-          }
-        }
-
-        &:focus {
-          &:before {
-            background-color: ${palette.blue.light2};
+            background-color: ${palette.blue.dark2};
           }
         }
       `,
@@ -134,17 +129,12 @@ const bannerVariantStyles: Record<
         color: ${palette.yellow.light2};
 
         &:active,
-        &:hover {
-          color: ${palette.yellow.dark2};
+        &:hover,
+        &:focus-visible {
+          color: ${palette.yellow.light2};
 
           &:before {
-            background-color: ${palette.yellow.light2};
-          }
-        }
-
-        &:focus {
-          &:before {
-            background-color: ${palette.yellow.light2};
+            background-color: ${palette.yellow.dark2};
           }
         }
       `,
@@ -168,17 +158,12 @@ const bannerVariantStyles: Record<
         color: ${palette.red.light2};
 
         &:active,
-        &:hover {
-          color: ${palette.red.dark2};
+        &:hover,
+        &:focus-visible {
+          color: ${palette.red.light2};
 
           &:before {
-            background-color: ${palette.red.light2};
-          }
-        }
-
-        &:focus {
-          &:before {
-            background-color: ${palette.red.light2};
+            background-color: ${palette.red.dark2};
           }
         }
       `,
@@ -202,17 +187,12 @@ const bannerVariantStyles: Record<
         color: ${palette.green.light2};
 
         &:active,
-        &:hover {
-          color: ${palette.green.dark2};
+        &:hover,
+        &:focus-visible {
+          color: ${palette.green.light2};
 
           &:before {
-            background-color: ${palette.green.light2};
-          }
-        }
-
-        &:focus {
-          &:before {
-            background-color: ${palette.green.light2};
+            background-color: ${palette.green.dark2};
           }
         }
       `,
@@ -238,15 +218,10 @@ const bannerVariantStyles: Record<
         color: ${palette.blue.dark2};
 
         &:active,
-        &:hover {
+        &:hover,
+        &:focus-visible {
           color: ${palette.blue.dark2};
 
-          &:before {
-            background-color: ${palette.blue.light2};
-          }
-        }
-
-        &:focus {
           &:before {
             background-color: ${palette.blue.light2};
           }
@@ -272,15 +247,10 @@ const bannerVariantStyles: Record<
         color: ${palette.yellow.dark2};
 
         &:active,
-        &:hover {
+        &:hover,
+        &:focus-visible {
           color: ${palette.yellow.dark2};
 
-          &:before {
-            background-color: ${palette.yellow.light2};
-          }
-        }
-
-        &:focus {
           &:before {
             background-color: ${palette.yellow.light2};
           }
@@ -306,15 +276,10 @@ const bannerVariantStyles: Record<
         color: ${palette.red.dark2};
 
         &:active,
-        &:hover {
+        &:hover,
+        &:focus-visible {
           color: ${palette.red.dark2};
 
-          &:before {
-            background-color: ${palette.red.light2};
-          }
-        }
-
-        &:focus {
           &:before {
             background-color: ${palette.red.light2};
           }
@@ -340,15 +305,10 @@ const bannerVariantStyles: Record<
         color: ${palette.green.dark2};
 
         &:active,
-        &:hover {
+        &:hover,
+        &:focus-visible {
           color: ${palette.green.dark2};
 
-          &:before {
-            background-color: ${palette.green.light2};
-          }
-        }
-
-        &:focus {
           &:before {
             background-color: ${palette.green.light2};
           }
