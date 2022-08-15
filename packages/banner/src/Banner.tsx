@@ -10,7 +10,11 @@ import { palette } from '@leafygreen-ui/palette';
 import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
+import {
+  useUpdatedBaseFontSize,
+  bodyTypeScaleStyles,
+} from '@leafygreen-ui/typography';
 
 const Variant = {
   Info: 'info',
@@ -28,14 +32,11 @@ const defaultBorderSpacing = 12;
 const baseBannerStyles = css`
   position: relative;
   display: flex;
-  min-height: 40px;
   padding: 10px 12px 10px 20px;
   border-width: 1px 1px 1px 0px;
   border-style: solid;
   border-radius: 12px;
   font-family: ${fontFamilies.default};
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
 
   &:before {
     content: '';
@@ -48,11 +49,18 @@ const baseBannerStyles = css`
   }
 `;
 
-const flexShrink = css`
+const iconStyles = css`
+  position: relative;
   flex-shrink: 0;
 `;
 
-const cursorPointer = css`
+const dismissibleIconStyles = css`
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 4px;
+  top: 8px;
+  flex-shrink: 0;
   cursor: pointer;
 `;
 
@@ -68,15 +76,18 @@ const renderedImageStyles = css`
 
 type StyledElements = 'body' | 'dismissButton';
 
-const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, string>>> = {
-  [Theme.Dark] : {
+const bannerVariantStyles: Record<
+  Theme,
+  Record<Variant, Record<StyledElements, string>>
+> = {
+  [Theme.Dark]: {
     [Variant.Info]: {
       body: css`
         color: ${palette.blue.light2};
         border-color: ${palette.blue.dark2};
         border-left-color: ${palette.blue.light1};
         background-color: ${palette.blue.dark3};
-  
+
         &:before {
           background: linear-gradient(
             to left,
@@ -87,16 +98,16 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
       dismissButton: css`
         color: ${palette.blue.light2};
-  
+
         &:active,
         &:hover {
           color: ${palette.blue.dark2};
-  
+
           &:before {
             background-color: ${palette.blue.light2};
           }
         }
-  
+
         &:focus {
           &:before {
             background-color: ${palette.blue.light2};
@@ -110,7 +121,7 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
         border-color: ${palette.yellow.dark2};
         border-left-color: ${palette.yellow.dark2};
         background-color: ${palette.yellow.dark3};
-  
+
         &:before {
           background: linear-gradient(
             to left,
@@ -121,16 +132,16 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
       dismissButton: css`
         color: ${palette.yellow.light2};
-  
+
         &:active,
         &:hover {
           color: ${palette.yellow.dark2};
-  
+
           &:before {
             background-color: ${palette.yellow.light2};
           }
         }
-  
+
         &:focus {
           &:before {
             background-color: ${palette.yellow.light2};
@@ -144,7 +155,7 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
         border-color: ${palette.red.dark2};
         border-left-color: ${palette.red.base};
         background-color: ${palette.red.dark3};
-  
+
         &:before {
           background: linear-gradient(
             to left,
@@ -155,16 +166,16 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
       dismissButton: css`
         color: ${palette.red.light2};
-  
+
         &:active,
         &:hover {
           color: ${palette.red.dark2};
-  
+
           &:before {
             background-color: ${palette.red.light2};
           }
         }
-  
+
         &:focus {
           &:before {
             background-color: ${palette.red.light2};
@@ -178,7 +189,7 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
         border-color: ${palette.green.dark2};
         border-left-color: ${palette.green.base};
         background-color: ${palette.green.dark3};
-  
+
         &:before {
           background: linear-gradient(
             to left,
@@ -189,16 +200,16 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
       dismissButton: css`
         color: ${palette.green.light2};
-  
+
         &:active,
         &:hover {
           color: ${palette.green.dark2};
-  
+
           &:before {
             background-color: ${palette.green.light2};
           }
         }
-  
+
         &:focus {
           &:before {
             background-color: ${palette.green.light2};
@@ -207,14 +218,14 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
     },
   },
-  [Theme.Light] : {
+  [Theme.Light]: {
     [Variant.Info]: {
       body: css`
         color: ${palette.blue.dark2};
         border-color: ${palette.blue.light2};
         border-left-color: ${palette.blue.base};
         background-color: ${palette.blue.light3};
-  
+
         &:before {
           background: linear-gradient(
             to left,
@@ -225,16 +236,16 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
       dismissButton: css`
         color: ${palette.blue.dark2};
-  
+
         &:active,
         &:hover {
           color: ${palette.blue.dark2};
-  
+
           &:before {
             background-color: ${palette.blue.light2};
           }
         }
-  
+
         &:focus {
           &:before {
             background-color: ${palette.blue.light2};
@@ -248,7 +259,7 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
         border-color: ${palette.yellow.light2};
         border-left-color: ${palette.yellow.base};
         background-color: ${palette.yellow.light3};
-  
+
         &:before {
           background: linear-gradient(
             to left,
@@ -259,16 +270,16 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
       dismissButton: css`
         color: ${palette.yellow.dark2};
-  
+
         &:active,
         &:hover {
           color: ${palette.yellow.dark2};
-  
+
           &:before {
             background-color: ${palette.yellow.light2};
           }
         }
-  
+
         &:focus {
           &:before {
             background-color: ${palette.yellow.light2};
@@ -282,7 +293,7 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
         border-color: ${palette.red.light2};
         border-left-color: ${palette.red.base};
         background-color: ${palette.red.light3};
-  
+
         &:before {
           background: linear-gradient(
             to left,
@@ -293,16 +304,16 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
       dismissButton: css`
         color: ${palette.red.dark2};
-  
+
         &:active,
         &:hover {
           color: ${palette.red.dark2};
-  
+
           &:before {
             background-color: ${palette.red.light2};
           }
         }
-  
+
         &:focus {
           &:before {
             background-color: ${palette.red.light2};
@@ -316,7 +327,7 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
         border-color: ${palette.green.light2};
         border-left-color: ${palette.green.base};
         background-color: ${palette.green.light3};
-  
+
         &:before {
           background: linear-gradient(
             to left,
@@ -327,16 +338,16 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
       `,
       dismissButton: css`
         color: ${palette.green.dark2};
-  
+
         &:active,
         &:hover {
           color: ${palette.green.dark2};
-  
+
           &:before {
             background-color: ${palette.green.light2};
           }
         }
-  
+
         &:focus {
           &:before {
             background-color: ${palette.green.light2};
@@ -344,11 +355,14 @@ const bannerVariantStyles: Record<Theme, Record<Variant, Record<StyledElements, 
         }
       `,
     },
-  }
+  },
 } as const;
 
-const map: Record<Theme, Record<Variant, {color: string, icon: React.ComponentType<any>}>> = {
-  [Theme.Dark] : {
+const map: Record<
+  Theme,
+  Record<Variant, { color: string; icon: React.ComponentType<any> }>
+> = {
+  [Theme.Dark]: {
     [Variant.Info]: { color: palette.blue.light1, icon: InfoWithCircleIcon },
     [Variant.Warning]: {
       color: palette.yellow.base,
@@ -360,7 +374,7 @@ const map: Record<Theme, Record<Variant, {color: string, icon: React.ComponentTy
       icon: CheckmarkWithCircleIcon,
     },
   },
-  [Theme.Light] : {
+  [Theme.Light]: {
     [Variant.Info]: { color: palette.blue.base, icon: InfoWithCircleIcon },
     [Variant.Warning]: {
       color: palette.yellow.dark2,
@@ -407,6 +421,15 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   `;
 };
 
+const bannerIconPositionStyles: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    top: 2px; // 18px(figma height) - 16px(icon-height)
+  `,
+  [BaseFontSize.Body2]: css`
+    top: 5.5px; // 21.5px(figma height) - 16px(icon height)
+  `,
+};
+
 interface BannerProps extends HTMLElementProps<'div', never> {
   /**
    * Sets the variant for the Banner
@@ -439,7 +462,12 @@ interface BannerProps extends HTMLElementProps<'div', never> {
    *
    * default: `false`
    */
-   darkMode?: boolean;
+  darkMode?: boolean;
+
+  /**
+   * The base font size of the title and text rendered in children.
+   */
+  baseFontSize?: BaseFontSize;
 }
 
 /**
@@ -451,6 +479,7 @@ interface BannerProps extends HTMLElementProps<'div', never> {
  * @param props.dismissible Determines whether or not the Banner is dismissible.
  * @param props.onClose Callback fired when dismiss button is clicked.
  * @param props.darkMode Determines whether or not the component will be rendered in dark mode.
+ * @param props.baseFontSize The base font size of the title and text rendered in children.
  */
 export default function Banner({
   variant = Variant.Info,
@@ -460,9 +489,11 @@ export default function Banner({
   children,
   className,
   darkMode: darkModeProp,
+  baseFontSize: baseFontSizeProp,
   ...rest
 }: BannerProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { icon: Icon, color } = map[theme][variant];
 
   const renderIcon = image ? (
@@ -472,12 +503,7 @@ export default function Banner({
   ) : (
     <Icon
       fill={color}
-      className={cx(
-        flexShrink,
-        css`
-          margin-top: 3px;
-        `,
-      )}
+      className={cx(iconStyles, bannerIconPositionStyles[baseFontSize])}
     />
   );
 
@@ -486,7 +512,13 @@ export default function Banner({
       role="alert"
       className={cx(
         baseBannerStyles,
+        bodyTypeScaleStyles[baseFontSize],
         bannerVariantStyles[theme][variant].body,
+        {
+          [css`
+            padding-right: 36px; // add space for the icon
+          `]: dismissible,
+        },
         className,
       )}
       {...rest}
@@ -496,12 +528,7 @@ export default function Banner({
       {dismissible && (
         <IconButton
           className={cx(
-            flexShrink,
-            cursorPointer,
-            css`
-              margin-top: -3px;
-              left: 8px;
-            `,
+            dismissibleIconStyles,
             bannerVariantStyles[theme][variant].dismissButton,
           )}
           aria-label="Close Message"
@@ -522,5 +549,6 @@ Banner.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   onClose: PropTypes.func,
   dismissable: PropTypes.bool,
-  image: PropTypes.element
+  image: PropTypes.element,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };

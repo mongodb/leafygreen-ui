@@ -25,7 +25,7 @@ export default {
     },
     children: defaultArgTypes.children,
     ref: defaultArgTypes.ref,
-    darkMode: defaultArgTypes.darkMode
+    darkMode: defaultArgTypes.darkMode,
   },
 } as Meta<typeof Banner>;
 
