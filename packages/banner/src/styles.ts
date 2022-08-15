@@ -1,30 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
-import XIcon from '@leafygreen-ui/icon/dist/X';
-import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
-import IconButton from '@leafygreen-ui/icon-button';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
-import {
-  useUpdatedBaseFontSize,
-  bodyTypeScaleStyles,
-} from '@leafygreen-ui/typography';
-import { Variant } from './types';
+import { css } from '@leafygreen-ui/emotion';
+import { Variant } from './';
 
-const defaultBorderSpacing = 12;
+export const defaultBorderSpacing = 12;
 
-const iconStyles = css`
-  position: relative;
-  flex-shrink: 0;
-`;
-
-const baseBannerStyles = css`
+export const baseBannerStyles = css`
   position: relative;
   display: flex;
   padding: 10px 12px 10px 20px;
@@ -44,7 +30,12 @@ const baseBannerStyles = css`
   }
 `;
 
-const dismissibleIconStyles = css`
+export const iconStyles = css`
+  position: relative;
+  flex-shrink: 0;
+`;
+
+export const dismissibleIconStyles = css`
   width: 24px;
   height: 24px;
   position: absolute;
@@ -54,7 +45,7 @@ const dismissibleIconStyles = css`
   cursor: pointer;
 `;
 
-const renderedImageStyles = css`
+export const renderedImageStyles = css`
   // this margin is set to control text alignment with the base of the renderedImage
   margin-top: 3px;
   margin-bottom: 3px;
@@ -63,9 +54,9 @@ const renderedImageStyles = css`
   flex-shrink: 0;
 `;
 
-type StyledElements = 'body' | 'dismissButton';
+export type StyledElements = 'body' | 'dismissButton';
 
-const bannerVariantStyles: Record<
+export const bannerVariantStyles: Record<
   Theme,
   Record<Variant, Record<StyledElements, string>>
 > = {
@@ -411,7 +402,7 @@ const bannerVariantStyles: Record<
   },
 } as const;
 
-const map: Record<
+export const map: Record<
   Theme,
   Record<Variant, { color: string; icon: React.ComponentType<any> }>
 > = {
@@ -441,7 +432,7 @@ const map: Record<
   },
 };
 
-const getTextStyle = (image: boolean, dismissible: boolean) => {
+export const getTextStyle = (image: boolean, dismissible: boolean) => {
   const defaultIconSize = 16;
 
   const styleObj: {
@@ -499,134 +490,11 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   `;
 };
 
-const bannerIconPositionStyles: Record<BaseFontSize, string> = {
+export const bannerIconPositionStyles: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     top: 2px; // 18px(figma height) - 16px(icon-height)
   `,
   [BaseFontSize.Body2]: css`
     top: 5.5px; // 21.5px(figma height) - 16px(icon height)
   `,
-};
-
-interface BannerProps extends HTMLElementProps<'div', never> {
-  /**
-   * Sets the variant for the Banner
-   *
-   * Default: `'info'`
-   */
-  variant?: Variant;
-
-  /**
-   * Illustration that will replace default Icon when the prop is supplied
-   */
-  image?: React.ReactElement;
-
-  /**
-   * Determines whether or not the Banner is dismissible
-   *
-   * Default: `false`
-   */
-  dismissible?: boolean;
-
-  /**
-   * Callback fired when dismiss button is clicked
-   *
-   * Default: `() => {}`
-   */
-  onClose?: React.MouseEventHandler;
-
-  /**
-   * Determines whether or not the component will be rendered in dark mode.
-   *
-   * default: `false`
-   */
-  darkMode?: boolean;
-
-  /**
-   * The base font size of the title and text rendered in children.
-   */
-  baseFontSize?: BaseFontSize;
-}
-
-/**
- *
- * Banners remain until dismissed by the user, or if the state, which caused the banner is resolved. They are usually contextual to the product or task. For guidelines on when to use Banners, refer to our [design guidelines](https://www.mongodb.design/component/banner/guidelines/).
- *
- * @param props.variant Sets the variant for the Banner.
- * @param props.image Illustration that will replace default Icon when the prop is supplied.
- * @param props.dismissible Determines whether or not the Banner is dismissible.
- * @param props.onClose Callback fired when dismiss button is clicked.
- * @param props.darkMode Determines whether or not the component will be rendered in dark mode.
- * @param props.baseFontSize The base font size of the title and text rendered in children.
- */
-export default function Banner({
-  variant = Variant.Info,
-  dismissible = false,
-  onClose = () => {},
-  image,
-  children,
-  className,
-  darkMode: darkModeProp,
-  baseFontSize: baseFontSizeProp,
-  ...rest
-}: BannerProps) {
-  const { theme, darkMode } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-  const { icon: Icon, color } = map[theme][variant];
-
-  const renderIcon = image ? (
-    React.cloneElement(image, {
-      className: renderedImageStyles,
-    })
-  ) : (
-    <Icon
-      fill={color}
-      className={cx(iconStyles, bannerIconPositionStyles[baseFontSize])}
-    />
-  );
-
-  return (
-    <div
-      role="alert"
-      className={cx(
-        baseBannerStyles,
-        bodyTypeScaleStyles[baseFontSize],
-        bannerVariantStyles[theme][variant].body,
-        {
-          [css`
-            padding-right: 36px; // add space for the icon
-          `]: dismissible,
-        },
-        className,
-      )}
-      {...rest}
-    >
-      {renderIcon}
-      <div className={getTextStyle(image != null, dismissible)}>{children}</div>
-      {dismissible && (
-        <IconButton
-          className={cx(
-            dismissibleIconStyles,
-            bannerVariantStyles[theme][variant].dismissButton,
-          )}
-          aria-label="Close Message"
-          onClick={onClose}
-          darkMode={darkMode}
-        >
-          <XIcon />
-        </IconButton>
-      )}
-    </div>
-  );
-}
-
-Banner.displayName = 'Banner';
-
-Banner.propTypes = {
-  darkMode: PropTypes.bool,
-  variant: PropTypes.oneOf(Object.values(Variant)),
-  onClose: PropTypes.func,
-  dismissable: PropTypes.bool,
-  image: PropTypes.element,
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };

@@ -3,6 +3,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Banner, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { Link } from '@leafygreen-ui/typography';
 
 export default {
   title: 'Components/Banner',
@@ -56,6 +57,27 @@ Danger.args = {
 export const Info = Template.bind({});
 Info.args = {
   variant: Variant.Info,
+};
+
+export const WithLink: ComponentStory<typeof Banner> = ({
+  // eslint-disable-next-line react/prop-types
+  image,
+  // eslint-disable-next-line react/prop-types
+  children,
+  ...args
+}) => {
+  return (
+    <Banner
+      // @ts-expect-error
+      image={image ? <Icon glyph={image} /> : undefined}
+      {...args}
+    >
+      {children}
+      <Link href="http://localhost:9001">Link style</Link>
+      &nbsp;
+      <a href="http://localhost:9001">Regular link</a>
+    </Banner>
+  );
 };
 
 export const WithCustomImage = Template.bind({});
