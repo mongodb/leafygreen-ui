@@ -28,6 +28,9 @@
     "@leafygreen-ui/tokens": "1.3.1",
     "@leafygreen-ui/typography": "13.1.1"
   },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^2.3.2"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/banner",
   "repository": {
     "type": "git",
