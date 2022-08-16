@@ -83,6 +83,5 @@ export const WithLink: ComponentStory<typeof Banner> = ({
 export const WithCustomImage = Template.bind({});
 WithCustomImage.args = {
   variant: Variant.Info,
-  // @ts-expect-error
   image: 'Copy',
 };

@@ -492,9 +492,9 @@ export const getTextStyle = (image: boolean, dismissible: boolean) => {
 
 export const bannerIconPositionStyles: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
-    top: 2px; // 18px(figma height) - 16px(icon-height)
+    top: 2px; // 18px(height in figma) - 16px(actual height of icon)
   `,
   [BaseFontSize.Body2]: css`
-    top: 5.5px; // 21.5px(figma height) - 16px(icon height)
+    top: 5.5px; // 21.5px(height in figma) - 16px(actual height of icon)
   `,
 };
