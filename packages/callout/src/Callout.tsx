@@ -10,6 +10,7 @@ import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { bodyTypeScaleStyles, Overline, Subtitle, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
 
 export const Variant = {
   Note: 'note',
@@ -23,7 +24,6 @@ export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
   font-family: ${fontFamilies.default};
-  background-color: ${palette.white};
   border-radius: 16px;
   position: relative;
 
@@ -37,6 +37,15 @@ const baseStyle = css`
     border-radius: 16px 0px 0px 16px;
   }
 `;
+
+const baseThemeStyles: Record<Theme, string> = {
+  [Theme.Dark] : css`
+    background-color: ${palette.gray.dark4};
+  `,
+  [Theme.Light] : css`
+    background-color: ${palette.white};
+  `,
+}
 
 const headerStyle = css`
   padding: 12px 24px 12px 52px;
@@ -65,17 +74,6 @@ const bodyStyle = css`
   font-weight: 400;
 `;
 
-// const fontSet: Record<BaseFontSize, string> = {
-//   [BaseFontSize.Body1]: css`
-//     font-size: 13px;
-//     line-height: 20px;
-//   `,
-//   [BaseFontSize.Body2]: css`
-//     font-size: 16px;
-//     line-height: 28px;
-//   `,
-// };
-
 export const headerLabels: Record<Variant, string> = {
   [Variant.Note]: 'Note',
   [Variant.Tip]: 'Tip',
@@ -103,57 +101,111 @@ interface ColorSet {
   border: string;
 }
 
-export const colorSets: Record<Variant, ColorSet> = {
-  [Variant.Note]: {
-    header: {
-      background: palette.blue.light3,
-      text: palette.blue.dark1,
+export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
+  [Theme.Dark] : {
+    [Variant.Note]: {
+      header: {
+        background: palette.blue.dark3,
+        text: palette.blue.light2,
+      },
+      text: palette.blue.light3,
+      bar: palette.blue.dark1,
+      icon: palette.blue.light1,
+      border: palette.blue.dark1,
     },
-    text: palette.blue.dark3,
-    bar: palette.blue.base,
-    icon: palette.blue.base,
-    border: palette.blue.light2,
-  },
-  [Variant.Tip]: {
-    header: {
-      background: palette.purple.light3,
-      text: palette.purple.dark2,
+    [Variant.Tip]: {
+      header: {
+        background: palette.purple.dark3,
+        text: palette.purple.light2,
+      },
+      text: palette.purple.light2,
+      bar: palette.purple.dark2,
+      icon: palette.purple.base,
+      border: palette.purple.dark2,
     },
-    text: palette.purple.dark3,
-    bar: palette.purple.base,
-    icon: palette.purple.base,
-    border: palette.purple.light2,
-  },
-  [Variant.Important]: {
-    header: {
-      background: palette.yellow.light3,
-      text: palette.yellow.dark2,
+    [Variant.Important]: {
+      header: {
+        background: palette.yellow.dark3,
+        text: palette.yellow.light2,
+      },
+      text: palette.yellow.light3,
+      bar: palette.yellow.dark2,
+      icon: palette.yellow.base,
+      border: palette.yellow.dark2,
     },
-    text: palette.yellow.dark3,
-    bar: palette.yellow.base,
-    icon: palette.yellow.dark2,
-    border: palette.yellow.light2,
-  },
-  [Variant.Warning]: {
-    header: {
-      background: palette.red.light3,
-      text: palette.red.dark2,
+    [Variant.Warning]: {
+      header: {
+        background: palette.red.dark3,
+        text: palette.red.light2,
+      },
+      text: palette.red.light3,
+      bar: palette.red.dark2,
+      icon: palette.red.light1,
+      border: palette.red.dark2,
     },
-    text: palette.red.dark3,
-    bar: palette.red.base,
-    icon: palette.red.base,
-    border: palette.red.light2,
-  },
-  [Variant.Example]: {
-    header: {
-      background: palette.gray.light2,
-      text: palette.gray.dark2,
+    [Variant.Example]: {
+      header: {
+        background: palette.gray.dark3,
+        text: palette.gray.light2,
+      },
+      text: palette.gray.light3,
+      bar: palette.gray.dark1,
+      icon: palette.gray.base,
+      border: palette.gray.dark1,
     },
-    text: palette.gray.dark3,
-    bar: palette.gray.dark1,
-    icon: palette.gray.dark3,
-    border: palette.gray.light1,
   },
+  [Theme.Light] : {
+    [Variant.Note]: {
+      header: {
+        background: palette.blue.light3,
+        text: palette.blue.dark1,
+      },
+      text: palette.blue.dark3,
+      bar: palette.blue.base,
+      icon: palette.blue.base,
+      border: palette.blue.light2,
+    },
+    [Variant.Tip]: {
+      header: {
+        background: palette.purple.light3,
+        text: palette.purple.dark2,
+      },
+      text: palette.purple.dark3,
+      bar: palette.purple.base,
+      icon: palette.purple.base,
+      border: palette.purple.light2,
+    },
+    [Variant.Important]: {
+      header: {
+        background: palette.yellow.light3,
+        text: palette.yellow.dark2,
+      },
+      text: palette.yellow.dark3,
+      bar: palette.yellow.base,
+      icon: palette.yellow.dark2,
+      border: palette.yellow.light2,
+    },
+    [Variant.Warning]: {
+      header: {
+        background: palette.red.light3,
+        text: palette.red.dark2,
+      },
+      text: palette.red.dark3,
+      bar: palette.red.base,
+      icon: palette.red.base,
+      border: palette.red.light2,
+    },
+    [Variant.Example]: {
+      header: {
+        background: palette.gray.light2,
+        text: palette.gray.dark2,
+      },
+      text: palette.gray.dark3,
+      bar: palette.gray.dark1,
+      icon: palette.gray.dark3,
+      border: palette.gray.light1,
+    },
+  }
 };
 
 
@@ -177,7 +229,6 @@ export interface CalloutProps {
   /**
    * Determines whether or not the component will be rendered in dark mode.
    *
-   * default: `false`
    */
   darkMode?: boolean;
 }
@@ -195,7 +246,7 @@ function Callout({
 }: CalloutProps) {
   const { theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-  const colorSet = colorSets[variant];
+  const colorSet = colorSets[theme][variant];
   const Icon = headerIcons[variant];
 
   return (
@@ -203,6 +254,7 @@ function Callout({
       role="note"
       className={cx(
         baseStyle,
+        baseThemeStyles[theme],
         css`
           color: ${colorSet.text};
           border: 2px solid ${colorSet.border};
@@ -258,6 +310,7 @@ function Callout({
 }
 
 Callout.propTypes = {
+  darkMode: PropTypes.bool,
   variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
   title: PropTypes.string,
   children: PropTypes.node.isRequired,
