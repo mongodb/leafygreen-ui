@@ -23,6 +23,7 @@ import {
   bodyStyle,
   titleStyle,
   contentStyles,
+  focusThemeStyles,
 } from './styles';
 
 export interface CalloutProps {
@@ -133,24 +134,7 @@ function Callout({
                 }
               }
             `,
-            {
-              [css`
-                a {
-                  &:focus-visible {
-                    box-shadow: 0 0 0 3px ${palette.gray.dark4},
-                      0 0 0 5px ${palette.blue.light1};
-                  }
-                }
-              `]: theme === Theme.Dark,
-              [css`
-                a {
-                  &:focus-visible {
-                    box-shadow: 0 0 0 3px ${palette.white},
-                      0 0 0 5px ${palette.blue.light1};
-                  }
-                }
-              `]: theme === Theme.Light,
-            },
+            focusThemeStyles[theme],
           )}
         >
           {contents}

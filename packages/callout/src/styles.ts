@@ -266,3 +266,21 @@ export const contentStyles = css`
     }
   }
 `;
+
+export const focusThemeStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    a {
+      &:focus-visible {
+        box-shadow: 0 0 0 3px ${palette.gray.dark4},
+          0 0 0 5px ${palette.blue.light1};
+      }
+    }
+  `,
+  [Theme.Light]: css`
+    a {
+      &:focus-visible {
+        box-shadow: 0 0 0 3px ${palette.white}, 0 0 0 5px ${palette.blue.light1};
+      }
+    }
+  `,
+};
