@@ -7,7 +7,12 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { bodyTypeScaleStyles, Overline, Subtitle, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+import {
+  bodyTypeScaleStyles,
+  Overline,
+  Subtitle,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
 import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
@@ -39,13 +44,13 @@ const baseStyle = css`
 `;
 
 const baseThemeStyles: Record<Theme, string> = {
-  [Theme.Dark] : css`
+  [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
   `,
-  [Theme.Light] : css`
+  [Theme.Light]: css`
     background-color: ${palette.white};
   `,
-}
+};
 
 const headerStyle = css`
   padding: 12px 24px 12px 52px;
@@ -101,10 +106,14 @@ interface ColorSet {
   bar: string;
   icon: string;
   border: string;
+  link: {
+    color: string;
+    hoverColor: string;
+  };
 }
 
 export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
-  [Theme.Dark] : {
+  [Theme.Dark]: {
     [Variant.Note]: {
       header: {
         background: palette.blue.dark3,
@@ -114,6 +123,10 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.blue.dark1,
       icon: palette.blue.light1,
       border: palette.blue.dark1,
+      link: {
+        color: palette.blue.light2,
+        hoverColor: palette.blue.light3,
+      },
     },
     [Variant.Tip]: {
       header: {
@@ -124,6 +137,10 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.purple.dark2,
       icon: palette.purple.base,
       border: palette.purple.dark2,
+      link: {
+        color: palette.purple.light2,
+        hoverColor: palette.purple.light3,
+      },
     },
     [Variant.Important]: {
       header: {
@@ -134,6 +151,10 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.yellow.dark2,
       icon: palette.yellow.base,
       border: palette.yellow.dark2,
+      link: {
+        color: palette.yellow.light2,
+        hoverColor: palette.yellow.light3,
+      },
     },
     [Variant.Warning]: {
       header: {
@@ -144,6 +165,10 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.red.dark2,
       icon: palette.red.light1,
       border: palette.red.dark2,
+      link: {
+        color: palette.red.light2,
+        hoverColor: palette.red.light3,
+      },
     },
     [Variant.Example]: {
       header: {
@@ -154,9 +179,13 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.gray.dark1,
       icon: palette.gray.base,
       border: palette.gray.dark1,
+      link: {
+        color: palette.gray.light2,
+        hoverColor: palette.gray.light3,
+      },
     },
   },
-  [Theme.Light] : {
+  [Theme.Light]: {
     [Variant.Note]: {
       header: {
         background: palette.blue.light3,
@@ -166,6 +195,10 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.blue.base,
       icon: palette.blue.base,
       border: palette.blue.light2,
+      link: {
+        color: palette.blue.dark3,
+        hoverColor: palette.blue.dark2,
+      },
     },
     [Variant.Tip]: {
       header: {
@@ -176,6 +209,10 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.purple.base,
       icon: palette.purple.base,
       border: palette.purple.light2,
+      link: {
+        color: palette.purple.dark3,
+        hoverColor: palette.purple.dark2,
+      },
     },
     [Variant.Important]: {
       header: {
@@ -186,6 +223,10 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.yellow.base,
       icon: palette.yellow.dark2,
       border: palette.yellow.light2,
+      link: {
+        color: palette.yellow.dark3,
+        hoverColor: palette.yellow.dark2,
+      },
     },
     [Variant.Warning]: {
       header: {
@@ -196,6 +237,10 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.red.base,
       icon: palette.red.base,
       border: palette.red.light2,
+      link: {
+        color: palette.red.dark3,
+        hoverColor: palette.red.dark2,
+      },
     },
     [Variant.Example]: {
       header: {
@@ -206,11 +251,39 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.gray.dark1,
       icon: palette.gray.dark3,
       border: palette.gray.light1,
+      link: {
+        color: palette.gray.dark3,
+        hoverColor: palette.gray.dark2,
+      },
     },
-  }
+  },
 };
 
+const contentStyles = css`
+  a {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    border-radius: 2px;
 
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      span {
+        &::after {
+          display: none;
+        }
+      }
+    }
+    &:focus-visible {
+      position: relative;
+    }
+  }
+`;
 
 export interface CalloutProps {
   /**
@@ -244,7 +317,7 @@ function Callout({
   baseFontSize: baseFontSizeProp,
   className,
   children: contents,
-  darkMode: darkModeProp
+  darkMode: darkModeProp,
 }: CalloutProps) {
   const { theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
@@ -301,11 +374,47 @@ function Callout({
       </div>
       <div className={bodyStyle}>
         {title && (
-          <Subtitle as="h3" className={cx(titleStyle, bodyTypeScaleStyles[baseFontSize])}>
+          <Subtitle
+            as="h3"
+            className={cx(titleStyle, bodyTypeScaleStyles[baseFontSize])}
+          >
             {title}
           </Subtitle>
         )}
-        <div className={bodyTypeScaleStyles[baseFontSize]}>{contents}</div>
+        <div
+          className={cx(
+            bodyTypeScaleStyles[baseFontSize],
+            contentStyles,
+            css`
+              a {
+                color: ${colorSet.link.color};
+                &:hover {
+                  color: ${colorSet.link.hoverColor};
+                }
+              }
+            `,
+            {
+              [css`
+                a {
+                  &:focus-visible {
+                    box-shadow: 0 0 0 3px ${palette.gray.dark4},
+                      0 0 0 5px ${palette.blue.light1};
+                  }
+                }
+              `]: theme === Theme.Dark,
+              [css`
+                a {
+                  &:focus-visible {
+                    box-shadow: 0 0 0 3px ${palette.white},
+                      0 0 0 5px ${palette.blue.light1};
+                  }
+                }
+              `]: theme === Theme.Light,
+            },
+          )}
+        >
+          {contents}
+        </div>
       </div>
     </div>
   );
