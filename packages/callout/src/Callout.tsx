@@ -57,8 +57,10 @@ const headerStyle = css`
 `;
 
 const headerIconStyle = css`
-  left: 20px;
   position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 const titleStyle = css`
