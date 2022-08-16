@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import {
   bodyTypeScaleStyles,
   Overline,
@@ -10,7 +9,6 @@ import {
 } from '@leafygreen-ui/typography';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Theme } from '@leafygreen-ui/lib';
 import { Variant } from './types';
 import {
   colorSets,
