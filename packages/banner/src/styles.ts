@@ -6,7 +6,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
 import { css } from '@leafygreen-ui/emotion';
-import { Variant } from './';
+import { Variant } from './types';
 
 export const defaultBorderSpacing = 12;
 
