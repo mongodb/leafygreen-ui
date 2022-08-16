@@ -7,8 +7,8 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { Overline, Subtitle } from '@leafygreen-ui/typography';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { bodyTypeScaleStyles, Overline, Subtitle, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export const Variant = {
@@ -22,7 +22,7 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
-  font-family: Euclid Circular A, ‘Helvetica Neue’, Helvetica, Arial, sans-serif; // TODO: Refresh – update to fontFamilies.default
+  font-family: ${fontFamilies.default};
   background-color: ${palette.white};
   border-radius: 16px;
   position: relative;
@@ -65,18 +65,18 @@ const bodyStyle = css`
   font-weight: 400;
 `;
 
-const fontSet = {
-  [13]: css`
-    font-size: 13px;
-    line-height: 20px;
-  `,
-  [16]: css`
-    font-size: 16px;
-    line-height: 28px;
-  `,
-};
+// const fontSet: Record<BaseFontSize, string> = {
+//   [BaseFontSize.Body1]: css`
+//     font-size: 13px;
+//     line-height: 20px;
+//   `,
+//   [BaseFontSize.Body2]: css`
+//     font-size: 16px;
+//     line-height: 28px;
+//   `,
+// };
 
-export const headerLabels = {
+export const headerLabels: Record<Variant, string> = {
   [Variant.Note]: 'Note',
   [Variant.Tip]: 'Tip',
   [Variant.Important]: 'Important',
@@ -84,13 +84,24 @@ export const headerLabels = {
   [Variant.Example]: 'Example',
 } as const;
 
-export const headerIcons = {
+export const headerIcons: Record<Variant, React.ComponentType<any>> = {
   [Variant.Note]: InfoWithCircleIcon,
   [Variant.Tip]: BulbIcon,
   [Variant.Important]: ImportantWithCircleIcon,
   [Variant.Warning]: WarningIcon,
   [Variant.Example]: BeakerIcon,
 } as const;
+
+interface ColorSet {
+  header: {
+    background: string;
+    text: string;
+  };
+  text: string;
+  bar: string;
+  icon: string;
+  border: string;
+}
 
 export const colorSets: Record<Variant, ColorSet> = {
   [Variant.Note]: {
@@ -145,16 +156,7 @@ export const colorSets: Record<Variant, ColorSet> = {
   },
 };
 
-interface ColorSet {
-  header: {
-    background: string;
-    text: string;
-  };
-  text: string;
-  bar: string;
-  icon: string;
-  border: string;
-}
+
 
 export interface CalloutProps {
   /**
@@ -186,12 +188,13 @@ export interface CalloutProps {
 function Callout({
   variant,
   title,
-  baseFontSize = 13,
+  baseFontSize: baseFontSizeProp,
   className,
   children: contents,
   darkMode: darkModeProp
 }: CalloutProps) {
   const { theme } = useDarkMode(darkModeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const colorSet = colorSets[variant];
   const Icon = headerIcons[variant];
 
@@ -244,11 +247,11 @@ function Callout({
       </div>
       <div className={bodyStyle}>
         {title && (
-          <Subtitle as="h3" className={cx(titleStyle, fontSet[baseFontSize])}>
+          <Subtitle as="h3" className={cx(titleStyle, bodyTypeScaleStyles[baseFontSize])}>
             {title}
           </Subtitle>
         )}
-        <div className={fontSet[baseFontSize]}>{contents}</div>
+        <div className={bodyTypeScaleStyles[baseFontSize]}>{contents}</div>
       </div>
     </div>
   );
