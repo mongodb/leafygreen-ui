@@ -9,6 +9,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Overline, Subtitle } from '@leafygreen-ui/typography';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export const Variant = {
   Note: 'note',
@@ -171,6 +172,12 @@ export interface CalloutProps {
    * The base font size of the title and text rendered in children.
    */
   baseFontSize?: BaseFontSize;
+  /**
+   * Determines whether or not the component will be rendered in dark mode.
+   *
+   * default: `false`
+   */
+  darkMode?: boolean;
 }
 
 /**
@@ -182,7 +189,9 @@ function Callout({
   baseFontSize = 13,
   className,
   children: contents,
+  darkMode: darkModeProp
 }: CalloutProps) {
+  const { theme } = useDarkMode(darkModeProp);
   const colorSet = colorSets[variant];
   const Icon = headerIcons[variant];
 
