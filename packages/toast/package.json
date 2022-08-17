@@ -28,7 +28,9 @@
     "@leafygreen-ui/icon": "^11.10.1",
     "@leafygreen-ui/icon-button": "^13.1.0",
     "@leafygreen-ui/typography": "^13.1.1",
-    "lodash": "^4.17.21"
+    "@leafygreen-ui/emotion": "4.0.0",
+    "lodash": "^4.17.21",
+    "polished": "^4.2.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "2.3.2"
