@@ -526,6 +526,9 @@ function Toast({
                       data-testid="toast-title"
                       className={cx(
                         currentVariantStyles.body,
+                        css`
+                          font-weight: 700
+                        `
                       )}
                     >
                       {title}
