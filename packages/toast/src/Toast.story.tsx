@@ -41,8 +41,9 @@ Dismissible.args = {
 export const WithLink = Template.bind({});
 WithLink.args = {
   body: (
-  <>
-    Exercitation incididunt ea proident. &nbsp;
-    <Link href="http://localhost:9001">Link style</Link>
-  </>),
+    <>
+      Exercitation incididunt ea proident. &nbsp;
+      <Link href="http://localhost:9001">Link style</Link>
+    </>
+  ),
 };
