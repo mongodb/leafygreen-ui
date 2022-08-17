@@ -60,9 +60,11 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
   `,
 
   dismissButton: css`
+    width: 24px;
+    height: 24px;
     position: absolute;
-    top: 7px;
-    right: 9px;
+    top: 8px;
+    right: 12px;
     transition: color 0.15s ease-in-out;
   `,
 };
@@ -541,7 +543,6 @@ function Toast({
               </div>
 
               {dismissible && (
-                // TODO: decrease the button width
                 <IconButton
                   className={cx(
                     baseElementStyles.dismissButton,
