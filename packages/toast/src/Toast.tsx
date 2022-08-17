@@ -15,6 +15,8 @@ import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import ProgressBar from './ToastProgressBar';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
 
 const toastWidth = 400;
 const transitionDuration = 150;
@@ -59,12 +61,6 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
     top: 7px;
     right: 9px;
     transition: color 0.15s ease-in-out;
-
-    &:focus {
-      color: ${palette.gray.dark3};
-      outline: 2px solid ${palette.blue.light1};
-      border: 2px solid ${palette.white};
-    }
   `,
 };
 
@@ -82,175 +78,309 @@ export { Variant };
 
 const variantStyles: Record<
   Variant,
-  Partial<Record<StyledElements, string>>
+  Record<Theme, Partial<Record<StyledElements, string>>>
 > = {
   [Variant.Success]: {
-    toast: css`
-      background-color: ${palette.green.light3};
-      border-color: ${palette.green.light2};
-    `,
+    [Theme.Dark]: {
+      toast: css`
+        background-color: ${palette.green.dark3};
+        border-color: ${palette.green.dark2};
+      `,
 
-    icon: css`
-      color: ${palette.green.dark1};
-    `,
+      icon: css`
+        color: ${palette.green.base};
+      `,
 
-    body: css`
-      color: ${palette.green.dark2};
-    `,
+      body: css`
+        color: ${palette.green.light2};
+      `,
 
-    dismissButton: css`
-      color: ${palette.green.dark2};
+      dismissButton: css`
+        color: ${palette.green.light2};
 
-      &:hover {
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.green.light2};
+
+          &:before {
+            background-color: ${palette.green.dark2};
+          }
+        }
+      `,
+    },
+    [Theme.Light]: {
+      toast: css`
+        background-color: ${palette.green.light3};
+        border-color: ${palette.green.light2};
+      `,
+
+      icon: css`
+        color: ${palette.green.dark1};
+      `,
+
+      body: css`
+        color: ${palette.green.dark2};
+      `,
+
+      dismissButton: css`
         color: ${palette.green.dark2};
 
-        &:before {
-          background-color: ${palette.green.light2};
-        }
-      }
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.green.dark2};
 
-      &:focus {
-        &:before {
-          background-color: ${palette.green.light2};
+          &:before {
+            background-color: ${palette.green.light2};
+          }
         }
-      }
-    `,
+      `,
+    },
   },
 
   [Variant.Note]: {
-    toast: css`
-      background-color: ${palette.blue.light3};
-      border-color: ${palette.blue.light2};
-    `,
+    [Theme.Dark]: {
+      toast: css`
+        background-color: ${palette.blue.dark3};
+        border-color: ${palette.blue.dark2};
+      `,
 
-    icon: css`
-      color: ${palette.blue.base};
-    `,
+      icon: css`
+        color: ${palette.blue.light1};
+      `,
 
-    body: css`
-      color: ${palette.blue.dark2};
-    `,
+      body: css`
+        color: ${palette.blue.light2};
+      `,
 
-    dismissButton: css`
-      color: ${palette.blue.dark2};
+      dismissButton: css`
+        color: ${palette.blue.light2};
 
-      &:hover {
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.blue.light2};
+
+          &:before {
+            background-color: ${palette.blue.dark2};
+          }
+        }
+      `,
+    },
+    [Theme.Light]: {
+      toast: css`
+        background-color: ${palette.blue.light3};
+        border-color: ${palette.blue.light2};
+      `,
+
+      icon: css`
+        color: ${palette.blue.base};
+      `,
+
+      body: css`
+        color: ${palette.blue.dark2};
+      `,
+
+      dismissButton: css`
         color: ${palette.blue.dark2};
 
-        &:before {
-          background-color: ${palette.blue.light2};
-        }
-      }
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.blue.dark2};
 
-      &:focus {
-        &:before {
-          background-color: ${palette.blue.light2};
+          &:before {
+            background-color: ${palette.blue.light2};
+          }
         }
-      }
-    `,
+      `,
+    },
   },
 
   [Variant.Warning]: {
-    toast: css`
-      background-color: ${palette.red.light3};
-      border-color: ${palette.red.light2};
-    `,
+    [Theme.Dark]: {
+      toast: css`
+        background-color: ${palette.red.dark2};
+        border-color: ${palette.red.dark2};
+      `,
 
-    icon: css`
-      color: ${palette.red.base};
-    `,
+      icon: css`
+        color: ${palette.red.light1};
+      `,
 
-    body: css`
-      color: ${palette.red.dark2};
-    `,
+      body: css`
+        color: ${palette.red.light2};
+      `,
 
-    dismissButton: css`
-      color: ${palette.red.dark2};
+      dismissButton: css`
+        color: ${palette.red.light2};
 
-      &:hover {
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.red.light2};
+
+          &:before {
+            background-color: ${palette.red.dark2};
+          }
+        }
+      `,
+    },
+    [Theme.Light]: {
+      toast: css`
+        background-color: ${palette.red.light3};
+        border-color: ${palette.red.light2};
+      `,
+
+      icon: css`
+        color: ${palette.red.base};
+      `,
+
+      body: css`
+        color: ${palette.red.dark2};
+      `,
+
+      dismissButton: css`
         color: ${palette.red.dark2};
 
-        &:before {
-          background-color: ${palette.red.light2};
-        }
-      }
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.red.dark2};
 
-      &:focus {
-        &:before {
-          background-color: ${palette.red.light2};
+          &:before {
+            background-color: ${palette.red.light2};
+          }
         }
-      }
-    `,
+      `,
+    },
   },
 
   [Variant.Important]: {
-    toast: css`
-      background-color: ${palette.yellow.light3};
-      border-color: ${palette.yellow.light2};
-    `,
+    [Theme.Dark]: {
+      toast: css`
+        background-color: ${palette.yellow.dark3};
+        border-color: ${palette.yellow.dark2};
+      `,
 
-    icon: css`
-      color: ${palette.yellow.dark2};
-    `,
+      icon: css`
+        color: ${palette.yellow.base};
+      `,
 
-    body: css`
-      color: ${palette.yellow.dark2};
-    `,
+      body: css`
+        color: ${palette.yellow.light2};
+      `,
 
-    dismissButton: css`
-      color: ${palette.yellow.dark2};
+      dismissButton: css`
+        color: ${palette.yellow.light2};
 
-      &:hover {
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.yellow.light2};
+
+          &:before {
+            background-color: ${palette.yellow.dark2};
+          }
+        }
+      `,
+    },
+    [Theme.Light]: {
+      toast: css`
+        background-color: ${palette.yellow.light3};
+        border-color: ${palette.yellow.light2};
+      `,
+
+      icon: css`
+        color: ${palette.yellow.dark2};
+      `,
+
+      body: css`
+        color: ${palette.yellow.dark2};
+      `,
+
+      dismissButton: css`
         color: ${palette.yellow.dark2};
 
-        &:before {
-          background-color: ${palette.yellow.light2};
-        }
-      }
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.yellow.dark2};
 
-      &:focus {
-        &:before {
-          background-color: ${palette.yellow.light2};
+          &:before {
+            background-color: ${palette.yellow.light2};
+          }
         }
-      }
-    `,
+      `,
+    },
   },
 
   [Variant.Progress]: {
-    toast: css`
-      background-color: ${palette.white};
-      border-color: ${palette.blue.light2};
-    `,
+    [Theme.Dark]: {
+      toast: css`
+        background-color: ${palette.gray.dark3};
+        border-color: ${palette.gray.dark2};
+      `,
 
-    icon: css`
-      color: ${palette.gray.dark2};
-    `,
+      icon: css`
+        color: ${palette.gray.light2};
+      `,
 
-    contentWrapper: css`
-      padding-bottom: 19px;
-    `,
+      contentWrapper: css`
+        padding-bottom: 19px;
+      `,
 
-    body: css`
-      color: ${palette.gray.dark2};
-    `,
+      body: css`
+        color: ${palette.gray.light2};
+      `,
 
-    dismissButton: css`
-      color: ${palette.gray.dark1};
+      dismissButton: css`
+        color: ${palette.gray.light1};
 
-      &:hover {
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.gray.light1};
+
+          &:before {
+            background-color: ${palette.gray.dark2};
+          }
+        }
+      `,
+    },
+    [Theme.Light]: {
+      toast: css`
+        background-color: ${palette.white};
+        border-color: ${palette.blue.light2};
+      `,
+
+      icon: css`
+        color: ${palette.gray.dark2};
+      `,
+
+      contentWrapper: css`
+        padding-bottom: 19px;
+      `,
+
+      body: css`
+        color: ${palette.gray.dark2};
+      `,
+
+      dismissButton: css`
         color: ${palette.gray.dark1};
 
-        &:before {
-          background-color: ${palette.gray.light2};
-        }
-      }
+        &:hover,
+        &:active,
+        &:focus-visible {
+          color: ${palette.gray.dark1};
 
-      &:focus {
-        &:before {
-          background-color: ${palette.gray.light2};
+          &:before {
+            background-color: ${palette.gray.light2};
+          }
         }
-      }
-    `,
+      `,
+    },
   },
 };
 
@@ -312,6 +442,12 @@ export interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
    * Optional click event handler that, when set, renders a close button that receives the passed handler.
    */
   close?: React.MouseEventHandler;
+
+  /**
+   * Determines whether or not the component will be rendered in dark theme.
+   *
+   */
+  darkMode?: boolean;
 }
 
 function Toast({
@@ -321,15 +457,17 @@ function Toast({
   variant,
   progress = 1.0,
   open = false,
+  darkMode: darkModeProp,
   close,
   ...rest
 }: ToastProps) {
+  const { theme, darkMode } = useDarkMode(darkModeProp);
   const nodeRef = useRef(null);
   const dismissible = typeof close === 'function';
 
   const VariantIcon = variantIcons[variant];
 
-  const currentVariantStyles = variantStyles[variant];
+  const currentVariantStyles = variantStyles[variant][theme];
 
   return (
     <Portal>
@@ -418,13 +556,14 @@ function Toast({
                   )}
                   aria-label="Close Message"
                   onClick={close}
+                  darkMode={darkMode}
                 >
                   <XIcon />
                 </IconButton>
               )}
 
               {variant === Variant.Progress && (
-                <ProgressBar progress={progress} />
+                <ProgressBar theme={theme} progress={progress} />
               )}
             </div>
           )}
@@ -437,6 +576,7 @@ function Toast({
 Toast.displayName = 'Toast';
 
 Toast.propTypes = {
+  darkMode: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   body: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   className: PropTypes.string,
