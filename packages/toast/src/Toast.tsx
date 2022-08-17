@@ -5,7 +5,7 @@ import { transparentize } from 'polished';
 import { cx, css } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 import IconButton from '@leafygreen-ui/icon-button';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
@@ -30,6 +30,9 @@ type StyledElements =
 
 const baseElementStyles: Partial<Record<StyledElements, string>> = {
   toast: css`
+    font-family: ${fontFamilies.default};
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
     position: fixed;
     bottom: ${spacing[6]}px;
     left: ${spacing[4]}px;
@@ -521,12 +524,6 @@ function Toast({
                       data-testid="toast-title"
                       className={cx(
                         currentVariantStyles.body,
-                        css`
-                          font-family: Euclid Circular A, ‘Helvetica Neue’,
-                            Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
-                          font-size: 13px; // TODO: Refresh – remove when fonts are updated
-                          font-weight: 700;
-                        `,
                       )}
                     >
                       {title}
@@ -536,11 +533,6 @@ function Toast({
                   <Body
                     className={cx(
                       currentVariantStyles.body,
-                      css`
-                        font-family: Euclid Circular A, ‘Helvetica Neue’,
-                          Helvetica, Arial, sans-serif; // TODO: Refresh – remove when fonts are updated
-                        font-size: 13px; // TODO: Refresh – remove when fonts are updated
-                      `,
                     )}
                   >
                     {body}
@@ -549,6 +541,7 @@ function Toast({
               </div>
 
               {dismissible && (
+                // TODO: decrease the button width
                 <IconButton
                   className={cx(
                     baseElementStyles.dismissButton,
