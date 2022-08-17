@@ -46,6 +46,29 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
     opacity: 0;
     transition: all ${transitionDuration}ms ease-in-out;
     border: 1px solid;
+
+    a {
+      font-size: inherit;
+      line-height: inherit;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+      border-radius: 4px;
+      &:hover,
+      &:focus,
+      &:focus-visible {
+        outline: none;
+        span {
+          &::after {
+            display: none;
+          }
+        }
+      }
+      &:focus-visible {
+        position: relative;
+      }
+    }
   `,
 
   icon: css`
@@ -98,6 +121,16 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.green.light2};
+
+        a {
+          color: ${palette.green.light3};
+          &:hover {
+            color: ${palette.green.light2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 5px ${palette.green.dark3}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -126,6 +159,17 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.green.dark2};
+
+        a {
+          color: ${palette.green.dark3};
+          &:hover {
+            color: ${palette.green.dark2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 3px ${palette.green.light3},
+              0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -157,6 +201,16 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.blue.light2};
+
+        a {
+          color: ${palette.blue.light3};
+          &:hover {
+            color: ${palette.blue.light2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 5px ${palette.blue.dark3}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -185,6 +239,17 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.blue.dark2};
+
+        a {
+          color: ${palette.blue.dark3};
+          &:hover {
+            color: ${palette.blue.dark2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 3px ${palette.blue.light3},
+              0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -216,6 +281,16 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.red.light2};
+
+        a {
+          color: ${palette.red.light3};
+          &:hover {
+            color: ${palette.red.light2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 5px ${palette.red.dark3}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -244,6 +319,17 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.red.dark2};
+
+        a {
+          color: ${palette.red.dark3};
+          &:hover {
+            color: ${palette.red.dark2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 3px ${palette.red.light3},
+              0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -275,6 +361,16 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.yellow.light2};
+
+        a {
+          color: ${palette.yellow.light3};
+          &:hover {
+            color: ${palette.yellow.light2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 5px ${palette.yellow.dark3}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -303,6 +399,17 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.yellow.dark2};
+
+        a {
+          color: ${palette.yellow.dark3};
+          &:hover {
+            color: ${palette.yellow.dark2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 3px ${palette.yellow.light3},
+              0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -338,6 +445,16 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.gray.light2};
+
+        a {
+          color: ${palette.gray.light3};
+          &:hover {
+            color: ${palette.gray.light2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 5px ${palette.gray.dark3}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`
@@ -370,6 +487,17 @@ const variantStyles: Record<
 
       body: css`
         color: ${palette.gray.dark2};
+
+        a {
+          color: ${palette.gray.dark3};
+          &:hover {
+            color: ${palette.gray.dark2};
+          }
+          &:focus-visible {
+            box-shadow: 0 0 0 3px ${palette.gray.light3},
+              0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+          }
+        }
       `,
 
       dismissButton: css`

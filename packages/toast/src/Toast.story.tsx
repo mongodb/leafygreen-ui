@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 import Toast, { Variant } from '.';
+import { Link } from '@leafygreen-ui/typography';
 
 export default {
   title: 'Components/Toast',
@@ -35,4 +36,13 @@ Dismissible.args = {
     // eslint-disable-next-line no-console
     console.log('close');
   },
+};
+
+export const WithLink = Template.bind({});
+WithLink.args = {
+  body: (
+  <>
+    Exercitation incididunt ea proident. &nbsp;
+    <Link href="http://localhost:9001">Link style</Link>
+  </>),
 };
