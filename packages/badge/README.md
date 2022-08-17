@@ -42,5 +42,4 @@ import Badge from '@leafygreen-ui/badge';
 | `className` | `string`                                                              | Adds a className to the class attribute                           |               |
 | `children`  | `node`                                                                | The content that will appear inside of the `<Badge />` component. |               |
 | ...         | native `div` attributes                                               | Any other props will be spread on the root `div` element          |               |
-
-_Note: Specifying the `onClick` attribute will change the cursor style to pointer._
+| `darkMode`  | `boolean`                                                             | Determines if the component renders in dark theme                 | `false`       |
