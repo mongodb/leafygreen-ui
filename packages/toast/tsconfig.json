@@ -30,6 +30,9 @@
     },
     {
       "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../icon"
     }
   ]
 }
