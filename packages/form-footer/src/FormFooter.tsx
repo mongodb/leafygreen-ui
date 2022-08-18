@@ -2,20 +2,32 @@ import React from 'react';
 import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-const footerStyle = css`
+const footerBaseStyle = css`
   min-height: 92px;
   width: 100%;
-  padding: 24px;
-  box-shadow: 0px -4px 4px 0px ${transparentize(0.9, uiColors.black)};
+  padding: 26px 24px;
   display: flex;
   align-items: center;
 `;
+
+const footerThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.white};
+    box-shadow: 0px -1px 4px 0px ${transparentize(0.75, '#000000')};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.black};
+    border-top: 1px solid ${palette.gray.dark2};
+    box-shadow: 0px -1px 4px 0px ${transparentize(0.75, '#000000')};
+  `,
+};
 
 const contentStyle = css`
   display: flex;
@@ -33,7 +45,6 @@ const flexEndContent = css`
 
 const bannerStyle = css`
   flex-grow: 0;
-  min-height: unset;
   padding-block: 7px;
   max-width: 700px;
 `;
@@ -59,6 +70,8 @@ export interface FormFooterProps {
    *  type?: 'button' | 'submit';
    * }
    * ```
+   *
+   * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
   primaryButton?: React.ReactChild | PrimaryButtonProps;
 
@@ -97,6 +110,13 @@ export interface FormFooterProps {
    * Styling prop
    */
   className?: string;
+
+  /**
+   * Determines whether or not the component will be rendered in dark theme.
+   *
+   * @default false
+   */
+  darkMode?: boolean;
 }
 
 /**
@@ -111,9 +131,11 @@ export default function FormFooter({
   errorMessage,
   contentClassName,
   className,
+  darkMode: darkModeProp,
 }: FormFooterProps) {
+  const { theme, darkMode } = useDarkMode(darkModeProp);
   return (
-    <footer className={cx(footerStyle, className)}>
+    <footer className={cx(footerBaseStyle, footerThemeStyle[theme], className)}>
       <div className={cx(contentStyle, contentClassName)}>
         {backButtonText && (
           <Button
@@ -121,13 +143,20 @@ export default function FormFooter({
             onClick={onBackClick}
             className={buttonStyle}
             leftGlyph={<ArrowLeftIcon />}
+            darkMode={darkMode}
           >
             {backButtonText}
           </Button>
         )}
         <div className={flexEndContent}>
           {errorMessage && (
-            <Banner className={bannerStyle} variant="danger">
+            <Banner
+              // TODO: REMOVE BEFORE MERGING GROUP7 -- the lastest banner darkMode changes will me merged in by then
+              // @ts-expect-error
+              darkMode={darkMode}
+              className={bannerStyle}
+              variant="danger"
+            >
               {errorMessage}
             </Banner>
           )}
@@ -136,14 +165,20 @@ export default function FormFooter({
               variant="default"
               onClick={onCancel}
               className={buttonStyle}
+              darkMode={darkMode}
             >
               {cancelButtonText || 'Cancel'}
             </Button>
           )}
           {isComponentType(primaryButton, 'Button') ? (
-            primaryButton
+            React.cloneElement(primaryButton, {
+              darkMode: darkMode,
+            })
           ) : (
-            <PrimaryButton {...(primaryButton as PrimaryButtonProps)} />
+            <PrimaryButton
+              darkMode={darkMode}
+              {...(primaryButton as PrimaryButtonProps)}
+            />
           )}
         </div>
       </div>

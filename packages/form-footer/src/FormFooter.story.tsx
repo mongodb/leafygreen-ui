@@ -4,11 +4,16 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import FormFooter from '.';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
   title: 'Components/FormFooter',
   component: FormFooter,
+  args: {
+    darkMode: false,
+  },
   argTypes: {
+    darkMode: defaultArgTypes.darkMode,
     cancelButtonText: { control: 'text' },
     onCancel: { control: 'none' },
     backButtonText: { control: 'text' },
