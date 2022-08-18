@@ -64,7 +64,7 @@ WithCustomPrimaryButton.args = {
 export const InLargerContainer: ComponentStory<typeof FormFooter> = args => (
   <div
     className={css`
-      width: 2000px;
+      width: 1500px;
     `}
   >
     <FormFooter {...args} />
