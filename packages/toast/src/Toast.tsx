@@ -14,6 +14,7 @@ import {
   variantStyles,
   transitionDuration,
   baseElementStyles,
+  toastThemeStyles,
   toastTransitionStateStyles,
 } from './styles';
 import { Variant } from './types';
@@ -104,6 +105,7 @@ function Toast({
               ref={nodeRef}
               className={cx(
                 baseElementStyles.toast,
+                toastThemeStyles[theme],
                 currentVariantStyles.toast,
                 toastTransitionStateStyles[state],
                 className,

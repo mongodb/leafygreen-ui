@@ -25,7 +25,7 @@ export const baseElementStyles: Partial<Record<StyledElements, string>> = {
     width: ${toastWidth}px;
     max-width: calc(100vw - ${spacing[4] * 2}px);
     border-radius: 12px;
-    box-shadow: 0 16px 32px -14px ${transparentize(0.8, palette.black)};
+
     overflow: hidden;
     transform: translate3d(0, ${spacing[3]}px, 0) scale(0.95);
     transform-origin: bottom center;
@@ -75,6 +75,15 @@ export const baseElementStyles: Partial<Record<StyledElements, string>> = {
     top: 8px;
     right: 12px;
     transition: color 0.15s ease-in-out;
+  `,
+};
+
+export const toastThemeStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    box-shadow: 0px 18px 18px -15px #000c12;
+  `,
+  [Theme.Light]: css`
+    box-shadow: 0px 18px 18px -15px ${transparentize(0.8, '#06161e')};
   `,
 };
 
