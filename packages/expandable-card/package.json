@@ -22,8 +22,11 @@
   "dependencies": {
     "@leafygreen-ui/card": "^7.0.0",
     "@leafygreen-ui/icon": "^11.10.1",
+    "@leafygreen-ui/icon-button": "13.1.0",
     "@leafygreen-ui/lib": "^9.4.1",
     "@leafygreen-ui/typography": "^13.1.1",
+    "@leafygreen-ui/emotion": "4.0.0",
+    "@leafygreen-ui/hooks": "7.3.0",
     "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {
