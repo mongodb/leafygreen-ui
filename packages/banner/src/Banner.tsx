@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { cx } from '@leafygreen-ui/emotion';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -10,7 +9,7 @@ import {
   useUpdatedBaseFontSize,
   bodyTypeScaleStyles,
 } from '@leafygreen-ui/typography';
-import { Variant } from './types';
+import { BannerProps, Variant } from './types';
 import {
   bannerIconPositionStyles,
   bannerVariantStyles,
@@ -20,47 +19,8 @@ import {
   iconStyles,
   map,
   renderedImageStyles,
+  bannerDismissibleStyles,
 } from './styles';
-
-interface BannerProps extends HTMLElementProps<'div', never> {
-  /**
-   * Sets the variant for the Banner
-   *
-   * Default: `'info'`
-   */
-  variant?: Variant;
-
-  /**
-   * Illustration that will replace default Icon when the prop is supplied
-   */
-  image?: React.ReactElement;
-
-  /**
-   * Determines whether or not the Banner is dismissible
-   *
-   * Default: `false`
-   */
-  dismissible?: boolean;
-
-  /**
-   * Callback fired when dismiss button is clicked
-   *
-   * Default: `() => {}`
-   */
-  onClose?: React.MouseEventHandler;
-
-  /**
-   * Determines whether or not the component will be rendered in dark mode.
-   *
-   * default: `false`
-   */
-  darkMode?: boolean;
-
-  /**
-   * The base font size of the title and text rendered in children.
-   */
-  baseFontSize?: BaseFontSize;
-}
 
 /**
  *
@@ -107,9 +67,7 @@ export default function Banner({
         bodyTypeScaleStyles[baseFontSize],
         bannerVariantStyles[theme][variant].body,
         {
-          [css`
-            padding-right: 36px; // add space for the icon
-          `]: dismissible,
+          [bannerDismissibleStyles]: dismissible,
         },
         className,
       )}

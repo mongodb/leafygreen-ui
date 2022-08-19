@@ -498,3 +498,7 @@ export const bannerIconPositionStyles: Record<BaseFontSize, string> = {
     top: 5.5px; // 21.5px(height in figma) - 16px(actual height of icon)
   `,
 };
+
+export const bannerDismissibleStyles = css`
+  padding-right: 36px; // add space for the icon
+`;
