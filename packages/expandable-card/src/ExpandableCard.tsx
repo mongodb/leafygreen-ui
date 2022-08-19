@@ -12,13 +12,14 @@ import {
   summaryStyle,
   summaryHeader,
   flagTextStyle,
-  summaryThemeStyle,
+  summaryTextThemeStyle,
   transitionDuration,
-  iconStyle,
+  iconThemeStyle,
   iconTransitionStyle,
   childrenWrapperStyle,
   childrenWrapperTransitionStyle,
 } from './styles';
+import { palette } from '@leafygreen-ui/palette';
 
 /**
  * Types
@@ -166,7 +167,7 @@ const ExpandableCard = ({
           {flagText && <span className={flagTextStyle}>{flagText}</span>}
         </span>
         {description && (
-          <Body className={summaryThemeStyle[theme]}>{description}</Body>
+          <Body className={summaryTextThemeStyle[theme]}>{description}</Body>
         )}
 
         <Transition in={isOpen} timeout={transitionDuration}>
@@ -174,12 +175,12 @@ const ExpandableCard = ({
             <IconButton
               // Setting 'as="div"' to avoid nesting interactive components for accessibility
               as="div"
-              className={cx(iconStyle, iconTransitionStyle[state])}
+              className={cx(iconThemeStyle[theme], iconTransitionStyle[state])}
               aria-label={`${isOpen ? 'collapse' : 'expand'} card`}
               tabIndex={0}
               darkMode={darkMode}
             >
-              <Icon glyph="ChevronUp" size={24} />
+              <Icon glyph="ChevronUp" size={24} fill={palette.gray.base} />
             </IconButton>
           )}
         </Transition>

@@ -36,7 +36,7 @@ export const summaryText = css`
   margin-top: 4px;
 `;
 
-export const summaryThemeStyle: Record<Theme, string> = {
+export const summaryTextThemeStyle: Record<Theme, string> = {
   [Theme.Dark]: cx(
     summaryText,
     css`
@@ -68,7 +68,39 @@ export const iconStyle = css`
   grid-column: 2;
   grid-row: 1/3;
   transition: transform ${transitionDuration}ms ease-in-out;
+
+  svg {
+    // TODO: this transition should be inside IconButton
+    transition: 150ms all ease-in-out;
+  }
 `;
+
+export const iconThemeStyle: Record<Theme, string> = {
+  [Theme.Dark]: cx(
+    iconStyle,
+    css`
+      &:hover,
+      &:active,
+      &:focus-visible {
+        svg {
+          color: ${palette.gray.light1};
+        }
+      }
+    `,
+  ),
+  [Theme.Light]: cx(
+    iconStyle,
+    css`
+      &:hover,
+      &:active,
+      &:focus-visible {
+        svg {
+          color: ${palette.gray.dark1};
+        }
+      }
+    `,
+  ),
+};
 
 export const iconTransitionStyle: Record<TransitionStatus, string> = {
   entering: css`
