@@ -50,10 +50,6 @@ export const menuItemContainerStyle = css`
   &:hover {
     text-decoration: none;
   }
-
-  &:active {
-    background-color: ${palette.black};
-  }
 `;
 
 export const menuItemContainerThemeStyle: Record<Theme, string> = {
@@ -61,7 +57,8 @@ export const menuItemContainerThemeStyle: Record<Theme, string> = {
     color: ${palette.white};
     background-color: ${palette.black};
 
-    &:hover {
+    &:hover,
+    &:active {
       background-color: ${palette.gray.dark3};
     }
   `,
@@ -69,7 +66,8 @@ export const menuItemContainerThemeStyle: Record<Theme, string> = {
     color: ${palette.black};
     background-color: ${palette.gray.light2};
 
-    &:hover {
+    &:hover,
+    &:active {
       background-color: ${palette.gray.light1};
     }
   `,
@@ -248,6 +246,7 @@ const disabledMenuItemContainerStyle = css`
 
   &:active {
     pointer-events: none;
+    background-color: unset;
   }
 
   &:hover {
