@@ -70,7 +70,7 @@ export const iconStyle = css`
   transition: transform ${transitionDuration}ms ease-in-out;
 `;
 
-export const iconTransitionStyle: { [key in TransitionStatus]: string } = {
+export const iconTransitionStyle: Record<TransitionStatus, string> = {
   entering: css`
     transform: rotate(180deg);
   `,
