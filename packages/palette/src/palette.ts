@@ -52,7 +52,7 @@ export const red = {
   dark3: '#5B0000',
   dark2: '#970606',
   base: '#DB3030',
-  light1: '#EF5752',
+  light1: '#FF6960',
   light2: '#FFCDC7',
   light3: '#FFEAE5',
 } as const;
