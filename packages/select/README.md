@@ -117,6 +117,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `popoverZIndex`   | `number`                                      | Sets the z-index CSS property for the popover.                                                                                                                                                                                                  |             |
 | `state`           | `'none'`, `'error'`                           | Determines the state of the `<select>`                                                                                                                                                                                                          | `'none'`    |
 | `errorMessage`    | `string`                                      | Text that shows when the `state` is set to `error`.                                                                                                                                                                                             |             |
+| `baseFontSize`    | `'13'`, `'16'`                                | Determines the base font size if sizeVariant is set to `default`                                                                                                                                                                                | `'13'`      |
 
 # Option
 

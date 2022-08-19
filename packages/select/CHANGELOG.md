@@ -1,5 +1,18 @@
 # @leafygreen-ui/select
 
+## 7.0.0
+
+### Major Changes
+
+- 5aba12f1: - Updates 'Select' for dark mode refresh.
+  - Adds `baseFontSize` prop which determines the base font size if sizeVariant is set to default.
+  - Consumes darkMode from the `LeafyGreenProvider` if the `darkMode` prop is not set.
+
+### Patch Changes
+
+- Updated dependencies [5aba12f1]
+  - @leafygreen-ui/typography@13.1.1
+
 ## 6.1.0
 
 ### Minor Changes

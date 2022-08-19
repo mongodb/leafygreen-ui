@@ -39,3 +39,14 @@ export const defaultTextColor: Record<Theme, string> = {
     color: ${palette.gray.light2};
   `,
 };
+
+export const labelTypeScaleStyles: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: 20px; // Hardcoding because it does not match body2 lineHeight
+  `,
+};

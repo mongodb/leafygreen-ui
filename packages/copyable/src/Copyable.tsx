@@ -6,17 +6,21 @@ import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
-import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
-import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
-
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
+import {
+  Description,
+  InlineCode,
+  Label,
+  useUpdatedBaseFontSize,
+  labelTypeScaleStyles,
+} from '@leafygreen-ui/typography';
+import {
+  useDarkMode,
+  usePopoverPortalContainer,
+} from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize, typeScales } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
 
 export const Size = {
   Default: 'default',
@@ -25,29 +29,14 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-interface ColorSet {
-  code: {
-    text: string;
-    background: string;
-    border: string;
-  };
-}
-
-const colorSets: Record<Mode, ColorSet> = {
-  [Mode.Light]: {
-    code: {
-      text: palette.gray.dark3,
-      background: palette.gray.light3,
-      border: palette.gray.light2,
-    },
-  },
-  [Mode.Dark]: {
-    code: {
-      text: uiColors.white,
-      background: uiColors.black,
-      border: uiColors.black,
-    },
-  },
+const codeStyleColor: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.black};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light2};
+    border-color: ${palette.gray.dark1};
+  `,
 };
 
 const containerStyle = css`
@@ -60,7 +49,7 @@ const containerStyle = css`
   margin: 2px 0;
 `;
 
-const copyableContainerStyle = css`
+const buttonContainerStyle = css`
   height: 36px;
 `;
 
@@ -70,27 +59,55 @@ const codeStyle = css`
   height: 100%;
   width: 100%;
   padding-left: 12px;
-  border: 1px solid;
   border-radius: 6px;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: auto;
   grid-column: 1/-1;
   grid-row: 1/2;
 `;
 
-const largeCodeStyle = css`
-  font-size: 15px;
+// Border is removed from the code component and added to the parent
+const codeStyleNoButton = css`
+  border: 0;
 `;
 
-const noButtonCodeStyle = css`
+const labelNoButtonStyle = css`
+  font-size: 18px;
+  line-height: 24px;
+`;
+
+const codeFontStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    font-size: ${typeScales.code1.fontSize}px;
+    line-height: ${typeScales.code1.lineHeight}px;
+  `,
+  [Size.Large]: css`
+    font-size: ${typeScales.code2.fontSize}px;
+    line-height: ${typeScales.code2.lineHeight}px;
+  `,
+};
+
+const labelFontStyle: Record<Size, string> = {
+  [Size.Default]: labelTypeScaleStyles[BaseFontSize.Body1],
+  [Size.Large]: labelTypeScaleStyles[BaseFontSize.Body2],
+};
+
+const noButtonContainerStyle = css`
   overflow: hidden;
+  border-radius: 12px;
 `;
 
-const codeStyleColor = (mode: Mode) => css`
-  color: ${colorSets[mode].code.text};
-  background-color: ${colorSets[mode].code.background};
-  border-color: ${colorSets[mode].code.border};
-`;
+// When there is no button, remove the border from the code component and add the border to this component so it sits above the button wrapper box shadow
+const noButtonContainerStyleMode: Record<Theme, string> = {
+  [Theme.Light]: css`
+    border-radius: 6px;
+    border: 1px solid ${palette.gray.light2};
+  `,
+  [Theme.Dark]: css`
+    border-radius: 6px;
+    border: 1px solid ${palette.gray.dark1};
+  `,
+};
 
 const buttonWrapperStyle = css`
   position: relative;
@@ -100,7 +117,7 @@ const buttonWrapperStyle = css`
   grid-row: 1/2;
 `;
 
-const copyableButtonShadowStyle = css`
+const buttonWrapperStyleShadow = css`
   &:before {
     content: '';
     display: block;
@@ -110,15 +127,29 @@ const copyableButtonShadowStyle = css`
     left: 0px;
     top: 3px;
     border-radius: 100%;
-    box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
     transition: box-shadow 100ms ease-in-out;
-  }
-
-  &:hover:before {
-    box-shadow: 0 0 12px 0 ${transparentize(0.6, palette.gray.dark1)};
   }
 `;
 
+const buttonWrapperStyleShadowTheme: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:before {
+      box-shadow: 0 0 10px 0 ${transparentize(0.65, palette.gray.dark1)};
+    }
+
+    &:hover:before {
+      box-shadow: 0 0 12px 0 ${transparentize(0.6, palette.gray.dark1)};
+    }
+  `,
+  [Theme.Dark]: css`
+    &:before {
+      box-shadow: -10px 0 10px 0 ${transparentize(0.4, palette.black)};
+    }
+
+    &:hover:before {
+      box-shadow: -12px 0 10px 0 ${transparentize(0.4, palette.black)};
+    `,
+};
 const buttonStyle = css`
   height: 100%;
   border-radius: 0 6px 6px 0;
@@ -134,6 +165,10 @@ const iconStyle = css`
 `;
 
 interface CopyableProps {
+  /**
+   * Determines whether or not the component appears in dark theme.
+   * @default: false
+   */
   darkMode?: boolean;
   children: string;
   /**
@@ -150,7 +185,7 @@ interface CopyableProps {
    */
   copyable?: boolean;
   /**
-   * The font size of the component's copyable children
+   * The display size of the label, description, and copyable children
    */
   size?: Size;
   /**
@@ -160,22 +195,30 @@ interface CopyableProps {
 }
 
 export default function Copyable({
-  darkMode = false,
+  darkMode: darkModeProp,
   children,
   label,
   description,
   className,
   copyable = true,
-  size = Size.Default,
+  size: SizeProp,
   shouldTooltipUsePortal = true,
 }: CopyableProps) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
-
+  const { theme, darkMode } = useDarkMode(darkModeProp);
   const [copied, setCopied] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
   const [buttonRef, setButtonRef] = useState<HTMLButtonElement>();
 
   const { portalContainer } = usePopoverPortalContainer();
+
+  const baseFontSize = useUpdatedBaseFontSize();
+
+  // If there is a size use that Size, if not then use the baseFontSize to set the size
+  const size = SizeProp
+    ? SizeProp
+    : baseFontSize === BaseFontSize.Body1
+    ? Size.Default
+    : Size.Large;
 
   useEffect(() => {
     setShowCopyButton(copyable && ClipboardJS.isSupported());
@@ -238,43 +281,58 @@ export default function Copyable({
   return (
     <>
       {label && (
-        <Label darkMode={darkMode} htmlFor={codeId}>
+        <Label
+          darkMode={darkMode}
+          htmlFor={codeId}
+          className={cx(labelFontStyle[size], {
+            [labelNoButtonStyle]: !showCopyButton,
+          })}
+        >
           {label}
         </Label>
       )}
       {description && (
-        <Description darkMode={darkMode}>{description}</Description>
+        <Description
+          darkMode={darkMode}
+          className={cx(labelFontStyle[size], {
+            [labelNoButtonStyle]: !showCopyButton,
+          })}
+        >
+          {description}
+        </Description>
       )}
 
       <div
         className={cx(
           containerStyle,
           {
-            [copyableContainerStyle]: showCopyButton,
-            [noButtonCodeStyle]: !showCopyButton,
+            [buttonContainerStyle]: showCopyButton,
+            [noButtonContainerStyleMode[theme]]: !showCopyButton,
+            [noButtonContainerStyle]: !showCopyButton,
           },
           className,
         )}
       >
         <InlineCode
+          darkMode={darkMode}
           id={codeId}
-          className={cx(codeStyle, codeStyleColor(mode), {
-            [largeCodeStyle]: size === Size.Large,
-            // TODO: Refresh - remove dark mode logic
-            [css`
-              font-size: 14px;
-            `]: darkMode,
-            [css`
-              font-size: 16px;
-            `]: darkMode && size === Size.Large,
-          })}
+          className={cx(
+            codeStyle,
+            codeStyleColor[theme],
+            [codeFontStyle[size]],
+            {
+              [codeStyleNoButton]: !showCopyButton,
+            },
+          )}
         >
           {children}
         </InlineCode>
+        {/* Using span because adding shadows directly to the button blends together with the hover box-shadow */}
         <span
           className={cx(buttonWrapperStyle, {
             // TODO: Toggle these styles on only when the content extends beyond the edge of the container
-            [copyableButtonShadowStyle]: true,
+            [buttonWrapperStyleShadow]: true,
+            [buttonWrapperStyleShadowTheme[theme]]: true,
           })}
         >
           {copyButton}
