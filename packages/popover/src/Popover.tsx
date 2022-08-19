@@ -123,6 +123,7 @@ function Popover({
     }
   }
 
+
   const viewportSize = useViewportSize();
 
   // We calculate the position of the popover when it becomes active,
@@ -260,6 +261,12 @@ function Popover({
   } else {
     renderedChildren = children;
   }
+
+  console.group();
+  console.log({referenceElement});
+  console.log({align});
+  console.log({justify});
+  console.groupEnd();
 
   return (
     <Transition

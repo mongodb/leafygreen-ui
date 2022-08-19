@@ -192,6 +192,13 @@ export function getElementDocumentPosition(
 
   const { scrollX, scrollY } = window;
 
+  console.group();
+  console.log('ref ele doc');
+  console.log({element});
+  console.log({width});
+  console.log({height});
+  console.groupEnd();
+
   return {
     top: top + scrollY,
     bottom: bottom + scrollY,
