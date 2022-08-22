@@ -164,7 +164,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
                 inputModeStyles[theme],
                 inputSizeStyles[sizeVariant],
                 inputStateStyles[state][theme],
-                inputFocusStyles, // Always show focus styles
+                inputFocusStyles[theme], // Always show focus styles
                 {
                   [css`
                     padding-right: 60px;

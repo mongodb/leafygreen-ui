@@ -1,7 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import isNull from 'lodash/isNull';
 import {
   focusRing,
   fontFamilies,
@@ -30,7 +29,7 @@ export const chipWrapperPaddingY = {
 /**
  * Height of the input element (in px)
  */
-const inputHeight: Record<Size, number> = {
+export const inputHeight: Record<Size, number> = {
   [Size.Default]:
     typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[Size.Default], // 20
   [Size.Large]:
@@ -183,7 +182,6 @@ export const inputWrapperStyle = ({
         ${baseWrapperStyle}
         display: block;
         height: ${inputHeight[size]}px;
-        padding-left: ${comboboxPadding[size].x}px;
         white-space: nowrap;
         overflow-x: scroll;
         scroll-behavior: smooth;
@@ -271,14 +269,19 @@ export const inputElementSizeStyle: Record<Size, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     min-width: ${maxCharWidth[Size.Default]}px;
-    padding-left: 4px;
+    // Only add padding if there are chips
+    &:not(:first-child) {
+      padding-left: 4px;
+    }
   `,
   [Size.Large]: css`
     height: ${inputHeight[Size.Large]}px;
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     min-width: ${maxCharWidth[Size.Large]}px;
-    padding-left: 6px;
+    &:not(:first-child) {
+      padding-left: 6px;
+    }
   `,
 };
 
@@ -310,21 +313,6 @@ export const multiselectInputElementStyle = (
     // TODO: This doesn't quite work. Fix this
     max-width: calc(100% - ${2 * caretIconSize}px);
   `;
-};
-
-// If there are chips, we remove the left padding from the input element
-export const multiselectInputElementPadding = (
-  selection: string | Array<string> | null,
-) => {
-  if (
-    typeof selection === 'object' &&
-    !isNull(selection) &&
-    selection.length > 0
-  )
-    return css`
-      padding-left: 0px;
-    `;
-  return '';
 };
 
 export const clearButtonStyle = css`

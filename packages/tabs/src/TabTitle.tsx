@@ -111,7 +111,7 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
 
 const listTitleStyles = css`
   font-family: ${fontFamilies.default};
-  font-size: ${typeScales.body1.fontSize};
+  font-size: ${typeScales.body1.fontSize}px;
   font-weight: 500;
   position: relative;
   display: inline-flex;
