@@ -76,6 +76,10 @@ export const baseElementStyles: Partial<Record<StyledElements, string>> = {
     right: 12px;
     transition: color 0.15s ease-in-out;
   `,
+
+  title: css`
+    font-weight: 700;
+  `,
 };
 
 export const toastThemeStyles: Record<Theme, string> = {

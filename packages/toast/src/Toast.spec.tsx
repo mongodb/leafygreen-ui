@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import Toast, { ToastProps } from './Toast';
-import { Variant } from './types';
+import Toast from './Toast';
+import { Variant, ToastProps } from './types';
 
 function renderToast(props: ToastProps) {
   return render(<Toast {...props} />);
