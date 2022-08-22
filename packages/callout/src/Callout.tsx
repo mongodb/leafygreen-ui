@@ -9,7 +9,7 @@ import {
 } from '@leafygreen-ui/typography';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Variant } from './types';
+import { CalloutProps, Variant } from './types';
 import {
   colorSets,
   headerIcons,
@@ -23,29 +23,6 @@ import {
   contentStyles,
   focusThemeStyles,
 } from './styles';
-
-export interface CalloutProps {
-  /**
-   * The title text rendered above children.
-   */
-  title?: string;
-  children: React.ReactNode;
-  className?: string;
-  /**
-   * The variant of the callout that defines the icon and colors used.
-   */
-  variant: Variant;
-  // TODO: Make sure this prop generates a Storybook control.
-  /**
-   * The base font size of the title and text rendered in children.
-   */
-  baseFontSize?: BaseFontSize;
-  /**
-   * Determines whether or not the component will be rendered in dark mode.
-   *
-   */
-  darkMode?: boolean;
-}
 
 /**
  * Callouts should be used when you want to call out information to the user. Unlike banners, callouts cannot be dismissed. They’re optimized for long form copy (banners are optimized to save space).
