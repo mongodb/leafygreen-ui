@@ -382,17 +382,17 @@ function Menu({
   );
 
   if (trigger) {
-    const triggerClickHandler = (e?: React.MouseEvent) => {
+    const triggerClickHandler = (event?: React.MouseEvent) => {
       setOpen((curr: boolean) => !curr);
 
       if (trigger && typeof trigger !== 'function') {
-        trigger.props?.onClick?.(e);
+        trigger.props?.onClick?.(event);
       }
 
       // We stop the native event from bubbling, but allow the React.Synthetic event to bubble
       // This way click handlers on parent components will still fire,
-      // but this click event won't propagate up to the document and immediately close the menu
-      e?.nativeEvent.stopPropagation();
+      // but this click event won't propagate up to the document and immediately close the menu.
+      event?.nativeEvent?.stopPropagation?.();
     };
 
     if (typeof trigger === 'function') {
