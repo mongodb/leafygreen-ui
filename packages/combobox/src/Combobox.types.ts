@@ -55,6 +55,10 @@ export const Overflow = {
    * Combobox will be set to a fixed height and width (default 100% of container). Chips will be scrollable left-right
    */
   scrollX: 'scroll-x',
+  /**
+   * @deprecated
+   */
+  expandX: 'expand-x',
 } as const;
 export type Overflow = typeof Overflow[keyof typeof Overflow];
 
