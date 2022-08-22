@@ -1,1 +1,2 @@
-export { default, Variant } from './Banner';
+export { default } from './Banner';
+export { Variant } from './types';
