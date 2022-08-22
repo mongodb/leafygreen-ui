@@ -151,8 +151,6 @@ export default function FormFooter({
         <div className={flexEndContent}>
           {errorMessage && (
             <Banner
-              // TODO: REMOVE BEFORE MERGING GROUP7 -- the lastest banner darkMode changes will me merged in by then
-              // @ts-expect-error
               darkMode={darkMode}
               className={bannerStyle}
               variant="danger"
