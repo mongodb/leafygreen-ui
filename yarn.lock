@@ -2261,17 +2261,6 @@
     "@leafygreen-ui/palette" "^3.2.2"
     "@leafygreen-ui/tokens" "^0.5.3"
 
-"@leafygreen-ui/typography@^9.1.1":
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-9.1.1.tgz#55c2a7ad5e87be0417c404cd6238ab97ca12c4d3"
-  integrity sha512-K5DkUvlCF8jskb68agpZDj42jEpUOAXE3tNd7BWmfMepYZDo2UHsmYpORuGXfaca0lrmmaIXO/GTqG0c/SZmpA==
-  dependencies:
-    "@leafygreen-ui/box" "^3.0.6"
-    "@leafygreen-ui/icon" "^11.3.0"
-    "@leafygreen-ui/lib" "^9.0.0"
-    "@leafygreen-ui/palette" "^3.3.1"
-    "@leafygreen-ui/tokens" "^1.1.0"
-
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"
