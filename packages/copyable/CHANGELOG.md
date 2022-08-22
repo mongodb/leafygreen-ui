@@ -1,5 +1,18 @@
 # @leafygreen-ui/copyable
 
+## 6.0.0
+
+### Major Changes
+
+- 5aba12f1: - Updates `Copyable` for dark mode brand refresh
+  - Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set.
+  - Label and Description font sizes will change based on the `size` prop.
+
+### Patch Changes
+
+- Updated dependencies [5aba12f1]
+  - @leafygreen-ui/typography@13.1.1
+
 ## 5.0.0
 
 ### Patch Changes

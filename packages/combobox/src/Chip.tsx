@@ -7,7 +7,11 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
 import { ChipProps, ComboboxSize as Size, Theme } from './Combobox.types';
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
-import { chipClassName, chipWrapperPaddingY } from './Combobox.styles';
+import {
+  chipClassName,
+  chipWrapperPaddingY,
+  inputHeight,
+} from './Combobox.styles';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;
@@ -80,7 +84,6 @@ const chipButtonStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   width: 100%;
   outline: none;
   border: none;
@@ -88,6 +91,15 @@ const chipButtonStyle = css`
   cursor: pointer;
   transition: background-color 100ms ease-in-out;
 `;
+
+const chipButtonSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    height: ${inputHeight[Size.Default]}px;
+  `,
+  [Size.Large]: css`
+    height: ${inputHeight[Size.Large]}px;
+  `,
+};
 
 const chipButtonThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -250,9 +262,14 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           aria-disabled={disabled}
           disabled={disabled}
           ref={buttonRef}
-          className={cx(chipButtonStyle, chipButtonThemeStyle[theme], {
-            [chipButtonDisabledStyle[theme]]: disabled,
-          })}
+          className={cx(
+            chipButtonStyle,
+            chipButtonThemeStyle[theme],
+            chipButtonSizeStyle[size],
+            {
+              [chipButtonDisabledStyle[theme]]: disabled,
+            },
+          )}
           onClick={handleButtonClick}
         >
           <Icon glyph="X" />
