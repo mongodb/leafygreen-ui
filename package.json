@@ -131,6 +131,7 @@
     "babel-jest": "26.0.0",
     "babel-loader": "^8.2.4",
     "babel-plugin-emotion": "10.0.33",
+    "commander": "^9.4.0",
     "create-emotion": "^10.0.27",
     "cz-conventional-changelog": "^3.1.0",
     "dotenv": "^10.0.0",
