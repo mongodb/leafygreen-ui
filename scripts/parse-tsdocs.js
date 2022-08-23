@@ -11,6 +11,10 @@ const cli = new Command('parse-tsdoc')
 const skippedComponents = [];
 
 const TSDocOptions = {
+  shouldExtractLiteralValuesFromEnum: true,
+  shouldRemoveUndefinedFromOptional: false,
+  shouldExtractValuesFromUnion: true,
+  skipChildrenPropWithoutDoc: false,
   propFilter: (prop, component) => {
     if (skippedComponents.includes(component.name)) {
       return false;
