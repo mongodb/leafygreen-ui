@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import isUndefined from 'lodash/isUndefined';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { useAvailableSpace, useEventListener } from '@leafygreen-ui/hooks';
 import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { FocusableMenuItemElement } from './FocusableMenuItem';
@@ -10,8 +12,6 @@ import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
 import MenuSeparator, { MenuSeparatorElement } from './MenuSeparator';
 import { MenuProps } from './types';
-import isUndefined from 'lodash/isUndefined';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { MenuContext } from './MenuContext';
 
 const rootMenuStyle = css`
