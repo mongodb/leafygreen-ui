@@ -1,6 +1,7 @@
 const docgen = require('react-docgen-typescript');
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk')
 
 const skippedComponents = [];
 
@@ -9,7 +10,7 @@ const options = {
     if (skippedComponents.includes(component.name)) {
       return false;
     }
-
+    
     if (prop.declarations !== undefined && prop.declarations.length > 0) {
       const hasPropAdditionalDescription = prop.declarations.find(
         declaration => {
@@ -24,30 +25,42 @@ const options = {
   },
 };
 
-const dirPath = path.resolve(__dirname, '../packages');
-const parsedFileNames = [];
+const packagesDir = path.resolve(__dirname, '../packages');
+const packages = fs.readdirSync(packagesDir);
 
-const getFilesRecursively = directory => {
-  const filesInDirectory = fs.readdirSync(directory);
+packages.forEach(parseDocs)
 
-  for (const file of filesInDirectory) {
-    const absolute = path.join(directory, file);
+function parseDocs(componentName) {
+  console.log(chalk.white(`Parsing TSDoc for:`, chalk.green.bold(`${componentName}`)))
+  const componentDir = path.resolve(__dirname, `../packages/${componentName}`)
+  const componentFileNames = parseFileNames(componentDir)
+  const docs = docgen.parse(componentFileNames, options);
+  const outFilePath = path.resolve(__dirname, componentDir + '/tsdoc.json')
+  fs.writeFileSync(outFilePath, JSON.stringify(docs), err => {
+    if (err) console.error(err);
+  });
+}
 
-    if (fs.statSync(absolute).isDirectory()) {
-      getFilesRecursively(absolute);
-    } else {
-      const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
-
-      if (regex.test(absolute)) {
-        parsedFileNames.push(absolute);
+function parseFileNames(root) {
+  const parsedFileNames = [];
+  getFilesRecursively(root);
+  return parsedFileNames
+  
+  function getFilesRecursively(directory) {
+    const filesInDirectory = fs.readdirSync(directory);
+  
+    for (const file of filesInDirectory) {
+      const absolute = path.join(directory, file);
+  
+      if (fs.statSync(absolute).isDirectory()) {
+        getFilesRecursively(absolute);
+      } else {
+        const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
+  
+        if (regex.test(absolute)) {
+          parsedFileNames.push(absolute);
+        }
       }
     }
-  }
-};
-
-getFilesRecursively(dirPath);
-const docs = docgen.parse(parsedFileNames, options);
-// TODO: replace writeFile with POST request to CMS
-fs.writeFile('./parsed-docs.json', JSON.stringify(docs), err => {
-  if (err) console.error(err);
-});
+  };
+}
