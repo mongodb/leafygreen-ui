@@ -3,6 +3,7 @@ import { Meta } from '@storybook/react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify, PopoverProps } from '.';
+import Tooltip from '@leafygreen-ui/tooltip';
 
 const popoverStyle = css`
   border: 1px solid ${palette.gray.light1};
@@ -133,22 +134,27 @@ export const Template = ({
 export const ScrollableContainer = ({
   refButtonPosition,
   buttonText,
+  justify,
+  align,
   ...args
 }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
-  const portalContainer = useRef<HTMLDivElement | null>(null);
+  // const portalContainer = useRef<HTMLDivElement | null>(null);
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null);
 
   const position = referenceElPositions[refButtonPosition];
 
+  console.log({portalContainer});
+
   return (
     <div className={scrollableStyle}>
-      <div className={scrollableInnerStyle} ref={portalContainer}>
-        <button
+      <div className={scrollableInnerStyle} ref={(el) => setPortalContainer(el)}>
+        {/* <button
           onClick={() => setActive(active => !active)}
           className={position}
         >
           {buttonText}
-          {/* @ts-expect-error */}
+          {/* @ts-expect-error
           <Popover
             {...args}
             active={active}
@@ -157,7 +163,19 @@ export const ScrollableContainer = ({
           >
             <div className={popoverStyle}>Popover content</div>
           </Popover>
-        </button>
+        </button> */}
+        <div className={position}>
+        <Tooltip
+          trigger={<span>trigger</span>}
+          portalContainer={portalContainer}
+          scrollContainer={portalContainer}
+          triggerEvent='click'
+          justify={justify}
+          align={align}
+        >
+        I am a Tooltip! and im super long like reallllllly long and you cant stop me
+    </Tooltip>
+    </div>
       </div>
     </div>
   );
