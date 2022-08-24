@@ -8,9 +8,11 @@ const { Command } = require('commander');
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
   .option('-r, --root <path>', 'Source packages directory', '../packages')
+  .option('-o, --out <path>', 'Directory to write the doc files (must have the same component folder(s) as source)', '../packages')
   .parse(process.argv);
 
 const packagesRoot = cli.opts()['root'];
+const outDir = cli.opts()['out'];
 const skippedComponents = [];
 
 const TSDocOptions = {
@@ -60,7 +62,9 @@ function parseDocs(componentName) {
     );
     const componentFileNames = parseFileNames(componentDir);
     const docs = docgen.parse(componentFileNames, TSDocOptions);
-    const outFilePath = path.resolve(__dirname, componentDir + '/tsdoc.json');
+
+    const outFilePath = path.resolve(__dirname, `${outDir}/${componentName}/tsdoc.json`);
+    outDir !== packagesRoot && console.log(`\t${outFilePath}`)
     fs.writeFileSync(outFilePath, JSON.stringify(docs, null, 2), err => {
       if (err) console.error(err);
     });
