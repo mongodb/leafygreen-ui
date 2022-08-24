@@ -4,6 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify, PopoverProps } from '.';
 import Tooltip from '@leafygreen-ui/tooltip';
+import Icon from '@leafygreen-ui/icon';
 
 const popoverStyle = css`
   border: 1px solid ${palette.gray.light1};
@@ -165,7 +166,7 @@ export const ScrollableContainer = ({
           </Popover>
         </button> */}
         <div className={position}>
-        <Tooltip
+        {/* <Tooltip
           trigger={<span>trigger</span>}
           portalContainer={portalContainer}
           scrollContainer={portalContainer}
@@ -173,7 +174,17 @@ export const ScrollableContainer = ({
           justify={justify}
           align={align}
         >
-        I am a Tooltip! and im super long like reallllllly long and you cant stop me
+        I am a Tooltip! and im very long and guess what? nothing ok bye
+    </Tooltip> */}
+     <Tooltip
+          trigger={<span><Icon glyph="Cloud" /></span>}
+          portalContainer={portalContainer}
+          scrollContainer={portalContainer}
+          triggerEvent='hover'
+          justify={justify}
+          align={align}
+        >
+        I am a Tooltip! and im very long and guess what? nothing ok bye
     </Tooltip>
     </div>
       </div>
