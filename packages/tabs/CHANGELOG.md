@@ -1,5 +1,13 @@
 # @leafygreen-ui/tabs
 
+## 9.0.1
+
+### Patch Changes
+
+- 699f8ba7: Add missing unit to `TabTitle` font-size
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
 ## 9.0.0
 
 ### Major Changes
