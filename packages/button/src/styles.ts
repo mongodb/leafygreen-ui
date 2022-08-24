@@ -48,11 +48,11 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
     [Variant.Default]: css`
       background-color: ${palette.gray.light3};
       border-color: ${palette.gray.base};
-      color: ${palette.gray.dark3};
+      color: ${palette.black};
 
       &:hover,
       &:active {
-        color: ${palette.gray.dark3};
+        color: ${palette.black};
         background-color: ${palette.white};
         box-shadow: 0 0 0 3px ${palette.gray.light2};
       }
