@@ -6,8 +6,10 @@ const { Command } = require('commander')
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
+  .option('-r, --root <path>', 'Source packages directory', '../packages')
   .parse(process.argv);
 
+const packagesRoot = cli.opts()['root']
 const skippedComponents = [];
 
 const TSDocOptions = {
@@ -37,13 +39,13 @@ const TSDocOptions = {
 if (cli.args.length) {
   cli.args.forEach(parseDocs)
 } else {
-  const packagesDir = path.resolve(__dirname, '../packages');
+  const packagesDir = path.resolve(__dirname, packagesRoot);
   const packages = fs.readdirSync(packagesDir);
   packages.forEach(parseDocs)
 } 
 
 function parseDocs(componentName) {
-  const componentDir = path.resolve(__dirname, `../packages/${componentName}`)
+  const componentDir = path.resolve(__dirname, `${packagesRoot}/${componentName}`)
   
   if (fs.existsSync(componentDir)) {
     console.log(chalk.blueBright(`Parsing TSDoc for:`, chalk.blue.bold(`${componentName}`)))
@@ -54,7 +56,12 @@ function parseDocs(componentName) {
       if (err) console.error(err);
     });
   } else {
-    console.warn(chalk.yellow('Could not find component:'), chalk.bold.yellow(componentName))
+    console.warn(
+      chalk.yellow('Could not find component:'), 
+      chalk.bold.yellow(`\`${componentName}\``),
+      chalk.yellow('in'), 
+      chalk.bold.yellow(packagesRoot),
+    )
   }
 }
 
