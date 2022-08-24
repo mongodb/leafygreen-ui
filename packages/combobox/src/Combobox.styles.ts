@@ -1,4 +1,4 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -68,22 +68,12 @@ const minWidth: Record<Size, number> = {
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
-export const comboboxParentStyle = (
-  size: Size,
-  overflow?: Overflow,
-): string => {
-  return cx(
-    css`
-      font-family: ${fontFamilies.default};
-      width: 100%;
-      min-width: ${minWidth[size]}px;
-    `,
-    {
-      [css`
-        width: unset;
-      `]: overflow === Overflow.expandX,
-    },
-  );
+export const comboboxParentStyle = (size: Size): string => {
+  return css`
+    font-family: ${fontFamilies.default};
+    width: 100%;
+    min-width: ${minWidth[size]}px;
+  `;
 };
 
 export const baseComboboxStyles = css`
@@ -205,17 +195,6 @@ export const inputWrapperStyle = ({
       `;
     }
 
-    case Overflow.expandX: {
-      return css`
-        ${baseWrapperStyle}
-        display: flex;
-        gap: 4px;
-        flex-wrap: nowrap;
-        white-space: nowrap;
-        height: ${inputHeight[size]}px;
-      `;
-    }
-
     // TODO - look into animating input element height on wrap
     case Overflow.expandY: {
       return css`
@@ -285,20 +264,13 @@ export const inputElementSizeStyle: Record<Size, string> = {
   `,
 };
 
-// We don't transition the input width then overflow == expand-x
-export const inputElementTransitionStyles = (
-  isOpen: boolean,
-  overflow: Overflow,
-) =>
-  cx({
-    [css`
-      /*
-    * Immediate transition in, slow transition out. 
-    * '-in' transition is handled by \`scroll-behavior\` 
-    */
-      transition: width ease-in-out ${isOpen ? '0s' : '100ms'};
-    `]: overflow !== Overflow.expandX,
-  });
+export const inputElementTransitionStyles = (isOpen: boolean) => css`
+  /*
+  * Immediate transition in, slow transition out. 
+  * '-in' transition is handled by \`scroll-behavior\` 
+  */
+  transition: width ease-in-out ${isOpen ? '0s' : '100ms'};
+`;
 
 // Previously defined in inputWrapperStyle
 /** Should only be applied to a multiselect */
