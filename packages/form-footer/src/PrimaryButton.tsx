@@ -11,6 +11,7 @@ export interface PrimaryButtonProps {
   variant?: 'primary' | 'danger';
   disabled?: boolean;
   type?: 'button' | 'submit';
+  darkMode?: boolean;
 }
 
 export const isPrimaryButtonProps = (
@@ -22,7 +23,7 @@ export const isPrimaryButtonProps = (
 const PrimaryButton = (props: PrimaryButtonProps) => {
   if (!isPrimaryButtonProps(props)) {
     consoleOnce.error(
-      '`primaryButton` prop in `FormFooter` must be either a `Button` component, or object with at minumum a `text` property',
+      '`primaryButton` prop in `FormFooter` must be either a `Button` component, or object with at minimum a `text` property',
     );
   }
 

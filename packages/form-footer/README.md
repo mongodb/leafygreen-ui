@@ -51,16 +51,16 @@ npm install @leafygreen-ui/form-footer
 
 ## Properties
 
-| Prop             | Type                                | Description                                                                                             | Default  |
-| ---------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------- | -------- |
-| primaryButton    | `<Button>` or `PrimaryButtonProps`  | The primary (right-most) button. Defined as a `<Button>` element, or as an object with the shape below. |          |
-| cancelButtonText | `string`                            | Text for the cancel button. A cancel button will only appear if this text is defined.                   | "Cancel" |
-| onCancel         | `(event: React.MouseEvent) => void` | onClick callback for the cancel button.                                                                 |          |
-| backButtonText   | `string`                            | Text for the back button. A back button will only appear if text is defined.                            |          |
-| onBackClick      | `(event: React.MouseEvent) => void` | onClick callback for the back button                                                                    |          |
-| errorMessage     | `string`                            | Text within the error banner. The banner will only appear if an error message is defined.               |          |
-| contentClassName | `string`                            | Styling prop for the content. Useful for setting left and right margins, or max-width                   |          |
-| className        | `string`                            | Styling prop                                                                                            |          |
+| Prop             | Type                                | Description                                                                                                                                                                              | Default  |
+| ---------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| primaryButton    | `<Button>` or `PrimaryButtonProps`  | The primary (right-most) button. Defined as a `<Button>` element, or as an object with the shape below. `darkMode` is handled internally so you do not have to pass the `darkMode` prop. |          |
+| cancelButtonText | `string`                            | Text for the cancel button. A cancel button will only appear if this text is defined.                                                                                                    | "Cancel" |
+| onCancel         | `(event: React.MouseEvent) => void` | onClick callback for the cancel button.                                                                                                                                                  |          |
+| backButtonText   | `string`                            | Text for the back button. A back button will only appear if text is defined.                                                                                                             |          |
+| onBackClick      | `(event: React.MouseEvent) => void` | onClick callback for the back button                                                                                                                                                     |          |
+| errorMessage     | `string`                            | Text within the error banner. The banner will only appear if an error message is defined.                                                                                                |          |
+| contentClassName | `string`                            | Styling prop for the content. Useful for setting left and right margins, or max-width                                                                                                    |          |
+| className        | `string`                            | Styling prop                                                                                                                                                                             |          |
 
 # Primary Button
 
