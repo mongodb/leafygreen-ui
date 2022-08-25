@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 const { Command } = require('commander');
+const { uniqBy } = require('lodash');
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
@@ -65,10 +66,13 @@ function parseDocs(componentName) {
       ),
     );
     const componentFileNames = parseFileNames(componentDir);
-    const docs = docgen
-      .parse(componentFileNames, TSDocOptions)
-      .filter(doc => !['src', 'index'].includes(doc.displayName))
-      .filter(doc => Object.keys(doc.props).length > 0);
+    const docs = uniqBy(
+      docgen
+        .parse(componentFileNames, TSDocOptions)
+        .filter(doc => !['src', 'index'].includes(doc.displayName))
+        .filter(doc => Object.keys(doc.props).length > 0),
+      'displayName'
+    )
 
     const outFilePath = path.resolve(
       __dirname,
