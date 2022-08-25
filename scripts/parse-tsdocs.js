@@ -65,7 +65,10 @@ function parseDocs(componentName) {
       ),
     );
     const componentFileNames = parseFileNames(componentDir);
-    const docs = docgen.parse(componentFileNames, TSDocOptions);
+    const docs = docgen
+      .parse(componentFileNames, TSDocOptions)
+      .filter(doc => !['src', 'index'].includes(doc.displayName))
+      .filter(doc => Object.keys(doc.props).length > 0);
 
     const outFilePath = path.resolve(
       __dirname,
