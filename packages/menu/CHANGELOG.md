@@ -1,5 +1,14 @@
 # @leafygreen-ui/menu
 
+## 15.0.1
+
+### Patch Changes
+
+- cdbbe4a2: Fix background color appearing when clicking on a disabled menu item
+- fdd1cbbf: Adds missing dependencies
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
 ## 15.0.0
 
 ### Major Changes
