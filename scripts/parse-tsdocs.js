@@ -71,8 +71,8 @@ function parseDocs(componentName) {
         .parse(componentFileNames, TSDocOptions)
         .filter(doc => !['src', 'index'].includes(doc.displayName))
         .filter(doc => Object.keys(doc.props).length > 0),
-      'displayName'
-    )
+      'displayName',
+    );
 
     const outFilePath = path.resolve(
       __dirname,
