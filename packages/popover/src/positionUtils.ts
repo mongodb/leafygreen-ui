@@ -153,8 +153,6 @@ const getElementPosition = (element: HTMLElement, isReference?: boolean) => {
   // If this element is the reference element return element.getBoundingClientRect().width since we don't have to be as strict with the width. If we used getComputedStyle then the reference element has to have a display other than inline set on it.
   const width = isReference ? boundingWidth : parseFloat(getComputedStyle(element).width);
 
-  // TODO: why was this an issue again?
-
   return {
     top,
     bottom,
