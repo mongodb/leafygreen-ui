@@ -1,5 +1,5 @@
-import { AsPropType } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { isUndefined } from 'lodash';
 import React, { HTMLProps } from 'react';
 
 const Variant = {
@@ -34,6 +34,8 @@ export const FontSize = {
 } as const;
 
 export type FontSize = typeof FontSize[keyof typeof FontSize];
+
+type AsPropType = keyof JSX.IntrinsicElements | React.ExoticComponent<any>;
 
 interface ButtonProps {
   as?: AsPropType;
@@ -103,5 +105,17 @@ interface ButtonProps {
    */
   href?: string;
 }
+
+/** Identifies whether the `as` prop is included in JSX.IntrinsicElements */
+export const isJSXIntrinsicElement = (
+  as?: AsPropType,
+): as is keyof JSX.IntrinsicElements =>
+  !isUndefined(as) && typeof as === 'string';
+
+/** Identifies whether the `as` prop is a Component */
+export const isAsComponent = (
+  as?: AsPropType,
+): as is React.ExoticComponent<any> =>
+  !isUndefined(as) && typeof as !== 'string';
 
 export { Variant, Size, ButtonProps };

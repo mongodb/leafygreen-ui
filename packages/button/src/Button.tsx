@@ -8,8 +8,13 @@ import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isJSXIntrinsicElement, isAsComponent } from '@leafygreen-ui/lib';
-import { Variant, Size, ButtonProps } from './types';
+import {
+  Variant,
+  Size,
+  ButtonProps,
+  isJSXIntrinsicElement,
+  isAsComponent,
+} from './types';
 import { getClassName, ButtonDataProp } from './styles';
 import { ButtonContent } from './ButtonContent';
 
