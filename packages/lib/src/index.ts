@@ -6,7 +6,15 @@ import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
 import { AsPropType, isJSXIntrinsicElement, isAsComponent } from './asProp';
 
-export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme, isJSXIntrinsicElement, isAsComponent };
+export {
+  typeIs,
+  createUniqueClassName,
+  getNodeTextContent,
+  getTheme,
+  Theme,
+  isJSXIntrinsicElement,
+  isAsComponent,
+};
 export type { DarkModeProps, AsPropType };
 
 /** Helper type to extract an HTML element's valid props */

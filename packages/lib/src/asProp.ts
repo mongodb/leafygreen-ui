@@ -1,6 +1,8 @@
 import { isUndefined } from 'lodash';
 
-export type AsPropType = keyof JSX.IntrinsicElements | React.ExoticComponent<any>;
+export type AsPropType =
+  | keyof JSX.IntrinsicElements
+  | React.ExoticComponent<any>;
 
 /** Identifies whether the `as` prop is included in JSX.IntrinsicElements */
 export const isJSXIntrinsicElement = (
