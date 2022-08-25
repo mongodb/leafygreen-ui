@@ -51,7 +51,6 @@ describe('packages/combobox', () => {
    * Overflow prop
    */
   test.todo('expand-y');
-  test.todo('expand-x');
   test.todo('scroll-x');
 
   const tests = [['single'], ['multiple']] as Array<Array<Select>>;
