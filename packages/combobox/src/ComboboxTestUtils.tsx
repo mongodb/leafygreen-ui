@@ -81,6 +81,7 @@ export const groupedOptions: Array<NestedObject> = [
 ];
 
 /**
+ * @internal
  * @param props Combobox props
  * @returns Combobox JSX
  */
