@@ -15,6 +15,7 @@ export const cardStyle = (darkMode: boolean) => css`
   width: 100%;
   padding: 0;
   color: ${darkMode ? palette.gray.light2 : palette.black};
+  background-color: ${darkMode ? palette.gray.dark4 : palette.white};
 `;
 
 export const summaryStyle = css`
