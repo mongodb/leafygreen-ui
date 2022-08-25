@@ -50,16 +50,19 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
 
     const isAnchor: boolean = (!!rest.href || asProp === 'a') && !disabled;
 
+    // What will the final element be rendered as?
     const finalAsProp = useMemo(() => {
       if (isJSXIntrinsicElement(asProp)) {
         return asProp;
       } else if (isAsComponent(asProp)) {
+        // If we pass in a component (like NextJS link) then it will finally be rendered as an anchor
         return 'a';
       } else {
         return isAnchor ? 'a' : 'button';
       }
     }, [asProp, isAnchor]);
 
+    // Props to add to the component root, whether that's the `AsComponent`, or `Box`
     const rootProps = {
       ...rest,
       href: disabled ? '' : (rest.href as string | UrlObject),
@@ -68,6 +71,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       ...(typeof rest.href !== 'string' && { disabled }),
     } as const;
 
+    // Props to add to the Box
     const boxProps = {
       type: isAnchor ? undefined : type || 'button',
       className: cx(buttonClassName, className),
