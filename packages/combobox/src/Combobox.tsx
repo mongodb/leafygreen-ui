@@ -1190,10 +1190,7 @@ export default function Combobox<M extends boolean>({
         inputValue,
       }}
     >
-      <div
-        className={cx(comboboxParentStyle(size, overflow), className)}
-        {...rest}
-      >
+      <div className={cx(comboboxParentStyle(size), className)} {...rest}>
         <div className={labelDescriptionContainerStyle}>
           {label && (
             <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
@@ -1251,7 +1248,7 @@ export default function Combobox<M extends boolean>({
                 baseInputElementStyle,
                 inputElementSizeStyle[size],
                 inputElementThemeStyle[theme],
-                inputElementTransitionStyles(isOpen, overflow),
+                inputElementTransitionStyles(isOpen),
                 {
                   [multiselectInputElementStyle(size, inputValue)]:
                     isMultiselect(selection),
