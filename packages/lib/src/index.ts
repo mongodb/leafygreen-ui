@@ -4,9 +4,10 @@ import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
+import { AsPropType, isJSXIntrinsicElement, isAsComponent } from './asProp';
 
-export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
-export type { DarkModeProps };
+export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme, isJSXIntrinsicElement, isAsComponent };
+export type { DarkModeProps, AsPropType };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
