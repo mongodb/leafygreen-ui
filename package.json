@@ -38,7 +38,6 @@
     "clean:modules": "rimraf packages/*/{node_modules} node_modules",
     "demo:storybook": "yarn build:storybook && ./scripts/demo-storybook.sh",
     "docs:tsdoc": "node ./scripts/parse-tsdocs.js",
-    "docs:readme": "node ./scripts/generate-readme.js",
     "fix": "npm-run-all --parallel fix:*",
     "fix:prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "fix:eslint": "eslint \"**/*.{js,ts,tsx}\" --fix",
@@ -59,7 +58,6 @@
     "test": "npm-run-all --serial test:*",
     "test:local": "jest --env jsdom --config jest.config.js",
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
-    "tsdoc:parse": "node ./scripts/parse-tsdocs.js",
     "watch": "yarn build -- -- --watch"
   },
   "devDependencies": {
