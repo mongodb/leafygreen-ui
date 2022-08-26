@@ -53,7 +53,10 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       usingKeyboard,
     });
 
-    const isAnchor: boolean = (!!rest.href || asProp === 'a') && !disabled;
+    const isAnchor: boolean = useMemo(
+      () => (!!rest.href || asProp === 'a') && !disabled,
+      [asProp, disabled, rest.href],
+    );
 
     // What will the final element be rendered as?
     const finalAsProp = useMemo(() => {
@@ -68,34 +71,53 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     }, [asProp, isAnchor]);
 
     // Props to add to the component root, whether that's the `AsComponent`, or `Box`
-    const rootProps = {
-      ...rest,
-      href: disabled ? '' : (rest.href as string | UrlObject),
-      onClick: !disabled ? onClick : undefined,
-      // only add the disabled prop if this is a button
-      ...(typeof rest.href !== 'string' && { disabled }),
-    } as const;
+    const rootProps = useMemo(
+      () => ({
+        ...rest,
+        href: disabled ? '' : (rest.href as string | UrlObject),
+        onClick: !disabled ? onClick : undefined,
+        // only add the disabled prop if this is a button
+        ...(typeof rest.href !== 'string' && { disabled }),
+      }),
+      [disabled, onClick, rest],
+    );
 
     // Props to add to the Box
-    const boxProps = {
-      type: isAnchor ? undefined : type || 'button',
-      className: cx(buttonClassName, className),
-      ref: forwardRef,
-      'aria-disabled': disabled,
-      as: finalAsProp,
-      ...ButtonDataProp.prop,
-      // If this is not a Component, then the Box is also the root
-      ...(!isAsComponent(asProp) && rootProps),
-    } as const;
+    const boxProps = useMemo(
+      () => ({
+        type: isAnchor ? undefined : type || 'button',
+        className: cx(buttonClassName, className),
+        ref: forwardRef,
+        'aria-disabled': disabled,
+        as: finalAsProp,
+        ...ButtonDataProp.prop,
+        // If this is not a Component, then the Box is also the root
+        ...(!isAsComponent(asProp) && rootProps),
+      }),
+      [
+        asProp,
+        buttonClassName,
+        className,
+        disabled,
+        finalAsProp,
+        forwardRef,
+        isAnchor,
+        rootProps,
+        type,
+      ],
+    );
 
-    const contentProps = {
-      rightGlyph,
-      leftGlyph,
-      darkMode,
-      disabled,
-      variant,
-      size,
-    } as const;
+    const contentProps = useMemo(
+      () => ({
+        rightGlyph,
+        leftGlyph,
+        darkMode,
+        disabled,
+        variant,
+        size,
+      }),
+      [darkMode, disabled, leftGlyph, rightGlyph, size, variant],
+    );
 
     const WrapperComponent = ({ ...props }) =>
       isAsComponent(asProp) ? (
