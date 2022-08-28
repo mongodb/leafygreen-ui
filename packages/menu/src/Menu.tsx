@@ -325,12 +325,12 @@ function Menu({
     popoverZIndex,
     ...(usePortal
       ? {
-          spacing,
-          usePortal,
-          portalClassName,
-          portalContainer,
-          scrollContainer,
-        }
+        spacing,
+        usePortal,
+        portalClassName,
+        portalContainer,
+        scrollContainer,
+      }
       : { spacing, usePortal }),
   };
 
@@ -395,14 +395,12 @@ function Menu({
           trigger.props.onClick(e);
         }
       },
-      children: triggerChildren
-        ? [
-            ...(triggerChildren instanceof Array
-              ? triggerChildren
-              : [triggerChildren]),
-            popoverContent,
-          ]
-        : popoverContent,
+      children: (
+        <>
+          {triggerChildren}
+          {popoverContent}
+        </>
+      )
     });
   }
 
