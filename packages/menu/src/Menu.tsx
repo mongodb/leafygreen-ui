@@ -325,12 +325,12 @@ function Menu({
     popoverZIndex,
     ...(usePortal
       ? {
-        spacing,
-        usePortal,
-        portalClassName,
-        portalContainer,
-        scrollContainer,
-      }
+          spacing,
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
       : { spacing, usePortal }),
   };
 
@@ -384,8 +384,6 @@ function Menu({
       });
     }
 
-    const { children: triggerChildren } = trigger.props;
-
     return React.cloneElement(trigger, {
       ref: triggerRef,
       onClick: (e: React.MouseEvent) => {
@@ -397,10 +395,10 @@ function Menu({
       },
       children: (
         <>
-          {triggerChildren}
+          {trigger.props.children}
           {popoverContent}
         </>
-      )
+      ),
     });
   }
 
