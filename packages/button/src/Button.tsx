@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { UrlObject } from 'url';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -34,7 +33,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       rightGlyph,
       children,
       className,
-      as: asProp,
+      as: AsProp,
       type,
       ...rest
     }: ButtonProps,
@@ -53,23 +52,23 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       usingKeyboard,
     });
 
-    const isAnchor: boolean = (!!rest.href || asProp === 'a') && !disabled;
+    const isAnchor: boolean = (!!rest.href || AsProp === 'a') && !disabled;
 
     // What will the final element be rendered as?
-    const boxAs = useMemo(() => {
-      if (isJSXIntrinsicElement(asProp)) {
-        return asProp;
-      } else if (isAsComponent(asProp)) {
+    const getBoxAsPropProp = () => {
+      if (isJSXIntrinsicElement(AsProp)) {
+        return AsProp;
+      } else if (isAsComponent(AsProp)) {
         // If we pass in a component (like NextJS link) then it will finally be rendered as an anchor
         return 'a';
       } else {
         return isAnchor ? 'a' : 'button';
       }
-    }, [asProp, isAnchor]);
+    };
 
-    // Props to add to the component root, whether that's the `AsComponent`, or `Box`
+    // Props to add to the component root, whether that's the `AsPropComponent`, or `Box`
     const rootProps = {
-      href: disabled ? '' : (rest.href as string | UrlObject),
+      href: disabled ? '' : (rest.href as string),
       onClick: !disabled ? onClick : undefined,
       // only add the disabled prop if this is a button
       ...(typeof rest.href !== 'string' && { disabled }),
@@ -77,15 +76,13 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
 
     // Props to add to the Box
     const boxProps = {
-      ...rest,
       type: isAnchor ? undefined : type || 'button',
       className: cx(buttonClassName, className),
       ref: forwardRef,
+      as: getBoxAsPropProp(),
       'aria-disabled': disabled,
-      as: boxAs,
       ...ButtonDataProp.prop,
-      // If this is not a Component, then the Box is also the root
-      ...(!isAsComponent(asProp) && rootProps),
+      ...rest,
     } as const;
 
     const contentProps = {
@@ -97,21 +94,21 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       size,
     } as const;
 
-    const WrapperComponent = ({ ...props }) =>
-      isAsComponent(asProp) ? (
-        React.createElement(asProp, { href: props.href, ...props })
-      ) : (
-        <>{props.children}</>
+    if (isAsComponent(AsProp)) {
+      return (
+        <AsProp {...rootProps}>
+          <Box {...boxProps}>
+            <ButtonContent {...contentProps}>{children}</ButtonContent>
+          </Box>
+        </AsProp>
       );
-
-    return (
-      // If WrapperComponent is a Fragment then is ignored, and rootProps gets applied to the Box
-      <WrapperComponent {...rootProps}>
-        <Box {...boxProps}>
+    } else {
+      return (
+        <Box {...boxProps} {...rootProps}>
           <ButtonContent {...contentProps}>{children}</ButtonContent>
         </Box>
-      </WrapperComponent>
-    );
+      );
+    }
   });
 
 Button.displayName = 'Button';
