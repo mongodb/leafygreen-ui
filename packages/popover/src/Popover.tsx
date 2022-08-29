@@ -123,9 +123,6 @@ function Popover({
     }
   }
 
-  console.log('😈😈',{referenceElement});
-
-
   const viewportSize = useViewportSize();
 
   // We calculate the position of the popover when it becomes active,
@@ -159,8 +156,6 @@ function Popover({
       scrollContainer,
     ),
   );
-
-  console.log('🧶 ref element check');
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
@@ -265,11 +260,6 @@ function Popover({
   } else {
     renderedChildren = children;
   }
-
-  console.group();
-  console.log({align});
-  console.log({justify});
-  console.groupEnd();
 
   return (
     <Transition

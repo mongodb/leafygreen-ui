@@ -131,23 +131,30 @@ export const ScrollableContainer = ({
   align,
   ...args
 }: TooltipScrollableyProps) => {
-  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null);
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
+    null,
+  );
   const position = referenceElPositions[refButtonPosition];
 
   return (
     <div className={scrollableStyle}>
-      <div className={scrollableInnerStyle} ref={(el) => setPortalContainer(el)}>
+      <div className={scrollableInnerStyle} ref={el => setPortalContainer(el)}>
         <div className={position}>
           <Tooltip
-              trigger={<span><Icon glyph="Cloud" /></span>}
-              portalContainer={portalContainer}
-              scrollContainer={portalContainer}
-              triggerEvent='click'
-              justify={justify}
-              align={align}
-              {...args}
-              >
-              I am a Tooltip! Lorem ipsum dolor sit amet, consectetur adipiscing elit
+            trigger={
+              <span>
+                <Icon glyph="Cloud" />
+              </span>
+            }
+            portalContainer={portalContainer}
+            scrollContainer={portalContainer}
+            triggerEvent="click"
+            justify={justify}
+            align={align}
+            {...args}
+          >
+            I am a Tooltip! Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit
           </Tooltip>
         </div>
       </div>
@@ -177,4 +184,4 @@ ScrollableContainer.argTypes = {
   open: { control: 'none' },
   setOpen: { control: 'none' },
   children: { control: 'none' },
-}
+};

@@ -65,8 +65,6 @@ export function calculatePosition({
     spacing,
   };
 
-  console.log({windowSafeCommonArgs});
-
   const windowSafeAlign = getWindowSafeAlign(align, windowSafeCommonArgs);
   const windowSafeJustify = getWindowSafeJustify(
     justify,
@@ -146,12 +144,20 @@ const defaultElementPosition = {
  * Returns the width and height as well as the top, bottom, left, and right positions of an element.
  */
 const getElementPosition = (element: HTMLElement, isReference?: boolean) => {
-  const { top, bottom, left, right, width: boundingWidth } = element.getBoundingClientRect();
+  const {
+    top,
+    bottom,
+    left,
+    right,
+    width: boundingWidth,
+  } = element.getBoundingClientRect();
   const { offsetHeight: height } = element;
   // Returns the unrounded, floating point width of the content element which does not include transformations.
   // `offsetWidth` would not work because this returns a rounded number of the element's layout width and `getBoundingClientRect.width` would also not work because it returns an exact number of the rendered width which can include transformations.
   // If this element is the reference element return element.getBoundingClientRect().width since we don't have to be as strict with the width. If we used getComputedStyle then the reference element has to have a display other than inline set on it.
-  const width = isReference ? boundingWidth : parseFloat(getComputedStyle(element).width);
+  const width = isReference
+    ? boundingWidth
+    : parseFloat(getComputedStyle(element).width);
 
   return {
     top,
@@ -166,14 +172,16 @@ const getElementPosition = (element: HTMLElement, isReference?: boolean) => {
 export function getElementDocumentPosition(
   element: HTMLElement | null,
   scrollContainer?: HTMLElement | null,
-  isReference?: boolean
+  isReference?: boolean,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right, height, width } =
-    getElementPosition(element, isReference);
+  const { top, bottom, left, right, height, width } = getElementPosition(
+    element,
+    isReference,
+  );
 
   if (scrollContainer) {
     const { scrollTop, scrollLeft } = scrollContainer;
@@ -183,17 +191,6 @@ export function getElementDocumentPosition(
       left: offsetLeft,
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
-
-    console.group();
-    console.log('getElementDocumentPosition: scroll container');
-    console.log({element});
-    console.log({width});
-    console.log({height});
-    console.log({top: top + scrollTop - offsetTop});
-    console.log({bottom: bottom + scrollTop - offsetBottom});
-    console.log({left: left + scrollLeft - offsetLeft});
-    console.log({right: right + scrollLeft - offsetRight});
-    console.groupEnd();
 
     return {
       top: top + scrollTop - offsetTop,
@@ -206,13 +203,6 @@ export function getElementDocumentPosition(
   }
 
   const { scrollX, scrollY } = window;
-
-  console.group();
-  console.log('getElementDocumentPosition: no no noscroll container');
-  console.log({element});
-  console.log({width});
-  console.log({height});
-  console.groupEnd();
 
   return {
     top: top + scrollY,
@@ -228,14 +218,16 @@ export function getElementDocumentPosition(
 export function getElementViewportPosition(
   element: HTMLElement | null,
   scrollContainer?: HTMLElement | null,
-  isReference?: boolean
+  isReference?: boolean,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right, height, width } =
-    getElementPosition(element, isReference);
+  const { top, bottom, left, right, height, width } = getElementPosition(
+    element,
+    isReference,
+  );
 
   if (scrollContainer) {
     const {
@@ -448,7 +440,6 @@ function calcAbsolutePosition({
   windowWidth,
   windowHeight,
 }: CalcAbsolutePositionArgs): AbsolutePositionObject {
-
   const leftNum = calcLeft({
     align,
     justify,
@@ -550,13 +541,6 @@ function calcLeft({
   referenceElPos,
   spacing,
 }: CalcPosition): number {
-
-  console.group();
-  console.log('calcLeft');
-  console.log({referenceElPos: referenceElPos.left});
-  console.log({contentElPos: contentElPos.width});
-  console.groupEnd();
-
   switch (align) {
     case Align.Top:
     case Align.Bottom:
@@ -604,17 +588,6 @@ function safelyWithinHorizontalWindow({
   contentWidth: number;
 }): boolean {
   const tooWide = left + contentWidth > windowWidth;
-
-  console.group();
-  console.log('safelyWithinHorizontalWindow');
-  console.log({left});
-  console.log({contentWidth});
-  console.log({windowWidth});
-  console.log({tooWide});
-  console.log({safelyWithinHorizontalWindow: left >= 0 && !tooWide});
-  console.groupEnd();
-
-
   return left >= 0 && !tooWide;
 }
 
@@ -663,7 +636,6 @@ function getWindowSafeAlign(
 
   return (
     alignOptions.find(fallback => {
-
       // console.group();
       // console.log('getWindowSafeAlign');
       // console.log({fallback});
@@ -742,12 +714,7 @@ function getWindowSafeJustify(
     case Align.Bottom:
     case Align.CenterVertical:
       return (
-        justifyOptions.find(fallback => {
-                console.group();
-      console.log('getWindowSafeJustify');
-      console.log({fallback});
-      console.groupEnd();
-          return (
+        justifyOptions.find(fallback =>
           safelyWithinHorizontalWindow({
             contentWidth:
               fallback === Justify.Fit
@@ -761,8 +728,7 @@ function getWindowSafeJustify(
               align: align,
               justify: fallback,
             }),
-          }))
-        }
+          }),
         ) ?? justifyFallbacks[justify][0]
       );
 
