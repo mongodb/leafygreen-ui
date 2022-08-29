@@ -342,9 +342,14 @@ function Tooltip({
       className={cx({
         [css`
           // Try to fit all the content on one line (until it hits max-width)
-          // Overrides default behavior, which is to set width to size of the trigger
+          // Overrides default behavior, which is to set width to size of the trigger.
+          // Except when justify is set to fit because the width should be the size of the trigger.
+          // Another exception is when justify is set to fit and the alignment is either left or right. In this case only the height should be the size of the trigger so we still want the width to fit the max content.
           width: max-content;
-        `]: justify !== Justify.Fit,
+        `]:
+          justify !== Justify.Fit ||
+          (justify === Justify.Fit &&
+            (align === Align.Left || align === Align.Right)),
       })}
       {...popoverProps}
     >
