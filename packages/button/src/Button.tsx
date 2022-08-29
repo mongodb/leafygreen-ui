@@ -1,23 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { registerRipple } from '@leafygreen-ui/ripple';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
-import {
-  getClassName,
-  rippleColors,
-  ButtonDataProp,
-  rippleStyle,
-  buttonContentStyle,
-  buttonContentSizeStyle,
-} from './styles';
-import ButtonIcon from './ButtonIcon';
+import { getClassName, rippleColors, ButtonDataProp } from './styles';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { ButtonContent } from './ButtonContent';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
@@ -59,8 +52,6 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       return unregisterRipple;
     }, [rippleRef, variant, darkMode, disabled, theme]);
 
-    const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
-
     const buttonClassName = getClassName({
       variant,
       size,
@@ -89,46 +80,20 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
       ...rest,
     } as const;
 
-    const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
+    const contentProps = {
+      rightGlyph,
+      leftGlyph,
+      darkMode,
+      disabled,
+      variant,
+      size,
+    } as const;
 
-    const content = (
-      <>
-        {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
-        <div className={cx(rippleStyle)} ref={rippleRef} />
-
-        <div
-          className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
-            [css`
-              justify-content: space-between;
-            `]: !!rightGlyph && darkMode,
-          })}
-        >
-          {leftGlyph && (
-            <ButtonIcon
-              glyph={leftGlyph}
-              className={css`
-                justify-self: right;
-              `}
-              {...iconProps}
-            />
-          )}
-
-          {children}
-
-          {rightGlyph && (
-            <ButtonIcon
-              glyph={rightGlyph}
-              className={css`
-                justify-self: left;
-              `}
-              {...iconProps}
-            />
-          )}
-        </div>
-      </>
+    return (
+      <Box {...buttonProps}>
+        <ButtonContent {...contentProps}>{children}</ButtonContent>
+      </Box>
     );
-
-    return <Box {...buttonProps}>{content}</Box>;
   });
 
 Button.displayName = 'Button';
