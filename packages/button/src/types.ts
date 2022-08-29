@@ -35,40 +35,7 @@ export const FontSize = {
 
 export type FontSize = typeof FontSize[keyof typeof FontSize];
 
-type AsPropType = keyof JSX.IntrinsicElements | React.ExoticComponent<any>;
-
-interface ButtonProps {
-  as?: AsPropType;
-
-  // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.
-  // https://github.com/storybookjs/storybook/issues/14798
-
-  /**
-   * Determines whether the button element will be disabled.
-   *
-   * @default false
-   */
-  disabled?: HTMLProps<HTMLButtonElement>['disabled'];
-
-  /**
-   * Callback fired when the button is clicked
-   *
-   * Default: `() => {}`
-   */
-  onClick?: HTMLProps<HTMLButtonElement>['onClick'];
-
-  /**
-   * Specifies the `type` property of the HTML button element
-   *
-   * Default: `'button''
-   */
-  type?: HTMLProps<HTMLButtonElement>['type'];
-
-  /**
-   * Specifies a CSS class passed to the element.
-   */
-  className?: HTMLProps<HTMLButtonElement>['className'];
-
+interface BaseButtonProps extends Omit<HTMLProps<'button'>, 'size'> {
   /**
    * Sets the variant for the Button
    *
@@ -97,25 +64,29 @@ interface ButtonProps {
    * Default: `undefined`
    */
   rightGlyph?: React.ReactElement;
-
-  /**
-   * A `href` prop that will make the Button render as an anchor tag.
-   *
-   * Default: `undefined`
-   */
-  href?: string;
 }
+
+type ButtonProps = BaseButtonProps &
+(
+  {
+    as: keyof Pick<JSX.IntrinsicElements, 'a'> | React.ComponentType<any>;
+    href?: string;
+  } | {
+    as: keyof Omit<JSX.IntrinsicElements, 'a'>;
+    href?: never
+  }
+)
 
 /** Identifies whether the `as` prop is included in JSX.IntrinsicElements */
 export const isJSXIntrinsicElement = (
-  as?: AsPropType,
+  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>,
 ): as is keyof JSX.IntrinsicElements =>
   !isUndefined(as) && typeof as === 'string';
 
 /** Identifies whether the `as` prop is a Component */
-export const isAsComponent = (
-  as?: AsPropType,
-): as is React.ExoticComponent<any> =>
+export const isReactComponent = (
+  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>,
+): as is React.ComponentType<any> =>
   !isUndefined(as) && typeof as !== 'string';
 
 export { Variant, Size, ButtonProps };
