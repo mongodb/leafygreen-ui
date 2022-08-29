@@ -35,22 +35,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
     forwardRef,
   ) {
     const { usingKeyboard } = useUsingKeyboardContext();
-    const rippleRef = useRef<HTMLDivElement | null>(null);
-
-    const { darkMode, theme } = useDarkMode(darkModeProp);
-
-    useEffect(() => {
-      let unregisterRipple: (() => void) | undefined;
-      const backgroundColor = rippleColors[theme][variant];
-
-      if (rippleRef.current != null && !disabled) {
-        unregisterRipple = registerRipple(rippleRef.current, {
-          backgroundColor,
-        });
-      }
-
-      return unregisterRipple;
-    }, [rippleRef, variant, darkMode, disabled, theme]);
+    const { darkMode } = useDarkMode(darkModeProp);
 
     const buttonClassName = getClassName({
       variant,
