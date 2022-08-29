@@ -180,8 +180,10 @@ ScrollableContainer.argTypes = {
   className: { control: 'none' },
   active: { control: 'none' },
   trigger: { control: 'none' },
+  triggerEvent: { control: 'none' },
   enabled: { control: 'none' },
   open: { control: 'none' },
   setOpen: { control: 'none' },
   children: { control: 'none' },
+  darkMode: { control: 'none' },
 };
