@@ -1,14 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
-import { registerRipple } from '@leafygreen-ui/ripple';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
-import { getClassName, rippleColors, ButtonDataProp } from './styles';
+import { getClassName, ButtonDataProp } from './styles';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { ButtonContent } from './ButtonContent';
 
