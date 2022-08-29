@@ -636,12 +636,7 @@ function getWindowSafeAlign(
 
   return (
     alignOptions.find(fallback => {
-      // console.group();
-      // console.log('getWindowSafeAlign');
-      // console.log({fallback});
-      // console.groupEnd();
       // Check that an alignment will not cause the popover to collide with the window.
-
       if (
         (
           [Align.Top, Align.Bottom, Align.CenterVertical] as Array<Align>
