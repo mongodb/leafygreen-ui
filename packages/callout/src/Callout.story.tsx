@@ -52,20 +52,26 @@ Example.args = {
   variant: Variant.Example,
 };
 
-export const WithRichContent = Template.bind({});
-WithRichContent.args = {
-  title: 'Title',
-  children: (
-    <>
-      Shopping items
-      <ul>
-        <li>Milk</li>
-        <li>Bread</li>
-        <li>Bananas</li>
-      </ul>
-      <Code language="js">console.log(&apos;Hello world&apos;)</Code>
-    </>
-  ),
+export const WithRichContent: ComponentStory<typeof Callout> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
+  return (
+    <Callout {...args} title="Title" darkMode={darkMode}>
+      <>
+        Shopping items
+        <ul>
+          <li>Milk</li>
+          <li>Bread</li>
+          <li>Bananas</li>
+        </ul>
+        <Code language="js" darkMode={darkMode}>
+          console.log(&apos;Hello world&apos;)
+        </Code>
+      </>
+    </Callout>
+  );
 };
 
 export const WithLinks = Template.bind({});
