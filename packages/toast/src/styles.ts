@@ -260,7 +260,7 @@ export const variantStyles: Record<
   [Variant.Warning]: {
     [Theme.Dark]: {
       toast: css`
-        background-color: ${palette.red.dark2};
+        background-color: ${palette.red.dark3};
         border-color: ${palette.red.dark2};
       `,
 
