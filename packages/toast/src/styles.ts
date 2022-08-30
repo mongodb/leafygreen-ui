@@ -75,6 +75,10 @@ export const baseElementStyles: Partial<Record<StyledElements, string>> = {
     top: 8px;
     right: 12px;
     transition: color 0.15s ease-in-out;
+
+    &:focus-visible {
+      outline: none;
+    }
   `,
 
   title: css`
@@ -128,6 +132,8 @@ export const variantStyles: Record<
         &:active,
         &:focus-visible {
           color: ${palette.green.light2};
+          box-shadow: 0 0 0 2px ${palette.green.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.green.dark2};
@@ -209,6 +215,8 @@ export const variantStyles: Record<
         &:active,
         &:focus-visible {
           color: ${palette.blue.light2};
+          box-shadow: 0 0 0 2px ${palette.blue.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.blue.dark2};
@@ -290,6 +298,8 @@ export const variantStyles: Record<
         &:active,
         &:focus-visible {
           color: ${palette.red.light2};
+          box-shadow: 0 0 0 2px ${palette.red.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.red.dark2};
@@ -371,6 +381,8 @@ export const variantStyles: Record<
         &:active,
         &:focus-visible {
           color: ${palette.yellow.light2};
+          box-shadow: 0 0 0 2px ${palette.yellow.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.yellow.dark2};
@@ -456,6 +468,8 @@ export const variantStyles: Record<
         &:active,
         &:focus-visible {
           color: ${palette.gray.light1};
+          box-shadow: 0 0 0 2px ${palette.gray.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.gray.dark2};
