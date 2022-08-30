@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { BoxProps } from '@leafygreen-ui/box';
-import Button from './Button';
+import { Button } from './Button';
 import { ButtonProps } from './types';
 
 const className = 'test-button-class';

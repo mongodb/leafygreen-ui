@@ -15,7 +15,7 @@ type Variant = typeof Variant[keyof typeof Variant];
 /**
  * Size variants
  *
- * Default: `'default'`
+ * @default 'default'
  */
 const Size = {
   XSmall: 'xsmall',
@@ -48,14 +48,14 @@ interface ButtonProps {
   /**
    * Callback fired when the button is clicked
    *
-   * Default: `() => {}`
+   * @default `() => {}`
    */
   onClick?: HTMLProps<HTMLButtonElement>['onClick'];
 
   /**
    * Specifies the `type` property of the HTML button element
    *
-   * Default: `'button''
+   * @default 'button'
    */
   type?: HTMLProps<HTMLButtonElement>['type'];
 
@@ -67,37 +67,51 @@ interface ButtonProps {
   /**
    * Sets the variant for the Button
    *
-   * Default: `'default'`
+   * @default 'default'
    */
   variant?: Variant;
+
+  /**
+   * Determines if the component renders in dark mode
+   *
+   * @default false
+   */
   darkMode?: boolean;
+
+  /**
+   * Determines the base font-size of the component
+   *
+   * @default 13
+   */
   baseFontSize?: BaseFontSize;
 
   /**
    * Sets the size for the Button
    *
-   * Default: `'default'`
+   * @default 'default'
    */
   size?: Size;
+
+  /**
+   * The content that will appear inside of the `<Button />` component.
+   */
   children?: React.ReactNode;
   /**
    * An icon glyph rendered before the button text.
-   *
-   * Default: `undefined`
    */
   leftGlyph?: React.ReactElement;
   /**
    * An icon glyph rendered after the button text.
-   *
-   * Default: `undefined`
    */
   rightGlyph?: React.ReactElement;
   /**
    * A `href` prop that will make the Button render as an anchor tag.
-   *
-   * Default: `undefined`
    */
   href?: string;
+
+  /**
+   * Determines the root element. An `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.
+   */
   as?: keyof JSX.IntrinsicElements;
 }
 
