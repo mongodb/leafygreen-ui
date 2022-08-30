@@ -67,15 +67,16 @@ interface BaseButtonProps extends Omit<HTMLProps<'button'>, 'size'> {
 }
 
 type ButtonProps = BaseButtonProps &
-(
-  {
-    as: keyof Pick<JSX.IntrinsicElements, 'a'> | React.ComponentType<any>;
-    href?: string;
-  } | {
-    as: keyof Omit<JSX.IntrinsicElements, 'a'>;
-    href?: never
-  }
-)
+  (
+    | {
+        as: keyof Pick<JSX.IntrinsicElements, 'a'> | React.ComponentType<any>;
+        href?: string;
+      }
+    | {
+        as: keyof Omit<JSX.IntrinsicElements, 'a'>;
+        href?: never;
+      }
+  );
 
 /** Identifies whether the `as` prop is included in JSX.IntrinsicElements */
 export const isJSXIntrinsicElement = (
@@ -86,7 +87,6 @@ export const isJSXIntrinsicElement = (
 /** Identifies whether the `as` prop is a Component */
 export const isReactComponent = (
   as?: keyof JSX.IntrinsicElements | React.ComponentType<any>,
-): as is React.ComponentType<any> =>
-  !isUndefined(as) && typeof as !== 'string';
+): as is React.ComponentType<any> => !isUndefined(as) && typeof as !== 'string';
 
 export { Variant, Size, ButtonProps };
