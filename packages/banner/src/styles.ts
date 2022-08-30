@@ -96,6 +96,8 @@ export const bannerVariantStyles: Record<
         &:hover,
         &:focus-visible {
           color: ${palette.blue.light2};
+          box-shadow: 0 0 0 2px ${palette.blue.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.blue.dark2};
@@ -138,6 +140,8 @@ export const bannerVariantStyles: Record<
         &:hover,
         &:focus-visible {
           color: ${palette.yellow.light2};
+          box-shadow: 0 0 0 2px ${palette.yellow.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.yellow.dark2};
@@ -180,6 +184,8 @@ export const bannerVariantStyles: Record<
         &:hover,
         &:focus-visible {
           color: ${palette.red.light2};
+          box-shadow: 0 0 0 2px ${palette.red.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.red.dark2};
@@ -222,6 +228,8 @@ export const bannerVariantStyles: Record<
         &:hover,
         &:focus-visible {
           color: ${palette.green.light2};
+          box-shadow: 0 0 0 2px ${palette.green.dark3},
+            0 0 0 4px ${palette.blue.light1};
 
           &:before {
             background-color: ${palette.green.dark2};
@@ -470,7 +478,8 @@ export const getTextStyle = (image: boolean, dismissible: boolean) => {
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 2px;
-      border-radius: 2px;
+      border-radius: 4px;
+      display: inline;
 
       &:hover,
       &:focus,

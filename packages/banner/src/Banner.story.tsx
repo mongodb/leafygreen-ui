@@ -73,6 +73,7 @@ export const WithLink: ComponentStory<typeof Banner> = ({
       {...args}
     >
       {children}
+      &nbsp;
       <Link href="http://localhost:9001">Link style</Link>
       &nbsp;
       <a href="http://localhost:9001">Regular link</a>
