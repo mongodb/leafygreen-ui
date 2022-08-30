@@ -116,7 +116,7 @@ describe('packages/button', () => {
 
     test(`renders a when passing in a NextJS Link wrapper`, () => {
       // eslint-disable-next-line react/prop-types
-      const Linker = ({ href, children, ...props }) => (
+      const Linker = ({ href, children, ...props }: any) => (
         <NextLink href={href}>
           <a {...props}>{children}</a>
         </NextLink>
