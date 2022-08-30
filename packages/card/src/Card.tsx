@@ -103,17 +103,28 @@ export interface CardProps {
    * className prop passed to the component
    */
   className?: string;
+
   /**
    * Determines whether the Card should be styled as clickable.
+   *
+   * Defaults to `'clickable'` (when a valid `onClick` handler or `href` link is provided
+   *
+   * @default 'clickable' | 'none'
    */
   contentStyle?: ContentStyle;
+
+  /**
+   * Determines whether or not the component will appear in dark mode.
+   *
+   * @default false
+   */
   darkMode?: boolean;
 }
 
 /**
  * Cards are used to organize information into consumable chunks.
  */
-const Card: ExtendableBox<CardProps> = ({
+export const Card: ExtendableBox<CardProps> = ({
   className,
   contentStyle,
   darkMode = false,
@@ -151,5 +162,3 @@ Card.displayName = 'Card';
 Card.propTypes = {
   className: PropTypes.string,
 };
-
-export default Card;
