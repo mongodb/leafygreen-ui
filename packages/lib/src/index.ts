@@ -8,12 +8,21 @@ import getTheme from './getTheme';
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
 export type { DarkModeProps };
 
-/** Helper type to extract an HTML element's valid props */
+/** 
+ * Extracts an HTML element's valid props.
+ * 
+ * Extend this type when creating component prop interfaces.
+ * 
+ * e.g.:
+ * ```ts
+ * interface MyComponentProps extends HTMLElementProps<'div'> {...}
+ * ```
+ */
 export type HTMLElementProps<
-  Element extends keyof JSX.IntrinsicElements,
-  RefType extends HTMLElement = never,
-> = Omit<JSX.IntrinsicElements[Element], 'ref'> & {
-  ref?: [RefType] extends [never] ? never : React.Ref<RefType>;
+  TagName extends (keyof JSX.IntrinsicElements & keyof HTMLElementTagNameMap),
+  RefType extends HTMLElement = HTMLElementTagNameMap[TagName],
+> = Omit<JSX.IntrinsicElements[TagName], 'ref'> & {
+  ref?: RefType extends HTMLElement ? React.Ref<RefType> : HTMLElementTagNameMap[TagName],
   key?: React.Key | null;
 };
 
