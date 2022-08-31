@@ -11,6 +11,8 @@ export type { DarkModeProps };
 /** 
  * Extracts an HTML element's valid props.
  * 
+ * Pass an `HTMLElement` as the second argument to use a different element type as the Ref object (not recommended)
+ * 
  * Extend this type when creating component prop interfaces.
  * 
  * e.g.:
