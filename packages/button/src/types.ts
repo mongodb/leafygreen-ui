@@ -100,7 +100,7 @@ interface ButtonProps {
   href?: string;
 
   /**
-   * HTML Element that wraps title in Tab List.
+   * The component or HTML Element that the button is rendered as.
    *
    * To use with NextJS Links, pass in a component that wraps the Link:
    * ```js
