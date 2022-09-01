@@ -18,29 +18,26 @@ const cli = new Command('parse-tsdoc')
 
 const packagesRoot = cli.opts()['root'];
 const outDir = cli.opts()['out'];
-const skippedComponents = [];
+
+const skipComponents = ['lib'];
+const skipProps = ['ref', 'key'];
 
 const TSDocOptions = {
   shouldExtractLiteralValuesFromEnum: true,
-  shouldRemoveUndefinedFromOptional: false,
   shouldExtractValuesFromUnion: true,
+  shouldIncludePropTagMap: true,
+  shouldRemoveUndefinedFromOptional: false,
   skipChildrenPropWithoutDoc: false,
   propFilter: (prop, component) => {
-    if (skippedComponents.includes(component.name)) {
-      return false;
+    return (
+      !skipComponents.includes(component.name)
+      && !skipProps.includes(prop.name)
+      && !isPropExternalDeclaration(prop)
+    );
+
+    function isPropExternalDeclaration(prop) {
+      return prop.parent && prop.parent.fileName.includes('node_modules')
     }
-
-    if (prop.declarations !== undefined && prop.declarations.length > 0) {
-      const hasPropAdditionalDescription = prop.declarations.find(
-        declaration => {
-          return !declaration.fileName.includes('node_modules');
-        },
-      );
-
-      return Boolean(hasPropAdditionalDescription);
-    }
-
-    return true;
   },
 };
 
@@ -71,6 +68,10 @@ function parseDocs(componentName) {
         .parse(componentFileNames, TSDocOptions)
         .filter(doc => !['src', 'index'].includes(doc.displayName))
         .filter(doc => Object.keys(doc.props).length > 0),
+        // .map(({ props, ...rest }) => ({
+        //   ...rest,
+        //   props: Object.values(props).reduce(groupPropsByParent, {}),
+        // })),
       'displayName',
     );
 
@@ -115,3 +116,17 @@ function parseFileNames(root) {
     }
   }
 }
+
+// function groupPropsByParent(propList, prop) {
+//   if (prop.parent && prop.parent.name) {
+//     if (!propList[prop.parent.name]) {
+//       propList[prop.parent.name] = {}
+//     }
+//     propList[prop.parent.name][prop.name] = prop
+
+//   } else {
+//     propList[prop.name] = prop;
+//   }
+
+//   return propList;
+// }
