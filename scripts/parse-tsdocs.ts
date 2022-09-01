@@ -83,16 +83,20 @@ function parseDocs(componentName: string): void {
 
     const docs: Array<CustomComponentDoc> = uniqBy(
       parse(componentFileNames, TSDocOptions)
-        // .filter(doc => !['src', 'index'].includes(doc.displayName))
+        // For default exports, change the displayName
+        .map(({displayName, ...rest}) => ({
+          ...rest,
+          displayName: ['src', 'index'].includes(displayName) ? startCase(componentName) : displayName})
+        )
+        // Remove any external components
         .filter(doc => !doc.filePath.includes('node_modules'))
+        // Remove any components with no props
         .filter(doc => Object.keys(doc.props).length > 0)
+        // Remove any internal components
         .filter(doc => isUndefined(doc.tags?.internal))
-        // Only show docs for functions that are explicitly related to the component.
-        // NOTE: this should be removed in favor of consistent use of `@internal`
-        // .filter(doc => doc.displayName.startsWith(startCase(componentName)))
+        // Group Props by where they are inherited from
         .map(({ props, ...rest }) => ({
           ...rest,
-          // Group Props by where they are inherited from
           props: Object.values(props).reduce(
             groupPropsByParent,
             {},
