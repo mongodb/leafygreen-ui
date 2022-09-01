@@ -84,6 +84,7 @@ function parseDocs(componentName: string): void {
     const docs: Array<CustomComponentDoc> = uniqBy(
       parse(componentFileNames, TSDocOptions)
         .filter(doc => !['src', 'index'].includes(doc.displayName))
+        .filter(doc => !doc.filePath.includes("node_modules"))
         .filter(doc => Object.keys(doc.props).length > 0)
         .filter(doc => isUndefined(doc.tags?.internal))
         // Only show docs for functions that are explicitly related to the component.
