@@ -37,7 +37,7 @@
     "clean:builds": "rimraf packages/*/{dist} **/*.tsbuildinfo",
     "clean:modules": "rimraf packages/*/{node_modules} node_modules",
     "demo:storybook": "yarn build:storybook && ./scripts/demo-storybook.sh",
-    "docs:tsdoc": "node ./scripts/parse-tsdocs.js",
+    "docs:tsdoc": "ts-node -O '{\"module\": \"commonjs\"}' ./scripts/parse-tsdocs.ts",
     "fix": "npm-run-all --parallel fix:*",
     "fix:prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "fix:eslint": "eslint \"**/*.{js,ts,tsx}\" --fix",

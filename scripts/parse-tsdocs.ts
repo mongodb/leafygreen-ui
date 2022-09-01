@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-const docgen = require('react-docgen-typescript');
-const fs = require('fs');
-const path = require('path');
-const chalk = require('chalk');
-const { Command } = require('commander');
-const { uniqBy } = require('lodash');
+import { parse, ParserOptions, PropItem } from 'react-docgen-typescript';
+import fs from 'fs';
+import path from 'path';
+import chalk from 'chalk';
+import { Command } from 'commander';
+import { uniqBy } from 'lodash';
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
@@ -22,7 +22,7 @@ const outDir = cli.opts()['out'];
 const skipComponents = ['lib'];
 const skipProps = ['ref', 'key'];
 
-const TSDocOptions = {
+const TSDocOptions: ParserOptions = {
   shouldExtractLiteralValuesFromEnum: true,
   shouldExtractValuesFromUnion: true,
   shouldIncludePropTagMap: true,
@@ -35,7 +35,7 @@ const TSDocOptions = {
       !isPropExternalDeclaration(prop)
     );
 
-    function isPropExternalDeclaration(prop) {
+    function isPropExternalDeclaration(prop: PropItem) {
       return prop.parent && prop.parent.fileName.includes('node_modules');
     }
   },
@@ -49,7 +49,7 @@ if (cli.args.length) {
   packages.forEach(parseDocs);
 }
 
-function parseDocs(componentName) {
+function parseDocs(componentName: string) {
   const componentDir = path.resolve(
     __dirname,
     `${packagesRoot}/${componentName}`,
@@ -63,15 +63,15 @@ function parseDocs(componentName) {
       ),
     );
     const componentFileNames = parseFileNames(componentDir);
+
     const docs = uniqBy(
-      docgen
-        .parse(componentFileNames, TSDocOptions)
+      parse(componentFileNames, TSDocOptions)
         .filter(doc => !['src', 'index'].includes(doc.displayName))
         .filter(doc => Object.keys(doc.props).length > 0),
-      // .map(({ props, ...rest }) => ({
-      //   ...rest,
-      //   props: Object.values(props).reduce(groupPropsByParent, {}),
-      // })),
+        // .map(({ props, ...rest }) => ({
+        //   ...rest,
+        //   props: Object.values(props).reduce(groupPropsByParent, {} as Props),
+        // })),
       'displayName',
     );
 
@@ -80,9 +80,7 @@ function parseDocs(componentName) {
       `${outDir}/${componentName}/tsdoc.json`,
     );
     outDir !== packagesRoot && console.log(`\t${outFilePath}`);
-    fs.writeFileSync(outFilePath, JSON.stringify(docs, null, 2), err => {
-      if (err) console.error(err);
-    });
+    fs.writeFileSync(outFilePath, JSON.stringify(docs, null, 2));
   } else {
     console.warn(
       chalk.yellow('Could not find component:'),
@@ -93,12 +91,12 @@ function parseDocs(componentName) {
   }
 }
 
-function parseFileNames(root) {
-  const parsedFileNames = [];
+function parseFileNames(root: string) {
+  const parsedFileNames: Array<string> = [];
   getFilesRecursively(root);
   return parsedFileNames;
 
-  function getFilesRecursively(directory) {
+  function getFilesRecursively(directory: string) {
     const filesInDirectory = fs.readdirSync(directory);
 
     for (const file of filesInDirectory) {
@@ -117,7 +115,7 @@ function parseFileNames(root) {
   }
 }
 
-// function groupPropsByParent(propList, prop) {
+// function groupPropsByParent(propList: Props, prop: PropItem) {
 //   if (prop.parent && prop.parent.name) {
 //     if (!propList[prop.parent.name]) {
 //       propList[prop.parent.name] = {}
