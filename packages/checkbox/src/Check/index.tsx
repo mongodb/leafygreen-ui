@@ -36,6 +36,10 @@ const checkIconColor: Record<Theme, Record<'default' | 'disabled', string>> = {
   },
 };
 
+/**
+ * @internal
+ * @returns
+ */
 export function Check({
   theme,
   isChecked,

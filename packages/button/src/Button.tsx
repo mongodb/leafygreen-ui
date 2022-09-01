@@ -22,6 +22,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
  */
+// TODO: TSDoc
 export const Button: ExtendableBox<
   ButtonProps & { ref?: React.Ref<any> },
   'button'
