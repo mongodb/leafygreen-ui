@@ -332,6 +332,7 @@ interface SubMenuProps {
   size?: Size;
 }
 
+// TODO: TSDoc
 const SubMenu: ExtendableBox<
   SubMenuProps & { ref?: React.Ref<any> },
   'button'

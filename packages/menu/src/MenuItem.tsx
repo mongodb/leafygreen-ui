@@ -68,6 +68,7 @@ interface BaseMenuItemProps {
   href?: string;
 }
 
+// TODO: TSDoc
 const MenuItem: ExtendableBox<
   BaseMenuItemProps & { ref?: React.Ref<any> },
   'button'
