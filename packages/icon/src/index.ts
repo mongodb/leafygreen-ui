@@ -1,6 +1,7 @@
 import createIconComponent from './createIconComponent';
 import glyphs from './glyphs';
 
+// TODO: TSDoc
 export { LGGlyph } from './types';
 export { Size } from './glyphCommon';
 export { default as createIconComponent } from './createIconComponent';

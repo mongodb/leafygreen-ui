@@ -21,6 +21,7 @@ import {
   removeButtonStyle,
 } from './styles';
 
+// TODO: TSDoc
 export const IconButton: ExtendableBox<
   AccessibleIconButtonProps & { ref?: React.Ref<any> },
   'button'
@@ -115,5 +116,3 @@ IconButton.propTypes = {
   href: PropTypes.string,
   active: PropTypes.bool,
 };
-
-export default IconButton;
