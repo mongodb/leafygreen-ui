@@ -106,7 +106,7 @@ export const colorSets: Record<Theme, ColorSets> = {
   [Theme.Dark]: {
     textArea: css`
       color: ${palette.gray.light3};
-      background-color: ${palette.gray.dark3};
+      background-color: ${palette.gray.dark4};
       border-color: ${palette.gray.base};
 
       &:hover:not(:disabled):not(:focus) {

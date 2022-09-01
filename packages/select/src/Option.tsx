@@ -64,7 +64,6 @@ export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
   disabled: boolean;
   onClick: React.MouseEventHandler;
   onFocus: React.FocusEventHandler;
-  isDeselection: boolean;
   hasGlyphs: boolean;
   triggerScrollIntoView: boolean;
 }
