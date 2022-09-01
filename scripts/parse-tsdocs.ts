@@ -83,7 +83,8 @@ function parseDocs(componentName: string): void {
 
     const docs: Array<CustomComponentDoc> = uniqBy(
       parse(componentFileNames, TSDocOptions)
-        .filter(doc => !['src', 'index'].includes(doc.displayName))
+        // .filter(doc => !['src', 'index'].includes(doc.displayName))
+        .filter(doc => !doc.filePath.includes('node_modules'))
         .filter(doc => Object.keys(doc.props).length > 0)
         .filter(doc => isUndefined(doc.tags?.internal))
         // Only show docs for functions that are explicitly related to the component.
@@ -156,7 +157,8 @@ function parseFileNames(root: string): Array<string> {
       if (fs.statSync(absolute).isDirectory()) {
         getFilesRecursively(absolute);
       } else {
-        const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
+        // const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
+        const regex = /^.*.index.tsx?$/
 
         if (regex.test(absolute)) {
           parsedFileNames.push(absolute);
