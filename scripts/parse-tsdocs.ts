@@ -1,10 +1,15 @@
 /* eslint-disable no-console */
-import { parse, ParserOptions, PropItem } from 'react-docgen-typescript';
+import { parse, ParserOptions, PropItem,Props, ComponentDoc } from 'react-docgen-typescript';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { uniqBy } from 'lodash';
+import { isUndefined, uniqBy, startCase } from 'lodash';
+
+export type PropCategory = Record<string, Props>;
+export type CustomComponentDoc = Omit<ComponentDoc, 'props'> & {
+  props: PropCategory
+}
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
@@ -20,7 +25,7 @@ const packagesRoot = cli.opts()['root'];
 const outDir = cli.opts()['out'];
 
 const skipComponents = ['lib'];
-const skipProps = ['ref', 'key'];
+const skipProps = ['ref', 'key', '__INTERNAL__menuButtonSlot__'];
 
 const TSDocOptions: ParserOptions = {
   shouldExtractLiteralValuesFromEnum: true,
@@ -30,17 +35,20 @@ const TSDocOptions: ParserOptions = {
   skipChildrenPropWithoutDoc: false,
   propFilter: (prop, component) => {
     return (
-      !skipComponents.includes(component.name) &&
-      !skipProps.includes(prop.name) &&
-      !isPropExternalDeclaration(prop)
+      !skipComponents.includes(component.name)
+      && !skipProps.includes(prop.name)
+      // && !isPropExternalDeclaration(prop)
     );
 
-    function isPropExternalDeclaration(prop: PropItem) {
-      return prop.parent && prop.parent.fileName.includes('node_modules');
-    }
+    // function isPropExternalDeclaration(prop: PropItem) {
+    //   return prop.parent && prop.parent.fileName.includes('node_modules');
+    // }
   },
 };
 
+/**
+ * Main logic
+ */
 if (cli.args.length) {
   cli.args.forEach(parseDocs);
 } else {
@@ -49,7 +57,11 @@ if (cli.args.length) {
   packages.forEach(parseDocs);
 }
 
-function parseDocs(componentName: string) {
+/**
+ * Parses the TSDocs for the provided component
+ * @param componentName
+ */
+function parseDocs(componentName: string): void {
   const componentDir = path.resolve(
     __dirname,
     `${packagesRoot}/${componentName}`,
@@ -64,14 +76,20 @@ function parseDocs(componentName: string) {
     );
     const componentFileNames = parseFileNames(componentDir);
 
-    const docs = uniqBy(
+    const docs: Array<CustomComponentDoc> = uniqBy(
       parse(componentFileNames, TSDocOptions)
         .filter(doc => !['src', 'index'].includes(doc.displayName))
-        .filter(doc => Object.keys(doc.props).length > 0),
-        // .map(({ props, ...rest }) => ({
-        //   ...rest,
-        //   props: Object.values(props).reduce(groupPropsByParent, {} as Props),
-        // })),
+        .filter(doc => Object.keys(doc.props).length > 0)
+        .filter(doc => isUndefined(doc.tags?.internal))
+        // Only show docs for functions that are explicitly related to the component.
+        // NOTE: this should be removed in favor of consistent use of `@internal`
+        // .filter(doc => doc.displayName.startsWith(startCase(componentName)))
+        .map(({ props, ...rest }) => ({
+          ...rest,
+          // Group Props by where they are inherited from
+          props: Object.values(props)
+            .reduce(groupPropsByParent, {}) as PropCategory,
+        })),
       'displayName',
     );
 
@@ -89,9 +107,36 @@ function parseDocs(componentName: string) {
       chalk.bold.yellow(packagesRoot),
     );
   }
+
+  function groupPropsByParent(propList: PropCategory, prop: PropItem) {
+    // If the prop is inherited, we group this prop under its parent
+    if (prop.parent && prop.parent.name) {
+      if (!propList[prop.parent.name]) {
+        propList[prop.parent.name] = {[prop.name]: prop};
+      }
+      propList[prop.parent.name][prop.name] = prop;
+    } else {
+      // if there is no parent for the prop, we use the component name as the group name
+      if (!propList[startCase(componentName)]) {
+        propList[startCase(componentName)] = {[prop.name]: prop}
+      } else {
+        propList[startCase(componentName)][prop.name] = prop
+      }
+    }
+
+    return propList;
+  }
+
 }
 
-function parseFileNames(root: string) {
+/**
+ *
+ * Returns all files to use for TSDoc generation for a given root directory
+ *
+ * @param root The root directory
+ * @returns parsedFileNames
+ */
+function parseFileNames(root: string): Array<string> {
   const parsedFileNames: Array<string> = [];
   getFilesRecursively(root);
   return parsedFileNames;
@@ -114,17 +159,3 @@ function parseFileNames(root: string) {
     }
   }
 }
-
-// function groupPropsByParent(propList: Props, prop: PropItem) {
-//   if (prop.parent && prop.parent.name) {
-//     if (!propList[prop.parent.name]) {
-//       propList[prop.parent.name] = {}
-//     }
-//     propList[prop.parent.name][prop.name] = prop
-
-//   } else {
-//     propList[prop.name] = prop;
-//   }
-
-//   return propList;
-// }
