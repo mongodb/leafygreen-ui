@@ -7,5 +7,5 @@ export const InheritablePropGroup = [
 export type InheritablePropGroup = keyof typeof InheritablePropGroup;
 export type PropCategory = Record<InheritablePropGroup | string, Props>;
 export type CustomComponentDoc = Omit<ComponentDoc, 'props'> & {
-  props: PropCategory
-}
+  props: PropCategory;
+};

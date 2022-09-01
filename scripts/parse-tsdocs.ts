@@ -1,5 +1,11 @@
 /* eslint-disable no-console */
-import { parse, ParserOptions, PropItem,Props, ComponentDoc } from 'react-docgen-typescript';
+import {
+  parse,
+  ParserOptions,
+  PropItem,
+  Props,
+  ComponentDoc,
+} from 'react-docgen-typescript';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
@@ -8,8 +14,8 @@ import { isUndefined, uniqBy, startCase } from 'lodash';
 
 export type PropCategory = Record<string, Props>;
 export type CustomComponentDoc = Omit<ComponentDoc, 'props'> & {
-  props: PropCategory
-}
+  props: PropCategory;
+};
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
@@ -35,8 +41,7 @@ const TSDocOptions: ParserOptions = {
   skipChildrenPropWithoutDoc: false,
   propFilter: (prop, component) => {
     return (
-      !skipComponents.includes(component.name)
-      && !skipProps.includes(prop.name)
+      !skipComponents.includes(component.name) && !skipProps.includes(prop.name)
       // && !isPropExternalDeclaration(prop)
     );
 
@@ -87,8 +92,10 @@ function parseDocs(componentName: string): void {
         .map(({ props, ...rest }) => ({
           ...rest,
           // Group Props by where they are inherited from
-          props: Object.values(props)
-            .reduce(groupPropsByParent, {}) as PropCategory,
+          props: Object.values(props).reduce(
+            groupPropsByParent,
+            {},
+          ) as PropCategory,
         })),
       'displayName',
     );
@@ -112,21 +119,20 @@ function parseDocs(componentName: string): void {
     // If the prop is inherited, we group this prop under its parent
     if (prop.parent && prop.parent.name) {
       if (!propList[prop.parent.name]) {
-        propList[prop.parent.name] = {[prop.name]: prop};
+        propList[prop.parent.name] = { [prop.name]: prop };
       }
       propList[prop.parent.name][prop.name] = prop;
     } else {
       // if there is no parent for the prop, we use the component name as the group name
       if (!propList[startCase(componentName)]) {
-        propList[startCase(componentName)] = {[prop.name]: prop}
+        propList[startCase(componentName)] = { [prop.name]: prop };
       } else {
-        propList[startCase(componentName)][prop.name] = prop
+        propList[startCase(componentName)][prop.name] = prop;
       }
     }
 
     return propList;
   }
-
 }
 
 /**
