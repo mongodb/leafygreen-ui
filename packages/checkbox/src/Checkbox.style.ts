@@ -54,7 +54,7 @@ export const labelHoverStyle: Record<Theme, string> = {
 };
 
 export const disabledLabelDarkThemeOverrideStyle = css`
-  color: ${palette.gray.dark1};
+  color: ${palette.gray.base};
 `;
 
 export const inputStyle = css`

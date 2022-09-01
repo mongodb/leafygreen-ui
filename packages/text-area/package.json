@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-area",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "leafyGreen UI Kit Text Area",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

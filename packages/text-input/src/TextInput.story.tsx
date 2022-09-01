@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
-import TextInput, { TextInputProps } from '.';
+import TextInput, { TextInputProps, State, SizeVariant } from '.';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const StoryTextInput: React.FC<TextInputProps> = props => (
   <TextInput {...props} />
@@ -17,8 +18,53 @@ export default {
     darkMode: {
       control: 'boolean',
     },
+    disabled: {
+      control: 'boolean',
+    },
+    label: {
+      control: 'text',
+    },
+    description: {
+      control: 'text',
+    },
+    placeholder: {
+      control: 'text',
+    },
+    optional: {
+      control: 'boolean',
+    },
+    id: {
+      control: 'text',
+    },
+    errorMessage: {
+      control: 'text',
+    },
+    state: {
+      control: 'select',
+      options: Object.values(State),
+    },
+    sizeVariant: {
+      control: 'select',
+      options: Object.values(SizeVariant),
+    },
+    baseFontSize: {
+      control: 'select',
+      options: Object.values(BaseFontSize),
+    },
   },
-  controls: { exclude: ['ref'] },
+  parameters: {
+    controls: {
+      exclude: [
+        'ref',
+        'value',
+        'className',
+        'onBlur',
+        'onChange',
+        'handleValidation',
+        'aria-labelledby',
+      ],
+    },
+  },
   excludeStories: ['StoryTextInput'],
 };
 

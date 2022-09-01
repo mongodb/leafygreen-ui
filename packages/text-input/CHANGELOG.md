@@ -1,5 +1,19 @@
 # @leafygreen-ui/text-input
 
+## 10.1.2
+
+### Patch Changes
+
+- b10463fc: Removing padding-top when neither label nor description are defined.
+
+## 10.1.1
+
+### Patch Changes
+
+- 79b3ba7e: Aligns Text Input focus & hover styles to Figma library
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
 ## 10.1.0
 
 ### Minor Changes
