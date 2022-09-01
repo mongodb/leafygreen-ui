@@ -69,7 +69,7 @@ export const badgeVariants: { [K in Variant]: string } = {
   `,
 } as const;
 
-interface BadgeProps {
+interface BadgeProps extends HTMLElementProps<'div'> {
   /**
    * An additional className to add to the component's classList
    */
@@ -83,7 +83,7 @@ interface BadgeProps {
   /**
    * The Badge's style variant
    *
-   * Default: `'lightgray'`
+   * @default: 'lightgray'
    */
   variant?: Variant;
 }
@@ -96,7 +96,7 @@ function Badge({
   variant = Variant.LightGray,
   className,
   ...rest
-}: BadgeProps & HTMLElementProps<'div', never>) {
+}: BadgeProps) {
   return (
     <div {...rest} className={cx(baseStyle, badgeVariants[variant], className)}>
       {children}
