@@ -30,13 +30,13 @@ const TSDocOptions = {
   skipChildrenPropWithoutDoc: false,
   propFilter: (prop, component) => {
     return (
-      !skipComponents.includes(component.name)
-      && !skipProps.includes(prop.name)
-      && !isPropExternalDeclaration(prop)
+      !skipComponents.includes(component.name) &&
+      !skipProps.includes(prop.name) &&
+      !isPropExternalDeclaration(prop)
     );
 
     function isPropExternalDeclaration(prop) {
-      return prop.parent && prop.parent.fileName.includes('node_modules')
+      return prop.parent && prop.parent.fileName.includes('node_modules');
     }
   },
 };
@@ -68,10 +68,10 @@ function parseDocs(componentName) {
         .parse(componentFileNames, TSDocOptions)
         .filter(doc => !['src', 'index'].includes(doc.displayName))
         .filter(doc => Object.keys(doc.props).length > 0),
-        // .map(({ props, ...rest }) => ({
-        //   ...rest,
-        //   props: Object.values(props).reduce(groupPropsByParent, {}),
-        // })),
+      // .map(({ props, ...rest }) => ({
+      //   ...rest,
+      //   props: Object.values(props).reduce(groupPropsByParent, {}),
+      // })),
       'displayName',
     );
 
