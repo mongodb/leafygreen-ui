@@ -21,6 +21,12 @@ export default {
     disabled: {
       control: 'boolean',
     },
+    label: {
+      control: 'text',
+    },
+    description: {
+      control: 'text',
+    },
     placeholder: {
       control: 'text',
     },
