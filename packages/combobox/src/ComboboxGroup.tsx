@@ -66,6 +66,6 @@ export function InternalComboboxGroup({
 
 ComboboxGroup.displayName = 'ComboboxGroup';
 
-export default function ComboboxGroup(_: ComboboxGroupProps): JSX.Element {
+export function ComboboxGroup(_: ComboboxGroupProps): JSX.Element {
   throw Error('`ComboboxGroup` must be a child of a `Combobox` instance');
 }
