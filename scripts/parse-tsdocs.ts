@@ -134,11 +134,10 @@ function parseDocs(componentName: string): void {
       propList[prop.parent.name][prop.name] = prop;
     } else {
       // if there is no parent for the prop, we group these all together
-      // TODO: Consider grouping these by declarations.fileName
-      if (!propList['Other']) {
-        propList['Other'] = { [prop.name]: prop };
+      if (!propList[startCase(componentName)]) {
+        propList[startCase(componentName)] = { [prop.name]: prop };
       } else {
-        propList['Other'][prop.name] = prop;
+        propList[startCase(componentName)][prop.name] = prop;
       }
     }
 
