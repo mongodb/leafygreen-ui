@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -56,178 +56,175 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
  * @param props.darkMode determines whether or not the component appears in dark theme.
  * @param props.sizeVariant determines the size of the text and the height of the input.
  */
-const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
-  React.forwardRef(
-    (
-      {
-        label,
-        description,
-        onChange,
-        onBlur,
-        placeholder,
-        errorMessage,
-        optional = false,
-        disabled = false,
-        state = State.None,
-        type = TextInputType.Text,
-        id: propsId,
-        value: controlledValue,
-        className,
-        darkMode: darkModeProp,
-        sizeVariant = SizeVariant.Default,
-        'aria-labelledby': ariaLabelledby,
-        handleValidation,
-        baseFontSize: baseFontSizeProp,
-        ...rest
-      }: TextInputProps,
-      forwardRef: React.Ref<HTMLInputElement>,
-    ) => {
-      const { darkMode, theme } = useDarkMode(darkModeProp);
-      const isControlled = typeof controlledValue === 'string';
-      const [uncontrolledValue, setValue] = useState('');
-      const value = isControlled ? controlledValue : uncontrolledValue;
-      const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-      const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+const TextInput = forwardRef(
+  (
+    {
+      label,
+      description,
+      onChange,
+      onBlur,
+      placeholder,
+      errorMessage,
+      optional = false,
+      disabled = false,
+      state = State.None,
+      type = TextInputType.Text,
+      id: propsId,
+      value: controlledValue,
+      className,
+      darkMode: darkModeProp,
+      sizeVariant = SizeVariant.Default,
+      'aria-labelledby': ariaLabelledby,
+      handleValidation,
+      baseFontSize: baseFontSizeProp,
+      ...rest
+    }: TextInputProps,
+    forwardRef: React.Ref<HTMLInputElement>,
+  ) => {
+    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const isControlled = typeof controlledValue === 'string';
+    const [uncontrolledValue, setValue] = useState('');
+    const value = isControlled ? controlledValue : uncontrolledValue;
+    const id = useIdAllocator({ prefix: 'textinput', id: propsId });
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
-      // Validation
-      const validation = useValidation<HTMLInputElement>(handleValidation);
+    // Validation
+    const validation = useValidation<HTMLInputElement>(handleValidation);
 
-      const onBlurHandler: React.FocusEventHandler<HTMLInputElement> = e => {
-        if (onBlur) {
-          onBlur(e);
-        }
-
-        validation.onBlur(e);
-      };
-
-      const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-        if (onChange) {
-          onChange(e);
-        }
-
-        if (!isControlled) {
-          setValue(e.target.value);
-        }
-
-        validation.onChange(e);
-      };
-
-      if (type !== 'search' && !label && !ariaLabelledby) {
-        console.error(
-          'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
-        );
+    const onBlurHandler: React.FocusEventHandler<HTMLInputElement> = e => {
+      if (onBlur) {
+        onBlur(e);
       }
 
-      if (type === 'search' && !rest['aria-label']) {
-        console.error(
-          'For screen-reader accessibility, aria-label must be provided to TextInput.',
-        );
+      validation.onBlur(e);
+    };
+
+    const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+      if (onChange) {
+        onChange(e);
       }
 
-      const RenderedCheckmarkIcon = darkMode
-        ? CheckmarkWithCircleIcon
-        : CheckmarkIcon;
+      if (!isControlled) {
+        setValue(e.target.value);
+      }
 
-      return (
-        <div
-          className={cx(
-            wrapperStyle,
-            getWrapperFontSize(sizeVariant, baseFontSize),
-            className,
-          )}
-        >
-          {(label || description) && (
-            <div className={textContainerStyle}>
-              {label && (
-                <Label
-                  darkMode={darkMode}
-                  htmlFor={id}
-                  disabled={disabled}
-                  className={inheritTypeScale}
-                >
-                  {label}
-                </Label>
-              )}
-              {description && (
-                <Description
-                  darkMode={darkMode}
-                  disabled={disabled}
-                  className={inheritTypeScale}
-                >
-                  {description}
-                </Description>
-              )}
-            </div>
-          )}
-          <div className={inputContainerStyle}>
-            <input
-              {...rest}
-              aria-labelledby={ariaLabelledby}
-              type={type}
-              className={cx(
-                baseInputStyle,
-                inputModeStyles[theme],
-                inputSizeStyles[sizeVariant],
-                inputStateStyles[state][theme],
-                inputFocusStyles[theme], // Always show focus styles
-                {
-                  [css`
-                    padding-right: 60px;
-                  `]: optional && !disabled,
-                },
-              )}
-              value={value}
-              required={!optional}
-              disabled={disabled}
-              placeholder={placeholder}
-              onChange={onValueChange}
-              onBlur={onBlurHandler}
-              ref={forwardRef}
-              id={id}
-              autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
-              aria-invalid={state === 'error'}
-            />
+      validation.onChange(e);
+    };
 
-            <div
-              className={cx(
-                iconClassName,
-                inputIndicatorStyle,
-                inputIndicatorSizeStyle[sizeVariant],
-              )}
-            >
-              {/* Render State Icon or Optional text*/}
-              {state === State.Valid && (
-                <RenderedCheckmarkIcon
-                  role="presentation"
-                  className={stateIndicatorStyles.valid[theme]}
-                />
-              )}
-
-              {state === State.Error && (
-                <WarningIcon
-                  role="presentation"
-                  className={stateIndicatorStyles.error[theme]}
-                />
-              )}
-
-              {state === State.None && !disabled && optional && (
-                <div className={optionalTextStyle}>
-                  <p>Optional</p>
-                </div>
-              )}
-            </div>
-          </div>
-          {state === State.Error && errorMessage && (
-            <div
-              className={cx(errorMessageStyle, errorMessageModeStyle[theme])}
-            >
-              <span>{errorMessage}</span>
-            </div>
-          )}
-        </div>
+    if (type !== 'search' && !label && !ariaLabelledby) {
+      console.error(
+        'For screen-reader accessibility, label or aria-labelledby must be provided to TextInput.',
       );
-    },
-  );
+    }
+
+    if (type === 'search' && !rest['aria-label']) {
+      console.error(
+        'For screen-reader accessibility, aria-label must be provided to TextInput.',
+      );
+    }
+
+    const RenderedCheckmarkIcon = darkMode
+      ? CheckmarkWithCircleIcon
+      : CheckmarkIcon;
+
+    return (
+      <div
+        className={cx(
+          wrapperStyle,
+          getWrapperFontSize(sizeVariant, baseFontSize),
+          className,
+        )}
+      >
+        {(label || description) && (
+          <div className={textContainerStyle}>
+            {label && (
+              <Label
+                darkMode={darkMode}
+                htmlFor={id}
+                disabled={disabled}
+                className={inheritTypeScale}
+              >
+                {label}
+              </Label>
+            )}
+            {description && (
+              <Description
+                darkMode={darkMode}
+                disabled={disabled}
+                className={inheritTypeScale}
+              >
+                {description}
+              </Description>
+            )}
+          </div>
+        )}
+        <div className={inputContainerStyle}>
+          <input
+            {...rest}
+            aria-labelledby={ariaLabelledby}
+            type={type}
+            className={cx(
+              baseInputStyle,
+              inputModeStyles[theme],
+              inputSizeStyles[sizeVariant],
+              inputStateStyles[state][theme],
+              inputFocusStyles[theme], // Always show focus styles
+              {
+                [css`
+                  padding-right: 60px;
+                `]: optional && !disabled,
+              },
+            )}
+            value={value}
+            required={!optional}
+            disabled={disabled}
+            placeholder={placeholder}
+            onChange={onValueChange}
+            onBlur={onBlurHandler}
+            ref={forwardRef}
+            id={id}
+            autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
+            aria-invalid={state === 'error'}
+          />
+
+          <div
+            className={cx(
+              iconClassName,
+              inputIndicatorStyle,
+              inputIndicatorSizeStyle[sizeVariant],
+            )}
+          >
+            {/* Render State Icon or Optional text*/}
+            {state === State.Valid && (
+              <RenderedCheckmarkIcon
+                role="presentation"
+                className={stateIndicatorStyles.valid[theme]}
+              />
+            )}
+
+            {state === State.Error && (
+              <WarningIcon
+                role="presentation"
+                className={stateIndicatorStyles.error[theme]}
+              />
+            )}
+
+            {state === State.None && !disabled && optional && (
+              <div className={optionalTextStyle}>
+                <p>Optional</p>
+              </div>
+            )}
+          </div>
+        </div>
+        {state === State.Error && errorMessage && (
+          <div className={cx(errorMessageStyle, errorMessageModeStyle[theme])}>
+            <span>{errorMessage}</span>
+          </div>
+        )}
+      </div>
+    );
+  },
+);
 
 TextInput.displayName = 'TextInput';
 
