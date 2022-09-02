@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, forwardRef } from 'react';
 import useSSR from 'use-ssr';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -185,9 +185,21 @@ function getIndentLevelStyle(indentLevel: number) {
 }
 
 interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
+  /**
+   * Determines whether or not the row is expanded on first render
+   */
   expanded?: boolean;
+  /**
+   * Determines whether or not the row is disabled
+   */
   disabled?: boolean;
+  /**
+   * @internal
+   */
   indentLevel?: number;
+  /**
+   * @internal
+   */
   isAnyAncestorCollapsed?: boolean;
 }
 
@@ -196,7 +208,7 @@ type RowElement = React.ReactComponentElement<
   React.ComponentPropsWithRef<typeof Row>
 >;
 
-const Row = React.forwardRef(
+const Row = forwardRef(
   (
     {
       expanded = false,
@@ -207,7 +219,7 @@ const Row = React.forwardRef(
       className,
       ...rest
     }: RowProps,
-    ref: React.Ref<any>,
+    ref: React.Ref<HTMLTableRowElement>,
   ) => {
     const { isBrowser } = useSSR();
     const {
