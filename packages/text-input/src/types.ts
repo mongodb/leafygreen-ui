@@ -48,7 +48,12 @@ export interface BaseTextInputProps
   /**
    * Text shown in bold above the input element.
    */
-  label?: string | null;
+  label: string | null;
+
+  /**
+   * Screen-reader label
+   */
+  ['aria-labelledby']: string;
 
   /**
    * Text that gives more detail about the requirements for the input.
@@ -110,8 +115,6 @@ export interface BaseTextInputProps
   type?: TextInputType;
 
   handleValidation?: (value: string) => void;
-
-  ['aria-labelledby']?: string;
 
   /**
    *  determines the font size and padding.
