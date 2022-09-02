@@ -39,3 +39,4 @@ coverage/
 
 # Exported TSDocs example files
 parsed-docs.json
+packages/**/tsdoc.json
