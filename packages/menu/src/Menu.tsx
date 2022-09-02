@@ -384,8 +384,6 @@ function Menu({
       });
     }
 
-    const { children: triggerChildren } = trigger.props;
-
     return React.cloneElement(trigger, {
       ref: triggerRef,
       onClick: (e: React.MouseEvent) => {
@@ -395,14 +393,12 @@ function Menu({
           trigger.props.onClick(e);
         }
       },
-      children: triggerChildren
-        ? [
-            ...(triggerChildren instanceof Array
-              ? triggerChildren
-              : [triggerChildren]),
-            popoverContent,
-          ]
-        : popoverContent,
+      children: (
+        <>
+          {trigger.props.children}
+          {popoverContent}
+        </>
+      ),
     });
   }
 

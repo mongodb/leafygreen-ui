@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 10.1.2
+
+### Patch Changes
+
+- b10463fc: Removing padding-top when neither label nor description are defined.
+
 ## 10.1.1
 
 ### Patch Changes
