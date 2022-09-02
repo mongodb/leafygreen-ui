@@ -18,6 +18,7 @@ export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
 
   /**
    * Callback to be executed when a RadioBox is selected.
+   * @default () => {}
    */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
@@ -33,6 +34,7 @@ export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
 
   /**
    * Determines size of RadioBox components ['default', 'compact', 'full'].
+   * @default 'default''
    */
   size?: Size;
 
@@ -43,8 +45,6 @@ export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
 }
 
 /**
- *
- * RadioBoxGroup component
  *
  * ```
 <RadioBoxGroup onChange={() => execute callback onChange}>
@@ -59,7 +59,7 @@ export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
  * @param props.className classname applied to RadioBoxGroup container.
  * @param props.size Determines size of RadioBox components ['default', 'compact', 'full'].
  */
-function RadioBoxGroup({
+export function RadioBoxGroup({
   children,
   className,
   size = Size.Default,
@@ -120,5 +120,3 @@ RadioBoxGroup.propTypes = {
   size: PropTypes.oneOf(['compact', 'default', 'full']),
   className: PropTypes.string,
 };
-
-export default RadioBoxGroup;

@@ -116,20 +116,38 @@ export const radioWrapper = css`
 `;
 
 export interface RadioBoxProps {
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Indicates whether or not the box will be checked
+   * @default false
+   */
   checked?: boolean;
-  size?: Size;
+
+  /**
+   * Callback to be executed when a RadioBox is selected.
+   * @default () => {}
+   */
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Name passed to each RadioBox belonging to the RadioGroup.
+   */
   name?: string;
+
+  /**
+   * Determines size of RadioBox components ['default', 'compact', 'full'].
+   * @default 'default''
+   */
+  size?: Size;
+
+  /**
+   * Determines what RadioBox will be checked on default. Component will be controlled if this prop is used.
+   */
+  value: string | number;
 
   /**
    * className supplied to RadioBox container.
    */
   className?: string;
-
-  /**
-   * Used to determine what RadioBox is checked.
-   */
-  value: string | number;
 
   /**
    * Boolean that determines if the RadioBox is disabled.
@@ -190,7 +208,7 @@ function isChecked({
  * @param props.children Content that will appear inside of RadioBox.
  * @param props.default If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
  */
-export default function RadioBox({
+export function RadioBox({
   className = '',
   onChange: onChangeProp,
   value,
