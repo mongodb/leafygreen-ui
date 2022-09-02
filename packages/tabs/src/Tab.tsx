@@ -14,6 +14,7 @@ export interface TabProps {
 
   /**
    * Boolean that determines if the Tab is disabled.
+   * @default false
    */
   disabled?: boolean;
 
