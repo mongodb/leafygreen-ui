@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import IconButton from './IconButton';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
+import IconButton from '.';
 
 const onClick = jest.fn();
 const className = 'test-icon-button-class';
