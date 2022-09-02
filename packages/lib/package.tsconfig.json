@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "jsx": "react",
+    "allowJs": false,
+    "pretty": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["packages/icon/src/generated/*"],
+      "@leafygreen-ui/*": ["packages/*/src"]
+    },
+    "module": "esnext",
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "importHelpers": false,
+    "composite": true,
+
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"]
+}
