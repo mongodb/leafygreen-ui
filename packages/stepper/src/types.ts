@@ -42,6 +42,8 @@ export interface StepperProps {
    * Maximum number of steps displayed in the stepper. Includes the ellipses steps.
    *
    * * NOTE: Validations for this prop's value in relation to `completedStepsShown` and `currentStep` are not implemented yet.
+   *
+   * @default children.length | 1
    */
   maxDisplayedSteps?: number;
   /**
