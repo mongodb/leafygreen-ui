@@ -8,6 +8,11 @@ import defaultArgTypes from '../../../stories/defaultArgTypes';
 export default {
   title: 'Components/Callout',
   component: Callout,
+  parameters: {
+    controls: {
+      exclude: ['className'],
+    },
+  },
   args: {
     variant: Variant.Note,
     children:

@@ -6,6 +6,11 @@ import defaultArgTypes from '../../../stories/defaultArgTypes';
 export default {
   title: 'Components/Badge',
   component: Badge,
+  parameters: {
+    controls: {
+      exclude: ['className'],
+    },
+  },
   args: {
     darkMode: false,
   },

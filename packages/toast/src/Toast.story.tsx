@@ -7,6 +7,11 @@ import { Link } from '@leafygreen-ui/typography';
 export default {
   title: 'Components/Toast',
   component: Toast,
+  parameters: {
+    controls: {
+      exclude: ['close', 'className'],
+    },
+  },
   args: {
     title: 'Velit ea exercitation qui aute dolor proident.',
     body: 'Exercitation incididunt ea proident velit mollit',
@@ -16,13 +21,22 @@ export default {
   },
   argTypes: {
     className: {
-      control: 'string',
+      control: 'text',
     },
-    progress: { control: { type: 'range', min: 0, max: 1, step: 0.1 } },
+    progress: {
+      control: { type: 'range', min: 0, max: 1, step: 0.1 },
+      if: { arg: 'variant', eq: Variant.Progress },
+    },
     open: {
       control: 'boolean',
     },
     darkMode: defaultArgTypes.darkMode,
+    body: {
+      control: 'text',
+    },
+    title: {
+      control: 'text',
+    },
   },
 };
 

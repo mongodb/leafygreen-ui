@@ -8,10 +8,16 @@ import { Link } from '@leafygreen-ui/typography';
 export default {
   title: 'Components/Banner',
   component: Banner,
+  parameters: {
+    controls: {
+      exclude: ['ref', 'className', 'onClose'],
+    },
+  },
   args: {
     children:
       'To avoid disrupting majority writes, new members are now added to replica sets as priority=0, votes=0 until they reach secondary state, after which Cloud Manager automatically updates the configuration to match the priority and votes value specified in the deployment.',
     darkMode: false,
+    dismissible: false,
   },
   argTypes: {
     image: {
@@ -20,9 +26,6 @@ export default {
     },
     dismissible: {
       control: 'boolean',
-    },
-    onClose: {
-      control: 'none',
     },
     children: defaultArgTypes.children,
     ref: defaultArgTypes.ref,

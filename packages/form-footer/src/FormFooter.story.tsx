@@ -9,6 +9,11 @@ import defaultArgTypes from '../../../stories/defaultArgTypes';
 export default {
   title: 'Components/FormFooter',
   component: FormFooter,
+  parameters: {
+    controls: {
+      exclude: ['onCancel', 'contentClassName', 'className', 'onBackClick'],
+    },
+  },
   args: {
     darkMode: false,
   },
