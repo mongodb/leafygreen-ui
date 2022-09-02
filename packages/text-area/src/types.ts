@@ -8,10 +8,10 @@ export const State = {
 
 export type State = typeof State[keyof typeof State];
 
-export type BaseTextAreaProps = HTMLElementProps<
+export interface BaseTextAreaProps extends HTMLElementProps<
   'textarea',
   HTMLTextAreaElement
-> & {
+> {
   /**
    * ID associated with the TextArea component.
    */
@@ -19,7 +19,7 @@ export type BaseTextAreaProps = HTMLElementProps<
 
   /**
    * Determines whether or not the component appears in dark theme.
-   * @default: false
+   * @default false
    */
   darkMode?: boolean;
 
@@ -35,7 +35,7 @@ export type BaseTextAreaProps = HTMLElementProps<
 
   /**
    * Whether or not the field is currently disabled.
-   * @default: false
+   * @default false
    */
   disabled?: boolean;
 
@@ -46,7 +46,7 @@ export type BaseTextAreaProps = HTMLElementProps<
 
   /**
    * The current state of the TextArea. This can be `none` or `error`.
-   * @default: 'none'
+   * @default "none"
    */
   state?: State;
 
