@@ -12,12 +12,12 @@ export interface SideNavProps {
   id?: string;
 
   /**
-   * Determines the base font size for the menu items.
+   * Determines the base font size (in pixels) of the Side Nav
    */
   baseFontSize?: 14 | 16;
 
   /**
-   * Provides an override for the SideNav width.
+   * Provides an override for the SideNav width (in pixels).
    */
   widthOverride?: number;
 
