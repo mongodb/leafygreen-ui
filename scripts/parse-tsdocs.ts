@@ -41,10 +41,10 @@ const TSDocOptions: ParserOptions = {
   skipChildrenPropWithoutDoc: false,
   propFilter: (prop, component) => {
     return (
-      !skipComponents.includes(component.name)
-      && !skipProps.includes(prop.name)
+      !skipComponents.includes(component.name) &&
+      !skipProps.includes(prop.name) &&
       // Ignore @internal props
-      && isUndefined((prop.tags as any)?.internal)
+      isUndefined((prop.tags as any)?.internal)
       // && !isPropExternalDeclaration(prop)
     );
 

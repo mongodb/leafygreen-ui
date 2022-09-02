@@ -16,7 +16,12 @@ export const State = {
 } as const;
 export type State = typeof State[keyof typeof State];
 
-export type SelectProps = {
+interface BaseSelectProps
+  extends Omit<
+      HTMLElementProps<'button', HTMLButtonElement>,
+      'onChange' | 'onClick'
+    >,
+    Omit<PopoverProps, 'active' | 'spacing'> {
   /**
    * Children rendered inside the component. Expected to be either `<Option>` or `<OptionGroup>`.
    */
@@ -67,10 +72,17 @@ export type SelectProps = {
    *  determines the base font size if sizeVariant is set to default.
    */
   baseFontSize?: BaseFontSize;
+
+  /**
+   * @internal
+   */
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
-} & Omit<PopoverProps, 'active' | 'spacing'> &
+}
+
+export type SelectProps = BaseSelectProps &
+  OneOf<{ label: string }, { 'aria-labelledby': string }> &
   (
     | // Uncontrolled
     ({
@@ -113,6 +125,4 @@ export type SelectProps = {
           }
         | { readOnly: true; onChange?: undefined }
       ))
-  ) &
-  OneOf<{ label: string }, { 'aria-labelledby': string }> &
-  Omit<HTMLElementProps<'button', HTMLButtonElement>, 'onChange'>;
+  );
