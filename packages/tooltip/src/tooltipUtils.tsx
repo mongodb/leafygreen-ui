@@ -19,6 +19,7 @@ export function notchPositionStyles({
       notchContainer: '',
       notch: '',
       tooltip: '',
+      beacon: ''
     };
   }
 
@@ -206,10 +207,44 @@ export function notchPositionStyles({
       position: absolute;
       width: ${containerSize}px;
       height: ${containerSize}px;
-      overflow: hidden;
+      // overflow: hidden;
       margin: auto;
       pointer-events: none;
       ${css(containerStyleObj)};
+
+      // &::before, &::after {
+      //   content: '';
+      //   position: absolute;
+        
+      //   border-radius: 50%;
+      //   left: 50%;
+      //   top: 109%;
+      //   transform: translate(-50%, -50%);
+      // }
+
+      // &::after {
+      //   background: rgba(1, 107, 248, 0.51);
+      //   width: 24px;
+      //   height: 24px;
+      // }
+
+      // &::before {
+      //   background: rgba(1, 107, 248, 0.17);
+      //   width: 60px;
+      //   height: 60px;
+
+      //   animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+      // }
+
+      // @keyframes pulse-ring {
+      //   0% {
+      //     transform: translateX(-50%) translateY(-50%) scale(.73);
+      //   }
+      //   100% {
+      //     opacity: 0;
+      //   }
+      // }
+
     `,
     notch: css`
       ${css(notchStyleObj)};
@@ -222,5 +257,8 @@ export function notchPositionStyles({
       min-width: ${notchOffset * 2 + containerSize}px;
       transform: ${tooltipOffsetTransform};
     `,
+    beacon: css`
+    ${css(notchStyleObj)};
+    `
   };
 }

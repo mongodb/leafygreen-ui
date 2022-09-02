@@ -171,7 +171,7 @@ export const Controlled = ({
         onClick={() => setIsOpen(o => !o)}
         rightGlyph={<EllipsisIcon />}
         darkMode={darkMode}
-      />
+        >click</Button>
     ),
     darkMode,
     ...args,

@@ -105,6 +105,47 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
+
+const testing = css`
+position: absolute;
+top: 109%;
+left: 50%;
+
+&::before, &::after {
+  content: '';
+  position: absolute;
+  
+  border-radius: 50%;
+  left: 50%;
+  top: 109%;
+  transform: translate(-50%, -50%);
+}
+
+&::after {
+  background: rgba(1, 107, 248, 0.51);
+  width: 24px;
+  height: 24px;
+}
+
+&::before {
+  background: rgba(1, 107, 248, 0.17);
+  width: 60px;
+  height: 60px;
+
+  animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translateX(-50%) translateY(-50%) scale(.73);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+`;
+
 type ModifiedPopoverProps = Omit<PopoverProps, 'active'>;
 
 export type TooltipProps = Omit<
@@ -353,6 +394,7 @@ function Tooltip({
           notchContainer: notchContainerStyle,
           notch: notchStyle,
           tooltip: tooltipNotchStyle,
+          beacon
         } = notchPositionStyles({
           align,
           justify,
@@ -386,6 +428,7 @@ function Tooltip({
             </div>
 
             <div className={notchContainerStyle}>
+              <div className={cx(beacon, testing)} />
               <SvgNotch
                 className={cx(notchStyle)}
                 fill={colorSet[theme].notchFill}
