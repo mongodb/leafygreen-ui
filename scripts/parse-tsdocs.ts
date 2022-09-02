@@ -84,10 +84,12 @@ function parseDocs(componentName: string): void {
     const docs: Array<CustomComponentDoc> = uniqBy(
       parse(componentFileNames, TSDocOptions)
         // For default exports, change the displayName
-        .map(({displayName, ...rest}) => ({
+        .map(({ displayName, ...rest }) => ({
           ...rest,
-          displayName: ['src', 'index'].includes(displayName) ? startCase(componentName) : displayName})
-        )
+          displayName: ['src', 'index'].includes(displayName)
+            ? startCase(componentName)
+            : displayName,
+        }))
         // Remove any external components
         .filter(doc => !doc.filePath.includes('node_modules'))
         // Remove any components with no props
@@ -163,7 +165,7 @@ function parseFileNames(root: string): Array<string> {
         getFilesRecursively(absolute);
       } else {
         // const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
-        const regex = /^.*.index.tsx?$/
+        const regex = /^.*.index.tsx?$/;
 
         if (regex.test(absolute)) {
           parsedFileNames.push(absolute);
