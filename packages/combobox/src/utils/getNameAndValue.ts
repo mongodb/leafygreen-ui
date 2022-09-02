@@ -6,7 +6,6 @@ import { ComboboxOptionProps } from '../Combobox.types';
  * Returns an object with properties `value` & `displayName`
  * based on the props provided
  *
- * @internal
  * @property value: string
  * @property displayName: string
  */
