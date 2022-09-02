@@ -8,10 +8,8 @@ export const State = {
 
 export type State = typeof State[keyof typeof State];
 
-export interface BaseTextAreaProps extends HTMLElementProps<
-  'textarea',
-  HTMLTextAreaElement
-> {
+export interface BaseTextAreaProps
+  extends HTMLElementProps<'textarea', HTMLTextAreaElement> {
   /**
    * ID associated with the TextArea component.
    */
@@ -79,7 +77,7 @@ export interface BaseTextAreaProps extends HTMLElementProps<
    * Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description
    */
   baseFontSize?: BaseFontSize;
-};
+}
 
 export type AriaLabels = 'label' | 'aria-labelledby';
 export type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;
