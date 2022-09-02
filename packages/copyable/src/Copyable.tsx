@@ -146,12 +146,9 @@ const buttonWrapperStyleShadowTheme: Record<Theme, string> = {
       box-shadow: -10px 0 10px 0 ${transparentize(0.4, palette.black)};
     }
 
-    &:hover {
-      &:before {
-        box-shadow: -12px 0 10px 0 ${transparentize(0.4, palette.black)};
-      }
-    }
-  `,
+    &:hover:before {
+      box-shadow: -12px 0 10px 0 ${transparentize(0.4, palette.black)};
+    `,
 };
 const buttonStyle = css`
   height: 100%;
@@ -170,7 +167,7 @@ const iconStyle = css`
 interface CopyableProps {
   /**
    * Determines whether or not the component appears in dark theme.
-   * @default false
+   * @default: false
    */
   darkMode?: boolean;
   children: string;

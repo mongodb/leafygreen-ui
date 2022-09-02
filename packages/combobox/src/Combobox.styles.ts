@@ -154,10 +154,6 @@ export const comboboxFocusStyle: Record<Theme, string> = {
   `,
 };
 
-/**
- * Calculates the style for the combobox input wrapper
- * @internal
- */
 export const inputWrapperStyle = ({
   overflow,
   size,
