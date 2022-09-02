@@ -72,7 +72,7 @@ export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
    * Prevents the option from being selectable.
    * @default false
    */
-  disabled: boolean;
+  disabled?: boolean;
   selected: boolean;
   focused: boolean;
   onClick: React.MouseEventHandler;
