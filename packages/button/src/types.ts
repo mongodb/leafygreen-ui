@@ -1,5 +1,5 @@
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { HTMLProps } from 'react';
+import React, { HTMLProps } from 'react';
 
 const Variant = {
   Default: 'default',
@@ -110,9 +110,19 @@ interface ButtonProps {
   href?: string;
 
   /**
-   * Determines the root element. An `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.
+   * The component or HTML Element that the button is rendered as.
+   *
+   * To use with NextJS Links, pass in a component that wraps the Link:
+   * ```js
+   * const Linker = ({ href, children, ...props }) => (
+   *  <NextLink href={href}>
+   *    <a {...props}>{children}</a>
+   *  </NextLink>
+   * );
+   * <Button as={Linker} />
+   * ```
    */
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType<any>;
 }
 
 export { Variant, Size, ButtonProps };

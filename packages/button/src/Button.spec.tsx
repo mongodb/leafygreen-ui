@@ -4,6 +4,7 @@ import { axe } from 'jest-axe';
 import { BoxProps } from '@leafygreen-ui/box';
 import { Button } from './Button';
 import { ButtonProps } from './types';
+import NextLink from 'next/link';
 
 const className = 'test-button-class';
 const title = 'Test button title';
@@ -78,14 +79,6 @@ describe('packages/button', () => {
       expect((button as HTMLButtonElement).type).toBe('submit');
     });
 
-    test(`renders a button as another component if the "as" prop is set`, () => {
-      const { container } = renderButton({
-        as: 'p',
-      });
-      expect(container.querySelector('button')).toBeNull();
-      expect(container.querySelector('p')).not.toBeNull();
-    });
-
     test(`renders inside of a \`button\` tag by default`, () => {
       const { button } = renderButton();
       expect(button.tagName.toLowerCase()).toBe('button');
@@ -113,13 +106,46 @@ describe('packages/button', () => {
       expect(button.tagName.toLowerCase()).toBe('button');
     });
 
+    test(`renders a button as another HTML element if the "as" prop is set`, () => {
+      const { container, button } = renderButton({
+        as: 'p',
+      });
+      expect(container.querySelector('button')).not.toBeInTheDocument();
+      expect(button.tagName.toLowerCase()).toBe('p');
+    });
+
+    test(`renders a when passing in a NextJS Link wrapper`, () => {
+      // eslint-disable-next-line react/prop-types
+      const Linker = ({ href, children, ...props }: any) => (
+        <NextLink href={href}>
+          <a {...props}>{children}</a>
+        </NextLink>
+      );
+
+      const { container, button } = renderButton({
+        href: 'https://mongodb.design',
+        as: Linker,
+      });
+
+      expect(container.querySelector('button')).not.toBeInTheDocument();
+      expect(button.tagName.toLowerCase()).toBe('a');
+    });
+
     test(`does not render the disabled attribute for a disabled link`, () => {
       const { button } = renderButton({
         href: 'http://mongodb.design',
         disabled: true,
       });
-      expect(button.getAttribute('disabled')).toBeNull();
-      expect(button.getAttribute('aria-disabled')).toBe('true');
+      expect(button).not.toHaveAttribute('disabled');
+      expect(button).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    test('renders additional attributes not explicitly defined in props', () => {
+      const { button } = renderButton({
+        tabIndex: 0,
+      });
+
+      expect(button).toHaveAttribute('tabindex', '0');
     });
   });
 
