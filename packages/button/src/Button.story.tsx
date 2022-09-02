@@ -3,7 +3,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Button, { Variant, ButtonProps } from '.';
 import { BoxProps } from '@leafygreen-ui/box';
 import { Meta, Story } from '@storybook/react';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
@@ -51,8 +51,8 @@ export default {
     href: {
       control: 'text',
     },
-    children: defaultArgTypes.children,
-    as: defaultArgTypes.as,
+    children: storybookArgTypes.children,
+    as: storybookArgTypes.as,
   },
 } as Meta<ButtonStoryProps>;
 
