@@ -133,7 +133,7 @@ function parseDocs(componentName: string): void {
       }
       propList[prop.parent.name][prop.name] = prop;
     } else {
-      // if there is no parent for the prop, we group these all together
+      // if there is no parent for the prop, we use the component name as the group name
       if (!propList[startCase(componentName)]) {
         propList[startCase(componentName)] = { [prop.name]: prop };
       } else {
