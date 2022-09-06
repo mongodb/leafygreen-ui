@@ -5,6 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import FormFooter from '.';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { FormFooterProps } from './FormFooter';
 
 export default {
   title: 'Components/FormFooter',
@@ -16,6 +17,7 @@ export default {
   },
   args: {
     darkMode: false,
+    primaryButtonText: 'Primary button text',
   },
   argTypes: {
     darkMode: defaultArgTypes.darkMode,
@@ -25,17 +27,27 @@ export default {
     onBackClick: { control: 'none' },
     errorMessage: { control: 'text' },
     contentClassName: { control: 'text' },
+    primaryButtonText: {
+      control: 'text',
+      description:
+        '*Storybook only prop* The primary (right-most) button text.',
+    },
   },
 } as Meta<typeof FormFooter>;
 
-const Template: ComponentStory<typeof FormFooter> = args => (
-  <FormFooter {...args} />
+type FormFooterStoryProps = FormFooterProps & { primaryButtonText?: string };
+
+const Template: ComponentStory<typeof FormFooter> = ({
+  primaryButtonText,
+  ...args
+}: FormFooterStoryProps) => (
+  <FormFooter {...args} primaryButton={{ text: primaryButtonText as string }} />
 );
 
 export const Basic = Template.bind({});
-Basic.args = {
-  primaryButton: {
-    text: 'Primary button text',
+Basic.parameters = {
+  controls: {
+    exclude: ['primaryButton'],
   },
 };
 
@@ -44,8 +56,10 @@ AllButtons.args = {
   cancelButtonText: 'Cancel button text',
   backButtonText: 'Back button text',
   errorMessage: 'Error message',
-  primaryButton: {
-    text: 'Primary button text',
+};
+AllButtons.parameters = {
+  controls: {
+    exclude: ['primaryButton'],
   },
 };
 
@@ -65,6 +79,11 @@ WithCustomPrimaryButton.args = {
     </Button>
   ),
 };
+WithCustomPrimaryButton.parameters = {
+  controls: {
+    exclude: ['primaryButtonText'],
+  },
+};
 
 export const InLargerContainer: ComponentStory<typeof FormFooter> = args => (
   <div
@@ -75,8 +94,8 @@ export const InLargerContainer: ComponentStory<typeof FormFooter> = args => (
     <FormFooter {...args} />
   </div>
 );
-InLargerContainer.args = {
-  primaryButton: {
-    text: 'Primary button text',
+InLargerContainer.parameters = {
+  controls: {
+    exclude: ['primaryButton'],
   },
 };
