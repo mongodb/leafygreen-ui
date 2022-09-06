@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { forwardRef, useContext, useMemo } from 'react';
 import Popover from '@leafygreen-ui/popover';
 import { ComboboxContext, useDarkMode } from '../ComboboxContext';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
@@ -37,7 +37,7 @@ type ComboboxMenuProps = {
   | 'popoverZIndex'
 >;
 
-export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
+export const ComboboxMenu = forwardRef<HTMLDivElement, ComboboxMenuProps>(
   (
     {
       children,
