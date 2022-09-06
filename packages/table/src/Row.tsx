@@ -131,8 +131,9 @@ const hiddenRowStyles = css`
   & > :is(td, th) {
     padding-block: 0;
 
-    & > ${tdInnerDiv.selector} {
+    & > ${tdInnerDiv.selector}{
       min-height: 0px;
+      max-height: 0px;
     }
   }
 `;
@@ -149,6 +150,7 @@ const nestedRowTransitionStyles = (
           & > ${tdInnerDiv.selector} {
             --lg-cell-max-height: max(var(--lg-cell-min-height), ${height}px);
             min-height: var(--lg-cell-min-height);
+            max-height: var(--lg-cell-max-height);
           }
         }
       `;
@@ -411,8 +413,8 @@ const Row = React.forwardRef(
 
     const alignmentStyles = columnInfo
       ? Object.entries(columnInfo).map(([key, { dataType }]) =>
-          styleColumn(key, dataType),
-        )
+        styleColumn(key, dataType),
+      )
       : [''];
 
     const rowClassName = cx(
