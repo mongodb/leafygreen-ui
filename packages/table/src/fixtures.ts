@@ -11,7 +11,7 @@ export interface testTableDataShape {
 
 export const defaultData: Array<testTableDataShape> = [
   {
-    name: 'Alice',
+    name: 'Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum.',
     age: 19,
     color: 'blue',
     location: 'bedford',

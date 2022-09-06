@@ -273,6 +273,7 @@ export const MultipleNestedRows = ({
         <TableHeader key="location" label="Location" />
       </HeaderRow>
     }
+    style={{ maxWidth: '400px' }}
   >
     {({ datum }: { datum: any }) => (
       <Row key={datum.title}>

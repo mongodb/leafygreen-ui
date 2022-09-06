@@ -133,7 +133,6 @@ const hiddenRowStyles = css`
 
     & > ${tdInnerDiv.selector} {
       min-height: 0px;
-      max-height: 0px;
     }
   }
 `;
@@ -150,7 +149,6 @@ const nestedRowTransitionStyles = (
           & > ${tdInnerDiv.selector} {
             --lg-cell-max-height: max(var(--lg-cell-min-height), ${height}px);
             min-height: var(--lg-cell-min-height);
-            max-height: var(--lg-cell-max-height);
           }
         }
       `;
