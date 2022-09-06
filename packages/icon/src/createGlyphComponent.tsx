@@ -11,7 +11,7 @@ import { generateAccessibleProps, sizeMap, Size } from './glyphCommon';
  * @param Glyph: SVGR.Component - the SVG icon component
  * @returns LGGlyph.Component
  */
-export default function createGlyphComponent(
+export function createGlyphComponent(
   glyphName: string,
   Glyph: SVGR.Component,
 ): LGGlyph.Component {
