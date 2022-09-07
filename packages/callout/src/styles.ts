@@ -8,6 +8,7 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Variant } from './types';
+import { anchorClassName } from '@leafygreen-ui/typography';
 
 export const baseStyle = css`
   font-family: ${fontFamilies.default};
@@ -242,7 +243,7 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
 };
 
 export const contentStyles = css`
-  a {
+  .${anchorClassName}, a {
     font-size: inherit;
     line-height: inherit;
     font-weight: 700;
@@ -269,7 +270,7 @@ export const contentStyles = css`
 
 export const focusThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
-    a {
+    .${anchorClassName}, a {
       &:focus-visible {
         box-shadow: 0 0 0 3px ${palette.gray.dark4},
           0 0 0 5px ${palette.blue.light1};
@@ -277,7 +278,7 @@ export const focusThemeStyles: Record<Theme, string> = {
     }
   `,
   [Theme.Light]: css`
-    a {
+    .${anchorClassName}, a {
       &:focus-visible {
         box-shadow: 0 0 0 3px ${palette.white}, 0 0 0 5px ${palette.blue.light1};
       }

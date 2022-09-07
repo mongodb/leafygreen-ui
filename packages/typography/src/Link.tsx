@@ -15,7 +15,7 @@ import { CommonTypographyProps } from './types';
 import { useUpdatedBaseFontSize } from '.';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-const anchorClassName = createUniqueClassName();
+export const anchorClassName = createUniqueClassName();
 
 const linkStyles = css`
   font-family: ${fontFamilies.default};

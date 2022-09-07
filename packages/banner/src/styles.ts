@@ -7,6 +7,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
 import { css } from '@leafygreen-ui/emotion';
 import { Variant } from './types';
+import { anchorClassName } from '@leafygreen-ui/typography';
 
 export const defaultBorderSpacing = 12;
 
@@ -68,7 +69,7 @@ export const bannerVariantStyles: Record<
         border-left-color: ${palette.blue.light1};
         background-color: ${palette.blue.dark3};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.blue.light3};
 
           &:hover {
@@ -112,7 +113,7 @@ export const bannerVariantStyles: Record<
         border-left-color: ${palette.yellow.dark2};
         background-color: ${palette.yellow.dark3};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.yellow.light3};
 
           &:hover {
@@ -156,7 +157,7 @@ export const bannerVariantStyles: Record<
         border-left-color: ${palette.red.base};
         background-color: ${palette.red.dark3};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.red.light3};
 
           &:hover {
@@ -200,7 +201,7 @@ export const bannerVariantStyles: Record<
         border-left-color: ${palette.green.base};
         background-color: ${palette.green.dark3};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.green.light3};
 
           &:hover {
@@ -246,7 +247,7 @@ export const bannerVariantStyles: Record<
         border-left-color: ${palette.blue.base};
         background-color: ${palette.blue.light3};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.blue.dark3};
 
           &:hover {
@@ -288,7 +289,7 @@ export const bannerVariantStyles: Record<
         border-left-color: ${palette.yellow.base};
         background-color: ${palette.yellow.light3};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.yellow.dark3};
 
           &:hover {
@@ -330,7 +331,7 @@ export const bannerVariantStyles: Record<
         border-left-color: ${palette.red.base};
         background-color: ${palette.red.light3};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.red.dark3};
 
           &:hover {
@@ -372,7 +373,7 @@ export const bannerVariantStyles: Record<
         border-left-color: ${palette.green.base};
         background-color: ${palette.green.light3};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.green.dark3};
 
           &:hover {
@@ -471,7 +472,7 @@ export const getTextStyle = (image: boolean, dismissible: boolean) => {
     margin-left: ${styleObj.marginLeft};
     margin-right: ${styleObj.marginRight};
 
-    a {
+    .${anchorClassName}, a {
       font-size: inherit;
       line-height: inherit;
       font-weight: 700;

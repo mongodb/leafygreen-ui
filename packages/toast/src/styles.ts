@@ -10,6 +10,7 @@ import { fontFamilies, typeScales, spacing } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { Transition } from 'react-transition-group';
 import { StyledElements, Variant } from './types';
+import { anchorClassName } from '@leafygreen-ui/typography';
 
 export const toastWidth = 400;
 export const transitionDuration = 150;
@@ -33,7 +34,7 @@ export const baseElementStyles: Partial<Record<StyledElements, string>> = {
     transition: all ${transitionDuration}ms ease-in-out;
     border: 1px solid;
 
-    a {
+    .${anchorClassName}, a {
       font-size: inherit;
       line-height: inherit;
       font-weight: 700;
@@ -113,7 +114,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.green.light2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.green.light3};
           &:hover {
             color: ${palette.green.light2};
@@ -154,7 +155,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.green.dark2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.green.dark3};
           &:hover {
             color: ${palette.green.dark2};
@@ -196,7 +197,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.blue.light2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.blue.light3};
           &:hover {
             color: ${palette.blue.light2};
@@ -237,7 +238,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.blue.dark2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.blue.dark3};
           &:hover {
             color: ${palette.blue.dark2};
@@ -279,7 +280,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.red.light2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.red.light3};
           &:hover {
             color: ${palette.red.light2};
@@ -320,7 +321,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.red.dark2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.red.dark3};
           &:hover {
             color: ${palette.red.dark2};
@@ -362,7 +363,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.yellow.light2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.yellow.light3};
           &:hover {
             color: ${palette.yellow.light2};
@@ -403,7 +404,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.yellow.dark2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.yellow.dark3};
           &:hover {
             color: ${palette.yellow.dark2};
@@ -449,7 +450,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.gray.light2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.gray.light3};
           &:hover {
             color: ${palette.gray.light2};
@@ -494,7 +495,7 @@ export const variantStyles: Record<
       body: css`
         color: ${palette.gray.dark2};
 
-        a {
+        .${anchorClassName}, a {
           color: ${palette.gray.dark3};
           &:hover {
             color: ${palette.gray.dark2};

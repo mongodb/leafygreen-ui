@@ -6,6 +6,7 @@ import {
   Overline,
   Subtitle,
   useUpdatedBaseFontSize,
+  anchorClassName,
 } from '@leafygreen-ui/typography';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -102,7 +103,7 @@ function Callout({
             bodyTypeScaleStyles[baseFontSize],
             contentStyles,
             css`
-              a {
+              .${anchorClassName}, a {
                 color: ${colorSet.link.color};
                 &:hover {
                   color: ${colorSet.link.hoverColor};
