@@ -315,7 +315,7 @@ export const NestedRowsWithLongContent = ({
             location: 'bedford',
             rand: Math.random(),
           },
-          ...defaultData
+          ...defaultData,
         ],
       },
       {
