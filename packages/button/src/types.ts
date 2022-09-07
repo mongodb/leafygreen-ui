@@ -121,6 +121,7 @@ interface ButtonProps {
    * );
    * <Button as={Linker} />
    * ```
+   * @type HTMLElement | React.Component
    */
   as?: React.ElementType<any>;
 }
