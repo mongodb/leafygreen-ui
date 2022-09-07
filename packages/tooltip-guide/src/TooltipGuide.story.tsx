@@ -10,7 +10,7 @@ export default {
   component: TooltipGuide,
   parameters: {
     controls: {
-      exclude: ['className', 'children', 'refEl', 'setOpen'],
+      exclude: ['className', 'children', 'refEl', 'setOpen', 'tooltipClassName', 'open'],
     },
   },
   argTypes: {
@@ -18,7 +18,10 @@ export default {
   },
   args: {
     title: 'New feature',
-    text: 'This is a new feature. You should try it out',
+    description: 'This is a new feature. You should try it out',
+    buttonText: 'Next',
+    numberOfSteps: 4,
+    currentStep: 2,
   },
 };
 
@@ -52,8 +55,6 @@ const Template: ComponentStory<typeof TooltipGuide> = args => {
         open={open}
         setOpen={setOpen}
         refEl={triggerRef}
-        numberofSteps={4}
-        currentStep={2}
       >
         <p>Hello from inside the tooltip</p>
       </TooltipGuide>

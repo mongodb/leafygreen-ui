@@ -15,7 +15,7 @@ interface TooltipGuideProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   refEl: React.RefObject<HTMLElement>;
-  numberofSteps: number;
+  numberOfSteps: number;
   currentStep: number;
   /**
    * Whether the `Tooltip` will appear in dark mode.
@@ -23,8 +23,10 @@ interface TooltipGuideProps {
    */
   darkMode?: boolean;
   children?: React.ReactNode;
-  title?: string;
-  text?: string;
+  title: string;
+  description: string;
+  tooltipClassName?: string;
+  buttonText: string;
 }
 
 const tooltipStyles = css`
@@ -48,10 +50,6 @@ const footerStyles = css`
   justify-content: flex-end;
   align-items: center;
   gap: 16px;
-`;
-
-const bodyStyles = css`
-  //TODO: font size?
 `;
 
 const bodyThemeStyles: Record<Theme, string> = {
@@ -78,11 +76,11 @@ const closeStyles = css`
 // TODO: presets
 // TODO: next callback?
 // TODO: close callback?
+// TODO: reduce motion
 
 /**
- * @param props.children Content to appear inside of Tooltip.
  * @param props.title Title to appear inside of Tooltip.
- * @param props.text Text to appear inside of Tooltip.
+ * @param props.description Text to appear inside of Tooltip.
  * @param props.open Boolean to describe whether or not Tooltip is open.
  * @param props.setOpen Callback to change the open state of the Tooltip.
  * @param props.darkMode Whether the Tooltip will apepar in dark mode.
@@ -90,18 +88,21 @@ const closeStyles = css`
  * @param props.refEl A reference to the element against which the beacon component will be positioned.
  * @param props.currentStep Current step to display.
  * @param props.numberOfSteps Used to display all steps.
+ * @param props.tooltipClassName className prop passed to the Tooltip component instance
+ * @param props.buttonText Text to appear inside the button.
  */
 
 function TooltipGuide({
   open,
   setOpen,
   refEl,
-  numberofSteps,
+  numberOfSteps,
   currentStep,
   darkMode: darkModeProp,
-  children,
   title,
-  text,
+  description,
+  tooltipClassName,
+  buttonText,
 }: TooltipGuideProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
@@ -121,8 +122,6 @@ function TooltipGuide({
     }
   }, [open]);
 
-  const stepText = currentStep === numberofSteps ? 'Finish' : 'Next';
-
   // TODO: TRAP FOCUS!!!!!!!
 
   return (
@@ -138,12 +137,13 @@ function TooltipGuide({
         justify="middle"
         align="top"
         trigger={<div className={beaconStyles}></div>}
-        className={tooltipStyles}
+        className={cx(tooltipStyles, tooltipClassName)}
       >
         <IconButton
           className={closeStyles}
           aria-label="Close Tooltip"
           onClick={() => setOpen(o => !o)}
+          darkMode={!darkMode}
         >
           <XIcon />
         </IconButton>
@@ -153,14 +153,14 @@ function TooltipGuide({
               <strong>{title}</strong>
             </Body>
           )}
-          {text && <Body className={bodyThemeStyles[theme]}>{text}</Body>}
+          {description && <Body className={bodyThemeStyles[theme]}>{description}</Body>}
         </div>
         <div className={footerStyles}>
           <Disclaimer>
-            {currentStep} of {numberofSteps}
+            {currentStep} of {numberOfSteps}
           </Disclaimer>
-          <Button variant="primary" onClick={() => setOpen(o => !o)}>
-            {stepText}
+          <Button variant="primary" onClick={() => setOpen(o => !o)} darkMode={!darkMode}>
+            {buttonText}
           </Button>
         </div>
       </Tooltip>
@@ -185,7 +185,9 @@ TooltipGuide.propTypes = {
   numberOfSteps: PropTypes.number,
   currentStep: PropTypes.number,
   title: PropTypes.string,
-  text: PropTypes.string,
+  description: PropTypes.string,
+  tooltipClassName: PropTypes.string,
+  buttonText: PropTypes.string,
 };
 
 export default TooltipGuide;
