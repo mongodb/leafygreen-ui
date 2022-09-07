@@ -8,31 +8,31 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../emotion"
-    },
-    {
-      "path": "../hooks"
-    },
-    {
       "path": "../lib"
     },
     {
-      "path": "../popover"
+      "path": "../tooltip"
     },
     {
-      "path": "../portal"
-    },
-    {
-      "path": "../palette"
-    },
-    {
-      "path": "../typography"
+      "path": "../leafygreen-provider"
     },
     {
       "path": "../icon"
     },
     {
-      "path": "../tokens"
+      "path": "../icon-button"
+    },
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../popover"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../palette"
     }
   ]
 }

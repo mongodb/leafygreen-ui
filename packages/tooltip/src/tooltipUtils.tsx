@@ -19,7 +19,7 @@ export function notchPositionStyles({
       notchContainer: '',
       notch: '',
       tooltip: '',
-      beacon: ''
+      beacon: '',
     };
   }
 
@@ -81,7 +81,14 @@ export function notchPositionStyles({
       );
       shouldTransformPosition = notchOffsetActual <= notchOffsetLowerBound;
 
-      console.log({triggerRectWidth:triggerRect.width}, {containerSize},{notchOffsetLowerBound},{notchOffsetUpperBound},{notchOffsetActual}, {notchOffset});
+      console.log(
+        { triggerRectWidth: triggerRect.width },
+        { containerSize },
+        { notchOffsetLowerBound },
+        { notchOffsetUpperBound },
+        { notchOffsetActual },
+        { notchOffset },
+      );
 
       notchStyleObj.left = `0px`;
       notchStyleObj.right = `0px`;
@@ -217,7 +224,7 @@ export function notchPositionStyles({
       // &::before, &::after {
       //   content: '';
       //   position: absolute;
-        
+
       //   border-radius: 50%;
       //   left: 50%;
       //   top: 109%;
@@ -246,7 +253,6 @@ export function notchPositionStyles({
       //     opacity: 0;
       //   }
       // }
-
     `,
     notch: css`
       ${css(notchStyleObj)};
@@ -259,8 +265,6 @@ export function notchPositionStyles({
       min-width: ${notchOffset * 2 + containerSize}px;
       transform: ${tooltipOffsetTransform};
     `,
-    beacon: css`
-
-    `
+    beacon: css``,
   };
 }
