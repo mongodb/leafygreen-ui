@@ -1,9 +1,13 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
+import {
+  createDataProp,
+  getNodeTextContent,
+  HTMLElementProps,
+} from '@leafygreen-ui/lib';
 import { cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import Box, { BoxProps } from '@leafygreen-ui/box';
 import {
   menuItemContainerStyle,
   menuItemContainerThemeStyle,
@@ -29,7 +33,7 @@ import { Size } from './types';
 import MenuContext from './MenuContext';
 
 const menuItemContainer = createDataProp('menu-item-container');
-interface BaseMenuItemProps {
+interface MenuItemProps extends HTMLElementProps<'button'> {
   /**
    * Determines whether or not the MenuItem is active.
    */
@@ -65,14 +69,13 @@ interface BaseMenuItemProps {
    */
   children?: React.ReactNode;
 
+  /**
+   * Causes the item to be rendered as an `anchor` instead of a `button`
+   */
   href?: string;
 }
 
-// TODO: TSDoc
-const MenuItem: ExtendableBox<
-  BaseMenuItemProps & { ref?: React.Ref<any> },
-  'button'
-> = React.forwardRef(
+const MenuItem = React.forwardRef(
   (
     {
       disabled = false,
@@ -83,7 +86,7 @@ const MenuItem: ExtendableBox<
       description,
       glyph,
       ...rest
-    }: BaseMenuItemProps,
+    }: MenuItemProps,
     ref: React.Ref<any>,
   ) => {
     const { theme } = useContext(MenuContext);
@@ -203,5 +206,5 @@ export default MenuItem;
 
 export type MenuItemElement = React.ReactComponentElement<
   typeof MenuItem,
-  BoxProps<'button', BaseMenuItemProps & { ref?: React.Ref<any> }>
+  BoxProps<'button', MenuItemProps & { ref?: React.Ref<any> }>
 >;
