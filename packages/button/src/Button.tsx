@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import {
   useDarkMode,
@@ -14,10 +14,7 @@ import { ButtonContent } from './ButtonContent';
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
  */
-export const Button: ExtendableBox<
-  ButtonProps & { ref?: React.Ref<any> },
-  'button'
-> = React.forwardRef(function Button(
+export const Button = React.forwardRef(function Button(
   {
     variant = Variant.Default,
     size = Size.Default,
@@ -32,7 +29,7 @@ export const Button: ExtendableBox<
     as,
     type,
     ...rest
-  }: ButtonProps,
+  }: BoxProps<'button', ButtonProps>,
   forwardRef,
 ) {
   const { usingKeyboard } = useUsingKeyboardContext();

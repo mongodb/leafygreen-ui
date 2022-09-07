@@ -178,8 +178,8 @@ function parseFileNames(root: string): Array<string> {
       if (fs.statSync(absolute).isDirectory()) {
         getFilesRecursively(absolute);
       } else {
-        const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
-        // const regex = /^.*.index.tsx?$/;
+        // const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;
+        const regex = /^.*.index.tsx?$/;
 
         if (regex.test(absolute)) {
           parsedFileNames.push(absolute);
