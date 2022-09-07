@@ -9,6 +9,7 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import GithubIcon from 'components/svgs/GithubIcon';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
 import { mq } from 'utils/mediaQuery';
@@ -43,6 +44,11 @@ const flexContainer = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const linkContainerStyles = css`
+  display: flex;
+  gap: ${spacing[2]}px;
 `;
 
 const caps = css`
@@ -129,17 +135,31 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
             {componentName.split('-').join(' ')}
           </H2>
 
-          {!isMobile && figmaLink && (
-            <Button
-              leftGlyph={<FigmaIcon />}
-              variant="primary"
-              href={figmaLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View in Figma
-            </Button>
-          )}
+          <div className={linkContainerStyles}>
+            {!isMobile && figmaLink && (
+              <Button
+                leftGlyph={<FigmaIcon />}
+                variant="primary"
+                href={figmaLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View in Figma
+              </Button>
+            )}
+
+            {!isMobile && (
+              <Button
+                leftGlyph={<GithubIcon />}
+                variant="primaryOutline"
+                href={`https://github.com/mongodb/leafygreen-ui/tree/main/packages/${componentName}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on Github
+              </Button>
+            )}
+          </div>
         </div>
       </div>
       <Tabs
