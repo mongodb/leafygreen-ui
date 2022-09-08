@@ -6,7 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import IconButton from '@leafygreen-ui/icon-button';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import Button from '@leafygreen-ui/button';
-import Popover from '@leafygreen-ui/popover';
+import Popover, { Align, Justify  } from '@leafygreen-ui/popover';
 import { Body, Disclaimer } from '@leafygreen-ui/typography';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -15,6 +15,7 @@ import { palette } from '@leafygreen-ui/palette';
 // alignment
 // close callback
 // button callback
+// classname
 
 interface TooltipGuideProps {
   /**
@@ -31,13 +32,15 @@ interface TooltipGuideProps {
    */
   refEl: React.RefObject<HTMLElement>;
   /**
-   * Used to display the number of steps.
+   * Used to display the number of steps. If `numberOfSteps` is <= 1 then the step will not show
+   * @default: 1
    */
-  numberOfSteps: number;
+  numberOfSteps?: number;
   /**
    * Used to display the current step.
+   * @default: 1
    */
-  currentStep: number;
+  currentStep? : number;
   /**
    * Detrmiens whether the `Tooltip` will appear in dark mode.
    * @default: false
@@ -59,6 +62,25 @@ interface TooltipGuideProps {
    * Text to appear inside the button
    */
   buttonText: string;
+  /**
+   * Callback fired when dismiss button is clicked
+   */
+  onClose?: Function;
+  /**
+   * Callback fired when 'next' button is clicked
+   * TODO: better description
+   */
+  onButtonClick?: Function;
+  /**
+   * Determines the alignment of the tooltip.
+   * @default: 'top'
+   */
+  tooltipAlignment?: Exclude<Align, 'center-vertical' | 'center-horizontal'>;
+  /**
+   * Determines the alignment of the beacon.
+   * @default: 'center-horizontal'
+   */
+  beaconAlignment?: Align;
 }
 
 const tooltipStyles = css`
@@ -143,22 +165,28 @@ const closeStyles = css`
  * @param props.numberOfSteps Used to display the number of steps.
  * @param props.tooltipClassName ClassName to be applied to the tooltip element.
  * @param props.buttonText Text to appear inside the button.
+ * @param props.tooltipAlignment Determines the alignment of the tooltip.
+ * @param props.beaconAlignment Determines the alignment of the beacon.
  */
+
+//TODO: popover props
 
 function TooltipGuide({
   open,
   setOpen,
   refEl,
-  numberOfSteps,
-  currentStep,
+  numberOfSteps = 1,
+  currentStep = 1 ,
   darkMode: darkModeProp,
   title,
   description,
   tooltipClassName,
   buttonText,
+  tooltipAlignment = Align.Top,
+  beaconAlignment = Align.CenterHorizontal
 }: TooltipGuideProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
-  //TODO: use state object
+  //TODO: use state object?
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);
 
@@ -168,7 +196,7 @@ function TooltipGuide({
     if (open) {
       // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible.
       setIsPopoverOpen(true);
-      setTimeout(() => setIsTooltipOpen(true), 200);
+      setTimeout(() => setIsTooltipOpen(true), 400);
     } else {
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible
       setIsTooltipOpen(false);
@@ -182,14 +210,15 @@ function TooltipGuide({
     <Popover
       active={isPopoverOpen}
       refEl={refEl}
-      align="center-horizontal"
-      justify="middle"
+      align={beaconAlignment}
+      justify={Justify.Middle}
+      spacing={-12}
     >
       <Tooltip
         darkMode={darkMode}
         open={isTooltipOpen}
-        justify="middle"
-        align="top"
+        justify={Justify.Middle}
+        align={tooltipAlignment}
         trigger={<div className={beaconStyles}></div>}
         className={cx(tooltipStyles, tooltipClassName)}
       >
@@ -208,11 +237,19 @@ function TooltipGuide({
           <Body className={bodyThemeStyles[theme]}>{description}</Body>
         </div>
         <div className={footerStyles}>
-          {(!!currentStep && !!numberOfSteps) && (
+          {/* check if the number is less than or equal to 1 then don't show */}
+
+          {(numberOfSteps > 1) && (
             <Disclaimer>
               {currentStep} of {numberOfSteps}
             </Disclaimer>
           )}
+
+          {/* {(!!currentStep && !!numberOfSteps) && (
+            <Disclaimer>
+              {currentStep} of {numberOfSteps}
+            </Disclaimer>
+          )} */}
           <Button
             variant="primary"
             onClick={() => setOpen(o => !o)}
@@ -246,6 +283,10 @@ TooltipGuide.propTypes = {
   description: PropTypes.string,
   tooltipClassName: PropTypes.string,
   buttonText: PropTypes.string,
+  onClose: PropTypes.func,
+  onButtonClick: PropTypes.func,
+  tooltipAlignment: PropTypes.oneOf(Object.values(Align)),
+  beaconAlignment: PropTypes.oneOf(Object.values(Align))
 };
 
 export default TooltipGuide;

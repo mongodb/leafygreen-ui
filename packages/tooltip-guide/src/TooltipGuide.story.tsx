@@ -17,6 +17,8 @@ export default {
         'setOpen',
         'tooltipClassName',
         'open',
+        'onClose',
+        'onButtonClick'
       ],
     },
   },
