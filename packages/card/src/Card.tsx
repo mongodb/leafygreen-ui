@@ -28,10 +28,10 @@ const lightHoverBoxShadow = `0 4px 20px -4px ${transparentize(
   0.8,
   palette.black,
 )}`;
-const lightFocusBoxShadow = focusRing['light'].default;
-const darkBaseBoxShadow = `0 4px 10px -4px  ${transparentize(0.4, '#000D13')}`;
+const lightFocusBoxShadow = focusRing.light.default;
+const darkBaseBoxShadow = `0 4px 20px -4px #01121A`;
 const darkHoverBoxShadow = `0 4px 20px -4px ${transparentize(0.3, '#000000')}`;
-const darkFocusBoxShadow = focusRing['dark'].default;
+const darkFocusBoxShadow = focusRing.dark.default;
 
 const colorSet: Record<Theme, ColorSet> = {
   [Theme.Light]: {
