@@ -11,21 +11,53 @@ import { Body, Disclaimer } from '@leafygreen-ui/typography';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
+// TODO: other props
+// alignment
+// close callback
+// button callback
+
 interface TooltipGuideProps {
+  /**
+   * Determines if the `Tooltip` will appear as open or close.
+   * @default: false
+   */
   open: boolean;
+  /**
+   * Callback to change the open state of the Tooltip in consuming applications.
+   */
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  /**
+   * Pass a reference to an element that the blue beacon should be centered against.
+   */
   refEl: React.RefObject<HTMLElement>;
+  /**
+   * Used to display the number of steps.
+   */
   numberOfSteps: number;
+  /**
+   * Used to display the current step.
+   */
   currentStep: number;
   /**
-   * Whether the `Tooltip` will appear in dark mode.
+   * Detrmiens whether the `Tooltip` will appear in dark mode.
    * @default: false
    */
   darkMode?: boolean;
-  children?: React.ReactNode;
+  /**
+   * Title to appear inside of Tooltip.
+   */
   title: string;
+  /**
+   * Description to appear inside of Tooltip.
+   */
   description: string;
+  /**
+   * ClassName to be applied to the tooltip element.
+   */
   tooltipClassName?: string;
+  /**
+   * Text to appear inside the button
+   */
   buttonText: string;
 }
 
@@ -34,11 +66,35 @@ const tooltipStyles = css`
 `;
 
 const beaconStyles = css`
-  background: rgba(1, 107, 248, 0.51);
+  background: rgba(1, 107, 248, 0.51); //TODO: use transparentize
   width: 24px;
   height: 24px;
   border-radius: 50%;
   position: relative;
+
+  &::before {
+    content: '';
+    background: rgba(1, 107, 248, 0.17);
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+
+    animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: translateX(-50%) translateY(-50%) scale(0.73);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
 `;
 
 const contentStyles = css`
@@ -73,22 +129,19 @@ const closeStyles = css`
   right: 10px;
 `;
 
-// TODO: presets
-// TODO: next callback?
-// TODO: close callback?
 // TODO: reduce motion
 
 /**
  * @param props.title Title to appear inside of Tooltip.
- * @param props.description Text to appear inside of Tooltip.
- * @param props.open Boolean to describe whether or not Tooltip is open.
- * @param props.setOpen Callback to change the open state of the Tooltip.
- * @param props.darkMode Whether the Tooltip will apepar in dark mode.
+ * @param props.description Description to appear inside of Tooltip.
+ * @param props.open Determines if the `Tooltip` will appear as open or close.
+ * @param props.setOpen Callback to change the open state of the Tooltip in consuming applications.
+ * @param props.darkMode Detrmiens whether the `Tooltip` will appear in dark mode.
  * @param props.className Classname applied to .
- * @param props.refEl A reference to the element against which the beacon component will be positioned.
- * @param props.currentStep Current step to display.
- * @param props.numberOfSteps Used to display all steps.
- * @param props.tooltipClassName className prop passed to the Tooltip component instance
+ * @param props.refEl Pass a reference to an element that the blue beacon should be centered against.
+ * @param props.currentStep Used to display the current step.
+ * @param props.numberOfSteps Used to display the number of steps.
+ * @param props.tooltipClassName ClassName to be applied to the tooltip element.
  * @param props.buttonText Text to appear inside the button.
  */
 
@@ -105,6 +158,7 @@ function TooltipGuide({
   buttonText,
 }: TooltipGuideProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
+  //TODO: use state object
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);
 
@@ -112,7 +166,7 @@ function TooltipGuide({
 
   useEffect(() => {
     if (open) {
-      // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is visible.
+      // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible.
       setIsPopoverOpen(true);
       setTimeout(() => setIsTooltipOpen(true), 200);
     } else {
@@ -148,18 +202,22 @@ function TooltipGuide({
           <XIcon />
         </IconButton>
         <div className={contentStyles}>
-          {title && (
-            <Body className={cx(bodyThemeStyles[theme], bodyTitleStyles)}>
-              <strong>{title}</strong>
-            </Body>
-          )}
-          {description && <Body className={bodyThemeStyles[theme]}>{description}</Body>}
+          <Body className={cx(bodyThemeStyles[theme], bodyTitleStyles)}>
+            <strong>{title}</strong>
+          </Body>
+          <Body className={bodyThemeStyles[theme]}>{description}</Body>
         </div>
         <div className={footerStyles}>
-          <Disclaimer>
-            {currentStep} of {numberOfSteps}
-          </Disclaimer>
-          <Button variant="primary" onClick={() => setOpen(o => !o)} darkMode={!darkMode}>
+          {(!!currentStep && !!numberOfSteps) && (
+            <Disclaimer>
+              {currentStep} of {numberOfSteps}
+            </Disclaimer>
+          )}
+          <Button
+            variant="primary"
+            onClick={() => setOpen(o => !o)}
+            darkMode={!darkMode}
+          >
             {buttonText}
           </Button>
         </div>

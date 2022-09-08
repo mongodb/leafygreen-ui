@@ -10,7 +10,14 @@ export default {
   component: TooltipGuide,
   parameters: {
     controls: {
-      exclude: ['className', 'children', 'refEl', 'setOpen', 'tooltipClassName', 'open'],
+      exclude: [
+        'className',
+        'children',
+        'refEl',
+        'setOpen',
+        'tooltipClassName',
+        'open',
+      ],
     },
   },
   argTypes: {
@@ -25,7 +32,8 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof TooltipGuide> = args => {
+// eslint-disable-next-line react/prop-types
+const Template: ComponentStory<typeof TooltipGuide> = ({darkMode ,...args}) => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
 
@@ -36,26 +44,23 @@ const Template: ComponentStory<typeof TooltipGuide> = args => {
         className={css`
           margin-bottom: 100px;
         `}
+        darkMode={darkMode}
       >
         Open me
       </Button>
       <div
         ref={triggerRef}
         className={css`
-          color: white;
+          color: black;
           background: burlywood;
           text-align: center;
           padding: 5px;
+          border-radius: 4px;
         `}
       >
         story refEl trigger
       </div>
-      <TooltipGuide
-        {...args}
-        open={open}
-        setOpen={setOpen}
-        refEl={triggerRef}
-      >
+      <TooltipGuide {...args} darkMode={darkMode} open={open} setOpen={setOpen} refEl={triggerRef}>
         <p>Hello from inside the tooltip</p>
       </TooltipGuide>
     </>
