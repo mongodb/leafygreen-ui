@@ -3,7 +3,7 @@ export type {
   SyntaxProps,
   CodeProps,
   LineHighlightingDefinition,
-  LanguageOption
+  LanguageOption,
 } from './types';
 export { variantColors } from './globalStyles';
 export { default } from './Code';

@@ -20,7 +20,10 @@ export interface BlobProps {
   /**
    * Click handler on the grey grid circles. Used in interactive mode
    */
-  onGridCircleClick?: (event: React.MouseEvent<SVGCircleElement, MouseEvent>, coords: Coordinate) => void;
+  onGridCircleClick?: (
+    event: React.MouseEvent<SVGCircleElement, MouseEvent>,
+    coords: Coordinate,
+  ) => void;
   /**
    * Switch between debug mode, interactive mode and production (static) mode
    */
@@ -29,7 +32,7 @@ export interface BlobProps {
   /**
    * CSS Class name
    */
-  className?: string
+  className?: string;
 }
 
 /**
