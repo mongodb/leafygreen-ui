@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.0.1
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+
 ## 4.0.0
 
 ### Major Changes

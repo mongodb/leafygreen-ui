@@ -1,5 +1,20 @@
 # @leafygreen-ui/segmented-control
 
+## 3.0.1
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/interaction-ring@4.0.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 3.0.0
 
 ### Patch Changes

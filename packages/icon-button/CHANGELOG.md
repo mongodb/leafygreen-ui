@@ -1,5 +1,19 @@
 # @leafygreen-ui/icon-button
 
+## 13.1.1
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/a11y@1.3.1
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 13.1.0
 
 ### Minor Changes

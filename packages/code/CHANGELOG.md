@@ -1,5 +1,24 @@
 # @leafygreen-ui/code
 
+## 12.0.2
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- 6924b0be: Locking highlight.js dependency to 11.5 given bugs in 11.6
+- ff69bdb6: Removes a misplaced shadow when `copyable` was `false`
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/a11y@1.3.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/icon-button@13.1.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/select@7.0.2
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 12.0.1
 
 ### Patch Changes
