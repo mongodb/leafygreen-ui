@@ -423,7 +423,6 @@ export default function Select({
         disabled={false}
         onClick={getOptionClickHandler(null, false)}
         onFocus={getOptionFocusHandler(null, false)}
-        isDeselection
         hasGlyphs={false}
         triggerScrollIntoView={selected && canTriggerScrollIntoView}
       >
@@ -455,7 +454,6 @@ export default function Select({
             focused: option === focusedOption,
             disabled,
             children: option.props.children,
-            isDeselection: false,
             hasGlyphs,
             onClick: getOptionClickHandler(option, disabled),
             onFocus: getOptionFocusHandler(option, disabled),

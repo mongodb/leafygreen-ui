@@ -7,3 +7,6 @@ storybook-static
 .changeset/
 website/.next/
 website/hosting/
+**/package.json
+**/tsconfig.json
+**/tsdoc.json

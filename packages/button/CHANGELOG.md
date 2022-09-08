@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 16.0.2
+
+### Patch Changes
+
+- 22128084: Updates typing of `as` prop. Adds documentation to clarify the use of NextJS `Link` wrapper
+
 ## 16.0.1
 
 ### Patch Changes
