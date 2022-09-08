@@ -3,121 +3,23 @@ import Card from '@leafygreen-ui/card';
 import Icon from '@leafygreen-ui/icon';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 import IconButton from '@leafygreen-ui/icon-button';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { Transition, TransitionStatus } from 'react-transition-group';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { cx } from '@leafygreen-ui/emotion';
+import { Transition } from 'react-transition-group';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-
-const transitionDuration = 300;
-
-/**
- * Styles
- */
-
-const cardStyle = (darkMode: boolean) => css`
-  --card-divider-color: ${darkMode ? uiColors.gray.base : uiColors.gray.light2};
-  display: block;
-  width: 100%;
-  padding: 0;
-`;
-
-const summaryStyle = css`
-  display: grid;
-  grid-template-columns: auto 24px;
-  padding: 24px;
-  column-gap: 8px;
-  cursor: pointer;
-  color: inherit;
-`;
-
-const summaryHeader = css`
-  display: inline-block;
-  color: inherit;
-`;
-
-const summaryText = css`
-  color: inherit;
-  margin-top: 4px;
-`;
-
-const flagTextStyle = css`
-  font-style: italic;
-  font-size: 12px;
-  letter-spacing: 0.2px;
-
-  &::before {
-    content: ' (';
-  }
-  &::after {
-    content: ')';
-  }
-`;
-
-const iconStyle = css`
-  grid-column: 2;
-  grid-row: 1/3;
-  transition: transform ${transitionDuration}ms ease-in-out;
-`;
-
-const iconTransitionStyle: { [key in TransitionStatus]: string } = {
-  entering: css`
-    transform: rotate(180deg);
-  `,
-  entered: css`
-    transform: rotate(180deg);
-  `,
-  exiting: css`
-    transform: rotate(0deg);
-  `,
-  exited: css`
-    transform: rotate(0deg);
-  `,
-  unmounted: '',
-};
-
-const childrenWrapperStyle = css`
-  overflow: hidden;
-  transition: ${transitionDuration}ms ease-in-out;
-  transition-property: all;
-  transform-origin: top left;
-  padding-inline: 24px;
-  box-sizing: content-box;
-  border-top: 1px solid transparent;
-  visibility: visible;
-`;
-
-const childrenWrapperTransitionStyle = (
-  state: TransitionStatus,
-  height?: number,
-): string => {
-  switch (state) {
-    case 'entering':
-      return css`
-        max-height: ${height || 9999}px;
-        padding-block: 24px;
-        border-color: var(--card-divider-color);
-      `;
-    case 'entered':
-      return css`
-        max-height: ${height || 9999}px;
-        padding-block: 24px;
-        border-color: var(--card-divider-color);
-      `;
-    case 'exiting':
-      return css`
-        max-height: 0;
-        padding-block: 0;
-      `;
-    case 'exited':
-      return css`
-        max-height: 0;
-        padding-block: 0;
-        visibility: hidden;
-      `;
-    default:
-      return ``;
-  }
-};
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  cardStyle,
+  summaryStyle,
+  summaryHeader,
+  flagTextStyle,
+  summaryTextThemeStyle,
+  transitionDuration,
+  iconThemeStyle,
+  iconTransitionStyle,
+  childrenWrapperStyle,
+  childrenWrapperTransitionStyle,
+} from './styles';
+import { palette } from '@leafygreen-ui/palette';
 
 /**
  * Types
@@ -187,7 +89,7 @@ interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement> {
 const ExpandableCard = ({
   title,
   children,
-  darkMode = false,
+  darkMode: darkModeProp,
   description,
   className,
   defaultOpen = false,
@@ -198,6 +100,7 @@ const ExpandableCard = ({
   contentClassName,
   ...rest
 }: ExpandableCardProps) => {
+  const { darkMode, theme } = useDarkMode(darkModeProp);
   const isControlled = isControlledOpen !== undefined;
 
   // Always start open
@@ -263,16 +166,19 @@ const ExpandableCard = ({
           <Subtitle className={summaryHeader}>{title}</Subtitle>
           {flagText && <span className={flagTextStyle}>{flagText}</span>}
         </span>
-        {description && <Body className={summaryText}>{description}</Body>}
+        {description && (
+          <Body className={summaryTextThemeStyle[theme]}>{description}</Body>
+        )}
 
         <Transition in={isOpen} timeout={transitionDuration}>
           {state => (
             <IconButton
               // Setting 'as="div"' to avoid nesting interactive components for accessibility
               as="div"
-              className={cx(iconStyle, iconTransitionStyle[state])}
+              className={cx(iconThemeStyle[theme], iconTransitionStyle[state])}
               aria-label={`${isOpen ? 'collapse' : 'expand'} card`}
               tabIndex={0}
+              darkMode={darkMode}
             >
               <Icon glyph="ChevronUp" size={24} fill={palette.gray.base} />
             </IconButton>

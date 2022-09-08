@@ -9,6 +9,7 @@ export default {
   args: {
     copyable: true,
     shouldTooltipUsePortal: true,
+    darkMode: false,
   },
   argTypes: {
     copyable: { control: 'boolean' },

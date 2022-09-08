@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -7,13 +7,13 @@ import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { createDataProp, getNodeTextContent } from '@leafygreen-ui/lib';
+import { createDataProp, getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { ExitHandler } from 'react-transition-group/Transition';
 import {
   menuItemContainerStyle,
   activeMenuItemContainerStyle,
-  disabledMenuItemContainerStyle,
+  disabledMenuItemContainerThemeStyle,
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
@@ -21,70 +21,133 @@ import {
   activeIconStyle,
   titleTextStyle,
   activeTitleTextStyle,
-  descriptionTextStyle,
+  descriptionTextThemeStyle,
   linkDescriptionTextStyle,
   activeDescriptionTextStyle,
   textContainer,
   getFocusedStyles,
   getHoverStyles,
   menuItemHeight,
-  paddingLeft,
+  paddingLeftWithGlyph,
+  paddingLeftWithoutGlyph,
+  menuItemContainerThemeStyle,
+  focusedSubMenuItemBorderStyles,
 } from './styles';
+import { Size } from './types';
+import MenuContext from './MenuContext';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const iconButton = createDataProp('icon-button');
 
-const subMenuContainerHeight = 56;
 const iconButtonContainerSize = 28;
 
 const subMenuStyle = css`
-  min-height: 56px;
-  background-color: ${palette.black};
   padding-right: ${iconButtonContainerSize + 16}px;
   align-items: center;
   justify-content: flex-start;
 `;
 
-const subMenuOpenStyle = css`
-  background-color: transparent;
+const subMenuThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: cx(
+    subMenuStyle,
+    css`
+      background-color: ${palette.black};
+    `,
+  ),
+  [Theme.Dark]: cx(
+    subMenuStyle,
+    css`
+      background-color: ${palette.gray.light2};
+    `,
+  ),
+};
 
-  &:hover {
-    background-color: ${palette.gray.dark3};
-  }
-`;
+const subMenuOpenStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: transparent;
 
-const focusedIconStyle = css`
-  ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
-    color: ${palette.white};
-  }
-`;
+    &:hover {
+      background-color: ${palette.gray.dark3};
+    }
+  `,
+  [Theme.Dark]: css`
+    background-color: transparent;
 
-const closedIconStyle = css`
-  transition: color 200ms ease-in-out;
-  color: ${palette.gray.light1};
-`;
+    &:hover {
+      background-color: ${palette.gray.light1};
+    }
+  `,
+};
 
-const openIconStyle = css`
-  color: ${palette.gray.light1};
-`;
+const focusedIconStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
+      color: ${palette.white};
+    }
+  `,
+  [Theme.Dark]: css`
+    ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
+      color: ${palette.white};
+    }
+  `,
+};
+
+const closedIconStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    transition: color 200ms ease-in-out;
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    transition: color 200ms ease-in-out;
+    color: ${palette.gray.dark1};
+  `,
+};
+
+const openIconStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
 
 const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
   right: 8px;
-  top: ${subMenuContainerHeight / 2 - iconButtonContainerSize / 2}px;
+  top: 0;
+  bottom: 0;
   margin: auto;
-  background-color: ${palette.black};
   transition: background-color 150ms ease-in-out;
-
-  &:hover {
-    background-color: ${palette.gray.dark2};
-  }
-
-  ${subMenuContainer.selector}:hover + & {
-    background-color: ${palette.gray.dark3};
-  }
 `;
+
+const iconButtonThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.black};
+
+    &:hover {
+      background-color: ${palette.gray.dark2};
+    }
+
+    ${subMenuContainer.selector}:hover + & {
+      background-color: ${palette.gray.dark3};
+    }
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.light2};
+
+    &:hover {
+      &:before {
+        background-color: ${palette.gray.light3};
+      }
+    }
+
+    ${subMenuContainer.selector}:hover + & {
+      background-color: ${palette.gray.light2};
+    }
+  `,
+};
 
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
@@ -96,9 +159,14 @@ const iconButtonFocusedStyle = css`
   }
 `;
 
-const openIconButtonStyle = css`
-  background-color: ${palette.black};
-`;
+const openIconButtonStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.black};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.light2};
+  `,
+};
 
 const ulStyle = css`
   list-style: none;
@@ -106,7 +174,39 @@ const ulStyle = css`
   height: 0;
   overflow: hidden;
   transition: height 150ms ease-in-out;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    right: 0;
+    z-index: 1;
+  }
+
+  &::before {
+    top: 0;
+  }
+
+  &::after {
+    bottom: 0;
+  }
 `;
+
+const ulThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &::before,
+    &::after {
+      background-color: ${palette.gray.dark2};
+    }
+  `,
+  [Theme.Dark]: css`
+    &::before,
+    &::after {
+      background-color: ${palette.gray.light1};
+    }
+  `,
+};
 
 const menuItemText = css`
   width: 100%;
@@ -135,9 +235,44 @@ const subItemStyle = css`
   // Reassign the variable for specificity
   --lg-menu-item-text-color: ${palette.gray.light1};
   position: relative;
+  min-height: 32px;
+
+  > div {
+    padding-left: 16px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    right: 0;
+    z-index: 1;
+    bottom: 0;
+  }
 `;
 
-const subMenuItemHeight = 36;
+const subItemThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+
+    &::after {
+      background-color: ${palette.gray.dark2};
+    }
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark2};
+
+    &:hover {
+      color: ${palette.black};
+    }
+
+    &::after {
+      background-color: ${palette.gray.light1};
+    }
+  `,
+};
+
+const subMenuItemHeight = 32;
 
 interface SubMenuProps {
   /**
@@ -190,6 +325,11 @@ interface SubMenuProps {
   onExited?: ExitHandler<HTMLElement>;
 
   href?: string;
+
+  /**
+   * Size of the MenuItem component, can be `default` or `large`. This size only affects the parent MenuItem, nested child MenuItems do not change.
+   */
+  size?: Size;
 }
 
 const SubMenu: ExtendableBox<
@@ -209,13 +349,15 @@ const SubMenu: ExtendableBox<
       open = false,
       active = false,
       disabled = false,
+      size = Size.Default,
       ...rest
     }: SubMenuProps,
     ref: React.Ref<any>,
   ) => {
+    const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(subMenuContainer.selector);
-    const focusStyles = getFocusedStyles(subMenuContainer.selector);
+    const hoverStyles = getHoverStyles(subMenuContainer.selector, theme);
+    const focusStyles = getFocusedStyles(subMenuContainer.selector, theme);
 
     const nodeRef = React.useRef(null);
 
@@ -240,9 +382,9 @@ const SubMenu: ExtendableBox<
 
     const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
     const chevronIconStyles = cx({
-      [openIconStyle]: open,
-      [closedIconStyle]: !open,
-      [focusedIconStyle]: showFocus,
+      [openIconStyle[theme]]: open,
+      [closedIconStyle[theme]]: !open,
+      [focusedIconStyle[theme]]: showFocus,
     });
 
     const handleChevronClick = (e: React.MouseEvent) => {
@@ -266,7 +408,7 @@ const SubMenu: ExtendableBox<
         className: cx(
           mainIconStyle,
           {
-            [activeIconStyle]: active,
+            [activeIconStyle[theme]]: active,
             [focusStyles.iconStyle]: showFocus,
           },
           glyph.props?.className,
@@ -299,8 +441,9 @@ const SubMenu: ExtendableBox<
           <div
             data-text={getNodeTextContent(children)}
             className={cx(titleTextStyle, hoverStyles.text, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
+              [activeTitleTextStyle[theme]]: active,
+              [hoverStyles.activeText]: active,
+              [disabledTextStyle[theme]]: disabled,
               [focusStyles.textStyle]: showFocus,
             })}
           >
@@ -308,9 +451,9 @@ const SubMenu: ExtendableBox<
           </div>
           {description && (
             <div
-              className={cx(descriptionTextStyle, {
-                [activeDescriptionTextStyle]: active,
-                [disabledTextStyle]: disabled,
+              className={cx(descriptionTextThemeStyle[theme], {
+                [activeDescriptionTextStyle[theme]]: active,
+                [disabledTextStyle[theme]]: disabled,
                 [focusStyles.descriptionStyle]: showFocus,
                 [linkDescriptionTextStyle]: typeof rest.href === 'string',
               })}
@@ -333,14 +476,15 @@ const SubMenu: ExtendableBox<
           {...rest}
           className={cx(
             menuItemContainerStyle,
-            menuItemHeight('default'),
+            menuItemContainerThemeStyle[theme],
+            menuItemHeight(size),
             linkStyle,
-            subMenuStyle,
+            subMenuThemeStyle[theme],
             {
-              [activeMenuItemContainerStyle]: active,
-              [disabledMenuItemContainerStyle]: disabled,
-              [focusedMenuItemContainerStyle]: showFocus,
-              [subMenuOpenStyle]: open,
+              [activeMenuItemContainerStyle[theme]]: active,
+              [disabledMenuItemContainerThemeStyle[theme]]: disabled,
+              [focusedMenuItemContainerStyle[theme]]: showFocus,
+              [subMenuOpenStyle[theme]]: open,
             },
             className,
           )}
@@ -352,8 +496,8 @@ const SubMenu: ExtendableBox<
             darkMode={true}
             ref={setIconButtonElement}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-            className={cx(iconButtonStyle, {
-              [openIconButtonStyle]: open,
+            className={cx(iconButtonStyle, iconButtonThemeStyle[theme], {
+              [openIconButtonStyle[theme]]: open,
               [iconButtonFocusedStyle]: showFocus,
             })}
             onClick={handleChevronClick}
@@ -380,11 +524,26 @@ const SubMenu: ExtendableBox<
           {(state: string) => (
             <ul
               ref={nodeRef}
-              className={cx(ulStyle, {
-                [css`
-                  height: ${subMenuItemHeight * numberOfMenuItems}px;
-                `]: state === 'entered',
-              })}
+              className={cx(
+                ulStyle,
+                ulThemeStyles[theme],
+                css`
+                  &::before {
+                    // this is the width for the UL border
+                    width: calc(
+                      100% -
+                        ${glyph
+                          ? paddingLeftWithGlyph
+                          : paddingLeftWithoutGlyph}px
+                    );
+                  }
+                `,
+                {
+                  [css`
+                    height: ${subMenuItemHeight * numberOfMenuItems}px;
+                  `]: state === 'entered',
+                },
+              )}
               role="menu"
               aria-label={title}
             >
@@ -393,6 +552,7 @@ const SubMenu: ExtendableBox<
                 (child, index) => {
                   const { className, ...rest } = child.props;
                   return React.cloneElement(child, {
+                    size: Size.Default,
                     children: (
                       <>
                         <div className={menuItemBorder} />
@@ -406,9 +566,25 @@ const SubMenu: ExtendableBox<
                     ),
                     className: cx(
                       subItemStyle,
+                      subItemThemeStyle[theme],
                       css`
-                        padding-left: ${glyph ? paddingLeft : 28}px;
+                        // padding-left of the button
+                        padding-left: ${glyph
+                          ? paddingLeftWithGlyph
+                          : paddingLeftWithoutGlyph}px;
+                        &::after {
+                          // this is the width for the button bottom border
+                          width: calc(
+                            100% -
+                              ${glyph
+                                ? paddingLeftWithGlyph
+                                : paddingLeftWithoutGlyph}px
+                          );
+                        }
                       `,
+                      {
+                        [focusedSubMenuItemBorderStyles[theme]]: showFocus,
+                      },
                       child.props.className,
                     ),
                     onClick: (

@@ -1,5 +1,20 @@
 # @leafygreen-ui/tabs
 
+## 9.0.1
+
+### Patch Changes
+
+- 699f8ba7: Add missing unit to `TabTitle` font-size
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
+## 9.0.0
+
+### Major Changes
+
+- 5aba12f1: - Updates `Tabs` for dark mode brand refresh
+  - Adds `disabled` to `TabTitle` props
+
 ## 8.0.0
 
 ### Patch Changes

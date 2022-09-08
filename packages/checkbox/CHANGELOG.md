@@ -1,5 +1,33 @@
 # @leafygreen-ui/checkbox
 
+## 10.0.2
+
+### Patch Changes
+
+- 3b6cf88b: Update darkMode disabled text color to match figma designs
+
+## 10.0.1
+
+### Patch Changes
+
+- 19a62173: Adding some missing dependencies,`@leafygreen-ui/a11y` and `@leafygreen-ui/emotion`
+
+## 10.0.0
+
+### Major Changes
+
+- 9dafe83a: Updates Checkbox Dark Mode for brand refresh
+
+### Minor Changes
+
+- bac1e809: Restores `bold` prop. If left `undefined` this prop will default to `true` if a description is provided, otherwise defaults to `false`
+
+### Patch Changes
+
+- bac1e809: Improves ripple animation on checkbox click
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/typography@13.1.0
+
 ## 9.0.0
 
 ### Patch Changes

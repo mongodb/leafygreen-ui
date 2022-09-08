@@ -8,6 +8,7 @@ const knobsConfig: KnobsConfigInterface<{
   disabled: boolean;
   children: string;
   size: 'default' | 'large';
+  darkMode: boolean;
 }> = {
   active: {
     type: 'boolean',
@@ -30,6 +31,11 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Size',
     options: ['default', 'large'],
   },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
 };
 
 export default function MenuLiveExample() {
@@ -37,11 +43,11 @@ export default function MenuLiveExample() {
 
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ children, active, disabled, size }) => {
+      {({ children, active, disabled, size, darkMode }) => {
         return (
           <Button onClick={() => setOpen(curr => !curr)}>
             Trigger
-            <Menu open={open}>
+            <Menu open={open} darkMode={darkMode}>
               <MenuItem size={size} active={active}>
                 Edit Data Source Configuration
               </MenuItem>

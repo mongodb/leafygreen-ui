@@ -1,5 +1,28 @@
 # @leafygreen-ui/menu
 
+## 15.0.1
+
+### Patch Changes
+
+- cdbbe4a2: Fix background color appearing when clicking on a disabled menu item
+- fdd1cbbf: Adds missing dependencies
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
+## 15.0.0
+
+### Major Changes
+
+- 5aba12f1: - Update `Menu` for dark mode brand refresh.
+  - Adds `darkMode` prop to determine whether or not the component will render in dark theme.
+  - Adds vertical spacing to `MenuSeparator`.
+  - Increase default `maxHeight` to 344px.
+  - Fixing bug where passing color styles to `MenuItem` using the `className` prop was being overwritten.
+
+### Patch Changes
+
+- 5aba12f1: Prevents the page from scrolling on up/down arrow key press when the menu is open
+
 ## 14.0.2
 
 ### Patch Changes

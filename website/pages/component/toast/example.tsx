@@ -8,6 +8,7 @@ const knobsConfig: KnobsConfigInterface<{
   variant: Variant;
   progress: number;
   close: boolean;
+  darkMode: boolean;
 }> = {
   variant: {
     type: 'select',
@@ -28,6 +29,11 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'boolean',
     default: false,
     label: 'Close',
+  },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
   },
 };
 

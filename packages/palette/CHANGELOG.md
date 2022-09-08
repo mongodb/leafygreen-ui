@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.4.1
+
+### Patch Changes
+
+- 30e038a3: Update red light1 to `#FF6960`
+
 ## 3.4.0
 
 ### Minor Changes

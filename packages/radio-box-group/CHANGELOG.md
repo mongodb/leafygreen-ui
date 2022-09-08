@@ -1,5 +1,15 @@
 # @leafygreen-ui/radio-box-group
 
+## 9.0.2
+
+### Patch Changes
+
+- 5a3a7623: Improves RadioBox + Tooltip compatibility, resolving an issue where Tooltips would not appear when a RadioBox was used as a trigger.
+- Updated dependencies [65c86281]
+- Updated dependencies [4ad8cbc0]
+- Updated dependencies [9cb53590]
+  - @leafygreen-ui/tooltip@7.1.0
+
 ## 9.0.1
 
 ### Patch Changes

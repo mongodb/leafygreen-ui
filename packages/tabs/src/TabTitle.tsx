@@ -1,11 +1,10 @@
 import React, { useRef, useEffect, RefObject } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
-import { Mode } from './Tabs';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 
 interface ListTitleMode {
   base: string;
@@ -15,13 +14,10 @@ interface ListTitleMode {
   disabled: string;
 }
 
-const listTitleModeStyles: Record<Mode, ListTitleMode> = {
+const listTitleModeStyles: Record<Theme, ListTitleMode> = {
   light: {
     base: css`
       color: ${palette.gray.dark1};
-      font-weight: 500;
-      font-family: ${fontFamilies.default};
-      font-size: 13px;
     `,
     hover: css`
       &:hover {
@@ -35,7 +31,6 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
     focus: css`
       &:focus {
         color: ${palette.blue.base};
-        font-weight: 700;
 
         &:after {
           background-color: ${palette.blue.light1};
@@ -68,59 +63,56 @@ const listTitleModeStyles: Record<Mode, ListTitleMode> = {
 
   dark: {
     base: css`
-      color: ${uiColors.gray.light1};
-      font-weight: 600;
-      font-family: ${fontFamilies.legacy};
-      font-size: 16px;
+      color: ${palette.gray.light1};
     `,
     hover: css`
       &:hover {
         cursor: pointer;
+        color: ${palette.white};
 
-        &:not(:focus) {
-          color: ${uiColors.white};
-
-          &:after {
-            background-color: ${uiColors.gray.dark1};
-          }
+        &:after {
+          background-color: ${palette.gray.dark2};
         }
       }
     `,
     focus: css`
       &:focus {
-        color: ${uiColors.blue.light1};
+        color: ${palette.blue.light1};
 
         &:after {
-          background-color: ${uiColors.focus};
+          background-color: ${palette.blue.light1};
         }
       }
     `,
     selected: css`
-      color: ${uiColors.green.light2};
+      color: ${palette.green.base};
+      font-weight: 700;
 
       &:after {
         transform: scaleX(1);
-        background-color: ${uiColors.green.base};
+        background-color: ${palette.green.dark1};
       }
 
       &:hover {
-        color: ${uiColors.green.light2};
-        font-weight: 700;
+        color: ${palette.green.base};
 
         &:after {
           transform: scaleX(1);
-          background-color: ${uiColors.green.base};
+          background-color: ${palette.green.dark1};
         }
       }
     `,
     disabled: css`
       cursor: not-allowed;
-      color: ${uiColors.gray.dark1};
+      color: ${palette.gray.dark2};
     `,
   },
 };
 
 const listTitleStyles = css`
+  font-family: ${fontFamilies.default};
+  font-size: ${typeScales.body1.fontSize}px;
+  font-weight: 500;
   position: relative;
   display: inline-flex;
   flex-direction: column;
@@ -130,14 +122,13 @@ const listTitleStyles = css`
   padding: 12px 16px;
   background-color: transparent;
   border: 0px;
+  margin: 0;
   text-decoration: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   transition: 150ms color ease-in-out;
 
-  &:focus {
+  &:focus:not(:disabled) {
     outline: none;
+    font-weight: 700;
   }
 
   // We create a pseudo element that's the width of the bolded text
@@ -174,16 +165,20 @@ const listTitleStyles = css`
       transform: scaleX(1);
     }
   }
-
-  > * {
-    vertical-align: middle;
-  }
 `;
 
 const listTitleChildrenStyles = css`
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  // Cannot use flexbox here to center children because it breaks text-overflow: ellipsis
+
+  > svg {
+    vertical-align: text-bottom;
+    margin-right: 4px;
+  }
 `;
 
 interface BaseTabTitleProps {
@@ -210,7 +205,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const theme = darkMode ? Theme.Dark : Theme.Light;
 
   // Checks to see if the current activeElement is a part of the same tab set
   // as the current TabTitle. If so, and the current TabTitle is not disabled
@@ -236,12 +231,12 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     ...rest,
     className: cx(
       listTitleStyles,
-      listTitleModeStyles[mode].base,
+      listTitleModeStyles[theme].base,
       {
-        [listTitleModeStyles[mode].selected]: selected,
-        [listTitleModeStyles[mode].focus]: showFocus,
-        [listTitleModeStyles[mode].hover]: !disabled && !selected,
-        [listTitleModeStyles[mode].disabled]: disabled,
+        [listTitleModeStyles[theme].selected]: selected,
+        [listTitleModeStyles[theme].focus]: showFocus,
+        [listTitleModeStyles[theme].hover]: !disabled && !selected,
+        [listTitleModeStyles[theme].disabled]: disabled,
       },
       className,
     ),
@@ -250,6 +245,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     ['aria-selected']: selected,
     name: nodeText,
     ['data-text']: nodeText,
+    disabled,
   } as const;
 
   if (typeof rest.href === 'string') {

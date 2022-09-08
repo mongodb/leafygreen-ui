@@ -25,6 +25,7 @@ export default {
   excludeStories: ['Card'],
   args: {
     children: 'This is a card component.',
+    darkMode: false,
   },
   argTypes: {
     href: { control: 'text' },

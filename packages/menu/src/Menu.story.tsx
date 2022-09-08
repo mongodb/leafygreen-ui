@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Menu, MenuProps, SubMenu, MenuItem } from '.';
+import { Menu, MenuProps, SubMenu, MenuItem, MenuSeparator } from '.';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
+import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import Button from '@leafygreen-ui/button';
+import IconButton from '@leafygreen-ui/icon-button';
+import defaultArgTypes from '../../../stories/defaultArgTypes';
 import { Size } from './types';
 
 export default {
@@ -13,7 +15,7 @@ export default {
     open: true,
     align: 'bottom',
     usePortal: true,
-    trigger: <Button rightGlyph={<CloudIcon />} />,
+    darkMode: false,
   },
   argTypes: {
     open: {
@@ -37,22 +39,46 @@ export default {
     className: {
       type: 'string',
     },
+    darkMode: defaultArgTypes.darkMode,
+    size: {
+      options: Object.values(Size),
+      control: 'select',
+      description:
+        'Size of the `MenuItem` component, can be `default` or `large`',
+    },
   },
 };
 
 export const UncontrolledTemplate = ({
   size,
   open,
-  trigger,
+  darkMode,
   ...args
 }: MenuProps & { size: Size }) => {
   return (
     <LeafyGreenProvider>
-      <Menu open={open} trigger={trigger} {...args}>
-        <MenuItem active size={size} glyph={<CloudIcon />}>
+      <Menu
+        trigger={
+          <IconButton darkMode={darkMode} aria-label="label">
+            <EllipsisIcon />
+          </IconButton>
+        }
+        darkMode={darkMode}
+        {...args}
+      >
+        <MenuItem
+          description="I am also an active description"
+          active
+          size={size}
+          glyph={<CloudIcon />}
+        >
           Active Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description" size={size}>
+        <MenuItem
+          description="I am also a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
           Menu Item With Description
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
@@ -77,20 +103,38 @@ UncontrolledTemplate.storyName = 'Uncontrolled';
 
 export const SubMenuExample = ({
   size,
+  darkMode,
   ...args
 }: MenuProps & { size: Size }) => {
   return (
     <LeafyGreenProvider>
-      <Menu {...args}>
-        <MenuItem active size={size} glyph={<CloudIcon />}>
-          Active Menu Item
+      <Menu
+        darkMode={darkMode}
+        trigger={<Button darkMode={darkMode} rightGlyph={<EllipsisIcon />} />}
+        {...args}
+      >
+        <MenuItem size={size} glyph={<CloudIcon />}>
+          Menu Item
         </MenuItem>
-        <MenuItem description="I am also a description" size={size}>
-          Menu Item With Description
+        <MenuItem
+          description="I am also a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
+          Menu Item
         </MenuItem>
         <MenuItem disabled description="I am a description" size={size}>
           Disabled Menu Item
         </MenuItem>
+        <MenuItem
+          disabled
+          description="I am a description"
+          size={size}
+          glyph={<CloudIcon />}
+        >
+          Disabled Menu Item
+        </MenuItem>
+        <MenuSeparator />
         <MenuItem size={size} href="http://mongodb.design">
           I am a link!
         </MenuItem>
@@ -100,15 +144,13 @@ export const SubMenuExample = ({
           glyph={<CloudIcon size="large" />}
           active={true}
           href="http://mongodb.design"
+          size={size}
         >
-          <MenuItem>SubMenu Item 1</MenuItem>
+          <MenuItem active>SubMenu Item 1</MenuItem>
           <MenuItem>SubMenu Item 2</MenuItem>
+          <MenuItem>SubMenu Item 3</MenuItem>
         </SubMenu>
-        <SubMenu
-          title="Menu Item 2"
-          description="Sed posuere consectetur"
-          glyph={<LaptopIcon size="large" />}
-        >
+        <SubMenu title="Menu Item 2" description="Sed posuere" size={size}>
           <MenuItem>Support 1</MenuItem>
         </SubMenu>
       </Menu>
@@ -121,6 +163,7 @@ export const Controlled = ({
   size,
   open,
   trigger,
+  darkMode,
   ...args
 }: MenuProps & { size: Size }) => {
   const [isOpen, setIsOpen] = useState(open);
@@ -128,8 +171,13 @@ export const Controlled = ({
     size,
     open: isOpen,
     trigger: (
-      <Button onClick={() => setIsOpen(o => !o)} rightGlyph={<CloudIcon />} />
+      <Button
+        onClick={() => setIsOpen(o => !o)}
+        rightGlyph={<EllipsisIcon />}
+        darkMode={darkMode}
+      />
     ),
+    darkMode,
     ...args,
   });
 };

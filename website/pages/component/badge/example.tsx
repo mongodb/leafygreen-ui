@@ -5,6 +5,7 @@ import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 const knobsConfig: KnobsConfigInterface<{
   variant: Variant;
   children: string;
+  darkMode: boolean;
 }> = {
   variant: {
     type: 'select',
@@ -16,6 +17,11 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'text',
     default: 'Sandbox',
     label: 'Children',
+  },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
   },
 };
 
