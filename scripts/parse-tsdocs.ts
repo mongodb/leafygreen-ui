@@ -60,6 +60,7 @@ const compilerOptions: CompilerOptions = {
   exactOptionalPropertyTypes: true,
   incremental: true,
   jsx: JsxEmit.React,
+  noEmit: false,
   /** Disable emitting declarations that have @internal in their JSDoc comments. */
   stripInternal: true,
 };
