@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import clamp from 'lodash/clamp';
 import { cx, css, keyframes } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { Theme } from '@leafygreen-ui/lib';
 
-const progressBackgroundBase = '#22B7EB';
-const progressBackgroundSecondary = '#1FACE5';
 const toastWidth = 400;
 
 const progressBarBackgroundStyle = css`
@@ -16,6 +15,15 @@ const progressBarBackgroundStyle = css`
   height: 6px;
   background-color: ${palette.gray.light2};
 `;
+
+const progressBarBackgroundThemeStyle: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark2};
+  `,
+  [Theme.Light]: css`
+    background-color: ${palette.gray.light2};
+  `,
+};
 
 const backgroundShimmer = keyframes`
   0% {
@@ -34,28 +42,46 @@ const progressBarStyle = css`
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: ${progressBackgroundBase};
-  background-image: linear-gradient(
-    90deg,
-    ${progressBackgroundBase} 0px,
-    #cce8f4 ${toastWidth / 2}px,
-    ${progressBackgroundSecondary} ${toastWidth}px
-  );
   background-size: 600px;
   animation: ${backgroundShimmer} 4s infinite linear;
   transition: width 0.3s ease-in-out;
 `;
 
+const progressBarThemeStyle: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    background-color: #083c90;
+    background-image: linear-gradient(
+      90deg,
+      #083c90 0px,
+      #c3e7fe ${toastWidth / 2}px,
+      #083c90 ${toastWidth}px
+    );
+  `,
+  [Theme.Light]: css`
+    background-color: #0498ec;
+    background-image: linear-gradient(
+      90deg,
+      #0498ec 0px,
+      #c3e7fe ${toastWidth / 2}px,
+      #0498ec ${toastWidth}px
+    );
+  `,
+};
+
 interface ProgressBarProps {
   progress: number;
+  theme: Theme;
 }
 
-function ToastProgressBar({ progress }: ProgressBarProps) {
+function ToastProgressBar({ progress, theme }: ProgressBarProps) {
   const normalizedProgress = clamp(progress, 0, 1) * 100;
 
   return (
     <div
-      className={progressBarBackgroundStyle}
+      className={cx(
+        progressBarBackgroundStyle,
+        progressBarBackgroundThemeStyle[theme],
+      )}
       role="progressbar"
       aria-valuenow={normalizedProgress}
       aria-valuemin={0}
@@ -64,6 +90,7 @@ function ToastProgressBar({ progress }: ProgressBarProps) {
       <div
         className={cx(
           progressBarStyle,
+          progressBarThemeStyle[theme],
           css`
             width: ${normalizedProgress}%;
           `,
