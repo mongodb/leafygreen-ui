@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-area
 
+## 6.1.1
+
+### Patch Changes
+
+- 3dbc73ba: Update darkMode background-color to match figma designs
+
 ## 6.1.0
 
 ### Minor Changes

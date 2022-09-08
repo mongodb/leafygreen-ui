@@ -1,5 +1,17 @@
 # @leafygreen-ui/checkbox
 
+## 10.0.2
+
+### Patch Changes
+
+- 3b6cf88b: Update darkMode disabled text color to match figma designs
+
+## 10.0.1
+
+### Patch Changes
+
+- 19a62173: Adding some missing dependencies,`@leafygreen-ui/a11y` and `@leafygreen-ui/emotion`
+
 ## 10.0.0
 
 ### Major Changes

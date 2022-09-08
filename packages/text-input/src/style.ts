@@ -68,11 +68,17 @@ export const inheritTypeScale = css`
   line-height: inherit;
 `;
 
+export const textContainerStyle = css`
+  > *:last-child {
+    display: block;
+    padding-bottom: 4px;
+  }
+`;
+
 export const inputContainerStyle = css`
   position: relative;
   display: flex;
   align-items: center;
-  padding-top: 4px;
   z-index: 0;
 `;
 
