@@ -7,6 +7,7 @@ const knobsConfig: KnobsConfigInterface<{
   cancelButtonText?: string;
   backButtonText?: string;
   errorMessage?: string;
+  darkMode: boolean;
 }> = {
   primaryButtonText: {
     type: 'text',
@@ -27,6 +28,11 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'text',
     default: "There's an error on this page.",
     label: 'Error message',
+  },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
   },
 };
 
