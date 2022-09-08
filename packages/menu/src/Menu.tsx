@@ -403,19 +403,15 @@ function Menu({
       });
     }
 
-    const { children: triggerChildren } = trigger.props;
-
     const renderedTrigger = React.cloneElement(trigger, {
       ref: triggerRef,
       onClick: triggerClickHandler,
-      children: triggerChildren
-        ? [
-            ...(triggerChildren instanceof Array
-              ? triggerChildren
-              : [triggerChildren]),
-            popoverContent,
-          ]
-        : popoverContent,
+      children: (
+        <>
+          {trigger.props.children}
+          {popoverContent}
+        </>
+      ),
     });
 
     return renderedTrigger;
