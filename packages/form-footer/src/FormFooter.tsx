@@ -136,7 +136,10 @@ export default function FormFooter({
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   return (
-    <footer className={cx(footerBaseStyle, footerThemeStyle[theme], className)} {...rest}>
+    <footer
+      className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
+      {...rest}
+    >
       <div className={cx(contentStyle, contentClassName)}>
         {backButtonText && (
           <Button
