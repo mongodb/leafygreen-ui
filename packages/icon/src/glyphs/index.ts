@@ -78,6 +78,7 @@ import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
 import Redo from './Redo.svg';
 import Refresh from './Refresh.svg';
+import Relationship from './Relationship.svg';
 import ReplicaSet from './ReplicaSet.svg';
 import Save from './Save.svg';
 import Serverless from './Serverless.svg';
@@ -184,6 +185,7 @@ const glyphs = {
   QuestionMarkWithCircle,
   Redo,
   Refresh,
+  Relationship,
   ReplicaSet,
   Save,
   Serverless,
