@@ -13,7 +13,6 @@ import {
  * Generates utility functions dependent on the provided `blobCode`
  */
 export const makeBlobUtils = (shape: blobCode) => {
-
   const circleCount = shape.reduce((count, row) => {
     count += row.filter(circle => !isCharEmpty(circle)).length;
     return count;
@@ -321,8 +320,7 @@ export const vertexCoordinatesForCenterPoint = (
  * - Ensure large circles are complete
  */
 export function isValidShape(shape: blobCode | undefined): boolean {
-
-  if (isUndefined(shape)) return false
+  if (isUndefined(shape)) return false;
 
   const { circleCount, isEmpty, isNotEmpty, hasAdjacency } =
     makeBlobUtils(shape);
