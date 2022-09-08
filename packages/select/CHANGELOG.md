@@ -1,5 +1,13 @@
 # @leafygreen-ui/select
 
+## 7.0.1
+
+### Patch Changes
+
+- 7409c9db: Remove `isDeselection` from `InternalOption`
+- Updated dependencies [22128084]
+  - @leafygreen-ui/button@16.0.2
+
 ## 7.0.0
 
 ### Major Changes

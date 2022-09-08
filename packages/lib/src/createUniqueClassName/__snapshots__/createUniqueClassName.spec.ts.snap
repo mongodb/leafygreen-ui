@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`packages/lib/createUniqueClassName rendering Classnames persist in snapshot tests 1`] = `
+<div>
+  <div
+    class="lg-ui-0000"
+    data-testid="el-1"
+  >
+    <div
+      class="lg-ui-0001"
+      data-testid="el-2"
+    />
+  </div>
+</div>
+`;

@@ -29,6 +29,7 @@ import {
   inputIndicatorStyle,
   inputIndicatorSizeStyle,
   inheritTypeScale,
+  textContainerStyle,
 } from './style';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -135,24 +136,28 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
             className,
           )}
         >
-          {label && (
-            <Label
-              darkMode={darkMode}
-              htmlFor={id}
-              disabled={disabled}
-              className={inheritTypeScale}
-            >
-              {label}
-            </Label>
-          )}
-          {description && (
-            <Description
-              darkMode={darkMode}
-              disabled={disabled}
-              className={inheritTypeScale}
-            >
-              {description}
-            </Description>
+          {(label || description) && (
+            <div className={textContainerStyle}>
+              {label && (
+                <Label
+                  darkMode={darkMode}
+                  htmlFor={id}
+                  disabled={disabled}
+                  className={inheritTypeScale}
+                >
+                  {label}
+                </Label>
+              )}
+              {description && (
+                <Description
+                  darkMode={darkMode}
+                  disabled={disabled}
+                  className={inheritTypeScale}
+                >
+                  {description}
+                </Description>
+              )}
+            </div>
           )}
           <div className={inputContainerStyle}>
             <input
@@ -164,7 +169,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<TextInputProps>> =
                 inputModeStyles[theme],
                 inputSizeStyles[sizeVariant],
                 inputStateStyles[state][theme],
-                inputFocusStyles, // Always show focus styles
+                inputFocusStyles[theme], // Always show focus styles
                 {
                   [css`
                     padding-right: 60px;
