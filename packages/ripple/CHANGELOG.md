@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/palette@3.4.2
+
 ## 1.1.2
 
 ### Patch Changes

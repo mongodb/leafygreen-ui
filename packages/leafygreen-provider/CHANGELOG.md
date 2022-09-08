@@ -1,5 +1,14 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 2.3.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/lib@9.4.2
+
 ## 2.3.2
 
 ### Patch Changes
