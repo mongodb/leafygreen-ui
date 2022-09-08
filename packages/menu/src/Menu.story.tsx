@@ -58,9 +58,7 @@ export const UncontrolledTemplate = ({
   return (
     <LeafyGreenProvider>
       <Menu
-        // open={open}
         trigger={
-          // <Button darkMode={darkMode} rightGlyph={<EllipsisIcon />} />
           <IconButton darkMode={darkMode} aria-label="label">
             <EllipsisIcon />
           </IconButton>

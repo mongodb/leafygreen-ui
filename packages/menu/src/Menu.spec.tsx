@@ -121,7 +121,7 @@ describe('packages/menu', () => {
       });
     });
 
-    test('Click handlers on parent elements still fire', () => {
+    test('Click handlers on parent elements fire', () => {
       const parentHandler = jest.fn();
       const { getByTestId } = render(
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
