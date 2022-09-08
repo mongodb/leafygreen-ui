@@ -98,10 +98,12 @@ interface ButtonProps {
   children?: React.ReactNode;
   /**
    * An icon glyph rendered before the button text.
+   * @type Leafygreen <Icon /> Element
    */
   leftGlyph?: React.ReactElement;
   /**
    * An icon glyph rendered after the button text.
+   * @type Leafygreen <Icon /> Element
    */
   rightGlyph?: React.ReactElement;
   /**

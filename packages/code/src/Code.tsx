@@ -209,7 +209,6 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
  *
  * React Component that outputs single-line and multi-line code blocks.
  *
- * ---
  * @param props.children The string to be formatted.
  * @param props.className An additional CSS class added to the root element of Code.
  * @param props.language The language used for syntax highlighing.

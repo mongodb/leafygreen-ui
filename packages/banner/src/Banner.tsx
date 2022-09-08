@@ -272,6 +272,8 @@ interface BannerProps extends HTMLElementProps<'div', never> {
 
   /**
    * Illustration that will replace default Icon when the prop is supplied
+   *
+   * @type ReactElement
    */
   image?: React.ReactElement;
 
