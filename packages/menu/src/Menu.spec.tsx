@@ -11,7 +11,7 @@ import userEvent from '@testing-library/user-event';
 
 const menuTestId = 'menu-test-id';
 const className = 'menu-item-class-name';
-const trigger = <button>trigger</button>;
+const trigger = <button data-testid="menu-trigger">trigger</button>;
 const onClick = jest.fn();
 
 function renderMenu(props = {}) {
@@ -67,6 +67,11 @@ function renderSubMenuItem(props = {}) {
 }
 
 describe('packages/menu', () => {
+  test.todo('trigger renders as a function');
+  test.todo('trigger renders as a JSX element');
+  test.todo('menu appears when trigger is a function');
+  test.todo('menu appears when trigger is a JSX element');
+
   test('menu appears on DOM when the "open" prop is set', () => {
     const { getByTestId } = renderMenu({ open: true });
     const menu = getByTestId(menuTestId);
@@ -113,6 +118,27 @@ describe('packages/menu', () => {
 
       waitFor(() => {
         expect(menu).toBeInTheDocument();
+      });
+    });
+
+    test('Click handlers on parent elements fire', () => {
+      const parentHandler = jest.fn();
+      const { getByTestId } = render(
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+        <div data-testid="parent" onClick={parentHandler}>
+          <Menu trigger={trigger} data-testid={menuTestId}>
+            <MenuItem>Item A</MenuItem>
+            <MenuItem>Item B</MenuItem>
+          </Menu>
+        </div>,
+      );
+      const button = getByTestId('menu-trigger');
+
+      userEvent.click(button);
+      const menu = getByTestId(menuTestId);
+      waitFor(() => {
+        expect(menu).toBeInTheDocument();
+        expect(parentHandler).toHaveBeenCalled();
       });
     });
   });

@@ -48,13 +48,15 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
       return;
     }
 
-    const callback = (e: DocumentEventMap[Type]) =>
+    const callback = (e: DocumentEventMap[Type]) => {
       memoizedEventCallback.current(e);
+    };
 
     const eventListenerOptions = {
       ...options,
       once: enabled === 'once',
     };
+
     // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
     (element ?? document).addEventListener(
       type,
