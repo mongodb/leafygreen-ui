@@ -51,8 +51,8 @@ const contentWrapperStyles = css`
   z-index: 0; // new stacking context
 `;
 
-const contentWrapperStylesWithWindowChrome = css`
-  // No panel with chrome
+const contentWrapperStylesNoPanel = css`
+  // No panel, all code
   grid-template-areas: 'code code';
 `;
 
@@ -83,7 +83,7 @@ const codeWrapperStyle = css`
   })}
 `;
 
-const codeWrapperStyleWithWindowChrome = css`
+const codeWrapperStyleNoPanel = css`
   border-left: 0;
   border-radius: inherit;
   border-top-right-radius: 0;
@@ -163,16 +163,16 @@ const baseScrollShadowStyles = css`
   }
 `;
 
-const scrollShadowStylesWithWindowChrome = css`
+const scrollShadowStylesNoPanel = css`
   &:after {
-    grid-column: 3; // Placed on the right edge
+    grid-column: -1; // Placed on the right edge
   }
 `;
 
 const scrollShadowStylesWithPicker = css`
   &:before,
   &:after {
-    grid-row: 2; // Placed on the right edge
+    grid-row: 2; // Placed on the top under the Picker Panel
   }
 `;
 
@@ -260,6 +260,10 @@ function Code({
     option => option.displayName === languageProp,
   );
 
+  const showPanel =
+    !showWindowChrome &&
+    (copyable || !!currentLanguage || showCustomActionsInPanel);
+
   const highlightLanguage = currentLanguage
     ? currentLanguage.language
     : languageProp;
@@ -342,13 +346,11 @@ function Code({
           baseScrollShadowStyles,
           getScrollShadow(scrollState, mode),
           {
-            [contentWrapperStylesWithWindowChrome]: showWindowChrome,
             [contentWrapperStyleWithPicker]: showLanguagePicker,
-            [scrollShadowStylesWithWindowChrome]: showWindowChrome,
             [scrollShadowStylesWithPicker]: showLanguagePicker,
+            [contentWrapperStylesNoPanel]: !showPanel,
+            [scrollShadowStylesNoPanel]: !showPanel,
           },
-          baseScrollShadowStyles,
-          getScrollShadow(scrollState, mode),
         )}
       >
         <pre
@@ -357,8 +359,8 @@ function Code({
             codeWrapperStyle,
             getCodeWrapperVariantStyle(mode),
             {
-              [codeWrapperStyleWithWindowChrome]: showWindowChrome,
               [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
+              [codeWrapperStyleNoPanel]: !showPanel,
               [singleLineCodeWrapperStyle]: !isMultiline,
               [codewrapperFocusStyle]: showFocus,
             },
@@ -375,23 +377,22 @@ function Code({
 
         {/* Can make this a more robust check in the future */}
         {/* Right now the panel will only be rendered with copyable or a language switcher */}
-        {!showWindowChrome &&
-          (copyable || !!currentLanguage || showCustomActionsInPanel) && (
-            <Panel
-              className={cx(panelStyles)}
-              language={currentLanguage}
-              languageOptions={languageOptions}
-              onChange={onChange}
-              contents={children}
-              onCopy={onCopy}
-              showCopyButton={showCopyBar}
-              darkMode={darkMode}
-              isMultiline={isMultiline}
-              customActionButtons={filteredCustomActionIconButtons}
-              showCustomActionButtons={showCustomActionsInPanel}
-              {...popoverProps}
-            />
-          )}
+        {showPanel && (
+          <Panel
+            className={cx(panelStyles)}
+            language={currentLanguage}
+            languageOptions={languageOptions}
+            onChange={onChange}
+            contents={children}
+            onCopy={onCopy}
+            showCopyButton={showCopyBar}
+            darkMode={darkMode}
+            isMultiline={isMultiline}
+            customActionButtons={filteredCustomActionIconButtons}
+            showCustomActionButtons={showCustomActionsInPanel}
+            {...popoverProps}
+          />
+        )}
       </div>
     </div>
   );

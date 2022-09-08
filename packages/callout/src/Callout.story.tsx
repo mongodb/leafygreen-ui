@@ -1,5 +1,6 @@
 import React from 'react';
 import Code from '@leafygreen-ui/code';
+import { Link } from '@leafygreen-ui/typography';
 import Callout, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
@@ -7,10 +8,16 @@ import defaultArgTypes from '../../../stories/defaultArgTypes';
 export default {
   title: 'Components/Callout',
   component: Callout,
+  parameters: {
+    controls: {
+      exclude: ['className'],
+    },
+  },
   args: {
     variant: Variant.Note,
     children:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy children ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    darkMode: false,
   },
   argTypes: {
     title: {
@@ -19,6 +26,7 @@ export default {
       },
     },
     children: defaultArgTypes.children,
+    darkMode: defaultArgTypes.darkMode,
   },
 } as Meta<typeof Callout>;
 
@@ -49,18 +57,37 @@ Example.args = {
   variant: Variant.Example,
 };
 
-export const WithRichContent = Template.bind({});
-WithRichContent.args = {
+export const WithRichContent: ComponentStory<typeof Callout> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
+  return (
+    <Callout {...args} title="Title" darkMode={darkMode}>
+      <>
+        Shopping items
+        <ul>
+          <li>Milk</li>
+          <li>Bread</li>
+          <li>Bananas</li>
+        </ul>
+        <Code language="js" darkMode={darkMode}>
+          console.log(&apos;Hello world&apos;)
+        </Code>
+      </>
+    </Callout>
+  );
+};
+
+export const WithLinks = Template.bind({});
+WithLinks.args = {
   title: 'Title',
   children: (
     <>
-      Shopping items
-      <ul>
-        <li>Milk</li>
-        <li>Bread</li>
-        <li>Bananas</li>
-      </ul>
-      <Code language="js">console.log(&apos;Hello world&apos;)</Code>
+      Lorem Ipsum is simply dummy text &nbsp;
+      <Link href="http://localhost:9001">Link component</Link>
+      &nbsp;
+      <a href="http://localhost:9001">Regular link</a>
     </>
   ),
 };
