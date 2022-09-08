@@ -3,7 +3,7 @@ import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { isComponentType, Theme } from '@leafygreen-ui/lib';
+import { HTMLElementProps, isComponentType, Theme } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
@@ -57,7 +57,7 @@ const buttonStyle = css`
  * Types
  */
 
-export interface FormFooterProps {
+export interface FormFooterProps extends HTMLElementProps<'footer'> {
   /**
    * The primary (right-most) button. Defined as a `<Button>` element, or as an object with the shape:
    *
@@ -132,10 +132,14 @@ export default function FormFooter({
   contentClassName,
   className,
   darkMode: darkModeProp,
+  ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   return (
-    <footer className={cx(footerBaseStyle, footerThemeStyle[theme], className)}>
+    <footer
+      className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
+      {...rest}
+    >
       <div className={cx(contentStyle, contentClassName)}>
         {backButtonText && (
           <Button
