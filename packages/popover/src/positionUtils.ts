@@ -143,12 +143,21 @@ const defaultElementPosition = {
 /**
  * Returns the width and height as well as the top, bottom, left, and right positions of an element.
  */
-const getElementPosition = (element: HTMLElement) => {
-  const { top, bottom, left, right } = element.getBoundingClientRect();
+const getElementPosition = (element: HTMLElement, isReference?: boolean) => {
+  const {
+    top,
+    bottom,
+    left,
+    right,
+    width: boundingWidth,
+  } = element.getBoundingClientRect();
   const { offsetHeight: height } = element;
-  // Returns the unrounded, floating point width of the element which does not include transformations.
+  // Returns the unrounded, floating point width of the content element which does not include transformations.
   // `offsetWidth` would not work because this returns a rounded number of the element's layout width and `getBoundingClientRect.width` would also not work because it returns an exact number of the rendered width which can include transformations.
-  const width = parseFloat(getComputedStyle(element).width);
+  // If this element is the reference element return element.getBoundingClientRect().width since we don't have to be as strict with the width. If we used getComputedStyle then the reference element has to have a display other than inline set on it.
+  const width = isReference
+    ? boundingWidth
+    : parseFloat(getComputedStyle(element).width);
 
   return {
     top,
@@ -163,13 +172,16 @@ const getElementPosition = (element: HTMLElement) => {
 export function getElementDocumentPosition(
   element: HTMLElement | null,
   scrollContainer?: HTMLElement | null,
+  isReference?: boolean,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right, height, width } =
-    getElementPosition(element);
+  const { top, bottom, left, right, height, width } = getElementPosition(
+    element,
+    isReference,
+  );
 
   if (scrollContainer) {
     const { scrollTop, scrollLeft } = scrollContainer;
@@ -206,13 +218,16 @@ export function getElementDocumentPosition(
 export function getElementViewportPosition(
   element: HTMLElement | null,
   scrollContainer?: HTMLElement | null,
+  isReference?: boolean,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
   }
 
-  const { top, bottom, left, right, height, width } =
-    getElementPosition(element);
+  const { top, bottom, left, right, height, width } = getElementPosition(
+    element,
+    isReference,
+  );
 
   if (scrollContainer) {
     const {
@@ -573,7 +588,6 @@ function safelyWithinHorizontalWindow({
   contentWidth: number;
 }): boolean {
   const tooWide = left + contentWidth > windowWidth;
-
   return left >= 0 && !tooWide;
 }
 
@@ -623,7 +637,6 @@ function getWindowSafeAlign(
   return (
     alignOptions.find(fallback => {
       // Check that an alignment will not cause the popover to collide with the window.
-
       if (
         (
           [Align.Top, Align.Bottom, Align.CenterVertical] as Array<Align>

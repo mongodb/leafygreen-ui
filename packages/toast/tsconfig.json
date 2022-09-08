@@ -27,6 +27,12 @@
     },
     {
       "path": "../typography"
+    },
+    {
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../icon"
     }
   ]
 }

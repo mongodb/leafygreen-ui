@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import Callout, { headerIcons, headerLabels, Variant } from './Callout';
+import Callout from './Callout';
+import { headerIcons, headerLabels } from './styles';
+import { Variant } from './types';
 
 const title = 'this is the callout title';
 const children = 'this is the callout content.';
