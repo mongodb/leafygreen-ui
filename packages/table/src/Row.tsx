@@ -11,7 +11,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { CellElement, tdInnerDiv } from './Cell';
 import { useDarkModeContext } from './DarkModeContext';
-import { TransitionStatus } from 'react-transition-group/Transition';
+import NestedRow from './NestedRow';
 
 /**
  * Types & Constants
@@ -101,64 +101,6 @@ const hideRow = css`
   opacity: 0;
 `;
 
-const nestedRowInitialStyle = css`
-  position: relative;
-  opacity: 0;
-  transform-origin: 50% 0%;
-  transition: ${transitionTime}ms ease-in-out;
-  transition-property: outline-color, opacity;
-
-  // This makes it so that any tall nested rows appear "below" the parents
-  // This may cause issues if there are multiple levels of nesting
-  // that all have more than one line of text. However this scenario is unlikely
-  z-index: 0;
-
-  & > :is(td, th) {
-    transition: ${transitionTime}ms ease-in-out;
-    transition-property: padding-block;
-
-    & > ${tdInnerDiv.selector} {
-      transition: ${transitionTime}ms ease-in-out;
-      transition-property: min-height, max-height;
-    }
-  }
-`;
-
-const hiddenRowStyles = css`
-  opacity: 0;
-  outline-color: transparent;
-
-  & > :is(td, th) {
-    padding-block: 0;
-
-    & > ${tdInnerDiv.selector} {
-      min-height: 0px;
-      max-height: 0px;
-    }
-  }
-`;
-
-const nestedRowTransitionStyles = (
-  state: TransitionStatus,
-  height?: number,
-): string => {
-  switch (state) {
-    case 'entered':
-      return css`
-        opacity: 1;
-        & > :is(td, th) {
-          & > ${tdInnerDiv.selector} {
-            --lg-cell-max-height: max(var(--lg-cell-min-height), ${height}px);
-            min-height: var(--lg-cell-min-height);
-            max-height: var(--lg-cell-max-height);
-          }
-        }
-      `;
-    default:
-      return hiddenRowStyles;
-  }
-};
-
 function styleColumn(index: string, dataType?: DataType) {
   let justify;
 
@@ -184,7 +126,7 @@ function getIndentLevelStyle(indentLevel: number) {
   `;
 }
 
-interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
+export interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
   expanded?: boolean;
   disabled?: boolean;
   indentLevel?: number;
@@ -222,22 +164,7 @@ const Row = React.forwardRef(
 
     const indexRef = useRef(useIdAllocator({ prefix: 'row' }));
     const [isExpanded, setIsExpanded] = useState(expanded);
-    const nestedRowNodeRef = useRef<HTMLTableRowElement>(null);
-
-    const [nestedRowHeight, setNestedRowHeight] = useState(0);
-    useEffect(() => {
-      if (nestedRowNodeRef && nestedRowNodeRef.current) {
-        const innerSpan: HTMLSpanElement | null =
-          nestedRowNodeRef.current.querySelector(
-            `${tdInnerDiv.selector} > span`,
-          );
-
-        if (innerSpan && innerSpan.offsetHeight) {
-          setNestedRowHeight(innerSpan.offsetHeight);
-        }
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [nestedRowNodeRef.current, isExpanded]);
+    const nestedRowParentRef = useRef<HTMLTableRowElement>(null);
 
     useEffect(() => {
       let shouldDispatchHasNestedRows = false;
@@ -304,7 +231,7 @@ const Row = React.forwardRef(
               enter: 0,
               exit: transitionTime,
             }}
-            nodeRef={nestedRowNodeRef}
+            nodeRef={nestedRowParentRef}
           >
             {state =>
               React.Children.map(children, (child, index) => {
@@ -312,23 +239,17 @@ const Row = React.forwardRef(
                   child != null &&
                   isComponentType<RowElement>(child, 'Row')
                 ) {
-                  return React.cloneElement(child, {
-                    ref: nestedRowNodeRef,
-                    isAnyAncestorCollapsed:
-                      isAnyAncestorCollapsedProp || !isExpanded,
-                    indentLevel: indentLevel + 1,
-                    key: `${indexRef.current}-${indentLevel}-${index}`,
-                    className: cx(
-                      nestedRowInitialStyle,
-                      nestedRowTransitionStyles(state, nestedRowHeight),
-                      {
-                        // TODO: Refresh - remove dark mode overrides
-                        [css`
-                          --lg-cell-min-height: 24px;
-                        `]: darkMode,
-                      },
-                    ),
-                  });
+                  return (
+                    <NestedRow
+                      isAnyAncestorCollapsed={
+                        isAnyAncestorCollapsedProp || !isExpanded
+                      }
+                      indentLevel={indentLevel + 1}
+                      key={`${indexRef.current}-${indentLevel}-${index}`}
+                      state={state}
+                      {...child.props}
+                    />
+                  );
                 }
               })
             }
@@ -348,8 +269,6 @@ const Row = React.forwardRef(
         isAnyAncestorCollapsedProp,
         isBrowser,
         indentLevel,
-        nestedRowHeight,
-        darkMode,
       ]);
 
     const renderedChildren = useMemo(() => {
