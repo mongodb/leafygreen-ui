@@ -12,11 +12,18 @@ export default function Blob({
   mode = 'production',
   onGridCircleClick,
   className,
+  ...rest
 }: BlobProps) {
   const path = useMemo(() => generateBlobPath(shape), [shape]);
 
   return (
-    <svg viewBox="0 0 8 8" width="100%" height="100%" className={className}>
+    <svg
+      viewBox="0 0 8 8"
+      width="100%"
+      height="100%"
+      className={className}
+      {...rest}
+    >
       {/* DEBUG */}
       {mode !== 'production' && (
         <g>
