@@ -1,3 +1,5 @@
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 export type blobChar = 'o' | 'O' | ' ';
 export type blobRow = [blobChar, blobChar, blobChar, blobChar];
 export type blobCode = [blobRow, blobRow, blobRow, blobRow];
@@ -8,7 +10,7 @@ export const isCharLarge = (char: blobChar): char is 'O' => char === 'O';
 
 type BlobMode = 'debug' | 'interactive' | 'production';
 
-export interface BlobProps {
+export interface BlobProps extends HTMLElementProps<'svg'> {
   /**
    * The 2D array defining the blob's shape
    */
