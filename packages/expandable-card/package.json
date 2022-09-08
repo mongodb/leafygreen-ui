@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/expandable-card",
-  "version": "0.9.6",
+  "version": "1.0.0",
   "description": "leafyGreen UI Kit Expandable Card",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,17 +20,17 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/card": "^7.0.0",
-    "@leafygreen-ui/icon": "^11.10.1",
-    "@leafygreen-ui/icon-button": "13.1.0",
-    "@leafygreen-ui/lib": "^9.4.1",
-    "@leafygreen-ui/typography": "^13.1.1",
-    "@leafygreen-ui/emotion": "4.0.0",
-    "@leafygreen-ui/hooks": "7.3.0",
+    "@leafygreen-ui/card": "^7.0.1",
+    "@leafygreen-ui/icon": "^11.10.2",
+    "@leafygreen-ui/icon-button": "13.1.1",
+    "@leafygreen-ui/lib": "^9.4.2",
+    "@leafygreen-ui/typography": "^13.1.2",
+    "@leafygreen-ui/emotion": "4.0.1",
+    "@leafygreen-ui/hooks": "7.3.1",
     "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.3.2"
+    "@leafygreen-ui/leafygreen-provider": "^2.3.3"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/expandable-card",
   "repository": {

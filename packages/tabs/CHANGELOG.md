@@ -1,5 +1,20 @@
 # @leafygreen-ui/tabs
 
+## 9.0.2
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/a11y@1.3.1
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/portal@4.0.4
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 9.0.1
 
 ### Patch Changes

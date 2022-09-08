@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 6.1.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+
 ## 6.1.2
 
 ### Patch Changes
