@@ -35,7 +35,9 @@ const cli = new Command('slackbot')
     'Channel to post to.',
     'leafygreen-ui-releases',
   )
-  .addHelpText('after', `
+  .addHelpText(
+    'after',
+    `
     Runs the update announcement Slackbot.
     This command is run by GitHub Actions immediately after \`changeset\`.
 
@@ -47,7 +49,8 @@ const cli = new Command('slackbot')
 
     Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
     Valid channels are: ${Object.keys(Channels).join(', ')}.
-  `)
+  `,
+  )
   .parse(process.argv);
 
 try {
@@ -62,7 +65,8 @@ try {
         const channel: string = Channels[channelName as keyof typeof Channels];
         slackbot(botToken, channel, updatesArray);
       } else {
-        errMsg = 'Updates array not found/incorrect format. Expected array of `{name: "@xx/yy", version: "a.b.c"}`';
+        errMsg =
+          'Updates array not found/incorrect format. Expected array of `{name: "@xx/yy", version: "a.b.c"}`';
       }
     } else {
       errMsg = `Channel name incorrect. Recieved ${channelName}`;
