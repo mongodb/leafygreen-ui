@@ -32,9 +32,19 @@ const cli = new Command('slackbot')
   .arguments('<updates>')
   .option(
     '-c, --channel <channel>',
-    'Channel to post to. Defaults to "leafygreen-ui-releases"',
-    Channels['leafygreen-ui-releases'],
+    'Channel to post to.',
+    'leafygreen-ui-releases',
   )
+  .addHelpText('after', `
+    Runs the update announcement Slackbot.
+    This command is run by GitHub Actions immediately after \`changeset\`
+
+    To run this automatically, pass in an array of updates (in the format output by \`changeset\`) as the first argument.
+    i.e. \`yarn slackbot '[{"name": "@leafygreen-ui/sample", "version": "0.1.0"}]' \`
+
+    Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
+    Valid channels are: ${Object.keys(Channels).join(', ')}.
+  `)
   .parse(process.argv);
 
 try {
