@@ -1,5 +1,18 @@
 # @leafygreen-ui/confirmation-modal
 
+## 3.0.7
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/button@16.0.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/modal@10.0.1
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/text-input@10.1.3
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 3.0.6
 
 ### Patch Changes

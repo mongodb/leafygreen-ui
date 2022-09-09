@@ -63,7 +63,6 @@ export default {
       },
     },
     onCopy: { control: 'none' },
-    showCustomButtons: { control: 'boolean' },
     usePortal: { control: 'boolean' },
     copyable: { control: 'boolean' },
     showWindowChrome: { control: 'boolean' },
@@ -76,6 +75,8 @@ export default {
     lineNumberStart: { control: 'number' },
     children: { control: 'none' },
     customActionButtons: { control: 'none' },
+    showCustomButtons: { control: 'none' },
+    showCustomActionButtons: { control: 'none' },
   },
 };
 

@@ -144,7 +144,7 @@ function Popover({
 
   // We don't memoize these values as they're reliant on scroll positioning
   const referenceElViewportPos = useObjectDependency(
-    getElementViewportPosition(referenceElement, scrollContainer),
+    getElementViewportPosition(referenceElement, scrollContainer, true),
   );
 
   // We use contentNode.parentNode since the parentNode has a transition applied to it and we want to be able to get the width of this element before it is transformed. Also as noted below, the parentNode cannot have a ref on it.
@@ -158,7 +158,7 @@ function Popover({
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
-      () => getElementDocumentPosition(referenceElement, scrollContainer),
+      () => getElementDocumentPosition(referenceElement, scrollContainer, true),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
         referenceElement,
