@@ -1,39 +1,83 @@
 require('dotenv').config();
-const { WebClient } = require('@slack/web-api');
-const { sample } = require('lodash');
-const fetch = require('node-fetch');
+import { WebClient } from '@slack/web-api';
+import { isUndefined, sample } from 'lodash';
+// import fetch from 'node-fetch';
+import { Command } from 'commander';
+import chalk from 'chalk';
 
-const updatesArray = JSON.parse(process.argv[2]);
-// const channel = 'C02JA6UG886'; // design-system-testing
-// const channel = 'GGGR7AXHP'; // design-system-team
-const channel = 'C01CBLPFD35'; // leafygreen-ui-releases
+interface ComponentUpdateObject {
+  name: string;
+  version: string;
+}
+interface SortedUpdates {
+  major: Array<ComponentUpdateObject>;
+  minor: Array<ComponentUpdateObject>;
+  patch: Array<ComponentUpdateObject>;
+}
+
+const isComponentUpdateObject = (obj: any): obj is ComponentUpdateObject =>
+  typeof obj === 'object' &&
+  Object.prototype.hasOwnProperty.call(obj, 'name') &&
+  Object.prototype.hasOwnProperty.call(obj, 'version');
+const isValidUpdatesArray = (arr: any): arr is Array<ComponentUpdateObject> =>
+  Array.isArray(arr) && arr.every(isComponentUpdateObject);
+
+const Channels = {
+  'design-system-testing': 'C02JA6UG886',
+  'design-system-team': 'GGGR7AXHP',
+  'leafygreen-ui-releases': 'C01CBLPFD35',
+} as const;
+
+const cli = new Command('slackbot')
+  .arguments('<updates>')
+  .option(
+    '-c, --channel <channel>',
+    'Channel to post to. Defaults to "leafygreen-ui-releases"',
+    Channels['leafygreen-ui-releases'],
+  )
+  .parse(process.argv);
 
 try {
   const botToken = process.env.SLACK_BOT_TOKEN;
+  const channelName = cli.opts()['channel'];
+  const updatesArray: any = JSON.parse(cli.args[0]);
+  let errMsg = '';
 
-  if (exists(botToken) && exists(updatesArray)) {
-    slackbot(botToken);
+  if (exists(botToken) && typeof botToken === 'string') {
+    if (exists(channelName) && Object.keys(Channels).includes(channelName)) {
+      if (exists(updatesArray) && isValidUpdatesArray(updatesArray)) {
+        const channel: string = Channels[channelName as keyof typeof Channels];
+        slackbot(botToken, channel, updatesArray);
+      } else {
+        errMsg = 'Updates array not found/incorrect format. Expected array of `{name: "@xx/yy", version: "a.b.c"}`';
+      }
+    } else {
+      errMsg = `Channel name incorrect. Recieved ${channelName}`;
+    }
   } else {
-    console.warn(
-      exists(botToken) ? 'Updates array not found' : 'Bot token not found',
-    );
+    errMsg = 'Bot Token not found';
   }
-} catch (error) {
+  console.warn(chalk.yellow(errMsg));
+} catch (error: any) {
   console.error(`Error:`, error.message);
 }
 
-async function slackbot(botToken) {
-  const sortedUpdates = updatesArray.reduce(
-    (updates, component) => {
+async function slackbot(
+  botToken: string,
+  channel: string,
+  updates: Array<ComponentUpdateObject>,
+) {
+  const sortedUpdates: SortedUpdates = updates.reduce(
+    (updates: SortedUpdates, component: ComponentUpdateObject) => {
       if (component.version.endsWith('.0.0')) updates.major.push(component);
       else if (component.version.endsWith('.0')) updates.minor.push(component);
       else updates.patch.push(component);
       return updates;
     },
     {
-      major: [],
-      minor: [],
-      patch: [],
+      major: [] as Array<ComponentUpdateObject>,
+      minor: [] as Array<ComponentUpdateObject>,
+      patch: [] as Array<ComponentUpdateObject>,
     },
   );
 
@@ -49,7 +93,7 @@ async function slackbot(botToken) {
     .map(parsePatchChangeString)
     .join('\n');
 
-  const greeting = getGreeting(updatesArray.length);
+  const greeting = getGreeting(updates.length);
   const allUpdateStrings = [greeting];
 
   if (majorUpdatesString.length > 0)
@@ -75,11 +119,11 @@ async function slackbot(botToken) {
 
 /* UTILS */
 
-function exists(arg) {
-  return !!arg && arg.length > 0;
+function exists(arg?: string | Array<any>) {
+  return !isUndefined(arg) && arg.length > 0;
 }
 
-function getGreeting(length) {
+function getGreeting(length: number) {
   const EMOJIS = [
     ':wave:',
     ':lefty_wave:',
@@ -118,13 +162,13 @@ function getGreeting(length) {
   return `${emoji} ${greeting} ${intro}`;
 }
 
-function getTimeOfDay(time) {
+function getTimeOfDay(time: number) {
   if (time <= 12) return 'morning';
   else if (time <= 18) return 'afternoon';
   else return 'evening';
 }
 
-function generateOutputStrings({ name, version }) {
+function generateOutputStrings({ name, version }: ComponentUpdateObject) {
   const shortName = name.split('/')[1];
   const changelogUrl = `https://github.com/mongodb/leafygreen-ui/blob/main/packages/${shortName}/CHANGELOG.md`;
   const fullName = `${name}@${version}`;
@@ -136,25 +180,25 @@ function generateOutputStrings({ name, version }) {
   };
 }
 
-function parseMinorChangeString(component) {
+function parseMinorChangeString(component: ComponentUpdateObject) {
   const { fullName, changelogUrl } = generateOutputStrings(component);
   return `*<${changelogUrl} | ${fullName}>*`;
 }
 
-function parsePatchChangeString(component) {
+function parsePatchChangeString(component: ComponentUpdateObject) {
   const { fullName, changelogUrl } = generateOutputStrings(component);
   return `*<${changelogUrl} | ${fullName}>*`;
 }
 
-// eslint-disable-next-line no-unused-vars
-async function fetchChangelogText(component) {
-  const { shortName } = generateOutputStrings(component);
-  const rawChangelogUrl = `https://raw.githubusercontent.com/mongodb/leafygreen-ui/main/packages/${shortName}/CHANGELOG.md`;
-  const response = await fetch(rawChangelogUrl);
-  return await response.text();
-}
+// // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+// async function fetchChangelogText(component: ComponentUpdateObject) {
+//   const { shortName } = generateOutputStrings(component);
+//   const rawChangelogUrl = `https://raw.githubusercontent.com/mongodb/leafygreen-ui/main/packages/${shortName}/CHANGELOG.md`;
+//   const response = await fetch(rawChangelogUrl);
+//   return await response.text();
+// }
 
-async function parseMajorChangeString(component) {
+async function parseMajorChangeString(component: ComponentUpdateObject) {
   const { fullName, changelogUrl } = generateOutputStrings(component);
   // TODO: decide how we want to format the changelog text
   // const changelogText = await fetchChangelogText(component)
