@@ -62,9 +62,7 @@ const Template: ComponentStory<typeof TooltipGuide> = ({darkMode ,...args}) => {
       >
         story refEl trigger
       </div>
-      <TooltipGuide {...args} darkMode={darkMode} open={open} setOpen={setOpen} refEl={triggerRef}>
-        <p>Hello from inside the tooltip</p>
-      </TooltipGuide>
+      <TooltipGuide {...args} darkMode={darkMode} open={open} setOpen={setOpen} refEl={triggerRef} />
     </>
   );
 };

@@ -204,6 +204,8 @@ function TooltipGuide({
     }
   }, [open]);
 
+  // Warning if current step is larger than number of steps
+
   // TODO: TRAP FOCUS!!!!!!!
 
   return (
@@ -221,7 +223,7 @@ function TooltipGuide({
         align={tooltipAlignment}
         trigger={<div className={beaconStyles}></div>}
         className={cx(tooltipStyles, tooltipClassName)}
-      >
+        >
         <IconButton
           className={closeStyles}
           aria-label="Close Tooltip"
@@ -258,7 +260,7 @@ function TooltipGuide({
             {buttonText}
           </Button>
         </div>
-      </Tooltip>
+        </Tooltip>
     </Popover>
   );
 }
