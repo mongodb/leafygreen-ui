@@ -1,5 +1,17 @@
 # @leafygreen-ui/logo
 
+## 6.1.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+
+## 6.1.2
+
+### Patch Changes
+
+- 2b6f86d2: Update SupportedColorsMap to pull from palette and remove all instances of uiColors
+
 ## 6.1.1
 
 ### Patch Changes

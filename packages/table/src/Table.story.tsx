@@ -8,7 +8,7 @@ import { TableProps } from './Table';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/Table',
+  title: 'Components/Table',
   component: Table,
   args: {
     data: defaultData,
@@ -295,5 +295,67 @@ export const MultipleNestedRows = ({
   </Table>
 );
 MultipleNestedRows.args = {
+  withHeaders: true,
+};
+
+export const NestedRowsWithLongContent = ({
+  withHeaders,
+  ...args
+}: TableArgs<any>) => (
+  <Table
+    {...args}
+    data={[
+      {
+        title: 'People',
+        people: [
+          {
+            name: 'Nulla vitae elit libero, a pharetra augue. Sed posuere consectetur est at lobortis.',
+            age: 19,
+            color: 'blue',
+            location: 'bedford',
+            rand: Math.random(),
+          },
+          ...defaultData,
+        ],
+      },
+      {
+        title: 'Average',
+        age: (
+          defaultData.reduce((sum, { age }) => sum + age, 0) /
+          defaultData.length
+        ).toFixed(2),
+      },
+    ]}
+    columns={
+      <HeaderRow>
+        <TableHeader key="name" label="Name" dataType="string" />
+        <TableHeader key="age" label="Age" dataType="number" />
+        <TableHeader label="Color" dataType="string" key="color" />
+        <TableHeader key="location" label="Location" />
+      </HeaderRow>
+    }
+    style={{ maxWidth: '400px ' }}
+  >
+    {({ datum }: { datum: any }) => (
+      <Row key={datum.title}>
+        <Cell isHeader={withHeaders}>{datum.title}</Cell>
+
+        {datum.people ? (
+          datum.people.map((person: any) => (
+            <Row key={person.name}>
+              <Cell isHeader={withHeaders}>{person.name}</Cell>
+              <Cell>{person.age}</Cell>
+              <Cell>{person.color}</Cell>
+              <Cell>{person.location}</Cell>
+            </Row>
+          ))
+        ) : (
+          <Cell>{datum.age}</Cell>
+        )}
+      </Row>
+    )}
+  </Table>
+);
+NestedRowsWithLongContent.args = {
   withHeaders: true,
 };

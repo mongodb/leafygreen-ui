@@ -1,5 +1,30 @@
 # @leafygreen-ui/marketing-modal
 
+## 3.0.5
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/button@16.0.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/modal@10.0.1
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/button@16.0.0
+  - @leafygreen-ui/modal@10.0.0
+  - @leafygreen-ui/typography@13.0.0
+
 ## 3.0.3
 
 ### Patch Changes

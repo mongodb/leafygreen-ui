@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.2.2
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+
 ## 0.2.1
 
 ### Patch Changes

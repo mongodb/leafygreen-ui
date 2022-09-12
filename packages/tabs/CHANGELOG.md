@@ -1,5 +1,44 @@
 # @leafygreen-ui/tabs
 
+## 9.0.2
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/a11y@1.3.1
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/portal@4.0.4
+  - @leafygreen-ui/tokens@1.3.2
+
+## 9.0.1
+
+### Patch Changes
+
+- 699f8ba7: Add missing unit to `TabTitle` font-size
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
+## 9.0.0
+
+### Major Changes
+
+- 5aba12f1: - Updates `Tabs` for dark mode brand refresh
+  - Adds `disabled` to `TabTitle` props
+
+## 8.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+
 ## 7.0.1
 
 ### Patch Changes

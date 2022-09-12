@@ -1,5 +1,52 @@
 # @leafygreen-ui/table
 
+## 6.0.0
+
+### Major Changes
+
+- 885226db: Changing default alignment of cell content from baseline to top
+
+### Patch Changes
+
+- 809a098e: Improves handling of open/close transition for tall nested content
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/icon-button@13.1.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
+## 5.0.1
+
+### Patch Changes
+
+- 8892dd16: Remove checkbox dependency
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/icon-button@13.1.0
+
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/checkbox@9.0.0
+  - @leafygreen-ui/icon-button@13.0.0
+
 ## 4.1.1
 
 ### Patch Changes

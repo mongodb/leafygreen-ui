@@ -21,6 +21,9 @@
     },
     {
       "path": "../box"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

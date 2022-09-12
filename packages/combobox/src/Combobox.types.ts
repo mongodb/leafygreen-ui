@@ -1,6 +1,13 @@
 import { ReactElement, ReactNode } from 'react';
 import { Either } from '@leafygreen-ui/lib';
 
+export const Theme = {
+  Dark: 'dark',
+  Light: 'light',
+} as const;
+
+export type Theme = typeof Theme[keyof typeof Theme];
+
 /**
  * Prop Enums & Types
  */
@@ -40,9 +47,18 @@ export type TrunctationLocation =
   typeof TrunctationLocation[keyof typeof TrunctationLocation];
 
 export const Overflow = {
+  /**
+   * Combobox will be set to a fixed width, and will expand its height based on the number of Chips selected
+   */
   expandY: 'expand-y',
-  expandX: 'expand-x',
+  /**
+   * Combobox will be set to a fixed height and width (default 100% of container). Chips will be scrollable left-right
+   */
   scrollX: 'scroll-x',
+  /**
+   * @deprecated
+   */
+  expandX: 'expand-x',
 } as const;
 export type Overflow = typeof Overflow[keyof typeof Overflow];
 

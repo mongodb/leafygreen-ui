@@ -1,11 +1,12 @@
 import React from 'react';
-import { uiColors, palette } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { ButtonProps, Variant, Size, Mode } from './types';
+import { ButtonProps, Variant, Size } from './types';
 import { ButtonDataProp } from './styles';
+import { getTheme, Theme } from '@leafygreen-ui/lib';
 
-const baseIconStyle: Record<Mode, Record<Variant, string>> = {
-  [Mode.Light]: {
+const baseIconStyle: Record<Theme, Record<Variant, string>> = {
+  [Theme.Light]: {
     [Variant.Default]: css`
       color: ${palette.gray.base};
     `,
@@ -26,7 +27,7 @@ const baseIconStyle: Record<Mode, Record<Variant, string>> = {
     `,
   },
 
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     [Variant.Default]: css`
       color: ${palette.gray.light2};
     `,
@@ -43,50 +44,50 @@ const baseIconStyle: Record<Mode, Record<Variant, string>> = {
       color: ${palette.red.light1};
     `,
     [Variant.BaseGreen]: css`
-      color: ${uiColors.green.dark3};
+      color: ${palette.green.dark2};
     `,
   },
 };
 
-const onlyIconStyle: Record<Mode, Record<Variant, string>> = {
-  [Mode.Light]: {
+const onlyIconStyle: Record<Theme, Record<Variant, string>> = {
+  [Theme.Light]: {
     [Variant.Default]: css`
-      color: ${palette.gray.dark1};
+      color: ${palette.black};
     `,
     [Variant.Primary]: css`
-      color: ${palette.green.light3};
+      color: ${palette.white};
     `,
     [Variant.PrimaryOutline]: css`
       color: ${palette.green.dark2};
     `,
     [Variant.Danger]: css`
-      color: ${palette.red.light3};
+      color: ${palette.white};
     `,
     [Variant.DangerOutline]: css`
-      color: ${palette.red.light1};
+      color: ${palette.red.base};
     `,
     [Variant.BaseGreen]: css`
-      color: ${palette.green.dark2};
+      color: ${palette.green.dark3};
     `,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     [Variant.Default]: css`
-      color: ${palette.gray.light3};
+      color: ${palette.white};
     `,
     [Variant.Primary]: css`
-      color: ${palette.green.light3};
+      color: ${palette.white};
     `,
     [Variant.PrimaryOutline]: css`
       color: ${palette.green.base};
     `,
     [Variant.Danger]: css`
-      color: ${palette.red.light3};
+      color: ${palette.white};
     `,
     [Variant.DangerOutline]: css`
       color: ${palette.red.light1};
     `,
     [Variant.BaseGreen]: css`
-      color: ${uiColors.green.dark3};
+      color: ${palette.green.dark3};
     `,
   },
 };
@@ -117,18 +118,23 @@ const iconSize: Record<Size, string> = {
   `,
 };
 
-const disabledIconStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const disabledIconStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.gray.light1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.dark1};
   `,
 };
 
-const disabledIconOnlyStyle = css`
-  color: ${palette.gray.light1};
-`;
+const disabledIconOnlyStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark2};
+  `,
+};
 
 function ButtonIcon({
   glyph,
@@ -149,17 +155,17 @@ function ButtonIcon({
     role: 'presentation',
   };
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const theme = getTheme(darkMode);
   const iconStyle = isIconOnlyButton ? onlyIconStyle : baseIconStyle;
 
   return React.cloneElement(glyph, {
     className: cx(
-      iconStyle[mode][variant],
+      iconStyle[theme][variant],
       iconSize[size],
       {
-        [disabledIconStyle[mode]]: disabled,
+        [disabledIconStyle[theme]]: disabled,
         [onlyIconStyleHover]: isIconOnlyButton,
-        [disabledIconOnlyStyle]: !darkMode && disabled && isIconOnlyButton,
+        [disabledIconOnlyStyle[theme]]: disabled && isIconOnlyButton,
       },
       className,
     ),

@@ -5,6 +5,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import Option from './Option';
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const optionGroupStyle = css`
   padding: 8px 0;
@@ -25,7 +26,7 @@ const optionGroupLabelStyle = css`
 
 export type ReactEmpty = null | undefined | false | '';
 
-export interface InternalProps {
+export interface InternalProps extends HTMLElementProps<'div', HTMLDivElement> {
   className: string | undefined;
   label: string;
   children: React.ReactNode;
@@ -35,22 +36,15 @@ export function InternalOptionGroup({
   className,
   label,
   children,
+  ...rest
 }: InternalProps) {
-  const { mode } = useContext(SelectContext);
-  const colorSet = colorSets[mode].option;
+  const { theme } = useContext(SelectContext);
+  const colorSet = colorSets[theme].option;
 
   const groupId = useIdAllocator({ prefix: 'select-option-group' });
 
   return (
-    <div
-      className={cx(
-        optionGroupStyle,
-        css`
-          border-bottom: 1px solid ${colorSet.group.border};
-        `,
-        className,
-      )}
-    >
+    <div className={cx(optionGroupStyle, className)} {...rest}>
       <div
         id={groupId}
         className={cx(
@@ -71,7 +65,7 @@ export function InternalOptionGroup({
 
 InternalOptionGroup.displayName = 'OptionGroup';
 
-interface Props {
+interface Props extends HTMLElementProps<'div', HTMLDivElement> {
   className?: string;
   label: string;
   disabled?: boolean;

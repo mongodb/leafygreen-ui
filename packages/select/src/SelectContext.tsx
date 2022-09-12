@@ -1,15 +1,16 @@
 import { createContext } from 'react';
-import { Mode, Size } from './styleSets';
+import { Size } from './types';
+import { Theme } from '@leafygreen-ui/lib';
 
 interface SelectData {
-  mode: Mode;
+  theme: Theme;
   size: Size;
   open: boolean;
   disabled: boolean;
 }
 
 export const SelectContext = createContext<SelectData>({
-  mode: Mode.Light,
+  theme: Theme.Light,
   size: Size.Default,
   open: false,
   disabled: false,

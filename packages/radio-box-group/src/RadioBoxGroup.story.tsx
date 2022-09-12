@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
+import Tooltip from '@leafygreen-ui/tooltip';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import RadioBoxGroup, { RadioBoxGroupProps } from './RadioBoxGroup';
 import RadioBox from './RadioBox';
 
 export default {
-  title: 'Packages/RadioBoxGroup',
+  title: 'Components/RadioBoxGroup',
   component: RadioBoxGroup,
   argTypes: {
     children: { control: false },
@@ -39,5 +40,37 @@ export const Controlled = (args: RadioBoxGroupProps) => {
 
   return (
     <Uncontrolled {...args} onChange={handleChange} value={activeRadioBox} />
+  );
+};
+
+export const TooltipTest = () => {
+  return (
+    <LeafyGreenProvider>
+      <RadioBoxGroup>
+        <Tooltip
+          justify="middle"
+          trigger={<RadioBox value="one">One</RadioBox>}
+        >
+          This one is pretty cool.
+        </Tooltip>
+        <Tooltip
+          justify="middle"
+          trigger={<RadioBox value="two">Two</RadioBox>}
+        >
+          This does a thing.
+        </Tooltip>
+
+        <Tooltip
+          justify="middle"
+          trigger={
+            <RadioBox value="three" disabled>
+              Three
+            </RadioBox>
+          }
+        >
+          This is disabled for a reason.
+        </Tooltip>
+      </RadioBoxGroup>
+    </LeafyGreenProvider>
   );
 };

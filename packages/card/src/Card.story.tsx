@@ -20,11 +20,12 @@ export const Card: React.FC<CardStoryProps> = props => (
 );
 
 export default {
-  title: 'Packages/Card',
+  title: 'Components/Card',
   component: Card,
   excludeStories: ['Card'],
   args: {
     children: 'This is a card component.',
+    darkMode: false,
   },
   argTypes: {
     href: { control: 'text' },

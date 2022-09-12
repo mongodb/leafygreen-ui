@@ -65,19 +65,6 @@ export function calculatePosition({
     spacing,
   };
 
-  // calculatePosition will run and return CSS even if getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if something is returned.
-  //  Justify fit does not position itself properly in this case so we continue to return the CSS
-  if (contentElViewportPos.width === 0 && justify !== Justify.Fit) {
-    return {
-      align,
-      justify,
-      positionCSS: {
-        left: 0,
-        top: 0,
-      },
-    };
-  }
-
   const windowSafeAlign = getWindowSafeAlign(align, windowSafeCommonArgs);
   const windowSafeJustify = getWindowSafeJustify(
     justify,
@@ -91,6 +78,21 @@ export function calculatePosition({
   });
 
   const transform = getTransform(windowSafeAlign, spacing);
+
+  // calculatePosition will run and return CSS even if getBoundingClientRect() returns 0 for all properties, which then causes the content to have incorrect CSS. To avoid this we only want to return CSS if something is returned.
+  //  Justify fit does not position itself properly in this case so we continue to return the CSS
+  if (Math.floor(contentElViewportPos.width) === 0 && justify !== Justify.Fit) {
+    return {
+      align,
+      justify,
+      positionCSS: {
+        left: 0,
+        top: 0,
+        transform,
+        transformOrigin,
+      },
+    };
+  }
 
   if (useRelativePositioning) {
     return {
@@ -139,29 +141,9 @@ const defaultElementPosition = {
 };
 
 /**
- * Returns the boundingWidth if the difference between the boundingWidth and offsetWidth is less than one else the offsetWidth is returned.
+ * Returns the width and height as well as the top, bottom, left, and right positions of an element.
  */
-const getClosestToExactWidth = (
-  boundingWidth: number,
-  offsetWidth: number,
-): number => {
-  // offsetWidth returns a rounded number of the element's layout width and height.
-  // boundingWidth returns an exact number with the rendered width and height which can include transformations.
-  // Using the boundingWidth (exact number) is a better indicator of determining if an element will fit in the window, e.g. calcLeft() uses the width to determine the left position and then that number is used to check if it is safetly within the window bounds. In some cases the offsetWidth is rounded up which means that it might not fit in the window bounds when it really can.
-  // With this we check if the difference between the boundingWidth and offsetWidth is less than one, if thats the case then the number was rounded to a whole number and we should use the exact number instead. However if the number is greater than one then that means that the boundingWidth is returning a width that has a transformation applied to it and we don't want that number. We want the untransformed width.
-  const wasRounded = Math.abs(boundingWidth - offsetWidth) < 1;
-
-  return wasRounded ? boundingWidth : offsetWidth;
-};
-
-export function getElementDocumentPosition(
-  element: HTMLElement | null,
-  scrollContainer?: HTMLElement | null,
-): ElementPosition {
-  if (!element) {
-    return defaultElementPosition;
-  }
-
+const getElementPosition = (element: HTMLElement, isReference?: boolean) => {
   const {
     top,
     bottom,
@@ -169,9 +151,37 @@ export function getElementDocumentPosition(
     right,
     width: boundingWidth,
   } = element.getBoundingClientRect();
-  const { offsetHeight: height, offsetWidth } = element;
+  const { offsetHeight: height } = element;
+  // Returns the unrounded, floating point width of the content element which does not include transformations.
+  // `offsetWidth` would not work because this returns a rounded number of the element's layout width and `getBoundingClientRect.width` would also not work because it returns an exact number of the rendered width which can include transformations.
+  // If this element is the reference element return element.getBoundingClientRect().width since we don't have to be as strict with the width. If we used getComputedStyle then the reference element has to have a display other than inline set on it.
+  const width = isReference
+    ? boundingWidth
+    : parseFloat(getComputedStyle(element).width);
 
-  const width = getClosestToExactWidth(boundingWidth, offsetWidth);
+  return {
+    top,
+    bottom,
+    left,
+    right,
+    height,
+    width,
+  };
+};
+
+export function getElementDocumentPosition(
+  element: HTMLElement | null,
+  scrollContainer?: HTMLElement | null,
+  isReference?: boolean,
+): ElementPosition {
+  if (!element) {
+    return defaultElementPosition;
+  }
+
+  const { top, bottom, left, right, height, width } = getElementPosition(
+    element,
+    isReference,
+  );
 
   if (scrollContainer) {
     const { scrollTop, scrollLeft } = scrollContainer;
@@ -208,21 +218,16 @@ export function getElementDocumentPosition(
 export function getElementViewportPosition(
   element: HTMLElement | null,
   scrollContainer?: HTMLElement | null,
+  isReference?: boolean,
 ): ElementPosition {
   if (!element) {
     return defaultElementPosition;
   }
 
-  const {
-    top,
-    bottom,
-    left,
-    right,
-    width: boundingWidth,
-  } = element.getBoundingClientRect();
-  const { offsetHeight: height, offsetWidth } = element;
-
-  const width = getClosestToExactWidth(boundingWidth, offsetWidth);
+  const { top, bottom, left, right, height, width } = getElementPosition(
+    element,
+    isReference,
+  );
 
   if (scrollContainer) {
     const {
@@ -583,7 +588,6 @@ function safelyWithinHorizontalWindow({
   contentWidth: number;
 }): boolean {
   const tooWide = left + contentWidth > windowWidth;
-
   return left >= 0 && !tooWide;
 }
 
@@ -633,7 +637,6 @@ function getWindowSafeAlign(
   return (
     alignOptions.find(fallback => {
       // Check that an alignment will not cause the popover to collide with the window.
-
       if (
         (
           [Align.Top, Align.Bottom, Align.CenterVertical] as Array<Align>

@@ -1,5 +1,55 @@
 # @leafygreen-ui/text-area
 
+## 6.1.2
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/interaction-ring@4.0.1
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 6.1.1
+
+### Patch Changes
+
+- 3dbc73ba: Update darkMode background-color to match figma designs
+
+## 6.1.0
+
+### Minor Changes
+
+- 65c86281: Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set
+
+### Patch Changes
+
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/typography@13.1.0
+
+## 6.0.2
+
+### Patch Changes
+
+- f4cacd36: Remove z-index from textarea
+- Updated dependencies [13a4adcc]
+  - @leafygreen-ui/typography@13.0.1
+
+## 6.0.1
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/interaction-ring@4.0.0
+  - @leafygreen-ui/typography@13.0.0
+
 ## 6.0.0
 
 ### Major Changes

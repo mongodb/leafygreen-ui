@@ -1,5 +1,40 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 2.3.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/lib@9.4.2
+
+## 2.3.2
+
+### Patch Changes
+
+- ee3586c9: Resolves a ReferenceError in PopoverContext
+- Updated dependencies [95f1e63a]
+  - @leafygreen-ui/lib@9.4.1
+
+## 2.3.1
+
+### Patch Changes
+
+- a8be50d8: Fixes a bad build that dropped `useDarkMode` from exports
+
+## 2.3.0
+
+### Minor Changes
+
+- 99e20bb9: Reusable DarkModeProps and darkMode prop for LeafygreenProvider
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+
 ## 2.2.0
 
 ### Minor Changes

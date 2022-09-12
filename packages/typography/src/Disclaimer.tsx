@@ -1,36 +1,46 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { baseTypographyStyles, defaultTextColor } from './styles';
-import { CommonTypographyProps, Mode } from './types';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { baseTypographyStyles } from './styles';
+import { CommonTypographyProps } from './types';
+import { palette } from '@leafygreen-ui/palette';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Disclaimer
  */
 const disclaimer = css`
   display: block;
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 11px;
+  line-height: 16px;
   letter-spacing: 0.2px;
 `;
+
+export const disclaimerTextColor: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+  `,
+};
 
 type DisclaimerProps = HTMLElementProps<'small'> & CommonTypographyProps;
 
 export function Disclaimer({
-  darkMode,
+  darkMode: darkModeProp,
   children,
   className,
   ...rest
 }: DisclaimerProps) {
-  // TODO: Replace with context
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
   return (
     <small
       {...rest}
       className={cx(
         baseTypographyStyles,
         disclaimer,
-        defaultTextColor[mode],
+        disclaimerTextColor[theme],
         className,
       )}
     >

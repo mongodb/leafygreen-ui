@@ -1,5 +1,29 @@
 # @leafygreen-ui/lib
 
+## 9.4.2
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/emotion@4.0.1
+
+## 9.4.1
+
+### Patch Changes
+
+- 95f1e63a: Fixes a bad build where `getTheme` was not properly exported
+
+## 9.4.0
+
+### Minor Changes
+
+- 99e20bb9: Reusable DarkModeProps and darkMode prop for LeafygreenProvider
+
+### Patch Changes
+
+- 85d46871: Adds `lodash` as an explicit dependency of `lib`. Imports `lodash` utility in a tree-shakable way
+
 ## 9.3.0
 
 ### Minor Changes

@@ -1,22 +1,40 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
+import isUndefined from 'lodash/isUndefined';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { useAvailableSpace, useEventListener } from '@leafygreen-ui/hooks';
-import { isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { FocusableMenuItemElement } from './FocusableMenuItem';
 import { MenuItemElement } from './MenuItem';
 import { SubMenuElement } from './SubMenu';
+import MenuSeparator, { MenuSeparatorElement } from './MenuSeparator';
 import { MenuProps } from './types';
+import { MenuContext } from './MenuContext';
 
 const rootMenuStyle = css`
-  width: 200px;
+  width: 210px;
   border-radius: 12px;
   overflow: auto;
   padding: 14px 0;
-  background-color: ${palette.black};
 `;
+
+const rootMenuThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.black};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.light2};
+  `,
+};
 
 const scrollContainerStyle = css`
   overflow: auto;
@@ -43,13 +61,14 @@ const scrollContainerStyle = css`
  * @param props.refEl Reference element that Menu should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
+ * @param props.darkMode Determines whether or not the component will be rendered in dark theme.
  */
 function Menu({
   align = Align.Bottom,
   justify = Justify.End,
   adjustOnMutation = false,
   shouldClose = () => true,
-  spacing,
+  spacing = 6,
   open: controlledOpen,
   setOpen: controlledSetOpen,
   children,
@@ -61,9 +80,12 @@ function Menu({
   portalContainer,
   scrollContainer,
   popoverZIndex,
-  maxHeight = 256,
+  maxHeight = 344,
+  darkMode: darkModeProp,
   ...rest
 }: MenuProps) {
+  const { theme } = useDarkMode(darkModeProp);
+
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
 
@@ -79,10 +101,10 @@ function Menu({
   const open = controlledOpen ?? uncontrolledOpen;
 
   const triggerRef = useRef<HTMLElement>(null);
-  const maxMenuHeight = Math.min(
-    maxHeight,
-    useAvailableSpace(refEl || triggerRef, spacing),
-  );
+  const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
+  const maxMenuHeightValue = !isUndefined(availableSpace)
+    ? `${Math.min(availableSpace, maxHeight)}px`
+    : 'unset';
 
   const { updatedChildren, refs } = React.useMemo(() => {
     if (
@@ -182,6 +204,10 @@ function Menu({
           });
         }
 
+        if (isComponentType<MenuSeparatorElement>(child, 'MenuSeparator')) {
+          return <MenuSeparator {...props} />;
+        }
+
         if (props?.children) {
           const { children, ...rest } = props;
           return React.cloneElement(child, {
@@ -201,7 +227,7 @@ function Menu({
 
   const [popoverNode, setPopoverNode] = useState<HTMLUListElement | null>(null);
 
-  const setFocus = (el: HTMLElement) => {
+  const setFocus = (el: HTMLElement | null) => {
     if (el == null) {
       return;
     }
@@ -210,7 +236,7 @@ function Menu({
     el.focus();
   };
 
-  useMemo(() => {
+  useEffect(() => {
     if (open) {
       hasSetInitialFocus.current = false;
       hasSetInitialOpen.current = false;
@@ -260,11 +286,13 @@ function Menu({
 
     switch (e.keyCode) {
       case keyMap.ArrowDown:
+        e.preventDefault(); // Prevents page scrolling
         refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
         setFocus(refToFocus);
         break;
 
       case keyMap.ArrowUp:
+        e.preventDefault(); // Prevents page scrolling
         refToFocus =
           refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
         setFocus(refToFocus);
@@ -285,6 +313,7 @@ function Menu({
 
       case keyMap.Escape:
         handleClose();
+        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
         break;
 
       case keyMap.Space:
@@ -311,69 +340,81 @@ function Menu({
       : { spacing, usePortal }),
   };
 
+  const providerData = useMemo(() => {
+    return { theme };
+  }, [theme]);
+
   const popoverContent = (
-    <Popover
-      key="popover"
-      active={open}
-      align={align}
-      justify={justify}
-      refEl={refEl}
-      adjustOnMutation={adjustOnMutation}
-      {...popoverProps}
-    >
-      <div
-        className={cx(
-          rootMenuStyle,
-          css`
-            max-height: ${maxMenuHeight}px;
-          `,
-          className,
-        )}
+    <MenuContext.Provider value={providerData}>
+      <Popover
+        key="popover"
+        active={open}
+        align={align}
+        justify={justify}
+        refEl={refEl}
+        adjustOnMutation={adjustOnMutation}
+        {...popoverProps}
       >
-        {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-        <ul
-          {...rest}
-          className={scrollContainerStyle}
-          role="menu"
-          ref={setPopoverNode}
-          onClick={e => e.stopPropagation()}
+        <div
+          className={cx(
+            rootMenuStyle,
+            rootMenuThemeStyles[theme],
+            css`
+              max-height: ${maxMenuHeightValue};
+            `,
+            className,
+          )}
         >
-          {updatedChildren}
-        </ul>
-      </div>
-    </Popover>
+          {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+          <ul
+            {...rest}
+            className={scrollContainerStyle}
+            role="menu"
+            ref={setPopoverNode}
+            onClick={e => e.stopPropagation()}
+          >
+            {updatedChildren}
+          </ul>
+        </div>
+      </Popover>
+    </MenuContext.Provider>
   );
 
   if (trigger) {
+    const triggerClickHandler = (event?: React.MouseEvent) => {
+      setOpen((curr: boolean) => !curr);
+
+      if (trigger && typeof trigger !== 'function') {
+        trigger.props?.onClick?.(event);
+      }
+
+      // We stop the native event from bubbling, but allow the React.Synthetic event to bubble
+      // This way click handlers on parent components will still fire,
+      // but this click event won't propagate up to the document and immediately close the menu.
+      event?.nativeEvent?.stopPropagation?.();
+    };
+
     if (typeof trigger === 'function') {
       return trigger({
-        onClick: () => setOpen((curr: boolean) => !curr),
+        onClick: triggerClickHandler,
         ref: triggerRef,
         children: popoverContent,
       });
     }
 
-    const { children: triggerChildren } = trigger.props;
-
-    return React.cloneElement(trigger, {
+    const renderedTrigger = React.cloneElement(trigger, {
       ref: triggerRef,
-      onClick: (e: React.MouseEvent) => {
-        setOpen((curr: boolean) => !curr);
-
-        if (trigger.props.onClick) {
-          trigger.props.onClick(e);
-        }
-      },
-      children: triggerChildren
-        ? [
-            ...(triggerChildren instanceof Array
-              ? triggerChildren
-              : [triggerChildren]),
-            popoverContent,
-          ]
-        : popoverContent,
+      onClick: triggerClickHandler,
+      children: (
+        <>
+          {trigger.props.children}
+          {popoverContent}
+        </>
+      ),
     });
+
+    return renderedTrigger;
   }
 
   return popoverContent;
@@ -396,6 +437,7 @@ Menu.propTypes = {
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   open: PropTypes.bool,
   setOpen: PropTypes.func,
+  darkMode: PropTypes.bool,
 };
 
 export default Menu;

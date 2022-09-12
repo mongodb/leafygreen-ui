@@ -1,5 +1,47 @@
 # @leafygreen-ui/typography
 
+## 13.1.2
+
+### Patch Changes
+
+- e39d8469: Export `anchorClassName`
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 13.1.1
+
+### Patch Changes
+
+- 5aba12f1: Export and combine `Label` and `Description` styles.
+
+## 13.1.0
+
+### Minor Changes
+
+- 65c86281: Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set
+
+## 13.0.1
+
+### Patch Changes
+
+- 13a4adcc: Style updates to the `Disclaimer` component
+
+## 13.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+
 ## 12.0.0
 
 ### Major Changes

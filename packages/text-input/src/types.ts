@@ -21,13 +21,6 @@ export const TextInputType = {
 
 export type TextInputType = typeof TextInputType[keyof typeof TextInputType];
 
-export const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-export type Mode = typeof Mode[keyof typeof Mode];
-
 export const SizeVariant = {
   XSmall: 'xsmall',
   Small: 'small',
@@ -110,7 +103,7 @@ export interface BaseTextInputProps
   className?: string;
 
   /**
-   *  determines whether or not the component appears in dark mode.
+   *  determines whether or not the component appears in dark theme.
    */
   darkMode?: boolean;
 

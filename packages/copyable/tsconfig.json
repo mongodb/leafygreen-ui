@@ -30,6 +30,12 @@
     },
     {
       "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../lib"
     }
   ]
 }

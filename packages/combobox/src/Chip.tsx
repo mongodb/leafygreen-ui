@@ -1,112 +1,143 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { ChipProps, ComboboxSize } from './Combobox.types';
 import Icon from '@leafygreen-ui/icon';
-import { ComboboxContext } from './ComboboxContext';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap } from '@leafygreen-ui/lib';
-import { chipClassName } from './Combobox.styles';
 import { typeScales } from '@leafygreen-ui/tokens';
+import { ChipProps, ComboboxSize as Size, Theme } from './Combobox.types';
+import { ComboboxContext, useDarkMode } from './ComboboxContext';
+import {
+  chipClassName,
+  chipWrapperPaddingY,
+  inputHeight,
+} from './Combobox.styles';
 
-const chipWrapperStyle = ({
-  darkMode,
-  size,
-}: {
-  darkMode: boolean;
-  size: ComboboxSize;
-}) => {
-  let chipModeStyle, chipSizeStyle;
-
-  if (darkMode) {
-    chipModeStyle = css``;
-  } else {
-    chipModeStyle = css`
-      --lg-combobox-chip-text-color: ${uiColors.gray.dark3};
-      --lg-combobox-chip-icon-color: ${uiColors.gray.dark2};
-      --lg-combobox-chip-background-color: ${uiColors.gray.light2};
-      --lg-combobox-chip-hover-color: ${uiColors.gray.light1};
-      --lg-combobox-chip-focus-color: ${uiColors.blue.light2};
-    `;
-  }
-
-  switch (size) {
-    case ComboboxSize.Default:
-      chipSizeStyle = css`
-        --lg-combobox-chip-height: 24px;
-        --lg-combobox-chip-border-radius: 4px;
-        --lg-combobox-chip-font-size: 14px;
-        --lg-combobox-chip-line-height: 20px;
-        --lg-combobox-chip-padding-x: 6px;
-      `;
-      break;
-    case ComboboxSize.Large:
-      chipSizeStyle = css`
-        --lg-combobox-chip-height: 28px;
-        --lg-combobox-chip-border-radius: 4px;
-        --lg-combobox-chip-font-size: ${typeScales.body2.fontSize}px;
-        --lg-combobox-chip-line-height: ${typeScales.body2.lineHeight}px;
-        --lg-combobox-chip-padding-x: 6px;
-      `;
-      break;
-  }
-
-  return cx(
-    chipModeStyle,
-    chipSizeStyle,
-    css`
-      display: inline-flex;
-      align-items: center;
-      overflow: hidden;
-      white-space: nowrap;
-      height: var(--lg-combobox-chip-height);
-      font-size: var(--lg-combobox-chip-font-size);
-      line-height: var(--lg-combobox-chip-line-height);
-      border-radius: var(--lg-combobox-chip-border-radius);
-      color: var(--lg-combobox-chip-text-color);
-      background-color: var(--lg-combobox-chip-background-color);
-
-      // TODO - refine these styles
-      /* &:focus, */
-      &:focus-within {
-        background-color: var(--lg-combobox-chip-focus-color);
-      }
-    `,
-  );
-};
-
-const chipText = css`
-  padding-inline: var(--lg-combobox-chip-padding-x);
+const chipWrapperBaseStyle = css`
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
 `;
 
-const chipButton = css`
+const chipWrapperSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    border-radius: 4px;
+  `,
+  [Size.Large]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+    border-radius: 4px;
+  `,
+};
+
+const chipWrapperThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.black};
+    background-color: ${palette.gray.light2};
+
+    // TODO: - refine these styles with Design
+    &:focus-within {
+      background-color: ${palette.blue.light2};
+    }
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark2};
+
+    &:focus-within {
+      background-color: ${palette.blue.dark2};
+    }
+  `,
+};
+
+const disabledChipWrapperStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.base};
+    background-color: ${palette.gray.light3};
+  `,
+  [Theme.Dark]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark2};
+    background-color: ${palette.gray.dark4};
+    box-shadow: inset 0 0 1px 1px ${palette.gray.dark2}; ;
+  `,
+};
+
+const chipTextSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    padding-inline: 6px;
+    padding-block: ${chipWrapperPaddingY[Size.Default]}px;
+  `,
+  [Size.Large]: css`
+    padding-inline: 10px;
+    padding-block: ${chipWrapperPaddingY[Size.Large]}px;
+  `,
+};
+
+const chipButtonStyle = css`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   width: 100%;
   outline: none;
   border: none;
   background-color: transparent;
-  color: var(--lg-combobox-chip-icon-color);
   cursor: pointer;
   transition: background-color 100ms ease-in-out;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 1px;
-    background-color: var(--lg-combobox-chip-hover-color);
-  }
-
-  &:hover {
-    background-color: var(--lg-combobox-chip-hover-color);
-  }
 `;
+
+const chipButtonSizeStyle: Record<Size, string> = {
+  [Size.Default]: css`
+    height: ${inputHeight[Size.Default]}px;
+  `,
+  [Size.Large]: css`
+    height: ${inputHeight[Size.Large]}px;
+  `,
+};
+
+const chipButtonThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark2};
+
+    &:hover {
+      color: ${palette.black};
+      background-color: ${palette.gray.light1};
+    }
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+
+    &:hover {
+      color: ${palette.gray.light3};
+      background-color: ${palette.gray.dark1};
+    }
+  `,
+};
+
+const chipButtonDisabledStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark2};
+    &:hover {
+      color: inherit;
+      background-color: unset;
+    }
+  `,
+  [Theme.Dark]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark2};
+    &:hover {
+      color: inherit;
+      background-color: unset;
+    }
+  `,
+};
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
@@ -117,6 +148,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
+    const theme = useDarkMode(darkMode);
 
     const isTruncated =
       !!chipCharacterLimit &&
@@ -199,14 +231,26 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         aria-selected={isFocused}
         data-testid="lg-combobox-chip"
         ref={forwardedRef}
-        className={cx(chipClassName, chipWrapperStyle({ darkMode, size }))}
+        className={cx(
+          chipClassName,
+          chipWrapperBaseStyle,
+          chipWrapperThemeStyle[theme],
+          chipWrapperSizeStyle[size],
+          {
+            [disabledChipWrapperStyle[theme]]: disabled,
+          },
+        )}
         onClick={handleChipClick}
         onKeyDown={handleKeyDown}
         tabIndex={-1}
       >
-        <span className={chipText}>
+        <span className={cx(chipTextSizeStyle[size])}>
           {truncatedName ? (
-            <InlineDefinition definition={displayName} align="bottom">
+            <InlineDefinition
+              darkMode={darkMode}
+              definition={displayName}
+              align="bottom"
+            >
               {truncatedName}
             </InlineDefinition>
           ) : (
@@ -218,7 +262,14 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           aria-disabled={disabled}
           disabled={disabled}
           ref={buttonRef}
-          className={chipButton}
+          className={cx(
+            chipButtonStyle,
+            chipButtonThemeStyle[theme],
+            chipButtonSizeStyle[size],
+            {
+              [chipButtonDisabledStyle[theme]]: disabled,
+            },
+          )}
           onClick={handleButtonClick}
         >
           <Icon glyph="X" />

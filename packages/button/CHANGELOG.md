@@ -1,5 +1,42 @@
 # @leafygreen-ui/button
 
+## 16.0.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/ripple@1.1.3
+  - @leafygreen-ui/tokens@1.3.2
+
+## 16.0.2
+
+### Patch Changes
+
+- 22128084: Updates typing of `as` prop. Adds documentation to clarify the use of NextJS `Link` wrapper
+
+## 16.0.1
+
+### Patch Changes
+
+- e9177e94: Updating a few colors
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
+## 16.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+
 ## 15.0.2
 
 ### Patch Changes

@@ -1,5 +1,81 @@
 # @leafygreen-ui/menu
 
+## 16.0.0
+
+### Major Changes
+
+- a1202635: Adds a call to `event.nativeEvent.stopPropagation()` on trigger click, preventing the native event from propagating, while still allowing the React synthetic event to bubble. This ensures clicks on the trigger do not close the menu in hybrid/multi-framework apps
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- 5de9d6ad: Resolving unique key warning on trigger component
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [1e708bd3]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/popover@9.0.1
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/icon-button@13.1.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 15.0.1
+
+### Patch Changes
+
+- cdbbe4a2: Fix background color appearing when clicking on a disabled menu item
+- fdd1cbbf: Adds missing dependencies
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
+## 15.0.0
+
+### Major Changes
+
+- 5aba12f1: - Update `Menu` for dark mode brand refresh.
+  - Adds `darkMode` prop to determine whether or not the component will render in dark theme.
+  - Adds vertical spacing to `MenuSeparator`.
+  - Increase default `maxHeight` to 344px.
+  - Fixing bug where passing color styles to `MenuItem` using the `className` prop was being overwritten.
+
+### Patch Changes
+
+- 5aba12f1: Prevents the page from scrolling on up/down arrow key press when the menu is open
+
+## 14.0.2
+
+### Patch Changes
+
+- f9846f68: When a menu is closed with the `Escape` key, the trigger will regain focus
+
+## 14.0.1
+
+### Patch Changes
+
+- c897e216: Removes flicker in the active wedge
+
+## 14.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/icon-button@13.0.0
+  - @leafygreen-ui/popover@9.0.0
+
+## 13.1.1
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
 ## 13.1.0
 
 ### Minor Changes

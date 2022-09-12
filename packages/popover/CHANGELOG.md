@@ -1,5 +1,32 @@
 # @leafygreen-ui/popover
 
+## 9.0.1
+
+### Patch Changes
+
+- 1e708bd3: Switch to `getBoundingClientRect` to get reference elements width
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/portal@4.0.4
+
+## 9.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+
+## 8.0.1
+
+### Patch Changes
+
+- 3e7c00db: Adds back transition to popover open. Uses `getComputedStyle` to get content width instead of `getBoundingClientRect` and `offsetWidth`.
+
 ## 8.0.0
 
 ### Major Changes

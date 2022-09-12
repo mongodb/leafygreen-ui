@@ -1,5 +1,13 @@
 # @leafygreen-ui/box
 
+## 3.0.8
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/lib@9.4.2
+
 ## 3.0.7
 
 ### Patch Changes

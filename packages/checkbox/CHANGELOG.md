@@ -1,5 +1,58 @@
 # @leafygreen-ui/checkbox
 
+## 10.0.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/a11y@1.3.1
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 10.0.2
+
+### Patch Changes
+
+- 3b6cf88b: Update darkMode disabled text color to match figma designs
+
+## 10.0.1
+
+### Patch Changes
+
+- 19a62173: Adding some missing dependencies,`@leafygreen-ui/a11y` and `@leafygreen-ui/emotion`
+
+## 10.0.0
+
+### Major Changes
+
+- 9dafe83a: Updates Checkbox Dark Mode for brand refresh
+
+### Minor Changes
+
+- bac1e809: Restores `bold` prop. If left `undefined` this prop will default to `true` if a description is provided, otherwise defaults to `false`
+
+### Patch Changes
+
+- bac1e809: Improves ripple animation on checkbox click
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/typography@13.1.0
+
+## 9.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/typography@13.0.0
+
 ## 8.0.3
 
 ### Patch Changes

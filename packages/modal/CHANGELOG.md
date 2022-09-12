@@ -1,5 +1,31 @@
 # @leafygreen-ui/modal
 
+## 10.0.1
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/icon-button@13.1.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/portal@4.0.4
+  - @leafygreen-ui/tokens@1.3.2
+
+## 10.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/icon-button@13.0.0
+
 ## 9.0.2
 
 ### Patch Changes

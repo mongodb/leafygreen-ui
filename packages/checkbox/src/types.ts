@@ -2,6 +2,7 @@ import {
   createUniqueClassName,
   Either,
   HTMLElementProps,
+  Theme,
 } from '@leafygreen-ui/lib';
 
 interface InternalCheckboxProps extends HTMLElementProps<'input', never> {
@@ -21,9 +22,16 @@ interface InternalCheckboxProps extends HTMLElementProps<'input', never> {
   /**
    * Whether the checkbox is disabled
    *
-   * default: `false`
+   * @default false
    */
   disabled?: boolean;
+
+  /**
+   * Whether the label's font-weight is bold or regular.
+   * If left `undefined` this prop will default to `true` if a description is provided, otherwise defaults to `false`
+   *
+   */
+  bold?: boolean;
   /**
    * If `true`, the indeterminate icon will be rendered regardless of the `checked` prop.
    *
@@ -51,6 +59,7 @@ export type CheckboxProps = Either<
 >;
 
 export interface CheckProps {
+  theme: Theme;
   isChecked: boolean;
   disabled: boolean;
   animate: boolean;

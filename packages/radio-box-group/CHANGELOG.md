@@ -1,5 +1,44 @@
 # @leafygreen-ui/radio-box-group
 
+## 9.0.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+- Updated dependencies [1e708bd3]
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+  - @leafygreen-ui/tooltip@7.1.1
+
+## 9.0.2
+
+### Patch Changes
+
+- 5a3a7623: Improves RadioBox + Tooltip compatibility, resolving an issue where Tooltips would not appear when a RadioBox was used as a trigger.
+- Updated dependencies [65c86281]
+- Updated dependencies [4ad8cbc0]
+- Updated dependencies [9cb53590]
+  - @leafygreen-ui/tooltip@7.1.0
+
+## 9.0.1
+
+### Patch Changes
+
+- 1d471e2c: Removes stacking context from Radio Box
+
+## 9.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+
 ## 8.0.2
 
 ### Patch Changes

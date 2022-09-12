@@ -1,5 +1,77 @@
 # @leafygreen-ui/select
 
+## 7.0.2
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [1e708bd3]
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/popover@9.0.1
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/button@16.0.3
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 7.0.1
+
+### Patch Changes
+
+- 7409c9db: Remove `isDeselection` from `InternalOption`
+- Updated dependencies [22128084]
+  - @leafygreen-ui/button@16.0.2
+
+## 7.0.0
+
+### Major Changes
+
+- 5aba12f1: - Updates 'Select' for dark mode refresh.
+  - Adds `baseFontSize` prop which determines the base font size if sizeVariant is set to default.
+  - Consumes darkMode from the `LeafyGreenProvider` if the `darkMode` prop is not set.
+
+### Patch Changes
+
+- Updated dependencies [5aba12f1]
+  - @leafygreen-ui/typography@13.1.1
+
+## 6.1.0
+
+### Minor Changes
+
+- 828c895d: Passes through all valid `button`, `li` and `div` attriutes (including `data-*` attributes) to `Select`, `Option` and `OptionGroup` respectively
+
+### Patch Changes
+
+- b22cc41f: Fixes a bug where long values, when selected, would overflow outside the Select trigger.
+- Updated dependencies [13a4adcc]
+  - @leafygreen-ui/typography@13.0.1
+
+## 6.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/button@16.0.0
+  - @leafygreen-ui/interaction-ring@4.0.0
+  - @leafygreen-ui/popover@9.0.0
+  - @leafygreen-ui/typography@13.0.0
+
+## 5.0.3
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
 ## 5.0.2
 
 ### Patch Changes

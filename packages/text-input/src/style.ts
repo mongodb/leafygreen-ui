@@ -1,8 +1,19 @@
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { Mode, SizeVariant, State } from './types';
+import {
+  BaseFontSize,
+  focusRing,
+  fontFamilies,
+  hoverRing,
+  typeScales,
+} from '@leafygreen-ui/tokens';
+import { SizeVariant, State } from './types';
+
+/**
+ * Adds an inset box shadow to hide the UA background styles for autofilled inputs
+ */
+const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
 export const iconClassName = createUniqueClassName('icon-selector');
 
@@ -57,11 +68,17 @@ export const inheritTypeScale = css`
   line-height: inherit;
 `;
 
+export const textContainerStyle = css`
+  > *:last-child {
+    display: block;
+    padding-bottom: 4px;
+  }
+`;
+
 export const inputContainerStyle = css`
   position: relative;
   display: flex;
   align-items: center;
-  padding-top: 4px;
   z-index: 0;
 `;
 
@@ -108,11 +125,30 @@ export const baseInputStyle = css`
   }
 `;
 
-export const inputModeStyles: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const inputModeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.black};
-    background-color: ${palette.white};
+    background: ${palette.white};
     border: 1px solid ${palette.gray.base};
+
+    &:-webkit-autofill {
+      color: ${palette.black};
+      background: ${palette.white};
+      border: 1px solid ${palette.gray.base};
+      -webkit-text-fill-color: ${palette.black};
+      box-shadow: ${autofillShadowOverride(palette.white)};
+
+      &:focus {
+        box-shadow: ${autofillShadowOverride(palette.white)},
+          ${focusRing.light.input};
+        border-color: ${palette.white};
+      }
+
+      &:hover:not(:focus) {
+        box-shadow: ${autofillShadowOverride(palette.white)},
+          ${hoverRing.light.gray};
+      }
+    }
 
     &::placeholder {
       color: ${palette.gray.light1};
@@ -121,7 +157,9 @@ export const inputModeStyles: Record<Mode, string> = {
 
     &:hover,
     &:active {
-      box-shadow: 0 0 0 3px ${palette.gray.light2};
+      &:not(:focus) {
+        box-shadow: ${hoverRing.light.gray};
+      }
     }
 
     &:disabled {
@@ -140,19 +178,40 @@ export const inputModeStyles: Record<Mode, string> = {
           appearance: none;
           border: 1px solid ${palette.gray.base};
           -webkit-text-fill-color: ${palette.gray.base};
-          box-shadow: 0 0 0px 1000px ${palette.gray.light2} inset;
+          box-shadow: ${autofillShadowOverride(palette.gray.light2)};
         }
       }
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light3};
-    background-color: ${palette.black};
-    border: 1px solid ${palette.gray.dark1};
+    background-color: ${palette.gray.dark4};
+    border: 1px solid ${palette.gray.base};
+
+    &:-webkit-autofill {
+      border: 1px solid ${palette.gray.base};
+      color: ${palette.gray.light3};
+      background: ${palette.gray.dark4};
+      -webkit-text-fill-color: ${palette.gray.light3};
+      box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
+
+      &:focus {
+        box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+          ${focusRing.dark.input};
+        border-color: ${palette.blue.light1};
+      }
+
+      &:hover:not(:focus) {
+        box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+          ${hoverRing.dark.gray};
+      }
+    }
 
     &:hover,
     &:active {
-      box-shadow: 0 0 0 3px ${palette.gray.dark2};
+      &:not(:focus) {
+        box-shadow: ${hoverRing.dark.gray};
+      }
     }
 
     &::placeholder {
@@ -176,19 +235,27 @@ export const inputModeStyles: Record<Mode, string> = {
           appearance: none;
           border: 1px solid ${palette.gray.dark1};
           -webkit-text-fill-color: ${palette.gray.dark1};
-          box-shadow: 0 0 0px 1000px ${palette.gray.dark2} inset;
+          box-shadow: ${autofillShadowOverride(palette.gray.dark2)};
         }
       }
     }
   `,
 };
 
-export const inputFocusStyles = css`
-  &:focus {
-    border-color: ${palette.blue.light1};
-    box-shadow: 0 0 0 2px ${palette.blue.light1};
-  }
-`;
+export const inputFocusStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:focus {
+      box-shadow: ${focusRing.light.input};
+      border-color: ${palette.white};
+    }
+  `,
+  [Theme.Dark]: css`
+    &:focus {
+      box-shadow: ${focusRing.dark.input};
+      border-color: ${palette.gray.dark4};
+    }
+  `,
+};
 
 export const inputSizeStyles: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
@@ -209,55 +276,62 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
   `,
 };
 
-export const inputStateStyles: Record<State, Record<Mode, string>> = {
+export const inputStateStyles: Record<State, Record<Theme, string>> = {
   [State.Valid]: {
-    [Mode.Light]: css`
+    [Theme.Light]: css`
       &:not(:disabled) {
         border-color: ${palette.green.dark1};
 
         &:hover,
         &:active {
-          box-shadow: 0 0 0 3px ${palette.green.light2};
+          &:not(:focus) {
+            box-shadow: ${hoverRing.light.green};
+          }
         }
       }
     `,
-    [Mode.Dark]: css`
+    [Theme.Dark]: css`
       &:not(:disabled) {
         border-color: ${palette.green.dark1};
 
         &:hover,
         &:active {
-          box-shadow: 0 0 0 3px ${palette.green.dark3};
+          &:not(:focus) {
+            box-shadow: ${hoverRing.dark.green};
+          }
         }
       }
     `,
   },
   [State.Error]: {
-    [Mode.Light]: css`
+    [Theme.Light]: css`
       &:not(:disabled) {
         border-color: ${palette.red.base};
 
         &:hover,
         &:active {
-          box-shadow: 0 0 0 3px ${palette.red.light2};
+          &:not(:focus) {
+            box-shadow: ${hoverRing.light.red};
+          }
         }
       }
     `,
-    [Mode.Dark]: css`
+    [Theme.Dark]: css`
       &:not(:disabled) {
         border-color: ${palette.red.light1};
 
         &:hover,
         &:active {
-          // Yes, yellow
-          box-shadow: 0 0 0 3px ${palette.yellow.dark3};
+          &:not(:focus) {
+            box-shadow: ${hoverRing.dark.red};
+          }
         }
       }
     `,
   },
   [State.None]: {
-    [Mode.Light]: css``,
-    [Mode.Dark]: css``,
+    [Theme.Light]: css``,
+    [Theme.Dark]: css``,
   },
 };
 
@@ -289,21 +363,21 @@ export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
 
 export const stateIndicatorStyles: Record<
   'valid' | 'error',
-  Record<Mode, string>
+  Record<Theme, string>
 > = {
   [State.Valid]: {
-    [Mode.Light]: css`
+    [Theme.Light]: css`
       color: ${palette.green.dark1};
     `,
-    [Mode.Dark]: css`
+    [Theme.Dark]: css`
       color: ${palette.green.base};
     `,
   },
   [State.Error]: {
-    [Mode.Light]: css`
+    [Theme.Light]: css`
       color: ${palette.red.base};
     `,
-    [Mode.Dark]: css`
+    [Theme.Dark]: css`
       color: ${palette.red.light1};
     `,
   },
@@ -313,7 +387,7 @@ export const optionalTextStyle = css`
   font-size: 12px;
   font-style: italic;
   font-weight: normal;
-  color: ${palette.gray.dark1}; // Same in light & dark mode
+  color: ${palette.gray.dark1}; // Same in light & dark theme
 `;
 
 export const errorMessageStyle = css`
@@ -323,11 +397,11 @@ export const errorMessageStyle = css`
   font-weight: normal;
 `;
 
-export const errorMessageModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const errorMessageModeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.red.base};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.red.light1};
   `,
 };

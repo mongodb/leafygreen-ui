@@ -1,5 +1,34 @@
 # @leafygreen-ui/callout
 
+## 7.0.0
+
+### Major Changes
+
+- e39d8469: Updates `Callout` for dark mode brand refresh.
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+
+## 6.0.0
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/typography@13.0.0
+
 ## 5.0.1
 
 ### Patch Changes

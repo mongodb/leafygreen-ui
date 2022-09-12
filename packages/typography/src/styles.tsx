@@ -1,11 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import {
-  BaseFontSize,
-  fontFamilies,
-  Mode,
-  typeScales,
-} from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 
 export const baseTypographyStyles = css`
   margin: unset;
@@ -35,11 +31,22 @@ export const codeTypeScaleStyles: Record<BaseFontSize, string> = {
   `,
 } as const;
 
-export const defaultTextColor: Record<Mode, string> = {
-  [Mode.Light]: css`
+export const defaultTextColor: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.black};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light2};
+  `,
+};
+
+export const labelTypeScaleStyles: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: 20px; // Hardcoding because it does not match body2 lineHeight
   `,
 };

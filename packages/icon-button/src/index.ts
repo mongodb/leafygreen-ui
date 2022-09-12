@@ -1,1 +1,2 @@
-export { default, Size } from './IconButton';
+export { default } from './IconButton';
+export { Size } from './types';

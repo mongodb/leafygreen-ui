@@ -1,5 +1,5 @@
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { HTMLProps } from 'react';
+import React, { HTMLProps } from 'react';
 
 const Variant = {
   Default: 'default',
@@ -25,13 +25,6 @@ const Size = {
 };
 
 type Size = typeof Size[keyof typeof Size];
-
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
 
 // TODO: Remove in next major release
 export const FontSize = {
@@ -105,7 +98,21 @@ interface ButtonProps {
    * Default: `undefined`
    */
   href?: string;
-  as?: keyof JSX.IntrinsicElements;
+
+  /**
+   * The component or HTML Element that the button is rendered as.
+   *
+   * To use with NextJS Links, pass in a component that wraps the Link:
+   * ```js
+   * const Linker = ({ href, children, ...props }) => (
+   *  <NextLink href={href}>
+   *    <a {...props}>{children}</a>
+   *  </NextLink>
+   * );
+   * <Button as={Linker} />
+   * ```
+   */
+  as?: React.ElementType<any>;
 }
 
-export { Variant, Size, Mode, ButtonProps };
+export { Variant, Size, ButtonProps };

@@ -1,5 +1,46 @@
 # @leafygreen-ui/tooltip
 
+## 7.1.1
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- 1e708bd3: Add `width: max-content` to tooltip to prevent early wrapping of content
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [1e708bd3]
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/popover@9.0.1
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 7.1.0
+
+### Minor Changes
+
+- 65c86281: Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set
+
+### Patch Changes
+
+- 4ad8cbc0: Adds missing @leafygreen-ui/typography dependency to package.json.
+- 9cb53590: Word break bug fixed for Tooltip
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/typography@13.1.0
+
+## 7.0.4
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/popover@9.0.0
+
 ## 7.0.3
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @leafygreen-ui/palette
 
+## 3.4.2
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+
+## 3.4.1
+
+### Patch Changes
+
+- 30e038a3: Update red light1 to `#FF6960`
+
 ## 3.4.0
 
 ### Minor Changes

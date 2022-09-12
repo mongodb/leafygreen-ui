@@ -7,19 +7,17 @@ import {
   useEventListener,
 } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
-import { OneOf, keyMap } from '@leafygreen-ui/lib';
-import { PopoverProps } from '@leafygreen-ui/popover';
-import { fontFamilies, breakpoints, spacing } from '@leafygreen-ui/tokens';
-import { Label, Description } from '@leafygreen-ui/typography';
+import { keyMap } from '@leafygreen-ui/lib';
 import {
-  legacySizeSets,
-  mobileSizeSet,
-  sizeSets,
-  Mode,
-  Size,
-  State,
-  SizeSet,
-} from './styleSets';
+  fontFamilies,
+  breakpoints,
+  spacing,
+  BaseFontSize,
+} from '@leafygreen-ui/tokens';
+import { Label, Description } from '@leafygreen-ui/typography';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { mobileSizeSet, sizeSets, SizeSet } from './styleSets';
+import { SelectProps, Size, State } from './types';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
 import SelectContext from './SelectContext';
@@ -37,6 +35,16 @@ import {
 const wrapperStyle = css`
   display: flex;
   flex-direction: column;
+
+  > label + button,
+  > p + button {
+    margin-top: 3px;
+  }
+`;
+
+const largeLabelStyles = css`
+  font-size: 18px;
+  line-height: 22px;
 `;
 
 const errorTextStyle = ({
@@ -46,100 +54,14 @@ const errorTextStyle = ({
   darkMode: boolean;
   sizeSet: SizeSet;
 }) => css`
-  font-family: ${darkMode ? fontFamilies.legacy : fontFamilies.default};
-  color: ${darkMode ? '#F97216' : palette.red.base};
+  font-family: ${fontFamilies.default};
+  color: ${darkMode ? palette.red.light1 : palette.red.base};
   font-size: ${sizeSet.text}px;
   margin-top: ${spacing[1]}px;
   padding-left: 2px;
   transition: color 100ms ease-in-out;
   transition-delay: 100ms;
 `;
-
-export type SelectProps = {
-  /**
-   * Children rendered inside the component. Expected to be either `<Option>` or `<OptionGroup>`.
-   */
-  children: React.ReactNode;
-  className?: string;
-  /**
-   * HTML `id` property used to allow Javascript, form, or label to reference the input.
-   */
-  id?: string;
-  darkMode?: boolean;
-  /**
-   * Determines the size in which the component will be rendered.
-   */
-  size?: Size;
-  /**
-   * When present, it specifies that the drop-down list should be disabled.
-   *
-   * A `disabled` drop-down list is unusable and un-clickable.
-   */
-  disabled?: boolean;
-  /**
-   * Secondary text rendered under the label to provide additional details about the select and its options.
-   */
-  description?: string;
-  /**
-   * Text rendered in the Select component before a value is set.
-   */
-  placeholder?: string;
-  /**
-   * The `name` attribute specifies the name for a drop-down list.
-   *
-   * The `name` attribute is used to reference elements in a JavaScript, or to reference form data after a form is submitted.
-   */
-  name?: string;
-  /**
-   * Allows the user to unselect an option.
-   */
-  allowDeselect?: boolean;
-  /**
-   * Error message rendered when the `state` prop is set to `error`.
-   */
-  errorMessage?: string;
-  /**
-   * Determines whether the component should be rendered in an error state.
-   */
-  state?: State;
-  __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
-    React.RefAttributes<unknown>
-  >;
-} & Omit<PopoverProps, 'active' | 'spacing'> &
-  (
-    | // Uncontrolled
-    ({
-        /**
-         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
-         */
-        defaultValue?: string;
-        /**
-         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
-         */
-        value?: undefined;
-      } & {
-        onChange?: (
-          value: string,
-          event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
-        ) => void;
-        /**
-         * Indicates that the component's value cannot be changed.
-         */
-        readOnly?: false;
-      })
-    // Controlled
-    | ({ value: string; defaultValue?: undefined } & (
-        | {
-            onChange: (
-              value: string,
-              event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
-            ) => void;
-            readOnly?: false;
-          }
-        | { readOnly: true; onChange?: undefined }
-      ))
-  ) &
-  OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
 /**
  * Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.
@@ -148,7 +70,7 @@ export type SelectProps = {
  */
 export default function Select({
   children,
-  darkMode = false,
+  darkMode: darkModeProp,
   size = Size.Default,
   disabled = false,
   allowDeselect = true,
@@ -170,7 +92,9 @@ export default function Select({
   popoverZIndex,
   errorMessage = 'error message right here',
   state = State.None,
+  baseFontSize = BaseFontSize.Body1,
   __INTERNAL__menuButtonSlot__,
+  ...rest
 }: SelectProps) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
   const labelId = useMemo(
@@ -184,6 +108,8 @@ export default function Select({
     );
   }
 
+  const { darkMode, theme } = useDarkMode(darkModeProp);
+
   const descriptionId = `${id}-description`;
   const menuId = `${id}-menu`;
 
@@ -193,12 +119,11 @@ export default function Select({
   const menuButtonId = useIdAllocator({ prefix: 'select' });
   const listMenuRef = useStateRef<HTMLUListElement | null>(null);
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
-  const sizeSet = darkMode ? legacySizeSets[size] : sizeSets[size];
+  const sizeSet = sizeSets[size];
 
   const providerData = useMemo(() => {
-    return { mode, size, open, disabled };
-  }, [mode, size, open, disabled]);
+    return { theme, size, open, disabled };
+  }, [theme, size, open, disabled]);
 
   useEffect(() => {
     if (value !== undefined && onChange === undefined && readOnly !== true) {
@@ -498,7 +423,6 @@ export default function Select({
         disabled={false}
         onClick={getOptionClickHandler(null, false)}
         onFocus={getOptionFocusHandler(null, false)}
-        isDeselection
         hasGlyphs={false}
         triggerScrollIntoView={selected && canTriggerScrollIntoView}
       >
@@ -523,13 +447,13 @@ export default function Select({
           const disabled = isOptionDisabled(option, group);
 
           return {
+            ...option.props,
             className: option.props.className,
             glyph: option.props.glyph,
             selected,
             focused: option === focusedOption,
             disabled,
             children: option.props.children,
-            isDeselection: false,
             hasGlyphs,
             onClick: getOptionClickHandler(option, disabled),
             onFocus: getOptionFocusHandler(option, disabled),
@@ -574,6 +498,13 @@ export default function Select({
           darkMode={darkMode}
           disabled={disabled}
           className={cx(
+            {
+              [largeLabelStyles]: size === Size.Large,
+              [css`
+                font-size: ${baseFontSize}px;
+                line-height: 20px;
+              `]: size === Size.Default,
+            },
             css`
               // Prevent hover state from showing when hovering label
               pointer-events: none;
@@ -584,14 +515,6 @@ export default function Select({
                 line-height: ${mobileSizeSet.label.lineHeight}px;
               }
             `,
-            {
-              [css`
-                font-size: ${legacySizeSets[size].label!.text}px;
-                line-height: ${legacySizeSets[size].label!.lineHeight}px;
-                padding-bottom: 0;
-                margin-bottom: 2px;
-              `]: mode === Mode.Dark, // TODO: Refresh - remove conditional logic
-            },
           )}
         >
           {label}
@@ -604,20 +527,19 @@ export default function Select({
           darkMode={darkMode}
           disabled={disabled}
           className={cx(
+            {
+              [largeLabelStyles]: size === Size.Large,
+              [css`
+                font-size: ${baseFontSize}px;
+                line-height: 20px;
+              `]: size === Size.Default,
+            },
             css`
               @media only screen and (max-width: ${breakpoints.Desktop}px) {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
             `,
-            {
-              [css`
-                font-size: ${legacySizeSets[size].description!.text}px;
-                line-height: ${legacySizeSets[size].description!.lineHeight}px;
-                padding-bottom: 0;
-                margin-bottom: 2px;
-              `]: mode === Mode.Dark, // TODO: Refresh - remove conditional logic
-            },
           )}
         >
           {description}
@@ -626,6 +548,7 @@ export default function Select({
 
       <SelectContext.Provider value={providerData}>
         <MenuButton
+          {...rest}
           id={menuButtonId}
           ref={menuButtonRef}
           name={name}
@@ -644,8 +567,10 @@ export default function Select({
           aria-expanded={open}
           aria-describedby={descriptionId}
           aria-invalid={state === State.Error}
+          aria-disabled={disabled}
           errorMessage={errorMessage}
           state={state}
+          baseFontSize={baseFontSize}
           __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
         >
           <ListMenu
@@ -708,4 +633,5 @@ Select.propTypes = {
   errorMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
   allowDeselect: PropTypes.bool,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };

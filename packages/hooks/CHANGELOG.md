@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.3.1
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+
 ## 7.3.0
 
 ### Minor Changes

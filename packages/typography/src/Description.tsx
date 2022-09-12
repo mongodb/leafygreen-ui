@@ -1,10 +1,11 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { Mode } from './types';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import { useUpdatedBaseFontSize } from './useUpdatedBaseFontSize';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { labelTypeScaleStyles } from './styles';
 
 const descriptionStyle = css`
   font-family: ${fontFamilies.default};
@@ -13,31 +14,20 @@ const descriptionStyle = css`
   margin-bottom: 0;
 `;
 
-const descriptionTypeScale: Record<BaseFontSize, string> = {
-  [BaseFontSize.Body1]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-  `,
-  [BaseFontSize.Body2]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: 20px; // Hardcoding because it does not match body2 lineHeight
-  `,
-};
-
-const descriptionColorStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const descriptionColorStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light1};
   `,
 };
 
-const disabledDescriptionColorStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const disabledDescriptionColorStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.gray.dark1};
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.base};
   `,
 };
@@ -48,23 +38,23 @@ type DescriptionProps = HTMLElementProps<'p', never> & {
 };
 
 export const Description = ({
-  darkMode = false,
+  darkMode: darkModeProp,
   disabled = false,
   children,
   className,
   ...rest
 }: DescriptionProps) => {
   const baseFontSize = useUpdatedBaseFontSize();
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode(darkModeProp);
 
   return (
     <p
       className={cx(
         descriptionStyle,
-        descriptionColorStyle[mode],
-        descriptionTypeScale[baseFontSize],
+        descriptionColorStyle[theme],
+        labelTypeScaleStyles[baseFontSize],
         {
-          [disabledDescriptionColorStyle[mode]]: disabled,
+          [disabledDescriptionColorStyle[theme]]: disabled,
         },
         className,
       )}

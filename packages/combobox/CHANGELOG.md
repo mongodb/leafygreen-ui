@@ -1,5 +1,98 @@
 # @leafygreen-ui/combobox
 
+## 3.0.1
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [1e708bd3]
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+- Updated dependencies [1e708bd3]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/popover@9.0.1
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/checkbox@10.0.3
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/icon-button@13.1.1
+  - @leafygreen-ui/inline-definition@4.0.2
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+  - @leafygreen-ui/tooltip@7.1.1
+
+## 3.0.0
+
+### Major Changes
+
+- 2ff9ac32: Removes `Overflow.ExpandX` option.
+
+  Overflow.ExpandX has always been an edge case, and is causing some issues with styling. Instead of increasing the complexity of the component to account for this edge case, we are removing this option.
+
+  In most cases the `x` direction will be more space-limited and not many folks will opt to use this option. And if they do use expand-x, it's inherently limited to the size of the container/window and we'll need to restrict the width regardless. Just providing scroll-x and expand-y overflow options will cover most use cases.
+
+### Patch Changes
+
+- 090bd806: Fixes broken button styles in Combobox Chip.
+  Reduces inline padding when `overflow === 'scroll-x'`.
+  Flags `Overflow.ExpandX` as deprecated. Will be removed in the next major release.
+- Updated dependencies [19a62173]
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/checkbox@10.0.1
+  - @leafygreen-ui/palette@3.4.1
+
+## 2.0.2
+
+### Patch Changes
+
+- bf320048: Updates the highlighting function (wrapJSX) to ensure all values are accepted, including regex special characters
+- bf320048: Adds missing `leafygreen-provider` as a peer dependency
+- Updated dependencies [65c86281]
+- Updated dependencies [4ad8cbc0]
+- Updated dependencies [9cb53590]
+- Updated dependencies [bac1e809]
+- Updated dependencies [bac1e809]
+- Updated dependencies [9dafe83a]
+  - @leafygreen-ui/icon-button@13.1.0
+  - @leafygreen-ui/tooltip@7.1.0
+  - @leafygreen-ui/typography@13.1.0
+  - @leafygreen-ui/checkbox@10.0.0
+
+## 2.0.1
+
+### Patch Changes
+
+- 5f82468e: Updates lodash imports in combobox. Lodash functions are now imported individually to reduce bundle size
+- Updated dependencies [13a4adcc]
+  - @leafygreen-ui/typography@13.0.1
+
+## 2.0.0
+
+### Major Changes
+
+- a0beace8: Updates Combobox for visual refresh. Adds Dark Mode
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/checkbox@9.0.0
+  - @leafygreen-ui/icon-button@13.0.0
+  - @leafygreen-ui/popover@9.0.0
+  - @leafygreen-ui/typography@13.0.0
+  - @leafygreen-ui/tooltip@7.0.4
+  - @leafygreen-ui/inline-definition@4.0.1
+
+## 1.2.2
+
+### Patch Changes
+
+- fad2b287: Fixes a bug where occasionally the max menu height would be set to 0 if a ref was left unset
+
 ## 1.2.1
 
 ### Patch Changes

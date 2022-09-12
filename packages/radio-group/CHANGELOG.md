@@ -1,5 +1,25 @@
 # @leafygreen-ui/radio-group
 
+## 8.0.4
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/interaction-ring@4.0.1
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+
+## 8.0.3
+
+### Patch Changes
+
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/interaction-ring@4.0.0
+
 ## 8.0.2
 
 ### Patch Changes

@@ -4,8 +4,20 @@ import ExpandableCard from '.';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/ExpandableCard',
+  title: 'Components/ExpandableCard',
   component: ExpandableCard,
+  parameters: {
+    controls: {
+      exclude: [
+        'className',
+        'contentClassName',
+        'id',
+        'onClick',
+        'isOpen',
+        'defaultOpen',
+      ],
+    },
+  },
   args: {
     title: 'Title',
     description: 'Donec id elit non mi porta gravida at eget metus.',
@@ -18,10 +30,6 @@ export default {
     flagText: { control: 'text' },
     children: defaultArgTypes.children,
     darkMode: defaultArgTypes.darkMode,
-    defaultOpen: { control: 'boolean' },
-    isOpen: { control: 'boolean' },
-    id: { control: 'text' },
-    contentClassName: { control: 'text' },
   },
 };
 

@@ -6,9 +6,10 @@ import { ComponentStory } from '@storybook/react';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 
 export default {
-  title: 'Packages/InlineDefinition',
+  title: 'Components/InlineDefinition',
   component: InlineDefinition,
   args: {
+    darkMode: false,
     definition:
       'Sharding is a method for horizontally scaling across multiple replica sets by breaking up large datasets (e.g. partitioning) into smaller parts. Sharding is native to MongoDB.',
   },

@@ -137,7 +137,7 @@ function Popover({
   );
 
   const lastTimeContentElMutated = useMutationObserver(
-    contentNode,
+    contentNode?.parentNode as HTMLElement,
     mutationOptions,
     Date.now,
     observeMutations,
@@ -145,16 +145,21 @@ function Popover({
 
   // We don't memoize these values as they're reliant on scroll positioning
   const referenceElViewportPos = useObjectDependency(
-    getElementViewportPosition(referenceElement, scrollContainer),
+    getElementViewportPosition(referenceElement, scrollContainer, true),
   );
 
+  // We use contentNode.parentNode since the parentNode has a transition applied to it and we want to be able to get the width of this element before it is transformed. Also as noted below, the parentNode cannot have a ref on it.
+  // Previously the contentNode was passed in but since it is a child of transformed element it was not possible to get an untransformed width.
   const contentElViewportPos = useObjectDependency(
-    getElementViewportPosition(contentNode, scrollContainer),
+    getElementViewportPosition(
+      contentNode?.parentNode as HTMLElement,
+      scrollContainer,
+    ),
   );
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
-      () => getElementDocumentPosition(referenceElement, scrollContainer),
+      () => getElementDocumentPosition(referenceElement, scrollContainer, true),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
         referenceElement,
@@ -174,7 +179,7 @@ function Popover({
       () => getElementDocumentPosition(contentNode),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
-        contentNode,
+        contentNode?.parentNode,
         viewportSize,
         lastTimeContentElMutated,
         active,

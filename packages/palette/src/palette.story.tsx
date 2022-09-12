@@ -53,7 +53,7 @@ function ColorBlock({ color, name }: ColorBlockProps) {
 }
 
 export default {
-  title: 'Packages/Palette',
+  title: 'Components/Palette',
   argTypes: {
     className: {
       table: {

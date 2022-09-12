@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
-import { colorSets, Mode } from './styleSets';
+import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 
@@ -55,7 +55,7 @@ const glyphFocusStyle = css`
   }
 `;
 
-export interface InternalProps {
+export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
   children: React.ReactNode;
   className: string | undefined;
   glyph: LGGlyph.Element | undefined;
@@ -64,7 +64,6 @@ export interface InternalProps {
   disabled: boolean;
   onClick: React.MouseEventHandler;
   onFocus: React.FocusEventHandler;
-  isDeselection: boolean;
   hasGlyphs: boolean;
   triggerScrollIntoView: boolean;
 }
@@ -78,19 +77,16 @@ export function InternalOption({
   disabled,
   onClick,
   onFocus,
-  isDeselection,
   triggerScrollIntoView,
   hasGlyphs,
+  ...rest
 }: InternalProps) {
-  const { mode } = useContext(SelectContext);
+  const { theme } = useContext(SelectContext);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const { option: colorSet } = colorSets[mode];
+  const { option: colorSet } = colorSets[theme];
 
   const ref = useRef<HTMLLIElement>(null);
-
-  const showDeselectionStyle =
-    selected && (mode === Mode.Light || !isDeselection);
 
   const scrollIntoView = useCallback(() => {
     if (ref.current == null) {
@@ -134,11 +130,7 @@ export function InternalOption({
       className={cx(optionTextStyle, {
         [css`
           font-weight: bold;
-        `]: showDeselectionStyle,
-        // TODO: Refresh - remove darkMode logic
-        [css`
-          font-family: ${fontFamilies.legacy};
-        `]: mode === Mode.Dark,
+        `]: selected,
       })}
     >
       {children}
@@ -183,7 +175,7 @@ export function InternalOption({
     }
   }
 
-  const checkmark = showDeselectionStyle ? (
+  const checkmark = selected ? (
     <CheckmarkIcon
       key="checkmark"
       className={cx(
@@ -237,6 +229,7 @@ export function InternalOption({
   return (
     <li
       {...option.prop}
+      {...rest}
       role="option"
       aria-selected={selected}
       tabIndex={-1}
@@ -248,10 +241,6 @@ export function InternalOption({
           color: ${colorSet.text.base};
         `,
         {
-          // TODO: Refresh - remove dark mode conditional styles
-          [css`
-            padding: 10px 12px;
-          `]: mode === Mode.Dark,
           [css`
             &:hover {
               background-color: ${colorSet.background.hovered};
@@ -287,7 +276,7 @@ export function InternalOption({
 
 InternalOption.displayName = 'Option';
 
-interface Props {
+interface Props extends HTMLElementProps<'li', HTMLLIElement> {
   className?: string;
   glyph?: LGGlyph.Element;
   disabled?: boolean;

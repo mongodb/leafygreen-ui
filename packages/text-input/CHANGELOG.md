@@ -1,5 +1,57 @@
 # @leafygreen-ui/text-input
 
+## 10.1.3
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
+## 10.1.2
+
+### Patch Changes
+
+- b10463fc: Removing padding-top when neither label nor description are defined.
+
+## 10.1.1
+
+### Patch Changes
+
+- 79b3ba7e: Aligns Text Input focus & hover styles to Figma library
+- Updated dependencies [30e038a3]
+  - @leafygreen-ui/palette@3.4.1
+
+## 10.1.0
+
+### Minor Changes
+
+- 65c86281: Consuming darkMode from the LeafyGreenProvider if the darkMode prop is not set
+
+### Patch Changes
+
+- Updated dependencies [65c86281]
+  - @leafygreen-ui/typography@13.1.0
+
+## 10.0.0
+
+### Patch Changes
+
+- e317392f: Minor darkmode style updates, remove interaction ring from dependencies, and bump up `Typography` version.
+- Updated dependencies [85d46871]
+- Updated dependencies [99e20bb9]
+  - @leafygreen-ui/lib@9.4.0
+  - @leafygreen-ui/leafygreen-provider@2.3.0
+  - @leafygreen-ui/typography@13.0.0
+
 ## 9.0.0
 
 ### Major Changes
