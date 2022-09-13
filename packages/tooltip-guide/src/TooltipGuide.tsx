@@ -80,9 +80,9 @@ interface TooltipGuideProps extends ModifiedTooltipProps {
   onClose?: () => void;
   /**
    * Callback fired when the bottom button is clicked
-   * TODO: better description and name
+   * TODO: better description
    */
-  onNextClick?: () => void;
+  onNext?: () => void;
   /**
    * Determines the alignment of the tooltip.
    * @default: 'top'
@@ -196,7 +196,7 @@ function TooltipGuide({
   title,
   description,
   onClose = () => {},
-  onNextClick = () => {},
+  onNext = () => {},
   tooltipClassName,
   portalClassName,
   buttonText: buttonTextProp,
@@ -236,7 +236,7 @@ function TooltipGuide({
 
   const handleButtonClick = () => {
     setOpen(o => !o);
-    onNextClick();
+    onNext();
   };
 
   const renderContent = () => (
@@ -342,7 +342,7 @@ function TooltipGuide({
 }
 
 TooltipGuide.displayName = 'TooltipGuide';
-
+// TODO: make sure the correct props are here
 TooltipGuide.propTypes = {
   children: PropTypes.node,
   darkMode: PropTypes.bool,
@@ -362,7 +362,7 @@ TooltipGuide.propTypes = {
   portalClassName: PropTypes.string,
   buttonText: PropTypes.string,
   onClose: PropTypes.func,
-  onNextClick: PropTypes.func,
+  onNext: PropTypes.func,
   tooltipAlign: PropTypes.oneOf(Object.values(Align)),
   beaconAlign: PropTypes.oneOf(Object.values(Align)),
 };
