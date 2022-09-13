@@ -25,6 +25,7 @@
       "access": "public"
     },
     "dependencies": {
+      "focus-trap-react": "^10.0.0",
       "@leafygreen-ui/lib": "^6.1.0",
       "@leafygreen-ui/tooltip": "^7.1.0",
       "@leafygreen-ui/icon": "^11.10.1",

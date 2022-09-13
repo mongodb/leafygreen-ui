@@ -10,6 +10,7 @@ import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { Body, Disclaimer } from '@leafygreen-ui/typography';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import FocusTrap from 'focus-trap-react';
 
 // Exclude these from tooltip (tooltip already extends popover props)
 type ModifiedTooltipProps = Omit<
@@ -231,8 +232,6 @@ function TooltipGuide({
 
   // Warning if current step is larger than number of steps
 
-  // TODO: TRAP FOCUS!!!!!!!
-
   const handleClose = () => {
     setOpen(false);
     onClose();
@@ -279,32 +278,36 @@ function TooltipGuide({
           popoverZIndex={popoverZIndex}
           className={portalClassName}
         >
-          <Tooltip
-            darkMode={darkMode}
-            open={tooltipOpen}
-            justify={Justify.Middle}
-            align={tooltipAlign}
-            trigger={<div className={beaconStyles}></div>}
-            className={cx(tooltipStyles, tooltipClassName)}
-            usePortal={false}
-            {...rest}
-          >
-            <IconButton
-              className={closeStyles}
-              aria-label="Close Tooltip"
-              onClick={() => handleClose()}
-              darkMode={!darkMode}
+            <Tooltip
+              darkMode={darkMode}
+              open={tooltipOpen}
+              justify={Justify.Middle}
+              align={tooltipAlign}
+              trigger={<div className={beaconStyles}></div>}
+              className={cx(tooltipStyles, tooltipClassName)}
+              usePortal={false}
+              {...rest}
             >
-              <XIcon />
-            </IconButton>
-            {renderContent()}
-            <div className={footerStyles}>
-              <Disclaimer>
-                {currentStep} of {numberOfSteps}
-              </Disclaimer>
-              {renderFooter()}
-            </div>
-          </Tooltip>
+              <FocusTrap>
+                <div>
+                <IconButton
+                  className={closeStyles}
+                  aria-label="Close Tooltip"
+                  onClick={() => handleClose()}
+                  darkMode={!darkMode}
+                >
+                  <XIcon />
+                </IconButton>
+                {renderContent()}
+                <div className={footerStyles}>
+                  <Disclaimer>
+                    {currentStep} of {numberOfSteps}
+                  </Disclaimer>
+                  {renderFooter()}
+                </div>
+                </div>
+              </FocusTrap>
+            </Tooltip>
         </Popover>
       )}
       {/* Standalone tooltip */}
@@ -323,8 +326,12 @@ function TooltipGuide({
           popoverZIndex={popoverZIndex}
           {...rest}
         >
+          <FocusTrap>
+            <div>
           {renderContent()}
           <div className={footerStyles}>{renderFooter()}</div>
+          </div>
+          </FocusTrap>
         </Tooltip>
       )}
     </>
