@@ -27,6 +27,7 @@ type ModifiedTooltipProps = Omit<
   | 'children'
   | 'open'
   | 'setOpen'
+  | 'onClose'
 >;
 
 interface TooltipGuideProps extends ModifiedTooltipProps {
@@ -215,6 +216,8 @@ function TooltipGuide({
 
   const buttonText = buttonTextProp ? buttonTextProp : currentStep === numberOfSteps ? 'Got it' : 'Next';
 
+  const isStandalone = numberOfSteps <= 1;
+
   useEffect(() => {
     if (open) {
       // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to multipstep tooltip.
@@ -258,10 +261,13 @@ function TooltipGuide({
     </Button>
   );
 
+  // This callback is fired when the Esc key closes the tooltip since this happens directly in the tooltip component
+  const onEscCloseCallback =  isStandalone ? onNext : onClose;
+
   return (
     <>
       {/* Multistep tooltip */}
-      {numberOfSteps > 1 && (
+      {!isStandalone && (
         <Popover
           active={popoverOpen}
           refEl={refEl}
@@ -276,7 +282,7 @@ function TooltipGuide({
           className={portalClassName}
         >
             {/* The beacon is using the popover component to position itself */}
-            {/* Instead of passing this as the tooltip trigger prop we instead pass the reference so that the default behavior of closing the tooltip on background click or showing and hiding the tooltip on hover */}
+            {/* Instead of passing this as the tooltip trigger prop we instead pass the reference so that the default behavior of closing the tooltip on background click or showing and hiding the tooltip on hover does not happen */}
             <div ref={beaconRef} className={beaconStyles} />
             {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
             <Tooltip
@@ -288,6 +294,7 @@ function TooltipGuide({
               refEl={beaconRef}
               className={cx(tooltipStyles, tooltipClassName)}
               usePortal={false}
+              onClose={() => onEscCloseCallback()}
               {...rest}
             >
               <FocusTrap>
@@ -314,7 +321,7 @@ function TooltipGuide({
       )}
       {/* Standalone tooltip */}
       {/* this is using the ref of the refEl prop to position itself against  */}
-      {numberOfSteps <= 1 && (
+      {isStandalone && (
         <Tooltip
           darkMode={darkMode}
           open={open}
@@ -327,6 +334,7 @@ function TooltipGuide({
           portalContainer={portalContainer}
           scrollContainer={scrollContainer}
           popoverZIndex={popoverZIndex}
+          onClose={() => onEscCloseCallback()}
           {...rest}
         >
           <FocusTrap>

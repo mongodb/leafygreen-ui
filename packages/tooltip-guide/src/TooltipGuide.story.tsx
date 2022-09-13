@@ -48,6 +48,12 @@ const Template: ComponentStory<typeof TooltipGuide> = ({
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
 
+  // eslint-disable-next-line no-console
+  const handleNext = () => console.log('next');
+
+  // eslint-disable-next-line no-console
+  const handleClose = () => console.log('close');
+
   return (
     <>
       <Button
@@ -77,6 +83,8 @@ const Template: ComponentStory<typeof TooltipGuide> = ({
         open={open}
         setOpen={setOpen}
         refEl={triggerRef}
+        onNext={handleNext}
+        onClose={handleClose}
       />
     </>
   );

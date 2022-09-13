@@ -156,6 +156,12 @@ export type TooltipProps = Omit<
      * @default: true
      */
     enabled?: boolean;
+
+    /**
+     * Callback that is called when the tooltip is closed.
+     *
+     */
+     onClose?: () => void;
   };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
@@ -189,6 +195,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.id id given to Tooltip content.
  * @param props.usePortal Determines whether or not Tooltip will be Portaled
  * @param props.portalClassName Classname applied to root element of the portal.
+ * @param props.onClose Callback that is fired when the tooltip is closed.
  */
 function Tooltip({
   open: controlledOpen,
@@ -210,6 +217,7 @@ function Tooltip({
   scrollContainer,
   popoverZIndex,
   refEl,
+  onClose = () => {},
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -240,9 +248,10 @@ function Tooltip({
 
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {
+      onClose();
       setOpen(false);
     }
-  }, [setOpen, shouldClose]);
+  }, [setOpen, shouldClose, onClose]);
 
   const createTriggerProps = useCallback(
     (triggerEvent: TriggerEvent, triggerProps?: any) => {
