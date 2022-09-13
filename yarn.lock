@@ -2129,20 +2129,6 @@
     "@leafygreen-ui/popover" "^7.2.2"
     react-transition-group "^4.4.1"
 
-"@leafygreen-ui/menu@^14.0.0":
-  version "14.0.2"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/menu/-/menu-14.0.2.tgz#07db0f840ee66b910d8578acfdee788ba2a136b7"
-  integrity sha512-tgMbHCZgvrVJbR3Dj3z3qtc5/EWTMRgfmle6ja8XWlSMFlmHL0qsnrfaxih8xvZg5ySIskxRGHI7X926CYyPXA==
-  dependencies:
-    "@leafygreen-ui/box" "^3.0.7"
-    "@leafygreen-ui/hooks" "^7.3.0"
-    "@leafygreen-ui/icon-button" "^13.0.0"
-    "@leafygreen-ui/lib" "^9.4.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-    "@leafygreen-ui/popover" "^9.0.0"
-    "@leafygreen-ui/tokens" "^1.3.1"
-    react-transition-group "^4.4.1"
-
 "@leafygreen-ui/mongo-nav@^7.2.1":
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/mongo-nav/-/mongo-nav-7.2.2.tgz#2fbea6b3424b2dc38d3f59c7582cff2c52bab58a"
@@ -2175,25 +2161,6 @@
     "@leafygreen-ui/portal" "^4.0.0"
     lodash "^4.17.21"
     react-transition-group "^4.4.1"
-
-"@leafygreen-ui/select@^6.0.0", "@leafygreen-ui/select@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/select/-/select-6.1.0.tgz#91d278fdffd5c573b125b78e5c02652637249143"
-  integrity sha512-Bp97O6NcPQmrxbu+mm/d1MlKPbQ1Aluzz8/v6O8JHNuUQbSttvio1DH6gz5XuvVSEBly+qC+Aj9doPeyHAZEuQ==
-  dependencies:
-    "@leafygreen-ui/button" "^16.0.0"
-    "@leafygreen-ui/emotion" "^4.0.0"
-    "@leafygreen-ui/hooks" "^7.3.0"
-    "@leafygreen-ui/icon" "^11.10.0"
-    "@leafygreen-ui/interaction-ring" "^4.0.0"
-    "@leafygreen-ui/lib" "^9.4.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-    "@leafygreen-ui/popover" "^9.0.0"
-    "@leafygreen-ui/tokens" "1.3.1"
-    "@leafygreen-ui/typography" "^13.0.1"
-    "@types/react-is" "^17.0.0"
-    polished "^4.1.3"
-    react-is "^17.0.1"
 
 "@leafygreen-ui/tabs@^5.1.4":
   version "5.1.5"
@@ -2228,17 +2195,6 @@
     "@leafygreen-ui/popover" "^7.2.2"
     "@leafygreen-ui/tokens" "^0.5.3"
     lodash "^4.17.21"
-
-"@leafygreen-ui/typography@^11.0.2":
-  version "11.0.2"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-11.0.2.tgz#b4747b85e1b4c5c8175698b9378a24861f884290"
-  integrity sha512-JXPpZRgwFrlIgpTWnh53i7m9OsMVLBj/jfMBCP1kpZJ+o/6Rs/OOsTbyLz8SX5WHq+HboOqlLL8PcIEk14GL3g==
-  dependencies:
-    "@leafygreen-ui/box" "^3.0.7"
-    "@leafygreen-ui/icon" "^11.9.0"
-    "@leafygreen-ui/lib" "^9.3.0"
-    "@leafygreen-ui/palette" "^3.4.0"
-    "@leafygreen-ui/tokens" "^1.3.1"
 
 "@leafygreen-ui/typography@^8.0.4":
   version "8.1.0"
