@@ -1,7 +1,7 @@
 import { ComponentStory } from '@storybook/react';
 import React, { SyntheticEvent, useState } from 'react';
 import ExpandableCard from '.';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';;
 
 export default {
   title: 'Components/ExpandableCard',
@@ -16,8 +16,8 @@ export default {
   argTypes: {
     description: { control: 'text' },
     flagText: { control: 'text' },
-    children: defaultArgTypes.children,
-    darkMode: defaultArgTypes.darkMode,
+    children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
     defaultOpen: { control: 'boolean' },
     isOpen: { control: 'boolean' },
     id: { control: 'text' },

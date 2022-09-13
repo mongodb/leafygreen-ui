@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import Icon from '@leafygreen-ui/icon';
 import { Tab, Tabs } from './index';
 import { TabsProps } from './Tabs';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';;
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
 export default {
@@ -41,7 +41,7 @@ export default {
     as: { control: false },
     setSelected: { control: false },
     selected: { control: 'number' },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
   },
   subcomponents: { Tab },
 } as Meta<typeof Tabs>;

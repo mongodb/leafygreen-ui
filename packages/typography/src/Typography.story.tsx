@@ -16,7 +16,7 @@ import {
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';;
 
 const wrapperStyles = css`
   padding: 0;
@@ -45,7 +45,7 @@ export default {
       description:
         'Storybook prop only. This font size is passed into the LeafygreenProvider.',
     },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     className: {
       table: {
         disable: true,

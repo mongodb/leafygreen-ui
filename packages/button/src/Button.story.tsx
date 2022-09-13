@@ -62,10 +62,8 @@ const Template: Story<ButtonStoryProps> = ({
   ...args
 }: ButtonStoryProps) => (
   <Button
-    // @ts-ignore-next-line
-    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-    // @ts-ignore-next-line
-    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
+    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined}
+    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined}
     {...args}
   />
 );
