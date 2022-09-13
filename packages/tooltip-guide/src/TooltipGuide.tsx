@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -15,7 +15,6 @@ import FocusTrap from 'focus-trap-react';
 // Exclude these from tooltip (tooltip already extends popover props)
 type ModifiedTooltipProps = Omit<
   TooltipProps,
-  | 'active'
   | 'usePortal'
   | 'justify'
   | 'align'
@@ -41,11 +40,11 @@ interface TooltipGuideProps extends ModifiedTooltipProps {
    */
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   /**
-   * Pass a reference to an element that the blue beacon should be centered against.
+   * Pass a reference to an element that the blue beacon or tooltip(if standalone) should be centered against.
    */
   refEl: React.RefObject<HTMLElement>;
   /**
-   * Used to display the number of steps. If `numberOfSteps` is <= 1 then the step will not show
+   * Used to display the number of steps. If `numberOfSteps` is <= 1 then the step text will not show and a standalone tooltip without the beacon will be used.
    * @default: 1
    */
   numberOfSteps?: number;
@@ -72,22 +71,18 @@ interface TooltipGuideProps extends ModifiedTooltipProps {
    */
   tooltipClassName?: string;
   /**
-   * ClassName to be applied to the portal element.
+   * Text to appear inside the green button. If no string is provided then it defaults to `Next` if the `currentStep` is less than the `numberOfSteps` or `Got it` if `currentStep` === numberOfSteps`.
    */
-  portalClassName?: string;
-  /**
-   * Text to appear inside the button
-   */
-  buttonText: string;
+  buttonText?: string;
   /**
    * Callback fired when dismiss button is clicked
    */
   onClose?: () => void;
   /**
    * Callback fired when 'next' button is clicked
-   * TODO: better description
+   * TODO: better description and name
    */
-  onButtonClick?: () => void;
+  onNextClick?: () => void;
   /**
    * Determines the alignment of the tooltip.
    * @default: 'top'
@@ -173,6 +168,7 @@ const closeStyles = css`
 `;
 
 // TODO: reduce motion
+// TODO: need a callback from the tooltip component to handle when the esc kep is clicked and the tooltip is closed
 
 /**
  * @param props.title Title to appear inside of Tooltip.
@@ -200,10 +196,10 @@ function TooltipGuide({
   title,
   description,
   onClose = () => {},
-  onButtonClick = () => {},
+  onNextClick = () => {},
   tooltipClassName,
   portalClassName,
-  buttonText,
+  buttonText: buttonTextProp,
   tooltipAlign = Align.Top,
   tooltipJustify = Justify.Middle,
   beaconAlign = Align.CenterHorizontal,
@@ -215,8 +211,9 @@ function TooltipGuide({
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
+  const beaconRef = useRef<HTMLDivElement | null>(null);
 
-  // TODO: checks
+  const buttonText = buttonTextProp ? buttonTextProp : currentStep === numberOfSteps ? 'Got it' : 'Next';
 
   useEffect(() => {
     if (open) {
@@ -239,7 +236,7 @@ function TooltipGuide({
 
   const handleButtonClick = () => {
     setOpen(o => !o);
-    onButtonClick();
+    onNextClick();
   };
 
   const renderContent = () => (
@@ -278,12 +275,17 @@ function TooltipGuide({
           popoverZIndex={popoverZIndex}
           className={portalClassName}
         >
+            {/* The beacon is using the popover component to position itself */}
+            {/* Instead of passing this as the tooltip trigger prop we instead pass the reference so that the default behavior of closing the tooltip on background click or showing and hiding the tooltip on hover */}
+            <div ref={beaconRef} className={beaconStyles} />
+            {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
             <Tooltip
               darkMode={darkMode}
               open={tooltipOpen}
+              setOpen={setOpen}
               justify={Justify.Middle}
               align={tooltipAlign}
-              trigger={<div className={beaconStyles}></div>}
+              refEl={beaconRef}
               className={cx(tooltipStyles, tooltipClassName)}
               usePortal={false}
               {...rest}
@@ -311,11 +313,12 @@ function TooltipGuide({
         </Popover>
       )}
       {/* Standalone tooltip */}
+      {/* this is using the ref of the refEl prop to position itself against  */}
       {numberOfSteps <= 1 && (
         <Tooltip
           darkMode={darkMode}
           open={open}
-          // setOpen={setOpen}
+          setOpen={setOpen}
           justify={tooltipJustify}
           align={tooltipAlign}
           refEl={refEl}
@@ -359,7 +362,7 @@ TooltipGuide.propTypes = {
   portalClassName: PropTypes.string,
   buttonText: PropTypes.string,
   onClose: PropTypes.func,
-  onButtonClick: PropTypes.func,
+  onNextClick: PropTypes.func,
   tooltipAlign: PropTypes.oneOf(Object.values(Align)),
   beaconAlign: PropTypes.oneOf(Object.values(Align)),
 };
