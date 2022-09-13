@@ -40,11 +40,11 @@ interface TooltipGuideProps extends ModifiedTooltipProps {
    */
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   /**
-   * Pass a reference to an element that the blue beacon or tooltip(if standalone) should be centered against.
+   * Pass a reference to an element that the beacon or tooltip(if standalone) should be centered against.
    */
   refEl: React.RefObject<HTMLElement>;
   /**
-   * Used to display the number of steps. If `numberOfSteps` is <= 1 then the step text will not show and a standalone tooltip without the beacon will be used.
+   * Used to display the number of steps. If `numberOfSteps` is `<= 1` then the step text will not show and a standalone tooltip without the beacon will be used.
    * @default: 1
    */
   numberOfSteps?: number;
@@ -71,7 +71,7 @@ interface TooltipGuideProps extends ModifiedTooltipProps {
    */
   tooltipClassName?: string;
   /**
-   * Text to appear inside the green button. If no string is provided then it defaults to `Next` if the `currentStep` is less than the `numberOfSteps` or `Got it` if `currentStep` === numberOfSteps`.
+   * Text to appear inside the bottom button. If no string is provided then it defaults to `Next` if the `currentStep` is less than the `numberOfSteps` or `Got it` if `currentStep` === numberOfSteps`.
    */
   buttonText?: string;
   /**
@@ -79,7 +79,7 @@ interface TooltipGuideProps extends ModifiedTooltipProps {
    */
   onClose?: () => void;
   /**
-   * Callback fired when 'next' button is clicked
+   * Callback fired when the bottom button is clicked
    * TODO: better description and name
    */
   onNextClick?: () => void;
@@ -94,7 +94,7 @@ interface TooltipGuideProps extends ModifiedTooltipProps {
    */
   tooltipJustify?: Justify;
   /**
-   * Determines the alignment of the beacon. This is only applied when `numberOfSteps` is greater than `1`.
+   * Determines the alignment of the beacon. This is only applied when `numberOfSteps` is `> 1`.
    * @default: 'center-horizontal'
    */
   beaconAlign?: Align;
