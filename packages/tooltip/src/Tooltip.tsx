@@ -161,7 +161,7 @@ export type TooltipProps = Omit<
      * Callback that is called when the tooltip is closed.
      *
      */
-     onClose?: () => void;
+    onClose?: () => void;
   };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {

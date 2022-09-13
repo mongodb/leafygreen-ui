@@ -4,6 +4,7 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 import TooltipGuide from '.';
+import { useEffect } from '@storybook/addons';
 
 export default {
   title: 'Components/TooltipGuide',
@@ -12,7 +13,6 @@ export default {
     controls: {
       exclude: [
         'className',
-        'children',
         'refEl',
         'setOpen',
         'tooltipClassName',
@@ -30,23 +30,31 @@ export default {
     currentStep: {
       control: 'number',
     },
+    children: {
+      control: 'text',
+    },
+    buttonText: {
+      control: 'text',
+    },
   },
   args: {
     title: 'New feature',
-    description: 'This is a new feature. You should try it out',
+    children: 'This is a new feature. You should try it out',
     buttonText: 'Next',
     numberOfSteps: 4,
     currentStep: 2,
   },
 };
 
-const Template: ComponentStory<typeof TooltipGuide> = ({
-  // eslint-disable-next-line react/prop-types
-  darkMode,
-  ...args
-}) => {
+const Template: ComponentStory<typeof TooltipGuide> = args => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
+  const { children, darkMode } = args;
+
+  useEffect(() => {
+    const timer = setTimeout(() => setOpen(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // eslint-disable-next-line no-console
   const handleNext = () => console.log('next');
@@ -85,7 +93,9 @@ const Template: ComponentStory<typeof TooltipGuide> = ({
         refEl={triggerRef}
         onNext={handleNext}
         onClose={handleClose}
-      />
+      >
+        {children}
+      </TooltipGuide>
     </>
   );
 };

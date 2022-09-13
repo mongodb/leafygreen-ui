@@ -1,191 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
+import Tooltip from '@leafygreen-ui/tooltip';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import IconButton from '@leafygreen-ui/icon-button';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import Button from '@leafygreen-ui/button';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { Body, Disclaimer } from '@leafygreen-ui/typography';
-import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import FocusTrap from 'focus-trap-react';
-
-// Exclude these from tooltip (tooltip already extends popover props)
-type ModifiedTooltipProps = Omit<
-  TooltipProps,
-  | 'usePortal'
-  | 'justify'
-  | 'align'
-  | 'refEl'
-  | 'onClick'
-  | 'trigger'
-  | 'triggerEvent'
-  | 'shouldClose'
-  | 'className'
-  | 'children'
-  | 'open'
-  | 'setOpen'
-  | 'onClose'
->;
-
-interface TooltipGuideProps extends ModifiedTooltipProps {
-  /**
-   * Determines if the `Tooltip` will appear as open or close.
-   * @default: false
-   */
-  open: boolean;
-  /**
-   * Callback to change the open state of the Tooltip in consuming applications.
-   */
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  /**
-   * Pass a reference to an element that the beacon or tooltip(if standalone) should be centered against.
-   */
-  refEl: React.RefObject<HTMLElement>;
-  /**
-   * Used to display the number of steps. If `numberOfSteps` is `<= 1` then the step text will not show and a standalone tooltip without the beacon will be used.
-   * @default: 1
-   */
-  numberOfSteps?: number;
-  /**
-   * Used to display the current step.
-   * @default: 1
-   */
-  currentStep?: number;
-  /**
-   * Detrmiens whether the `Tooltip` will appear in dark mode.
-   * @default: false
-   */
-  darkMode?: boolean;
-  /**
-   * Title to appear inside of Tooltip.
-   */
-  title: string;
-  /**
-   * Description to appear inside of Tooltip.
-   */
-  description: string;
-  /**
-   * ClassName to be applied to the tooltip element.
-   */
-  tooltipClassName?: string;
-  /**
-   * Text to appear inside the bottom button. If no string is provided then it defaults to `Next` if the `currentStep` is less than the `numberOfSteps` or `Got it` if `currentStep` === numberOfSteps`.
-   */
-  buttonText?: string;
-  /**
-   * Callback fired when dismiss button is clicked
-   */
-  onClose?: () => void;
-  /**
-   * Callback fired when the bottom button is clicked
-   * TODO: better description
-   */
-  onNext?: () => void;
-  /**
-   * Determines the alignment of the tooltip.
-   * @default: 'top'
-   */
-  tooltipAlign?: Exclude<Align, 'center-vertical' | 'center-horizontal'>;
-  /**
-   * Determines the justification of the tooltip if it is a standalone tooltip.
-   * @default: 'middle'
-   */
-  tooltipJustify?: Justify;
-  /**
-   * Determines the alignment of the beacon. This is only applied when `numberOfSteps` is `> 1`.
-   * @default: 'center-horizontal'
-   */
-  beaconAlign?: Align;
-};
-
-const tooltipStyles = css`
-  padding: 28px 16px 16px;
-`;
-
-const beaconStyles = css`
-  background: rgba(1, 107, 248, 0.51); //TODO: use transparentize
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  position: relative;
-
-  &::before {
-    content: '';
-    background: rgba(1, 107, 248, 0.17);
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
-
-    animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-  }
-
-  @keyframes pulse-ring {
-    0% {
-      transform: translateX(-50%) translateY(-50%) scale(0.73);
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-`;
-
-const contentStyles = css`
-  margin-bottom: 16px;
-`;
-
-const footerStyles = css`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 16px;
-`;
-
-const bodyThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.light1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.black};
-  `,
-};
-
-const bodyTitleStyles = css`
-  + p {
-    margin-top: 4px;
-  }
-`;
-
-const closeStyles = css`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-`;
+import {
+  beaconStyles,
+  bodyThemeStyles,
+  bodyTitleStyles,
+  closeStyles,
+  contentStyles,
+  footerStyles,
+  tooltipStyles,
+} from './styles';
+import { TooltipGuideProps } from './types';
 
 // TODO: reduce motion
-// TODO: need a callback from the tooltip component to handle when the esc kep is clicked and the tooltip is closed
-
-/**
- * @param props.title Title to appear inside of Tooltip.
- * @param props.description Description to appear inside of Tooltip.
- * @param props.open Determines if the `Tooltip` will appear as open or close.
- * @param props.setOpen Callback to change the open state of the Tooltip in consuming applications.
- * @param props.darkMode Detrmiens whether the `Tooltip` will appear in dark mode.
- * @param props.className Classname applied to .
- * @param props.refEl Pass a reference to an element that the blue beacon should be centered against.
- * @param props.currentStep Used to display the current step.
- * @param props.numberOfSteps Used to display the number of steps.
- * @param props.tooltipClassName ClassName to be applied to the tooltip element.
- * @param props.buttonText Text to appear inside the button.
- * @param props.tooltipAlign Determines the alignment of the tooltip.
- * @param props.beaconAlign Determines the alignment of the beacon. This is only applied when `numberOfSteps` is greater than `1`.
- */
 
 function TooltipGuide({
   open,
@@ -195,7 +30,7 @@ function TooltipGuide({
   currentStep = 1,
   darkMode: darkModeProp,
   title,
-  description,
+  children,
   onClose = () => {},
   onNext = () => {},
   tooltipClassName,
@@ -214,31 +49,47 @@ function TooltipGuide({
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
   const beaconRef = useRef<HTMLDivElement | null>(null);
 
-  const buttonText = buttonTextProp ? buttonTextProp : currentStep === numberOfSteps ? 'Got it' : 'Next';
+  /**
+   * Determines the button text. If there is nothing passed then default text will show depending on the numberOfSteps.
+   */
+  const buttonText = buttonTextProp
+    ? buttonTextProp
+    : currentStep === numberOfSteps
+    ? 'Got it'
+    : 'Next';
 
+  /**
+   * Determines if the stand-alone tooltip should be shown. If there are multiple steps the guided multipstep tooltip will be shown.
+   */
   const isStandalone = numberOfSteps <= 1;
 
   useEffect(() => {
     if (open) {
-      // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to multipstep tooltip.
-      setPopoverOpen(true);
-      setTimeout(() => setTooltipOpen(true), 400);
+      // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to guided multistep tooltip.
+      setPopoverOpen(true); // beacon opens first
+      setTimeout(() => setTooltipOpen(true), 400); // tooltip opens a little after
     } else {
-      // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multipstep tooltip.
-      setTooltipOpen(false);
-      setTimeout(() => setPopoverOpen(false), 200);
+      // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to guided multistep tooltip.
+      setTooltipOpen(false); // tooltip closes first
+      setTimeout(() => setPopoverOpen(false), 200); // beacon closes a little after
     }
   }, [open]);
 
-  // Warning if current step is larger than number of steps
+  //TODO: Warning if current step is larger than number of steps
 
-  const handleClose = () => {
+  /**
+   * Callback fired when the x icon is clicked. It closes the tooltip and fires the callback that was passed to `onClose`.
+   */
+  const handleCloseClick = () => {
     setOpen(false);
     onClose();
   };
 
+  /**
+   * Callback fired when the button at the bottom of the tooltip is clicked. It closes the tooltip and fires the callback that was passed to `onNext`.
+   */
   const handleButtonClick = () => {
-    setOpen(o => !o);
+    setOpen(false);
     onNext();
   };
 
@@ -247,7 +98,9 @@ function TooltipGuide({
       <Body className={cx(bodyThemeStyles[theme], bodyTitleStyles)}>
         <strong>{title}</strong>
       </Body>
-      <Body className={bodyThemeStyles[theme]}>{description}</Body>
+      <Body as="div" className={bodyThemeStyles[theme]}>
+        {children}
+      </Body>
     </div>
   );
 
@@ -260,13 +113,14 @@ function TooltipGuide({
       {buttonText}
     </Button>
   );
-
-  // This callback is fired when the Esc key closes the tooltip since this happens directly in the tooltip component
-  const onEscCloseCallback =  isStandalone ? onNext : onClose;
+  /**
+   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the bottom button(`onNext`) since that is the callback that would be fired if the bottom button was clicked. If it's the guided multistep tooltip we use the callback from the close icon button(`onClose`) since thats the callback that would be fired if the close icon was clicked.
+   */
+  const onEscCloseCallback = isStandalone ? onNext : onClose;
 
   return (
     <>
-      {/* Multistep tooltip */}
+      {/* Guided multistep tooltip */}
       {!isStandalone && (
         <Popover
           active={popoverOpen}
@@ -281,28 +135,28 @@ function TooltipGuide({
           popoverZIndex={popoverZIndex}
           className={portalClassName}
         >
-            {/* The beacon is using the popover component to position itself */}
-            {/* Instead of passing this as the tooltip trigger prop we instead pass the reference so that the default behavior of closing the tooltip on background click or showing and hiding the tooltip on hover does not happen */}
-            <div ref={beaconRef} className={beaconStyles} />
-            {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
-            <Tooltip
-              darkMode={darkMode}
-              open={tooltipOpen}
-              setOpen={setOpen}
-              justify={Justify.Middle}
-              align={tooltipAlign}
-              refEl={beaconRef}
-              className={cx(tooltipStyles, tooltipClassName)}
-              usePortal={false}
-              onClose={() => onEscCloseCallback()}
-              {...rest}
-            >
-              <FocusTrap>
-                <div>
+          {/* The beacon is using the popover component to position itself */}
+          {/* Instead of passing this as the tooltip trigger prop we instead pass the reference so that the default behavior of closing the tooltip on background click or showing and hiding the tooltip on hover does not happen */}
+          <div ref={beaconRef} className={beaconStyles} />
+          {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
+          <Tooltip
+            darkMode={darkMode}
+            open={tooltipOpen}
+            setOpen={setOpen}
+            justify={Justify.Middle}
+            align={tooltipAlign}
+            refEl={beaconRef}
+            className={cx(tooltipStyles, tooltipClassName)}
+            usePortal={false}
+            onClose={() => onEscCloseCallback()}
+            {...rest}
+          >
+            <FocusTrap>
+              <div>
                 <IconButton
                   className={closeStyles}
                   aria-label="Close Tooltip"
-                  onClick={() => handleClose()}
+                  onClick={() => handleCloseClick()}
                   darkMode={!darkMode}
                 >
                   <XIcon />
@@ -314,13 +168,13 @@ function TooltipGuide({
                   </Disclaimer>
                   {renderFooter()}
                 </div>
-                </div>
-              </FocusTrap>
-            </Tooltip>
+              </div>
+            </FocusTrap>
+          </Tooltip>
         </Popover>
       )}
       {/* Standalone tooltip */}
-      {/* this is using the ref of the refEl prop to position itself against  */}
+      {/* this is using the ref of the `refEl` prop to position itself against  */}
       {isStandalone && (
         <Tooltip
           darkMode={darkMode}
@@ -329,7 +183,7 @@ function TooltipGuide({
           justify={tooltipJustify}
           align={tooltipAlign}
           refEl={refEl}
-          className={cx(tooltipStyles, tooltipClassName)}
+          className={cx(tooltipClassName)}
           portalClassName={portalClassName}
           portalContainer={portalContainer}
           scrollContainer={scrollContainer}
@@ -339,9 +193,9 @@ function TooltipGuide({
         >
           <FocusTrap>
             <div>
-          {renderContent()}
-          <div className={footerStyles}>{renderFooter()}</div>
-          </div>
+              {renderContent()}
+              <div className={footerStyles}>{renderFooter()}</div>
+            </div>
           </FocusTrap>
         </Tooltip>
       )}
@@ -365,7 +219,6 @@ TooltipGuide.propTypes = {
   numberOfSteps: PropTypes.number,
   currentStep: PropTypes.number,
   title: PropTypes.string,
-  description: PropTypes.string,
   tooltipClassName: PropTypes.string,
   portalClassName: PropTypes.string,
   buttonText: PropTypes.string,
