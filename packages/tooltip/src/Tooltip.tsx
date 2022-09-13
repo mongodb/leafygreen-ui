@@ -105,7 +105,7 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-type ModifiedPopoverProps = Omit<PopoverProps, 'active'>;
+type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'adjustOnMutation'>;
 
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,

@@ -18,12 +18,18 @@ export default {
         'tooltipClassName',
         'open',
         'onClose',
-        'onButtonClick'
+        'onButtonClick',
       ],
     },
   },
   argTypes: {
     darkMode: defaultArgTypes.darkMode,
+    numberOfSteps: {
+      control: 'number',
+    },
+    currentStep: {
+      control: 'number',
+    },
   },
   args: {
     title: 'New feature',
@@ -34,8 +40,11 @@ export default {
   },
 };
 
-// eslint-disable-next-line react/prop-types
-const Template: ComponentStory<typeof TooltipGuide> = ({darkMode ,...args}) => {
+const Template: ComponentStory<typeof TooltipGuide> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
 
@@ -62,7 +71,13 @@ const Template: ComponentStory<typeof TooltipGuide> = ({darkMode ,...args}) => {
       >
         story refEl trigger
       </div>
-      <TooltipGuide {...args} darkMode={darkMode} open={open} setOpen={setOpen} refEl={triggerRef} />
+      <TooltipGuide
+        {...args}
+        darkMode={darkMode}
+        open={open}
+        setOpen={setOpen}
+        refEl={triggerRef}
+      />
     </>
   );
 };
