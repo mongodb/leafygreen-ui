@@ -1191,16 +1191,18 @@ export function Combobox<M extends boolean>({
       }}
     >
       <div className={cx(comboboxParentStyle(size), className)} {...rest}>
-        <div className={labelDescriptionContainerStyle}>
-          {label && (
-            <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
-              {label}
-            </Label>
-          )}
-          {description && (
-            <Description darkMode={darkMode}>{description}</Description>
-          )}
-        </div>
+        {(label || description) && (
+          <div className={labelDescriptionContainerStyle}>
+            {label && (
+              <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
+                {label}
+              </Label>
+            )}
+            {description && (
+              <Description darkMode={darkMode}>{description}</Description>
+            )}
+          </div>
+        )}
 
         {/* Disable eslint: onClick sets focus. Key events would already have focus */}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
