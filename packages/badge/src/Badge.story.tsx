@@ -1,7 +1,7 @@
 import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
 import Badge from './Badge';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 
 export default {
   title: 'Components/Badge',
@@ -15,7 +15,7 @@ export default {
     darkMode: false,
   },
   argTypes: {
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
   },
 } as Meta<typeof Badge>;
 
