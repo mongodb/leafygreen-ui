@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 6.1.4-next.0
+
+### Patch Changes
+
+- b70fe564: Updates `tsdoc.json` file
+
 ## 6.1.3
 
 ### Patch Changes

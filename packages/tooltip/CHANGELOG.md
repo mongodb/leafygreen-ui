@@ -1,5 +1,25 @@
 # @leafygreen-ui/tooltip
 
+## 7.1.2-next.0
+
+### Patch Changes
+
+- 00a2a281: Updates Storybook configs
+- b70fe564: Updates `tsdoc.json` file
+- Updated dependencies [b70fe564]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/icon@11.11.0-next.0
+  - @leafygreen-ui/popover@9.1.0-next.0
+  - @leafygreen-ui/typography@13.2.0-next.0
+  - @leafygreen-ui/lib@9.5.0-next.0
+  - @leafygreen-ui/emotion@4.0.2-next.0
+  - @leafygreen-ui/hooks@7.3.2-next.0
+  - @leafygreen-ui/palette@3.4.3-next.0
+  - @leafygreen-ui/tokens@1.3.3-next.0
+
 ## 7.1.1
 
 ### Patch Changes

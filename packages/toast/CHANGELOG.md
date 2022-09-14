@@ -1,5 +1,26 @@
 # @leafygreen-ui/toast
 
+## 2.0.1-next.0
+
+### Patch Changes
+
+- 00a2a281: Updates Storybook configs
+- b70fe564: Updates `tsdoc.json` file
+- Updated dependencies [b70fe564]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/icon@11.11.0-next.0
+  - @leafygreen-ui/icon-button@13.2.0-next.0
+  - @leafygreen-ui/typography@13.2.0-next.0
+  - @leafygreen-ui/lib@9.5.0-next.0
+  - @leafygreen-ui/emotion@4.0.2-next.0
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.0
+  - @leafygreen-ui/palette@3.4.3-next.0
+  - @leafygreen-ui/portal@4.0.5-next.0
+  - @leafygreen-ui/tokens@1.3.3-next.0
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.4-next.0
+
+### Patch Changes
+
+- b70fe564: Updates `tsdoc.json` file
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/palette@3.4.3-next.0
+
 ## 1.1.3
 
 ### Patch Changes

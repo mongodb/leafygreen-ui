@@ -1,5 +1,18 @@
 # @leafygreen-ui/lib
 
+## 9.5.0-next.0
+
+### Minor Changes
+
+- 00a2a281: Exports storybook config objects, and package.tsconfig
+
+### Patch Changes
+
+- 00a2a281: Updates Storybook configs
+- b70fe564: Updates `tsdoc.json` file
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/emotion@4.0.2-next.0
+
 ## 9.4.2
 
 ### Patch Changes

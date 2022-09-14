@@ -1,5 +1,25 @@
 # @leafygreen-ui/stepper
 
+## 3.1.0-next.0
+
+### Minor Changes
+
+- b70fe564: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- Updated dependencies [b70fe564]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/icon@11.11.0-next.0
+  - @leafygreen-ui/typography@13.2.0-next.0
+  - @leafygreen-ui/lib@9.5.0-next.0
+  - @leafygreen-ui/tooltip@7.1.2-next.0
+  - @leafygreen-ui/emotion@4.0.2-next.0
+  - @leafygreen-ui/palette@3.4.3-next.0
+
 ## 3.0.4
 
 ### Patch Changes

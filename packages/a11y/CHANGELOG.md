@@ -1,5 +1,17 @@
 # @leafygreen-ui/a11y
 
+## 1.3.2-next.0
+
+### Patch Changes
+
+- b70fe564: Updates `tsdoc.json` file
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/lib@9.5.0-next.0
+  - @leafygreen-ui/emotion@4.0.2-next.0
+  - @leafygreen-ui/hooks@7.3.2-next.0
+
 ## 1.3.1
 
 ### Patch Changes

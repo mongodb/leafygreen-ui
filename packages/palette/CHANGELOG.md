@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.4.3-next.0
+
+### Patch Changes
+
+- b70fe564: Updates `tsdoc.json` file
+
 ## 3.4.2
 
 ### Patch Changes

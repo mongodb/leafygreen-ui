@@ -1,5 +1,27 @@
 # @leafygreen-ui/segmented-control
 
+## 3.1.0-next.0
+
+### Minor Changes
+
+- b70fe564: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 00a2a281: Updates Storybook configs
+- Updated dependencies [b70fe564]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/typography@13.2.0-next.0
+  - @leafygreen-ui/lib@9.5.0-next.0
+  - @leafygreen-ui/emotion@4.0.2-next.0
+  - @leafygreen-ui/hooks@7.3.2-next.0
+  - @leafygreen-ui/interaction-ring@4.0.2-next.0
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.0
+  - @leafygreen-ui/tokens@1.3.3-next.0
+
 ## 3.0.1
 
 ### Patch Changes

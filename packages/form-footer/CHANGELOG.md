@@ -1,5 +1,19 @@
 # @leafygreen-ui/form-footer
 
+## 1.0.1-next.0
+
+### Patch Changes
+
+- b70fe564: Updates `tsdoc.json` file
+- Updated dependencies [b70fe564]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/button@16.1.0-next.0
+  - @leafygreen-ui/lib@9.5.0-next.0
+  - @leafygreen-ui/banner@5.0.1-next.0
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.0
+
 ## 1.0.0
 
 ### Major Changes

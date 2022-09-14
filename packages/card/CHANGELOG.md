@@ -1,5 +1,24 @@
 # @leafygreen-ui/card
 
+## 7.1.0-next.0
+
+### Minor Changes
+
+- b70fe564: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 00a2a281: Updates Storybook configs
+- Updated dependencies [b70fe564]
+- Updated dependencies [00a2a281]
+- Updated dependencies [00a2a281]
+- Updated dependencies [b70fe564]
+  - @leafygreen-ui/box@3.1.0-next.0
+  - @leafygreen-ui/lib@9.5.0-next.0
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.0
+  - @leafygreen-ui/palette@3.4.3-next.0
+  - @leafygreen-ui/tokens@1.3.3-next.0
+
 ## 7.0.1
 
 ### Patch Changes
