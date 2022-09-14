@@ -1,5 +1,11 @@
 # @leafygreen-ui/toast
 
+## 2.0.1-next.1
+
+### Patch Changes
+
+- 2a53feb4: Update storybook imports
+
 ## 2.0.1-next.0
 
 ### Patch Changes

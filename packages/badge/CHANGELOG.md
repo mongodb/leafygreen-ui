@@ -1,5 +1,11 @@
 # @leafygreen-ui/badge
 
+## 6.1.0-next.1
+
+### Patch Changes
+
+- 2a53feb4: Update storybook imports
+
 ## 6.1.0-next.0
 
 ### Minor Changes

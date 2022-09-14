@@ -52,6 +52,7 @@
     "website": "0.4.0"
   },
   "changesets": [
+    "cyan-dryers-compete",
     "famous-hounds-breathe",
     "fast-hounds-cross",
     "happy-meals-return",
