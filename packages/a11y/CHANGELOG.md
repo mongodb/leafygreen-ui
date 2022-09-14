@@ -1,5 +1,15 @@
 # @leafygreen-ui/a11y
 
+## 1.3.1
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/lib@9.4.2
+
 ## 1.3.0
 
 ### Minor Changes

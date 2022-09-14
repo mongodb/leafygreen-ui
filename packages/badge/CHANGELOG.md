@@ -1,5 +1,20 @@
 # @leafygreen-ui/badge
 
+## 6.0.0
+
+### Major Changes
+
+- e39d8469: Updates `Badge` for dark mode brand refresh.
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 5.0.1
 
 ### Patch Changes

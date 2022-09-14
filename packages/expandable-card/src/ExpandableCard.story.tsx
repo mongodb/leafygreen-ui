@@ -1,11 +1,23 @@
 import { ComponentStory } from '@storybook/react';
 import React, { SyntheticEvent, useState } from 'react';
 import ExpandableCard from '.';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';;
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 
 export default {
   title: 'Components/ExpandableCard',
   component: ExpandableCard,
+  parameters: {
+    controls: {
+      exclude: [
+        'className',
+        'contentClassName',
+        'id',
+        'onClick',
+        'isOpen',
+        'defaultOpen',
+      ],
+    },
+  },
   args: {
     title: 'Title',
     description: 'Donec id elit non mi porta gravida at eget metus.',

@@ -4,7 +4,8 @@ import { Menu, MenuProps, SubMenu, MenuItem, MenuSeparator } from '.';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import Button from '@leafygreen-ui/button';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';;
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import IconButton from '@leafygreen-ui/icon-button';
 import { Size } from './types';
 
 export default {
@@ -57,8 +58,11 @@ export const UncontrolledTemplate = ({
   return (
     <LeafyGreenProvider>
       <Menu
-        open={open}
-        trigger={<Button darkMode={darkMode} rightGlyph={<EllipsisIcon />} />}
+        trigger={
+          <IconButton darkMode={darkMode} aria-label="label">
+            <EllipsisIcon />
+          </IconButton>
+        }
         darkMode={darkMode}
         {...args}
       >

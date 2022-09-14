@@ -1,1 +1,2 @@
-export { default, Variant } from './Callout';
+export { default } from './Callout';
+export { Variant } from './types';

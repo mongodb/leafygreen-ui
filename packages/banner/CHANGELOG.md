@@ -1,5 +1,26 @@
 # @leafygreen-ui/banner
 
+## 5.0.0
+
+### Major Changes
+
+- e39d8469: Updates `Banner` for dark mode brand refresh. Adds `baseFontSize` prop. Adds new link styles for both light and dark modes.
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/icon-button@13.1.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 4.0.1
 
 ### Patch Changes

@@ -7,6 +7,7 @@ const knobsConfig: KnobsConfigInterface<{
   children: string;
   title: boolean;
   baseFontSize: 13 | 16;
+  darkMode: boolean;
 }> = {
   variant: {
     type: 'select',
@@ -31,6 +32,11 @@ const knobsConfig: KnobsConfigInterface<{
     default: 13,
     label: 'Base Font Size',
     options: [13, 16],
+  },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
   },
 };
 
