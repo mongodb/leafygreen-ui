@@ -3,12 +3,12 @@ import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
-import TooltipGuide from '.';
+import Guidecue from '.';
 import { useEffect } from '@storybook/addons';
 
 export default {
-  title: 'Components/TooltipGuide',
-  component: TooltipGuide,
+  title: 'Components/Guidecue',
+  component: Guidecue,
   parameters: {
     controls: {
       exclude: [
@@ -46,7 +46,7 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof TooltipGuide> = args => {
+const Template: ComponentStory<typeof Guidecue> = args => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
   const { children, darkMode } = args;
@@ -85,17 +85,18 @@ const Template: ComponentStory<typeof TooltipGuide> = args => {
       >
         story refEl trigger
       </div>
-      <TooltipGuide
+      <Guidecue
         {...args}
         darkMode={darkMode}
         open={open}
         setOpen={setOpen}
         refEl={triggerRef}
-        onNext={handleNext}
+        onButtonClick={handleNext}
         onClose={handleClose}
+        aria-labelledby="test"
       >
         {children}
-      </TooltipGuide>
+      </Guidecue>
     </>
   );
 };

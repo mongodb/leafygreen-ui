@@ -16,7 +16,7 @@ type ModifiedTooltipProps = Omit<
   | 'onClose'
 >;
 
-export interface TooltipGuideProps extends ModifiedTooltipProps {
+export interface GuidecueProps extends ModifiedTooltipProps {
   /**
    * Determines if the `Tooltip` will appear as open or close.
    * @default: false
@@ -66,9 +66,9 @@ export interface TooltipGuideProps extends ModifiedTooltipProps {
    */
   onClose?: () => void;
   /**
-   * Callback fired when the bottom button is clicked. This applies to both the stand-alone and guided multistep tooltip
+   * Callback fired when the bottom primary button is clicked. This applies to both the stand-alone and guided multistep tooltip
    */
-  onNext?: () => void;
+  onButtonClick?: () => void;
   /**
    * Determines the alignment of the tooltip.
    * @default: 'top'

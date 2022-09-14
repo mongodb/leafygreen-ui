@@ -370,8 +370,8 @@ function Tooltip({
 
         return (
           <div
-            {...rest}
             role="tooltip"
+            {...rest}
             id={tooltipId}
             className={cx(
               baseStyles,

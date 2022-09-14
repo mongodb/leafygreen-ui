@@ -1,8 +1,8 @@
 
   {
-    "name": "@leafygreen-ui/tooltip-guide",
+    "name": "@leafygreen-ui/guidecue",
     "version": "0.9.0",
-    "description": "leafyGreen UI Kit Tooltip Guide",
+    "description": "leafyGreen UI Kit Guidecue",
     "main": "./dist/index.js",
     "module": "./dist/esm/index.js",
     "types": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
       "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
     },
     "license": "Apache-2.0",
-    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tooltip-guide",
+    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/guidecue",
     "repository": {
       "type": "git",
       "url": "https://github.com/mongodb/leafygreen-ui"
@@ -33,7 +33,8 @@
       "@leafygreen-ui/button": "^16.0.2",
       "@leafygreen-ui/popover": "^9.0.0",
       "@leafygreen-ui/typography": "^13.1.1",
-      "@leafygreen-ui/palette": "^3.4.1"
+      "@leafygreen-ui/palette": "^3.4.1",
+      "@leafygreen-ui/emotion": "^4.0.1"
     },
     "peerDependencies": {
       "@leafygreen-ui/leafygreen-provider": "^2.3.2"

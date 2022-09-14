@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import TooltipGuide from '.';
+import Guidecue from '.';
 
-describe('packages/tooltip-guide', () => {
+describe('packages/guidecue', () => {
   test('condition', () => {});
 });

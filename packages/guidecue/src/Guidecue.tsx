@@ -18,11 +18,11 @@ import {
   footerStyles,
   tooltipStyles,
 } from './styles';
-import { TooltipGuideProps } from './types';
+import { GuidecueProps } from './types';
 
 // TODO: reduce motion
 
-function TooltipGuide({
+function Guidecue({
   open,
   setOpen,
   refEl,
@@ -32,7 +32,7 @@ function TooltipGuide({
   title,
   children,
   onClose = () => {},
-  onNext = () => {},
+  onButtonClick = () => {},
   tooltipClassName,
   portalClassName,
   buttonText: buttonTextProp,
@@ -43,11 +43,13 @@ function TooltipGuide({
   scrollContainer,
   popoverZIndex,
   ...rest
-}: TooltipGuideProps) {
+}: GuidecueProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
   const beaconRef = useRef<HTMLDivElement | null>(null);
+
+  const ariaLabelledby = 'guidecue';
 
   /**
    * Determines the button text. If there is nothing passed then default text will show depending on the numberOfSteps.
@@ -86,16 +88,20 @@ function TooltipGuide({
   };
 
   /**
-   * Callback fired when the button at the bottom of the tooltip is clicked. It closes the tooltip and fires the callback that was passed to `onNext`.
+   * Callback fired when the button at the bottom of the tooltip is clicked. It closes the tooltip and fires the callback that was passed to `onButtonClick`.
    */
   const handleButtonClick = () => {
     setOpen(false);
-    onNext();
+    onButtonClick();
   };
 
   const renderContent = () => (
     <div className={contentStyles}>
-      <Body className={cx(bodyThemeStyles[theme], bodyTitleStyles)}>
+      <Body
+        id={ariaLabelledby}
+        as="h2"
+        className={cx(bodyThemeStyles[theme], bodyTitleStyles)}
+      >
         <strong>{title}</strong>
       </Body>
       <Body as="div" className={bodyThemeStyles[theme]}>
@@ -114,9 +120,9 @@ function TooltipGuide({
     </Button>
   );
   /**
-   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the bottom button(`onNext`) since that is the callback that would be fired if the bottom button was clicked. If it's the guided multistep tooltip we use the callback from the close icon button(`onClose`) since thats the callback that would be fired if the close icon was clicked.
+   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the bottom button(`onButtonClick`) since that is the callback that would be fired if the bottom button was clicked. If it's the guided multistep tooltip we use the callback from the close icon button(`onClose`) since thats the callback that would be fired if the close icon was clicked.
    */
-  const onEscCloseCallback = isStandalone ? onNext : onClose;
+  const onEscCloseCallback = isStandalone ? onButtonClick : onClose;
 
   return (
     <>
@@ -149,6 +155,8 @@ function TooltipGuide({
             className={cx(tooltipStyles, tooltipClassName)}
             usePortal={false}
             onClose={() => onEscCloseCallback()}
+            role="dialog"
+            aria-labelledby={ariaLabelledby}
             {...rest}
           >
             <FocusTrap>
@@ -189,6 +197,8 @@ function TooltipGuide({
           scrollContainer={scrollContainer}
           popoverZIndex={popoverZIndex}
           onClose={() => onEscCloseCallback()}
+          role="dialog"
+          aria-labelledby={ariaLabelledby}
           {...rest}
         >
           <FocusTrap>
@@ -203,9 +213,9 @@ function TooltipGuide({
   );
 }
 
-TooltipGuide.displayName = 'TooltipGuide';
+Guidecue.displayName = 'Guidecue';
 // TODO: make sure the correct props are here
-TooltipGuide.propTypes = {
+Guidecue.propTypes = {
   children: PropTypes.node,
   darkMode: PropTypes.bool,
   open: PropTypes.bool,
@@ -223,9 +233,9 @@ TooltipGuide.propTypes = {
   portalClassName: PropTypes.string,
   buttonText: PropTypes.string,
   onClose: PropTypes.func,
-  onNext: PropTypes.func,
+  onButtonClick: PropTypes.func,
   tooltipAlign: PropTypes.oneOf(Object.values(Align)),
   beaconAlign: PropTypes.oneOf(Object.values(Align)),
 };
 
-export default TooltipGuide;
+export default Guidecue;
