@@ -37,7 +37,6 @@
     "@leafygreen-ui/leafygreen-provider": "^2.3.3"
   },
   "devDependencies": {
-    "@leafygreen-ui/mongo-nav": "^7.2.1",
     "@leafygreen-ui/select": "^7.0.2",
     "@leafygreen-ui/icon-button": "^13.1.1"
   },
