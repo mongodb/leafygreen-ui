@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Box, { BoxProps } from '@leafygreen-ui/box';
 import { fontFamilies, focusRing, typeScales } from '@leafygreen-ui/tokens';
-import { Theme } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export const ContentStyle = {
@@ -98,7 +98,7 @@ const containerStyle = css`
   min-height: 68px; // 48px + 20px (padding + line-height)
 `;
 
-export interface CardProps {
+export interface CardProps extends HTMLElementProps<'div'> {
   /**
    * className prop passed to the component
    */

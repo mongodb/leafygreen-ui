@@ -1,8 +1,8 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
 import IconButton from '.';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 
 export default {
   title: 'Components/IconButton',
@@ -11,7 +11,7 @@ export default {
     href: { control: 'string' },
     active: { control: 'boolean' },
     disabled: { control: 'boolean' },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
   },
 };
 // eslint-disable-next-line react/prop-types

@@ -3,7 +3,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { H2, Body, Link } from '@leafygreen-ui/typography';
 import InlineDefinition from '.';
 import { ComponentStory } from '@storybook/react';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';;
 
 export default {
   title: 'Components/InlineDefinition',
@@ -16,7 +16,7 @@ export default {
   argTypes: {
     definition: { control: 'text' },
     children: { control: 'text' },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
   },
 };
 

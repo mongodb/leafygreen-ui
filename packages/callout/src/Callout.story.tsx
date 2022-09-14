@@ -3,7 +3,7 @@ import Code from '@leafygreen-ui/code';
 import { Link } from '@leafygreen-ui/typography';
 import Callout, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 
 export default {
   title: 'Components/Callout',
@@ -25,8 +25,8 @@ export default {
         type: 'text',
       },
     },
-    children: defaultArgTypes.children,
-    darkMode: defaultArgTypes.darkMode,
+    children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
   },
 } as Meta<typeof Callout>;
 

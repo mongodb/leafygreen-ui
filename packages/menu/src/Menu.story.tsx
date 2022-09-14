@@ -5,7 +5,7 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import Button from '@leafygreen-ui/button';
 import IconButton from '@leafygreen-ui/icon-button';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 import { Size } from './types';
 
 export default {
@@ -39,7 +39,7 @@ export default {
     className: {
       type: 'string',
     },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     size: {
       options: Object.values(Size),
       control: 'select',
