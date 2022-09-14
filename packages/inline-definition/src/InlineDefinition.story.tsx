@@ -3,7 +3,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { H2, Body, Link } from '@leafygreen-ui/typography';
 import InlineDefinition from '.';
 import { ComponentStory } from '@storybook/react';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';;
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 
 export default {
   title: 'Components/InlineDefinition',

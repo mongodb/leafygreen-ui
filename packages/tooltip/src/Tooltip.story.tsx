@@ -4,7 +4,7 @@ import Tooltip, { Align, Justify, TooltipProps } from '.';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';;
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 
 export default {
   title: 'Components/Tooltip',

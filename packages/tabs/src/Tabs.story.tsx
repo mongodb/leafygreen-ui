@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import Icon from '@leafygreen-ui/icon';
 import { Tab, Tabs } from './index';
 import { TabsProps } from './Tabs';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';;
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
 export default {

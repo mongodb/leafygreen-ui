@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { Radio, RadioGroup } from '.';
 import { RadioGroupProps } from './RadioGroup';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';;
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 
 export default {
   title: 'Components/RadioGroup',
