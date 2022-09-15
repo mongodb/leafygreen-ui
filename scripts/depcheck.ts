@@ -6,7 +6,10 @@ import { exit } from 'process';
 import chalk from 'chalk'
 import { Command } from 'commander'
 import packageJson from '../package.json';
-import { exec } from 'child_process';
+import {
+  SpawnOptions,
+  spawnSync
+} from 'child_process';
 const lgPackages = readdirSync('packages/')
 const devDependencies = Object.keys(packageJson.devDependencies)
 
@@ -29,14 +32,15 @@ async function checkDependencies() {
     if (missing.length > 0 || unused.length > 0) {
 
       (missing.length > 0) && console.log(`${chalk.green(`packages/${pkg}`)} is missing: ${chalk.redBright(missing.join(', '))}`);
-      (unused.length > 0) && console.log(`${chalk.green(`packages/${pkg}`)} doesn't use ${chalk.blueBright(unused.join(''))}`);
-      console.log('')
+      (unused.length > 0) && console.log(`${chalk.green(`packages/${pkg}`)} doesn't use ${chalk.blueBright(unused.join(', '))}`);
 
       if (fix) {
-        await fixDependencies(pkg, missing, unused)
+        fixDependencies(pkg, missing, unused)
       } else {
         issuesFound = true;
       }
+
+      console.log('')
     }
   }
 
@@ -47,11 +51,8 @@ async function checkDependencies() {
   }
 }
 
-
-async function fixDependencies(pkg: string, missing: Array<string>, unused: Array<string>) {
-  console.log(`Fixing packages/${pkg}`)
-  const installCmd = missing.length > 0 ? `yarn add -W ${missing.join(' ')}` : '';
-  const removeCmd = unused.length > 0 ? `yarn remove -W ${unused.join(' ')}`: '';
-  exec(`cd packages/${pkg}; ${installCmd}; ${removeCmd}`)
+function fixDependencies(pkg: string, missing: Array<string>, unused: Array<string>) {
+  const cmdOpts:SpawnOptions = {stdio: 'inherit', cwd: `packages/${pkg}`};
+  (missing.length > 0 ) && spawnSync('yarn', ['add', '-W', ...missing], cmdOpts);
+  (unused.length > 0) && spawnSync('yarn', ['remove', ...unused], cmdOpts)
 }
-
