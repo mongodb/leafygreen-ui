@@ -78,7 +78,7 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    * Determines the justification of the tooltip if it is a stand-alone tooltip.
    * @default: 'middle'
    */
-  tooltipJustify?: Justify;
+  tooltipJustify?: Exclude<Justify, 'fit'>;
   /**
    * Determines the alignment of the beacon. This is only applied when `numberOfSteps` is `> 1`.
    * @default: 'center-horizontal'

@@ -19,6 +19,9 @@ import {
   tooltipStyles,
 } from './styles';
 import { GuidecueProps } from './types';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
+
+const focusClassName = createUniqueClassName('guidecue');
 
 // TODO: reduce motion
 
@@ -66,15 +69,22 @@ function Guidecue({
   const isStandalone = numberOfSteps <= 1;
 
   useEffect(() => {
+    let openTimeout: NodeJS.Timeout, closeTimeout: NodeJS.Timeout;
+
     if (open) {
       // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to guided multistep tooltip.
       setPopoverOpen(true); // beacon opens first
-      setTimeout(() => setTooltipOpen(true), 400); // tooltip opens a little after
+      openTimeout = setTimeout(() => setTooltipOpen(true), 400); // tooltip opens a little after
     } else {
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to guided multistep tooltip.
       setTooltipOpen(false); // tooltip closes first
-      setTimeout(() => setPopoverOpen(false), 200); // beacon closes a little after
+      closeTimeout = setTimeout(() => setPopoverOpen(false), 200); // beacon closes a little after
     }
+
+    return () => {
+      clearTimeout(openTimeout);
+      clearTimeout(closeTimeout);
+    };
   }, [open]);
 
   //TODO: Warning if current step is larger than number of steps
@@ -115,6 +125,7 @@ function Guidecue({
       variant="primary"
       onClick={() => handleButtonClick()}
       darkMode={!darkMode}
+      className={focusClassName}
     >
       {buttonText}
     </Button>
@@ -123,6 +134,9 @@ function Guidecue({
    * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the bottom button(`onButtonClick`) since that is the callback that would be fired if the bottom button was clicked. If it's the guided multistep tooltip we use the callback from the close icon button(`onClose`) since thats the callback that would be fired if the close icon was clicked.
    */
   const onEscCloseCallback = isStandalone ? onButtonClick : onClose;
+
+  // Test are failing because of `focus-trap-react`. Even though there is a focusable element in the dialog it does not find it in time and throws an error. A fix is to add a classname to the primary button and set that as the fallback focus.
+  const focusTrapOptions = { fallbackFocus: `.${focusClassName}` };
 
   return (
     <>
@@ -159,7 +173,7 @@ function Guidecue({
             aria-labelledby={ariaLabelledby}
             {...rest}
           >
-            <FocusTrap>
+            <FocusTrap focusTrapOptions={focusTrapOptions}>
               <div>
                 <IconButton
                   className={closeStyles}
@@ -201,7 +215,7 @@ function Guidecue({
           aria-labelledby={ariaLabelledby}
           {...rest}
         >
-          <FocusTrap>
+          <FocusTrap focusTrapOptions={focusTrapOptions}>
             <div>
               {renderContent()}
               <div className={footerStyles}>{renderFooter()}</div>
