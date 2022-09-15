@@ -22,17 +22,20 @@
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.3.1",
+    "@leafygreen-ui/button": "^16.0.3",
+    "@leafygreen-ui/emotion": "^4.0.1",
     "@leafygreen-ui/hooks": "^7.3.1",
-    "@leafygreen-ui/select": "^7.0.2",
-    "@leafygreen-ui/palette": "^3.4.2",
-    "@leafygreen-ui/lib": "^9.4.2",
     "@leafygreen-ui/icon": "^11.10.2",
     "@leafygreen-ui/icon-button": "^13.1.1",
+    "@leafygreen-ui/lib": "^9.4.2",
+    "@leafygreen-ui/palette": "^3.4.2",
+    "@leafygreen-ui/select": "^7.0.2",
     "@leafygreen-ui/tokens": "^1.3.2",
+    "clipboard": "^2.0.6",
+    "facepaint": "^1.2.1",
     "highlight.js": "~11.5.0",
-    "highlightjs-line-numbers.js": "^2.7.0",
     "highlightjs-graphql": "^1.0.1",
-    "clipboard": "^2.0.6"
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.3.3"
