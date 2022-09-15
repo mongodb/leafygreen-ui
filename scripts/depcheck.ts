@@ -20,8 +20,8 @@ async function checkDependencies() {
 
     if (missing.length > 0 || unused.length > 0) {
       issuesFound = true;
-      (missing.length > 0) && console.log(`${chalk.green(pkg)} is missing: ${chalk.redBright(missing.join(', '))}`);
-      (unused.length > 0) && console.log(`${chalk.green(pkg)} doesn't use ${chalk.blueBright(unused.join(''))}`);
+      (missing.length > 0) && console.log(`${chalk.green(`packages/${pkg}`)} is missing: ${chalk.redBright(missing.join(', '))}`);
+      (unused.length > 0) && console.log(`${chalk.green(`packages/${pkg}`)} doesn't use ${chalk.blueBright(unused.join(''))}`);
       console.log('')
     }
   }
