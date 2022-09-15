@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/table': minor
+'@leafygreen-ui/table': patch
 ---
 
 Removes external package `use-ssr`
