@@ -65,8 +65,9 @@ function fixDependencies(
   unused: Array<string>,
 ) {
   const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
-  // Fix for https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
-  spawnSync('yarn', ['policies', 'set-version', '1.19.0'])
-  missing.length > 0 && spawnSync('yarn', ['add', '-W', ...missing], cmdOpts);
-  unused.length > 0 && spawnSync('yarn', ['remove', ...unused], cmdOpts);
+  // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
+  missing.length > 0 &&
+    spawnSync('npx', ['yarn@1.19.0', 'add', '-W', ...missing], cmdOpts);
+  unused.length > 0 &&
+    spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
 }
