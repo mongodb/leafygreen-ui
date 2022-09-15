@@ -41,7 +41,7 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    */
   currentStep?: number;
   /**
-   * Detrmiens whether the `Tooltip` will appear in dark mode.
+   * Determines whether the `Tooltip` will appear in dark mode.
    * @default: false
    */
   darkMode?: boolean;
@@ -58,15 +58,15 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    */
   tooltipClassName?: string;
   /**
-   * Text to appear inside the bottom button. If no string is provided then it defaults to `Next` if the `currentStep` is less than the `numberOfSteps` or `Got it` if `currentStep` === numberOfSteps`.
+   * Text to appear inside the primary button. If no string is provided then it defaults to `'Next'` if the `currentStep < numberOfSteps` or `'Got it'` if `currentStep === numberOfSteps`.
    */
   buttonText?: string;
   /**
-   * Callback fired when the dismiss button is clicked. This only applies to the guided tooltip.
+   * Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step guided tooltip.
    */
   onClose?: () => void;
   /**
-   * Callback fired when the bottom primary button is clicked. This applies to both the stand-alone and guided multistep tooltip
+   * Callback fired when the bottom primary button is clicked. This applies to both the stand-alone and guided multi-step guided tooltip. This is also fired when the `Esc` key is pressed in the stand-alone tooltip.
    */
   onButtonClick?: () => void;
   /**
@@ -75,12 +75,12 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    */
   tooltipAlign?: Exclude<Align, 'center-vertical' | 'center-horizontal'>;
   /**
-   * Determines the justification of the tooltip if it is a stand-alone tooltip.
+   * Determines the justification of the tooltip.
    * @default: 'middle'
    */
   tooltipJustify?: Exclude<Justify, 'fit'>;
   /**
-   * Determines the alignment of the beacon. This is only applied when `numberOfSteps` is `> 1`.
+   * Determines the alignment of the beacon. The beacon is only shown when `numberOfSteps` is `> 1`, making it a multi-step guided tooltip.
    * @default: 'center-horizontal'
    */
   beaconAlign?: Align;

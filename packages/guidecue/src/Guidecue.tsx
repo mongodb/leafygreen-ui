@@ -5,21 +5,18 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { cx } from '@leafygreen-ui/emotion';
 import IconButton from '@leafygreen-ui/icon-button';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import Button from '@leafygreen-ui/button';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
-import { Body, Disclaimer } from '@leafygreen-ui/typography';
+import { Disclaimer } from '@leafygreen-ui/typography';
 import FocusTrap from 'focus-trap-react';
 import {
   beaconStyles,
-  bodyThemeStyles,
-  bodyTitleStyles,
   closeStyles,
-  contentStyles,
   footerStyles,
   tooltipStyles,
 } from './styles';
 import { GuidecueProps } from './types';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { PrimaryButton, Content } from './';
 
 const focusClassName = createUniqueClassName('guidecue');
 
@@ -45,7 +42,7 @@ function Guidecue({
   portalContainer,
   scrollContainer,
   popoverZIndex,
-  ...rest
+  ...tooltipProps
 }: GuidecueProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
@@ -105,37 +102,12 @@ function Guidecue({
     onButtonClick();
   };
 
-  const renderContent = () => (
-    <div className={contentStyles}>
-      <Body
-        id={ariaLabelledby}
-        as="h2"
-        className={cx(bodyThemeStyles[theme], bodyTitleStyles)}
-      >
-        <strong>{title}</strong>
-      </Body>
-      <Body as="div" className={bodyThemeStyles[theme]}>
-        {children}
-      </Body>
-    </div>
-  );
-
-  const renderFooter = () => (
-    <Button
-      variant="primary"
-      onClick={() => handleButtonClick()}
-      darkMode={!darkMode}
-      className={focusClassName}
-    >
-      {buttonText}
-    </Button>
-  );
   /**
    * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the bottom button(`onButtonClick`) since that is the callback that would be fired if the bottom button was clicked. If it's the guided multistep tooltip we use the callback from the close icon button(`onClose`) since thats the callback that would be fired if the close icon was clicked.
    */
   const onEscCloseCallback = isStandalone ? onButtonClick : onClose;
 
-  // Test are failing because of `focus-trap-react`. Even though there is a focusable element in the dialog it does not find it in time and throws an error. A fix is to add a classname to the primary button and set that as the fallback focus.
+  // Test are failing because of `focus-trap-react`. Even though there is a focusable element it does not find it in time and throws an error. A fix is to point to the primary button and set that as the fallback focus. (https://github.com/focus-trap/focus-trap-react/issues/91)
   const focusTrapOptions = { fallbackFocus: `.${focusClassName}` };
 
   return (
@@ -163,7 +135,7 @@ function Guidecue({
             darkMode={darkMode}
             open={tooltipOpen}
             setOpen={setOpen}
-            justify={Justify.Middle}
+            justify={tooltipJustify}
             align={tooltipAlign}
             refEl={beaconRef}
             className={cx(tooltipStyles, tooltipClassName)}
@@ -171,7 +143,7 @@ function Guidecue({
             onClose={() => onEscCloseCallback()}
             role="dialog"
             aria-labelledby={ariaLabelledby}
-            {...rest}
+            {...tooltipProps}
           >
             <FocusTrap focusTrapOptions={focusTrapOptions}>
               <div>
@@ -183,12 +155,23 @@ function Guidecue({
                 >
                   <XIcon />
                 </IconButton>
-                {renderContent()}
+                <Content
+                  theme={theme}
+                  title={title}
+                  ariaLabelledby={ariaLabelledby}
+                >
+                  {children}
+                </Content>
                 <div className={footerStyles}>
                   <Disclaimer>
                     {currentStep} of {numberOfSteps}
                   </Disclaimer>
-                  {renderFooter()}
+                  <PrimaryButton
+                    buttonText={buttonText}
+                    handleButtonClick={handleButtonClick}
+                    focusClassName={focusClassName}
+                    darkMode={darkMode}
+                  />
                 </div>
               </div>
             </FocusTrap>
@@ -213,12 +196,25 @@ function Guidecue({
           onClose={() => onEscCloseCallback()}
           role="dialog"
           aria-labelledby={ariaLabelledby}
-          {...rest}
+          {...tooltipProps}
         >
           <FocusTrap focusTrapOptions={focusTrapOptions}>
             <div>
-              {renderContent()}
-              <div className={footerStyles}>{renderFooter()}</div>
+              <Content
+                theme={theme}
+                title={title}
+                ariaLabelledby={ariaLabelledby}
+              >
+                {children}
+              </Content>
+              <div className={footerStyles}>
+                <PrimaryButton
+                  buttonText={buttonText}
+                  handleButtonClick={handleButtonClick}
+                  focusClassName={focusClassName}
+                  darkMode={darkMode}
+                />
+              </div>
             </div>
           </FocusTrap>
         </Tooltip>
@@ -244,11 +240,11 @@ Guidecue.propTypes = {
   currentStep: PropTypes.number,
   title: PropTypes.string,
   tooltipClassName: PropTypes.string,
-  portalClassName: PropTypes.string,
   buttonText: PropTypes.string,
   onClose: PropTypes.func,
   onButtonClick: PropTypes.func,
   tooltipAlign: PropTypes.oneOf(Object.values(Align)),
+  tooltipJustify: PropTypes.oneOf(Object.values(Justify)),
   beaconAlign: PropTypes.oneOf(Object.values(Align)),
 };
 
