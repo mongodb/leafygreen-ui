@@ -186,5 +186,5 @@ jobs:
       - uses: preactjs/compressed-size-action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          clean-script: 'clean:packages'
+          clean-script: 'clean:builds && clean:modules'
           build-script: 'build:packages'
