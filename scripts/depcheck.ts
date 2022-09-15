@@ -8,10 +8,6 @@ import packageJson from '../package.json';
 const lgPackages = readdirSync('packages/')
 
 const devDependencies = Object.keys(packageJson.devDependencies)
-// interface DepcheckResult {
-//   missing?: Array<string>,
-//   unused?: Array<string>
-// }
 
 async function checkDependencies() {
   let issuesFound = false;
