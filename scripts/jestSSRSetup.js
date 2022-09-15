@@ -42,7 +42,6 @@ class ArtificialServerContext {
 // We preload these packages so they load in a server context.
 Context.within(new ArtificialServerContext(), () => {
   require('@emotion/cache');
-  require('use-ssr');
   require('@emotion/react');
   require('@leafygreen-ui/emotion');
 });
