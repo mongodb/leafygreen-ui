@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@leafygreen-ui/button": "^16.0.3",
-    "@leafygreen-ui/lib": "^9.4.2",
     "@leafygreen-ui/modal": "^10.0.1",
     "@leafygreen-ui/palette": "^3.4.2",
     "@leafygreen-ui/text-input": "^10.1.3",
