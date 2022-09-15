@@ -5,6 +5,8 @@ import { css } from '@leafygreen-ui/emotion';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 import Guidecue from '.';
 import { useEffect } from '@storybook/addons';
+import { GuidecueProps } from './types';
+import { Body } from '@leafygreen-ui/typography';
 
 export default {
   title: 'Components/Guidecue',
@@ -73,17 +75,8 @@ const Template: ComponentStory<typeof Guidecue> = args => {
       >
         Open me
       </Button>
-      <div
-        ref={triggerRef}
-        className={css`
-          color: black;
-          background: burlywood;
-          text-align: center;
-          padding: 5px;
-          border-radius: 4px;
-        `}
-      >
-        story refEl trigger
+      <div ref={triggerRef}>
+        <Body darkMode={darkMode}>story refEl trigger</Body>
       </div>
       <Guidecue
         {...args}
@@ -102,3 +95,58 @@ const Template: ComponentStory<typeof Guidecue> = args => {
 };
 
 export const Default = Template.bind({});
+
+const scrollableStyle = css`
+  width: 800px;
+  height: 100vh;
+  background-color: #e8edeb;
+  overflow: scroll;
+  position: relative;
+`;
+
+const scrollableInnerStyle = css`
+  position: relative;
+  height: 130vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ScrollableContainer = (args: GuidecueProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const triggerRef = useRef<null | HTMLDivElement>(null);
+  const portalContainer = useRef<HTMLDivElement | null>(null);
+
+  const { children, darkMode } = args;
+  return (
+    <div className={scrollableStyle}>
+      <div className={scrollableInnerStyle} ref={portalContainer}>
+        <>
+          <Button
+            onClick={() => setOpen(o => !o)}
+            className={css`
+              margin-bottom: 100px;
+            `}
+            darkMode={darkMode}
+          >
+            Open me
+          </Button>
+          <div ref={triggerRef}>
+            <Body darkMode={darkMode}>story refEl trigger</Body>
+          </div>
+          <Guidecue
+            {...args}
+            darkMode={darkMode}
+            open={open}
+            setOpen={setOpen}
+            refEl={triggerRef}
+            portalContainer={portalContainer.current}
+            scrollContainer={portalContainer.current}
+          >
+            {children}
+          </Guidecue>
+        </>
+      </div>
+    </div>
+  );
+};
