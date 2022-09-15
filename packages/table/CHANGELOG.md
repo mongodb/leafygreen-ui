@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 6.0.1
+
+### Patch Changes
+
+- 38f3effb: Removes external package `use-ssr`
+
 ## 6.0.0
 
 ### Major Changes
