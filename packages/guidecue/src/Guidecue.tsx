@@ -7,6 +7,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { Disclaimer } from '@leafygreen-ui/typography';
+import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import FocusTrap from 'focus-trap-react';
 import {
   beaconStyles,
@@ -45,6 +46,7 @@ function Guidecue({
   ...tooltipProps
 }: GuidecueProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
   const beaconRef = useRef<HTMLDivElement | null>(null);
@@ -130,7 +132,12 @@ function Guidecue({
         >
           {/* The beacon is using the popover component to position itself */}
           {/* Instead of passing this as the tooltip trigger prop we instead pass the reference so that the default behavior of closing the tooltip on background click or showing and hiding the tooltip on hover does not happen */}
-          <div ref={beaconRef} className={beaconStyles} />
+          <div
+            ref={beaconRef}
+            className={beaconStyles(prefersReducedMotion, darkMode)}
+          >
+            <div />
+          </div>
           {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
           <Tooltip
             darkMode={darkMode}

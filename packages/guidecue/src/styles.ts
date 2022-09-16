@@ -1,41 +1,116 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { transparentize } from 'polished';
 
 export const tooltipStyles = css`
   padding: 32px 16px 16px;
 `;
 
-export const beaconStyles = css`
-  background: rgba(1, 107, 248, 0.51); //TODO: use transparentize
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  position: relative;
+export const beaconStyles = (
+  prefersReducedMotion: boolean,
+  darkMode: boolean,
+) => {
+  const color = darkMode ? palette.blue.light2 : palette.blue.base;
 
-  &::before {
-    content: '';
-    background: rgba(1, 107, 248, 0.17);
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
+  const sharedCss = css`
+    --size: 24px;
+    position: relative;
 
-    animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    div {
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      background-color: ${transparentize(0.5, color)};
+      transform-origin: center;
+      position: relative;
+    }
+  `;
+
+  if (prefersReducedMotion) {
+    return cx(
+      sharedCss,
+      css`
+        div {
+          box-shadow: 0px 0px 0px 4px ${transparentize(0.83, color)};
+        }
+      `,
+    );
   }
 
-  @keyframes pulse-ring {
-    0% {
-      transform: translateX(-50%) translateY(-50%) scale(0.73);
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-`;
+  return cx(
+    sharedCss,
+    css`
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        translate: -50% -50%;
+        top: 50%;
+        left: 50%;
+        scale: 0.9;
+        width: var(--size);
+        height: var(--size);
+        background: transparent;
+        box-shadow: 0px 0px 0px 0px ${transparentize(1, color)};
+      }
+
+      // inner most pulse ring
+      &::before {
+        animation: pulse-outer 2.3s infinite cubic-bezier(0.42, 0, 0.61, 0.69);
+      }
+
+      // outer mosts pulse ring
+      &::after {
+        animation: pulse-outer-2 2.3s infinite cubic-bezier(0.42, 0, 0.46, 0.72);
+      }
+
+      @keyframes pulse-outer {
+        0% {
+          box-shadow: 0px 0px 0px 0px ${transparentize(0.95, color)};
+        }
+
+        40%,
+        100% {
+          // this should scale up to 1 and have 0 opacity by 42% and remain that way until 100%
+          scale: 1;
+          box-shadow: 0px 0px 0px 15px ${transparentize(0.7, color)};
+          opacity: 0;
+        }
+      }
+
+      @keyframes pulse-outer-2 {
+        0% {
+          box-shadow: 0px 0px 0px 0px ${transparentize(0.95, color)};
+        }
+
+        35%,
+        100% {
+          // this should scale up to 1 and have 0 opacity by 35% a and remain that way until 100%. This is 35% so that it gives the illusions of disappearing before the first ring
+          scale: 1;
+          box-shadow: 0px 0px 0px 18px ${transparentize(0.7, color)};
+          opacity: 0;
+        }
+      }
+
+      div {
+        animation: pulse-inner 2.3s infinite cubic-bezier(0.42, 0, 0.58, 0.72);
+
+        @keyframes pulse-inner {
+          40% {
+            // at 0% this will start to slowly scale and by 40% this should scale to 1.3
+            scale: 1.3;
+          }
+          73% {
+            // By 73% this shoulds scale back to 1. From 73% to 100% it will remain at 1.
+            scale: 1;
+          }
+        }
+      }
+    `,
+  );
+};
 
 export const contentStyles = css`
   margin-bottom: 16px;
