@@ -1,0 +1,2 @@
+# Runs ts-node with custom compiler options
+ts-node -P './tsconfig.json' -O '{"module": "commonjs"}' $@
