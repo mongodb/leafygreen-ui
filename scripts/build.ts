@@ -7,7 +7,6 @@ import chalk from 'chalk';
 import { exit } from 'process';
 import { Command } from 'commander';
 import { uniq } from 'lodash';
-const cmdArgs = ['--parallel', 'build']
 
 interface Opts {
   exclude?: Array<string>,
@@ -35,8 +34,10 @@ const cli = new Command('build-packages')
     diff,
     deps,
     dry,
-    // watch,
+    watch,
   } = cli.opts() as Opts
+const cmdArgs = ['--parallel', 'build']
+if (watch) cmdArgs.push('--watch')
 
 /**
  * `--diff` - builds only packages that have uncommitted changes
