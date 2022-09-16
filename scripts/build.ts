@@ -20,10 +20,9 @@ const cli = new Command('build-packages')
   .option(
     '-e, --exclude <packages...>',
     `Optionally "exclude" packages from being built.
-    For example: ${chalk.bgGray(
+    For example: ${chalk.bgWhite(
       `yarn build -e icon typography`,
-    )} will build everything ${chalk.underline('but')} icon & typography.
-    Note: If an exclude flag is provided, any packages listed before the flag are ignored.`,
+    )} will build everything ${chalk.underline('but')} icon & typography.`,
   )
   .option(
     '--diff',
