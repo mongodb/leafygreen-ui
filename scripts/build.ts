@@ -4,9 +4,9 @@ import chalk from 'chalk';
 import { exit } from 'process';
 import { Command } from 'commander';
 import { uniq } from 'lodash';
-import { getGitDiff } from './utils/getGitDiff'
-import { getPackageLGDependencies } from './utils/getPackageDependencies'
-import { getAllPackageNames } from './utils/getAllPackageNames'
+import { getGitDiff } from './utils/getGitDiff';
+import { getPackageLGDependencies } from './utils/getPackageDependencies';
+import { getAllPackageNames } from './utils/getAllPackageNames';
 
 interface Opts {
   exclude?: Array<string>;
@@ -17,7 +17,9 @@ interface Opts {
 }
 
 const cli = new Command('build-packages')
-  .description('Builds leagygreen-ui packages. By default, this script will build all packages in the `packages/` directory')
+  .description(
+    'Builds leagygreen-ui packages. By default, this script will build all packages in the `packages/` directory',
+  )
   .arguments('[packages...]')
   .option(
     '-e, --exclude <packages...>',
@@ -68,7 +70,7 @@ if (diff) {
       chalk.yellow(`\tIgnoring ${cli.args.length} package names provided`),
     );
 
-  const changedPackages = getGitDiff()
+  const changedPackages = getGitDiff();
 
   packages =
     changedPackages.length > 0 ? changedPackages : getAllPackageNames();

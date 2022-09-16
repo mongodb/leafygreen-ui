@@ -7,7 +7,7 @@ export function getGitDiff(): Array<string> {
     '--name-only',
   ]).stdout.toString();
 
-  return  gitDiff
+  return gitDiff
     .trim()
     .split('\n')
     .filter(file => file.startsWith('packages/'))

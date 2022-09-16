@@ -1,4 +1,4 @@
-import {readFileSync}from 'fs';
+import { readFileSync } from 'fs';
 
 export function getPackageLGDependencies(pkg: string) {
   const pkgJson = JSON.parse(
