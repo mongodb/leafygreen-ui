@@ -4,7 +4,7 @@ import {
   spawnSync } from 'child_process';
 import fs from 'fs';
 import chalk from 'chalk';
-// import { exit } from 'process';
+import { exit } from 'process';
 import { Command } from 'commander';
 import { uniq } from 'lodash';
 const cmdArgs = ['--parallel', 'build']
@@ -45,10 +45,10 @@ const cli = new Command('build-packages')
 let packages: Array<string> = []
 
 if (diff) {
-  console.log(`${chalk.bold('Building from git diff')}`);
-  // Base this off of git-staged files
-  // TODO - see if we can get files that have been changed vs `main`
-  const gitDiff = spawnSync('git', ['diff', '--name-only']).stdout.toString();
+  console.log(chalk.bold(`Building changed packages against ${chalk.bgWhite('main')}`));
+  (cli.args.length > 0) && console.log(chalk.yellow(`Ignoring ${cli.args.length} package names provided`));
+
+  const gitDiff = spawnSync('git', ['diff', '..main', '--name-only']).stdout.toString();
 
   const changedPackages = gitDiff
     .trim()
@@ -56,7 +56,14 @@ if (diff) {
     .filter(file => file.startsWith('packages/'))
     .map(file => file.replace(/(?<=packages\/.*?\/)(.*)|(packages\/)|\//g, ''));
 
-  packages = changedPackages
+  packages = changedPackages.length > 0 ? changedPackages : getAllPackageNames();
+
+  if (changedPackages.length > 0) {
+    packages = changedPackages
+  } else {
+    console.log('No diffs found. Aborting build')
+    exit(0)
+  }
 } else {
   packages = cli.args.length > 0 ? cli.args : getAllPackageNames()
 }
