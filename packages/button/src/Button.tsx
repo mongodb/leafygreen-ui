@@ -75,7 +75,7 @@ const Button: ExtendableBox<ButtonProps & { ref?: React.Ref<any> }, 'button'> =
 
     return (
       <Box {...buttonProps}>
-        <ButtonContent {...contentProps}>{children}</ButtonContent>
+        <ButtonContent {...contentProps}>{children} Some change</ButtonContent>
       </Box>
     );
   });
