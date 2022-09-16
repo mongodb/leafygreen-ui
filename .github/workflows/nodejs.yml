@@ -183,7 +183,7 @@ jobs:
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-cache-
-      - uses: preactjs/compressed-size-action@v1
+      - uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           clean-script: 'clean:builds && clean:modules'
