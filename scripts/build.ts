@@ -15,7 +15,7 @@ interface Opts {
 }
 
 const cli = new Command('build-packages')
-  // .description('By default, this script will build all packages in the `packages/` directory')
+  .description('Builds leagygreen-ui packages. By default, this script will build all packages in the `packages/` directory')
   .arguments('[packages...]')
   .option(
     '-e, --exclude <packages...>',
