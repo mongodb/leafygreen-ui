@@ -51,7 +51,8 @@ cli.addHelpText(
 
   Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
   Valid channels are: ${Object.keys(Channels).join(', ')}.
-`)
+`,
+);
 
 try {
   const botToken = process.env.SLACK_BOT_TOKEN;
