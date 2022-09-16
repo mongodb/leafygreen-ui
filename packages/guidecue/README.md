@@ -23,7 +23,7 @@ npm install @leafygreen-ui/guidecue
 ```js
 import GuideCue from '@leafygreen-ui/guidecue';
 
-const [open, setOpen] = useState < boolean > true;
+const [open, setOpen] = useState(true);
 
 <Guidecue open={open} setOpen={setOpen} title="New feature" refEl={triggerRef}>
   This is a new feature. You should try it out
@@ -35,7 +35,7 @@ or
 ```js
 import GuideCue from '@leafygreen-ui/guidecue';
 
-const [open, setOpen] = useState < boolean > true;
+const [open, setOpen] = useState(true);
 
 <Guidecue
   open={open}
@@ -74,4 +74,4 @@ const [open, setOpen] = useState < boolean > true;
 | `scrollContainer`  | `HTMLElement` \| `null`                                                                        | If the popover portal has a scrollable ancestor other than the window, this prop allows passing a reference to that lement to allow the portal to position properly.                                                                            |                        |
 | `portalClassName`  | `string`                                                                                       | Passes the given className to the popover's portal container if the default portal container is being used.                                                                                                                                     |                        |
 | `popoverZIndex`    | `number`                                                                                       | Sets the z-index CSS property for the popover.                                                                                                                                                                                                  |                        |
-| ...                | native `div` attributes                                                                        | Any other props will be spread on the root `div` element                                                                                                                                                                                        |                        |
+| ...                | native `div` attributes                                                                        | Any other props will be spread on th tooltip `div` element                                                                                                                                                                                      |                        |

@@ -21,8 +21,6 @@ import { PrimaryButton, Content } from './';
 
 const focusClassName = createUniqueClassName('guidecue');
 
-// TODO: reduce motion
-
 function Guidecue({
   open,
   setOpen,
@@ -248,6 +246,7 @@ Guidecue.propTypes = {
         : PropTypes.any,
   }),
   numberOfSteps: PropTypes.number,
+
   currentStep: PropTypes.number,
   title: PropTypes.string,
   tooltipClassName: PropTypes.string,
