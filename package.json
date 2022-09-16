@@ -55,9 +55,9 @@
     "start:all": "npm-run-all --parallel start:storybook start:website",
     "start:storybook": "start-storybook -p 9001 --no-version-updates",
     "start:website": "(cd website && yarn dev)",
-    "test": "npm-run-all --serial test:*",
-    "test:local": "jest --env jsdom --config jest.config.js",
-    "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
+    "test": "./scripts/tsnode ./scripts/test.ts",
+    "test:local": "yarn test",
+    "test:ssr": "yarn test --ssr",
     "watch": "yarn build -- -- --watch"
   },
   "devDependencies": {
