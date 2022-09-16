@@ -45,8 +45,8 @@ const cli = new Command('build-packages')
 let packages: Array<string> = []
 
 if (diff) {
-  console.log(chalk.bold(`Building changed packages against ${chalk.bgWhite('main')}`));
-  (cli.args.length > 0) && console.log(chalk.yellow(`Ignoring ${cli.args.length} package names provided`));
+  console.log(chalk.bold(`\nBuilding changed packages against ${chalk.bgWhite('main')}`));
+  (cli.args.length > 0) && console.log(chalk.yellow(`\tIgnoring ${cli.args.length} package names provided`));
 
   const gitDiff = spawnSync('git', ['diff', '..main', '--name-only']).stdout.toString();
 
@@ -59,9 +59,10 @@ if (diff) {
   packages = changedPackages.length > 0 ? changedPackages : getAllPackageNames();
 
   if (changedPackages.length > 0) {
+    console.log(`\t${changedPackages.length} diffs found:`, chalk.blue(changedPackages));
     packages = changedPackages
   } else {
-    console.log('No diffs found. Aborting build')
+    console.log('\tNo diffs found. Aborting build')
     exit(0)
   }
 } else {
@@ -69,8 +70,8 @@ if (diff) {
 }
 
 if (deps) {
-  console.log(`${chalk.bold('Including dependencies')}`);
-  const dependencies = packages.flatMap(pkg => getPackageLGDependencies(pkg));
+  const dependencies = uniq(packages.flatMap(pkg => getPackageLGDependencies(pkg)));
+  console.log(chalk.bold(`\nIncluding ${dependencies.length} dependencies:`), chalk.blue(`${dependencies}`))
   packages.splice(0, 0, ...dependencies);
 }
 
@@ -89,7 +90,7 @@ packages = uniq(packages)
 if (dry) {
   console.log(`
   ${chalk.bgYellowBright.black.bold('    Dry Run    ')}
-  ${chalk.bold('Would have built:')}
+  ${chalk.bold(`Would have built ${packages.length} packages:`)}
     ${chalk.green(packages.length ? packages.join(', ') : 'all packages')}
   `);
 } else {
