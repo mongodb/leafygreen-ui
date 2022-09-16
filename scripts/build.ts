@@ -1,138 +1,116 @@
-import { spawn, spawnSync } from 'child_process';
+/* eslint-disable no-console */
+import {
+  spawn,
+  spawnSync } from 'child_process';
 import fs from 'fs';
-import _ from 'lodash';
 import chalk from 'chalk';
-import { exit } from 'process';
+// import { exit } from 'process';
+import { Command } from 'commander';
+import { uniq } from 'lodash';
+const cmdArgs = ['--parallel', 'build']
 
-const cmdArgs = ['--parallel', 'build'];
-const args = process.argv.slice(2);
-let packages: Array<string> = [];
-let dryRun = false;
-
-const docs = `
-${chalk.green.bold.underline('Leafygreen Build script')}
-
-By default, this script will build all packages in the \`packages/\` directory.
-Cutomize which packages get built by adding flags to this script:
-
-${chalk.bold.inverse('--help, -h')}: Show this help menu.
-
-${chalk.bold.inverse(
-  '--exclude, -e',
-)}: Optionally "exclude" packages from being built.
-  For example: ${chalk.bgGray(
-    `yarn build -e icon typography`,
-  )} will build everything ${chalk.underline('but')} icon & typography.
-  Note: If an exclude flag is provided, any packages listed before the flag are ignored.
-
-${chalk.bold.inverse(
-  '--diff',
-)}: Builds packages that you have been working on, based on the current git diff
-
-${chalk.bold.inverse(
-  '--dependencies, --deps',
-)}: Builds packages that you have been working on, and their leafygreen-ui dependencies. 
-
-${chalk.bold.inverse(
-  '--dry',
-)}: Don't build, but print what would have been build given the same arguments.
-
-${chalk.bold.inverse('--watch')}: Watch all files you intend to build
-`;
-
-if (argsIncludes('--help', '-h')) {
-  // eslint-disable-next-line no-console
-  console.log(docs);
-  exit(0);
+interface Opts {
+  exclude?: Array<string>,
+  diff: boolean,
+  deps: boolean,
+  dry: boolean,
+  watch: boolean,
 }
 
-// check if we should be watching
-if (args.includes('--watch')) {
-  cmdArgs.push('--', '--watch');
-  removeFromArgs('--watch');
-}
+const cli = new Command('build-packages')
+  // .description('By default, this script will build all packages in the `packages/` directory')
+  .arguments('[packages...]')
+  .option('-e, --exclude <packages...>',
+    `Optionally "exclude" packages from being built.
+    For example: ${chalk.bgGray(`yarn build -e icon typography`)} will build everything ${chalk.underline('but')} icon & typography.
+    Note: If an exclude flag is provided, any packages listed before the flag are ignored.`)
+  .option('--diff', 'Builds packages that you have been working on, based on the current git diff', false)
+  .option('--deps', 'Builds packages that you have been working on, and their leafygreen-ui dependencies.', false)
+  .option('--dry', 'Don\'t build, but print what would have been build given the same arguments.', false)
+  .option('--watch', 'Watch all files you intend to build', false)
+  .parse(process.argv);
 
-if (argsIncludes('--dry')) {
-  dryRun = true;
-  removeFromArgs('--dry');
-}
+  const {
+    exclude,
+    diff,
+    deps,
+    dry,
+    // watch,
+  } = cli.opts() as Opts
 
 /**
  * `--diff` - builds only packages that have uncommitted changes
  * `--dependencies` or `--deps` - builds the dependencies of packages that have uncommitted changes
  */
-if (argsIncludes('--diff', '--dependencies', '--deps')) {
+let packages: Array<string> = []
+
+if (diff) {
+  console.log(`${chalk.bold('Building from git diff')}`);
   // Base this off of git-staged files
   // TODO - see if we can get files that have been changed vs `main`
   const gitDiff = spawnSync('git', ['diff', '--name-only']).stdout.toString();
-  packages = gitDiff
+
+  const changedPackages = gitDiff
     .trim()
     .split('\n')
     .filter(file => file.startsWith('packages/'))
     .map(file => file.replace(/(?<=packages\/.*?\/)(.*)|(packages\/)|\//g, ''));
 
-  if (argsIncludes('--dependencies', '--deps')) {
-    const dependencies = packages.flatMap(pkg => getPackageDependencies(pkg));
-    packages.splice(0, 0, ...dependencies);
-  }
-  removeFromArgs('--diff', '--dependencies', '--deps');
+  packages = changedPackages
+} else {
+  packages = cli.args.length > 0 ? cli.args : getAllPackageNames()
+}
+
+if (deps) {
+  console.log(`${chalk.bold('Including dependencies')}`);
+  const dependencies = packages.flatMap(pkg => getPackageLGDependencies(pkg));
+  packages.splice(0, 0, ...dependencies);
 }
 
 /**
  * `--exclude` - run all packages EXCEPT the ones following this flag (alias: `-e`)
  */
-if (argsIncludes('--exclude', '-e')) {
-  removeFromArgs('--exclude', '-e');
+if (exclude && exclude.length > 0) {
+  console.log(`${chalk.bold.red(`Excluding: ${exclude.length} packages`)}`);
+
   // Look for the packages we should be excluding
-  packages = (packages.length ? packages : getAllPackageNames()).filter(
-    pkg => !args.includes(pkg),
-  );
-
-  // eslint-disable-next-line no-console
-  console.log(`
-  ${chalk.bold('Excluding:')} ${chalk.red(args.join(', '))}
-  `);
-
-  removeFromArgs(...args);
-} else {
-  packages.push(...args);
+  packages = packages.filter(pkg => !exclude.includes(pkg));
 }
 
-// Remove duplicates
-packages = _.uniq(packages);
+packages = uniq(packages)
 
-if (!dryRun) {
+if (dry) {
+  console.log(`
+  ${chalk.bgYellowBright.black.bold('    Dry Run    ')}
+  ${chalk.bold('Would have built:')}
+    ${chalk.green(packages.length ? packages.join(', ') : 'all packages')}
+  `);
+} else {
+  /** BUILD */
+
+  console.log(chalk.green.bold(`Building ${packages.length} packages.\n`));
+
   const packageArgs = packages.flatMap(pkg => [
     '--scope',
     `@leafygreen-ui/${pkg}`,
   ]);
 
-  // eslint-disable-next-line no-console
   console.log(chalk.magenta('Running pre-build...'));
+
   spawnSync('yarn', ['pre-build', ...packages], { stdio: 'inherit' });
 
   // Run lerna
   cmdArgs.unshift(...packageArgs);
-
-  // eslint-disable-next-line no-console
-  console.log(chalk.green.bold(`Building ${packages.length} packages.\n`));
 
   const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
   cmd.on('close', code => {
     // eslint-disable-next-line no-console
     console.log(
       code === 0
-        ? chalk.green.bold(`\n✅ Finished building\n`)
+        ? chalk.green.bold(`\n✅ Finished building ${packages.length} packages\n`)
         : chalk.red.bold(`\nExit code ${code}\n`),
     );
   });
-} else {
-  // eslint-disable-next-line no-console
-  console.log(`
-  ${chalk.bgYellowBright.black.bold('    Dry Run    ')}
-  ${chalk.bold('Would have built:')}
-    ${chalk.green(packages.length ? packages.join(', ') : 'all packages')}
-  `);
 }
 
 function getAllPackageNames() {
@@ -142,24 +120,24 @@ function getAllPackageNames() {
     .map(dir => dir.name);
 }
 
-function getPackageDependencies(pkg: string) {
+function getPackageLGDependencies(pkg: string) {
   const pkgJson = JSON.parse(fs.readFileSync(`packages/${pkg}/package.json`, 'utf-8'));
-  const dependencies = Object.keys(pkgJson.dependencies).map(pkg =>
-    pkg.replace(`@leafygreen-ui/`, ''),
-  );
+  const dependencies = Object.keys({...pkgJson.dependencies, ...pkgJson.devDependencies})
+  .filter(pkg => pkg.includes('@leafygreen-ui'))
+  .map(pkg => pkg.replace(`@leafygreen-ui/`, ''));
   return dependencies;
 }
 
-function argsIncludes(...flags : Array<any>) {
-  return flags.some(flag => args.includes(flag));
-}
+// function argsIncludes(...flags : Array<any>) {
+//   return flags.some(flag => args.includes(flag));
+// }
 
-function removeFromArgs(...flags : Array<any>) {
-  flags.forEach(flag => {
-    const i = args.indexOf(flag);
+// function removeFromArgs(...flags : Array<any>) {
+//   flags.forEach(flag => {
+//     const i = args.indexOf(flag);
 
-    if (i > -1) {
-      args.splice(i, 1);
-    }
-  });
-}
+//     if (i > -1) {
+//       args.splice(i, 1);
+//     }
+//   });
+// }
