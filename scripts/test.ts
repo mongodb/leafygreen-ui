@@ -47,7 +47,7 @@ const args: Array<string> = cli.args.filter(
 
 if (diff) {
   const changedPackages = getGitDiff();
-  packages = changedPackages.length > 0 ? changedPackages : cli.args;
+  packages = changedPackages.length > 0 ? changedPackages : packages;
 }
 
 if (deps) {
