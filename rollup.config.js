@@ -150,7 +150,6 @@ const config = ['esm', 'umd'].flatMap(format => {
         'react-transition-group',
         '@testing-library/react',
         'lodash',
-        'use-ssr',
         'focus-trap-react',
         ...getLodashExternals(),
         ...allPackages,

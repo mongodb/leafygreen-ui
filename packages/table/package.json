@@ -20,16 +20,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/hooks": "^7.0.0",
-    "@leafygreen-ui/lib": "^9.0.1",
     "@leafygreen-ui/checkbox": "^6.0.6",
     "@leafygreen-ui/emotion": "^4.0.0",
-    "@leafygreen-ui/palette": "3.3.0",
+    "@leafygreen-ui/hooks": "^7.0.0",
     "@leafygreen-ui/icon": "^11.6.0",
     "@leafygreen-ui/icon-button": "^9.1.6",
-    "react-transition-group": "^4.4.1",
+    "@leafygreen-ui/lib": "^9.0.1",
+    "@leafygreen-ui/palette": "3.3.0",
     "lodash": "^4.17.21",
-    "use-ssr": "^1.0.23"
+    "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.1.3"
