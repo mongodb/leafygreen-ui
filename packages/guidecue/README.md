@@ -20,7 +20,36 @@ npm install @leafygreen-ui/guidecue
 
 ## Example
 
-**Output HTML**
+```js
+import GuideCue from '@leafygreen-ui/guidecue';
+
+const [open, setOpen] = useState < boolean > true;
+
+<Guidecue open={open} setOpen={setOpen} title="New feature" refEl={triggerRef}>
+  This is a new feature. You should try it out
+</Guidecue>;
+```
+
+or
+
+```js
+import GuideCue from '@leafygreen-ui/guidecue';
+
+const [open, setOpen] = useState < boolean > true;
+
+<Guidecue
+  open={open}
+  setOpen={setOpen}
+  title="New feature"
+  refEl={triggerRef}
+  onButtonClick={() => {}}
+  onClose={() => {}}
+  numberOfSteps={4}
+  currentStep={1}
+>
+  This is a new feature. You should try it out
+</Guidecue>;
+```
 
 ## Properties
 

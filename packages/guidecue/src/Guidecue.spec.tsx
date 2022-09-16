@@ -5,6 +5,7 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import Guidecue from '.';
 import userEvent from '@testing-library/user-event';
 
@@ -77,6 +78,14 @@ function renderGuidecue(
 }
 
 describe('packages/guidecue', () => {
+  describe('A11y', () => {
+    test('does not have basic accessibility violations', async () => {
+      const { container } = renderGuidecue({ open: true });
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
   describe('Stand-alone guidecue', () => {
     test('is visible when open is "true"', async () => {
       const { getByRole } = renderGuidecue({ open: true });

@@ -49,7 +49,8 @@ function Guidecue({
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
   const beaconRef = useRef<HTMLDivElement | null>(null);
 
-  const ariaLabelledby = 'guidecue';
+  const ariaLabelledby = 'guidecue-label';
+  const ariaDescribedby = 'guidecue-desc';
 
   /**
    * Determines the button text. If there is nothing passed then default text will show depending on the numberOfSteps.
@@ -95,7 +96,7 @@ function Guidecue({
   };
 
   /**
-   * Callback fired when the button at the bottom of the tooltip is clicked. It closes the tooltip and fires the callback that was passed to `onButtonClick`.
+   * Callback fired when the primary bottom is clicked. It closes the tooltip and fires the callback that was passed to `onButtonClick`.
    */
   const handleButtonClick = () => {
     setOpen(false);
@@ -103,7 +104,7 @@ function Guidecue({
   };
 
   /**
-   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the bottom button(`onButtonClick`) since that is the callback that would be fired if the bottom button was clicked. If it's the guided multistep tooltip we use the callback from the close icon button(`onClose`) since thats the callback that would be fired if the close icon was clicked.
+   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the primary button(`onButtonClick`) since that is the callback that would be fired if the primary button was clicked. If it's the guided multi-step tooltip we use the callback from the close icon button(`onClose`) since thats the callback that would be fired if the close icon was clicked.
    */
   const onEscCloseCallback = isStandalone ? onButtonClick : onClose;
 
@@ -143,6 +144,7 @@ function Guidecue({
             onClose={() => onEscCloseCallback()}
             role="dialog"
             aria-labelledby={ariaLabelledby}
+            aria-describedby={ariaDescribedby}
             {...tooltipProps}
           >
             <FocusTrap focusTrapOptions={focusTrapOptions}>
@@ -159,6 +161,7 @@ function Guidecue({
                   theme={theme}
                   title={title}
                   ariaLabelledby={ariaLabelledby}
+                  ariaDescribedby={ariaDescribedby}
                 >
                   {children}
                 </Content>
@@ -204,6 +207,7 @@ function Guidecue({
                 theme={theme}
                 title={title}
                 ariaLabelledby={ariaLabelledby}
+                ariaDescribedby={ariaDescribedby}
               >
                 {children}
               </Content>

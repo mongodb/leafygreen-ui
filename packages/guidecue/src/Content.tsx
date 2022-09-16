@@ -7,11 +7,18 @@ import { Theme } from '@leafygreen-ui/lib';
 interface ContentProps {
   theme: Theme;
   ariaLabelledby: string;
+  ariaDescribedby: string;
   title: string;
   children: React.ReactNode;
 }
 
-function Content({ theme, ariaLabelledby, title, children }: ContentProps) {
+function Content({
+  theme,
+  ariaLabelledby,
+  ariaDescribedby,
+  title,
+  children,
+}: ContentProps) {
   return (
     <div className={contentStyles}>
       <Body
@@ -21,7 +28,7 @@ function Content({ theme, ariaLabelledby, title, children }: ContentProps) {
       >
         <strong>{title}</strong>
       </Body>
-      <Body as="div" className={bodyThemeStyles[theme]}>
+      <Body as="div" className={bodyThemeStyles[theme]} id={ariaDescribedby}>
         {children}
       </Body>
     </div>
