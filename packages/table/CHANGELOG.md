@@ -135,6 +135,11 @@
 - Updated dependencies [614be76]
   - @leafygreen-ui/tokens@1.1.0
 
+## 2.0.7
+
+### Patch Changes
+  - (Hot-fix): Removes external package use-ssr
+
 ## 2.0.6
 
 ### Patch Changes
