@@ -35,9 +35,9 @@ jobs:
             **/dist
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/webpack.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/storybook/webpack.config.js', '!**/node_modules', '!**/dist') }}
-      - name: build updated packages
+      - name: build
         if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn build:packages --diff --deps
+        run: yarn build:packages
       - name: tests
         run: yarn test:local --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
@@ -73,9 +73,9 @@ jobs:
             **/dist
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/webpack.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/storybook/webpack.config.js', '!**/node_modules', '!**/dist') }}
-      - name: build updated packages
+      - name: build
         if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn build:packages --diff --deps
+        run: yarn build:packages
       - name: tests
         run: yarn test:ssr --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
