@@ -1,12 +1,12 @@
-const { spawn, spawnSync } = require('child_process');
-const fs = require('fs');
-const _ = require('lodash');
-const chalk = require('chalk');
-const { exit } = require('process');
+import { spawn, spawnSync } from 'child_process';
+import fs from 'fs';
+import _ from 'lodash';
+import chalk from 'chalk';
+import { exit } from 'process';
 
 const cmdArgs = ['--parallel', 'build'];
 const args = process.argv.slice(2);
-let packages = [];
+let packages: Array<string> = [];
 let dryRun = false;
 
 const docs = `
@@ -142,19 +142,19 @@ function getAllPackageNames() {
     .map(dir => dir.name);
 }
 
-function getPackageDependencies(pkg) {
-  const pkgJson = JSON.parse(fs.readFileSync(`packages/${pkg}/package.json`));
+function getPackageDependencies(pkg: string) {
+  const pkgJson = JSON.parse(fs.readFileSync(`packages/${pkg}/package.json`, 'utf-8'));
   const dependencies = Object.keys(pkgJson.dependencies).map(pkg =>
     pkg.replace(`@leafygreen-ui/`, ''),
   );
   return dependencies;
 }
 
-function argsIncludes(...flags) {
+function argsIncludes(...flags : Array<any>) {
   return flags.some(flag => args.includes(flag));
 }
 
-function removeFromArgs(...flags) {
+function removeFromArgs(...flags : Array<any>) {
   flags.forEach(flag => {
     const i = args.indexOf(flag);
 
