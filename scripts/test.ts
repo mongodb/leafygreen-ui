@@ -4,7 +4,7 @@ import { Command } from 'commander';
 import { uniq } from 'lodash';
 import { getGitDiff } from './utils/getGitDiff';
 import { getAllPackageNames } from './utils/getAllPackageNames';
-import { getPackageLGDependencies } from './utils/getPackageDependencies';
+import { getPackageDependants, getPackageLGDependencies } from './utils/getPackageDependencies';
 
 interface Opts {
   diff: boolean;
@@ -54,7 +54,10 @@ if (deps) {
   const dependencies = uniq(
     packages.flatMap(pkg => getPackageLGDependencies(pkg)),
   );
-  packages.splice(0, 0, ...dependencies);
+  const dependants = uniq(
+    packages.flatMap(pkg => getPackageDependants(pkg))
+  )
+  packages.splice(0, 0, ...dependencies, ...dependants);
 }
 
 const packageArgs = [...packages.map(pkg => `packages/${pkg}`), ...t];

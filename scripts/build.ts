@@ -5,7 +5,7 @@ import { exit } from 'process';
 import { Command } from 'commander';
 import { uniq } from 'lodash';
 import { getGitDiff } from './utils/getGitDiff';
-import { getPackageLGDependencies } from './utils/getPackageDependencies';
+import { getPackageDependants, getPackageLGDependencies } from './utils/getPackageDependencies';
 import { getAllPackageNames } from './utils/getAllPackageNames';
 
 interface Opts {
@@ -18,7 +18,8 @@ interface Opts {
 
 const cli = new Command('build-packages')
   .description(
-    'Builds leagygreen-ui packages. By default, this script will build all packages in the `packages/` directory',
+    `Builds leagygreen-ui packages.
+    By default, this script will build all packages in the \`packages/\` directory`,
   )
   .arguments('[packages...]')
   .option(
@@ -93,11 +94,21 @@ if (deps) {
   const dependencies = uniq(
     packages.flatMap(pkg => getPackageLGDependencies(pkg)),
   );
+
+  const dependants = uniq(
+    packages.flatMap(pkg => getPackageDependants(pkg))
+  )
+
   console.log(
     chalk.bold(`\nIncluding ${dependencies.length} dependencies:`),
-    chalk.blue(`${dependencies}`),
+    chalk.blue(dependencies.join(', ')),
   );
-  packages.splice(0, 0, ...dependencies);
+  console.log(
+    chalk.bold(`Including ${dependants.length} dependants: `),
+    chalk.blue(dependants.join(', '))
+  )
+
+  packages.splice(0, 0, ...dependencies, ...dependants);
 }
 
 /**
