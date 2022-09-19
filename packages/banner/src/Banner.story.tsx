@@ -2,8 +2,8 @@ import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Banner, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
-import { Link } from '@leafygreen-ui/typography';
 import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { Link } from '@leafygreen-ui/typography';
 
 export default {
   title: 'Components/Banner',
@@ -32,6 +32,7 @@ export default {
     },
     children: storybookArgTypes.children,
     ref: storybookArgTypes.ref,
+    darkMode: storybookArgTypes.darkMode,
   },
 } as Meta<typeof Banner>;
 

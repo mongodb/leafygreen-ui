@@ -27,9 +27,8 @@
     "@leafygreen-ui/palette": "3.4.3-next.0",
     "@leafygreen-ui/icon": "^11.11.0-next.0",
     "@leafygreen-ui/icon-button": "^13.2.0-next.0",
-    "react-transition-group": "^4.4.1",
     "lodash": "^4.17.21",
-    "use-ssr": "^1.0.23"
+    "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.3.4-next.0"

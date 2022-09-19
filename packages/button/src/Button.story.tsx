@@ -62,9 +62,9 @@ const Template: Story<ButtonStoryProps> = ({
   ...args
 }: ButtonStoryProps) => (
   <Button
-    /// @ts-ignore
+    /// @ts-expect-error
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined}
-    /// @ts-ignore
+    /// @ts-expect-error
     rightGlyph={rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined}
     {...args}
   />

@@ -21,7 +21,7 @@ const Template: ComponentStory<typeof IconButton> = ({ darkMode, ...args }) => (
   </IconButton>
 );
 
-export const Basic = Template.bind({});
+export const Basic = Template.bind({});w
 
 export const Link = Template.bind({});
 Link.args = {
