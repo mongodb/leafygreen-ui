@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-group",
-  "version": "8.1.0-next.0",
+  "version": "8.1.0-next.1",
   "description": "leafyGreen UI Kit RadioGroup",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,10 +20,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/interaction-ring": "^4.0.2-next.0",
-    "@leafygreen-ui/lib": "^9.5.0-next.0",
-    "@leafygreen-ui/palette": "^3.4.3-next.0",
-    "@leafygreen-ui/hooks": "^7.3.2-next.0"
+    "@leafygreen-ui/interaction-ring": "^4.0.2-next.1",
+    "@leafygreen-ui/lib": "^9.5.0-next.1",
+    "@leafygreen-ui/palette": "^3.4.3-next.1",
+    "@leafygreen-ui/hooks": "^7.3.2-next.1"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-group",

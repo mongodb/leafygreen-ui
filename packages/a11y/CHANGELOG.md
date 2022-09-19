@@ -1,5 +1,15 @@
 # @leafygreen-ui/a11y
 
+## 1.3.2-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/emotion@4.0.2-next.1
+  - @leafygreen-ui/hooks@7.3.2-next.1
+  - @leafygreen-ui/lib@9.5.0-next.1
+
 ## 1.3.2-next.0
 
 ### Patch Changes

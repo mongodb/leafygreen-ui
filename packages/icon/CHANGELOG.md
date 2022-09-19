@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 11.11.0-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/lib@9.5.0-next.1
+
 ## 11.11.0-next.0
 
 ### Minor Changes

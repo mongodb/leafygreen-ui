@@ -1,5 +1,16 @@
 # @leafygreen-ui/radio-group
 
+## 8.1.0-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/hooks@7.3.2-next.1
+  - @leafygreen-ui/interaction-ring@4.0.2-next.1
+  - @leafygreen-ui/lib@9.5.0-next.1
+  - @leafygreen-ui/palette@3.4.3-next.1
+
 ## 8.1.0-next.0
 
 ### Minor Changes

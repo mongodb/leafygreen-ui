@@ -1,5 +1,16 @@
 # @leafygreen-ui/popover
 
+## 9.1.0-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/hooks@7.3.2-next.1
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.1
+  - @leafygreen-ui/lib@9.5.0-next.1
+  - @leafygreen-ui/portal@4.0.5-next.1
+
 ## 9.1.0-next.0
 
 ### Minor Changes

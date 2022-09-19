@@ -1,5 +1,16 @@
 # @leafygreen-ui/badge
 
+## 6.1.0-next.2
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.1
+  - @leafygreen-ui/lib@9.5.0-next.1
+  - @leafygreen-ui/palette@3.4.3-next.1
+  - @leafygreen-ui/tokens@1.3.3-next.1
+
 ## 6.1.0-next.1
 
 ### Patch Changes

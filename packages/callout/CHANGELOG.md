@@ -1,5 +1,18 @@
 # @leafygreen-ui/callout
 
+## 7.0.1-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/emotion@4.0.2-next.1
+  - @leafygreen-ui/icon@11.11.0-next.1
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.1
+  - @leafygreen-ui/lib@9.5.0-next.1
+  - @leafygreen-ui/palette@3.4.3-next.1
+  - @leafygreen-ui/typography@13.2.0-next.1
+
 ## 7.0.1-next.0
 
 ### Patch Changes

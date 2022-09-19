@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.4-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/palette@3.4.3-next.1
+
 ## 1.1.4-next.0
 
 ### Patch Changes

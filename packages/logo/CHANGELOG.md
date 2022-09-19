@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 6.1.4-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+
 ## 6.1.4-next.0
 
 ### Patch Changes

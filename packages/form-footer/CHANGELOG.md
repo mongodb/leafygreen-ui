@@ -1,5 +1,16 @@
 # @leafygreen-ui/form-footer
 
+## 1.0.1-next.2
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/banner@5.0.1-next.1
+  - @leafygreen-ui/button@16.1.0-next.1
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.1
+  - @leafygreen-ui/lib@9.5.0-next.1
+
 ## 1.0.1-next.1
 
 ### Patch Changes

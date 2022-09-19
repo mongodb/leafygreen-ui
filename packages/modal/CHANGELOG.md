@@ -1,5 +1,20 @@
 # @leafygreen-ui/modal
 
+## 10.1.0-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+- Updated dependencies [87a90f46]
+  - @leafygreen-ui/hooks@7.3.2-next.1
+  - @leafygreen-ui/icon@11.11.0-next.1
+  - @leafygreen-ui/icon-button@13.2.0-next.1
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.1
+  - @leafygreen-ui/lib@9.5.0-next.1
+  - @leafygreen-ui/palette@3.4.3-next.1
+  - @leafygreen-ui/portal@4.0.5-next.1
+  - @leafygreen-ui/tokens@1.3.3-next.1
+
 ## 10.1.0-next.0
 
 ### Minor Changes

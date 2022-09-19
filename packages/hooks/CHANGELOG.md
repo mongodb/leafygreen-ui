@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.3.2-next.1
+
+### Patch Changes
+
+- 87a90f46: Update tsdoc gen and storybook
+
 ## 7.3.2-next.0
 
 ### Patch Changes
