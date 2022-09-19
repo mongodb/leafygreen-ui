@@ -21,7 +21,7 @@ npm install @leafygreen-ui/guidecue
 ## Example
 
 ```js
-import GuideCue from '@leafygreen-ui/guidecue';
+import { GuideCue } from '@leafygreen-ui/guidecue';
 
 const [open, setOpen] = useState(true);
 
@@ -42,14 +42,24 @@ const [open, setOpen] = useState(true);
   setOpen={setOpen}
   title="New feature"
   refEl={triggerRef}
-  onButtonClick={() => {}}
-  onClose={() => {}}
+  onButtonClick={() => {
+    // do something
+  }}
+  onDismissClick={() => {
+    // do something
+  }}
   numberOfSteps={4}
-  currentStep={1}
+  currentStep={2}
 >
   This is a new feature. You should try it out
 </Guidecue>;
 ```
+
+## Usage
+
+There are two variations of the tooltip -- stand-alone and multi-step. The multi-step tooltip shows the number of steps, has a dismiss and primary button, and displays a pulsing beacon while the stand-alone tooltip only shows the primary button.
+
+The variant that is shown depends on the number of steps. If `numberOfSteps > 1` the multi-step tooltip is shown else the stand-alone tooltip is shown.
 
 ## Properties
 
@@ -58,20 +68,20 @@ const [open, setOpen] = useState(true);
 | `open`             | `boolean`                                                                                      | Determines if the `Tooltip` will appear as open or close.                                                                                                                                                                                       | `false`                |
 | `setOpen`          | `function`                                                                                     | Callback to change the open state of the Tooltip in consuming applications.                                                                                                                                                                     | `(boolean) => boolean` |
 | `refEl`            | `HTMLElement`                                                                                  | Pass a reference to an element that the beacon/tooltip(if stand-alone) should be centered against.                                                                                                                                              | `null`                 |
-| `numberOfSteps`    | `number`                                                                                       | Used to display the number of steps. If `numberOfSteps` is `<= 1` then the step text will not show and a stand-alone tooltip without the beacon will be used.                                                                                   | `1`                    |
+| `numberOfSteps`    | `number`                                                                                       | Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.                       | `1`                    |
 | `currentStep`      | `number`                                                                                       | Used to display the current step                                                                                                                                                                                                                | `1`                    |
 | `darkMode`         | `boolean`                                                                                      | Determines whether the `Tooltip` will appear in dark mode.                                                                                                                                                                                      | `false`                |
 | `title`            | `string`                                                                                       | Title to appear inside of Tooltip.                                                                                                                                                                                                              | `''`                   |
 | `children`         | `React.ReactNode`                                                                              | Body content to appear inside the tooltip, under the title.                                                                                                                                                                                     | `''`                   |
 | `buttonText`       | `string`                                                                                       | Text to appear inside the primary button. If no string is provided then it defaults to `'Next'` if the `currentStep < numberOfSteps` or `'Got it'` if `currentStep === numberOfSteps`.                                                          | `'Next'`               |
-| `onClose`          | `function`                                                                                     | Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step guided tooltip.                                                                                                      | `() => {}`             |
-| `onButtonClick`    | `function`                                                                                     | Callback fired when the bottom primary button is clicked. This applies to both the stand-alone and guided multi-step guided tooltip. This is also fired when the `Esc` key is pressed in the stand-alone tooltip.                               | `() => {}`             |
+| `onDismissClick`   | `function`                                                                                     | Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step tooltip.                                                                                                             | `() => {}`             |
+| `onButtonClick`    | `function`                                                                                     | Callback fired when the bottom primary button is clicked. This applies to both the stand-alone and multi-step tooltip. This is also fired when the `Esc` key is pressed in the stand-alone tooltip.                                             | `() => {}`             |
 | `tooltipClassName` | `string`                                                                                       | ClassName to be applied to the tooltip element.                                                                                                                                                                                                 | `''`                   |
 | `tooltipAlign`     | `'top'` \| `'bottom'` \| `'left'` \| `'right'`                                                 | Determines the alignment of the tooltip.                                                                                                                                                                                                        | `top`                  |
 | `tooltipJustify`   | `'start'` \| `'middle'` \| `'end'`                                                             | Determines the justification of the tooltip.                                                                                                                                                                                                    | `middle`               |
-| `beaconAlign`      | `'top'` \| `'bottom'` \| `'left'` \| `'right'` \| `'center-horizontal'` \| `'center-vertical'` | Determines the alignment of the beacon. This is only applied when `numberOfSteps is > 1`, making it a multi-step guided tooltip.                                                                                                                | `center-horizontal`    |
+| `beaconAlign`      | `'top'` \| `'bottom'` \| `'left'` \| `'right'` \| `'center-horizontal'` \| `'center-vertical'` | Determines the alignment of the beacon. This only applies to the multi-step tooltip.                                                                                                                                                            | `center-horizontal`    |
 | `portalContainer`  | `HTMLElement` \| `null`                                                                        | Sets the container used for the popover's portal. NOTE: If using a `scrollContainer` make sure that the `portalContainer` is contained within the `scrollContainer`. E.g, passing the same refrence to `scrollContainer` and `portalContainer`. |                        |
-| `scrollContainer`  | `HTMLElement` \| `null`                                                                        | If the popover portal has a scrollable ancestor other than the window, this prop allows passing a reference to that lement to allow the portal to position properly.                                                                            |                        |
+| `scrollContainer`  | `HTMLElement` \| `null`                                                                        | If the popover portal has a scrollable ancestor other than the window, this prop allows passing a reference to that element to allow the portal to position properly.                                                                           |                        |
 | `portalClassName`  | `string`                                                                                       | Passes the given className to the popover's portal container if the default portal container is being used.                                                                                                                                     |                        |
 | `popoverZIndex`    | `number`                                                                                       | Sets the z-index CSS property for the popover.                                                                                                                                                                                                  |                        |
-| ...                | native `div` attributes                                                                        | Any other props will be spread on th tooltip `div` element                                                                                                                                                                                      |                        |
+| ...                | native `div` attributes                                                                        | Any other props will be spread on the tooltip `div` element                                                                                                                                                                                     |                        |

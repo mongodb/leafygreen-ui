@@ -3,8 +3,7 @@ import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
-import Guidecue from '.';
-import { useEffect } from '@storybook/addons';
+import { Guidecue } from '.';
 import { GuidecueProps } from './types';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -19,7 +18,7 @@ export default {
         'setOpen',
         'tooltipClassName',
         'open',
-        'onClose',
+        'onDismissClick',
         'onButtonClick',
       ],
     },
@@ -53,11 +52,6 @@ const Template: ComponentStory<typeof Guidecue> = args => {
   const triggerRef = useRef<null | HTMLDivElement>(null);
   const { children, darkMode } = args;
 
-  useEffect(() => {
-    const timer = setTimeout(() => setOpen(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
   // eslint-disable-next-line no-console
   const handleNext = () => console.log('next');
 
@@ -85,7 +79,7 @@ const Template: ComponentStory<typeof Guidecue> = args => {
         setOpen={setOpen}
         refEl={triggerRef}
         onButtonClick={handleNext}
-        onClose={handleClose}
+        onDismissClick={handleClose}
         aria-labelledby="test"
       >
         {children}

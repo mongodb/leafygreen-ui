@@ -8,13 +8,13 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../lib"
+      "path": "../a11y"
     },
     {
-      "path": "../tooltip"
+      "path": "../button"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../emotion"
     },
     {
       "path": "../icon"
@@ -23,16 +23,22 @@
       "path": "../icon-button"
     },
     {
-      "path": "../button"
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../palette"
     },
     {
       "path": "../popover"
     },
     {
-      "path": "../typography"
+      "path": "../tooltip"
     },
     {
-      "path": "../palette"
+      "path": "../typography"
     }
   ]
 }

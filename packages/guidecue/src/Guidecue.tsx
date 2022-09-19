@@ -6,20 +6,14 @@ import { cx } from '@leafygreen-ui/emotion';
 import IconButton from '@leafygreen-ui/icon-button';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
-import { Disclaimer } from '@leafygreen-ui/typography';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
-import FocusTrap from 'focus-trap-react';
-import {
-  beaconStyles,
-  closeStyles,
-  footerStyles,
-  tooltipStyles,
-} from './styles';
-import { GuidecueProps } from './types';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
-import { PrimaryButton, Content } from './';
+import FocusTrap from 'focus-trap-react';
+import { beaconStyles, closeStyles, tooltipStyles } from './styles';
+import { GuidecueProps } from './types';
+import { Content } from './';
 
-const focusClassName = createUniqueClassName('guidecue');
+const focusId = createUniqueClassName('guidecue');
 
 function Guidecue({
   open,
@@ -30,7 +24,7 @@ function Guidecue({
   darkMode: darkModeProp,
   title,
   children,
-  onClose = () => {},
+  onDismissClick = () => {},
   onButtonClick = () => {},
   tooltipClassName,
   portalClassName,
@@ -53,16 +47,16 @@ function Guidecue({
   const ariaDescribedby = 'guidecue-desc';
 
   /**
-   * Determines the button text. If there is nothing passed then default text will show depending on the numberOfSteps.
+   * Determines the button text. If there is nothing passed to the `buttonText` prop then default text will show depending on the numberOfSteps.
    */
   const buttonText = buttonTextProp
     ? buttonTextProp
-    : currentStep === numberOfSteps
+    : currentStep === numberOfSteps || numberOfSteps === 1
     ? 'Got it'
     : 'Next';
 
   /**
-   * Determines if the stand-alone tooltip should be shown. If there are multiple steps the guided multipstep tooltip will be shown.
+   * Determines if the stand-alone tooltip should be shown. If there are multiple steps the multip-step tooltip will be shown.
    */
   const isStandalone = numberOfSteps <= 1;
 
@@ -70,11 +64,11 @@ function Guidecue({
     let openTimeout: NodeJS.Timeout, closeTimeout: NodeJS.Timeout;
 
     if (open) {
-      // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to guided multistep tooltip.
+      // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to multi-step tooltip.
       setPopoverOpen(true); // beacon opens first
       openTimeout = setTimeout(() => setTooltipOpen(true), 400); // tooltip opens a little after
     } else {
-      // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to guided multistep tooltip.
+      // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multi-step tooltip.
       setTooltipOpen(false); // tooltip closes first
       closeTimeout = setTimeout(() => setPopoverOpen(false), 200); // beacon closes a little after
     }
@@ -85,14 +79,12 @@ function Guidecue({
     };
   }, [open]);
 
-  //TODO: Warning if current step is larger than number of steps
-
   /**
-   * Callback fired when the x icon is clicked. It closes the tooltip and fires the callback that was passed to `onClose`.
+   * Callback fired when the X icon is clicked . It closes the tooltip and fires the callback that was passed to `onDismissClick`.
    */
   const handleCloseClick = () => {
     setOpen(false);
-    onClose();
+    onDismissClick();
   };
 
   /**
@@ -104,23 +96,23 @@ function Guidecue({
   };
 
   /**
-   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the primary button(`onButtonClick`) since that is the callback that would be fired if the primary button was clicked. If it's the guided multi-step tooltip we use the callback from the close icon button(`onClose`) since thats the callback that would be fired if the close icon was clicked.
+   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the primary button(`onButtonClick`) since that is the callback that would be fired if the primary button was clicked. If it's the multi-step tooltip we use the callback from the dismiss(X) button(`onDismissClick`) since thats the callback that would be fired if the dismiss(X) button was clicked.
    */
-  const onEscCloseCallback = isStandalone ? onButtonClick : onClose;
+  const onEscClose = isStandalone ? onButtonClick : onDismissClick;
 
   // Test are failing because of `focus-trap-react`. Even though there is a focusable element it does not find it in time and throws an error. A fix is to point to the primary button and set that as the fallback focus. (https://github.com/focus-trap/focus-trap-react/issues/91)
-  const focusTrapOptions = { fallbackFocus: `.${focusClassName}` };
+  const focusTrapOptions = { fallbackFocus: `#${focusId}` };
 
   return (
     <>
-      {/* Guided multistep tooltip */}
+      {/* Multistep tooltip */}
       {!isStandalone && (
         <Popover
           active={popoverOpen}
           refEl={refEl}
           align={beaconAlign}
           justify={Justify.Middle}
-          spacing={-12}
+          spacing={-12} // width of beacon is 24px, 24/2 = 12
           portalClassName={portalClassName}
           portalContainer={portalContainer}
           scrollContainer={scrollContainer}
@@ -129,7 +121,6 @@ function Guidecue({
           className={portalClassName}
         >
           {/* The beacon is using the popover component to position itself */}
-          {/* Instead of passing this as the tooltip trigger prop we instead pass the reference so that the default behavior of closing the tooltip on background click or showing and hiding the tooltip on hover does not happen */}
           <div
             ref={beaconRef}
             className={beaconStyles(prefersReducedMotion, darkMode)}
@@ -137,16 +128,17 @@ function Guidecue({
             <div />
           </div>
           {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
+          {/* Instead of passing the beacon as the tooltip trigger prop we pass a reference to the beacon to the `refEl` prop. By passing only the reference we avoid default tooltip behaviors such as closing the tooltip on background click or showing and hiding the tooltip on hover. */}
           <Tooltip
             darkMode={darkMode}
             open={tooltipOpen}
-            setOpen={setOpen}
+            setOpen={setOpen} // setOpen is called when the `Esc` key is pressed. This behavior is handled inside the tooltip component.
             justify={tooltipJustify}
             align={tooltipAlign}
             refEl={beaconRef}
             className={cx(tooltipStyles, tooltipClassName)}
             usePortal={false}
-            onClose={() => onEscCloseCallback()}
+            onClose={() => onEscClose()}
             role="dialog"
             aria-labelledby={ariaLabelledby}
             aria-describedby={ariaDescribedby}
@@ -167,28 +159,24 @@ function Guidecue({
                   title={title}
                   ariaLabelledby={ariaLabelledby}
                   ariaDescribedby={ariaDescribedby}
+                  isStandalone={isStandalone}
+                  buttonText={buttonText}
+                  handleButtonClick={handleButtonClick}
+                  focusId={focusId}
+                  darkMode={darkMode}
+                  numberOfSteps={numberOfSteps}
+                  currentStep={currentStep}
                 >
                   {children}
                 </Content>
-                <div className={footerStyles}>
-                  <Disclaimer>
-                    {currentStep} of {numberOfSteps}
-                  </Disclaimer>
-                  <PrimaryButton
-                    buttonText={buttonText}
-                    handleButtonClick={handleButtonClick}
-                    focusClassName={focusClassName}
-                    darkMode={darkMode}
-                  />
-                </div>
               </div>
             </FocusTrap>
           </Tooltip>
         </Popover>
       )}
       {/* Standalone tooltip */}
-      {/* this is using the ref of the `refEl` prop to position itself against  */}
       {isStandalone && (
+        // this is using the reference from the `refEl` prop to position itself against
         <Tooltip
           darkMode={darkMode}
           open={open}
@@ -201,7 +189,7 @@ function Guidecue({
           portalContainer={portalContainer}
           scrollContainer={scrollContainer}
           popoverZIndex={popoverZIndex}
-          onClose={() => onEscCloseCallback()}
+          onClose={() => onEscClose()}
           role="dialog"
           aria-labelledby={ariaLabelledby}
           {...tooltipProps}
@@ -213,17 +201,16 @@ function Guidecue({
                 title={title}
                 ariaLabelledby={ariaLabelledby}
                 ariaDescribedby={ariaDescribedby}
+                isStandalone={isStandalone}
+                buttonText={buttonText}
+                handleButtonClick={handleButtonClick}
+                focusId={focusId}
+                darkMode={darkMode}
+                numberOfSteps={numberOfSteps}
+                currentStep={currentStep}
               >
                 {children}
               </Content>
-              <div className={footerStyles}>
-                <PrimaryButton
-                  buttonText={buttonText}
-                  handleButtonClick={handleButtonClick}
-                  focusClassName={focusClassName}
-                  darkMode={darkMode}
-                />
-              </div>
             </div>
           </FocusTrap>
         </Tooltip>
@@ -233,7 +220,6 @@ function Guidecue({
 }
 
 Guidecue.displayName = 'Guidecue';
-// TODO: make sure the correct props are here
 Guidecue.propTypes = {
   children: PropTypes.node,
   darkMode: PropTypes.bool,
@@ -246,12 +232,11 @@ Guidecue.propTypes = {
         : PropTypes.any,
   }),
   numberOfSteps: PropTypes.number,
-
   currentStep: PropTypes.number,
   title: PropTypes.string,
   tooltipClassName: PropTypes.string,
   buttonText: PropTypes.string,
-  onClose: PropTypes.func,
+  onDismissClick: PropTypes.func,
   onButtonClick: PropTypes.func,
   tooltipAlign: PropTypes.oneOf(Object.values(Align)),
   tooltipJustify: PropTypes.oneOf(Object.values(Justify)),

@@ -87,7 +87,7 @@ export const beaconStyles = (
 
         35%,
         100% {
-          // this should scale up to 1 and have 0 opacity by 35% a and remain that way until 100%. This is 35% so that it gives the illusions of disappearing before the first ring
+          // this should scale up to 1 and have 0 opacity by 35% and remain that way until 100%. This is 35% so that it gives the illusion of disappearing before the first ring.
           scale: 1;
           box-shadow: 0px 0px 0px 18px ${transparentize(0.7, color)};
           opacity: 0;
@@ -142,4 +142,17 @@ export const closeStyles = css`
   position: absolute;
   top: 10px;
   right: 10px;
+`;
+
+export const stepStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark2};
+  `,
+};
+
+export const buttonStyles = css`
+  height: 28px;
 `;

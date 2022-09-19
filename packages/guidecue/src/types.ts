@@ -31,7 +31,7 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    */
   refEl: React.RefObject<HTMLElement>;
   /**
-   * Used to display the number of steps. If `numberOfSteps` is `<= 1` then the step text will not show and a stand-alone tooltip without the beacon will be used.
+   * Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.
    * @default: 1
    */
   numberOfSteps?: number;
@@ -62,11 +62,11 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    */
   buttonText?: string;
   /**
-   * Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step guided tooltip.
+   * Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step tooltip.
    */
-  onClose?: () => void;
+  onDismissClick?: () => void;
   /**
-   * Callback fired when the bottom primary button is clicked. This applies to both the stand-alone and guided multi-step guided tooltip. This is also fired when the `Esc` key is pressed in the stand-alone tooltip.
+   * Callback fired when the primary button is clicked. This applies to both the stand-alone and multi-step tooltip. This is also fired when the `Esc` key is pressed in the stand-alone tooltip.
    */
   onButtonClick?: () => void;
   /**
@@ -80,7 +80,7 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    */
   tooltipJustify?: Exclude<Justify, 'fit'>;
   /**
-   * Determines the alignment of the beacon. The beacon is only shown when `numberOfSteps` is `> 1`, making it a multi-step guided tooltip.
+   * Determines the alignment of the beacon. This only applies to the multi-step tooltip.
    * @default: 'center-horizontal'
    */
   beaconAlign?: Align;
