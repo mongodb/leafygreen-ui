@@ -1,19 +1,22 @@
 /* eslint-disable no-console */
 import depcheck from 'depcheck';
-import { readdirSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { exit } from 'process';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import packageJson from '../package.json';
 import { SpawnOptions, spawnSync } from 'child_process';
+import { getPackageLGDependencies } from './utils/getPackageDependencies';
 const lgPackages = readdirSync('packages/');
 const devDependencies = Object.keys(packageJson.devDependencies);
 
 const cli = new Command('depcheck')
   .option('-f, --fix', 'Option to fix any errors found', false)
+  .option('--fix-tsconfig', 'Optionally overwrite the tsconfig.json based on package.json')
   .parse(process.argv);
 const fix: boolean = cli.opts()['fix'];
+const fixTS = cli.opts()['fixTsconfig']
 
 checkDependencies();
 
@@ -50,6 +53,10 @@ async function checkDependencies() {
 
       console.log('');
     }
+
+    if (fixTS) {
+      fixTSconfig(pkg);
+    }
   }
 
   if (issuesFound) {
@@ -63,11 +70,25 @@ function fixDependencies(
   pkg: string,
   missing: Array<string>,
   unused: Array<string>,
-) {
+): void {
   const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
   missing.length > 0 &&
     spawnSync('npx', ['yarn@1.19.0', 'add', '-W', ...missing], cmdOpts);
   unused.length > 0 &&
     spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
+}
+
+/**
+ * Reads the tsconfig file and rewrites the references array based on the package.json
+ */
+function fixTSconfig(pkg: string) {
+  const tsConfigFileName = `packages/${pkg}/tsconfig.json`;
+  const dependencies = getPackageLGDependencies(pkg);
+  const tsconfig = JSON.parse(readFileSync(tsConfigFileName, 'utf-8'));
+
+  tsconfig.references = dependencies.map(dep => ({
+    path: `../${dep}`,
+  }));
+  writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
 }
