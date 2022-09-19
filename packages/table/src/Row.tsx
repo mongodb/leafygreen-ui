@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, forwardRef } from 'react';
 import useSSR from './useSSR';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
