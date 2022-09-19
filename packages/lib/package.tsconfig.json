@@ -21,7 +21,7 @@
     "strict": true,
     "strictNullChecks": true,
     "target": "ES5",
-    
+
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["packages/icon/src/generated/*"],
       "@leafygreen-ui/*": ["packages/*/src"]

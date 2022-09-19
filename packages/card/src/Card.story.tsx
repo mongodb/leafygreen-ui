@@ -2,7 +2,7 @@
 import { BoxProps } from '@leafygreen-ui/box';
 import { Story } from '@storybook/react';
 import React from 'react';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';;
+import { storybookArgTypes } from '@leafygreen-ui/lib/';
 import LGCard, { CardProps } from './Card';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef

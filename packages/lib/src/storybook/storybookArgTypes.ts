@@ -25,4 +25,3 @@ export const storybookArgTypes = {
     control: { type: 'select' },
   },
 };
-
