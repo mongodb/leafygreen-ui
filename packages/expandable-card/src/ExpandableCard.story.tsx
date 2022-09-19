@@ -43,7 +43,7 @@ export const Controlled: ComponentStory<typeof ExpandableCard> = args => {
   ) => {
     // eslint-disable-next-line no-console
     console.log(`Parent controlling isOpen:`, e);
-    setIsOpen(false);
+    setIsOpen(isOpen => !isOpen);
   };
 
   return (
