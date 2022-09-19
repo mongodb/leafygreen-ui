@@ -5,22 +5,24 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../lib"
     },
     {
-      "path": "../emotion"
+      "path": "../palette"
     },
     {
       "path": "../portal"
     },
     {
-      "path": "../palette"
+      "path": "../tokens"
     },
     {
-      "path": "../tokens"
+      "path": "../icon"
     },
     {
       "path": "../icon-button"
@@ -29,10 +31,7 @@
       "path": "../typography"
     },
     {
-      "path": "../leafygreen-provider"
-    },
-    {
-      "path": "../icon"
+      "path": "../emotion"
     }
   ]
 }

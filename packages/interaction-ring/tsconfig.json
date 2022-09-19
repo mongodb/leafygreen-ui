@@ -5,13 +5,12 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../emotion"
-    },
-    {
-      "path": "../leafygreen-provider"
     },
     {
       "path": "../lib"

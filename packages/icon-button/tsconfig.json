@@ -5,31 +5,32 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "../../typings/*", "typings/**/*"],
+  "include": [
+    "src/**/*",
+    "../../typings/*",
+    "typings/**/*"
+  ],
   "references": [
     {
-      "path": "../emotion"
+      "path": "../a11y"
     },
     {
       "path": "../lib"
     },
     {
-      "path": "../palette"
+      "path": "../emotion"
     },
     {
-      "path": "../icon"
+      "path": "../tokens"
+    },
+    {
+      "path": "../palette"
     },
     {
       "path": "../box"
     },
     {
-      "path": "../a11y"
-    },
-    {
-      "path": "../leafygreen-provider"
-    },
-    {
-      "path": "../tokens"
+      "path": "../icon"
     }
   ]
 }

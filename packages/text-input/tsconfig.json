@@ -5,31 +5,30 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
-      "path": "../box"
-    },
-    {
       "path": "../emotion"
-    },
-    {
-      "path": "../lib"
-    },
-    {
-      "path": "../icon"
-    },
-    {
-      "path": "../palette"
-    },
-    {
-      "path": "../typography"
     },
     {
       "path": "../hooks"
     },
     {
+      "path": "../icon"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../palette"
+    },
+    {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }

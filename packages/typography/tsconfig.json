@@ -5,10 +5,12 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
-      "path": "../lib"
+      "path": "../box"
     },
     {
       "path": "../emotion"
@@ -17,13 +19,13 @@
       "path": "../icon"
     },
     {
+      "path": "../inline-definition"
+    },
+    {
+      "path": "../lib"
+    },
+    {
       "path": "../palette"
-    },
-    {
-      "path": "../leafygreen-provider"
-    },
-    {
-      "path": "../box"
     },
     {
       "path": "../tokens"

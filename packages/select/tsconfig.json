@@ -5,7 +5,9 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../button"
@@ -18,9 +20,6 @@
     },
     {
       "path": "../icon"
-    },
-    {
-      "path": "../leafygreen-provider"
     },
     {
       "path": "../lib"

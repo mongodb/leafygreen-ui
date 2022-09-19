@@ -5,7 +5,9 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../emotion"
@@ -14,25 +16,25 @@
       "path": "../hooks"
     },
     {
+      "path": "../icon"
+    },
+    {
       "path": "../lib"
-    },
-    {
-      "path": "../popover"
-    },
-    {
-      "path": "../portal"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../typography"
-    },
-    {
-      "path": "../icon"
+      "path": "../popover"
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../button"
     }
   ]
 }

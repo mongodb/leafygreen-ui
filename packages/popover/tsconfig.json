@@ -5,7 +5,10 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "../../typings/*"],
+  "include": [
+    "src/**/*",
+    "../../typings/*"
+  ],
   "references": [
     {
       "path": "../emotion"
@@ -18,9 +21,6 @@
     },
     {
       "path": "../portal"
-    },
-    {
-      "path": "../leafygreen-provider"
     },
     {
       "path": "../palette"

@@ -5,16 +5,21 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
-    {
-      "path": "../lib"
-    },
     {
       "path": "../emotion"
     },
     {
-      "path": "../interaction-ring"
+      "path": "../hooks"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../lib"
     },
     {
       "path": "../palette"
@@ -24,9 +29,6 @@
     },
     {
       "path": "../typography"
-    },
-    {
-      "path": "../hooks"
     }
   ]
 }

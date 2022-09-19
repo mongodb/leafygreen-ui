@@ -5,13 +5,18 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
-      "path": "../a11y"
+      "path": "../card"
     },
     {
-      "path": "../card"
+      "path": "../emotion"
+    },
+    {
+      "path": "../hooks"
     },
     {
       "path": "../icon"
@@ -23,10 +28,10 @@
       "path": "../lib"
     },
     {
-      "path": "../typography"
+      "path": "../palette"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../typography"
     }
   ]
 }

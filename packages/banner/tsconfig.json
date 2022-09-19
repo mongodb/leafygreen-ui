@@ -5,7 +5,9 @@
     "rootDir": "src",
     "outDir": "dist"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../lib"
@@ -27,9 +29,6 @@
     },
     {
       "path": "../typography"
-    },
-    {
-      "path": "../leafygreen-provider"
     }
   ]
 }

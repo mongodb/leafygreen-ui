@@ -5,19 +5,16 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "../tooltip/src/getTooltipTriggerHandlers.ts"],
+  "include": [
+    "src/**/*",
+    "../tooltip/src/getTooltipTriggerHandlers.ts"
+  ],
   "references": [
     {
       "path": "../emotion"
     },
     {
       "path": "../hooks"
-    },
-    {
-      "path": "../interaction-ring"
-    },
-    {
-      "path": "../leafygreen-provider"
     },
     {
       "path": "../lib"

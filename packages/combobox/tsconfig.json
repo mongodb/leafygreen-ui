@@ -5,13 +5,21 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
+    {
+      "path": "../button"
+    },
     {
       "path": "../checkbox"
     },
     {
       "path": "../emotion"
+    },
+    {
+      "path": "../hooks"
     },
     {
       "path": "../icon"
@@ -23,9 +31,6 @@
       "path": "../inline-definition"
     },
     {
-      "path": "../hooks"
-    },
-    {
       "path": "../lib"
     },
     {
@@ -33,9 +38,6 @@
     },
     {
       "path": "../popover"
-    },
-    {
-      "path": "../tooltip"
     },
     {
       "path": "../tokens"
