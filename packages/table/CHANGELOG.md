@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 6.0.1
+
+### Patch Changes
+
+- 38f3effb: Removes external package `use-ssr`
+
 ## 6.0.0
 
 ### Major Changes
@@ -20,6 +26,12 @@
   - @leafygreen-ui/lib@9.4.2
   - @leafygreen-ui/palette@3.4.2
   - @leafygreen-ui/tokens@1.3.2
+
+## 5.0.3
+
+### Patch Changes
+
+- (Hot-fix): Removes external package `use-ssr`
 
 ## 5.0.2
 
@@ -128,6 +140,12 @@
 
 - Updated dependencies [614be76]
   - @leafygreen-ui/tokens@1.1.0
+
+## 2.0.7
+
+### Patch Changes
+
+- (Hot-fix): Removes external package `use-ssr`
 
 ## 2.0.6
 

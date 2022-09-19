@@ -43,7 +43,7 @@
     "fix:eslint": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "link": "./scripts/link.sh",
     "link:all": "lerna exec -- yarn link",
-    "prepublishOnly": "yarn fix && yarn test && yarn build && yarn prepublish:ts-downlevel && yarn tsdoc:parse",
+    "prepublishOnly": "yarn fix && yarn test && yarn build && yarn prepublish:ts-downlevel",
     "prepublish:ts-downlevel": "rimraf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
     "release": "yarn publish",
     "publish": "npm-run-all --serial publish:*",
