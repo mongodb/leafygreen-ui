@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
 import { spawn, spawnSync } from 'child_process';
-import fs from 'fs';
 import chalk from 'chalk';
 import { exit } from 'process';
 import { Command } from 'commander';
 import { uniq } from 'lodash';
+import { getGitDiff } from './utils/getGitDiff';
+import { getPackageLGDependencies } from './utils/getPackageDependencies';
+import { getAllPackageNames } from './utils/getAllPackageNames';
 
 interface Opts {
   exclude?: Array<string>;
@@ -53,11 +55,11 @@ const {
 } = cli.opts() as Opts;
 const cmdArgs = ['--parallel', 'build'];
 
+let packages: Array<string> = [];
 /**
  * `--diff` - builds only packages that have uncommitted changes
  * `--dependencies` or `--deps` - builds the dependencies of packages that have uncommitted changes
  */
-let packages: Array<string> = [];
 
 if (diff) {
   console.log(
@@ -68,17 +70,7 @@ if (diff) {
       chalk.yellow(`\tIgnoring ${cli.args.length} package names provided`),
     );
 
-  const gitDiff = spawnSync('git', [
-    'diff',
-    '..main',
-    '--name-only',
-  ]).stdout.toString();
-
-  const changedPackages = gitDiff
-    .trim()
-    .split('\n')
-    .filter(file => file.startsWith('packages/'))
-    .map(file => file.replace(/(?<=packages\/.*?\/)(.*)|(packages\/)|\//g, ''));
+  const changedPackages = getGitDiff();
 
   packages =
     changedPackages.length > 0 ? changedPackages : getAllPackageNames();
@@ -155,37 +147,3 @@ if (dry) {
     );
   });
 }
-
-function getAllPackageNames() {
-  return fs
-    .readdirSync(`${__dirname}/../packages`, { withFileTypes: true })
-    .filter(dir => dir.isDirectory())
-    .map(dir => dir.name);
-}
-
-function getPackageLGDependencies(pkg: string) {
-  const pkgJson = JSON.parse(
-    fs.readFileSync(`packages/${pkg}/package.json`, 'utf-8'),
-  );
-  const dependencies = Object.keys({
-    ...pkgJson.dependencies,
-    ...pkgJson.devDependencies,
-  })
-    .filter(pkg => pkg.includes('@leafygreen-ui'))
-    .map(pkg => pkg.replace(`@leafygreen-ui/`, ''));
-  return dependencies;
-}
-
-// function argsIncludes(...flags : Array<any>) {
-//   return flags.some(flag => args.includes(flag));
-// }
-
-// function removeFromArgs(...flags : Array<any>) {
-//   flags.forEach(flag => {
-//     const i = args.indexOf(flag);
-
-//     if (i > -1) {
-//       args.splice(i, 1);
-//     }
-//   });
-// }
