@@ -50,6 +50,9 @@
     },
     {
       "path": "../select"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

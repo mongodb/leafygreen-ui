@@ -35,6 +35,9 @@
     },
     {
       "path": "../button"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

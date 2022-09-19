@@ -26,6 +26,9 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }
