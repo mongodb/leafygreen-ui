@@ -3,6 +3,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
 
+const size = 24;
+
 export const tooltipStyles = css`
   padding: 32px 16px 16px;
 `;
@@ -14,12 +16,11 @@ export const beaconStyles = (
   const color = darkMode ? palette.blue.light2 : palette.blue.base;
 
   const sharedCss = css`
-    --size: 24px;
     position: relative;
 
     div {
-      width: var(--size);
-      height: var(--size);
+      width: ${size}px;
+      height: ${size}px;
       border-radius: 50%;
       background-color: ${transparentize(0.5, color)};
       transform-origin: center;
@@ -50,9 +51,9 @@ export const beaconStyles = (
         top: 50%;
         left: 50%;
         scale: 0.9;
-        width: var(--size);
-        height: var(--size);
-        background: transparent;
+        width: ${size}px;
+        height: ${size}px;
+        background: rgba(255, 255, 255, 0);
         box-shadow: 0px 0px 0px 0px ${transparentize(1, color)};
       }
 
@@ -133,9 +134,7 @@ export const bodyThemeStyles: Record<Theme, string> = {
 };
 
 export const bodyTitleStyles = css`
-  + * {
-    margin-top: 4px;
-  }
+  margin-bottom: 4px;
 `;
 
 export const closeStyles = css`
