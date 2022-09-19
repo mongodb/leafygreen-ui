@@ -27,6 +27,12 @@
   - @leafygreen-ui/palette@3.4.2
   - @leafygreen-ui/tokens@1.3.2
 
+## 5.0.3
+
+### Patch Changes
+
+- (Hot-fix): Removes external package `use-ssr`
+
 ## 5.0.2
 
 ### Patch Changes
