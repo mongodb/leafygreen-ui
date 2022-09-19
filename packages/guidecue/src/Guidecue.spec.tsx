@@ -6,7 +6,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import Guidecue from '.';
+import { Guidecue } from '.';
 import userEvent from '@testing-library/user-event';
 
 // TODO: maybe add globally
@@ -174,7 +174,7 @@ describe('packages/guidecue', () => {
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
-        onClose,
+        onDismissClick: onClose,
       });
       await act(async () => {
         await waitForTimeout(500);

@@ -158,7 +158,7 @@ export type TooltipProps = Omit<
     enabled?: boolean;
 
     /**
-     * Callback that is called when the tooltip is closed.
+     * Callback that is called when the tooltip is closed internally. E.g. on ESC press, on backdrop click, on blur.
      *
      */
     onClose?: () => void;

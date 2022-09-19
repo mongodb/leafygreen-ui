@@ -16,6 +16,31 @@ type ModifiedTooltipProps = Omit<
   | 'onClose'
 >;
 
+// TODO: Conditional type
+// type ConditionalProps =
+// | {
+//     /**
+//    * Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.
+//    * @default: 1
+//    */
+//      numberOfSteps?: 1;
+//        /**
+//    * Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step tooltip.
+//    */
+//   onDismissClick?: null;
+// }
+// | {
+//       /**
+//    * Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.
+//    * @default: 1
+//    */
+//        numberOfSteps: 2|3|4|5|6|7|8;
+//        /**
+//    * Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step tooltip.
+//    */
+//   onDismissClick?: () => void;
+// };
+
 export interface GuidecueProps extends ModifiedTooltipProps {
   /**
    * Determines if the `Tooltip` will appear as open or close.
