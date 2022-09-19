@@ -21,6 +21,7 @@
   - @leafygreen-ui/leafygreen-provider@2.3.4-next.0
   - @leafygreen-ui/palette@3.4.3-next.0
   - @leafygreen-ui/tokens@1.3.3-next.0
+
 ## 6.0.1
 
 ### Patch Changes
