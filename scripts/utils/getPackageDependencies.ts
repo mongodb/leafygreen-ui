@@ -15,11 +15,12 @@ export function getPackageLGDependencies(pkg: string) {
 }
 
 export function getPackageDependants(pkg: string) {
-  const allPackages = getAllPackageNames()
+  const allPackages = getAllPackageNames();
 
-  return allPackages.filter(otherPkg => {
-    const otherPkgDeps = getPackageLGDependencies(otherPkg)
-    return otherPkgDeps.includes(pkg)
-  })
-  .map(pkg => pkg.replace(`@leafygreen-ui/`, ''));
+  return allPackages
+    .filter(otherPkg => {
+      const otherPkgDeps = getPackageLGDependencies(otherPkg);
+      return otherPkgDeps.includes(pkg);
+    })
+    .map(pkg => pkg.replace(`@leafygreen-ui/`, ''));
 }

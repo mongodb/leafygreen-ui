@@ -5,7 +5,10 @@ import { exit } from 'process';
 import { Command } from 'commander';
 import { uniq } from 'lodash';
 import { getGitDiff } from './utils/getGitDiff';
-import { getPackageDependants, getPackageLGDependencies } from './utils/getPackageDependencies';
+import {
+  getPackageDependants,
+  getPackageLGDependencies,
+} from './utils/getPackageDependencies';
 import { getAllPackageNames } from './utils/getAllPackageNames';
 
 interface Opts {
@@ -95,9 +98,7 @@ if (deps) {
     packages.flatMap(pkg => getPackageLGDependencies(pkg)),
   );
 
-  const dependants = uniq(
-    packages.flatMap(pkg => getPackageDependants(pkg))
-  )
+  const dependants = uniq(packages.flatMap(pkg => getPackageDependants(pkg)));
 
   console.log(
     chalk.bold(`\nIncluding ${dependencies.length} dependencies:`),
@@ -105,8 +106,8 @@ if (deps) {
   );
   console.log(
     chalk.bold(`Including ${dependants.length} dependants: `),
-    chalk.blue(dependants.join(', '))
-  )
+    chalk.blue(dependants.join(', ')),
+  );
 
   packages.splice(0, 0, ...dependencies, ...dependants);
 }
