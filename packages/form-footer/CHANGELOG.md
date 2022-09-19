@@ -1,5 +1,16 @@
 # @leafygreen-ui/form-footer
 
+## 1.0.1-next.3
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+- Updated dependencies [659251a3]
+  - @leafygreen-ui/banner@5.0.1-next.2
+  - @leafygreen-ui/button@16.1.0-next.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.2
+  - @leafygreen-ui/lib@9.5.0-next.2
+
 ## 1.0.1-next.2
 
 ### Patch Changes

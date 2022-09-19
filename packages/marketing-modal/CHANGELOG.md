@@ -1,5 +1,18 @@
 # @leafygreen-ui/marketing-modal
 
+## 3.0.6-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+- Updated dependencies [659251a3]
+  - @leafygreen-ui/button@16.1.0-next.2
+  - @leafygreen-ui/lib@9.5.0-next.2
+  - @leafygreen-ui/modal@10.1.0-next.2
+  - @leafygreen-ui/palette@3.4.3-next.2
+  - @leafygreen-ui/tokens@1.3.3-next.2
+  - @leafygreen-ui/typography@13.2.0-next.2
+
 ## 3.0.6-next.1
 
 ### Patch Changes

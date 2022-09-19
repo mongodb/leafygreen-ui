@@ -1,5 +1,11 @@
 # website
 
+## 0.4.1-next.0
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+
 ## 0.4.0
 
 ### Minor Changes

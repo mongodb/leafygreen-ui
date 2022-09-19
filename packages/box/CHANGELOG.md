@@ -1,5 +1,13 @@
 # @leafygreen-ui/box
 
+## 3.1.0-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+- Updated dependencies [659251a3]
+  - @leafygreen-ui/lib@9.5.0-next.2
+
 ## 3.1.0-next.1
 
 ### Patch Changes

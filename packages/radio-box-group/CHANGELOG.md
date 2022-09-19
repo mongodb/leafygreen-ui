@@ -1,5 +1,18 @@
 # @leafygreen-ui/radio-box-group
 
+## 9.1.0-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+- Updated dependencies [659251a3]
+  - @leafygreen-ui/hooks@7.3.2-next.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.2
+  - @leafygreen-ui/lib@9.5.0-next.2
+  - @leafygreen-ui/palette@3.4.3-next.2
+  - @leafygreen-ui/tokens@1.3.3-next.2
+  - @leafygreen-ui/tooltip@7.1.2-next.2
+
 ## 9.1.0-next.1
 
 ### Patch Changes

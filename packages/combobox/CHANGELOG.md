@@ -1,5 +1,25 @@
 # @leafygreen-ui/combobox
 
+## 3.1.0-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+- Updated dependencies [659251a3]
+  - @leafygreen-ui/checkbox@10.1.0-next.2
+  - @leafygreen-ui/emotion@4.0.2-next.2
+  - @leafygreen-ui/hooks@7.3.2-next.2
+  - @leafygreen-ui/icon@11.11.0-next.2
+  - @leafygreen-ui/icon-button@13.2.0-next.2
+  - @leafygreen-ui/inline-definition@4.1.0-next.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.2
+  - @leafygreen-ui/lib@9.5.0-next.2
+  - @leafygreen-ui/palette@3.4.3-next.2
+  - @leafygreen-ui/popover@9.1.0-next.2
+  - @leafygreen-ui/tokens@1.3.3-next.2
+  - @leafygreen-ui/tooltip@7.1.2-next.2
+  - @leafygreen-ui/typography@13.2.0-next.2
+
 ## 3.1.0-next.1
 
 ### Patch Changes

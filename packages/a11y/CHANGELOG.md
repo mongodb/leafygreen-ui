@@ -1,5 +1,15 @@
 # @leafygreen-ui/a11y
 
+## 1.3.2-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+- Updated dependencies [659251a3]
+  - @leafygreen-ui/emotion@4.0.2-next.2
+  - @leafygreen-ui/hooks@7.3.2-next.2
+  - @leafygreen-ui/lib@9.5.0-next.2
+
 ## 1.3.2-next.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 6.1.4-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+
 ## 6.1.4-next.1
 
 ### Patch Changes

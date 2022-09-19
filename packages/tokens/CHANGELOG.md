@@ -1,5 +1,14 @@
 # @leafygreen-ui/tokens
 
+## 1.3.3-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+- Updated dependencies [659251a3]
+  - @leafygreen-ui/lib@9.5.0-next.2
+  - @leafygreen-ui/palette@3.4.3-next.2
+
 ## 1.3.3-next.1
 
 ### Patch Changes

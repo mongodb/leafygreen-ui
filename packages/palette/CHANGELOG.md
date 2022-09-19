@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.4.3-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+
 ## 3.4.3-next.1
 
 ### Patch Changes

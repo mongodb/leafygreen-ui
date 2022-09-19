@@ -1,5 +1,18 @@
 # @leafygreen-ui/callout
 
+## 7.0.1-next.2
+
+### Patch Changes
+
+- 659251a3: Fixes back tsconfig build
+- Updated dependencies [659251a3]
+  - @leafygreen-ui/emotion@4.0.2-next.2
+  - @leafygreen-ui/icon@11.11.0-next.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4-next.2
+  - @leafygreen-ui/lib@9.5.0-next.2
+  - @leafygreen-ui/palette@3.4.3-next.2
+  - @leafygreen-ui/typography@13.2.0-next.2
+
 ## 7.0.1-next.1
 
 ### Patch Changes
