@@ -58,8 +58,8 @@ const Step = ({
   const completedLineStyles = css`
     &:after {
       background-color: ${isDarkMode
-        ? palette.green.base
-        : palette.green.dark1};
+      ? palette.green.base
+      : palette.green.dark1};
     }
   `;
 
