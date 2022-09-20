@@ -1,5 +1,29 @@
 # @leafygreen-ui/menu
 
+## 16.0.0
+
+### Major Changes
+
+- a1202635: Adds a call to `event.nativeEvent.stopPropagation()` on trigger click, preventing the native event from propagating, while still allowing the React synthetic event to bubble. This ensures clicks on the trigger do not close the menu in hybrid/multi-framework apps
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- 5de9d6ad: Resolving unique key warning on trigger component
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [1e708bd3]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/popover@9.0.1
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/hooks@7.3.1
+  - @leafygreen-ui/icon-button@13.1.1
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 15.0.1
 
 ### Patch Changes

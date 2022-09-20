@@ -1,5 +1,21 @@
 # @leafygreen-ui/stepper
 
+## 3.0.4
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+- Updated dependencies [1e708bd3]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/typography@13.1.2
+  - @leafygreen-ui/emotion@4.0.1
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tooltip@7.1.1
+
 ## 3.0.3
 
 ### Patch Changes

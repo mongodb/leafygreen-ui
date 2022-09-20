@@ -1,5 +1,14 @@
 # @leafygreen-ui/icon
 
+## 11.10.2
+
+### Patch Changes
+
+- 7caa1c3e: Add 'Relationship' icon
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/lib@9.4.2
+
 ## 11.10.1
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # @leafygreen-ui/form-footer
 
+## 1.0.0
+
+### Major Changes
+
+- e39d8469: Updates `FormFooter` for dark mode brand refresh.
+
+### Patch Changes
+
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- 80d0c7bf: Spreads `...rest` props onto the internal `footer` element
+- Updated dependencies [e39d8469]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/banner@5.0.0
+  - @leafygreen-ui/button@16.0.3
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+
 ## 0.10.3
 
 ### Patch Changes
