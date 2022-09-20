@@ -7,7 +7,7 @@ export function getPackageLGDependencies(pkg: string) {
   const dependencies = Object.keys({
     ...pkgJson.dependencies,
     ...pkgJson.devDependencies,
-    ...pkgJson.peerDependencies
+    ...pkgJson.peerDependencies,
   })
     .filter(pkg => pkg.includes('@leafygreen-ui'))
     .map(pkg => pkg.replace(`@leafygreen-ui/`, ''));

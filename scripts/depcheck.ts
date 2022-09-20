@@ -13,10 +13,13 @@ const devDependencies = Object.keys(packageJson.devDependencies);
 
 const cli = new Command('depcheck')
   .option('-f, --fix', 'Option to fix any errors found', false)
-  .option('--fix-tsconfig', 'Optionally overwrite the tsconfig.json based on package.json')
+  .option(
+    '--fix-tsconfig',
+    'Optionally overwrite the tsconfig.json based on package.json',
+  )
   .parse(process.argv);
 const fix: boolean = cli.opts()['fix'];
-const fixTS = cli.opts()['fixTsconfig']
+const fixTS = cli.opts()['fixTsconfig'];
 
 checkDependencies();
 
