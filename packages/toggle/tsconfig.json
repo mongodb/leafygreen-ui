@@ -5,8 +5,13 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
+    {
+      "path": "../a11y"
+    },
     {
       "path": "../emotion"
     },
@@ -21,9 +26,6 @@
     },
     {
       "path": "../palette"
-    },
-    {
-      "path": "../a11y"
     }
   ]
 }

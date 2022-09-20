@@ -5,13 +5,15 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../button"
     },
     {
-      "path": "../lib"
+      "path": "../emotion"
     },
     {
       "path": "../modal"
@@ -20,10 +22,10 @@
       "path": "../palette"
     },
     {
-      "path": "../typography"
+      "path": "../tokens"
     },
     {
-      "path": "../tokens"
+      "path": "../typography"
     }
   ]
 }
