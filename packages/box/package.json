@@ -19,10 +19,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "@leafygreen-ui/lib": "^9.4.2",
-    "lodash": "^4.17.21"
-  },
+  "dependencies": {},
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/box",
   "repository": {
     "type": "git",

@@ -5,8 +5,13 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
+    {
+      "path": "../box"
+    },
     {
       "path": "../emotion"
     },
@@ -18,9 +23,6 @@
     },
     {
       "path": "../tokens"
-    },
-    {
-      "path": "../box"
     },
     {
       "path": "../leafygreen-provider"
