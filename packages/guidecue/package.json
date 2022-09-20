@@ -32,7 +32,7 @@
       "@leafygreen-ui/emotion": "^4.0.1",
       "@leafygreen-ui/icon": "^11.10.1",
       "@leafygreen-ui/icon-button": "^13.1.0",
-      "@leafygreen-ui/lib": "^6.1.0",
+      "@leafygreen-ui/lib": "^9.4.2",
       "@leafygreen-ui/palette": "^3.4.1",
       "@leafygreen-ui/popover": "^9.0.0",
       "@leafygreen-ui/tooltip": "^7.1.0",
