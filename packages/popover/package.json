@@ -20,11 +20,11 @@
     "access": "public"
   },
   "dependencies": {
-    "react-transition-group": "^4.4.1",
+    "@leafygreen-ui/emotion": "^4.0.1",
     "@leafygreen-ui/hooks": "^7.3.1",
     "@leafygreen-ui/lib": "^9.4.2",
     "@leafygreen-ui/portal": "^4.0.4",
-    "lodash": "^4.17.21"
+    "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
     "@leafygreen-ui/palette": "^3.4.2"
