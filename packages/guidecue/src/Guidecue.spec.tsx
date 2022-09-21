@@ -86,22 +86,29 @@ describe('packages/guidecue', () => {
     });
   });
 
-  describe('Stand-alone guidecue', () => {
+  describe('Stand-alone tooltip', () => {
     test('is visible when open is "true"', async () => {
       const { getByRole } = renderGuidecue({ open: true });
       const guidecue = getByRole('dialog');
       await waitFor(() => expect(guidecue).toBeVisible());
     });
 
-    test('closes when the primary button is clicked and fires the onButtonClick handler once', async () => {
+    test('closes when the primary button is clicked', async () => {
       const onButtonClick = jest.fn();
       const { getByRole } = renderGuidecue({ open: true, onButtonClick });
       const guidecue = getByRole('dialog');
       const button = getByRole('button');
       userEvent.click(button);
-      expect(onButtonClick).toHaveBeenCalledTimes(1);
       await waitForElementToBeRemoved(guidecue);
       expect(guidecue).not.toBeInTheDocument();
+    });
+
+    test('fires the onButtonClick handler once when the primary button is clicked', async () => {
+      const onButtonClick = jest.fn();
+      const { getByRole } = renderGuidecue({ open: true, onButtonClick });
+      const button = getByRole('button');
+      userEvent.click(button);
+      expect(onButtonClick).toHaveBeenCalledTimes(1);
     });
 
     test('backdrop click should do nothing', async () => {
@@ -126,7 +133,7 @@ describe('packages/guidecue', () => {
       expect(guidecue).not.toBeInTheDocument();
     });
 
-    test('expect content to be at the end of the dom', () => {
+    test('content should not be in the container', () => {
       const { container, getByTestId } = renderGuidecue({
         open: true,
       });
@@ -142,19 +149,26 @@ describe('packages/guidecue', () => {
       expect(steps).not.toBeInTheDocument();
     });
 
-    test('title and body content should be visible', () => {
+    test('title should be visible', () => {
       const { getByText } = renderGuidecue({
         open: true,
       });
 
       const title = getByText(guidecueTitle);
-      const body = getByText(guidecueChildren);
       expect(title).toBeInTheDocument();
+    });
+
+    test('body content should be visible', () => {
+      const { getByText } = renderGuidecue({
+        open: true,
+      });
+
+      const body = getByText(guidecueChildren);
       expect(body).toBeInTheDocument();
     });
   });
 
-  describe('Multistep guidecue', () => {
+  describe('Multistep tooltip', () => {
     test('is visible when open is "true"', async () => {
       const { getByRole } = renderGuidecue({
         open: true,
@@ -168,7 +182,7 @@ describe('packages/guidecue', () => {
       await waitFor(() => expect(guidecue).toBeVisible());
     });
 
-    test('closes when the X icon is clicked and fires the onClose handler once', async () => {
+    test('closes when the dismiss(X) button is clicked', async () => {
       const onClose = jest.fn();
       const { getByRole, getByLabelText } = renderGuidecue({
         open: true,
@@ -182,12 +196,27 @@ describe('packages/guidecue', () => {
       const guidecue = getByRole('dialog');
       const button = getByLabelText('Close Tooltip', { selector: 'button' });
       userEvent.click(button);
-      expect(onClose).toHaveBeenCalledTimes(1);
       await waitForElementToBeRemoved(guidecue);
       expect(guidecue).not.toBeInTheDocument();
     });
 
-    test('closes when the primary button is clicked and fires the onButtonClick handler once', async () => {
+    test('fires the onClose handler once when the dismiss(X) button is clicked', async () => {
+      const onClose = jest.fn();
+      const { getByLabelText } = renderGuidecue({
+        open: true,
+        numberOfSteps: 2,
+        currentStep: 1,
+        onDismissClick: onClose,
+      });
+      await act(async () => {
+        await waitForTimeout(500);
+      });
+      const button = getByLabelText('Close Tooltip', { selector: 'button' });
+      userEvent.click(button);
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    test('closes when the primary button is clicked', async () => {
       const onButtonClick = jest.fn();
       const { getByRole, getAllByRole } = renderGuidecue({
         open: true,
@@ -201,9 +230,24 @@ describe('packages/guidecue', () => {
       const guidecue = getByRole('dialog');
       const button = getAllByRole('button')[1];
       userEvent.click(button);
-      expect(onButtonClick).toHaveBeenCalledTimes(1);
       await waitForElementToBeRemoved(guidecue);
       expect(guidecue).not.toBeInTheDocument();
+    });
+
+    test('fires the onButtonClick handler once when the primary button is clicked', async () => {
+      const onButtonClick = jest.fn();
+      const { getAllByRole } = renderGuidecue({
+        open: true,
+        numberOfSteps: 2,
+        currentStep: 1,
+        onButtonClick,
+      });
+      await act(async () => {
+        await waitForTimeout(500);
+      });
+      const button = getAllByRole('button')[1];
+      userEvent.click(button);
+      expect(onButtonClick).toHaveBeenCalledTimes(1);
     });
 
     test('backdrop click should do nothing', async () => {
@@ -241,7 +285,7 @@ describe('packages/guidecue', () => {
       expect(modal).not.toBeInTheDocument();
     });
 
-    test('expect content to be at the end of the dom', async () => {
+    test('content should not be in the container', async () => {
       const { container, getByTestId } = renderGuidecue({
         open: true,
         numberOfSteps: 2,
@@ -269,7 +313,7 @@ describe('packages/guidecue', () => {
       expect(steps).toBeInTheDocument();
     });
 
-    test('title and body content should be visible', async () => {
+    test('title should be visible', async () => {
       const { getByText } = renderGuidecue({
         open: true,
         numberOfSteps: 2,
@@ -281,8 +325,21 @@ describe('packages/guidecue', () => {
       });
 
       const title = getByText(guidecueTitle);
-      const body = getByText(guidecueChildren);
       expect(title).toBeInTheDocument();
+    });
+
+    test('body content should be visible', async () => {
+      const { getByText } = renderGuidecue({
+        open: true,
+        numberOfSteps: 2,
+        currentStep: 1,
+      });
+
+      await act(async () => {
+        await waitForTimeout(500);
+      });
+
+      const body = getByText(guidecueChildren);
       expect(body).toBeInTheDocument();
     });
   });
