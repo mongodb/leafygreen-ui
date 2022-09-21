@@ -21,13 +21,24 @@ const cli = new Command('depcheck')
 const fix: boolean = cli.opts()['fix'];
 const fixTS = cli.opts()['fixTsconfig'];
 
+const depcheckOptions: depcheck.Options = {
+  ignorePatterns: [
+    // files matching these patterns will be ignored
+    '*.story.tsx'
+  ],
+  ignoreMatches: [
+    // ignore dependencies that matches these globs
+    '@leafygreen-ui/mongo-nav'
+  ]
+}
+
 checkDependencies();
 
 async function checkDependencies() {
   let issuesFound = false;
 
   for (const pkg of lgPackages) {
-    const check = await depcheck(resolve(__dirname, `../packages/${pkg}`), {});
+    const check = await depcheck(resolve(__dirname, `../packages/${pkg}`), depcheckOptions);
     const { dependencies: unused, missing: missingLocal } = check;
 
     const missing = Object.keys(missingLocal).filter(
@@ -89,8 +100,9 @@ function fixTSconfig(pkg: string) {
   const tsConfigFileName = `packages/${pkg}/tsconfig.json`;
   const dependencies = getPackageLGDependencies(pkg);
   const tsconfig = JSON.parse(readFileSync(tsConfigFileName, 'utf-8'));
-
-  tsconfig.references = dependencies.map(dep => ({
+  tsconfig.references = dependencies
+  .filter(dep => dep !== 'mongo-nav')
+  .map(dep => ({
     path: `../${dep}`,
   }));
   writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
