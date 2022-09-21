@@ -24,6 +24,7 @@ const fixTS = cli.opts()['fixTsconfig'];
 const depcheckOptions: depcheck.Options = {
   ignorePatterns: [
     // files matching these patterns will be ignored
+    '*.spec.tsx',
     '*.story.tsx'
   ],
   ignoreMatches: [
