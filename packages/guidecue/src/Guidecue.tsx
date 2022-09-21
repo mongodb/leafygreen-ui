@@ -106,7 +106,6 @@ function Guidecue({
     buttonText,
     numberOfSteps,
     currentStep,
-    children,
     tooltipClassName,
     onEscClose,
     handleButtonClick,
@@ -119,7 +118,7 @@ function Guidecue({
       {isStandalone ? (
         //Standalone tooltip
         // this is using the reference from the `refEl` prop to position itself against
-        <TooltipContent {...tooltipContentProps} />
+        <TooltipContent {...tooltipContentProps}>{children}</TooltipContent>
       ) : (
         // Multistep tooltip
         <Popover
@@ -149,7 +148,9 @@ function Guidecue({
             refEl={beaconRef}
             open={tooltipOpen}
             usePortal={false}
-          />
+          >
+            {children}
+          </TooltipContent>
         </Popover>
       )}
     </>
