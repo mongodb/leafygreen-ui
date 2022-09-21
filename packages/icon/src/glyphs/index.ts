@@ -1,4 +1,4 @@
-import { default as createGlyphComponent } from '../createGlyphComponent';
+import { createGlyphComponent } from '../createGlyphComponent';
 import { LGGlyph } from '../types';
 
 // Glyphs

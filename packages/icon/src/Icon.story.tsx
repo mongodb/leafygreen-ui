@@ -11,7 +11,7 @@ export default {
   title: 'Components/Icons',
   component: Icon,
   parameters: {
-    default: 'SingleIcon',
+    default: 'Single',
   },
 } as Meta<typeof Icon>;
 
@@ -35,9 +35,17 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-export const Single: ComponentStory<typeof Icon> = (args: IconProps) => (
-  <Icon {...args} />
-);
+export const Single: ComponentStory<typeof Icon> = (args: IconProps) => {
+  if (!args.glyph) {
+    args = {
+      ...args,
+      glyph: 'QuestionMarkWithCircle',
+    };
+  }
+
+  return <Icon {...args} />;
+};
+
 Single.argTypes = {
   glyph: {
     control: 'select',
