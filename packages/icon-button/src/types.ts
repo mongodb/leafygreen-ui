@@ -1,5 +1,5 @@
 import { BoxProps } from '@leafygreen-ui/box';
-import { Either} from '@leafygreen-ui/lib';
+import { Either } from '@leafygreen-ui/lib';
 
 export const Size = {
   Default: 'default',
@@ -61,4 +61,7 @@ export interface BaseIconButtonProps {
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
-export type AccessibleIconButtonProps = BoxProps<'button', Either<BaseIconButtonProps, AriaLabels>>;
+export type AccessibleIconButtonProps = BoxProps<
+  'button',
+  Either<BaseIconButtonProps, AriaLabels>
+>;
