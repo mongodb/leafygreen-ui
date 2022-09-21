@@ -14,3 +14,6 @@ export { default as UniversityLogoLockup } from './UniversityLogoLockup';
 export { default as AtlasLogoMark } from './AtlasLogoMark';
 export { default as RealmLogoMark } from './RealmLogoMark';
 export { default as ChartsLogoMark } from './ChartsLogoMark';
+
+export { default } from './Logo';
+export type { LogoName } from './Logo';

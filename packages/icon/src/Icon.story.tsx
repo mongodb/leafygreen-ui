@@ -4,10 +4,15 @@ import Icon, { glyphs } from '.';
 import { css } from '@leafygreen-ui/emotion';
 import { ComponentStory, Meta } from '@storybook/react';
 import { palette } from '@leafygreen-ui/palette';
+import { IconProps } from './createIconComponent';
+import { GlyphName } from './glyphs';
 
 export default {
   title: 'Components/Icons',
   component: Icon,
+  parameters: {
+    default: 'Single',
+  },
 } as Meta<typeof Icon>;
 
 const containerStyle = css`
@@ -30,13 +35,34 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-export const AllIcons: ComponentStory<typeof Icon> = args => (
+export const Single: ComponentStory<typeof Icon> = (args: IconProps) => {
+  if (!args.glyph) {
+    args = {
+      ...args,
+      glyph: 'QuestionMarkWithCircle',
+    };
+  }
+
+  return <Icon {...args} />;
+};
+
+Single.argTypes = {
+  glyph: {
+    control: 'select',
+  },
+};
+
+export const AllIcons: ComponentStory<typeof Icon> = (
+  args: Omit<IconProps, 'glyph'>,
+) => (
   <>
-    {Object.keys(glyphs).map(glyph => (
-      <div key={glyph} className={containerStyle}>
-        <Icon {...args} glyph={glyph} />
-        <div className={textStyle}>{glyph}</div>
-      </div>
-    ))}
+    {Object.keys(glyphs).map(glyph => {
+      return (
+        <div key={glyph} className={containerStyle}>
+          <Icon {...args} glyph={glyph as GlyphName} />
+          <div className={textStyle}>{glyph}</div>
+        </div>
+      );
+    })}
   </>
 );
