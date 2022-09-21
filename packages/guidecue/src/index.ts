@@ -1,2 +1,2 @@
-export { default as Content } from './Content';
+export { default as TooltipContent } from './TooltipContent';
 export { default as Guidecue } from './Guidecue';

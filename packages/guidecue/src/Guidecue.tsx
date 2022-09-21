@@ -1,19 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import Tooltip from '@leafygreen-ui/tooltip';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { cx } from '@leafygreen-ui/emotion';
-import IconButton from '@leafygreen-ui/icon-button';
-import XIcon from '@leafygreen-ui/icon/dist/X';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
-import FocusTrap from 'focus-trap-react';
-import { beaconStyles, closeStyles, tooltipStyles } from './styles';
+import { beaconStyles } from './styles';
 import { GuidecueProps } from './types';
-import { Content } from './';
-
-const focusId = createUniqueClassName('guidecue');
+import { TooltipContent } from './';
 
 function Guidecue({
   open,
@@ -42,9 +34,6 @@ function Guidecue({
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
   const beaconRef = useRef<HTMLDivElement | null>(null);
-
-  const ariaLabelledby = 'guidecue-label';
-  const ariaDescribedby = 'guidecue-desc';
 
   /**
    * Determines the button text. If there is nothing passed to the `buttonText` prop then default text will show depending on the numberOfSteps.
@@ -100,13 +89,39 @@ function Guidecue({
    */
   const onEscClose = isStandalone ? onButtonClick : onDismissClick;
 
-  // Test are failing because of `focus-trap-react`. Even though there is a focusable element it does not find it in time and throws an error. A fix is to point to the primary button and set that as the fallback focus. (https://github.com/focus-trap/focus-trap-react/issues/91)
-  const focusTrapOptions = { fallbackFocus: `#${focusId}` };
+  const tooltipContentProps = {
+    darkMode,
+    open,
+    setOpen,
+    tooltipJustify,
+    tooltipAlign,
+    refEl,
+    portalClassName,
+    portalContainer,
+    scrollContainer,
+    popoverZIndex,
+    theme,
+    title,
+    isStandalone,
+    buttonText,
+    numberOfSteps,
+    currentStep,
+    children,
+    tooltipClassName,
+    onEscClose,
+    handleButtonClick,
+    handleCloseClick,
+    ...tooltipProps,
+  };
 
   return (
     <>
-      {/* Multistep tooltip */}
-      {!isStandalone && (
+      {isStandalone ? (
+        //Standalone tooltip
+        // this is using the reference from the `refEl` prop to position itself against
+        <TooltipContent {...tooltipContentProps} />
+      ) : (
+        // Multistep tooltip
         <Popover
           active={popoverOpen}
           refEl={refEl}
@@ -129,91 +144,13 @@ function Guidecue({
           </div>
           {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
           {/* Instead of passing the beacon as the tooltip trigger prop we pass a reference to the beacon to the `refEl` prop. By passing only the reference we avoid default tooltip behaviors such as closing the tooltip on background click or showing and hiding the tooltip on hover. */}
-          <Tooltip
-            darkMode={darkMode}
-            open={tooltipOpen}
-            setOpen={setOpen} // setOpen is called when the `Esc` key is pressed. This behavior is handled inside the tooltip component.
-            justify={tooltipJustify}
-            align={tooltipAlign}
+          <TooltipContent
+            {...tooltipContentProps}
             refEl={beaconRef}
-            className={cx(tooltipStyles, tooltipClassName)}
+            open={tooltipOpen}
             usePortal={false}
-            onClose={() => onEscClose()}
-            role="dialog"
-            aria-labelledby={ariaLabelledby}
-            aria-describedby={ariaDescribedby}
-            {...tooltipProps}
-          >
-            <FocusTrap focusTrapOptions={focusTrapOptions}>
-              <div>
-                <IconButton
-                  className={closeStyles}
-                  aria-label="Close Tooltip"
-                  onClick={() => handleCloseClick()}
-                  darkMode={!darkMode}
-                >
-                  <XIcon />
-                </IconButton>
-                <Content
-                  theme={theme}
-                  title={title}
-                  ariaLabelledby={ariaLabelledby}
-                  ariaDescribedby={ariaDescribedby}
-                  isStandalone={isStandalone}
-                  buttonText={buttonText}
-                  handleButtonClick={handleButtonClick}
-                  focusId={focusId}
-                  darkMode={darkMode}
-                  numberOfSteps={numberOfSteps}
-                  currentStep={currentStep}
-                >
-                  {children}
-                </Content>
-              </div>
-            </FocusTrap>
-          </Tooltip>
+          />
         </Popover>
-      )}
-      {/* Standalone tooltip */}
-      {isStandalone && (
-        // this is using the reference from the `refEl` prop to position itself against
-        <Tooltip
-          darkMode={darkMode}
-          open={open}
-          setOpen={setOpen}
-          justify={tooltipJustify}
-          align={tooltipAlign}
-          refEl={refEl}
-          className={cx(tooltipClassName)}
-          portalClassName={portalClassName}
-          portalContainer={portalContainer}
-          scrollContainer={scrollContainer}
-          popoverZIndex={popoverZIndex}
-          onClose={() => onEscClose()}
-          role="dialog"
-          aria-labelledby={ariaLabelledby}
-          {...tooltipProps}
-        >
-          <FocusTrap focusTrapOptions={focusTrapOptions}>
-            <div>
-              <Content
-                theme={theme}
-                title={title}
-                ariaLabelledby={ariaLabelledby}
-                ariaDescribedby={ariaDescribedby}
-                isStandalone={isStandalone}
-                buttonText={buttonText}
-                handleButtonClick={handleButtonClick}
-                focusId={focusId}
-                darkMode={darkMode}
-                numberOfSteps={numberOfSteps}
-                currentStep={currentStep}
-              >
-                {children}
-              </Content>
-            </div>
-          </FocusTrap>
-        </Tooltip>
       )}
     </>
   );
