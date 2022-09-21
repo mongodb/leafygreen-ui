@@ -23,7 +23,7 @@ const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
   `;
 
   const currentStyles = css`
-    color: ${isDarkMode ? palette.white : palette.green.dark3};
+    color: ${isDarkMode ? palette.gray.light2 : palette.green.dark3};
   `;
 
   const upcomingStyles = css`
