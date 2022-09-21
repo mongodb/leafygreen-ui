@@ -23,7 +23,6 @@
     "react-dom": "^17.0.0"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.1",
     "@leafygreen-ui/hooks": "^7.3.1",
     "@leafygreen-ui/lib": "^9.4.2"
   },
