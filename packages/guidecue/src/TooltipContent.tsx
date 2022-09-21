@@ -99,7 +99,8 @@ function TooltipContent({
               <Body
                 id={ariaLabelledby}
                 as="h2"
-                className={cx(bodyThemeStyles[theme], bodyTitleStyles)}
+                className={cx(bodyTitleStyles)}
+                darkMode={!darkMode}
               >
                 <strong>{title}</strong>
               </Body>
