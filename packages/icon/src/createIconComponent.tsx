@@ -6,7 +6,7 @@ import { GlyphName } from './glyphs';
 
 // We omit size here because we map string values for size to numbers in this component.
 export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
-  glyph: GlyphName;
+  glyph: GlyphName | string;
   size?: Size | number;
 }
 
