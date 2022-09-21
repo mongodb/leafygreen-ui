@@ -111,7 +111,7 @@ describe('packages/guidecue', () => {
       expect(onButtonClick).toHaveBeenCalledTimes(1);
     });
 
-    test('backdrop click should do nothing', async () => {
+    test('a click ourside of the tooltip should do nothing', async () => {
       const { getByRole, backdrop } = renderGuidecue({
         open: true,
       });
@@ -166,9 +166,24 @@ describe('packages/guidecue', () => {
       const body = getByText(guidecueChildren);
       expect(body).toBeInTheDocument();
     });
+
+    test('will render inside portal and scroll container', async () => {
+      const elem = document.createElement('div');
+      document.body.appendChild(elem);
+
+      renderGuidecue({
+        open: true,
+        portalContainer: elem,
+        scrollContainer: elem
+      });
+
+      await act(async () => {
+        expect(elem.innerHTML.includes(guidecueTitle)).toBe(true);
+      });
+    });
   });
 
-  describe('Multistep tooltip', () => {
+  describe('Multi-step tooltip', () => {
     test('is visible when open is "true"', async () => {
       const { getByRole } = renderGuidecue({
         open: true,
@@ -250,7 +265,7 @@ describe('packages/guidecue', () => {
       expect(onButtonClick).toHaveBeenCalledTimes(1);
     });
 
-    test('backdrop click should do nothing', async () => {
+    test('a click outside the tooltip should do nothing', async () => {
       const { getByRole, backdrop } = renderGuidecue({
         open: true,
         numberOfSteps: 2,
@@ -341,6 +356,24 @@ describe('packages/guidecue', () => {
 
       const body = getByText(guidecueChildren);
       expect(body).toBeInTheDocument();
+    });
+
+    test('will render inside portal and scroll container', async () => {
+      const elem = document.createElement('div');
+      document.body.appendChild(elem);
+
+      renderGuidecue({
+        open: true,
+        numberOfSteps: 2,
+        currentStep: 1,
+        portalContainer: elem,
+        scrollContainer: elem
+      });
+
+      await act(async () => {
+        await waitForTimeout(500);
+        expect(elem.innerHTML.includes(guidecueTitle)).toBe(true);
+      });
     });
   });
 });
