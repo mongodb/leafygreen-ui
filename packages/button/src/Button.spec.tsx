@@ -201,11 +201,14 @@ describe('packages/button', () => {
     });
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
   describe.skip('types behave as expected', () => {
-    // eslint-disable-next-line jest/expect-expect
     test('does not throw an error when no children are passed to the component', () => {
       <Button onClick={() => {}} />;
+    });
+
+    test('accepts anchor tag attributes', () => {
+      <Button href="http://mongodb.design" target="_blank" rel="noopener" />;
     });
   });
 });
