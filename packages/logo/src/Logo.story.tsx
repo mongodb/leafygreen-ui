@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import { Meta, Story } from '@storybook/react';
+import React from 'react';
+import { Meta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { SupportedColors, LogoProps } from './utils';

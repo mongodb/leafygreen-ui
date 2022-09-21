@@ -108,7 +108,7 @@ import Warning from './Warning.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
-const glyphs = {
+export const glyphs = {
   ActivityFeed,
   AddFile,
   Apps,
@@ -216,7 +216,7 @@ const glyphs = {
   XWithCircle,
 } as const;
 
-type GlyphName = keyof typeof glyphs;
+export type GlyphName = keyof typeof glyphs;
 
 const glyphKeys = Object.keys(glyphs) as Array<GlyphName>;
 
