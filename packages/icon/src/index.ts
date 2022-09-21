@@ -4,4 +4,4 @@ export { default as createIconComponent } from './createIconComponent';
 export { default as createGlyphComponent } from './createGlyphComponent';
 export { default as glyphs } from './glyphs';
 export { isComponentGlyph } from './isComponentGlyph';
-export { default } from './Icon'
+export { default } from './Icon';
