@@ -174,7 +174,7 @@ describe('packages/guidecue', () => {
       renderGuidecue({
         open: true,
         portalContainer: elem,
-        scrollContainer: elem
+        scrollContainer: elem,
       });
 
       await act(async () => {
@@ -367,7 +367,7 @@ describe('packages/guidecue', () => {
         numberOfSteps: 2,
         currentStep: 1,
         portalContainer: elem,
-        scrollContainer: elem
+        scrollContainer: elem,
       });
 
       await act(async () => {

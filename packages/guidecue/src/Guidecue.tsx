@@ -73,7 +73,7 @@ function Guidecue({
    */
   const handleCloseClick = () => {
     setOpen(false);
-    onDismissClick();
+    setTimeout(() => onDismissClick(), 400);
   };
 
   /**
@@ -81,7 +81,7 @@ function Guidecue({
    */
   const handleButtonClick = () => {
     setOpen(false);
-    onButtonClick();
+    setTimeout(() => onButtonClick(), isStandalone ? 0 : 400);
   };
 
   /**

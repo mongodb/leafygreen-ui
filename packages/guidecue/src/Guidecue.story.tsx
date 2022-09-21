@@ -6,6 +6,7 @@ import defaultArgTypes from '../../../stories/defaultArgTypes';
 import { Guidecue } from '.';
 import { GuidecueProps } from './types';
 import { Body } from '@leafygreen-ui/typography';
+import { useEffect } from '@storybook/addons';
 
 export default {
   title: 'Components/Guidecue',
@@ -143,4 +144,97 @@ export const ScrollableContainer = (args: GuidecueProps) => {
       </div>
     </div>
   );
+};
+
+const spacing = css`
+  margin-bottom: 30px;
+`;
+
+export const MultistepDemo = (args: GuidecueProps) => {
+  const { darkMode } = args;
+  const [open, setOpen] = useState<boolean>(false);
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  // For demo purposes all refs are created in this file
+  const triggerRef1 = useRef<null | HTMLDivElement>(null);
+  const triggerRef2 = useRef<null | HTMLDivElement>(null);
+  const triggerRef3 = useRef<null | HTMLDivElement>(null);
+  const triggers = [triggerRef1, triggerRef2, triggerRef3];
+  const steps = triggers.length;
+
+  const handleNext = () => {
+    if (currentStep !== steps) {
+      setCurrentStep(n => n + 1);
+      setOpen(true);
+    }
+  };
+
+  const handleDismiss = () => {
+    // do something
+    // eslint-disable-next-line no-console
+    console.log('dismissed');
+  };
+
+  const handleReset = () => {
+    setCurrentStep(1);
+    setOpen(true);
+  };
+
+  return (
+    <>
+      <Button className={spacing} onClick={handleReset}>
+        Begin tour
+      </Button>
+      {/* These don't need to be in the same container as the Guidecue component */}
+      <div ref={triggerRef1}>
+        <Body className={spacing} darkMode={darkMode}>
+          story refEl trigger1
+        </Body>
+      </div>
+      <div ref={triggerRef2}>
+        <Body className={spacing} darkMode={darkMode}>
+          story refEl trigger2
+        </Body>
+      </div>
+      <div ref={triggerRef3}>
+        <Body className={spacing} darkMode={darkMode}>
+          story refEl trigger3
+        </Body>
+      </div>
+      <Guidecue
+        darkMode={darkMode}
+        open={open}
+        setOpen={setOpen}
+        refEl={triggers[currentStep - 1]}
+        numberOfSteps={steps}
+        currentStep={currentStep}
+        onButtonClick={() => handleNext()}
+        onDismissClick={() => handleDismiss()}
+        title="New feature"
+      >
+        This is a new feature. You should try it out
+      </Guidecue>
+    </>
+  );
+};
+
+MultistepDemo.parameters = {
+  controls: {
+    exclude: [
+      'title',
+      'children',
+      'buttonText',
+      'numberOfSteps',
+      'currentStep',
+      'tooltipAlign',
+      'tooltipJustify',
+      'beaconAlign',
+      'className',
+      'refEl',
+      'setOpen',
+      'tooltipClassName',
+      'open',
+      'onDismissClick',
+      'onButtonClick',
+    ],
+  },
 };
