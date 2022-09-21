@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/expandable-card",
-  "version": "1.0.1-next.2",
+  "version": "1.0.1-next.3",
   "description": "leafyGreen UI Kit Expandable Card",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@leafygreen-ui/card": "^7.1.0-next.2",
-    "@leafygreen-ui/icon": "^11.11.0-next.2",
-    "@leafygreen-ui/icon-button": "13.2.0-next.2",
+    "@leafygreen-ui/icon": "^11.11.0-next.3",
+    "@leafygreen-ui/icon-button": "13.2.0-next.3",
     "@leafygreen-ui/lib": "^9.5.0-next.2",
     "@leafygreen-ui/typography": "^13.2.0-next.2",
     "@leafygreen-ui/emotion": "4.0.2-next.2",

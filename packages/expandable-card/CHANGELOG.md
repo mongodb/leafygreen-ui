@@ -1,5 +1,13 @@
 # @leafygreen-ui/expandable-card
 
+## 1.0.1-next.3
+
+### Patch Changes
+
+- Updated dependencies [a0aac1d6]
+  - @leafygreen-ui/icon@11.11.0-next.3
+  - @leafygreen-ui/icon-button@13.2.0-next.3
+
 ## 1.0.1-next.2
 
 ### Patch Changes

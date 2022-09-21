@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 13.2.0-next.3
+
+### Patch Changes
+
+- a0aac1d6: Updates Stories
+
 ## 13.2.0-next.2
 
 ### Patch Changes

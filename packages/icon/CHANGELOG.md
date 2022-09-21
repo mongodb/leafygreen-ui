@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.11.0-next.3
+
+### Patch Changes
+
+- a0aac1d6: Updates Stories
+
 ## 11.11.0-next.2
 
 ### Patch Changes

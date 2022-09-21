@@ -1,5 +1,15 @@
 # @leafygreen-ui/logo
 
+## 6.2.0-next.3
+
+### Minor Changes
+
+- 9c5e115e: Exports a generic `Logo` component.
+
+### Patch Changes
+
+- a0aac1d6: Updates Stories
+
 ## 6.1.4-next.2
 
 ### Patch Changes
