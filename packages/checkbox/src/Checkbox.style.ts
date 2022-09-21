@@ -53,6 +53,10 @@ export const labelHoverStyle: Record<Theme, string> = {
   `,
 };
 
+export const disabledLabelStyle = css`
+  cursor: not-allowed;
+`;
+
 export const disabledLabelDarkThemeOverrideStyle = css`
   color: ${palette.gray.base};
 `;
