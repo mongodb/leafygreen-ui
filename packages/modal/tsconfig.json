@@ -11,12 +11,6 @@
   ],
   "references": [
     {
-      "path": "../code"
-    },
-    {
-      "path": "../copyable"
-    },
-    {
       "path": "../emotion"
     },
     {
@@ -38,13 +32,7 @@
       "path": "../portal"
     },
     {
-      "path": "../select"
-    },
-    {
       "path": "../tokens"
-    },
-    {
-      "path": "../typography"
     },
     {
       "path": "../button"
