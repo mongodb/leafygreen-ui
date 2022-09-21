@@ -67,4 +67,27 @@ describe('packages/icon-button', () => {
 
     expect(icon.getAttribute('title')).toBe(titleText);
   });
+
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
+  describe.skip('types behave as expected', () => {
+    test('does not throw an error when no children are passed to the component', () => {
+      <IconButton aria-label="button" onClick={() => {}} />;
+    });
+
+    test('requires either aria-label or aria-labelledby', () => {
+      /// @ts-expect-error
+      <IconButton />;
+      <IconButton aria-label="button" />;
+      <IconButton aria-labelledby="buttonId" />;
+    });
+
+    test('accepts anchor tag attributes', () => {
+      <IconButton
+        aria-label="button"
+        href="http://mongodb.design"
+        target="_blank"
+        rel="noopener"
+      />;
+    });
+  });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box from '@leafygreen-ui/box';
 import { isComponentType } from '@leafygreen-ui/lib';
 import {
   useDarkMode,
@@ -21,11 +21,7 @@ import {
   removeButtonStyle,
 } from './styles';
 
-// TODO: TSDoc
-export const IconButton: ExtendableBox<
-  AccessibleIconButtonProps & { ref?: React.Ref<any> },
-  'button'
-> = React.forwardRef(
+export const IconButton = React.forwardRef(
   (
     {
       size = Size.Default,
