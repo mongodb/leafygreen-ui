@@ -7,7 +7,7 @@ import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { typeIs } from '@leafygreen-ui/lib';
 import { SVGR } from './types';
-import { createIconComponent, createGlyphComponent, glyphs } from '.';
+import { createGlyphComponent, createIconComponent, glyphs } from '.';
 import EditIcon from '@leafygreen-ui/icon/dist/Edit';
 import { Size } from './glyphCommon';
 import { isComponentGlyph } from './isComponentGlyph';

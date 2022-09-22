@@ -27,26 +27,28 @@ export interface ModalProps {
 
   /**
    * Determines the open state of the modal
-   * @default: `false`
+   * @default false
    */
   open?: boolean;
 
   /**
    * Specifies the size of the Modal.
    *
-   * default: `default`
+   * @default 'default'
    */
   size?: ModalSize;
 
   /**
    * Callback to change the open state of the Modal.
    *
+   * @default () => {}
    */
   setOpen?: (open: boolean) => void | React.Dispatch<SetStateAction<boolean>>;
 
   /**
    * Callback to determine whether or not Modal should close when user tries to close it.
    *
+   * @default () => true
    */
   shouldClose?: () => boolean;
 
@@ -68,8 +70,16 @@ export interface ModalProps {
    */
   initialFocus?: string;
 
+  /**
+   * Determines if the component will appear in dark mode.
+   * @default false
+   */
   darkMode?: boolean;
 
+  /**
+   * Determines the color of the close icon. Currently will only work if darkMode is set to false.
+   * @default 'default'
+   */
   closeIconColor?: CloseIconColor;
 }
 

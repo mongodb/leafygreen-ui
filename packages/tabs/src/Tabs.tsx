@@ -53,13 +53,17 @@ type ReactEmpty = null | undefined | false | '';
 export interface TabsProps {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
+   *
+   * @type ReactElement[]
    */
   children: Array<React.ReactElement | ReactEmpty>;
 
   /**
    * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
+   *
+   * @type (index: number) => void
    */
-  setSelected?: any;
+  setSelected?: React.Dispatch<React.SetStateAction<number>>;
 
   /**
    * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
@@ -79,6 +83,8 @@ export interface TabsProps {
 
   /**
    * HTML Element that wraps title in Tab List.
+   *
+   * @type HTMLElement | React.Component
    */
   as?: React.ElementType<any>;
 

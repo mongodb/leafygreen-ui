@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import Option from './Option';
+import { Option } from './Option';
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
@@ -26,8 +26,15 @@ const optionGroupLabelStyle = css`
 
 export type ReactEmpty = null | undefined | false | '';
 
-export interface InternalProps extends HTMLElementProps<'div', HTMLDivElement> {
-  className: string | undefined;
+export interface InternalOptionProps
+  extends HTMLElementProps<'div', HTMLDivElement> {
+  /**
+   * Adds a className to the outermost element.
+   */
+  className?: string;
+  /**
+   * Text shown above the group's options.
+   */
   label: string;
   children: React.ReactNode;
 }
@@ -37,7 +44,7 @@ export function InternalOptionGroup({
   label,
   children,
   ...rest
-}: InternalProps) {
+}: InternalOptionProps) {
   const { theme } = useContext(SelectContext);
   const colorSet = colorSets[theme].option;
 
@@ -65,10 +72,17 @@ export function InternalOptionGroup({
 
 InternalOptionGroup.displayName = 'OptionGroup';
 
-interface Props extends HTMLElementProps<'div', HTMLDivElement> {
-  className?: string;
-  label: string;
+interface OptionGroupProps extends InternalOptionProps {
+  /**
+   * Prevents all the contained options from being selectable.
+   * @default false
+   */
   disabled?: boolean;
+
+  /**
+   * `<Option />` elements
+   * @type <Option />
+   */
   children:
     | React.ReactFragment
     | React.ReactComponentElement<typeof Option>
@@ -79,7 +93,7 @@ interface Props extends HTMLElementProps<'div', HTMLDivElement> {
       >;
 }
 
-export default function OptionGroup(_: Props): JSX.Element {
+export function OptionGroup(_: OptionGroupProps): JSX.Element {
   throw Error('`OptionGroup` must be a child of a `Select` instance');
 }
 

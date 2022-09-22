@@ -47,8 +47,17 @@ export interface BaseTextInputProps
 
   /**
    * Text shown in bold above the input element.
+   *
+   * Optional if `aria-labelledby` is provided
    */
-  label?: string | null;
+  label: string | null;
+
+  /**
+   * Screen-reader label.
+   *
+   * Optional if `label` is provided
+   */
+  ['aria-labelledby']: string;
 
   /**
    * Text that gives more detail about the requirements for the input.
@@ -107,11 +116,14 @@ export interface BaseTextInputProps
    */
   darkMode?: boolean;
 
+  /**
+   * The input type.
+   *
+   * Requires an `aria-label` if `"search"` is provided
+   */
   type?: TextInputType;
 
   handleValidation?: (value: string) => void;
-
-  ['aria-labelledby']?: string;
 
   /**
    *  determines the font size and padding.
@@ -129,4 +141,10 @@ export interface BaseTextInputProps
 type AriaLabels = 'label' | 'aria-labelledby';
 export type TextInputProps =
   | Either<BaseTextInputProps, AriaLabels>
-  | (BaseTextInputProps & { type: 'search'; 'aria-label': string });
+  | (BaseTextInputProps & {
+      type: 'search';
+      /**
+       * Required if `type` is `"search"`
+       */
+      'aria-label': string;
+    });

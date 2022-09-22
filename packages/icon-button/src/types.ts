@@ -1,3 +1,4 @@
+import { BoxProps } from '@leafygreen-ui/box';
 import { Either } from '@leafygreen-ui/lib';
 
 export const Size = {
@@ -15,8 +16,7 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   title?: string | null | boolean;
 }
 
-export interface BaseIconButtonProps
-  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
+export interface BaseIconButtonProps {
   className?: string;
   children?: React.ReactNode;
   /**
@@ -52,8 +52,16 @@ export interface BaseIconButtonProps
    * Callback fired on click
    */
   onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+
+  /**
+   * The component or HTML Element that the button is rendered as.
+   */
+  as?: React.ElementType<any>;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
-export type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
+export type AccessibleIconButtonProps = BoxProps<
+  'button',
+  Either<BaseIconButtonProps, AriaLabels>
+>;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import { BoxProps } from '@leafygreen-ui/box';
 import NextLink from 'next/link';
+import { BoxProps } from '@leafygreen-ui/box';
 import { ButtonProps } from './types';
 import Button from '.';
 
@@ -201,11 +201,22 @@ describe('packages/button', () => {
     });
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
   describe.skip('types behave as expected', () => {
-    // eslint-disable-next-line jest/expect-expect
     test('does not throw an error when no children are passed to the component', () => {
       <Button onClick={() => {}} />;
+    });
+
+    test('accepts anchor tag attributes', () => {
+      <Button href="http://mongodb.design" target="_blank" rel="noopener" />;
+    });
+
+    test('accepts a string as `as`', () => {
+      <Button as="p" />;
+    });
+
+    test('accepts a component as `as`', () => {
+      <Button as={() => <>JSX</>} />;
     });
   });
 });

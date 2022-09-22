@@ -2,12 +2,17 @@ import React, { useCallback, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
-import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import Box, { BoxProps } from '@leafygreen-ui/box';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { createDataProp, getNodeTextContent, Theme } from '@leafygreen-ui/lib';
+import {
+  createDataProp,
+  getNodeTextContent,
+  HTMLElementProps,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { ExitHandler } from 'react-transition-group/Transition';
 import {
@@ -274,7 +279,7 @@ const subItemThemeStyle: Record<Theme, string> = {
 
 const subMenuItemHeight = 32;
 
-interface SubMenuProps {
+interface BaseSubMenuProps extends HTMLElementProps<'button'> {
   /**
    * Determines if `<SubMenu />` item appears open
    */
@@ -330,12 +335,27 @@ interface SubMenuProps {
    * Size of the MenuItem component, can be `default` or `large`. This size only affects the parent MenuItem, nested child MenuItems do not change.
    */
   size?: Size;
+
+  /**
+   * The component or HTML Element that the button is rendered as.
+   *
+   * To use with NextJS Links, pass in a component that wraps the Link:
+   * ```js
+   * const Linker = ({ href, children, ...props }) => (
+   *  <NextLink href={href}>
+   *    <a {...props}>{children}</a>
+   *  </NextLink>
+   * );
+   * <Button as={Linker} />
+   * ```
+   * @type HTMLElement | React.Component
+   */
+  as?: React.ElementType<any>;
 }
 
-const SubMenu: ExtendableBox<
-  SubMenuProps & { ref?: React.Ref<any> },
-  'button'
-> = React.forwardRef(
+export type SubMenuProps = BoxProps<'button', BaseSubMenuProps>;
+
+const SubMenu = React.forwardRef(
   (
     {
       title,

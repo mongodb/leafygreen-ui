@@ -20,11 +20,14 @@ export interface RadioGroupProps {
 
   /**
    * Callback to be executed when a Radio is selected.
+   * Receives the associated event object as the first argument.
    */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
   /**
    * Content that will appear inside of RadioGroup component.
+   *
+   * Can be any node; however, any <Radio /> components, will be treated as belonging to the <RadioGroup /> compound component, and will receive internal state from <RadioGroup />
    */
   children: React.ReactNode;
 
@@ -40,7 +43,7 @@ export interface RadioGroupProps {
 
   /**
    * Determines the size of the Radio components Can be 'small' or 'default.
-   *
+   * (Use of xsmall should be limited to only Charts)
    * @default default
    */
   size?: Size;

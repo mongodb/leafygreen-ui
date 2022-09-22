@@ -1,5 +1,5 @@
 import React from 'react';
-import TextArea from './TextArea';
+import TextArea from '.';
 import { TextAreaProps } from './types';
 import { storybookArgTypes } from '@leafygreen-ui/lib/';
 

@@ -15,7 +15,7 @@ export type Variant = typeof Variant[keyof typeof Variant];
 /**
  * Size variants
  *
- * Default: `'default'`
+ * @default 'default'
  */
 export const Size = {
   XSmall: 'xsmall',
@@ -48,14 +48,14 @@ export interface ButtonProps {
   /**
    * Callback fired when the button is clicked
    *
-   * Default: `() => {}`
+   * @default `() => {}`
    */
   onClick?: HTMLProps<HTMLButtonElement>['onClick'];
 
   /**
    * Specifies the `type` property of the HTML button element
    *
-   * Default: `'button''
+   * @default 'button'
    */
   type?: HTMLProps<HTMLButtonElement>['type'];
 
@@ -67,35 +67,49 @@ export interface ButtonProps {
   /**
    * Sets the variant for the Button
    *
-   * Default: `'default'`
+   * @default 'default'
    */
   variant?: Variant;
+
+  /**
+   * Determines if the component renders in dark mode
+   *
+   * @default false
+   */
   darkMode?: boolean;
+
+  /**
+   * Determines the base font-size of the component
+   *
+   * @default 13
+   */
   baseFontSize?: BaseFontSize;
 
   /**
    * Sets the size for the Button
    *
-   * Default: `'default'`
+   * @default 'default'
    */
   size?: Size;
+
+  /**
+   * The content that will appear inside of the `<Button />` component.
+   */
   children?: React.ReactNode;
   /**
    * An icon glyph rendered before the button text.
-   *
-   * Default: `undefined`
+   * To use a custom icon, see {@link Icon}: `createIconComponent` docs
+   * @type Leafygreen <Icon /> Component
    */
   leftGlyph?: React.ReactElement;
   /**
    * An icon glyph rendered after the button text.
-   *
-   * Default: `undefined`
+   * To use a custom icon, see {@link Icon}: `createIconComponent` docs
+   * @type Leafygreen <Icon /> Component
    */
   rightGlyph?: React.ReactElement;
   /**
    * A `href` prop that will make the Button render as an anchor tag.
-   *
-   * Default: `undefined`
    */
   href?: string;
 
@@ -111,6 +125,7 @@ export interface ButtonProps {
    * );
    * <Button as={Linker} />
    * ```
+   * @type HTMLElement | React.Component
    */
   as?: React.ElementType<any>;
 }

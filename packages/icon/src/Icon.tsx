@@ -1,5 +1,4 @@
-import glyphs from './glyphs';
-import createIconComponent from './createIconComponent';
+import { glyphs } from './glyphs';
+import { createIconComponent } from './createIconComponent';
 
-const Icon = createIconComponent(glyphs);
-export default Icon;
+export const Icon = createIconComponent(glyphs);

@@ -1,2 +1,2 @@
-export { default as SegmentedControl } from './SegmentedControl';
-export { default as SegmentedControlOption } from './SegmentedControlOption';
+export { SegmentedControl } from './SegmentedControl';
+export { SegmentedControlOption } from './SegmentedControlOption';

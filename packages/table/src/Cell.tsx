@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { getCommonCellStyles } from './styles';
@@ -10,12 +10,18 @@ export const tdInnerDiv = createDataProp('td-inner-div');
 
 interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
+  /**
+   * Renders the cell as a th element
+   */
   isHeader: true;
   isDisabled?: boolean;
 }
 
 interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
   isDisabled?: boolean;
+  /**
+   * Renders the cell as a th element
+   */
   isHeader?: false;
 }
 
@@ -58,10 +64,10 @@ const darkModeDisabledHeaderStyles = css`
 `;
 
 export type CellElement = React.ReactComponentElement<typeof Cell>;
-const Cell = React.forwardRef(
+const Cell = forwardRef(
   (
     { children, className, isHeader = false, isDisabled, ...rest }: CellProps,
-    ref: React.Ref<any>,
+    ref: React.Ref<HTMLTableHeaderCellElement | HTMLTableCellElement>,
   ) => {
     const Root = isHeader ? 'th' : 'td';
 

@@ -150,7 +150,7 @@ interface ConfirmationModalProps {
   darkMode?: boolean;
 }
 
-const ConfirmationModal = ({
+export const ConfirmationModal = ({
   children,
   title,
   requiredInputText,
@@ -270,5 +270,3 @@ ConfirmationModal.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
 };
-
-export default ConfirmationModal;
