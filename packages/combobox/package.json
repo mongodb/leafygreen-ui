@@ -20,7 +20,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^16.0.3",
     "@leafygreen-ui/checkbox": "^10.0.3",
     "@leafygreen-ui/emotion": "^4.0.1",
     "@leafygreen-ui/hooks": "^7.3.1",
