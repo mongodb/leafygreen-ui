@@ -108,7 +108,10 @@ describe('packages/guidecue', () => {
       const { getByRole } = renderGuidecue({ open: true, onButtonClick });
       const button = getByRole('button');
       userEvent.click(button);
-      expect(onButtonClick).toHaveBeenCalledTimes(1);
+      await act(async () => {
+        await waitForTimeout(100);
+        expect(onButtonClick).toHaveBeenCalledTimes(1);
+      });
     });
 
     test('a click ourside of the tooltip should do nothing', async () => {
@@ -191,7 +194,7 @@ describe('packages/guidecue', () => {
         currentStep: 1,
       });
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
       const guidecue = getByRole('dialog');
       await waitFor(() => expect(guidecue).toBeVisible());
@@ -206,7 +209,7 @@ describe('packages/guidecue', () => {
         onDismissClick: onClose,
       });
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
       const guidecue = getByRole('dialog');
       const button = getByLabelText('Close Tooltip', { selector: 'button' });
@@ -224,11 +227,14 @@ describe('packages/guidecue', () => {
         onDismissClick: onClose,
       });
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
       const button = getByLabelText('Close Tooltip', { selector: 'button' });
       userEvent.click(button);
-      expect(onClose).toHaveBeenCalledTimes(1);
+      await act(async () => {
+        await waitForTimeout(400);
+        expect(onClose).toHaveBeenCalledTimes(1);
+      });
     });
 
     test('closes when the primary button is clicked', async () => {
@@ -240,7 +246,7 @@ describe('packages/guidecue', () => {
         onButtonClick,
       });
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
       const guidecue = getByRole('dialog');
       const button = getAllByRole('button')[1];
@@ -258,11 +264,14 @@ describe('packages/guidecue', () => {
         onButtonClick,
       });
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
       const button = getAllByRole('button')[1];
       userEvent.click(button);
-      expect(onButtonClick).toHaveBeenCalledTimes(1);
+      await act(async () => {
+        await waitForTimeout(400);
+        expect(onButtonClick).toHaveBeenCalledTimes(1);
+      });
     });
 
     test('a click outside the tooltip should do nothing', async () => {
@@ -273,7 +282,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
       const guidecue = getByRole('dialog');
       userEvent.click(backdrop);
@@ -290,7 +299,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
 
       const modal = getByRole('dialog');
@@ -308,7 +317,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
       expect(container).not.toContain(getByTestId(guidecueTestId));
     });
@@ -321,7 +330,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
 
       const steps = getByText('1 of 2');
@@ -336,7 +345,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
 
       const title = getByText(guidecueTitle);
@@ -351,7 +360,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
       });
 
       const body = getByText(guidecueChildren);
@@ -371,7 +380,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(500);
+        await waitForTimeout(400);
         expect(elem.innerHTML.includes(guidecueTitle)).toBe(true);
       });
     });
