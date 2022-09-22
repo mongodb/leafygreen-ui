@@ -1,7 +1,7 @@
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import React, { HTMLProps } from 'react';
 
-export const Variant = {
+const Variant = {
   Default: 'default',
   Primary: 'primary',
   PrimaryOutline: 'primaryOutline',
@@ -10,21 +10,21 @@ export const Variant = {
   BaseGreen: 'baseGreen',
 } as const;
 
-export type Variant = typeof Variant[keyof typeof Variant];
+type Variant = typeof Variant[keyof typeof Variant];
 
 /**
  * Size variants
  *
  * @default 'default'
  */
-export const Size = {
+const Size = {
   XSmall: 'xsmall',
   Small: 'small',
   Default: 'default',
   Large: 'large',
 };
 
-export type Size = typeof Size[keyof typeof Size];
+type Size = typeof Size[keyof typeof Size];
 
 // TODO: Remove in next major release
 export const FontSize = {
@@ -34,7 +34,7 @@ export const FontSize = {
 
 export type FontSize = typeof FontSize[keyof typeof FontSize];
 
-export interface ButtonProps {
+interface ButtonProps {
   // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.
   // https://github.com/storybookjs/storybook/issues/14798
 
@@ -129,3 +129,5 @@ export interface ButtonProps {
    */
   as?: React.ElementType<any>;
 }
+
+export { Variant, Size, ButtonProps };
