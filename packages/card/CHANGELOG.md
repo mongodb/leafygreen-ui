@@ -1,5 +1,18 @@
 # @leafygreen-ui/card
 
+## 7.0.1
+
+### Patch Changes
+
+- e39d8469: update darkMode `box-shadow`
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 7.0.0
 
 ### Major Changes

@@ -5,7 +5,10 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "../../typings"],
+  "include": [
+    "src/**/*",
+    "../../typings"
+  ],
   "references": [
     {
       "path": "../emotion"
@@ -20,9 +23,6 @@
       "path": "../icon-button"
     },
     {
-      "path": "../icon"
-    },
-    {
       "path": "../lib"
     },
     {
@@ -33,6 +33,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../button"
     },
     {
       "path": "../leafygreen-provider"

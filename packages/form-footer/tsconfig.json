@@ -5,7 +5,9 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../banner"
@@ -17,7 +19,13 @@
       "path": "../emotion"
     },
     {
+      "path": "../icon"
+    },
+    {
       "path": "../lib"
+    },
+    {
+      "path": "../palette"
     },
     {
       "path": "../leafygreen-provider"

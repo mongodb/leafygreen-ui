@@ -1,5 +1,20 @@
 # @leafygreen-ui/typography
 
+## 13.1.2
+
+### Patch Changes
+
+- e39d8469: Export `anchorClassName`
+- 8d7534e9: Adds `tsdoc.json` to published package files
+- Updated dependencies [7caa1c3e]
+- Updated dependencies [8d7534e9]
+  - @leafygreen-ui/icon@11.10.2
+  - @leafygreen-ui/box@3.0.8
+  - @leafygreen-ui/leafygreen-provider@2.3.3
+  - @leafygreen-ui/lib@9.4.2
+  - @leafygreen-ui/palette@3.4.2
+  - @leafygreen-ui/tokens@1.3.2
+
 ## 13.1.1
 
 ### Patch Changes
