@@ -109,7 +109,6 @@ function parseDocs(componentName: string): void {
             isUndefined(doc.tags?.internal)
           );
         })
-          ) as PropCategory,
         .map(
           ({ displayName, props, ...rest }) =>
             ({
