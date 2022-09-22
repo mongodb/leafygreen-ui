@@ -50,9 +50,15 @@ const triggerElementModeStyles: Record<Theme, string> = {
   `,
 };
 
-interface InlineDefinitionProps extends TooltipProps {
+interface InlineDefinitionProps extends Partial<TooltipProps> {
+  /**
+   * Trigger element for the definition tooltip
+   * @required
+   */
+  children: TooltipProps['children'];
   /**
    * ReactNode rendered inside the tooltip
+   * @required
    */
   definition: React.ReactNode;
 
