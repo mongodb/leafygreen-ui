@@ -99,27 +99,28 @@ function parseDocs(componentName: string): void {
 
     const docs: Array<CustomComponentDoc> = uniqBy(
       Parser.parse(componentFileNames)
-        // For default exports, change the displayName
-        .map(({ displayName, ...rest }) => ({
+        .filter((doc: ComponentDoc) => {
+          // Remove any external components
+          return (
+            !doc.filePath.includes('node_modules') &&
+            // Remove any components with no props
+            Object.keys(doc.props).length > 0 &&
+            // Remove any internal components
+            isUndefined(doc.tags?.internal)
+          );
+        })
+        .map(({ displayName, props, ...rest }) => ({
           ...rest,
+          // For default exports, change the displayName
           displayName: ['src', 'index'].includes(displayName)
             ? pascalCase(componentName)
             : displayName,
-        }))
-        // Remove any external components
-        .filter(doc => !doc.filePath.includes('node_modules'))
-        // Remove any components with no props
-        .filter(doc => Object.keys(doc.props).length > 0)
-        // Remove any internal components
-        .filter(doc => isUndefined(doc.tags?.internal))
-        // Group Props by where they are inherited from
-        .map(({ props, ...rest }) => ({
-          ...rest,
+          // Group Props by where they are inherited from
           props: Object.values(props).reduce(
             groupPropsByParent,
             {},
           ) as PropCategory,
-        })),
+        } as CustomComponentDoc)),
       'displayName',
     );
 
