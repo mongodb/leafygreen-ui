@@ -210,5 +210,13 @@ describe('packages/button', () => {
     test('accepts anchor tag attributes', () => {
       <Button href="http://mongodb.design" target="_blank" rel="noopener" />;
     });
+
+    test('accepts a string as `as`', () => {
+      <Button as="p" />;
+    });
+
+    test('accepts a component as `as`', () => {
+      <Button as={() => <>JSX</>} />;
+    });
   });
 });
