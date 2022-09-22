@@ -24,12 +24,10 @@ const TestExtendableBox: ExtendableBox<{ test: number }> = (
   return <Box {...props} />;
 };
 
-const TestExtendableBoxWithButton: ExtendableBox<
-  {},
-  'button'
-> = (props: {}) => {
-  return <Box {...props} />;
-};
+const TestExtendableBoxWithButton: ExtendableBox<{}, 'button'> =
+  (props: {}) => {
+    return <Box {...props} />;
+  };
 
 describe('packages/box', () => {
   const linkWrapperFn = jest.fn();

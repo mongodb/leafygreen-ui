@@ -247,9 +247,8 @@ export default function Select({
    * Focus
    */
 
-  const [focusedOption, setFocusedOption] = useState<
-    OptionElement | null | undefined
-  >();
+  const [focusedOption, setFocusedOption] =
+    useState<OptionElement | null | undefined>();
 
   const enabledOptions = useMemo(() => {
     const enabledOptions: Array<OptionElement | null> = [];

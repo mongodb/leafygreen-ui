@@ -121,9 +121,8 @@ export default function Combobox<M extends boolean>({
 
   const [isOpen, setOpen] = useState(false);
   const wasOpen = usePrevious(isOpen);
-  const [highlightedOption, sethighlightedOption] = useState<string | null>(
-    null,
-  );
+  const [highlightedOption, sethighlightedOption] =
+    useState<string | null>(null);
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
   const [inputValue, setInputValue] = useState<string>('');
@@ -363,9 +362,8 @@ export default function Combobox<M extends boolean>({
    *
    */
 
-  const [focusedElementName, trackFocusedElement] = useState<
-    ComboboxElement | undefined
-  >();
+  const [focusedElementName, trackFocusedElement] =
+    useState<ComboboxElement | undefined>();
   const isElementFocused = (elementName: ComboboxElement) =>
     elementName === focusedElementName;
 
