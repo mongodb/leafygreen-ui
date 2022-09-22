@@ -111,4 +111,19 @@ describe('packages/Card', () => {
       });
     });
   });
+
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
+  describe.skip('Types behave as expected', () => {
+    test('Allows no props', () => {
+      <Card />;
+    });
+    test('Accepts `as` prop', () => {
+      <Card as="p" />;
+      <Card as={() => <></>} />;
+    });
+
+    test('Accepts `href` prop', () => {
+      <Card href="http://mongodb.design" />;
+    });
+  });
 });
