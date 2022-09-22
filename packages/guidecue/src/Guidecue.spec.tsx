@@ -36,8 +36,7 @@ const buttonTextDefault = 'bottom button';
 const GuidecueWrapper = ({
   open: initialOpen = false,
   buttonText = buttonTextDefault,
-  numberOfSteps = 1,
-  currentStep = 1,
+  currentStep,
   ...props
 }: Partial<React.ComponentProps<typeof Guidecue>>) => {
   const [open, setOpen] = useState(initialOpen);
@@ -53,8 +52,7 @@ const GuidecueWrapper = ({
       title={guidecueTitle}
       refEl={ref}
       buttonText={buttonText}
-      numberOfSteps={numberOfSteps}
-      currentStep={currentStep}
+      currentStep={currentStep as number}
       {...props}
     >
       <div>{guidecueChildren}</div>

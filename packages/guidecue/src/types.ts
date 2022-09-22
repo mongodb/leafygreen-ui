@@ -16,32 +16,34 @@ type ModifiedTooltipProps = Omit<
   | 'onClose'
 >;
 
-// TODO: Conditional type
-// type ConditionalProps =
-// | {
-//     /**
-//    * Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.
-//    * @default: 1
-//    */
-//      numberOfSteps?: 1;
-//        /**
-//    * Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step tooltip.
-//    */
-//   onDismissClick?: null;
-// }
-// | {
-//       /**
-//    * Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.
-//    * @default: 1
-//    */
-//        numberOfSteps: 2|3|4|5|6|7|8;
-//        /**
-//    * Callback fired when the dismiss(X) button is clicked or when the `Esc` key is pressed. This only applies to the multi-step tooltip.
-//    */
-//   onDismissClick?: () => void;
-// };
+interface Standalone {
+  /**
+   * Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.
+   * @default: 1
+   */
+  numberOfSteps?: 1;
+  /**
+   * Used to display the current step.
+   * @default: 1
+   */
+  currentStep?: number;
+}
+interface Multistep {
+  /**
+   * Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.
+   * @default: 1
+   */
+  numberOfSteps: number;
+  /**
+   * Used to display the current step.
+   * @default: 1
+   */
+  currentStep: number;
+}
 
-export interface GuidecueProps extends ModifiedTooltipProps {
+type ConditionalProps = Standalone | Multistep;
+
+export type GuidecueProps = {
   /**
    * Determines if the `Tooltip` will appear as open or close.
    * @default: false
@@ -55,16 +57,6 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    * Pass a reference to an element that the beacon or tooltip(if stand-alone) should be centered against.
    */
   refEl: React.RefObject<HTMLElement>;
-  /**
-   * Used to determine which tooltip will be shown. If `numberOfSteps` is `> 1` then the multi-step tooltip will be shown else the stand-alone tooltip will be shown. This number will be displayed in the multi-step tooltip.
-   * @default: 1
-   */
-  numberOfSteps?: number;
-  /**
-   * Used to display the current step.
-   * @default: 1
-   */
-  currentStep?: number;
   /**
    * Determines whether the `Tooltip` will appear in dark mode.
    * @default: false
@@ -109,4 +101,5 @@ export interface GuidecueProps extends ModifiedTooltipProps {
    * @default: 'center-horizontal'
    */
   beaconAlign?: Align;
-}
+} & ModifiedTooltipProps &
+  ConditionalProps;
