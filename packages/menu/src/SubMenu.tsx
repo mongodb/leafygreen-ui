@@ -279,7 +279,7 @@ const subItemThemeStyle: Record<Theme, string> = {
 
 const subMenuItemHeight = 32;
 
-interface SubMenuProps extends HTMLElementProps<'button'> {
+interface BaseSubMenuProps extends HTMLElementProps<'button'> {
   /**
    * Determines if `<SubMenu />` item appears open
    */
@@ -329,13 +329,34 @@ interface SubMenuProps extends HTMLElementProps<'button'> {
 
   onExited?: ExitHandler<HTMLElement>;
 
+  /**
+   * A `href` prop that will make the Button render as an anchor tag.
+   */
   href?: string;
 
   /**
    * Size of the MenuItem component, can be `default` or `large`. This size only affects the parent MenuItem, nested child MenuItems do not change.
    */
   size?: Size;
+
+  /**
+   * The component or HTML Element that the button is rendered as.
+   *
+   * To use with NextJS Links, pass in a component that wraps the Link:
+   * ```js
+   * const Linker = ({ href, children, ...props }) => (
+   *  <NextLink href={href}>
+   *    <a {...props}>{children}</a>
+   *  </NextLink>
+   * );
+   * <Button as={Linker} />
+   * ```
+   * @type HTMLElement | React.Component
+   */
+  as?: React.ElementType<any>;
 }
+
+export type SubMenuProps = BoxProps<'button', BaseSubMenuProps>;
 
 const SubMenu = React.forwardRef(
   (

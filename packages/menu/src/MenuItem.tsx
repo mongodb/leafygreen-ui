@@ -33,7 +33,7 @@ import { Size } from './types';
 import MenuContext from './MenuContext';
 
 const menuItemContainer = createDataProp('menu-item-container');
-interface MenuItemProps extends HTMLElementProps<'button'> {
+interface BaseMenuItemProps extends HTMLElementProps<'button'> {
   /**
    * Determines whether or not the MenuItem is active.
    */
@@ -73,7 +73,25 @@ interface MenuItemProps extends HTMLElementProps<'button'> {
    * Causes the item to be rendered as an `anchor` instead of a `button`
    */
   href?: string;
+
+  /**
+   * The component or HTML Element that the button is rendered as.
+   *
+   * To use with NextJS Links, pass in a component that wraps the Link:
+   * ```js
+   * const Linker = ({ href, children, ...props }) => (
+   *  <NextLink href={href}>
+   *    <a {...props}>{children}</a>
+   *  </NextLink>
+   * );
+   * <Button as={Linker} />
+   * ```
+   * @type HTMLElement | React.Component
+   */
+  as?: React.ElementType<any>;
 }
+
+export type MenuItemProps = BoxProps<'button', BaseMenuItemProps>;
 
 const MenuItem = React.forwardRef(
   (
