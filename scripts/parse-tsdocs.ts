@@ -109,18 +109,22 @@ function parseDocs(componentName: string): void {
             isUndefined(doc.tags?.internal)
           );
         })
-        .map(({ displayName, props, ...rest }) => ({
-          ...rest,
-          // For default exports, change the displayName
-          displayName: ['src', 'index'].includes(displayName)
-            ? pascalCase(componentName)
-            : displayName,
-          // Group Props by where they are inherited from
-          props: Object.values(props).reduce(
-            groupPropsByParent,
-            {},
           ) as PropCategory,
-        } as CustomComponentDoc)),
+        .map(
+          ({ displayName, props, ...rest }) =>
+            ({
+              ...rest,
+              // For default exports, change the displayName
+              displayName: ['src', 'index'].includes(displayName)
+                ? pascalCase(componentName)
+                : displayName,
+              // Group Props by where they are inherited from
+              props: Object.values(props).reduce(
+                groupPropsByParent,
+                {},
+              ) as PropCategory,
+            } as CustomComponentDoc),
+        ),
       'displayName',
     );
 
