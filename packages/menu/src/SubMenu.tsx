@@ -329,9 +329,6 @@ interface BaseSubMenuProps extends HTMLElementProps<'button'> {
 
   onExited?: ExitHandler<HTMLElement>;
 
-  /**
-   * A `href` prop that will make the Button render as an anchor tag.
-   */
   href?: string;
 
   /**
