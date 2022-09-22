@@ -131,8 +131,9 @@ export const ScrollableContainer = ({
   align,
   ...args
 }: TooltipScrollableyProps) => {
-  const [portalContainer, setPortalContainer] =
-    useState<HTMLDivElement | null>(null);
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
+    null,
+  );
   const position = referenceElPositions[refButtonPosition];
 
   return (
