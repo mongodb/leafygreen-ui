@@ -49,6 +49,7 @@ export const Single: ComponentStory<typeof Icon> = (args: IconProps) => {
 Single.argTypes = {
   glyph: {
     control: 'select',
+    options: Object.keys(glyphs),
   },
 };
 
