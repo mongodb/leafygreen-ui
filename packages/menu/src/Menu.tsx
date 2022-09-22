@@ -90,9 +90,8 @@ function Menu({
   const hasSetInitialOpen = useRef(false);
 
   const [, setClosed] = useState(false);
-  const [currentSubMenu, setCurrentSubMenu] = useState<SubMenuElement | null>(
-    null,
-  );
+  const [currentSubMenu, setCurrentSubMenu] =
+    useState<SubMenuElement | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
 
   const setOpen =

@@ -68,9 +68,8 @@ function RadioBoxGroup({
   value: controlledValue,
   ...rest
 }: RadioBoxGroupProps) {
-  const [uncontrolledValue, setUncontrolledValue] = React.useState<
-    string | number | undefined
-  >();
+  const [uncontrolledValue, setUncontrolledValue] =
+    React.useState<string | number | undefined>();
 
   const defaultName = useIdAllocator({
     prefix: 'radio-box-group',

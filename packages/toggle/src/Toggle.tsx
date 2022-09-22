@@ -428,9 +428,8 @@ function Toggle({
 }: ToggleProps) {
   validateAriaLabelProps(rest, Toggle.displayName);
 
-  const [buttonElement, setButtonElement] = useState<HTMLButtonElement | null>(
-    null,
-  );
+  const [buttonElement, setButtonElement] =
+    useState<HTMLButtonElement | null>(null);
   const [checked, setChecked] = useState(false);
 
   const isControlled = typeof controlledChecked === 'boolean';

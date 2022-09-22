@@ -1,33 +1,37 @@
-
-  {
-    "name": "@leafygreen-ui/blob",
-    "version": "0.1.0",
-    "description": "leafyGreen UI Kit Blob",
-    "main": "./dist/index.js",
-    "module": "./dist/esm/index.js",
-    "types": "./dist/index.d.ts",
-    "typesVersions": {
-      "<3.9": { "*": ["ts3.4/*"] }
-    },
-    "scripts": {
-      "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
-    },
-    "license": "Apache-2.0",
-    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/blob",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/mongodb/leafygreen-ui"
-    },
-    "bugs": {
-      "url": "https://jira.mongodb.org/projects/PD/summary"
-    },
-    "publishConfig": {
-      "access": "public"
-    },
-    "dependencies": {
-      "@leafygreen-ui/emotion": "^4.0.0",
-      "@leafygreen-ui/lib": "^6.1.0",
-      "@leafygreen-ui/palette": "^3.4.0",
-      "@leafygreen-ui/tokens": "^1.3.1"
+{
+  "name": "@leafygreen-ui/blob",
+  "version": "0.1.0",
+  "description": "leafyGreen UI Kit Blob",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
     }
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/blob",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.0",
+    "@leafygreen-ui/lib": "^6.1.0",
+    "@leafygreen-ui/palette": "^3.4.0",
+    "@leafygreen-ui/tokens": "^1.3.1",
+    "lodash": "^4.17.21"
   }
+}

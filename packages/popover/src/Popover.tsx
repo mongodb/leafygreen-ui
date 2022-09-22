@@ -79,9 +79,8 @@ function Popover({
   scrollContainer: scrollContainerProp,
   ...rest
 }: PopoverProps) {
-  const [placeholderNode, setPlaceholderNode] = useState<HTMLElement | null>(
-    null,
-  );
+  const [placeholderNode, setPlaceholderNode] =
+    useState<HTMLElement | null>(null);
   const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
