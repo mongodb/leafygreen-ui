@@ -1,12 +1,16 @@
 import { Either } from '@leafygreen-ui/lib';
 
-type ReactEmpty = null | undefined | false | '';
-
 export interface TabsProps {
   /**
-   * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
+   * Content that will appear inside of Tabs component.
+   * Should be comprised of at least two `<Tab />` components.
    */
-  children: Array<React.ReactElement | ReactEmpty>;
+  children: React.ReactNode;
+
+  /**
+   * Content that will appear inline after the `<Tab />` components
+   */
+  inlineChildren?: React.ReactNode;
 
   /**
    * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
