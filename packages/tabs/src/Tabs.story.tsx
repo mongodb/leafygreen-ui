@@ -9,6 +9,7 @@ import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import { Tab, Tabs } from './index';
 import { TabsProps } from './types';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { css } from '@leafygreen-ui/emotion';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
 export default {
@@ -53,6 +54,9 @@ export default {
 
 const Template = (props: TabsProps) => (
   <Tabs
+    className={css`
+      width: 66vw;
+    `}
     aria-label="Tabs to demonstrate usage of Leafygreen UI Tab Components"
     {...props}
   />

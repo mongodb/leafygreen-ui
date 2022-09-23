@@ -7,7 +7,6 @@ import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { AccessibleTabsProps } from './types';
-import Portal from '@leafygreen-ui/portal';
 
 // Using a background allows the "border" to appear underneath the individual tab color
 const modeColors = {
@@ -32,13 +31,23 @@ const modeColors = {
   },
 };
 
+const tabContainerStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const inlineChildrenWrapperStyle = css`
+  display: flex;
+  align-items: center;
+`;
+
 const listStyle = css`
   list-style: none;
   padding: 0;
   display: flex;
   width: 100%;
   overflow-x: auto;
-  align-items: center;
 
   /* Remove scrollbar */
 
@@ -188,17 +197,17 @@ function Tabs(props: AccessibleTabsProps) {
       {/* render the portaled contents */}
       {renderedTabs}
 
-      {/* Since renderedTabs uses portals, inlineChildren must as well, otherwise it'll be rendered before the tabs  */}
-      <Portal container={tabNode}>{inlineChildren}</Portal>
-
-      {/* renderedTabs portals the tab title into this element */}
-      <div
-        className={cx(listStyle, modeColors[theme].underlineColor)}
-        role="tablist"
-        ref={setTabNode}
-        aria-orientation="horizontal"
-        {...accessibilityProps}
-      />
+      <div className={tabContainerStyle}>
+        {/* renderedTabs portals the tab title into this element */}
+        <div
+          className={cx(listStyle, modeColors[theme].underlineColor)}
+          role="tablist"
+          ref={setTabNode}
+          aria-orientation="horizontal"
+          {...accessibilityProps}
+        />
+        <div className={inlineChildrenWrapperStyle}>{inlineChildren}</div>
+      </div>
 
       {/* renderedTabs portals the contents into this element */}
       <div ref={setPanelNode} />
