@@ -7,6 +7,7 @@ import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { AccessibleTabsProps } from './types';
+import Portal from '@leafygreen-ui/portal';
 
 // Using a background allows the "border" to appear underneath the individual tab color
 const modeColors = {
@@ -37,6 +38,7 @@ const listStyle = css`
   display: flex;
   width: 100%;
   overflow-x: auto;
+  align-items: center;
 
   /* Remove scrollbar */
 
@@ -71,6 +73,7 @@ function Tabs(props: AccessibleTabsProps) {
 
   const {
     children,
+    inlineChildren,
     setSelected: setControlledSelected,
     selected: controlledSelected,
     className,
@@ -139,7 +142,7 @@ function Tabs(props: AccessibleTabsProps) {
     [getEnabledIndexes, setSelected],
   );
 
-  const renderedChildren = React.Children.map(children, (child, index) => {
+  const renderedTabs = React.Children.map(children, (child, index) => {
     if (!isComponentType(child, 'Tab')) {
       return child;
     }
@@ -167,6 +170,9 @@ function Tabs(props: AccessibleTabsProps) {
     };
 
     return (
+      // Since the <Tab /> children contain both the tab title and content,
+      // and since we want these elements to be in different places in the DOM
+      // we use a Portal in InternalTab to place the conten in the correct spot
       <InternalTab
         child={child}
         selected={isTabSelected}
@@ -179,7 +185,13 @@ function Tabs(props: AccessibleTabsProps) {
 
   return (
     <div {...rest} className={className}>
-      {renderedChildren}
+      {/* render the portaled contents */}
+      {renderedTabs}
+
+      {/* Since renderedTabs uses portals, inlineChildren must as well, otherwise it'll be rendered before the tabs  */}
+      <Portal container={tabNode}>{inlineChildren}</Portal>
+
+      {/* renderedTabs portals the tab title into this element */}
       <div
         className={cx(listStyle, modeColors[theme].underlineColor)}
         role="tablist"
@@ -188,6 +200,7 @@ function Tabs(props: AccessibleTabsProps) {
         {...accessibilityProps}
       />
 
+      {/* renderedTabs portals the contents into this element */}
       <div ref={setPanelNode} />
     </div>
   );
