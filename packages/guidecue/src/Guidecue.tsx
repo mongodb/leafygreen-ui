@@ -11,13 +11,13 @@ function Guidecue({
   open,
   setOpen,
   refEl,
-  numberOfSteps = 1,
+  numberOfSteps,
   currentStep = 1,
   darkMode: darkModeProp,
   title,
   children,
-  onDismissClick = () => {},
-  onButtonClick = () => {},
+  onDismiss = () => {},
+  onPrimaryButtonClick = () => {},
   tooltipClassName,
   portalClassName,
   buttonText: buttonTextProp,
@@ -69,25 +69,25 @@ function Guidecue({
   }, [open]);
 
   /**
-   * Callback fired when the X icon is clicked . It closes the tooltip and fires the callback that was passed to `onDismissClick`.
+   * Callback fired when the X icon is clicked . It closes the tooltip and fires the callback that was passed to `onDismiss`.
    */
   const handleCloseClick = () => {
     setOpen(false);
-    setTimeout(() => onDismissClick(), 400);
+    setTimeout(() => onDismiss(), 400);
   };
 
   /**
-   * Callback fired when the primary bottom is clicked. It closes the tooltip and fires the callback that was passed to `onButtonClick`.
+   * Callback fired when the primary bottom is clicked. It closes the tooltip and fires the callback that was passed to `onPrimaryButtonClick`.
    */
   const handleButtonClick = () => {
     setOpen(false);
-    setTimeout(() => onButtonClick(), isStandalone ? 0 : 400);
+    setTimeout(() => onPrimaryButtonClick(), isStandalone ? 0 : 400);
   };
 
   /**
-   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the primary button(`onButtonClick`) since that is the callback that would be fired if the primary button was clicked. If it's the multi-step tooltip we use the callback from the dismiss(X) button(`onDismissClick`) since thats the callback that would be fired if the dismiss(X) button was clicked.
+   * This callback is fired when the Esc key closes the tooltip since this happens directly in the `Tooltip` component. If this is a stand-alone tooltip then we use the callback for the primary button(`onPrimaryButtonClick`) since that is the callback that would be fired if the primary button was clicked. If it's the multi-step tooltip we use the callback from the dismiss(X) button(`onDismiss`) since thats the callback that would be fired if the dismiss(X) button was clicked.
    */
-  const onEscClose = isStandalone ? onButtonClick : onDismissClick;
+  const onEscClose = isStandalone ? onPrimaryButtonClick : onDismiss;
 
   const tooltipContentProps = {
     darkMode,
@@ -101,6 +101,7 @@ function Guidecue({
     scrollContainer,
     popoverZIndex,
     numberOfSteps,
+    currentStep,
     theme,
     title,
     isStandalone,
@@ -117,12 +118,7 @@ function Guidecue({
       {isStandalone ? (
         //Standalone tooltip
         // this is using the reference from the `refEl` prop to position itself against
-        <TooltipContent
-          {...tooltipContentProps}
-          currentStep={currentStep as number}
-        >
-          {children}
-        </TooltipContent>
+        <TooltipContent {...tooltipContentProps}>{children}</TooltipContent>
       ) : (
         // Multistep tooltip
         <Popover
@@ -152,7 +148,6 @@ function Guidecue({
             refEl={beaconRef}
             open={tooltipOpen}
             usePortal={false}
-            currentStep={currentStep as number}
           >
             {children}
           </TooltipContent>
@@ -174,13 +169,33 @@ Guidecue.propTypes = {
         ? PropTypes.instanceOf(Element)
         : PropTypes.any,
   }),
-  numberOfSteps: PropTypes.number,
-  currentStep: PropTypes.number,
+  numberOfSteps: PropTypes.number.isRequired,
+  currentStep: function (props: { [x: string]: any }, propName: string) {
+    // if numberOfSteps > 1 and currentStep is not a number then throw error
+    if (props['numberOfSteps'] > 1 && typeof props[propName] !== 'number') {
+      return new Error(
+        '`currentStep` prop of type `number` is required if numberOfSteps > 1',
+      );
+    }
+
+    // if numberOfSteps <= 1 && currentStep prop exist and it is not a number make sure its a number
+    if (
+      props['numberOfSteps'] <= 1 &&
+      props[propName] !== undefined &&
+      typeof props[propName] !== 'number'
+    ) {
+      return new Error(
+        `'currentStep' prop is invalid. Type '${typeof props[
+          propName
+        ]}' supplied to 'currentStep', expected 'number'`,
+      );
+    }
+  },
   title: PropTypes.string,
   tooltipClassName: PropTypes.string,
   buttonText: PropTypes.string,
-  onDismissClick: PropTypes.func,
-  onButtonClick: PropTypes.func,
+  onDismiss: PropTypes.func,
+  onPrimaryButtonClick: PropTypes.func,
   tooltipAlign: PropTypes.oneOf(Object.values(Align)),
   tooltipJustify: PropTypes.oneOf(Object.values(Justify)),
   beaconAlign: PropTypes.oneOf(Object.values(Align)),

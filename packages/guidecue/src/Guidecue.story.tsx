@@ -6,7 +6,6 @@ import defaultArgTypes from '../../../stories/defaultArgTypes';
 import { Guidecue } from '.';
 import { GuidecueProps } from './types';
 import { Body } from '@leafygreen-ui/typography';
-import { useEffect } from '@storybook/addons';
 
 export default {
   title: 'Components/Guidecue',
@@ -19,8 +18,8 @@ export default {
         'setOpen',
         'tooltipClassName',
         'open',
-        'onDismissClick',
-        'onButtonClick',
+        'onDismiss',
+        'onPrimaryButtonClick',
       ],
     },
   },
@@ -79,8 +78,8 @@ const Template: ComponentStory<typeof Guidecue> = args => {
         open={open}
         setOpen={setOpen}
         refEl={triggerRef}
-        onButtonClick={handleNext}
-        onDismissClick={handleClose}
+        onPrimaryButtonClick={handleNext}
+        onDismiss={handleClose}
         aria-labelledby="test"
       >
         {children}
@@ -207,8 +206,8 @@ export const MultistepDemo = (args: GuidecueProps) => {
         refEl={triggers[currentStep - 1]}
         numberOfSteps={steps}
         currentStep={currentStep}
-        onButtonClick={() => handleNext()}
-        onDismissClick={() => handleDismiss()}
+        onPrimaryButtonClick={() => handleNext()}
+        onDismiss={() => handleDismiss()}
         title="New feature"
       >
         This is a new feature. You should try it out
@@ -233,8 +232,8 @@ MultistepDemo.parameters = {
       'setOpen',
       'tooltipClassName',
       'open',
-      'onDismissClick',
-      'onButtonClick',
+      'onDismiss',
+      'onPrimaryButtonClick',
     ],
   },
 };

@@ -36,7 +36,8 @@ const buttonTextDefault = 'bottom button';
 const GuidecueWrapper = ({
   open: initialOpen = false,
   buttonText = buttonTextDefault,
-  currentStep,
+  currentStep = 1,
+  numberOfSteps = 1,
   ...props
 }: Partial<React.ComponentProps<typeof Guidecue>>) => {
   const [open, setOpen] = useState(initialOpen);
@@ -52,7 +53,8 @@ const GuidecueWrapper = ({
       title={guidecueTitle}
       refEl={ref}
       buttonText={buttonText}
-      currentStep={currentStep as number}
+      currentStep={currentStep}
+      numberOfSteps={numberOfSteps}
       {...props}
     >
       <div>{guidecueChildren}</div>
@@ -92,8 +94,11 @@ describe('packages/guidecue', () => {
     });
 
     test('closes when the primary button is clicked', async () => {
-      const onButtonClick = jest.fn();
-      const { getByRole } = renderGuidecue({ open: true, onButtonClick });
+      const onPrimaryButtonClick = jest.fn();
+      const { getByRole } = renderGuidecue({
+        open: true,
+        onPrimaryButtonClick,
+      });
       const guidecue = getByRole('dialog');
       const button = getByRole('button');
       userEvent.click(button);
@@ -101,14 +106,17 @@ describe('packages/guidecue', () => {
       expect(guidecue).not.toBeInTheDocument();
     });
 
-    test('fires the onButtonClick handler once when the primary button is clicked', async () => {
-      const onButtonClick = jest.fn();
-      const { getByRole } = renderGuidecue({ open: true, onButtonClick });
+    test('fires the onPrimaryButtonClick handler once when the primary button is clicked', async () => {
+      const onPrimaryButtonClick = jest.fn();
+      const { getByRole } = renderGuidecue({
+        open: true,
+        onPrimaryButtonClick,
+      });
       const button = getByRole('button');
       userEvent.click(button);
       await act(async () => {
         await waitForTimeout(100);
-        expect(onButtonClick).toHaveBeenCalledTimes(1);
+        expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -204,7 +212,7 @@ describe('packages/guidecue', () => {
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
-        onDismissClick: onClose,
+        onDismiss: onClose,
       });
       await act(async () => {
         await waitForTimeout(400);
@@ -222,7 +230,7 @@ describe('packages/guidecue', () => {
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
-        onDismissClick: onClose,
+        onDismiss: onClose,
       });
       await act(async () => {
         await waitForTimeout(400);
@@ -236,12 +244,12 @@ describe('packages/guidecue', () => {
     });
 
     test('closes when the primary button is clicked', async () => {
-      const onButtonClick = jest.fn();
+      const onPrimaryButtonClick = jest.fn();
       const { getByRole, getAllByRole } = renderGuidecue({
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
-        onButtonClick,
+        onPrimaryButtonClick,
       });
       await act(async () => {
         await waitForTimeout(400);
@@ -253,13 +261,13 @@ describe('packages/guidecue', () => {
       expect(guidecue).not.toBeInTheDocument();
     });
 
-    test('fires the onButtonClick handler once when the primary button is clicked', async () => {
-      const onButtonClick = jest.fn();
+    test('fires the onPrimaryButtonClick handler once when the primary button is clicked', async () => {
+      const onPrimaryButtonClick = jest.fn();
       const { getAllByRole } = renderGuidecue({
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
-        onButtonClick,
+        onPrimaryButtonClick,
       });
       await act(async () => {
         await waitForTimeout(400);
@@ -268,7 +276,7 @@ describe('packages/guidecue', () => {
       userEvent.click(button);
       await act(async () => {
         await waitForTimeout(400);
-        expect(onButtonClick).toHaveBeenCalledTimes(1);
+        expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1);
       });
     });
 
