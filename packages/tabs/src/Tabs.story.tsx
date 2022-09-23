@@ -10,6 +10,7 @@ import { Tab, Tabs } from './index';
 import { TabsProps } from './types';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
 import { css } from '@leafygreen-ui/emotion';
+import { Story } from '@storybook/react';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
 export default {
@@ -52,7 +53,7 @@ export default {
   subcomponents: { Tab },
 } as Meta<typeof Tabs>;
 
-const Template = (props: TabsProps) => (
+const Template: Story<TabsProps> = (props: TabsProps) => (
   <Tabs
     className={css`
       width: 66vw;
