@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import Portal from '@leafygreen-ui/portal';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
-import { TabsProps } from './Tabs';
+import { TabsProps } from './types';
 
 type InternalTabProps = Pick<TabsProps, 'as' | 'darkMode' | 'className'> & {
   child: React.ReactElement;

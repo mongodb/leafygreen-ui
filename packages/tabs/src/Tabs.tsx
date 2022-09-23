@@ -2,10 +2,11 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { keyMap, isComponentType, Either, Theme } from '@leafygreen-ui/lib';
+import { keyMap, isComponentType, Theme } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { AccessibleTabsProps } from './types';
 
 // Using a background allows the "border" to appear underneath the individual tab color
 const modeColors = {
@@ -47,55 +48,6 @@ const listStyle = css`
   -ms-overflow-style: none; /* IE */
   scrollbar-width: none; /* Firefox */
 `;
-
-type ReactEmpty = null | undefined | false | '';
-
-export interface TabsProps {
-  /**
-   * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
-   */
-  children: Array<React.ReactElement | ReactEmpty>;
-
-  /**
-   * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
-   */
-  setSelected?: any;
-
-  /**
-   * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
-   */
-  selected?: number;
-
-  /**
-   * className supplied to Tabs container.
-   */
-  className?: string;
-
-  /**
-   * determines if component will appear for Dark Mode
-   * @default false
-   */
-  darkMode?: boolean;
-
-  /**
-   * HTML Element that wraps title in Tab List.
-   */
-  as?: React.ElementType<any>;
-
-  /**
-   * Accessible label that describes the set of tabs
-   */
-  ['aria-label']?: string;
-
-  /**
-   * References id of label external to the component that describes the set of tabs
-   */
-  ['aria-labelledby']?: string;
-}
-
-type AriaLabels = 'aria-label' | 'aria-labelledby';
-
-export type AccessibleTabsProps = Either<TabsProps, AriaLabels>;
 
 /**
  * # Tabs
