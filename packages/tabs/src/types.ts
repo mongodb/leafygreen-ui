@@ -8,7 +8,7 @@ export interface TabsProps {
   children: React.ReactNode;
 
   /**
-   * Content that will appear inline after the `<Tab />` components
+   * Content that will appear inline after the `<Tab />` components. `inlineChildren` are wrapped in a flexbox container.
    */
   inlineChildren?: React.ReactNode;
 
