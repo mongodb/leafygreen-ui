@@ -23,6 +23,8 @@ export interface BaseTextAreaProps
 
   /**
    * Text shown in bold above the input element.
+   *
+   * Optional if `aria-labelledby` is provided
    */
   label?: string | null;
 
@@ -59,7 +61,9 @@ export interface BaseTextAreaProps
   errorMessage?: string;
 
   /**
-   *  Validation callback used to validate input.
+   * Callback called whenever validation should be run.
+   *
+   * See [Form Validation & Error Handling](https://www.mongodb.design/foundation/forms/#form-validation--error-handling) for more
    */
   handleValidation?: (value: string) => void;
 
@@ -77,6 +81,13 @@ export interface BaseTextAreaProps
    * Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description
    */
   baseFontSize?: BaseFontSize;
+
+  /**
+   * Screen-reader label element
+   *
+   * Optional if `label` is provided
+   */
+  ['aria-labelledby']: string;
 }
 
 export type AriaLabels = 'label' | 'aria-labelledby';

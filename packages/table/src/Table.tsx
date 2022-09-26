@@ -96,6 +96,8 @@ export interface TableRowInterface<Shape = {}> {
 export interface TableProps<Shape> extends HTMLElementProps<'table'> {
   /**
    * The array of data displayed in rows. Each array element's type is determined by the `Shape` generic.
+   *
+   * @type Array of Objects
    */
   data: Array<Shape>;
 
