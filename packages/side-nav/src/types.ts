@@ -1,11 +1,10 @@
-export interface SideNavProps {
-  /**
-   * Class name that will be applied to the root-level element.
-   */
-  className?: string;
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
+export interface SideNavProps extends HTMLElementProps<'nav'> {
   /**
    * Content that will be rendered inside the root-level element.
+   *
+   * @type `<SideNavItem />` | `<SideNavGroup />`
    */
   children?: React.ReactNode;
 

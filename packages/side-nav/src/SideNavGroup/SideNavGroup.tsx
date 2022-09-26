@@ -150,8 +150,8 @@ function SideNavGroup({
     </div>
   );
 
-  // compute styles for indented itels
-  const intentedStyle = cx(
+  // compute styles for indented items
+  const indentedStyle = cx(
     getIndentLevelStyle(indentLevel),
     css`
       padding-top: 16px;
@@ -192,7 +192,7 @@ function SideNavGroup({
               `,
               {
                 [collapsibleHeaderFocusStyle]: usingKeyboard,
-                [intentedStyle]: indentLevel > 1,
+                [indentedStyle]: indentLevel > 1,
               },
             )}
             onClick={() => setOpen(curr => !curr)}
@@ -252,7 +252,7 @@ function SideNavGroup({
           <div
             {...groupHeaderProps}
             className={cx(headerStyle, {
-              [intentedStyle]: indentLevel > 1,
+              [indentedStyle]: indentLevel > 1,
             })}
           >
             {renderedHeader}

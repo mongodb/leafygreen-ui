@@ -24,9 +24,10 @@ interface BaseSelectProps
     Omit<PopoverProps, 'active' | 'spacing'> {
   /**
    * Children rendered inside the component. Expected to be either `<Option>` or `<OptionGroup>`.
+   *
+   * @type `<Option />` | `<OptionGroup/>`
    */
   children: React.ReactNode;
-  className?: string;
   /**
    * HTML `id` property used to allow Javascript, form, or label to reference the input.
    */
