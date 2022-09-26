@@ -51,6 +51,7 @@ interface BaseMenuItemProps extends HTMLElementProps<'button'> {
 
   /**
    * Slot to pass in an Icon rendered to the left of `MenuItem` text.
+   * @type `<Icon />` component
    */
   glyph?: React.ReactElement;
 
