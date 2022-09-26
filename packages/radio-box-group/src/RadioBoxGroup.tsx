@@ -10,9 +10,10 @@ const baseGroupStyle = css`
   display: flex;
 `;
 
-export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
+export interface RadioBoxGroupProps extends HTMLElementProps<'div'> {
   /**
    * Content that will appear inside of RadioBoxGroup component.
+   * @type `<RadioBox />`
    */
   children?: React.ReactNode;
 
@@ -37,11 +38,6 @@ export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
    * @default 'default''
    */
   size?: Size;
-
-  /**
-   * className supplied to RadioBoxGroup container.
-   */
-  className?: string;
 }
 
 /**
@@ -56,7 +52,7 @@ export interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
  * @param props.onChange Callback to be executed when a RadioBox is selected.
  * @param props.name Name passed to each RadioBox belonging to the RadioBoxGroup.
  * @param props.value RadioBox that should appear checked. If value passed, component will be controlled by consumer.
- * @param props.className classname applied to RadioBoxGroup container.
+ * @param props.className className applied to RadioBoxGroup container.
  * @param props.size Determines size of RadioBox components ['default', 'compact', 'full'].
  */
 export function RadioBoxGroup({

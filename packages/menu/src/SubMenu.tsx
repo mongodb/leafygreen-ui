@@ -312,6 +312,9 @@ interface BaseSubMenuProps extends HTMLElementProps<'button'> {
 
   /**
    * Slot to pass in an Icon rendered to the left of `SubMenu` text.
+   *
+   * @type `<Icon />` component
+   *
    */
   glyph?: React.ReactElement;
 
@@ -322,6 +325,7 @@ interface BaseSubMenuProps extends HTMLElementProps<'button'> {
 
   /**
    * Content rendered inside of `SubMenu`.
+   * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`
    */
   children?: React.ReactNode;
 

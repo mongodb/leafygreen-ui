@@ -2,7 +2,13 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { keyMap, isComponentType, Either, Theme } from '@leafygreen-ui/lib';
+import {
+  keyMap,
+  isComponentType,
+  Either,
+  Theme,
+  HTMLElementProps,
+} from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -50,11 +56,11 @@ const listStyle = css`
 
 type ReactEmpty = null | undefined | false | '';
 
-export interface TabsProps {
+export interface TabsProps extends HTMLElementProps<'div'> {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
    *
-   * @type ReactElement[]
+   * @type `<Tab />`
    */
   children: Array<React.ReactElement | ReactEmpty>;
 
@@ -69,11 +75,6 @@ export interface TabsProps {
    * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
    */
   selected?: number;
-
-  /**
-   * className supplied to Tabs container.
-   */
-  className?: string;
 
   /**
    * determines if component will appear for Dark Mode

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface TabProps {
+export interface TabProps extends HTMLElementProps<'div'> {
   /**
    * Content that will appear as the title in the Tab list.
    */
@@ -38,8 +39,15 @@ export interface TabProps {
    */
   to?: string;
 
+  /**
+   * Whether this tab is currently selected
+   */
   selected?: boolean;
 
+  /**
+   * TODO: remove, or do something with this
+   * @internal
+   */
   ariaControl?: string;
 
   // Done in order to support any Router system, such that TabTitle component can accept any URL destination prop.

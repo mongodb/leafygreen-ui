@@ -53,7 +53,7 @@ export interface BaseTextInputProps
   label: string | null;
 
   /**
-   * Screen-reader label.
+   * Screen-reader label element.
    *
    * Optional if `label` is provided
    */
@@ -123,6 +123,11 @@ export interface BaseTextInputProps
    */
   type?: TextInputType;
 
+  /**
+   * Callback called whenever validation should be run.
+   *
+   * See [Form Validation & Error Handling](https://www.mongodb.design/foundation/forms/#form-validation--error-handling) for more
+   */
   handleValidation?: (value: string) => void;
 
   /**

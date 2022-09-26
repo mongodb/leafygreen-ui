@@ -14,10 +14,17 @@ interface HeaderCellProps
    * Renders the cell as a th element
    */
   isHeader: true;
+
+  /**
+   * Determines whether the cell renders as disabled
+   */
   isDisabled?: boolean;
 }
 
 interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
+  /**
+   * Determines whether the cell renders as disabled
+   */
   isDisabled?: boolean;
   /**
    * Renders the cell as a th element

@@ -218,7 +218,9 @@ export const SegmentedControlContext = React.createContext<SCContext>({
 export interface SegmentedControlProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'> {
   /**
-   * Children must be SegmentedControlOptions
+   * Options provided in the segmented control
+   *
+   * @type `<SegmentedControlOption />`
    */
   children: React.ReactNode;
 

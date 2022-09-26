@@ -16,7 +16,8 @@ export interface BannerProps extends HTMLElementProps<'div', never> {
   /**
    * Sets the variant for the Banner
    *
-   * Default: `'info'`
+   * @required
+   * @default: 'info'
    */
   variant?: Variant;
 
@@ -28,21 +29,21 @@ export interface BannerProps extends HTMLElementProps<'div', never> {
   /**
    * Determines whether or not the Banner is dismissible
    *
-   * Default: `false`
+   * @default `false`
    */
   dismissible?: boolean;
 
   /**
    * Callback fired when dismiss button is clicked
    *
-   * Default: `() => {}`
+   * @default `() => {}`
    */
   onClose?: React.MouseEventHandler;
 
   /**
    * Determines whether or not the component will be rendered in dark mode.
    *
-   * default: `false`
+   * @default `false`
    */
   darkMode?: boolean;
 
