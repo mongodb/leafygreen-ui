@@ -25,6 +25,7 @@ export type LogoName =
 interface GenericLogoProps extends LogoProps {
   /**
    * The name of the logo to render
+   * @required
    */
   name: LogoName;
 }
