@@ -1,5 +1,5 @@
 import { PopoverProps } from '@leafygreen-ui/popover';
-import {ReactNode} from 'react';
+import { ReactNode } from 'react';
 
 export const Size = {
   Default: 'default',
@@ -8,12 +8,11 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 export interface MenuProps extends Omit<PopoverProps, 'active'> {
-
   /**
    * The menu items, or submenus
    * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`
    */
-  children: ReactNode
+  children: ReactNode;
 
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows

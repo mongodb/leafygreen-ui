@@ -299,7 +299,6 @@ export interface RadioProps
    */
   children?: React.ReactNode;
 }
-// Pick<RadioGroupProps, 'darkMode' | 'size'> & ;
 
 /**
  * # Radio

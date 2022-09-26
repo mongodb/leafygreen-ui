@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Size } from './types';
 
-export interface RadioGroupProps {
+export interface RadioGroupProps extends HTMLElementProps<'div'> {
   /**
    * Determines whether or not the RadioGroup will appear in dark mode.
    *
    * @default false
    */
   darkMode?: boolean;
-
-  /**
-   * className supplied to RadioGroup container.
-   */
-  className?: string;
 
   /**
    * Callback to be executed when a Radio is selected.
@@ -27,7 +22,9 @@ export interface RadioGroupProps {
   /**
    * Content that will appear inside of RadioGroup component.
    *
-   * Can be any node; however, any <Radio /> components, will be treated as belonging to the <RadioGroup /> compound component, and will receive internal state from <RadioGroup />
+   * Can be any node; however, only <Radio /> components, will be treated as belonging to the <RadioGroup /> compound component, and will receive internal state from <RadioGroup />
+   *
+   * @type `<Radio />`
    */
   children: React.ReactNode;
 
@@ -62,7 +59,7 @@ export interface RadioGroupProps {
  * @param props.children Content to appear inside of RadioGroup component.
  * @param props.onChange Callback to be executed when a Radio is selected.
  * @param props.value Radio that should appear checked. If value passed, component will be controlled by consumer.
- * @param props.className classname applied to RadioGroup container.
+ * @param props.className className applied to RadioGroup container.
  * @param props.name Name passed to each Radio belonging to the RadioGroup.
  * @param props.darkMode Determines whether or not the RadioGroup will appear in dark mode.
  * @param props.size Determines the size of the Radio components Can be 'small' or 'default.
@@ -75,6 +72,7 @@ function RadioGroup({
   children,
   value: controlledValue,
   name: nameProp,
+  ...rest
 }: RadioGroupProps) {
   let isControlled = controlledValue != null ? true : false,
     defaultChecked = '';
@@ -135,6 +133,7 @@ function RadioGroup({
       )}
       role="group"
       aria-label={name}
+      {...rest}
     >
       {renderedChildren}
     </div>

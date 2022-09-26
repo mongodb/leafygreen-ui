@@ -115,7 +115,7 @@ export const radioWrapper = css`
   }
 `;
 
-export interface RadioBoxProps {
+export interface RadioBoxProps extends Omit<HTMLElementProps<'input'>, 'size'> {
   /**
    * Indicates whether or not the box will be checked
    * @default false
@@ -170,9 +170,6 @@ export interface RadioBoxProps {
   default?: boolean;
 }
 
-type ExtendedRadioBoxProps = RadioBoxProps &
-  Omit<HTMLElementProps<'input', never>, 'size'>;
-
 function isChecked({
   checkedProp,
   defaultProp,
@@ -225,7 +222,7 @@ export function RadioBox({
   onBlur,
   onClick,
   ...rest
-}: ExtendedRadioBoxProps) {
+}: RadioBoxProps) {
   const radioBoxGroupContext = useRadioBoxGroupContext();
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
