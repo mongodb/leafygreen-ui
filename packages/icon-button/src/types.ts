@@ -10,23 +10,32 @@ export const Size = {
 export type Size = typeof Size[keyof typeof Size];
 
 // Since applications can't yet tree-shake, we're duplicating this interface from the types in the namespaces within the Icon package rather than importing the Icon package.
+// TODO: Import {IconProps} from '.../icon`
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   glyph: string;
   size?: Size | number;
   title?: string | null | boolean;
 }
 
+// Not extending `button` props. Instead using `BoxProps`
 export interface BaseIconButtonProps {
   className?: string;
+
+  /**
+   * The Leafygreen `<Icon />` component to render
+   * @required
+   */
   children?: React.ReactNode;
+
   /**
    * If `true`, the button will be rendered with disabled styles
    */
   disabled?: boolean;
   /**
-   * Size of tehe icon
+   * Size of the icon
    */
   size?: Size;
+
   darkMode?: boolean;
   /**
    * If `true`, the button will be rendered with active styles

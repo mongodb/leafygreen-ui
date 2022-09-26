@@ -5,7 +5,14 @@ import { Size } from './glyphCommon';
 
 // We omit size here because we map string values for size to numbers in this component.
 export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
+  /**
+   * The name of the icon glyph
+   */
   glyph: string;
+
+  /**
+   * Size of the icon
+   */
   size?: Size | number;
 }
 

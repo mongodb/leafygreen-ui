@@ -1,6 +1,7 @@
 export { LGGlyph } from './types';
 export { Size } from './glyphCommon';
 export { createIconComponent } from './createIconComponent';
+export type { IconProps } from './createIconComponent';
 export { createGlyphComponent } from './createGlyphComponent';
 export { glyphs } from './glyphs';
 export { isComponentGlyph } from './isComponentGlyph';
