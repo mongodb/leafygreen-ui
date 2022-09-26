@@ -1,3 +1,4 @@
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import React, { Dispatch } from 'react';
 
 export interface StepperContextValues {
@@ -31,17 +32,17 @@ export type SingleStepStates =
   | StepStates.Current
   | StepStates.Upcoming;
 
-export interface StepperProps {
+export interface StepperProps extends HTMLElementProps<'ol'> {
   /**
    * The index of the step that should be marked as current. (zero-indexed)
    *
-   * * NOTE: Validations for this prop's value in relation to `completedStepsShown` and `maxDisplayedSteps` are not implemented yet.
+   * *NOTE:* Validations for this prop's value in relation to `completedStepsShown` and `maxDisplayedSteps` are not yet implemented.
    */
   currentStep: number;
   /**
    * Maximum number of steps displayed in the stepper. Includes the ellipses steps.
    *
-   * * NOTE: Validations for this prop's value in relation to `completedStepsShown` and `currentStep` are not implemented yet.
+   * *NOTE:* Validations for this prop's value in relation to `completedStepsShown` and `currentStep` are not yet implemented.
    *
    * @default children.length | 1
    */
@@ -49,14 +50,14 @@ export interface StepperProps {
   /**
    * Number of completed steps shown before the upcoming steps are displayed. Includes the ellipses step for prior steps.
    *
-   * * NOTE: Validations for this prop's value in relation to `maxDisplayedSteps` and `currentStep` are not implemented yet.
+   * *NOTE:* Validations for this prop's value in relation to `maxDisplayedSteps` and `currentStep` are not yet implemented.
    */
   completedStepsShown?: number;
   darkMode?: boolean;
   className?: string;
 }
 
-export interface InternalStepProps {
+export interface InternalStepProps extends HTMLElementProps<'div'> {
   state: StepStates;
   index?: number;
   stepIcon?: React.ReactNode;
