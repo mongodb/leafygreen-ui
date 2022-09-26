@@ -17,6 +17,8 @@ interface Layout {
     size: number;
     gutter: number;
     lastSize: number;
+    after: number;
+    margin: number;
   };
   fontSize: number;
   fontWeight: number;
@@ -35,7 +37,10 @@ export const layout: { readonly [K in Size]: Layout } = {
     chevron: {
       size: 2,
       gutter: 20,
-      lastSize: 9,
+      lastSize: 12,
+      after: 6,
+      margin: -9,
+
     },
     fontSize: 13,
     fontWeight: 600,
@@ -53,7 +58,9 @@ export const layout: { readonly [K in Size]: Layout } = {
     chevron: {
       size: 2,
       gutter: 20,
-      lastSize: 11,
+      lastSize: 12,
+      after: 8,
+      margin: -9,
     },
     fontSize: 13,
     fontWeight: 600,
@@ -72,6 +79,8 @@ export const layout: { readonly [K in Size]: Layout } = {
       size: 3,
       gutter: 20,
       lastSize: 13,
+      after: 11,
+      margin: -9,
     },
     fontSize: 13,
     fontWeight: 600,
@@ -90,6 +99,8 @@ export const layout: { readonly [K in Size]: Layout } = {
       size: 4,
       gutter: 20,
       lastSize: 15,
+      after: 15,
+      margin: -10,
     },
     fontSize: 18,
     fontWeight: 600,
