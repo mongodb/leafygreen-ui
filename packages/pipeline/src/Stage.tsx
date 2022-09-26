@@ -68,8 +68,10 @@ const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
     css`
       background-color: ${primary.backgroundColor};
       color: ${color};
-      padding: ${gutter.vertical}px ${gutter.horizontal}px;
-      margin-right: ${offset}px;
+      // padding: ${gutter.vertical}px ${gutter.horizontal}px;
+      padding: ${gutter.vertical}px ${chevron.gutter}px ${gutter.vertical}px ${gutter.horizontal}px;
+
+      // margin-right: ${offset}px;
       font-size: ${fontSize}px;
       font-weight: ${fontWeight};
       line-height: ${lineHeight};
@@ -85,6 +87,37 @@ const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
       &[data-stage-visible='false'] {
         counter-increment: hiddenCount;
       }
+
+      // span {
+      //   background-color: ${primary.backgroundColor};
+      // color: ${color};
+      // // padding: ${gutter.vertical}px ${gutter.horizontal}px;
+      // padding: ${gutter.vertical}px ${chevron.gutter}px ${gutter.vertical}px ${gutter.horizontal}px;
+      // }
+
+      &:last-of-type {
+        // padding: ${gutter.vertical}px ${gutter.horizontal}px;
+        &::after {
+          content: '';
+          width: ${chevron.lastSize}px;
+          height: 100%;
+          background-image: url("data:image/svg+xml,%3Csvg width='15' height='48' viewBox='0 0 15 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H0.572721C2.47768 0 4.21713 1.08246 5.05854 2.79152L14.4127 21.7915C15.0983 23.184 15.0983 24.816 14.4127 26.2085L5.05855 45.2085C4.21713 46.9175 2.47768 48 0.572721 48H0V0Z' fill='%23C3E7FE'/%3E%3C/svg%3E%0A");
+          background-color: white;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: 0;
+    background-position: -1px 0px;
+        }
+      }
+
+      &:not(&:last-of-type) {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 15 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H7.72009C6.97388 0 6.49054 0.787842 6.82867 1.45312L14.087 15.7346C14.8105 17.1582 14.8105 18.8418 14.087 20.2654L6.82867 34.5469C6.49054 35.2122 6.97388 36 7.72009 36H0C1.89386 36 3.62518 34.9299 4.47211 33.2361L10.9721 20.2361C11.6759 18.8285 11.676 17.1716 10.9721 15.7639L4.47211 2.76392C3.62518 1.07007 1.89386 0 0 0Z' fill='white'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: auto;
+        background-position: right;
+        // padding: ${gutter.vertical}px ${chevron.gutter}px ${gutter.vertical}px ${gutter.horizontal}px;
+      }
     `,
   );
 };
@@ -96,16 +129,38 @@ const getStageChevronStyle = ({
   const { primary } = colors;
   const outerSize = height / 2;
 
-  return cx(
-    getChevronStyle({ size }),
-    css`
-      &::before {
-        background-color: ${primary.backgroundColor};
-        box-shadow: 0 0 0 ${chevron.size}px ${uiColors.white},
-          0 0 0 ${outerSize}px ${primary.backgroundColor};
-      }
-    `,
-  );
+  // return cx(
+  //   getChevronStyle({ size }),
+  //   css`
+  //     &::before {
+  //       background-color: ${primary.backgroundColor};
+  //       box-shadow: 0 0 0 ${chevron.size}px ${uiColors.white},
+  //         0 0 0 ${outerSize}px ${primary.backgroundColor};
+  //     }
+  //   `,
+  // );
+
+  return css`
+    // position: absolute;
+    // right: 0;
+    // height: 100%;
+    // width: ${chevron.gutter}px;
+    // overflow: hidden;
+
+    // background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 15 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H7.72009C6.97388 0 6.49054 0.787842 6.82867 1.45312L14.087 15.7346C14.8105 17.1582 14.8105 18.8418 14.087 20.2654L6.82867 34.5469C6.49054 35.2122 6.97388 36 7.72009 36H0C1.89386 36 3.62518 34.9299 4.47211 33.2361L10.9721 20.2361C11.6759 18.8285 11.676 17.1716 10.9721 15.7639L4.47211 2.76392C3.62518 1.07007 1.89386 0 0 0Z' fill='white'/%3E%3C/svg%3E");
+    //   background-repeat: no-repeat;
+    //   background-size: contain;
+
+    // // &::before {
+    // //   content: '';
+    // //   height: 100%;
+    // //   width: 100%;
+    // //   display: inline-block;
+    // //   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 15 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H7.72009C6.97388 0 6.49054 0.787842 6.82867 1.45312L14.087 15.7346C14.8105 17.1582 14.8105 18.8418 14.087 20.2654L6.82867 34.5469C6.49054 35.2122 6.97388 36 7.72009 36H0C1.89386 36 3.62518 34.9299 4.47211 33.2361L10.9721 20.2361C11.6759 18.8285 11.676 17.1716 10.9721 15.7639L4.47211 2.76392C3.62518 1.07007 1.89386 0 0 0Z' fill='white'/%3E%3C/svg%3E");
+    // //   background-repeat: no-repeat;
+    // //   background-size: contain;
+    // // }
+  `;
 };
 
 const getStatefulStyles = (state: StateForStyles) => ({
@@ -164,13 +219,14 @@ const Stage = forwardRef(
         data-stage-visible={isVisible}
         className={cx(baseStyle, className)}
       >
-        {children}
-
-        <div
+        <span>
+          {children}
+        </span>
+        {/* <div
           data-testid="pipeline-stage-chevron"
           {...stageChevronAttr.prop}
           className={chevronStyle}
-        />
+        /> */}
       </li>
     );
   },

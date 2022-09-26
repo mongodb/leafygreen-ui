@@ -1,4 +1,4 @@
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { createDataProp } from '@leafygreen-ui/lib';
 
@@ -15,6 +15,8 @@ interface Layout {
   borderRadius: number;
   chevron: {
     size: number;
+    gutter: number;
+    lastSize: number;
   };
   fontSize: number;
   fontWeight: number;
@@ -32,8 +34,10 @@ export const layout: { readonly [K in Size]: Layout } = {
     borderRadius: 4,
     chevron: {
       size: 2,
+      gutter: 20,
+      lastSize: 9,
     },
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: 600,
     gutter: {
       vertical: 2,
@@ -48,14 +52,16 @@ export const layout: { readonly [K in Size]: Layout } = {
     borderRadius: 4,
     chevron: {
       size: 2,
+      gutter: 20,
+      lastSize: 11,
     },
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 600,
     gutter: {
       vertical: 2,
       horizontal: 6,
     },
-    height: 25,
+    height: 28,
     lineHeight: 1,
     minWidth: 74,
   },
@@ -64,14 +70,16 @@ export const layout: { readonly [K in Size]: Layout } = {
     borderRadius: 4,
     chevron: {
       size: 3,
+      gutter: 20,
+      lastSize: 13,
     },
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 600,
     gutter: {
       vertical: 2,
       horizontal: 8,
     },
-    height: 32,
+    height: 36,
     lineHeight: 1,
     minWidth: 74,
   },
@@ -80,14 +88,16 @@ export const layout: { readonly [K in Size]: Layout } = {
     borderRadius: 4,
     chevron: {
       size: 4,
+      gutter: 20,
+      lastSize: 15,
     },
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 600,
     gutter: {
       vertical: 2,
       horizontal: 10,
     },
-    height: 45,
+    height: 48,
     lineHeight: 1,
     minWidth: 74,
   },
@@ -106,7 +116,7 @@ interface Color {
 export const colors: Color = {
   color: uiColors.blue.base,
   primary: {
-    backgroundColor: uiColors.blue.light2,
+    backgroundColor: palette.blue.light2,
   },
   secondary: {
     backgroundColor: uiColors.blue.light3,
