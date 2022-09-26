@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Card from '@leafygreen-ui/card';
+import Card, { CardProps } from '@leafygreen-ui/card';
 import Icon from '@leafygreen-ui/icon';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -24,7 +24,7 @@ import { palette } from '@leafygreen-ui/palette';
 /**
  * Types
  */
-interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ExpandableCardProps extends Omit<CardProps, 'contentStyle'> {
   /**
    * The title of the card
    */
@@ -68,11 +68,6 @@ interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement> {
   id?: string;
 
   /**
-   * Styling prop
-   */
-  className?: string;
-
-  /**
    * Styling prop for children
    */
   contentClassName?: string;
@@ -84,7 +79,7 @@ interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Conponent
+ * TODO: Description
  */
 const ExpandableCard = ({
   title,

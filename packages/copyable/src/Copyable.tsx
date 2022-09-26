@@ -20,7 +20,7 @@ import {
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize, typeScales } from '@leafygreen-ui/tokens';
-import { Theme } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 
 export const Size = {
   Default: 'default',
@@ -148,7 +148,8 @@ const buttonWrapperStyleShadowTheme: Record<Theme, string> = {
 
     &:hover:before {
       box-shadow: -12px 0 10px 0 ${transparentize(0.4, palette.black)};
-    `,
+    }
+  `,
 };
 const buttonStyle = css`
   height: 100%;
@@ -164,7 +165,7 @@ const iconStyle = css`
   padding-right: 6px;
 `;
 
-interface CopyableProps {
+interface CopyableProps extends HTMLElementProps<'div'> {
   /**
    * Determines whether or not the component appears in dark theme.
    * @default: false
@@ -179,7 +180,7 @@ interface CopyableProps {
    * Description text
    */
   description?: string;
-  className?: string;
+
   /**
    * If `true`, there will be a copy button that will move the component's children to the user's clipboard
    */
