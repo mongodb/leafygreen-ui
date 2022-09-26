@@ -150,6 +150,24 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
 
         <link rel="icon" href="/favicon.ico" />
+
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=G-VFTH2BJVVK`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', G-VFTH2BJVVK, {
+              page_path: window.location.pathname,
+            });
+          `,
+          }}
+        />
       </Head>
       <Global styles={globalStyles} />
       <BaseLayout>
