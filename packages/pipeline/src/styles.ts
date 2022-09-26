@@ -40,7 +40,6 @@ export const layout: { readonly [K in Size]: Layout } = {
       lastSize: 12,
       after: 6,
       margin: -9,
-
     },
     fontSize: 13,
     fontWeight: 600,

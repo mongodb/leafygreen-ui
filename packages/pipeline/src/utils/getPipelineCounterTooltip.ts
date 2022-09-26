@@ -1,7 +1,6 @@
-import React, { ReactNode } from 'react';
-import { onlyText } from 'react-children-utilities';
 import flatMap from 'lodash/flatMap';
 
+// TODO: change desc
 /**
  * A utility function which takes the React.children rendered by the Pipeline component
  * and returns the string which represents the full pipeline, for usage with the tooltip.
@@ -9,8 +8,10 @@ import flatMap from 'lodash/flatMap';
  * @param children - the children rendered by the pipeline component
  * @returns string - the tooltip text
  */
-export default function getPipelineCounterTooltip(children: ReactNode): string {
-  const stages = (React.Children.map(children, onlyText) || []).filter(Boolean);
+export default function getPipelineCounterTooltip(
+  stages: Array<string | null>,
+): string {
+  // const stages = (React.Children.map(children, onlyText) || []).filter(Boolean);
 
   return flatMap(stages, (value, index, array) =>
     array.length - 1 !== index ? [value, '>'] : value,

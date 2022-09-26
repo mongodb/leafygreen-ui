@@ -5,6 +5,7 @@ import React, {
   Ref,
   ReactElement,
   ReactNode,
+  useRef,
 } from 'react';
 
 import PropTypes from 'prop-types';
@@ -142,6 +143,7 @@ const Pipeline = forwardRef(
     // State
     const [pipelineNode, setPipelineNode] = useState<HTMLElement | null>(null);
     const [hasHiddenStages, setHasHiddenStages] = useState(false);
+    const [tooltipText, setTooltipText] = useState<string>('');
 
     // Handlers
 
@@ -155,32 +157,23 @@ const Pipeline = forwardRef(
       setHasHiddenStages(result);
     };
 
+    // TODO: change this
     /**
      * Decorates the last visible stage with a className necessary for applying
      * the correct visual appearance. The mutation of the DOM is required otherwise the
      * Stage components will re-render, triggering an infinite loop on the
      * mutation observer.
      */
-    const setLastVisibleStage = () => {
+    const getAllHiddenStages = () => {
       const allStages = Array.from(
         pipelineNode!.children as HTMLCollectionOf<HTMLElement>,
       );
 
-      // Remove previously added last visible stage classNames
-      allStages.forEach(element => {
-        element.classList.remove(lastVisibleClassName);
-      });
+      const allHiddenStages = allStages
+        .filter(element => element.dataset.stageVisible === 'false')
+        .map(element => element.textContent);
 
-      // Get the last visible stage
-      const lastVisibleStage = findLast(
-        allStages,
-        element => element.dataset.stageVisible !== 'false',
-      );
-
-      // Decorate the last visible stage so that we can appropriately style the chevron
-      if (lastVisibleStage) {
-        lastVisibleStage.classList.add(lastVisibleClassName);
-      }
+      setTooltipText(getPipelineCounterTooltip(allHiddenStages));
     };
 
     /**
@@ -193,7 +186,7 @@ const Pipeline = forwardRef(
 
       if (attrs.includes('data-stage-visible') || types.includes('childList')) {
         handleCounterDisplay();
-        setLastVisibleStage();
+        getAllHiddenStages();
       }
     };
 
@@ -220,7 +213,6 @@ const Pipeline = forwardRef(
         : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
     });
 
-    const tooltipText = getPipelineCounterTooltip(childrenAsPipelineStages);
     const {
       base: baseStyle,
       pipeline: pipelineStyle,

@@ -72,16 +72,17 @@ const getCounterChevronStyle = ({
   const { secondary } = colors;
   const outerSize = height / 2;
 
-  return cx(
-    getChevronStyle({ size }),
-    css`
-      &::before {
-        background-color: ${secondary.backgroundColor};
-        box-shadow: 0 0 0 ${chevron.size}px transparent,
-          0 0 0 ${outerSize}px transparent;
-      }
-    `,
-  );
+  // return cx(
+  //   getChevronStyle({ size }),
+  //   css`
+  //     &::before {
+  //       background-color: ${secondary.backgroundColor};
+  //       box-shadow: 0 0 0 ${chevron.size}px transparent,
+  //         0 0 0 ${outerSize}px transparent;
+  //     }
+  //   `,
+  // );
+  return css``;
 };
 
 const getStatefulStyles = (state: StateForStyles) => ({
