@@ -2,6 +2,7 @@ import React, { SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import { ModalView } from '.';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const CloseIconColor = {
   Default: 'default',
@@ -19,7 +20,7 @@ export const ModalSize = {
 
 export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 
-export interface ModalProps {
+export interface ModalProps extends HTMLElementProps<'div'> {
   /**
    * Content that will appear inside of the Modal component.
    */
@@ -51,11 +52,6 @@ export interface ModalProps {
    * @default () => true
    */
   shouldClose?: () => boolean;
-
-  /**
-   * className applied to root div.
-   */
-  className?: string;
 
   /**
    * className applied to overlay div.

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Button from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
-import Modal from '@leafygreen-ui/modal';
+import Modal, { ModalProps } from '@leafygreen-ui/modal';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import { fontFamilies } from '@leafygreen-ui/tokens';
@@ -117,7 +117,7 @@ const footerContentStyle = css`
   justify-content: center;
 `;
 
-interface MarketingModalProps {
+interface MarketingModalProps extends ModalProps {
   /**
    * Text of header element
    */
@@ -149,7 +149,7 @@ interface MarketingModalProps {
    * 	Callback fired when the modal is closed
    */
   onClose?: () => void;
-  className?: string;
+
   /**
    * 	Text of the primary CTA button
    */
@@ -158,6 +158,7 @@ interface MarketingModalProps {
    * 	Text of the secondary link element
    */
   linkText: string;
+
   darkMode?: boolean;
   /**
    * 	Color of the close icon button
