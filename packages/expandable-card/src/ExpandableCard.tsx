@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import Card, { CardProps } from '@leafygreen-ui/card';
 import Icon from '@leafygreen-ui/icon';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
@@ -33,7 +33,7 @@ interface ExpandableCardProps extends Omit<CardProps, 'contentStyle'> {
   /**
    * Description text below the title
    */
-  description?: string;
+  description?: ReactNode;
 
   /**
    * Text in parentheses immediately following the title. Typically 'optional' or 'required'
