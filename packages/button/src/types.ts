@@ -67,6 +67,7 @@ interface ButtonProps {
   /**
    * Sets the variant for the Button
    *
+   * @required
    * @default 'default'
    */
   variant?: Variant;
