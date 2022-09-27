@@ -75,7 +75,7 @@ import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
  * allowing the user to either type a value directly or select a value from the list.
  * Can be configured to select a single or multiple options.
  */
-function Combobox<M extends boolean>({
+export default function Combobox<M extends boolean>({
   children,
   label,
   description,
@@ -125,7 +125,7 @@ function Combobox<M extends boolean>({
 
   const [isOpen, setOpen] = useState(false);
   const wasOpen = usePrevious(isOpen);
-  const [highlightedOption, sethighlightedOption] = useState<string | null>(
+  const [highlightedOption, setHighlightedOption] = useState<string | null>(
     null,
   );
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
@@ -161,11 +161,11 @@ function Combobox<M extends boolean>({
     <T extends string>(val?: Array<T> | T | null): val is Array<T> => {
       if (multiselect && (typeof val == 'string' || typeof val == 'number')) {
         consoleOnce.error(
-          `Error in Combobox: multiselect is set to \`true\`, but recieved a ${typeof val} value: "${val}"`,
+          `Error in Combobox: multiselect is set to \`true\`, but received a ${typeof val} value: "${val}"`,
         );
       } else if (!multiselect && isArray(val)) {
         consoleOnce.error(
-          'Error in Combobox: multiselect is set to `false`, but recieved an Array value',
+          'Error in Combobox: multiselect is set to `false`, but received an Array value',
         );
       }
 
@@ -198,7 +198,8 @@ function Combobox<M extends boolean>({
   const updateSelection = useCallback(
     (value: string | null) => {
       if (isMultiselect(selection)) {
-        const newSelection: SelectValueType<M> = clone(selection);
+        // We know M is true here
+        const newSelection: SelectValueType<true> = clone(selection);
 
         if (isNull(value)) {
           newSelection.length = 0;
@@ -213,7 +214,7 @@ function Combobox<M extends boolean>({
             setInputValue('');
           }
         }
-        setSelection(newSelection);
+        setSelection(newSelection as SelectValueType<M>);
         (onChange as onChangeType<true>)?.(
           newSelection as SelectValueType<true>,
         );
@@ -398,7 +399,7 @@ function Combobox<M extends boolean>({
               ? getValueAtIndex(indexOfHighlight + 1)
               : getValueAtIndex(0);
 
-          sethighlightedOption(newValue ?? null);
+          setHighlightedOption(newValue ?? null);
           break;
         }
 
@@ -408,20 +409,20 @@ function Combobox<M extends boolean>({
               ? getValueAtIndex(indexOfHighlight - 1)
               : getValueAtIndex(lastIndex);
 
-          sethighlightedOption(newValue ?? null);
+          setHighlightedOption(newValue ?? null);
           break;
         }
 
         case 'last': {
           const newValue = getValueAtIndex(lastIndex);
-          sethighlightedOption(newValue ?? null);
+          setHighlightedOption(newValue ?? null);
           break;
         }
 
         case 'first':
         default: {
           const newValue = getValueAtIndex(0);
-          sethighlightedOption(newValue ?? null);
+          setHighlightedOption(newValue ?? null);
         }
       }
     },
@@ -495,7 +496,7 @@ function Combobox<M extends boolean>({
   const handleArrowKey = useCallback(
     (direction: 'left' | 'right', event: React.KeyboardEvent<Element>) => {
       // Remove focus from menu
-      if (direction) sethighlightedOption(null);
+      if (direction) setHighlightedOption(null);
 
       switch (direction) {
         case 'right':
@@ -627,7 +628,7 @@ function Combobox<M extends boolean>({
             : selection === value;
 
           const setSelected = () => {
-            sethighlightedOption(value);
+            setHighlightedOption(value);
             updateSelection(value);
             setInputFocus();
 
@@ -983,7 +984,7 @@ function Combobox<M extends boolean>({
   };
 
   const handleClearButtonFocus = () => {
-    sethighlightedOption(null);
+    setHighlightedOption(null);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {

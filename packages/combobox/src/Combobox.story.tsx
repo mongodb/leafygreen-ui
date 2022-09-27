@@ -92,7 +92,7 @@ export default {
       if: { arg: 'searchState', eq: SearchState.loading },
     },
     chipTruncationLocation: {
-      options: Object.values(TrunctationLocation),
+      options: Object.values(TruncationLocation),
       control: 'select',
       if: { arg: 'multiselect' },
     },
