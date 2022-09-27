@@ -1,5 +1,11 @@
 # @leafygreen-ui/stepper
 
+## 3.0.5
+
+### Patch Changes
+
+- c47de060: Dark mode text color change
+
 ## 3.0.4
 
 ### Patch Changes
