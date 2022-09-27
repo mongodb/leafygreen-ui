@@ -24,7 +24,7 @@ interface StandaloneProps {
   /**
    * Used to display the current step. If `numberOfSteps === 1` this number will not display.
    */
-  currentStep?: number;
+  currentStep?: never;
 }
 
 interface MultistepProps {
