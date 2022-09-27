@@ -1,16 +1,15 @@
 import React, { forwardRef, ReactElement, ReactNode, Ref } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { SegmentXs, SegmentS, SegmentM, SegmentL } from './svgs';
 
 import {
   getRootStyle,
   getChildStyle,
-  getChevronStyle,
   Size,
   layout,
   colors,
   counterAttr,
-  counterChevronAttr,
 } from './styles';
 
 interface StateForStyles {
@@ -34,8 +33,15 @@ interface CounterProps {
   size: Size;
 }
 
+const segments: Record<Size, React.ComponentType<any>> = {
+  [Size.XSmall]: SegmentXs,
+  [Size.Small]: SegmentS,
+  [Size.Normal]: SegmentM,
+  [Size.Large]: SegmentL,
+} as const;
+
 const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
-  const { chevron, fontSize, fontWeight, gutter, height, lineHeight } =
+  const { chevron, fontSize, fontWeight, gutter, height, lineHeight, counter } =
     layout[size];
 
   const { color, secondary } = colors;
@@ -49,13 +55,14 @@ const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
       background-color: ${secondary.backgroundColor};
       color: ${color};
       padding: ${gutter.vertical}px ${gutter.horizontal}px;
-      margin-right: ${offset}px;
+      // margin-right: ${offset}px;
       font-size: ${fontSize}px;
       font-weight: ${fontWeight};
       line-height: ${lineHeight};
       flex: 1 1 auto;
       white-space: nowrap;
       z-index: 2;
+      min-width: ${counter.minWidth}px;
 
       &::before {
         white-space: nowrap;
@@ -105,9 +112,10 @@ const Counter = forwardRef(
     { className = '', children, size, ...rest }: CounterProps,
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
-    const { base: baseStyle, chevron: chevronStyle } = getStatefulStyles({
+    const { base: baseStyle } = getStatefulStyles({
       size,
     });
+    const Icon = segments[size];
 
     return (
       <div
@@ -117,14 +125,16 @@ const Counter = forwardRef(
         className={cx(baseStyle, className)}
         ref={ref}
       >
+        {/* TODO: add classname prop */}
+        <Icon/>
         {/* Children will be the tooltip provided by the Pipeline component */}
         {children}
 
-        <div
+        {/* <div
           {...counterChevronAttr.prop}
           data-testid="pipeline-counter-chevron"
           className={chevronStyle}
-        />
+        /> */}
       </div>
     );
   },
