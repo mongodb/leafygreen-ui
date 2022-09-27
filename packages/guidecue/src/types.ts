@@ -94,7 +94,7 @@ export type GuidecueProps = {
    */
   tooltipJustify?: Exclude<Justify, 'fit'>;
   /**
-   * Determines the alignment of the beacon. This only applies to the multi-step tooltip.
+   * Determines the alignment of the beacon(animated pulsing circle that appears on top of the trigger element). This only applies to the multi-step tooltip.
    * @default 'center-horizontal'
    */
   beaconAlign?: Align;
