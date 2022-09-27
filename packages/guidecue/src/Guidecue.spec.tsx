@@ -8,6 +8,7 @@ import {
 import { axe } from 'jest-axe';
 import { Guidecue } from '.';
 import userEvent from '@testing-library/user-event';
+import { timeout1 } from './styles';
 
 // TODO: maybe add globally
 async function expectElementToNotBeRemoved(element: HTMLElement) {
@@ -93,6 +94,12 @@ describe('packages/guidecue', () => {
       await waitFor(() => expect(guidecue).toBeVisible());
     });
 
+    test('is not visible when open is "false"', async () => {
+      const { queryByRole } = renderGuidecue({ open: true });
+      const guidecue = queryByRole('dialog');
+      await waitFor(() => expect(guidecue).not.toBeVisible());
+    });
+
     test('closes when the primary button is clicked', async () => {
       const onPrimaryButtonClick = jest.fn();
       const { getByRole } = renderGuidecue({
@@ -115,8 +122,9 @@ describe('packages/guidecue', () => {
       const button = getByRole('button');
       userEvent.click(button);
       await act(async () => {
-        await waitForTimeout(100);
-        expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1);
+        await waitFor(() =>
+          expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1),
+        );
       });
     });
 
@@ -142,7 +150,7 @@ describe('packages/guidecue', () => {
       expect(guidecue).not.toBeInTheDocument();
     });
 
-    test('content should not be in the container', () => {
+    test('content should render in a portal', () => {
       const { container, getByTestId } = renderGuidecue({
         open: true,
       });
@@ -200,7 +208,7 @@ describe('packages/guidecue', () => {
         currentStep: 1,
       });
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
       const guidecue = getByRole('dialog');
       await waitFor(() => expect(guidecue).toBeVisible());
@@ -215,7 +223,7 @@ describe('packages/guidecue', () => {
         onDismiss: onClose,
       });
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
       const guidecue = getByRole('dialog');
       const button = getByLabelText('Close Tooltip', { selector: 'button' });
@@ -233,13 +241,12 @@ describe('packages/guidecue', () => {
         onDismiss: onClose,
       });
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
       const button = getByLabelText('Close Tooltip', { selector: 'button' });
       userEvent.click(button);
       await act(async () => {
-        await waitForTimeout(400);
-        expect(onClose).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
       });
     });
 
@@ -252,7 +259,7 @@ describe('packages/guidecue', () => {
         onPrimaryButtonClick,
       });
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
       const guidecue = getByRole('dialog');
       const button = getAllByRole('button')[1];
@@ -270,13 +277,14 @@ describe('packages/guidecue', () => {
         onPrimaryButtonClick,
       });
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
       const button = getAllByRole('button')[1];
       userEvent.click(button);
       await act(async () => {
-        await waitForTimeout(400);
-        expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1);
+        await waitFor(() =>
+          expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1),
+        );
       });
     });
 
@@ -288,7 +296,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
       const guidecue = getByRole('dialog');
       userEvent.click(backdrop);
@@ -305,7 +313,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
 
       const modal = getByRole('dialog');
@@ -315,17 +323,17 @@ describe('packages/guidecue', () => {
       expect(modal).not.toBeInTheDocument();
     });
 
-    test('content should not be in the container', async () => {
+    test('content should render in a portal', async () => {
       const { container, getByTestId } = renderGuidecue({
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
       });
-
       await act(async () => {
-        await waitForTimeout(400);
+        await waitFor(() =>
+          expect(container).not.toContain(getByTestId(guidecueTestId)),
+        );
       });
-      expect(container).not.toContain(getByTestId(guidecueTestId));
     });
 
     test('number of steps should be visible', async () => {
@@ -336,7 +344,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
 
       const steps = getByText('1 of 2');
@@ -351,7 +359,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
 
       const title = getByText(guidecueTitle);
@@ -366,7 +374,7 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(400);
+        await waitForTimeout(timeout1);
       });
 
       const body = getByText(guidecueChildren);
@@ -386,8 +394,10 @@ describe('packages/guidecue', () => {
       });
 
       await act(async () => {
-        await waitForTimeout(400);
-        expect(elem.innerHTML.includes(guidecueTitle)).toBe(true);
+        // await waitForTimeout(timeout1);
+        await waitFor(() =>
+          expect(elem.innerHTML.includes(guidecueTitle)).toBe(true),
+        );
       });
     });
   });

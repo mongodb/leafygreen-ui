@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
-import { beaconStyles } from './styles';
+import { beaconStyles, timeout1, timeout2 } from './styles';
 import { GuidecueProps } from './types';
 import { TooltipContent } from './';
 
@@ -55,11 +55,11 @@ function Guidecue({
     if (open) {
       // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to multi-step tooltip.
       setPopoverOpen(true); // beacon opens first
-      openTimeout = setTimeout(() => setTooltipOpen(true), 400); // tooltip opens a little after
+      openTimeout = setTimeout(() => setTooltipOpen(true), timeout1); // tooltip opens a little after
     } else {
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multi-step tooltip.
       setTooltipOpen(false); // tooltip closes first
-      closeTimeout = setTimeout(() => setPopoverOpen(false), 200); // beacon closes a little after
+      closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2); // beacon closes a little after
     }
 
     return () => {
@@ -73,7 +73,7 @@ function Guidecue({
    */
   const handleCloseClick = () => {
     setOpen(false);
-    setTimeout(() => onDismiss(), 400);
+    setTimeout(() => onDismiss(), timeout1);
   };
 
   /**
@@ -81,7 +81,7 @@ function Guidecue({
    */
   const handleButtonClick = () => {
     setOpen(false);
-    setTimeout(() => onPrimaryButtonClick(), isStandalone ? 0 : 400);
+    setTimeout(() => onPrimaryButtonClick(), isStandalone ? 0 : timeout1);
   };
 
   /**
