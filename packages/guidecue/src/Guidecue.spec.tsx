@@ -100,6 +100,15 @@ describe('packages/guidecue', () => {
       await waitFor(() => expect(guidecue).not.toBeVisible());
     });
 
+    test('is rendered if numberOfSteps < 1', async () => {
+      const { getAllByRole } = renderGuidecue({
+        open: true,
+        numberOfSteps: -1,
+      });
+      const numOfButtons = getAllByRole('button').length;
+      await waitFor(() => expect(numOfButtons).toEqual(1));
+    });
+
     test('closes when the primary button is clicked', async () => {
       const onPrimaryButtonClick = jest.fn();
       const { getByRole } = renderGuidecue({
@@ -132,20 +141,16 @@ describe('packages/guidecue', () => {
       const { getByRole, backdrop } = renderGuidecue({
         open: true,
       });
-
       const guidecue = getByRole('dialog');
       userEvent.click(backdrop);
-
       await expectElementToNotBeRemoved(guidecue);
       expect(guidecue).toBeVisible();
     });
 
     test('closes guidecue when escape key is pressed', async () => {
       const { getByRole } = renderGuidecue({ open: true });
-
       const guidecue = getByRole('dialog');
       userEvent.type(guidecue, '{esc}');
-
       await waitForElementToBeRemoved(guidecue);
       expect(guidecue).not.toBeInTheDocument();
     });
@@ -187,13 +192,11 @@ describe('packages/guidecue', () => {
     test('will render inside portal and scroll container', async () => {
       const elem = document.createElement('div');
       document.body.appendChild(elem);
-
       renderGuidecue({
         open: true,
         portalContainer: elem,
         scrollContainer: elem,
       });
-
       await act(async () => {
         expect(elem.innerHTML.includes(guidecueTitle)).toBe(true);
       });
@@ -294,13 +297,11 @@ describe('packages/guidecue', () => {
         numberOfSteps: 2,
         currentStep: 1,
       });
-
       await act(async () => {
         await waitForTimeout(timeout1);
       });
       const guidecue = getByRole('dialog');
       userEvent.click(backdrop);
-
       await expectElementToNotBeRemoved(guidecue);
       expect(guidecue).toBeVisible();
     });
@@ -311,14 +312,11 @@ describe('packages/guidecue', () => {
         numberOfSteps: 2,
         currentStep: 1,
       });
-
       await act(async () => {
         await waitForTimeout(timeout1);
       });
-
       const modal = getByRole('dialog');
       userEvent.type(modal, '{esc}');
-
       await waitForElementToBeRemoved(modal);
       expect(modal).not.toBeInTheDocument();
     });
@@ -342,11 +340,9 @@ describe('packages/guidecue', () => {
         numberOfSteps: 2,
         currentStep: 1,
       });
-
       await act(async () => {
         await waitForTimeout(timeout1);
       });
-
       const steps = getByText('1 of 2');
       expect(steps).toBeInTheDocument();
     });
@@ -357,11 +353,9 @@ describe('packages/guidecue', () => {
         numberOfSteps: 2,
         currentStep: 1,
       });
-
       await act(async () => {
         await waitForTimeout(timeout1);
       });
-
       const title = getByText(guidecueTitle);
       expect(title).toBeInTheDocument();
     });
@@ -372,19 +366,29 @@ describe('packages/guidecue', () => {
         numberOfSteps: 2,
         currentStep: 1,
       });
-
       await act(async () => {
         await waitForTimeout(timeout1);
       });
-
       const body = getByText(guidecueChildren);
       expect(body).toBeInTheDocument();
+    });
+
+    test('dismiss button and primary button should be visible', async () => {
+      const { getAllByRole } = renderGuidecue({
+        open: true,
+        numberOfSteps: 2,
+        currentStep: 1,
+      });
+      await act(async () => {
+        await waitForTimeout(timeout1);
+      });
+      const numOfButtons = getAllByRole('button').length;
+      await waitFor(() => expect(numOfButtons).toEqual(2));
     });
 
     test('will render inside portal and scroll container', async () => {
       const elem = document.createElement('div');
       document.body.appendChild(elem);
-
       renderGuidecue({
         open: true,
         numberOfSteps: 2,
@@ -392,9 +396,7 @@ describe('packages/guidecue', () => {
         portalContainer: elem,
         scrollContainer: elem,
       });
-
       await act(async () => {
-        // await waitForTimeout(timeout1);
         await waitFor(() =>
           expect(elem.innerHTML.includes(guidecueTitle)).toBe(true),
         );
