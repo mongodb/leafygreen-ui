@@ -37,14 +37,14 @@ export const ComboboxSize = {
 } as const;
 export type ComboboxSize = typeof ComboboxSize[keyof typeof ComboboxSize];
 
-export const TrunctationLocation = {
+export const TruncationLocation = {
   start: 'start',
   middle: 'middle',
   end: 'end',
   none: 'none',
 } as const;
-export type TrunctationLocation =
-  typeof TrunctationLocation[keyof typeof TrunctationLocation];
+export type TruncationLocation =
+  typeof TruncationLocation[keyof typeof TruncationLocation];
 
 export const Overflow = {
   /**
@@ -237,7 +237,7 @@ export interface BaseComboboxProps {
   /**
    * Defines where the ellipses appear in a Chip when the length exceeds the `chipCharacterLimit`
    */
-  chipTruncationLocation?: TrunctationLocation;
+  chipTruncationLocation?: TruncationLocation;
 
   /**
    * Defined the character limit of a multiselect Chip before they start truncating.

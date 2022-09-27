@@ -9,7 +9,7 @@ import {
   Overflow,
   SearchState,
   State,
-  TrunctationLocation,
+  TruncationLocation,
 } from './Combobox.types';
 
 const wrapperStyle = css`

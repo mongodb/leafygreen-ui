@@ -11,6 +11,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import { Description, Label } from '@leafygreen-ui/typography';
 import {
   useDynamicRefs,
@@ -32,6 +33,9 @@ import {
   ComboboxElement,
   ComboboxSize,
   State,
+  Overflow,
+  TruncationLocation,
+  SearchState,
 } from './Combobox.types';
 import {
   flattenChildren,
@@ -71,7 +75,7 @@ import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
  * allowing the user to either type a value directly or select a value from the list.
  * Can be configured to select a single or multiple options.
  */
-export default function Combobox<M extends boolean>({
+function Combobox<M extends boolean>({
   children,
   label,
   description,
@@ -1351,6 +1355,51 @@ export default function Combobox<M extends boolean>({
     if (comboboxRef.current?.contains(element)) return ComboboxElement.Combobox;
   }
 }
+
+/* eslint-disable react/forbid-prop-types */
+Combobox.propTypes = {
+  // Multiselect props
+  multiselect: PropTypes.bool,
+  value: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  initialValue: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  overflow: PropTypes.oneOf(Object.values(Overflow)),
+
+  // Standard Props
+  onChange: PropTypes.func,
+  'aria-label': PropTypes.string,
+  label: PropTypes.string,
+  chipCharacterLimit: PropTypes.number,
+  chipTruncationLocation: PropTypes.oneOf(Object.values(TruncationLocation)),
+  onClear: PropTypes.func,
+  onFilter: PropTypes.func,
+  clearable: PropTypes.bool,
+  searchLoadingMessage: PropTypes.string,
+  searchErrorMessage: PropTypes.string,
+  searchEmptyMessage: PropTypes.string,
+  searchState: PropTypes.oneOf(Object.values(SearchState)),
+  errorMessage: PropTypes.string,
+  state: PropTypes.oneOf(Object.values(State)),
+  darkMode: PropTypes.bool,
+  size: PropTypes.oneOf(Object.values(ComboboxSize)),
+  disabled: PropTypes.bool,
+  description: PropTypes.string,
+  children: PropTypes.node,
+  placeholder: PropTypes.string,
+  filteredOptions: PropTypes.arrayOf(PropTypes.string),
+  // Popover Props
+  popoverZIndex: PropTypes.number,
+  usePortal: PropTypes.bool,
+  scrollContainer: PropTypes.any,
+  portalContainer: PropTypes.any,
+  portalClassName: PropTypes.string,
+};
+
 /**
  * Why'd you have to go and make things so complicated?
  * - Avril; and also me to myself about this component
