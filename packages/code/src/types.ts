@@ -22,6 +22,7 @@ export type LineHighlightingDefinition = ReadonlyArray<
 export interface SyntaxProps extends HTMLElementProps<'code'> {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
+   * @required
    */
   children: string;
 
