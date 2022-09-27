@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
+import Card from '@leafygreen-ui/card';
+import Button from '@leafygreen-ui/button';
+import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
+import ExportIcon from '@leafygreen-ui/icon/dist/Export';
+import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import { Tab, Tabs } from './index';
-import { TabsProps } from './Tabs';
+import { TabsProps } from './types';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { css } from '@leafygreen-ui/emotion';
+import { Story } from '@storybook/react';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
 export default {
@@ -13,16 +20,16 @@ export default {
     darkMode: false,
     children: [
       <Tab key="Tab 1" default name="Tab 1">
-        Tab 1 Content
+        <Card>Tab 1 Content</Card>
       </Tab>,
       <Tab
         key="Tab 2"
         name="Tab 2 with a really long name that might overflow and stretch past the width of the Tab"
       >
-        Tab 2 Content
+        <Card>Tab 2 Content</Card>
       </Tab>,
       <Tab key="Tab 3" disabled name="Tab 3">
-        Tab 3 Content
+        <Card>Tab 3 Content</Card>
       </Tab>,
       <Tab
         key="Tab 4"
@@ -46,8 +53,11 @@ export default {
   subcomponents: { Tab },
 } as Meta<typeof Tabs>;
 
-const Template = (props: TabsProps) => (
+const Template: Story<TabsProps> = (props: TabsProps) => (
   <Tabs
+    className={css`
+      width: 66vw;
+    `}
     aria-label="Tabs to demonstrate usage of Leafygreen UI Tab Components"
     {...props}
   />
@@ -69,5 +79,23 @@ export const ControlledByState = ({
   );
 };
 ControlledByState.argTypes = {
-  selected: { control: false },
+  selected: { control: 'none' },
+};
+
+export const WithInlineChildren = Template.bind({});
+WithInlineChildren.args = {
+  inlineChildren: (
+    <>
+      <IconButton aria-label="export">
+        <ExportIcon />
+      </IconButton>
+      <IconButton aria-label="save">
+        <SaveIcon />
+      </IconButton>
+      <Button>Continue</Button>
+    </>
+  ),
+};
+WithInlineChildren.argTypes = {
+  inlineChildren: { control: 'none' },
 };
