@@ -89,6 +89,12 @@ function Guidecue({
    */
   const onEscClose = isStandalone ? onPrimaryButtonClick : onDismiss;
 
+  const sharedProps = {
+    portalClassName,
+    portalContainer,
+    scrollContainer,
+  };
+
   const tooltipContentProps = {
     darkMode,
     open,
@@ -96,9 +102,6 @@ function Guidecue({
     tooltipJustify,
     tooltipAlign,
     refEl,
-    portalClassName,
-    portalContainer,
-    scrollContainer,
     popoverZIndex,
     numberOfSteps,
     currentStep,
@@ -110,6 +113,7 @@ function Guidecue({
     onEscClose,
     handleButtonClick,
     handleCloseClick,
+    ...sharedProps,
     ...tooltipProps,
   };
 
@@ -127,11 +131,9 @@ function Guidecue({
           align={beaconAlign}
           justify={Justify.Middle}
           spacing={-12} // width of beacon is 24px, 24/2 = 12
-          portalClassName={portalClassName}
-          portalContainer={portalContainer}
-          scrollContainer={scrollContainer}
           adjustOnMutation={true}
           popoverZIndex={popoverZIndex}
+          {...sharedProps}
         >
           {/* The beacon is using the popover component to position itself */}
           <div
