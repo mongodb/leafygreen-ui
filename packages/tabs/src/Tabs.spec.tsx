@@ -48,6 +48,27 @@ describe('packages/tabs', () => {
       expect(third).toHaveAttribute('name', 'Third');
     });
   });
+
+  describe('rendering', () => {
+    test('accepts inlineChildren', () => {
+      const { getByTestId } = render(
+        <Tabs
+          aria-label="Label"
+          inlineChildren={
+            <div data-testid="inline-children">
+              <button>Some Button</button>
+              <button>Some other Button</button>
+            </div>
+          }
+        >
+          <Tab name="Tab 1">Tab 1</Tab>
+        </Tabs>,
+      );
+
+      expect(getByTestId('inline-children')).toBeInTheDocument();
+    });
+  });
+
   describe('when controlled', () => {
     test('clicking a tab fires setSelected callback', () => {
       renderTabs({ setSelected, selected: 1 });
