@@ -6,6 +6,9 @@ import { PropItem } from 'react-docgen-typescript';
 import { CustomComponentDoc } from './parse-tsdocs';
 import { pickBy } from 'lodash';
 
+/**
+ * A simple script to get a quick & dirty first pass of React `propTypes` from the generated `tsdoc.json`
+ */
 const cli = new Command('proptypes').argument('<package>').parse(process.argv);
 
 const [pkg] = cli.args;
