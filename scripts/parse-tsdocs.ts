@@ -2,14 +2,14 @@
 import {
   withCompilerOptions,
   ParserOptions,
-  PropItem,
   Props as TSDocProps,
   ComponentDoc,
 } from 'react-docgen-typescript';
 import {
   CustomComponentDoc,
   GroupedPropRecord,
-  PropGroup,
+  PropItem,
+  Props,
   isInheritableGroup,
   getHTMLAttributesLink,
 } from './utils/tsDoc.utils';
@@ -171,7 +171,7 @@ function parseDocs(componentName: string): void {
       }
 
       propList[groupName] = {
-        ...((propList[groupName] as PropGroup) ?? {}),
+        ...((propList[groupName] as Props) ?? {}),
         [name]: { name, ...prop },
       };
       return propList;

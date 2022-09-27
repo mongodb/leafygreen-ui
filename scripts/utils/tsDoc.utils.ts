@@ -1,4 +1,7 @@
-import { ComponentDoc, PropItem } from 'react-docgen-typescript';
+import {
+  ComponentDoc,
+  PropItem as TSDocPropItem,
+} from 'react-docgen-typescript';
 export const InheritablePropGroups = {
   HTMLAttributes:
     'https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes',
@@ -9,10 +12,12 @@ export const InheritablePropGroups = {
     'https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes',
   String: '',
 } as const;
+
 export type InheritablePropGroups = keyof typeof InheritablePropGroups;
-export type PropGroup = Record<string, PropItem>;
-// export type PropCategory = Record<InheritablePropGroups | string, Props>;
-export type GroupedPropRecord = Record<string, PropGroup | string>;
+export type PropItem = TSDocPropItem & { tags?: Record<string, any> };
+export type Props = Record<string, PropItem>;
+export type PropCategory = Record<string, Props>;
+export type GroupedPropRecord = Record<string, Props | string>;
 export type CustomComponentDoc = Omit<ComponentDoc, 'props' | 'filePath'> & {
   props: GroupedPropRecord;
 };
