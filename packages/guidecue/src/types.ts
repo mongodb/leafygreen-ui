@@ -43,7 +43,7 @@ type ConditionalProps = StandaloneProps | MultistepProps;
 export type GuidecueProps = {
   /**
    * Determines if the `Tooltip` will appear as open or close.
-   * @default: false
+   * @default false
    */
   open: boolean;
   /**
@@ -56,7 +56,7 @@ export type GuidecueProps = {
   refEl: React.RefObject<HTMLElement>;
   /**
    * Determines whether the `Tooltip` will appear in dark mode.
-   * @default: false
+   * @default false
    */
   darkMode?: boolean;
   /**
@@ -85,17 +85,17 @@ export type GuidecueProps = {
   onPrimaryButtonClick?: () => void;
   /**
    * Determines the alignment of the tooltip.
-   * @default: 'top'
+   * @default 'top'
    */
   tooltipAlign?: Exclude<Align, 'center-vertical' | 'center-horizontal'>;
   /**
    * Determines the justification of the tooltip.
-   * @default: 'middle'
+   * @default 'middle'
    */
   tooltipJustify?: Exclude<Justify, 'fit'>;
   /**
    * Determines the alignment of the beacon. This only applies to the multi-step tooltip.
-   * @default: 'center-horizontal'
+   * @default 'center-horizontal'
    */
   beaconAlign?: Align;
 } & ModifiedTooltipProps &

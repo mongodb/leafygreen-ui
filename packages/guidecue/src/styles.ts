@@ -104,7 +104,7 @@ export const beaconStyles = (
             scale: 1.3;
           }
           73% {
-            // By 73% this shoulds scale back to 1. From 73% to 100% it will remain at 1.
+            // By 73% this should scale back to 1. From 73% to 100% it will remain at 1.
             scale: 1;
           }
         }

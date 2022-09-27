@@ -132,7 +132,6 @@ function Guidecue({
           scrollContainer={scrollContainer}
           adjustOnMutation={true}
           popoverZIndex={popoverZIndex}
-          className={portalClassName}
         >
           {/* The beacon is using the popover component to position itself */}
           <div

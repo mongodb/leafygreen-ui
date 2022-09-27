@@ -120,7 +120,7 @@ describe('packages/guidecue', () => {
       });
     });
 
-    test('a click ourside of the tooltip should do nothing', async () => {
+    test('a click outside of the tooltip should do nothing', async () => {
       const { getByRole, backdrop } = renderGuidecue({
         open: true,
       });
