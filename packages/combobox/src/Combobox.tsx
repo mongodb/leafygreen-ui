@@ -964,13 +964,15 @@ export default function Combobox<M extends boolean>({
 
       setInputFocus(cursorPos);
     }
+
+    // Only open the menu in response to a click
+    openMenu();
   };
 
   // Fired whenever the wrapper gains focus,
   // and any time the focus within changes
   const handleComboboxFocus = (e: React.FocusEvent) => {
     scrollInputToEnd();
-    openMenu();
     trackFocusedElement(getNameFromElement(e.target));
   };
 
