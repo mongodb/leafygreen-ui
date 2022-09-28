@@ -853,6 +853,14 @@ describe('packages/combobox', () => {
       });
 
       describe('Tab key', () => {
+        test('Focuses combobox but does not open menu', () => {
+          const { getMenuElements, inputEl } = renderCombobox(select);
+          userEvent.tab();
+          expect(inputEl).toHaveFocus();
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
         test('Closes menu when no selection is made', async () => {
           const { openMenu } = renderCombobox(select);
           const { menuContainerEl } = openMenu();
