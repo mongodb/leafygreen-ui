@@ -1,6 +1,9 @@
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, createUniqueClassName } from '@leafygreen-ui/lib';
+
+export const svgInnerOutlineClassName = createUniqueClassName('pipeline');
+export const svgOuterOutlineClassName = createUniqueClassName('pipeline');
 
 export const Size = {
   XSmall: 'xsmall',
@@ -54,7 +57,7 @@ export const layout: { readonly [K in Size]: Layout } = {
     lineHeight: 1,
     minWidth: 74,
     counter: {
-      minWidth: 35,
+      minWidth: 44,
     },
   },
 
@@ -77,7 +80,7 @@ export const layout: { readonly [K in Size]: Layout } = {
     lineHeight: 1,
     minWidth: 74,
     counter: {
-      minWidth: 39,
+      minWidth: 48,
     },
   },
 
@@ -100,7 +103,7 @@ export const layout: { readonly [K in Size]: Layout } = {
     lineHeight: 1,
     minWidth: 74,
     counter: {
-      minWidth: 45,
+      minWidth: 54,
     },
   },
 
@@ -123,7 +126,7 @@ export const layout: { readonly [K in Size]: Layout } = {
     lineHeight: 1,
     minWidth: 74,
     counter: {
-      minWidth: 57,
+      minWidth: 66,
     },
   },
 } as const;

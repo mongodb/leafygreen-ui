@@ -5,11 +5,9 @@ import React, {
   Ref,
   ReactElement,
   ReactNode,
-  useRef,
 } from 'react';
 
 import PropTypes from 'prop-types';
-import findLast from 'lodash/findLast';
 
 import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip from '@leafygreen-ui/tooltip';
@@ -85,36 +83,9 @@ const getPipelineStyle = ({ size }: StateForStyles): string => {
   );
 };
 
-export const lastVisibleClassName =
-  'leafygreen-ui-pipeline-stage--last-visible';
-
-const getLastVisibleStageChevronStyles = ({
-  hasHiddenStages,
-  size,
-}: StateForStyles): string => {
-  const { height, chevron } = layout[size];
-  const { primary, secondary } = colors;
-  const outerSize = height / 2;
-
-  const boxShadow = hasHiddenStages
-    ? // With counter
-      { innerColor: uiColors.white, outerColor: secondary.backgroundColor }
-    : // No counter
-      { innerColor: 'transparent', outerColor: 'transparent' };
-
-  return css`
-    .${lastVisibleClassName} > ${stageChevronAttr.selector}::before {
-      background-color: ${primary.backgroundColor};
-      box-shadow: 0 0 0 ${chevron.size}px ${boxShadow.innerColor},
-        0 0 0 ${outerSize}px ${boxShadow.outerColor};
-    }
-  `;
-};
-
 const getStatefulStyles = (state: StateForStyles) => ({
   base: getBaseStyle(state),
   pipeline: getPipelineStyle(state),
-  lastVisibleStageChevron: getLastVisibleStageChevronStyles(state),
 });
 
 /**
@@ -213,11 +184,10 @@ const Pipeline = forwardRef(
         : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
     });
 
-    const {
-      base: baseStyle,
-      pipeline: pipelineStyle,
-      lastVisibleStageChevron: lastVisibleStageChevronStyle,
-    } = getStatefulStyles({ hasHiddenStages, size });
+    const { base: baseStyle, pipeline: pipelineStyle } = getStatefulStyles({
+      hasHiddenStages,
+      size,
+    });
 
     return (
       <div
@@ -231,7 +201,7 @@ const Pipeline = forwardRef(
           {...pipelineStages.prop}
           ref={setPipelineNode}
           data-testid="pipeline-stages"
-          className={cx(pipelineStyle, lastVisibleStageChevronStyle)}
+          className={cx(pipelineStyle)}
         >
           {childrenAsPipelineStages}
         </ol>

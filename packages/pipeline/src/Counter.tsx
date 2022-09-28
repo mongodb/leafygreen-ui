@@ -52,9 +52,10 @@ const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
     getRootStyle({ size }),
     getChildStyle({ size }),
     css`
-      background-color: ${secondary.backgroundColor};
+      // background-color: ${secondary.backgroundColor};
       color: ${color};
       padding: ${gutter.vertical}px ${gutter.horizontal}px;
+      // padding: 0 25px;
       // margin-right: ${offset}px;
       font-size: ${fontSize}px;
       font-weight: ${fontWeight};
@@ -64,38 +65,41 @@ const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
       z-index: 2;
       min-width: ${counter.minWidth}px;
 
+      margin-left: -11px;
+
       &::before {
         white-space: nowrap;
         content: '+' counter(hiddenCount);
+        z-index: 1;
+        // TODO: add to style object
+        padding: 0 15px;
       }
     `,
   );
 };
 
-const getCounterChevronStyle = ({
-  size = Size.XSmall,
-}: StateForStyles): string => {
-  const { chevron, height } = layout[size];
-  const { secondary } = colors;
-  const outerSize = height / 2;
-
-  // return cx(
-  //   getChevronStyle({ size }),
-  //   css`
-  //     &::before {
-  //       background-color: ${secondary.backgroundColor};
-  //       box-shadow: 0 0 0 ${chevron.size}px transparent,
-  //         0 0 0 ${outerSize}px transparent;
-  //     }
-  //   `,
-  // );
-  return css``;
-};
-
 const getStatefulStyles = (state: StateForStyles) => ({
   base: getBaseStyle(state),
-  chevron: getCounterChevronStyle(state),
 });
+
+const svgStyles = css`
+  position: absolute;
+`;
+
+const svgLayer1Styles = cx(
+  svgStyles,
+  css`
+    left: 0;
+  `,
+);
+
+const svgLayer2Styles = cx(
+  svgStyles,
+  css`
+    width: 70%;
+    right: 0;
+  `,
+);
 
 /**
  * # Counter
@@ -124,17 +128,14 @@ const Counter = forwardRef(
         data-testid="pipeline-counter"
         className={cx(baseStyle, className)}
         ref={ref}
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
       >
-        {/* TODO: add classname prop */}
-        <Icon />
+        {/* TODO: Explain whats happening here */}
+        <Icon className={svgLayer1Styles} />
+        <Icon className={svgLayer2Styles} />
         {/* Children will be the tooltip provided by the Pipeline component */}
         {children}
-
-        {/* <div
-          {...counterChevronAttr.prop}
-          data-testid="pipeline-counter-chevron"
-          className={chevronStyle}
-        /> */}
       </div>
     );
   },
