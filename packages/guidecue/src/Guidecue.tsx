@@ -200,6 +200,11 @@ Guidecue.propTypes = {
   tooltipAlign: PropTypes.oneOf(Object.values(Align)),
   tooltipJustify: PropTypes.oneOf(Object.values(Justify)),
   beaconAlign: PropTypes.oneOf(Object.values(Align)),
+  // Popover Props
+  popoverZIndex: PropTypes.number,
+  scrollContainer: PropTypes.elementType,
+  portalContainer: PropTypes.elementType,
+  portalClassName: PropTypes.string,
 };
 
 export default Guidecue;

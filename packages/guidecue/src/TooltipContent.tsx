@@ -13,6 +13,7 @@ import {
   footerStyles,
   stepStyles,
   tooltipStyles,
+  tooltipStandaloneStyles,
 } from './styles';
 import { GuidecueProps } from './types';
 import FocusTrap from 'focus-trap-react';
@@ -71,7 +72,11 @@ function TooltipContent({
         justify={tooltipJustify}
         align={tooltipAlign}
         refEl={refEl}
-        className={cx({ [tooltipStyles]: !isStandalone }, tooltipClassName)}
+        className={cx(
+          { [tooltipStandaloneStyles]: !isStandalone },
+          tooltipStyles,
+          tooltipClassName,
+        )}
         portalClassName={portalClassName}
         portalContainer={portalContainer}
         scrollContainer={scrollContainer}

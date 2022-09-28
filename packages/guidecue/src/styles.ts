@@ -8,8 +8,12 @@ export const timeout2 = 100;
 
 const size = 24;
 
-export const tooltipStyles = css`
+export const tooltipStandaloneStyles = css`
   padding: 32px 16px 16px;
+`;
+
+export const tooltipStyles = css`
+  cursor: auto;
 `;
 
 export const beaconStyles = (
