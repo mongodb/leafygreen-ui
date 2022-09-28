@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-disabled-tests */
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
 import flatten from 'lodash/flatten';
@@ -34,8 +33,8 @@ import { keyMap } from '@leafygreen-ui/lib';
 describe('packages/combobox', () => {
   describe('A11y', () => {
     test('does not have basic accessibility violations', async () => {
-      const { container, inputEl } = renderCombobox();
-      act(() => inputEl.focus()); // we focus the input to ensure the listbox gets rendered
+      const { container, openMenu } = renderCombobox();
+      openMenu();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
@@ -73,7 +72,7 @@ describe('packages/combobox', () => {
         expect(labelEl).toBeInTheDocument();
       });
 
-      // Desctiption prop
+      // Description prop
       test('Description is rendered', () => {
         const description = 'Lorem ipsum';
         const { queryByText } = renderCombobox(select, { description });
@@ -456,13 +455,6 @@ describe('packages/combobox', () => {
         const { comboboxEl, inputEl } = renderCombobox(select);
         userEvent.click(comboboxEl);
         expect(inputEl).toHaveFocus();
-      });
-
-      test('Menu appears when input is focused', () => {
-        const { inputEl, getMenuElements } = renderCombobox(select);
-        act(() => inputEl.focus());
-        const { menuContainerEl } = getMenuElements();
-        expect(menuContainerEl).toBeInTheDocument();
       });
 
       test('Menu appears when box is clicked', () => {
@@ -1088,6 +1080,7 @@ describe('packages/combobox', () => {
           waitFor(() => expect(inputEl).toHaveFocus());
         });
 
+        // eslint-disable-next-line jest/no-disabled-tests
         test.skip('When focus is on clear button, Left arrow moves focus to input', async () => {
           const initialValue = select === 'multiple' ? ['apple'] : 'apple';
           const { inputEl } = renderCombobox(select, {
@@ -1253,6 +1246,15 @@ describe('packages/combobox', () => {
       });
     });
 
+    describe('Programmatic interaction', () => {
+      test('Menu does not open when input is focused programmatically', () => {
+        const { inputEl, getMenuElements } = renderCombobox(select);
+        act(() => inputEl.focus());
+        const { menuContainerEl } = getMenuElements();
+        expect(menuContainerEl).not.toBeInTheDocument();
+      });
+    });
+
     /**
      * Filtered options
      */
@@ -1376,6 +1378,7 @@ describe('packages/combobox', () => {
       });
 
       // Unsure if this is the desired behavior
+      // eslint-disable-next-line jest/no-disabled-tests
       test.skip('Menu renders empty state message when filtered options is empty', () => {
         const searchEmptyMessage = 'Empty state message';
         const { openMenu } = renderCombobox(select, {
