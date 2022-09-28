@@ -1357,7 +1357,6 @@ export default function Combobox<M extends boolean>({
   }
 }
 
-/* eslint-disable react/forbid-prop-types */
 Combobox.propTypes = {
   // Multiselect props
   multiselect: PropTypes.bool,
@@ -1372,9 +1371,11 @@ Combobox.propTypes = {
   overflow: PropTypes.oneOf(Object.values(Overflow)),
 
   // Standard Props
-  onChange: PropTypes.func,
-  'aria-label': PropTypes.string,
+  darkMode: PropTypes.bool,
   label: PropTypes.string,
+  'aria-label': PropTypes.string,
+  children: PropTypes.node,
+  onChange: PropTypes.func,
   chipCharacterLimit: PropTypes.number,
   chipTruncationLocation: PropTypes.oneOf(Object.values(TruncationLocation)),
   onClear: PropTypes.func,
@@ -1386,18 +1387,16 @@ Combobox.propTypes = {
   searchState: PropTypes.oneOf(Object.values(SearchState)),
   errorMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
-  darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(ComboboxSize)),
   disabled: PropTypes.bool,
   description: PropTypes.string,
-  children: PropTypes.node,
   placeholder: PropTypes.string,
   filteredOptions: PropTypes.arrayOf(PropTypes.string),
   // Popover Props
   popoverZIndex: PropTypes.number,
   usePortal: PropTypes.bool,
-  scrollContainer: PropTypes.any,
-  portalContainer: PropTypes.any,
+  scrollContainer: PropTypes.elementType,
+  portalContainer: PropTypes.elementType,
   portalClassName: PropTypes.string,
 };
 
