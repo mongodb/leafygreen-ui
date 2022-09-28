@@ -1043,8 +1043,8 @@ export default function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          // Select the highlighed option iff
-          // the menu is open
+          // Select the highlighted option iff
+          // the menu is open,
           // we're focused on input element,
           // and the highlighted option is not disabled
           if (
@@ -1323,7 +1323,7 @@ export default function Combobox<M extends boolean>({
    */
   function scrollInputToEnd() {
     if (inputWrapperRef && inputWrapperRef.current) {
-      // TODO - consider converting to .scrollTo(). This is not yet suppoted in IE or jsdom
+      // TODO - consider converting to .scrollTo(). This is not yet supported in IE or jsdom
       inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
     }
   }
