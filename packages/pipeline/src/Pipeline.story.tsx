@@ -1,13 +1,14 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
 import { Pipeline, Stage } from '.';
-import { PipelineProps } from './Pipeline';
+import { PipelineProps } from './types';
 
 export default {
   title: 'Components/Pipeline',
   component: Pipeline,
   args: {
     stages: ['$match', '$group', '$project', '$addFields', '$limit'].join(','),
+    darkMode: false,
   },
   argTypes: {
     className: {
@@ -15,6 +16,9 @@ export default {
     },
     children: {
       control: false,
+    },
+    darkMode: {
+      control: 'boolean',
     },
     stages: {
       description:

@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { svgInnerOutlineClassName, svgOuterOutlineClassName } from '../';
+import {
+  svgInnerOutlineClassName,
+  svgOuterOutlineClassName,
+  svgInnerClassName,
+} from '../';
 
 const SegmentL = ({ className }: { className: string }) => {
   return (
@@ -22,6 +26,7 @@ const SegmentL = ({ className }: { className: string }) => {
       <path
         d="M4.10631 5.44611C3.77492 4.78128 4.25844 4 5.00129 4H46.9582C48.8632 4 50.6026 5.08246 51.444 6.79152L60.7982 25.7915C61.4838 27.184 61.4838 28.816 60.7982 30.2085L51.444 49.2085C50.6026 50.9175 48.8632 52 46.9582 52H5.00129C4.25844 52 3.77492 51.2187 4.10631 50.5539L14.2366 30.2305C14.9368 28.8259 14.9368 27.1741 14.2366 25.7695L4.10631 5.44611Z"
         fill="#C3E7FE"
+        className={svgInnerClassName}
       />
       <path
         fillRule="evenodd"

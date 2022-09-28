@@ -5,6 +5,7 @@ import {
   Size,
   svgInnerOutlineClassName,
   svgOuterOutlineClassName,
+  svgInnerClassName,
 } from './styles';
 
 export {
@@ -14,4 +15,5 @@ export {
   Size,
   svgInnerOutlineClassName,
   svgOuterOutlineClassName,
+  svgInnerClassName,
 };
