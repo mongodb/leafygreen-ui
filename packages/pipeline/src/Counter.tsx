@@ -126,7 +126,7 @@ const Counter = forwardRef(
         ref={ref}
       >
         {/* TODO: add classname prop */}
-        <Icon/>
+        <Icon />
         {/* Children will be the tooltip provided by the Pipeline component */}
         {children}
 

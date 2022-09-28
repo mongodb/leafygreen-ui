@@ -31,7 +31,7 @@ interface Layout {
   minWidth: number;
   counter: {
     minWidth: number;
-  }
+  };
 }
 
 export const layout: { readonly [K in Size]: Layout } = {
@@ -55,7 +55,7 @@ export const layout: { readonly [K in Size]: Layout } = {
     minWidth: 74,
     counter: {
       minWidth: 35,
-    }
+    },
   },
 
   [Size.Small]: {
@@ -78,7 +78,7 @@ export const layout: { readonly [K in Size]: Layout } = {
     minWidth: 74,
     counter: {
       minWidth: 39,
-    }
+    },
   },
 
   [Size.Normal]: {
@@ -101,7 +101,7 @@ export const layout: { readonly [K in Size]: Layout } = {
     minWidth: 74,
     counter: {
       minWidth: 45,
-    }
+    },
   },
 
   [Size.Large]: {
@@ -124,7 +124,7 @@ export const layout: { readonly [K in Size]: Layout } = {
     minWidth: 74,
     counter: {
       minWidth: 57,
-    }
+    },
   },
 } as const;
 
