@@ -27,10 +27,8 @@ import {
   getRootStyle,
   Size,
   layout,
-  colors,
   pipelineAttr,
   pipelineStages,
-  stageChevronAttr,
 } from './styles';
 
 interface StateForStyles {
@@ -184,10 +182,10 @@ const Pipeline = forwardRef(
         : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
     });
 
-    const { base: baseStyle, pipeline: pipelineStyle } = getStatefulStyles({
-      hasHiddenStages,
-      size,
-    });
+    const {
+      base: baseStyle,
+      pipeline: pipelineStyle,
+    } = getStatefulStyles({ hasHiddenStages, size });
 
     return (
       <div

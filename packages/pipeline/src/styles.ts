@@ -14,6 +14,8 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
+//TODO: clean up and remove unused vars
+
 interface Layout {
   borderRadius: number;
   chevron: {
