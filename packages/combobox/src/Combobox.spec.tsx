@@ -769,6 +769,15 @@ describe('packages/combobox', () => {
       });
 
       describe('Enter key', () => {
+        test('opens menu when input is focused', () => {
+          const { getMenuElements, inputEl } = renderCombobox(select);
+          userEvent.tab();
+          userEvent.type(inputEl!, '{enter}');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeNull();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+
         test('selects highlighted option', () => {
           const { inputEl, openMenu, queryChipsByName } =
             renderCombobox(select);
