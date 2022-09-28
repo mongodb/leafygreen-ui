@@ -281,6 +281,7 @@ expect.extend({
             `\t Expected element not to contain focus: \n\t\t ${chalk.red(
               recieved.outerHTML,
             )} \n\t Element with focus: \n\t\t ${chalk.blue(
+              // @ts-ignore
               document.activeElement?.outerHTML,
             )}`,
         }
@@ -290,6 +291,7 @@ expect.extend({
             `\t Expected element to contain focus: \n\t\t ${chalk.green(
               recieved.outerHTML,
             )} \n\t Element with focus: \n\t\t ${chalk.red(
+              // @ts-ignore
               document.activeElement?.outerHTML,
             )}`,
         };
