@@ -273,13 +273,13 @@ configure({
 });
 
 expect.extend({
-  toContainFocus(recieved: HTMLElement) {
-    return recieved.contains(document.activeElement)
+  toContainFocus(received: HTMLElement) {
+    return received.contains(document.activeElement)
       ? {
           pass: true,
           message: () =>
             `\t Expected element not to contain focus: \n\t\t ${chalk.red(
-              recieved.outerHTML,
+              received.outerHTML,
             )} \n\t Element with focus: \n\t\t ${chalk.blue(
               // @ts-ignore
               document.activeElement?.outerHTML,
@@ -289,9 +289,10 @@ expect.extend({
           pass: false,
           message: () =>
             `\t Expected element to contain focus: \n\t\t ${chalk.green(
-              recieved.outerHTML,
+              received.outerHTML,
             )} \n\t Element with focus: \n\t\t ${chalk.red(
               // @ts-ignore
+
               document.activeElement?.outerHTML,
             )}`,
         };
