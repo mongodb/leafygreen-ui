@@ -13,7 +13,7 @@ import {
   footerStyles,
   stepStyles,
   tooltipStyles,
-  tooltipStandaloneStyles,
+  tooltipMultistepStyles,
 } from './styles';
 import { GuidecueProps } from './types';
 import FocusTrap from 'focus-trap-react';
@@ -73,7 +73,7 @@ function TooltipContent({
         align={tooltipAlign}
         refEl={refEl}
         className={cx(
-          { [tooltipStandaloneStyles]: !isStandalone },
+          { [tooltipMultistepStyles]: !isStandalone },
           tooltipStyles,
           tooltipClassName,
         )}

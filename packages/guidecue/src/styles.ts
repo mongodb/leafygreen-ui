@@ -8,7 +8,7 @@ export const timeout2 = 100;
 
 const size = 24;
 
-export const tooltipStandaloneStyles = css`
+export const tooltipMultistepStyles = css`
   padding: 32px 16px 16px;
 `;
 
