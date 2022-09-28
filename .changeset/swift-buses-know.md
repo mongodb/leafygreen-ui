@@ -2,4 +2,4 @@
 '@leafygreen-ui/leafygreen-provider': patch
 ---
 
-Adds additionaly test cases
+Adds additional test cases
