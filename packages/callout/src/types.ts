@@ -15,7 +15,6 @@ export interface CalloutProps extends HTMLElementProps<'div'> {
   /**
    * The variant of the callout that defines the icon and colors used.
    *
-   * @required
    * @default `note``
    */
   variant?: Variant;

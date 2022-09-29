@@ -56,6 +56,7 @@ interface InlineDefinitionProps extends Partial<TooltipProps> {
    * @required
    */
   children: TooltipProps['children'];
+
   /**
    * ReactNode rendered inside the tooltip
    * @required
