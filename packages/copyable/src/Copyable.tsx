@@ -168,7 +168,7 @@ const iconStyle = css`
 interface CopyableProps extends HTMLElementProps<'div'> {
   /**
    * Determines whether or not the component appears in dark theme.
-   * @default: false
+   * @default false
    */
   darkMode?: boolean;
   children: string;

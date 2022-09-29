@@ -54,7 +54,7 @@ interface InternalCheckboxProps extends HTMLElementProps<'input'> {
   /**
    * Whether there should be animation when the checkbox's state changes
    *
-   * @default: `true`
+   * @default `true`
    */
   animate?: boolean;
   ['aria-label']?: string;
