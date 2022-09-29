@@ -6,7 +6,7 @@ import React, {
   useContext,
 } from 'react';
 import PropTypes from 'prop-types';
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { SegmentXs, SegmentS, SegmentM, SegmentL } from './svgs';
 
 import {
@@ -79,9 +79,26 @@ const Counter = forwardRef(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
+        <div className={css`
+          position: absolute;
+          width: 100%;
+          height: 100%;
+
+          display: flex;
+
+          & > * {
+            width: 50%;
+          }
+
+        `}>
         {/* TODO: Explain whats happening here */}
+        <div>
         <Icon className={cx(svgLayer1Styles)} />
+        </div>
+        <div>
         <Icon className={cx(svgLayer2Styles)} />
+        </div>
+        </div>
         {/* Children will be the tooltip provided by the Pipeline component */}
         {children}
       </div>

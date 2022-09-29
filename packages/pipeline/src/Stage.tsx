@@ -95,6 +95,7 @@ const Stage = forwardRef(
         {...rest}
         {...stageAttr.prop}
         ref={mergeRefs([setRef, ref])}
+
         data-testid="pipeline-stage"
         data-stage-visible={isVisible}
         className={cx(

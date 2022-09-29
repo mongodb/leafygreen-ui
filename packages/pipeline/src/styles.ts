@@ -119,10 +119,10 @@ export const counterBaseStyles = cx(
       z-index: 1;
     }
 
-    // // .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
-    // //   opacity: 0;
-    // //   transition: opacity 150ms ease-in-out;
-    // // }
+    .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
+      opacity: 0;
+      transition: opacity 1500ms ease-in-out;
+    }
 
     // .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
     //   opacity: 0;
@@ -132,15 +132,15 @@ export const counterBaseStyles = cx(
     // //   transition: opacity 10050ms ease-in-out;
     // // }
 
-    // &:focus-visible {
-    //   outline: none;
-    //   .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
-    //     opacity: 1; 
-    //   }
-    //   .${svgOuterOutlineClassName} {
-    //     transition: opacity 150ms ease-in-out;
-    //   }
-    // }
+    &:focus-visible {
+      outline: none;
+      .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
+        opacity: 1; 
+      }
+      // .${svgOuterOutlineClassName} {
+      //   transition: opacity 150ms ease-in-out;
+      // }
+    }
 
     // &:hover {
     //   .${svgInnerOutlineClassName} {
@@ -320,14 +320,20 @@ export const svgLayer1Styles = cx(
   svgStyles,
   css`
     left: 0;
+
+    top: 50%;
+    transform: translate(0%, -50%);
   `,
 );
 
 export const svgLayer2Styles = cx(
   svgStyles,
   css`
-    width: 70%;
+    // width: 70%;
     right: 0;
+
+    top: 50%;
+    transform: translate(0%, -50%);
   `,
 );
 
