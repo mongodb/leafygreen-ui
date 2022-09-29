@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '.';
 import { SelectProps } from './types';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Select',

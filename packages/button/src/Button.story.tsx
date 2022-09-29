@@ -3,7 +3,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Button, { Variant, ButtonProps } from '.';
 import { BoxProps } from '@leafygreen-ui/box';
 import { Meta, Story } from '@storybook/react';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;

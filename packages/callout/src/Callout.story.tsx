@@ -3,7 +3,7 @@ import Code from '@leafygreen-ui/code';
 import { Link } from '@leafygreen-ui/typography';
 import Callout, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Callout',

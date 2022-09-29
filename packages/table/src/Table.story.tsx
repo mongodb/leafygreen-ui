@@ -5,7 +5,7 @@ import React from 'react';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, multiRowData } from './fixtures';
 import { TableProps } from './Table';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Table',
