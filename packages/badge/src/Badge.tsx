@@ -20,7 +20,7 @@ interface BadgeProps extends HTMLElementProps<'div'> {
   /**
    * The Badge's style variant
    *
-   * @default: 'lightgray'
+   * @default 'lightgray'
    */
   variant?: Variant;
 
