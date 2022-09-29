@@ -216,7 +216,7 @@ const _glyphs = {
   XWithCircle,
 } as const;
 
-type GlyphName = keyof typeof _glyphs;
+export type GlyphName = keyof typeof _glyphs;
 
 const glyphKeys = Object.keys(_glyphs) as Array<GlyphName>;
 

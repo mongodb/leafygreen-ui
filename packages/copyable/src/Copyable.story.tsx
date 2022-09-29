@@ -1,7 +1,7 @@
 import { ComponentStory } from '@storybook/react';
 import React from 'react';
 import Copyable from '.';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Copyable',
@@ -16,8 +16,8 @@ export default {
     label: { control: 'text' },
     description: { control: 'text' },
     shouldTooltipUsePortal: { control: 'boolean' },
-    children: defaultArgTypes.children,
-    darkMode: defaultArgTypes.darkMode,
+    children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
   },
 };
 

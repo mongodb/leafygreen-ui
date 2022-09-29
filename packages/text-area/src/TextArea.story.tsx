@@ -1,7 +1,7 @@
 import React from 'react';
 import TextArea from '.';
 import { TextAreaProps } from './types';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { ComponentStory } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -29,7 +29,7 @@ export default {
     label: { control: 'text' },
     description: { control: 'text' },
     errorMessage: { control: 'text' },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
   excludeStories: ['StoryTextArea'],

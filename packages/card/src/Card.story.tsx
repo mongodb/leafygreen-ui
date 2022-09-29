@@ -2,7 +2,7 @@
 import { BoxProps } from '@leafygreen-ui/box';
 import { Story } from '@storybook/react';
 import React from 'react';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Card as LGCard, CardProps } from './Card';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef
@@ -29,9 +29,9 @@ export default {
   },
   argTypes: {
     href: { control: 'text' },
-    as: defaultArgTypes.as,
-    darkMode: defaultArgTypes.darkMode,
-    children: defaultArgTypes.children,
+    as: storybookArgTypes.as,
+    darkMode: storybookArgTypes.darkMode,
+    children: storybookArgTypes.children,
   },
 };
 
