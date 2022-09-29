@@ -5,6 +5,7 @@ import UsingKeyboardProvider, {
   UsingKeyboardContext,
   useUsingKeyboardContext,
 } from './UsingKeyboardContext';
+import userEvent from '@testing-library/user-event';
 
 const childTestID = 'using-keyboard-provider';
 const buttonTestId = 'test-button';
@@ -59,13 +60,21 @@ describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
     });
   });
 
+  test(`usingKeyboard is true after userEvent.tab`, () => {
+    const { testChild } = renderProvider();
+    userEvent.tab();
+    expect(testChild.textContent).toBe('true');
+  });
+
   test(`usingKeyboard is false after mousedown event fires`, () => {
     const { testChild } = renderProvider();
+    fireEvent.mouseDown(document, { bubbles: true });
+    expect(testChild.textContent).toBe('false');
+  });
 
-    fireEvent.mouseDown(document, {
-      bubbles: true,
-    });
-
+  test(`usingKeyboard is false after userEvent.click`, () => {
+    const { testChild } = renderProvider();
+    userEvent.click(testChild);
     expect(testChild.textContent).toBe('false');
   });
 
@@ -78,8 +87,6 @@ describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
     expect(testChild.textContent).toBe('true');
   });
 });
-
-// const genId = () => Math.round(Math.random() * 1000000).toString();
 
 function TestUseUsingKeyboardComponent({
   id,
@@ -134,7 +141,24 @@ describe('useUsingKeyboardContext', () => {
 
     test('before interaction, usingKeyboard is false', () => {
       const { testChildElement } = renderTestComponent();
+      expect(testChildElement.textContent).toBe('false');
+    });
 
+    test(`usingKeyboard is true after userEvent.tab`, () => {
+      const { testChildElement } = renderTestComponent();
+      userEvent.tab();
+      expect(testChildElement.textContent).toBe('true');
+    });
+
+    test(`usingKeyboard is false after mousedown event fires`, () => {
+      const { testChildElement } = renderTestComponent();
+      fireEvent.mouseDown(document, { bubbles: true });
+      expect(testChildElement.textContent).toBe('false');
+    });
+
+    test(`usingKeyboard is false after userEvent.click`, () => {
+      const { testChildElement } = renderTestComponent();
+      userEvent.click(testChildElement);
       expect(testChildElement.textContent).toBe('false');
     });
 
