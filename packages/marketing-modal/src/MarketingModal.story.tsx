@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import MarketingModal, { BlobPosition, GraphicStyle } from '.';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import Button from '@leafygreen-ui/button';

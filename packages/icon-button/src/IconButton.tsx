@@ -101,14 +101,12 @@ export const IconButton = React.forwardRef(
 
 IconButton.displayName = 'IconButton';
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 IconButton.propTypes = {
   darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  // @ts-ignore
   href: PropTypes.string,
   active: PropTypes.bool,
 };

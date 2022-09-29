@@ -3,7 +3,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Button, { Variant, ButtonProps } from '.';
 import { BoxProps } from '@leafygreen-ui/box';
 import { Meta, Story } from '@storybook/react';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
@@ -62,10 +62,10 @@ const Template: Story<ButtonStoryProps> = ({
   ...args
 }: ButtonStoryProps) => (
   <Button
-    /// @ts-expect-error
-    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined}
-    /// @ts-expect-error
-    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined}
+    // @ts-expect-error
+    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+    // @ts-expect-error
+    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
     {...args}
   />
 );

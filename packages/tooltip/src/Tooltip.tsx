@@ -119,13 +119,13 @@ export type TooltipProps = Omit<
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
-     * @default: 'hover'
+     * @default 'hover'
      */
     triggerEvent?: TriggerEvent;
 
     /**
      * Controls component and determines the open state of the `Tooltip`
-     * @default: `false`
+     * @default `false`
      */
     open?: boolean;
 
@@ -136,7 +136,7 @@ export type TooltipProps = Omit<
 
     /**
      * Whether the `Tooltip` will appear in dark mode.
-     * @default: false
+     * @default false
      */
     darkMode?: boolean;
 
@@ -153,7 +153,7 @@ export type TooltipProps = Omit<
 
     /**
      * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
-     * @default: true
+     * @default true
      */
     enabled?: boolean;
   };

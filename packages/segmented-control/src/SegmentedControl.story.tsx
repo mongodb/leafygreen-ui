@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import Icon from '@leafygreen-ui/icon';
 import { SegmentedControlProps } from './SegmentedControl';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/SegmentedControl',

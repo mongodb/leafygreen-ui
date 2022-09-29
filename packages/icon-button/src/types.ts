@@ -23,7 +23,6 @@ export interface BaseIconButtonProps {
 
   /**
    * The Leafygreen `<Icon />` component to render
-   * @required
    */
   children?: React.ReactNode;
 

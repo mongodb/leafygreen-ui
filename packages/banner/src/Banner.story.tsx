@@ -2,7 +2,7 @@ import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Banner, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
-import { storybookArgTypes } from '@leafygreen-ui/lib/';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 export default {
