@@ -9,8 +9,9 @@ import {
   queryAllByTestId,
   queryAllByAttribute,
 } from '@testing-library/react';
-import chalk from '@testing-library/jest-dom/node_modules/chalk';
+import chalk from 'chalk';
 import userEvent from '@testing-library/user-event';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Combobox, ComboboxGroup, ComboboxOption } from '.';
 import {
   BaseComboboxProps,
@@ -116,14 +117,16 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
   const label = props?.label ?? 'Some label';
   const options = props?.options ?? defaultOptions;
   return (
-    <Combobox
-      data-testid="combobox-container"
-      label={label}
-      multiselect={props?.multiselect ?? false}
-      {...props}
-    >
-      {options.map(renderOption)}
-    </Combobox>
+    <LeafyGreenProvider>
+      <Combobox
+        data-testid="combobox-container"
+        label={label}
+        multiselect={props?.multiselect ?? false}
+        {...props}
+      >
+        {options.map(renderOption)}
+      </Combobox>
+    </LeafyGreenProvider>
   );
 };
 
@@ -180,7 +183,7 @@ export function renderCombobox<T extends Select>(
    * @returns Object of menu elements
    */
   const openMenu = () => {
-    userEvent.click(comboboxEl);
+    userEvent.click(inputEl);
     return getMenuElements();
   };
 
@@ -270,14 +273,15 @@ configure({
 });
 
 expect.extend({
-  toContainFocus(recieved: HTMLElement) {
-    return recieved.contains(document.activeElement)
+  toContainFocus(received: HTMLElement) {
+    return received.contains(document.activeElement)
       ? {
           pass: true,
           message: () =>
             `\t Expected element not to contain focus: \n\t\t ${chalk.red(
-              recieved.outerHTML,
+              received.outerHTML,
             )} \n\t Element with focus: \n\t\t ${chalk.blue(
+              // @ts-ignore
               document.activeElement?.outerHTML,
             )}`,
         }
@@ -285,8 +289,10 @@ expect.extend({
           pass: false,
           message: () =>
             `\t Expected element to contain focus: \n\t\t ${chalk.green(
-              recieved.outerHTML,
+              received.outerHTML,
             )} \n\t Element with focus: \n\t\t ${chalk.red(
+              // @ts-ignore
+
               document.activeElement?.outerHTML,
             )}`,
         };

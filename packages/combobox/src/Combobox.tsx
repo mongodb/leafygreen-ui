@@ -964,13 +964,15 @@ export default function Combobox<M extends boolean>({
 
       setInputFocus(cursorPos);
     }
+
+    // Only open the menu in response to a click
+    openMenu();
   };
 
   // Fired whenever the wrapper gains focus,
   // and any time the focus within changes
   const handleComboboxFocus = (e: React.FocusEvent) => {
     scrollInputToEnd();
-    openMenu();
     trackFocusedElement(getNameFromElement(e.target));
   };
 
@@ -1043,12 +1045,14 @@ export default function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          // Select the highlighted option iff
-          // the menu is open,
-          // we're focused on input element,
-          // and the highlighted option is not disabled
-          if (
-            isOpen &&
+          if (!isOpen) {
+            // If the menu is not open, enter should open the menu
+            openMenu();
+          } else if (
+            // Select the highlighted option iff
+            // the menu is open,
+            // we're focused on input element,
+            // and the highlighted option is not disabled
             focusedElementName === ComboboxElement.Input &&
             !isNull(highlightedOption) &&
             !isOptionDisabled(highlightedOption)

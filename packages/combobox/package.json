@@ -36,6 +36,9 @@
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.3.3"
   },
+  "devDependencies": {
+    "chalk": "^2.4.2"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {
     "type": "git",
