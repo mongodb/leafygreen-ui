@@ -32,8 +32,6 @@ export const sharedBaseStyles = css`
   display: flex;
 `;
 
-
-
 export const baseStyles = css`
   counter-reset: hiddenCount;
   flex-direction: row;
@@ -93,7 +91,7 @@ export const counterSizeStyles: Record<Size, string> = {
   `,
   [Size.Normal]: css`
     min-width: 54px;
-    margin-left: -11px;
+    margin-left: -9px;
 
     &::before {
       padding: 0 15px;
@@ -221,6 +219,14 @@ export const stageBaseStyles = cx(
       position: relative;
       height: 100%;
     }
+
+    &:first-of-type {
+      span {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+    }
+
   `,
 );
 
@@ -249,14 +255,14 @@ export const stageSvgThemeStyles = (theme: Theme) => {
 export const stageSvgSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     &:not(&:first-of-type) {
-      margin-left: -9px;
+      margin-left: -10px;
       &::before {
         width: 12px;
       }
     }
 
     &::after {
-      width: 6px;
+      width: 7px;
     }
   `,
   [Size.Small]: css`
@@ -284,6 +290,7 @@ export const stageSvgSizeStyles: Record<Size, string> = {
     }
   `,
   [Size.Large]: css`
+
     &:not(&:first-of-type) {
       margin-left: -10px;
       &::before {
