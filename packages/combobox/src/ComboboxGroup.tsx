@@ -2,6 +2,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { ComboboxGroupProps, Theme } from './Combobox.types';
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
 
@@ -65,6 +66,12 @@ export function InternalComboboxGroup({
 }
 
 ComboboxGroup.displayName = 'ComboboxGroup';
+
+ComboboxGroup.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  label: PropTypes.string.isRequired,
+};
 
 export default function ComboboxGroup(_: ComboboxGroupProps): JSX.Element {
   throw Error('`ComboboxGroup` must be a child of a `Combobox` instance');
