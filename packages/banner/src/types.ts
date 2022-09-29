@@ -16,7 +16,6 @@ export interface BannerProps extends HTMLElementProps<'div', never> {
   /**
    * Sets the variant for the Banner
    *
-   * @required
    * @default 'info'
    */
   variant?: Variant;
