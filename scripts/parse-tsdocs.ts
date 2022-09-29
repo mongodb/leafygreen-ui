@@ -2,10 +2,17 @@
 import {
   withCompilerOptions,
   ParserOptions,
-  PropItem,
-  Props,
+  Props as TSDocProps,
   ComponentDoc,
 } from 'react-docgen-typescript';
+import {
+  CustomComponentDoc,
+  GroupedPropRecord,
+  PropItem,
+  Props,
+  isInheritableGroup,
+  getHTMLAttributesLink,
+} from './utils/tsDoc.utils';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
@@ -15,11 +22,6 @@ import { CompilerOptions, JsxEmit } from 'typescript';
 
 const pascalCase = (str: string) =>
   camelCase(str).slice(0, 1).toUpperCase() + camelCase(str).slice(1);
-
-export type PropCategory = Record<string, Props>;
-export type CustomComponentDoc = Omit<ComponentDoc, 'props'> & {
-  props: PropCategory;
-};
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
@@ -89,19 +91,13 @@ function parseDocs(componentName: string): void {
   );
 
   if (fs.existsSync(componentDir)) {
-    console.log(
-      chalk.blueBright(
-        `Parsing TSDoc for:`,
-        chalk.blue.bold(`${componentName}`),
-      ),
-    );
     const componentFileNames = parseFileNames(componentDir);
 
     const docs: Array<CustomComponentDoc> = uniqBy(
       Parser.parse(componentFileNames)
         .filter((doc: ComponentDoc) => {
-          // Remove any external components
           return (
+            // Remove any external components
             !doc.filePath.includes('node_modules') &&
             // Remove any components with no props
             Object.keys(doc.props).length > 0 &&
@@ -109,30 +105,42 @@ function parseDocs(componentName: string): void {
             isUndefined(doc.tags?.internal)
           );
         })
-        .map(
-          ({ displayName, props, ...rest }) =>
-            ({
-              ...rest,
-              // For default exports, change the displayName
-              displayName: ['src', 'index'].includes(displayName)
-                ? pascalCase(componentName)
-                : displayName,
-              // Group Props by where they are inherited from
-              props: Object.values(props).reduce(
-                groupPropsByParent,
-                {},
-              ) as PropCategory,
-            } as CustomComponentDoc),
-        ),
+        .map(({ displayName, props, filePath, ...rest }) => {
+          return {
+            ...rest,
+            // For default exports, change the displayName
+            displayName: ['src', 'index'].includes(displayName)
+              ? pascalCase(componentName)
+              : displayName,
+            // // Group Props by where they are inherited from
+            props: parseProps(props, displayName),
+          } as CustomComponentDoc;
+        }),
       'displayName',
+    );
+
+    const docString = JSON.stringify(docs, null, 2);
+
+    console.log(
+      chalk.blueBright(
+        `Parsed TSDoc for:`,
+        chalk.blue.bold(`${componentName}`),
+        chalk.gray(`(${(Buffer.byteLength(docString) / 1024).toFixed(2)}kb)`),
+      ),
     );
 
     const outFilePath = path.resolve(
       __dirname,
       `${outDir}/${componentName}/tsdoc.json`,
     );
-    outDir !== packagesRoot && console.log(`\t${outFilePath}`);
-    fs.writeFileSync(outFilePath, JSON.stringify(docs, null, 2));
+
+    try {
+      fs.writeFileSync(outFilePath, docString);
+      outDir !== packagesRoot &&
+        console.log(`\tWriting to ${chalk.gray(outFilePath)}`);
+    } catch (err) {
+      console.error(chalk.red(`Could not write file to ${outFilePath}`), err);
+    }
   } else {
     console.warn(
       chalk.yellow('Could not find component:'),
@@ -142,23 +150,32 @@ function parseDocs(componentName: string): void {
     );
   }
 
-  function groupPropsByParent(propList: PropCategory, prop: PropItem) {
-    // If the prop is inherited, we group this prop under its parent
-    if (prop.parent && prop.parent.name) {
-      if (!propList[prop.parent.name]) {
-        propList[prop.parent.name] = { [prop.name]: prop };
-      }
-      propList[prop.parent.name][prop.name] = prop;
-    } else {
-      // if there is no parent for the prop, we use the component name as the group name
-      if (!propList[pascalCase(componentName)]) {
-        propList[pascalCase(componentName)] = { [prop.name]: prop };
-      } else {
-        propList[pascalCase(componentName)][prop.name] = prop;
-      }
-    }
+  function parseProps(props: TSDocProps, docName: string): GroupedPropRecord {
+    return Object.values(props).reduce(groupPropsByParent, {});
 
-    return propList;
+    function groupPropsByParent(
+      propList: GroupedPropRecord,
+      { parent, name, declarations, ...prop }: PropItem,
+    ): GroupedPropRecord {
+      // By default we group all ungrouped props under the Component Name
+      let groupName = pascalCase(docName + 'Props');
+
+      // If the prop is inherited, we group this prop under its parent
+      if (parent && parent.name) {
+        if (isInheritableGroup(parent.name)) {
+          propList[parent.name] = getHTMLAttributesLink(parent.name);
+          return propList;
+        } else {
+          groupName = parent.name;
+        }
+      }
+
+      propList[groupName] = {
+        ...((propList[groupName] as Props) ?? {}),
+        [name]: { name, ...prop },
+      };
+      return propList;
+    }
   }
 }
 
