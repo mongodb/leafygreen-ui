@@ -26,8 +26,6 @@ import {
 
 import {
   Size,
-  pipelineAttr,
-  pipelineStages,
   baseSizeStyles,
   basePipelineStyles,
   baseStyles,
@@ -93,7 +91,7 @@ const Pipeline = forwardRef(
      * Stage components will re-render, triggering an infinite loop on the
      * mutation observer.
      */
-    const getAllHiddenStages = () => {
+    const setAllHiddenStagesText = () => {
       const allStages = Array.from(
         pipelineNode!.children as HTMLCollectionOf<HTMLElement>,
       );
@@ -115,7 +113,7 @@ const Pipeline = forwardRef(
 
       if (attrs.includes('data-stage-visible') || types.includes('childList')) {
         handleCounterDisplay();
-        getAllHiddenStages();
+        setAllHiddenStagesText();
       }
     };
 
@@ -146,13 +144,11 @@ const Pipeline = forwardRef(
       <PipelineContext.Provider value={providerData}>
         <div
           {...rest}
-          {...pipelineAttr.prop}
           data-testid="pipeline"
           ref={ref}
           className={cx(baseSizeStyles[size], baseStyles, className)}
         >
           <ol
-            {...pipelineStages.prop}
             ref={setPipelineNode}
             data-testid="pipeline-stages"
             className={cx(baseSizeStyles[size], basePipelineStyles)}

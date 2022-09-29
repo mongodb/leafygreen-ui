@@ -1,7 +1,7 @@
 import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  createDataProp,
+  // createDataProp,
   createUniqueClassName,
   Theme,
 } from '@leafygreen-ui/lib';
@@ -20,16 +20,18 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
+// base styles
+
 export const sharedBaseStyles = css`
-  font-weight: 600;
+  display: flex;
   flex: 1 1 auto;
-  white-space: nowrap;
-  z-index: 2;
-  position: relative;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  display: flex;
+  font-weight: 600;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
 `;
 
 export const baseStyles = css`
@@ -72,13 +74,15 @@ export const baseSizeStyles: Record<Size, string> = {
   `,
 };
 
+// Counter Styles
+
 export const counterSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     min-width: 44px;
     margin-left: -7px;
 
     &::before {
-      padding: 0 15px;
+      padding: 0 18px;
     }
   `,
   [Size.Small]: css`
@@ -86,7 +90,7 @@ export const counterSizeStyles: Record<Size, string> = {
     margin-left: -8px;
 
     &::before {
-      padding: 0 15px;
+      padding: 0 21px;
     }
   `,
   [Size.Normal]: css`
@@ -94,7 +98,7 @@ export const counterSizeStyles: Record<Size, string> = {
     margin-left: -9px;
 
     &::before {
-      padding: 0 15px;
+      padding: 0 23px;
     }
   `,
   [Size.Large]: css`
@@ -102,7 +106,7 @@ export const counterSizeStyles: Record<Size, string> = {
     margin-left: -11px;
 
     &::before {
-      padding: 0 15px;
+      padding: 0px 28px;
     }
   `,
 };
@@ -178,6 +182,8 @@ export const counterThemeStyles: Record<Theme, string> = {
   `,
 };
 
+// Stage Styles
+
 export const stageTextStyles = css`
   display: flex;
   height: 100%;
@@ -185,6 +191,21 @@ export const stageTextStyles = css`
   justify-content: center;
   width: 100%;
 `;
+
+export const stageTextSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    padding: 0 6px;
+  `,
+  [Size.Small]: css`
+    padding: 0 6px;
+  `,
+  [Size.Normal]: css`
+    padding: 0 8px;
+  `,
+  [Size.Large]: css`
+    padding: 0 12px;
+  `,
+};
 
 export const stageTextThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -212,7 +233,7 @@ export const stageBaseStyles = cx(
     &::after {
       content: '';
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: auto 100%;
       background-position: right;
       display: inline-block;
       flex-shrink: 0;
@@ -230,6 +251,9 @@ export const stageBaseStyles = cx(
   `,
 );
 
+// TODO: explain
+// Adding rounded tips of segments as an SVG with CSS to have better control of which segments it should be added to. 
+// Using SVG Data URIs to have control over the color.
 export const stageSvgThemeStyles = (theme: Theme) => {
   return css`
     &:not(&:first-of-type) {
@@ -260,19 +284,17 @@ export const stageSvgSizeStyles: Record<Size, string> = {
         width: 12px;
       }
     }
-
     &::after {
       width: 7px;
     }
   `,
   [Size.Small]: css`
     &:not(&:first-of-type) {
-      margin-left: -9px;
+      margin-left: -10px;
       &::before {
         width: 12px;
       }
     }
-
     &::after {
       width: 8px;
     }
@@ -284,40 +306,32 @@ export const stageSvgSizeStyles: Record<Size, string> = {
         width: 13px;
       }
     }
-
     &::after {
       width: 11px;
     }
   `,
   [Size.Large]: css`
-
     &:not(&:first-of-type) {
       margin-left: -10px;
       &::before {
         width: 15px;
       }
     }
-
     &::after {
       width: 15px;
     }
   `,
 };
 
-export const stageTextBaseStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    padding: 0 6px;
-  `,
-  [Size.Small]: css`
-    padding: 0 6px;
-  `,
-  [Size.Normal]: css`
-    padding: 0 8px;
-  `,
-  [Size.Large]: css`
-    padding: 0 10px;
-  `,
-};
+export const counterSvgBaseStyles = css`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  & > * {
+    width: 50%;
+  }
+`;
 
 export const svgStyles = css`
   position: absolute;
@@ -327,7 +341,6 @@ export const svgLayer1Styles = cx(
   svgStyles,
   css`
     left: 0;
-
     top: 50%;
     transform: translate(0%, -50%);
   `,
@@ -336,9 +349,7 @@ export const svgLayer1Styles = cx(
 export const svgLayer2Styles = cx(
   svgStyles,
   css`
-    // width: 70%;
     right: 0;
-
     top: 50%;
     transform: translate(0%, -50%);
   `,
@@ -346,14 +357,14 @@ export const svgLayer2Styles = cx(
 
 /* LeafyGreen Data attributes */
 
-// Pipeline
-export const pipelineAttr = createDataProp('pipeline');
-export const pipelineStages = createDataProp('pipeline-stages');
+// // Pipeline
+// export const pipelineAttr = createDataProp('pipeline');
+// export const pipelineStages = createDataProp('pipeline-stages');
 
-// Stage
-export const stageAttr = createDataProp('pipeline-stage');
-export const stageChevronAttr = createDataProp('pipeline-stage-chevron');
+// // Stage
+// export const stageAttr = createDataProp('pipeline-stage');
+// export const stageChevronAttr = createDataProp('pipeline-stage-chevron');
 
-// Counter
-export const counterAttr = createDataProp('pipeline-counter');
-export const counterChevronAttr = createDataProp('pipeline-counter-chevron');
+// // Counter
+// export const counterAttr = createDataProp('pipeline-counter');
+// export const counterChevronAttr = createDataProp('pipeline-counter-chevron');

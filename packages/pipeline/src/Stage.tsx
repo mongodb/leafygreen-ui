@@ -6,18 +6,16 @@ import React, {
   useContext,
 } from 'react';
 import PropTypes from 'prop-types';
-import mergeRefs from 'react-merge-refs';
 import { useInView } from 'react-intersection-observer';
 import { cx } from '@leafygreen-ui/emotion';
 import {
   Size,
-  stageAttr,
   stageTextThemeStyles,
   stageTextStyles,
   stageBaseStyles,
   stageSvgThemeStyles,
   baseSizeStyles,
-  stageTextBaseStyles,
+  stageTextSizeStyles,
   stageSvgSizeStyles,
 } from './styles';
 import PipelineContext from './PipelineContext';
@@ -29,7 +27,7 @@ export interface StageProps {
   children: ReactNode;
 
   /**
-   * Classname applied to Stage content container.
+   * ClassName applied to Stage content container.
    **/
   className?: string;
 
@@ -93,23 +91,23 @@ const Stage = forwardRef(
     return (
       <li
         {...rest}
-        {...stageAttr.prop}
-        ref={mergeRefs([setRef, ref])}
-
+        ref={ref}
         data-testid="pipeline-stage"
         data-stage-visible={isVisible}
         className={cx(
-          stageBaseStyles,
           baseSizeStyles[size as Size],
+          stageBaseStyles,
           stageSvgThemeStyles(theme),
           stageSvgSizeStyles[size as Size],
           className,
         )}
       >
         <span
+          // if this ref is added to the <li> this component will keep re-rendering
+          ref={setRef}
           className={cx(
             stageTextStyles,
-            stageTextBaseStyles[size as Size],
+            stageTextSizeStyles[size as Size],
             stageTextThemeStyles[theme],
           )}
         >
