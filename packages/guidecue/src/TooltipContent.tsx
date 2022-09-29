@@ -9,6 +9,7 @@ import {
   bodyTitleStyles,
   buttonStyles,
   closeStyles,
+  closeHoverStyles,
   contentStyles,
   footerStyles,
   stepStyles,
@@ -91,7 +92,7 @@ function TooltipContent({
           <div>
             {!isStandalone && (
               <IconButton
-                className={closeStyles}
+                className={cx(closeStyles, { [closeHoverStyles]: darkMode })}
                 aria-label="Close Tooltip"
                 onClick={handleCloseClick}
                 darkMode={!darkMode}

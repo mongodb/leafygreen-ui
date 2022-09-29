@@ -150,6 +150,16 @@ export const closeStyles = css`
   right: 10px;
 `;
 
+export const closeHoverStyles = css`
+  color: ${palette.gray.dark2};
+  &:hover,
+  &:active {
+    &::before {
+      background-color: ${palette.gray.light3};
+    }
+  }
+`;
+
 export const stepStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.base};
