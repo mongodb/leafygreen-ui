@@ -1,3 +1,4 @@
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { SupportedLanguages } from './languages';
 
 export const Mode = {
@@ -18,16 +19,11 @@ export type LineHighlightingDefinition = ReadonlyArray<
   number | readonly [number, number]
 >;
 
-export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
+export interface SyntaxProps extends HTMLElementProps<'code'> {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
    */
   children: string;
-
-  /**
-   * An additional CSS class applied to the root element
-   */
-  className?: string;
 
   /**
    * The language to highlight the syntax of.
@@ -37,7 +33,7 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Determines whether or not the syntax will be rendered in dark mode.
    *
-   * default: `false`
+   * @default `false`
    */
   darkMode?: boolean;
 

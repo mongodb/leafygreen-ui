@@ -1,8 +1,8 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import IconButton from './IconButton';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
+import IconButton from '.';
 
 export default {
   title: 'Components/IconButton',

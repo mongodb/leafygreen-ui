@@ -11,6 +11,7 @@ import escapeRegExp from 'lodash/escapeRegExp';
  * @param wrap
  * @param element
  * @returns `JSX.Element`
+ * @internal
  */
 export const wrapJSX = (
   str: string,

@@ -1,4 +1,4 @@
-import createGlyphComponent from '../createGlyphComponent';
+import { createGlyphComponent } from '../createGlyphComponent';
 import { LGGlyph } from '../types';
 
 // Glyphs
@@ -108,7 +108,7 @@ import Warning from './Warning.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
-const glyphs = {
+const _glyphs = {
   ActivityFeed,
   AddFile,
   Apps,
@@ -216,14 +216,12 @@ const glyphs = {
   XWithCircle,
 } as const;
 
-type GlyphName = keyof typeof glyphs;
+type GlyphName = keyof typeof _glyphs;
 
-const glyphKeys = Object.keys(glyphs) as Array<GlyphName>;
+const glyphKeys = Object.keys(_glyphs) as Array<GlyphName>;
 
-const processedGlyphs = glyphKeys.reduce((acc, name) => {
-  acc[name] = createGlyphComponent(name, glyphs[name]);
+export const glyphs = glyphKeys.reduce((acc, name) => {
+  acc[name] = createGlyphComponent(name, _glyphs[name]);
 
   return acc;
 }, {} as Record<GlyphName, LGGlyph.Component>);
-
-export default processedGlyphs;

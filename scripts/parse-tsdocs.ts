@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import {
-  parse,
+  withCompilerOptions,
   ParserOptions,
   PropItem,
   Props,
@@ -10,7 +10,11 @@ import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { isUndefined, uniqBy, startCase } from 'lodash';
+import { isUndefined, uniqBy, camelCase } from 'lodash';
+import { CompilerOptions, JsxEmit } from 'typescript';
+
+const pascalCase = (str: string) =>
+  camelCase(str).slice(0, 1).toUpperCase() + camelCase(str).slice(1);
 
 export type PropCategory = Record<string, Props>;
 export type CustomComponentDoc = Omit<ComponentDoc, 'props'> & {
@@ -45,14 +49,23 @@ const TSDocOptions: ParserOptions = {
       !skipProps.includes(prop.name) &&
       // Ignore @internal props
       isUndefined((prop.tags as any)?.internal)
-      // && !isPropExternalDeclaration(prop)
     );
-
-    // function isPropExternalDeclaration(prop: PropItem) {
-    //   return prop.parent && prop.parent.fileName.includes('node_modules');
-    // }
   },
 };
+
+const compilerOptions: CompilerOptions = {
+  allowSyntheticDefaultImports: true,
+  emitDecoratorMetadata: true,
+  /** Interpret optional property types as written, rather than adding undefined. */
+  exactOptionalPropertyTypes: true,
+  incremental: true,
+  jsx: JsxEmit.React,
+  noEmit: false,
+  /** Disable emitting declarations that have @internal in their JSDoc comments. */
+  stripInternal: true,
+};
+
+const Parser = withCompilerOptions(compilerOptions, TSDocOptions);
 
 /**
  * Main logic
@@ -85,28 +98,32 @@ function parseDocs(componentName: string): void {
     const componentFileNames = parseFileNames(componentDir);
 
     const docs: Array<CustomComponentDoc> = uniqBy(
-      parse(componentFileNames, TSDocOptions)
-        // For default exports, change the displayName
-        .map(({ displayName, ...rest }) => ({
-          ...rest,
-          displayName: ['src', 'index'].includes(displayName)
-            ? startCase(componentName)
-            : displayName,
-        }))
-        // Remove any external components
-        .filter(doc => !doc.filePath.includes('node_modules'))
-        // Remove any components with no props
-        .filter(doc => Object.keys(doc.props).length > 0)
-        // Remove any internal components
-        .filter(doc => isUndefined(doc.tags?.internal))
-        // Group Props by where they are inherited from
-        .map(({ props, ...rest }) => ({
-          ...rest,
-          props: Object.values(props).reduce(
-            groupPropsByParent,
-            {},
-          ) as PropCategory,
-        })),
+      Parser.parse(componentFileNames)
+        .filter((doc: ComponentDoc) => {
+          // Remove any external components
+          return (
+            !doc.filePath.includes('node_modules') &&
+            // Remove any components with no props
+            Object.keys(doc.props).length > 0 &&
+            // Remove any internal components
+            isUndefined(doc.tags?.internal)
+          );
+        })
+        .map(
+          ({ displayName, props, ...rest }) =>
+            ({
+              ...rest,
+              // For default exports, change the displayName
+              displayName: ['src', 'index'].includes(displayName)
+                ? pascalCase(componentName)
+                : displayName,
+              // Group Props by where they are inherited from
+              props: Object.values(props).reduce(
+                groupPropsByParent,
+                {},
+              ) as PropCategory,
+            } as CustomComponentDoc),
+        ),
       'displayName',
     );
 
@@ -134,10 +151,10 @@ function parseDocs(componentName: string): void {
       propList[prop.parent.name][prop.name] = prop;
     } else {
       // if there is no parent for the prop, we use the component name as the group name
-      if (!propList[startCase(componentName)]) {
-        propList[startCase(componentName)] = { [prop.name]: prop };
+      if (!propList[pascalCase(componentName)]) {
+        propList[pascalCase(componentName)] = { [prop.name]: prop };
       } else {
-        propList[startCase(componentName)][prop.name] = prop;
+        propList[pascalCase(componentName)][prop.name] = prop;
       }
     }
 

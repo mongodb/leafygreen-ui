@@ -42,6 +42,7 @@ export default function CardLiveExample() {
           className={cardPadding}
           // @ts-ignore
           as={as}
+          // @ts-ignore
           href={as === 'a' ? 'http://mongodb.design' : undefined}
           darkMode={darkMode}
         >

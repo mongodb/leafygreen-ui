@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import RadioBoxGroup, { RadioBoxGroupProps } from './RadioBoxGroup';
-import RadioBox from './RadioBox';
+import { RadioBoxGroup, RadioBox } from '.';
+import { RadioBoxGroupProps } from './RadioBoxGroup';
 
 export default {
   title: 'Components/RadioBoxGroup',

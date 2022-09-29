@@ -10,6 +10,7 @@ type PortalProps = {
   {
     /**
      * A custom container element. By default, the container will be a `div` appended to the document body.
+     * @required
      */
     container: HTMLElement;
     /**

@@ -8,10 +8,8 @@ export const State = {
 
 export type State = typeof State[keyof typeof State];
 
-export type BaseTextAreaProps = HTMLElementProps<
-  'textarea',
-  HTMLTextAreaElement
-> & {
+export interface BaseTextAreaProps
+  extends HTMLElementProps<'textarea', HTMLTextAreaElement> {
   /**
    * ID associated with the TextArea component.
    */
@@ -19,12 +17,14 @@ export type BaseTextAreaProps = HTMLElementProps<
 
   /**
    * Determines whether or not the component appears in dark theme.
-   * @default: false
+   * @default false
    */
   darkMode?: boolean;
 
   /**
    * Text shown in bold above the input element.
+   *
+   * Optional if `aria-labelledby` is provided
    */
   label?: string | null;
 
@@ -35,7 +35,7 @@ export type BaseTextAreaProps = HTMLElementProps<
 
   /**
    * Whether or not the field is currently disabled.
-   * @default: false
+   * @default false
    */
   disabled?: boolean;
 
@@ -46,7 +46,7 @@ export type BaseTextAreaProps = HTMLElementProps<
 
   /**
    * The current state of the TextArea. This can be `none` or `error`.
-   * @default: 'none'
+   * @default "none"
    */
   state?: State;
 
@@ -61,7 +61,9 @@ export type BaseTextAreaProps = HTMLElementProps<
   errorMessage?: string;
 
   /**
-   *  Validation callback used to validate input.
+   * Callback called whenever validation should be run.
+   *
+   * See [Form Validation & Error Handling](https://www.mongodb.design/foundation/forms/#form-validation--error-handling) for more
    */
   handleValidation?: (value: string) => void;
 
@@ -79,7 +81,14 @@ export type BaseTextAreaProps = HTMLElementProps<
    * Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description
    */
   baseFontSize?: BaseFontSize;
-};
+
+  /**
+   * Screen-reader label element
+   *
+   * Optional if `label` is provided
+   */
+  ['aria-labelledby']: string;
+}
 
 export type AriaLabels = 'label' | 'aria-labelledby';
 export type TextAreaProps = Either<BaseTextAreaProps, AriaLabels>;

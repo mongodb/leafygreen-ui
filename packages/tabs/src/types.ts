@@ -1,6 +1,6 @@
-import { Either } from '@leafygreen-ui/lib';
+import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface TabsProps {
+export interface TabsProps extends HTMLElementProps<'div'> {
   /**
    * Content that will appear inside of Tabs component.
    * Should be comprised of at least two `<Tab />` components.
@@ -14,18 +14,15 @@ export interface TabsProps {
 
   /**
    * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
+   *
+   * @type (index: number) => void
    */
-  setSelected?: any;
+  setSelected?: React.Dispatch<React.SetStateAction<number>>;
 
   /**
    * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
    */
   selected?: number;
-
-  /**
-   * className supplied to Tabs container.
-   */
-  className?: string;
 
   /**
    * determines if component will appear for Dark Mode
@@ -35,6 +32,8 @@ export interface TabsProps {
 
   /**
    * HTML Element that wraps title in Tab List.
+   *
+   * @type HTMLElement | React.Component
    */
   as?: React.ElementType<any>;
 
@@ -53,7 +52,7 @@ type AriaLabels = 'aria-label' | 'aria-labelledby';
 
 export type AccessibleTabsProps = Either<TabsProps, AriaLabels>;
 
-export interface TabProps {
+export interface TabProps extends HTMLElementProps<'div'> {
   /**
    * Content that will appear as the title in the Tab list.
    */
@@ -66,6 +65,7 @@ export interface TabProps {
 
   /**
    * Boolean that determines if the Tab is disabled.
+   * @default false
    */
   disabled?: boolean;
 
@@ -89,8 +89,15 @@ export interface TabProps {
    */
   to?: string;
 
+  /**
+   * Whether this tab is currently selected
+   */
   selected?: boolean;
 
+  /**
+   * TODO: remove, or do something with this
+   * @internal
+   */
   ariaControl?: string;
 
   // Done in order to support any Router system, such that TabTitle component can accept any URL destination prop.

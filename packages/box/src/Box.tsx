@@ -31,6 +31,11 @@ type BoxIntrinsic<
 > = Override2<
   React.ComponentPropsWithRef<TElement>,
   {
+    /**
+     * The component or HTML Element that the button is rendered as.
+     *
+     * @type HTML Element | React.Component
+     */
     as: TElement;
   },
   ExtraProps
@@ -39,11 +44,15 @@ type BoxIntrinsic<
 type BoxComponent<TProps = {}, ExtraProps = {}> = Override2<
   React.PropsWithRef<TProps>,
   {
+    /**
+     * The component or HTML Element that the button is rendered as.
+     */
     as: React.ComponentType<TProps>;
   },
   ExtraProps
 >;
 
+// TODO: TSDoc
 export type BoxProps<
   Default extends React.ElementType = 'div',
   ExtraProps = {},
@@ -109,10 +118,10 @@ export interface ExtendableBox<
     React.FunctionComponent<BoxProps<Default, ExtraProps>>,
     'displayName' | 'propTypes'
   > {
-  (props: BoxDefault<Default, ExtraProps>): JSX.Element | null;
-  (props: BoxAnchorDefault<ExtraProps>): JSX.Element | null;
   <TElement extends keyof JSX.IntrinsicElements>(
     props: BoxIntrinsic<TElement, ExtraProps>,
   ): JSX.Element | null;
+  (props: BoxAnchorDefault<ExtraProps>): JSX.Element | null;
+  (props: BoxDefault<Default, ExtraProps>): JSX.Element | null;
   <TProps>(props: BoxComponent<TProps, ExtraProps>): JSX.Element | null;
 }

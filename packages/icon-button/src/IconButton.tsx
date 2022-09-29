@@ -1,7 +1,7 @@
 import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box from '@leafygreen-ui/box';
 import { isComponentType } from '@leafygreen-ui/lib';
 import {
   useDarkMode,
@@ -21,10 +21,7 @@ import {
   removeButtonStyle,
 } from './styles';
 
-export const IconButton: ExtendableBox<
-  AccessibleIconButtonProps & { ref?: React.Ref<any> },
-  'button'
-> = React.forwardRef(
+export const IconButton = React.forwardRef(
   (
     {
       size = Size.Default,
@@ -104,16 +101,12 @@ export const IconButton: ExtendableBox<
 
 IconButton.displayName = 'IconButton';
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 IconButton.propTypes = {
   darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  // @ts-ignore
   href: PropTypes.string,
   active: PropTypes.bool,
 };
-
-export default IconButton;
