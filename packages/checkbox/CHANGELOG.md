@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 10.0.4
+
+### Patch Changes
+
+- 6e1c365e: Add disabled cursor to label text when disabled
+
 ## 10.0.3
 
 ### Patch Changes

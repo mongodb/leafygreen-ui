@@ -2,16 +2,11 @@ import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import {
-  keyMap,
-  isComponentType,
-  Either,
-  Theme,
-  HTMLElementProps,
-} from '@leafygreen-ui/lib';
+import { keyMap, isComponentType, Theme } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import InternalTab from './InternalTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { AccessibleTabsProps } from './types';
 
 // Using a background allows the "border" to appear underneath the individual tab color
 const modeColors = {
@@ -36,6 +31,17 @@ const modeColors = {
   },
 };
 
+const tabContainerStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const inlineChildrenWrapperStyle = css`
+  display: flex;
+  align-items: center;
+`;
+
 const listStyle = css`
   list-style: none;
   padding: 0;
@@ -53,56 +59,6 @@ const listStyle = css`
   -ms-overflow-style: none; /* IE */
   scrollbar-width: none; /* Firefox */
 `;
-
-type ReactEmpty = null | undefined | false | '';
-
-export interface TabsProps extends HTMLElementProps<'div'> {
-  /**
-   * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
-   *
-   * @type `<Tab />`
-   */
-  children: Array<React.ReactElement | ReactEmpty>;
-
-  /**
-   * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
-   *
-   * @type (index: number) => void
-   */
-  setSelected?: React.Dispatch<React.SetStateAction<number>>;
-
-  /**
-   * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
-   */
-  selected?: number;
-
-  /**
-   * determines if component will appear for Dark Mode
-   * @default false
-   */
-  darkMode?: boolean;
-
-  /**
-   * HTML Element that wraps title in Tab List.
-   *
-   * @type HTMLElement | React.Component
-   */
-  as?: React.ElementType<any>;
-
-  /**
-   * Accessible label that describes the set of tabs
-   */
-  ['aria-label']?: string;
-
-  /**
-   * References id of label external to the component that describes the set of tabs
-   */
-  ['aria-labelledby']?: string;
-}
-
-type AriaLabels = 'aria-label' | 'aria-labelledby';
-
-export type AccessibleTabsProps = Either<TabsProps, AriaLabels>;
 
 /**
  * # Tabs
@@ -126,6 +82,7 @@ function Tabs(props: AccessibleTabsProps) {
 
   const {
     children,
+    inlineChildren,
     setSelected: setControlledSelected,
     selected: controlledSelected,
     className,
@@ -194,7 +151,7 @@ function Tabs(props: AccessibleTabsProps) {
     [getEnabledIndexes, setSelected],
   );
 
-  const renderedChildren = React.Children.map(children, (child, index) => {
+  const renderedTabs = React.Children.map(children, (child, index) => {
     if (!isComponentType(child, 'Tab')) {
       return child;
     }
@@ -222,6 +179,9 @@ function Tabs(props: AccessibleTabsProps) {
     };
 
     return (
+      // Since the <Tab /> children contain both the tab title and content,
+      // and since we want these elements to be in different places in the DOM
+      // we use a Portal in InternalTab to place the conten in the correct spot
       <InternalTab
         child={child}
         selected={isTabSelected}
@@ -234,15 +194,22 @@ function Tabs(props: AccessibleTabsProps) {
 
   return (
     <div {...rest} className={className}>
-      {renderedChildren}
-      <div
-        className={cx(listStyle, modeColors[theme].underlineColor)}
-        role="tablist"
-        ref={setTabNode}
-        aria-orientation="horizontal"
-        {...accessibilityProps}
-      />
+      {/* render the portaled contents */}
+      {renderedTabs}
 
+      <div className={tabContainerStyle}>
+        {/* renderedTabs portals the tab title into this element */}
+        <div
+          className={cx(listStyle, modeColors[theme].underlineColor)}
+          role="tablist"
+          ref={setTabNode}
+          aria-orientation="horizontal"
+          {...accessibilityProps}
+        />
+        <div className={inlineChildrenWrapperStyle}>{inlineChildren}</div>
+      </div>
+
+      {/* renderedTabs portals the contents into this element */}
       <div ref={setPanelNode} />
     </div>
   );
