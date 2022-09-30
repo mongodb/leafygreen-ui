@@ -75,7 +75,7 @@ import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
  * allowing the user to either type a value directly or select a value from the list.
  * Can be configured to select a single or multiple options.
  */
-export default function Combobox<M extends boolean>({
+export function Combobox<M extends boolean>({
   children,
   label,
   description,

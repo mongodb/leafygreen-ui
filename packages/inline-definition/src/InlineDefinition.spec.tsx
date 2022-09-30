@@ -65,4 +65,20 @@ describe('packages/inline-definition', () => {
       timeout: 500,
     });
   });
+
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
+  describe.skip('Tests behave as expected', () => {
+    test('Requires a definition prop and children', () => {
+      /// @ts-expect-error
+      <InlineDefinition />;
+      /// @ts-expect-error
+      <InlineDefinition definition="lorem ipsum" />;
+      <InlineDefinition definition="lorem ipsum">Lorem Ipsum</InlineDefinition>;
+    });
+    test('Allows any subset of TooltipProps', () => {
+      <InlineDefinition definition="lorem ipsum" triggerEvent="hover">
+        Lorem Ipsum
+      </InlineDefinition>;
+    });
+  });
 });

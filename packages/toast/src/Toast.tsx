@@ -23,7 +23,7 @@ function Toast({
   title,
   body,
   className,
-  variant,
+  variant = Variant.Note,
   progress = 1.0,
   open = false,
   darkMode: darkModeProp,

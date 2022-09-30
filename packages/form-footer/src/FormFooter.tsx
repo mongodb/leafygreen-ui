@@ -59,7 +59,8 @@ const buttonStyle = css`
 
 export interface FormFooterProps extends HTMLElementProps<'footer'> {
   /**
-   * The primary (right-most) button. Defined as a `<Button>` element, or as an object with the shape:
+   * The primary (right-most) button.
+   * Defined as a `<Button>` element, or as an object with the shape:
    *
    * ```ts
    * interface PrimaryButtonProps {
@@ -73,10 +74,13 @@ export interface FormFooterProps extends HTMLElementProps<'footer'> {
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  primaryButton?: React.ReactChild | PrimaryButtonProps;
+  primaryButton: React.ReactChild | PrimaryButtonProps;
 
   /**
-   * Text for the cancel button. A cancel button will only appear if this text is defined.
+   * Text for the cancel button.
+   * A cancel button will only appear if this text is defined.
+   *
+   * @default "Cancel"
    */
   cancelButtonText?: string;
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Button, { Variant, Size } from '@leafygreen-ui/button';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import { GlyphName } from '@leafygreen-ui/icon/dist/glyphs';
 
 const knobsConfig: KnobsConfigInterface<{
   disabled: boolean;
@@ -73,8 +74,12 @@ export default function ButtonLiveExample() {
         {({ leftGlyph, rightGlyph, hasHrefProp, ...props }) => (
           <Button
             href={hasHrefProp ? 'https://cloud.mongodb.com' : undefined}
-            leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-            rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
+            leftGlyph={
+              leftGlyph ? <Icon glyph={leftGlyph as GlyphName} /> : undefined
+            }
+            rightGlyph={
+              rightGlyph ? <Icon glyph={rightGlyph as GlyphName} /> : undefined
+            }
             {...props}
           />
         )}

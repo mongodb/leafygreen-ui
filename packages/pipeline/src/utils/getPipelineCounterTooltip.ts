@@ -8,6 +8,7 @@ import flatMap from 'lodash/flatMap';
  *
  * @param children - the children rendered by the pipeline component
  * @returns string - the tooltip text
+ * @internal
  */
 export default function getPipelineCounterTooltip(children: ReactNode): string {
   const stages = (React.Children.map(children, onlyText) || []).filter(Boolean);
