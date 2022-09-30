@@ -96,7 +96,11 @@ export function getOptionValue(option: OptionElement | null): string {
     return option.props.children.filter(child => !isReactEmpty(child)).join('');
   }
 
-  return option.props.children.toString();
+  if (option.props.children) {
+    return option.props.children.toString();
+  }
+
+  return '';
 }
 
 export function isOptionDisabled(

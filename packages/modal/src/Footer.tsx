@@ -19,6 +19,10 @@ interface FooterProps {
   darkMode?: boolean;
 }
 
+/**
+ * @internal
+ * Internal modal Footer component
+ */
 const Footer = ({ children, className, darkMode }: FooterProps) => {
   return (
     <div

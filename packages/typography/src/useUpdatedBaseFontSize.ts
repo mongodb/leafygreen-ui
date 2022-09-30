@@ -10,10 +10,9 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
  * this hook will be removed, and {@link useBaseFontSize} updated
  * to return the updated tokens.
  *
- *  @param override: If the calling component accepts a `baseFontSize` prop, pass that prop into this hook to respect it
- *
+ * @param override: If the calling component accepts a `baseFontSize` prop, pass that prop into this hook to respect it
  * @deprecated
- *
+ * @internal
  * @returns - {@link BaseFontSize}
  */
 export const useUpdatedBaseFontSize = (

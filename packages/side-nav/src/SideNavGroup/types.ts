@@ -1,11 +1,6 @@
-import { OneOf } from '@leafygreen-ui/lib';
+import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
 
-interface SideNavGroupBaseProps {
-  /**
-   * Class name that will be applied to the root-level element.
-   */
-  className?: string;
-
+interface SideNavGroupBaseProps extends HTMLElementProps<'li'> {
   /**
    * Content that will be rendered as the component's header. If a string is provided,
    * it will be rendered with default styling as a header tag.
@@ -13,12 +8,16 @@ interface SideNavGroupBaseProps {
   header?: React.ReactNode;
 
   /**
-   * Content that will be rendered inside the root-level element.
+   * Content that will be rendered inside the root-level element.\
+   *
+   * @type `<SideNavItem />`
    */
   children?: React.ReactNode;
 
   /**
    * Icon that's rendered in the group label.
+   *
+   * @type `<Icon />`
    */
   glyph?: React.ReactNode;
 

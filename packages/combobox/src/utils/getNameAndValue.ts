@@ -8,6 +8,7 @@ import { ComboboxOptionProps } from '../Combobox.types';
  *
  * @property value: string
  * @property displayName: string
+ * @internal
  */
 export const getNameAndValue = ({
   value: valProp,

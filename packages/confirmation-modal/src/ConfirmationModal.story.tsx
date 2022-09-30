@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import ConfirmationModal, { Variant } from '.';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Modals/ConfirmationModal',
@@ -18,7 +18,7 @@ export default {
     open: { control: 'boolean' },
     title: { control: 'text' },
     buttonText: { control: 'text' },
-    children: defaultArgTypes.children,
+    children: storybookArgTypes.children,
   },
 };
 

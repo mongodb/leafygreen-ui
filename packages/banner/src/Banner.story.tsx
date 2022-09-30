@@ -2,7 +2,7 @@ import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Banner, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 export default {
@@ -27,9 +27,12 @@ export default {
     dismissible: {
       control: 'boolean',
     },
-    children: defaultArgTypes.children,
-    ref: defaultArgTypes.ref,
-    darkMode: defaultArgTypes.darkMode,
+    onClose: {
+      control: 'none',
+    },
+    children: storybookArgTypes.children,
+    ref: storybookArgTypes.ref,
+    darkMode: storybookArgTypes.darkMode,
   },
 } as Meta<typeof Banner>;
 
@@ -87,6 +90,6 @@ export const WithLink: ComponentStory<typeof Banner> = ({
 export const WithCustomImage = Template.bind({});
 WithCustomImage.args = {
   variant: Variant.Info,
-  // @ts-expect-error
+  /// @ts-ignore
   image: 'Copy',
 };

@@ -8,7 +8,7 @@ import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import { Tab, Tabs } from './index';
 import { TabsProps } from './types';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
 import { Story } from '@storybook/react';
 
@@ -48,7 +48,7 @@ export default {
     as: { control: false },
     setSelected: { control: false },
     selected: { control: 'number' },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
   },
   subcomponents: { Tab },
 } as Meta<typeof Tabs>;

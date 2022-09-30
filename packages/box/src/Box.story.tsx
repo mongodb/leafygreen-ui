@@ -1,7 +1,7 @@
 import React from 'react';
 import Box, { BoxProps } from '.';
 import { Meta, Story } from '@storybook/react';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef
 // https://github.com/storybookjs/storybook/issues/15334
@@ -24,7 +24,7 @@ export default {
   argTypes: {
     as: {
       defaultValue: 'div',
-      ...defaultArgTypes.as,
+      ...storybookArgTypes.as,
     },
     href: {
       control: 'text',
