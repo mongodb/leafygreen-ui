@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { forwardRef, useContext, useEffect, useRef } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import {
@@ -9,6 +9,7 @@ import Box from '@leafygreen-ui/box';
 import { Size, Mode } from './types';
 import { SegmentedControlContext } from './SegmentedControl';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 /**
  * Styles
@@ -197,8 +198,7 @@ const labelStyle = css`
 /**
  * Types
  */
-export interface SegmentedControlOptionProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
   /**
    * Can be text and/or an icon element
    */
@@ -234,45 +234,51 @@ export interface SegmentedControlOptionProps
   className?: string;
 
   /**
-   * Internal. A unique identifier for the option
+   * @internal
+   * A unique identifier for the option
    */
   _id?: string;
 
   /**
-   * Internal. Identifies whether the option is checked.
+   * @internal
+   * Identifies whether the option is checked.
    */
   _checked?: boolean;
 
   /**
-   * Internal. Identifies whether the option has focus
+   * @internal
+   * Identifies whether the option has focus
    */
   _focused?: boolean;
 
   /**
-   * Internal. The index of the option
+   * @internal
+   * The index of the option
    */
   _index?: number;
 
   /**
-   * Internal. Calls the onChange callback
+   * @internal
+   * Calls the onChange callback
    */
   _onClick?: (value: string) => void;
 
   /**
-   * Internal. Fires on mouse in and out
+   * @internal
+   * Fires on mouse in and out
    */
   _onHover?: (hovered: boolean) => void;
 
   /**
-   * Any other props
+   * @internal
    */
-  [key: string]: any;
+  isfocusInComponent?: boolean;
 }
 
 /**
- * Component
+ * SegmentedControlOption
  */
-const SegmentedControlOption = React.forwardRef<
+export const SegmentedControlOption = forwardRef<
   HTMLDivElement,
   SegmentedControlOptionProps
 >(
@@ -372,5 +378,3 @@ const SegmentedControlOption = React.forwardRef<
 );
 
 SegmentedControlOption.displayName = 'SegmentedControlOption';
-
-export default SegmentedControlOption;

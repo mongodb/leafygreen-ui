@@ -1,7 +1,7 @@
 import React from 'react';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export type HeaderRowProps = HTMLElementProps<'tr', never>;
+export interface HeaderRowProps extends HTMLElementProps<'tr'> {}
 
 export type HeaderRowElement = React.ReactComponentElement<typeof HeaderRow>;
 

@@ -168,6 +168,10 @@ const closeButton: Record<
 
 const closeClassName = createUniqueClassName();
 
+/**
+ * @internal
+ * Internal Modal View component
+ */
 function ModalView({
   open = false,
   size = ModalSize.Default,

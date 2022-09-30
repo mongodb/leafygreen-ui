@@ -2,8 +2,8 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { typeIs } from '@leafygreen-ui/lib';
-import RadioBox from './RadioBox';
-import RadioBoxGroup from './RadioBoxGroup';
+import { RadioBox } from './RadioBox';
+import { RadioBoxGroup } from './RadioBoxGroup';
 
 const className = 'test-radio-box-class';
 

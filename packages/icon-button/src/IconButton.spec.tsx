@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import IconButton from './IconButton';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
+import IconButton from '.';
 
 const onClick = jest.fn();
 const className = 'test-icon-button-class';
@@ -66,5 +66,28 @@ describe('packages/icon-button', () => {
     const { icon } = renderIconButton({ children: iconWithTitle });
 
     expect(icon.getAttribute('title')).toBe(titleText);
+  });
+
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
+  describe.skip('types behave as expected', () => {
+    test('does not throw an error when no children are passed to the component', () => {
+      <IconButton aria-label="button" onClick={() => {}} />;
+    });
+
+    test('requires either aria-label or aria-labelledby', () => {
+      /// @ts-expect-error
+      <IconButton />;
+      <IconButton aria-label="button" />;
+      <IconButton aria-labelledby="buttonId" />;
+    });
+
+    test('accepts anchor tag attributes', () => {
+      <IconButton
+        aria-label="button"
+        href="http://mongodb.design"
+        target="_blank"
+        rel="noopener"
+      />;
+    });
   });
 });

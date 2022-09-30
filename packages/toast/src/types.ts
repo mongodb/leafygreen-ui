@@ -36,8 +36,10 @@ export interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
 
   /**
    * Required style variant to render the Toast as.
+   *
+   * @default `note`
    */
-  variant: Variant;
+  variant?: Variant;
 
   /**
    * Optional number between 0 and 1 that sets the progress bar's progress. Note that the progress bar is only rendered when the Toast variant is set to `'progress'`.

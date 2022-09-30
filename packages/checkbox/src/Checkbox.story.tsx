@@ -4,7 +4,7 @@ import React from 'react';
 import Checkbox from '.';
 import { CheckboxProps } from './types';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Checkbox',
@@ -17,7 +17,7 @@ export default {
   argTypes: {
     label: { control: 'text' },
     description: { control: 'text' },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
     bold: { control: 'boolean' },

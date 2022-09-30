@@ -27,14 +27,14 @@ export interface LogoProps extends HTMLElementProps<'svg'> {
   /**
    * Determines Color of the Logo or LogoMark component.
    *
-   * @default: 40
+   * @default 40
    */
   color?: SupportedColors;
 
   /**
    * Determines height of the Logo or LogoMark component.
    *
-   * @default: 40
+   * @default 40
    */
   height?: number;
 }

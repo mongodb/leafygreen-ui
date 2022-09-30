@@ -56,7 +56,7 @@ const renderUncontrolledRadioGroup = (
   );
 };
 
-const renderRadio = (props: RadioProps) => {
+const renderRadio = (props: Omit<RadioProps, 'value'>) => {
   const { getByTestId } = render(
     <Radio {...props} data-testid="lg-radio" value="input-only" />,
   );

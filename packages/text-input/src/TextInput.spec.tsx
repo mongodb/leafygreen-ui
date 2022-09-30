@@ -259,7 +259,8 @@ describe('packages/text-input', () => {
     });
 
     test('TextInput throws an error when `type` is "search" and an aria-label is not supplied', () => {
-      <TextInput type="search" aria-label="search for this..." />;
+      // @ts-expect-error
+      <TextInput type="search" />;
     });
   });
   /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
