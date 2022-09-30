@@ -76,6 +76,18 @@ export const baseSizeStyles: Record<Size, string> = {
 
 // Counter Styles
 
+export const counterSvgBaseStyles = css`
+  position: absolute;
+  width: 100%;
+  height: calc(100% + 10px);
+  display: flex;
+  & > * {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+  }
+`;
+
 export const counterSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     min-width: 44px;
@@ -121,63 +133,84 @@ export const counterBaseStyles = cx(
       z-index: 1;
     }
 
-    .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
-      opacity: 0;
-      transition: opacity 1500ms ease-in-out;
+    .${svgInnerClassName} {
+      transition: all 300ms ease-in-out;
     }
 
-    // .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
-    //   opacity: 0;
-    // }
-
-    // // .${svgOuterOutlineClassName} {
-    // //   transition: opacity 10050ms ease-in-out;
-    // // }
+    .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
+      fill: rgba(255, 255, 255, 0);
+      transition: all 300ms ease-in-out;
+    }
 
     &:focus-visible {
       outline: none;
-      .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
-        opacity: 1; 
-      }
-      // .${svgOuterOutlineClassName} {
-      //   transition: opacity 150ms ease-in-out;
-      // }
     }
+  `,
+);
 
-    // &:hover {
-    //   .${svgInnerOutlineClassName} {
-    //     transition: opacity 150ms ease-in-out;
-    //     opacity: 1; 
-    //     fill: red;
-    //   }
-    // }
+export const svgStyles = css`
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%);
+`;
 
+export const svgLayer1Styles = cx(
+  svgStyles,
+  css`
+    left: 0;
+  `,
+);
+
+export const svgLayer2Styles = cx(
+  svgStyles,
+  css`
+    right: 0;
   `,
 );
 
 export const counterThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.blue.dark1};
+
     .${svgInnerClassName} {
       fill: ${palette.blue.light3};
     }
-    .${svgInnerOutlineClassName} {
-      fill: ${palette.white};
+
+    &:focus-visible {
+      .${svgOuterOutlineClassName} {
+        fill: ${palette.blue.light1};
+      }
     }
-    .${svgOuterOutlineClassName} {
-      fill: ${palette.blue.light1};
+
+    &:hover {
+      .${svgInnerOutlineClassName} {
+        fill: ${palette.blue.light3};
+      }
+      .${svgInnerClassName} {
+        fill: ${palette.blue.light2};
+      }
     }
   `,
   [Theme.Dark]: css`
     color: ${palette.blue.light2};
+
     .${svgInnerClassName} {
       fill: ${palette.blue.dark2};
     }
-    .${svgInnerOutlineClassName} {
-      fill: ${palette.black};
+
+    &:focus-visible {
+      .${svgOuterOutlineClassName} {
+        fill: ${palette.blue.light1};
+      }
     }
-    .${svgOuterOutlineClassName} {
-      fill: ${palette.blue.light1};
+
+    &:hover {
+      .${svgInnerOutlineClassName} {
+        fill: ${palette.blue.dark2};
+      }
+      .${svgInnerClassName} {
+        fill: ${palette.blue.dark1};
+      }
     }
   `,
 };
@@ -247,12 +280,12 @@ export const stageBaseStyles = cx(
         border-bottom-left-radius: 5px;
       }
     }
-
   `,
 );
 
+// TODO: these need individual SVGs :(
 // TODO: explain
-// Adding rounded tips of segments as an SVG with CSS to have better control of which segments it should be added to. 
+// Adding rounded tips of segments as an SVG with CSS to have better control of which segments it should be added to.
 // Using SVG Data URIs to have control over the color.
 export const stageSvgThemeStyles = (theme: Theme) => {
   return css`
@@ -322,49 +355,3 @@ export const stageSvgSizeStyles: Record<Size, string> = {
     }
   `,
 };
-
-export const counterSvgBaseStyles = css`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  & > * {
-    width: 50%;
-  }
-`;
-
-export const svgStyles = css`
-  position: absolute;
-`;
-
-export const svgLayer1Styles = cx(
-  svgStyles,
-  css`
-    left: 0;
-    top: 50%;
-    transform: translate(0%, -50%);
-  `,
-);
-
-export const svgLayer2Styles = cx(
-  svgStyles,
-  css`
-    right: 0;
-    top: 50%;
-    transform: translate(0%, -50%);
-  `,
-);
-
-/* LeafyGreen Data attributes */
-
-// // Pipeline
-// export const pipelineAttr = createDataProp('pipeline');
-// export const pipelineStages = createDataProp('pipeline-stages');
-
-// // Stage
-// export const stageAttr = createDataProp('pipeline-stage');
-// export const stageChevronAttr = createDataProp('pipeline-stage-chevron');
-
-// // Counter
-// export const counterAttr = createDataProp('pipeline-counter');
-// export const counterChevronAttr = createDataProp('pipeline-counter-chevron');

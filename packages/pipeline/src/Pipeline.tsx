@@ -24,12 +24,7 @@ import {
   isElementOverflowed,
 } from './utils';
 
-import {
-  Size,
-  baseSizeStyles,
-  basePipelineStyles,
-  baseStyles,
-} from './styles';
+import { Size, baseSizeStyles, basePipelineStyles, baseStyles } from './styles';
 import { PipelineProps } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
