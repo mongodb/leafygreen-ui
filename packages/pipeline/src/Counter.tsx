@@ -6,20 +6,20 @@ import React, {
   useContext,
 } from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { SegmentXs, SegmentS, SegmentM, SegmentL } from './svgs';
 
 import {
-  Size,
   counterThemeStyles,
   counterBaseStyles,
   counterSizeStyles,
   svgLayer1Styles,
   svgLayer2Styles,
-  baseSizeStyles,
   counterSvgBaseStyles,
+  counterSvgColStyles,
 } from './styles';
 import PipelineContext from './PipelineContext';
+import { Size } from './types';
 
 interface CounterProps {
   /**
@@ -68,7 +68,6 @@ const Counter = forwardRef(
         {...rest}
         data-testid="pipeline-counter"
         className={cx(
-          baseSizeStyles[size],
           counterBaseStyles,
           counterSizeStyles[size],
           counterThemeStyles[theme],
@@ -79,12 +78,12 @@ const Counter = forwardRef(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
-        {/* The counter is a unique shape that is not easily accomplished with css alone so we are using an SVG. We are also using the SVG to show hover and focus states. The reason we have 2 SVGs is to mimic the behavior of a div expanding horizontally when the text increases since an SVG does not stretch horizontally while maintaining its height.*/}
+        {/* The counter is a unique shape with focus and hover state that are not easily accomplished with css alone so we are using an SVG. The reason we have 2 SVGs is to mimic the behavior of a div expanding horizontally when the text increases since an SVG does not stretch horizontally while maintaining its height.*/}
         <div className={counterSvgBaseStyles}>
-          <div>
+          <div className={counterSvgColStyles}>
             <Icon className={cx(svgLayer1Styles)} />
           </div>
-          <div>
+          <div className={counterSvgColStyles}>
             <Icon className={cx(svgLayer2Styles)} />
           </div>
         </div>

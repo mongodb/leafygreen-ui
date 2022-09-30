@@ -9,16 +9,15 @@ import PropTypes from 'prop-types';
 import { useInView } from 'react-intersection-observer';
 import { cx } from '@leafygreen-ui/emotion';
 import {
-  Size,
   stageTextThemeStyles,
   stageTextStyles,
   stageBaseStyles,
   stageSvgThemeStyles,
-  baseSizeStyles,
   stageTextSizeStyles,
   stageSvgSizeStyles,
 } from './styles';
 import PipelineContext from './PipelineContext';
+import { Size } from './types';
 
 export interface StageProps {
   /**
@@ -62,7 +61,7 @@ export interface StageProps {
  * </Pipeline>
  * ```
  * @param props.children Content that will appear inside of the Stage component.
- * @param props.className ClassName applied to Stage content container.
+ * @param props.className Classname applied to Stage content container.
  * @param props.intersectionNode The DOM node to use as the root node for the intersectionObserver. Defaults to window when null or undefined.
  * @param props.size Alters the rendered size of the component.
  * @param props.threshold Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed.
@@ -95,9 +94,8 @@ const Stage = forwardRef(
         data-testid="pipeline-stage"
         data-stage-visible={isVisible}
         className={cx(
-          baseSizeStyles[size as Size],
           stageBaseStyles,
-          stageSvgThemeStyles(theme),
+          stageSvgThemeStyles[theme],
           stageSvgSizeStyles[size as Size],
           className,
         )}

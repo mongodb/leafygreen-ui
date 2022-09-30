@@ -8,13 +8,10 @@ import React, {
 } from 'react';
 
 import PropTypes from 'prop-types';
-
-// import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { cx } from '@leafygreen-ui/emotion';
 import { useMutationObserver } from '@leafygreen-ui/hooks';
 import { PipelineContext } from './PipelineContext';
-
 import Stage from './Stage';
 import Counter from './Counter';
 
@@ -24,8 +21,12 @@ import {
   isElementOverflowed,
 } from './utils';
 
-import { Size, baseSizeStyles, basePipelineStyles, baseStyles } from './styles';
-import { PipelineProps } from './types';
+import {
+  baseSizeStyles,
+  basePipelineListStyles,
+  basePipelineStyles,
+} from './styles';
+import { PipelineProps, Size } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
@@ -141,12 +142,12 @@ const Pipeline = forwardRef(
           {...rest}
           data-testid="pipeline"
           ref={ref}
-          className={cx(baseSizeStyles[size], baseStyles, className)}
+          className={cx(baseSizeStyles[size], basePipelineStyles, className)}
         >
           <ol
             ref={setPipelineNode}
             data-testid="pipeline-stages"
-            className={cx(baseSizeStyles[size], basePipelineStyles)}
+            className={cx(basePipelineListStyles)}
           >
             {childrenAsPipelineStages}
           </ol>

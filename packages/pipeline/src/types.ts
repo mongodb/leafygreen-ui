@@ -1,5 +1,13 @@
 import { ReactNode } from 'react';
-import { Size } from './styles';
+
+export const Size = {
+  XSmall: 'xsmall',
+  Small: 'small',
+  Normal: 'normal',
+  Large: 'large',
+} as const;
+
+export type Size = typeof Size[keyof typeof Size];
 
 export interface StateForStyles {
   hasHiddenStages: boolean;

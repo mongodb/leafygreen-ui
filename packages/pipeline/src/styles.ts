@@ -6,43 +6,25 @@ import {
   Theme,
 } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
+import { Size } from './types';
+import { edges } from './svgs';
 
 export const svgInnerOutlineClassName = createUniqueClassName('pipeline');
 export const svgOuterOutlineClassName = createUniqueClassName('pipeline');
 export const svgInnerClassName = createUniqueClassName('pipeline');
 
-export const Size = {
-  XSmall: 'xsmall',
-  Small: 'small',
-  Normal: 'normal',
-  Large: 'large',
-} as const;
-
-export type Size = typeof Size[keyof typeof Size];
-
 // base styles
 
-export const sharedBaseStyles = css`
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  white-space: nowrap;
-  position: relative;
-  z-index: 2;
-`;
-
-export const baseStyles = css`
-  counter-reset: hiddenCount;
-  flex-direction: row;
-`;
-
 export const basePipelineStyles = css`
+  display: flex;
+  counter-reset: hiddenCount;
+  z-index: 2;
+  font-weight: 600;
+`;
+
+export const basePipelineListStyles = css`
+  display: flex;
   flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 100%;
   flex-wrap: wrap;
   overflow: hidden;
   list-style: none;
@@ -53,22 +35,18 @@ export const basePipelineStyles = css`
 
 export const baseSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
-    display: flex;
     font-size: ${typeScales.body1.fontSize}px;
     height: 22px;
   `,
   [Size.Small]: css`
-    display: flex;
     font-size: ${typeScales.body1.fontSize}px;
     height: 28px;
   `,
   [Size.Normal]: css`
-    display: flex;
     font-size: ${typeScales.body1.fontSize}px;
     height: 36px;
   `,
   [Size.Large]: css`
-    display: flex;
     font-size: 18px;
     height: 48px;
   `,
@@ -81,17 +59,18 @@ export const counterSvgBaseStyles = css`
   width: 100%;
   height: calc(100% + 10px);
   display: flex;
-  & > * {
-    width: 50%;
-    position: relative;
-    overflow: hidden;
-  }
+`;
+
+export const counterSvgColStyles = css`
+  width: 50%;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const counterSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     min-width: 44px;
-    margin-left: -7px;
+    margin-left: -6px;
 
     &::before {
       padding: 0 18px;
@@ -124,8 +103,12 @@ export const counterSizeStyles: Record<Size, string> = {
 };
 
 export const counterBaseStyles = cx(
-  sharedBaseStyles,
   css`
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     margin-left: -11px;
     &::before {
       white-space: nowrap;
@@ -142,7 +125,8 @@ export const counterBaseStyles = cx(
       transition: all 300ms ease-in-out;
     }
 
-    &:focus-visible {
+    &:focus-visible,
+    &:focus {
       outline: none;
     }
   `,
@@ -252,11 +236,10 @@ export const stageTextThemeStyles: Record<Theme, string> = {
 };
 
 export const stageBaseStyles = cx(
-  sharedBaseStyles,
   css`
-    flex: 1 1 auto;
-    white-space: nowrap;
-    z-index: 1;
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
 
     &[data-stage-visible='false'] {
       counter-increment: hiddenCount;
@@ -265,9 +248,6 @@ export const stageBaseStyles = cx(
     &::before,
     &::after {
       content: '';
-      background-repeat: no-repeat;
-      background-size: auto 100%;
-      background-position: right;
       display: inline-block;
       flex-shrink: 0;
       position: relative;
@@ -283,74 +263,104 @@ export const stageBaseStyles = cx(
   `,
 );
 
-// TODO: these need individual SVGs :(
-// TODO: explain
-// Adding rounded tips of segments as an SVG with CSS to have better control of which segments it should be added to.
-// Using SVG Data URIs to have control over the color.
-export const stageSvgThemeStyles = (theme: Theme) => {
-  return css`
+export const stageSvgThemeStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
     &:not(&:first-of-type) {
       &::before {
-        background-image: url("data:image/svg+xml,%3Csvg width='13' height='48' viewBox='0 0 13 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.223607 1.44721C-0.108843 0.782313 0.374652 0 1.11803 0H13V48H1.11803C0.374652 48 -0.108844 47.2177 0.223607 46.5528L10.382 26.2361C11.0858 24.8284 11.0858 23.1716 10.382 21.7639L0.223607 1.44721Z' fill='%23${theme ===
-        Theme.Light
-          ? 'C3E7FE'
-          : '1254B7'}'/%3E%3C/svg%3E%0A");
-        left: 1px;
+        background: ${palette.blue.dark1};
+        right: -1px;
       }
     }
-
     &::after {
-      background-image: url("data:image/svg+xml,%3Csvg width='15' height='48' viewBox='0 0 15 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H0.572721C2.47768 0 4.21713 1.08246 5.05854 2.79152L14.4127 21.7915C15.0983 23.184 15.0983 24.816 14.4127 26.2085L5.05855 45.2085C4.21713 46.9175 2.47768 48 0.572721 48H0V0Z' fill='%23${theme ===
-      Theme.Light
-        ? 'C3E7FE'
-        : '1254B7'}'/%3E%3C/svg%3E%0A");
+      background: ${palette.blue.dark1};
       left: -1px;
     }
-  `;
-};
-
-export const stageSvgSizeStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
+  `,
+  [Theme.Light]: css`
     &:not(&:first-of-type) {
-      margin-left: -10px;
       &::before {
-        width: 12px;
+        background: ${palette.blue.light2};
+        right: -1px;
       }
     }
     &::after {
-      width: 7px;
+      background: ${palette.blue.light2};
+      left: -1px;
+    }
+  `,
+};
+
+// Adding rounded tips of segments as an SVG with CSS
+export const stageSvgSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    &:first-of-type {
+      span {
+        padding-left: 10px;
+      }
+    }
+    &:not(&:first-of-type) {
+      margin-left: -3px;
+      &::before {
+        mask: url('${edges[Size.XSmall].before}');
+        width: 7px;
+      }
+    }
+    &::after {
+      mask: url('${edges[Size.XSmall].after}');
+      width: 9px;
     }
   `,
   [Size.Small]: css`
+    &:first-of-type {
+      span {
+        padding-left: 10px;
+      }
+    }
     &:not(&:first-of-type) {
-      margin-left: -10px;
+      margin-left: -6px;
       &::before {
-        width: 12px;
+        mask: url('${edges[Size.Small].before}');
+        width: 9px;
       }
     }
     &::after {
-      width: 8px;
+      mask: url('${edges[Size.Small].after}');
+      width: 11px;
     }
   `,
   [Size.Normal]: css`
+    &:first-of-type {
+      span {
+        padding-left: 12px;
+      }
+    }
     &:not(&:first-of-type) {
-      margin-left: -9px;
+      margin-left: -7px;
       &::before {
+        mask: url('${edges[Size.Normal].before}');
         width: 13px;
       }
     }
     &::after {
-      width: 11px;
+      mask: url('${edges[Size.Normal].after}');
+      width: 13px;
     }
   `,
   [Size.Large]: css`
+    &:first-of-type {
+      span {
+        padding-left: 15px;
+      }
+    }
     &:not(&:first-of-type) {
-      margin-left: -10px;
+      margin-left: -8px;
       &::before {
-        width: 15px;
+        mask: url('${edges[Size.Large].before}');
+        width: 13px;
       }
     }
     &::after {
+      mask: url('${edges[Size.Large].after}');
       width: 15px;
     }
   `,
