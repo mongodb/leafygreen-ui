@@ -255,7 +255,7 @@ export const stageBaseStyles = cx(
     }
 
     &:first-of-type {
-      span {
+      span { // TODO: make this a classname
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
       }

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Counter from './Counter';
-import { Size } from './styles';
+import { Size } from './types';
 
 const className = 'test-counter-class';
 

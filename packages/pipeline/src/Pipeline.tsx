@@ -90,7 +90,7 @@ const Pipeline = forwardRef(
     const setAllHiddenStagesText = () => {
       const allStages = Array.from(
         pipelineNode!.children as HTMLCollectionOf<HTMLElement>,
-      );
+      ) || [];
 
       const allHiddenStages = allStages
         .filter(element => element.dataset.stageVisible === 'false')
@@ -130,6 +130,10 @@ const Pipeline = forwardRef(
         intersectionNode: pipelineNode,
         ref: createRef<HTMLLIElement>(),
       };
+
+            // return isComponentType(child, 'Stage')
+      //   ? React.cloneElement(child, props)
+      //   : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
 
       return isStageElement(child)
         ? React.cloneElement(child, props)

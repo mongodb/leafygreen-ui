@@ -4,7 +4,7 @@ import React from 'react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { render, cleanup } from '@testing-library/react';
 import Stage from './Stage';
-import { Size } from './styles';
+import { Size } from './types';
 
 const className = 'test-stage-class';
 const parentElement = document.createElement('div');

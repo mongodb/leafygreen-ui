@@ -1,7 +1,7 @@
 import React from 'react';
 import isStageElement from './isStageElement';
 import Stage from '../Stage';
-import { Size } from '../styles';
+import { Size } from '../types';
 
 describe('packages/pipeline/utils/isStageElement', () => {
   test('returns "true" if the element is a "Stage" element', () => {
