@@ -41,7 +41,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   numberOfSteps: {
     type: 'number',
-    default: 1,
+    default: 2,
     label: 'numberOfSteps',
   },
   currentStep: {
@@ -99,6 +99,7 @@ export default function CardLiveExample() {
         tooltipAlign,
         tooltipJustify,
         beaconAlign,
+        buttonText,
       }) => (
         <div>
           <Button
@@ -124,6 +125,7 @@ export default function CardLiveExample() {
             tooltipAlign={tooltipAlign}
             tooltipJustify={tooltipJustify}
             beaconAlign={beaconAlign}
+            buttonText={buttonText}
           >
             {children}
           </GuideCue>

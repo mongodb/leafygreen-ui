@@ -5,7 +5,7 @@ import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { beaconStyles, timeout1, timeout2 } from './styles';
 import { GuideCueProps } from './types';
-import { TooltipContent } from './';
+import TooltipContent from './TooltipContent';
 
 function GuideCue({
   open,
