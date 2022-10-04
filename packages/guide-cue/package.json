@@ -1,0 +1,45 @@
+
+  {
+    "name": "@leafygreen-ui/guide-cue",
+    "version": "0.9.0",
+    "description": "leafyGreen UI Kit GuideCue",
+    "main": "./dist/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/index.d.ts",
+    "typesVersions": {
+      "<3.9": { "*": ["ts3.4/*"] }
+    },
+    "scripts": {
+      "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    },
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/guide-cue",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mongodb/leafygreen-ui"
+    },
+    "bugs": {
+      "url": "https://jira.mongodb.org/projects/PD/summary"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "dependencies": {
+      "focus-trap-react": "^10.0.0",
+      "polished": "^4.2.2",
+      "@leafygreen-ui/a11y": "^1.3.1",
+      "@leafygreen-ui/button": "^16.0.2",
+      "@leafygreen-ui/emotion": "^4.0.1",
+      "@leafygreen-ui/hooks":"^7.3.1",
+      "@leafygreen-ui/icon": "^11.10.1",
+      "@leafygreen-ui/icon-button": "^13.1.0",
+      "@leafygreen-ui/lib": "^9.4.2",
+      "@leafygreen-ui/palette": "^3.4.1",
+      "@leafygreen-ui/popover": "^9.0.0",
+      "@leafygreen-ui/tooltip": "^7.1.0",
+      "@leafygreen-ui/typography": "^13.1.1"
+    },
+    "peerDependencies": {
+      "@leafygreen-ui/leafygreen-provider": "^2.3.2"
+    }
+  }
