@@ -9,6 +9,7 @@ import { getNameAndValue } from './getNameAndValue';
  *
  * @param _children
  * @returns `Array<OptionObject>`
+ * @internal
  */
 export const flattenChildren = (
   _children: React.ReactNode,

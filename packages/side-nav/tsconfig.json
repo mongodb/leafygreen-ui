@@ -5,43 +5,51 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
-      "path": "../../packages/lib"
+      "path": "../a11y"
     },
     {
-      "path": "../../packages/emotion"
+      "path": "../box"
     },
     {
-      "path": "../../packages/palette"
+      "path": "../emotion"
     },
     {
-      "path": "../../packages/menu"
+      "path": "../hooks"
     },
     {
-      "path": "../../packages/portal"
+      "path": "../icon"
     },
     {
-      "path": "../../packages/icon"
+      "path": "../lib"
     },
     {
-      "path": "../../packages/hooks"
+      "path": "../palette"
     },
     {
-      "path": "../../packages/tooltip"
+      "path": "../portal"
     },
     {
-      "path": "../../packages/tokens"
+      "path": "../tokens"
     },
     {
-      "path": "../../packages/a11y"
+      "path": "../tooltip"
     },
     {
-      "path": "../../packages/select"
+      "path": "../typography"
     },
     {
-      "path": "../../packages/leafygreen-provider"
+      "path": "../icon-button"
+    },
+    {
+      "path": "../select"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

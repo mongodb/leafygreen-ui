@@ -2,6 +2,7 @@ import React, { SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import { ModalView } from '.';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const CloseIconColor = {
   Default: 'default',
@@ -19,7 +20,7 @@ export const ModalSize = {
 
 export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 
-export interface ModalProps {
+export interface ModalProps extends HTMLElementProps<'div'> {
   /**
    * Content that will appear inside of the Modal component.
    */
@@ -27,33 +28,30 @@ export interface ModalProps {
 
   /**
    * Determines the open state of the modal
-   * @default: `false`
+   * @default false
    */
   open?: boolean;
 
   /**
    * Specifies the size of the Modal.
    *
-   * default: `default`
+   * @default 'default'
    */
   size?: ModalSize;
 
   /**
    * Callback to change the open state of the Modal.
    *
+   * @default () => {}
    */
   setOpen?: (open: boolean) => void | React.Dispatch<SetStateAction<boolean>>;
 
   /**
    * Callback to determine whether or not Modal should close when user tries to close it.
    *
+   * @default () => true
    */
   shouldClose?: () => boolean;
-
-  /**
-   * className applied to root div.
-   */
-  className?: string;
 
   /**
    * className applied to overlay div.
@@ -68,8 +66,16 @@ export interface ModalProps {
    */
   initialFocus?: string;
 
+  /**
+   * Determines if the component will appear in dark mode.
+   * @default false
+   */
   darkMode?: boolean;
 
+  /**
+   * Determines the color of the close icon. Currently will only work if darkMode is set to false.
+   * @default 'default'
+   */
   closeIconColor?: CloseIconColor;
 }
 

@@ -5,8 +5,13 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
+    {
+      "path": "../box"
+    },
     {
       "path": "../emotion"
     },
@@ -14,25 +19,22 @@
       "path": "../hooks"
     },
     {
-      "path": "../lib"
-    },
-    {
-      "path": "../popover"
-    },
-    {
-      "path": "../portal"
-    },
-    {
-      "path": "../palette"
-    },
-    {
-      "path": "../tokens"
+      "path": "../icon"
     },
     {
       "path": "../icon-button"
     },
     {
-      "path": "../box"
+      "path": "../lib"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../popover"
+    },
+    {
+      "path": "../tokens"
     },
     {
       "path": "../leafygreen-provider"

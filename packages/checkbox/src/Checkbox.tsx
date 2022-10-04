@@ -14,6 +14,7 @@ import {
   containerStyle,
   descriptionStyle,
   disabledContainerStyle,
+  disabledLabelStyle,
   disabledLabelDarkThemeOverrideStyle,
   inputClassName,
   inputFocusStyles,
@@ -102,6 +103,7 @@ function Checkbox({
         darkMode={darkMode}
         disabled={disabled}
         className={cx(labelStyle, labelHoverStyle[theme], {
+          [disabledLabelStyle]: disabled,
           [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
         })}
       >

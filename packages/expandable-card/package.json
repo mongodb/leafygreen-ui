@@ -21,12 +21,13 @@
   },
   "dependencies": {
     "@leafygreen-ui/card": "^7.0.1",
+    "@leafygreen-ui/emotion": "4.0.1",
+    "@leafygreen-ui/hooks": "7.3.1",
     "@leafygreen-ui/icon": "^11.10.2",
     "@leafygreen-ui/icon-button": "13.1.1",
     "@leafygreen-ui/lib": "^9.4.2",
+    "@leafygreen-ui/palette": "^3.4.2",
     "@leafygreen-ui/typography": "^13.1.2",
-    "@leafygreen-ui/emotion": "4.0.1",
-    "@leafygreen-ui/hooks": "7.3.1",
     "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {

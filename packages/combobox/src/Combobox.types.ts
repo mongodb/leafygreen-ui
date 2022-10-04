@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode } from 'react';
-import { Either } from '@leafygreen-ui/lib';
+import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const Theme = {
   Dark: 'dark',
@@ -37,14 +37,14 @@ export const ComboboxSize = {
 } as const;
 export type ComboboxSize = typeof ComboboxSize[keyof typeof ComboboxSize];
 
-export const TrunctationLocation = {
+export const TruncationLocation = {
   start: 'start',
   middle: 'middle',
   end: 'end',
   none: 'none',
 } as const;
-export type TrunctationLocation =
-  typeof TrunctationLocation[keyof typeof TrunctationLocation];
+export type TruncationLocation =
+  typeof TruncationLocation[keyof typeof TruncationLocation];
 
 export const Overflow = {
   /**
@@ -116,7 +116,7 @@ export interface ComboboxMultiselectProps<M extends boolean> {
   initialValue?: SelectValueType<M>;
   /**
    * A callback called when the selection changes.
-   * Callback recieves a single argument that is the new selection, either string, or string array
+   * Callback receives a single argument that is the new selection, either string, or string array
    */
   onChange?: onChangeType<M>;
   /**
@@ -132,14 +132,15 @@ export interface ComboboxMultiselectProps<M extends boolean> {
    *
    * `expand-y`: Combobox has fixed width, and additional selections will cause the element to grow in the block direction.
    *
-   * `expand-x`: Combobox has fixed height, and additional selections will cause the elemenet to grow in the inline direction.
+   * `expand-x`: Combobox has fixed height, and additional selections will cause the element to grow in the inline direction.
    *
    * `scroll-x`: Combobox has fixed height and width, and additional selections will cause the element to be scrollable in the x (horizontal) direction.
    */
   overflow?: M extends true ? Overflow : undefined;
 }
 
-export interface BaseComboboxProps {
+export interface BaseComboboxProps
+  extends Omit<HTMLElementProps<'div'>, 'onChange'> {
   /**
    * Defines the Combobox Options by passing children. Must be `ComboboxOption` or `ComboboxGroup`
    */
@@ -212,7 +213,7 @@ export interface BaseComboboxProps {
 
   /**
    * A callback called when the search input changes.
-   * Recieves a single argument that is the current input value.
+   * Receives a single argument that is the current input value.
    * Use this callback to set `searchState` and/or `filteredOptions` appropriately
    */
   onFilter?: (value: string) => void;
@@ -237,18 +238,13 @@ export interface BaseComboboxProps {
   /**
    * Defines where the ellipses appear in a Chip when the length exceeds the `chipCharacterLimit`
    */
-  chipTruncationLocation?: TrunctationLocation;
+  chipTruncationLocation?: TruncationLocation;
 
   /**
    * Defined the character limit of a multiselect Chip before they start truncating.
    * Note: the three ellipses dots are included in the character limit.
    */
   chipCharacterLimit?: number;
-
-  /**
-   * Styling prop
-   */
-  className?: string;
 
   /**
    * Specifies that the popover content should be rendered at the end of the DOM,

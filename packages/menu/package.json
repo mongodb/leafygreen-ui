@@ -26,11 +26,11 @@
     "@leafygreen-ui/icon": "^11.10.2",
     "@leafygreen-ui/icon-button": "^13.1.1",
     "@leafygreen-ui/lib": "^9.4.2",
-    "@leafygreen-ui/popover": "^9.0.1",
     "@leafygreen-ui/palette": "^3.4.2",
+    "@leafygreen-ui/popover": "^9.0.1",
     "@leafygreen-ui/tokens": "^1.3.2",
-    "react-transition-group": "^4.4.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.3.3"

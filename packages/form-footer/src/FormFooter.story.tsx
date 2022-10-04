@@ -4,7 +4,7 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import FormFooter from '.';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { FormFooterProps } from './FormFooter';
 
 export default {
@@ -20,7 +20,7 @@ export default {
     primaryButtonText: 'Primary button text',
   },
   argTypes: {
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     cancelButtonText: { control: 'text' },
     onCancel: { control: 'none' },
     backButtonText: { control: 'text' },

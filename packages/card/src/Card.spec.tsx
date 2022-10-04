@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import Card, { ContentStyle } from './Card';
+import { Card, ContentStyle } from './Card';
 
 const defaultClassName = 'card-className';
 const defaultChildren = 'this is my card component';
@@ -109,6 +109,21 @@ describe('packages/Card', () => {
         });
         expect(isVisuallyClickable(renderedCard)).toBe(false);
       });
+    });
+  });
+
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
+  describe.skip('Types behave as expected', () => {
+    test('Allows no props', () => {
+      <Card />;
+    });
+    test('Accepts `as` prop', () => {
+      <Card as="p" />;
+      <Card as={() => <></>} />;
+    });
+
+    test('Accepts `href` prop', () => {
+      <Card href="http://mongodb.design" />;
     });
   });
 });

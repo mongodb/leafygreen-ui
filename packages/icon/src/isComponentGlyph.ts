@@ -4,7 +4,10 @@ import { LGGlyph } from './types';
 type ExtendedComponentType = ComponentType<any> & {
   [key: string]: any;
 };
-/** Helper type to check if element is a LeafyGreen UI Glyph  */
+/**
+ * Helper type to check if element is a LeafyGreen UI Glyph
+ * @internal
+ */
 function isComponentGlyph(node: ReactNode): node is LGGlyph.Element;
 function isComponentGlyph(
   component: ExtendedComponentType,

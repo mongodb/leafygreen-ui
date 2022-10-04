@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 9.1.0
+
+### Minor Changes
+
+- c9346f93: Adds an `inlineChildren` prop to support inline children after the tabs
+
 ## 9.0.2
 
 ### Patch Changes

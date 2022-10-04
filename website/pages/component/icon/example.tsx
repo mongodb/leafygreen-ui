@@ -7,6 +7,7 @@ import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Icon, { Size, glyphs } from '@leafygreen-ui/icon';
 import { uiColors } from '@leafygreen-ui/palette/';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import { GlyphName } from '@leafygreen-ui/icon/dist/glyphs';
 
 const resetButtonStyles = css`
   display: inline;
@@ -88,7 +89,7 @@ function WrappedIconBlock({ glyph, size }: { glyph: string; size: Size }) {
         className={resetButtonStyles}
       >
         <div key={glyph} className={containerStyle}>
-          <Icon glyph={glyph} fill="#000000" size={size} />
+          <Icon glyph={glyph as GlyphName} fill="#000000" size={size} />
           <div className={textStyle}>{glyph}</div>
         </div>
       </button>

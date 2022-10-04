@@ -6,7 +6,10 @@ export interface FocusableMenuItemProps {
   onFocus?: React.FocusEventHandler;
 }
 
-/** For internal use only: Component to allow us to include non-MenuItems in a Menu's group of focusable elements */
+/**
+ * For internal use only: Component to allow us to include non-MenuItems in a Menu's group of focusable elements
+ * @internal
+ */
 const FocusableMenuItem = React.forwardRef(
   ({ children }: FocusableMenuItemProps, forwardRef) => {
     return React.cloneElement(children, {

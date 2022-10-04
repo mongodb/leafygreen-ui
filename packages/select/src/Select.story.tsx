@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '.';
 import { SelectProps } from './types';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Select',
@@ -42,7 +42,7 @@ export default {
     label: { control: 'text' },
     'aria-labelledby': { control: 'text' },
     description: { control: 'text' },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     id: { control: 'text' },
     value: { control: 'text' },
     defaultValue: { control: 'text' },

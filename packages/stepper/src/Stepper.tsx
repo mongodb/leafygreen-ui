@@ -1,4 +1,4 @@
-import React, { OlHTMLAttributes, PropsWithChildren } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Step from './InternalStep';
@@ -24,7 +24,7 @@ const Stepper = ({
   darkMode = false,
   className,
   ...rest
-}: PropsWithChildren<StepperProps & OlHTMLAttributes<HTMLOListElement>>) => {
+}: StepperProps) => {
   // Helper Variables
   const numSteps = React.Children.count(children);
   maxDisplayedSteps = Math.min(maxDisplayedSteps, numSteps);

@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { Radio, RadioGroup } from '.';
 import { RadioGroupProps } from './RadioGroup';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/RadioGroup',
   component: RadioGroup,
   argTypes: {
     children: { control: false },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     onChange: { control: false },
     name: { control: 'text' },
     value: { control: 'text' },

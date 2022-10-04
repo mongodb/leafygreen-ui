@@ -1,3 +1,3 @@
-export { default as Combobox } from './Combobox';
-export { default as ComboboxOption } from './ComboboxOption';
+export { Combobox } from './Combobox';
+export { ComboboxOption } from './ComboboxOption';
 export { default as ComboboxGroup } from './ComboboxGroup';
