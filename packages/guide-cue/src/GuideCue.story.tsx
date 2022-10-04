@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { GuideCue } from '.';
 import { GuideCueProps } from './types';
 import { Body } from '@leafygreen-ui/typography';
@@ -24,7 +24,7 @@ export default {
     },
   },
   argTypes: {
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     numberOfSteps: {
       control: 'number',
     },

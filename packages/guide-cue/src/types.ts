@@ -1,7 +1,10 @@
 import { Align, Justify } from '@leafygreen-ui/popover';
 import { TooltipProps } from '@leafygreen-ui/tooltip';
 
-export type TooltipAlign = Exclude<Align, 'center-vertical' | 'center-horizontal'>;
+export type TooltipAlign = Exclude<
+  Align,
+  'center-vertical' | 'center-horizontal'
+>;
 export type TooltipJustify = Exclude<Justify, 'fit'>;
 
 // Exclude these from tooltip (tooltip already extends popover props)
