@@ -4,10 +4,10 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { beaconStyles, timeout1, timeout2 } from './styles';
-import { GuidecueProps } from './types';
+import { GuideCueProps } from './types';
 import { TooltipContent } from './';
 
-function Guidecue({
+function GuideCue({
   open,
   setOpen,
   refEl,
@@ -28,7 +28,7 @@ function Guidecue({
   scrollContainer,
   popoverZIndex,
   ...tooltipProps
-}: GuidecueProps) {
+}: GuideCueProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
@@ -158,8 +158,8 @@ function Guidecue({
   );
 }
 
-Guidecue.displayName = 'Guidecue';
-Guidecue.propTypes = {
+GuideCue.displayName = 'GuideCue';
+GuideCue.propTypes = {
   children: PropTypes.node,
   darkMode: PropTypes.bool,
   open: PropTypes.bool,
@@ -202,9 +202,15 @@ Guidecue.propTypes = {
   beaconAlign: PropTypes.oneOf(Object.values(Align)),
   // Popover Props
   popoverZIndex: PropTypes.number,
-  scrollContainer: PropTypes.elementType,
-  portalContainer: PropTypes.elementType,
+  scrollContainer:
+    typeof window !== 'undefined'
+      ? PropTypes.instanceOf(Element)
+      : PropTypes.any,
+  portalContainer:
+    typeof window !== 'undefined'
+      ? PropTypes.instanceOf(Element)
+      : PropTypes.any,
   portalClassName: PropTypes.string,
 };
 
-export default Guidecue;
+export default GuideCue;

@@ -1,8 +1,8 @@
 
   {
-    "name": "@leafygreen-ui/guidecue",
+    "name": "@leafygreen-ui/guide-cue",
     "version": "0.9.0",
-    "description": "leafyGreen UI Kit Guidecue",
+    "description": "leafyGreen UI Kit GuideCue",
     "main": "./dist/index.js",
     "module": "./dist/esm/index.js",
     "types": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
       "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
     },
     "license": "Apache-2.0",
-    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/guidecue",
+    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/guide-cue",
     "repository": {
       "type": "git",
       "url": "https://github.com/mongodb/leafygreen-ui"

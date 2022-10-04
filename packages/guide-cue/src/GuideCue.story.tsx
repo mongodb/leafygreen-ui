@@ -3,13 +3,13 @@ import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import defaultArgTypes from '../../../stories/defaultArgTypes';
-import { Guidecue } from '.';
-import { GuidecueProps } from './types';
+import { GuideCue } from '.';
+import { GuideCueProps } from './types';
 import { Body } from '@leafygreen-ui/typography';
 
 export default {
-  title: 'Components/Guidecue',
-  component: Guidecue,
+  title: 'Components/GuideCue',
+  component: GuideCue,
   parameters: {
     controls: {
       exclude: [
@@ -47,7 +47,7 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof Guidecue> = args => {
+const Template: ComponentStory<typeof GuideCue> = args => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
   const { children, darkMode } = args;
@@ -72,7 +72,7 @@ const Template: ComponentStory<typeof Guidecue> = args => {
       <div ref={triggerRef}>
         <Body darkMode={darkMode}>story refEl trigger</Body>
       </div>
-      <Guidecue
+      <GuideCue
         {...args}
         darkMode={darkMode}
         open={open}
@@ -83,7 +83,7 @@ const Template: ComponentStory<typeof Guidecue> = args => {
         aria-labelledby="test"
       >
         {children}
-      </Guidecue>
+      </GuideCue>
     </>
   );
 };
@@ -106,7 +106,7 @@ const scrollableInnerStyle = css`
   justify-content: center;
 `;
 
-export const ScrollableContainer = (args: GuidecueProps) => {
+export const ScrollableContainer = (args: GuideCueProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
   const portalContainer = useRef<HTMLDivElement | null>(null);
@@ -128,7 +128,7 @@ export const ScrollableContainer = (args: GuidecueProps) => {
           <div ref={triggerRef}>
             <Body darkMode={darkMode}>story refEl trigger</Body>
           </div>
-          <Guidecue
+          <GuideCue
             {...args}
             darkMode={darkMode}
             open={open}
@@ -138,7 +138,7 @@ export const ScrollableContainer = (args: GuidecueProps) => {
             scrollContainer={portalContainer.current}
           >
             {children}
-          </Guidecue>
+          </GuideCue>
         </>
       </div>
     </div>
@@ -149,7 +149,7 @@ const spacing = css`
   margin-bottom: 30px;
 `;
 
-export const MultistepDemo = (args: GuidecueProps) => {
+export const MultistepDemo = (args: GuideCueProps) => {
   const { darkMode } = args;
   const [open, setOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -183,7 +183,7 @@ export const MultistepDemo = (args: GuidecueProps) => {
       <Button className={spacing} onClick={handleReset}>
         Begin tour
       </Button>
-      {/* These don't need to be in the same container as the Guidecue component */}
+      {/* These don't need to be in the same container as the GuideCue component */}
       <div ref={triggerRef1}>
         <Body className={spacing} darkMode={darkMode}>
           story refEl trigger1
@@ -199,7 +199,7 @@ export const MultistepDemo = (args: GuidecueProps) => {
           story refEl trigger3
         </Body>
       </div>
-      <Guidecue
+      <GuideCue
         darkMode={darkMode}
         open={open}
         setOpen={setOpen}
@@ -211,7 +211,7 @@ export const MultistepDemo = (args: GuidecueProps) => {
         title="New feature"
       >
         This is a new feature. You should try it out
-      </Guidecue>
+      </GuideCue>
     </>
   );
 };

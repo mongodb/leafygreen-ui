@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/guidecue': major
+'@leafygreen-ui/guide-cue': major
 ---
 
-Release Guidecue as v1
+Release GuideCue as v1

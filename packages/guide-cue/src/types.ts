@@ -40,7 +40,7 @@ interface MultistepProps {
 
 type ConditionalProps = StandaloneProps | MultistepProps;
 
-export type GuidecueProps = {
+export type GuideCueProps = {
   /**
    * Determines if the `Tooltip` will appear as open or close.
    * @default false

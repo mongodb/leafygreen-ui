@@ -16,16 +16,16 @@ import {
   tooltipStyles,
   tooltipMultistepStyles,
 } from './styles';
-import { GuidecueProps } from './types';
+import { GuideCueProps } from './types';
 import FocusTrap from 'focus-trap-react';
 import Button from '@leafygreen-ui/button';
 import { Disclaimer, Body } from '@leafygreen-ui/typography';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
-const ariaLabelledby = 'guidecue-label';
-const ariaDescribedby = 'guidecue-desc';
+const ariaLabelledby = 'guide-cue-label';
+const ariaDescribedby = 'guide-cue-desc';
 
-type TooltipContentProps = Partial<GuidecueProps> & {
+type TooltipContentProps = Partial<GuideCueProps> & {
   theme: Theme;
   title: string;
   isStandalone: boolean;
@@ -61,7 +61,7 @@ function TooltipContent({
   usePortal = true,
   ...tooltipProps
 }: TooltipContentProps) {
-  const focusId = useIdAllocator({ prefix: 'guidecue' });
+  const focusId = useIdAllocator({ prefix: 'guide-cue' });
   // Test are failing because of `focus-trap-react`. Even though there is a focusable element it does not find it in time and throws an error. A fix is to point to the primary button and set that as the fallback focus. (https://github.com/focus-trap/focus-trap-react/issues/91)
   const focusTrapOptions = { fallbackFocus: `#${focusId}` };
   return (

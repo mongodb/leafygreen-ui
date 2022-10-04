@@ -1,21 +1,21 @@
-# Guidecue
+# GuideCue
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/guidecue.svg)
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/guide-cue.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/guidecue/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/guide-cue/example/)
 
 ## Installation
 
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/guidecue
+yarn add @leafygreen-ui/guide-cue
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/guidecue
+npm install @leafygreen-ui/guide-cue
 ```
 
 ## Example
@@ -23,11 +23,11 @@ npm install @leafygreen-ui/guidecue
 ### Stand-alone example
 
 ```js
-import { GuideCue } from '@leafygreen-ui/guidecue';
+import { GuideCue } from '@leafygreen-ui/guide-cue';
 
 const [open, setOpen] = useState(true);
 
-<Guidecue
+<GuideCue
   open={open}
   setOpen={setOpen}
   title="New feature"
@@ -39,7 +39,7 @@ const [open, setOpen] = useState(true);
   }}
 >
   This is a new feature. You should try it out
-</Guidecue>;
+</GuideCue>;
 ```
 
 or
@@ -47,11 +47,11 @@ or
 ### Multi-step example
 
 ```js
-import GuideCue from '@leafygreen-ui/guidecue';
+import GuideCue from '@leafygreen-ui/guide-cue';
 
 const [open, setOpen] = useState(true);
 
-<Guidecue
+<GuideCue
   open={open}
   setOpen={setOpen}
   title="New feature"
@@ -66,7 +66,7 @@ const [open, setOpen] = useState(true);
   }}
 >
   This is a new feature. You should try it out
-</Guidecue>;
+</GuideCue>;
 ```
 
 An example of how to use the multi-step tooltip can be found in (storybook - MultistepDemo)[https://github.com/mongodb/leafygreen-ui/blob/main/packages/guide-cue/src/GuideCue.story.tsx]
