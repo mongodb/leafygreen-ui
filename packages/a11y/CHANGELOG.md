@@ -6,8 +6,6 @@
 
 - 3690df49: Updates `tsdoc.json` file
 - Updated dependencies [3690df49]
-- Updated dependencies [3690df49]
-- Updated dependencies [3690df49]
   - @leafygreen-ui/lib@9.5.0
   - @leafygreen-ui/emotion@4.0.2
   - @leafygreen-ui/hooks@7.3.2
