@@ -1,5 +1,16 @@
 # @leafygreen-ui/lib
 
+## 9.5.0
+
+### Minor Changes
+
+- 3690df49: Exports storybook config objects, and package.tsconfig
+
+### Patch Changes
+
+- 3690df49: Updates Storybook configs
+- 3690df49: Updates `tsdoc.json` file
+
 ## 9.4.2
 
 ### Patch Changes

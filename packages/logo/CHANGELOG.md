@@ -1,5 +1,15 @@
 # @leafygreen-ui/logo
 
+## 6.2.0
+
+### Minor Changes
+
+- 3690df49: Exports a generic `Logo` component.
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+
 ## 6.1.3
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @leafygreen-ui/box
 
+## 3.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 3690df49: Updates Storybook configs
+
 ## 3.0.8
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 2.3.4
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+- 58a5a05e: Adds additional test cases
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/hooks@7.3.2
+
 ## 2.3.3
 
 ### Patch Changes
