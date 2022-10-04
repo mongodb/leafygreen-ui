@@ -34,53 +34,53 @@ const knobsConfig: KnobsConfigInterface<{
   tooltipJustify?: TooltipJustify;
   beaconAlign?: BeaconAlign;
 }> = {
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
   title: {
     type: 'text',
     default: 'New feature',
-    label: 'title',
+    label: 'Title',
   },
   numberOfSteps: {
     type: 'number',
     default: 2,
-    label: 'numberOfSteps',
+    label: 'Number of Steps',
   },
   currentStep: {
     type: 'number',
     default: 1,
-    label: 'currentStep',
+    label: 'Current Step',
   },
   buttonText: {
     type: 'text',
     default: 'Next',
-    label: 'buttonText',
+    label: 'Button Text',
   },
   children: {
     type: 'area',
     default: 'This is a new feature. You should try it out',
     label: 'Children',
   },
-  darkMode: {
-    type: 'boolean',
-    default: false,
-    label: 'Dark Mode',
-  },
   tooltipAlign: {
     type: 'select',
     options: Object.values(Align),
     default: Align.Top,
-    label: 'Align',
+    label: 'Tooltip Align',
   },
   tooltipJustify: {
     type: 'select',
     options: Object.values(Justify),
     default: Justify.Middle,
-    label: 'Justify',
+    label: 'Tooltip Justify',
   },
   beaconAlign: {
     type: 'select',
     options: Object.values(Align),
     default: BeaconAlign.CenterHorizontal,
-    label: 'Align',
+    label: 'Beacon Align(pulsing circle)',
   },
 };
 

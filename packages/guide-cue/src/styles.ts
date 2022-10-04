@@ -58,6 +58,7 @@ export const beaconStyles = (
         top: 50%;
         left: 50%;
         scale: 0.9;
+        opacity: 0;
         width: ${size}px;
         height: ${size}px;
         background: rgba(255, 255, 255, 0);
@@ -75,8 +76,9 @@ export const beaconStyles = (
       }
 
       @keyframes pulse-outer {
-        0% {
+        10% {
           box-shadow: 0px 0px 0px 0px ${transparentize(0.95, color)};
+          opacity: 1;
         }
 
         40%,
@@ -89,8 +91,9 @@ export const beaconStyles = (
       }
 
       @keyframes pulse-outer-2 {
-        0% {
+        10% {
           box-shadow: 0px 0px 0px 0px ${transparentize(0.95, color)};
+          opacity: 1;
         }
 
         35%,
