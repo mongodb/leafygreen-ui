@@ -1,5 +1,23 @@
 # @leafygreen-ui/pipeline
 
+## 2.2.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- Updated dependencies [dafe6be8]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/tooltip@7.1.2
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/palette@3.4.3
+
 ## 2.1.8
 
 ### Patch Changes

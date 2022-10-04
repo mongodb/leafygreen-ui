@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 11.11.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 3690df49: Exports `IconProps`
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/emotion@4.0.2
+
 ## 11.10.2
 
 ### Patch Changes

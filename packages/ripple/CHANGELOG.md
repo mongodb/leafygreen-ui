@@ -1,5 +1,11 @@
 # @leafygreen-ui/ripple
 
+## 1.1.4
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+
 ## 1.1.3
 
 ### Patch Changes

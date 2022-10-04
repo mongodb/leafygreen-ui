@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.3.2
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+
 ## 7.3.1
 
 ### Patch Changes
