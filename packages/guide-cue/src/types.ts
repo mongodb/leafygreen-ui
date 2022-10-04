@@ -1,6 +1,9 @@
 import { Align, Justify } from '@leafygreen-ui/popover';
 import { TooltipProps } from '@leafygreen-ui/tooltip';
 
+export type TooltipAlign = Exclude<Align, 'center-vertical' | 'center-horizontal'>;
+export type TooltipJustify = Exclude<Justify, 'fit'>;
+
 // Exclude these from tooltip (tooltip already extends popover props)
 type ModifiedTooltipProps = Omit<
   TooltipProps,
@@ -87,12 +90,12 @@ export type GuideCueProps = {
    * Determines the alignment of the tooltip.
    * @default 'top'
    */
-  tooltipAlign?: Exclude<Align, 'center-vertical' | 'center-horizontal'>;
+  tooltipAlign?: TooltipAlign;
   /**
    * Determines the justification of the tooltip.
    * @default 'middle'
    */
-  tooltipJustify?: Exclude<Justify, 'fit'>;
+  tooltipJustify?: TooltipJustify;
   /**
    * Determines the alignment of the beacon(animated pulsing circle that appears on top of the trigger element). This only applies to the multi-step tooltip.
    * @default 'center-horizontal'
