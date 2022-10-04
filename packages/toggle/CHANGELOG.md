@@ -1,5 +1,22 @@
 # @leafygreen-ui/toggle
 
+## 8.0.4
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/a11y@1.3.2
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/interaction-ring@4.0.2
+  - @leafygreen-ui/palette@3.4.3
+
 ## 8.0.3
 
 ### Patch Changes

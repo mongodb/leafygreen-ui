@@ -1,5 +1,16 @@
 # @leafygreen-ui/portal
 
+## 4.0.5
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/hooks@7.3.2
+
 ## 4.0.4
 
 ### Patch Changes
