@@ -1,5 +1,33 @@
 # @leafygreen-ui/expandable-card
 
+## 1.1.0
+
+### Minor Changes
+
+- 3690df49: Allows any ReactNode as `description`
+
+### Patch Changes
+
+- 3690df49: Exports `CardProps` from Card. Extends `CardProps` in ExpandableCard
+- 3690df49: Updates Storybook configs
+- 3690df49: Updates `tsdoc.json` file
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/card@7.1.0
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/icon-button@13.2.0
+  - @leafygreen-ui/typography@13.2.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/palette@3.4.3
+
 ## 1.0.0
 
 ### Major Changes

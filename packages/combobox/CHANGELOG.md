@@ -1,5 +1,36 @@
 # @leafygreen-ui/combobox
 
+## 3.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+- 58a5a05e: - Ensures the combobox does not open on initial focus. The menu should only open when clicked, or a relevant key is pressed when the input is focused.
+  - Opens the menu on `Enter` key press if the menu is closed.
+
+### Patch Changes
+
+- 3690df49: Extends `div` element props
+- 58a5a05e: Adds missing PropTypes declarations
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/checkbox@10.1.0
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/icon-button@13.2.0
+  - @leafygreen-ui/inline-definition@4.1.0
+  - @leafygreen-ui/popover@9.1.0
+  - @leafygreen-ui/typography@13.2.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 3.0.1
 
 ### Patch Changes
