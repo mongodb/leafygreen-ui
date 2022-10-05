@@ -1,19 +1,9 @@
 import Pipeline from './Pipeline';
 import Stage from './Stage';
-import Counter from './Counter';
-import {
-  Size,
-  svgInnerOutlineClassName,
-  svgOuterOutlineClassName,
-  svgInnerClassName,
-} from './styles';
+import { Size } from './types';
 
 export {
   Pipeline,
   Stage,
-  Counter,
   Size,
-  svgInnerOutlineClassName,
-  svgOuterOutlineClassName,
-  svgInnerClassName,
 };

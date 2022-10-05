@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { Pipeline, Stage } from '.';
+import Pipeline from './Pipeline';
+import Stage from './Stage'
 import { PipelineProps } from './types';
 
 export default {

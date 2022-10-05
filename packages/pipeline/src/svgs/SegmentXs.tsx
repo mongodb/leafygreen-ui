@@ -3,9 +3,9 @@ import {
   svgInnerOutlineClassName,
   svgOuterOutlineClassName,
   svgInnerClassName,
-} from '../';
+} from '../styles';
 
-const SegmentXs = ({ className }: { className: string }) => {
+export const SegmentXs = ({ className }: { className: string }) => {
   return (
     <svg
       width="44"
@@ -35,5 +35,3 @@ const SegmentXs = ({ className }: { className: string }) => {
     </svg>
   );
 };
-
-export default SegmentXs;

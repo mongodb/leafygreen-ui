@@ -7,7 +7,7 @@ import {
 } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
 import { Size } from './types';
-import { edges } from './svgs';
+import { edges } from './svgs/edges';
 
 export const svgInnerOutlineClassName = createUniqueClassName('pipeline');
 export const svgOuterOutlineClassName = createUniqueClassName('pipeline');
@@ -255,7 +255,8 @@ export const stageBaseStyles = cx(
     }
 
     &:first-of-type {
-      span { // TODO: make this a classname
+      span {
+        // TODO: make this a classname
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
       }

@@ -88,9 +88,9 @@ const Pipeline = forwardRef(
      * mutation observer.
      */
     const setAllHiddenStagesText = () => {
-      const allStages = Array.from(
-        pipelineNode!.children as HTMLCollectionOf<HTMLElement>,
-      ) || [];
+      const allStages =
+        Array.from(pipelineNode!.children as HTMLCollectionOf<HTMLElement>) ||
+        [];
 
       const allHiddenStages = allStages
         .filter(element => element.dataset.stageVisible === 'false')
@@ -131,7 +131,7 @@ const Pipeline = forwardRef(
         ref: createRef<HTMLLIElement>(),
       };
 
-            // return isComponentType(child, 'Stage')
+      // return isComponentType(child, 'Stage')
       //   ? React.cloneElement(child, props)
       //   : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
 

@@ -10,31 +10,12 @@ const className = 'test-pipeline-class';
 const stages = ['$group', '$match', '$limit'];
 const parentElement = document.createElement('div');
 
-// function renderPipeline(props = {}) {
-//   const utils = render(
-//     <Pipeline {...props} size={Size.XSmall}>
-//       {stages.map((stage, index) => (
-//         <Stage key={`${index}-${stage}`}>{stage}</Stage>
-//       ))}
-//     </Pipeline>,
-//     { container: document.body.appendChild(parentElement) },
-//   );
-
-//   if (!typeIs.element(utils.container.firstChild)) {
-//     throw new Error('Pipeline element not found');
-//   }
-
-//   return {
-//     ...utils,
-//     element: utils.container.firstChild,
-//   };
-// }
-
-function renderPipeline() {
+function renderPipeline(props = {}) {
   const utils = render(
-    <Pipeline size={Size.XSmall}>
-      <Stage>hi</Stage>
-      <Stage>hii</Stage>
+    <Pipeline {...props} size={Size.XSmall}>
+      {stages.map((stage, index) => (
+        <Stage key={`${index}-${stage}`}>{stage}</Stage>
+      ))}
     </Pipeline>,
     { container: document.body.appendChild(parentElement) },
   );
@@ -62,17 +43,17 @@ describe('packages/pipeline/Pipeline', () => {
     });
   });
 
-  // test(`renders "${className}" in the stage's classList`, () => {
-  //   const { element } = renderPipeline({ className });
-  //   expect(element.classList.contains(className)).toBe(true);
-  // });
+  test(`renders "${className}" in the stage's classList`, () => {
+    const { element } = renderPipeline({ className });
+    expect(element.classList.contains(className)).toBe(true);
+  });
 
-  // test(`renders each child as a Stage`, function () {
-  //   const { getByText } = renderPipeline();
+  test(`renders each child as a Stage`, function () {
+    const { getByText } = renderPipeline();
 
-  //   stages.forEach(stage => {
-  //     const element = getByText(stage);
-  //     expect(element.getAttribute('data-testid')).toEqual('pipeline-stage');
-  //   });
-  // });
+    stages.forEach(stage => {
+      const element = getByText(stage);
+      expect(element.getAttribute('data-testid')).toEqual('pipeline-stage');
+    });
+  });
 });

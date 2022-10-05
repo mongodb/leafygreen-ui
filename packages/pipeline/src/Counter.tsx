@@ -7,7 +7,11 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
-import { SegmentXs, SegmentS, SegmentM, SegmentL } from './svgs';
+// import { SegmentXs, SegmentS, SegmentM, SegmentL } from './svgs';
+import { SegmentXs } from './svgs/SegmentXs';
+import { SegmentS } from './svgs/SegmentS';
+import { SegmentM } from './svgs/SegmentM';
+import { SegmentL } from './svgs/SegmentL';
 
 import {
   counterThemeStyles,
