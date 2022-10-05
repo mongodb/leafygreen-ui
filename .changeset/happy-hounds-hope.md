@@ -48,4 +48,4 @@
 '@leafygreen-ui/typography': patch
 ---
 
-- Updates the build to remove an implicit dependency on `@emotion/react`. LG packages will not build if `@leafygreen/emotion@4.0.2` or greater is installed since this package has since removed `@emotion/react` as a dependency.
+- Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
