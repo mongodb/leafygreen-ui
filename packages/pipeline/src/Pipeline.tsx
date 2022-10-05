@@ -15,7 +15,7 @@ import { PipelineContext } from './PipelineContext';
 import Stage from './Stage';
 import Counter from './Counter';
 
-import { getPipelineCounterTooltip, isElementOverflowed } from './utils';
+import { getPipelineCounterTooltip } from './utils';
 
 import {
   baseSizeStyles,
@@ -59,7 +59,6 @@ const Pipeline = forwardRef(
     const { theme, darkMode } = useDarkMode(darkModeProp);
     // State
     const [pipelineNode, setPipelineNode] = useState<HTMLElement | null>(null);
-    const [hasHiddenStages, setHasHiddenStages] = useState(false);
     const [tooltipText, setTooltipText] = useState<string>('');
 
     const providerData = useMemo(() => {
@@ -67,17 +66,6 @@ const Pipeline = forwardRef(
     }, [theme]);
 
     // Handlers
-
-    /**
-     * Determines whether the Pipeline element is overflowed.
-     * If the Pipeline is overflowed, this means that we have stages which aren't visible and
-     * so we should display the counter.
-     */
-    const handleCounterDisplay = () => {
-      const result = isElementOverflowed(pipelineNode!);
-      setHasHiddenStages(result);
-    };
-
     /**
      * Get the text of all the hidden stages. The mutation of the DOM is required otherwise the
      * Stage components will re-render, triggering an infinite loop on the
@@ -104,7 +92,6 @@ const Pipeline = forwardRef(
       const attrs = records.map(r => r.attributeName);
 
       if (attrs.includes('data-stage-visible') || types.includes('childList')) {
-        handleCounterDisplay();
         setAllHiddenStagesText();
       }
     };
@@ -139,9 +126,6 @@ const Pipeline = forwardRef(
       return <Stage {...props}>{child}</Stage>;
     });
 
-    const isCounterVisible =
-      hasHiddenStages && React.Children.count(childrenAsPipelineStages) > 0;
-
     return (
       <PipelineContext.Provider value={providerData}>
         <div
@@ -164,7 +148,7 @@ const Pipeline = forwardRef(
             justify="middle"
             trigger={
               <Counter
-                className={cx({ [counterVisibleStyles]: isCounterVisible })}
+                className={cx({ [counterVisibleStyles]: !!tooltipText })}
                 size={size}
               />
             }
