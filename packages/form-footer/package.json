@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-footer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "leafyGreen UI Kit Form Footer",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,15 +20,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/banner": "^5.0.1",
-    "@leafygreen-ui/button": "^16.1.0",
-    "@leafygreen-ui/emotion": "^4.0.2",
-    "@leafygreen-ui/icon": "^11.11.0",
-    "@leafygreen-ui/lib": "^9.5.0",
-    "@leafygreen-ui/palette": "^3.4.3"
+    "@leafygreen-ui/banner": "^5.0.2",
+    "@leafygreen-ui/button": "^16.1.1",
+    "@leafygreen-ui/emotion": "^4.0.3",
+    "@leafygreen-ui/icon": "^11.11.1",
+    "@leafygreen-ui/lib": "^9.5.1",
+    "@leafygreen-ui/palette": "^3.4.4"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.3.4"
+    "@leafygreen-ui/leafygreen-provider": "^2.3.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-footer",
   "repository": {

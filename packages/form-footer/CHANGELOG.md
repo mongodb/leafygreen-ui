@@ -1,5 +1,19 @@
 # @leafygreen-ui/form-footer
 
+## 1.0.2
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/banner@5.0.2
+  - @leafygreen-ui/button@16.1.1
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/icon@11.11.1
+  - @leafygreen-ui/leafygreen-provider@2.3.5
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/palette@3.4.4
+
 ## 1.0.1
 
 ### Patch Changes
