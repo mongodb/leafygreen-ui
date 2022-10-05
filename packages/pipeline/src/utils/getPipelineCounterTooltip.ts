@@ -11,8 +11,6 @@ import flatMap from 'lodash/flatMap';
 export default function getPipelineCounterTooltip(
   stages: Array<string | null>,
 ): string {
-  // const stages = (React.Children.map(children, onlyText) || []).filter(Boolean);
-
   return flatMap(stages, (value, index, array) =>
     array.length - 1 !== index ? [value, '>'] : value,
   ).join(' ');

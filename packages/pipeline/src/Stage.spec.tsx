@@ -24,9 +24,13 @@ function renderStage(props = {}) {
     throw new Error('Pipeline element not found');
   }
 
+  // This element used to check if `useInView`
+  const childElement = utils.getByTestId('pipeline-stage');
+
   return {
     ...utils,
     element: utils.container.firstChild,
+    childElement,
   };
 }
 
@@ -45,13 +49,6 @@ describe('packages/pipeline/Stage', () => {
   test(`renders "${child}" as the badge's textContent`, () => {
     const { element } = renderStage();
     expect(element.textContent).toBe(child);
-  });
-
-  test('renders a "chevron"', () => {
-    const { getByTestId } = renderStage();
-    const element = getByTestId('pipeline-stage-chevron');
-
-    expect(element).toBeTruthy();
   });
 
   test('observes the intersection of the provided root element', () => {
@@ -92,17 +89,17 @@ describe('packages/pipeline/Stage', () => {
 
   describe('when it is NOT intersecting its parent', () => {
     test('should set the "data-stage-visible" attribute to "false"', () => {
-      const { element } = renderStage();
+      const { childElement, element } = renderStage();
 
-      mockIsIntersecting(element, false);
+      mockIsIntersecting(childElement, false);
       expect(element.getAttribute('data-stage-visible')).toBe('false');
     });
   });
 
   describe('when it is intersecting its parent', () => {
     test('should set the "data-stage-visible" attribute to "true"', () => {
-      const { element } = renderStage();
-      mockIsIntersecting(element, true);
+      const { childElement, element } = renderStage();
+      mockIsIntersecting(childElement, true);
 
       expect(element.getAttribute('data-stage-visible')).toBe('true');
     });

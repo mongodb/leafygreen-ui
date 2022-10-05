@@ -91,7 +91,6 @@ const Stage = forwardRef(
       <li
         {...rest}
         ref={ref}
-        // data-testid="pipeline-stage"
         data-stage-visible={isVisible}
         className={cx(
           stageBaseStyles,
@@ -108,16 +107,10 @@ const Stage = forwardRef(
             stageTextSizeStyles[size as Size],
             stageTextThemeStyles[theme],
           )}
-          // data-testid="pipeline-stage-chevron"
           data-testid="pipeline-stage"
         >
           {children}
         </span>
-        {/* <div
-          data-testid="pipeline-stage-chevron"
-          {...stageChevronAttr.prop}
-          className={chevronStyle}
-        /> */}
       </li>
     );
   },
