@@ -1,5 +1,13 @@
 # @leafygreen-ui/tokens
 
+## 1.3.4
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/palette@3.4.4
+
 ## 1.3.3
 
 ### Patch Changes
