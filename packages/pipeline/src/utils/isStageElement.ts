@@ -1,5 +1,6 @@
 import { ReactNode, ReactElement } from 'react';
-import Stage, { StageProps } from '../Stage';
+import Stage from '../Stage';
+import { StageProps } from '../types';
 
 /**
  * Helper function to check whether an element is a type of Stage element.

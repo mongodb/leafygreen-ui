@@ -54,6 +54,10 @@ export const baseSizeStyles: Record<Size, string> = {
 
 // Counter Styles
 
+export const counterVisibleStyles = css`
+  display: flex;
+`;
+
 export const counterSvgBaseStyles = css`
   position: absolute;
   width: 100%;
@@ -104,7 +108,7 @@ export const counterSizeStyles: Record<Size, string> = {
 
 export const counterBaseStyles = cx(
   css`
-    display: flex;
+    display: none;
     flex-grow: 1;
     align-items: center;
     justify-content: center;

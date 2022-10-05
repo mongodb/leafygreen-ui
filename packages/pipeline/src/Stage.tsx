@@ -1,10 +1,4 @@
-import React, {
-  forwardRef,
-  ReactNode,
-  Ref,
-  ReactElement,
-  useContext,
-} from 'react';
+import React, { forwardRef, Ref, ReactElement, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useInView } from 'react-intersection-observer';
 import { cx } from '@leafygreen-ui/emotion';
@@ -17,35 +11,7 @@ import {
   stageSvgSizeStyles,
 } from './styles';
 import PipelineContext from './PipelineContext';
-import { Size } from './types';
-
-export interface StageProps {
-  /**
-   * Content that will appear inside of the Stage component.
-   **/
-  children: ReactNode;
-
-  /**
-   * ClassName applied to Stage content container.
-   **/
-  className?: string;
-
-  /**
-   * The DOM node to use as the root node for the intersectionObserver. Defaults to window when null or undefined.
-   **/
-  intersectionNode?: HTMLElement | null;
-
-  /**
-   * Alter the rendered size of the component. Inherited from the parent Pipeline component.
-   */
-  size?: Size;
-
-  /**
-   * Either a single number or an array of numbers which indicate at what percentage of the target's visibility
-   * the observer's callback should be executed.
-   */
-  threshold?: number | Array<number>;
-}
+import { Size, StageProps } from './types';
 
 /**
  * # Stage

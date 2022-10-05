@@ -2,10 +2,10 @@ import flatMap from 'lodash/flatMap';
 
 // TODO: change desc
 /**
- * A utility function which takes the React.children rendered by the Pipeline component
+ * A utility function which takes and array of strings
  * and returns the string which represents the full pipeline, for usage with the tooltip.
  *
- * @param children - the children rendered by the pipeline component
+ * @param stages - an array of text from each hidden stage
  * @returns string - the tooltip text
  */
 export default function getPipelineCounterTooltip(

@@ -1,5 +1,7 @@
 import { Size } from '../types';
 
+// https://yoksel.github.io/url-encoder/
+
 export const edges: Record<Size, Record<'before' | 'after', string>> = {
   [Size.XSmall]: {
     before:

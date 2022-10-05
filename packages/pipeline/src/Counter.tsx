@@ -1,10 +1,4 @@
-import React, {
-  forwardRef,
-  ReactElement,
-  ReactNode,
-  Ref,
-  useContext,
-} from 'react';
+import React, { forwardRef, ReactElement, Ref, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 // import { SegmentXs, SegmentS, SegmentM, SegmentL } from './svgs';
@@ -23,24 +17,7 @@ import {
   counterSvgColStyles,
 } from './styles';
 import PipelineContext from './PipelineContext';
-import { Size } from './types';
-
-interface CounterProps {
-  /**
-   * Content that will appear inside of the Counter component.
-   */
-  children?: ReactNode;
-
-  /**
-   * Classname applied to Counter content container.
-   **/
-  className?: string;
-
-  /**
-   * Alter the rendered size of the component. Inherited from the parent Pipeline component.
-   */
-  size: Size;
-}
+import { CounterProps, Size } from './types';
 
 const segments: Record<Size, React.ComponentType<any>> = {
   [Size.XSmall]: SegmentXs,

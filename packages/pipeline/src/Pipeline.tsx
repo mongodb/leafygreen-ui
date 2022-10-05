@@ -15,19 +15,17 @@ import { PipelineContext } from './PipelineContext';
 import Stage from './Stage';
 import Counter from './Counter';
 
-import {
-  getPipelineCounterTooltip,
-  isStageElement,
-  isElementOverflowed,
-} from './utils';
+import { getPipelineCounterTooltip, isElementOverflowed } from './utils';
 
 import {
   baseSizeStyles,
   basePipelineListStyles,
   basePipelineStyles,
+  counterVisibleStyles,
 } from './styles';
 import { PipelineProps, Size } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 
 /**
  *
@@ -80,10 +78,8 @@ const Pipeline = forwardRef(
       setHasHiddenStages(result);
     };
 
-    // TODO: change this
     /**
-     * Decorates the last visible stage with a className necessary for applying
-     * the correct visual appearance. The mutation of the DOM is required otherwise the
+     * Get the text of all the hidden stages. The mutation of the DOM is required otherwise the
      * Stage components will re-render, triggering an infinite loop on the
      * mutation observer.
      */
@@ -131,14 +127,20 @@ const Pipeline = forwardRef(
         ref: createRef<HTMLLIElement>(),
       };
 
-      // return isComponentType(child, 'Stage')
-      //   ? React.cloneElement(child, props)
-      //   : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
+      if (isComponentType(child, 'Stage')) {
+        const { children, ...rest } = child.props;
+        const combinedProps = {
+          ...props,
+          ...rest,
+        };
+        return <Stage {...combinedProps}>{children}</Stage>;
+      }
 
-      return isStageElement(child)
-        ? React.cloneElement(child, props)
-        : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
+      return <Stage {...props}>{child}</Stage>;
     });
+
+    const isCounterVisible =
+      hasHiddenStages && React.Children.count(childrenAsPipelineStages) > 0;
 
     return (
       <PipelineContext.Provider value={providerData}>
@@ -156,18 +158,21 @@ const Pipeline = forwardRef(
             {childrenAsPipelineStages}
           </ol>
 
-          {hasHiddenStages &&
-            React.Children.count(childrenAsPipelineStages) > 0 && (
-              <Tooltip
-                align="top"
-                justify="middle"
-                trigger={<Counter size={size} />}
-                triggerEvent="hover"
-                darkMode={darkMode}
-              >
-                {tooltipText}
-              </Tooltip>
-            )}
+          {/* Removing the component was causing a unmounted error so instead we're hiding it with css */}
+          <Tooltip
+            align="top"
+            justify="middle"
+            trigger={
+              <Counter
+                className={cx({ [counterVisibleStyles]: isCounterVisible })}
+                size={size}
+              />
+            }
+            triggerEvent="hover"
+            darkMode={darkMode}
+          >
+            {tooltipText}
+          </Tooltip>
         </div>
       </PipelineContext.Provider>
     );
