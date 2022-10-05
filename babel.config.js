@@ -13,7 +13,6 @@ module.exports = function (api) {
         modules: api.env('production') ? false : 'commonjs',
       },
     ],
-    '@emotion/babel-preset-css-prop',
   ];
 
   // For an explanation of `{loose: true}` see:
