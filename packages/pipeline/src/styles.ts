@@ -1,7 +1,6 @@
 import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  // createDataProp,
   createUniqueClassName,
   Theme,
 } from '@leafygreen-ui/lib';
@@ -295,7 +294,7 @@ export const stageSvgThemeStyles: Record<Theme, string> = {
   `,
 };
 
-// Adding rounded tips of segments as an SVG with CSS
+// Adding edges of segments as an SVG with CSS
 export const stageSvgSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     &:first-of-type {

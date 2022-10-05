@@ -1,8 +1,7 @@
 import flatMap from 'lodash/flatMap';
 
-// TODO: change desc
 /**
- * A utility function which takes and array of strings
+ * A utility function which takes an array of strings
  * and returns the string which represents the full pipeline, for usage with the tooltip.
  *
  * @param stages - an array of text from each hidden stage
