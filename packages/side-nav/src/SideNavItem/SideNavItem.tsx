@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
@@ -20,7 +20,7 @@ import {
 import { SideNavItemProps } from './types';
 
 /**
- * # SideNavItem
+ * TODO: TSDoc
  *
  * ```
   <SideNavItem href="/">
@@ -44,7 +44,7 @@ import { SideNavItemProps } from './types';
 const SideNavItem: ExtendableBox<
   SideNavItemProps & { ref?: React.Ref<any> },
   'button'
-> = React.forwardRef((props: SideNavItemProps, forwardRef) => {
+> = forwardRef((props: SideNavItemProps, forwardedRef) => {
   const {
     active = false,
     disabled = false,
@@ -164,7 +164,7 @@ const SideNavItem: ExtendableBox<
         )}
         aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
         aria-disabled={disabled}
-        ref={forwardRef}
+        ref={forwardedRef}
         onClick={onClick}
       >
         {accessibleGlyph && (

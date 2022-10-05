@@ -1,5 +1,13 @@
 # @leafygreen-ui/tokens
 
+## 1.3.3
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/palette@3.4.3
+
 ## 1.3.2
 
 ### Patch Changes

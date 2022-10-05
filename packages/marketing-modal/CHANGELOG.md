@@ -1,5 +1,24 @@
 # @leafygreen-ui/marketing-modal
 
+## 3.0.6
+
+### Patch Changes
+
+- 3690df49: Exports `ModalProps` from Modal.
+  Extends `ModalProps` in Confirmation & Marketing modals
+- 3690df49: Updates Storybook configs
+- 3690df49: Updates `tsdoc.json` file
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/button@16.1.0
+  - @leafygreen-ui/modal@10.1.0
+  - @leafygreen-ui/typography@13.2.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 3.0.5
 
 ### Patch Changes

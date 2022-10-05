@@ -5,13 +5,17 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "../../typings/*", "typings/**/*"],
+  "include": [
+    "src/**/*",
+    "../../typings/*",
+    "typings/**/*"
+  ],
   "references": [
     {
-      "path": "../emotion"
+      "path": "../lib"
     },
     {
-      "path": "../lib"
+      "path": "../emotion"
     },
     {
       "path": "../palette"

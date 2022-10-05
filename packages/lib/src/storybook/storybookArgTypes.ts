@@ -1,6 +1,6 @@
-import IntrinsicElements from '../.storybook/utils/IntrinsicElements';
+import IntrinsicElements from './IntrinsicElements';
 
-const defaultArgTypes = {
+export const storybookArgTypes = {
   darkMode: {
     description: 'Render the component in dark mode.',
     control: 'boolean',
@@ -25,5 +25,3 @@ const defaultArgTypes = {
     control: { type: 'select' },
   },
 };
-
-export default defaultArgTypes;

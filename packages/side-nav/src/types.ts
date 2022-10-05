@@ -1,23 +1,22 @@
-export interface SideNavProps {
-  /**
-   * Class name that will be applied to the root-level element.
-   */
-  className?: string;
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
+export interface SideNavProps extends HTMLElementProps<'nav'> {
   /**
    * Content that will be rendered inside the root-level element.
+   *
+   * @type `<SideNavItem />` | `<SideNavGroup />`
    */
   children?: React.ReactNode;
 
   id?: string;
 
   /**
-   * Determines the base font size for the menu items.
+   * Determines the base font size (in pixels) of the Side Nav
    */
   baseFontSize?: 14 | 16;
 
   /**
-   * Provides an override for the SideNav width.
+   * Provides an override for the SideNav width (in pixels).
    */
   widthOverride?: number;
 

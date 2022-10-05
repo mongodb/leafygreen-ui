@@ -1,5 +1,29 @@
 # @leafygreen-ui/table
 
+## 6.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 3690df49: Updates Storybook configs
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/icon-button@13.2.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 6.0.1
 
 ### Patch Changes
@@ -26,6 +50,12 @@
   - @leafygreen-ui/lib@9.4.2
   - @leafygreen-ui/palette@3.4.2
   - @leafygreen-ui/tokens@1.3.2
+
+## 5.0.3
+
+### Patch Changes
+
+- (Hot-fix): Removes external package `use-ssr`
 
 ## 5.0.2
 

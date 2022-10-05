@@ -8,13 +8,16 @@ import {
 } from '@testing-library/react';
 import { Menu, MenuSeparator, MenuItem, SubMenu } from '.';
 import userEvent from '@testing-library/user-event';
+import { MenuItemProps } from './MenuItem';
+import { SubMenuProps } from './SubMenu';
+import { MenuProps } from './types';
 
 const menuTestId = 'menu-test-id';
 const className = 'menu-item-class-name';
 const trigger = <button data-testid="menu-trigger">trigger</button>;
 const onClick = jest.fn();
 
-function renderMenu(props = {}) {
+function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
     <Menu {...props} data-testid={menuTestId}>
       <MenuItem>Item A</MenuItem>
@@ -25,7 +28,7 @@ function renderMenu(props = {}) {
   return utils;
 }
 
-function renderMenuItem(props = {}) {
+function renderMenuItem(props: MenuItemProps = {}) {
   const utils = render(
     <MenuItem {...props} data-testid="menu-item-test-id">
       Item 1
@@ -35,7 +38,7 @@ function renderMenuItem(props = {}) {
   return { ...utils, menuItem };
 }
 
-function renderSubMenuItem(props = {}) {
+function renderSubMenuItem(props: SubMenuProps = {}) {
   const utils = render(
     <Menu open={true} setOpen={jest.fn()}>
       <SubMenu title="First SubMenu" data-testid="sub-menu-a" {...props}>
@@ -229,6 +232,18 @@ describe('packages/menu/menu-item', () => {
     const { menuItem } = renderMenuItem({ active: true });
     expect(menuItem).toHaveAttribute('aria-current', 'true');
   });
+
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
+  describe.skip('Types behave as expected', () => {
+    test('Accepts string as `as` prop', () => {
+      <MenuItem as="p" />;
+    });
+
+    test('Accepts component as `as` prop', () => {
+      <MenuItem as={() => <></>} />;
+    });
+  });
+  /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
 });
 
 describe('packages/menu/sub-menu', () => {
@@ -271,4 +286,21 @@ describe('packages/menu/sub-menu', () => {
     const subMenu = getByTestId('sub-menu-a');
     expect(subMenu.tagName.toLowerCase()).toBe('a');
   });
+
+  test('renders as `div` tag when the "as" prop is set', () => {
+    const { getByTestId } = renderSubMenuItem({ as: 'div' });
+    const subMenu = getByTestId('sub-menu-a');
+    expect(subMenu.tagName.toLowerCase()).toBe('div');
+  });
+
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
+  describe.skip('Types behave as expected', () => {
+    test('Accepts string as `as` prop', () => {
+      <SubMenu as="p" />;
+    });
+    test('Accepts component as `as` prop', () => {
+      <SubMenu as={() => <></>} />;
+    });
+  });
+  /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
 });

@@ -45,6 +45,9 @@
       "path": "./packages/form-footer"
     },
     {
+      "path": "./packages/guide-cue"
+    },
+    {
       "path": "./packages/hooks"
     },
     {

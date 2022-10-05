@@ -1,5 +1,30 @@
 # @leafygreen-ui/copyable
 
+## 6.0.2
+
+### Patch Changes
+
+- 3690df49: Updates Storybook configs
+- 3690df49: Updates `tsdoc.json` file
+- 3690df49: Extends `div` element props
+- Updated dependencies [dafe6be8]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/tooltip@7.1.2
+  - @leafygreen-ui/button@16.1.0
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/typography@13.2.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 6.0.1
 
 ### Patch Changes

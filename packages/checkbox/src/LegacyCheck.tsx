@@ -55,6 +55,9 @@ const checkboxStyleChecked = css`
   transform: translate3d(${-width + height}px, 0, 0);
 `;
 
+/**
+ * @internal
+ */
 export function LegacyCheck({
   isChecked,
   indeterminate,

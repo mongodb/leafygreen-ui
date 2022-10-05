@@ -1,3 +1,4 @@
+import { BoxProps } from '@leafygreen-ui/box';
 import { Either } from '@leafygreen-ui/lib';
 
 export const Size = {
@@ -9,24 +10,31 @@ export const Size = {
 export type Size = typeof Size[keyof typeof Size];
 
 // Since applications can't yet tree-shake, we're duplicating this interface from the types in the namespaces within the Icon package rather than importing the Icon package.
+// TODO: Import {IconProps} from '.../icon`
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   glyph: string;
   size?: Size | number;
   title?: string | null | boolean;
 }
 
-export interface BaseIconButtonProps
-  extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
+// Not extending `button` props. Instead using `BoxProps`
+export interface BaseIconButtonProps {
   className?: string;
+
+  /**
+   * The Leafygreen `<Icon />` component to render
+   */
   children?: React.ReactNode;
+
   /**
    * If `true`, the button will be rendered with disabled styles
    */
   disabled?: boolean;
   /**
-   * Size of tehe icon
+   * Size of the icon
    */
   size?: Size;
+
   darkMode?: boolean;
   /**
    * If `true`, the button will be rendered with active styles
@@ -52,8 +60,16 @@ export interface BaseIconButtonProps
    * Callback fired on click
    */
   onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+
+  /**
+   * The component or HTML Element that the button is rendered as.
+   */
+  as?: React.ElementType<any>;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
-export type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
+export type AccessibleIconButtonProps = BoxProps<
+  'button',
+  Either<BaseIconButtonProps, AriaLabels>
+>;

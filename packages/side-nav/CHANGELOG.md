@@ -1,5 +1,33 @@
 # @leafygreen-ui/side-nav
 
+## 10.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- Updated dependencies [dafe6be8]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/tooltip@7.1.2
+  - @leafygreen-ui/box@3.1.0
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/typography@13.2.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/a11y@1.3.2
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/portal@4.0.5
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 10.0.2
 
 ### Patch Changes

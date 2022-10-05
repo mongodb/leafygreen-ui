@@ -6,6 +6,7 @@ import flatMap from 'lodash/flatMap';
  *
  * @param stages - an array of text from each hidden stage
  * @returns string - the tooltip text
+ * @internal
  */
 export default function getPipelineCounterTooltip(
   stages: Array<string | null>,

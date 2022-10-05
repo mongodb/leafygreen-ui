@@ -4,7 +4,7 @@ import {
   SearchState,
   State,
   Theme,
-  TrunctationLocation,
+  TruncationLocation,
 } from './Combobox.types';
 
 interface ComboboxData {
@@ -16,7 +16,7 @@ interface ComboboxData {
   isOpen: boolean;
   state: State;
   searchState: SearchState;
-  chipTruncationLocation?: TrunctationLocation;
+  chipTruncationLocation?: TruncationLocation;
   chipCharacterLimit?: number;
   inputValue?: string;
 }

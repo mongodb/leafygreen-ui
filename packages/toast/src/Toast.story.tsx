@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import Toast, { Variant } from '.';
 import { Link } from '@leafygreen-ui/typography';
 
@@ -30,7 +30,7 @@ export default {
     open: {
       control: 'boolean',
     },
-    darkMode: defaultArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     body: {
       control: 'text',
     },

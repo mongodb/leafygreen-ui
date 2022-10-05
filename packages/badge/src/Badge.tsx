@@ -6,7 +6,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { baseStyle, badgeVariants } from './styles';
 import { Variant } from './types';
 
-interface BadgeProps {
+interface BadgeProps extends HTMLElementProps<'div'> {
   /**
    * An additional className to add to the component's classList
    */
@@ -20,7 +20,7 @@ interface BadgeProps {
   /**
    * The Badge's style variant
    *
-   * Default: `'lightgray'`
+   * @default 'lightgray'
    */
   variant?: Variant;
 
@@ -41,7 +41,7 @@ function Badge({
   className,
   darkMode: darkModeProp,
   ...rest
-}: BadgeProps & HTMLElementProps<'div', never>) {
+}: BadgeProps) {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <div

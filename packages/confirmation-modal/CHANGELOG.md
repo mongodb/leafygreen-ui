@@ -1,5 +1,29 @@
 # @leafygreen-ui/confirmation-modal
 
+## 3.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 3690df49: Exports `ModalProps` from Modal.
+  Extends `ModalProps` in Confirmation & Marketing modals
+- 3690df49: Updates Storybook configs
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/button@16.1.0
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/modal@10.1.0
+  - @leafygreen-ui/text-input@10.2.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 3.0.7
 
 ### Patch Changes

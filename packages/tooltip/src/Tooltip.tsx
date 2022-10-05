@@ -105,7 +105,7 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-type ModifiedPopoverProps = Omit<PopoverProps, 'active'>;
+type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'adjustOnMutation'>;
 
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
@@ -119,13 +119,13 @@ export type TooltipProps = Omit<
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
-     * @default: 'hover'
+     * @default 'hover'
      */
     triggerEvent?: TriggerEvent;
 
     /**
      * Controls component and determines the open state of the `Tooltip`
-     * @default: `false`
+     * @default `false`
      */
     open?: boolean;
 
@@ -136,7 +136,7 @@ export type TooltipProps = Omit<
 
     /**
      * Whether the `Tooltip` will appear in dark mode.
-     * @default: false
+     * @default false
      */
     darkMode?: boolean;
 
@@ -153,9 +153,15 @@ export type TooltipProps = Omit<
 
     /**
      * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
-     * @default: true
+     * @default true
      */
     enabled?: boolean;
+
+    /**
+     * Callback that is called when the tooltip is closed internally. E.g. on ESC press, on backdrop click, on blur.
+     *
+     */
+    onClose?: () => void;
   };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
@@ -189,6 +195,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.id id given to Tooltip content.
  * @param props.usePortal Determines whether or not Tooltip will be Portaled
  * @param props.portalClassName Classname applied to root element of the portal.
+ * @param props.onClose Callback that is fired when the tooltip is closed.
  */
 function Tooltip({
   open: controlledOpen,
@@ -210,6 +217,7 @@ function Tooltip({
   scrollContainer,
   popoverZIndex,
   refEl,
+  onClose = () => {},
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -240,9 +248,10 @@ function Tooltip({
 
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {
+      onClose();
       setOpen(false);
     }
-  }, [setOpen, shouldClose]);
+  }, [setOpen, shouldClose, onClose]);
 
   const createTriggerProps = useCallback(
     (triggerEvent: TriggerEvent, triggerProps?: any) => {
@@ -366,8 +375,8 @@ function Tooltip({
 
         return (
           <div
-            {...rest}
             role="tooltip"
+            {...rest}
             id={tooltipId}
             className={cx(
               baseStyles,

@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.0.2
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+
 ## 4.0.1
 
 ### Patch Changes

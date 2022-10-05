@@ -619,5 +619,24 @@ describe('packages/tooltip', () => {
         expect(mouseLeaveHandler).toHaveBeenCalled();
       });
     });
+
+    test('"onClose" callback is triggered when the tooltip is closed internally', async () => {
+      const onClose = jest.fn();
+      const { getByTestId, button } = renderTooltip({
+        triggerEvent: 'click',
+        onClose,
+      });
+
+      fireEvent.click(button);
+      const tooltip = getByTestId(tooltipTestId);
+      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
+
+      fireEvent.keyDown(button, {
+        key: 'Escape',
+        keyCode: 27,
+      });
+      expect(onClose).toHaveBeenCalledTimes(1);
+      await waitForElementToBeRemoved(tooltip);
+    });
   });
 });

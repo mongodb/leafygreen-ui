@@ -7,6 +7,7 @@ export const menuGroupDataProp = createDataProp('menu-group-section');
 interface MenuGroupProps {
   /**
    * Content that will appear inside of MenuGroup component.
+   * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`
    */
   children: React.ReactNode;
 
@@ -24,7 +25,7 @@ interface MenuGroupProps {
   <MenuGroup>Hello World!</MenuGroup>
 </MenuGroup>
  * ```
- * @param props.className Classname applied to MenuGroup.
+ * @param props.className ClassName applied to MenuGroup.
  * @param props.children Content to appear inside of the MenuGroup.
  *
  */

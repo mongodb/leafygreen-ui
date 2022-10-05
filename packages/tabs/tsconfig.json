@@ -5,10 +5,21 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
+      "path": "../box"
+    },
+    {
       "path": "../emotion"
+    },
+    {
+      "path": "../hooks"
     },
     {
       "path": "../lib"
@@ -17,22 +28,13 @@
       "path": "../palette"
     },
     {
-      "path": "../box"
+      "path": "../portal"
     },
     {
       "path": "../tokens"
     },
     {
       "path": "../leafygreen-provider"
-    },
-    {
-      "path": "../portal"
-    },
-    {
-      "path": "../hooks"
-    },
-    {
-      "path": "../a11y"
     }
   ]
 }

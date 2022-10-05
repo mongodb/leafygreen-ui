@@ -5,13 +5,18 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../button"
     },
     {
-      "path": "../lib"
+      "path": "../emotion"
+    },
+    {
+      "path": "../icon"
     },
     {
       "path": "../modal"
