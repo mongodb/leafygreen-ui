@@ -20,6 +20,9 @@
       "path": "../palette"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../tooltip"
     }
   ]

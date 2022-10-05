@@ -1,3 +1,4 @@
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { ReactNode } from 'react';
 
 export const Size = {
@@ -14,7 +15,7 @@ export interface StateForStyles {
   size: Size;
 }
 
-export interface PipelineProps {
+export interface PipelineProps extends HTMLElementProps<'div', never> {
   /**
    * Content that will appear inside of the Pipeline component.
    */

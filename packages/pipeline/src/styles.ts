@@ -1,9 +1,6 @@
 import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  createUniqueClassName,
-  Theme,
-} from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 import { edges } from './svgs/edges';
@@ -17,7 +14,6 @@ export const svgInnerClassName = createUniqueClassName('pipeline');
 export const basePipelineStyles = css`
   display: flex;
   counter-reset: hiddenCount;
-  z-index: 2;
   font-weight: 600;
 `;
 
@@ -259,7 +255,6 @@ export const stageBaseStyles = cx(
 
     &:first-of-type {
       span {
-        // TODO: make this a classname
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
       }
