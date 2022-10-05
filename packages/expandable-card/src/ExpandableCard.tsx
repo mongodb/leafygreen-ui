@@ -19,7 +19,6 @@ import {
   childrenWrapperStyle,
   childrenWrapperTransitionStyle,
 } from './styles';
-import { palette } from '@leafygreen-ui/palette';
 
 /**
  * Types
@@ -175,7 +174,7 @@ const ExpandableCard = ({
               tabIndex={0}
               darkMode={darkMode}
             >
-              <Icon glyph="ChevronUp" size={24} fill={palette.gray.base} />
+              <Icon glyph="ChevronUp" size={24} />
             </IconButton>
           )}
         </Transition>
