@@ -1,5 +1,18 @@
 # @leafygreen-ui/radio-box-group
 
+## 9.1.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/hooks@7.3.3
+  - @leafygreen-ui/leafygreen-provider@2.3.5
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/palette@3.4.4
+  - @leafygreen-ui/tokens@1.3.4
+
 ## 9.1.0
 
 ### Minor Changes
