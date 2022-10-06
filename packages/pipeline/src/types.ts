@@ -39,7 +39,7 @@ export interface PipelineProps extends HTMLElementProps<'div', never> {
   darkMode?: boolean;
 }
 
-export interface StageProps {
+export interface StageProps extends HTMLElementProps<'li', never> {
   /**
    * Content that will appear inside of the Stage component.
    **/
