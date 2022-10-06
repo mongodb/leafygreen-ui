@@ -109,7 +109,6 @@ export const DefaultSelect = (args: ModalProps) => {
             value={value}
             onChange={setValue}
             usePortal={true}
-            data-testid="hi"
           >
             <OptionGroup label="Common">
               <Option value="dog">Dog</Option>
