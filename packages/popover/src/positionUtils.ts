@@ -192,17 +192,6 @@ export function getElementDocumentPosition(
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
 
-    console.group();
-    console.log('getElementDocumentPosition');
-    console.log({isReference});
-    console.log({top: top + scrollTop - offsetTop});
-    console.log({bottom: bottom + scrollTop - offsetBottom});
-    console.log({left: left + scrollLeft - offsetLeft});
-    console.log({right: right + scrollLeft - offsetRight});
-    console.log({height});
-    console.log({width});
-    console.groupEnd();
-
     return {
       top: top + scrollTop - offsetTop,
       bottom: bottom + scrollTop - offsetBottom,
@@ -247,17 +236,6 @@ export function getElementViewportPosition(
       left: offsetLeft,
       right: offsetRight,
     } = scrollContainer.getBoundingClientRect();
-
-    console.group();
-    console.log('getElementViewportPosition');
-    console.log({isReference});
-    console.log({top: top - offsetTop});
-    console.log({bottom: bottom - offsetBottom});
-    console.log({left: left - offsetLeft});
-    console.log({right: right - offsetRight});
-    console.log({height});
-    console.log({width});
-    console.groupEnd();
 
     return {
       top: top - offsetTop,
