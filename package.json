@@ -33,6 +33,7 @@
     "check:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md}\"",
     "check:eslint": "eslint \"**/*.{js,ts,tsx}\"",
     "check:deps": "ts-node -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true}' ./scripts/depcheck.ts",
+    "check:builds": "yarn ts-node ./scripts/check-builds.ts",
     "check:ts": "tsc --project tsconfig.json",
     "clean": "yarn clean:builds && yarn clean:modules",
     "clean:builds": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo website/tsconfig.tsbuildinfo ./tsconfig.tsbuildinfo",
@@ -60,7 +61,6 @@
     "test": "yarn ts-node ./scripts/test.ts",
     "test:local": "yarn test",
     "test:ssr": "yarn test --ssr",
-    "test:builds": "yarn ts-node ./scripts/test-modules.ts",
     "ts-node": "ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\"}' --",
     "unlink": "./scripts/unlink.sh",
     "watch": "yarn build -- -- --watch"
