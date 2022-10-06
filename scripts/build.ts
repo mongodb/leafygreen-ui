@@ -6,7 +6,7 @@ import { Command } from 'commander';
 import { uniq } from 'lodash';
 import { getGitDiff } from './utils/getGitDiff';
 import {
-  getPackageDependants,
+  getPackageDependents,
   getPackageLGDependencies,
 } from './utils/getPackageDependencies';
 import { getAllPackageNames } from './utils/getAllPackageNames';
@@ -98,18 +98,18 @@ if (deps) {
     packages.flatMap(pkg => getPackageLGDependencies(pkg)),
   );
 
-  const dependants = uniq(packages.flatMap(pkg => getPackageDependants(pkg)));
+  const dependents = uniq(packages.flatMap(pkg => getPackageDependents(pkg)));
 
   console.log(
     chalk.bold(`\nIncluding ${dependencies.length} dependencies:`),
     chalk.blue(dependencies.join(', ')),
   );
   console.log(
-    chalk.bold(`Including ${dependants.length} dependants: `),
-    chalk.blue(dependants.join(', ')),
+    chalk.bold(`Including ${dependents.length} dependents: `),
+    chalk.blue(dependents.join(', ')),
   );
 
-  packages.splice(0, 0, ...dependencies, ...dependants);
+  packages.splice(0, 0, ...dependencies, ...dependents);
 }
 
 /**

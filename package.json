@@ -60,6 +60,7 @@
     "test": "yarn ts-node ./scripts/test.ts",
     "test:local": "yarn test",
     "test:ssr": "yarn test --ssr",
+    "test:builds": "yarn ts-node ./scripts/test-modules.ts",
     "ts-node": "ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\"}' --",
     "unlink": "./scripts/unlink.sh",
     "watch": "yarn build -- -- --watch"
