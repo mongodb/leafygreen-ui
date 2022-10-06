@@ -1,4 +1,3 @@
-
 import React, { forwardRef } from 'react';
 import { SearchInputProps, SizeVariant, State } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -41,8 +40,7 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     {
       onChange,
       onBlur,
-      placeholder = "Search",
-      disabled = false,
+      placeholder = 'Search',
       state = State.None,
       id: propsId,
       value: controlledValue,
@@ -62,8 +60,9 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       <div
         className={cx(
           inputContainerStyle,
-          getWrapperFontSize(sizeVariant, baseFontSize)
-        )}>
+          getWrapperFontSize(sizeVariant, baseFontSize),
+        )}
+      >
         <MagnifyingGlass
           className={cx(
             searchIconStyle,
@@ -81,14 +80,16 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             inputThemeStyle[theme],
             inputSizeStyles[sizeVariant],
             inputFocusStyles[theme], // Always show focus styles
-            className
+            className,
           )}
           ref={forwardRef}
           {...rest}
         />
       </div>
-    )
-  }
+    );
+  },
 );
+
+SearchInput.displayName = 'SearchInput';
 
 export default SearchInput;

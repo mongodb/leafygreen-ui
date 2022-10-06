@@ -271,7 +271,6 @@ export const searchIconThemeStyle: Record<Theme, string> = {
   `,
 };
 
-
 export const searchIconSizeStyle: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
     width: 8px;

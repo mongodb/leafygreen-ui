@@ -12,10 +12,10 @@ export default {
     placeholder: { control: 'string' },
     value: { control: 'string' },
     ref: { control: 'none' },
-  }
-}
+  },
+};
 
-const Template: ComponentStory<typeof SearchInput> = (props) => (
+const Template: ComponentStory<typeof SearchInput> = props => (
   <SearchInput {...props} />
 );
 

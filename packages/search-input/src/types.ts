@@ -1,5 +1,5 @@
-import { HTMLElementProps } from "@leafygreen-ui/lib";
-import { BaseFontSize } from "@leafygreen-ui/tokens";
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {
   None: 'none',
@@ -16,7 +16,6 @@ export const SizeVariant = {
 } as const;
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
-
 
 export interface SearchInputProps
   extends HTMLElementProps<'input', HTMLInputElement> {

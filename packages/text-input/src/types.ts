@@ -147,9 +147,9 @@ type AriaLabels = 'label' | 'aria-labelledby';
 export type TextInputProps =
   | Either<BaseTextInputProps, AriaLabels>
   | (BaseTextInputProps & {
-    type: 'search';
-    /**
-     * Required if `type` is `"search"`
-     */
-    'aria-label': string;
-  });
+      type: 'search';
+      /**
+       * Required if `type` is `"search"`
+       */
+      'aria-label': string;
+    });

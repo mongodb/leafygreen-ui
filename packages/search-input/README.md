@@ -1,7 +1,7 @@
-
 # Search Input
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/search-input.svg)
+
 #### [View on MongoDB.design](https://www.mongodb.design/component/search-input/example/)
 
 ## Installation
@@ -26,4 +26,3 @@ npm install @leafygreen-ui/search-input
 
 | Prop | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
-
