@@ -51,7 +51,10 @@ const Stage = forwardRef(
       root: intersectionNode,
     });
 
+    // const { theme, isPipeline } = useContext(PipelineContext);
     const { theme } = useContext(PipelineContext);
+
+    // if not ifPipeline throw error
 
     return (
       <li
