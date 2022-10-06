@@ -268,8 +268,8 @@ function ModalView({
                 >
                   <PortalContextProvider
                     popover={{
-                      portalContainer: modalRef,
-                      scrollContainer: modalRef,
+                      portalContainer: modalRef, // PortalContainer needs to be the modal because of the focus trap
+                      scrollContainer: nodeRef.current,
                     }}
                   >
                     {children}

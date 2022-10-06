@@ -156,6 +156,8 @@ function Popover({
     ),
   );
 
+  console.log({scrollContainer}, {referenceElement});
+
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
       () => getElementDocumentPosition(referenceElement, scrollContainer, true),
