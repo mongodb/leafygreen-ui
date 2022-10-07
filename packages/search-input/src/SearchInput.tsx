@@ -24,30 +24,20 @@ import { cx } from '@leafygreen-ui/emotion';
  * ```
 <SearchInput  onChange={() => execute when value of input field changes}/>
 ```
- * @param props.id id associated with the SearchInput component.
- * @param props.onChange Callback to be executed when the value of the input field changes.
- * @param props.onBlur Callback to be executed when the input stops being focused.
- * @param props.placeholder The placeholder text shown in the input field before the user begins typing.
  * @param props.state The current state of the SearchInput. This can be none, or loading.
- * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
- * @param props.className className supplied to the SearchInput container.
  * @param props.darkMode determines whether or not the component appears in dark theme.
  * @param props.sizeVariant determines the size of the text and the height of the input.
+ * @param props.baseFontSize determines the base font size if sizeVariant is set to default.
  */
 type SearchInput = React.ForwardRefExoticComponent<SearchInputProps>;
 const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   (
     {
-      onChange,
-      onBlur,
       placeholder = 'Search',
       state = State.None,
-      id: propsId,
-      value: controlledValue,
       className,
       darkMode: darkModeProp,
       sizeVariant = SizeVariant.Default,
-      'aria-labelledby': ariaLabelledby,
       baseFontSize: baseFontSizeProp,
       ...rest
     }: SearchInputProps,
@@ -73,8 +63,6 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         />
         <input
           type="search"
-          aria-labelledby={ariaLabelledby}
-          placeholder={placeholder}
           className={cx(
             baseInputStyle,
             inputThemeStyle[theme],
