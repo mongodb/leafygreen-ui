@@ -34,11 +34,11 @@ const segments: Record<Size, React.ComponentType<any>> = {
  */
 const Counter = forwardRef(
   (
-    { className = '', children, size, ...rest }: CounterProps,
+    { className = '', children, ...rest }: CounterProps,
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
+    const { theme, size } = useContext(PipelineContext);
     const Icon = segments[size];
-    const { theme } = useContext(PipelineContext);
 
     return (
       <div
@@ -76,7 +76,6 @@ Counter.displayName = 'Counter';
 Counter.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  size: PropTypes.oneOf(Object.values(Size)).isRequired,
 };
 
 export default Counter;

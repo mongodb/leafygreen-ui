@@ -28,33 +28,31 @@ import { Size, StageProps } from './types';
  * ```
  * @param props.children Content that will appear inside of the Stage component.
  * @param props.className Classname applied to Stage content container.
- * @param props.intersectionNode The DOM node to use as the root node for the intersectionObserver. Defaults to window when null or undefined.
- * @param props.size Alters the rendered size of the component.
  * @param props.threshold Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed.
- * @param props.variant Alters the visual appearance of the component.
  */
 const Stage = forwardRef(
   (
     {
       children,
       className = '',
-      intersectionNode,
-      size,
       threshold = 0.8,
       ...rest
     }: StageProps,
     ref: Ref<HTMLLIElement>,
   ): ReactElement => {
+    const { theme, size, isPipelineComponent, intersectionNode } = useContext(PipelineContext);
     // Effects
     const [setRef, isVisible] = useInView({
       threshold,
       root: intersectionNode,
     });
 
-    // const { theme, isPipeline } = useContext(PipelineContext);
-    const { theme } = useContext(PipelineContext);
+    console.log({isPipelineComponent}, {size});
 
-    // if not ifPipeline throw error
+    // If Stage is used outside of Pipeline throw an error
+    if (!isPipelineComponent) {
+      throw Error('`Stage` must be a child of a `Pipeline` instance');
+    }
 
     return (
       <li
@@ -67,6 +65,7 @@ const Stage = forwardRef(
           stageSvgSizeStyles[size as Size],
           className,
         )}
+        data-testid="pipeline-stage"
       >
         <span
           // if this ref is added to the <li> this component will keep re-rendering
@@ -76,7 +75,7 @@ const Stage = forwardRef(
             stageTextSizeStyles[size as Size],
             stageTextThemeStyles[theme],
           )}
-          data-testid="pipeline-stage"
+          data-testid="pipeline-stage-item"
         >
           {children}
         </span>
@@ -90,8 +89,6 @@ Stage.displayName = 'Stage';
 Stage.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  intersectionNode: PropTypes.any, // eslint-disable-line react/forbid-prop-types
-  size: PropTypes.oneOf(Object.values(Size)),
   threshold: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.arrayOf(PropTypes.number.isRequired),

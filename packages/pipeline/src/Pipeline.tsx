@@ -62,8 +62,8 @@ const Pipeline = forwardRef(
     const [tooltipText, setTooltipText] = useState<string>('');
 
     const providerData = useMemo(() => {
-      return { theme };
-    }, [theme]);
+      return { theme, size, isPipelineComponent: true, intersectionNode: pipelineNode};
+    }, [pipelineNode, size, theme]);
 
     // Handlers
     /**
@@ -109,8 +109,6 @@ const Pipeline = forwardRef(
 
     const childrenAsPipelineStages = React.Children.map(children, child => {
       const props = {
-        size,
-        intersectionNode: pipelineNode,
         ref: createRef<HTMLLIElement>(),
       };
 
@@ -149,7 +147,6 @@ const Pipeline = forwardRef(
             trigger={
               <Counter
                 className={cx({ [counterVisibleStyles]: !!tooltipText })}
-                size={size}
               />
             }
             triggerEvent="hover"

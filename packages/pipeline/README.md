@@ -48,9 +48,7 @@ _All other props will be spread onto the root element._
 | ------------------ | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `className`        | `string`               | Adds a className to the class attribute.                                                                                                                          | `''`        |
 | `children`         | `node`                 | The content that will render inside of the component.                                                                                                             | `undefined` |
-| `intersectionNode` | `React.Element`        | The DOM element to observe intersections with. When used with the `Pipeline` component, this prop is automatically set to the element rendered by the `Pipeline`. | `window`    |
 | `threshold`        | `number`               | Either a single number or an array of numbers which indicate at what percentage of the target's visibility, the observer's callback should be executed.           | `0.8`       |
-| `size`             | `string`               | Sets the size variant of the Pipeline. Valid sizes are: `'xsmall'`, `'small'`, `'normal'`, `'large'`                                                              | `'xsmall'`  |
 | ...                | native `li` attributes | Any other props will be spread on the root `li` element                                                                                                           |             |
 
-_All other props will be spread onto the root element. The Pipeline component will also decorate the child Stage components with the `size` prop that it is supplied with._
+_The Pipeline component will decorate the child Stage components with the `size` and `darkMode` prop that it is supplied with._
