@@ -32,22 +32,16 @@ import { Size, StageProps } from './types';
  */
 const Stage = forwardRef(
   (
-    {
-      children,
-      className = '',
-      threshold = 0.8,
-      ...rest
-    }: StageProps,
+    { children, className = '', threshold = 0.8, ...rest }: StageProps,
     ref: Ref<HTMLLIElement>,
   ): ReactElement => {
-    const { theme, size, isPipelineComponent, intersectionNode } = useContext(PipelineContext);
+    const { theme, size, isPipelineComponent, intersectionNode } =
+      useContext(PipelineContext);
     // Effects
     const [setRef, isVisible] = useInView({
       threshold,
       root: intersectionNode,
     });
-
-    console.log({isPipelineComponent}, {size});
 
     // If Stage is used outside of Pipeline throw an error
     if (!isPipelineComponent) {

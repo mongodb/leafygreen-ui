@@ -53,7 +53,9 @@ describe('packages/pipeline/Pipeline', () => {
 
     stages.forEach(stage => {
       const element = getByText(stage);
-      expect(element.getAttribute('data-testid')).toEqual('pipeline-stage-item');
+      expect(element.getAttribute('data-testid')).toEqual(
+        'pipeline-stage-item',
+      );
     });
   });
 });

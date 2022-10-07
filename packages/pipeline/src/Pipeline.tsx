@@ -62,7 +62,12 @@ const Pipeline = forwardRef(
     const [tooltipText, setTooltipText] = useState<string>('');
 
     const providerData = useMemo(() => {
-      return { theme, size, isPipelineComponent: true, intersectionNode: pipelineNode};
+      return {
+        theme,
+        size,
+        isPipelineComponent: true,
+        intersectionNode: pipelineNode,
+      };
     }, [pipelineNode, size, theme]);
 
     // Handlers

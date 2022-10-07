@@ -13,7 +13,7 @@ export const PipelineContext = createContext<PipelineData>({
   theme: Theme.Light,
   size: Size.XSmall,
   intersectionNode: null,
-  isPipelineComponent: false
+  isPipelineComponent: false,
 });
 
 export default PipelineContext;

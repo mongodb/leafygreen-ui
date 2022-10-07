@@ -1,7 +1,6 @@
 import { mockIsIntersecting } from './mocks/IntersectionObserver';
 
 import React from 'react';
-import { typeIs } from '@leafygreen-ui/lib';
 import { render, cleanup } from '@testing-library/react';
 import Stage from './Stage';
 import Pipeline from './Pipeline';
@@ -14,30 +13,18 @@ const child = '$match';
 function renderStage(props = {}) {
   const utils = render(
     <Pipeline size={Size.Normal}>
-      <Stage {...props}>
-        {child}
-      </Stage>
+      <Stage {...props}>{child}</Stage>
     </Pipeline>,
-    // {
-    //   container: document.body.appendChild(parentElement),
-    // },
   );
-
-  // if (!typeIs.element(utils.container.firstChild)) {
-  //   throw new Error('Pipeline element not found');
-  // }
 
   // This element used to check if `useInView`
   const element = utils.getByTestId('pipeline-stage');
   const childElement = utils.getByTestId('pipeline-stage-item');
-  const observedNode = utils.getByTestId('pipeline-stages');
 
   return {
     ...utils,
-    // element: utils.container.firstChild,
     element,
     childElement,
-    observedNode
   };
 }
 
@@ -57,21 +44,6 @@ describe('packages/pipeline/Stage', () => {
     const { element } = renderStage();
     expect(element.textContent).toBe(child);
   });
-
-  // test('observes the intersection of the provided root element', () => {
-  //   const {observedNode} = renderStage();
-
-  //   const {
-  //     value: { root },
-  //   } = (window.IntersectionObserver as jest.Mock<IntersectionObserver>).mock
-  //     .results[0];
-
-  //     console.log((window.IntersectionObserver as jest.Mock<IntersectionObserver>).mock
-  //     .results[0]);
-
-  //   // expect(root).toBe(observedNode);
-  //   expect(root).toBe('t');
-  // });
 
   test('sets the default threshold for the intersection', () => {
     renderStage();

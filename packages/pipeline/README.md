@@ -44,11 +44,11 @@ _All other props will be spread onto the root element._
 
 ## Properties
 
-| Prop               | Type                   | Description                                                                                                                                                       | Default     |
-| ------------------ | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `className`        | `string`               | Adds a className to the class attribute.                                                                                                                          | `''`        |
-| `children`         | `node`                 | The content that will render inside of the component.                                                                                                             | `undefined` |
-| `threshold`        | `number`               | Either a single number or an array of numbers which indicate at what percentage of the target's visibility, the observer's callback should be executed.           | `0.8`       |
-| ...                | native `li` attributes | Any other props will be spread on the root `li` element                                                                                                           |             |
+| Prop        | Type                   | Description                                                                                                                                             | Default     |
+| ----------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `className` | `string`               | Adds a className to the class attribute.                                                                                                                | `''`        |
+| `children`  | `node`                 | The content that will render inside of the component.                                                                                                   | `undefined` |
+| `threshold` | `number`               | Either a single number or an array of numbers which indicate at what percentage of the target's visibility, the observer's callback should be executed. | `0.8`       |
+| ...         | native `li` attributes | Any other props will be spread on the root `li` element                                                                                                 |             |
 
 _The Pipeline component will decorate the child Stage components with the `size` and `darkMode` prop that it is supplied with._
