@@ -1,5 +1,25 @@
 # @leafygreen-ui/portal
 
+## 4.0.6
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/hooks@7.3.3
+  - @leafygreen-ui/lib@9.5.1
+
+## 4.0.5
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/hooks@7.3.2
+
 ## 4.0.4
 
 ### Patch Changes

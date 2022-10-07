@@ -662,7 +662,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-syntax-jsx@^7.12.1", "@babel/plugin-syntax-jsx@^7.12.13", "@babel/plugin-syntax-jsx@^7.16.7", "@babel/plugin-syntax-jsx@^7.2.0":
+"@babel/plugin-syntax-jsx@^7.12.1", "@babel/plugin-syntax-jsx@^7.12.13", "@babel/plugin-syntax-jsx@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.16.7.tgz#50b6571d13f764266a113d77c82b4a6508bbe665"
   integrity sha512-Esxmk7YjA8QysKeT3VhTXvF6y77f/a91SIs4pWb4H2eWGQkCKFgQaG6hdoEVZtGsrAcb2K5BW66XsOErD4WU3Q==
@@ -946,7 +946,7 @@
   dependencies:
     "@babel/plugin-transform-react-jsx" "^7.16.7"
 
-"@babel/plugin-transform-react-jsx@^7.12.1", "@babel/plugin-transform-react-jsx@^7.12.12", "@babel/plugin-transform-react-jsx@^7.16.7", "@babel/plugin-transform-react-jsx@^7.9.4":
+"@babel/plugin-transform-react-jsx@^7.12.12", "@babel/plugin-transform-react-jsx@^7.16.7", "@babel/plugin-transform-react-jsx@^7.9.4":
   version "7.17.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-react-jsx/-/plugin-transform-react-jsx-7.17.3.tgz#eac1565da176ccb1a715dae0b4609858808008c1"
   integrity sha512-9tjBm4O07f7mzKSIlEmPdiE6ub7kfIe6Cd+w+oQebpATfTQMAgW+YOuWxogbKVTulA+MEO7byMeIUtQ1z+z+ZQ==
@@ -1607,13 +1607,6 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@emotion/babel-plugin-jsx-pragmatic@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@emotion/babel-plugin-jsx-pragmatic/-/babel-plugin-jsx-pragmatic-0.1.5.tgz#27debfe9c27c4d83574d509787ae553bf8a34d7e"
-  integrity sha512-y+3AJ0SItMDaAgGPVkQBC/S/BaqaPACkQ6MyCI2CUlrjTxKttTVfD3TMtcs7vLEcLxqzZ1xiG0vzwCXjhopawQ==
-  dependencies:
-    "@babel/plugin-syntax-jsx" "^7.2.0"
-
 "@emotion/babel-plugin@11.0.0":
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.0.0.tgz#e6f40fa81ef52775773a53d50220c597ebc5c2ef"
@@ -1632,7 +1625,7 @@
     source-map "^0.5.7"
     stylis "^4.0.3"
 
-"@emotion/babel-plugin@^11.2.0", "@emotion/babel-plugin@^11.3.0", "@emotion/babel-plugin@^11.7.1":
+"@emotion/babel-plugin@^11.3.0", "@emotion/babel-plugin@^11.7.1":
   version "11.9.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.9.2.tgz#723b6d394c89fb2ef782229d92ba95a740576e95"
   integrity sha512-Pr/7HGH6H6yKgnVFNEj2MVlreu3ADqftqjqwUvDy/OJzKFgxKeTQ+eeUf20FOTuHVkDON2iNa25rAXVYtWJCjw==
@@ -1649,16 +1642,6 @@
     find-root "^1.1.0"
     source-map "^0.5.7"
     stylis "4.0.13"
-
-"@emotion/babel-preset-css-prop@^11.2.0":
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/@emotion/babel-preset-css-prop/-/babel-preset-css-prop-11.2.0.tgz#c7e945f56b2610b438f0dc8ae5253fc55488de0e"
-  integrity sha512-9XLQm2eLPYTho+Cx1LQTDA1rATjoAaB4O+ds55XDvoAa+Z16Hhg8y5Vihj3C8E6+ilDM8SV5A9Z6z+yj0YIRBg==
-  dependencies:
-    "@babel/plugin-transform-react-jsx" "^7.12.1"
-    "@babel/runtime" "^7.7.2"
-    "@emotion/babel-plugin" "^11.2.0"
-    "@emotion/babel-plugin-jsx-pragmatic" "^0.1.5"
 
 "@emotion/cache@^10.0.27":
   version "10.0.29"
@@ -9832,12 +9815,27 @@ focus-trap-react@8.10.0:
   dependencies:
     focus-trap "^6.8.1"
 
+focus-trap-react@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-10.0.0.tgz#9e41ddd0b869db577dfe670611648d97736b9188"
+  integrity sha512-I0tReLdpmCwWuVb6YAmOD+S9KHj0GrlIWmnVJf61j2NHxiIg7DbrsabPmtPC+1yzGJrsy+/iTZiqXtStjlBQcA==
+  dependencies:
+    focus-trap "^7.0.0"
+    tabbable "^6.0.0"
+
 focus-trap@^6.8.1:
   version "6.8.1"
   resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.8.1.tgz#0c9e4e44db8f7242f3d4b1056a518747d9c97125"
   integrity sha512-sdz/jAPiP/9cyElo31+X3/estGPi6wgHutg+R/3MFmJtMM5AeeBlFGplejQyy89Ouyds/9xW+qPEH3jFlOAuKg==
   dependencies:
     tabbable "^5.3.1"
+
+focus-trap@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.0.0.tgz#4e2cd9aab5b673e2cbad945c52bd232f6160c2cb"
+  integrity sha512-uT4Bl8TwU+5vVAx/DHil/1eVS54k9unqhK/vGy2KSh7esPmqgC0koAB9J2sJ+vtj8+vmiFyGk2unLkhNLQaxoA==
+  dependencies:
+    tabbable "^6.0.0"
 
 follow-redirects@^1.14.8:
   version "1.14.9"
@@ -17666,6 +17664,11 @@ tabbable@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-5.3.1.tgz#059f2a19b829efce2a0ec05785a47dd3bcd0a25b"
   integrity sha512-NtO7I7eoAHR+JwwcNsi/PipamtAEebYDnur/k9wM6n238HHy/+1O4+7Zx7e/JaDAbKJPlIFYsfsV/6tPqTOQvg==
+
+tabbable@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.0.0.tgz#7f95ea69134e9335979092ba63866fe67b521b01"
+  integrity sha512-SxhZErfHc3Yozz/HLAl/iPOxuIj8AtUw13NRewVOjFW7vbsqT1f3PuiHrPQbUkRcLNEgAedAv2DnjLtzynJXiw==
 
 table@^5.2.3:
   version "5.4.6"

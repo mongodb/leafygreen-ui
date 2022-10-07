@@ -21,6 +21,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/main/packages/emotion)
 - [Expandable Card](https://github.com/mongodb/leafygreen-ui/tree/main/packages/expandable-card)
 - [Form Footer](https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-footer)
+- [GuideCue](https://github.com/mongodb/leafygreen-ui/tree/main/packages/guide-cue)
 - [Hooks](https://github.com/mongodb/leafygreen-ui/tree/main/packages/hooks)
 - [Icon](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon)
 - [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button)

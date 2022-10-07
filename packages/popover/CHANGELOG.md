@@ -1,5 +1,35 @@
 # @leafygreen-ui/popover
 
+## 9.1.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/hooks@7.3.3
+  - @leafygreen-ui/leafygreen-provider@2.3.5
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/portal@4.0.6
+
+## 9.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/portal@4.0.5
+
 ## 9.0.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/interaction-ring",
-  "version": "4.0.1",
+  "version": "4.0.3",
   "description": "leafyGreen UI Kit Interaction Ring",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,12 +20,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.1",
-    "@leafygreen-ui/lib": "^9.4.2",
-    "@leafygreen-ui/palette": "^3.4.2"
+    "@leafygreen-ui/emotion": "^4.0.3",
+    "@leafygreen-ui/lib": "^9.5.1",
+    "@leafygreen-ui/palette": "^3.4.4"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.3.3"
+    "@leafygreen-ui/leafygreen-provider": "^2.3.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/interaction-ring",
   "repository": {
