@@ -14,18 +14,20 @@ import { useMutationObserver } from '@leafygreen-ui/hooks';
 import { PipelineContext } from './PipelineContext';
 import Stage from './Stage';
 import Counter from './Counter';
-
-import { getPipelineCounterTooltip } from './utils';
+import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 
 import {
   baseSizeStyles,
   basePipelineListStyles,
   basePipelineStyles,
   counterVisibleStyles,
+  tooltipTextStyles,
+  tooltipStyles,
 } from './styles';
 import { PipelineProps, Size } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 
 /**
  *
@@ -50,7 +52,7 @@ const Pipeline = forwardRef(
     {
       children,
       className = '',
-      size = Size.XSmall,
+      size = Size.Normal,
       darkMode: darkModeProp,
       ...rest
     }: PipelineProps,
@@ -59,7 +61,9 @@ const Pipeline = forwardRef(
     const { theme, darkMode } = useDarkMode(darkModeProp);
     // State
     const [pipelineNode, setPipelineNode] = useState<HTMLElement | null>(null);
-    const [tooltipText, setTooltipText] = useState<string>('');
+    const [tooltipText, setTooltipText] = useState<Array<React.ReactElement>>(
+      [],
+    );
 
     const providerData = useMemo(() => {
       return {
@@ -72,7 +76,7 @@ const Pipeline = forwardRef(
 
     // Handlers
     /**
-     * Get the text of all the hidden stages. The mutation of the DOM is required otherwise the
+     * Sets the text of all the hidden stages. The mutation of the DOM is required otherwise the
      * Stage components will re-render, triggering an infinite loop on the
      * mutation observer.
      */
@@ -85,7 +89,32 @@ const Pipeline = forwardRef(
         .filter(element => element.dataset.stageVisible === 'false')
         .map(element => element.textContent);
 
-      setTooltipText(getPipelineCounterTooltip(allHiddenStages));
+      const tooltipChildren = [];
+
+      if (allHiddenStages.length > 0) {
+        for (let i = 0; i < allHiddenStages.length; i++) {
+          if (i === 0) {
+            tooltipChildren.push(
+              <span key={`${allHiddenStages[i]}-${i}`}>
+                {allHiddenStages[i]}
+              </span>,
+            );
+          } else {
+            tooltipChildren.push(
+              <span key={`icon-${i}`}>
+                <ChevronRight size={12} fill={palette.gray.base} />
+              </span>,
+            );
+            tooltipChildren.push(
+              <span key={`${allHiddenStages[i]}-${i}`}>
+                {allHiddenStages[i]}
+              </span>,
+            );
+          }
+        }
+      }
+
+      setTooltipText(tooltipChildren);
     };
 
     /**
@@ -145,19 +174,20 @@ const Pipeline = forwardRef(
             {childrenAsPipelineStages}
           </ol>
 
-          {/* Removing the component was causing a unmounted error so instead we're hiding it with css */}
+          {/* Removing the component was causing an unmounted error so instead we're hiding it with css */}
           <Tooltip
             align="top"
             justify="middle"
             trigger={
               <Counter
-                className={cx({ [counterVisibleStyles]: !!tooltipText })}
+                className={cx({ [counterVisibleStyles]: !!tooltipText.length })}
               />
             }
             triggerEvent="hover"
             darkMode={darkMode}
+            className={tooltipStyles}
           >
-            {tooltipText}
+            <div className={tooltipTextStyles}>{tooltipText}</div>
           </Tooltip>
         </div>
       </PipelineContext.Provider>

@@ -11,7 +11,7 @@ interface PipelineData {
 
 export const PipelineContext = createContext<PipelineData>({
   theme: Theme.Light,
-  size: Size.XSmall,
+  size: Size.Normal,
   intersectionNode: null,
   isPipelineComponent: false,
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta } from '@storybook/react';
 import Pipeline from './Pipeline';
 import Stage from './Stage';
-import { PipelineProps } from './types';
+import { PipelineProps, Size } from './types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
@@ -11,6 +11,7 @@ export default {
   args: {
     stages: ['$match', '$group', '$project', '$addFields', '$limit'].join(','),
     darkMode: false,
+    size: Size.Normal
   },
   argTypes: {
     className: {

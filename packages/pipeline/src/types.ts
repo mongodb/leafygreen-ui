@@ -28,8 +28,9 @@ export interface PipelineProps extends HTMLElementProps<'div', never> {
 
   /**
    * Alter the rendered size of the component
+   * @default 'normal'
    */
-  size: Size;
+  size?: Size;
 
   /**
    * Renders the component with dark mode styles.

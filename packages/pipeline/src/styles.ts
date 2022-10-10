@@ -364,3 +364,18 @@ export const stageSvgSizeStyles: Record<Size, string> = {
     }
   `,
 };
+
+export const tooltipStyles = css`
+  max-width: 400px;
+`;
+
+export const tooltipTextStyles = css`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+
+  span {
+    display: inline-flex;
+  }
+`;
