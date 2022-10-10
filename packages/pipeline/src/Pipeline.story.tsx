@@ -11,7 +11,7 @@ export default {
   args: {
     stages: ['$match', '$group', '$project', '$addFields', '$limit'].join(','),
     darkMode: false,
-    size: Size.Normal
+    size: Size.Normal,
   },
   argTypes: {
     className: {
