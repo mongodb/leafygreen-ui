@@ -77,12 +77,34 @@ export const DefaultSelect = (args: ModalProps) => {
       <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <Modal {...args} open={open} setOpen={setOpen}>
         <div>Modal Content goes here.</div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          tristique risus sed est finibus pellentesque. Vestibulum feugiat,
+          libero in efficitur egestas, ipsum leo mattis purus, nec maximus nisl
+          lorem at orci. Nam nunc turpis, vehicula ac aliquam vitae, convallis
+          et turpis. Fusce fermentum laoreet gravida. Nam malesuada nisl eget
+          blandit auctor. Quisque quis posuere enim. Etiam non est sit amet diam
+          efficitur malesuada. In ut pretium risus. Etiam convallis rhoncus
+          tempor. Donec ullamcorper maximus enim sed dapibus. Duis ac vehicula
+          orci, et semper turpis.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+          tristique risus sed est finibus pellentesque. Vestibulum feugiat,
+          libero in efficitur egestas, ipsum leo mattis purus, nec maximus nisl
+          lorem at orci. Nam nunc turpis, vehicula ac aliquam vitae, convallis
+          et turpis. Fusce fermentum laoreet gravida. Nam malesuada nisl eget
+          blandit auctor. Quisque quis posuere enim. Etiam non est sit amet diam
+          efficitur malesuada. In ut pretium risus. Etiam convallis rhoncus
+          tempor. Donec ullamcorper maximus enim sed dapibus. Duis ac vehicula
+          orci, et semper turpis.
+        </p>
 
         <div>
           <Select
             label="label"
             size="small"
-            placeholder="lala"
+            placeholder="animals"
             name="pets"
             value={value}
             onChange={setValue}
@@ -91,6 +113,7 @@ export const DefaultSelect = (args: ModalProps) => {
             <OptionGroup label="Common">
               <Option value="dog">Dog</Option>
               <Option value="cat">Cat</Option>
+              <Option value="axolotl">Axolotl</Option>
             </OptionGroup>
           </Select>
         </div>
@@ -99,7 +122,7 @@ export const DefaultSelect = (args: ModalProps) => {
           <Select
             label="label2"
             size="small"
-            placeholder="second one"
+            placeholder="types of cat"
             name="cats"
             value={valueB}
             onChange={setValueB}
