@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 9.5.2
+
+### Patch Changes
+
+- ab2fd6b3: Resolves broken builds, by removing erroneously included `package.tsconfig.json`
+
 ## 9.5.1
 
 ### Patch Changes
