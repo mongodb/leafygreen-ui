@@ -30,6 +30,7 @@ const segments: Record<Size, React.ComponentType<any>> = {
  * ```
  * <Counter />
  * ```
+ * @internal
  * @param props.className Classname applied to Counter content container.
  */
 const Counter = forwardRef(
@@ -58,10 +59,10 @@ const Counter = forwardRef(
         {/* The counter is a unique shape with focus and hover state that are not easily accomplished with css alone so we are using an SVG. The reason we have 2 SVGs is to mimic the behavior of a div expanding horizontally when the text increases since an SVG does not stretch horizontally while maintaining its height.*/}
         <div className={counterSvgBaseStyles}>
           <div className={counterSvgColStyles}>
-            <Icon className={cx(svgLayer1Styles)} />
+            <Icon className={svgLayer1Styles} />
           </div>
           <div className={counterSvgColStyles}>
-            <Icon className={cx(svgLayer2Styles)} />
+            <Icon className={svgLayer2Styles} />
           </div>
         </div>
         {/* Children will be the tooltip provided by the Pipeline component */}

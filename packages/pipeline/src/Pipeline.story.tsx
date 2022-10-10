@@ -3,6 +3,7 @@ import { Meta } from '@storybook/react';
 import Pipeline from './Pipeline';
 import Stage from './Stage';
 import { PipelineProps } from './types';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Pipeline',
@@ -18,9 +19,7 @@ export default {
     children: {
       control: false,
     },
-    darkMode: {
-      control: 'boolean',
-    },
+    darkMode: storybookArgTypes.darkMode,
     stages: {
       description:
         '[STORYBOOK ONLY]\n\nThis prop is used to generate DOM elements to render children. It is not defined in the component.',
