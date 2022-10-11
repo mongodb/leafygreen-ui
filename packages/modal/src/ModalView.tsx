@@ -189,7 +189,8 @@ function ModalView({
 
   const nodeRef = React.useRef(null);
 
-  const [modalRef, setModalRef] = useState<null | HTMLDivElement>(null);
+  const [scrollContainerRef, setScrollContainerRef] =
+    useState<null | HTMLDivElement>(null);
 
   const { isPopoverOpen } = usePopoverContext();
 
@@ -238,9 +239,11 @@ function ModalView({
             })}
           >
             <FocusTrap focusTrapOptions={focusTrapOptions}>
-              <div className={scrollContainer}>
+              <div
+                className={scrollContainer}
+                ref={el => setScrollContainerRef(el)}
+              >
                 <div
-                  ref={el => setModalRef(el)}
                   aria-modal="true"
                   role="dialog"
                   tabIndex={-1}
@@ -268,8 +271,8 @@ function ModalView({
                 >
                   <PortalContextProvider
                     popover={{
-                      portalContainer: modalRef,
-                      scrollContainer: modalRef,
+                      portalContainer: scrollContainerRef,
+                      scrollContainer: scrollContainerRef,
                     }}
                   >
                     {children}
