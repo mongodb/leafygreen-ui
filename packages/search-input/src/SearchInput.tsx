@@ -70,6 +70,7 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             inputFocusStyles[theme], // Always show focus styles
             className,
           )}
+          placeholder={placeholder}
           ref={forwardRef}
           {...rest}
         />
