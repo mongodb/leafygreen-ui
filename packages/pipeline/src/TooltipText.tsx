@@ -17,7 +17,6 @@ export interface TooltipTextProps {
  * <TooltipText />
  * ```
  * @internal
- * @param props.hiddenStages Classname applied to TooltipText content container.
  */
 const TooltipText = ({ hiddenStages }: TooltipTextProps) => {
   const tooltipChildren = [];
