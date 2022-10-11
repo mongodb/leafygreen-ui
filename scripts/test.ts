@@ -5,7 +5,7 @@ import { uniq } from 'lodash';
 import { getGitDiff } from './utils/getGitDiff';
 import { getAllPackageNames } from './utils/getAllPackageNames';
 import {
-  getPackageDependants,
+  getPackageDependents,
   getPackageLGDependencies,
 } from './utils/getPackageDependencies';
 
@@ -19,7 +19,7 @@ interface Opts {
 }
 
 const cli = new Command('test')
-  .description('Tests leagygreen-ui packages.')
+  .description('Tests leafygreen-ui packages.')
   .argument('[packages...]')
   .option('--ssr', 'Runs tests on a simulated server', false)
   .option(
@@ -57,8 +57,8 @@ if (deps) {
   const dependencies = uniq(
     packages.flatMap(pkg => getPackageLGDependencies(pkg)),
   );
-  const dependants = uniq(packages.flatMap(pkg => getPackageDependants(pkg)));
-  packages.splice(0, 0, ...dependencies, ...dependants);
+  const dependents = uniq(packages.flatMap(pkg => getPackageDependents(pkg)));
+  packages.splice(0, 0, ...dependencies, ...dependents);
 }
 
 const packageArgs = [...packages.map(pkg => `packages/${pkg}`), ...t];
