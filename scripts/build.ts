@@ -1,15 +1,8 @@
 /* eslint-disable no-console */
 import { spawn, spawnSync } from 'child_process';
 import chalk from 'chalk';
-import { exit } from 'process';
 import { Command } from 'commander';
-import { uniq } from 'lodash';
-import { getGitDiff } from './utils/getGitDiff';
-import {
-  getPackageDependants,
-  getPackageLGDependencies,
-} from './utils/getPackageDependencies';
-import { getAllPackageNames } from './utils/getAllPackageNames';
+import { getRelevantPackages } from './utils/getRelevantPackages';
 
 interface Opts {
   exclude?: Array<string>;
@@ -21,7 +14,7 @@ interface Opts {
 
 const cli = new Command('build-packages')
   .description(
-    `Builds leagygreen-ui packages.
+    `Builds leafygreen-ui packages.
     By default, this script will build all packages in the \`packages/\` directory`,
   )
   .arguments('[packages...]')
@@ -59,70 +52,7 @@ const {
 } = cli.opts() as Opts;
 const cmdArgs = ['--parallel', 'build'];
 
-let packages: Array<string> = [];
-/**
- * `--diff` - builds only packages that have uncommitted changes
- * `--dependencies` or `--deps` - builds the dependencies of packages that have uncommitted changes
- */
-
-if (diff) {
-  console.log(
-    chalk.bold(`\nBuilding changed packages against ${chalk.bgWhite('main')}`),
-  );
-  cli.args.length > 0 &&
-    console.log(
-      chalk.yellow(`\tIgnoring ${cli.args.length} package names provided`),
-    );
-
-  const changedPackages = getGitDiff();
-
-  packages =
-    changedPackages.length > 0 ? changedPackages : getAllPackageNames();
-
-  if (changedPackages.length > 0) {
-    console.log(
-      `\t${changedPackages.length} diffs found:`,
-      chalk.blue(changedPackages),
-    );
-    packages = changedPackages;
-  } else {
-    console.log('\tNo diffs found. Aborting build');
-    exit(0);
-  }
-} else {
-  packages = cli.args.length > 0 ? cli.args : getAllPackageNames();
-}
-
-if (deps) {
-  const dependencies = uniq(
-    packages.flatMap(pkg => getPackageLGDependencies(pkg)),
-  );
-
-  const dependants = uniq(packages.flatMap(pkg => getPackageDependants(pkg)));
-
-  console.log(
-    chalk.bold(`\nIncluding ${dependencies.length} dependencies:`),
-    chalk.blue(dependencies.join(', ')),
-  );
-  console.log(
-    chalk.bold(`Including ${dependants.length} dependants: `),
-    chalk.blue(dependants.join(', ')),
-  );
-
-  packages.splice(0, 0, ...dependencies, ...dependants);
-}
-
-/**
- * `--exclude` - run all packages EXCEPT the ones following this flag (alias: `-e`)
- */
-if (exclude && exclude.length > 0) {
-  console.log(`${chalk.bold.red(`Excluding: ${exclude.length} packages`)}`);
-
-  // Look for the packages we should be excluding
-  packages = packages.filter(pkg => !exclude.includes(pkg));
-}
-
-packages = uniq(packages);
+const packages = getRelevantPackages(cli.args, { diff, deps, exclude });
 
 if (dry) {
   console.log(`

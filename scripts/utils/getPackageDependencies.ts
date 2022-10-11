@@ -15,7 +15,7 @@ export function getPackageLGDependencies(pkg: string) {
   return dependencies;
 }
 
-export function getPackageDependants(pkg: string) {
+export function getPackageDependents(pkg: string) {
   const allPackages = getAllPackageNames();
 
   return allPackages
