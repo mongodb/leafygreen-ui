@@ -1,6 +1,5 @@
 import React from 'react';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-
 import { tooltipTextStyles } from './styles';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -13,34 +12,39 @@ export interface TooltipTextProps {
  *
  * React Component to render the TooltipText for the number of hidden hiddenStages in the Pipeline component.
  *
+ * input: ['one', 'two']
+ * output:
+ *  <div>
+ *    <span>one</span>
+ *    <span><Icon/></span>
+ *    <span>two</span>
+ *  </div>
+ *
  * ```
  * <TooltipText />
  * ```
  * @internal
  */
 const TooltipText = ({ hiddenStages }: TooltipTextProps) => {
-  const tooltipChildren = [];
+  return (
+    <div className={tooltipTextStyles}>
+      {hiddenStages.map((hiddenStage: string | null, index: number) => {
+        if (index === 0)
+          return (
+            <span key={`${hiddenStages[index]}-${index}`}>{hiddenStage}</span>
+          );
 
-  if (hiddenStages.length > 0) {
-    for (let i = 0; i < hiddenStages.length; i++) {
-      if (i === 0) {
-        tooltipChildren.push(
-          <span key={`${hiddenStages[i]}-${i}`}>{hiddenStages[i]}</span>,
+        return (
+          <React.Fragment key={`${hiddenStages[index]}-${index}`}>
+            <span>
+              <ChevronRight size={12} fill={palette.gray.base} />
+            </span>
+            <span>{hiddenStage}</span>{' '}
+          </React.Fragment>
         );
-      } else {
-        tooltipChildren.push(
-          <span key={`icon-${i}`}>
-            <ChevronRight size={12} fill={palette.gray.base} />
-          </span>,
-        );
-        tooltipChildren.push(
-          <span key={`${hiddenStages[i]}-${i}`}>{hiddenStages[i]}</span>,
-        );
-      }
-    }
-  }
-
-  return <div className={tooltipTextStyles}>{tooltipChildren}</div>;
+      })}
+    </div>
+  );
 };
 
 TooltipText.displayName = 'TooltipText';

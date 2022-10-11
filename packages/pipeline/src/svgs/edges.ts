@@ -1,6 +1,9 @@
 import { Size } from '../types';
 
 // https://yoksel.github.io/url-encoder/
+// I was having trouble adding these as SVG files because they kept importing as react components so I went with this route.
+// If I were to use SVG files I would still need to map them to the correct size and position.
+// If I were to switch over to clip-path instead of using a mask I would still need an edge object to map each path so I stuck with SVGs and data URIs
 
 export const edges: Record<Size, Record<'before' | 'after', string>> = {
   [Size.XSmall]: {
