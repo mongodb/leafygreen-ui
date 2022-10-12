@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import {
   MongoDBLogo,
   MongoDBLogoMark,
+  AtlasLogo,
   AtlasLogoLockup,
   AtlasLogoMark,
   AtlasForGovernmentLogoLockup,
@@ -18,6 +19,7 @@ import {
 const renderedComponents = {
   MongoDBLogo: <MongoDBLogo />,
   MongoDBLogoMark: <MongoDBLogoMark />,
+  AtlasLogo: <AtlasLogo />,
   AtlasLogoLockup: <AtlasLogoLockup />,
   AtlasLogoMark: <AtlasLogoMark />,
   AtlasForGovernmentLogoLockup: <AtlasForGovernmentLogoLockup />,
