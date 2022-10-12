@@ -14,6 +14,14 @@ export default {
     checked: {
       control: 'boolean',
     },
+    disabled: {
+      control: 'boolean',
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'onChange'],
+    },
   },
 };
 
