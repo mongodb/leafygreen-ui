@@ -2,6 +2,9 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ProductLogoProps, getColor, getAccessibleProps } from './utils';
 
+/**
+ * @deprecated
+ */
 function AtlasLogoMark({
   size = 18,
   knockout = false,
