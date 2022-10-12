@@ -1,5 +1,28 @@
 # @leafygreen-ui/lib
 
+## 9.5.2
+
+### Patch Changes
+
+- ab2fd6b3: Resolves broken builds, by removing erroneously included `package.tsconfig.json`
+
+## 9.5.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+
+## 9.5.0
+
+### Minor Changes
+
+- 3690df49: Exports storybook config objects, and package.tsconfig
+
+### Patch Changes
+
+- 3690df49: Updates Storybook configs
+- 3690df49: Updates `tsdoc.json` file
+
 ## 9.4.2
 
 ### Patch Changes

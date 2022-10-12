@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import ModalView from './';
+import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
 
 const modalContent = 'Modal Content';
 
@@ -112,6 +117,36 @@ describe('packages/modal', () => {
       await expectElementToNotBeRemoved(modal);
 
       expect(modal).toBeVisible();
+    });
+
+    test('popover renders inside same portal as modal', async () => {
+      const { getByTestId } = render(
+        <ModalView data-testid="modal-test-id" open={true}>
+          {modalContent}
+          <Select
+            label="label"
+            size="small"
+            placeholder="animals"
+            name="pets"
+            usePortal={true}
+            data-testid="modal-select-test-id"
+          >
+            <OptionGroup label="Common">
+              <Option value="dog">Dog</Option>
+              <Option value="cat">Cat</Option>
+              <Option value="axolotl">Axolotl</Option>
+            </OptionGroup>
+          </Select>
+        </ModalView>,
+      );
+
+      const modal = getByTestId('modal-test-id');
+      const select = getByTestId('modal-select-test-id');
+      userEvent.click(select);
+
+      await waitFor(() => {
+        expect(modal).toHaveTextContent('Axolotl');
+      });
     });
   });
 

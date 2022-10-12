@@ -66,6 +66,7 @@ const buttonModeStyle = {
     background-color: ${uiColors.gray.dark2};
     border-right: 1px solid ${uiColors.gray.dark3};
     font-family: ${fontFamilies.legacy};
+    color: ${palette.gray.light2};
 
     &:hover,
     &:focus,

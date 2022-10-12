@@ -2,4 +2,4 @@
 '@leafygreen-ui/logo': minor
 ---
 
-Exports a generic `Logo` component.
+Adds new Atlas logo

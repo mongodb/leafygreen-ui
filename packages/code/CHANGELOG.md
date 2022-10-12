@@ -1,5 +1,51 @@
 # @leafygreen-ui/code
 
+## 12.1.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/a11y@1.3.3
+  - @leafygreen-ui/button@16.1.1
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/hooks@7.3.3
+  - @leafygreen-ui/icon@11.11.1
+  - @leafygreen-ui/icon-button@13.2.1
+  - @leafygreen-ui/leafygreen-provider@2.3.5
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/palette@3.4.4
+  - @leafygreen-ui/select@7.1.1
+  - @leafygreen-ui/tokens@1.3.4
+
+## 12.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 3690df49: Extends `code` element props
+- 8c34ea32: Changing language picker button text color in dark mode
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/button@16.1.0
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/icon-button@13.2.0
+  - @leafygreen-ui/select@7.1.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/a11y@1.3.2
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 12.0.2
 
 ### Patch Changes

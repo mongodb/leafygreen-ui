@@ -139,7 +139,6 @@ const config = ['esm', 'umd'].flatMap(format => {
         'highlightjs-graphql',
         'react',
         'react-dom',
-        '@emotion/react',
         '@emotion/server',
         '@emotion/css',
         '@emotion/css/create-instance',
