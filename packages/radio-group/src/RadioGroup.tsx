@@ -83,17 +83,7 @@ function RadioGroup({
   });
 
   return (
-    <div
-      className={cx(
-        css`
-          width: 700px;
-        `,
-        className,
-      )}
-      role="group"
-      aria-label={name}
-      {...rest}
-    >
+    <div className={className} role="group" aria-label={name} {...rest}>
       {renderedChildren}
     </div>
   );
