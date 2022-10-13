@@ -35,7 +35,9 @@ export function getRelevantPackages(
 
     if (changedPackages.length > 0) {
       console.log(
-        chalk.bold(`\nUsing changed packages against ${chalk.bgWhite.black('main')}`),
+        chalk.bold(
+          `\nUsing changed packages against ${chalk.bgWhite.black('main')}`,
+        ),
       );
       packages.length > 0 &&
         console.log(chalk.yellow(`\tIgnoring package names provided`));
