@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, focusRing, hoverRing } from '@leafygreen-ui/tokens';
+import { fontFamilies, focusRing, hoverRing, typeScales } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 export const inputDisplay = createUniqueClassName('radio-group');
@@ -59,7 +59,7 @@ export const labelBaseStyle = css`
   line-height: 20px;
   cursor: pointer;
   align-items: flex-start;
-  font-size: 13px;
+  font-size: ${typeScales.body1.fontSize}px;
   font-weight: 700;
 `;
 
