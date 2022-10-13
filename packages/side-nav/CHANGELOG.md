@@ -1,5 +1,11 @@
 # @leafygreen-ui/side-nav
 
+## 10.1.2
+
+### Patch Changes
+
+- 24921fd2: Fix dependency range in package.json
+
 ## 10.1.1
 
 ### Patch Changes

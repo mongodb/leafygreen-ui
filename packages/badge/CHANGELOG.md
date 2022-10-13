@@ -1,5 +1,11 @@
 # @leafygreen-ui/badge
 
+## 6.1.2
+
+### Patch Changes
+
+- 24921fd2: Fix dependency range in package.json
+
 ## 6.1.1
 
 ### Patch Changes
