@@ -1,5 +1,11 @@
 # @leafygreen-ui/expandable-card
 
+## 1.1.2
+
+### Patch Changes
+
+- 24921fd2: Fix dependency range in package.json
+
 ## 1.1.1
 
 ### Patch Changes
