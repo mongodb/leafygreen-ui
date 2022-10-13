@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/side-nav",
-  "version": "10.1.1",
+  "version": "10.1.2",
   "description": "leafyGreen UI Kit Side Nav",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -39,7 +39,7 @@
   "devDependencies": {
     "@leafygreen-ui/icon-button": "^13.2.1",
     "@leafygreen-ui/mongo-nav": "^7.2.1",
-    "@leafygreen-ui/select": "^7.1.1"
+    "@leafygreen-ui/select": "^7.1.2"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {

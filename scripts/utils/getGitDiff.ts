@@ -3,7 +3,7 @@ import { spawnSync } from 'child_process';
 export function getGitDiff(): Array<string> {
   const gitDiff = spawnSync('git', [
     'diff',
-    '..main',
+    '..origin/main',
     '--name-only',
   ]).stdout.toString();
 
