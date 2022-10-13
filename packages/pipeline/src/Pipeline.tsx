@@ -4,117 +4,28 @@ import React, {
   useState,
   Ref,
   ReactElement,
-  ReactNode,
+  useMemo,
 } from 'react';
 
 import PropTypes from 'prop-types';
-import findLast from 'lodash/findLast';
-
-import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip from '@leafygreen-ui/tooltip';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useMutationObserver } from '@leafygreen-ui/hooks';
-
+import { PipelineContext } from './PipelineContext';
 import Stage from './Stage';
 import Counter from './Counter';
 
 import {
-  getPipelineCounterTooltip,
-  isStageElement,
-  isElementOverflowed,
-} from './utils';
-
-import {
-  getRootStyle,
-  Size,
-  layout,
-  colors,
-  pipelineAttr,
-  pipelineStages,
-  stageChevronAttr,
+  baseSizeStyles,
+  basePipelineListStyles,
+  basePipelineStyles,
+  counterVisibleStyles,
+  tooltipStyles,
 } from './styles';
-
-interface StateForStyles {
-  hasHiddenStages: boolean;
-  size: Size;
-}
-
-export interface PipelineProps {
-  /**
-   * Content that will appear inside of the Pipeline component.
-   */
-  children: ReactNode;
-
-  /**
-   * Optional className prop to apply to Pipeline content container.
-   */
-  className?: string;
-
-  /**
-   * Alter the rendered size of the component
-   */
-  size: Size;
-}
-
-const getBaseStyle = ({ size }: StateForStyles): string =>
-  cx(
-    getRootStyle({ size }),
-    css`
-      counter-reset: hiddenCount;
-      flex-direction: row;
-    `,
-  );
-
-const getPipelineStyle = ({ size }: StateForStyles): string => {
-  const { minWidth } = layout[size];
-
-  return cx(
-    getRootStyle({ size }),
-    css`
-      flex-grow: 1;
-      flex-shrink: 1;
-      flex-basis: 100%;
-      flex-wrap: wrap;
-      overflow: hidden;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      min-width: ${minWidth}px;
-    `,
-  );
-};
-
-export const lastVisibleClassName =
-  'leafygreen-ui-pipeline-stage--last-visible';
-
-const getLastVisibleStageChevronStyles = ({
-  hasHiddenStages,
-  size,
-}: StateForStyles): string => {
-  const { height, chevron } = layout[size];
-  const { primary, secondary } = colors;
-  const outerSize = height / 2;
-
-  const boxShadow = hasHiddenStages
-    ? // With counter
-      { innerColor: uiColors.white, outerColor: secondary.backgroundColor }
-    : // No counter
-      { innerColor: 'transparent', outerColor: 'transparent' };
-
-  return css`
-    .${lastVisibleClassName} > ${stageChevronAttr.selector}::before {
-      background-color: ${primary.backgroundColor};
-      box-shadow: 0 0 0 ${chevron.size}px ${boxShadow.innerColor},
-        0 0 0 ${outerSize}px ${boxShadow.outerColor};
-    }
-  `;
-};
-
-const getStatefulStyles = (state: StateForStyles) => ({
-  base: getBaseStyle(state),
-  pipeline: getPipelineStyle(state),
-  lastVisibleStageChevron: getLastVisibleStageChevronStyles(state),
-});
+import { PipelineProps, Size } from './types';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
+import TooltipText from './TooltipText';
 
 /**
  *
@@ -136,51 +47,45 @@ const getStatefulStyles = (state: StateForStyles) => ({
  */
 const Pipeline = forwardRef(
   (
-    { children, className = '', size = Size.XSmall, ...rest }: PipelineProps,
+    {
+      children,
+      className = '',
+      size = Size.Normal,
+      darkMode: darkModeProp,
+      ...rest
+    }: PipelineProps,
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
+    const { theme, darkMode } = useDarkMode(darkModeProp);
     // State
     const [pipelineNode, setPipelineNode] = useState<HTMLElement | null>(null);
-    const [hasHiddenStages, setHasHiddenStages] = useState(false);
+    const [hiddenStages, setHiddenStages] = useState<Array<string | null>>([]);
+
+    const providerData = useMemo(() => {
+      return {
+        theme,
+        size,
+        isPipelineComponent: true,
+        intersectionNode: pipelineNode,
+      };
+    }, [pipelineNode, size, theme]);
 
     // Handlers
-
     /**
-     * Determines whether the Pipeline element is overflowed.
-     * If the Pipeline is overflowed, this means that we have stages which aren't visible and
-     * so we should display the counter.
-     */
-    const handleCounterDisplay = () => {
-      const result = isElementOverflowed(pipelineNode!);
-      setHasHiddenStages(result);
-    };
-
-    /**
-     * Decorates the last visible stage with a className necessary for applying
-     * the correct visual appearance. The mutation of the DOM is required otherwise the
+     * Sets the hidden stages. The mutation of the DOM is required otherwise the
      * Stage components will re-render, triggering an infinite loop on the
      * mutation observer.
      */
-    const setLastVisibleStage = () => {
-      const allStages = Array.from(
-        pipelineNode!.children as HTMLCollectionOf<HTMLElement>,
-      );
+    const setAllHiddenStagesText = () => {
+      const allStages =
+        Array.from(pipelineNode!.children as HTMLCollectionOf<HTMLElement>) ||
+        [];
 
-      // Remove previously added last visible stage classNames
-      allStages.forEach(element => {
-        element.classList.remove(lastVisibleClassName);
-      });
+      const allHiddenStages = allStages
+        .filter(element => element.dataset.stageVisible === 'false')
+        .map(element => element.textContent);
 
-      // Get the last visible stage
-      const lastVisibleStage = findLast(
-        allStages,
-        element => element.dataset.stageVisible !== 'false',
-      );
-
-      // Decorate the last visible stage so that we can appropriately style the chevron
-      if (lastVisibleStage) {
-        lastVisibleStage.classList.add(lastVisibleClassName);
-      }
+      setHiddenStages(allHiddenStages);
     };
 
     /**
@@ -192,8 +97,7 @@ const Pipeline = forwardRef(
       const attrs = records.map(r => r.attributeName);
 
       if (attrs.includes('data-stage-visible') || types.includes('childList')) {
-        handleCounterDisplay();
-        setLastVisibleStage();
+        setAllHiddenStagesText();
       }
     };
 
@@ -210,52 +114,56 @@ const Pipeline = forwardRef(
 
     const childrenAsPipelineStages = React.Children.map(children, child => {
       const props = {
-        size,
-        intersectionNode: pipelineNode,
         ref: createRef<HTMLLIElement>(),
       };
 
-      return isStageElement(child)
-        ? React.cloneElement(child, props)
-        : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
+      if (isComponentType(child, 'Stage')) {
+        const { children, ...rest } = child.props;
+        const combinedProps = {
+          ...props,
+          ...rest,
+        };
+        return <Stage {...combinedProps}>{children}</Stage>;
+      }
+
+      return <Stage {...props}>{child}</Stage>;
     });
 
-    const tooltipText = getPipelineCounterTooltip(childrenAsPipelineStages);
-    const {
-      base: baseStyle,
-      pipeline: pipelineStyle,
-      lastVisibleStageChevron: lastVisibleStageChevronStyle,
-    } = getStatefulStyles({ hasHiddenStages, size });
-
     return (
-      <div
-        {...rest}
-        {...pipelineAttr.prop}
-        data-testid="pipeline"
-        ref={ref}
-        className={cx(baseStyle, className)}
-      >
-        <ol
-          {...pipelineStages.prop}
-          ref={setPipelineNode}
-          data-testid="pipeline-stages"
-          className={cx(pipelineStyle, lastVisibleStageChevronStyle)}
+      <PipelineContext.Provider value={providerData}>
+        <div
+          {...rest}
+          data-testid="pipeline"
+          ref={ref}
+          className={cx(baseSizeStyles[size], basePipelineStyles, className)}
         >
-          {childrenAsPipelineStages}
-        </ol>
+          <ol
+            ref={setPipelineNode}
+            data-testid="pipeline-stages"
+            className={cx(basePipelineListStyles)}
+          >
+            {childrenAsPipelineStages}
+          </ol>
 
-        {hasHiddenStages && React.Children.count(childrenAsPipelineStages) > 0 && (
+          {/* Removing the component was causing an unmounted error so instead we're hiding it with css */}
           <Tooltip
             align="top"
             justify="middle"
-            trigger={<Counter size={size} />}
+            trigger={
+              <Counter
+                className={cx({
+                  [counterVisibleStyles]: !!hiddenStages.length,
+                })}
+              />
+            }
             triggerEvent="hover"
-            darkMode={true}
+            darkMode={darkMode}
+            className={tooltipStyles}
           >
-            {tooltipText}
+            <TooltipText hiddenStages={hiddenStages} />
           </Tooltip>
-        )}
-      </div>
+        </div>
+      </PipelineContext.Provider>
     );
   },
 );
@@ -266,6 +174,7 @@ Pipeline.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   size: PropTypes.oneOf(Object.values(Size)).isRequired,
+  darkMode: PropTypes.bool,
 };
 
 export default Pipeline;
