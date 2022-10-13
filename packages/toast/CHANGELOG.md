@@ -1,5 +1,11 @@
 # @leafygreen-ui/toast
 
+## 2.0.3
+
+### Patch Changes
+
+- 24921fd2: Fix dependency range in package.json
+
 ## 2.0.2
 
 ### Patch Changes
