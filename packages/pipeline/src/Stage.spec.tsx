@@ -1,10 +1,10 @@
 import { mockIsIntersecting } from './mocks/IntersectionObserver';
 
 import React from 'react';
-import { typeIs } from '@leafygreen-ui/lib';
 import { render, cleanup } from '@testing-library/react';
 import Stage from './Stage';
-import { Size } from './styles';
+import Pipeline from './Pipeline';
+import { Size } from './types';
 
 const className = 'test-stage-class';
 const parentElement = document.createElement('div');
@@ -12,21 +12,19 @@ const child = '$match';
 
 function renderStage(props = {}) {
   const utils = render(
-    <Stage {...props} intersectionNode={parentElement} size={Size.XSmall}>
-      {child}
-    </Stage>,
-    {
-      container: document.body.appendChild(parentElement),
-    },
+    <Pipeline size={Size.Normal}>
+      <Stage {...props}>{child}</Stage>
+    </Pipeline>,
   );
 
-  if (!typeIs.element(utils.container.firstChild)) {
-    throw new Error('Pipeline element not found');
-  }
+  // This element used to check if `useInView`
+  const element = utils.getByTestId('pipeline-stage');
+  const childElement = utils.getByTestId('pipeline-stage-item');
 
   return {
     ...utils,
-    element: utils.container.firstChild,
+    element,
+    childElement,
   };
 }
 
@@ -45,24 +43,6 @@ describe('packages/pipeline/Stage', () => {
   test(`renders "${child}" as the badge's textContent`, () => {
     const { element } = renderStage();
     expect(element.textContent).toBe(child);
-  });
-
-  test('renders a "chevron"', () => {
-    const { getByTestId } = renderStage();
-    const element = getByTestId('pipeline-stage-chevron');
-
-    expect(element).toBeTruthy();
-  });
-
-  test('observes the intersection of the provided root element', () => {
-    renderStage();
-
-    const {
-      value: { root },
-    } = (window.IntersectionObserver as jest.Mock<IntersectionObserver>).mock
-      .results[0];
-
-    expect(root).toBe(parentElement);
   });
 
   test('sets the default threshold for the intersection', () => {
@@ -92,17 +72,17 @@ describe('packages/pipeline/Stage', () => {
 
   describe('when it is NOT intersecting its parent', () => {
     test('should set the "data-stage-visible" attribute to "false"', () => {
-      const { element } = renderStage();
+      const { childElement, element } = renderStage();
 
-      mockIsIntersecting(element, false);
+      mockIsIntersecting(childElement, false);
       expect(element.getAttribute('data-stage-visible')).toBe('false');
     });
   });
 
   describe('when it is intersecting its parent', () => {
     test('should set the "data-stage-visible" attribute to "true"', () => {
-      const { element } = renderStage();
-      mockIsIntersecting(element, true);
+      const { childElement, element } = renderStage();
+      mockIsIntersecting(childElement, true);
 
       expect(element.getAttribute('data-stage-visible')).toBe('true');
     });

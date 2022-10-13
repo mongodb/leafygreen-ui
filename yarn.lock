@@ -15632,11 +15632,6 @@ raw-loader@^4.0.2:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
-react-children-utilities@^2.0.0:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/react-children-utilities/-/react-children-utilities-2.7.1.tgz#bf72e3b05f572fec75da66d003f3a22ab431841e"
-  integrity sha512-olV2IcUcARN/VrgYnijbxEtvc2P07BcmAWKdLI0txZgAqs8YODxbYu68GMDv/uretA1sVlPMCQXRgY0Msh4dmA==
-
 react-colorful@^5.1.2:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.5.1.tgz#29d9c4e496f2ca784dd2bb5053a3a4340cfaf784"

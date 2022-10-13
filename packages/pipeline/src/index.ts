@@ -1,6 +1,5 @@
 import Pipeline from './Pipeline';
 import Stage from './Stage';
-import Counter from './Counter';
-import { Size } from './styles';
+import { Size } from './types';
 
-export { Pipeline, Stage, Counter, Size };
+export { Pipeline, Stage, Size };
