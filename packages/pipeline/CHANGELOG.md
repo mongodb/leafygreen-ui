@@ -1,5 +1,11 @@
 # @leafygreen-ui/pipeline
 
+## 3.0.0
+
+### Major Changes
+
+- c6a7f42d: Updates `Pipeline` for brand refresh. Adds `darkMode`.
+
 ## 2.2.1
 
 ### Patch Changes

@@ -5,6 +5,7 @@
     "eamodio.gitlens",
     "esbenp.prettier-vscode",
     "wayou.vscode-todo-highlight",
-    "styled-components.vscode-styled-components"
+    "styled-components.vscode-styled-components",
+    "redhat.vscode-yaml"
   ]
 }
