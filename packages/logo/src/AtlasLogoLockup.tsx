@@ -18,6 +18,8 @@ import {
  * ```
  * @param props.color Determines the color of the logo.
  * @param props.height Determines height of the <Logo /> component.
+ *
+ * @deprecated
  */
 function AtlasLogoLockup({
   height = 40,

@@ -2,6 +2,7 @@ import React from 'react';
 
 import MongoDBLogo from './MongoDBLogo';
 import MongoDBLogoMark from './MongoDBLogoMark';
+import AtlasLogo from './AtlasLogo';
 
 // Product Family Logo Lockups
 import AtlasLogoLockup from './AtlasLogoLockup';
@@ -12,15 +13,20 @@ import CommunityEditionLogoLockup from './CommunityEditionLogoLockup';
 import UniversityLogoLockup from './UniversityLogoLockup';
 
 import { LogoProps } from './utils';
-export type LogoName =
-  | 'MongoDBLogo'
-  | 'MongoDBLogoMark'
-  | 'AtlasLogoLockup'
-  | 'AtlasForGovernmentLogoLockup'
-  | 'RealmLogoLockup'
-  | 'EnterpriseAdvancedLogoLockup'
-  | 'CommunityEditionLogoLockup'
-  | 'UniversityLogoLockup';
+
+export const LogoNames = [
+  'MongoDBLogoMark',
+  'MongoDBLogo',
+  'AtlasLogo',
+  'AtlasLogoLockup',
+  'AtlasForGovernmentLogoLockup',
+  'RealmLogoLockup',
+  'EnterpriseAdvancedLogoLockup',
+  'CommunityEditionLogoLockup',
+  'UniversityLogoLockup',
+] as const;
+
+export type LogoName = typeof LogoNames[number];
 
 interface GenericLogoProps extends LogoProps {
   /**
@@ -42,6 +48,7 @@ export default function GenericLogo({
   const LogoMap = {
     MongoDBLogo,
     MongoDBLogoMark,
+    AtlasLogo,
     AtlasLogoLockup,
     AtlasForGovernmentLogoLockup,
     RealmLogoLockup,
