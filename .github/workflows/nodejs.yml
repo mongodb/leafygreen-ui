@@ -5,6 +5,15 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
+  checkout:
+    name: Checkout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Log Git
+        run: git diff ..origin/main --name-only
+
   tests:
     name: Run tests
     runs-on: ubuntu-latest
@@ -196,7 +205,6 @@ jobs:
         run: yarn build:packages --diff --deps
       - name: check builds
         run: yarn check:builds --diff --deps
-
 
   sizeDiff:
     name: Check file size
