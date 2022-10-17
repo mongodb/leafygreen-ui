@@ -6,6 +6,7 @@ import { SupportedColors, LogoProps } from './utils';
 import {
   MongoDBLogo,
   MongoDBLogoMark,
+  AtlasLogo,
   AtlasLogoLockup,
   AtlasForGovernmentLogoLockup,
   RealmLogoLockup,
@@ -17,6 +18,7 @@ import {
   ChartsLogoMark,
 } from '.';
 import Logo, { LogoName } from '.';
+import { LogoNames } from './Logo';
 
 export default {
   title: 'Components/Logo',
@@ -32,7 +34,7 @@ export default {
     color: {
       default: SupportedColors.White,
       control: 'radio',
-      options: SupportedColors,
+      options: Object.values(SupportedColors),
     },
     background: {
       default: palette.white,
@@ -81,25 +83,17 @@ export const Default = (
   return <Logo {...args} />;
 };
 Default.argTypes = {
-  logo: {
+  name: {
     control: 'select',
-    options: [
-      'MongoDBLogo',
-      'MongoDBLogoMark',
-      'AtlasLogoLockup',
-      'AtlasForGovernmentLogoLockup',
-      'RealmLogoLockup',
-      'EnterpriseAdvancedLogoLockup',
-      'CommunityEditionLogoLockup',
-      'UniversityLogoLockup',
-    ],
+    options: LogoNames,
   },
 };
 Default.args = {
-  logo: 'MongoDBLogoMark',
+  name: 'MongoDBLogoMark',
 };
 
 export const MongoDB = (args: LogoProps) => Template(MongoDBLogo, args);
+export const Atlas = (args: LogoProps) => Template(AtlasLogo, args);
 export const MongoDBMark = (args: LogoProps) => Template(MongoDBLogoMark, args);
 export const AtlasLockup = (args: LogoProps) => Template(AtlasLogoLockup, args);
 export const AtlasForGovernmentLockup = (args: LogoProps) =>

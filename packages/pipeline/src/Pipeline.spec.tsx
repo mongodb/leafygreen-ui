@@ -4,7 +4,7 @@ import { typeIs } from '@leafygreen-ui/lib';
 import { axe } from 'jest-axe';
 import Pipeline from './Pipeline';
 import Stage from './Stage';
-import { Size } from './styles';
+import { Size } from './types';
 
 const className = 'test-pipeline-class';
 const stages = ['$group', '$match', '$limit'];
@@ -53,7 +53,9 @@ describe('packages/pipeline/Pipeline', () => {
 
     stages.forEach(stage => {
       const element = getByText(stage);
-      expect(element.getAttribute('data-testid')).toEqual('pipeline-stage');
+      expect(element.getAttribute('data-testid')).toEqual(
+        'pipeline-stage-item',
+      );
     });
   });
 });

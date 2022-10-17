@@ -1,15 +1,20 @@
 import React from 'react';
 import { css } from '@emotion/css';
-import { uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { Pipeline, Stage, Size } from '@leafygreen-ui/pipeline';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
-const knobsConfig: KnobsConfigInterface<{ size: Size }> = {
+const knobsConfig: KnobsConfigInterface<{ size: Size; darkMode: boolean }> = {
   size: {
     type: 'select',
     options: Object.values(Size),
     default: Size.XSmall,
     label: 'Size',
+  },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
   },
 };
 
@@ -21,7 +26,7 @@ const containerStyle = css`
   resize: horizontal;
   padding: 2rem;
   margin: 2rem;
-  border: 1px solid ${uiColors.gray.light1};
+  border: 1px solid ${palette.gray.light1};
   min-width: 180px;
   width: 320px;
 `;

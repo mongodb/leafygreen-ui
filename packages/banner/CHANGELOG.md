@@ -1,5 +1,11 @@
 # @leafygreen-ui/banner
 
+## 5.0.3
+
+### Patch Changes
+
+- 24921fd2: Fix dependency range in package.json
+
 ## 5.0.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 6.3.0
+
+### Minor Changes
+
+- a855b513: Adds new Atlas logo
+
 ## 6.2.1
 
 ### Patch Changes
