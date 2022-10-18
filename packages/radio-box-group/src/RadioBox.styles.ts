@@ -68,7 +68,7 @@ export const getRadioDisplayStyles = ({
     `,
     {
       [css`
-        border-color: transparent;
+        border-color: rgba(255, 255, 255, 0);
         box-shadow: 0 0 0 3px ${palette.green.dark1};
         &:hover,
         &:active {
