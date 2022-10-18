@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 7.1.2
+
+### Patch Changes
+
+- 24921fd2: Fix dependency range in package.json
+
 ## 7.1.1
 
 ### Patch Changes
