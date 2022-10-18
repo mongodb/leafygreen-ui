@@ -1,7 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, focusRing, hoverRing, typeScales } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  focusRing,
+  hoverRing,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 export const inputDisplay = createUniqueClassName('radio-group');
