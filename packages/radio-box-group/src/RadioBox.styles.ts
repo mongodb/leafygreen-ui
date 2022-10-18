@@ -63,8 +63,7 @@ export const getRadioDisplayStyles = ({
 
       &:hover,
       &:active {
-        box-shadow: 0 0 0 3px
-          ${darkMode ? hoverRing.dark.gray : hoverRing.light.gray};
+        box-shadow: ${darkMode ? hoverRing.dark.gray : hoverRing.light.gray};
       }
     `,
     {
