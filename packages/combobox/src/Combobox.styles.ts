@@ -50,6 +50,9 @@ export const comboboxPadding: Record<Size, { x: number; y: number }> = {
   },
 };
 
+/** Width of the clear icon (in px) */
+export const clearButtonIconSize = 28
+
 /** Width of the dropdown caret icon (in px) */
 export const caretIconSize = spacing[3];
 
@@ -77,14 +80,16 @@ export const comboboxParentStyle = (size: Size): string => {
 };
 
 export const baseComboboxStyles = css`
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr ${caretIconSize}px;
   align-items: center;
   cursor: text;
   transition: 150ms ease-in-out;
   transition-property: background-color, box-shadow, border-color;
   border: 1px solid;
-  width: inherit;
+  width: 100%;
+  max-width: 100%;
   border-radius: 6px;
 `;
 
@@ -154,6 +159,10 @@ export const comboboxFocusStyle: Record<Theme, string> = {
   `,
 };
 
+export const comboboxSelectionStyles = css`
+  grid-template-columns: 1fr ${clearButtonIconSize}px ${caretIconSize}px;
+`
+
 export const inputWrapperStyle = ({
   overflow,
   size,
@@ -163,7 +172,7 @@ export const inputWrapperStyle = ({
 }) => {
   const baseWrapperStyle = css`
     flex-grow: 1;
-    width: inherit;
+    width: 100%;
   `;
 
   switch (overflow) {
@@ -202,7 +211,7 @@ export const inputWrapperStyle = ({
         display: flex;
         flex-wrap: wrap;
         gap: 4px;
-        overflow-x: visible;
+        overflow-x: hidden;
         min-height: ${inputHeight[size]}px;
       `;
     }
@@ -280,10 +289,8 @@ export const multiselectInputElementStyle = (
 ) => {
   const inputLength = inputValue?.length ?? 0;
   return css`
-    max-width: 100%;
     width: ${inputLength * maxCharWidth[size]}px;
-    // TODO: This doesn't quite work. Fix this
-    max-width: calc(100% - ${2 * caretIconSize}px);
+    max-width: 100%;
   `;
 };
 
