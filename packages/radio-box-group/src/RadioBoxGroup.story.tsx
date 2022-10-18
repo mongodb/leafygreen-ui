@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import Tooltip from '@leafygreen-ui/tooltip';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { RadioBoxGroup, RadioBox } from '.';
 import { RadioBoxGroupProps } from './types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
