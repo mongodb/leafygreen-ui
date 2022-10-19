@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
@@ -16,7 +17,7 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';
-import { SegmentedControlProps } from './types';
+import { SegmentedControlProps, Size } from './types';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
 import {
   wrapperStyle,
@@ -37,7 +38,7 @@ export const SegmentedControl = forwardRef<
   {
     children,
     name: nameProp,
-    size = 'default',
+    size = Size.Default,
     darkMode: darkModeProp,
     defaultValue,
     value: controlledValue,
@@ -342,4 +343,14 @@ SegmentedControl.displayName = 'SegmentedControl';
 const errorOnce = once(console.error);
 const warnOnce = once(console.warn);
 
-// TODO: proptypes
+SegmentedControl.propTypes = {
+  darkMode: PropTypes.bool,
+  size: PropTypes.oneOf(Object.values(Size)),
+  onChange: PropTypes.func,
+  defaultValue: PropTypes.string,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  followFocus: PropTypes.bool,
+  className: PropTypes.string,
+};
