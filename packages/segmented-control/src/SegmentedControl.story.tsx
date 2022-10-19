@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import Icon from '@leafygreen-ui/icon';
-import { SegmentedControlProps } from './SegmentedControl';
+import { SegmentedControlProps } from './types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
@@ -18,6 +18,11 @@ export default {
     'aria-controls': { control: 'text' },
 
     darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: ['aria-controls', 'className', 'children', 'onChange', 'value', 'defaultValue'],
+    },
   },
 } as Meta<typeof SegmentedControl>;
 
@@ -37,7 +42,7 @@ Uncontrolled.args = {
     <SegmentedControlOption key="fig" value="fig">
       Fig
     </SegmentedControlOption>,
-    <SegmentedControlOption key="grape" value="grape">
+    <SegmentedControlOption disabled key="grape" value="grape">
       Grape
     </SegmentedControlOption>,
   ],
