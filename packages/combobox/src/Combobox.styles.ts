@@ -51,7 +51,7 @@ export const comboboxPadding: Record<Size, { x: number; y: number }> = {
 };
 
 /** Width of the clear icon (in px) */
-export const clearButtonIconSize = 28
+export const clearButtonIconSize = 28;
 
 /** Width of the dropdown caret icon (in px) */
 export const caretIconSize = spacing[3];
@@ -161,7 +161,7 @@ export const comboboxFocusStyle: Record<Theme, string> = {
 
 export const comboboxSelectionStyles = css`
   grid-template-columns: 1fr ${clearButtonIconSize}px ${caretIconSize}px;
-`
+`;
 
 export const inputWrapperStyle = ({
   overflow,
