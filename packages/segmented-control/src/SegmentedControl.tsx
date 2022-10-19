@@ -28,13 +28,6 @@ import {
 import { SegmentedControlContext } from './SegmentedControlContext';
 
 /**
- * The selection and hover indicators are absolutely positioned elements that move underneath the text.
- * This allows us to achieve the sliding effect.
- */
-// const selectionIndicatorClassname = createUniqueClassName('selection-indicator');
-// const hoverIndicatorClassname = createUniqueClassName('hover-indicator');
-
-/**
  * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
  */
 export const SegmentedControl = forwardRef<
@@ -322,6 +315,10 @@ export const SegmentedControl = forwardRef<
           onKeyDownCapture={handleKeyDown}
         >
           {renderedChildren}
+          {/*
+           * The selection and hover indicators are absolutely positioned elements that move underneath the text.
+           * This allows us to achieve the sliding effect.
+           */}
           <div
             className={cx(
               selectionIndicatorStyle,
