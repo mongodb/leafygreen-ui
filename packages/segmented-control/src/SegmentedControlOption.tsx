@@ -6,7 +6,13 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 import Box from '@leafygreen-ui/box';
 import { SegmentedControlContext } from './SegmentedControlContext';
-import { optionStyle, boxStyle, buttonStyle, buttonFocusStyle, labelStyle } from './SegmentedControlOption.styles';
+import {
+  optionStyle,
+  boxStyle,
+  buttonStyle,
+  buttonFocusStyle,
+  labelStyle,
+} from './SegmentedControlOption.styles';
 import { SegmentedControlOptionProps } from './types';
 
 /**
@@ -94,11 +100,7 @@ export const SegmentedControlOption = forwardRef<
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
           >
-            <span
-              className={labelStyle}
-            >
-              {children}
-            </span>
+            <span className={labelStyle}>{children}</span>
           </button>
         </Box>
       </div>

@@ -1,6 +1,6 @@
-import { Theme } from "@leafygreen-ui/lib";
-import React from "react";
-import { Size } from "./types";
+import { Theme } from '@leafygreen-ui/lib';
+import React from 'react';
+import { Size } from './types';
 
 interface SCContext {
   size: Size;

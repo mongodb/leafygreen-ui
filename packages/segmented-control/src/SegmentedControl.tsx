@@ -10,14 +10,21 @@ import isNull from 'lodash/isNull';
 import once from 'lodash/once';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { useDarkMode, useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
-  isComponentType
-} from '@leafygreen-ui/lib';
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';
 import { SegmentedControlProps } from './types';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
-import { wrapperStyle, labelStyle, optionsWrapperStyle, selectionIndicatorStyle, hoverIndicatorStyle } from './SegmentedControl.styles';
+import {
+  wrapperStyle,
+  labelStyle,
+  optionsWrapperStyle,
+  selectionIndicatorStyle,
+  hoverIndicatorStyle,
+} from './SegmentedControl.styles';
 import { SegmentedControlContext } from './SegmentedControlContext';
 
 /**
@@ -296,13 +303,12 @@ export const SegmentedControl = forwardRef<
    * Return
    */
   return (
-    <SegmentedControlContext.Provider value={{ size, theme, name, followFocus }}>
+    <SegmentedControlContext.Provider
+      value={{ size, theme, name, followFocus }}
+    >
       <div
         ref={segmentedContainerRef}
-        className={cx(
-          wrapperStyle,
-          className,
-        )}
+        className={cx(wrapperStyle, className)}
         {...rest}
       >
         {label && <Overline className={labelStyle[theme]}>{label}</Overline>}

@@ -1,18 +1,18 @@
-import { css, cx } from "@leafygreen-ui/emotion";
-import { Theme } from "@leafygreen-ui/lib";
-import { palette } from "@leafygreen-ui/palette";
-import { Mode, fontFamilies, focusRing } from "@leafygreen-ui/tokens";
-import { Size } from "./types";
+import { css, cx } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { Mode, fontFamilies, focusRing } from '@leafygreen-ui/tokens';
+import { Size } from './types';
 
 /**
  * Styles
  */
- export const optionMode: Record<Theme, string> = {
+export const optionTheme: Record<Theme, string> = {
   [Theme.Light]: css`
     --base-text-color: ${palette.gray.dark1};
     --base-background-color: rgba(255, 255, 255, 0);
     --base-shadow-color: rgba(255, 255, 255, 0);
-    // Hover 
+    // Hover
     --hover-text-color: ${palette.gray.dark3};
     // Selected
     --active-text-color: ${palette.white};
@@ -40,7 +40,6 @@ export const optionSize: Record<Size, string> = {
   [Size.Small]: css`
     --font-size: 12px;
     --line-height: 16px;
-    --padding-block: 3px;
     --padding-inline: 12px;
     --text-transform: uppercase;
     --font-weight: 700;
@@ -49,7 +48,6 @@ export const optionSize: Record<Size, string> = {
   [Size.Default]: css`
     --font-size: 13px;
     --line-height: 24px;
-    --padding-block: 3px; // top/bottom
     --padding-inline: 12px; // left/right
     --text-transform: none;
     --font-weight: 500;
@@ -58,12 +56,36 @@ export const optionSize: Record<Size, string> = {
   [Size.Large]: css`
     --font-size: 16px;
     --line-height: 28px;
-    --padding-block: 6px;
     --padding-inline: 12px;
     --text-transform: none;
     --font-weight: 500;
     --divider-height: 20px;
   `,
+};
+
+export const optionPadding: Record<Theme, Record<Size, string>> = {
+  [Theme.Light]: {
+    [Size.Small]: css`
+      --padding-block: 3px;
+    `,
+    [Size.Default]: css`
+      --padding-block: 3px;
+    `,
+    [Size.Large]: css`
+      --padding-block: 4px;
+    `,
+  },
+  [Theme.Dark]: {
+    [Size.Small]: css`
+      --padding-block: 3px;
+    `,
+    [Size.Default]: css`
+      --padding-block: 4px;
+    `,
+    [Size.Large]: css`
+      --padding-block: 5px;
+    `,
+  },
 };
 
 export const optionStyle = ({
@@ -76,8 +98,9 @@ export const optionStyle = ({
   baseFontSize: 14 | 16;
 }) =>
   cx(
-    optionMode[theme],
+    optionTheme[theme],
     optionSize[size],
+    optionPadding[theme][size],
     css`
       position: relative;
       display: flex;

@@ -21,7 +21,14 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: ['aria-controls', 'className', 'children', 'onChange', 'value', 'defaultValue'],
+      exclude: [
+        'aria-controls',
+        'className',
+        'children',
+        'onChange',
+        'value',
+        'defaultValue',
+      ],
     },
   },
 } as Meta<typeof SegmentedControl>;
