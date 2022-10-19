@@ -7,7 +7,7 @@ import { Size } from './types';
 /**
  * Styles
  */
-export const optionTheme: Record<Theme, string> = {
+export const optionThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     --base-text-color: ${palette.gray.dark1};
     --base-background-color: rgba(255, 255, 255, 0);
@@ -36,7 +36,7 @@ export const optionTheme: Record<Theme, string> = {
   `,
 };
 
-export const optionSize: Record<Size, string> = {
+export const optionSizeStyle: Record<Size, string> = {
   [Size.Small]: css`
     --font-size: 12px;
     --line-height: 16px;
@@ -63,7 +63,7 @@ export const optionSize: Record<Size, string> = {
   `,
 };
 
-export const optionPadding: Record<Theme, Record<Size, string>> = {
+export const optionPaddingStyle: Record<Theme, Record<Size, string>> = {
   [Theme.Light]: {
     [Size.Small]: css`
       --padding-block: 3px;
@@ -98,9 +98,9 @@ export const optionStyle = ({
   baseFontSize: 14 | 16;
 }) =>
   cx(
-    optionTheme[theme],
-    optionSize[size],
-    optionPadding[theme][size],
+    optionThemeStyle[theme],
+    optionSizeStyle[size],
+    optionPaddingStyle[theme][size],
     css`
       position: relative;
       display: flex;

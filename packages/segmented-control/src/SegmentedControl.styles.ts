@@ -64,10 +64,7 @@ export const optionsWrapperStyleTheme: Record<Theme, string> = {
   `,
 };
 
-export const optionWrapperStyleThemeSize: Record<
-  Theme,
-  Record<Size, string>
-> = {
+export const optionWrapperRadiusStyle: Record<Theme, Record<Size, string>> = {
   [Theme.Light]: {
     [Size.Small]: css`
       --outer-radius: 6px;
@@ -112,7 +109,7 @@ export const optionsWrapperStyle = ({
   cx(
     optionsWrapperStyleSize[size],
     optionsWrapperStyleTheme[theme],
-    optionWrapperStyleThemeSize[theme][size],
+    optionWrapperRadiusStyle[theme][size],
     css`
       position: relative;
       display: grid;

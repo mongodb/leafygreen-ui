@@ -96,7 +96,7 @@ WithIcons.args = {
     <SegmentedControlOption key="xml" value="xml">
       <Icon glyph="Code"></Icon> XML
     </SegmentedControlOption>,
-    <SegmentedControlOption key="shell" value="shell">
+    <SegmentedControlOption disabled key="shell" value="shell">
       <Icon glyph="Shell"></Icon> Shell
     </SegmentedControlOption>,
   ],
@@ -113,7 +113,7 @@ IconsOnly.args = {
     <SegmentedControlOption key="globe" value="globe">
       <Icon glyph="GlobeAmericas" />
     </SegmentedControlOption>,
-    <SegmentedControlOption key="government" value="government">
+    <SegmentedControlOption disabled key="government" value="government">
       <Icon glyph="GovernmentBuilding" />
     </SegmentedControlOption>,
   ],
