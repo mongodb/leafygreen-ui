@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/blob",
+  "name": "@leafygreen-ui/brand-shape",
   "version": "0.1.0",
-  "description": "leafyGreen UI Kit Blob",
+  "description": "leafyGreen UI Kit Brand Shape",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
