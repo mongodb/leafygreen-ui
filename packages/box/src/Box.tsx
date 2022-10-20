@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 type Override<T, U> = Omit<T, keyof U> & U;
 type Override2<T, U, V> = Override<Override<T, U>, V>;
 
-type BoxDefault<Default extends React.ElementType = 'div', ExtraProps = {}> =
-  Override2<
-    React.ComponentPropsWithRef<Default>,
-    {
-      as?: never;
-      href?: never;
-    },
-    ExtraProps
-  >;
+type BoxDefault<
+  Default extends React.ElementType = 'div',
+  ExtraProps = {},
+> = Override2<
+  React.ComponentPropsWithRef<Default>,
+  {
+    as?: never;
+    href?: never;
+  },
+  ExtraProps
+>;
 
 type BoxAnchorDefault<ExtraProps = {}> = Override2<
   React.ComponentPropsWithRef<'a'>,
