@@ -203,9 +203,7 @@ export const buttonFocusStyle: Record<Mode, string> = {
 };
 
 export const labelStyle = css`
-  // display: inline-flex;
   min-height: var(--line-height);
-  // align-items: center;
   gap: calc(var(--font-size) / 2);
   overflow: hidden;
   white-space: nowrap;

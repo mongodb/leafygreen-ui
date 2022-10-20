@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import Icon from '@leafygreen-ui/icon';
-import { SegmentedControlProps } from './types';
+import { SegmentedControlProps, Size } from './types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
@@ -16,7 +16,12 @@ export default {
     value: { control: 'text' },
     followFocus: { control: 'boolean' },
     'aria-controls': { control: 'text' },
-
+    size: {
+      control: {
+        type: 'radio',
+        options: Object.values(Size),
+      },
+    },
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {

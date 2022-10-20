@@ -118,8 +118,10 @@ export const optionsWrapperStyle = ({
       position: relative;
       display: grid;
       grid-auto-flow: column;
-      // grid-auto-columns: 1fr;
-      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-columns: minmax(
+        0,
+        1fr
+      ); // allows the grid tracks to be as small as 0 but as large as 1fr, creating columns that will stay equal
       gap: var(--segment-gap);
       align-items: center;
       padding: var(--wrapper-padding);
