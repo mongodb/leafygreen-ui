@@ -6,7 +6,7 @@ import { BlobProps } from './types';
 import { generateBlobPath } from './generateBlobPath';
 import { useMemo } from 'react';
 
-export default function Blob({
+export function Blob({
   shape,
   fill = palette.green.base,
   mode = 'production',

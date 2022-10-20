@@ -10,7 +10,7 @@ import {
   SegmentedControlOption,
 } from '@leafygreen-ui/segmented-control';
 import Code, { Language, LanguageOption } from '@leafygreen-ui/code';
-import Blob from '.';
+import { Blob } from '.';
 import { generateBlobPath } from './generateBlobPath';
 import {
   blobCode,
