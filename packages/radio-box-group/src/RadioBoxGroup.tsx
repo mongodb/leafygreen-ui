@@ -34,8 +34,9 @@ export function RadioBoxGroup({
   darkMode: darkModeProp,
   ...rest
 }: RadioBoxGroupProps) {
-  const [uncontrolledValue, setUncontrolledValue] =
-    React.useState<string | number | undefined>();
+  const [uncontrolledValue, setUncontrolledValue] = React.useState<
+    string | number | undefined
+  >();
 
   const { darkMode } = useDarkMode(darkModeProp);
 
