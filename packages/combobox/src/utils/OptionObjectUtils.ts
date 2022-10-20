@@ -1,5 +1,10 @@
 import { OptionObject } from '../Combobox.types';
-
+/**
+ *
+ * @param value
+ * @param options
+ * @internal
+ */
 export const getOptionObjectFromValue = (
   value: string | null,
   options: Array<OptionObject>,
@@ -7,6 +12,12 @@ export const getOptionObjectFromValue = (
   if (value) return options.find(opt => opt.value === value);
 };
 
+/**
+ *
+ * @param value
+ * @param options
+ * @internal
+ */
 export const getDisplayNameForValue = (
   value: string | null,
   options: Array<OptionObject>,
@@ -16,6 +27,12 @@ export const getDisplayNameForValue = (
     : '';
 };
 
+/**
+ *
+ * @param value
+ * @param options
+ * @internal
+ */
 export const getValueForDisplayName = (
   displayName: string | null,
   options: Array<OptionObject>,

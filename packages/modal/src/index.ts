@@ -1,6 +1,4 @@
-import Footer from './Footer';
-import Modal, { ModalSize, CloseIconColor } from './Modal';
-import ModalView from './ModalView';
-
-export { Footer, ModalSize, CloseIconColor, ModalView };
-export default Modal;
+export { default, ModalSize, CloseIconColor } from './Modal';
+export type { ModalProps } from './Modal';
+export { default as Footer } from './Footer';
+export { default as ModalView } from './ModalView';

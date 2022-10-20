@@ -1,5 +1,17 @@
 # @leafygreen-ui/emotion
 
+## 4.0.3
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+
+## 4.0.2
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+
 ## 4.0.1
 
 ### Patch Changes

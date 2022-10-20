@@ -1,5 +1,47 @@
 # @leafygreen-ui/checkbox
 
+## 10.1.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/a11y@1.3.3
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/hooks@7.3.3
+  - @leafygreen-ui/leafygreen-provider@2.3.5
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/tokens@1.3.4
+  - @leafygreen-ui/typography@13.2.1
+
+## 10.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 3690df49: Updates Storybook configs
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/typography@13.2.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/a11y@1.3.2
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/hooks@7.3.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/tokens@1.3.3
+
+## 10.0.4
+
+### Patch Changes
+
+- 6e1c365e: Add disabled cursor to label text when disabled
+
 ## 10.0.3
 
 ### Patch Changes

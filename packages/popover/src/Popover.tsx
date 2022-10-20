@@ -40,15 +40,14 @@ const mutationOptions = {
 };
 
 /**
- * # Popover
  *
  * React Component that handles positioning of content relative to another element.
  *
  * ```
-<button>
-  <Popover active={true}>Hello world!</Popover>
-</button>
-```
+ * <button>
+ *  <Popover active={true}>Hello world!</Popover>
+ * </button>
+ * ```
  * @param props.active Boolean to describe whether or not Popover is active.
  * @param props.spacing The spacing (in pixels) between the reference element, and the popover.
  * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`, `center-horizontal`, `center-vertical`.

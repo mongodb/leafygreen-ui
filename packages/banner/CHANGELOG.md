@@ -1,5 +1,47 @@
 # @leafygreen-ui/banner
 
+## 5.0.3
+
+### Patch Changes
+
+- 24921fd2: Fix dependency range in package.json
+
+## 5.0.2
+
+### Patch Changes
+
+- 24683433: - Removes an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/icon@11.11.1
+  - @leafygreen-ui/icon-button@13.2.1
+  - @leafygreen-ui/leafygreen-provider@2.3.5
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/palette@3.4.4
+  - @leafygreen-ui/tokens@1.3.4
+  - @leafygreen-ui/typography@13.2.1
+
+## 5.0.1
+
+### Patch Changes
+
+- 3690df49: Updates Storybook configs
+- 3690df49: Updates `tsdoc.json` file
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/icon-button@13.2.0
+  - @leafygreen-ui/typography@13.2.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 5.0.0
 
 ### Major Changes

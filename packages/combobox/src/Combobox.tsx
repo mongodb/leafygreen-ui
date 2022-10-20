@@ -11,6 +11,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import PropTypes from 'prop-types';
 import { Description, Label } from '@leafygreen-ui/typography';
 import {
   useDynamicRefs,
@@ -32,6 +33,9 @@ import {
   ComboboxElement,
   ComboboxSize,
   State,
+  Overflow,
+  TruncationLocation,
+  SearchState,
 } from './Combobox.types';
 import {
   flattenChildren,
@@ -63,6 +67,7 @@ import {
   errorMessageSizeStyle,
   labelDescriptionContainerStyle,
   inputElementThemeStyle,
+  comboboxSelectionStyles,
 } from './Combobox.styles';
 import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
 
@@ -71,7 +76,7 @@ import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
  * allowing the user to either type a value directly or select a value from the list.
  * Can be configured to select a single or multiple options.
  */
-export default function Combobox<M extends boolean>({
+export function Combobox<M extends boolean>({
   children,
   label,
   description,
@@ -121,8 +126,9 @@ export default function Combobox<M extends boolean>({
 
   const [isOpen, setOpen] = useState(false);
   const wasOpen = usePrevious(isOpen);
-  const [highlightedOption, sethighlightedOption] =
-    useState<string | null>(null);
+  const [highlightedOption, setHighlightedOption] = useState<string | null>(
+    null,
+  );
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
   const [inputValue, setInputValue] = useState<string>('');
@@ -156,11 +162,11 @@ export default function Combobox<M extends boolean>({
     <T extends string>(val?: Array<T> | T | null): val is Array<T> => {
       if (multiselect && (typeof val == 'string' || typeof val == 'number')) {
         consoleOnce.error(
-          `Error in Combobox: multiselect is set to \`true\`, but recieved a ${typeof val} value: "${val}"`,
+          `Error in Combobox: multiselect is set to \`true\`, but received a ${typeof val} value: "${val}"`,
         );
       } else if (!multiselect && isArray(val)) {
         consoleOnce.error(
-          'Error in Combobox: multiselect is set to `false`, but recieved an Array value',
+          'Error in Combobox: multiselect is set to `false`, but received an Array value',
         );
       }
 
@@ -193,7 +199,8 @@ export default function Combobox<M extends boolean>({
   const updateSelection = useCallback(
     (value: string | null) => {
       if (isMultiselect(selection)) {
-        const newSelection: SelectValueType<M> = clone(selection);
+        // We know M is true here
+        const newSelection: SelectValueType<true> = clone(selection);
 
         if (isNull(value)) {
           newSelection.length = 0;
@@ -208,7 +215,7 @@ export default function Combobox<M extends boolean>({
             setInputValue('');
           }
         }
-        setSelection(newSelection);
+        setSelection(newSelection as SelectValueType<M>);
         (onChange as onChangeType<true>)?.(
           newSelection as SelectValueType<true>,
         );
@@ -362,8 +369,9 @@ export default function Combobox<M extends boolean>({
    *
    */
 
-  const [focusedElementName, trackFocusedElement] =
-    useState<ComboboxElement | undefined>();
+  const [focusedElementName, trackFocusedElement] = useState<
+    ComboboxElement | undefined
+  >();
   const isElementFocused = (elementName: ComboboxElement) =>
     elementName === focusedElementName;
 
@@ -392,7 +400,7 @@ export default function Combobox<M extends boolean>({
               ? getValueAtIndex(indexOfHighlight + 1)
               : getValueAtIndex(0);
 
-          sethighlightedOption(newValue ?? null);
+          setHighlightedOption(newValue ?? null);
           break;
         }
 
@@ -402,20 +410,20 @@ export default function Combobox<M extends boolean>({
               ? getValueAtIndex(indexOfHighlight - 1)
               : getValueAtIndex(lastIndex);
 
-          sethighlightedOption(newValue ?? null);
+          setHighlightedOption(newValue ?? null);
           break;
         }
 
         case 'last': {
           const newValue = getValueAtIndex(lastIndex);
-          sethighlightedOption(newValue ?? null);
+          setHighlightedOption(newValue ?? null);
           break;
         }
 
         case 'first':
         default: {
           const newValue = getValueAtIndex(0);
-          sethighlightedOption(newValue ?? null);
+          setHighlightedOption(newValue ?? null);
         }
       }
     },
@@ -489,7 +497,7 @@ export default function Combobox<M extends boolean>({
   const handleArrowKey = useCallback(
     (direction: 'left' | 'right', event: React.KeyboardEvent<Element>) => {
       // Remove focus from menu
-      if (direction) sethighlightedOption(null);
+      if (direction) setHighlightedOption(null);
 
       switch (direction) {
         case 'right':
@@ -621,7 +629,7 @@ export default function Combobox<M extends boolean>({
             : selection === value;
 
           const setSelected = () => {
-            sethighlightedOption(value);
+            setHighlightedOption(value);
             updateSelection(value);
             setInputFocus();
 
@@ -957,13 +965,15 @@ export default function Combobox<M extends boolean>({
 
       setInputFocus(cursorPos);
     }
+
+    // Only open the menu in response to a click
+    openMenu();
   };
 
   // Fired whenever the wrapper gains focus,
   // and any time the focus within changes
   const handleComboboxFocus = (e: React.FocusEvent) => {
     scrollInputToEnd();
-    openMenu();
     trackFocusedElement(getNameFromElement(e.target));
   };
 
@@ -977,7 +987,7 @@ export default function Combobox<M extends boolean>({
   };
 
   const handleClearButtonFocus = () => {
-    sethighlightedOption(null);
+    setHighlightedOption(null);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -1036,12 +1046,14 @@ export default function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          // Select the highlighed option iff
-          // the menu is open
-          // we're focused on input element,
-          // and the highlighted option is not disabled
-          if (
-            isOpen &&
+          if (!isOpen) {
+            // If the menu is not open, enter should open the menu
+            openMenu();
+          } else if (
+            // Select the highlighted option iff
+            // the menu is open,
+            // we're focused on input element,
+            // and the highlighted option is not disabled
             focusedElementName === ComboboxElement.Input &&
             !isNull(highlightedOption) &&
             !isOptionDisabled(highlightedOption)
@@ -1221,6 +1233,7 @@ export default function Combobox<M extends boolean>({
             comboboxThemeStyles[theme],
             comboboxSizeStyles(size),
             {
+              [comboboxSelectionStyles]: clearable && doesSelectionExist,
               [comboboxDisabledStyles[theme]]: disabled,
               [comboboxErrorStyles[theme]]: state === State.error,
               [comboboxFocusStyle[theme]]: isElementFocused(
@@ -1316,7 +1329,7 @@ export default function Combobox<M extends boolean>({
    */
   function scrollInputToEnd() {
     if (inputWrapperRef && inputWrapperRef.current) {
-      // TODO - consider converting to .scrollTo(). This is not yet suppoted in IE or jsdom
+      // TODO - consider converting to .scrollTo(). This is not yet supported in IE or jsdom
       inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
     }
   }
@@ -1349,6 +1362,50 @@ export default function Combobox<M extends boolean>({
     if (comboboxRef.current?.contains(element)) return ComboboxElement.Combobox;
   }
 }
+
+Combobox.propTypes = {
+  // Multiselect props
+  multiselect: PropTypes.bool,
+  value: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  initialValue: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  overflow: PropTypes.oneOf(Object.values(Overflow)),
+
+  // Standard Props
+  darkMode: PropTypes.bool,
+  label: PropTypes.string,
+  'aria-label': PropTypes.string,
+  children: PropTypes.node,
+  onChange: PropTypes.func,
+  chipCharacterLimit: PropTypes.number,
+  chipTruncationLocation: PropTypes.oneOf(Object.values(TruncationLocation)),
+  onClear: PropTypes.func,
+  onFilter: PropTypes.func,
+  clearable: PropTypes.bool,
+  searchLoadingMessage: PropTypes.string,
+  searchErrorMessage: PropTypes.string,
+  searchEmptyMessage: PropTypes.string,
+  searchState: PropTypes.oneOf(Object.values(SearchState)),
+  errorMessage: PropTypes.string,
+  state: PropTypes.oneOf(Object.values(State)),
+  size: PropTypes.oneOf(Object.values(ComboboxSize)),
+  disabled: PropTypes.bool,
+  description: PropTypes.string,
+  placeholder: PropTypes.string,
+  filteredOptions: PropTypes.arrayOf(PropTypes.string),
+  // Popover Props
+  popoverZIndex: PropTypes.number,
+  usePortal: PropTypes.bool,
+  scrollContainer: PropTypes.elementType,
+  portalContainer: PropTypes.elementType,
+  portalClassName: PropTypes.string,
+};
+
 /**
  * Why'd you have to go and make things so complicated?
  * - Avril; and also me to myself about this component

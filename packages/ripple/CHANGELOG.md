@@ -1,5 +1,17 @@
 # @leafygreen-ui/ripple
 
+## 1.1.5
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+
+## 1.1.4
+
+### Patch Changes
+
+- 3690df49: Updates `tsdoc.json` file
+
 ## 1.1.3
 
 ### Patch Changes

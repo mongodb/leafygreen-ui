@@ -1,4 +1,5 @@
 import React, {
+  forwardRef,
   useCallback,
   useEffect,
   useMemo,
@@ -11,7 +12,11 @@ import once from 'lodash/once';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { createDataProp, isComponentType } from '@leafygreen-ui/lib';
+import {
+  createDataProp,
+  HTMLElementProps,
+  isComponentType,
+} from '@leafygreen-ui/lib';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
@@ -211,9 +216,11 @@ export const SegmentedControlContext = React.createContext<SCContext>({
 });
 
 export interface SegmentedControlProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  extends Omit<HTMLElementProps<'div'>, 'onChange'> {
   /**
-   * Children must be SegmentedControlOptions
+   * Options provided in the segmented control
+   *
+   * @type `<SegmentedControlOption />`
    */
   children: React.ReactNode;
 
@@ -281,7 +288,7 @@ export interface SegmentedControlProps
 /**
  * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
  */
-const SegmentedControl = React.forwardRef<
+export const SegmentedControl = forwardRef<
   HTMLDivElement,
   SegmentedControlProps
 >(function SegmentedControl(
@@ -594,8 +601,6 @@ const SegmentedControl = React.forwardRef<
 });
 
 SegmentedControl.displayName = 'SegmentedControl';
-
-export default SegmentedControl;
 
 const errorOnce = once(console.error);
 const warnOnce = once(console.warn);

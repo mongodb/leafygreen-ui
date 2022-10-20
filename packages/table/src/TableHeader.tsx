@@ -98,6 +98,8 @@ export function normalizeAccessor<T extends string | Function>(
 interface TableHeaderInterface<Shape> {
   /**
    * The label of the column
+   *
+   * @type string
    */
   label: React.ReactElement | string;
 

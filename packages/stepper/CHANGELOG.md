@@ -1,5 +1,47 @@
 # @leafygreen-ui/stepper
 
+## 3.1.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/icon@11.11.1
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/palette@3.4.4
+  - @leafygreen-ui/tokens@1.3.4
+  - @leafygreen-ui/tooltip@7.1.3
+  - @leafygreen-ui/typography@13.2.1
+
+## 3.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- Updated dependencies [dafe6be8]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/tooltip@7.1.2
+  - @leafygreen-ui/icon@11.11.0
+  - @leafygreen-ui/typography@13.2.0
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
+## 3.0.5
+
+### Patch Changes
+
+- c47de060: Dark mode text color change
+
 ## 3.0.4
 
 ### Patch Changes

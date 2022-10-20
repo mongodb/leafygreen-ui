@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import MarketingModal, { BlobPosition, GraphicStyle } from '.';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import Button from '@leafygreen-ui/button';
@@ -34,8 +34,8 @@ export default {
       control: 'radio',
       options: Object.values(BlobPosition),
     },
-    children: defaultArgTypes.children,
-    darkMode: defaultArgTypes.darkMode,
+    children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
   },
 } as Meta<typeof MarketingModal>;
 

@@ -3,9 +3,9 @@ import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import Box, { BoxProps } from '@leafygreen-ui/box';
 import { fontFamilies, focusRing, typeScales } from '@leafygreen-ui/tokens';
-import { Theme } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export const ContentStyle = {
@@ -98,22 +98,28 @@ const containerStyle = css`
   min-height: 68px; // 48px + 20px (padding + line-height)
 `;
 
-export interface CardProps {
-  /**
-   * className prop passed to the component
-   */
-  className?: string;
+export interface CardProps extends HTMLElementProps<'div'> {
   /**
    * Determines whether the Card should be styled as clickable.
+   *
+   * Defaults to `'clickable'` (when a valid `onClick` handler or `href` link is provided
+   *
+   * @default 'clickable' | 'none'
    */
   contentStyle?: ContentStyle;
+
+  /**
+   * Determines whether or not the component will appear in dark mode.
+   *
+   * @default false
+   */
   darkMode?: boolean;
 }
 
 /**
  * Cards are used to organize information into consumable chunks.
  */
-const Card: ExtendableBox<CardProps> = ({
+export const Card = ({
   className,
   contentStyle,
   darkMode = false,
@@ -151,5 +157,3 @@ Card.displayName = 'Card';
 Card.propTypes = {
   className: PropTypes.string,
 };
-
-export default Card;

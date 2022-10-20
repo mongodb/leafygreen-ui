@@ -11,6 +11,7 @@ export const Component = {
   ConfirmationModal: 'confirmation-modal',
   Copyable: 'copyable',
   FormFooter: 'form-footer',
+  GuideCue: 'guide-cue',
   ExpandableCard: 'expandable-card',
   Icon: 'icon',
   IconButton: 'icon-button',

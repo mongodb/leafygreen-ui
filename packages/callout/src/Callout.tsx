@@ -29,12 +29,13 @@ import {
  * Callouts should be used when you want to call out information to the user. Unlike banners, callouts cannot be dismissed. They’re optimized for long form copy (banners are optimized to save space).
  */
 function Callout({
-  variant,
+  variant = Variant.Note,
   title,
   baseFontSize: baseFontSizeProp,
   className,
   children: contents,
   darkMode: darkModeProp,
+  ...rest
 }: CalloutProps) {
   const { theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
@@ -62,6 +63,7 @@ function Callout({
         `,
         className,
       )}
+      {...rest}
     >
       <div
         className={cx(

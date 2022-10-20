@@ -1,10 +1,12 @@
 import React from 'react';
+import { Meta } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { SupportedColors, LogoProps } from './utils';
 import {
   MongoDBLogo,
   MongoDBLogoMark,
+  AtlasLogo,
   AtlasLogoLockup,
   AtlasForGovernmentLogoLockup,
   RealmLogoLockup,
@@ -15,9 +17,14 @@ import {
   RealmLogoMark,
   ChartsLogoMark,
 } from '.';
+import Logo, { LogoName } from '.';
+import { LogoNames } from './Logo';
 
 export default {
   title: 'Components/Logo',
+  parameters: {
+    default: 'Default',
+  },
   argTypes: {
     className: {
       table: {
@@ -27,7 +34,7 @@ export default {
     color: {
       default: SupportedColors.White,
       control: 'radio',
-      options: SupportedColors,
+      options: Object.values(SupportedColors),
     },
     background: {
       default: palette.white,
@@ -35,7 +42,7 @@ export default {
       options: [palette.white, palette.gray.dark3],
     },
   },
-};
+} as Meta<typeof Logo>;
 
 const divStyle = css`
   min-width: 150px;
@@ -66,7 +73,27 @@ const Template = (
   );
 };
 
+export const Default = (
+  args: LogoProps & { name: LogoName } & { background?: string },
+) => {
+  if (!args.name) {
+    args = { ...args, name: 'MongoDBLogo' };
+  }
+
+  return <Logo {...args} />;
+};
+Default.argTypes = {
+  name: {
+    control: 'select',
+    options: LogoNames,
+  },
+};
+Default.args = {
+  name: 'MongoDBLogoMark',
+};
+
 export const MongoDB = (args: LogoProps) => Template(MongoDBLogo, args);
+export const Atlas = (args: LogoProps) => Template(AtlasLogo, args);
 export const MongoDBMark = (args: LogoProps) => Template(MongoDBLogoMark, args);
 export const AtlasLockup = (args: LogoProps) => Template(AtlasLogoLockup, args);
 export const AtlasForGovernmentLockup = (args: LogoProps) =>

@@ -136,6 +136,10 @@ const disabledIconOnlyStyle: Record<Theme, string> = {
   `,
 };
 
+/**
+ *
+ * @internal
+ */
 function ButtonIcon({
   glyph,
   variant,

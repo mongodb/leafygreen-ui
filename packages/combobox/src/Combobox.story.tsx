@@ -9,12 +9,11 @@ import {
   Overflow,
   SearchState,
   State,
-  TrunctationLocation,
+  TruncationLocation,
 } from './Combobox.types';
 
 const wrapperStyle = css`
   width: 256px;
-  height: 100vh;
   padding-block: 64px;
 `;
 
@@ -92,7 +91,7 @@ export default {
       if: { arg: 'searchState', eq: SearchState.loading },
     },
     chipTruncationLocation: {
-      options: Object.values(TrunctationLocation),
+      options: Object.values(TruncationLocation),
       control: 'select',
       if: { arg: 'multiselect' },
     },

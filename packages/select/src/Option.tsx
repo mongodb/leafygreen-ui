@@ -56,12 +56,25 @@ const glyphFocusStyle = css`
 `;
 
 export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
+  /**
+   * Content to appear inside of the Option.
+   */
   children: React.ReactNode;
-  className: string | undefined;
-  glyph: LGGlyph.Element | undefined;
+  /**
+   * Adds a className to the outermost element.
+   */
+  className?: string;
+  /**
+   * Icon to display next to the option text.
+   */
+  glyph?: LGGlyph.Element;
+  /**
+   * Prevents the option from being selectable.
+   * @default false
+   */
+  disabled?: boolean;
   selected: boolean;
   focused: boolean;
-  disabled: boolean;
   onClick: React.MouseEventHandler;
   onFocus: React.FocusEventHandler;
   hasGlyphs: boolean;
@@ -276,15 +289,16 @@ export function InternalOption({
 
 InternalOption.displayName = 'Option';
 
-interface Props extends HTMLElementProps<'li', HTMLLIElement> {
-  className?: string;
-  glyph?: LGGlyph.Element;
-  disabled?: boolean;
+interface OptionProps
+  extends Pick<InternalProps, 'children' | 'className' | 'glyph' | 'disabled'> {
+  /**
+   * Corresponds to the value passed into the onChange prop of <Select /> when the option is selected.
+   * @default children
+   */
   value?: string;
-  children: React.ReactText | Array<React.ReactText | ReactEmpty>;
 }
 
-export default function Option(_: Props): JSX.Element {
+export function Option(_: OptionProps): JSX.Element {
   throw Error('`Option` must be a child of a `Select` instance');
 }
 
@@ -313,4 +327,4 @@ Option.propTypes = {
 export type OptionElement = Omit<
   React.ReactComponentElement<typeof Option>,
   'props'
-> & { props: Props };
+> & { props: OptionProps };

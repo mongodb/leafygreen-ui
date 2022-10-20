@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
-import Modal, { Footer } from '@leafygreen-ui/modal';
+import Modal, { Footer, ModalProps } from '@leafygreen-ui/modal';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
@@ -112,12 +112,12 @@ const warningIconStyles = css`
   }
 `;
 
-interface ConfirmationModalProps {
+interface ConfirmationModalProps extends ModalProps {
   /**
    * Text of header element
    */
   title: string;
-  children: React.ReactNode;
+
   /**
    * The component is shown when the value is set to `true`.
    */
@@ -150,7 +150,7 @@ interface ConfirmationModalProps {
   darkMode?: boolean;
 }
 
-const ConfirmationModal = ({
+export const ConfirmationModal = ({
   children,
   title,
   requiredInputText,
@@ -270,5 +270,3 @@ ConfirmationModal.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
 };
-
-export default ConfirmationModal;

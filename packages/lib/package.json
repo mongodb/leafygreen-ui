@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "9.4.2",
+  "version": "9.5.2",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,8 +24,7 @@
     "react": "^17.0.0"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
-    "react-docgen-typescript": "^2.2.2"
+    "lodash": "^4.17.21"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/lib",

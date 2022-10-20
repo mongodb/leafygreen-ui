@@ -4,7 +4,7 @@ import Tooltip, { Align, Justify, TooltipProps } from '.';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { css } from '@leafygreen-ui/emotion';
-import defaultArgTypes from '../../../stories/defaultArgTypes';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Tooltip',
@@ -14,8 +14,8 @@ export default {
   },
   argTypes: {
     open: { control: 'boolean' },
-    darkMode: defaultArgTypes.darkMode,
-    children: defaultArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
+    children: storybookArgTypes.children,
   },
 };
 

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { StepStates, InternalStepProps } from './types';
 import StepIcon from './StepIcon';
@@ -17,7 +17,7 @@ const Step = ({
   iconSize = 20,
   className,
   ...rest
-}: PropsWithChildren<InternalStepProps & React.HTMLProps<HTMLDivElement>>) => {
+}: InternalStepProps) => {
   const { isDarkMode } = useStepperContext();
   const isCurrent = state === StepStates.Current;
   const isCompleted =

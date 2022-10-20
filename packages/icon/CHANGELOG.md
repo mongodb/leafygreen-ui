@@ -1,5 +1,25 @@
 # @leafygreen-ui/icon
 
+## 11.11.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/emotion@4.0.3
+
+## 11.11.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- 3690df49: Exports `IconProps`
+- Updated dependencies [3690df49]
+  - @leafygreen-ui/emotion@4.0.2
+
 ## 11.10.2
 
 ### Patch Changes

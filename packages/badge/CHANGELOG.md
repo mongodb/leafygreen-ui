@@ -1,5 +1,41 @@
 # @leafygreen-ui/badge
 
+## 6.1.2
+
+### Patch Changes
+
+- 24921fd2: Fix dependency range in package.json
+
+## 6.1.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/leafygreen-provider@2.3.5
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/palette@3.4.4
+  - @leafygreen-ui/tokens@1.3.4
+
+## 6.1.0
+
+### Minor Changes
+
+- 3690df49: Updates TypeScript annotations, type structures and export format of some components
+
+### Patch Changes
+
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [3690df49]
+- Updated dependencies [58a5a05e]
+  - @leafygreen-ui/lib@9.5.0
+  - @leafygreen-ui/emotion@4.0.2
+  - @leafygreen-ui/leafygreen-provider@2.3.4
+  - @leafygreen-ui/palette@3.4.3
+  - @leafygreen-ui/tokens@1.3.3
+
 ## 6.0.0
 
 ### Major Changes
