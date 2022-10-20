@@ -22,6 +22,7 @@ import { useEffectOnceOnMount } from './useEffectOnceOnMount';
 import {
   wrapperStyle,
   labelStyle,
+  labelThemeStyle,
   optionsWrapperStyle,
   selectionIndicatorStyle,
   hoverIndicatorStyle,
@@ -305,7 +306,11 @@ export const SegmentedControl = forwardRef<
         className={cx(wrapperStyle, className)}
         {...rest}
       >
-        {label && <Overline className={labelStyle[theme]}>{label}</Overline>}
+        {label && (
+          <Overline className={cx(labelStyle, labelThemeStyle[theme])}>
+            {label}
+          </Overline>
+        )}
 
         <div
           role="tablist"

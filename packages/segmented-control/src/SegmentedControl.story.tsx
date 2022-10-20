@@ -67,14 +67,14 @@ export const Controlled = (args: SegmentedControlProps) => {
   );
 };
 Controlled.args = {
-  label: 'Fruit',
+  label: 'Fruit overwhelmed',
   name: 'fruit',
   children: [
     <SegmentedControlOption key="dragonfruit" value="dragonfruit">
-      Dragonfruit
+      Dragonfruit fruit
     </SegmentedControlOption>,
     <SegmentedControlOption key="eggplant" value="eggplant">
-      Eggplant
+      Eggplant bananana
     </SegmentedControlOption>,
     <SegmentedControlOption key="fig" value="fig">
       Fig

@@ -16,7 +16,11 @@ export const wrapperStyle = css`
   font-family: ${fontFamilies.default};
 `;
 
-export const labelStyle: Record<Theme, string> = {
+export const labelStyle = css`
+  white-space: nowrap;
+`;
+
+export const labelThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     letter-spacing: 1.4px;
     color: ${palette.gray.dark1};
@@ -114,7 +118,8 @@ export const optionsWrapperStyle = ({
       position: relative;
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: 1fr;
+      // grid-auto-columns: 1fr;
+      grid-auto-columns: minmax(0, 1fr);
       gap: var(--segment-gap);
       align-items: center;
       padding: var(--wrapper-padding);
