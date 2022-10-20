@@ -20,7 +20,7 @@ export const useDarkMode: (componentDarkMode?: boolean) => {
   return { darkMode, theme };
 };
 
-function DarkModeProvider({
+export function DarkModeProvider({
   children,
   globalDarkMode = false,
 }: PropsWithChildren<DarkModeContextProps>) {
@@ -41,5 +41,3 @@ DarkModeProvider.propTypes = {
   children: PropTypes.node,
   globalDarkMode: PropTypes.bool,
 };
-
-export default DarkModeProvider;

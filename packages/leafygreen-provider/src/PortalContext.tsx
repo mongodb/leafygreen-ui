@@ -29,7 +29,7 @@ interface PortalContext {
   children: React.ReactNode;
 }
 
-export default function PortalContextProvider({
+export function PortalContextProvider({
   popover = defaultPortalContextValues.popover,
   children,
 }: PortalContext) {

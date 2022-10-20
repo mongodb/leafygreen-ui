@@ -1,11 +1,12 @@
 import React, { PropsWithChildren } from 'react';
 import PropTypes from 'prop-types';
 import UsingKeyboardProvider from './UsingKeyboardContext';
-import TypographyProvider, {
+import {
+  TypographyProvider,
   TypographyProviderProps,
 } from './TypographyContext';
-import PortalContextProvider, { PortalContextValues } from './PortalContext';
-import DarkModeProvider from './DarkModeContext';
+import { PortalContextProvider, PortalContextValues } from './PortalContext';
+import { DarkModeProvider } from './DarkModeContext';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 type LeafyGreenProviderProps = {

@@ -16,7 +16,7 @@ export function useBaseFontSize() {
   return useContext(BaseFontSizeContext);
 }
 
-function TypographyProvider({
+export function TypographyProvider({
   children,
   baseFontSize = 14,
 }: PropsWithChildren<TypographyProviderProps>) {
@@ -33,5 +33,3 @@ TypographyProvider.propTypes = {
   children: PropTypes.node,
   baseFontSize: PropTypes.number,
 };
-
-export default TypographyProvider;

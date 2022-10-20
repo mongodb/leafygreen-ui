@@ -19,7 +19,7 @@ interface PopoverProviderProps {
   children?: React.ReactNode;
 }
 
-function PopoverProvider({ children }: PopoverProviderProps) {
+export function PopoverProvider({ children }: PopoverProviderProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
   const providerValue = useMemo(
@@ -40,5 +40,3 @@ function PopoverProvider({ children }: PopoverProviderProps) {
 PopoverProvider.displayName = 'PopoverProvider';
 
 PopoverProvider.propTypes = { children: PropTypes.node };
-
-export default PopoverProvider;
