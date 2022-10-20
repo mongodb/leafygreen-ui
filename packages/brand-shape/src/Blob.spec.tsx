@@ -1,6 +1,6 @@
 import React from 'react';
 import { getByTestId, render } from '@testing-library/react';
-import Blob from '.';
+import { Blob } from '.';
 
 describe('packages/blob', () => {
   test('Blob renders', () => {
