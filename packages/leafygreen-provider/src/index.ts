@@ -9,6 +9,10 @@ export {
   PopoverProvider,
 } from './PopoverContext';
 export { useBaseFontSize, TypographyProvider } from './TypographyContext';
-export { useDarkModeContext, useDarkMode, DarkModeProvider } from './DarkModeContext';
+export {
+  useDarkModeContext,
+  useDarkMode,
+  DarkModeProvider,
+} from './DarkModeContext';
 
 export { default } from './LeafyGreenContext';
