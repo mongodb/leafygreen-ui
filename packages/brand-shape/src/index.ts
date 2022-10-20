@@ -1,2 +1,2 @@
 export { Blob, Blob as BrandShape } from './Blob';
-export {BlobProps} from './types'
+export { BlobProps } from './types';
