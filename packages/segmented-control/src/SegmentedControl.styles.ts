@@ -120,7 +120,6 @@ export const optionsWrapperStyle = ({
       padding: var(--wrapper-padding);
       border-radius: var(--outer-radius);
       background-color: var(--background-color);
-      width: max-content; // prevent line breaks but this will cause overflow if the content is too wide
 
       &:focus {
         outline: none;
