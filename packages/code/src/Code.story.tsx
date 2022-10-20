@@ -25,6 +25,8 @@ export const Code: React.FC<CodeProps> = props => <LGCode {...props} />;
 
 const jsSnippet = `
 
+import datetime from './';
+
 const myVar = 42;
 
 var myObj = {

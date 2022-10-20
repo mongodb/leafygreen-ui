@@ -32,8 +32,8 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
   },
 
   [Mode.Dark]: {
-    0: uiColors.black,
-    1: uiColors.gray.dark3,
+    0: palette.black,
+    1: palette.gray.dark2,
     2: '#919DA1',
     3: uiColors.gray.light3,
     4: uiColors.gray.dark2,
