@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import UsingKeyboardProvider from './UsingKeyboardContext';
 import TypographyProvider, {
   TypographyProviderProps,
+  useBaseFontSize,
 } from './TypographyContext';
-import PortalContextProvider, { PortalContextValues } from './PortalContext';
-import DarkModeProvider from './DarkModeContext';
+import PortalContextProvider, {
+  PortalContextValues,
+  usePopoverPortalContainer,
+} from './PortalContext';
+import DarkModeProvider, { useDarkMode } from './DarkModeContext';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-type LeafyGreenProviderProps = {
+export type LeafyGreenProviderProps = {
   /**
    * Define a container HTMLElement for components that utilize the `Portal` component
    */
@@ -18,10 +22,20 @@ type LeafyGreenProviderProps = {
 
 function LeafyGreenProvider({
   children,
-  baseFontSize,
-  popoverPortalContainer,
-  darkMode,
+  baseFontSize: fontSizeProp,
+  popoverPortalContainer: popoverPortalContainerProp,
+  darkMode: darkModeProp,
 }: PropsWithChildren<LeafyGreenProviderProps>) {
+  // If a darkMode prop is not set,
+  // then we want to check if there's an outer dark mode context
+  const { darkMode } = useDarkMode(darkModeProp);
+  // Similarly with base font size
+  const contextFontSize = useBaseFontSize();
+  const baseFontSize = fontSizeProp ?? contextFontSize;
+  // and popover portal container
+  const contextContainer = usePopoverPortalContainer();
+  const popoverPortalContainer = popoverPortalContainerProp ?? contextContainer;
+
   return (
     <UsingKeyboardProvider>
       <PortalContextProvider popover={popoverPortalContainer}>
