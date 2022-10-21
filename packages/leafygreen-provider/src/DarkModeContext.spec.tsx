@@ -1,15 +1,18 @@
-import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import React, { useState } from 'react';
+import { render, cleanup, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import LeafyGreenProvider, { useDarkMode } from '.';
 
 afterAll(cleanup);
 
 describe('packages/leafygreen-provider/DarkModeContext', () => {
   const TestComponent = () => {
-    const { darkMode, theme } = useDarkMode();
+    const { darkMode, theme, setDarkMode } = useDarkMode();
+
     return (
       <>
         <div data-testid="darkMode" data-mode={darkMode} data-theme={theme} />
+        <button onClick={() => setDarkMode!(!darkMode)}></button>
       </>
     );
   };
@@ -58,5 +61,45 @@ describe('packages/leafygreen-provider/DarkModeContext', () => {
       </LeafyGreenProvider>,
     );
     expect(getByTestId('darkMode')).toHaveAttribute('data-theme', 'dark');
+  });
+
+  test('setter updates mode & theme', () => {
+    const SetterTestCase = () => {
+      const [darkMode, setDarkMode] = useState(true);
+      return (
+        <LeafyGreenProvider darkMode={darkMode} setDarkMode={setDarkMode}>
+          <TestComponent />
+        </LeafyGreenProvider>
+      );
+    };
+
+    const { getByTestId, getByRole } = render(<SetterTestCase />);
+    expect(getByTestId('darkMode')).toHaveAttribute('data-mode', 'true');
+    expect(getByTestId('darkMode')).toHaveAttribute('data-theme', 'dark');
+
+    const button = getByRole('button');
+    userEvent.click(button);
+
+    expect(getByTestId('darkMode')).toHaveAttribute('data-mode', 'false');
+    expect(getByTestId('darkMode')).toHaveAttribute('data-theme', 'light');
+  });
+
+  test('dark mode changes if re-rendered with a different value', () => {
+    const { getByTestId, rerender } = render(
+      <LeafyGreenProvider darkMode={true}>
+        <TestComponent />
+      </LeafyGreenProvider>,
+    );
+
+    waitFor(() => {
+      rerender(
+        <LeafyGreenProvider darkMode={false}>
+          <TestComponent />
+        </LeafyGreenProvider>,
+      );
+
+      expect(getByTestId('darkMode')).toHaveAttribute('data-mode', 'false');
+      expect(getByTestId('darkMode')).toHaveAttribute('data-theme', 'light');
+    });
   });
 });
