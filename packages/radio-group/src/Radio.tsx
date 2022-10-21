@@ -5,16 +5,15 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { RadioProps, Size } from './types';
 import {
   containerMargin,
-  divThemeStyles,
-  hoverModeStyles,
-  inputDataProp,
-  inputDisplay,
-  inputDisplayWrapper,
+  inputDisplayThemeStyles,
+  hoverThemeStyles,
+  inputClassName,
+  inputDisplayClassName,
+  inputDisplayWrapperClassName,
   labelThemeStyles,
-  offsets,
-  divSizeStyles,
+  inputDisplaySizeStyles,
   radioBoxSizeStyles,
-  divBaseStyle,
+  inputDisplayBaseStyle,
   labelBaseStyle,
   inputThemeStyles,
   inputBaseStyle,
@@ -81,7 +80,11 @@ function Radio({
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
-          className={cx(inputDataProp, inputBaseStyle, inputThemeStyles[theme])}
+          className={cx(
+            inputClassName,
+            inputBaseStyle,
+            inputThemeStyles[theme],
+          )}
         />
 
         <div
@@ -89,22 +92,26 @@ function Radio({
             radioBoxBaseStyle,
             radioBoxSizeStyles[normalizedSize],
             {
-              [hoverModeStyles[theme]]: !disabled,
+              [css`
+                margin-top: 3px;
+                margin-right: 4px;
+              `]: size === Size.XSmall, // TODO: keeping this style until XS is deprecated
+              [hoverThemeStyles[theme]]: !disabled,
             },
-            inputDisplayWrapper,
+            inputDisplayWrapperClassName,
           )}
         >
           <div
             className={cx(
-              inputDisplay,
-              divBaseStyle,
-              divThemeStyles[theme],
-              divSizeStyles[normalizedSize],
+              inputDisplayClassName,
+              inputDisplayBaseStyle,
+              inputDisplayThemeStyles[theme],
+              inputDisplaySizeStyles[normalizedSize],
             )}
           />
         </div>
 
-        <div className={cx(offsets[size])}>{children}</div>
+        <div>{children}</div>
       </label>
     </div>
   );

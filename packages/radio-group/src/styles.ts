@@ -9,30 +9,16 @@ import {
 } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
-export const inputDisplay = createUniqueClassName('radio-group');
-export const inputDisplayWrapper = createUniqueClassName('radio-group');
-export const inputDataProp = createUniqueClassName('radio-group');
+export const inputDisplayClassName = createUniqueClassName('radio-group');
+export const inputDisplayWrapperClassName =
+  createUniqueClassName('radio-group');
+export const inputClassName = createUniqueClassName('radio-group');
 
 export const containerMargin = css`
   & + & {
     margin-top: 8px;
   }
 `;
-
-export const offsets: Record<Size, string> = {
-  [Size.XSmall]: css`
-    margin-top: -3px;
-    margin-left: 4px;
-  `,
-  [Size.Small]: css`
-    margin-top: -3px;
-    margin-left: 8px;
-  `,
-  [Size.Default]: css`
-    margin-top: 0;
-    margin-left: 8px;
-  `,
-};
 
 export const labelThemeStyles = {
   [Theme.Light]: {
@@ -68,10 +54,10 @@ export const labelBaseStyle = css`
   font-weight: 700;
 `;
 
-export const inputThemeStyles = {
+export const inputThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     &:checked {
-      & + .${inputDisplayWrapper} .${inputDisplay} {
+      & + .${inputDisplayWrapperClassName} .${inputDisplayClassName} {
         background-color: ${palette.blue.base};
         border-color: ${palette.blue.base};
 
@@ -80,7 +66,7 @@ export const inputThemeStyles = {
         }
       }
 
-      &:disabled + .${inputDisplayWrapper} .${inputDisplay} {
+      &:disabled + .${inputDisplayWrapperClassName} .${inputDisplayClassName} {
         background-color: ${palette.gray.light2};
         border-color: ${palette.gray.light2};
 
@@ -91,11 +77,13 @@ export const inputThemeStyles = {
       }
     }
 
-    &:focus-visible:not(:disabled) + .${inputDisplayWrapper} .${inputDisplay} {
+    &:focus-visible:not(:disabled)
+      + .${inputDisplayWrapperClassName}
+      .${inputDisplayClassName} {
       box-shadow: ${focusRing.light.default};
     }
 
-    &:disabled + .${inputDisplayWrapper} .${inputDisplay} {
+    &:disabled + .${inputDisplayWrapperClassName} .${inputDisplayClassName} {
       border-color: ${palette.gray.light2};
       background-color: ${palette.gray.light3};
 
@@ -108,7 +96,7 @@ export const inputThemeStyles = {
 
   [Theme.Dark]: css`
     &:checked {
-      & + .${inputDisplayWrapper} .${inputDisplay} {
+      & + .${inputDisplayWrapperClassName} .${inputDisplayClassName} {
         background-color: ${palette.blue.light1};
         border-color: ${palette.blue.light1};
 
@@ -117,7 +105,7 @@ export const inputThemeStyles = {
         }
       }
 
-      &:disabled + .${inputDisplayWrapper} .${inputDisplay} {
+      &:disabled + .${inputDisplayWrapperClassName} .${inputDisplayClassName} {
         border-color: ${palette.gray.dark3};
 
         &:after {
@@ -127,11 +115,13 @@ export const inputThemeStyles = {
       }
     }
 
-    &:focus-visible:not(:disabled) + .${inputDisplayWrapper} .${inputDisplay} {
+    &:focus-visible:not(:disabled)
+      + .${inputDisplayWrapperClassName}
+      .${inputDisplayClassName} {
       box-shadow: ${focusRing.dark.default};
     }
 
-    &:disabled + .${inputDisplayWrapper} .${inputDisplay} {
+    &:disabled + .${inputDisplayWrapperClassName} .${inputDisplayClassName} {
       border-color: ${palette.gray.dark2};
       background-color: ${palette.gray.dark3};
 
@@ -143,18 +133,17 @@ export const inputThemeStyles = {
   `,
 };
 
-export const hoverModeStyles: Record<Theme, string> = {
+export const hoverThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     &:hover {
-      color: red;
-      .${inputDisplay} {
+      .${inputDisplayClassName} {
         box-shadow: ${hoverRing.light.gray};
       }
     }
   `,
   [Theme.Dark]: css`
     &:hover {
-      .${inputDisplay} {
+      .${inputDisplayClassName} {
         box-shadow: ${hoverRing.dark.gray};
       }
     }
@@ -168,7 +157,7 @@ export const inputBaseStyle = css`
   margin: 0;
 `;
 
-export const divThemeStyles: Record<Theme, string> = {
+export const inputDisplayThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     border-color: ${palette.gray.dark2};
     background-color: ${palette.white};
@@ -179,7 +168,7 @@ export const divThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const divBaseStyle = css`
+export const inputDisplayBaseStyle = css`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -205,14 +194,14 @@ export const divBaseStyle = css`
     transform: scale(0);
   }
 
-  .${inputDataProp}:disabled + .${inputDisplayWrapper} & {
+  .${inputClassName}:disabled + .${inputDisplayWrapperClassName} & {
     &:after {
       box-shadow: none;
     }
   }
 `;
 
-export const divSizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
+export const inputDisplaySizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
   [Size.Small]: css`
     border-width: 2px;
 
@@ -239,10 +228,13 @@ export const radioBoxSizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
   [Size.Small]: css`
     height: 14px;
     width: 14px;
+    margin-top: 3px;
+    margin-right: 8px;
   `,
   [Size.Default]: css`
     height: 20px;
     width: 20px;
+    margin-right: 8px;
   `,
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { Radio, RadioGroup } from '.';
-import { RadioGroupProps } from './types';
+import { RadioGroupProps, Size } from './types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
@@ -10,8 +10,10 @@ export default {
   argTypes: {
     children: { control: false },
     darkMode: storybookArgTypes.darkMode,
-    name: { control: 'text' },
-    value: { control: 'text' },
+    size: {
+      control: 'radio',
+      options: Object.values(Size),
+    },
   },
   parameters: {
     controls: {
