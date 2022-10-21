@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useState,
-} from 'react';
+import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { getTheme, Theme } from '@leafygreen-ui/lib';
 
