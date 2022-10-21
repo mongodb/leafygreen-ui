@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render, cleanup, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LeafyGreenProvider, { useDarkMode } from '.';
@@ -12,7 +12,7 @@ describe('packages/leafygreen-provider/DarkModeContext', () => {
     return (
       <>
         <div data-testid="darkMode" data-mode={darkMode} data-theme={theme} />
-        <button onClick={() => setDarkMode!(!darkMode)}></button>
+        <button onClick={() => setDarkMode(!darkMode)}></button>
       </>
     );
   };
@@ -64,16 +64,11 @@ describe('packages/leafygreen-provider/DarkModeContext', () => {
   });
 
   test('setter updates mode & theme', () => {
-    const SetterTestCase = () => {
-      const [darkMode, setDarkMode] = useState(true);
-      return (
-        <LeafyGreenProvider darkMode={darkMode} setDarkMode={setDarkMode}>
-          <TestComponent />
-        </LeafyGreenProvider>
-      );
-    };
-
-    const { getByTestId, getByRole } = render(<SetterTestCase />);
+    const { getByTestId, getByRole } = render(
+      <LeafyGreenProvider darkMode={true}>
+        <TestComponent />
+      </LeafyGreenProvider>,
+    );
     expect(getByTestId('darkMode')).toHaveAttribute('data-mode', 'true');
     expect(getByTestId('darkMode')).toHaveAttribute('data-theme', 'dark');
 

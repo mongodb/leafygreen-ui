@@ -9,7 +9,7 @@ import { getTheme, Theme } from '@leafygreen-ui/lib';
 
 interface DarkModeContextProps {
   contextDarkMode?: boolean;
-  setDarkMode?: React.Dispatch<boolean>;
+  setDarkMode: React.Dispatch<boolean>;
 }
 
 const DarkModeContext = createContext<DarkModeContextProps>({
@@ -21,7 +21,7 @@ export const useDarkModeContext = () => useContext(DarkModeContext);
 type useDarkMode = (localDarkMode?: boolean) => {
   darkMode: boolean;
   theme: Theme;
-  setDarkMode?: React.Dispatch<boolean>;
+  setDarkMode: React.Dispatch<boolean>;
 };
 
 export const useDarkMode: useDarkMode = localDarkMode => {
@@ -33,10 +33,9 @@ export const useDarkMode: useDarkMode = localDarkMode => {
 
 function DarkModeProvider({
   children,
-  contextDarkMode: darkModeProp,
+  contextDarkMode,
+  setDarkMode,
 }: PropsWithChildren<DarkModeContextProps>) {
-  const [contextDarkMode, setDarkMode] = useState(darkModeProp);
-
   return (
     <DarkModeContext.Provider
       value={{

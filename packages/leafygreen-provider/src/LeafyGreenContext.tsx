@@ -18,16 +18,13 @@ export type LeafyGreenProviderProps = {
    */
   popoverPortalContainer?: PortalContextValues['popover'];
 } & TypographyProviderProps &
-  DarkModeProps & {
-    setDarkMode?: React.Dispatch<boolean>;
-  };
+  DarkModeProps;
 
 function LeafyGreenProvider({
   children,
   baseFontSize: fontSizeProp,
   popoverPortalContainer: popoverPortalContainerProp,
   darkMode: darkModeProp,
-  setDarkMode,
 }: PropsWithChildren<LeafyGreenProviderProps>) {
   // If a darkMode prop is not set,
   // then we want to check if there's an outer dark mode context.
@@ -35,7 +32,14 @@ function LeafyGreenProvider({
   // if the prop is set, we use that
   // if the prop is not set, we use outer context
   const { contextDarkMode: inheritedDarkMode } = useDarkModeContext();
-  const darkMode = darkModeProp ?? inheritedDarkMode;
+  // const darkMode = darkModeProp ?? inheritedDarkMode;
+  const [darkModeState, setDarkMode] = useState(
+    darkModeProp ?? inheritedDarkMode,
+  );
+
+  useEffect(() => {
+    setDarkMode(darkModeProp ?? inheritedDarkMode);
+  }, [darkModeProp, inheritedDarkMode]);
 
   // Similarly with base font size
   const inheritedFontSize = useBaseFontSize();
@@ -50,7 +54,7 @@ function LeafyGreenProvider({
       <PortalContextProvider popover={popoverPortalContainer}>
         <TypographyProvider baseFontSize={baseFontSize}>
           <DarkModeProvider
-            contextDarkMode={darkMode}
+            contextDarkMode={darkModeState}
             setDarkMode={setDarkMode}
           >
             {children}
