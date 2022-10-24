@@ -12,14 +12,14 @@ interface BaseToggleProps {
   /**
    * Sets the size of the toggle.
    *
-   * default: `'default'`
+   * @default 'default'
    */
   size?: Size;
 
   /**
    * Determines if the Toggle will render the dark mode styles.
    *
-   * default: `false`
+   * @default false
    */
   darkMode?: boolean;
 
@@ -31,7 +31,7 @@ interface BaseToggleProps {
   /**
    * Disables the Toggle.
    *
-   * default: `false`
+   * @default false
    */
   disabled?: boolean;
 

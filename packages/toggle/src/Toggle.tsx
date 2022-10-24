@@ -9,10 +9,12 @@ import {
   buttonBaseStyles,
   checkmarkBaseStyles,
   sliderBaseStyles,
-  checkmarkModeStyles,
+  checkmarkThemeStyles,
   checkmarkSize,
-  themeStyles,
-  sizeStyles,
+  buttonThemeStyles,
+  buttonSizeStyles,
+  sliderThemeStyles,
+  sliderSizeStyles,
   toggleButtonClassName,
 } from './styles';
 
@@ -50,12 +52,6 @@ function Toggle({
     [isControlled, controlledChecked, onClickProp, onChangeProp],
   );
 
-  const { button: buttonModeStyles, slider: sliderModeStyles } =
-    themeStyles[theme];
-
-  const { button: buttonSizeStyles, slider: sliderSizeStyles } =
-    sizeStyles[size];
-
   return (
     <button
       role="switch"
@@ -67,16 +63,22 @@ function Toggle({
       className={cx(
         toggleButtonClassName,
         buttonBaseStyles,
-        buttonModeStyles,
-        buttonSizeStyles,
+        buttonThemeStyles[theme],
+        buttonSizeStyles[size],
       )}
       {...rest}
     >
-      <div className={cx(sliderBaseStyles, sliderSizeStyles, sliderModeStyles)}>
+      <div
+        className={cx(
+          sliderBaseStyles,
+          sliderSizeStyles[size],
+          sliderThemeStyles[theme],
+        )}
+      >
         {size !== Size.XSmall && (
           <CheckmarkIcon
             aria-hidden={true}
-            className={cx(checkmarkBaseStyles, checkmarkModeStyles[theme])}
+            className={cx(checkmarkBaseStyles, checkmarkThemeStyles[theme])}
             size={checkmarkSize[size]}
           />
         )}
@@ -88,7 +90,7 @@ function Toggle({
 Toggle.displayName = 'Toggle';
 
 Toggle.propTypes = {
-  size: PropTypes.oneOf(['default', 'small', 'xsmall']),
+  size: PropTypes.oneOf(Object.values(Size)),
   darkMode: PropTypes.bool,
   checked: PropTypes.bool,
   disabled: PropTypes.bool,

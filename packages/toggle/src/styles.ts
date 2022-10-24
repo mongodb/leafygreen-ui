@@ -105,148 +105,140 @@ export const sliderBaseStyles = css`
   }
 `;
 
-export const sizeStyles: Record<Size, Record<'button' | 'slider', string>> = {
-  [Size.Default]: {
-    button: css`
-      height: 32px;
-      width: 56px;
-    `,
+export const buttonSizeStyles: Record<Size, string> = {
+  [Size.Default]: css`
+    height: 32px;
+    width: 56px;
+  `,
 
-    slider: css`
-      height: 28px;
-      width: 28px;
-      left: 1px;
+  [Size.Small]: css`
+    height: 22px;
+    width: 40px;
+  `,
 
-      ${sliderSelector.checked} {
-        transform: translate3d(24px, 0, 0);
-      }
-    `,
-  },
+  [Size.XSmall]: css`
+    height: 14px;
+    width: 26px;
+  `,
+};
 
-  [Size.Small]: {
-    button: css`
-      height: 22px;
-      width: 40px;
-    `,
+export const sliderSizeStyles: Record<Size, string> = {
+  [Size.Default]: css`
+    height: 28px;
+    width: 28px;
+    left: 1px;
 
-    slider: css`
-      height: 18px;
-      width: 18px;
-      left: 1px;
+    ${sliderSelector.checked} {
+      transform: translate3d(24px, 0, 0);
+    }
+  `,
 
-      ${sliderSelector.checked} {
-        transform: translate3d(18px, 0, 0);
-      }
-    `,
-  },
+  [Size.Small]: css`
+    height: 18px;
+    width: 18px;
+    left: 1px;
 
-  [Size.XSmall]: {
-    button: css`
-      height: 14px;
-      width: 26px;
-    `,
+    ${sliderSelector.checked} {
+      transform: translate3d(18px, 0, 0);
+    }
+  `,
 
-    slider: css`
-      height: 12px;
-      width: 12px;
+  [Size.XSmall]: css`
+    height: 12px;
+    width: 12px;
 
-      ${sliderSelector.checked} {
-        transform: translate3d(12px, 0, 0);
-      }
-    `,
-  },
-} as const;
+    ${sliderSelector.checked} {
+      transform: translate3d(12px, 0, 0);
+    }
+  `,
+};
 
-export const themeStyles: Record<Theme, Record<'button' | 'slider', string>> = {
-  [Theme.Light]: {
-    button: css`
-      &[aria-checked='false']:not(:disabled) {
-        background-color: ${palette.gray.base};
-        border-color: ${palette.gray.base};
-      }
+export const buttonThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &[aria-checked='false']:not(:disabled) {
+      background-color: ${palette.gray.base};
+      border-color: ${palette.gray.base};
+    }
 
-      &[aria-checked='true'] {
-        // We set background-color here to avoid a small issue with overflow clipping
-        // that makes this look less seamless than it should.
-        background-color: ${palette.blue.base};
-        border-color: ${palette.blue.base};
-      }
+    &[aria-checked='true'] {
+      // We set background-color here to avoid a small issue with overflow clipping
+      // that makes this look less seamless than it should.
+      background-color: ${palette.blue.base};
+      border-color: ${palette.blue.base};
+    }
 
-      &:disabled {
-        background-color: ${palette.gray.light2};
-        border-color: ${palette.gray.light2};
-      }
+    &:disabled {
+      background-color: ${palette.gray.light2};
+      border-color: ${palette.gray.light2};
+    }
 
-      &:before {
-        background-color: ${palette.blue.base};
-      }
+    &:before {
+      background-color: ${palette.blue.base};
+    }
 
-      &:hover:not(:disabled) {
-        box-shadow: ${hoverRing.light.gray};
-      }
+    &:hover:not(:disabled) {
+      box-shadow: ${hoverRing.light.gray};
+    }
 
-      &:focus-visible:not(:disabled) {
-        box-shadow: ${focusRing.light.default};
-      }
-    `,
+    &:focus-visible:not(:disabled) {
+      box-shadow: ${focusRing.light.default};
+    }
+  `,
+  [Theme.Dark]: css`
+    &[aria-checked='false']:not(:disabled) {
+      background-color: ${palette.gray.dark1};
+      border-color: ${palette.gray.dark1};
+    }
 
-    slider: css`
-      background-color: ${palette.white};
+    &[aria-checked='true'] {
+      // We set background-color here to avoid a small issue with overflow clipping
+      // that makes this look less seamless than it should.
+      background-color: ${palette.blue.light1};
+      border-color: ${palette.blue.light1};
+    }
 
-      ${sliderSelector.disabled} {
-        background-color: ${palette.gray.light3};
-      }
-    `,
-  },
+    &:disabled {
+      background-color: ${palette.gray.dark2};
+      border-color: ${palette.gray.dark2};
+    }
 
-  [Theme.Dark]: {
-    button: css`
-      &[aria-checked='false']:not(:disabled) {
-        background-color: ${palette.gray.dark1};
-        border-color: ${palette.gray.dark1};
-      }
+    &:before {
+      background-color: ${palette.blue.light1};
+    }
 
-      &[aria-checked='true'] {
-        // We set background-color here to avoid a small issue with overflow clipping
-        // that makes this look less seamless than it should.
-        background-color: ${palette.blue.light1};
-        border-color: ${palette.blue.light1};
-      }
+    &:hover:not(:disabled) {
+      box-shadow: ${hoverRing.dark.gray};
+    }
 
-      &:disabled {
-        background-color: ${palette.gray.dark2};
-        border-color: ${palette.gray.dark2};
-      }
+    &:focus-visible:not(:disabled) {
+      box-shadow: ${focusRing.dark.default};
+    }
+  `,
+};
 
-      &:before {
-        background-color: ${palette.blue.light1};
-      }
+export const sliderThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.white};
 
-      &:hover:not(:disabled) {
-        box-shadow: ${hoverRing.dark.gray};
-      }
+    ${sliderSelector.disabled} {
+      background-color: ${palette.gray.light3};
+    }
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.white};
 
-      &:focus-visible:not(:disabled) {
-        box-shadow: ${focusRing.dark.default};
-      }
-    `,
-
-    slider: css`
-      background-color: ${palette.white};
-
-      ${sliderSelector.disabled} {
-        background-color: ${palette.gray.dark1};
-      }
-    `,
-  },
-} as const;
+    ${sliderSelector.disabled} {
+      background-color: ${palette.gray.dark1};
+    }
+  `,
+};
 
 export const checkmarkBaseStyles = css`
   display: flex;
   transition: color ${transitionInMS}ms ease-in-out;
 `;
 
-export const checkmarkModeStyles: Record<Theme, string> = {
+export const checkmarkThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     ${checkmarkSelector.checked} {
       color: ${palette.blue.light1};
