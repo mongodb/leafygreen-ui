@@ -6,6 +6,7 @@ import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { beaconStyles, timeout1, timeout2 } from './styles';
 import { GuideCueProps } from './types';
 import TooltipContent from './TooltipContent';
+import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 
 function GuideCue({
   open,
@@ -116,6 +117,14 @@ function GuideCue({
     ...sharedProps,
     ...tooltipProps,
   };
+
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useIsomorphicLayoutEffect(() => setShouldRender(true), []);
+
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
     <>
