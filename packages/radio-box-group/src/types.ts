@@ -38,11 +38,6 @@ export interface RadioBoxProps extends Omit<HTMLElementProps<'input'>, 'size'> {
   value: string | number;
 
   /**
-   * className supplied to RadioBox container.
-   */
-  className?: string;
-
-  /**
    * Boolean that determines if the RadioBox is disabled.
    */
   disabled?: boolean;
