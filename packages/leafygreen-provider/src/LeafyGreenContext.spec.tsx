@@ -20,11 +20,11 @@ const ContextChecker = () => {
       <div data-testid="font-size" data-value={baseFontSize} />
       <div
         data-testid="portal-container"
-        id={portalContainer?.getAttribute('id')}
+        id={portalContainer!.getAttribute('id') ?? ''}
       />
       <div
         data-testid="scroll-container"
-        id={scrollContainer?.getAttribute('id')}
+        id={scrollContainer!.getAttribute('id') ?? ''}
       />
     </>
   );
