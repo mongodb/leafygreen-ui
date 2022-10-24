@@ -71,11 +71,6 @@ export interface SegmentedControlProps
    * Callback that gets called when a user makes a new selection.
    */
   onChange?: (value: string) => void;
-
-  /**
-   * Styling prop
-   */
-  className?: string;
 }
 
 export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
@@ -107,11 +102,6 @@ export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
    * Required as a prop on the control, or on each individual option.
    */
   'aria-controls'?: string;
-
-  /**
-   * Styling prop
-   */
-  className?: string;
 
   /**
    * @internal
