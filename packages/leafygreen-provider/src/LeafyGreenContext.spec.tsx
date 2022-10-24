@@ -20,11 +20,11 @@ const ContextChecker = () => {
       <div data-testid="font-size" data-value={baseFontSize} />
       <div
         data-testid="portal-container"
-        data-value={portalContainer?.getAttribute('id')}
+        id={portalContainer?.getAttribute('id')}
       />
       <div
         data-testid="scroll-container"
-        data-value={scrollContainer?.getAttribute('id')}
+        id={scrollContainer?.getAttribute('id')}
       />
     </>
   );
@@ -89,8 +89,8 @@ describe('packages/leafygreen-provider/LeafyGreenProvider', () => {
         'data-value',
         `${defaultContext.baseFontSize}`,
       );
-      expect(portalContainerDiv).toHaveAttribute('data-value', 'portal');
-      expect(scrollContainerDiv).toHaveAttribute('data-value', 'scroll');
+      expect(portalContainerDiv).toHaveAttribute('id', 'portal');
+      expect(scrollContainerDiv).toHaveAttribute('id', 'scroll');
     });
 
     describe('Nested contexts', () => {
@@ -117,8 +117,8 @@ describe('packages/leafygreen-provider/LeafyGreenProvider', () => {
           'data-value',
           `${defaultContext.baseFontSize}`,
         );
-        expect(portalContainerDiv).toHaveAttribute('data-value', 'portal');
-        expect(scrollContainerDiv).toHaveAttribute('data-value', 'scroll');
+        expect(portalContainerDiv).toHaveAttribute('id', 'portal');
+        expect(scrollContainerDiv).toHaveAttribute('id', 'scroll');
       });
 
       test('Inner context uses set values', () => {
@@ -151,8 +151,8 @@ describe('packages/leafygreen-provider/LeafyGreenProvider', () => {
           'data-value',
           `${newContext.baseFontSize}`,
         );
-        expect(portalContainerDiv).toHaveAttribute('data-value', 'new-portal');
-        expect(scrollContainerDiv).toHaveAttribute('data-value', 'new-scroll');
+        expect(portalContainerDiv).toHaveAttribute('id', 'new-portal');
+        expect(scrollContainerDiv).toHaveAttribute('id', 'new-scroll');
       });
     });
   });
