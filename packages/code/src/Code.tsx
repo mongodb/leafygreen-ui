@@ -36,8 +36,8 @@ const wrapperStyle: Record<Mode, string> = {
     overflow: hidden;
   `,
   [Mode.Dark]: css`
-    border: 0;
-    border-radius: 6px;
+    border: 1px solid ${variantColors.dark[1]};
+    border-radius: 12px;
     overflow: hidden;
   `,
 };
@@ -121,11 +121,7 @@ const panelStyles = css`
 function getCodeWrapperVariantStyle(mode: Mode): string {
   const colors = variantColors[mode];
 
-  const borderStyle =
-    mode === 'dark' ? `border: 0` : `border-color: ${colors[1]}`;
-
   return css`
-    ${borderStyle};
     background-color: ${colors[0]};
     color: ${colors[3]};
   `;

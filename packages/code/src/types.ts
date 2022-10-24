@@ -118,10 +118,10 @@ export type CodeProps = Omit<
   onCopy?: Function;
 
   /**
-   * Custom action buttons.
+   * Custom action buttons. Should be an array of `IconButton`.
    *
    */
-  customActionButtons?: Array<React.ReactNode>;
+  customActionButtons?: Array<React.ReactElement>;
 
   /**
    * When true, custom action buttons will be shown.

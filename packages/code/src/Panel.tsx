@@ -23,7 +23,7 @@ function getSidebarVariantStyle(mode: Mode): string {
       return css`
         // TODO: Refresh - update these colors
         background-color: ${uiColors.gray.dark2};
-        border-color: ${uiColors.gray.dark3};
+        border-color: ${palette.gray.dark1};
       `;
   }
 }
@@ -70,7 +70,7 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   showCopyButton?: boolean;
   language?: LanguageOption;
   isMultiline?: boolean;
-  customActionButtons?: Array<React.ReactNode>;
+  customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
   className?: string;
 } & PopoverProps;
@@ -128,7 +128,10 @@ function Panel({
         />
       )}
       {showCustomActionButtons && (
-        <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
+        // TODO: cloneElement can be removed when the provider is updated
+        <>{customActionButtons?.map((action: React.ReactElement) => React.cloneElement(action, {
+          darkMode: darkMode,
+        }))}</>
       )}
     </div>
   );

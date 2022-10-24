@@ -64,7 +64,7 @@ const buttonModeStyle = {
   `,
   dark: css`
     background-color: ${uiColors.gray.dark2};
-    border-right: 1px solid ${uiColors.gray.dark3};
+    border-right: 1px solid ${palette.gray.dark1};
     font-family: ${fontFamilies.legacy};
     color: ${palette.gray.light2};
 
@@ -176,12 +176,7 @@ function LanguageSwitcher({
       <Button
         {...props}
         className={cx(className, menuButtonStyle, buttonModeStyle[mode], {
-          [buttonFocusStyle[mode]]: showFocus,
-          // TODO: Refresh - remove darkMode logic
-          [css`
-            font-family: ${fontFamilies.legacy};
-            font-size: 14px;
-          `]: darkMode,
+          [buttonFocusStyle[mode]]: showFocus
         })}
         darkMode={darkMode}
         ref={ref}

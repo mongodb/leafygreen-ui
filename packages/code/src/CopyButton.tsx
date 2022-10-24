@@ -2,57 +2,52 @@ import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Mode } from './types';
 import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
 
-const copiedStyle = css`
-  color: ${palette.white};
-  background-color: ${palette.green.dark1};
 
-  &:focus {
+const copiedThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     color: ${palette.white};
+    background-color: ${palette.green.dark1};
 
-    &:before {
-      background-color: ${palette.green.dark1};
-    }
-  }
-
-  &:hover {
-    color: ${palette.white};
-
-    &:before {
-      background-color: ${palette.green.dark1};
-    }
-  }
-`;
-
-function getCopyButtonStyle(mode: Mode): string {
-  const baseStyle = css`
-    align-self: center;
-    color: ${palette.gray.base};
-  `;
-
-  // TODO: Refresh - Update these styles
-  const darkModeStyles = css`
-    color: ${uiColors.gray.light2};
-
-    &:hover {
-      color: ${uiColors.gray.light3};
+    &:focus, &:hover  {
+      color: ${palette.white};
 
       &:before {
-        background-color: ${uiColors.gray.dark3};
+        background-color: ${palette.green.dark1};
       }
     }
-  `;
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark3};
+    background-color: ${palette.green.dark1};
 
-  return cx(baseStyle, {
-    [darkModeStyles]: mode === Mode.Dark,
-  });
-}
+    &:focus, &:hover {
+      color: ${palette.gray.dark3};
+
+      &:before {
+        background-color: ${palette.green.dark1};
+      }
+    }
+  `
+};
+
+const copyButtonThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+  align-self: center;
+  color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+  align-self: center;
+  color: ${palette.gray.light1};
+  `
+};
 
 interface CopyProps {
   onCopy?: Function;
@@ -104,8 +99,8 @@ function CopyButton({ onCopy, contents, darkMode }: CopyProps) {
       ref={setButtonNode}
       darkMode={darkMode}
       aria-label="Copy"
-      className={cx(getCopyButtonStyle(mode), {
-        [copiedStyle]: copied,
+      className={cx(copyButtonThemeStyles[mode], {
+        [copiedThemeStyle[mode]]: copied,
       })}
       onClick={handleClick}
     >
