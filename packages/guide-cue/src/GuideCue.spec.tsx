@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import {
   act,
   render,
@@ -39,12 +39,10 @@ const GuideCueWrapper = ({
   buttonText = buttonTextDefault,
   currentStep = 1,
   numberOfSteps = 1,
+  refEl,
   ...props
 }: Partial<React.ComponentProps<typeof GuideCue>>) => {
   const [open, setOpen] = useState(initialOpen);
-
-  const elem = document.createElement('div');
-  const ref = { current: elem };
 
   return (
     <GuideCue
@@ -52,7 +50,7 @@ const GuideCueWrapper = ({
       setOpen={setOpen}
       data-testid={guideCueTestId}
       title={guideCueTitle}
-      refEl={ref}
+      refEl={refEl as React.RefObject<HTMLElement>}
       buttonText={buttonText}
       currentStep={currentStep}
       numberOfSteps={numberOfSteps}
@@ -66,10 +64,13 @@ const GuideCueWrapper = ({
 function renderGuideCue(
   props: Partial<React.ComponentProps<typeof GuideCue>> = {},
 ) {
+  const elem = document.createElement('div');
+  document.body.appendChild(elem);
+  const ref = { current: elem };
   const utils = render(
     <>
       <div data-testid="backdrop" />
-      <GuideCueWrapper {...props} />
+      <GuideCueWrapper refEl={ref} {...props} />
     </>,
   );
 
@@ -95,9 +96,9 @@ describe('packages/guide-cue', () => {
     });
 
     test('is not visible when open is "false"', async () => {
-      const { queryByRole } = renderGuideCue({ open: true });
+      const { queryByRole } = renderGuideCue({ open: false });
       const guideCue = queryByRole('dialog');
-      await waitFor(() => expect(guideCue).not.toBeVisible());
+      await waitFor(() => expect(guideCue).not.toBeInTheDocument());
     });
 
     test('is rendered if numberOfSteps < 1', async () => {
