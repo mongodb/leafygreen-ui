@@ -5,9 +5,6 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { Size } from './types';
 
-/**
- * Styles
- */
 export const wrapperStyle = css`
   display: flex;
   gap: 8px;
@@ -35,14 +32,22 @@ export const optionsWrapperStyleSize: Record<Size, string> = {
     --segment-gap: 1px; // space between segments
     --wrapper-padding: 0px;
     --indicator-height: 100%;
+    --outer-radius: 6px;
+    --indicator-radius: 6px;
   `,
   [Size.Default]: css`
     --segment-gap: 5px; // space between segments
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
+    --wrapper-padding: 3px;
+    --outer-radius: 8px;
+    --indicator-radius: 6px;
   `,
   [Size.Large]: css`
     --segment-gap: 5px; // space between segments
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
+    --outer-radius: 8px;
+    --wrapper-padding: 3px;
+    --indicator-radius: 6px;
   `,
 };
 
@@ -60,45 +65,10 @@ export const optionsWrapperStyleTheme: Record<Theme, string> = {
     --border-color: rgba(255, 255, 255, 0);
     --inner-shadow: 0px 0px 0px 1px ${palette.gray.dark1} inset;
     --outer-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0);
-    --hover-background-color: ${palette.gray.dark3};
+    --hover-background-color: ${palette.gray.dark2};
     --indicator-background-color: ${palette.gray.light2};
     --indicator-border-color: ${palette.gray.light2};
   `,
-};
-
-export const optionWrapperRadiusStyle: Record<Theme, Record<Size, string>> = {
-  [Theme.Light]: {
-    [Size.Small]: css`
-      --outer-radius: 6px;
-      --indicator-radius: 6px;
-    `,
-    [Size.Default]: css`
-      --wrapper-padding: 3px;
-      --outer-radius: 8px;
-      --indicator-radius: 6px;
-    `,
-    [Size.Large]: css`
-      --outer-radius: 9px;
-      --wrapper-padding: 3px;
-      --indicator-radius: 6px;
-    `,
-  },
-  [Theme.Dark]: {
-    [Size.Small]: css`
-      --outer-radius: 4px;
-      --indicator-radius: 6px;
-    `,
-    [Size.Default]: css`
-      --wrapper-padding: 2px;
-      --outer-radius: 6px;
-      --indicator-radius: 4px;
-    `,
-    [Size.Large]: css`
-      --wrapper-padding: 2px;
-      --outer-radius: 6px;
-      --indicator-radius: 4px;
-    `,
-  },
 };
 
 export const optionsWrapperStyle = ({
@@ -111,7 +81,6 @@ export const optionsWrapperStyle = ({
   cx(
     optionsWrapperStyleSize[size],
     optionsWrapperStyleTheme[theme],
-    optionWrapperRadiusStyle[theme][size],
     css`
       position: relative;
       display: grid;

@@ -44,6 +44,7 @@ export const optionSizeStyle: Record<Size, string> = {
     --text-transform: uppercase;
     --font-weight: 700;
     --divider-height: 12px;
+    --padding-block: 3px;
   `,
   [Size.Default]: css`
     --font-size: 13px;
@@ -52,6 +53,7 @@ export const optionSizeStyle: Record<Size, string> = {
     --text-transform: none;
     --font-weight: 500;
     --divider-height: 18px;
+    --padding-block: 3px;
   `,
   [Size.Large]: css`
     --font-size: 16px;
@@ -60,32 +62,8 @@ export const optionSizeStyle: Record<Size, string> = {
     --text-transform: none;
     --font-weight: 500;
     --divider-height: 20px;
+    --padding-block: 4px;
   `,
-};
-
-export const optionPaddingStyle: Record<Theme, Record<Size, string>> = {
-  [Theme.Light]: {
-    [Size.Small]: css`
-      --padding-block: 3px;
-    `,
-    [Size.Default]: css`
-      --padding-block: 3px;
-    `,
-    [Size.Large]: css`
-      --padding-block: 4px;
-    `,
-  },
-  [Theme.Dark]: {
-    [Size.Small]: css`
-      --padding-block: 3px;
-    `,
-    [Size.Default]: css`
-      --padding-block: 4px;
-    `,
-    [Size.Large]: css`
-      --padding-block: 5px;
-    `,
-  },
 };
 
 export const optionStyle = ({
@@ -100,7 +78,6 @@ export const optionStyle = ({
   cx(
     optionThemeStyle[theme],
     optionSizeStyle[size],
-    optionPaddingStyle[theme][size],
     css`
       position: relative;
       display: flex;
@@ -205,7 +182,17 @@ export const buttonFocusStyle: Record<Mode, string> = {
 export const labelStyle = css`
   min-height: var(--line-height);
   gap: calc(var(--font-size) / 2);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+
+  span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
 `;

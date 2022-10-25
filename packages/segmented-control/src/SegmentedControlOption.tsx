@@ -65,7 +65,7 @@ export const SegmentedControlOption = forwardRef<
       if (didComponentMount.current) {
         // usingKeyboard: Returns if the keyboard is being used.
         // focused: Returns if this option should be the item in focus.
-        // isfocusInComponent: Returns if the focus should organically be this component. Without this check focus will be hijacked to this component if `usingKeyboard` is updated to true.
+        // isfocusInComponent: Returns if the focus should organically be this component. Without this check this component will hijack the focus if `usingKeyboard` is updated to true.
         if (usingKeyboard && focused && isfocusInComponent) {
           // Respond in the DOM when this option is given focus via keyboard
           buttonRef?.current?.focus();
