@@ -304,18 +304,8 @@ export function Option(_: OptionProps): JSX.Element {
 
 Option.displayName = 'Option';
 
-const textPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
-
 Option.propTypes = {
-  children: PropTypes.oneOfType([
-    textPropType,
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        textPropType,
-        PropTypes.oneOf([false, null, undefined, '']),
-      ]),
-    ),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   glyph: PropTypes.element,
   value: PropTypes.string,
