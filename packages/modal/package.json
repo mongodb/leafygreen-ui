@@ -34,7 +34,7 @@
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^17.0.0"
+    "@leafygreen-ui/button": "^16.2.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.3.5"
