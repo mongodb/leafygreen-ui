@@ -5,9 +5,7 @@
 ### Patch Changes
 
 - Updated dependencies [0b6435fa]
-  - @leafygreen-ui/button@17.0.0
-  - @leafygreen-ui/modal@11.0.0
-  - @leafygreen-ui/text-input@11.0.0
+  - @leafygreen-ui/button@16.1.2
 
 ## 3.1.1
 

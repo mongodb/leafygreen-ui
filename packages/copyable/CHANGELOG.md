@@ -2,16 +2,18 @@
 
 ## 7.0.0
 
+### Major Changes
+
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ### Patch Changes
 
 - Updated dependencies [0b6435fa]
 - Updated dependencies [7162f1ab]
 - Updated dependencies [e399f1b9]
-- Updated dependencies [e399f1b9]
-  - @leafygreen-ui/button@17.0.0
+  - @leafygreen-ui/button@16.1.2
   - @leafygreen-ui/tooltip@8.0.0
-  - @leafygreen-ui/leafygreen-provider@3.0.0
-  - @leafygreen-ui/typography@14.0.0
 
 ## 6.0.3
 

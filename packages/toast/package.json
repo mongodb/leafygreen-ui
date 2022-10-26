@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/toast",
-  "version": "3.0.0",
+  "version": "2.0.3",
   "description": "leafyGreen UI Kit Toast",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -33,7 +33,7 @@
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "3.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^2.3.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",
   "repository": {

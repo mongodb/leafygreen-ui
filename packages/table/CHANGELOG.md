@@ -1,14 +1,5 @@
 # @leafygreen-ui/table
 
-## 7.0.0
-
-### Patch Changes
-
-- Updated dependencies [e399f1b9]
-- Updated dependencies [e399f1b9]
-  - @leafygreen-ui/leafygreen-provider@3.0.0
-  - @leafygreen-ui/icon-button@14.0.0
-
 ## 6.1.1
 
 ### Patch Changes

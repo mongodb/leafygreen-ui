@@ -1,11 +1,5 @@
 # @leafygreen-ui/toggle
 
-## 8.0.6
-
-### Patch Changes
-
-- @leafygreen-ui/interaction-ring@5.0.0
-
 ## 8.0.5
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-group",
-  "version": "8.1.2",
+  "version": "8.1.1",
   "description": "leafyGreen UI Kit RadioGroup",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
-    "@leafygreen-ui/interaction-ring": "^5.0.0",
+    "@leafygreen-ui/interaction-ring": "^4.0.3",
     "@leafygreen-ui/lib": "^9.5.1",
     "@leafygreen-ui/palette": "^3.4.4",
     "@leafygreen-ui/tokens": "^1.3.4"

@@ -11,8 +11,6 @@
 - Updated dependencies [e399f1b9]
 - Updated dependencies [e399f1b9]
   - @leafygreen-ui/leafygreen-provider@3.0.0
-  - @leafygreen-ui/popover@10.0.0
-  - @leafygreen-ui/typography@14.0.0
 
 ## 7.1.3
 

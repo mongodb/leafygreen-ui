@@ -1,13 +1,5 @@
 # @leafygreen-ui/tabs
 
-## 10.0.0
-
-### Patch Changes
-
-- Updated dependencies [e399f1b9]
-- Updated dependencies [e399f1b9]
-  - @leafygreen-ui/leafygreen-provider@3.0.0
-
 ## 9.2.1
 
 ### Patch Changes
