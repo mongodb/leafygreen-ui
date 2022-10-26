@@ -12,7 +12,7 @@ Exposes a `setDarkMode` function form the `useDarkMode` hook.
 
 const MyComponent = () => {
   const { setDarkMode } = useDarkMode()
-  ... 
+  ...
 }
 ```
 
