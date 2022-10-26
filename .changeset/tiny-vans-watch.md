@@ -3,18 +3,17 @@
 ---
 
 Exposes a `setDarkMode` function form the `useDarkMode` hook.
-Note that the value can still be controlled externally by the prop on LeafyGreenProvider. The value of the last update is used as the context state.
 
 ```jsx
 <LeafyGreenProvider darkMode={true}>
   <MyComponent />
 </LeafyGreenProvider>
-
 ...
 
 const MyComponent = () => {
   const { setDarkMode } = useDarkMode()
-  ... 
-
+  ...
 }
 ```
+
+Note: If the value of `darkMode` passed into LeafyGreenProvider changes between renders (e.g. from an external `useState` call) then this new value will be used until the next `setDarkMode` call.
