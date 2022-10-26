@@ -1,14 +1,18 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import UsingKeyboardProvider from './UsingKeyboardContext';
 import TypographyProvider, {
   TypographyProviderProps,
+  useBaseFontSize,
 } from './TypographyContext';
-import PortalContextProvider, { PortalContextValues } from './PortalContext';
-import DarkModeProvider from './DarkModeContext';
+import PortalContextProvider, {
+  PortalContextValues,
+  usePopoverPortalContainer,
+} from './PortalContext';
+import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-type LeafyGreenProviderProps = {
+export type LeafyGreenProviderProps = {
   /**
    * Define a container HTMLElement for components that utilize the `Portal` component
    */
@@ -18,15 +22,37 @@ type LeafyGreenProviderProps = {
 
 function LeafyGreenProvider({
   children,
-  baseFontSize,
-  popoverPortalContainer,
-  darkMode,
+  baseFontSize: fontSizeProp,
+  popoverPortalContainer: popoverPortalContainerProp,
+  darkMode: darkModeProp,
 }: PropsWithChildren<LeafyGreenProviderProps>) {
+  // if the prop is set, we use that
+  // if the prop is not set, we use outer context
+  const { contextDarkMode: inheritedDarkMode } = useDarkModeContext();
+  const [darkModeState, setDarkMode] = useState(
+    darkModeProp ?? inheritedDarkMode,
+  );
+
+  useEffect(() => {
+    setDarkMode(darkModeProp ?? inheritedDarkMode);
+  }, [darkModeProp, inheritedDarkMode]);
+
+  // Similarly with base font size
+  const inheritedFontSize = useBaseFontSize();
+  const baseFontSize = fontSizeProp ?? inheritedFontSize;
+  // and popover portal container
+  const inheritedContainer = usePopoverPortalContainer();
+  const popoverPortalContainer =
+    popoverPortalContainerProp ?? inheritedContainer;
+
   return (
     <UsingKeyboardProvider>
       <PortalContextProvider popover={popoverPortalContainer}>
         <TypographyProvider baseFontSize={baseFontSize}>
-          <DarkModeProvider globalDarkMode={darkMode}>
+          <DarkModeProvider
+            contextDarkMode={darkModeState}
+            setDarkMode={setDarkMode}
+          >
             {children}
           </DarkModeProvider>
         </TypographyProvider>
