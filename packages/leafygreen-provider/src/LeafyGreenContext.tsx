@@ -26,13 +26,9 @@ function LeafyGreenProvider({
   popoverPortalContainer: popoverPortalContainerProp,
   darkMode: darkModeProp,
 }: PropsWithChildren<LeafyGreenProviderProps>) {
-  // If a darkMode prop is not set,
-  // then we want to check if there's an outer dark mode context.
-
   // if the prop is set, we use that
   // if the prop is not set, we use outer context
   const { contextDarkMode: inheritedDarkMode } = useDarkModeContext();
-  // const darkMode = darkModeProp ?? inheritedDarkMode;
   const [darkModeState, setDarkMode] = useState(
     darkModeProp ?? inheritedDarkMode,
   );

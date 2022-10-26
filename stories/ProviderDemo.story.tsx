@@ -13,7 +13,6 @@ export default {
 
 const DarkModeComponent = () => {
   const { darkMode, theme, setDarkMode } = useDarkMode();
-  // console.log({ darkMode, theme });
 
   return (
     <Card darkMode={darkMode}>
