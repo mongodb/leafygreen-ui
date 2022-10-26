@@ -25,7 +25,9 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
 import SvgNotch from './Notch';
 import { borderRadius, notchWidth } from './tooltipConstants';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -186,7 +188,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.children Content to appear inside of Tooltip.
  * @param props.open Boolean to describe whether or not Tooltip is open.
  * @param props.setOpen Callback to change the open state of the Tooltip.
- * @param props.darkMode Whether the Tooltip will apepar in dark mode.
+ * @param props.darkMode Whether the Tooltip will appear in dark mode.
  * @param props.className Classname applied to Tooltip.
  * @param props.align Alignment of Tooltip relative to trigger: `top`, `bottom`, `left`, `right`.
  * @param props.justify Justification of Tooltip relative to trigger: `start`, `middle`, `end`.
@@ -232,7 +234,7 @@ function Tooltip({
 
   const existingId = id ?? tooltipNode?.id;
   const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });
-  const { theme } = useDarkMode(darkThemeProp);
+  const { darkMode: localDarkMode, theme } = useDarkMode(darkThemeProp);
 
   useEffect(() => {
     // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
@@ -310,7 +312,7 @@ function Tooltip({
        *
        * This handler is added to the document.
        * No need to check whether the click target is the trigger node
-       * since clicks on that element are stopped from propogating by the <Popover>
+       * since clicks on that element are stopped from propagating by the <Popover>
        */
       if (tooltipNode && !tooltipNode.contains(e.target as HTMLElement)) {
         handleClose();
@@ -374,38 +376,42 @@ function Tooltip({
         });
 
         return (
-          <div
-            role="tooltip"
-            {...rest}
-            id={tooltipId}
-            className={cx(
-              baseStyles,
-              tooltipNotchStyle,
-              colorSet[theme].tooltip,
-              {
-                [minHeightStyle]: isLeftOrRightAligned,
-              },
-              className,
-            )}
-            ref={setTooltipNode}
-          >
+          // Establish a new DarkMode context so any LG components inherit the correct value
+          // (since tooltip backgrounds are inverse to the outer context's theme)
+          <LeafyGreenProvider darkMode={!localDarkMode}>
             <div
+              role="tooltip"
+              {...rest}
+              id={tooltipId}
               className={cx(
-                baseTypeStyle,
-                bodyTypeScaleStyles[size],
-                colorSet[theme].children,
+                baseStyles,
+                tooltipNotchStyle,
+                colorSet[theme].tooltip,
+                {
+                  [minHeightStyle]: isLeftOrRightAligned,
+                },
+                className,
               )}
+              ref={setTooltipNode}
             >
-              {children}
-            </div>
+              <div
+                className={cx(
+                  baseTypeStyle,
+                  bodyTypeScaleStyles[size],
+                  colorSet[theme].children,
+                )}
+              >
+                {children}
+              </div>
 
-            <div className={notchContainerStyle}>
-              <SvgNotch
-                className={cx(notchStyle)}
-                fill={colorSet[theme].notchFill}
-              />
+              <div className={notchContainerStyle}>
+                <SvgNotch
+                  className={cx(notchStyle)}
+                  fill={colorSet[theme].notchFill}
+                />
+              </div>
             </div>
-          </div>
+          </LeafyGreenProvider>
         );
       }}
     </Popover>
