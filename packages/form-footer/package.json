@@ -28,7 +28,7 @@
     "@leafygreen-ui/palette": "^3.4.4"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^2.3.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-footer",
   "repository": {

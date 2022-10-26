@@ -7,7 +7,6 @@
 - Updated dependencies [0b6435fa]
 - Updated dependencies [f21e42a0]
 - Updated dependencies [e399f1b9]
-- Updated dependencies [e399f1b9]
   - @leafygreen-ui/button@16.1.2
   - @leafygreen-ui/select@7.1.3
 

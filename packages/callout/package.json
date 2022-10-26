@@ -28,7 +28,7 @@
     "@leafygreen-ui/typography": "^13.2.1"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^13.0.0"
+    "@leafygreen-ui/code": "^12.1.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.3.5"

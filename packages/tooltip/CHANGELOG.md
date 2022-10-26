@@ -2,15 +2,14 @@
 
 ## 8.0.0
 
+### Major Changes
+
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ### Minor Changes
 
 - 7162f1ab: Establishes a new DarkMode context inside tooltip. Now any LeafyGreen components that use dark mode context will appear correctly inside a tooltip
-
-### Patch Changes
-
-- Updated dependencies [e399f1b9]
-- Updated dependencies [e399f1b9]
-  - @leafygreen-ui/leafygreen-provider@3.0.0
 
 ## 7.1.3
 
