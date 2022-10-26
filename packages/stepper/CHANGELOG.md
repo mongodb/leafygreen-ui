@@ -1,5 +1,13 @@
 # @leafygreen-ui/stepper
 
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies [7162f1ab]
+  - @leafygreen-ui/tooltip@8.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 3.1.1
 
 ### Patch Changes
