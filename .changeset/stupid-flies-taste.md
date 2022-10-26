@@ -14,4 +14,4 @@ For example:
 </LeafyGreenProvider>
 ```
 
-[*] Will be converted to 13 with `useUpdatedBaseFontSize`
+[*] Will be converted to 13 in redesigned components
