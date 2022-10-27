@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Mode, spacing } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Button, { ButtonProps } from '@leafygreen-ui/button';
 import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { Select, Option } from '@leafygreen-ui/select';
 import { LanguageOption, PopoverProps } from './types';
 import { palette } from '@leafygreen-ui/palette';
+import CodeContext from './CodeContext';
 
 const containerStyle = css`
   display: flex;
@@ -45,8 +46,8 @@ const menuButtonStyle = css`
   }
 `;
 
-const buttonModeStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const buttonModeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     background-color: ${palette.white};
     border-right: 1px solid ${palette.gray.light2};
     box-shadow: 0 0 0 0;
@@ -61,7 +62,7 @@ const buttonModeStyle: Record<Mode, string> = {
       background-color: ${palette.gray.light2};
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     background-color: ${palette.gray.dark2};
     border-right: 1px solid ${palette.gray.dark1};
     color: ${palette.gray.light2};
@@ -79,13 +80,13 @@ const buttonModeStyle: Record<Mode, string> = {
   `,
 };
 
-const buttonFocusStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
+const buttonFocusStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     &:focus {
       background-color: ${palette.blue.light2};
     }
   `,
-  [Mode.Dark]: css`
+  [Theme.Dark]: css`
     &:focus {
       background-color: ${palette.blue.light1};
     }
@@ -113,14 +114,12 @@ interface Props extends PopoverProps {
   language: LanguageOption;
   languageOptions: Array<LanguageOption>;
   onChange: (arg0: LanguageOption) => void;
-  darkMode?: boolean;
 }
 
 function LanguageSwitcher({
   language,
   languageOptions,
   onChange,
-  darkMode,
   usePortal,
   portalClassName,
   portalContainer,
@@ -128,7 +127,7 @@ function LanguageSwitcher({
   popoverZIndex,
 }: Props) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const mode = darkMode ? 'dark' : 'light';
+  const { theme, darkMode } = useContext(CodeContext);
 
   const previousLanguage = usePrevious(language);
 
@@ -173,8 +172,8 @@ function LanguageSwitcher({
     ({ className, children, ...props }: ButtonProps, ref) => (
       <Button
         {...props}
-        className={cx(className, menuButtonStyle, buttonModeStyle[mode], {
-          [buttonFocusStyle[mode]]: showFocus,
+        className={cx(className, menuButtonStyle, buttonModeStyle[theme], {
+          [buttonFocusStyle[theme]]: showFocus,
         })}
         darkMode={darkMode}
         ref={ref}

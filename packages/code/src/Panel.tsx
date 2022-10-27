@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import CopyButton from './CopyButton';
 import LanguageSwitcher from './LanguageSwitcher';
 import { PopoverProps } from './types';
 import {
-  Mode,
   LanguageOption,
   LanguageSwitcher as LanguageSwitcherProps,
 } from './types';
 import { palette } from '@leafygreen-ui/palette';
+import CodeContext from './CodeContext';
+import { Theme } from '@leafygreen-ui/lib';
 
-function getSidebarVariantStyle(mode: Mode): string {
+function getSidebarVariantStyle(mode: Theme): string {
   switch (mode) {
-    case Mode.Light:
+    case Theme.Light:
       return css`
         background-color: ${palette.white};
         border-color: ${palette.gray.light2};
       `;
 
-    case Mode.Dark:
+    case Theme.Dark:
       return css`
         background-color: ${palette.gray.dark2};
         border-color: ${palette.gray.dark2};
@@ -27,7 +28,7 @@ function getSidebarVariantStyle(mode: Mode): string {
   }
 }
 
-function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
+function getPanelStyles(mode: Theme, withLanguageSwitcher: boolean) {
   const basePanelStyle = css`
     display: flex;
     align-items: center;
@@ -65,7 +66,6 @@ function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   onCopy?: Function;
   contents: string;
-  darkMode?: boolean;
   showCopyButton?: boolean;
   language?: LanguageOption;
   isMultiline?: boolean;
@@ -81,7 +81,6 @@ function Panel({
   onChange,
   onCopy,
   showCopyButton,
-  darkMode,
   customActionButtons,
   showCustomActionButtons,
   usePortal,
@@ -91,7 +90,7 @@ function Panel({
   popoverZIndex,
   className,
 }: PanelProps) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme, darkMode } = useContext(CodeContext);
 
   const popoverProps = {
     popoverZIndex,
@@ -103,7 +102,7 @@ function Panel({
 
   return (
     <div
-      className={cx(getPanelStyles(mode, !!language), className)}
+      className={cx(getPanelStyles(theme, !!language), className)}
       data-testid="leafygreen-code-panel"
     >
       {language !== undefined &&
@@ -113,7 +112,6 @@ function Panel({
             onChange={onChange}
             language={language}
             languageOptions={languageOptions}
-            darkMode={darkMode}
             {...popoverProps}
           />
         )}
