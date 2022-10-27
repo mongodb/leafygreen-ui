@@ -27,17 +27,20 @@ const staticWidthTextStyle = ({
     /* Inherit relevant properties from the parent */
     font-weight: inherit;
     font-size: inherit;
-    white-space: inherit;
-    overflow: inherit;
-    text-overflow: inherit;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     position: relative;
+
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     text-decoration: none;
     min-width: 0;
+    max-width: 100%;
 
     ${pseudoSelector} {
       content: attr(data-text);

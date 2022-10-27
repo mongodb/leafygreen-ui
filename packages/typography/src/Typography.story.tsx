@@ -19,6 +19,7 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import Icon from '@leafygreen-ui/icon';
 
 const wrapperStyles = css`
   padding: 0;
@@ -169,13 +170,6 @@ export const AllTypography = ({
 };
 
 export const StaticWidthTextStory = () => {
-  const textWrapper = css`
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  `;
-
   const hoverBold = css`
     font-weight: 400;
     cursor: pointer;
@@ -187,59 +181,75 @@ export const StaticWidthTextStory = () => {
     }
   `;
 
+  const tabStyle = css`
+    outline: 1px solid ${palette.blue.light1};
+    padding: 10px;
+    width: max-content;
+    max-width: 200px;
+  `;
+
+  const buttonStyle = css`
+    outline: 1px solid gray;
+    padding: 10px;
+    width: max-content;
+    max-width: 148px;
+    display: flex;
+    align-items: center;
+  `;
+
   return (
-    <>
+    <div
+      className={css`
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 20px;
+      `}
+    >
       <div
         className={css`
-          outline: 1px solid gray;
-          padding: 10px;
           display: flex;
-          gap: 2px;
         `}
       >
-        <div className={textWrapper}>
+        <div className={tabStyle}>
           <StaticWidthText className={hoverBold}>Some Tabs</StaticWidthText>
         </div>
-        <div className={textWrapper}>
+        <div className={tabStyle}>
           <StaticWidthText
             className={cx(
               hoverBold,
               css`
-                max-width: 100%;
+                flex: 1;
               `,
             )}
           >
             Some long text that will be truncated eventually because its long
           </StaticWidthText>
         </div>
-        <div className={textWrapper}>
+        <div className={tabStyle}>
           <StaticWidthText className={hoverBold}>
             Some more text
           </StaticWidthText>
         </div>
       </div>
-
-      <div
-        className={css`
-          outline: 1px solid gray;
-          padding: 10px;
-          width: 150px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        `}
-      >
+      <br />
+      <div className={cx(hoverBold, buttonStyle)}>
+        <StaticWidthText>Some button</StaticWidthText>
+        <Icon glyph="CaretDown" />
+      </div>
+      <br />
+      <div className={cx(hoverBold, buttonStyle)}>
         <StaticWidthText
           className={cx(
-            hoverBold,
             css`
-              max-width: 100%;
+              flex: 1;
             `,
           )}
         >
-          Some long text that will be truncated eventually because its long
+          Some long text button that should be truncated
         </StaticWidthText>
+        <Icon glyph="CaretDown" />
       </div>
-    </>
+    </div>
   );
 };
