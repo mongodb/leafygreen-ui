@@ -3,13 +3,13 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
+import { Mode, spacing } from '@leafygreen-ui/tokens';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Button, { ButtonProps } from '@leafygreen-ui/button';
 import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { Select, Option } from '@leafygreen-ui/select';
 import { LanguageOption, PopoverProps } from './types';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
   display: flex;
@@ -45,12 +45,11 @@ const menuButtonStyle = css`
   }
 `;
 
-const buttonModeStyle = {
-  light: css`
+const buttonModeStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
     background-color: ${palette.white};
     border-right: 1px solid ${palette.gray.light2};
     box-shadow: 0 0 0 0;
-    font-family: ${fontFamilies.default};
 
     &:hover,
     &:active,
@@ -62,41 +61,40 @@ const buttonModeStyle = {
       background-color: ${palette.gray.light2};
     }
   `,
-  dark: css`
-    background-color: ${uiColors.gray.dark2};
+  [Mode.Dark]: css`
+    background-color: ${palette.gray.dark2};
     border-right: 1px solid ${palette.gray.dark1};
-    font-family: ${fontFamilies.legacy};
     color: ${palette.gray.light2};
 
     &:hover,
     &:focus,
     &:active {
-      border-right: 1px solid ${uiColors.gray.dark2};
+      border-right: 1px solid ${palette.gray.dark2};
     }
 
     &:hover,
     &:active {
-      background-color: ${uiColors.gray.dark1};
+      background-color: ${palette.gray.dark1};
     }
   `,
 };
 
-const buttonFocusStyle = {
-  light: css`
+const buttonFocusStyle: Record<Mode, string> = {
+  [Mode.Light]: css`
     &:focus {
       background-color: ${palette.blue.light2};
     }
   `,
-  dark: css`
+  [Mode.Dark]: css`
     &:focus {
-      background-color: ${uiColors.focus};
+      background-color: ${palette.blue.light1};
     }
   `,
 };
 
 const selectStyle = css`
   min-width: 144px;
-  height: 100%;s
+  height: 100%;
 `;
 
 const iconMargin = css`
@@ -151,7 +149,7 @@ function LanguageSwitcher({
   const iconStyle = cx(
     iconMargin,
     css`
-      color: ${darkMode ? uiColors.white : uiColors.gray.dark1};
+      color: ${darkMode ? palette.gray.light1 : palette.gray.base};
     `,
   );
 
@@ -176,7 +174,7 @@ function LanguageSwitcher({
       <Button
         {...props}
         className={cx(className, menuButtonStyle, buttonModeStyle[mode], {
-          [buttonFocusStyle[mode]]: showFocus
+          [buttonFocusStyle[mode]]: showFocus,
         })}
         darkMode={darkMode}
         ref={ref}

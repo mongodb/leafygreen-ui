@@ -10,13 +10,13 @@ import { Mode } from './types';
 import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 
-
 const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.white};
     background-color: ${palette.green.dark1};
 
-    &:focus, &:hover  {
+    &:focus,
+    &:hover {
       color: ${palette.white};
 
       &:before {
@@ -28,25 +28,26 @@ const copiedThemeStyle: Record<Theme, string> = {
     color: ${palette.gray.dark3};
     background-color: ${palette.green.dark1};
 
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
       color: ${palette.gray.dark3};
 
       &:before {
         background-color: ${palette.green.dark1};
       }
     }
-  `
+  `,
 };
 
 const copyButtonThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-  align-self: center;
-  color: ${palette.gray.base};
+    align-self: center;
+    color: ${palette.gray.base};
   `,
   [Theme.Dark]: css`
-  align-self: center;
-  color: ${palette.gray.light1};
-  `
+    align-self: center;
+    color: ${palette.gray.light1};
+  `,
 };
 
 interface CopyProps {

@@ -74,22 +74,22 @@ export default {
   },
   parameters: {
     controls: {
-    exclude : [
-      'showCustomActionButtons',
-      'showCustomButtons',
-      'customActionButtons',
-      'children',
-      'onCopy',
-      'className',
-      'onChange',
-      'portalClassName',
-      'portalContainer',
-      'scrollContainer',
-      'popoverZIndex',
-      'ref'
-    ]
-  }
-  }
+      exclude: [
+        'showCustomActionButtons',
+        'showCustomButtons',
+        'customActionButtons',
+        'children',
+        'onCopy',
+        'className',
+        'onChange',
+        'portalClassName',
+        'portalContainer',
+        'scrollContainer',
+        'popoverZIndex',
+        'ref',
+      ],
+    },
+  },
 };
 
 const Template: Story<CodeProps> = args => <Code {...args}>{jsSnippet}</Code>;

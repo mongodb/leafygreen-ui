@@ -49,7 +49,7 @@ const contentWrapperStyles = css`
   grid-template-columns: auto 38px;
   border-radius: inherit;
   z-index: 0; // new stacking context
-  overflow: hidden; // for safari
+  // overflow: hidden; // for safari
 `;
 
 const contentWrapperStylesNoPanel = css`
@@ -174,13 +174,15 @@ const scrollShadowStylesWithPicker = css`
 `;
 
 function getScrollShadow(scrollState: ScrollState, mode: Mode): string {
-    const dropShadowBefore = mode === Mode.Light
-  ? `0 0 8px 0 ${transparentize(0.75, 'black')}`
-  : `20px 0px 36px 0 ${transparentize(0.55, 'black')}`;
+  const dropShadowBefore =
+    mode === Mode.Light
+      ? `1px 0 10px 0 ${transparentize(0.75, 'black')}`
+      : `15px 0px 15px 0 ${transparentize(0.7, 'black')}`;
 
-  const dropShadowAfter = mode === Mode.Light
-  ? `0px 0px 8px ${transparentize(0.75, 'black')}`
-  : `-20px 0px 36px 0 ${transparentize(0.55, 'black')}`;
+  const dropShadowAfter =
+    mode === Mode.Light
+      ? `-1px 0px 10px ${transparentize(0.75, 'black')}`
+      : `-15px 0px 15px 0 ${transparentize(0.7, 'black')}`;
 
   return css`
     &:before {
@@ -193,7 +195,7 @@ function getScrollShadow(scrollState: ScrollState, mode: Mode): string {
     &:after {
       ${(scrollState === ScrollState.Both ||
         scrollState === ScrollState.Right) &&
-        `
+      `
         box-shadow: ${dropShadowAfter};
       `};
     }

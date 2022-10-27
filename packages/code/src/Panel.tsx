@@ -128,9 +128,13 @@ function Panel({
       )}
       {showCustomActionButtons && (
         // TODO: cloneElement can be removed when the provider is updated
-        <>{customActionButtons?.map((action: React.ReactElement) => React.cloneElement(action, {
-          darkMode: darkMode,
-        }))}</>
+        <>
+          {customActionButtons?.map((action: React.ReactElement) =>
+            React.cloneElement(action, {
+              darkMode: darkMode,
+            }),
+          )}
+        </>
       )}
     </div>
   );

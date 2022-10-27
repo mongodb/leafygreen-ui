@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { variantColors } from './globalStyles';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Light: 'light',
@@ -30,7 +30,7 @@ const windowChromeStyle = css`
 const textStyle = css`
   padding-left: ${controlSpacing}px;
   padding-right: ${controlSpacing}px;
-  font-size: 14px;
+  font-size: ${typeScales.body1.fontSize}px;
 `;
 interface WindowChromeProps {
   darkMode?: boolean;
@@ -52,12 +52,6 @@ function WindowChrome({
           background-color: ${colors[1]};
           color: ${colors[2]};
         `,
-        {
-          // TODO: Refresh - remove darkModee logic
-          [css`
-            font-family: ${fontFamilies.legacy};
-          `]: darkMode,
-        },
       )}
     >
       <div className={textStyle}>{chromeTitle}</div>
