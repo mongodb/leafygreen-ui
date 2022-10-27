@@ -9,7 +9,7 @@ import {
   LanguageOption,
   LanguageSwitcher as LanguageSwitcherProps,
 } from './types';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 
 function getSidebarVariantStyle(mode: Mode): string {
   switch (mode) {
@@ -21,9 +21,8 @@ function getSidebarVariantStyle(mode: Mode): string {
 
     case Mode.Dark:
       return css`
-        // TODO: Refresh - update these colors
-        background-color: ${uiColors.gray.dark2};
-        border-color: ${palette.gray.dark1};
+        background-color: ${palette.gray.dark2};
+        border-color: ${palette.gray.dark2};
       `;
   }
 }

@@ -13,7 +13,7 @@ import Syntax from './Syntax';
 import Panel from './Panel';
 import WindowChrome from './WindowChrome';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
 
 export function hasMultipleLines(string: string): boolean {
@@ -49,6 +49,7 @@ const contentWrapperStyles = css`
   grid-template-columns: auto 38px;
   border-radius: inherit;
   z-index: 0; // new stacking context
+  overflow: hidden; // for safari
 `;
 
 const contentWrapperStylesNoPanel = css`
@@ -145,14 +146,14 @@ const baseScrollShadowStyles = css`
     z-index: 1; // above the code
     top: 0;
     height: 100%;
-    width: 8px;
-    border-radius: 100%;
+    width: 40px;
+    border-radius: 40%;
     box-shadow: unset;
     transition: box-shadow 100ms ease-in-out;
   }
   &:before {
     grid-column: 1;
-    left: -8px;
+    left: -40px;
   }
   &:after {
     grid-column: 2; // Placed either under Panel, or on the right edge
@@ -173,25 +174,28 @@ const scrollShadowStylesWithPicker = css`
 `;
 
 function getScrollShadow(scrollState: ScrollState, mode: Mode): string {
-  const shadowColor =
-    mode === Mode.Light
-      ? transparentize(0.7, palette.gray.dark1)
-      : transparentize(0.7, uiColors.black);
+    const dropShadowBefore = mode === Mode.Light
+  ? `0 0 8px 0 ${transparentize(0.75, 'black')}`
+  : `20px 0px 36px 0 ${transparentize(0.55, 'black')}`;
 
-  const boxShadowStyle = css`
-    box-shadow: 0 0 10px 0 ${shadowColor};
-  `;
+  const dropShadowAfter = mode === Mode.Light
+  ? `0px 0px 8px ${transparentize(0.75, 'black')}`
+  : `-20px 0px 36px 0 ${transparentize(0.55, 'black')}`;
 
   return css`
     &:before {
       ${(scrollState === ScrollState.Both ||
         scrollState === ScrollState.Left) &&
-      boxShadowStyle};
+      css`
+        box-shadow: ${dropShadowBefore};
+      `};
     }
     &:after {
       ${(scrollState === ScrollState.Both ||
         scrollState === ScrollState.Right) &&
-      boxShadowStyle};
+        `
+        box-shadow: ${dropShadowAfter};
+      `};
     }
   `;
 }
