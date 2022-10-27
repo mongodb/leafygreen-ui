@@ -32,17 +32,17 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
   },
 
   [Mode.Dark]: {
-    0: palette.black,
-    1: palette.gray.dark2,
+    0: '#061621',
+    1: '#21313C',
     2: '#989498',
     3: '#B9B5B8',
-    4: palette.gray.dark2, // TODO: missing in figma
-    5: '#FF6F44', // TODO: missing
-    6: '#EDB210',// TODO: missing
-    7: '#8FC13E',
-    8: '#a5e3ff',// TODO: missing
-    9: '#FD8B19',
-    10: '#C85E7C',
+    4: palette.gray.dark2,
+    5: '#FF6F44',
+    6: '#EDB210',
+    7: '#35DE7B',
+    8: '#a5e3ff',
+    9: '#2dc4ff',
+    10: '#FF7DC3',
   },
 };
 
