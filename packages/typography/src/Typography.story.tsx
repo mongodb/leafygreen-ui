@@ -13,10 +13,12 @@ import {
   Description,
   Link,
 } from '.';
+import { StaticWidthText } from './utility/StaticWidthText';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 
 const wrapperStyles = css`
   padding: 0;
@@ -163,5 +165,81 @@ export const AllTypography = ({
         </div>
       </div>
     </LeafygreenProvider>
+  );
+};
+
+export const StaticWidthTextStory = () => {
+  const textWrapper = css`
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  `;
+
+  const hoverBold = css`
+    font-weight: 400;
+    cursor: pointer;
+    outline: 1px solid ${palette.red.light2};
+    outline-offset: -1px;
+
+    &:hover {
+      font-weight: 700;
+    }
+  `;
+
+  return (
+    <>
+      <div
+        className={css`
+          outline: 1px solid gray;
+          padding: 10px;
+          display: flex;
+          gap: 2px;
+        `}
+      >
+        <div className={textWrapper}>
+          <StaticWidthText className={hoverBold}>Some Tabs</StaticWidthText>
+        </div>
+        <div className={textWrapper}>
+          <StaticWidthText
+            className={cx(
+              hoverBold,
+              css`
+                max-width: 100%;
+              `,
+            )}
+          >
+            Some long text that will be truncated eventually because its long
+          </StaticWidthText>
+        </div>
+        <div className={textWrapper}>
+          <StaticWidthText className={hoverBold}>
+            Some more text
+          </StaticWidthText>
+        </div>
+      </div>
+
+      <div
+        className={css`
+          outline: 1px solid gray;
+          padding: 10px;
+          width: 150px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        `}
+      >
+        <StaticWidthText
+          className={cx(
+            hoverBold,
+            css`
+              max-width: 100%;
+            `,
+          )}
+        >
+          Some long text that will be truncated eventually because its long
+        </StaticWidthText>
+      </div>
+    </>
   );
 };
