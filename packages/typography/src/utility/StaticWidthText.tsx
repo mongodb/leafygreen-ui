@@ -65,8 +65,13 @@ const childWrapper = css`
 `;
 
 /**
- * Ensures that updating the font weight (of this component or the parent) does not affect the width of the component,
- * and prevents layout shift should the font weight change
+ * A wrapper component to ensure that updating the font weight does not affect the width of the element,
+ * and prevents layout shift should the font weight change.
+ *
+ * Useful for showing a bold effect on hover, focus, or active (See `Tabs`, `MenuItem`)
+ *
+ * Note: does not support wrapped text (i.e. text within a paragraph)
+ *
  */
 export function StaticWidthText<T extends keyof JSX.IntrinsicElements>({
   as = 'span' as T,
