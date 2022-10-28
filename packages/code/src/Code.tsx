@@ -53,7 +53,6 @@ const contentWrapperStyles = css`
   grid-template-columns: auto 38px;
   border-radius: inherit;
   z-index: 0; // new stacking context
-  // overflow: hidden; // for safari
 `;
 
 const contentWrapperStylesNoPanel = css`
