@@ -39,7 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
-      
+
       - name: Dispatch to Website repo
         uses: peter-evans/repository-dispatch@v2
         continue-on-error: true
@@ -63,4 +63,3 @@ jobs:
       - name: Publish mongodb.design with package updates
         if: steps.changesets.outputs.published == 'true'
         run: yarn publish:website
-

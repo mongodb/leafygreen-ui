@@ -1,5 +1,41 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.0.0
+
+### Major Changes
+
+- e399f1b9: Nested LeafyGreenProviders now inherit values from ancestor contexts.
+  For example:
+
+  ```jsx
+  <LeafyGreenProvider darkMode={true}>
+    Will have `darkMode == true` and `baseFontSize == 14`[*]
+    <LeafyGreenProvider baseFontSize={16}>
+      Will have `darkMode == true` and `baseFontSize == 16`
+    </LeafyGreenProvider>
+  </LeafyGreenProvider>
+  ```
+
+  [*] Will be converted to 13 in redesigned components
+
+### Minor Changes
+
+- e399f1b9: Exposes a `setDarkMode` function form the `useDarkMode` hook.
+
+  ```jsx
+  <LeafyGreenProvider darkMode={true}>
+    <MyComponent />
+  </LeafyGreenProvider>
+  ...
+
+  const MyComponent = () => {
+    const { setDarkMode } = useDarkMode()
+    ...
+  }
+  ```
+
+  Note: If the value of `darkMode` passed into LeafyGreenProvider changes between renders (e.g. from an external `useState` call) then this new value will be used until the next `setDarkMode` call.
+
 ## 2.3.5
 
 ### Patch Changes

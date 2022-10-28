@@ -1,5 +1,14 @@
 # @leafygreen-ui/button
 
+## 17.0.0
+
+### Patch Changes
+
+- 0b6435fa: Fixing bug where icon color was not changed when the Button was disabled
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ## 16.1.1
 
 ### Patch Changes
