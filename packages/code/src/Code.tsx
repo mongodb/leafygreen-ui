@@ -345,9 +345,7 @@ function Code({
   return (
     <CodeContext.Provider value={providerData}>
       <div className={wrapperStyle[theme]}>
-        {showWindowChrome && (
-          <WindowChrome chromeTitle={chromeTitle} darkMode={darkMode} />
-        )}
+        {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} />}
 
         <div
           className={cx(

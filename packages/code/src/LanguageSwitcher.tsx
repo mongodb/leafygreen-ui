@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
@@ -10,7 +10,7 @@ import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { Select, Option } from '@leafygreen-ui/select';
 import { LanguageOption, PopoverProps } from './types';
 import { palette } from '@leafygreen-ui/palette';
-import CodeContext from './CodeContext';
+import { useCodeContext } from './CodeContext';
 
 const containerStyle = css`
   display: flex;
@@ -127,8 +127,7 @@ function LanguageSwitcher({
   popoverZIndex,
 }: Props) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const { theme, darkMode } = useContext(CodeContext);
-
+  const { theme, darkMode } = useCodeContext();
   const previousLanguage = usePrevious(language);
 
   const handleChange = (val: string) => {

@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { variantColors } from './globalStyles';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
+import { useCodeContext } from './CodeContext';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 
 export const windowChromeHeight = 28;
 const controlSize = 12;
@@ -27,22 +23,27 @@ const windowChromeStyle = css`
   font-family: ${fontFamilies.default};
 `;
 
+const windowChromeThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark2};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+  `,
+};
+
 const textStyle = css`
   padding-left: ${controlSpacing}px;
   padding-right: ${controlSpacing}px;
   font-size: ${typeScales.body1.fontSize}px;
 `;
 interface WindowChromeProps {
-  darkMode?: boolean;
   chromeTitle?: string;
 }
 
-function WindowChrome({
-  darkMode = false,
-  chromeTitle = '',
-}: WindowChromeProps) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
-  const colors = variantColors[mode];
+function WindowChrome({ chromeTitle = '' }: WindowChromeProps) {
+  const { theme } = useCodeContext();
+  const colors = variantColors[theme];
 
   return (
     <div
@@ -50,8 +51,8 @@ function WindowChrome({
         windowChromeStyle,
         css`
           background-color: ${colors[1]};
-          color: ${colors[2]};
         `,
+        windowChromeThemeStyles[theme],
       )}
     >
       <div className={textStyle}>{chromeTitle}</div>

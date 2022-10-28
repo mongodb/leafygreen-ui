@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import CopyButton from './CopyButton';
@@ -9,7 +9,7 @@ import {
   LanguageSwitcher as LanguageSwitcherProps,
 } from './types';
 import { palette } from '@leafygreen-ui/palette';
-import CodeContext from './CodeContext';
+import { useCodeContext } from './CodeContext';
 import { Theme } from '@leafygreen-ui/lib';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
@@ -91,7 +91,7 @@ function Panel({
   popoverZIndex,
   className,
 }: PanelProps) {
-  const { theme, darkMode } = useContext(CodeContext);
+  const { theme, darkMode } = useCodeContext();
 
   const popoverProps = {
     popoverZIndex,
@@ -120,7 +120,6 @@ function Panel({
       {showCopyButton && (
         <CopyButton
           onCopy={onCopy}
-          darkMode={darkMode}
           contents={contents}
           withLanguageSwitcher={!!language}
         />

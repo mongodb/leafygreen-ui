@@ -6,9 +6,9 @@ import { palette } from '@leafygreen-ui/palette';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
-import { Mode } from './types';
 import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
+import { useCodeContext } from './CodeContext';
 
 const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -53,14 +53,13 @@ const copyButtonThemeStyles: Record<Theme, string> = {
 interface CopyProps {
   onCopy?: Function;
   contents: string;
-  darkMode?: boolean;
   withLanguageSwitcher?: boolean;
 }
 
-function CopyButton({ onCopy, contents, darkMode }: CopyProps) {
+function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
   const [buttonNode, setButtonNode] = useState(null);
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme, darkMode } = useCodeContext();
 
   const { portalContainer } = usePopoverPortalContainer();
 
@@ -100,8 +99,8 @@ function CopyButton({ onCopy, contents, darkMode }: CopyProps) {
       ref={setButtonNode}
       darkMode={darkMode}
       aria-label="Copy"
-      className={cx(copyButtonThemeStyles[mode], {
-        [copiedThemeStyle[mode]]: copied,
+      className={cx(copyButtonThemeStyles[theme], {
+        [copiedThemeStyle[theme]]: copied,
       })}
       onClick={handleClick}
     >

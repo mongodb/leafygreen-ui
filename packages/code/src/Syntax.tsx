@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
@@ -12,7 +12,7 @@ import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import CodeContext from './CodeContext';
+import { useCodeContext } from './CodeContext';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -96,7 +96,7 @@ function Syntax({
       highlightedContent.react
     );
 
-  const { theme, darkMode } = useContext(CodeContext);
+  const { theme, darkMode } = useCodeContext();
 
   const baseFontSize = useBaseFontSize();
   // TODO: remove 14 check when useBaseFontSize is updated
