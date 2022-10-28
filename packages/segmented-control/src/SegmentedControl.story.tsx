@@ -76,16 +76,16 @@ Controlled.args = {
   name: 'fruit',
   children: [
     <SegmentedControlOption key="dragonfruit" value="dragonfruit">
-      <span>Dragonfruit fruit</span>
+      Dragonfruit fruit
     </SegmentedControlOption>,
     <SegmentedControlOption key="eggplant" value="eggplant">
-      <span>Eggplant bananana</span>
+      Eggplant bananana
     </SegmentedControlOption>,
     <SegmentedControlOption key="fig" value="fig">
-      <span>Fig</span>
+      Fig
     </SegmentedControlOption>,
     <SegmentedControlOption key="grape" value="grape">
-      <span>Grape</span>
+      Grape
     </SegmentedControlOption>,
   ],
 };
@@ -96,13 +96,13 @@ WithIcons.args = {
   name: 'language',
   children: [
     <SegmentedControlOption key="json" value="json">
-      <Icon glyph="CurlyBraces"></Icon> <span>JSONNNNN and more</span>
+      <Icon glyph="CurlyBraces"></Icon> JSONNNNN and more
     </SegmentedControlOption>,
     <SegmentedControlOption key="xml" value="xml">
-      <Icon glyph="Code"></Icon> <span>XML</span>
+      <Icon glyph="Code"></Icon> XML
     </SegmentedControlOption>,
     <SegmentedControlOption disabled key="shell" value="shell">
-      <Icon glyph="Shell"></Icon> <span>Shell</span>
+      <Icon glyph="Shell"></Icon> Shell
     </SegmentedControlOption>,
   ],
 };

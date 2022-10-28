@@ -186,13 +186,13 @@ export const labelStyle = css`
   align-items: center;
   min-width: 0;
 
-  span {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
   svg {
     flex-shrink: 0;
   }
+`;
+
+export const textEllipsisStyle = css`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
