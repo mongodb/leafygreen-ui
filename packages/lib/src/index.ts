@@ -86,7 +86,7 @@ export function isComponentType<T = React.ReactElement>(
  *  // Used on React Component
  *  <div {...checkboxWrapper.prop} />
  * @param {string} name Name of element we want to reference.
- * 
+ *
  * @deprecated
  */
 export function createDataProp(name: string) {
