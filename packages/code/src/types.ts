@@ -32,13 +32,6 @@ export interface SyntaxProps extends HTMLElementProps<'code'> {
   language: Language;
 
   /**
-   * Determines whether or not the syntax will be rendered in dark mode.
-   *
-   * @default `false`
-   */
-  darkMode?: boolean;
-
-  /**
    * Shows line numbers. This is specifically used for the Code component implementation.
    *
    * default: `false`
@@ -128,6 +121,13 @@ export type CodeProps = Omit<
    *
    */
   showCustomActionButtons?: boolean;
+
+  /**
+   * Determines whether or not the syntax will be rendered in dark mode.
+   *
+   * @default `false`
+   */
+  darkMode?: boolean;
 } & (
     | { language: Language; languageOptions?: undefined; onChange?: undefined }
     | {

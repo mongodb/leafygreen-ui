@@ -298,7 +298,6 @@ function Code({
     <Syntax
       showLineNumbers={showLineNumbers}
       lineNumberStart={lineNumberStart}
-      darkMode={darkMode}
       language={highlightLanguage as Language}
       highlightLines={highlightLines}
     >

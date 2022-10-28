@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
@@ -12,6 +12,7 @@ import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import CodeContext from './CodeContext';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -65,7 +66,6 @@ const codeStyles = css`
 function Syntax({
   children,
   language,
-  darkMode = false,
   showLineNumbers = false,
   lineNumberStart,
   highlightLines = [],
@@ -98,11 +98,10 @@ function Syntax({
       highlightedContent.react
     );
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme, darkMode } = useContext(CodeContext);
 
   const baseFontSize = useBaseFontSize();
-  // TODO: Refresh - remove darkMode logic
-  const codeFontSize = baseFontSize === 14 ? 13 : darkMode ? 16 : 15;
+  const codeFontSize = baseFontSize === 14 ? 13 : 15;
 
   const codeFontStyles = css`
     font-size: ${codeFontSize}px;
@@ -120,7 +119,7 @@ function Syntax({
       <code
         {...rest}
         className={cx(
-          `lg-highlight-hljs-${mode}`,
+          `lg-highlight-hljs-${theme}`,
           codeStyles,
           codeFontStyles,
           language,
