@@ -12,23 +12,12 @@ import once from 'lodash/once';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import {
-  createDataProp,
-  HTMLElementProps,
-  isComponentType,
-} from '@leafygreen-ui/lib';
+import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 import { Size, Mode } from './types';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
-
-/**
- * The selection and hover indicators are absolutely positioned elements that move underneath the text.
- * This allows us to achieve the sliding effect.
- */
-const selectionIndicatorDataAttr = createDataProp('selection-indicator');
-const hoverIndicatorDataAttr = createDataProp('hover-indicator');
 
 /**
  * Styles
@@ -580,15 +569,17 @@ export const SegmentedControl = forwardRef<
           onKeyDownCapture={handleKeyDown}
         >
           {renderedChildren}
+          {/**
+           * The selection and hover indicators are absolutely positioned elements that move underneath the text.
+           * This allows us to achieve the sliding effect.
+           */}
           <div
-            {...selectionIndicatorDataAttr.prop}
             className={cx(
               selectionIndicatorStyle,
               getIndicatorDynamicStyles(selectedIndex),
             )}
           />
           <div
-            {...hoverIndicatorDataAttr.prop}
             className={cx(
               hoverIndicatorStyle,
               getIndicatorDynamicStyles(hoveredIndex),
