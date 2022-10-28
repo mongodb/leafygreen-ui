@@ -11,6 +11,7 @@ import {
 import { palette } from '@leafygreen-ui/palette';
 import CodeContext from './CodeContext';
 import { Theme } from '@leafygreen-ui/lib';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 function getSidebarVariantStyle(mode: Theme): string {
   switch (mode) {
@@ -125,14 +126,9 @@ function Panel({
         />
       )}
       {showCustomActionButtons && (
-        // TODO: cloneElement can be removed when the provider is updated
-        <>
-          {customActionButtons?.map((action: React.ReactElement) =>
-            React.cloneElement(action, {
-              darkMode: darkMode,
-            }),
-          )}
-        </>
+        <LeafyGreenProvider darkMode={darkMode}>
+          {customActionButtons?.map((action: React.ReactElement) => action)}
+        </LeafyGreenProvider>
       )}
     </div>
   );

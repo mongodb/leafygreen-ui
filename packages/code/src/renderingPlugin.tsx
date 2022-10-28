@@ -2,7 +2,7 @@ import { transparentize } from 'polished';
 import React from 'react';
 import flatMap from 'lodash/flatMap';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { useSyntaxContext } from './SyntaxContext';
 import {
@@ -114,14 +114,15 @@ function getHighlightedRowStyle(darkMode: boolean) {
     backgroundColor = 'transparent';
     // Browsers inconsistently render the value "transparent" within gradients.
     // We explicitly set it to transparent dark3 here to solve for that.
-    backgroundImage = `linear-gradient(90deg, ${
-      uiColors.gray.dark3
-    }, ${transparentize(100, uiColors.gray.dark3)})`;
-    borderColor = uiColors.gray.dark3;
+    backgroundImage = `linear-gradient(90deg, ${'#21313C'}, ${transparentize(
+      100,
+      '#21313C',
+    )})`;
+    borderColor = '#21313C';
   } else {
-    backgroundColor = uiColors.yellow.light3;
+    backgroundColor = '#FEF7E3';
     backgroundImage = 'none';
-    borderColor = uiColors.yellow.light2;
+    borderColor = '#FEF2C8';
   }
 
   return css`
@@ -167,10 +168,8 @@ export function LineTableRow({
   darkMode,
   children,
 }: LineTableRowProps) {
-  const numberColor = darkMode ? uiColors.gray.dark1 : palette.gray.dark1;
-  const highlightedNumberColor = darkMode
-    ? uiColors.gray.light2
-    : palette.yellow.dark2;
+  const numberColor = darkMode ? '#5D6C74' : palette.gray.dark1;
+  const highlightedNumberColor = darkMode ? '#E7EEEC' : palette.yellow.dark2;
 
   return (
     <tr className={cx({ [getHighlightedRowStyle(darkMode)]: highlighted })}>
