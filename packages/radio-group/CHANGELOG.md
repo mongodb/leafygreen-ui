@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 8.1.2
+
+### Patch Changes
+
+- @leafygreen-ui/interaction-ring@5.0.0
+
 ## 8.1.1
 
 ### Patch Changes

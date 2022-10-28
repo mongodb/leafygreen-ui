@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon-button",
-  "version": "13.2.1",
+  "version": "14.0.0",
   "description": "LeafyGreen UI Kit Icon Buttons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,7 +31,7 @@
     "@leafygreen-ui/box": "^3.1.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.3.5"
+    "@leafygreen-ui/leafygreen-provider": "^3.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button",
   "repository": {

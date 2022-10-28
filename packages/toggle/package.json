@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/toggle",
-  "version": "8.0.5",
+  "version": "8.0.6",
   "description": "LeafyGreen UI Kit Toggle",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

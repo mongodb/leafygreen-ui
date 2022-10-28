@@ -178,7 +178,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', G-VFTH2BJVVK, {
+            gtag('config', 'G-VFTH2BJVVK', {
               page_path: window.location.pathname,
             });
           `,
