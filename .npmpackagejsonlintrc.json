@@ -1,0 +1,5 @@
+{
+  "rules": {
+    "no-absolute-version-dependencies": "error"
+  }
+}
