@@ -67,6 +67,7 @@ import {
   errorMessageSizeStyle,
   labelDescriptionContainerStyle,
   inputElementThemeStyle,
+  comboboxSelectionStyles,
 } from './Combobox.styles';
 import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
 
@@ -1232,6 +1233,7 @@ export function Combobox<M extends boolean>({
             comboboxThemeStyles[theme],
             comboboxSizeStyles(size),
             {
+              [comboboxSelectionStyles]: clearable && doesSelectionExist,
               [comboboxDisabledStyles[theme]]: disabled,
               [comboboxErrorStyles[theme]]: state === State.error,
               [comboboxFocusStyle[theme]]: isElementFocused(

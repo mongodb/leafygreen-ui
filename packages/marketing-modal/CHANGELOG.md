@@ -1,5 +1,27 @@
 # @leafygreen-ui/marketing-modal
 
+## 3.0.8
+
+### Patch Changes
+
+- Updated dependencies [0b6435fa]
+  - @leafygreen-ui/button@17.0.0
+  - @leafygreen-ui/modal@11.0.0
+  - @leafygreen-ui/typography@14.0.0
+
+## 3.0.7
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/button@16.1.1
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/modal@10.1.1
+  - @leafygreen-ui/palette@3.4.4
+  - @leafygreen-ui/tokens@1.3.4
+  - @leafygreen-ui/typography@13.2.1
+
 ## 3.0.6
 
 ### Patch Changes

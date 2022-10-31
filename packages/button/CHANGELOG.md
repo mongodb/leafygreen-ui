@@ -1,5 +1,28 @@
 # @leafygreen-ui/button
 
+## 17.0.0
+
+### Patch Changes
+
+- 0b6435fa: Fixing bug where icon color was not changed when the Button was disabled
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
+## 16.1.1
+
+### Patch Changes
+
+- 24683433: - Remove an implicit dependency on `@emotion/react` fixing an issue where LG packages would not build if `@leafygreen/emotion@4.0.2` or greater was installed.
+- Updated dependencies [24683433]
+  - @leafygreen-ui/box@3.1.1
+  - @leafygreen-ui/emotion@4.0.3
+  - @leafygreen-ui/leafygreen-provider@2.3.5
+  - @leafygreen-ui/lib@9.5.1
+  - @leafygreen-ui/palette@3.4.4
+  - @leafygreen-ui/ripple@1.1.5
+  - @leafygreen-ui/tokens@1.3.4
+
 ## 16.1.0
 
 ### Minor Changes

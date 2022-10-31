@@ -1,13 +1,17 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-import { Pipeline, Stage } from '.';
-import { PipelineProps } from './Pipeline';
+import Pipeline from './Pipeline';
+import Stage from './Stage';
+import { PipelineProps, Size } from './types';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Pipeline',
   component: Pipeline,
   args: {
     stages: ['$match', '$group', '$project', '$addFields', '$limit'].join(','),
+    darkMode: false,
+    size: Size.Normal,
   },
   argTypes: {
     className: {
@@ -16,6 +20,7 @@ export default {
     children: {
       control: false,
     },
+    darkMode: storybookArgTypes.darkMode,
     stages: {
       description:
         '[STORYBOOK ONLY]\n\nThis prop is used to generate DOM elements to render children. It is not defined in the component.',
