@@ -5,6 +5,7 @@ import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
 export default {
   title: 'Components/Tooltip',
@@ -42,7 +43,18 @@ export const ControlledWithState = (args: TooltipProps) => {
   return <Template {...args} open={open} setOpen={setOpen} />;
 };
 
-export const Test = ({ darkMode, ...args }: TooltipProps) => {
+export const WithLeafyGreenChildren = Template.bind({});
+WithLeafyGreenChildren.args = {
+  children: (
+    <>
+      <Subtitle>Example</Subtitle>
+      <Body>Use Tooltip in your codebase:</Body>
+      <InlineCode>@leafygreen-ui/tooltip</InlineCode>
+    </>
+  ),
+};
+
+export const AlignmentTest = ({ darkMode, ...args }: TooltipProps) => {
   return (
     <div
       className={css`
@@ -119,7 +131,7 @@ const referenceElPositions: { [key: string]: string } = {
   `,
 };
 
-type TooltipScrollableyProps = TooltipProps & {
+type TooltipScrollableProps = TooltipProps & {
   buttonText: string;
   refButtonPosition: string;
 };
@@ -130,7 +142,7 @@ export const ScrollableContainer = ({
   justify,
   align,
   ...args
-}: TooltipScrollableyProps) => {
+}: TooltipScrollableProps) => {
   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
     null,
   );
