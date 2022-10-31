@@ -1,5 +1,5 @@
 {
   "rules": {
-    "no-absolute-version-dependencies": "error"
+    "prefer-caret-version-dependencies": "error"
   }
 }
