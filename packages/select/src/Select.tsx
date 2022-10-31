@@ -8,12 +8,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import { keyMap } from '@leafygreen-ui/lib';
-import {
-  fontFamilies,
-  spacing,
-  BaseFontSize,
-  breakpoints,
-} from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing, BaseFontSize } from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { mobileSizeSet, sizeSets, SizeSet } from './styleSets';
