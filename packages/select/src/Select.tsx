@@ -10,9 +10,9 @@ import { palette } from '@leafygreen-ui/palette';
 import { keyMap } from '@leafygreen-ui/lib';
 import {
   fontFamilies,
-  breakpoints,
   spacing,
   BaseFontSize,
+  breakpoints,
 } from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -27,6 +27,7 @@ import {
   getOptionValue,
   isOptionDisabled,
   isOptionSelectable,
+  MobileMediaQuery,
   reconcileOption,
   traverseSelectChildren,
   useStateRef,
@@ -510,7 +511,7 @@ export default function Select({
               pointer-events: none;
             `,
             css`
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+              ${MobileMediaQuery} {
                 font-size: ${mobileSizeSet.label.text}px;
                 line-height: ${mobileSizeSet.label.lineHeight}px;
               }
@@ -535,7 +536,7 @@ export default function Select({
               `]: size === Size.Default,
             },
             css`
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+              ${MobileMediaQuery} {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
@@ -593,7 +594,7 @@ export default function Select({
           className={cx(
             errorTextStyle({ darkMode, sizeSet }),
             css`
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+              ${MobileMediaQuery} {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }

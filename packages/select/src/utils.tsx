@@ -8,6 +8,10 @@ import {
 } from './Option';
 import { InternalOptionGroup, OptionGroupElement } from './OptionGroup';
 import { isFragment } from 'react-is';
+import { breakpoints } from '@leafygreen-ui/tokens';
+
+// Any screen smaller than a tablet with a coarse pointer and no hover capability (i.e. touch screen)
+export const MobileMediaQuery = `@media only screen and (max-width: ${breakpoints.Tablet}px) and (pointer: coarse) and (hover: none)`;
 
 function isReactEmpty(value: React.ReactNode): value is ReactEmpty {
   return (
