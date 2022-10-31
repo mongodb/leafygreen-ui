@@ -12,8 +12,8 @@ import {
   Label,
   Description,
   Link,
+  StaticWidthText,
 } from '.';
-import { StaticWidthText } from './utility/StaticWidthText';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
