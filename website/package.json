@@ -28,7 +28,8 @@
     "remark-parse": "^10.0.1"
   },
   "devDependencies": {
-    "@emotion/babel-plugin": "11.0.0",
+    "@emotion/babel-plugin": "^11.0.0",
+    "@emotion/babel-preset-css-prop": "^11.10.0",
     "@mdx-js/loader": "^2.1.0",
     "@mdx-js/react": "^2.1.2",
     "@next/mdx": "^10.0.3",

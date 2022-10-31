@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "9.1.1",
+  "version": "10.0.0",
   "description": "LeafyGreen UI Kit Popover",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,7 +30,7 @@
     "@leafygreen-ui/palette": "^3.4.4"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.3.5"
+    "@leafygreen-ui/leafygreen-provider": "^3.0.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover",
