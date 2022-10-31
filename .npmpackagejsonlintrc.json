@@ -1,5 +1,13 @@
 {
   "rules": {
     "prefer-caret-version-dependencies": "error"
-  }
+  },
+  "overrides": [
+    {
+      "patterns": ["./packages/code/package.json"],
+      "rules": {
+        "prefer-caret-version-dependencies": "warning"
+      }
+    }
+  ]
 }
