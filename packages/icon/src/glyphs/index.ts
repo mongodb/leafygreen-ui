@@ -44,6 +44,7 @@ import Disconnect from './Disconnect.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
+import Email from './Email.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
 import File from './File.svg';
@@ -54,6 +55,7 @@ import Folder from './Folder.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
 import Home from './Home.svg';
+import Import from './Import.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
@@ -85,6 +87,7 @@ import Serverless from './Serverless.svg';
 import ShardedCluster from './ShardedCluster.svg';
 import Settings from './Settings.svg';
 import Shell from './Shell.svg';
+import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
@@ -151,6 +154,7 @@ const _glyphs = {
   Download,
   Edit,
   Ellipsis,
+  Email,
   Export,
   Favorite,
   File,
@@ -161,6 +165,7 @@ const _glyphs = {
   GlobeAmericas,
   GovernmentBuilding,
   Home,
+  Import,
   ImportantWithCircle,
   InfoWithCircle,
   InviteUser,
@@ -192,6 +197,7 @@ const _glyphs = {
   ShardedCluster,
   Settings,
   Shell,
+  SMS,
   SortAscending,
   SortDescending,
   SplitHorizontal,
