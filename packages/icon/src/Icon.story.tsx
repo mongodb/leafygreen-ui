@@ -56,7 +56,13 @@ Single.argTypes = {
 export const AllIcons: ComponentStory<typeof Icon> = (
   args: Omit<IconProps, 'glyph'>,
 ) => (
-  <>
+  <div
+    className={css`
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    `}
+  >
     {Object.keys(glyphs).map(glyph => {
       return (
         <div key={glyph} className={containerStyle}>
@@ -65,5 +71,5 @@ export const AllIcons: ComponentStory<typeof Icon> = (
         </div>
       );
     })}
-  </>
+  </div>
 );
