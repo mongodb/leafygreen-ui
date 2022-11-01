@@ -7,7 +7,7 @@ import {
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Variant, Size, ButtonProps } from './types';
-import { getClassName, ButtonDataProp } from './styles';
+import { getClassName, ButtonClassName } from './styles';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { ButtonContent } from './ButtonContent';
 
@@ -35,7 +35,7 @@ export const Button = React.forwardRef(function Button(
   const { usingKeyboard } = useUsingKeyboardContext();
   const { darkMode } = useDarkMode(darkModeProp);
 
-  const buttonClassName = getClassName({
+  const buttonStyles = getClassName({
     variant,
     size,
     darkMode,
@@ -48,7 +48,7 @@ export const Button = React.forwardRef(function Button(
 
   const buttonProps = {
     type: isAnchor ? undefined : type || 'button',
-    className: cx(buttonClassName, className),
+    className: cx(ButtonClassName, buttonStyles, className),
     ref: forwardRef,
     // Provide a default value for the as prop
     // If consuming application passes a value for as, it will override the default set here
@@ -57,7 +57,6 @@ export const Button = React.forwardRef(function Button(
     ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,
     onClick: !disabled ? onClick : undefined,
-    ...ButtonDataProp.prop,
     ...rest,
   } as const;
 

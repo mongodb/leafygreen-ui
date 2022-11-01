@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState, useCallback } from 'react';
-import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
+import {
+  HTMLElementProps,
+  Either,
+  createUniqueClassName,
+} from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -22,12 +26,12 @@ export const Mode = {
 
 export type Mode = typeof Mode[keyof typeof Mode];
 
-const toggleButton = createDataProp('toggle-button');
+const toggleButtonClassName = createUniqueClassName('toggle-button');
 
 const buttonSelectors = {
-  checked: `${toggleButton.selector}[aria-checked="true"]`,
-  unchecked: `${toggleButton.selector}[aria-checked="false"]`,
-  disabled: `${toggleButton.selector}:disabled`,
+  checked: `.${toggleButtonClassName}[aria-checked="true"]`,
+  unchecked: `.${toggleButtonClassName}[aria-checked="false"]`,
+  disabled: `.${toggleButtonClassName}:disabled`,
 };
 
 const sliderSelector = {
@@ -481,6 +485,7 @@ function Toggle({
         aria-disabled={disabled}
         ref={setButtonElement}
         className={cx(
+          toggleButtonClassName,
           baseButtonStyles,
           {
             [baseButtonFocusStyles]: !darkMode,
@@ -493,7 +498,6 @@ function Toggle({
             `]: size === Size.Default && darkMode, // TODO: Refresh - remove when darkMode is updated
           },
         )}
-        {...toggleButton.prop}
         {...rest}
       >
         {/* TODO: Refresh - remove when darkMode is updated  */}
