@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
 import Button from '@leafygreen-ui/button';
@@ -69,6 +69,10 @@ export default function Copyable({
 
   const codeId = useIdAllocator({ prefix: 'code' });
 
+  const isOverflowed = codeRef.current
+    ? codeRef.current?.scrollWidth > codeRef.current?.clientWidth
+    : false;
+
   // Clipboard functionality
   useEffect(() => {
     if (!buttonRef) {
@@ -126,8 +130,7 @@ export default function Copyable({
           className,
         )}
       >
-        <InlineCode
-          darkMode={darkMode}
+        <code
           id={codeId}
           ref={codeRef}
           className={cx(
@@ -140,13 +143,13 @@ export default function Copyable({
           )}
         >
           {children}
-        </InlineCode>
+        </code>
         {/* Using span because adding shadows directly to the button blends together with the hover box-shadow */}
         <span
           className={cx(buttonWrapperStyle, {
             // Toggle these styles on only when the content extends beyond the edge of the container
-            [buttonWrapperStyleShadow]: true,
-            [buttonWrapperStyleShadowTheme[theme]]: true,
+            [buttonWrapperStyleShadow]: isOverflowed,
+            [buttonWrapperStyleShadowTheme[theme]]: isOverflowed,
           })}
         >
           {showCopyButton && (

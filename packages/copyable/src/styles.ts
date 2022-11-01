@@ -2,25 +2,16 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, typeScales } from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { labelTypeScaleStyles } from '@leafygreen-ui/typography';
 import { Size } from './types';
-
-export const codeStyleColor: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.black};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light2};
-    border-color: ${palette.gray.dark1};
-  `,
-};
 
 export const containerStyle = css`
   position: relative;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 1fr auto;
+  grid-template-areas: 'code button';
   height: 48px;
   width: 400px;
   margin: 2px 0;
@@ -31,17 +22,32 @@ export const buttonContainerStyle = css`
 `;
 
 export const codeStyle = css`
+  grid-area: code;
   display: inline-flex;
   align-items: center;
   height: 100%;
   width: 100%;
+  font-family: ${fontFamilies.code};
+  border: 1px solid;
+  border-right: unset;
+  border-radius: 6px 0 0 6px;
   padding-left: 12px;
-  border-radius: 6px;
   white-space: nowrap;
-  overflow: auto;
-  grid-column: 1/-1;
-  grid-row: 1/2;
+  overflow: hidden;
 `;
+
+export const codeStyleColor: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.black};
+    background-color: ${palette.gray.light3};
+    border-color: ${palette.gray.light2};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light2};
+    background-color: ${palette.black};
+    border-color: ${palette.gray.dark1};
+  `,
+};
 
 // Border is removed from the code component and added to the parent
 export const codeStyleNoButton = css`
@@ -87,11 +93,10 @@ export const noButtonContainerStyleMode: Record<Theme, string> = {
 };
 
 export const buttonWrapperStyle = css`
+  grid-area: button;
   position: relative;
   display: inline-block;
   height: 100%;
-  grid-column: 2/-1;
-  grid-row: 1/2;
 `;
 
 export const buttonWrapperStyleShadow = css`
