@@ -12,7 +12,6 @@ import { axe } from 'jest-axe';
 import Tooltip, { TooltipProps } from './Tooltip';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
 
 const buttonText = 'trigger button';
