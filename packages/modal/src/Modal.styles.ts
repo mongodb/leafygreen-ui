@@ -61,13 +61,28 @@ export const modalContentStyle = css`
 `;
 
 export const modeStyles = css`
+  
+`;
+
+export const modalThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
   color: ${uiColors.gray.dark3};
   background-color: ${uiColors.white};
   font-family: ${fontFamilies.default};
   border-radius: 24px;
   padding: 40px 36px;
   box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
-`;
+  `,
+  [Theme.Dark]: css`
+  color: ${uiColors.white};
+  background-color: ${uiColors.gray.dark3};
+  font-family: ${fontFamilies.legacy};
+  border-radius: 7px;
+  padding: 32px;
+  box-shadow: 0 5px 15px
+    ${transparentize(0.4, uiColors.black)};
+  `
+}
 
 export const visibleModalContentStyle = css`
   transform: translate3d(0, 0, 0);

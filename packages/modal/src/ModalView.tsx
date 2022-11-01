@@ -9,14 +9,14 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
 import {
   PortalContextProvider,
+  useDarkMode,
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { CloseIconColor, ModalProps, ModalSize } from '././types';
-import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { backdrop, visibleBackdrop, scrollContainer, modalContentStyle, modeStyles, modalSizes, visibleModalContentStyle, baseCloseButtonStyles, closeButton } from './Modal.styles';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { backdrop, visibleBackdrop, scrollContainer, modalContentStyle, modeStyles, modalSizes, visibleModalContentStyle, baseCloseButtonStyles, closeButton, modalThemeStyles } from './Modal.styles';
 
 const closeClassName = createUniqueClassName(); // TODO: use IdAllocator
 
@@ -29,7 +29,7 @@ function ModalView({
   size = ModalSize.Default,
   setOpen = () => {},
   shouldClose = () => true,
-  darkMode = false,
+  darkMode: darkModeProp,
   children,
   className,
   contentClassName,
@@ -37,7 +37,7 @@ function ModalView({
   closeIconColor = CloseIconColor.Default,
   ...rest
 }: ModalProps) {
-  const mode = darkMode ? Theme.Dark : Theme.Light;
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const nodeRef = React.useRef(null);
 
@@ -101,19 +101,7 @@ function ModalView({
                   tabIndex={-1}
                   className={cx(
                     modalContentStyle,
-                    modeStyles,
-                    {
-                      [css`
-                        // TODO: Refresh – remove when darkMode is updated
-                        color: ${uiColors.white};
-                        background-color: ${uiColors.gray.dark3};
-                        font-family: ${fontFamilies.legacy};
-                        border-radius: 7px;
-                        padding: 32px;
-                        box-shadow: 0 5px 15px
-                          ${transparentize(0.4, uiColors.black)};
-                      `]: darkMode,
-                    },
+                    modalThemeStyles[theme],
                     modalSizes[size],
                     {
                       [visibleModalContentStyle]: state === 'entered',
@@ -133,8 +121,8 @@ function ModalView({
                       aria-label="Close modal"
                       className={cx(
                         baseCloseButtonStyles,
-                        closeButton[mode][closeIconColor],
-                        closeButton[mode].position,
+                        closeButton[theme][closeIconColor],
+                        closeButton[theme].position,
                         closeClassName,
                       )}
                       darkMode={darkMode}
