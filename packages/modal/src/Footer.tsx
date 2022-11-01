@@ -1,17 +1,7 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-
-const footerStyle = css`
-  position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: right;
-  flex-direction: row-reverse;
-  padding: 24px 35px 35px;
-`;
+import { footerStyle } from './Footer.styles';
 
 interface FooterProps {
   children: React.ReactNode;
