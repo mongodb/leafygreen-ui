@@ -80,15 +80,6 @@ export const SegmentedControlOption = forwardRef<
       didComponentMount.current = true;
     }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
 
-    /**
-     * Wraps text in a `<span>`. This span will be used to clip text and add an ellipsis. We do this so that consumers don't have to add the `<span>` themselves. We can't add the ellipsis styles to the parent container because that container has `display: flex` which doesn't work with `text-overflow: ellipsis`.
-     */
-    const renderedChildren = React.Children.map(children, child => {
-      if (typeof child === 'string')
-        return <span className={textEllipsisStyle}>{child}</span>;
-      return child;
-    });
-
     return (
       <div
         className={cx(optionStyle({ theme, size, baseFontSize }), className)}
@@ -110,8 +101,18 @@ export const SegmentedControlOption = forwardRef<
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
+            type="button"
           >
-            <span className={labelStyle}>{renderedChildren}</span>
+            <span className={labelStyle}>
+              {
+                // Wraps text in a `<span>`. This span will be used to clip text and add an ellipsis. We do this so that consumers don't have to add the `<span>` themselves. We can't add the ellipsis styles to the parent container because that container has `display: flex` which doesn't work with `text-overflow: ellipsis`.
+                React.Children.map(children, child => {
+                  if (typeof child === 'string')
+                    return <span className={textEllipsisStyle}>{child}</span>;
+                  return child;
+                })
+              }
+            </span>
           </button>
         </Box>
       </div>

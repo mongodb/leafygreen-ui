@@ -16,10 +16,10 @@ const renderNewContainer = () => {
       className={testClassName}
     >
       <SegmentedControlOption value="apple" data-testid="apple">
-        <span>Apple</span>
+        Apple
       </SegmentedControlOption>
       <SegmentedControlOption value="banana" data-testid="banana">
-        <span>Banana</span>
+        Banana
       </SegmentedControlOption>
     </SegmentedControl>,
   );
@@ -126,12 +126,8 @@ describe('packages/segmented-control', () => {
           name="testName"
           defaultValue={'banana'}
         >
-          <SegmentedControlOption value="apple">
-            <span>Apple</span>
-          </SegmentedControlOption>
-          <SegmentedControlOption value="banana">
-            <span>Banana</span>
-          </SegmentedControlOption>
+          <SegmentedControlOption value="apple">Apple</SegmentedControlOption>
+          <SegmentedControlOption value="banana">Banana</SegmentedControlOption>
         </SegmentedControl>,
       );
 
