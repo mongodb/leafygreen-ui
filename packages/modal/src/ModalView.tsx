@@ -15,15 +15,8 @@ import {
   PortalContextProvider,
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { CloseIconColor, ModalProps, ModalSize } from './Modal';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
-
-const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-};
-
-type Mode = typeof Mode[keyof typeof Mode];
+import { CloseIconColor, ModalProps, ModalSize } from '././types';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 
 // breakpoints for different screen sizes
 const small = '767px'; // mobile screens, from 0px - 767px
@@ -115,10 +108,10 @@ const baseCloseButtonStyles = css`
 `;
 
 const closeButton: Record<
-  Mode,
+  Theme,
   Record<CloseIconColor, string> & Record<'position', string>
 > = {
-  [Mode.Light]: {
+  [Theme.Light]: {
     [CloseIconColor.Default]: css`
       color: ${palette.gray.base};
     `,
@@ -135,7 +128,7 @@ const closeButton: Record<
       top: 18px;
     `,
   },
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     [CloseIconColor.Default]: css`
       color: ${uiColors.gray.base};
 
@@ -185,7 +178,7 @@ function ModalView({
   closeIconColor = CloseIconColor.Default,
   ...rest
 }: ModalProps) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const mode = darkMode ? Theme.Dark : Theme.Light;
 
   const nodeRef = React.useRef(null);
 

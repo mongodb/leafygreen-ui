@@ -7,7 +7,8 @@ import { Subtitle, Body } from '@leafygreen-ui/typography';
 import Copyable from '@leafygreen-ui/copyable';
 import Code from '@leafygreen-ui/code';
 import { ComponentStory, Meta } from '@storybook/react';
-import { ModalProps } from './Modal';
+import { ModalProps, ModalSize } from './types';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Modals/Modal',
@@ -21,6 +22,16 @@ export default {
     },
     children: {
       control: false,
+    },
+    darkMode: storybookArgTypes.darkMode,
+    size: {
+      options: Object.values(ModalSize),
+      control: 'radio',
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'setOpen', 'shouldClose', 'children', 'open'],
     },
   },
 } as Meta<typeof Modal>;
