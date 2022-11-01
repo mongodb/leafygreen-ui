@@ -108,8 +108,6 @@ jobs:
         run: yarn check:prettier
       - name: eslint
         run: yarn check:eslint --format junit -o reports/junit/js-lint-results.xml
-      - name: package.json versions
-        run: yarn check:package-json
 
   types:
     name: Check types
@@ -162,6 +160,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: deps
         run: yarn check:deps
+      - name: package.json versions
+        run: yarn check:package-json
 
   builds:
     name: Check builds
