@@ -160,6 +160,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: deps
         run: yarn check:deps
+      - name: package.json versions
+        run: yarn check:package-json
 
   builds:
     name: Check builds
