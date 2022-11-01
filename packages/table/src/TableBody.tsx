@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import { useTableContext } from './TableContext';
 import { getDataComparisonFunction, useSortContext } from './SortContext';
-import { TableProps } from './Table';
+import { TableProps, TableRowInterface } from './Table';
 
 type TableBodyProps<Shape> = Pick<TableProps<Shape>, 'children'>;
 
@@ -11,7 +11,7 @@ type TableBodyProps<Shape> = Pick<TableProps<Shape>, 'children'>;
  */
 function useRenderedChildren<Datum>(
   data: Array<Datum>,
-  renderFunction: React.FunctionComponent<Datum>,
+  renderFunction: React.FunctionComponent<TableRowInterface<Datum>>,
   compareFn?: (a: Datum, b: Datum) => number,
 ): Array<React.ReactNode> {
   const resultMap = useMemo(() => {
@@ -19,7 +19,9 @@ function useRenderedChildren<Datum>(
     data.forEach((datum, index) =>
       resultMap.set(
         datum,
-        <React.Fragment key={index}>{renderFunction(datum)}</React.Fragment>,
+        <React.Fragment key={index}>
+          {renderFunction({ datum, index })}
+        </React.Fragment>,
       ),
     );
     return resultMap;
@@ -55,7 +57,10 @@ function TableBody<Shape>({ children }: TableBodyProps<Shape>) {
     }
   }, [sort]);
 
-  const renderFunction = useCallback(datum => children({ datum }), [children]);
+  const renderFunction = useCallback(
+    ({ datum, index }: TableRowInterface<Shape>) => children({ datum, index }),
+    [children],
+  );
 
   const rows = useRenderedChildren(data, renderFunction, compareFn);
 

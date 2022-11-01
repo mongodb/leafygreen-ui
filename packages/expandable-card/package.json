@@ -22,9 +22,9 @@
   "dependencies": {
     "@leafygreen-ui/card": "^8.0.0",
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "7.3.3",
+    "@leafygreen-ui/hooks": "^7.3.3",
     "@leafygreen-ui/icon": "^11.11.1",
-    "@leafygreen-ui/icon-button": "14.0.0",
+    "@leafygreen-ui/icon-button": "^14.0.0",
     "@leafygreen-ui/lib": "^9.5.1",
     "@leafygreen-ui/palette": "^3.4.4",
     "@leafygreen-ui/typography": "^14.0.0",
