@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
 import Button from '@leafygreen-ui/button';
@@ -50,6 +50,7 @@ export default function Copyable({
   const [copied, setCopied] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
   const [buttonRef, setButtonRef] = useState<HTMLButtonElement>();
+  const codeRef = useRef<HTMLElement>(null);
 
   const { portalContainer } = usePopoverPortalContainer();
 
@@ -68,37 +69,7 @@ export default function Copyable({
 
   const codeId = useIdAllocator({ prefix: 'code' });
 
-  let copyButton: JSX.Element | undefined;
-
-  if (showCopyButton) {
-    const trigger = (
-      <Button
-        ref={setButtonRef}
-        variant="default"
-        darkMode={darkMode}
-        className={buttonStyle}
-        onClick={() => setCopied(true)}
-        leftGlyph={<CopyIcon size="large" className={iconStyle} />}
-      >
-        Copy
-      </Button>
-    );
-
-    copyButton = (
-      <Tooltip
-        open={copied}
-        darkMode={darkMode}
-        align={Align.Top}
-        justify={Justify.Middle}
-        trigger={trigger}
-        triggerEvent={TriggerEvent.Click}
-        usePortal={shouldTooltipUsePortal}
-      >
-        Copied!
-      </Tooltip>
-    );
-  }
-
+  // Clipboard functionality
   useEffect(() => {
     if (!buttonRef) {
       return;
@@ -158,6 +129,7 @@ export default function Copyable({
         <InlineCode
           darkMode={darkMode}
           id={codeId}
+          ref={codeRef}
           className={cx(
             codeStyle,
             codeStyleColor[theme],
@@ -172,12 +144,35 @@ export default function Copyable({
         {/* Using span because adding shadows directly to the button blends together with the hover box-shadow */}
         <span
           className={cx(buttonWrapperStyle, {
-            // TODO: Toggle these styles on only when the content extends beyond the edge of the container
+            // Toggle these styles on only when the content extends beyond the edge of the container
             [buttonWrapperStyleShadow]: true,
             [buttonWrapperStyleShadowTheme[theme]]: true,
           })}
         >
-          {copyButton}
+          {showCopyButton && (
+            <Tooltip
+              open={copied}
+              darkMode={darkMode}
+              align={Align.Top}
+              justify={Justify.Middle}
+              trigger={
+                <Button
+                  ref={setButtonRef}
+                  variant="default"
+                  darkMode={darkMode}
+                  className={buttonStyle}
+                  onClick={() => setCopied(true)}
+                  leftGlyph={<CopyIcon size="large" className={iconStyle} />}
+                >
+                  Copy
+                </Button>
+              }
+              triggerEvent={TriggerEvent.Click}
+              usePortal={shouldTooltipUsePortal}
+            >
+              Copied!
+            </Tooltip>
+          )}
         </span>
       </div>
     </>
