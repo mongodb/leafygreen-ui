@@ -24,9 +24,10 @@ const renderNewContainer = () => {
     </SegmentedControl>,
   );
 
-  const apple = getByText(rendered.container, 'Apple').parentElement as Element;
-  const banana = getByText(rendered.container, 'Banana')
-    .parentElement as Element;
+  const apple = getByText(rendered.container, 'Apple').parentElement
+    ?.parentElement as Element;
+  const banana = getByText(rendered.container, 'Banana').parentElement
+    ?.parentElement as Element;
 
   return {
     ...rendered,
@@ -130,7 +131,8 @@ describe('packages/segmented-control', () => {
         </SegmentedControl>,
       );
 
-      const banana = getByText(container, 'Banana').parentElement;
+      const banana = getByText(container, 'Banana').parentElement
+        ?.parentElement;
       expect(banana).toHaveAttribute('aria-selected', 'true');
     });
   });
