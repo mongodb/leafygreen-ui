@@ -17,7 +17,7 @@ export interface TabsProps extends HTMLElementProps<'div'> {
    *
    * @type (index: number) => void
    */
-  setSelected?: React.Dispatch<React.SetStateAction<number>>;
+  setSelected?: React.Dispatch<number>;
 
   /**
    * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
