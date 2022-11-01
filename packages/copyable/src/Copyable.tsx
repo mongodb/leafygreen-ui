@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
 import Button from '@leafygreen-ui/button';
@@ -8,7 +8,6 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import {
   Description,
-  InlineCode,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
