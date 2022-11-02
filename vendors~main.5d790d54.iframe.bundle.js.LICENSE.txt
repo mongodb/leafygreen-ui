@@ -56,7 +56,7 @@ object-assign
  */
 
 /*!
-* focus-trap 6.8.1
+* focus-trap 6.9.4
 * @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
 */
 
@@ -66,7 +66,7 @@ object-assign
 */
 
 /*!
-* tabbable 5.3.1
+* tabbable 5.3.3
 * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
 */
 
