@@ -65,7 +65,7 @@ export const optionsWrapperStyleTheme: Record<Theme, string> = {
     --border-color: rgba(255, 255, 255, 0);
     --inner-shadow: 0px 0px 0px 1px ${palette.gray.dark1} inset;
     --outer-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0);
-    --hover-background-color: ${palette.gray.dark2};
+    --hover-background-color: ${palette.gray.dark3};
     --indicator-background-color: ${palette.gray.light2};
     --indicator-border-color: ${palette.gray.light2};
   `,

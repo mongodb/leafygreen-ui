@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { Mode, fontFamilies, focusRing } from '@leafygreen-ui/tokens';
+import { fontFamilies, focusRing } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 /**
@@ -129,7 +129,7 @@ export const boxStyle = css`
 
 export const buttonStyle = css`
   font-family: ${fontFamilies.default};
-  display: inline-flex;
+  display: flex;
   position: relative;
   width: 100%;
   height: 100%;
@@ -164,9 +164,23 @@ export const buttonStyle = css`
     color: var(--disabled-text-color);
     cursor: not-allowed;
   }
+
+  &[aria-selected='false']:not(:disabled):not(:hover) {
+    svg {
+      color: ${palette.gray.base};
+    }
+  }
 `;
 
-export const buttonFocusStyle: Record<Mode, string> = {
+export const iconOnlyThemeStyles = css`
+  &[aria-selected='false']:not(:disabled):not(:hover) {
+    svg {
+      color: var(--base-text-color);
+    }
+  }
+`;
+
+export const buttonFocusStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &:focus {
       box-shadow: ${focusRing.light.default};
