@@ -33,7 +33,7 @@ export const codeStyle = css`
   border-radius: 6px 0 0 6px;
   padding-left: 12px;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: auto;
 `;
 
 export const codeStyleColor: Record<Theme, string> = {
