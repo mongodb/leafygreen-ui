@@ -1,5 +1,12 @@
 # @leafygreen-ui/portal
 
+## 4.0.7
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+
 ## 4.0.6
 
 ### Patch Changes
