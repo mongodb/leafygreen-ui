@@ -23,11 +23,11 @@ const anchorClassName = createUniqueClassName();
  * Code
  */
 const code = css`
+  display: inline;
   transition: all 0.15s ease-in-out;
   border-radius: 3px;
   font-family: ${fontFamilies.code};
   line-height: 20px;
-  display: inherit;
 
   .${anchorClassName}:hover > & {
     text-decoration: none;
