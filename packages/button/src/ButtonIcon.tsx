@@ -2,7 +2,7 @@ import React from 'react';
 import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ButtonProps, Variant, Size } from './types';
-import { ButtonDataProp } from './styles';
+import { ButtonClassName } from './styles';
 import { getTheme, Theme } from '@leafygreen-ui/lib';
 
 const baseIconStyle: Record<Theme, Record<Variant, string>> = {
@@ -93,10 +93,12 @@ const onlyIconStyle: Record<Theme, Record<Variant, string>> = {
 };
 
 const onlyIconStyleHover = css`
-  ${ButtonDataProp.selector}:hover &,
-  ${ButtonDataProp.selector}:active & {
-    color: currentColor;
-  } ;
+  .${ButtonClassName} {
+    &:hover,
+    &:active {
+      color: currentColor;
+    }
+  }
 `;
 
 const iconSize: Record<Size, string> = {

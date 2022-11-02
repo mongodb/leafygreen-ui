@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
+import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { RadioGroupProps } from './RadioGroup';
 import { Size } from './types';
 
-const inputDisplay = createDataProp('radio-input-display');
-const inputDisplayWrapper = createDataProp('radio-input-display-wrapper');
-const inputDataProp = createDataProp('input-element');
+const inputWrapperClassName = createUniqueClassName('radio-input-wrapper');
+const inputDisplayClassName = createUniqueClassName('radio-input-display');
+const inputClassName = createUniqueClassName('input-element');
 
 const Mode = {
   Dark: 'dark',
@@ -92,7 +92,7 @@ const labelStyle = css`
 
 const inputColorSet = {
   [Mode.Light]: css`
-    &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
+    &:checked + .${inputWrapperClassName} .${inputDisplayClassName} {
       background-color: ${palette.blue.base};
       border-color: ${palette.blue.base};
 
@@ -101,11 +101,11 @@ const inputColorSet = {
       }
     }
 
-    &:focus-visible + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
+    &:focus-visible + .${inputWrapperClassName} .${inputDisplayClassName} {
       box-shadow: 0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1};
     }
 
-    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
+    &:disabled + .${inputWrapperClassName} .${inputDisplayClassName} {
       border-color: ${palette.gray.light2};
       background-color: ${palette.gray.light3};
 
@@ -117,7 +117,7 @@ const inputColorSet = {
   `,
 
   [Mode.Dark]: css`
-    &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
+    &:checked + .${inputWrapperClassName} .${inputDisplayClassName} {
       background-color: #43b1e5;
       border-color: #43b1e5;
 
@@ -132,7 +132,7 @@ const inputColorSet = {
       border-color: ${uiColors.blue.base};
     }
 
-    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
+    &:disabled + .${inputWrapperClassName} .${inputDisplayClassName} {
       background-color: ${uiColors.gray.dark2};
       border-color: rgba(255, 255, 255, 0.15);
     }
@@ -141,7 +141,7 @@ const inputColorSet = {
 
 const disabledChecked = {
   [Mode.Light]: css`
-    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
+    &:disabled + .${inputWrapperClassName} .${inputDisplayClassName} {
       background-color: ${palette.gray.light2};
       border-color: ${palette.gray.light2};
 
@@ -153,7 +153,7 @@ const disabledChecked = {
   `,
 
   [Mode.Dark]: css`
-    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
+    &:disabled + .${inputWrapperClassName} .${inputDisplayClassName} {
       border-color: ${uiColors.gray.dark2};
 
       &:after {
@@ -208,9 +208,11 @@ const divStyle = css`
     transform: scale(0);
   }
 
-  ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} & {
-    &:after {
-      box-shadow: none;
+  .${inputClassName} {
+    &:disabled + .${inputWrapperClassName} & {
+      &:after {
+        box-shadow: none;
+      }
     }
   }
 `;
@@ -358,7 +360,6 @@ function Radio({
       >
         <input
           {...rest}
-          {...inputDataProp.prop}
           ref={setInputElement}
           checked={!!checked}
           id={id}
@@ -369,7 +370,7 @@ function Radio({
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
-          className={cx(inputStyle, inputColorSet[mode], {
+          className={cx(inputClassName, inputStyle, inputColorSet[mode], {
             [disabledChecked[mode]]: disabled && checked,
           })}
         />
@@ -378,14 +379,17 @@ function Radio({
           darkMode={darkMode}
           disabled={disabled}
           focusTargetElement={inputElement}
-          className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
+          className={cx(
+            inputWrapperClassName,
+            radioBoxStyle,
+            radioBoxSize[normalizedSize],
+          )}
           borderRadius="100%"
           color={darkMode ? undefined : { focused: 'transparent' }} // TODO: Refresh - overriding the focus style for light mode
-          {...inputDisplayWrapper.prop}
         >
           <div
-            {...inputDisplay.prop}
             className={cx(
+              inputDisplayClassName,
               divStyle,
               divColorSet[mode],
               divSize[normalizedSize][mode],

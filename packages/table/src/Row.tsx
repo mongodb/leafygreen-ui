@@ -9,7 +9,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
-import { CellElement, tdInnerDiv } from './Cell';
+import { CellElement, tdInnerDivClassName } from './Cell';
 import { useDarkModeContext } from './DarkModeContext';
 import NestedRow from './NestedRow';
 
@@ -91,7 +91,7 @@ const rowStyle = css`
   position: relative;
   z-index: 1;
 
-  & > :is(td, th) > ${tdInnerDiv.selector} {
+  & > :is(td, th) > .${tdInnerDivClassName} {
     min-height: var(--lg-cell-min-height);
     max-height: unset;
   }
