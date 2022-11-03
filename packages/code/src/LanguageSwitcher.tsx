@@ -72,7 +72,7 @@ const buttonModeStyle: Record<Theme, string> = {
     &:hover,
     &:focus,
     &:active {
-      border-right: 1px solid ${palette.gray.dark2};
+      border-right: 1px solid ${palette.gray.dark1};
     }
 
     &:hover,

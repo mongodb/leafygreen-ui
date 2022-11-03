@@ -23,7 +23,7 @@ function getSidebarVariantStyle(theme: Theme): string {
     case Theme.Dark:
       return css`
         background-color: ${palette.gray.dark2};
-        border-color: ${palette.gray.dark2};
+        border-color: ${palette.gray.dark1};
       `;
   }
 }
