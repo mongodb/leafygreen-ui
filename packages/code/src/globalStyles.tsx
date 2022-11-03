@@ -34,8 +34,8 @@ export const variantColors: { readonly [K in Theme]: Base16Palette } = {
   [Theme.Dark]: {
     0: palette.black,
     1: palette.gray.dark2,
-    2: '#989498',
-    3: '#B9B5B8',
+    2: palette.gray.light1,
+    3: palette.gray.light3,
     4: palette.gray.dark2,
     5: '#FF6F44',
     6: '#EDB210',

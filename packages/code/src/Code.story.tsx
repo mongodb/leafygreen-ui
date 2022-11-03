@@ -99,7 +99,7 @@ Basic.args = {};
 
 export const HighlightOptions = Template.bind({});
 HighlightOptions.args = {
-  highlightLines: [[2, 4], 6],
+  highlightLines: [6, [10, 15]],
 };
 
 export const WithChrome = Template.bind({});
