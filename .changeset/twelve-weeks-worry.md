@@ -2,4 +2,4 @@
 '@leafygreen-ui/expandable-card': patch
 ---
 
-Updates focus and hover styles to match figma specs
+Updates focus and hover styles to match figma specs. Wraps contents in a `LeafyGreenProvider`.
