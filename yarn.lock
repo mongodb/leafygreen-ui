@@ -2322,6 +2322,13 @@
     "@leafygreen-ui/hooks" "^7.3.3"
     "@leafygreen-ui/lib" "^9.5.1"
 
+"@leafygreen-ui/lib@^9.0.0", "@leafygreen-ui/lib@^9.0.1", "@leafygreen-ui/lib@^9.2.1", "@leafygreen-ui/lib@^9.5.1":
+  version "9.5.2"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-9.5.2.tgz#c80d7920e819c89ee544866b1046667fe99ea8d3"
+  integrity sha512-soC5ZSnhqoqbFv9b2kAe+1s7nUnAcdcBzrI0yIJZymExCJsZnmI3VWjLTUbViuTrsO1GfnmLDdsUeDr3ezTOOg==
+  dependencies:
+    lodash "^4.17.21"
+
 "@leafygreen-ui/logo@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/logo/-/logo-5.0.0.tgz#db4154246c18f62c12e5c664bd12aabe7c2a11a2"
