@@ -102,7 +102,7 @@ function Syntax({
 
   const baseFontSize = useBaseFontSize();
   // TODO: remove 14 check when useBaseFontSize is updated
-  const typeScale = (baseFontSize === 14) ? typeScales.code1 : typeScales.code2;
+  const typeScale = baseFontSize === 14 ? typeScales.code1 : typeScales.code2;
   const codeFontStyles = css`
     font-size: ${typeScale.fontSize}px;
     line-height: ${typeScale.lineHeight}px;

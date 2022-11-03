@@ -47,12 +47,7 @@ function WindowChrome({ chromeTitle = '' }: WindowChromeProps) {
   const { theme } = useDarkMode();
 
   return (
-    <div
-      className={cx(
-        windowChromeStyle,
-        windowChromeThemeStyles[theme],
-      )}
-    >
+    <div className={cx(windowChromeStyle, windowChromeThemeStyles[theme])}>
       <div className={textStyle}>{chromeTitle}</div>
     </div>
   );
