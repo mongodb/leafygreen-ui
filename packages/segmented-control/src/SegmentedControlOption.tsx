@@ -99,8 +99,10 @@ export const SegmentedControlOption = forwardRef<
     const renderedChildren = useMemo(
       () =>
         React.Children.map(children, child => {
+          // if its a string wrap it in a span
           if (typeof child === 'string')
             return <span className={textEllipsisStyle}>{child}</span>;
+          // if its a LG icon or glyph set hasIcon to true
           if (isComponentType(child, 'Icon') || isComponentGlyph(child))
             setHasIcon(true);
           return child;
