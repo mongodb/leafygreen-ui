@@ -321,7 +321,7 @@ export const SegmentedControl = forwardRef<
           onKeyDownCapture={handleKeyDown}
         >
           {renderedChildren}
-          {/*
+          {/**
            * The selection and hover indicators are absolutely positioned elements that move underneath the text.
            * This allows us to achieve the sliding effect.
            */}

@@ -36,6 +36,7 @@ export const Basic = ({ withHeaders, ...args }: TableArgs<any>) => (
     data={defaultData.slice(0, 8)}
     columns={
       <HeaderRow>
+        <TableHeader key="index" label="Index" dataType="number" />
         <TableHeader key="name" label="Name" dataType="string" />
         <TableHeader key="age" label="Age" dataType="number" />
         <TableHeader key="color" label="Color" dataType="string" />
@@ -43,8 +44,9 @@ export const Basic = ({ withHeaders, ...args }: TableArgs<any>) => (
       </HeaderRow>
     }
   >
-    {({ datum }: { datum: any }) => (
+    {({ datum, index }) => (
       <Row key={datum.name}>
+        <Cell isHeader={withHeaders}>{index}</Cell>
         <Cell isHeader={withHeaders}>{datum.name}</Cell>
         <Cell>{datum.age}</Cell>
         <Cell>{datum.color}</Cell>

@@ -1,5 +1,20 @@
 # @leafygreen-ui/expandable-card
 
+## 2.0.1
+
+### Patch Changes
+
+- 2195359a: Updates some packges to use a caret instead of an exact version
+- Updated dependencies [2195359a]
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon-button@14.0.1
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/card@8.0.1
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/typography@14.0.1
+
 ## 2.0.0
 
 ### Patch Changes
