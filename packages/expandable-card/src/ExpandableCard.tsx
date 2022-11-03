@@ -6,7 +6,9 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { Transition } from 'react-transition-group';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import {
   cardStyle,
   summaryStyle,
@@ -145,62 +147,66 @@ const ExpandableCard = ({
       id={id}
       {...rest}
     >
-      {/* HTML `button` elements can't be used as a grid parent */}
-      <div
-        role="button"
-        aria-expanded={isOpen}
-        aria-controls={contentId}
-        id={summaryId}
-        className={summaryStyle}
-        onClick={onClick}
-        onKeyPress={onClick}
-        tabIndex={-1}
-      >
-        <span>
-          <Subtitle className={summaryHeader}>{title}</Subtitle>
-          {flagText && <span className={flagTextStyle}>{flagText}</span>}
-        </span>
-        {description && (
-          <Body className={summaryTextThemeStyle[theme]}>{description}</Body>
-        )}
+      <LeafyGreenProvider darkMode={darkMode}>
+        {/* HTML `button` elements can't be used as a grid parent */}
+        <div
+          role="button"
+          aria-expanded={isOpen}
+          aria-controls={contentId}
+          id={summaryId}
+          className={summaryStyle}
+          onClick={onClick}
+          onKeyPress={onClick}
+          tabIndex={-1}
+        >
+          <span>
+            <Subtitle className={summaryHeader}>{title}</Subtitle>
+            {flagText && <span className={flagTextStyle}>{flagText}</span>}
+          </span>
+          {description && (
+            <Body className={summaryTextThemeStyle[theme]}>{description}</Body>
+          )}
 
-        <Transition in={isOpen} timeout={transitionDuration}>
+          <Transition in={isOpen} timeout={transitionDuration}>
+            {state => (
+              <IconButton
+                // Setting 'as="div"' to avoid nesting interactive components for accessibility
+                as="div"
+                className={cx(
+                  iconThemeStyle[theme],
+                  iconTransitionStyle[state],
+                )}
+                aria-label={`${isOpen ? 'collapse' : 'expand'} card`}
+                tabIndex={0}
+              >
+                <Icon glyph="ChevronUp" size={24} />
+              </IconButton>
+            )}
+          </Transition>
+        </div>
+        <Transition
+          in={isOpen}
+          timeout={transitionDuration}
+          nodeRef={childrenWrapperRef}
+          onEntered={updateHeight}
+        >
           {state => (
-            <IconButton
-              // Setting 'as="div"' to avoid nesting interactive components for accessibility
-              as="div"
-              className={cx(iconThemeStyle[theme], iconTransitionStyle[state])}
-              aria-label={`${isOpen ? 'collapse' : 'expand'} card`}
-              tabIndex={0}
-              darkMode={darkMode}
+            <div
+              role="region"
+              id={contentId}
+              aria-labelledby={summaryId}
+              ref={childrenWrapperRef}
+              className={cx(
+                childrenWrapperStyle,
+                childrenWrapperTransitionStyle(state, childrenHeight),
+                contentClassName,
+              )}
             >
-              <Icon glyph="ChevronUp" size={24} />
-            </IconButton>
+              <div ref={childrenInnerRef}>{children}</div>
+            </div>
           )}
         </Transition>
-      </div>
-      <Transition
-        in={isOpen}
-        timeout={transitionDuration}
-        nodeRef={childrenWrapperRef}
-        onEntered={updateHeight}
-      >
-        {state => (
-          <div
-            role="region"
-            id={contentId}
-            aria-labelledby={summaryId}
-            ref={childrenWrapperRef}
-            className={cx(
-              childrenWrapperStyle,
-              childrenWrapperTransitionStyle(state, childrenHeight),
-              contentClassName,
-            )}
-          >
-            <div ref={childrenInnerRef}>{children}</div>
-          </div>
-        )}
-      </Transition>
+      </LeafyGreenProvider>
     </Card>
   );
 };
