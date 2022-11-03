@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
+import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 
-const option = createDataProp('option');
+const OptionClassName = createUniqueClassName('option');
 
 export type ReactEmpty = null | undefined | false | '';
 
@@ -50,8 +50,10 @@ const iconStyle = css`
 `;
 
 const glyphFocusStyle = css`
-  ${option.selector}:focus & {
-    color: currentColor;
+  .${OptionClassName} {
+    &:focus & {
+      color: currentColor;
+    }
   }
 `;
 
@@ -241,13 +243,13 @@ export function InternalOption({
 
   return (
     <li
-      {...option.prop}
       {...rest}
       role="option"
       aria-selected={selected}
       tabIndex={-1}
       ref={ref}
       className={cx(
+        OptionClassName,
         optionStyle,
         css`
           cursor: pointer;
