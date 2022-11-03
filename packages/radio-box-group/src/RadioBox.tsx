@@ -15,9 +15,6 @@ import {
   radioWrapper,
 } from './RadioBox.styles';
 
-
-
-
 function isChecked({
   checkedProp,
   defaultProp,
