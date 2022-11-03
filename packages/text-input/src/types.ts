@@ -46,20 +46,6 @@ export interface BaseTextInputProps
   id?: string;
 
   /**
-   * Text shown in bold above the input element.
-   *
-   * Optional if `aria-labelledby` is provided
-   */
-  label: string | null;
-
-  /**
-   * Screen-reader label element.
-   *
-   * Optional if `label` is provided
-   */
-  ['aria-labelledby']: string;
-
-  /**
    * Text that gives more detail about the requirements for the input.
    */
   description?: string;
@@ -143,9 +129,24 @@ export interface BaseTextInputProps
   baseFontSize?: BaseFontSize;
 }
 
-type AriaLabels = 'label' | 'aria-labelledby';
+interface AriaLabelProps {
+  /**
+   * Text shown in bold above the input element.
+   *
+   * Optional if `aria-labelledby` is provided
+   */
+  label: string | null;
+
+  /**
+   * Screen-reader label element.
+   *
+   * Optional if `label` is provided
+   */
+  ['aria-labelledby']: string;
+}
+
 export type TextInputProps =
-  | Either<BaseTextInputProps, AriaLabels>
+  | Either<BaseTextInputProps & AriaLabelProps, keyof AriaLabelProps>
   | (BaseTextInputProps & {
       type: 'search';
       /**

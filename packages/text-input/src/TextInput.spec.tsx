@@ -256,11 +256,18 @@ describe('packages/text-input', () => {
     test('TextInput throws error when neither aria-labelledby or label is supplied', () => {
       // @ts-expect-error
       <TextInput />;
+      // @ts-expect-error
+      <TextInput aria-label="some label" />;
+      <TextInput aria-labelledby="some-id" />;
+      <TextInput label="some-id" />;
     });
 
     test('TextInput throws an error when `type` is "search" and an aria-label is not supplied', () => {
       // @ts-expect-error
       <TextInput type="search" />;
+      <TextInput type="search" aria-label="some label" />;
+      <TextInput type="search" label="some label" />;
+      <TextInput type="search" aria-labelledby="some label" />;
     });
   });
   /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
