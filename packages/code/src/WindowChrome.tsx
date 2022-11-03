@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { variantColors } from './globalStyles';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { useCodeContext } from './CodeContext';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export const windowChromeHeight = 28;
 const controlSize = 12;
@@ -26,9 +26,11 @@ const windowChromeStyle = css`
 const windowChromeThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark2};
+    background-color: ${variantColors.light[1]};
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.light1};
+    background-color: ${variantColors.dark[1]};
   `,
 };
 
@@ -42,16 +44,12 @@ interface WindowChromeProps {
 }
 
 function WindowChrome({ chromeTitle = '' }: WindowChromeProps) {
-  const { theme } = useCodeContext();
-  const colors = variantColors[theme];
+  const { theme } = useDarkMode();
 
   return (
     <div
       className={cx(
         windowChromeStyle,
-        css`
-          background-color: ${colors[1]};
-        `,
         windowChromeThemeStyles[theme],
       )}
     >

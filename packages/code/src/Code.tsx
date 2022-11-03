@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { spacing } from '@leafygreen-ui/tokens';
-import {
+import LeafyGreenProvider, {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -18,7 +18,6 @@ import WindowChrome from './WindowChrome';
 import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
-import CodeContext from './CodeContext';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -253,10 +252,6 @@ function Code({
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
-  const providerData = useMemo(() => {
-    return { theme, darkMode };
-  }, [theme, darkMode]);
-
   const filteredCustomActionIconButtons = customActionButtons.filter(
     (item: React.ReactNode) => isComponentType(item, 'IconButton') === true,
   );
@@ -342,7 +337,7 @@ function Code({
   } as const;
 
   return (
-    <CodeContext.Provider value={providerData}>
+    <LeafyGreenProvider darkMode={darkMode}>
       <div className={wrapperStyle[theme]}>
         {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} />}
 
@@ -400,7 +395,7 @@ function Code({
           )}
         </div>
       </div>
-    </CodeContext.Provider>
+    </LeafyGreenProvider>
   );
 }
 

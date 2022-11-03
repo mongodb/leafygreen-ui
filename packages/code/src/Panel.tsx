@@ -9,12 +9,11 @@ import {
   LanguageSwitcher as LanguageSwitcherProps,
 } from './types';
 import { palette } from '@leafygreen-ui/palette';
-import { useCodeContext } from './CodeContext';
 import { Theme } from '@leafygreen-ui/lib';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-function getSidebarVariantStyle(mode: Theme): string {
-  switch (mode) {
+function getSidebarVariantStyle(theme: Theme): string {
+  switch (theme) {
     case Theme.Light:
       return css`
         background-color: ${palette.white};
@@ -29,7 +28,7 @@ function getSidebarVariantStyle(mode: Theme): string {
   }
 }
 
-function getPanelStyles(mode: Theme, withLanguageSwitcher: boolean) {
+function getPanelStyles(theme: Theme, withLanguageSwitcher: boolean) {
   const basePanelStyle = css`
     display: flex;
     align-items: center;
@@ -60,7 +59,7 @@ function getPanelStyles(mode: Theme, withLanguageSwitcher: boolean) {
     {
       [languageSwitcherPanelStyle]: withLanguageSwitcher,
     },
-    getSidebarVariantStyle(mode),
+    getSidebarVariantStyle(theme),
   );
 }
 
@@ -70,7 +69,7 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   showCopyButton?: boolean;
   language?: LanguageOption;
   isMultiline?: boolean;
-  customActionButtons?: Array<React.ReactElement>;
+  customActionButtons?: Array<React.ReactNode>;
   showCustomActionButtons?: boolean;
   className?: string;
 } & PopoverProps;
@@ -91,7 +90,7 @@ function Panel({
   popoverZIndex,
   className,
 }: PanelProps) {
-  const { theme, darkMode } = useCodeContext();
+  const { theme } = useDarkMode();
 
   const popoverProps = {
     popoverZIndex,
@@ -125,9 +124,7 @@ function Panel({
         />
       )}
       {showCustomActionButtons && (
-        <LeafyGreenProvider darkMode={darkMode}>
-          {customActionButtons?.map((action: React.ReactElement) => action)}
-        </LeafyGreenProvider>
+        <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
       )}
     </div>
   );

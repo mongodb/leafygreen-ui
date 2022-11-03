@@ -11,8 +11,10 @@ import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { useCodeContext } from './CodeContext';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -96,14 +98,14 @@ function Syntax({
       highlightedContent.react
     );
 
-  const { theme, darkMode } = useCodeContext();
+  const { theme, darkMode } = useDarkMode();
 
   const baseFontSize = useBaseFontSize();
   // TODO: remove 14 check when useBaseFontSize is updated
-  const codeSize = baseFontSize === 14 ? '1' : '2';
+  const typeScale = (baseFontSize === 14) ? typeScales.code1 : typeScales.code2;
   const codeFontStyles = css`
-    font-size: ${typeScales[`code${codeSize}`].fontSize}px;
-    line-height: ${typeScales[`code${codeSize}`].lineHeight}px;
+    font-size: ${typeScale.fontSize}px;
+    line-height: ${typeScale.lineHeight}px;
   `;
 
   return (

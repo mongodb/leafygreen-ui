@@ -4,13 +4,15 @@ import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import Button, { ButtonProps } from '@leafygreen-ui/button';
 import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { Select, Option } from '@leafygreen-ui/select';
 import { LanguageOption, PopoverProps } from './types';
 import { palette } from '@leafygreen-ui/palette';
-import { useCodeContext } from './CodeContext';
 
 const containerStyle = css`
   display: flex;
@@ -127,7 +129,7 @@ function LanguageSwitcher({
   popoverZIndex,
 }: Props) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const { theme, darkMode } = useCodeContext();
+  const { theme, darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
 
   const handleChange = (val: string) => {

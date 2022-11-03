@@ -113,6 +113,7 @@ export type CodeProps = Omit<
   /**
    * Custom action buttons. Should be an array of `IconButton`.
    *
+   * @type <IconButton />[]
    */
   customActionButtons?: Array<React.ReactElement>;
 

@@ -6,9 +6,11 @@ import { palette } from '@leafygreen-ui/palette';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
-import { usePopoverPortalContainer } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useDarkMode,
+  usePopoverPortalContainer,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
-import { useCodeContext } from './CodeContext';
 
 const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -26,14 +28,14 @@ const copiedThemeStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.dark3};
-    background-color: ${palette.green.dark1};
+    background-color: ${palette.green.base};
 
     &:focus,
     &:hover {
       color: ${palette.gray.dark3};
 
       &:before {
-        background-color: ${palette.green.dark1};
+        background-color: ${palette.green.base};
       }
     }
   `,
@@ -59,8 +61,7 @@ interface CopyProps {
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
   const [buttonNode, setButtonNode] = useState(null);
-  const { theme, darkMode } = useCodeContext();
-
+  const { theme, darkMode } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
 
   useEffect(() => {
