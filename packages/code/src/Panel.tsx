@@ -12,56 +12,71 @@ import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-function getSidebarVariantStyle(theme: Theme): string {
-  switch (theme) {
-    case Theme.Light:
-      return css`
-        background-color: ${palette.white};
-        border-color: ${palette.gray.light2};
-      `;
+const basePanelStyle = css`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: ${spacing[1]}px;
 
-    case Theme.Dark:
-      return css`
-        background-color: ${palette.gray.dark2};
-        border-color: ${palette.gray.dark1};
-      `;
+  svg {
+    width: 16px;
+    height: 16px;
   }
-}
+`;
 
-function getPanelStyles(theme: Theme, withLanguageSwitcher: boolean) {
-  const basePanelStyle = css`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    flex-shrink: 0;
-    gap: ${spacing[1]}px;
-    padding: 6px;
-    border-left: solid 1px;
+const basePanelThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.white};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark2};
+  `,
+};
 
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  `;
+const sidePanelStyle = css`
+  flex-direction: column;
+  padding: 6px;
+  border-left: solid 1px;
+`;
 
-  const languageSwitcherPanelStyle = css`
-    flex-direction: row;
-    border-left: unset;
-    border-bottom: 1px solid;
-    justify-content: space-between;
-    padding: 0;
-    padding-right: 8px;
-    height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
-  `;
+const sidePanelThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: cx(
+    sidePanelStyle,
+    css`
+      border-color: ${palette.gray.light2};
+    `,
+  ),
+  [Theme.Dark]: cx(
+    sidePanelStyle,
+    css`
+      border-color: ${palette.gray.dark2};
+    `,
+  ),
+};
 
-  return cx(
-    basePanelStyle,
-    {
-      [languageSwitcherPanelStyle]: withLanguageSwitcher,
-    },
-    getSidebarVariantStyle(theme),
-  );
-}
+const languageSwitcherPanelStyle = css`
+  flex-direction: row;
+  border-bottom: 1px solid;
+  justify-content: space-between;
+  padding: 0;
+  padding-right: 8px;
+  height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
+`;
+
+const languageSwitcherPanelThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: cx(
+    languageSwitcherPanelStyle,
+    css`
+      border-color: ${palette.gray.light2};
+    `,
+  ),
+  [Theme.Dark]: cx(
+    languageSwitcherPanelStyle,
+    css`
+      border-color: ${palette.gray.dark1};
+    `,
+  ),
+};
 
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   onCopy?: Function;
@@ -102,7 +117,15 @@ function Panel({
 
   return (
     <div
-      className={cx(getPanelStyles(theme, !!language), className)}
+      className={cx(
+        basePanelStyle,
+        basePanelThemeStyle[theme],
+        {
+          [sidePanelThemeStyles[theme]]: !language,
+          [languageSwitcherPanelThemeStyles[theme]]: !!language,
+        },
+        className,
+      )}
       data-testid="leafygreen-code-panel"
     >
       {language !== undefined &&
