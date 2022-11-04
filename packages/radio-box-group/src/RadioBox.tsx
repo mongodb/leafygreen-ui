@@ -1,6 +1,6 @@
 import React, { HTMLProps, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
@@ -8,9 +8,6 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Size from './Size';
 import { useRadioBoxGroupContext, RadioBoxGroupContext } from './context';
-
-const radioBoxWrapper = createDataProp('radio-box-wrapper');
-const radioBoxInput = createDataProp('radio-box-input');
 
 export const radioBoxSizes: { [K in Size]: string } = {
   [Size.Default]: css`
@@ -266,7 +263,6 @@ export function RadioBox({
 
   return (
     <label
-      {...radioBoxWrapper.prop}
       {...tooltipTriggerHandlers}
       htmlFor={id}
       className={cx(
@@ -279,7 +275,6 @@ export function RadioBox({
     >
       <input
         {...rest}
-        {...radioBoxInput.prop}
         type="radio"
         id={id}
         name={name}

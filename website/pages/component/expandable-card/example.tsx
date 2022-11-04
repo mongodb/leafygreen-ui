@@ -49,21 +49,19 @@ export default function CardLiveExample() {
               label="Trigger Name"
               description="Enter the name for the new Trigger"
               placeholder="trigger-0"
-              darkMode={props.darkMode}
               className={css`
                 margin-bottom: 12px;
               `}
             />
             <Label
               htmlFor="enabled"
-              darkMode={props.darkMode}
               className={css`
                 display: block;
               `}
             >
               Enabled
             </Label>
-            <Toggle aria-labelledby="enabled" darkMode={props.darkMode} />
+            <Toggle aria-labelledby="enabled" />
           </div>
         </ExpandableCard>
       )}
