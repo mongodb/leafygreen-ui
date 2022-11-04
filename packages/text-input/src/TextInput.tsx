@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -57,8 +57,12 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
  * @param props.sizeVariant determines the size of the text and the height of the input.
  */
 
-type TextInput = React.ForwardRefExoticComponent<TextInputProps>;
-const TextInput: TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+type TextInputComponentType = React.ForwardRefExoticComponent<TextInputProps>;
+/// @ts-expect-error
+const TextInput: TextInputComponentType = React.forwardRef<
+  HTMLInputElement,
+  TextInputProps
+>(
   (
     {
       label,
@@ -233,6 +237,7 @@ TextInput.displayName = 'TextInput';
 TextInput.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
+  'aria-labelledby': PropTypes.string,
   description: PropTypes.string,
   optional: PropTypes.bool,
   disabled: PropTypes.bool,

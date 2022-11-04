@@ -38,8 +38,37 @@ export const TextInputFontSize = {
 export type TextInputFontSize =
   typeof TextInputFontSize[keyof typeof TextInputFontSize];
 
+interface AriaLabelProps {
+  /**
+   * Text shown in bold above the input element.
+   *
+   * Optional if `aria-labelledby` is provided
+   */
+  label?: string;
+
+  /**
+   * Screen-reader label element.
+   *
+   * Optional if `label` is provided
+   */
+  ['aria-labelledby']?: string;
+}
+
+type AriaLabels = keyof AriaLabelProps;
+
+interface TextInputTypeProp {
+  /**
+   * The input type.
+   *
+   * Requires an `aria-label` if `"search"` is provided
+   */
+  type?: TextInputType;
+}
 export interface BaseTextInputProps
-  extends HTMLElementProps<'input', HTMLInputElement> {
+  extends Omit<
+    HTMLElementProps<'input', HTMLInputElement>,
+    AriaLabels | 'type'
+  > {
   /**
    * id associated with the TextInput component.
    */
@@ -103,13 +132,6 @@ export interface BaseTextInputProps
   darkMode?: boolean;
 
   /**
-   * The input type.
-   *
-   * Requires an `aria-label` if `"search"` is provided
-   */
-  type?: TextInputType;
-
-  /**
    * Callback called whenever validation should be run.
    *
    * See [Form Validation & Error Handling](https://www.mongodb.design/foundation/forms/#form-validation--error-handling) for more
@@ -129,28 +151,20 @@ export interface BaseTextInputProps
   baseFontSize?: BaseFontSize;
 }
 
-interface AriaLabelProps {
-  /**
-   * Text shown in bold above the input element.
-   *
-   * Optional if `aria-labelledby` is provided
-   */
-  label: string | null;
+type AccessibleTextInputProps = Either<
+  BaseTextInputProps & AriaLabelProps & TextInputTypeProp,
+  AriaLabels
+>;
+type SearchTextInputProps = BaseTextInputProps &
+  AriaLabelProps & {
+    /**
+     *
+     */
+    type: 'search';
+    /**
+     * Required if `type` is `"search"`
+     */
+    'aria-label': string;
+  };
 
-  /**
-   * Screen-reader label element.
-   *
-   * Optional if `label` is provided
-   */
-  ['aria-labelledby']: string;
-}
-
-export type TextInputProps =
-  | Either<BaseTextInputProps & AriaLabelProps, keyof AriaLabelProps>
-  | (BaseTextInputProps & {
-      type: 'search';
-      /**
-       * Required if `type` is `"search"`
-       */
-      'aria-label': string;
-    });
+export type TextInputProps = AccessibleTextInputProps | SearchTextInputProps;
