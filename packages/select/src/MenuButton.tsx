@@ -293,7 +293,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         css`
           width: 100%;
           ${MobileMediaQuery} {
-            color: red;
             height: ${mobileSizeSet.height}px;
             font-size: ${mobileSizeSet.text}px;
           }
