@@ -1,10 +1,9 @@
-import { css } from "@leafygreen-ui/emotion";
-import { Theme } from "@leafygreen-ui/lib";
-import { palette, uiColors } from "@leafygreen-ui/palette";
-import { fontFamilies } from "@leafygreen-ui/tokens";
-import facepaint from "facepaint";
-import { transparentize } from "polished";
-import { CloseIconColor, ModalSize } from "./types";
+import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import facepaint from 'facepaint';
+import { transparentize } from 'polished';
+import { CloseIconColor, ModalSize } from './types';
 
 // breakpoints for different screen sizes
 export const small = '767px'; // mobile screens, from 0px - 767px
@@ -20,7 +19,7 @@ export const mq = facepaint([
 export const defaultHorizontalSpacing = 18;
 export const defaultVerticalSpacing = 64;
 
-export const backdrop = css`
+export const backdropBaseStyle = css`
   overflow-y: auto;
   position: fixed;
   top: 0;
@@ -30,6 +29,15 @@ export const backdrop = css`
   opacity: 0;
   transition: opacity 150ms ease-in-out;
 `;
+
+export const backdropThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${transparentize(0.4, palette.black)};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${transparentize(0.4, palette.gray.dark2)};
+  `,
+};
 
 export const visibleBackdrop = css`
   opacity: 1;
@@ -54,35 +62,27 @@ export const modalContentStyle = css`
   pointer-events: all;
   transform: translate3d(0, -16px, 0);
   opacity: 0;
+  border-radius: 24px;
+  padding: 40px 36px;
+  box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
 
   &:focus {
     outline: none;
   }
 `;
 
-export const modeStyles = css`
-  
-`;
+export const modeStyles = css``;
 
 export const modalThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-  color: ${uiColors.gray.dark3};
-  background-color: ${uiColors.white};
-  font-family: ${fontFamilies.default};
-  border-radius: 24px;
-  padding: 40px 36px;
-  box-shadow: 0px 8px 20px -8px ${transparentize(0.4, palette.black)};
+    color: ${palette.black};
+    background-color: ${palette.white};
   `,
   [Theme.Dark]: css`
-  color: ${uiColors.white};
-  background-color: ${uiColors.gray.dark3};
-  font-family: ${fontFamilies.legacy};
-  border-radius: 7px;
-  padding: 32px;
-  box-shadow: 0 5px 15px
-    ${transparentize(0.4, uiColors.black)};
-  `
-}
+    color: ${palette.gray.light2};
+    background-color: ${palette.black};
+  `,
+};
 
 export const visibleModalContentStyle = css`
   transform: translate3d(0, 0, 0);
@@ -108,56 +108,33 @@ export const modalSizes: { readonly [K in ModalSize]: string } = {
 export const baseCloseButtonStyles = css`
   position: absolute;
   cursor: pointer;
+  // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
+  // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
+  right: 18px;
+  top: 18px;
 `;
 
-export const closeButton: Record<
-  Theme,
-  Record<CloseIconColor, string> & Record<'position', string>
-> = {
+export const closeButton: Record<Theme, Record<CloseIconColor, string>> = {
   [Theme.Light]: {
     [CloseIconColor.Default]: css`
-      color: ${palette.gray.base};
-    `,
-    [CloseIconColor.Dark]: css`
       color: ${palette.gray.dark1};
     `,
-    [CloseIconColor.Light]: css`
-      color: ${palette.white};
+    [CloseIconColor.Dark]: css`
+      color: ${palette.black};
     `,
-    position: css`
-      // x-icon should be 24px from edge. IconButton is 28x28 and Icon is 16x16
-      // so there's already (28 - 16) / 2 = 6px of spacing. 24 - 6 = 18.
-      right: 18px;
-      top: 18px;
+    [CloseIconColor.Light]: css`
+      color: ${palette.gray.light2};
     `,
   },
   [Theme.Dark]: {
     [CloseIconColor.Default]: css`
-      color: ${uiColors.gray.base};
-
-      &:hover {
-        color: ${uiColors.gray.base};
-      }
+      color: ${palette.gray.base};
     `,
     [CloseIconColor.Dark]: css`
-      color: ${uiColors.gray.base};
-
-      &:hover {
-        color: ${uiColors.gray.base};
-      }
+      color: ${palette.black};
     `,
     [CloseIconColor.Light]: css`
-      color: ${uiColors.gray.base};
-
-      &:hover {
-        color: ${uiColors.gray.base};
-      }
-    `,
-    position: css`
-      // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
-      // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
-      right: 10px;
-      top: 10px;
+      color: ${palette.gray.light2};
     `,
   },
 };

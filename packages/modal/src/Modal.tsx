@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import { ModalView } from '.';
-import { ModalProps } from './types';
+import { CloseIconColor, ModalProps } from './types';
 
 /**
  *
@@ -62,6 +62,7 @@ Modal.propTypes = {
   className: PropTypes.string,
   setOpen: PropTypes.func,
   darkMode: PropTypes.bool,
+  closeIconColor: PropTypes.oneOf(Object.values(CloseIconColor)),
 };
 
 export default Modal;

@@ -1,5 +1,5 @@
-import { HTMLElementProps } from "@leafygreen-ui/lib";
-import { SetStateAction } from "react";
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { SetStateAction } from 'react';
 
 export const CloseIconColor = {
   Default: 'default',
@@ -70,7 +70,7 @@ export interface ModalProps extends HTMLElementProps<'div'> {
   darkMode?: boolean;
 
   /**
-   * Determines the color of the close icon. Currently will only work if darkMode is set to false.
+   * Determines the color of the close icon.
    * @default 'default'
    */
   closeIconColor?: CloseIconColor;
