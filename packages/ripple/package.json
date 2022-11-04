@@ -21,7 +21,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@leafygreen-ui/lib": "^9.5.1"
+    "@leafygreen-ui/lib": "^10.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ripple",
   "repository": {
