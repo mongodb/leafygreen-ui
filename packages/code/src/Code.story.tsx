@@ -25,6 +25,8 @@ export const Code: React.FC<CodeProps> = props => <LGCode {...props} />;
 
 const jsSnippet = `
 
+import datetime from './';
+
 const myVar = 42;
 
 var myObj = {
@@ -62,21 +64,31 @@ export default {
         options: Object.keys(Language),
       },
     },
-    onCopy: { control: 'none' },
     usePortal: { control: 'boolean' },
     copyable: { control: 'boolean' },
     showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
     darkMode: { control: 'boolean' },
-    chromeTitle: { control: 'string' },
-    scrollContainer: { control: 'none' },
-    portalClassName: { control: 'string' },
-    popoverZIndex: { control: 'number' },
+    chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
-    children: { control: 'none' },
-    customActionButtons: { control: 'none' },
-    showCustomButtons: { control: 'none' },
-    showCustomActionButtons: { control: 'none' },
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        'showCustomActionButtons',
+        'showCustomButtons',
+        'customActionButtons',
+        'children',
+        'onCopy',
+        'className',
+        'onChange',
+        'portalClassName',
+        'portalContainer',
+        'scrollContainer',
+        'popoverZIndex',
+        'ref',
+      ],
+    },
   },
 };
 
@@ -87,7 +99,7 @@ Basic.args = {};
 
 export const HighlightOptions = Template.bind({});
 HighlightOptions.args = {
-  highlightLines: [[2, 4], 6],
+  highlightLines: [6, [10, 15]],
 };
 
 export const WithChrome = Template.bind({});
