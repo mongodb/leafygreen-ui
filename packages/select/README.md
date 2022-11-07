@@ -118,6 +118,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `state`           | `'none'`, `'error'`                           | Determines the state of the `<select>`                                                                                                                                                                                                          | `'none'`    |
 | `errorMessage`    | `string`                                      | Text that shows when the `state` is set to `error`.                                                                                                                                                                                             |             |
 | `baseFontSize`    | `'13'`, `'16'`                                | Determines the base font size if sizeVariant is set to `default`                                                                                                                                                                                | `'13'`      |
+| `popoverClassName`    | `string`                                | `className` passed to the menu popover.                                                                                                                                                                                |       |
 
 # Option
 
