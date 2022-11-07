@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
-import ConfirmationModal, { Variant } from '.';
+import { ConfirmationModal } from './ConfirmationModal';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Variant } from './ConfirmationModal.types';
 
 export default {
   title: 'Components/Modals/ConfirmationModal',
