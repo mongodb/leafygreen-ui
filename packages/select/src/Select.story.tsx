@@ -5,6 +5,7 @@ import { Option, OptionGroup, Select } from '.';
 import { SelectProps } from './types';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Justify } from '@leafygreen-ui/popover';
 
 export default {
   title: 'Components/Select',
@@ -49,6 +50,7 @@ export default {
     readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
+    justify: { control: 'select', options: Justify },
   },
 } as Meta<typeof Select>;
 
@@ -77,6 +79,26 @@ export const Controlled = ({
       readOnly={false}
       value={value}
       onChange={setValue}
+    />
+  );
+};
+
+export const OverflowingPopover = ({
+  defaultValue,
+  readOnly,
+  ...args
+}: SelectProps) => {
+  const [value, setValue] = useState('cat');
+  return (
+    <Uncontrolled
+      {...args}
+      readOnly={false}
+      value={value}
+      onChange={setValue}
+      popoverClassName={css`
+        min-width: 500px;
+      `}
+      justify="end"
     />
   );
 };

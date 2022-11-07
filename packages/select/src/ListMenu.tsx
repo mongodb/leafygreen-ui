@@ -63,6 +63,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       scrollContainer,
       portalClassName,
       popoverZIndex,
+      ...rest
     }: ListMenuProps,
     forwardedRef,
   ) {
@@ -90,6 +91,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       ...(usePortal
         ? { usePortal, portalClassName, portalContainer, scrollContainer }
         : { usePortal }),
+      ...rest,
     };
 
     return (

@@ -94,6 +94,7 @@ export default function Select({
   state = State.None,
   baseFontSize = BaseFontSize.Body1,
   popoverClassName,
+  justify,
   __INTERNAL__menuButtonSlot__,
   ...rest
 }: SelectProps) {
@@ -480,6 +481,7 @@ export default function Select({
 
   const popoverProps = {
     popoverZIndex,
+    justify,
     ...(usePortal
       ? {
           usePortal,
