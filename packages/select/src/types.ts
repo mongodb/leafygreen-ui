@@ -18,10 +18,10 @@ export type State = typeof State[keyof typeof State];
 
 interface BaseSelectProps
   extends Omit<
-      HTMLElementProps<'button', HTMLButtonElement>,
-      'onChange' | 'onClick'
-    >,
-    Omit<PopoverProps, 'active' | 'spacing'> {
+  HTMLElementProps<'button', HTMLButtonElement>,
+  'onChange' | 'onClick'
+  >,
+  Omit<PopoverProps, 'active' | 'spacing'> {
   /**
    * Children rendered inside the component. Expected to be either `<Option>` or `<OptionGroup>`.
    *
@@ -73,6 +73,10 @@ interface BaseSelectProps
    *  determines the base font size if sizeVariant is set to default.
    */
   baseFontSize?: BaseFontSize;
+  /**
+   *  `className` passed to the menu popover.
+   */
+  popoverClassName?: string;
 
   /**
    * @internal
@@ -87,43 +91,43 @@ export type SelectProps = BaseSelectProps &
   (
     | // Uncontrolled
     ({
-        /**
-         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
-         */
-        defaultValue?: string;
-        /**
-         * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
-         */
-        value?: undefined;
-      } & {
+      /**
+       * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
+       */
+      defaultValue?: string;
+      /**
+       * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
+       */
+      value?: undefined;
+    } & {
+      /**
+       * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
+       *
+       * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
+       */
+      onChange?: (
+        value: string,
+        event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
+      ) => void;
+      /**
+       * Indicates that the component's value cannot be changed.
+       */
+      readOnly?: false;
+    })
+    // Controlled
+    | ({ value: string; defaultValue?: undefined } & (
+      | {
         /**
          * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
          *
          * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
          */
-        onChange?: (
+        onChange: (
           value: string,
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void;
-        /**
-         * Indicates that the component's value cannot be changed.
-         */
         readOnly?: false;
-      })
-    // Controlled
-    | ({ value: string; defaultValue?: undefined } & (
-        | {
-            /**
-             * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
-             *
-             * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
-             */
-            onChange: (
-              value: string,
-              event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
-            ) => void;
-            readOnly?: false;
-          }
-        | { readOnly: true; onChange?: undefined }
-      ))
+      }
+      | { readOnly: true; onChange?: undefined }
+    ))
   );
