@@ -45,7 +45,13 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     const { theme } = useDarkMode(darkModeProp);
 
     return (
-      <div className={cx(inputContainerStyle, wrapperFontStyle[sizeVariant])}>
+      <div
+        className={cx(
+          inputContainerStyle,
+          wrapperFontStyle[sizeVariant],
+          className,
+        )}
+      >
         <MagnifyingGlass
           className={cx(
             searchIconStyle,
@@ -63,7 +69,6 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             inputThemeStyle[theme],
             inputSizeStyles[sizeVariant],
             inputFocusStyles[theme], // Always show focus styles
-            className,
           )}
           placeholder={placeholder}
           ref={forwardRef}

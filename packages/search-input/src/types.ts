@@ -20,7 +20,7 @@ export interface SearchInputProps
   /**
    * Screen-reader label element.
    */
-  ['aria-labelledby']: string;
+  ['aria-label']: string;
 
   /**
    * The current state of the SearchInput. This can be none, or loading.

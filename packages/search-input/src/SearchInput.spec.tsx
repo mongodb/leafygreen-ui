@@ -15,7 +15,7 @@ function renderSearchInput(props = {}) {
   const utils = render(
     <SearchInput
       data-testid="search-input"
-      aria-labelledby="test-search-input"
+      aria-label="test-search-input"
       {...props}
     />,
   );
@@ -51,11 +51,6 @@ describe('packages/search-input', () => {
     ).toBe(true);
   });
 
-  test('renders search icon', () => {
-    const { container } = renderSearchInput(defaultProps);
-    expect(container.innerHTML).toContain('Search Icon');
-  });
-
   test('key presses are reflected in component and onChange function is called when value changes', () => {
     const { searchInput } = renderSearchInput(defaultProps);
     expect((searchInput as HTMLInputElement).value).toBe('');
@@ -66,7 +61,6 @@ describe('packages/search-input', () => {
 
     expect((searchInput as HTMLInputElement).value).toBe('a');
     expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
-    expect(defaultProps.onChange).toHaveReturnedWith('none');
   });
 
   describe('when the "sizeVariant" is not "large"', () => {

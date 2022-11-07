@@ -32,6 +32,7 @@ import {
   textContainerStyle,
 } from './style';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 /**
  * # TextInput
@@ -120,7 +121,7 @@ const TextInput: TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     }
 
     if (type === 'search') {
-      console.warn(
+      consoleOnce.warn(
         'We recommend using the Leafygreen SearchInput for `type="search" inputs.',
       );
       if (!rest['aria-label']) {

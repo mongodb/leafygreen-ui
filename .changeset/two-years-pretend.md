@@ -1,5 +1,4 @@
 ---
-'@leafygreen-ui/search-input': major
 '@leafygreen-ui/text-input': patch
 ---
 
