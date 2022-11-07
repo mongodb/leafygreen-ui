@@ -1,5 +1,4 @@
 import { css } from '@leafygreen-ui/emotion';
-// import { uiColors } from '@leafygreen-ui/palette';
 
 export const footerStyle = css`
   position: relative;
