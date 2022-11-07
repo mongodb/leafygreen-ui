@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Modal from '.';
+import Modal from './Modal';
 import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
 import { Subtitle, Body, H3 } from '@leafygreen-ui/typography';
 import Copyable from '@leafygreen-ui/copyable';

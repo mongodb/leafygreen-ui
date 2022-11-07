@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
-import { ModalView } from '.';
+import ModalView from './ModalView';
 import { CloseIconColor, ModalProps } from './types';
 
 /**
