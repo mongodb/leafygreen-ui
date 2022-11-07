@@ -235,7 +235,7 @@ export const ConfirmationModal = ({
         {children}
         {textEntryConfirmation}
       </div>
-      <Footer darkMode={darkMode}>
+      <Footer>
         <Button
           variant={variant}
           disabled={!confirmEnabled || submitDisabled}
