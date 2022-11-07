@@ -28,18 +28,18 @@ export interface SearchInputProps
   state?: State;
 
   /**
-   *  determines whether or not the component appears in dark theme.
+   * Determines whether the component appears in dark theme.
    */
   darkMode?: boolean;
 
   /**
-   *  determines the font size and padding.
+   * Determines the font size and padding.
    */
 
   sizeVariant?: SizeVariant;
 
   /**
-   * Whether or not the field is currently disabled.
+   * Determines whether the field is currently disabled.
    * Default: false
    */
   disabled?: boolean;
