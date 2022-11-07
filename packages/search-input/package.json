@@ -36,6 +36,6 @@
     "@leafygreen-ui/typography": "^13.1.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.3.3"
+    "@leafygreen-ui/leafygreen-provider": "^3.0.0"
   }
 }

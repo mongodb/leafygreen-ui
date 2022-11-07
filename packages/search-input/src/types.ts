@@ -1,5 +1,4 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {
   None: 'none',
@@ -9,7 +8,6 @@ export const State = {
 export type State = typeof State[keyof typeof State];
 
 export const SizeVariant = {
-  XSmall: 'xsmall',
   Small: 'small',
   Default: 'default',
   Large: 'large',
@@ -41,8 +39,8 @@ export interface SearchInputProps
   sizeVariant?: SizeVariant;
 
   /**
-   *  determines the base font size if sizeVariant is set to default.
+   * Whether or not the field is currently disabled.
+   * Default: false
    */
-
-  baseFontSize?: BaseFontSize;
+  disabled?: boolean;
 }

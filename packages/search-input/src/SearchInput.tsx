@@ -1,11 +1,10 @@
 import React, { forwardRef } from 'react';
-import { SearchInputProps, SizeVariant, State } from './types';
+import { SearchInputProps, SizeVariant } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
 import {
   baseInputStyle,
-  getWrapperFontSize,
+  wrapperFontStyle,
   inputContainerStyle,
   inputFocusStyles,
   inputThemeStyle,
@@ -13,6 +12,7 @@ import {
   searchIconStyle,
   searchIconThemeStyle,
   searchIconSizeStyle,
+  searchIconDisabledStyle,
 } from './styles';
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -34,31 +34,26 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   (
     {
       placeholder = 'Search',
-      state = State.None,
       className,
       darkMode: darkModeProp,
       sizeVariant = SizeVariant.Default,
-      baseFontSize: baseFontSizeProp,
+      disabled,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const { theme } = useDarkMode(darkModeProp);
 
     return (
-      <div
-        className={cx(
-          inputContainerStyle,
-          getWrapperFontSize(sizeVariant, baseFontSize),
-        )}
-      >
+      <div className={cx(inputContainerStyle, wrapperFontStyle[sizeVariant])}>
         <MagnifyingGlass
           className={cx(
             searchIconStyle,
             searchIconThemeStyle[theme],
             searchIconSizeStyle[sizeVariant],
+            { [searchIconDisabledStyle[theme]]: disabled },
           )}
+          aria-label="Search Icon"
           role="presentation"
         />
         <input
@@ -72,6 +67,7 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           )}
           placeholder={placeholder}
           ref={forwardRef}
+          disabled={disabled}
           {...rest}
         />
       </div>

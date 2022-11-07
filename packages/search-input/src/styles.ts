@@ -2,7 +2,6 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
-  BaseFontSize,
   focusRing,
   fontFamilies,
   hoverRing,
@@ -15,44 +14,19 @@ import { SizeVariant } from './types';
  */
 const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
-export const getWrapperFontSize = (
-  size: SizeVariant,
-  baseFontSize: BaseFontSize,
-): string => {
-  switch (size) {
-    case SizeVariant.XSmall: {
-      return css`
-        font-size: ${typeScales.body1.fontSize}px;
-        line-height: ${typeScales.body1.lineHeight}px;
-      `;
-    }
-
-    case SizeVariant.Small: {
-      return css`
-        font-size: ${typeScales.body1.fontSize}px;
-        line-height: ${typeScales.body1.lineHeight}px;
-      `;
-    }
-
-    case SizeVariant.Large: {
-      return css`
-        font-size: 18px;
-        line-height: 32px;
-      `;
-    }
-
-    case SizeVariant.Default:
-    default: {
-      const baseFontSizeObject =
-        baseFontSize == BaseFontSize.Body1
-          ? typeScales.body1
-          : typeScales.body2;
-      return css`
-        font-size: ${baseFontSizeObject.fontSize}px;
-        line-height: ${baseFontSizeObject.lineHeight}px;
-      `;
-    }
-  }
+export const wrapperFontStyle: Record<SizeVariant, string> = {
+  [SizeVariant.Small]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [SizeVariant.Default]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [SizeVariant.Large]: css`
+    font-size: 18px;
+    line-height: 32px;
+  `,
 };
 
 export const inputContainerStyle = css`
@@ -129,7 +103,7 @@ export const inputThemeStyle: Record<Theme, string> = {
     }
 
     &::placeholder {
-      color: ${palette.gray.light1};
+      color: ${palette.gray.base};
       font-weight: normal;
     }
 
@@ -162,7 +136,7 @@ export const inputThemeStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light3};
+    color: ${palette.gray.light2};
     background-color: ${palette.gray.dark4};
     border: 1px solid ${palette.gray.base};
 
@@ -198,7 +172,7 @@ export const inputThemeStyle: Record<Theme, string> = {
     }
 
     &:disabled {
-      color: ${palette.gray.dark1};
+      color: ${palette.gray.dark2};
       background-color: ${palette.gray.dark3};
       border-color: ${palette.gray.dark2};
 
@@ -236,17 +210,13 @@ export const inputFocusStyles: Record<Theme, string> = {
 };
 
 export const inputSizeStyles: Record<SizeVariant, string> = {
-  [SizeVariant.XSmall]: css`
-    height: 22px;
-    padding-left: 16px;
-  `,
   [SizeVariant.Small]: css`
     height: 28px;
-    padding-left: 24px;
+    padding-left: 34px;
   `,
   [SizeVariant.Default]: css`
     height: 36px;
-    padding-left: 32px;
+    padding-left: 36px;
   `,
   [SizeVariant.Large]: css`
     height: 48px;
@@ -257,14 +227,13 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
 export const searchIconStyle = css`
   position: absolute;
   top: 50%;
-  left: 8px;
   transform: translateY(-50%);
   z-index: 2;
 `;
 
 export const searchIconThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.gray.dark2};
+    color: ${palette.gray.dark1};
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.light2};
@@ -272,20 +241,22 @@ export const searchIconThemeStyle: Record<Theme, string> = {
 };
 
 export const searchIconSizeStyle: Record<SizeVariant, string> = {
-  [SizeVariant.XSmall]: css`
-    width: 8px;
-    left: 4px;
-  `,
   [SizeVariant.Small]: css`
-    width: 12px;
-    left: 6px;
+    left: 10px;
   `,
   [SizeVariant.Default]: css`
-    width: 16px;
-    left: 8px;
+    left: 12px;
   `,
   [SizeVariant.Large]: css`
-    width: 20px;
-    left: 10px;
+    left: 16px;
+  `,
+};
+
+export const searchIconDisabledStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
   `,
 };

@@ -11,6 +11,7 @@ export default {
     id: { control: 'string' },
     placeholder: { control: 'string' },
     value: { control: 'string' },
+    disabled: { control: 'boolean' },
     ref: { control: 'none' },
   },
 };

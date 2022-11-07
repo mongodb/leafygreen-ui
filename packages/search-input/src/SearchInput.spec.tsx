@@ -1,8 +1,15 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import SearchInput from '.';
 import { axe } from 'jest-axe';
 import { SizeVariant } from './types';
+
+const defaultProps = {
+  className: 'test-text-input-class',
+  placeholder: 'This is some placeholder text',
+  onChange: jest.fn(),
+  onBlur: jest.fn(),
+};
 
 function renderSearchInput(props = {}) {
   const utils = render(
@@ -30,6 +37,53 @@ describe('packages/search-input', () => {
     expect(searchInput.getAttribute('type')).toBe('search');
   });
 
+  test(`renders ${defaultProps.placeholder} as placeholder text`, () => {
+    const { getByPlaceholderText } = renderSearchInput(defaultProps);
+    expect(getByPlaceholderText(defaultProps.placeholder)).toBeVisible();
+  });
+
+  test(`renders ${defaultProps.className} in the classList`, () => {
+    const { container } = renderSearchInput(defaultProps);
+    expect(
+      (container?.firstChild as HTMLElement)?.classList.contains(
+        defaultProps.className,
+      ),
+    ).toBe(true);
+  });
+
+  test('renders search icon', () => {
+    const { container } = renderSearchInput(defaultProps);
+    expect(container.innerHTML).toContain('Search Icon');
+  });
+
+  test('key presses are reflected in component and onChange function is called when value changes', () => {
+    const { searchInput } = renderSearchInput(defaultProps);
+    expect((searchInput as HTMLInputElement).value).toBe('');
+
+    fireEvent.change(searchInput, {
+      target: { value: 'a' },
+    });
+
+    expect((searchInput as HTMLInputElement).value).toBe('a');
+    expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+    expect(defaultProps.onChange).toHaveReturnedWith('none');
+  });
+
+  describe('when the "sizeVariant" is not "large"', () => {
+    // TODO: This type of check should be done with a visual regression test
+    // As written this test does not pass even if the font-size is inherited correctly
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('check if font-size is 13px', () => {
+      const { searchInput } = renderSearchInput({
+        value: 'test',
+      });
+
+      expect(searchInput).toHaveStyle({
+        fontSize: '13px',
+      });
+    });
+  });
+
   describe('when the "sizeVariant" is "large"', () => {
     // TODO: This type of check should be done with a visual regression test
     // As written this test does not pass even if the font-size is inherited correctly
@@ -38,7 +92,6 @@ describe('packages/search-input', () => {
       const { searchInput } = renderSearchInput({
         value: 'test',
         sizeVariant: SizeVariant.Large,
-        optional: true,
       });
 
       expect(searchInput).toHaveStyle({
