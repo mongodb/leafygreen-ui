@@ -114,9 +114,9 @@ function getHighlightedRowStyle(darkMode: boolean) {
     backgroundImage = `linear-gradient(90deg, ${palette.gray.dark3}, ${palette.black})`;
     borderColor = palette.gray.dark3;
   } else {
-    backgroundColor = '#FEF7E3'; // not updating to palette yet, currently sticking with uiColor for accessibility reasons
+    backgroundColor = '#FEF7E3'; //TODO: not updating to palette yet, currently sticking with uiColor for accessibility reasons
     backgroundImage = 'none';
-    borderColor = '#FEF2C8'; // not updating to palette yet, currently sticking with uiColor for accessibility reasons
+    borderColor = '#FEF2C8'; //TODO: not updating to palette yet, currently sticking with uiColor for accessibility reasons
   }
 
   return css`

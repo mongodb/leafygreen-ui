@@ -34,12 +34,12 @@ const lineHeight = 24;
 
 const wrapperStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    border: 1px solid ${variantColors.light[1]};
+    border: 1px solid ${variantColors[Theme.Light][1]};
     border-radius: 12px;
     overflow: hidden;
   `,
   [Theme.Dark]: css`
-    border: 1px solid ${variantColors.dark[1]};
+    border: 1px solid ${variantColors[Theme.Dark][1]};
     border-radius: 12px;
     overflow: hidden;
   `,
