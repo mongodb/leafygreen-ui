@@ -1,5 +1,35 @@
 # @leafygreen-ui/select
 
+## 9.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/button@18.0.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/popover@10.0.1
+  - @leafygreen-ui/typography@14.0.1
+
+## 8.0.0
+
+### Patch Changes
+
+- f21e42a0: Updates propTypes to accept `node` as children
+- Updated dependencies [0b6435fa]
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/button@17.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/popover@10.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 7.1.2
 
 ### Patch Changes

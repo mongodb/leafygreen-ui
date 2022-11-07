@@ -34,7 +34,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/webpack.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/storybook/webpack.config.js', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
       - name: build
         if: steps.build-cache.outputs.cache-hit != 'true'
         run: yarn build:packages --diff --deps
@@ -72,7 +72,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/webpack.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/storybook/webpack.config.js', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
       - name: build
         if: steps.build-cache.outputs.cache-hit != 'true'
         run: yarn build:packages --diff --deps
@@ -160,6 +160,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - name: deps
         run: yarn check:deps
+      - name: package.json versions
+        run: yarn check:package-json
 
   builds:
     name: Check builds
@@ -190,13 +192,12 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/webpack.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/storybook/webpack.config.js', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
       - name: build
         if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn build:packages --diff --deps
+        run: yarn build --diff --deps
       - name: check builds
         run: yarn check:builds --diff --deps
-
 
   sizeDiff:
     name: Check file size

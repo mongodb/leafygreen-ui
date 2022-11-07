@@ -1,5 +1,27 @@
 # @leafygreen-ui/pipeline
 
+## 4.0.1
+
+### Patch Changes
+
+- 2195359a: Updates some packges to use a caret instead of an exact version
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/tooltip@8.0.1
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies [7162f1ab]
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/tooltip@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ## 3.0.0
 
 ### Major Changes

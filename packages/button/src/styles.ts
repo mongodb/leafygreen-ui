@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Size, Variant, ButtonProps } from './types';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { createDataProp, getTheme, Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, getTheme, Theme } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 
@@ -385,7 +385,7 @@ const fontStyles: Record<BaseFontSize, string> = {
   `,
 };
 
-export const ButtonDataProp = createDataProp('button');
+export const ButtonClassName = createUniqueClassName('button');
 
 export function getClassName({
   variant,

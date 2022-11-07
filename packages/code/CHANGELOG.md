@@ -1,5 +1,33 @@
 # @leafygreen-ui/code
 
+## 13.0.1
+
+### Patch Changes
+
+- Updated dependencies [2195359a]
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon-button@14.0.1
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/button@18.0.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/select@9.0.0
+  - @leafygreen-ui/a11y@1.3.4
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+
+## 13.0.0
+
+### Patch Changes
+
+- Updated dependencies [0b6435fa]
+- Updated dependencies [f21e42a0]
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/button@17.0.0
+  - @leafygreen-ui/select@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/icon-button@14.0.0
+
 ## 12.1.1
 
 ### Patch Changes

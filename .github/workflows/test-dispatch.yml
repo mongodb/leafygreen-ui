@@ -10,7 +10,7 @@ jobs:
       - name: Test continue-on-error
         continue-on-error: true
         run: gibberish
-        
+
       - name: Dispatch to Website repo
         uses: peter-evans/repository-dispatch@v2
         with:

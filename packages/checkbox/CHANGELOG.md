@@ -1,5 +1,24 @@
 # @leafygreen-ui/checkbox
 
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/a11y@1.3.4
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/typography@14.0.1
+
+## 11.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 10.1.1
 
 ### Patch Changes

@@ -1,5 +1,30 @@
 # @leafygreen-ui/side-nav
 
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/tooltip@8.0.1
+  - @leafygreen-ui/a11y@1.3.4
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/portal@4.0.7
+  - @leafygreen-ui/typography@14.0.1
+
+## 11.0.0
+
+### Patch Changes
+
+- Updated dependencies [7162f1ab]
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/tooltip@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 10.1.2
 
 ### Patch Changes

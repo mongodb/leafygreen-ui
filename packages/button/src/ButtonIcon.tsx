@@ -2,7 +2,7 @@ import React from 'react';
 import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ButtonProps, Variant, Size } from './types';
-import { ButtonDataProp } from './styles';
+import { ButtonClassName } from './styles';
 import { getTheme, Theme } from '@leafygreen-ui/lib';
 
 const baseIconStyle: Record<Theme, Record<Variant, string>> = {
@@ -93,10 +93,12 @@ const onlyIconStyle: Record<Theme, Record<Variant, string>> = {
 };
 
 const onlyIconStyleHover = css`
-  ${ButtonDataProp.selector}:hover &,
-  ${ButtonDataProp.selector}:active & {
-    color: currentColor;
-  } ;
+  .${ButtonClassName} {
+    &:hover,
+    &:active {
+      color: currentColor;
+    }
+  }
 `;
 
 const iconSize: Record<Size, string> = {
@@ -127,14 +129,9 @@ const disabledIconStyle: Record<Theme, string> = {
   `,
 };
 
-const disabledIconOnlyStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.light1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.dark2};
-  `,
-};
+const disabledIconOnlyDarkModeStyle = css`
+  color: ${palette.gray.dark2};
+`;
 
 /**
  *
@@ -167,9 +164,10 @@ function ButtonIcon({
       iconStyle[theme][variant],
       iconSize[size],
       {
-        [disabledIconStyle[theme]]: disabled,
         [onlyIconStyleHover]: isIconOnlyButton,
-        [disabledIconOnlyStyle[theme]]: disabled && isIconOnlyButton,
+        [disabledIconStyle[theme]]: disabled,
+        [disabledIconOnlyDarkModeStyle]:
+          disabled && isIconOnlyButton && darkMode,
       },
       className,
     ),

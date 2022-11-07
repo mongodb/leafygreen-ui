@@ -1,5 +1,26 @@
 # @leafygreen-ui/button
 
+## 18.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+
+## 17.0.0
+
+### Patch Changes
+
+- 0b6435fa: Fixing bug where icon color was not changed when the Button was disabled
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ## 16.1.1
 
 ### Patch Changes

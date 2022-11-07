@@ -1,5 +1,25 @@
 # @leafygreen-ui/text-area
 
+## 7.0.1
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/typography@14.0.1
+
+## 7.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 6.2.1
 
 ### Patch Changes

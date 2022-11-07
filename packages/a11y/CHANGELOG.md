@@ -1,5 +1,12 @@
 # @leafygreen-ui/a11y
 
+## 1.3.4
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+
 ## 1.3.3
 
 ### Patch Changes
