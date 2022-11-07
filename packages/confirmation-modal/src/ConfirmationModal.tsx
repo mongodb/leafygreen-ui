@@ -3,17 +3,13 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import Modal, { Footer, ModalProps } from '@leafygreen-ui/modal';
-import { uiColors, palette } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-
-const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-};
-
-type Mode = typeof Mode[keyof typeof Mode];
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { H3 } from '@leafygreen-ui/typography';
+import { Theme } from '@leafygreen-ui/lib';
 
 export const Variant = {
   Default: ButtonVariant.Primary,
@@ -23,12 +19,8 @@ export const Variant = {
 export type Variant = typeof Variant[keyof typeof Variant];
 
 const titleStyle = css`
-  font-size: 24px;
-  font-weight: 700;
   line-height: 32px;
   margin-bottom: 10px;
-  margin-top: 0;
-  color: ${palette.black};
 `;
 
 const baseModalStyle = css`
@@ -39,25 +31,24 @@ const baseModalStyle = css`
 
 const contentStyle = css`
   font-family: ${fontFamilies.default};
-  font-size: 13px;
-  line-height: 20px;
-  color: ${palette.black};
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
 `;
 
-// TODO: Refresh – remove mode logic
-const modeAndVariantContentStyles: Record<Mode, Record<Variant, string>> = {
-  [Mode.Light]: {
-    [Variant.Default]: css`
-      padding: 40px 36px 0px;
-    `,
-    [Variant.Danger]: css`
-      padding: 40px 36px 0px 78px;
-    `,
-  },
-  [Mode.Dark]: {
-    [Variant.Default]: css``,
-    [Variant.Danger]: css``,
-  },
+const contentThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css``,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+  `,
+};
+
+const contentVariantStyles: Record<Variant, string> = {
+  [Variant.Default]: css`
+    padding: 40px 36px 0px;
+  `,
+  [Variant.Danger]: css`
+    padding: 40px 36px 0px 78px;
+  `,
 };
 
 const textEntryInputStyle = css`
@@ -69,37 +60,22 @@ const textEntryInputStyle = css`
   }
 `;
 
-// TODO: Refresh - remove mode logic
-const buttonStyle = {
-  [Mode.Light]: css`
-    margin: 0 2px;
+const buttonStyle = css`
+  margin: 0 2px;
 
-    &:first-of-type {
-      margin: 0 0 0 5px;
-    }
+  &:first-of-type {
+    margin: 0 0 0 5px;
+  }
 
-    &:last-of-type {
-      margin: 0 5px 0 0;
-    }
-  `,
-  [Mode.Dark]: css`
-    margin: 0 2px;
+  &:last-of-type {
+    margin: 0 5px 0 0;
+  }
+`;
 
-    &:first-of-type {
-      margin: 0 0 0 4px;
-    }
-
-    &:last-of-type {
-      margin: 0 4px 0 0;
-    }
-  `,
-};
-
-const warningIconStyles = css`
+const warningIconStyle = css`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: ${palette.red.light3};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,6 +87,15 @@ const warningIconStyles = css`
     margin-top: -3px;
   }
 `;
+
+const warningIconThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background: ${palette.red.light3};
+  `,
+  [Theme.Dark]: css`
+    background: ${palette.red.dark2};
+  `,
+};
 
 interface ConfirmationModalProps extends ModalProps {
   /**
@@ -159,11 +144,11 @@ export const ConfirmationModal = ({
   variant = Variant.Default,
   onConfirm,
   onCancel,
-  darkMode,
+  darkMode: darkModeProp,
   ...modalProps
 }: ConfirmationModalProps) => {
   const [confirmEnabled, setConfirmEnabled] = useState(!requiredInputText);
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const textEntryConfirmation = useMemo(() => {
     setConfirmEnabled(!requiredInputText);
@@ -199,57 +184,35 @@ export const ConfirmationModal = ({
       <div
         className={cx(
           contentStyle,
-          {
-            [css`
-              // TODO: Refresh – remove when darkMode is updated
-              font-family: ${fontFamilies.legacy};
-              font-size: 14px;
-              line-height: 20px;
-              padding: 36px;
-              color: ${uiColors.white};
-            `]: darkMode,
-          },
-          modeAndVariantContentStyles[mode][variant],
+          contentThemeStyles[theme],
+          contentVariantStyles[variant],
         )}
       >
-        {/* TODO: Refresh - remove mode logic when darkmode is updated */}
-        {variant === Variant.Danger && mode === Mode.Light && (
-          <div className={cx(warningIconStyles)}>
-            <WarningIcon fill={palette.red.base} role="presentation" />
+        {variant === Variant.Danger && (
+          <div className={cx(warningIconStyle, warningIconThemeStyle[theme])}>
+            <WarningIcon
+              fill={darkMode ? palette.red.light3 : palette.red.base}
+              role="presentation"
+            />
           </div>
         )}
-        <h1
-          className={cx(titleStyle, {
-            [css`
-              // TODO: Refresh – remove when darkMode is updated
-              font-weight: bold;
-              line-height: 25px;
-              margin-bottom: 10px;
-              margin-top: revert;
-              color: ${uiColors.gray.light2};
-            `]: darkMode,
-          })}
-        >
+        <H3 as="h1" className={cx(titleStyle)}>
           {title}
-        </h1>
+        </H3>
         {children}
         {textEntryConfirmation}
       </div>
-      <Footer darkMode={darkMode}>
+      <Footer>
         <Button
           variant={variant}
           disabled={!confirmEnabled || submitDisabled}
           onClick={onConfirm}
-          className={buttonStyle[mode]}
+          className={buttonStyle} // TODO: look into this
           darkMode={darkMode}
         >
           {buttonText}
         </Button>
-        <Button
-          onClick={onCancel}
-          className={buttonStyle[mode]}
-          darkMode={darkMode}
-        >
+        <Button onClick={onCancel} className={buttonStyle} darkMode={darkMode}>
           Cancel
         </Button>
       </Footer>
@@ -269,4 +232,5 @@ ConfirmationModal.propTypes = {
   buttonText: PropTypes.string,
   variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
+  darkMode: PropTypes.bool,
 };

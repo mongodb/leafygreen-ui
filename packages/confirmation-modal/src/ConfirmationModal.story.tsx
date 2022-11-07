@@ -19,6 +19,12 @@ export default {
     title: { control: 'text' },
     buttonText: { control: 'text' },
     children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'onConfirm', 'onCancel', 'open', 'variant'],
+    },
   },
 };
 
