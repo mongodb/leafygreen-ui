@@ -89,7 +89,7 @@ export const visibleModalContentStyle = css`
   opacity: 1;
 `;
 
-export const modalSizes: { readonly [K in ModalSize]: string } = {
+export const modalSizes: Record<ModalSize, string> = {
   small: css`
     width: 400px;
   `,

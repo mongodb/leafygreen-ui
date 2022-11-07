@@ -25,7 +25,6 @@ import {
   backdropThemeStyles,
 } from './Modal.styles';
 
-//TODO: circular depen
 /**
  * @internal
  * Internal Modal View component
