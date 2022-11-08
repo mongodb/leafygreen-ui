@@ -176,7 +176,7 @@ export function LineTableRow({
             css`
               user-select: none;
               text-align: right;
-              padding-left: ${spacing[2]}px;
+              padding-left: ${spacing[3] - 1}px;
               padding-right: 0;
               color: ${highlighted ? highlightedNumberColor : numberColor};
             `,

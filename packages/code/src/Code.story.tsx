@@ -5,6 +5,7 @@ import LGCode, { CodeProps, Language } from '.';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LanguageSwitcherExample from './LanguageSwitcherExample';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 // TODO: Import below comment directly from component definition.
 /**
@@ -56,6 +57,7 @@ export default {
   args: {
     language: 'js',
     highlightLines: [],
+    baseFontSize: 14,
   },
   argTypes: {
     language: {
@@ -71,6 +73,12 @@ export default {
     darkMode: { control: 'boolean' },
     chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
+    baseFontSize: {
+      options: [14, 16],
+      control: { type: 'radio' },
+      description:
+        '[STORYBOOK ONLY]\n\nThis font size is passed into the LeafygreenProvider.',
+    },
   },
   parameters: {
     controls: {
@@ -92,7 +100,17 @@ export default {
   },
 };
 
-const Template: Story<CodeProps> = args => <Code {...args}>{jsSnippet}</Code>;
+type BaseFontSize = 14 | 16;
+
+const Template: Story<CodeProps & { baseFontSize: BaseFontSize }> = ({
+  // eslint-disable-next-line react/prop-types
+  baseFontSize,
+  ...args
+}) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code {...args}>{jsSnippet}</Code>
+  </LeafygreenProvider>
+);
 
 export const Basic = Template.bind({});
 Basic.args = {};
@@ -129,10 +147,15 @@ WithCustomActions.args = {
   customActionButtons,
 };
 
-export const WithLanguageSwitcher: Story<CodeProps> = args => (
-  <LanguageSwitcherExample
-    showCustomActionButtons={true}
-    customActionButtons={customActionButtons}
-    {...args}
-  />
+export const WithLanguageSwitcher: Story<
+  CodeProps & { baseFontSize: BaseFontSize }
+  // eslint-disable-next-line react/prop-types
+> = ({ baseFontSize, ...args }) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <LanguageSwitcherExample
+      showCustomActionButtons={true}
+      customActionButtons={customActionButtons}
+      {...args}
+    />
+  </LeafygreenProvider>
 );
