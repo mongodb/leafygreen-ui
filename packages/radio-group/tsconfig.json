@@ -16,7 +16,7 @@
       "path": "../hooks"
     },
     {
-      "path": "../interaction-ring"
+      "path": "../leafygreen-provider"
     },
     {
       "path": "../lib"

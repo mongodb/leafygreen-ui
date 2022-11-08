@@ -5,6 +5,7 @@ import LGCode, { CodeProps, Language } from '.';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LanguageSwitcherExample from './LanguageSwitcherExample';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 // TODO: Import below comment directly from component definition.
 /**
@@ -24,6 +25,8 @@ import LanguageSwitcherExample from './LanguageSwitcherExample';
 export const Code: React.FC<CodeProps> = props => <LGCode {...props} />;
 
 const jsSnippet = `
+
+import datetime from './';
 
 const myVar = 42;
 
@@ -54,6 +57,7 @@ export default {
   args: {
     language: 'js',
     highlightLines: [],
+    baseFontSize: 14,
   },
   argTypes: {
     language: {
@@ -62,32 +66,58 @@ export default {
         options: Object.keys(Language),
       },
     },
-    onCopy: { control: 'none' },
     usePortal: { control: 'boolean' },
     copyable: { control: 'boolean' },
     showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
     darkMode: { control: 'boolean' },
-    chromeTitle: { control: 'string' },
-    scrollContainer: { control: 'none' },
-    portalClassName: { control: 'string' },
-    popoverZIndex: { control: 'number' },
+    chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
-    children: { control: 'none' },
-    customActionButtons: { control: 'none' },
-    showCustomButtons: { control: 'none' },
-    showCustomActionButtons: { control: 'none' },
+    baseFontSize: {
+      options: [14, 16],
+      control: { type: 'radio' },
+      description:
+        '[STORYBOOK ONLY]\n\nThis font size is passed into the LeafygreenProvider.',
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        'showCustomActionButtons',
+        'showCustomButtons',
+        'customActionButtons',
+        'children',
+        'onCopy',
+        'className',
+        'onChange',
+        'portalClassName',
+        'portalContainer',
+        'scrollContainer',
+        'popoverZIndex',
+        'ref',
+      ],
+    },
   },
 };
 
-const Template: Story<CodeProps> = args => <Code {...args}>{jsSnippet}</Code>;
+type BaseFontSize = 14 | 16;
+
+const Template: Story<CodeProps & { baseFontSize: BaseFontSize }> = ({
+  // eslint-disable-next-line react/prop-types
+  baseFontSize,
+  ...args
+}) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code {...args}>{jsSnippet}</Code>
+  </LeafygreenProvider>
+);
 
 export const Basic = Template.bind({});
 Basic.args = {};
 
 export const HighlightOptions = Template.bind({});
 HighlightOptions.args = {
-  highlightLines: [[2, 4], 6],
+  highlightLines: [6, [10, 15]],
 };
 
 export const WithChrome = Template.bind({});
@@ -117,10 +147,15 @@ WithCustomActions.args = {
   customActionButtons,
 };
 
-export const WithLanguageSwitcher: Story<CodeProps> = args => (
-  <LanguageSwitcherExample
-    showCustomActionButtons={true}
-    customActionButtons={customActionButtons}
-    {...args}
-  />
+export const WithLanguageSwitcher: Story<
+  CodeProps & { baseFontSize: BaseFontSize }
+  // eslint-disable-next-line react/prop-types
+> = ({ baseFontSize, ...args }) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <LanguageSwitcherExample
+      showCustomActionButtons={true}
+      customActionButtons={customActionButtons}
+      {...args}
+    />
+  </LeafygreenProvider>
 );
