@@ -5,72 +5,86 @@ import CopyButton from './CopyButton';
 import LanguageSwitcher from './LanguageSwitcher';
 import { PopoverProps } from './types';
 import {
-  Mode,
   LanguageOption,
   LanguageSwitcher as LanguageSwitcherProps,
 } from './types';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
+import { Theme } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-function getSidebarVariantStyle(mode: Mode): string {
-  switch (mode) {
-    case Mode.Light:
-      return css`
-        background-color: ${palette.white};
-        border-color: ${palette.gray.light2};
-      `;
+const basePanelStyle = css`
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: ${spacing[1]}px;
 
-    case Mode.Dark:
-      return css`
-        // TODO: Refresh - update these colors
-        background-color: ${uiColors.gray.dark2};
-        border-color: ${uiColors.gray.dark3};
-      `;
+  svg {
+    width: 16px;
+    height: 16px;
   }
-}
+`;
 
-function getPanelStyles(mode: Mode, withLanguageSwitcher: boolean) {
-  const basePanelStyle = css`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    flex-shrink: 0;
-    gap: ${spacing[1]}px;
-    padding: 6px;
-    border-left: solid 1px;
+const basePanelThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.white};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark2};
+  `,
+};
 
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  `;
+const sidePanelStyle = css`
+  flex-direction: column;
+  padding: 6px;
+  border-left: solid 1px;
+`;
 
-  const languageSwitcherPanelStyle = css`
-    flex-direction: row;
-    border-left: unset;
-    border-bottom: 1px solid;
-    justify-content: space-between;
-    padding: 0;
-    padding-right: 8px;
-    height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
-  `;
+const sidePanelThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: cx(
+    sidePanelStyle,
+    css`
+      border-color: ${palette.gray.light2};
+    `,
+  ),
+  [Theme.Dark]: cx(
+    sidePanelStyle,
+    css`
+      border-color: ${palette.gray.dark2};
+    `,
+  ),
+};
 
-  return cx(
-    basePanelStyle,
-    {
-      [languageSwitcherPanelStyle]: withLanguageSwitcher,
-    },
-    getSidebarVariantStyle(mode),
-  );
-}
+const languageSwitcherPanelStyle = css`
+  flex-direction: row;
+  border-bottom: 1px solid;
+  justify-content: space-between;
+  padding: 0;
+  padding-right: 8px;
+  height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
+`;
+
+const languageSwitcherPanelThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: cx(
+    languageSwitcherPanelStyle,
+    css`
+      border-color: ${palette.gray.light2};
+    `,
+  ),
+  [Theme.Dark]: cx(
+    languageSwitcherPanelStyle,
+    css`
+      border-color: ${palette.gray.dark1};
+    `,
+  ),
+};
 
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   onCopy?: Function;
   contents: string;
-  darkMode?: boolean;
   showCopyButton?: boolean;
   language?: LanguageOption;
   isMultiline?: boolean;
-  customActionButtons?: Array<React.ReactNode>;
+  customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
   className?: string;
 } & PopoverProps;
@@ -82,7 +96,6 @@ function Panel({
   onChange,
   onCopy,
   showCopyButton,
-  darkMode,
   customActionButtons,
   showCustomActionButtons,
   usePortal,
@@ -92,7 +105,7 @@ function Panel({
   popoverZIndex,
   className,
 }: PanelProps) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme } = useDarkMode();
 
   const popoverProps = {
     popoverZIndex,
@@ -104,7 +117,15 @@ function Panel({
 
   return (
     <div
-      className={cx(getPanelStyles(mode, !!language), className)}
+      className={cx(
+        basePanelStyle,
+        basePanelThemeStyle[theme],
+        {
+          [sidePanelThemeStyles[theme]]: !language,
+          [languageSwitcherPanelThemeStyles[theme]]: !!language,
+        },
+        className,
+      )}
       data-testid="leafygreen-code-panel"
     >
       {language !== undefined &&
@@ -114,7 +135,6 @@ function Panel({
             onChange={onChange}
             language={language}
             languageOptions={languageOptions}
-            darkMode={darkMode}
             {...popoverProps}
           />
         )}
@@ -122,7 +142,6 @@ function Panel({
       {showCopyButton && (
         <CopyButton
           onCopy={onCopy}
-          darkMode={darkMode}
           contents={contents}
           withLanguageSwitcher={!!language}
         />
