@@ -25,7 +25,8 @@ const renderNewContainer = () => {
   );
 
   const apple = getByText(rendered.container, 'Apple').parentElement as Element;
-  const banana = getByText(rendered.container, 'Banana').parentElement as Element;
+  const banana = getByText(rendered.container, 'Banana')
+    .parentElement as Element;
 
   return {
     ...rendered,

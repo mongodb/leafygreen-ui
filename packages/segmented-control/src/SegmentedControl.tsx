@@ -306,9 +306,7 @@ export const SegmentedControl = forwardRef<
         {...rest}
       >
         {label && (
-          <Overline className={labelThemeStyle[theme]}>
-            {label}
-          </Overline>
+          <Overline className={labelThemeStyle[theme]}>{label}</Overline>
         )}
 
         <div
