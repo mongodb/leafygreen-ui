@@ -88,17 +88,20 @@ export const inputThemeStyle: Record<Theme, string> = {
       background: ${palette.white};
       border: 1px solid ${palette.gray.base};
       -webkit-text-fill-color: ${palette.black};
-      box-shadow: ${autofillShadowOverride(palette.white)};
 
-      &:focus {
-        box-shadow: ${autofillShadowOverride(palette.white)},
-          ${focusRing.light.input};
-        border-color: ${palette.white};
-      }
+      &:not(:disabled) {
+        box-shadow: ${autofillShadowOverride(palette.white)};
 
-      &:hover:not(:focus) {
-        box-shadow: ${autofillShadowOverride(palette.white)},
-          ${hoverRing.light.gray};
+        &:focus {
+          box-shadow: ${autofillShadowOverride(palette.white)},
+            ${focusRing.light.input};
+          border-color: ${palette.white};
+        }
+
+        &:hover:not(:focus) {
+          box-shadow: ${autofillShadowOverride(palette.white)},
+            ${hoverRing.light.gray};
+        }
       }
     }
 
@@ -109,7 +112,7 @@ export const inputThemeStyle: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not(:focus) {
+      &:not(:disabled):not(:focus) {
         box-shadow: ${hoverRing.light.gray};
       }
     }
@@ -145,23 +148,25 @@ export const inputThemeStyle: Record<Theme, string> = {
       color: ${palette.gray.light3};
       background: ${palette.gray.dark4};
       -webkit-text-fill-color: ${palette.gray.light3};
-      box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
+      &:not(:disabled) {
+        box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
 
-      &:focus {
-        box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-          ${focusRing.dark.input};
-        border-color: ${palette.blue.light1};
-      }
+        &:focus {
+          box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+            ${focusRing.dark.input};
+          border-color: ${palette.blue.light1};
+        }
 
-      &:hover:not(:focus) {
-        box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-          ${hoverRing.dark.gray};
+        &:hover:not(:focus) {
+          box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+            ${hoverRing.dark.gray};
+        }
       }
     }
 
     &:hover,
     &:active {
-      &:not(:focus) {
+      &:not(:disabled):not(:focus) {
         box-shadow: ${hoverRing.dark.gray};
       }
     }
@@ -196,13 +201,13 @@ export const inputThemeStyle: Record<Theme, string> = {
 
 export const inputFocusStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus {
+    &:not(:disabled):focus {
       box-shadow: ${focusRing.light.input};
       border-color: ${palette.white};
     }
   `,
   [Theme.Dark]: css`
-    &:focus {
+    &:not(:disabled):focus {
       box-shadow: ${focusRing.dark.input};
       border-color: ${palette.gray.dark4};
     }
@@ -236,7 +241,7 @@ export const searchIconThemeStyle: Record<Theme, string> = {
     color: ${palette.gray.dark1};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light2};
+    color: ${palette.gray.light1};
   `,
 };
 

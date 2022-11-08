@@ -24,10 +24,10 @@ npm install @leafygreen-ui/search-input
 
 ## Properties
 
-| Prop            | Type                                          | Description                                                                              | Default |
-| --------------- | --------------------------------------------- | ---------------------------------------------------------------------------------------- | ------- |
-| aria-labelledby | string                                        | Screen-reader label element.                                                             |         |
-| state           | "none" \| "loading"                           | The current state of the SearchInput                                                     | "none"  |
-| darkMode        | boolean                                       | determines whether or not the component appears in dark theme.                           | false   |
-| sizeVariant     | `'xsmall'`, `'small'`, `'default'`, `'large'` | determines the font size and padding.                                                    | default |
-| disabled    | boolean                                      | Determines whether the field is currently disabled. | false      |
+| Prop            | Type                                          | Description                                                    | Default |
+| --------------- | --------------------------------------------- | -------------------------------------------------------------- | ------- |
+| aria-labelledby | string                                        | Screen-reader label element.                                   |         |
+| state           | "none" \| "loading"                           | The current state of the SearchInput                           | "none"  |
+| darkMode        | boolean                                       | determines whether or not the component appears in dark theme. | false   |
+| sizeVariant     | `'xsmall'`, `'small'`, `'default'`, `'large'` | determines the font size and padding.                          | default |
+| disabled        | boolean                                       | Determines whether the field is currently disabled.            | false   |
