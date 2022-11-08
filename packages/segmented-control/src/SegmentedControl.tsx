@@ -21,7 +21,6 @@ import { SegmentedControlProps, Size } from './types';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
 import {
   wrapperStyle,
-  labelStyle,
   labelThemeStyle,
   optionsWrapperStyle,
   selectionIndicatorStyle,
@@ -307,7 +306,7 @@ export const SegmentedControl = forwardRef<
         {...rest}
       >
         {label && (
-          <Overline className={cx(labelStyle, labelThemeStyle[theme])}>
+          <Overline className={labelThemeStyle[theme]}>
             {label}
           </Overline>
         )}

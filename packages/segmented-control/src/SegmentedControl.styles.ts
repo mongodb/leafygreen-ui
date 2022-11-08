@@ -13,10 +13,6 @@ export const wrapperStyle = css`
   font-family: ${fontFamilies.default};
 `;
 
-export const labelStyle = css`
-  white-space: nowrap;
-`;
-
 export const labelThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     letter-spacing: 1.4px;
