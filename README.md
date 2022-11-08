@@ -216,7 +216,7 @@ git push --follow-tags
 
 You can deploy a static build of our Storybook site to gh-pages from the `main` branch.
 
-1. First be sure you've built a static version of Storybook: `yarn build:storybook`
+1. First be sure you've built a static version of Storybook with the script: `build-storybook`
 2. Then deploy to gh-pages: `yarn release:site`
 
 ### To deploy to your own mirror of leafygreen-ui
