@@ -253,7 +253,7 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
-    (item: React.ReactNode) => isComponentType(item, 'IconButton') === true,
+    (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
   );
 
   const showCustomActionsInPanel =
