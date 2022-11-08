@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import {
@@ -20,12 +13,8 @@ import {
   buttonStyle,
   buttonFocusStyle,
   labelStyle,
-  textEllipsisStyle,
-  iconOnlyThemeStyles,
 } from './SegmentedControlOption.styles';
 import { SegmentedControlOptionProps } from './types';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
 
 /**
  * SegmentedControlOption
@@ -56,7 +45,6 @@ export const SegmentedControlOption = forwardRef<
     const { size, theme, followFocus } = useContext(SegmentedControlContext);
     const { usingKeyboard } = useUsingKeyboardContext();
     const baseFontSize = useBaseFontSize();
-    const [hasIcon, setHasIcon] = useState<boolean>(false);
 
     const onClick = () => {
       _onClick?.(value);
