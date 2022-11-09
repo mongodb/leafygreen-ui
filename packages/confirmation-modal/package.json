@@ -26,7 +26,11 @@
     "@leafygreen-ui/modal": "^11.0.0",
     "@leafygreen-ui/palette": "^3.4.4",
     "@leafygreen-ui/text-input": "^11.0.0",
-    "@leafygreen-ui/tokens": "^1.3.4"
+    "@leafygreen-ui/tokens": "^1.3.4",
+    "@leafygreen-ui/typography": "^14.0.1"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/confirmation-modal",
   "repository": {
