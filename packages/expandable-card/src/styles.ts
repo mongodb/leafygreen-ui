@@ -68,12 +68,7 @@ export const flagTextStyle = css`
 export const iconStyle = css`
   grid-column: 2;
   grid-row: 1/3;
-  transition: transform ${transitionDuration}ms ease-in-out;
-
-  svg {
-    // TODO: this transition should be inside IconButton
-    transition: 150ms all ease-in-out;
-  }
+  color: ${palette.gray.base};
 `;
 
 export const iconThemeStyle: Record<Theme, string> = {
@@ -83,8 +78,10 @@ export const iconThemeStyle: Record<Theme, string> = {
       &:hover,
       &:active,
       &:focus-visible {
-        svg {
-          color: ${palette.gray.light1};
+        color: ${palette.gray.light1};
+
+        &::before {
+          background-color: ${palette.gray.dark2};
         }
       }
     `,
@@ -95,8 +92,10 @@ export const iconThemeStyle: Record<Theme, string> = {
       &:hover,
       &:active,
       &:focus-visible {
-        svg {
-          color: ${palette.gray.dark1};
+        color: ${palette.gray.dark1};
+
+        &::before {
+          background-color: ${palette.gray.light2};
         }
       }
     `,

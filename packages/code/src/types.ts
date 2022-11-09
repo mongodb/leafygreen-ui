@@ -32,13 +32,6 @@ export interface SyntaxProps extends HTMLElementProps<'code'> {
   language: Language;
 
   /**
-   * Determines whether or not the syntax will be rendered in dark mode.
-   *
-   * @default `false`
-   */
-  darkMode?: boolean;
-
-  /**
    * Shows line numbers. This is specifically used for the Code component implementation.
    *
    * default: `false`
@@ -118,16 +111,24 @@ export type CodeProps = Omit<
   onCopy?: Function;
 
   /**
-   * Custom action buttons.
+   * Custom action buttons. Should be an array of `IconButton`.
    *
+   * @type <IconButton />[]
    */
-  customActionButtons?: Array<React.ReactNode>;
+  customActionButtons?: Array<React.ReactElement>;
 
   /**
    * When true, custom action buttons will be shown.
    *
    */
   showCustomActionButtons?: boolean;
+
+  /**
+   * Determines whether or not the syntax will be rendered in dark mode.
+   *
+   * @default `false`
+   */
+  darkMode?: boolean;
 } & (
     | { language: Language; languageOptions?: undefined; onChange?: undefined }
     | {
