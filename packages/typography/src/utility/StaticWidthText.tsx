@@ -3,19 +3,25 @@ import Box from '@leafygreen-ui/box';
 import { getNodeTextContent, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 
-type StaticWidthTextProps<T extends keyof JSX.IntrinsicElements> =
-  HTMLElementProps<T> & {
-    /**
-     * The maximum future weight of the text. Determines the width of the component.
-     * @default 700
-     */
-    maxFontWeight?: React.CSSProperties['fontWeight'];
-    /**
-     * Defines the pseudo element used to force the element width
-     */
-    pseudoElement?: 'before' | 'after';
-    as?: T;
-  };
+type StaticWidthTextProps<T extends keyof JSX.IntrinsicElements> = Omit<
+  HTMLElementProps<T>,
+  'children'
+> & {
+  /**
+   * Text to render
+   */
+  children: string;
+  /**
+   * The maximum future weight of the text. Determines the width of the component.
+   * @default 700
+   */
+  maxFontWeight?: React.CSSProperties['fontWeight'];
+  /**
+   * Defines the pseudo element used to force the element width
+   */
+  pseudoElement?: 'before' | 'after';
+  as?: T;
+};
 
 const staticWidthTextStyle = ({
   pseudoElement,
@@ -33,7 +39,6 @@ const staticWidthTextStyle = ({
     text-overflow: ellipsis;
 
     position: relative;
-
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
@@ -81,8 +86,8 @@ export function StaticWidthText<T extends keyof JSX.IntrinsicElements>({
   className,
   ...rest
 }: StaticWidthTextProps<T>) {
-  const textValue = getNodeTextContent(children);
-
+  // calling getNodeTextContent in case a node gets passed in without TS
+  const textContent = getNodeTextContent(children);
   return (
     <Box
       className={cx(
@@ -90,7 +95,7 @@ export function StaticWidthText<T extends keyof JSX.IntrinsicElements>({
         className,
       )}
       as={as}
-      data-text={textValue}
+      data-text={textContent}
       {...rest}
     >
       <span className={childWrapper}>{children}</span>
