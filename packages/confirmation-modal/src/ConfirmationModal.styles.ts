@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { typeScales } from '@leafygreen-ui/tokens';
 import { Variant } from './ConfirmationModal.types';
 
 export const titleStyle = css`
@@ -16,7 +16,6 @@ export const baseModalStyle = css`
 `;
 
 export const contentStyle = css`
-  font-family: ${fontFamilies.default};
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
 `;
