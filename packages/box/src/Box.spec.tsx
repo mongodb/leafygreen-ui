@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { axe } from 'jest-axe';
 import Box, { ExtendableBox, BoxProps } from '.';
 
@@ -46,6 +47,16 @@ describe('packages/box', () => {
   }
 
   const sharedProps = { name: 'testName' };
+
+  const anchorPropsWithoutRef: React.ComponentPropsWithoutRef<'a'> & {
+    as: 'a';
+  } = {
+    as: 'a',
+    href: 'https://cloud.mongodb.com',
+    target: '_blank',
+    ...sharedProps,
+  };
+
   const anchorProps: React.ComponentPropsWithRef<'a'> & { as: 'a' } = {
     as: 'a',
     href: 'https://cloud.mongodb.com',
@@ -156,6 +167,124 @@ describe('packages/box', () => {
 
       test('it renders the child content', () => {
         expect(child).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Higher-Order Components', () => {
+    describe('Basic HOC', () => {
+      type TestHocProps<T extends keyof JSX.IntrinsicElements> = BoxProps<
+        T,
+        HTMLElementProps<T> & {
+          name?: string;
+        }
+      >;
+
+      /**
+       * Test Higher-Order Component
+       */
+      function TestHoc<T extends keyof JSX.IntrinsicElements>({
+        as = 'div' as T,
+        children,
+        ...rest
+      }: TestHocProps<T>) {
+        return (
+          <Box as={as} {...rest}>
+            {children}
+          </Box>
+        );
+      }
+
+      test('Renders with default props', () => {
+        const { getByTestId } = render(
+          <TestHoc {...sharedProps}>
+            <span data-testid="HOC-child" />
+          </TestHoc>,
+        );
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
+
+      test('Renders as an anchor', () => {
+        const { getByTestId } = render(
+          <TestHoc {...anchorPropsWithoutRef} data-testid="anchor-node">
+            <span data-testid="HOC-child" />
+          </TestHoc>,
+        );
+
+        expect(getByTestId('anchor-node').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
+
+      test('Renders as custom component', () => {
+        const { getByTestId } = render(
+          <TestHoc as={LinkWrapper}>
+            <span data-testid="HOC-child" />
+          </TestHoc>,
+        );
+        expect(linkWrapperFn).toHaveBeenCalled();
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
+    });
+
+    describe('HOC with forwardRef', () => {
+      type TestHocProps<T extends keyof JSX.IntrinsicElements> = BoxProps<
+        T,
+        HTMLElementProps<T> & {
+          name?: string;
+        }
+      >;
+
+      /**
+       * Test Higher-Order Component
+       */
+      function TestHoc<T extends keyof JSX.IntrinsicElements>({
+        as = 'div' as T,
+        children,
+        ...rest
+      }: TestHocProps<T>) {
+        return (
+          <Box as={as} {...rest}>
+            {children}
+          </Box>
+        );
+      }
+
+      const TestHocFwdRef = React.forwardRef(TestHoc) as <
+        T extends keyof JSX.IntrinsicElements,
+      >(
+        props: TestHocProps<T> & {
+          ref: React.ForwardedRef<JSX.IntrinsicElements[T]>;
+        },
+      ) => ReturnType<typeof TestHoc>;
+
+      test('Renders with default props', () => {
+        const { getByTestId } = render(
+          <TestHocFwdRef {...sharedProps}>
+            <span data-testid="HOC-child" />
+          </TestHocFwdRef>,
+        );
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
+
+      test('Renders as an anchor', () => {
+        const { getByTestId } = render(
+          <TestHocFwdRef {...anchorPropsWithoutRef} data-testid="anchor-node">
+            <span data-testid="HOC-child" />
+          </TestHocFwdRef>,
+        );
+
+        expect(getByTestId('anchor-node').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
+
+      test('Renders as custom component', () => {
+        const { getByTestId } = render(
+          <TestHocFwdRef as={LinkWrapper}>
+            <span data-testid="HOC-child" />
+          </TestHocFwdRef>,
+        );
+        expect(linkWrapperFn).toHaveBeenCalled();
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
       });
     });
   });
