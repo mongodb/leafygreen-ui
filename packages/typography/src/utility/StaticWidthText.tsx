@@ -70,6 +70,7 @@ const childWrapper = css`
 `;
 
 /**
+ * 
  * A wrapper component to ensure that updating the font weight does not affect the width of the element,
  * and prevents layout shift should the font weight change.
  *
@@ -77,6 +78,7 @@ const childWrapper = css`
  *
  * Note: does not support wrapped text (i.e. text within a paragraph)
  *
+ * @internal
  */
 export function StaticWidthText<T extends keyof JSX.IntrinsicElements>({
   as = 'span' as T,
