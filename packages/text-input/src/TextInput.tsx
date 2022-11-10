@@ -32,6 +32,7 @@ import {
   textContainerStyle,
 } from './style';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 /**
  * # TextInput
@@ -123,10 +124,15 @@ const TextInput: TextInputComponentType = React.forwardRef<
       );
     }
 
-    if (type === 'search' && !rest['aria-label']) {
-      console.error(
-        'For screen-reader accessibility, aria-label must be provided to TextInput.',
+    if (type === 'search') {
+      consoleOnce.warn(
+        'We recommend using the Leafygreen SearchInput for `type="search" inputs.',
       );
+      if (!rest['aria-label']) {
+        console.error(
+          'For screen-reader accessibility, aria-label must be provided to TextInput.',
+        );
+      }
     }
 
     const RenderedCheckmarkIcon = darkMode
