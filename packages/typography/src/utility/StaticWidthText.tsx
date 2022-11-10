@@ -70,7 +70,7 @@ const childWrapper = css`
 `;
 
 /**
- * 
+ *
  * A wrapper component to ensure that updating the font weight does not affect the width of the element,
  * and prevents layout shift should the font weight change.
  *
