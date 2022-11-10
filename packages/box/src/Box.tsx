@@ -2,41 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 type Override<T, U> = Omit<T, keyof U> & U;
-type Override2<T, U, V> = Override<Override<T, U>, V>;
+// type Override2<T, U, V> = Override<Override<T, U>, V>;
 
-type AsPropType = keyof JSX.IntrinsicElements &
-  React.ComponentType<unknown> &
-  never;
+export type AsPropType = keyof JSX.IntrinsicElements | React.ComponentType;
 
 /**
  * Box Props types
  */
-type BoxDefault<
-  Default extends React.ElementType = 'div',
-  ExtraProps = {},
-> = Override2<
-  React.ComponentPropsWithRef<Default>,
+
+/** The fallback BoxProps renders as a div */
+type BoxDefaultProps<T extends never = never, ExtraProps = {}> = Override<
+  React.PropsWithChildren<React.ComponentPropsWithRef<'div'> & ExtraProps>,
   {
-    as?: never;
+    as?: T;
     href?: never;
-  },
-  ExtraProps
+  }
 >;
 
-type BoxAnchorDefault<ExtraProps = {}> = Override2<
-  React.ComponentPropsWithRef<'a'>,
+/** If only an `href` is provided as a prop, we render as an anchor */
+type BoxAnchorProps<T extends never = never, ExtraProps = {}> = Override<
+  React.PropsWithChildren<React.ComponentPropsWithRef<'a'> & ExtraProps>,
   {
-    as?: never;
+    as?: T;
     href: string;
-  },
-  ExtraProps
+  }
 >;
 
+/**
+ * If an as prop string is provided, then we render as that HTML element
+ */
 type BoxIntrinsic<
-  TElement extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements,
+  TElement extends keyof JSX.IntrinsicElements,
   ExtraProps = {},
-> = Override2<
-  React.ComponentPropsWithRef<TElement>,
+> = Override<
+  React.PropsWithChildren<React.ComponentPropsWithRef<TElement> & ExtraProps>,
   {
     /**
      * The component or HTML Element that the box is rendered as.
@@ -44,90 +43,89 @@ type BoxIntrinsic<
      * @type HTML Element | React.Component
      */
     as: TElement;
-  },
-  ExtraProps
+  }
 >;
 
-type BoxComponent<TProps = {}, ExtraProps = {}> = Override2<
-  React.PropsWithRef<TProps>,
+/**
+ * If an `as` prop is provided as a component, we render as that component
+ */
+type BoxComponent<
+  TComponent extends React.ComponentType<Props>,
+  Props = {},
+> = Override<
+  React.PropsWithChildren<React.PropsWithRef<Props>>,
   {
     /**
      * The component or HTML Element that the button is rendered as.
      */
-    as: React.ComponentType<TProps>;
-  },
-  ExtraProps
+    as: TComponent;
+  }
 >;
 
-// TODO: TSDoc
 export type BoxProps<
-  Default extends React.ElementType = 'div',
+  T extends AsPropType,
   ExtraProps = {},
-> =
-  | BoxAnchorDefault<ExtraProps>
-  | BoxIntrinsic<keyof JSX.IntrinsicElements, ExtraProps>
-  | BoxComponent<{}, ExtraProps>
-  | BoxDefault<Default, ExtraProps>;
+> = T extends React.ComponentType<any>
+  ? BoxComponent<T, ExtraProps>
+  : T extends keyof JSX.IntrinsicElements
+  ? BoxIntrinsic<T, ExtraProps>
+  : BoxAnchorProps<never, ExtraProps> | BoxDefaultProps<never, ExtraProps>;
 
 /**
  * Type Checkers
  */
-const isIntrinsicOrComponentProps = <T extends AsPropType>(
-  props: BoxProps<T>,
-): props is BoxIntrinsic<T> | BoxComponent<T> => {
+const isIntrinsicProps = <T extends AsPropType>(
+  props: any,
+): props is BoxIntrinsic<T> => {
   return props.as != null;
 };
 
-const isAnchorProps = <T extends AsPropType>(
-  props: BoxProps<T>,
-): props is BoxAnchorDefault<unknown> => {
-  if (props.as) return false;
-  else return (props as BoxAnchorDefault).href != null;
+const isComponentProps = <T extends AsPropType, P = {}>(
+  props: any,
+): props is BoxComponent<T, P> => {
+  return props.as != null;
 };
 
-const isDefaultProps = <T extends AsPropType>(
-  props: BoxProps<T>,
-): props is BoxDefault<T> => {
+const isAnchorProps = (props: any): props is BoxAnchorProps => {
   if (props.as) return false;
-  else return (props as BoxAnchorDefault).href == null;
+  else return (props as BoxAnchorProps).href != null;
 };
 
 /**
- * Inline Box Overloads
+ * Overloads for the internal Box component
  */
-function InlineBox(props: BoxDefault, ref: React.Ref<any>): JSX.Element;
-function InlineBox(props: BoxAnchorDefault, ref: React.Ref<any>): JSX.Element;
-function InlineBox<TElement extends keyof JSX.IntrinsicElements>(
-  props: BoxIntrinsic<TElement>,
-  ref: React.Ref<any>,
+function _Box(
+  props: BoxDefaultProps,
+  ref: React.ForwardedRef<'div'>,
 ): JSX.Element;
-function InlineBox<TProps>(
-  props: BoxComponent<TProps>,
-  ref: React.Ref<any>,
+function _Box(props: BoxAnchorProps, ref: React.ForwardedRef<'a'>): JSX.Element;
+function _Box<TElement extends keyof JSX.IntrinsicElements, ExtraProps>(
+  props: BoxIntrinsic<TElement, ExtraProps>,
+  ref: React.ForwardedRef<TElement>,
 ): JSX.Element;
-
-function InlineBox<T extends AsPropType>(
-  props: BoxProps<T>,
-  ref: React.Ref<any>,
+function _Box<TComponent extends React.ComponentType<Props>, Props>(
+  props: TComponent,
+  ref: React.ForwardedRef<TComponent>,
+): JSX.Element;
+function _Box<T extends AsPropType, P extends {}>(
+  props: BoxProps<T, P>,
+  ref: React.ForwardedRef<T>,
 ) {
-  if (isIntrinsicOrComponentProps<T>(props)) {
-    const { as: Component, ...rest } = props as BoxProps<
-      React.ComponentType<unknown> & JSX.IntrinsicElements
-    >;
-    // @ts-expect-error
+  if (isIntrinsicProps<T>(props) || isComponentProps<T, P>(props)) {
+    /// @ts-expect-error
+    const { as: Component, ...rest } = props;
+    /// @ts-expect-error
     return <Component {...rest} ref={ref} />;
   }
 
-  if (isAnchorProps<T>(props)) {
+  if (isAnchorProps(props)) {
     return <a {...props} ref={ref} />; //eslint-disable-line jsx-a11y/anchor-has-content
   }
 
-  if (isDefaultProps<T>(props)) {
-    return <div {...props} ref={ref} />;
-  }
+  return <div {...props} ref={ref} />;
 }
 
-InlineBox.displayName = 'InlineBox';
+_Box.displayName = 'Box';
 
 /**
  * The Box component handles the `as` prop, allowing the component to be rendered using alternate HTML elements.
@@ -135,7 +133,7 @@ InlineBox.displayName = 'InlineBox';
  * It also defaults to an `<a>` tag when a `href` prop is set.
  */
 // @ts-expect-error
-const Box = React.forwardRef(InlineBox) as typeof InlineBox;
+const Box = React.forwardRef(_Box) as typeof _Box;
 
 Box.displayName = 'Box';
 
@@ -161,7 +159,7 @@ export interface ExtendableBox<
   <TElement extends keyof JSX.IntrinsicElements>(
     props: BoxIntrinsic<TElement, ExtraProps>,
   ): JSX.Element | null;
-  (props: BoxAnchorDefault<ExtraProps>): JSX.Element | null;
-  (props: BoxDefault<Default, ExtraProps>): JSX.Element | null;
+  (props: BoxAnchorProps<ExtraProps>): JSX.Element | null;
+  (props: BoxDefaultProps<Default, ExtraProps>): JSX.Element | null;
   <TProps>(props: BoxComponent<TProps, ExtraProps>): JSX.Element | null;
 }
