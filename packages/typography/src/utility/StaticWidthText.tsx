@@ -74,11 +74,16 @@ const childWrapper = css`
  * A wrapper component to ensure that updating the font weight does not affect the width of the element,
  * and prevents layout shift should the font weight change.
  *
- * Useful for showing a bold effect on hover, focus, or active (See `Tabs`, `MenuItem`)
+ * Useful for showing a bold effect on hover, focus, or active (See `Tabs`, `MenuItem`).
+ *
+ * Will add an ellipsis if the text would extend beyond the parent,
+ * or if the bold text is significantly larger than the regular text
+ * (This is rare, and will only occur with _very_ long text)
  *
  * Note: does not support wrapped text (i.e. text within a paragraph)
  *
  * @internal
+ *
  */
 export function StaticWidthText<T extends keyof JSX.IntrinsicElements>({
   as = 'span' as T,
