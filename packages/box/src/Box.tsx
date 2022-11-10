@@ -4,6 +4,13 @@ import PropTypes from 'prop-types';
 type Override<T, U> = Omit<T, keyof U> & U;
 type Override2<T, U, V> = Override<Override<T, U>, V>;
 
+type AsPropType = keyof JSX.IntrinsicElements &
+  React.ComponentType<unknown> &
+  never;
+
+/**
+ * Box Props types
+ */
 type BoxDefault<
   Default extends React.ElementType = 'div',
   ExtraProps = {},
@@ -32,7 +39,7 @@ type BoxIntrinsic<
   React.ComponentPropsWithRef<TElement>,
   {
     /**
-     * The component or HTML Element that the button is rendered as.
+     * The component or HTML Element that the box is rendered as.
      *
      * @type HTML Element | React.Component
      */
@@ -62,6 +69,32 @@ export type BoxProps<
   | BoxComponent<{}, ExtraProps>
   | BoxDefault<Default, ExtraProps>;
 
+/**
+ * Type Checkers
+ */
+const isIntrinsicOrComponentProps = <T extends AsPropType>(
+  props: BoxProps<T>,
+): props is BoxIntrinsic<T> | BoxComponent<T> => {
+  return props.as != null;
+};
+
+const isAnchorProps = <T extends AsPropType>(
+  props: BoxProps<T>,
+): props is BoxAnchorDefault<unknown> => {
+  if (props.as) return false;
+  else return (props as BoxAnchorDefault).href != null;
+};
+
+const isDefaultProps = <T extends AsPropType>(
+  props: BoxProps<T>,
+): props is BoxDefault<T> => {
+  if (props.as) return false;
+  else return (props as BoxAnchorDefault).href == null;
+};
+
+/**
+ * Inline Box Overloads
+ */
 function InlineBox(props: BoxDefault, ref: React.Ref<any>): JSX.Element;
 function InlineBox(props: BoxAnchorDefault, ref: React.Ref<any>): JSX.Element;
 function InlineBox<TElement extends keyof JSX.IntrinsicElements>(
@@ -73,18 +106,25 @@ function InlineBox<TProps>(
   ref: React.Ref<any>,
 ): JSX.Element;
 
-function InlineBox(props: BoxProps, ref: React.Ref<any>) {
-  if (props.as != null) {
-    const { as: Component, ...rest } = props;
+function InlineBox<T extends AsPropType>(
+  props: BoxProps<T>,
+  ref: React.Ref<any>,
+) {
+  if (isIntrinsicOrComponentProps<T>(props)) {
+    const { as: Component, ...rest } = props as BoxProps<
+      React.ComponentType<unknown> & JSX.IntrinsicElements
+    >;
     // @ts-expect-error
     return <Component {...rest} ref={ref} />;
   }
 
-  if (props.href != null) {
+  if (isAnchorProps<T>(props)) {
     return <a {...props} ref={ref} />; //eslint-disable-line jsx-a11y/anchor-has-content
   }
 
-  return <div {...props} ref={ref} />;
+  if (isDefaultProps<T>(props)) {
+    return <div {...props} ref={ref} />;
+  }
 }
 
 InlineBox.displayName = 'InlineBox';
