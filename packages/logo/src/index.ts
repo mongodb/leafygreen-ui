@@ -1,7 +1,7 @@
 // Company Logo
 export { default as MongoDBLogo } from './MongoDBLogo';
 export { default as MongoDBLogoMark } from './MongoDBLogoMark';
-export { default as AtlasLogo } from './AtlasLogo';
+export { default as AtlasNavGraphic } from './AtlasNavGraphic';
 
 // Product Family Logo Lockups
 export { default as AtlasLogoLockup } from './AtlasLogoLockup';
