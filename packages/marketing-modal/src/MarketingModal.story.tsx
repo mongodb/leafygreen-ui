@@ -46,7 +46,7 @@ const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
 }) => {
   const graphicCenterImage = 'marketing-center-light.svg';
   const graphicFillImage = darkMode
-    ? 'Realm_Rebrand_Image.png'
+    ? 'marketing-fill-dark.jpg'
     : 'marketing-fill-light.jpg';
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);

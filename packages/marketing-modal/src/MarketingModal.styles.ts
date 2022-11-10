@@ -54,7 +54,6 @@ export const contentStyle = css`
   padding: 0 20px 32px;
   max-width: 476px;
   margin: 0 auto;
-  // color: ${palette.gray.dark3};
 `;
 
 export const contentThemeStyle: Record<Theme, string> = {
@@ -73,4 +72,12 @@ export const footerContentStyle = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const buttonStyle = css`
+  min-width: 200px
+`;
+
+export const linkStyle = css`
+  margin-top: 16px;
 `;

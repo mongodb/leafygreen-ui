@@ -7,7 +7,8 @@ import Modal, { ModalProps } from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import { svgBlobs } from '.';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { baseModalStyle, baseGraphicContainerStyle, centeredGraphicContainerStyle, filledGraphicContainerStyle, baseGraphicStyle, filledGraphicStyle, contentStyle, contentThemeStyle, titleStyle, footerContentStyle } from './MarketingModal.styles';
+import { baseModalStyle, baseGraphicContainerStyle, buttonStyle, centeredGraphicContainerStyle, filledGraphicContainerStyle, baseGraphicStyle, filledGraphicStyle, contentStyle, contentThemeStyle, titleStyle, footerContentStyle, linkStyle } from './MarketingModal.styles';
+import { palette } from '@leafygreen-ui/palette';
 
 export const BlobPosition = {
   TopLeft: 'top left',
@@ -24,11 +25,12 @@ export const GraphicStyle = {
 
 type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
 
-export const renderCurvedSVG = () => {
+export const renderCurvedSVG = (darkMode: boolean) => {
   const curvedSVGStyles = css`
     position: absolute;
     left: 0;
     bottom: 24px;
+    color: ${darkMode ? palette.black : '#ffffff'}
   `;
 
   return (
@@ -40,7 +42,7 @@ export const renderCurvedSVG = () => {
     >
       <path
         d="M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z"
-        fill="#ffffff"
+        fill='currentColor'
       />
     </svg>
   );
@@ -117,7 +119,7 @@ const MarketingModal = ({
   buttonText,
   linkText,
   darkMode: darkModeProp,
-  closeIconColor = CloseIconColor.Dark,
+  closeIconColor = CloseIconColor.Default,
   blobPosition = BlobPosition.TopLeft,
   showBlob = false,
   ...modalProps
@@ -132,10 +134,10 @@ const MarketingModal = ({
       darkMode={darkMode}
       closeIconColor={closeIconColor}
     >
-      {!darkMode &&
+      {
         showBlob &&
         graphicStyle === GraphicStyle.Center &&
-        svgBlobs(blobPosition)}
+        svgBlobs(blobPosition, darkMode)}
       <div
         className={cx(baseGraphicContainerStyle, {
           [centeredGraphicContainerStyle[theme]]:
@@ -148,7 +150,7 @@ const MarketingModal = ({
             [filledGraphicStyle]: graphicStyle === GraphicStyle.Fill,
           })}`,
         })}
-        {!darkMode && graphicStyle === GraphicStyle.Fill && renderCurvedSVG()}
+        {graphicStyle === GraphicStyle.Fill && renderCurvedSVG(darkMode)}
       </div>
       <div
         className={cx(contentStyle, contentThemeStyle[theme])}
@@ -164,11 +166,7 @@ const MarketingModal = ({
         <Button
           variant="baseGreen"
           onClick={onButtonClick}
-          className={cx({
-            [css`
-              min-width: 200px;
-            `]: !darkMode,
-          })}
+          className={buttonStyle}
         >
           {buttonText}
         </Button>
@@ -176,15 +174,7 @@ const MarketingModal = ({
           tabIndex={0}
           onClick={onLinkClick}
           hideExternalIcon
-          className={cx({
-            [css`
-              margin-top: 16px;
-            `]: !darkMode,
-            [css`
-              color: #41c6ff;
-              margin-top: 24px;
-            `]: darkMode,
-          })}
+          className={linkStyle}
         >
           {linkText}
         </Link>
