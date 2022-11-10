@@ -33,3 +33,10 @@ Basic.args = {
   description: 'Description',
   children: 'npm install @leafygreen-ui/copyable',
 };
+
+export const LongText = Template.bind({});
+LongText.args = {
+  label: 'Label',
+  description: 'Description',
+  children: 'npm install @leafygreen-ui/leafygreen-provider',
+};
