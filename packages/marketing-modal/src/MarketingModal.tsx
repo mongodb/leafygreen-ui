@@ -4,17 +4,10 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Button from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
 import Modal, { ModalProps } from '@leafygreen-ui/modal';
-import { uiColors, palette } from '@leafygreen-ui/palette';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { fontFamilies } from '@leafygreen-ui/tokens';
 import { svgBlobs } from '.';
-
-const Mode = {
-  Dark: 'dark',
-  Light: 'light',
-};
-
-type Mode = typeof Mode[keyof typeof Mode];
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { baseModalStyle, baseGraphicContainerStyle, centeredGraphicContainerStyle, filledGraphicContainerStyle, baseGraphicStyle, filledGraphicStyle, contentStyle, contentThemeStyle, titleStyle, footerContentStyle } from './MarketingModal.styles';
 
 export const BlobPosition = {
   TopLeft: 'top left',
@@ -31,62 +24,7 @@ export const GraphicStyle = {
 
 type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
 
-const titleStyle = css`
-  font-size: 24px;
-  color: ${palette.black};
-  font-weight: 700;
-  line-height: 32px;
-  margin-bottom: 4px;
-`;
-
-const baseModalStyle = css`
-  width: 600px;
-  padding: initial;
-  overflow: hidden;
-`;
-
-const baseGraphicContainerStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const baseGraphicStyle = css`
-  display: block;
-`;
-
-const centeredGraphicContainerStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    padding-top: 48px;
-    padding-bottom: 24px;
-  `,
-  [Mode.Dark]: css`
-    padding-top: 20px;
-    padding-bottom: 8px;
-  `,
-};
-
-const filledGraphicContainerStyle = css`
-  padding-bottom: 24px;
-  position: relative;
-`;
-
-const filledGraphicStyle = css`
-  width: 100%;
-`;
-
-const contentStyle = css`
-  font-family: ${fontFamilies.default};
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: 0;
-  text-align: center;
-  padding: 0 20px 32px;
-  max-width: 476px;
-  margin: 0 auto;
-  color: ${palette.gray.dark3};
-`;
-
-const renderCurvedSVG = () => {
+export const renderCurvedSVG = () => {
   const curvedSVGStyles = css`
     position: absolute;
     left: 0;
@@ -107,15 +45,6 @@ const renderCurvedSVG = () => {
     </svg>
   );
 };
-
-const footerContentStyle = css`
-  line-height: 24px;
-  padding-bottom: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
 
 interface MarketingModalProps extends ModalProps {
   /**
@@ -187,13 +116,13 @@ const MarketingModal = ({
   onClose,
   buttonText,
   linkText,
-  darkMode,
+  darkMode: darkModeProp,
   closeIconColor = CloseIconColor.Dark,
   blobPosition = BlobPosition.TopLeft,
   showBlob = false,
   ...modalProps
 }: MarketingModalProps) => {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   return (
     <Modal
@@ -209,7 +138,7 @@ const MarketingModal = ({
         svgBlobs(blobPosition)}
       <div
         className={cx(baseGraphicContainerStyle, {
-          [centeredGraphicContainerStyle[mode]]:
+          [centeredGraphicContainerStyle[theme]]:
             graphicStyle === GraphicStyle.Center,
           [filledGraphicContainerStyle]: graphicStyle === GraphicStyle.Fill,
         })}
@@ -222,31 +151,10 @@ const MarketingModal = ({
         {!darkMode && graphicStyle === GraphicStyle.Fill && renderCurvedSVG()}
       </div>
       <div
-        className={cx(contentStyle, {
-          [css`
-            // TODO: Refresh – remove when darkMode is updated
-            font-family: ${fontFamilies.legacy};
-            font-size: 14px;
-            line-height: 20px;
-            letter-spacing: 0;
-            text-align: center;
-            padding: 0 92px;
-            padding-bottom: 24px;
-            color: ${uiColors.gray.light2};
-            max-width: inherit;
-          `]: darkMode,
-        })}
+        className={cx(contentStyle, contentThemeStyle[theme])}
       >
         <div
-          className={cx(titleStyle, {
-            [css`
-              // TODO: Refresh – remove when darkMode is updated
-              color: ${uiColors.white};
-              font-weight: bold;
-              line-height: 25px;
-              margin-bottom: 10px;
-            `]: darkMode,
-          })}
+          className={titleStyle}
         >
           {title}
         </div>
@@ -256,7 +164,6 @@ const MarketingModal = ({
         <Button
           variant="baseGreen"
           onClick={onButtonClick}
-          darkMode={darkMode}
           className={cx({
             [css`
               min-width: 200px;

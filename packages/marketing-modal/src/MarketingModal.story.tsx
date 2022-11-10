@@ -44,9 +44,7 @@ const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
   darkMode,
   ...args
 }) => {
-  const graphicCenterImage = darkMode
-    ? 'DataLake.png'
-    : 'marketing-center-light.svg';
+  const graphicCenterImage = 'marketing-center-light.svg';
   const graphicFillImage = darkMode
     ? 'Realm_Rebrand_Image.png'
     : 'marketing-fill-light.jpg';
@@ -64,8 +62,8 @@ const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
             <img
               alt=""
               src={`examples/${graphicCenterImage}`}
-              width={darkMode ? 275 : 278}
-              height={darkMode ? 220 : 252.6}
+              width={275}
+              height={220}
             />
           ) : (
             <img alt="Marketing Modal" src={`examples/${graphicFillImage}`} />
