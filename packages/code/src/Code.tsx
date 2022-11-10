@@ -6,14 +6,17 @@ import debounce from 'lodash/debounce';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { spacing } from '@leafygreen-ui/tokens';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import { variantColors } from './globalStyles';
-import { Language, CodeProps, Mode } from './types';
+import { Language, CodeProps } from './types';
 import Syntax from './Syntax';
 import Panel from './Panel';
 import WindowChrome from './WindowChrome';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { isComponentType, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
 
 export function hasMultipleLines(string: string): boolean {
@@ -29,15 +32,15 @@ const mq = facepaint([
 const singleLineComponentHeight = 36;
 const lineHeight = 24;
 
-const wrapperStyle: Record<Mode, string> = {
-  [Mode.Light]: css`
-    border: 1px solid ${variantColors[Mode.Light][1]};
+const wrapperStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    border: 1px solid ${variantColors[Theme.Light][1]};
     border-radius: 12px;
     overflow: hidden;
   `,
-  [Mode.Dark]: css`
-    border: 0;
-    border-radius: 6px;
+  [Theme.Dark]: css`
+    border: 1px solid ${variantColors[Theme.Dark][1]};
+    border-radius: 12px;
     overflow: hidden;
   `,
 };
@@ -118,14 +121,10 @@ const panelStyles = css`
   grid-area: panel;
 `;
 
-function getCodeWrapperVariantStyle(mode: Mode): string {
-  const colors = variantColors[mode];
-
-  const borderStyle =
-    mode === 'dark' ? `border: 0` : `border-color: ${colors[1]}`;
+function getCodeWrapperVariantStyle(theme: Theme): string {
+  const colors = variantColors[theme];
 
   return css`
-    ${borderStyle};
     background-color: ${colors[0]};
     color: ${colors[3]};
   `;
@@ -149,14 +148,14 @@ const baseScrollShadowStyles = css`
     z-index: 1; // above the code
     top: 0;
     height: 100%;
-    width: 8px;
-    border-radius: 100%;
+    width: 40px;
+    border-radius: 40%;
     box-shadow: unset;
     transition: box-shadow 100ms ease-in-out;
   }
   &:before {
     grid-column: 1;
-    left: -8px;
+    left: -40px;
   }
   &:after {
     grid-column: 2; // Placed either under Panel, or on the right edge
@@ -176,26 +175,31 @@ const scrollShadowStylesWithPicker = css`
   }
 `;
 
-function getScrollShadow(scrollState: ScrollState, mode: Mode): string {
-  const shadowColor =
-    mode === Mode.Light
-      ? transparentize(0.7, palette.gray.dark1)
-      : transparentize(0.7, uiColors.black);
+function getScrollShadow(scrollState: ScrollState, theme: Theme): string {
+  const dropShadowBefore =
+    theme === Theme.Light
+      ? `1px 0 10px 0 ${transparentize(0.75, 'black')}`
+      : `15px 0px 15px 0 ${transparentize(0.7, 'black')}`;
 
-  const boxShadowStyle = css`
-    box-shadow: 0 0 10px 0 ${shadowColor};
-  `;
+  const dropShadowAfter =
+    theme === Theme.Light
+      ? `-1px 0px 10px ${transparentize(0.75, 'black')}`
+      : `-15px 0px 15px 0 ${transparentize(0.7, 'black')}`;
 
   return css`
     &:before {
       ${(scrollState === ScrollState.Both ||
         scrollState === ScrollState.Left) &&
-      boxShadowStyle};
+      css`
+        box-shadow: ${dropShadowBefore};
+      `};
     }
     &:after {
       ${(scrollState === ScrollState.Both ||
         scrollState === ScrollState.Right) &&
-      boxShadowStyle};
+      `
+        box-shadow: ${dropShadowAfter};
+      `};
     }
   `;
 }
@@ -222,7 +226,7 @@ function Code({
   children = '',
   className,
   language: languageProp,
-  darkMode = false,
+  darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
   showWindowChrome = false,
@@ -245,11 +249,11 @@ function Code({
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [showCopyBar, setShowCopyBar] = useState(false);
-  const mode = darkMode ? Mode.Dark : Mode.Light;
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
-    (item: React.ReactNode) => isComponentType(item, 'IconButton') === true,
+    (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
   );
 
   const showCustomActionsInPanel =
@@ -288,7 +292,6 @@ function Code({
     <Syntax
       showLineNumbers={showLineNumbers}
       lineNumberStart={lineNumberStart}
-      darkMode={darkMode}
       language={highlightLanguage as Language}
       highlightLines={highlightLines}
     >
@@ -334,66 +337,65 @@ function Code({
   } as const;
 
   return (
-    <div className={wrapperStyle[mode]}>
-      {showWindowChrome && (
-        <WindowChrome chromeTitle={chromeTitle} darkMode={darkMode} />
-      )}
+    <LeafyGreenProvider darkMode={darkMode}>
+      <div className={wrapperStyle[theme]}>
+        {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} />}
 
-      <div
-        className={cx(
-          contentWrapperStyles,
-          baseScrollShadowStyles,
-          getScrollShadow(scrollState, mode),
-          {
-            [contentWrapperStyleWithPicker]: showLanguagePicker,
-            [scrollShadowStylesWithPicker]: showLanguagePicker,
-            [contentWrapperStylesNoPanel]: !showPanel,
-            [scrollShadowStylesNoPanel]: !showPanel,
-          },
-        )}
-      >
-        <pre
-          {...(rest as DetailedElementProps<HTMLPreElement>)}
+        <div
           className={cx(
-            codeWrapperStyle,
-            getCodeWrapperVariantStyle(mode),
+            contentWrapperStyles,
+            baseScrollShadowStyles,
+            getScrollShadow(scrollState, theme),
             {
-              [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
-              [codeWrapperStyleNoPanel]: !showPanel,
-              [singleLineCodeWrapperStyle]: !isMultiline,
-              [codeWrapperFocusStyle]: showFocus,
+              [contentWrapperStyleWithPicker]: showLanguagePicker,
+              [scrollShadowStylesWithPicker]: showLanguagePicker,
+              [contentWrapperStylesNoPanel]: !showPanel,
+              [scrollShadowStylesNoPanel]: !showPanel,
             },
-            className,
           )}
-          onScroll={onScroll}
-          ref={scrollableElementRef}
-          // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-          tabIndex={scrollState !== ScrollState.None ? 0 : -1}
         >
-          {renderedSyntaxComponent}
-        </pre>
+          <pre
+            {...(rest as DetailedElementProps<HTMLPreElement>)}
+            className={cx(
+              codeWrapperStyle,
+              getCodeWrapperVariantStyle(theme),
+              {
+                [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
+                [codeWrapperStyleNoPanel]: !showPanel,
+                [singleLineCodeWrapperStyle]: !isMultiline,
+                [codeWrapperFocusStyle]: showFocus,
+              },
+              className,
+            )}
+            onScroll={onScroll}
+            ref={scrollableElementRef}
+            // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={scrollState !== ScrollState.None ? 0 : -1}
+          >
+            {renderedSyntaxComponent}
+          </pre>
 
-        {/* Can make this a more robust check in the future */}
-        {/* Right now the panel will only be rendered with copyable or a language switcher */}
-        {showPanel && (
-          <Panel
-            className={cx(panelStyles)}
-            language={currentLanguage}
-            languageOptions={languageOptions}
-            onChange={onChange}
-            contents={children}
-            onCopy={onCopy}
-            showCopyButton={showCopyBar}
-            darkMode={darkMode}
-            isMultiline={isMultiline}
-            customActionButtons={filteredCustomActionIconButtons}
-            showCustomActionButtons={showCustomActionsInPanel}
-            {...popoverProps}
-          />
-        )}
+          {/* Can make this a more robust check in the future */}
+          {/* Right now the panel will only be rendered with copyable or a language switcher */}
+          {showPanel && (
+            <Panel
+              className={cx(panelStyles)}
+              language={currentLanguage}
+              languageOptions={languageOptions}
+              onChange={onChange}
+              contents={children}
+              onCopy={onCopy}
+              showCopyButton={showCopyBar}
+              isMultiline={isMultiline}
+              customActionButtons={filteredCustomActionIconButtons}
+              showCustomActionButtons={showCustomActionsInPanel}
+              {...popoverProps}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </LeafyGreenProvider>
   );
 }
 

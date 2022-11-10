@@ -6,273 +6,27 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { transparentize } from 'polished';
+import PropTypes from 'prop-types';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
-import { palette, uiColors } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';
-import { Size, Mode } from './types';
+import { SegmentedControlProps, Size } from './types';
 import { useEffectOnceOnMount } from './useEffectOnceOnMount';
-
-/**
- * Styles
- */
-const wrapperStyle = css`
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  z-index: 0;
-  font-family: ${fontFamilies.default};
-`;
-
-const labelStyle: {
-  [key in Mode]: string;
-} = {
-  light: css`
-    letter-spacing: 1.4px;
-    color: ${palette.gray.dark1};
-  `,
-  dark: css`
-    color: ${uiColors.gray.light1};
-  `,
-};
-
-const optionsWrapperStyleSize: Record<Size, string> = {
-  [Size.Small]: css`
-    --segment-gap: 1px; // space between segments
-    --wrapper-padding: 0px;
-    --outer-radius: 6px;
-    --indicator-radius: 6px;
-    --indicator-height: 100%;
-  `,
-  [Size.Default]: css`
-    --segment-gap: 5px; // space between segments
-    --wrapper-padding: 3px;
-    --outer-radius: 8px;
-    --indicator-radius: 6px;
-    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
-  `,
-  [Size.Large]: css`
-    --segment-gap: 5px; // space between segments
-    --wrapper-padding: 3px;
-    --outer-radius: 12px;
-    --indicator-radius: 6px;
-    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
-  `,
-};
-
-const optionsWrapperStyleMode: Record<Mode, string> = {
-  [Mode.Light]: css`
-    --background-color: ${palette.gray.light3};
-    --border-color: transparent;
-    --border-width: 0px;
-    --inner-shadow: 0px 1px 2px ${transparentize(0.7, palette.black)} inset;
-    --outer-shadow: 0px 1px 1px ${palette.gray.light2};
-    // Hover indicator
-    --hover-background-color: ${palette.white};
-    // Selection indicator
-    --indicator-background-color: ${palette.black};
-    --indicator-border-color: ${palette.black};
-    --indicator-shadow: 0px 1px 2px ${transparentize(0.7, palette.gray.dark3)};
-  `,
-  [Mode.Dark]: css`
-    --background-color: ${uiColors.gray.dark3};
-    --border-color: ${uiColors.gray.dark1};
-    --border-width: 1px;
-    --inner-shadow: unset;
-    --outer-shadow: unset;
-    --hover-background-color: ${uiColors.gray.dark2};
-    --indicator-background-color: ${uiColors.gray.dark1};
-    --indicator-border-color: ${uiColors.gray.base};
-    --indicator-shadow: 0px 1px 2px ${transparentize(0.7, uiColors.gray.dark3)};
-  `,
-};
-
-const optionsWrapperStyleSizeDarkModeOverrides: Record<Size, string> = {
-  [Size.Small]: css`
-    --segment-gap: 1px;
-    --wrapper-padding: 0px;
-    --outer-radius: 4px;
-    --indicator-radius: 4px;
-    --indicator-height: 100%;
-  `,
-  [Size.Default]: css`
-    --segment-gap: 5px;
-    --wrapper-padding: 3px;
-    --outer-radius: 6px;
-    --indicator-radius: 6px;
-    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
-  `,
-  [Size.Large]: css`
-    --segment-gap: 5px;
-    --wrapper-padding: 3px;
-    --outer-radius: 6px;
-    --indicator-radius: 6px;
-    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
-  `,
-};
-
-const optionsWrapperStyle = ({
-  mode = 'light',
-  size = 'default',
-}: {
-  mode: Mode;
-  size: Size;
-}) =>
-  cx(
-    optionsWrapperStyleSize[size],
-    optionsWrapperStyleMode[mode],
-    css`
-      position: relative;
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: 1fr;
-      gap: var(--segment-gap);
-      align-items: center;
-      padding: var(--wrapper-padding);
-      border: var(--border-width) solid var(--border-color);
-      border-radius: var(--outer-radius);
-      --indicator-radius: 6px;
-      background-color: var(--background-color);
-
-      &:focus {
-        outline: none;
-      }
-
-      // Frame shadow
-      &:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: inherit;
-        box-shadow: var(--inner-shadow), var(--outer-shadow);
-        z-index: 1;
-        pointer-events: none;
-      }
-    `,
-    {
-      // TODO: Refresh - remove darkMode overrides
-      [optionsWrapperStyleSizeDarkModeOverrides[size]]: mode === 'dark',
-    },
-  );
-
-const selectionIndicatorStyle = css`
-  position: absolute;
-  width: 100%;
-  height: var(--indicator-height);
-  z-index: 2;
-  box-shadow: var(--indicator-shadow-color);
-  border-radius: var(--indicator-radius);
-  border-width: 1px;
-  border-style: solid;
-  background-color: var(--indicator-background-color);
-  border-color: var(--indicator-border-color);
-  transition: transform 150ms ease-in-out;
-`;
-
-const hoverIndicatorStyle = css`
-  position: absolute;
-  height: var(--indicator-height);
-  width: 100%;
-  border-radius: var(--indicator-radius);
-  background-color: var(--hover-background-color);
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 100ms ease-in-out;
-`;
-
-/**
- * Types
- */
-
-interface SCContext {
-  size: Size;
-  mode: Mode;
-  name: string;
-  followFocus: boolean;
-}
-export const SegmentedControlContext = React.createContext<SCContext>({
-  size: 'default',
-  mode: 'light',
-  name: '',
-  followFocus: true,
-});
-
-export interface SegmentedControlProps
-  extends Omit<HTMLElementProps<'div'>, 'onChange'> {
-  /**
-   * Options provided in the segmented control
-   *
-   * @type `<SegmentedControlOption />`
-   */
-  children: React.ReactNode;
-
-  /**
-   * Defines the size of the segmented control. Can be either `small`, `default`, or `large`
-   */
-  size?: Size;
-
-  /**
-   * Toggles dark mode
-   */
-  darkMode?: boolean;
-
-  /**
-   * Defines the default, or initial value of the component. Ignored if `value` is also provided.
-   */
-  defaultValue?: string;
-
-  /**
-   * Controls the value of the component.
-   * If provided, you must update the value in the `onChange` method,
-   * or other user actions (such as routing)
-   */
-  value?: string;
-
-  /**
-   * A text label to the left of the segmented control. Sets the `name` prop if none is provided.
-   */
-  label?: string;
-
-  /**
-   * Identifies the segmented control group to screen readers. Auto-generated if no `name` or `label` is provided.
-   *
-   * It's recommended for accessability to set this to a meaningful value.
-   */
-  name?: string;
-
-  /**
-   * Defines whether the selection should automatically follow focus.
-   * If set to true, the arrow keys can be used to switch selection,
-   * otherwise a keyboard user will need to press enter to make a selection.
-   *
-   * Default: `true`
-   */
-  followFocus?: boolean;
-
-  /**
-   * Identifies the element(s) whose contents/presence is controlled by the segmented control.
-   *
-   * Required as a prop on the control, or on each individual option.
-   */
-  'aria-controls'?: string;
-
-  /**
-   * Callback that gets called when a user makes a new selection.
-   */
-  onChange?: (value: string) => void;
-
-  /**
-   * Styling prop
-   */
-  className?: string;
-}
+import {
+  wrapperStyle,
+  labelThemeStyle,
+  optionsWrapperStyle,
+  selectionIndicatorStyle,
+  hoverIndicatorStyle,
+} from './SegmentedControl.styles';
+import { SegmentedControlContext } from './SegmentedControlContext';
 
 /**
  * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
@@ -284,8 +38,8 @@ export const SegmentedControl = forwardRef<
   {
     children,
     name: nameProp,
-    size = 'default',
-    darkMode = false,
+    size = Size.Default,
+    darkMode: darkModeProp,
     defaultValue,
     value: controlledValue,
     onChange,
@@ -302,9 +56,9 @@ export const SegmentedControl = forwardRef<
   const segmentedContainerRef = useRef<null | HTMLDivElement>(null);
   const [isfocusInComponent, setIsfocusInComponent] = useState<boolean>(false);
 
-  const getOptionRef = useDynamicRefs<HTMLDivElement>({ prefix: 'option' });
+  const { theme } = useDarkMode(darkModeProp);
 
-  const mode: Mode = darkMode ? 'dark' : 'light';
+  const getOptionRef = useDynamicRefs<HTMLDivElement>({ prefix: 'option' });
 
   const name = useIdAllocator({
     prefix: 'segmented-control',
@@ -543,28 +297,23 @@ export const SegmentedControl = forwardRef<
    * Return
    */
   return (
-    <SegmentedControlContext.Provider value={{ size, mode, name, followFocus }}>
+    <SegmentedControlContext.Provider
+      value={{ size, theme, name, followFocus }}
+    >
       <div
         ref={segmentedContainerRef}
-        className={cx(
-          wrapperStyle,
-          {
-            // TODO: Refresh - remove darkmode font override
-            [css`
-              font-family: ${fontFamilies.legacy};
-            `]: darkMode,
-          },
-          className,
-        )}
+        className={cx(wrapperStyle, className)}
         {...rest}
       >
-        {label && <Overline className={labelStyle[mode]}>{label}</Overline>}
+        {label && (
+          <Overline className={labelThemeStyle[theme]}>{label}</Overline>
+        )}
 
         <div
           role="tablist"
           aria-label={name}
           aria-owns={childrenIdList}
-          className={cx(optionsWrapperStyle({ mode, size }))}
+          className={cx(optionsWrapperStyle({ theme, size }))}
           ref={forwardedRef}
           onKeyDownCapture={handleKeyDown}
         >
@@ -595,3 +344,15 @@ SegmentedControl.displayName = 'SegmentedControl';
 
 const errorOnce = once(console.error);
 const warnOnce = once(console.warn);
+
+SegmentedControl.propTypes = {
+  darkMode: PropTypes.bool,
+  size: PropTypes.oneOf(Object.values(Size)),
+  onChange: PropTypes.func,
+  defaultValue: PropTypes.string,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  followFocus: PropTypes.bool,
+  className: PropTypes.string,
+};
