@@ -19,13 +19,16 @@
       "path": "../icon"
     },
     {
-      "path": "../interaction-ring"
+      "path": "../leafygreen-provider"
     },
     {
       "path": "../lib"
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../tokens"
     }
   ]
 }

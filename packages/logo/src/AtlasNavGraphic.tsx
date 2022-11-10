@@ -7,7 +7,7 @@ import {
   SupportedColorsMap,
 } from './utils';
 
-export default function AtlasLogo({
+export default function AtlasNavGraphic({
   height = 40,
   className,
   color = SupportedColors.GreenDark2,

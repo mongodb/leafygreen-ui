@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
-  createDataProp,
+  createUniqueClassName,
   getNodeTextContent,
   HTMLElementProps,
 } from '@leafygreen-ui/lib';
@@ -32,7 +32,7 @@ import {
 import { Size } from './types';
 import MenuContext from './MenuContext';
 
-const menuItemContainer = createDataProp('menu-item-container');
+const MenuItemContainerClassName = createUniqueClassName('menu-item-container');
 interface BaseMenuItemProps extends HTMLElementProps<'button'> {
   /**
    * Determines whether or not the MenuItem is active.
@@ -110,8 +110,8 @@ const MenuItem = React.forwardRef(
   ) => {
     const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(menuItemContainer.selector, theme);
-    const focusStyles = getFocusedStyles(menuItemContainer.selector, theme);
+    const hoverStyles = getHoverStyles(MenuItemContainerClassName, theme);
+    const focusStyles = getFocusedStyles(MenuItemContainerClassName, theme);
 
     const isAnchor = typeof rest.href === 'string';
 
@@ -120,6 +120,7 @@ const MenuItem = React.forwardRef(
       React.cloneElement(glyph, {
         role: 'presentation',
         className: cx(
+          MenuItemContainerClassName,
           mainIconStyle,
           {
             [activeIconStyle[theme]]: active,
@@ -131,7 +132,6 @@ const MenuItem = React.forwardRef(
       });
 
     const boxProps = {
-      ...menuItemContainer.prop,
       ref,
       role: 'menuitem',
       tabIndex: disabled ? -1 : undefined,

@@ -1,5 +1,17 @@
 # @leafygreen-ui/radio-group
 
+## 9.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/interaction-ring@6.0.0
+  - @leafygreen-ui/lib@10.0.0
+
 ## 8.1.2
 
 ### Patch Changes

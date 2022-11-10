@@ -2,8 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { Radio, RadioGroup } from '.';
-import { RadioGroupProps } from './RadioGroup';
-import { RadioProps } from './Radio';
+import { RadioGroupProps, RadioProps } from './types';
 
 function WrappedRadio({ checked }: { checked: string }) {
   return (
