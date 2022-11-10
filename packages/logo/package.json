@@ -20,7 +20,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/lib": "^9.5.1",
+    "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/palette": "^3.4.4"
   },

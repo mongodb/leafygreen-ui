@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import { HTMLElementProps, createUniqueClassName } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { getCommonCellStyles } from './styles';
 import { useFontSizeContext } from './FontSizeContext';
 import { useDarkModeContext } from './DarkModeContext';
 import { palette } from '@leafygreen-ui/palette';
 
-export const tdInnerDiv = createDataProp('td-inner-div');
+export const tdInnerDivClassName = createUniqueClassName('td-inner-div');
 
 interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
@@ -104,7 +104,7 @@ const Cell = forwardRef(
 
     return (
       <Root {...props} {...rest}>
-        <div className={innerDivStyles} {...tdInnerDiv.prop}>
+        <div className={cx(tdInnerDivClassName, innerDivStyles)}>
           <span
             className={css`
               display: flex;

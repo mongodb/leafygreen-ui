@@ -91,6 +91,7 @@ type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
 export interface TableRowInterface<Shape = {}> {
   datum: Shape;
+  index: number;
 }
 
 export interface TableProps<Shape> extends HTMLElementProps<'table'> {
