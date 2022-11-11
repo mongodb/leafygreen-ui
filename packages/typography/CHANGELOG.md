@@ -1,5 +1,17 @@
 # @leafygreen-ui/typography
 
+## 15.0.0
+
+### Minor Changes
+
+- 07b3c797: Enables passing a ref to `InlineCode`
+
+### Patch Changes
+
+- 07b3c797: Sets `InlineCode` default display property to `inline`
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
 ## 14.0.1
 
 ### Patch Changes

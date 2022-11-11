@@ -1,5 +1,19 @@
 # @leafygreen-ui/segmented-control
 
+## 6.0.0
+
+### Major Changes
+
+- 30207122: Updates `Segmented Control` for dark mode brand refresh.
+
+### Patch Changes
+
+- Updated dependencies [07b3c797]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
 ## 5.0.0
 
 ### Major Changes
