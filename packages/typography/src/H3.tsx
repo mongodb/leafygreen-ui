@@ -14,14 +14,14 @@ const h3 = css`
   font-weight: 500;
 `;
 
-type H3Props = TypographyProps<'h3'>;
+type H3Props<T extends keyof JSX.IntrinsicElements> = TypographyProps<T>;
 
-const H3 = ({
+const H3 = <T extends keyof JSX.IntrinsicElements>({
   darkMode: darkModeProp,
   className,
-  as = 'h3',
+  as = 'h3' as T,
   ...rest
-}: H3Props) => {
+}: H3Props<T>) => {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <Box

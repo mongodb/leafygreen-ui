@@ -1,13 +1,12 @@
 import React from 'react';
 import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import {
   baseTypographyStyles,
   bodyTypeScaleStyles,
   defaultTextColor,
 } from './styles';
-import { CommonTypographyProps, TypographyProps } from './types';
+import { TypographyProps } from './types';
 import { useUpdatedBaseFontSize } from '.';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 

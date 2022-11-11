@@ -27,14 +27,14 @@ const h2Color: Record<Theme, string> = {
   `,
 };
 
-type H2Props = TypographyProps<'h2'>;
+type H2Props<T extends keyof JSX.IntrinsicElements> = TypographyProps<T>;
 
-const H2 = ({
+const H2 = <T extends keyof JSX.IntrinsicElements>({
   darkMode: darkModeProp,
   className,
-  as = 'h2',
+  as = 'h2' as T,
   ...rest
-}: H2Props) => {
+}: H2Props<T>) => {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <Box

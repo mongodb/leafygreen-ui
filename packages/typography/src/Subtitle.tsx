@@ -14,14 +14,14 @@ const subtitle = css`
   font-weight: 700;
 `;
 
-type SubtitleProps = TypographyProps<'h6'>;
+type SubtitleProps<T extends keyof JSX.IntrinsicElements> = TypographyProps<T>;
 
-const Subtitle = ({
+const Subtitle = <T extends keyof JSX.IntrinsicElements>({
   darkMode: darkModeProp,
   className,
-  as = 'h6',
+  as = 'h6' as T,
   ...rest
-}: SubtitleProps) => {
+}: SubtitleProps<T>) => {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <Box

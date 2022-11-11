@@ -22,7 +22,7 @@ const typographyComponents: Array<{
   { Component: H2, extendsBox: true },
   { Component: H3, extendsBox: true },
   { Component: Subtitle, extendsBox: true },
-  { Component: Body, extendsBox: false },
+  { Component: Body, extendsBox: true },
   { Component: Description, extendsBox: false },
   { Component: Label, extendsBox: false },
   { Component: Disclaimer, extendsBox: false },
@@ -77,3 +77,22 @@ describe.each(typographyComponents)(
     });
   },
 );
+
+/* eslint-disable jest/expect-expect, jest/no-disabled-tests */
+describe.skip('TS types behave as expected', () => {
+  test('H1', () => {
+    <H1 as="a">Children</H1>;
+  });
+  test('H2', () => {
+    <H2 as="a">Children</H2>;
+  });
+  test('H3', () => {
+    <H3 as="a">Children</H3>;
+  });
+  test('Subtitle', () => {
+    <Subtitle as="a">Children</Subtitle>;
+  });
+  test('Body', () => {
+    <Body as="span">Children</Body>;
+  });
+});
