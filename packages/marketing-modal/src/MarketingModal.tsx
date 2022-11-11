@@ -3,27 +3,13 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Button from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
-import Modal, { ModalProps } from '@leafygreen-ui/modal';
+import Modal from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import { svgBlobs } from '.';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { baseModalStyle, baseGraphicContainerStyle, buttonStyle, centeredGraphicContainerStyle, filledGraphicContainerStyle, baseGraphicStyle, filledGraphicStyle, contentStyle, contentThemeStyle, titleStyle, footerContentStyle, linkStyle } from './MarketingModal.styles';
 import { palette } from '@leafygreen-ui/palette';
-
-export const BlobPosition = {
-  TopLeft: 'top left',
-  TopRight: 'top right',
-  BottomRight: 'bottom right',
-} as const;
-
-export type BlobPosition = typeof BlobPosition[keyof typeof BlobPosition];
-
-export const GraphicStyle = {
-  Center: 'center',
-  Fill: 'fill',
-} as const;
-
-type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
+import { BlobPosition, GraphicStyle, MarketingModalProps } from './MarketingModal.types';
 
 export const renderCurvedSVG = (darkMode: boolean) => {
   const curvedSVGStyles = css`
@@ -47,66 +33,6 @@ export const renderCurvedSVG = (darkMode: boolean) => {
     </svg>
   );
 };
-
-interface MarketingModalProps extends ModalProps {
-  /**
-   * Text of header element
-   */
-  title: string;
-  /**
-   * React Element to be rendered as the modal's hero image
-   */
-  graphic: React.ReactElement;
-  /**
-   * Determines the rendering style of the graphic.
-   *
-   * `fill` adds a curving effect to the bottom border of the graphic.
-   */
-  graphicStyle?: GraphicStyle;
-  children: React.ReactNode;
-  /**
-   * 	The component is shown when the value is set to `true`.
-   */
-  open?: boolean;
-  /**
-   * 	Callback fired when the primary action button is clicked.
-   */
-  onButtonClick?: () => void;
-  /**
-   * 	Callback fired when the secondary link element is clicked.
-   */
-  onLinkClick?: () => void;
-  /**
-   * 	Callback fired when the modal is closed
-   */
-  onClose?: () => void;
-
-  /**
-   * 	Text of the primary CTA button
-   */
-  buttonText: string;
-  /**
-   * 	Text of the secondary link element
-   */
-  linkText: string;
-
-  darkMode?: boolean;
-  /**
-   * 	Color of the close icon button
-   */
-  closeIconColor?: CloseIconColor;
-  /**
-   * 	Position of the blob visual effect. Defaults to top-left.
-   *
-   *  Note: The blob is only rendered if: `showBlob` prop is `true`, and the `graphicStyle` prop is `center`.
-   *
-   */
-  blobPosition?: BlobPosition;
-  /**
-   * 	Determines whether the blob should be rendered.
-   */
-  showBlob?: boolean;
-}
 
 const MarketingModal = ({
   children,
