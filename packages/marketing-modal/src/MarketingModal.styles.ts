@@ -22,16 +22,10 @@ export const baseGraphicStyle = css`
   display: block;
 `;
 
-export const centeredGraphicContainerStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    padding-top: 20px;
-    padding-bottom: 8px;
-  `,
-  [Theme.Dark]: css`
-    padding-top: 20px;
-    padding-bottom: 8px;
-  `,
-};
+export const centeredGraphicContainerStyle = css`
+  padding-top: 48px;
+  padding-bottom: 24px;
+`;
 
 export const filledGraphicContainerStyle = css`
   padding-bottom: 24px;
