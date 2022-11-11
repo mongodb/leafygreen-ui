@@ -108,6 +108,9 @@ describe.skip('TS types behave as expected', () => {
   test('Subtitle', () => {
     <Subtitle as="a">Children</Subtitle>;
   });
+  test('Overline', () => {
+    <Overline as="a">Children</Overline>;
+  });
   test('Body', () => {
     <Body as="span">Children</Body>;
   });
