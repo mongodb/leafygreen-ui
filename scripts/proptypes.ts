@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { Command } from 'commander';
 import { PropItem } from 'react-docgen-typescript';
-import { CustomComponentDoc } from './utils/tsdoc/tsDoc.utils';
+import { CustomComponentDoc } from './utils/tsDoc.utils';
 import { pickBy } from 'lodash';
 
 /**
