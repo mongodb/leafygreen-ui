@@ -7,7 +7,7 @@ import {
   bodyTypeScaleStyles,
   defaultTextColor,
 } from './styles';
-import { CommonTypographyProps } from './types';
+import { CommonTypographyProps, TypographyProps } from './types';
 import { useUpdatedBaseFontSize } from '.';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -16,15 +16,13 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
  */
 
 type BodyFontWeight = 'regular' | 'medium';
-type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> &
-  CommonTypographyProps & {
-    /**
-     * font-weight applied to typography element
-     * default: `regular`
-     */
-    weight?: BodyFontWeight;
-    as?: T;
-  };
+type BodyProps<T extends keyof JSX.IntrinsicElements> = TypographyProps<T> & {
+  /**
+   * font-weight applied to typography element
+   * default: `regular`
+   */
+  weight?: BodyFontWeight;
+};
 
 const fontWeights: Record<
   'default' | 'strong',

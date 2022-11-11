@@ -1,11 +1,11 @@
 import React from 'react';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 import { baseTypographyStyles } from './styles';
-import { CommonTypographyProps } from './types';
+import { TypographyProps } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
@@ -27,17 +27,18 @@ const h1Color: Record<Theme, string> = {
   `,
 };
 
-type H1Props = HTMLElementProps<'h1'> & CommonTypographyProps;
+type H1Props = TypographyProps<'h1'>;
 
-const H1: ExtendableBox<H1Props, 'h1'> = ({
+const H1 = ({
   darkMode: darkModeProp,
   className,
+  as = 'h1',
   ...rest
 }: H1Props) => {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <Box
-      as="h1"
+      as={as}
       className={cx(baseTypographyStyles, h1, h1Color[theme], className)}
       {...rest}
     />

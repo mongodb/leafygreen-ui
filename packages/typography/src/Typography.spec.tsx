@@ -15,7 +15,7 @@ import {
 } from '.';
 
 const typographyComponents: Array<{
-  Component: React.ComponentType<unknown>;
+  Component: React.ComponentType<any>;
   extendsBox: boolean;
 }> = [
   { Component: H1, extendsBox: true },
@@ -24,7 +24,6 @@ const typographyComponents: Array<{
   { Component: Subtitle, extendsBox: true },
   { Component: Body, extendsBox: false },
   { Component: Description, extendsBox: false },
-  /// @ts-expect-error - missing `htmlFor`
   { Component: Label, extendsBox: false },
   { Component: Disclaimer, extendsBox: false },
   { Component: InlineCode, extendsBox: false },
@@ -50,13 +49,28 @@ describe.each(typographyComponents)(
 
       describe('Extends `Box`', () => {
         if (extendsBox) {
-          test('renders with `as` prop', () => {
+          test('renders with HTMLElement `as` prop', () => {
             const { getByTestId } = render(
-              /// @ts-expect-error - ambiguous at this point if the component supports `as`
               <Component data-testid="component" as={'span'} />,
             );
             expect(getByTestId('component')).toBeInTheDocument();
             expect(getByTestId('component').tagName.toLowerCase()).toBe('span');
+          });
+
+          // eslint-disable-next-line jest/no-disabled-tests
+          test.skip('renders with `href`', () => {
+            const { getByTestId } = render(
+              <Component
+                data-testid="component"
+                href="http://mongodb.design"
+              />,
+            );
+            expect(getByTestId('component')).toBeInTheDocument();
+            expect(getByTestId('component').tagName.toLowerCase()).toBe('a');
+            expect(getByTestId('component')).toHaveAttribute(
+              'href',
+              'http://mongodb.design',
+            );
           });
         }
       });
