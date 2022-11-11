@@ -1,5 +1,16 @@
 # @leafygreen-ui/toggle
 
+## 10.0.0
+
+### Major Changes
+
+- 30207122: Updates `Toggle` for dark mode brand refresh
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
 ## 9.0.0
 
 ### Major Changes
