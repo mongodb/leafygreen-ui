@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
 import {
   H1,
   H2,
@@ -35,7 +36,6 @@ describe.each(typographyComponents)(
   'packages/typography',
   ({ Component, extendsBox }) => {
     const { displayName = '' } = Component;
-
     describe(`${displayName}`, () => {
       test('renders', () => {
         const { container } = render(<Component />);
@@ -77,6 +77,22 @@ describe.each(typographyComponents)(
     });
   },
 );
+
+describe('TSDoc', () => {
+  const docs = parseTSDoc(`Typography`);
+  test('Generates TSDoc', () => {
+    expect(docs).not.toBeUndefined();
+  });
+
+  describe.each(typographyComponents)(
+    'Generates TSDoc for',
+    ({ Component: { displayName } }) => {
+      test(`${displayName}`, () => {
+        expect(docs?.find(doc => doc.displayName === displayName)).toBeTruthy();
+      });
+    },
+  );
+});
 
 /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
 describe.skip('TS types behave as expected', () => {
