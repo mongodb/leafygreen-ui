@@ -83,8 +83,7 @@ const MarketingModal = ({
         svgBlobs(blobPosition, darkMode)}
       <div
         className={cx(baseGraphicContainerStyle, {
-          [centeredGraphicContainerStyle]:
-            graphicStyle === GraphicStyle.Center,
+          [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
           [filledGraphicContainerStyle]: graphicStyle === GraphicStyle.Fill,
         })}
       >
