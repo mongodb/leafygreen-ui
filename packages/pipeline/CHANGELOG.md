@@ -1,5 +1,14 @@
 # @leafygreen-ui/pipeline
 
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies [95c9fb0d]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/tooltip@9.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
 ## 4.0.1
 
 ### Patch Changes

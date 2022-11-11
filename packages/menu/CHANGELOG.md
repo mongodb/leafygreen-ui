@@ -1,5 +1,14 @@
 # @leafygreen-ui/menu
 
+## 19.0.0
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+  - @leafygreen-ui/icon-button@15.0.0
+  - @leafygreen-ui/popover@11.0.0
+
 ## 18.0.0
 
 ### Major Changes
