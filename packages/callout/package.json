@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "8.0.1",
+  "version": "9.0.0",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,13 +25,13 @@
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.4",
     "@leafygreen-ui/tokens": "^1.3.4",
-    "@leafygreen-ui/typography": "^14.0.1"
+    "@leafygreen-ui/typography": "^15.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^13.0.1"
+    "@leafygreen-ui/code": "^14.0.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.0.1"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/callout",
   "repository": {

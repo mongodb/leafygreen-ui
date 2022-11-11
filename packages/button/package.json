@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "18.0.0",
+  "version": "19.0.0",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -32,7 +32,7 @@
     "next": "^12.2.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.0.1"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/button",

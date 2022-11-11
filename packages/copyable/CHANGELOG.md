@@ -1,5 +1,19 @@
 # @leafygreen-ui/copyable
 
+## 8.0.0
+
+### Patch Changes
+
+- 07b3c797: Shows copyable shadow only when text overflows
+- Updated dependencies [07b3c797]
+- Updated dependencies [95c9fb0d]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/tooltip@9.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+  - @leafygreen-ui/button@19.0.0
+
 ## 7.0.1
 
 ### Patch Changes

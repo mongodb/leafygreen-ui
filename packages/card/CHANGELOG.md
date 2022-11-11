@@ -1,5 +1,12 @@
 # @leafygreen-ui/card
 
+## 9.0.0
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
 ## 8.0.1
 
 ### Patch Changes

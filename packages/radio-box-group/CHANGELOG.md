@@ -1,5 +1,16 @@
 # @leafygreen-ui/radio-box-group
 
+## 12.0.0
+
+### Major Changes
+
+- 30207122: Updates `RadioBoxGroup` for dark mode brand refresh. Exports `RadioBoxProps` and `RadioBoxGroupProps`.
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
 ## 11.0.0
 
 ### Major Changes
