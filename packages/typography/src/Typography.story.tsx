@@ -12,11 +12,14 @@ import {
   Label,
   Description,
   Link,
+  StaticWidthText,
 } from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { cx, css } from '@leafygreen-ui/emotion';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import Icon from '@leafygreen-ui/icon';
 
 const wrapperStyles = css`
   padding: 0;
@@ -163,5 +166,90 @@ export const AllTypography = ({
         </div>
       </div>
     </LeafygreenProvider>
+  );
+};
+
+export const StaticWidthTextStory = () => {
+  const hoverBold = css`
+    font-weight: 400;
+    cursor: pointer;
+    outline: 1px solid ${palette.red.light2};
+    outline-offset: -1px;
+
+    &:hover {
+      font-weight: 700;
+    }
+  `;
+
+  const tabStyle = css`
+    outline: 1px solid ${palette.blue.light1};
+    padding: 10px;
+    width: max-content;
+    max-width: 200px;
+  `;
+
+  const buttonStyle = css`
+    outline: 1px solid gray;
+    padding: 10px;
+    width: max-content;
+    max-width: 148px;
+    display: flex;
+    align-items: center;
+  `;
+
+  return (
+    <div
+      className={css`
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 20px;
+      `}
+    >
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <div className={tabStyle}>
+          <StaticWidthText className={hoverBold}>Some Tabs</StaticWidthText>
+        </div>
+        <div className={tabStyle}>
+          <StaticWidthText
+            className={cx(
+              hoverBold,
+              css`
+                flex: 1;
+              `,
+            )}
+          >
+            Some long text that will be truncated eventually because its long
+          </StaticWidthText>
+        </div>
+        <div className={tabStyle}>
+          <StaticWidthText className={hoverBold}>
+            Some more text
+          </StaticWidthText>
+        </div>
+      </div>
+      <br />
+      <div className={cx(hoverBold, buttonStyle)}>
+        <StaticWidthText>Some button</StaticWidthText>
+        <Icon glyph="CaretDown" />
+      </div>
+      <br />
+      <div className={cx(hoverBold, buttonStyle)}>
+        <StaticWidthText
+          className={cx(
+            css`
+              flex: 1;
+            `,
+          )}
+        >
+          Some long text button that should be truncated
+        </StaticWidthText>
+        <Icon glyph="CaretDown" />
+      </div>
+    </div>
   );
 };
