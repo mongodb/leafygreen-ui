@@ -12,3 +12,4 @@ export { default as Link, anchorClassName } from './Link';
 export { default as Overline } from './Overline';
 export { default as Subtitle } from './Subtitle';
 export { bodyTypeScaleStyles, labelTypeScaleStyles } from './styles';
+export { StaticWidthText } from './utility/StaticWidthText';
