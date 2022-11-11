@@ -1,5 +1,11 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.1.0
+
+### Minor Changes
+
+- b9b09a86: Sets default `usingKeyboard` to `true`. Defaulting to true allows autofocus to display a focus state.
+
 ## 3.0.1
 
 ### Patch Changes
