@@ -56,7 +56,7 @@ function svgBlobs(blobPosition: BlobPosition, darkMode: boolean) {
       aria-hidden="true"
       data-testid="svg-blob"
     >
-      <path opacity="0.6" d={path} fill='currentColor' />
+      <path opacity="0.6" d={path} fill="currentColor" />
     </svg>
   );
 }

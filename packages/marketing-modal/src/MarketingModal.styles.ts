@@ -1,12 +1,9 @@
-import { css } from "@leafygreen-ui/emotion";
-import { Theme } from "@leafygreen-ui/lib";
-import { palette } from "@leafygreen-ui/palette";
-import { fontFamilies } from "@leafygreen-ui/tokens";
+import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { typeScales } from '@leafygreen-ui/tokens';
 
 export const titleStyle = css`
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 32px;
   margin-bottom: 4px;
 `;
 
@@ -27,8 +24,8 @@ export const baseGraphicStyle = css`
 
 export const centeredGraphicContainerStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-  padding-top: 20px;
-  padding-bottom: 8px;
+    padding-top: 20px;
+    padding-bottom: 8px;
   `,
   [Theme.Dark]: css`
     padding-top: 20px;
@@ -45,15 +42,16 @@ export const filledGraphicStyle = css`
   width: 100%;
 `;
 
-export const contentStyle = css`
-  font-family: ${fontFamilies.default};
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: 0;
+export const wrapperStyle = css`
   text-align: center;
   padding: 0 20px 32px;
   max-width: 476px;
   margin: 0 auto;
+`;
+
+export const contentStyle = css`
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
 `;
 
 export const contentThemeStyle: Record<Theme, string> = {
@@ -61,9 +59,9 @@ export const contentThemeStyle: Record<Theme, string> = {
     color: ${palette.black};
   `,
   [Theme.Dark]: css`
-  color: ${palette.gray.light1};
-  `
-}
+    color: ${palette.gray.light1};
+  `,
+};
 
 export const footerContentStyle = css`
   line-height: 24px;
@@ -75,7 +73,7 @@ export const footerContentStyle = css`
 `;
 
 export const buttonStyle = css`
-  min-width: 200px
+  min-width: 200px;
 `;
 
 export const linkStyle = css`

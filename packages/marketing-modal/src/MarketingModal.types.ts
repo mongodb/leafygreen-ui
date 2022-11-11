@@ -1,4 +1,4 @@
-import { ModalProps } from "@leafygreen-ui/modal";
+import { ModalProps } from '@leafygreen-ui/modal';
 
 export const BlobPosition = {
   TopLeft: 'top left',

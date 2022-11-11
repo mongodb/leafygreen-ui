@@ -2,21 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Button from '@leafygreen-ui/button';
-import { Link } from '@leafygreen-ui/typography';
+import { H3, Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 import { svgBlobs } from '.';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { baseModalStyle, baseGraphicContainerStyle, buttonStyle, centeredGraphicContainerStyle, filledGraphicContainerStyle, baseGraphicStyle, filledGraphicStyle, contentStyle, contentThemeStyle, titleStyle, footerContentStyle, linkStyle } from './MarketingModal.styles';
+import {
+  baseModalStyle,
+  baseGraphicContainerStyle,
+  buttonStyle,
+  centeredGraphicContainerStyle,
+  filledGraphicContainerStyle,
+  baseGraphicStyle,
+  filledGraphicStyle,
+  contentStyle,
+  contentThemeStyle,
+  titleStyle,
+  footerContentStyle,
+  linkStyle,
+  wrapperStyle,
+} from './MarketingModal.styles';
 import { palette } from '@leafygreen-ui/palette';
-import { BlobPosition, GraphicStyle, MarketingModalProps } from './MarketingModal.types';
+import {
+  BlobPosition,
+  GraphicStyle,
+  MarketingModalProps,
+} from './MarketingModal.types';
 
 export const renderCurvedSVG = (darkMode: boolean) => {
   const curvedSVGStyles = css`
     position: absolute;
     left: 0;
     bottom: 24px;
-    color: ${darkMode ? palette.black : '#ffffff'}
+    color: ${darkMode ? palette.black : '#ffffff'};
   `;
 
   return (
@@ -28,7 +46,7 @@ export const renderCurvedSVG = (darkMode: boolean) => {
     >
       <path
         d="M329.065 48C439.779 45.2633 537.038 27.0233 600 3.86855e-06V49H0V0C62.9624 27.0233 160.221 45.2633 270.935 48H329.065Z"
-        fill='currentColor'
+        fill="currentColor"
       />
     </svg>
   );
@@ -60,8 +78,7 @@ const MarketingModal = ({
       darkMode={darkMode}
       closeIconColor={closeIconColor}
     >
-      {
-        showBlob &&
+      {showBlob &&
         graphicStyle === GraphicStyle.Center &&
         svgBlobs(blobPosition, darkMode)}
       <div
@@ -78,15 +95,13 @@ const MarketingModal = ({
         })}
         {graphicStyle === GraphicStyle.Fill && renderCurvedSVG(darkMode)}
       </div>
-      <div
-        className={cx(contentStyle, contentThemeStyle[theme])}
-      >
-        <div
-          className={titleStyle}
-        >
+      <div className={wrapperStyle}>
+        <H3 className={titleStyle} as="h1">
           {title}
+        </H3>
+        <div className={cx(contentStyle, contentThemeStyle[theme])}>
+          {children}
         </div>
-        {children}
       </div>
       <div className={footerContentStyle}>
         <Button

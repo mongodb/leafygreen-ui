@@ -35,7 +35,7 @@ export default {
   },
   args: {
     closeIconColor: CloseIconColor.Default,
-    darkMode: false
+    darkMode: false,
   },
   parameters: {
     controls: {
