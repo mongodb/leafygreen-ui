@@ -1,9 +1,8 @@
 import React from 'react';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { baseTypographyStyles, defaultTextColor } from './styles';
-import { CommonTypographyProps } from './types';
+import { TypographyProps } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
@@ -17,16 +16,18 @@ const overline = css`
   letter-spacing: 0.4px;
 `;
 
-type OverlineProps = HTMLElementProps<'div'> & CommonTypographyProps;
+type OverlineProps<T extends keyof JSX.IntrinsicElements> = TypographyProps<T>;
 
-export const Overline: ExtendableBox<OverlineProps, 'div'> = ({
+export const Overline = <T extends keyof JSX.IntrinsicElements>({
   darkMode: darkModeProp,
   className,
+  as = 'div' as T,
   ...rest
-}: OverlineProps) => {
+}: OverlineProps<T>) => {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <Box
+      as={as}
       className={cx(
         baseTypographyStyles,
         overline,

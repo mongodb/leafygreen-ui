@@ -29,7 +29,7 @@ const typographyComponents: Array<{
   { Component: Disclaimer, extendsBox: false },
   { Component: InlineCode, extendsBox: false },
   { Component: InlineKeyCode, extendsBox: false },
-  { Component: Overline, extendsBox: false },
+  { Component: Overline, extendsBox: true },
 ];
 
 describe.each(typographyComponents)(
