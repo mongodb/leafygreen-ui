@@ -4,7 +4,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import {
   BaseFontSize,
-  breakpoints,
   focusRing,
   spacing,
   hoverRing,
@@ -14,7 +13,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { mobileSizeSet, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
-import { useForwardedRef } from './utils';
+import { MobileMediaQuery, useForwardedRef } from './utils';
 import { State, Size } from './types';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
@@ -293,7 +292,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         },
         css`
           width: 100%;
-          @media only screen and (max-width: ${breakpoints.Desktop}px) {
+          ${MobileMediaQuery} {
             height: ${mobileSizeSet.height}px;
             font-size: ${mobileSizeSet.text}px;
           }
