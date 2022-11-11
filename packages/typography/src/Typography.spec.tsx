@@ -16,7 +16,7 @@ import {
 } from '.';
 
 const typographyComponents: Array<{
-  Component: React.ComponentType<any>;
+  Component: React.FunctionComponent;
   extendsBox: boolean;
 }> = [
   { Component: H1, extendsBox: true },
@@ -25,6 +25,7 @@ const typographyComponents: Array<{
   { Component: Subtitle, extendsBox: true },
   { Component: Body, extendsBox: true },
   { Component: Description, extendsBox: false },
+  /// @ts-expect-error Missing `htmlFor`
   { Component: Label, extendsBox: false },
   { Component: Disclaimer, extendsBox: false },
   { Component: InlineCode, extendsBox: false },
@@ -51,6 +52,7 @@ describe.each(typographyComponents)(
         if (extendsBox) {
           test('renders with HTMLElement `as` prop', () => {
             const { getByTestId } = render(
+              /// @ts-expect-error unknown whether the component supports `as`
               <Component data-testid="component" as={'span'} />,
             );
             expect(getByTestId('component')).toBeInTheDocument();
@@ -62,6 +64,7 @@ describe.each(typographyComponents)(
             const { getByTestId } = render(
               <Component
                 data-testid="component"
+                /// @ts-expect-error unknown whether the component supports `href`
                 href="http://mongodb.design"
               />,
             );
