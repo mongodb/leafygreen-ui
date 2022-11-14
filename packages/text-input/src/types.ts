@@ -42,16 +42,24 @@ interface AriaLabelProps {
   /**
    * Text shown in bold above the input element.
    *
-   * Optional if `aria-labelledby` is provided
+   * Optional if `aria-labelledby` or `aria-label` is provided
    */
   label?: string;
 
   /**
    * Screen-reader label element.
    *
-   * Optional if `label` is provided
+   * Optional if `label` or `aria-label` is provided
    */
   ['aria-labelledby']?: string;
+
+  /**
+   * Screen reader label text
+   *
+   * Optional if `label` or `aria-labelledby` is provided
+   *
+   */
+  ['aria-label']?: string;
 }
 
 type AriaLabels = keyof AriaLabelProps;
@@ -59,15 +67,13 @@ type AriaLabels = keyof AriaLabelProps;
 interface TextInputTypeProp {
   /**
    * The input type.
-   *
-   * Requires an `aria-label` if `"search"` is provided
    */
   type?: TextInputType;
 }
 export interface BaseTextInputProps
   extends Omit<
     HTMLElementProps<'input', HTMLInputElement>,
-    AriaLabels | 'type'
+    AriaLabels
   > {
   /**
    * id associated with the TextInput component.
@@ -151,20 +157,7 @@ export interface BaseTextInputProps
   baseFontSize?: BaseFontSize;
 }
 
-type AccessibleTextInputProps = Either<
+export type TextInputProps = Either<
   BaseTextInputProps & AriaLabelProps & TextInputTypeProp,
   AriaLabels
 >;
-type SearchTextInputProps = BaseTextInputProps &
-  AriaLabelProps & {
-    /**
-     *
-     */
-    type: 'search';
-    /**
-     * Required if `type` is `"search"`
-     */
-    'aria-label': string;
-  };
-
-export type TextInputProps = AccessibleTextInputProps | SearchTextInputProps;

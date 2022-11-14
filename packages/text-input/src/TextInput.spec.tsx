@@ -253,16 +253,15 @@ describe('packages/text-input', () => {
 
   /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
-    test('TextInput throws error when neither aria-labelledby or label is supplied', () => {
+    test('TextInput throws error when no label is supplied', () => {
       // @ts-expect-error
       <TextInput />;
-      // @ts-expect-error
       <TextInput aria-label="some label" />;
       <TextInput aria-labelledby="some-id" />;
       <TextInput label="some-id" />;
     });
 
-    test('TextInput throws an error when `type` is "search" and an aria-label is not supplied', () => {
+    test('TextInput throws an error when `type` is "search" and no label is supplied', () => {
       // @ts-expect-error
       <TextInput type="search" />;
       <TextInput type="search" aria-label="some label" />;
