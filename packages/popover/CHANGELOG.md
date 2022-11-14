@@ -1,5 +1,12 @@
 # @leafygreen-ui/popover
 
+## 11.0.0
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
 ## 10.0.1
 
 ### Patch Changes

@@ -1,12 +1,12 @@
 import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import { Theme } from '@leafygreen-ui/lib';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
-import { useForwardedRef } from './utils';
+import { MobileMediaQuery, useForwardedRef } from './utils';
 import { Size } from './types';
 import isUndefined from 'lodash/isUndefined';
 
@@ -116,7 +116,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
             getMenuStyles(theme, size),
             css`
               max-height: ${maxHeightValue};
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+              ${MobileMediaQuery} {
                 font-size: ${mobileSizeSet.option.text}px;
               }
             `,
