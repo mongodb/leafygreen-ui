@@ -71,10 +71,7 @@ interface TextInputTypeProp {
   type?: TextInputType;
 }
 export interface BaseTextInputProps
-  extends Omit<
-    HTMLElementProps<'input', HTMLInputElement>,
-    AriaLabels
-  > {
+  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels> {
   /**
    * id associated with the TextInput component.
    */
