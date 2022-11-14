@@ -167,7 +167,7 @@ export function InternalOption({
   let styledGlyph = iconPlaceholder;
 
   if (glyph) {
-    if (!isComponentGlyph(glyph) || !isComponentType(glyph, 'Icon')) {
+    if (!isComponentGlyph(glyph)) {
       console.error(
         '`Option` instance did not render icon because it is not a known glyph element.',
       );
