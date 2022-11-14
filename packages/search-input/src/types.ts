@@ -1,4 +1,4 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const State = {
   None: 'none',
@@ -15,13 +15,8 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export interface SearchInputProps
+interface BaseSearchInputProps
   extends HTMLElementProps<'input', HTMLInputElement> {
-  /**
-   * Screen-reader label element.
-   */
-  ['aria-label']: string;
-
   /**
    * The current state of the SearchInput. This can be none, or loading.
    */
@@ -44,3 +39,5 @@ export interface SearchInputProps
    */
   disabled?: boolean;
 }
+
+export type SearchInputProps = Either<BaseSearchInputProps, 'aria-label' | 'aria-labelledby'>
