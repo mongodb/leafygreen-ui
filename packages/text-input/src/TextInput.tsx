@@ -59,11 +59,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
  */
 
 type TextInputComponentType = React.ForwardRefExoticComponent<TextInputProps>;
-/// @ts-expect-error
-const TextInput: TextInputComponentType = React.forwardRef<
-  HTMLInputElement,
-  TextInputProps
->(
+const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       label,
@@ -236,7 +232,7 @@ const TextInput: TextInputComponentType = React.forwardRef<
       </div>
     );
   },
-);
+) as TextInputComponentType;
 
 TextInput.displayName = 'TextInput';
 
