@@ -45,7 +45,7 @@ const progressBarStyle = css`
   left: 0;
   background-size: 600px;
   animation: ${backgroundShimmer} 4s infinite linear;
-  transition: width ${transitionDuration.slower}s ease-in-out;
+  transition: width ${transitionDuration.slower}ms ease-in-out;
 `;
 
 const progressBarThemeStyle: Record<Theme, string> = {
