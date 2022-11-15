@@ -41,5 +41,5 @@ interface BaseSearchInputProps
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
-export type SearchInputProps = Either<BaseSearchInputProps, AriaLabels>
+export type SearchInputProps = Either<BaseSearchInputProps, AriaLabels>;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
