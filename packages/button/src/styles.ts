@@ -2,7 +2,12 @@ import { mix, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Size, Variant, ButtonProps } from './types';
-import { BaseFontSize, fontFamilies, typeScales, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  typeScales,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { createUniqueClassName, getTheme, Theme } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
@@ -222,10 +227,10 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       &:active {
         color: ${palette.green.dark3};
         background-color: ${mix(
-      0.96,
-      palette.green.base,
-      palette.green.light3,
-    )};
+          0.96,
+          palette.green.base,
+          palette.green.light3,
+        )};
         border-color: ${palette.green.dark2};
         box-shadow: 0px 0px 0px 3px ${palette.green.dark3};
       }

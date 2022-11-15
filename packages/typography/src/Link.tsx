@@ -111,7 +111,7 @@ export { ArrowAppearance };
 
 export interface LinkProps
   extends CommonTypographyProps,
-  HTMLElementProps<'a'> {
+    HTMLElementProps<'a'> {
   arrowAppearance?: ArrowAppearance;
   hideExternalIcon?: boolean;
 }

@@ -161,8 +161,8 @@ export const getHoverStyles = (containerClass: string, theme: Theme) => ({
     .${containerClass} {
       &:not(:disabled):hover & {
         color: ${theme === Theme.Light
-      ? palette.green.base
-      : palette.green.dark3};
+          ? palette.green.base
+          : palette.green.dark3};
       }
     }
   `,
@@ -336,8 +336,8 @@ export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
       .${containerClassName} {
         &:focus & {
           color: ${theme === Theme.Light
-        ? palette.blue.light3
-        : palette.blue.dark1};
+            ? palette.blue.light3
+            : palette.blue.dark1};
         }
       }
     `,
@@ -345,8 +345,8 @@ export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
       .${containerClassName} {
         &:focus > & {
           color: ${theme === Theme.Light
-        ? palette.blue.light3
-        : palette.blue.base};
+            ? palette.blue.light3
+            : palette.blue.base};
         }
       }
     `,

@@ -8,7 +8,12 @@ import {
 } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import { keyMap } from '@leafygreen-ui/lib';
-import { fontFamilies, spacing, BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  spacing,
+  BaseFontSize,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { mobileSizeSet, sizeSets, SizeSet } from './styleSets';
@@ -125,9 +130,9 @@ export default function Select({
     if (value !== undefined && onChange === undefined && readOnly !== true) {
       console.warn(
         'You provided a `value` prop to a form field without an `onChange` handler. ' +
-        'This will render a read-only field. ' +
-        'If the field should be mutable use `defaultValue`. ' +
-        'Otherwise, set either `onChange` or `readOnly`.',
+          'This will render a read-only field. ' +
+          'If the field should be mutable use `defaultValue`. ' +
+          'Otherwise, set either `onChange` or `readOnly`.',
       );
     }
   }, [onChange, readOnly, value]);
@@ -192,7 +197,7 @@ export default function Select({
     if (uncontrolledSelectedOption !== null) {
       setUncontrolledSelectedOption(
         reconcileOption(children, uncontrolledSelectedOption) ??
-        initialUncontrolledSelectedOption,
+          initialUncontrolledSelectedOption,
       );
     }
   }, [children, initialUncontrolledSelectedOption, uncontrolledSelectedOption]);
@@ -477,11 +482,11 @@ export default function Select({
     popoverZIndex,
     ...(usePortal
       ? {
-        usePortal,
-        portalClassName,
-        portalContainer,
-        scrollContainer,
-      }
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
       : { usePortal }),
   };
 

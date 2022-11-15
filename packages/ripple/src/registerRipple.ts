@@ -1,6 +1,6 @@
 import { getRippleGlobalNamespace } from './getRippleGlobalNamespace';
 import { Options } from './utils';
-import { transitionDuration } from '@leafygreen-ui/tokens'
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const TRANSITION_TIME = transitionDuration.slower;
 const RIPPLE_NAMESPACE = getRippleGlobalNamespace();

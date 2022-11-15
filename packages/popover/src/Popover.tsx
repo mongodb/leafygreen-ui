@@ -21,11 +21,12 @@ import {
   getElementDocumentPosition,
 } from './positionUtils';
 import { consoleOnce } from '@leafygreen-ui/lib';
-import { transitionDuration } from '@leafygreen-ui/tokens'
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const rootPopoverStyle = css`
   position: absolute;
-  transition: transform ${transitionDuration.default}ms ease-in-out, opacity ${transitionDuration.default}ms ease-in-out;
+  transition: transform ${transitionDuration.default}ms ease-in-out,
+    opacity ${transitionDuration.default}ms ease-in-out;
   opacity: 0;
 `;
 

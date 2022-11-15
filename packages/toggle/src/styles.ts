@@ -1,7 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme, createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { focusRing, hoverRing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  focusRing,
+  hoverRing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 export const toggleButtonClassName = createUniqueClassName('toggle-button');
@@ -25,9 +29,9 @@ export const checkmarkSelector = {
   disabledUnchecked: `${buttonSelectors.unchecked}:disabled &`,
 };
 
-
 export const buttonBaseStyles = css`
-  transition: ${transitionDuration.default}ms all ease-in-out, 0s background-color linear;
+  transition: ${transitionDuration.default}ms all ease-in-out,
+    0s background-color linear;
   display: inline-block;
   flex-shrink: 0;
   position: relative;

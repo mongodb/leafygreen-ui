@@ -3,7 +3,7 @@ import { css, cx } from '@emotion/css';
 import { Transition } from 'react-transition-group';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { uiColors } from '@leafygreen-ui/palette';
-import { transitionDuration } from '@leafygreen-ui/tokens'
+import { transitionDuration } from '@leafygreen-ui/tokens';
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 
 const buttonResetStyles = css`

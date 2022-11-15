@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, focusRing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  focusRing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import {
   HTMLElementProps,
   OneOf,
@@ -121,7 +125,7 @@ const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
     const { theme } = useDarkMode(darkModeProp);
     const whiteSpace =
       ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <=
-        30
+      30
         ? nowrap
         : normal;
     const isAnchor = rest?.href !== undefined || rest.onClick !== undefined;

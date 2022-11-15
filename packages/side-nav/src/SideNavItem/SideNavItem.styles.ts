@@ -1,7 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 
 export const sideNavItemClassName = createUniqueClassName('side-nav-item');

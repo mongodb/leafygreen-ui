@@ -107,8 +107,8 @@ export interface TableProps<Shape> extends HTMLElementProps<'table'> {
    * @type Array of `<TableHeader />`
    */
   columns:
-  | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
-  | React.ReactFragment;
+    | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
+    | React.ReactFragment;
 
   /**
    * A function that takes in the datum of a single row as a parameter and returns a `JSX.Element` determining how it should be rendered.

@@ -380,7 +380,7 @@ const SubMenu = React.forwardRef(
       setOpen,
       className,
       glyph,
-      onExited = () => { },
+      onExited = () => {},
       open = false,
       active = false,
       disabled = false,
@@ -463,9 +463,9 @@ const SubMenu = React.forwardRef(
 
     const anchorProps = isAnchor
       ? {
-        target: '_self',
-        rel: '',
-      }
+          target: '_self',
+          rel: '',
+        }
       : {};
 
     const content = (
@@ -572,8 +572,8 @@ const SubMenu = React.forwardRef(
                     width: calc(
                       100% -
                         ${glyph
-                    ? paddingLeftWithGlyph
-                    : paddingLeftWithoutGlyph}px
+                          ? paddingLeftWithGlyph
+                          : paddingLeftWithoutGlyph}px
                     );
                   }
                 `,
@@ -616,8 +616,8 @@ const SubMenu = React.forwardRef(
                           width: calc(
                             100% -
                               ${glyph
-                          ? paddingLeftWithGlyph
-                          : paddingLeftWithoutGlyph}px
+                                ? paddingLeftWithGlyph
+                                : paddingLeftWithoutGlyph}px
                           );
                         }
                       `,

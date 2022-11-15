@@ -80,10 +80,10 @@ const codeWrapperStyle = css`
   transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
 
   ${mq({
-  // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
-  // Ideally, we wouldn't need to set the text to wrap, but from what I can tell, this is the one possible solution to the problem.
-  whiteSpace: ['pre', 'pre-wrap', 'pre'],
-})}
+    // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
+    // Ideally, we wouldn't need to set the text to wrap, but from what I can tell, this is the one possible solution to the problem.
+    whiteSpace: ['pre', 'pre-wrap', 'pre'],
+  })}
 `;
 
 const codeWrapperStyleNoPanel = css`
@@ -189,15 +189,15 @@ function getScrollShadow(scrollState: ScrollState, theme: Theme): string {
   return css`
     &:before {
       ${(scrollState === ScrollState.Both ||
-      scrollState === ScrollState.Left) &&
-    css`
+        scrollState === ScrollState.Left) &&
+      css`
         box-shadow: ${dropShadowBefore};
       `};
     }
     &:after {
       ${(scrollState === ScrollState.Both ||
-      scrollState === ScrollState.Right) &&
-    `
+        scrollState === ScrollState.Right) &&
+      `
         box-shadow: ${dropShadowAfter};
       `};
     }
@@ -328,11 +328,11 @@ function Code({
     popoverZIndex,
     ...(usePortal
       ? {
-        usePortal,
-        portalClassName,
-        portalContainer,
-        scrollContainer,
-      }
+          usePortal,
+          portalClassName,
+          portalContainer,
+          scrollContainer,
+        }
       : { usePortal }),
   } as const;
 

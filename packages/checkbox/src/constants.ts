@@ -1,4 +1,4 @@
-import { transitionDuration } from "@leafygreen-ui/tokens";
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 export const checkBoxSize = 14;
 export const checkAnimationDuration = transitionDuration.faster;

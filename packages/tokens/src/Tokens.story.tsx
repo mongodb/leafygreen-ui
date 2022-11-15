@@ -3,7 +3,14 @@ import React from 'react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { H2, InlineCode } from '@leafygreen-ui/typography';
-import { spacing, hoverRing, fontFamilies, typeScales, focusRing, transitionDuration } from '.';
+import {
+  spacing,
+  hoverRing,
+  fontFamilies,
+  typeScales,
+  focusRing,
+  transitionDuration,
+} from '.';
 import { Mode } from './mode';
 import { startCase } from 'lodash';
 

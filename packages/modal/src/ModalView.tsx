@@ -104,8 +104,8 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
   large: css`
     ${mq({
-    width: ['720px', '720px', '960px'],
-  })}
+      width: ['720px', '720px', '960px'],
+    })}
   `,
 };
 
@@ -175,7 +175,7 @@ const closeClassName = createUniqueClassName();
 function ModalView({
   open = false,
   size = ModalSize.Default,
-  setOpen = () => { },
+  setOpen = () => {},
   shouldClose = () => true,
   darkMode = false,
   children,
@@ -206,12 +206,12 @@ function ModalView({
 
   const focusTrapOptions = initialFocus
     ? {
-      initialFocus: `#${id} ${initialFocus}`,
-      fallbackFocus: `#${id} .${closeClassName}`,
-    }
+        initialFocus: `#${id} ${initialFocus}`,
+        fallbackFocus: `#${id} .${closeClassName}`,
+      }
     : {
-      fallbackFocus: `#${id} .${closeClassName}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
-    };
+        fallbackFocus: `#${id} .${closeClassName}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
+      };
 
   return (
     <Transition

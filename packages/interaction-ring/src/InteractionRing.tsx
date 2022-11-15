@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
-import { transitionDuration } from '@leafygreen-ui/tokens'
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Light: 'light',

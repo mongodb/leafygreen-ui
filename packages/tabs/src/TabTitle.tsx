@@ -3,7 +3,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { fontFamilies, typeScales, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  typeScales,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 
 interface ListTitleMode {
