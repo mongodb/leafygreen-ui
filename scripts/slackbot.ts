@@ -9,7 +9,7 @@ import fetch from 'node-fetch';
 interface ComponentUpdateObject {
   name: string;
   version: string;
-  updates?: Array<string>
+  updates?: Array<string>;
 }
 interface SortedUpdates {
   major: Array<ComponentUpdateObject>;
@@ -33,9 +33,9 @@ const Channels = {
 } as const;
 
 interface Opts {
-  channel: keyof typeof Channels,
-  test: boolean,
-  dry: boolean
+  channel: keyof typeof Channels;
+  test: boolean;
+  dry: boolean;
 }
 
 const cli = new Command('slackbot')
@@ -45,16 +45,8 @@ const cli = new Command('slackbot')
     'Channel to post to.',
     'leafygreen-ui-releases',
   )
-  .option(
-    '--test',
-    'Post to `design-system-testing`',
-    false
-  )
-  .option(
-    '--dry',
-    'Dry run. Does not post',
-    false
-  )
+  .option('--test', 'Post to `design-system-testing`', false)
+  .option('--dry', 'Dry run. Does not post', false)
   .parse(process.argv);
 
 cli.addHelpText(
@@ -74,15 +66,13 @@ cli.addHelpText(
 `,
 );
 
-const {
-  channel,
-  test,
-  dry
-}: Opts = cli.opts()
+const { channel, test, dry }: Opts = cli.opts();
 
 try {
   const botToken = process.env.SLACK_BOT_TOKEN;
-  const channelName: keyof typeof Channels = test ? 'design-system-testing' : channel
+  const channelName: keyof typeof Channels = test
+    ? 'design-system-testing'
+    : channel;
   const updatesArray: any = JSON.parse(cli.args[0]);
   let errMsg = '';
 
@@ -115,63 +105,109 @@ async function slackbot(
     major: [],
     minor: [],
     patch: [],
-    dependency: []
-  }
-
+    dependency: [],
+  };
 
   for (const component of updates) {
-    const { majorUpdates, minorUpdates, patchUpdates } = await parseChangeLog(component)
+    const { majorUpdates, minorUpdates, patchUpdates } = await parseChangeLog(
+      component,
+    );
 
-    if (majorUpdates) sortedUpdates.major.push({...component, updates: majorUpdates});
-    else if (minorUpdates) sortedUpdates.minor.push({...component, updates: minorUpdates})
+    if (majorUpdates)
+      sortedUpdates.major.push({ ...component, updates: majorUpdates });
+    else if (minorUpdates)
+      sortedUpdates.minor.push({ ...component, updates: minorUpdates });
     else if (patchUpdates) {
       if (!patchUpdates[0].includes('Updated dependencies')) {
-        sortedUpdates.patch.push(component)
+        sortedUpdates.patch.push(component);
       } else {
-        sortedUpdates.dependency.push(component)
+        sortedUpdates.dependency.push(component);
       }
     }
   }
 
-
   const constructBasicUpdateText = (component: ComponentUpdateObject) => {
     const { fullName, changelogUrl } = generateOutputStrings(component);
     return `*<${changelogUrl} | ${fullName}>*`;
-  }
+  };
 
-  const constructUpdateTextWithChangelog = (component: ComponentUpdateObject) => {
-    const { updates } = component
-    return constructBasicUpdateText(component) + '\n' + updates?.map(u => `\t• ${u}\n`)
-  }
+  const constructUpdateTextWithChangelog = (
+    component: ComponentUpdateObject,
+  ) => {
+    const { updates } = component;
+    return (
+      constructBasicUpdateText(component) +
+      '\n' +
+      updates?.map(u => `\t• ${u}\n`)
+    );
+  };
 
   const constructShortUpdateText = (component: ComponentUpdateObject) => {
-    const {shortName, changelogUrl} = generateOutputStrings(component)
-    return `<${changelogUrl} | ${shortName}>`
-  }
+    const { shortName, changelogUrl } = generateOutputStrings(component);
+    return `<${changelogUrl} | ${shortName}>`;
+  };
 
-  const majorUpdatesString = sortedUpdates.major.map(constructUpdateTextWithChangelog).join('\n');
-  const minorUpdatesString = sortedUpdates.minor.map(constructUpdateTextWithChangelog).join('\n');
-  const patchUpdatesString = sortedUpdates.patch.map(constructBasicUpdateText).join('\n');
-  const depsUpdatesString = sortedUpdates.dependency.map(constructShortUpdateText).join(', ');
+  const majorUpdatesString = sortedUpdates.major
+    .map(constructUpdateTextWithChangelog)
+    .join('\n');
+  const minorUpdatesString = sortedUpdates.minor
+    .map(constructUpdateTextWithChangelog)
+    .join('\n');
+  const patchUpdatesString = sortedUpdates.patch
+    .map(constructBasicUpdateText)
+    .join('\n');
+  const depsUpdatesString = sortedUpdates.dependency
+    .map(constructShortUpdateText)
+    .join(', ');
 
   const web = new WebClient(botToken);
 
   /** Post to the channel */
-  if (exists(majorUpdatesString || minorUpdatesString || patchUpdatesString || depsUpdatesString)) {
+  if (
+    exists(
+      majorUpdatesString ||
+        minorUpdatesString ||
+        patchUpdatesString ||
+        depsUpdatesString,
+    )
+  ) {
     if (!dry) {
       // post message(s) synchronously
-      await web.chat.postMessage({text: getGreeting(updates.length), channel});
-      majorUpdatesString.length > 0 && await web.chat.postMessage({text: `*Major Changes*\n${majorUpdatesString}`, channel});
-      minorUpdatesString.length > 0 && await web.chat.postMessage({text: `*Minor Changes*\n${minorUpdatesString}`, channel});
-      patchUpdatesString.length > 0 && await web.chat.postMessage({text: `*Patch Changes*\n${patchUpdatesString}`, channel});
-      depsUpdatesString.length > 0 && await web.chat.postMessage({text: `*Dependency updates*\n${depsUpdatesString}`, channel});
+      await web.chat.postMessage({
+        text: getGreeting(updates.length),
+        channel,
+      });
+      majorUpdatesString.length > 0 &&
+        (await web.chat.postMessage({
+          text: `*Major Changes*\n${majorUpdatesString}`,
+          channel,
+        }));
+      minorUpdatesString.length > 0 &&
+        (await web.chat.postMessage({
+          text: `*Minor Changes*\n${minorUpdatesString}`,
+          channel,
+        }));
+      patchUpdatesString.length > 0 &&
+        (await web.chat.postMessage({
+          text: `*Patch Changes*\n${patchUpdatesString}`,
+          channel,
+        }));
+      depsUpdatesString.length > 0 &&
+        (await web.chat.postMessage({
+          text: `*Dependency updates*\n${depsUpdatesString}`,
+          channel,
+        }));
       console.log(`Sent message(s) to ${channel}`);
     } else {
       console.log('Dry run. Would have posted:');
-      majorUpdatesString && console.log(`*Major Changes*\n${majorUpdatesString}`);
-      minorUpdatesString && console.log(`*Minor Changes*\n${minorUpdatesString}`);
-      patchUpdatesString && console.log(`*Patch Changes*\n${patchUpdatesString}`);
-      depsUpdatesString && console.log(`*Dependency updates*\n${depsUpdatesString}`);
+      majorUpdatesString &&
+        console.log(`*Major Changes*\n${majorUpdatesString}`);
+      minorUpdatesString &&
+        console.log(`*Minor Changes*\n${minorUpdatesString}`);
+      patchUpdatesString &&
+        console.log(`*Patch Changes*\n${patchUpdatesString}`);
+      depsUpdatesString &&
+        console.log(`*Dependency updates*\n${depsUpdatesString}`);
     }
   } else {
     console.warn('Missing message text. Did not send message.');
@@ -239,24 +275,31 @@ function generateOutputStrings({ name, version }: ComponentUpdateObject) {
     changelogUrl,
     fullName,
     name,
-    version
+    version,
   };
 }
 
-async function fetchChangelogText(component: ComponentUpdateObject): Promise<string> {
+async function fetchChangelogText(
+  component: ComponentUpdateObject,
+): Promise<string> {
   const { shortName } = generateOutputStrings(component);
   const rawChangelogUrl = `https://raw.githubusercontent.com/mongodb/leafygreen-ui/main/packages/${shortName}/CHANGELOG.md`;
   const response = await fetch(rawChangelogUrl);
   return await response.text();
 }
 
-async function fetchLatestChangelogText(component: ComponentUpdateObject): Promise<string> {
-  const fullChangelogText = await fetchChangelogText(component)
-  const { version } = component
-  const startIndex = fullChangelogText.indexOf(`## ${version}`)
-  const endIndex = fullChangelogText.indexOf(`\n## `, startIndex + version.length)
-  const latestChangelog = fullChangelogText.substring(startIndex, endIndex)
-  return latestChangelog
+async function fetchLatestChangelogText(
+  component: ComponentUpdateObject,
+): Promise<string> {
+  const fullChangelogText = await fetchChangelogText(component);
+  const { version } = component;
+  const startIndex = fullChangelogText.indexOf(`## ${version}`);
+  const endIndex = fullChangelogText.indexOf(
+    `\n## `,
+    startIndex + version.length,
+  );
+  const latestChangelog = fullChangelogText.substring(startIndex, endIndex);
+  return latestChangelog;
 }
 
 /**
@@ -264,40 +307,55 @@ async function fetchLatestChangelogText(component: ComponentUpdateObject): Promi
  * Parse the changelog text into separate majorUpdates, minorUpdates & patchUpdates arrays
  */
 async function parseChangeLog(component: ComponentUpdateObject) {
-  const latestChangelog = await fetchLatestChangelogText(component)
-  const majorUpdates = parseMajorChange(latestChangelog)
-  const minorUpdates = parseMinorChange(latestChangelog)
-  const patchUpdates = parsePatchChange(latestChangelog)
+  const latestChangelog = await fetchLatestChangelogText(component);
+  const majorUpdates = parseMajorChange(latestChangelog);
+  const minorUpdates = parseMinorChange(latestChangelog);
+  const patchUpdates = parsePatchChange(latestChangelog);
 
   return {
     majorUpdates,
     minorUpdates,
-    patchUpdates
-  }
+    patchUpdates,
+  };
 }
 
-const majorChangeIndex = (changelog: string) => changelog.indexOf(`### Major Changes`) >= 0 ? changelog.indexOf(`### Major Changes`) : undefined
-const minorChangeIndex = (changelog: string) => changelog.indexOf(`### Minor Changes`) >= 0 ? changelog.indexOf(`### Minor Changes`) : undefined
-const patchChangeIndex = (changelog: string) => changelog.indexOf(`### Patch Changes`) >= 0 ? changelog.indexOf(`### Patch Changes`) : undefined
+const majorChangeIndex = (changelog: string) =>
+  changelog.indexOf(`### Major Changes`) >= 0
+    ? changelog.indexOf(`### Major Changes`)
+    : undefined;
+const minorChangeIndex = (changelog: string) =>
+  changelog.indexOf(`### Minor Changes`) >= 0
+    ? changelog.indexOf(`### Minor Changes`)
+    : undefined;
+const patchChangeIndex = (changelog: string) =>
+  changelog.indexOf(`### Patch Changes`) >= 0
+    ? changelog.indexOf(`### Patch Changes`)
+    : undefined;
 
 const getChangesArray = (changelog: string, start: number, end: number) => {
-  const changeString = changelog.substring(start + 17, end).trim()
-  return _.uniq(changeString
-    .split(/\n- /g) // Split on each bullet
-    .map(str => (
-      str.replace(/(- |\[)[a-z0-9]{8}]?:?/g, '') // remove GH Commit hashes
-      .replace('-', '') // Remove any remaining dashes
-      .trim())
-    ))
-}
+  const changeString = changelog.substring(start + 17, end).trim();
+  return _.uniq(
+    changeString
+      .split(/\n- /g) // Split on each bullet
+      .map(str =>
+        str
+          .replace(/(- |\[)[a-z0-9]{8}]?:?/g, '') // remove GH Commit hashes
+          .replace('-', '') // Remove any remaining dashes
+          .trim(),
+      ),
+  );
+};
 
 function parseMajorChange(changelog: string): Array<string> | undefined {
   const startIndex = majorChangeIndex(changelog);
 
   if (startIndex) {
-    const endIndex = minorChangeIndex(changelog) ?? patchChangeIndex(changelog) ?? changelog.length
-    const changes = getChangesArray(changelog, startIndex, endIndex)
-    return changes
+    const endIndex =
+      minorChangeIndex(changelog) ??
+      patchChangeIndex(changelog) ??
+      changelog.length;
+    const changes = getChangesArray(changelog, startIndex, endIndex);
+    return changes;
   }
 }
 
@@ -305,9 +363,9 @@ function parseMinorChange(changelog: string) {
   const startIndex = minorChangeIndex(changelog);
 
   if (startIndex) {
-    const endIndex = patchChangeIndex(changelog) ?? changelog.length
-    const changes = getChangesArray(changelog, startIndex, endIndex)
-    return changes
+    const endIndex = patchChangeIndex(changelog) ?? changelog.length;
+    const changes = getChangesArray(changelog, startIndex, endIndex);
+    return changes;
   }
 }
 
@@ -315,8 +373,8 @@ function parsePatchChange(changelog: string) {
   const startIndex = patchChangeIndex(changelog);
 
   if (startIndex) {
-    const endIndex = changelog.length
-    const changes = getChangesArray(changelog, startIndex, endIndex)
-    return changes
+    const endIndex = changelog.length;
+    const changes = getChangesArray(changelog, startIndex, endIndex);
+    return changes;
   }
 }
