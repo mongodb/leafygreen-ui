@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
@@ -166,7 +167,7 @@ export function InternalOption({
   let styledGlyph = iconPlaceholder;
 
   if (glyph) {
-    if (!glyph.type.isGlyph) {
+    if (!isComponentGlyph(glyph)) {
       console.error(
         '`Option` instance did not render icon because it is not a known glyph element.',
       );
