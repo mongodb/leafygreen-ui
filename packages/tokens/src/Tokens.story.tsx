@@ -3,7 +3,7 @@ import React from 'react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { H2, InlineCode } from '@leafygreen-ui/typography';
-import { spacing, hoverRing, fontFamilies, typeScales, focusRing } from '.';
+import { spacing, hoverRing, fontFamilies, typeScales, focusRing, transitionDuration } from '.';
 import { Mode } from './mode';
 import { startCase } from 'lodash';
 
@@ -154,7 +154,7 @@ export const InteractionRings = () => {
     padding: ${spacing[2]}px;
     border-radius: ${spacing[1]}px;
     cursor: pointer;
-    transition: box-shadow 100ms ease-in-out;
+    transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
   `;
 
   return (

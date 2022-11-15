@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme, createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
+import { focusRing, hoverRing, transitionDuration } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 export const toggleButtonClassName = createUniqueClassName('toggle-button');
@@ -25,10 +25,9 @@ export const checkmarkSelector = {
   disabledUnchecked: `${buttonSelectors.unchecked}:disabled &`,
 };
 
-export const transitionInMS = 150;
 
 export const buttonBaseStyles = css`
-  transition: ${transitionInMS}ms all ease-in-out, 0s background-color linear;
+  transition: ${transitionDuration.default}ms all ease-in-out, 0s background-color linear;
   display: inline-block;
   flex-shrink: 0;
   position: relative;
@@ -46,7 +45,7 @@ export const buttonBaseStyles = css`
   }
 
   &[aria-checked='true'] {
-    transition-delay: ${transitionInMS}ms;
+    transition-delay: ${transitionDuration.default}ms;
 
     &:before {
       transform: scale(1);
@@ -58,7 +57,7 @@ export const buttonBaseStyles = css`
   // background an animation in and out.
   &:before {
     content: '';
-    transition: ${transitionInMS}ms all ease-in-out;
+    transition: ${transitionDuration.default}ms all ease-in-out;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -75,7 +74,7 @@ export const buttonBaseStyles = css`
 `;
 
 export const sliderBaseStyles = css`
-  transition: all ${transitionInMS}ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   border-radius: 100%;
   position: absolute;
   top: 0;
@@ -235,7 +234,7 @@ export const sliderThemeStyles: Record<Theme, string> = {
 
 export const checkmarkBaseStyles = css`
   display: flex;
-  transition: color ${transitionInMS}ms ease-in-out;
+  transition: color ${transitionDuration.default}ms ease-in-out;
 `;
 
 export const checkmarkThemeStyles: Record<Theme, string> = {

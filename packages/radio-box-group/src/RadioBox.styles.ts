@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { focusRing, fontFamilies, hoverRing } from '@leafygreen-ui/tokens';
+import { focusRing, fontFamilies, hoverRing, transitionDuration } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 export const radioBoxSizes: { [K in Size]: string } = {
@@ -58,7 +58,7 @@ export const getRadioDisplayStyles = ({
 
       cursor: pointer;
       pointer-events: auto;
-      transition: 150ms ease-in-out;
+      transition: ${transitionDuration.default}ms ease-in-out;
       transition-property: border-color, box-shadow;
 
       &:hover,
@@ -90,8 +90,8 @@ export const getRadioDisplayStyles = ({
         input:focus + & {
           border-color: ${palette.gray.base};
           box-shadow: ${darkMode
-            ? focusRing.dark.default
-            : focusRing.light.default};
+          ? focusRing.dark.default
+          : focusRing.light.default};
         }
       `]: showFocus,
     },

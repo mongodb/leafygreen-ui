@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, typeScales, transitionDuration } from '@leafygreen-ui/tokens';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 
 interface ListTitleMode {
@@ -124,7 +124,7 @@ const listTitleStyles = css`
   border: 0px;
   margin: 0;
   text-decoration: none;
-  transition: 150ms color ease-in-out;
+  transition: ${transitionDuration.default}ms color ease-in-out;
 
   &:focus:not(:disabled) {
     outline: none;
@@ -151,7 +151,7 @@ const listTitleStyles = css`
     bottom: 0;
     height: 4px;
     border-radius: 4px 4px 0 0;
-    transition: all 150ms ease-in-out;
+    transition: all ${transitionDuration.default}ms ease-in-out;
     background-color: transparent;
     transform: scaleX(0.8);
   }

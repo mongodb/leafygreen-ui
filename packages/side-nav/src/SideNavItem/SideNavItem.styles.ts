@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 
 export const sideNavItemClassName = createUniqueClassName('side-nav-item');
@@ -33,7 +33,7 @@ export const baseNavItemStyle = css`
   color: ${palette.black};
 
   // Stateful transitions
-  transition: background-color 100ms ease-in-out;
+  transition: background-color ${transitionDuration.faster}ms ease-in-out;
   background-color: ${transparentize(100, palette.gray.light3)};
 
   &:hover {
@@ -60,7 +60,7 @@ export const baseNavItemStyle = css`
     bottom: 6px;
     width: ${spacing[1]}px;
     border-radius: 0 6px 6px 0;
-    transition: transform 150ms ease-in-out;
+    transition: transform ${transitionDuration.default}ms ease-in-out;
     transform: scaleY(0.3);
   }
 `;

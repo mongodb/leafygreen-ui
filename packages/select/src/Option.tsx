@@ -8,7 +8,7 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 
 const OptionClassName = createUniqueClassName('option');
 
@@ -19,7 +19,7 @@ const optionStyle = css`
   width: 100%;
   outline: none;
   overflow-wrap: anywhere;
-  transition: background-color 150ms ease-in-out;
+  transition: background-color ${transitionDuration.default}ms ease-in-out;
   position: relative;
   padding: 8px 12px;
 
@@ -34,7 +34,7 @@ const optionStyle = css`
     width: 4px;
     border-radius: 0px 4px 4px 0px;
     opacity: 0;
-    transition: all 150ms ease-in-out;
+    transition: all ${transitionDuration.default}ms ease-in-out;
   }
 `;
 

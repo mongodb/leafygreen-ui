@@ -10,7 +10,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import {
   PortalContextProvider,
   usePopoverContext,
@@ -47,7 +47,7 @@ const backdrop = css`
   right: 0;
   bottom: 0;
   opacity: 0;
-  transition: opacity 150ms ease-in-out;
+  transition: opacity ${transitionDuration.default}ms ease-in-out;
 `;
 
 const visibleBackdrop = css`
@@ -66,7 +66,7 @@ const scrollContainer = css`
 `;
 
 const modalContentStyle = css`
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   margin: auto;
   max-height: calc(100% - ${defaultVerticalSpacing}px);
   position: relative;
@@ -104,8 +104,8 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
   large: css`
     ${mq({
-      width: ['720px', '720px', '960px'],
-    })}
+    width: ['720px', '720px', '960px'],
+  })}
   `,
 };
 
@@ -175,7 +175,7 @@ const closeClassName = createUniqueClassName();
 function ModalView({
   open = false,
   size = ModalSize.Default,
-  setOpen = () => {},
+  setOpen = () => { },
   shouldClose = () => true,
   darkMode = false,
   children,
@@ -206,12 +206,12 @@ function ModalView({
 
   const focusTrapOptions = initialFocus
     ? {
-        initialFocus: `#${id} ${initialFocus}`,
-        fallbackFocus: `#${id} .${closeClassName}`,
-      }
+      initialFocus: `#${id} ${initialFocus}`,
+      fallbackFocus: `#${id} .${closeClassName}`,
+    }
     : {
-        fallbackFocus: `#${id} .${closeClassName}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
-      };
+      fallbackFocus: `#${id} .${closeClassName}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
+    };
 
   return (
     <Transition

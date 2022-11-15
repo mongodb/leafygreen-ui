@@ -6,6 +6,7 @@ import {
   focusRing,
   hoverRing,
   typeScales,
+  transitionDuration,
 } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
@@ -208,8 +209,8 @@ export const inputDisplaySizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
     &:after {
       width: 6px;
       height: 6px;
-      transition: transform 0.15s cubic-bezier(0.16, 1.54, 0, 1.31),
-        border-color 0.15s ease-in-out;
+      transition: transform ${transitionDuration.default}ms cubic-bezier(0.16, 1.54, 0, 1.31),
+        border-color ${transitionDuration.default}ms ease-in-out;
     }
   `,
   [Size.Default]: css`
@@ -218,8 +219,8 @@ export const inputDisplaySizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
     &:after {
       width: 8px;
       height: 8px;
-      transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-        border-color 0.15s ease-in-out;
+      transition: transform ${transitionDuration.default}ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        border-color ${transitionDuration.default}ms ease-in-out;
     }
   `,
 };

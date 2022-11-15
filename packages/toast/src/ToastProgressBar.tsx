@@ -4,6 +4,7 @@ import clamp from 'lodash/clamp';
 import { cx, css, keyframes } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const toastWidth = 400;
 
@@ -44,7 +45,7 @@ const progressBarStyle = css`
   left: 0;
   background-size: 600px;
   animation: ${backgroundShimmer} 4s infinite linear;
-  transition: width 0.3s ease-in-out;
+  transition: width ${transitionDuration.slower}s ease-in-out;
 `;
 
 const progressBarThemeStyle: Record<Theme, string> = {

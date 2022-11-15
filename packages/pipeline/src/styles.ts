@@ -1,7 +1,7 @@
 import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { typeScales } from '@leafygreen-ui/tokens';
+import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 import { edges } from './svgs/edges';
 
@@ -116,12 +116,12 @@ export const counterBaseStyles = cx(
     }
 
     .${svgInnerClassName} {
-      transition: all 300ms ease-in-out;
+      transition: all ${transitionDuration.slower}ms ease-in-out;
     }
 
     .${svgInnerOutlineClassName}, .${svgOuterOutlineClassName} {
       fill: rgba(255, 255, 255, 0);
-      transition: all 300ms ease-in-out;
+      transition: all ${transitionDuration.slower}ms ease-in-out;
     }
 
     &:focus-visible,

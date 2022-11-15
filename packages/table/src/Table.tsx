@@ -3,7 +3,7 @@ import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import {
   useIsomorphicLayoutEffect,
@@ -52,7 +52,7 @@ const shadow = css`
     bottom: 0;
     width: 16px;
     border-radius: 100%;
-    transition: opacity 150ms ease-in-out;
+    transition: opacity ${transitionDuration.default}ms ease-in-out;
   }
 `;
 
@@ -107,8 +107,8 @@ export interface TableProps<Shape> extends HTMLElementProps<'table'> {
    * @type Array of `<TableHeader />`
    */
   columns:
-    | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
-    | React.ReactFragment;
+  | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
+  | React.ReactFragment;
 
   /**
    * A function that takes in the datum of a single row as a parameter and returns a `JSX.Element` determining how it should be rendered.

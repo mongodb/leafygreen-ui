@@ -25,6 +25,7 @@ import {
 } from './SideNavGroup.styles';
 import { SideNavGroupProps } from './types';
 import { Overline } from '@leafygreen-ui/typography';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 /**
  * # SideNavGroup
@@ -117,10 +118,10 @@ function SideNavGroup({
   const accessibleGlyph =
     glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
       ? React.cloneElement(glyph, {
-          className: cx(customIconStyles, glyph.props.className),
-          role: 'presentation',
-          'data-testid': 'side-nav-group-header-icon',
-        })
+        className: cx(customIconStyles, glyph.props.className),
+        role: 'presentation',
+        'data-testid': 'side-nav-group-header-icon',
+      })
       : null;
 
   // Render the header text
@@ -230,7 +231,7 @@ function SideNavGroup({
                   className={cx(
                     ulStyleOverrides,
                     css`
-                      transition: opacity 150ms ease-in-out;
+                      transition: opacity ${transitionDuration.default}ms ease-in-out;
                       opacity: 0;
                     `,
                     {
