@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import Icon from '@leafygreen-ui/icon';
-import { SegmentedControlProps } from './SegmentedControl';
+import { SegmentedControlProps, Size } from './types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
@@ -16,8 +16,25 @@ export default {
     value: { control: 'text' },
     followFocus: { control: 'boolean' },
     'aria-controls': { control: 'text' },
-
+    size: {
+      control: {
+        type: 'radio',
+        options: Object.values(Size),
+      },
+    },
     darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        'aria-controls',
+        'className',
+        'children',
+        'onChange',
+        'value',
+        'defaultValue',
+      ],
+    },
   },
 } as Meta<typeof SegmentedControl>;
 
@@ -37,7 +54,7 @@ Uncontrolled.args = {
     <SegmentedControlOption key="fig" value="fig">
       Fig
     </SegmentedControlOption>,
-    <SegmentedControlOption key="grape" value="grape">
+    <SegmentedControlOption disabled key="grape" value="grape">
       Grape
     </SegmentedControlOption>,
   ],
@@ -55,14 +72,14 @@ export const Controlled = (args: SegmentedControlProps) => {
   );
 };
 Controlled.args = {
-  label: 'Fruit',
+  label: 'Fruit overwhelmed',
   name: 'fruit',
   children: [
     <SegmentedControlOption key="dragonfruit" value="dragonfruit">
-      Dragonfruit
+      Dragonfruit fruit
     </SegmentedControlOption>,
     <SegmentedControlOption key="eggplant" value="eggplant">
-      Eggplant
+      Eggplant bananana
     </SegmentedControlOption>,
     <SegmentedControlOption key="fig" value="fig">
       Fig
@@ -79,12 +96,12 @@ WithIcons.args = {
   name: 'language',
   children: [
     <SegmentedControlOption key="json" value="json">
-      <Icon glyph="CurlyBraces"></Icon> JSON
+      <Icon glyph="CurlyBraces"></Icon> JSONNNNN and more
     </SegmentedControlOption>,
     <SegmentedControlOption key="xml" value="xml">
       <Icon glyph="Code"></Icon> XML
     </SegmentedControlOption>,
-    <SegmentedControlOption key="shell" value="shell">
+    <SegmentedControlOption disabled key="shell" value="shell">
       <Icon glyph="Shell"></Icon> Shell
     </SegmentedControlOption>,
   ],
@@ -101,7 +118,7 @@ IconsOnly.args = {
     <SegmentedControlOption key="globe" value="globe">
       <Icon glyph="GlobeAmericas" />
     </SegmentedControlOption>,
-    <SegmentedControlOption key="government" value="government">
+    <SegmentedControlOption disabled key="government" value="government">
       <Icon glyph="GovernmentBuilding" />
     </SegmentedControlOption>,
   ],

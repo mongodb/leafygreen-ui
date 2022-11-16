@@ -8,7 +8,7 @@ import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import {
-  createDataProp,
+  createUniqueClassName,
   getNodeTextContent,
   HTMLElementProps,
   Theme,
@@ -41,8 +41,8 @@ import {
 import { Size } from './types';
 import MenuContext from './MenuContext';
 
-const subMenuContainer = createDataProp('sub-menu-container');
-const iconButton = createDataProp('icon-button');
+const SubMenuContainerClassName = createUniqueClassName('sub-menu-container');
+const IconButtonClassName = createUniqueClassName('icon-button');
 
 const iconButtonContainerSize = 28;
 
@@ -86,13 +86,17 @@ const subMenuOpenStyle: Record<Theme, string> = {
 
 const focusedIconStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
-      color: ${palette.white};
+    .${SubMenuContainerClassName} {
+      &:focus + .${IconButtonClassName} & {
+        color: ${palette.white};
+      }
     }
   `,
   [Theme.Dark]: css`
-    ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
-      color: ${palette.white};
+    .${SubMenuContainerClassName} {
+      &:focus + .${IconButtonClassName} & {
+        color: ${palette.white};
+      }
     }
   `,
 };
@@ -135,8 +139,10 @@ const iconButtonThemeStyle: Record<Theme, string> = {
       background-color: ${palette.gray.dark2};
     }
 
-    ${subMenuContainer.selector}:hover + & {
-      background-color: ${palette.gray.dark3};
+    .${SubMenuContainerClassName} {
+      &:hover + & {
+        background-color: ${palette.gray.dark3};
+      }
     }
   `,
   [Theme.Dark]: css`
@@ -148,18 +154,22 @@ const iconButtonThemeStyle: Record<Theme, string> = {
       }
     }
 
-    ${subMenuContainer.selector}:hover + & {
-      background-color: ${palette.gray.light2};
+    .${SubMenuContainerClassName} {
+      &:hover + & {
+        background-color: ${palette.gray.light2};
+      }
     }
   `,
 };
 
 const iconButtonFocusedStyle = css`
-  ${subMenuContainer.selector}:focus + & {
-    background-color: ${palette.blue.dark2};
-
-    &:hover:before {
+  .${SubMenuContainerClassName} {
+    &:focus + & {
       background-color: ${palette.blue.dark2};
+
+      &:hover:before {
+        background-color: ${palette.blue.dark2};
+      }
     }
   }
 `;
@@ -380,8 +390,8 @@ const SubMenu = React.forwardRef(
   ) => {
     const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(subMenuContainer.selector, theme);
-    const focusStyles = getFocusedStyles(subMenuContainer.selector, theme);
+    const hoverStyles = getHoverStyles(SubMenuContainerClassName, theme);
+    const focusStyles = getFocusedStyles(SubMenuContainerClassName, theme);
 
     const nodeRef = React.useRef(null);
 
@@ -440,7 +450,6 @@ const SubMenu = React.forwardRef(
       });
 
     const boxProps = {
-      ...subMenuContainer.prop,
       ref,
       role: 'menuitem',
       'aria-haspopup': true,
@@ -499,6 +508,7 @@ const SubMenu = React.forwardRef(
           {...anchorProps}
           {...rest}
           className={cx(
+            SubMenuContainerClassName,
             menuItemContainerStyle,
             menuItemContainerThemeStyle[theme],
             menuItemHeight(size),
@@ -515,15 +525,19 @@ const SubMenu = React.forwardRef(
         >
           {content}
           <IconButton
-            {...iconButton.prop}
             data-testid="lg-sub-menu-icon-button"
             darkMode={true}
             ref={setIconButtonElement}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-            className={cx(iconButtonStyle, iconButtonThemeStyle[theme], {
-              [openIconButtonStyle[theme]]: open,
-              [iconButtonFocusedStyle]: showFocus,
-            })}
+            className={cx(
+              IconButtonClassName,
+              iconButtonStyle,
+              iconButtonThemeStyle[theme],
+              {
+                [openIconButtonStyle[theme]]: open,
+                [iconButtonFocusedStyle]: showFocus,
+              },
+            )}
             onClick={handleChevronClick}
           >
             <ChevronIcon

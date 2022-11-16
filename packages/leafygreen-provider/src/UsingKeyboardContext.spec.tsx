@@ -43,9 +43,9 @@ describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
     expect(container.firstChild).toBe(testChild);
   });
 
-  test('usingKeyboard is initialized as false', () => {
+  test('usingKeyboard is initialized as true', () => {
     const { testChild } = renderProvider();
-    expect(testChild.textContent).toBe('false');
+    expect(testChild.textContent).toBe('true');
   });
 
   Object.values(NavigationKeyCodes).forEach(keyCode => {
@@ -139,9 +139,9 @@ describe('useUsingKeyboardContext', () => {
       };
     }
 
-    test('before interaction, usingKeyboard is false', () => {
+    test('before interaction, usingKeyboard is true', () => {
       const { testChildElement } = renderTestComponent();
-      expect(testChildElement.textContent).toBe('false');
+      expect(testChildElement.textContent).toBe('true');
     });
 
     test(`usingKeyboard is true after userEvent.tab`, () => {

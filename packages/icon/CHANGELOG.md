@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.12.0
+
+### Minor Changes
+
+- 209f77ed: Adds Email, Import, and SMS icons
+
 ## 11.11.1
 
 ### Patch Changes

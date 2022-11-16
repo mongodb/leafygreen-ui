@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 10.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
 ## 9.5.2
 
 ### Patch Changes

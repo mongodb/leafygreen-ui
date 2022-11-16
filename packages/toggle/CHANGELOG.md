@@ -1,5 +1,31 @@
 # @leafygreen-ui/toggle
 
+## 10.0.0
+
+### Major Changes
+
+- 30207122: Updates `Toggle` for dark mode brand refresh
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 9.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/interaction-ring@6.0.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/a11y@1.3.4
+
 ## 8.0.6
 
 ### Patch Changes

@@ -6,7 +6,7 @@ import { SupportedColors, LogoProps } from './utils';
 import {
   MongoDBLogo,
   MongoDBLogoMark,
-  AtlasLogo,
+  AtlasNavGraphic,
   AtlasLogoLockup,
   AtlasForGovernmentLogoLockup,
   RealmLogoLockup,
@@ -93,7 +93,7 @@ Default.args = {
 };
 
 export const MongoDB = (args: LogoProps) => Template(MongoDBLogo, args);
-export const Atlas = (args: LogoProps) => Template(AtlasLogo, args);
+export const Atlas = (args: LogoProps) => Template(AtlasNavGraphic, args);
 export const MongoDBMark = (args: LogoProps) => Template(MongoDBLogoMark, args);
 export const AtlasLockup = (args: LogoProps) => Template(AtlasLogoLockup, args);
 export const AtlasForGovernmentLockup = (args: LogoProps) =>

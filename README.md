@@ -41,6 +41,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Radio Box Group](https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-box-group)
 - [Radio Group](https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-group)
 - [Ripple](https://github.com/mongodb/leafygreen-ui/tree/main/packages/ripple)
+- [Search Input](https://github.com/mongodb/leafygreen-ui/tree/main/packages/search-input)
 - [Segmented Control](https://github.com/mongodb/leafygreen-ui/tree/main/packages/segmented-control)
 - [Select](https://github.com/mongodb/leafygreen-ui/tree/main/packages/select)
 - [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav)
@@ -216,7 +217,7 @@ git push --follow-tags
 
 You can deploy a static build of our Storybook site to gh-pages from the `main` branch.
 
-1. First be sure you've built a static version of Storybook: `yarn build:storybook`
+1. First be sure you've built a static version of Storybook with the script: `build-storybook`
 2. Then deploy to gh-pages: `yarn release:site`
 
 ### To deploy to your own mirror of leafygreen-ui
