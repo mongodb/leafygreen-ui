@@ -5,6 +5,7 @@ import {
   focusRing,
   fontFamilies,
   hoverRing,
+  transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 import { SizeVariant } from './types';
@@ -47,7 +48,7 @@ export const baseInputStyle = css`
   z-index: 1;
   outline: none;
   border-radius: 6px;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border-color, box-shadow;
 
   &:disabled {

@@ -2,7 +2,12 @@ import { mix, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Size, Variant, ButtonProps } from './types';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  typeScales,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { createUniqueClassName, getTheme, Theme } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
@@ -19,7 +24,7 @@ const baseButtonStyles = css`
   border: 1px solid transparent;
   display: inline-flex;
   align-items: stretch;
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   position: relative;
   text-decoration: none;
   cursor: pointer;

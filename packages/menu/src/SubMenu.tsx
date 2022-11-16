@@ -40,6 +40,7 @@ import {
 } from './styles';
 import { Size } from './types';
 import MenuContext from './MenuContext';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const SubMenuContainerClassName = createUniqueClassName('sub-menu-container');
 const IconButtonClassName = createUniqueClassName('icon-button');
@@ -128,7 +129,7 @@ const iconButtonStyle = css`
   top: 0;
   bottom: 0;
   margin: auto;
-  transition: background-color 150ms ease-in-out;
+  transition: background-color ${transitionDuration.default}ms ease-in-out;
 `;
 
 const iconButtonThemeStyle: Record<Theme, string> = {
@@ -188,7 +189,7 @@ const ulStyle = css`
   padding: 0;
   height: 0;
   overflow: hidden;
-  transition: height 150ms ease-in-out;
+  transition: height ${transitionDuration.default}ms ease-in-out;
   position: relative;
 
   &::before {
