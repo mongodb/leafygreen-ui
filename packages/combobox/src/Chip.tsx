@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap } from '@leafygreen-ui/lib';
-import { typeScales } from '@leafygreen-ui/tokens';
+import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 import { ChipProps, ComboboxSize as Size, Theme } from './Combobox.types';
 import { ComboboxContext, useDarkMode } from './ComboboxContext';
 import {
@@ -89,7 +89,7 @@ const chipButtonStyle = css`
   border: none;
   background-color: transparent;
   cursor: pointer;
-  transition: background-color 100ms ease-in-out;
+  transition: background-color ${transitionDuration.faster}ms ease-in-out;
 `;
 
 const chipButtonSizeStyle: Record<Size, string> = {

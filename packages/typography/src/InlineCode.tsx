@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, focusRing } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  focusRing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import {
   HTMLElementProps,
   OneOf,
@@ -24,7 +28,7 @@ const anchorClassName = createUniqueClassName();
  */
 const code = css`
   display: inline;
-  transition: all 0.15s ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   border-radius: 3px;
   font-family: ${fontFamilies.code};
   line-height: 20px;
