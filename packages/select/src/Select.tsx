@@ -8,7 +8,12 @@ import {
 } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import { keyMap } from '@leafygreen-ui/lib';
-import { fontFamilies, spacing, BaseFontSize } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  spacing,
+  BaseFontSize,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { Label, Description } from '@leafygreen-ui/typography';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { mobileSizeSet, sizeSets, SizeSet } from './styleSets';
@@ -55,8 +60,8 @@ const errorTextStyle = ({
   font-size: ${sizeSet.text}px;
   margin-top: ${spacing[1]}px;
   padding-left: 2px;
-  transition: color 100ms ease-in-out;
-  transition-delay: 100ms;
+  transition: color ${transitionDuration.faster}ms ease-in-out;
+  transition-delay: ${transitionDuration.faster}ms;
 `;
 
 /**

@@ -1,5 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
 import { Size } from './types';
@@ -30,7 +30,7 @@ export const menuItemContainerStyle = css`
   cursor: pointer;
   border: none;
 
-  transition: background-color 150ms ease-in-out;
+  transition: background-color ${transitionDuration.default}ms ease-in-out;
 
   &:focus {
     outline: none;
@@ -44,7 +44,7 @@ export const menuItemContainerStyle = css`
     left: 0px;
     border-radius: 0 ${wedgeWidth}px ${wedgeWidth}px 0;
     background-color: transparent;
-    transition: background-color 150ms ease-in-out;
+    transition: background-color ${transitionDuration.default}ms ease-in-out;
   }
 
   &:hover {

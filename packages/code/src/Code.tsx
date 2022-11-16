@@ -5,7 +5,7 @@ import facepaint from 'facepaint';
 import debounce from 'lodash/debounce';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import LeafyGreenProvider, {
   useDarkMode,
   useUsingKeyboardContext,
@@ -77,7 +77,7 @@ const codeWrapperStyle = css`
   padding-bottom: ${spacing[2]}px;
   margin: 0;
   position: relative;
-  transition: box-shadow 100ms ease-in-out;
+  transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
 
   ${mq({
     // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
@@ -151,7 +151,7 @@ const baseScrollShadowStyles = css`
     width: 40px;
     border-radius: 40%;
     box-shadow: unset;
-    transition: box-shadow 100ms ease-in-out;
+    transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
   }
   &:before {
     grid-column: 1;
