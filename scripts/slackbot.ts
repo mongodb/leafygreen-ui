@@ -144,7 +144,7 @@ async function slackbot(
 
   const constructShortUpdateText = (component: ComponentUpdateObject) => {
     const { shortName, changelogUrl } = generateOutputStrings(component);
-    return `<${changelogUrl} | ${shortName}>`;
+    return `<${changelogUrl} | ${shortName}@${component.version}>`;
   };
 
   const majorUpdatesString = sortedUpdates.major
