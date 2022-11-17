@@ -28,6 +28,9 @@
     "@leafygreen-ui/tooltip": "^9.0.0",
     "@leafygreen-ui/typography": "^15.0.0"
   },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/stepper",
   "repository": {
     "type": "git",
