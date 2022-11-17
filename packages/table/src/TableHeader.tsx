@@ -4,23 +4,19 @@ import SortDescendingIcon from '@leafygreen-ui/icon/dist/SortDescending';
 import UnsortedIcon from '@leafygreen-ui/icon/dist/Unsorted';
 import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { getCommonCellStyles } from './styles';
 import { SortDirection, useSortContext } from './SortContext';
 import { useFontSizeContext } from './FontSizeContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
-import { enforceExhaustive } from '@leafygreen-ui/lib';
-import { useDarkModeContext } from './DarkModeContext';
+import { enforceExhaustive, Theme } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
+type StyledElements = 'thStyle' | 'labelStyle' | 'glyphColor';
 
-type Mode = typeof Mode[keyof typeof Mode];
-
-const modeStyles = {
-  [Mode.Light]: {
+const themeStyles: Record<Theme, Record<StyledElements, string>> = {
+  [Theme.Light]: {
     thStyle: css`
       border-color: ${palette.gray.light2};
     `,
@@ -32,16 +28,16 @@ const modeStyles = {
     `,
   },
 
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     thStyle: css`
-      background-color: ${uiColors.gray.dark3};
-      border-color: ${uiColors.gray.dark1};
+      background-color: ${palette.black};
+      border-color: ${palette.gray.dark2};
     `,
     labelStyle: css`
-      color: ${uiColors.gray.light3};
+      color: ${palette.gray.light2};
     `,
     glyphColor: css`
-      color: ${uiColors.blue.light1};
+      color: ${palette.blue.light1};
     `,
   },
 };
@@ -165,10 +161,11 @@ function TableHeader<Shape>({
 }: TableHeaderProps<Shape>) {
   const { dispatch } = useTableContext();
   const { sort, setSort } = useSortContext();
-  const baseFontSize = useFontSizeContext();
-  const darkMode = useDarkModeContext();
+  // const baseFontSize = useFontSizeContext();
+  const baseFontSize = useUpdatedBaseFontSize();
+  const { theme, darkMode } = useDarkMode();
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  // const mode = darkMode ? Mode.Dark : Mode.Light;
 
   React.useEffect(() => {
     if (typeof index === 'number') {
@@ -238,19 +235,12 @@ function TableHeader<Shape>({
       className={cx(
         getCommonCellStyles(baseFontSize),
         thStyle,
-        modeStyles[mode].thStyle,
-        {
-          // TODO: Refresh - remove darkMode overrides
-          [css`
-            font-size: 14px;
-            border-width: 0px 1px 3px 1px;
-          `]: darkMode,
-        },
+        themeStyles[theme].thStyle,
         className,
       )}
     >
       <div className={flexDisplay}>
-        <span className={cx(labelStyle, modeStyles[mode].labelStyle)}>
+        <span className={cx(labelStyle, themeStyles[theme].labelStyle)}>
           {label}
         </span>
         {isSortable && (
@@ -264,7 +254,7 @@ function TableHeader<Shape>({
               size="small"
               title={`${glyph}-${index}`}
               className={cx({
-                [modeStyles[mode].glyphColor]:
+                [themeStyles[theme].glyphColor]:
                   glyph === 'asc' || glyph === 'desc',
               })}
             />

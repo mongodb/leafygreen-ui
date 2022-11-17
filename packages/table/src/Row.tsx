@@ -4,26 +4,20 @@ import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import { isComponentType, HTMLElementProps } from '@leafygreen-ui/lib';
+import { isComponentType, HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { CellElement, tdInnerDivClassName } from './Cell';
-import { useDarkModeContext } from './DarkModeContext';
 import NestedRow from './NestedRow';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Types & Constants
  */
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
 
-type Mode = typeof Mode[keyof typeof Mode];
-
-const transitionTime = 200;
+const transitionTime = 200; //TODO: update with transition changes?
 
 /**
  * Styles
@@ -33,8 +27,28 @@ const iconButtonMargin = css`
   margin-right: 4px;
 `;
 
-const modeStyles = {
-  [Mode.Light]: {
+const iconButtonThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
+  `,
+};
+
+export const iconButtonThemeDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
+
+type StyledElements = 'rowStyle' | 'altColor' | 'disabledStyle';
+
+const themeStyles: Record<Theme, Record<StyledElements, string>> = {
+  [Theme.Light]: {
     rowStyle: css`
       background-color: ${palette.white};
       color: ${palette.gray.dark3};
@@ -58,30 +72,25 @@ const modeStyles = {
     `,
   },
 
-  [Mode.Dark]: {
+  [Theme.Dark]: {
     rowStyle: css`
-      background-color: ${uiColors.gray.dark3};
-      color: ${uiColors.gray.light3};
-      box-shadow: 0 -1px 0 inset ${uiColors.gray.dark1};
+      background-color: ${palette.black};
+      color: ${palette.gray.light2};
     `,
 
     altColor: css`
       &:nth-of-type(even) {
-        background-color: ${uiColors.gray.dark2};
+        background-color: ${palette.gray.dark4};
       }
 
       &:nth-of-type(odd) > th {
-        background-color: ${palette.gray.dark3};
-      }
-
-      > th {
-        box-shadow: 0 -1px 0 inset ${uiColors.gray.dark1};
+        background-color: ${palette.black};
       }
     `,
 
     disabledStyle: css`
-      background-color: ${uiColors.gray.dark1};
-      color: ${uiColors.gray.base};
+      background-color: ${palette.gray.dark2};
+      color: ${palette.gray.base};
     `,
   },
 };
@@ -168,8 +177,7 @@ const Row = forwardRef(
       state: { data, columnInfo, hasNestedRows, hasRowSpan },
       dispatch: tableDispatch,
     } = useTableContext();
-    const darkMode = useDarkModeContext();
-    const mode = darkMode ? Mode.Dark : Mode.Light;
+    const { theme, darkMode } = useDarkMode();
 
     const shouldAltRowColor =
       data && data.length >= 10 && hasNestedRows != null && !hasNestedRows;
@@ -312,7 +320,9 @@ const Row = forwardRef(
             onClick={() => setIsExpanded(curr => !curr)}
             aria-label={isExpanded ? 'Collapse row' : 'Expand row'}
             aria-expanded={isExpanded}
-            className={iconButtonMargin}
+            className={cx(iconButtonMargin, iconButtonThemeStyles[theme], {
+              [iconButtonThemeDisabledStyles[theme]]: disabled,
+            })}
             darkMode={darkMode}
           >
             <Icon aria-hidden />
@@ -333,14 +343,7 @@ const Row = forwardRef(
       }
 
       return renderedChildren;
-    }, [
-      children,
-      rowHasNestedRows,
-      isExpanded,
-      setIsExpanded,
-      darkMode,
-      disabled,
-    ]);
+    }, [children, rowHasNestedRows, disabled, isExpanded, theme, darkMode]);
 
     const alignmentStyles = columnInfo
       ? Object.entries(columnInfo).map(([key, { dataType }]) =>
@@ -350,14 +353,14 @@ const Row = forwardRef(
 
     const rowClassName = cx(
       rowStyle,
-      modeStyles[mode].rowStyle,
+      themeStyles[theme].rowStyle,
       getIndentLevelStyle(indentLevel),
       [...alignmentStyles],
       {
         // Hide the row until we can apply correct alignment to cells.
         [hideRow]: !columnInfo,
-        [modeStyles[mode].altColor]: shouldAltRowColor,
-        [modeStyles[mode].disabledStyle]: disabled,
+        [themeStyles[theme].altColor]: shouldAltRowColor,
+        [themeStyles[theme].disabledStyle]: disabled,
       },
       className,
     );

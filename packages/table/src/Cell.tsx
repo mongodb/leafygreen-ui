@@ -3,8 +3,9 @@ import { HTMLElementProps, createUniqueClassName } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { getCommonCellStyles } from './styles';
 import { useFontSizeContext } from './FontSizeContext';
-import { useDarkModeContext } from './DarkModeContext';
 import { palette } from '@leafygreen-ui/palette';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 export const tdInnerDivClassName = createUniqueClassName('td-inner-div');
 
@@ -49,8 +50,8 @@ const lightModeThStyles = css`
 `;
 
 const darkModeThStyles = css`
-  border-right: 3px solid ${palette.gray.dark1};
-  background-color: ${palette.gray.dark2};
+  border-right: 3px solid ${palette.gray.dark2};
+  background-color: ${palette.gray.dark4};
 `;
 
 const innerDivStyles = css`
@@ -78,13 +79,14 @@ const Cell = forwardRef(
   ) => {
     const Root = isHeader ? 'th' : 'td';
 
-    const baseFontSize = useFontSizeContext();
-    const darkMode = useDarkModeContext();
+    // const baseFontSize = useFontSizeContext();
+    const baseFontSize = useUpdatedBaseFontSize();
+    const { darkMode } = useDarkMode();
 
     const props: Partial<CellProps> = {
       ref,
       className: cx(
-        getCommonCellStyles(baseFontSize, darkMode),
+        getCommonCellStyles(baseFontSize),
         baseStyles,
         {
           [thStyles]: isHeader,

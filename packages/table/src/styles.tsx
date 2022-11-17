@@ -9,25 +9,12 @@ const sharedStyles = css`
   text-align: left; // Justification is updated in \`Row.tsx\` for number cells
 `;
 
-export const getCommonCellStyles = (
-  baseFontSize: 14 | 16,
-  darkMode?: boolean,
-): string => {
+export const getCommonCellStyles = (baseFontSize: 13 | 16): string => {
   if (baseFontSize === 16) {
     return css`
       ${sharedStyles}
-      font-size: 16px;
+      font-size: 16px; //TODO: use tokens
       line-height: 24px;
-    `;
-  }
-
-  // TODO: Refresh - remove darkMode override
-  if (darkMode) {
-    return css`
-      --lg-cell-padding-block: 8px;
-      ${sharedStyles}
-      font-size: 14px;
-      line-height: 20px;
     `;
   }
 
