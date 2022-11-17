@@ -12,24 +12,24 @@ export const useStepperContext = () =>
   useContext<Partial<StepperContextValues>>(StepperContext);
 
 const StepperContextProvider = ({
-  darkMode,
+  darkMode: darkModeProp,
   children,
 }: {
   darkMode: boolean;
   children: ReactNode;
 }) => {
   // TODO: This dark mode state should ideally be managed in a global state.
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(darkMode);
+  const [darkMode, setDarkMode] = useState<boolean>(darkModeProp);
 
   useEffect(() => {
-    setIsDarkMode(darkMode);
+    setDarkMode(darkMode);
   }, [darkMode]);
 
   return (
     <StepperContext.Provider
       value={{
-        isDarkMode,
-        setIsDarkMode,
+        darkMode,
+        setDarkMode,
       }}
     >
       {children}

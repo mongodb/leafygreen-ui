@@ -1,30 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
-import Step from './InternalStep';
-import { StepStates, StepperProps } from './types';
-import EllipsesStep from './EllipsesStep';
-import StepperContextProvider from './StepperContext';
-
-const baseStyles = css`
-  list-style: none;
-  padding-inline-start: 0;
-  width: 100%;
-  display: flex;
-  & > * {
-    flex: 1;
-  }
-`;
+import { cx } from '@leafygreen-ui/emotion';
+import Step from '../InternalStep';
+import { StepperProps } from './types';
+import { StepStates } from '../types';
+import EllipsesStep from '../EllipsesStep';
+import StepperContextProvider from '../StepperContext';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import baseStyles from './styles';
+import { getStepRangeText, getStepState, isLastStep } from './utils';
 
 const Stepper = ({
   children,
   currentStep,
   maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
   completedStepsShown = 1,
-  darkMode = false,
+  darkMode: darkModeProp,
   className,
   ...rest
 }: StepperProps) => {
+  const { darkMode } = useDarkMode(darkModeProp);
+
   // Helper Variables
   const numSteps = React.Children.count(children);
   maxDisplayedSteps = Math.min(maxDisplayedSteps, numSteps);
@@ -39,32 +35,6 @@ const Stepper = ({
   const hasLaterSteps = lastDisplayedStep < numSteps;
   if (hasPriorSteps) firstDisplayedStep++; // one step will be the prior Ellipses
   if (hasLaterSteps) lastDisplayedStep--; // one step will be the later Ellipses
-
-  const getStepState = (step: number) => {
-    if (step < currentStep) {
-      return StepStates.Completed;
-    } else if (step === currentStep) {
-      return StepStates.Current;
-    } else {
-      return StepStates.Upcoming;
-    }
-  };
-
-  // Helper Functions
-  const isLastStep = (step: number) => step + 1 === numSteps;
-
-  const getStepRangeText: (startStep: number, endStep: number) => string = (
-    startStep,
-    endStep,
-  ) => {
-    const stepRange = endStep - startStep;
-
-    if (stepRange === 1) {
-      return `Steps ${startStep} and ${endStep}`;
-    } else {
-      return `Steps ${startStep} to ${endStep}`;
-    }
-  };
 
   return (
     <StepperContextProvider darkMode={darkMode}>
@@ -84,8 +54,10 @@ const Stepper = ({
           (stepContents, i) => (
             <li>
               <Step
-                state={getStepState(firstDisplayedStep + i)}
-                shouldDisplayLine={!isLastStep(firstDisplayedStep + i)}
+                state={getStepState(firstDisplayedStep + i, currentStep)}
+                shouldDisplayLine={
+                  !isLastStep(firstDisplayedStep + i, numSteps)
+                }
                 index={firstDisplayedStep + i + 1}
               >
                 {stepContents}
