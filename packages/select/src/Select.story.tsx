@@ -98,7 +98,6 @@ export const OverflowingPopover = ({
       popoverClassName={css`
         min-width: 500px;
       `}
-      justify="end"
     />
   );
 };
