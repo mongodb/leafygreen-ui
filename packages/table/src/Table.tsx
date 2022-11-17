@@ -4,7 +4,7 @@ import { transparentize } from 'polished';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+import { palette } from '@leafygreen-ui/palette';
 import {
   useIsomorphicLayoutEffect,
   useViewportSize,
@@ -20,7 +20,7 @@ import TableBody from './TableBody';
 import { SortProvider } from './SortContext';
 
 const lmShadowColor = transparentize(0.7, palette.black);
-const dmShadowColor = transparentize(0.2, uiColors.black);
+const dmShadowColor = transparentize(0.3, 'black');
 
 const containerStyle = css`
   position: relative;
@@ -61,7 +61,10 @@ const leftShadow = (darkMode: boolean) => css`
 
   &:after {
     right: 100%;
-    box-shadow: 4px 0 4px ${darkMode ? dmShadowColor : lmShadowColor};
+    box-shadow: ${darkMode
+      ? '4px 0 9px 5px ' + dmShadowColor
+      : '4px 0 4px ' +
+        lmShadowColor}; //TODO: Bug: currently the full height of the shadow is not showing unless the background color is removed from <tr>
   }
 `;
 
@@ -70,7 +73,9 @@ const rightShadow = (darkMode: boolean) => css`
 
   &:after {
     left: 100%;
-    box-shadow: -4px 0 4px ${darkMode ? dmShadowColor : lmShadowColor};
+    box-shadow: ${darkMode
+      ? '-4px 0 9px 5px ' + dmShadowColor
+      : '-4px 0 4px ' + lmShadowColor};
   }
 `;
 
@@ -237,3 +242,4 @@ export default function Table<Shape>({
     </div>
   );
 }
+//  TODO: missing proptypes

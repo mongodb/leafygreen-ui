@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import { HTMLElementProps, createUniqueClassName } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { getCommonCellStyles } from './styles';
-import { useFontSizeContext } from './FontSizeContext';
 import { palette } from '@leafygreen-ui/palette';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
@@ -36,7 +35,6 @@ interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
 type CellProps = HeaderCellProps | TableCellProps;
 
 const baseStyles = css`
-  line-height: 20px;
   position: relative;
 `;
 
@@ -79,7 +77,6 @@ const Cell = forwardRef(
   ) => {
     const Root = isHeader ? 'th' : 'td';
 
-    // const baseFontSize = useFontSizeContext();
     const baseFontSize = useUpdatedBaseFontSize();
     const { darkMode } = useDarkMode();
 

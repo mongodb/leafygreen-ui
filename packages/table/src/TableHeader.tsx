@@ -7,7 +7,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { getCommonCellStyles } from './styles';
 import { SortDirection, useSortContext } from './SortContext';
-import { useFontSizeContext } from './FontSizeContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { enforceExhaustive, Theme } from '@leafygreen-ui/lib';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -161,11 +160,8 @@ function TableHeader<Shape>({
 }: TableHeaderProps<Shape>) {
   const { dispatch } = useTableContext();
   const { sort, setSort } = useSortContext();
-  // const baseFontSize = useFontSizeContext();
   const baseFontSize = useUpdatedBaseFontSize();
   const { theme, darkMode } = useDarkMode();
-
-  // const mode = darkMode ? Mode.Dark : Mode.Light;
 
   React.useEffect(() => {
     if (typeof index === 'number') {

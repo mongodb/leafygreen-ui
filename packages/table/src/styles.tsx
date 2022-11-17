@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { bodyTypeScaleStyles } from '@leafygreen-ui/typography';
 
 const sharedStyles = css`
   --lg-cell-padding-block: 10px;
@@ -10,17 +11,8 @@ const sharedStyles = css`
 `;
 
 export const getCommonCellStyles = (baseFontSize: 13 | 16): string => {
-  if (baseFontSize === 16) {
-    return css`
-      ${sharedStyles}
-      font-size: 16px; //TODO: use tokens
-      line-height: 24px;
-    `;
-  }
-
   return css`
     ${sharedStyles}
-    font-size: 13px;
-    line-height: 20px;
+    ${bodyTypeScaleStyles[baseFontSize]}
   `;
 };
