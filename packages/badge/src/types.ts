@@ -1,4 +1,4 @@
-import { HTMLElementProps } from "@leafygreen-ui/lib";
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 interface BadgeProps extends HTMLElementProps<'div'> {
   /**
