@@ -14,8 +14,8 @@ import {
   bannerDismissibleStyles,
   variantStyles,
 } from './styles';
-import BannerIcon from './BannerIcon';
-import BannerDismissButton from './BannerDismissButton';
+import BannerIcon from '../BannerIcon';
+import BannerDismissButton from '../BannerDismissButton';
 
 /**
  *
@@ -31,7 +31,7 @@ import BannerDismissButton from './BannerDismissButton';
 export default function Banner({
   variant = Variant.Info,
   dismissible = false,
-  onClose = () => {},
+  onClose = () => { },
   image,
   children,
   className,
@@ -40,7 +40,7 @@ export default function Banner({
   ...rest
 }: BannerProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
   return (
     <div

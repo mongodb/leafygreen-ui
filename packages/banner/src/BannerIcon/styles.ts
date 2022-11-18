@@ -2,7 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { Variant } from '../types';
+import { Variant } from '../Banner/types';
 
 export const baseStyles = css`
   position: relative;
