@@ -7,7 +7,6 @@
   },
   "include": [
     "src/**/*",
-    "H1/H1.tsx"
   ],
   "references": [
     {

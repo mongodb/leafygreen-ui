@@ -11,10 +11,10 @@ export const h1Styles = css`
 `;
 
 export const h1Color: Record<Theme, string> = {
-    [Theme.Light]: css`
+  [Theme.Light]: css`
     color: ${palette.green.dark2};
   `,
-    [Theme.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.green.light1};
   `,
 };

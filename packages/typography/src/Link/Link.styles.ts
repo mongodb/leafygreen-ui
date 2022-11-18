@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { createUniqueClassName, Theme, } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 
 export const anchorClassName = createUniqueClassName();
 
@@ -19,11 +19,11 @@ export const linkStyles = css`
 `;
 
 export const linkModeStyles: Record<Theme, string> = {
-    [Theme.Light]: css`
+  [Theme.Light]: css`
     color: ${palette.blue.base};
     font-weight: 400;
   `,
-    [Theme.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.blue.light1};
     font-weight: 700;
   `,
@@ -49,14 +49,14 @@ export const underlineStyles = css`
 `;
 
 export const underlineModeStyles: Record<Theme, string> = {
-    [Theme.Light]: css`
+  [Theme.Light]: css`
     .${anchorClassName}:hover & {
       &::after {
         background-color: ${palette.gray.light2};
       }
     }
   `,
-    [Theme.Dark]: css`
+  [Theme.Dark]: css`
     .${anchorClassName}:hover & {
       &::after {
         background-color: ${palette.gray.dark2};

@@ -6,8 +6,17 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { bodyTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
-import { openInNewTabStyles, arrowRightIconHover, arrowRightIconPersist, anchorClassName, linkStyles, linkModeStyles, underlineModeStyles, underlineStyles } from './Link.styles'
-import { LinkProps, ArrowAppearance } from './Link.types'
+import {
+  openInNewTabStyles,
+  arrowRightIconHover,
+  arrowRightIconPersist,
+  anchorClassName,
+  linkStyles,
+  linkModeStyles,
+  underlineModeStyles,
+  underlineStyles,
+} from './Link.styles';
+import { LinkProps, ArrowAppearance } from './Link.types';
 
 const Link: ExtendableBox<LinkProps, 'a'> = ({
   href,

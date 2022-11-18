@@ -7,7 +7,16 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 import { codeTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
-import { anchorClassName, nowrap, normal, code, codeModes, codeLinkStyleModes, codeLinkWrapper, codeFocusModes } from './InlineCode.styles'
+import {
+  anchorClassName,
+  nowrap,
+  normal,
+  code,
+  codeModes,
+  codeLinkStyleModes,
+  codeLinkWrapper,
+  codeFocusModes,
+} from './InlineCode.styles';
 import { InlineCodeProps } from './InlineCode.types';
 
 const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
@@ -20,7 +29,7 @@ const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
     const { theme } = useDarkMode(darkModeProp);
     const whiteSpace =
       ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <=
-        30
+      30
         ? nowrap
         : normal;
     const isAnchor = rest?.href !== undefined || rest.onClick !== undefined;

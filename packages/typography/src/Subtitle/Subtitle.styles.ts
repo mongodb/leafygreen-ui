@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion'
+import { css } from '@leafygreen-ui/emotion';
 
 export const subtitleStyles = css`
   font-size: 18px;

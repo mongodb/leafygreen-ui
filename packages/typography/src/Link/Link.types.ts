@@ -2,9 +2,9 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { CommonTypographyProps } from '../types';
 
 const ArrowAppearance = {
-    Hover: 'hover',
-    Persist: 'persist',
-    None: 'none',
+  Hover: 'hover',
+  Persist: 'persist',
+  None: 'none',
 } as const;
 
 type ArrowAppearance = typeof ArrowAppearance[keyof typeof ArrowAppearance];
@@ -12,8 +12,8 @@ type ArrowAppearance = typeof ArrowAppearance[keyof typeof ArrowAppearance];
 export { ArrowAppearance };
 
 export interface LinkProps
-    extends CommonTypographyProps,
+  extends CommonTypographyProps,
     HTMLElementProps<'a'> {
-    arrowAppearance?: ArrowAppearance;
-    hideExternalIcon?: boolean;
+  arrowAppearance?: ArrowAppearance;
+  hideExternalIcon?: boolean;
 }

@@ -18,7 +18,7 @@ export const code = css`
 `;
 
 export const codeModes: Record<Theme, string> = {
-    [Theme.Light]: css`
+  [Theme.Light]: css`
     background-color: ${palette.gray.light3};
     border: 1px solid ${palette.gray.light2};
     color: ${palette.gray.dark3};
@@ -29,7 +29,7 @@ export const codeModes: Record<Theme, string> = {
     }
   `,
 
-    [Theme.Dark]: css`
+  [Theme.Dark]: css`
     background-color: transparent;
     border: 1px solid ${palette.gray.dark2};
     color: ${palette.gray.light1};
@@ -42,14 +42,14 @@ export const codeModes: Record<Theme, string> = {
 };
 
 export const codeFocusModes: Record<Theme, string> = {
-    [Theme.Light]: css`
+  [Theme.Light]: css`
     .${anchorClassName}:focus > & {
       box-shadow: ${focusRing[Theme.Light].default};
       border: 1px solid ${palette.blue.base};
     }
   `,
 
-    [Theme.Dark]: css`
+  [Theme.Dark]: css`
     .${anchorClassName}:focus > & {
       box-shadow: ${focusRing[Theme.Dark].default};
       border: 1px solid ${palette.blue.base};
@@ -58,10 +58,10 @@ export const codeFocusModes: Record<Theme, string> = {
 };
 
 export const codeLinkStyleModes: Record<Theme, string> = {
-    [Theme.Light]: css`
+  [Theme.Light]: css`
     color: ${palette.blue.base};
   `,
-    [Theme.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.blue.light1};
   `,
 };

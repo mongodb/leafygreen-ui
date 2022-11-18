@@ -3,7 +3,6 @@
   "include": [
     "packages/**/src/**/*",
     "typings/**/*",
-    "packages/typography/src/H1/H1.tsx"
   ],
   "exclude": [
     "packages/testing-lib/src/**/*"

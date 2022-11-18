@@ -3,9 +3,11 @@ import { cx } from '@leafygreen-ui/emotion';
 import { codeTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { inlineKeyCodeStyles, inlineKeyCodeColor } from './InlineKeyCode.styles'
-import { InlineKeyCodeProps } from './InlineKeyCode.types'
-
+import {
+  inlineKeyCodeStyles,
+  inlineKeyCodeColor,
+} from './InlineKeyCode.styles';
+import { InlineKeyCodeProps } from './InlineKeyCode.types';
 
 function InlineKeyCode({
   darkMode: darkModeProp,

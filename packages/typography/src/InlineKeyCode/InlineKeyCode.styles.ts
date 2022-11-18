@@ -12,12 +12,12 @@ export const inlineKeyCodeStyles = css`
 `;
 
 export const inlineKeyCodeColor: Record<Theme, string> = {
-    [Theme.Light]: css`
+  [Theme.Light]: css`
     color: ${palette.black};
     border-color: ${palette.gray.dark3};
     background-color: ${palette.white};
   `,
-    [Theme.Dark]: css`
+  [Theme.Dark]: css`
     color: ${palette.gray.light2};
     border-color: ${palette.gray.base};
     background-color: ${palette.gray.dark3};
