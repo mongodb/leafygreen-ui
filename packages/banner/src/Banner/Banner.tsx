@@ -31,7 +31,7 @@ import BannerDismissButton from '../BannerDismissButton';
 export default function Banner({
   variant = Variant.Info,
   dismissible = false,
-  onClose = () => { },
+  onClose = () => {},
   image,
   children,
   className,
