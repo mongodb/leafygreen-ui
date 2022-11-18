@@ -28,7 +28,7 @@ export const backdropBaseStyle = css`
   right: 0;
   bottom: 0;
   opacity: 0;
-  transition: opacity ${transitionDuration.default} ease-in-out;
+  transition: opacity ${transitionDuration.default}ms ease-in-out;
 `;
 
 export const backdropThemeStyles: Record<Theme, string> = {
@@ -57,7 +57,7 @@ export const scrollContainer = css`
 
 export const modalContentStyle = css`
   font-family: ${fontFamilies.default};
-  transition: all ${transitionDuration.default} ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   margin: auto;
   max-height: calc(100% - ${defaultVerticalSpacing}px);
   position: relative;
