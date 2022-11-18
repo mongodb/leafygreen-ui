@@ -109,7 +109,7 @@ const darkModeDangerBannerStyles = css`
       ${palette.red.base} 6px
     );
   }
-`
+`;
 
 const darkModeSuccessBannerStyles = css`
   color: ${palette.green.light2};
@@ -137,7 +137,7 @@ const darkModeSuccessBannerStyles = css`
       ${palette.green.base} 6px
     );
   }
-`
+`;
 
 const lightModeInfoBannerStyles = css`
   color: ${palette.blue.dark2};
@@ -153,8 +153,8 @@ const lightModeInfoBannerStyles = css`
     }
 
     &:focus-visible {
-      box-shadow: 0 0 0 3px ${palette.blue.light3},
-        0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+      box-shadow: 0 0 0 3px ${palette.blue.light3}, 0 0 0 5px ${palette.white},
+        0 0 0 7px ${palette.blue.light1};
     }
   }
 
@@ -181,8 +181,8 @@ const lightModeWarningBannerStyles = css`
     }
 
     &:focus-visible {
-      box-shadow: 0 0 0 3px ${palette.yellow.light3},
-        0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+      box-shadow: 0 0 0 3px ${palette.yellow.light3}, 0 0 0 5px ${palette.white},
+        0 0 0 7px ${palette.blue.light1};
     }
   }
 
@@ -209,8 +209,8 @@ const lightModeDangerBannerStyles = css`
     }
 
     &:focus-visible {
-      box-shadow: 0 0 0 3px ${palette.red.light3},
-        0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+      box-shadow: 0 0 0 3px ${palette.red.light3}, 0 0 0 5px ${palette.white},
+        0 0 0 7px ${palette.blue.light1};
     }
   }
 
@@ -237,8 +237,8 @@ const lightModeSuccessBannerStyles = css`
     }
 
     &:focus-visible {
-      box-shadow: 0 0 0 3px ${palette.green.light3},
-        0 0 0 5px ${palette.white}, 0 0 0 7px ${palette.blue.light1};
+      box-shadow: 0 0 0 3px ${palette.green.light3}, 0 0 0 5px ${palette.white},
+        0 0 0 7px ${palette.blue.light1};
     }
   }
 
@@ -263,8 +263,8 @@ export const variantStyles: Record<Theme, Record<Variant, string>> = {
     [Variant.Warning]: lightModeWarningBannerStyles,
     [Variant.Danger]: lightModeDangerBannerStyles,
     [Variant.Success]: lightModeSuccessBannerStyles,
-  }
-}
+  },
+};
 
 export const getTextStyle = (image: boolean, dismissible: boolean) => {
   const defaultIconSize = 16;

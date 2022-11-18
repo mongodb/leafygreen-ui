@@ -1,7 +1,7 @@
-import { css } from "@leafygreen-ui/emotion";
-import { Theme } from "@leafygreen-ui/lib";
-import { palette } from "@leafygreen-ui/palette";
-import { Variant } from "..";
+import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { Variant } from '..';
 
 export const baseStyles = css`
   width: 24px;
@@ -51,14 +51,13 @@ const darkModeDangerStyles = css`
   &:hover,
   &:focus-visible {
     color: ${palette.red.light2};
-    box-shadow: 0 0 0 2px ${palette.red.dark3},
-      0 0 0 4px ${palette.blue.light1};
+    box-shadow: 0 0 0 2px ${palette.red.dark3}, 0 0 0 4px ${palette.blue.light1};
 
     &:before {
       background-color: ${palette.red.dark2};
     }
   }
-`
+`;
 
 const darkModeSuccessStyles = css`
   color: ${palette.green.light2};
@@ -74,7 +73,7 @@ const darkModeSuccessStyles = css`
       background-color: ${palette.green.dark2};
     }
   }
-`
+`;
 
 const lightModeInfoStyles = css`
   color: ${palette.blue.dark2};
@@ -144,5 +143,5 @@ export const variantStyles: Record<Theme, Record<Variant, string>> = {
     [Variant.Warning]: lightModeWarningStyles,
     [Variant.Danger]: lightModeDangerStyles,
     [Variant.Success]: lightModeSuccessStyles,
-  }
-}
+  },
+};

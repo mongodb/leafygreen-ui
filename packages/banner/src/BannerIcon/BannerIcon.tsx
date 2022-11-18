@@ -35,7 +35,11 @@ const BannerIcon = ({
   } else {
     return (
       <Icon
-        className={cx(baseStyles, themeStyles[theme][variant], bannerIconPositionStyles[baseFontSize])}
+        className={cx(
+          baseStyles,
+          themeStyles[theme][variant],
+          bannerIconPositionStyles[baseFontSize],
+        )}
       />
     );
   }

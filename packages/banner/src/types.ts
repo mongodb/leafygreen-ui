@@ -12,7 +12,9 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
-export interface BannerProps extends HTMLElementProps<'div', never>, DarkModeProps {
+export interface BannerProps
+  extends HTMLElementProps<'div', never>,
+    DarkModeProps {
   /**
    * Sets the variant for the Banner
    *

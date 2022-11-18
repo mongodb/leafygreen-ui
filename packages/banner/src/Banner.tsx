@@ -15,7 +15,7 @@ import {
   variantStyles,
 } from './styles';
 import BannerIcon from './BannerIcon';
-import BannerDismissButton from './BannerDismissButton/BannerDismissButton';
+import BannerDismissButton from './BannerDismissButton';
 
 /**
  *
@@ -31,7 +31,7 @@ import BannerDismissButton from './BannerDismissButton/BannerDismissButton';
 export default function Banner({
   variant = Variant.Info,
   dismissible = false,
-  onClose = () => { },
+  onClose = () => {},
   image,
   children,
   className,
@@ -58,7 +58,15 @@ export default function Banner({
     >
       <BannerIcon theme={theme} baseFontSize={baseFontSize} variant={variant} />
       <div className={getTextStyle(image != null, dismissible)}>{children}</div>
-      {dismissible && <BannerDismissButton onClose={onClose} darkMode={darkMode} />}
+      {dismissible && (
+        <BannerDismissButton
+          theme={theme}
+          baseFontSize={baseFontSize}
+          variant={variant}
+          onClose={onClose}
+          darkMode={darkMode}
+        />
+      )}
     </div>
   );
 }
