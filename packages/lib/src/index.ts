@@ -1,13 +1,13 @@
 import once from 'lodash/once';
 import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
-import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
 
+export { getNodeTextContent } from './getNodeTextContent';
 export { storybookArgTypes } from './storybook/storybookArgTypes';
 
-export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
+export { typeIs, createUniqueClassName, getTheme, Theme };
 export type { DarkModeProps };
 
 /** Helper type to extract an HTML element's valid props */

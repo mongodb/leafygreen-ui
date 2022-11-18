@@ -10,34 +10,13 @@
   ],
   "references": [
     {
-      "path": "../card"
-    },
-    {
       "path": "../emotion"
-    },
-    {
-      "path": "../hooks"
-    },
-    {
-      "path": "../icon"
-    },
-    {
-      "path": "../icon-button"
     },
     {
       "path": "../lib"
     },
     {
-      "path": "../palette"
-    },
-    {
-      "path": "../tokens"
-    },
-    {
       "path": "../typography"
-    },
-    {
-      "path": "../leafygreen-provider"
     }
   ]
 }

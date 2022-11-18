@@ -3,7 +3,7 @@ import { ReactElement, ReactNode, ReactText } from 'react';
 /**
  * Returns the text string of a React node
  */
-export default function getNodeTextContent(node?: ReactNode): string {
+export function getNodeTextContent(node?: ReactNode): string {
   if (isText(node)) {
     return node.toString().trim();
   }
