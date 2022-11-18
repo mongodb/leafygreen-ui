@@ -5,8 +5,6 @@ import { css } from '@leafygreen-ui/emotion';
 import { Variant } from './types';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
-export const defaultBorderSpacing = 12;
-
 export const baseBannerStyles = css`
   position: relative;
   display: flex;
@@ -266,8 +264,42 @@ export const variantStyles: Record<Theme, Record<Variant, string>> = {
   },
 };
 
-export const getTextStyle = (image: boolean, dismissible: boolean) => {
+export const textStyles = (image: boolean, dismissible: boolean) => css`
+  align-self: center;
+  flex-grow: 1;
+  margin-left: ${getTextMargins(image, dismissible).marginLeft};
+  margin-right: ${getTextMargins(image, dismissible).marginRight};
+
+  .${anchorClassName}, a {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    border-radius: 4px;
+    display: inline;
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      span {
+        &::after {
+          display: none;
+        }
+      }
+    }
+
+    &:focus-visible {
+      position: relative;
+    }
+  }
+`;
+
+export const getTextMargins = (image: boolean, dismissible: boolean) => {
   const defaultIconSize = 16;
+  const defaultBorderSpacing = 12;
 
   const styleObj: {
     marginLeft?: string;
@@ -291,38 +323,7 @@ export const getTextStyle = (image: boolean, dismissible: boolean) => {
     }
   }
 
-  return css`
-    align-self: center;
-    flex-grow: 1;
-    margin-left: ${styleObj.marginLeft};
-    margin-right: ${styleObj.marginRight};
-
-    .${anchorClassName}, a {
-      font-size: inherit;
-      line-height: inherit;
-      font-weight: 700;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 2px;
-      border-radius: 4px;
-      display: inline;
-
-      &:hover,
-      &:focus,
-      &:focus-visible {
-        outline: none;
-        span {
-          &::after {
-            display: none;
-          }
-        }
-      }
-
-      &:focus-visible {
-        position: relative;
-      }
-    }
-  `;
+  return styleObj;
 };
 
 export const bannerDismissibleStyles = css`

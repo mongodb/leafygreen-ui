@@ -10,7 +10,7 @@ import {
 import { BannerProps, Variant } from './types';
 import {
   baseBannerStyles,
-  getTextStyle,
+  textStyles,
   bannerDismissibleStyles,
   variantStyles,
 } from './styles';
@@ -31,7 +31,7 @@ import BannerDismissButton from './BannerDismissButton';
 export default function Banner({
   variant = Variant.Info,
   dismissible = false,
-  onClose = () => {},
+  onClose = () => { },
   image,
   children,
   className,
@@ -57,7 +57,7 @@ export default function Banner({
       {...rest}
     >
       <BannerIcon theme={theme} baseFontSize={baseFontSize} variant={variant} />
-      <div className={getTextStyle(image != null, dismissible)}>{children}</div>
+      <div className={textStyles(image != null, dismissible)}>{children}</div>
       {dismissible && (
         <BannerDismissButton
           theme={theme}
