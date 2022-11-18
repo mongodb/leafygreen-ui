@@ -1,6 +1,6 @@
 import { cx } from '@leafygreen-ui/emotion';
 import React from 'react';
-import { Variant } from '..';
+import { Variant } from '../types';
 import {
   baseStyles,
   renderedImageStyles,

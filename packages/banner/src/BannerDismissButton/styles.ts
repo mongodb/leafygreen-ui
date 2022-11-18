@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { Variant } from '..';
+import { Variant } from '../types';
 
 export const baseStyles = css`
   width: 24px;
