@@ -1,9 +1,10 @@
 import { css, cx } from '@leafygreen-ui/emotion';
+import { transitionDuration as transitionDurationToken } from '@leafygreen-ui/tokens';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { TransitionStatus } from 'react-transition-group';
 
-export const transitionDuration = 300;
+export const transitionDuration = transitionDurationToken.slower;
 
 /**
  * Styles
@@ -68,12 +69,7 @@ export const flagTextStyle = css`
 export const iconStyle = css`
   grid-column: 2;
   grid-row: 1/3;
-  transition: transform ${transitionDuration}ms ease-in-out;
-
-  svg {
-    // TODO: this transition should be inside IconButton
-    transition: 150ms all ease-in-out;
-  }
+  color: ${palette.gray.base};
 `;
 
 export const iconThemeStyle: Record<Theme, string> = {
@@ -83,8 +79,10 @@ export const iconThemeStyle: Record<Theme, string> = {
       &:hover,
       &:active,
       &:focus-visible {
-        svg {
-          color: ${palette.gray.light1};
+        color: ${palette.gray.light1};
+
+        &::before {
+          background-color: ${palette.gray.dark2};
         }
       }
     `,
@@ -95,8 +93,10 @@ export const iconThemeStyle: Record<Theme, string> = {
       &:hover,
       &:active,
       &:focus-visible {
-        svg {
-          color: ${palette.gray.dark1};
+        color: ${palette.gray.dark1};
+
+        &::before {
+          background-color: ${palette.gray.light2};
         }
       }
     `,

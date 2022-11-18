@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback, useMemo, useState } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors, palette } from '@leafygreen-ui/palette';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Light: 'light',
@@ -35,7 +36,7 @@ const baseContainerStyle = css`
 `;
 
 const baseInteractionRingStyle = css`
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   position: absolute;
   z-index: -1;
   top: 0;
@@ -45,7 +46,7 @@ const baseInteractionRingStyle = css`
   pointer-events: none;
 `;
 
-const interactionRingDataProp = createDataProp('interaction-ring');
+const interactionRingClassName = createUniqueClassName('interaction-ring');
 
 function computeStyles({
   mode,
@@ -76,7 +77,7 @@ function computeStyles({
   return {
     container: cx(baseContainerStyle, {
       [css`
-        &:hover > ${interactionRingDataProp.selector} {
+        &:hover > .${interactionRingClassName} {
           ${hoverStyle}
         }
       `]: hovered !== false && !focused,
@@ -116,6 +117,9 @@ interface InteractionRingProps {
   ignoreKeyboardContext?: boolean;
 }
 
+/**
+ * @deprecated Prefer `tokens/hoverRing` & `tokens/focusRing`
+ */
 export default function InteractionRing({
   darkMode = false,
   className,
@@ -201,10 +205,7 @@ export default function InteractionRing({
     <div className={cx(styles.container, className)} {...rest}>
       {content}
       {!disabled && (
-        <div
-          {...interactionRingDataProp.prop}
-          className={styles.interactionRing}
-        />
+        <div className={cx(interactionRingClassName, styles.interactionRing)} />
       )}
     </div>
   );

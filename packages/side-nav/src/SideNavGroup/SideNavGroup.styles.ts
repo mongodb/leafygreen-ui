@@ -2,7 +2,7 @@ import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { sideNavItemSidePadding } from '../styles';
 
 export const buttonClassName = createUniqueClassName('side-nav-group-button');
@@ -32,7 +32,7 @@ export const collapsibleHeaderStyle = css`
   background-color: transparent;
   border: none;
   margin: 0px;
-  transition: 100ms ease-in-out;
+  transition: ${transitionDuration.faster}ms ease-in-out;
   transition-property: border-color, background-color, color;
   cursor: pointer;
   border-bottom: 1px solid ${palette.gray.light2};
@@ -71,7 +71,7 @@ export const customIconStyles = css`
 `;
 
 export const expandIconStyle = css`
-  transition: 150ms all ease-in-out;
+  transition: ${transitionDuration.default}ms all ease-in-out;
   margin-left: ${spacing[2]}px;
 
   ${prefersReducedMotion(`
@@ -87,11 +87,11 @@ export const sideNavCollapsibleGroupBaseStyles = css`
   max-height: 0;
   overflow: hidden;
   opacity: 1;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: opacity, max-height;
 
   ${prefersReducedMotion(`
-    transition: opacity 150ms ease-in-out;
+    transition: opacity ${transitionDuration.default}ms ease-in-out;
   `)}
 `;
 

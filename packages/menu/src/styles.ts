@@ -1,5 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
 import { Size } from './types';
@@ -30,7 +30,7 @@ export const menuItemContainerStyle = css`
   cursor: pointer;
   border: none;
 
-  transition: background-color 150ms ease-in-out;
+  transition: background-color ${transitionDuration.default}ms ease-in-out;
 
   &:focus {
     outline: none;
@@ -44,7 +44,7 @@ export const menuItemContainerStyle = css`
     left: 0px;
     border-radius: 0 ${wedgeWidth}px ${wedgeWidth}px 0;
     background-color: transparent;
-    transition: background-color 150ms ease-in-out;
+    transition: background-color ${transitionDuration.default}ms ease-in-out;
   }
 
   &:hover {
@@ -149,17 +149,21 @@ export const linkDescriptionTextStyle = css`
  * Hover Styles
  */
 
-export const getHoverStyles = (container: string, theme: Theme) => ({
+export const getHoverStyles = (containerClass: string, theme: Theme) => ({
   text: css`
-    ${container}:not(:disabled):hover & {
-      font-weight: 700;
+    .${containerClass} {
+      &:not(:disabled):hover & {
+        font-weight: 700;
+      }
     }
   `,
   activeText: css`
-    ${container}:not(:disabled):hover & {
-      color: ${theme === Theme.Light
-        ? palette.green.base
-        : palette.green.dark3};
+    .${containerClass} {
+      &:not(:disabled):hover & {
+        color: ${theme === Theme.Light
+          ? palette.green.base
+          : palette.green.dark3};
+      }
     }
   `,
 });
@@ -319,25 +323,31 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
   `,
 };
 
-export const getFocusedStyles = (selector: string, theme: Theme) => {
+export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
   return {
     textStyle: css`
-      ${selector}:focus & {
-        color: ${theme === Theme.Light ? palette.white : palette.blue.dark1};
+      .${containerClassName} {
+        &:focus & {
+          color: ${theme === Theme.Light ? palette.white : palette.blue.dark1};
+        }
       }
     `,
     descriptionStyle: css`
-      ${selector}:focus & {
-        color: ${theme === Theme.Light
-          ? palette.blue.light3
-          : palette.blue.dark1};
+      .${containerClassName} {
+        &:focus & {
+          color: ${theme === Theme.Light
+            ? palette.blue.light3
+            : palette.blue.dark1};
+        }
       }
     `,
     iconStyle: css`
-      ${selector}:focus > & {
-        color: ${theme === Theme.Light
-          ? palette.blue.light3
-          : palette.blue.base};
+      .${containerClassName} {
+        &:focus > & {
+          color: ${theme === Theme.Light
+            ? palette.blue.light3
+            : palette.blue.base};
+        }
       }
     `,
   };

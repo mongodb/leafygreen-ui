@@ -5,7 +5,7 @@ import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
@@ -31,7 +31,7 @@ const buttonStyles = css`
   background-color: ${palette.white};
   border: 1px solid ${palette.gray.light2};
   cursor: pointer;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: color, border-color, box-shadow;
 
   &:hover {

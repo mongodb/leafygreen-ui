@@ -1,5 +1,27 @@
 # @leafygreen-ui/text-input
 
+## 12.0.0
+
+### Patch Changes
+
+- 3cb2e1f7: Removes hover box-shadow from disabled inputs. Adds console warning suggestion to use SearchInput component in place of TextInput with type="search".
+- Updated dependencies [07b3c797]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/typography@14.0.1
+
 ## 11.0.0
 
 ### Patch Changes
