@@ -21,7 +21,6 @@ const TestAnchorLike = (props: React.AnchorHTMLAttributes<any>) => {
 const TestExtendableBox: ExtendableBox<{ test: number }> = (
   props: BoxProps & { test: number },
 ) => {
-  // @ts-expect-error
   return <Box {...props} />;
 };
 
