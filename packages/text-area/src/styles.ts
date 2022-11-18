@@ -6,6 +6,7 @@ import {
   fontFamilies,
   focusRing,
   hoverRing,
+  transitionDuration,
 } from '@leafygreen-ui/tokens';
 
 export const containerStyles = css`
@@ -25,7 +26,7 @@ export const textAreaStyle = css`
   line-height: 16px;
   border: 1px solid;
   border-radius: 6px;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border-color, box-shadow;
   margin-top: 4px;
 

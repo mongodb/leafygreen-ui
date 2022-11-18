@@ -4,7 +4,7 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 import { useStepperContext } from './StepperContext';
 import { stepIconClassName } from './constants';
@@ -101,8 +101,7 @@ const StepIcon = ({ state, size, ...rest }: StepIconProps) => {
     align-items: center;
     justify-content: center;
     border: 1px solid;
-    // TODO: use centralized transition prop
-    transition: 0.3s box-shadow ease;
+    transition: ${transitionDuration.slower}ms box-shadow ease;
     z-index: 1;
 
     svg {

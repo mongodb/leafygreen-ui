@@ -5,7 +5,11 @@ import { transparentize } from 'polished';
 import { Overline } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import {
+  spacing,
+  breakpoints,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
@@ -61,7 +65,7 @@ const sharedHoverInteraction = css`
 const previewWrapper = css`
   ${container}
   overflow: hidden;
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
 
   &:hover > div {
     opacity: 1;
@@ -76,7 +80,7 @@ const overlineContainer = css`
   left: 0;
   padding-left: ${spacing[3]}px;
   padding-bottom: ${spacing[3]}px;
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
 
   ${mq({
     opacity: [1, 1, 0],
@@ -99,7 +103,7 @@ const marketingWrapper = css`
   height: 100%;
   overflow: hidden;
   position: relative;
-  transition: transform 300ms ease-in-out;
+  transition: transform ${transitionDuration.slower}ms ease-in-out;
   color: white;
   text-shadow: 0 0 10px ${transparentize(0.2, uiColors.green.base)},
     0 2px 2px ${transparentize(0.2, uiColors.green.dark2)};
