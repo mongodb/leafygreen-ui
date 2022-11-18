@@ -94,11 +94,10 @@ export const ConfirmationModal = ({
           disabled={!confirmEnabled || submitDisabled}
           onClick={onConfirm}
           className={buttonStyle}
-          darkMode={darkMode}
         >
           {buttonText}
         </Button>
-        <Button onClick={onCancel} className={buttonStyle} darkMode={darkMode}>
+        <Button onClick={onCancel} className={buttonStyle}>
           Cancel
         </Button>
       </Footer>
