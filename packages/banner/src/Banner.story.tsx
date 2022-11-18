@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { Variant } from './types';
 import Banner from './Banner';
+import { Variant } from './types';
 import { ComponentStory, Meta } from '@storybook/react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';

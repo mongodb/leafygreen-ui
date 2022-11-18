@@ -14,7 +14,7 @@ export { Variant };
 
 export interface BannerProps
   extends HTMLElementProps<'div', never>,
-  DarkModeProps {
+    DarkModeProps {
   /**
    * Sets the variant for the Banner
    *
