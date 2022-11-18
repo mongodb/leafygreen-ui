@@ -34,6 +34,9 @@
       "path": "../typography"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../leafygreen-provider"
     }
   ]

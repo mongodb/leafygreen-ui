@@ -6,6 +6,7 @@ import {
   fontFamilies,
   hoverRing,
   spacing,
+  transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 import { ComboboxSize as Size, Overflow, Theme } from './Combobox.types';
@@ -85,7 +86,7 @@ export const baseComboboxStyles = css`
   grid-template-columns: 1fr ${caretIconSize}px;
   align-items: center;
   cursor: text;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color, box-shadow, border-color;
   border: 1px solid;
   width: 100%;

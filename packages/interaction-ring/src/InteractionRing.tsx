@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors, palette } from '@leafygreen-ui/palette';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const Mode = {
   Light: 'light',
@@ -35,7 +36,7 @@ const baseContainerStyle = css`
 `;
 
 const baseInteractionRingStyle = css`
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   position: absolute;
   z-index: -1;
   top: 0;

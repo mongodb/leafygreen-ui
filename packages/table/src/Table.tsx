@@ -3,7 +3,7 @@ import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
 import {
   useIsomorphicLayoutEffect,
@@ -52,7 +52,7 @@ const shadow = css`
     bottom: 0;
     width: 16px;
     border-radius: 100%;
-    transition: opacity 150ms ease-in-out;
+    transition: opacity ${transitionDuration.default}ms ease-in-out;
   }
 `;
 

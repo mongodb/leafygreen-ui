@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { Size } from './types';
 
@@ -116,7 +116,7 @@ export const selectionIndicatorStyle = css`
   z-index: 2;
   border-radius: var(--indicator-radius);
   background-color: var(--indicator-background-color);
-  transition: transform 150ms ease-in-out;
+  transition: transform ${transitionDuration.default}ms ease-in-out;
 `;
 
 export const hoverIndicatorStyle = css`
