@@ -3,8 +3,8 @@ import React from 'react';
 /**
  * A subset of JSX.IntrinsicElements that accept children
  */
-export type IntrinsicElementsWithChildren = Omit<
-  JSX.IntrinsicElements,
+export type HTMLElements = Omit<
+  HTMLElementTagNameMap,
   // Excludes Void, Raw & Foreign elements
   // (https://html.spec.whatwg.org/multipage/syntax.html#void-elements)
   | 'object'
@@ -25,7 +25,7 @@ export type IntrinsicElementsWithChildren = Omit<
   | 'script'
   | 'style'
   | 'title'
-  | keyof React.ReactSVG
+  // | keyof React.ReactSVG
 >;
 
-export type IntrinsicElementTag = keyof IntrinsicElementsWithChildren
+export type ElementTag = keyof HTMLElements
