@@ -1,7 +1,13 @@
 {
   "extends": "./common.tsconfig.json",
-  "include": ["packages/**/src/**/*", "typings/**/*"],
-  "exclude": ["packages/testing-lib/src/**/*"],
+  "include": [
+    "packages/**/src/**/*",
+    "typings/**/*",
+    "packages/typography/src/H1/H1.tsx"
+  ],
+  "exclude": [
+    "packages/testing-lib/src/**/*"
+  ],
   "compilerOptions": {
     "module": "system",
     "noEmit": true,
