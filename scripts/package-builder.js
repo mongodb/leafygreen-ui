@@ -141,13 +141,20 @@ export { default } from './${PACKAGE_UC}';
 
 const storybook = `
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 import ${PACKAGE_UC} from '.';
 
-storiesOf('Components/${PACKAGE_UC}', module)
-  .add('Default', () => (
-    <${PACKAGE_UC} />
-  ))
+export default {
+  title: 'Components/${PACKAGE_UC}',
+  component: ${PACKAGE_UC},
+}
+
+const Template: ComponentStory<typeof ${PACKAGE_UC}> = (props) => (
+  <${PACKAGE_UC} {...props} />
+);
+
+export const Basic = Template.bind({});
+
 `;
 
 const spec = `

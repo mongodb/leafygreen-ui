@@ -20,13 +20,16 @@
       "path": "../lib"
     },
     {
-      "path": "../portal"
+      "path": "../leafygreen-provider"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../leafygreen-provider"
-    }
+      "path": "../portal"
+    },
+    {
+      "path": "../tokens"
+    },
   ]
 }

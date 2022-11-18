@@ -6,6 +6,7 @@ import {
   focusRing,
   fontFamilies,
   hoverRing,
+  transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 import { SizeVariant, State } from './types';
@@ -92,7 +93,7 @@ export const baseInputStyle = css`
   z-index: 1;
   outline: none;
   border-radius: 6px;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration}ms ease-in-out;
   transition-property: border-color, box-shadow;
 
   &:disabled {
@@ -138,13 +139,13 @@ export const inputModeStyles: Record<Theme, string> = {
       -webkit-text-fill-color: ${palette.black};
       box-shadow: ${autofillShadowOverride(palette.white)};
 
-      &:focus {
+      &:not(:disabled):focus {
         box-shadow: ${autofillShadowOverride(palette.white)},
           ${focusRing.light.input};
         border-color: ${palette.white};
       }
 
-      &:hover:not(:focus) {
+      &:not(:disabled):hover:not(:focus) {
         box-shadow: ${autofillShadowOverride(palette.white)},
           ${hoverRing.light.gray};
       }
@@ -157,7 +158,7 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not(:focus) {
+      &:not(:disabled):not(:focus) {
         box-shadow: ${hoverRing.light.gray};
       }
     }
@@ -195,13 +196,13 @@ export const inputModeStyles: Record<Theme, string> = {
       -webkit-text-fill-color: ${palette.gray.light3};
       box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
 
-      &:focus {
+      &:not(:disabled):focus {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
           ${focusRing.dark.input};
         border-color: ${palette.blue.light1};
       }
 
-      &:hover:not(:focus) {
+      &:not(:disabled):hover:not(:focus) {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
           ${hoverRing.dark.gray};
       }
@@ -209,7 +210,7 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not(:focus) {
+      &:not(:disabled):not(:focus) {
         box-shadow: ${hoverRing.dark.gray};
       }
     }
@@ -244,13 +245,13 @@ export const inputModeStyles: Record<Theme, string> = {
 
 export const inputFocusStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus {
+    &:not(:disabled):focus {
       box-shadow: ${focusRing.light.input};
       border-color: ${palette.white};
     }
   `,
   [Theme.Dark]: css`
-    &:focus {
+    &:not(:disabled):focus {
       box-shadow: ${focusRing.dark.input};
       border-color: ${palette.gray.dark4};
     }
@@ -284,7 +285,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
 
         &:hover,
         &:active {
-          &:not(:focus) {
+          &:not(:disabled):not(:focus) {
             box-shadow: ${hoverRing.light.green};
           }
         }
@@ -296,7 +297,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
 
         &:hover,
         &:active {
-          &:not(:focus) {
+          &:not(:disabled):not(:focus) {
             box-shadow: ${hoverRing.dark.green};
           }
         }
@@ -310,7 +311,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
 
         &:hover,
         &:active {
-          &:not(:focus) {
+          &:not(:disabled):not(:focus) {
             box-shadow: ${hoverRing.light.red};
           }
         }
@@ -322,7 +323,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
 
         &:hover,
         &:active {
-          &:not(:focus) {
+          &:not(:disabled):not(:focus) {
             box-shadow: ${hoverRing.dark.red};
           }
         }

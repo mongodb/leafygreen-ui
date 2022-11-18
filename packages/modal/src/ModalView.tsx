@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import FocusTrap from 'focus-trap-react';
-import { Transition } from 'react-transition-group';
+import { Transition, TransitionStatus } from 'react-transition-group';
 import Portal from '@leafygreen-ui/portal';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -79,7 +79,7 @@ function ModalView({
       unmountOnExit
       nodeRef={nodeRef}
     >
-      {(state: string) => (
+      {(state: TransitionStatus) => (
         <Portal>
           <div
             {...rest}

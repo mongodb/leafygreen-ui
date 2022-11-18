@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 7.0.0
+
+### Major Changes
+
+- a4895e02: Renames `AtlasLogo` (incorrect) to `AtlasNavGraphic`
+
 ## 6.3.0
 
 ### Minor Changes

@@ -4,7 +4,7 @@ import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import {
   HTMLElementProps,
   createUniqueClassName,
@@ -84,7 +84,7 @@ const arrowRightIconPersist = css`
 const arrowRightIconHover = css`
   opacity: 0;
   transform: translate3d(-3px, 0, 0);
-  transition: all 100ms ease-in;
+  transition: all ${transitionDuration.faster}ms ease-in;
 
   .${anchorClassName}:hover & {
     opacity: 1;

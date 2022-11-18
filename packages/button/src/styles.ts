@@ -2,8 +2,13 @@ import { mix, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Size, Variant, ButtonProps } from './types';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { createDataProp, getTheme, Theme } from '@leafygreen-ui/lib';
+import {
+  BaseFontSize,
+  fontFamilies,
+  typeScales,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
+import { createUniqueClassName, getTheme, Theme } from '@leafygreen-ui/lib';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 
@@ -19,7 +24,7 @@ const baseButtonStyles = css`
   border: 1px solid transparent;
   display: inline-flex;
   align-items: stretch;
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   position: relative;
   text-decoration: none;
   cursor: pointer;
@@ -385,7 +390,7 @@ const fontStyles: Record<BaseFontSize, string> = {
   `,
 };
 
-export const ButtonDataProp = createDataProp('button');
+export const ButtonClassName = createUniqueClassName('button');
 
 export function getClassName({
   variant,

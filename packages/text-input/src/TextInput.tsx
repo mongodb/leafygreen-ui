@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -32,6 +32,7 @@ import {
   textContainerStyle,
 } from './style';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 /**
  * # TextInput
@@ -57,8 +58,12 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
  * @param props.sizeVariant determines the size of the text and the height of the input.
  */
 
-type TextInput = React.ForwardRefExoticComponent<TextInputProps>;
-const TextInput: TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+type TextInputComponentType = React.ForwardRefExoticComponent<TextInputProps>;
+/// @ts-expect-error
+const TextInput: TextInputComponentType = React.forwardRef<
+  HTMLInputElement,
+  TextInputProps
+>(
   (
     {
       label,
@@ -119,10 +124,15 @@ const TextInput: TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
-    if (type === 'search' && !rest['aria-label']) {
-      console.error(
-        'For screen-reader accessibility, aria-label must be provided to TextInput.',
+    if (type === 'search') {
+      consoleOnce.warn(
+        'We recommend using the Leafygreen SearchInput for `type="search" inputs.',
       );
+      if (!rest['aria-label']) {
+        console.error(
+          'For screen-reader accessibility, aria-label must be provided to TextInput.',
+        );
+      }
     }
 
     const RenderedCheckmarkIcon = darkMode
@@ -233,6 +243,7 @@ TextInput.displayName = 'TextInput';
 TextInput.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
+  'aria-labelledby': PropTypes.string,
   description: PropTypes.string,
   optional: PropTypes.bool,
   disabled: PropTypes.bool,

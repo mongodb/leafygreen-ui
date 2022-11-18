@@ -31,7 +31,7 @@ export function getRelevantPackages(
 ) {
   // If we used the `diff` flag, we use packages based on the current git diff, regardless of what was passed in
   if (diff) {
-    const changedPackages = getGitDiff();
+    const changedPackages = uniq(getGitDiff());
 
     if (changedPackages.length > 0) {
       console.log(
@@ -39,6 +39,7 @@ export function getRelevantPackages(
           `\nUsing changed packages against ${chalk.bgWhite.black('main')}`,
         ),
       );
+
       packages.length > 0 &&
         console.log(chalk.yellow(`\tIgnoring package names provided`));
       console.log(
@@ -50,7 +51,7 @@ export function getRelevantPackages(
       // no diffs found
       packages = packages.length > 0 ? packages : getAllPackageNames();
       console.log(`\tNo diffs found. Using ${packages.length} packages`);
-      process.exit(0);
+      return uniq(packages);
     }
   } else {
     // `diff` is false
