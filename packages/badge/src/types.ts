@@ -1,6 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-interface BadgeProps extends HTMLElementProps<'div'> {
+interface BadgeProps extends HTMLElementProps<'div'>, DarkModeProps {
   /**
    * An additional className to add to the component's classList
    */
@@ -17,13 +17,6 @@ interface BadgeProps extends HTMLElementProps<'div'> {
    * @default 'lightgray'
    */
   variant?: Variant;
-
-  /**
-   * Determines whether or not the component will be rendered in dark theme.
-   *
-   * @default false
-   */
-  darkMode?: boolean;
 }
 
 export const Variant = {
