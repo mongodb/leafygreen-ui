@@ -17,7 +17,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
  * Types & Constants
  */
 
-const transitionTime = 200; //TODO: update with transition changes?
+const transitionTime = 200;
 
 /**
  * Styles
