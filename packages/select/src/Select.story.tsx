@@ -14,6 +14,7 @@ export default {
     disabled: false,
     allowDeselect: false,
     darkMode: false,
+    label: 'Select',
     children: [
       <Option key="long" value="long">
         Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
@@ -39,7 +40,7 @@ export default {
     children: { control: false },
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
-    label: { control: 'text' },
+    label: { control: 'text', default: 'Select' },
     'aria-labelledby': { control: 'text' },
     description: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,

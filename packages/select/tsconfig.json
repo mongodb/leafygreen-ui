@@ -22,6 +22,9 @@
       "path": "../icon"
     },
     {
+      "path": "../internal"
+    },
+    {
       "path": "../lib"
     },
     {

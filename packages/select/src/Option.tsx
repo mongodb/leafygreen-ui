@@ -1,15 +1,20 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { InputOption } from '@leafygreen-ui/internal';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  createUniqueClassName,
+  getNodeTextContent,
+  HTMLElementProps,
+} from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const OptionClassName = createUniqueClassName('option');
 
@@ -18,25 +23,7 @@ export type ReactEmpty = null | undefined | false | '';
 const optionStyle = css`
   display: flex;
   width: 100%;
-  outline: none;
   overflow-wrap: anywhere;
-  transition: background-color ${transitionDuration.default}ms ease-in-out;
-  position: relative;
-  padding: 8px 12px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    transform: scaleY(0.3);
-    top: 7px;
-    bottom: 7px;
-    left: 0;
-    right: 0;
-    width: 4px;
-    border-radius: 0px 4px 4px 0px;
-    opacity: 0;
-    transition: all ${transitionDuration.default}ms ease-in-out;
-  }
 `;
 
 const optionTextStyle = css`
@@ -243,50 +230,21 @@ export function InternalOption({
   }
 
   return (
-    <li
-      {...rest}
+    <InputOption
       role="option"
+      aria-label={getNodeTextContent(children)}
       aria-selected={selected}
       tabIndex={-1}
       ref={ref}
-      className={cx(
-        OptionClassName,
-        optionStyle,
-        css`
-          cursor: pointer;
-          color: ${colorSet.text.base};
-        `,
-        {
-          [css`
-            &:hover {
-              background-color: ${colorSet.background.hovered};
-            }
-          `]: !disabled,
-          [css`
-            &:focus {
-              color: ${colorSet.text.focused};
-              background-color: ${colorSet.background.focused};
-
-              &:before {
-                opacity: 1;
-                transform: scaleY(1);
-                background-color: ${colorSet.indicator.focused};
-              }
-            }
-          `]: showFocus && !disabled,
-          [css`
-            cursor: not-allowed;
-            color: ${colorSet.text.disabled};
-          `]: disabled,
-        },
-        className,
-      )}
+      disabled={disabled}
+      focused={shouldFocus && !disabled}
+      className={cx(OptionClassName, optionStyle, className)}
       onClick={onClick}
       onFocus={onFocus}
       onKeyDown={undefined}
     >
       {renderedChildren}
-    </li>
+    </InputOption>
   );
 }
 
