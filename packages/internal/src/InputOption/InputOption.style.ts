@@ -1,17 +1,25 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
 export const inputOptionStyles = css`
   position: relative;
   list-style: none;
   cursor: pointer;
+  outline: none;
+
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
   font-family: ${fontFamilies.default};
-
   padding: ${spacing[2]}px ${spacing[2] + spacing[1]}px;
+
+  transition: background-color ${transitionDuration.default}ms ease-in-out;
+
+  &:focus, &:focus-visible {
+    outline: none;
+    border: unset;
+  }
 `;
 
 export const inputOptionThemeStyles: Record<Theme, string> = {
