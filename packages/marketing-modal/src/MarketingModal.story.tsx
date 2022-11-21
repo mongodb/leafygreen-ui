@@ -16,6 +16,7 @@ export default {
     graphicStyle: 'center',
     children:
       'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
+    closeIconColor: CloseIconColor.Default,
   },
   argTypes: {
     open: { control: false },

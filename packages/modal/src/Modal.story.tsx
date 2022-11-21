@@ -33,9 +33,6 @@ export default {
       control: 'radio',
     },
   },
-  args: {
-    closeIconColor: CloseIconColor.Default,
-  },
   parameters: {
     controls: {
       exclude: ['className', 'setOpen', 'shouldClose', 'children', 'open'],

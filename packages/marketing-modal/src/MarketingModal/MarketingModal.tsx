@@ -59,7 +59,7 @@ const MarketingModal = ({
   buttonText,
   linkText,
   darkMode: darkModeProp,
-  closeIconColor = CloseIconColor.Default,
+  closeIconColor = CloseIconColor.Dark,
   blobPosition = BlobPosition.TopLeft,
   showBlob = false,
   ...modalProps
