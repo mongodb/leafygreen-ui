@@ -63,15 +63,15 @@ const SideNavItem: ExtendableBox<
 
   const onClick = disabled
     ? (e: React.MouseEvent) => {
-      e.nativeEvent.stopImmediatePropagation();
-      e.preventDefault();
-    }
+        e.nativeEvent.stopImmediatePropagation();
+        e.preventDefault();
+      }
     : (e: React.MouseEvent) => {
-      onClickProp?.(e);
-    };
+        onClickProp?.(e);
+      };
 
   const accessibleGlyph =
-    (glyph && isComponentGlyph(glyph))
+    glyph && isComponentGlyph(glyph)
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 

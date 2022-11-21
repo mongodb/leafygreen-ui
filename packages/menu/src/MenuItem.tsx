@@ -143,9 +143,9 @@ const MenuItem = React.forwardRef(
 
     const anchorProps = isAnchor
       ? {
-        target: '_self',
-        rel: '',
-      }
+          target: '_self',
+          rel: '',
+        }
       : {};
 
     const content = (
