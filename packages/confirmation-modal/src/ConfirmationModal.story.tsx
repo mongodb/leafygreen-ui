@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
-import ConfirmationModal, { Variant } from '.';
+import { ConfirmationModal } from './ConfirmationModal';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Variant } from './ConfirmationModal.types';
 
 export default {
   title: 'Components/Modals/ConfirmationModal',
@@ -19,6 +20,12 @@ export default {
     title: { control: 'text' },
     buttonText: { control: 'text' },
     children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'onConfirm', 'onCancel', 'open', 'variant'],
+    },
   },
 };
 

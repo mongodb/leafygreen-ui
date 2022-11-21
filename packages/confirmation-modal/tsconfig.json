@@ -19,6 +19,9 @@
       "path": "../icon"
     },
     {
+      "path": "../leafygreen-provider"
+    },
+    {
       "path": "../modal"
     },
     {
@@ -29,6 +32,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }
