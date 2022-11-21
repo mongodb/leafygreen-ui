@@ -5,7 +5,7 @@ import Button from '@leafygreen-ui/button';
 import { H3, Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { svgBlobs } from '.';
+import { svgBlobs } from '..';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   baseModalStyle,
@@ -21,13 +21,9 @@ import {
   footerContentStyle,
   linkStyle,
   wrapperStyle,
-} from './MarketingModal.styles';
+} from './styles';
 import { palette } from '@leafygreen-ui/palette';
-import {
-  BlobPosition,
-  GraphicStyle,
-  MarketingModalProps,
-} from './MarketingModal.types';
+import { BlobPosition, GraphicStyle, MarketingModalProps } from './types';
 
 export const renderCurvedSVG = (darkMode: boolean) => {
   const curvedSVGStyles = css`

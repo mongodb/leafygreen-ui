@@ -52,7 +52,8 @@ export const scrollContainer = css`
 
 export const modalContentStyle = css`
   font-family: ${fontFamilies.default};
-  transition: transform ${transitionDuration.default}ms ease-in-out, opacity ${transitionDuration.default}ms ease-in-out;
+  transition: transform ${transitionDuration.default}ms ease-in-out,
+    opacity ${transitionDuration.default}ms ease-in-out;
   margin: auto;
   max-height: calc(100% - ${defaultVerticalSpacing}px);
   position: relative;

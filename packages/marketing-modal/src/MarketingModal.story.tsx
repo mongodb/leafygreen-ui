@@ -52,7 +52,9 @@ const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
   const handleClose = () => setOpen(false);
   return (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        Open Modal
+      </Button>
       <MarketingModal
         {...args}
         graphicStyle={graphicStyle}
