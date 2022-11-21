@@ -103,11 +103,17 @@ function fixDependencies(
 function fixTSconfig(pkg: string) {
   const tsConfigFileName = `packages/${pkg}/tsconfig.json`;
   const dependencies = getPackageLGDependencies(pkg);
-  const tsconfig = JSON.parse(readFileSync(tsConfigFileName, 'utf-8'));
-  tsconfig.references = dependencies
-    .filter(dep => dep !== 'mongo-nav')
-    .map(dep => ({
-      path: `../${dep}`,
-    }));
-  writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
+
+  try {
+    const tsconfig = JSON.parse(readFileSync(tsConfigFileName, 'utf-8'));
+    tsconfig.references = dependencies
+      .filter(dep => dep !== 'mongo-nav')
+      .map(dep => ({
+        path: `../${dep}`,
+      }));
+    writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
+  } catch(error) {
+    throw new Error(`Error in ${pkg}: ${error}`)
+  }
+
 }
