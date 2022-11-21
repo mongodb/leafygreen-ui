@@ -116,12 +116,12 @@ function SideNavGroup({
 
   // render the provided glyph with appropriate aria roles
   const accessibleGlyph =
-    glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
+    glyph && (isComponentGlyph(glyph))
       ? React.cloneElement(glyph, {
-          className: cx(customIconStyles, glyph.props.className),
-          role: 'presentation',
-          'data-testid': 'side-nav-group-header-icon',
-        })
+        className: cx(customIconStyles, glyph.props.className),
+        role: 'presentation',
+        'data-testid': 'side-nav-group-header-icon',
+      })
       : null;
 
   // Render the header text
