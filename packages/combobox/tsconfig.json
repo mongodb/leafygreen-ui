@@ -28,6 +28,9 @@
       "path": "../inline-definition"
     },
     {
+      "path": "../internal"
+    },
+    {
       "path": "../lib"
     },
     {
