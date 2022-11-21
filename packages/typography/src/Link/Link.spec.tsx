@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Link } from '.';
-import { LinkProps } from './Link';
+import { Link } from '..';
+import { LinkProps } from './Link.types';
 import { BoxProps } from '@leafygreen-ui/box/src';
 
 const renderLink = (props: BoxProps<'a', LinkProps>) => {
