@@ -1,145 +1,39 @@
 import React, {
   createContext,
+  PropsWithChildren,
   useContext,
-  useMemo,
-  useReducer,
-  useEffect,
+  useState,
 } from 'react';
+import { TableContextValues } from './types';
 
-const TableActionTypes = {
-  RegisterColumn: 'REGISTER_COLUMN_INFO',
-  SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
-  SetHasRowSpan: 'SET_HAS_ROW_SPAN',
-  SetData: 'SET_DATA',
-} as const;
+export const TableContext = createContext({});
+export const useTableContext = () =>
+  useContext<Partial<TableContextValues>>(TableContext);
 
-type TableActionTypes = typeof TableActionTypes[keyof typeof TableActionTypes];
-
-export { TableActionTypes };
-
-interface ActionPayload {
-  [TableActionTypes.RegisterColumn]: {
-    dataType?: DataType;
-    index: number;
-  };
-  [TableActionTypes.SetData]: Array<any>;
-  [TableActionTypes.SetHasRowSpan]: boolean;
-  [TableActionTypes.SetHasNestedRows]: boolean;
-}
-
-type ActionMap<A extends Record<string, any>> = {
-  [Key in keyof A]: A[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: A[Key];
-      };
-};
-
-type Action = ActionMap<ActionPayload>[keyof ActionMap<ActionPayload>];
-
-type Dispatch = (action: Action) => void;
-
-const DataType = {
-  Number: 'number',
-  Weight: 'weight',
-  ZipCode: 'zipCode',
-  String: 'string',
-  Date: 'date',
-} as const;
-
-type DataType = typeof DataType[keyof typeof DataType];
-
-export { DataType };
-
-export interface State {
-  data: Array<any>;
-  columnInfo?: Record<number, { dataType?: DataType }>;
-  hasNestedRows?: boolean;
-  hasRowSpan?: boolean;
-}
-
-interface TableProviderInterface {
-  children: React.ReactNode;
-  data: Array<any>;
-}
-
-interface ContextInterface {
-  state: State;
-  dispatch: Dispatch;
-}
-
-const TableContext = createContext<ContextInterface>({
-  state: {
-    data: [],
-  },
-  dispatch: () => {},
-});
-
-export function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case TableActionTypes.SetHasRowSpan:
-      return {
-        ...state,
-        hasRowSpan: action.payload,
-      };
-
-    case TableActionTypes.SetHasNestedRows:
-      return {
-        ...state,
-        hasNestedRows: action.payload,
-      };
-
-    case TableActionTypes.RegisterColumn:
-      return {
-        ...state,
-        columnInfo: {
-          ...state.columnInfo,
-          [action.payload.index]: {
-            dataType: action.payload.dataType,
-          },
-        },
-      };
-
-    case TableActionTypes.SetData:
-      return {
-        ...state,
-        data: action.payload,
-      };
-
-    default:
-      return state;
-  }
-}
-
-export function TableProvider({ children, data }: TableProviderInterface) {
-  const initialState: State = {
-    data,
-    hasNestedRows: false,
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  useEffect(() => {
-    dispatch({
-      type: TableActionTypes.SetData,
-      payload: data,
-    });
-  }, [data]);
-
-  const contextValue = useMemo(() => {
-    return { state, dispatch };
-  }, [state, dispatch]);
+const TableContextProvider = ({
+  children,
+  shouldAlternateRowColor,
+  selectedRows: selectedRowsProp,
+}: PropsWithChildren<Partial<TableContextValues>>) => {
+  const [selectedRows, setSelectedRows] = useState<Array<number>>(
+    selectedRowsProp ?? [],
+  );
+  const [columnAlignments, setColumnAlignments] =
+    useState<Record<number, 'left' | 'right' | 'center'>>();
 
   return (
-    <TableContext.Provider value={contextValue}>
+    <TableContext.Provider
+      value={{
+        selectedRows,
+        setSelectedRows,
+        shouldAlternateRowColor,
+        columnAlignments,
+        setColumnAlignments,
+      }}
+    >
       {children}
     </TableContext.Provider>
   );
-}
+};
 
-export function useTableContext() {
-  return useContext(TableContext);
-}
+export default TableContextProvider;
