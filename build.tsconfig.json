@@ -102,6 +102,9 @@
       "path": "./packages/ripple"
     },
     {
+      "path": "./packages/search-input"
+    },
+    {
       "path": "./packages/segmented-control"
     },
     {

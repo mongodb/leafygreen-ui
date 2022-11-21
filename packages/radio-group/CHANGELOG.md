@@ -1,5 +1,28 @@
 # @leafygreen-ui/radio-group
 
+## 10.0.0
+
+### Major Changes
+
+- 30207122: Updates `RadioGroup` for dark mode brand refresh
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 9.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/interaction-ring@6.0.0
+  - @leafygreen-ui/lib@10.0.0
+
 ## 8.1.2
 
 ### Patch Changes

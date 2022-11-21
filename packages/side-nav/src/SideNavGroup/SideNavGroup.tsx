@@ -25,6 +25,7 @@ import {
 } from './SideNavGroup.styles';
 import { SideNavGroupProps } from './types';
 import { Overline } from '@leafygreen-ui/typography';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 /**
  * # SideNavGroup
@@ -230,7 +231,8 @@ function SideNavGroup({
                   className={cx(
                     ulStyleOverrides,
                     css`
-                      transition: opacity 150ms ease-in-out;
+                      transition: opacity ${transitionDuration.default}ms
+                        ease-in-out;
                       opacity: 0;
                     `,
                     {

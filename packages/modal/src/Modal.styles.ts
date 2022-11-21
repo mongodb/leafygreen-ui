@@ -1,21 +1,16 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import facepaint from 'facepaint';
+import {
+  fontFamilies,
+  transitionDuration,
+  breakpoints,
+} from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
 import { CloseIconColor, ModalSize } from './types';
 
 // breakpoints for different screen sizes
-export const small = '767px'; // mobile screens, from 0px - 767px
-export const medium = '768px'; // tablet screens, from 768px - 1024px
-export const large = '1025px'; // laptops/desktop screens, from 1025px and above
-
-export const mq = facepaint([
-  `@media only screen and (max-width: ${small})`,
-  `@media only screen and (min-width: ${medium})`,
-  `@media only screen and (min-width: ${large})`,
-]);
+export const large = `${breakpoints.Desktop + 1}px`; // laptops/desktop screens, from 1025px and above
 
 export const defaultHorizontalSpacing = 18;
 export const defaultVerticalSpacing = 64;
@@ -28,7 +23,7 @@ export const backdropBaseStyle = css`
   right: 0;
   bottom: 0;
   opacity: 0;
-  transition: opacity 150ms ease-in-out;
+  transition: opacity ${transitionDuration.default}ms ease-in-out;
 `;
 
 export const backdropThemeStyles: Record<Theme, string> = {
@@ -57,7 +52,7 @@ export const scrollContainer = css`
 
 export const modalContentStyle = css`
   font-family: ${fontFamilies.default};
-  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+  transition: transform ${transitionDuration.default}ms ease-in-out, opacity ${transitionDuration.default}ms ease-in-out;
   margin: auto;
   max-height: calc(100% - ${defaultVerticalSpacing}px);
   position: relative;
@@ -72,8 +67,6 @@ export const modalContentStyle = css`
     outline: none;
   }
 `;
-
-export const modeStyles = css``;
 
 export const modalThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -105,9 +98,11 @@ export const modalSizes: Record<ModalSize, string> = {
   `,
 
   large: css`
-    ${mq({
-      width: ['720px', '720px', '960px'],
-    })}
+    width: 720px;
+
+    @media only screen and (min-width: ${large}) {
+      width: 960px;
+    }
   `,
 };
 

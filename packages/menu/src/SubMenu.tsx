@@ -8,7 +8,7 @@ import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import {
-  createDataProp,
+  createUniqueClassName,
   getNodeTextContent,
   HTMLElementProps,
   Theme,
@@ -40,9 +40,10 @@ import {
 } from './styles';
 import { Size } from './types';
 import MenuContext from './MenuContext';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
-const subMenuContainer = createDataProp('sub-menu-container');
-const iconButton = createDataProp('icon-button');
+const SubMenuContainerClassName = createUniqueClassName('sub-menu-container');
+const IconButtonClassName = createUniqueClassName('icon-button');
 
 const iconButtonContainerSize = 28;
 
@@ -86,13 +87,17 @@ const subMenuOpenStyle: Record<Theme, string> = {
 
 const focusedIconStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
-      color: ${palette.white};
+    .${SubMenuContainerClassName} {
+      &:focus + .${IconButtonClassName} & {
+        color: ${palette.white};
+      }
     }
   `,
   [Theme.Dark]: css`
-    ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
-      color: ${palette.white};
+    .${SubMenuContainerClassName} {
+      &:focus + .${IconButtonClassName} & {
+        color: ${palette.white};
+      }
     }
   `,
 };
@@ -124,7 +129,7 @@ const iconButtonStyle = css`
   top: 0;
   bottom: 0;
   margin: auto;
-  transition: background-color 150ms ease-in-out;
+  transition: background-color ${transitionDuration.default}ms ease-in-out;
 `;
 
 const iconButtonThemeStyle: Record<Theme, string> = {
@@ -135,8 +140,10 @@ const iconButtonThemeStyle: Record<Theme, string> = {
       background-color: ${palette.gray.dark2};
     }
 
-    ${subMenuContainer.selector}:hover + & {
-      background-color: ${palette.gray.dark3};
+    .${SubMenuContainerClassName} {
+      &:hover + & {
+        background-color: ${palette.gray.dark3};
+      }
     }
   `,
   [Theme.Dark]: css`
@@ -148,18 +155,22 @@ const iconButtonThemeStyle: Record<Theme, string> = {
       }
     }
 
-    ${subMenuContainer.selector}:hover + & {
-      background-color: ${palette.gray.light2};
+    .${SubMenuContainerClassName} {
+      &:hover + & {
+        background-color: ${palette.gray.light2};
+      }
     }
   `,
 };
 
 const iconButtonFocusedStyle = css`
-  ${subMenuContainer.selector}:focus + & {
-    background-color: ${palette.blue.dark2};
-
-    &:hover:before {
+  .${SubMenuContainerClassName} {
+    &:focus + & {
       background-color: ${palette.blue.dark2};
+
+      &:hover:before {
+        background-color: ${palette.blue.dark2};
+      }
     }
   }
 `;
@@ -178,7 +189,7 @@ const ulStyle = css`
   padding: 0;
   height: 0;
   overflow: hidden;
-  transition: height 150ms ease-in-out;
+  transition: height ${transitionDuration.default}ms ease-in-out;
   position: relative;
 
   &::before {
@@ -380,8 +391,8 @@ const SubMenu = React.forwardRef(
   ) => {
     const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(subMenuContainer.selector, theme);
-    const focusStyles = getFocusedStyles(subMenuContainer.selector, theme);
+    const hoverStyles = getHoverStyles(SubMenuContainerClassName, theme);
+    const focusStyles = getFocusedStyles(SubMenuContainerClassName, theme);
 
     const nodeRef = React.useRef(null);
 
@@ -440,7 +451,6 @@ const SubMenu = React.forwardRef(
       });
 
     const boxProps = {
-      ...subMenuContainer.prop,
       ref,
       role: 'menuitem',
       'aria-haspopup': true,
@@ -499,6 +509,7 @@ const SubMenu = React.forwardRef(
           {...anchorProps}
           {...rest}
           className={cx(
+            SubMenuContainerClassName,
             menuItemContainerStyle,
             menuItemContainerThemeStyle[theme],
             menuItemHeight(size),
@@ -515,15 +526,19 @@ const SubMenu = React.forwardRef(
         >
           {content}
           <IconButton
-            {...iconButton.prop}
             data-testid="lg-sub-menu-icon-button"
             darkMode={true}
             ref={setIconButtonElement}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-            className={cx(iconButtonStyle, iconButtonThemeStyle[theme], {
-              [openIconButtonStyle[theme]]: open,
-              [iconButtonFocusedStyle]: showFocus,
-            })}
+            className={cx(
+              IconButtonClassName,
+              iconButtonStyle,
+              iconButtonThemeStyle[theme],
+              {
+                [openIconButtonStyle[theme]]: open,
+                [iconButtonFocusedStyle]: showFocus,
+              },
+            )}
             onClick={handleChevronClick}
           >
             <ChevronIcon

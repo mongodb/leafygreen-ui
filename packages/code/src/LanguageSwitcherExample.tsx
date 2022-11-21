@@ -132,7 +132,7 @@ function LanguageSwitcher({
 }: {
   darkMode?: boolean;
   onChange?: Function;
-  customActionButtons?: Array<React.ReactNode>;
+  customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
 }) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
