@@ -112,8 +112,7 @@ function fixTSconfig(pkg: string) {
         path: `../${dep}`,
       }));
     writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
-  } catch(error) {
-    throw new Error(`Error in ${pkg}: ${error}`)
+  } catch (error) {
+    throw new Error(`Error in ${pkg}: ${error}`);
   }
-
 }
