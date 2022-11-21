@@ -2,7 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { typeScales } from '@leafygreen-ui/tokens';
-import { Variant } from './ConfirmationModal.types';
+import { Variant } from './types';
 
 export const titleStyle = css`
   line-height: 32px;

@@ -11,7 +11,7 @@ import LeafyGreenProvider, {
   useDarkMode,
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { CloseIconColor, ModalProps, ModalSize } from '././types';
+import { CloseIconColor, ModalProps, ModalSize } from './types';
 import {
   backdropBaseStyle,
   visibleBackdrop,
@@ -23,7 +23,7 @@ import {
   closeButton,
   modalThemeStyles,
   backdropThemeStyles,
-} from './Modal.styles';
+} from './styles';
 
 /**
  * @internal
