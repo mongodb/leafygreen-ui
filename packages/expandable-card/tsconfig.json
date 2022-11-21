@@ -31,10 +31,10 @@
       "path": "../palette"
     },
     {
-      "path": "../typography"
+      "path": "../tokens"
     },
     {
-      "path": "../tokens"
+      "path": "../typography"
     },
     {
       "path": "../leafygreen-provider"

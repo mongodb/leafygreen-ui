@@ -10,10 +10,10 @@
   ],
   "references": [
     {
-      "path": "../lib"
+      "path": "../tokens"
     },
     {
-      "path": "../tokens"
+      "path": "../lib"
     }
   ]
 }
