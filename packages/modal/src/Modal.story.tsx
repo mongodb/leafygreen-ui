@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Modal from './Modal';
+import Modal from './Modal/Modal';
 import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
 import { Subtitle, Body, H3 } from '@leafygreen-ui/typography';
 import Copyable from '@leafygreen-ui/copyable';
 import Code from '@leafygreen-ui/code';
 import { ComponentStory, Meta } from '@storybook/react';
-import { CloseIconColor, ModalProps, ModalSize } from './types';
+import { CloseIconColor, ModalProps, ModalSize } from './Modal/types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {

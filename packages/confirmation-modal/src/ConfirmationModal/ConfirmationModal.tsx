@@ -18,8 +18,8 @@ import {
   titleStyle,
   warningIconStyle,
   warningIconThemeStyle,
-} from './ConfirmationModal.styles';
-import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
+} from './styles';
+import { ConfirmationModalProps, Variant } from './types';
 
 export const ConfirmationModal = ({
   children,

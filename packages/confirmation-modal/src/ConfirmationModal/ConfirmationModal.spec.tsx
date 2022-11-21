@@ -6,7 +6,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import ConfirmationModal from '.';
+import ConfirmationModal from '..';
 
 const WrappedModal = ({
   open: initialOpen,

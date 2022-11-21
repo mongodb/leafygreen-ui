@@ -1,11 +1,7 @@
 import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
-import { footerStyle } from './Footer.styles';
-
-interface FooterProps {
-  children: React.ReactNode;
-  className?: string;
-}
+import { footerStyle } from './styles';
+import { FooterProps } from './types';
 
 /**
  * @internal
