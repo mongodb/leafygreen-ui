@@ -1,12 +1,15 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
 
 export const inputOptionStyles = css`
   position: relative;
   list-style: none;
   cursor: pointer;
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
+  font-family: ${fontFamilies.default};
 
   padding: ${spacing[2]}px ${spacing[2] + spacing[1]}px;
 `;
@@ -14,15 +17,19 @@ export const inputOptionStyles = css`
 export const inputOptionThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.black};
+    background-color: ${palette.white};
 
     &:hover {
+      outline: none;
       background-color: ${palette.gray.light2};
     }
   `,
   [Theme.Dark]: css`
     color: ${palette.white};
+    background-color: ${palette.gray.dark3};
 
     &:hover {
+      outline: none;
       background-color: ${palette.gray.dark4};
     }
   `,
@@ -30,7 +37,6 @@ export const inputOptionThemeStyles: Record<Theme, string> = {
 
 const wedgeWidth = 4;
 export const inputOptionWedge = css`
-
   // Left wedge
   &:before {
     content: '';
@@ -48,6 +54,7 @@ export const inputOptionWedge = css`
 
 export const inputOptionActiveStyles: Record<Theme, string> = {
   [Theme.Light]: css`
+    outline: none;
     background-color: ${palette.blue.light3};
 
     &:before {
@@ -56,6 +63,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
+    outline: none;
     background-color: ${palette.blue.dark3};
 
     &:before {

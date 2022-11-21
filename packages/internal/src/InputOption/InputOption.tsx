@@ -1,5 +1,4 @@
 import React from 'react';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { cx } from '@leafygreen-ui/emotion';
 import { InputOptionProps } from './InputOption.types';
 import {
@@ -25,13 +24,11 @@ function _InputOption(
   ref: React.ForwardedRef<HTMLLIElement>,
 ) {
   const { theme } = useDarkMode(darkModeProp);
-  const textContent = getNodeTextContent(children);
   return (
     <li
       ref={ref}
       role="option"
       aria-selected={focused}
-      aria-label={textContent}
       tabIndex={-1}
       className={cx(
         inputOptionStyles,
