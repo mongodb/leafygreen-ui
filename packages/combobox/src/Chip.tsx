@@ -12,7 +12,6 @@ import {
   chipWrapperPaddingY,
   inputHeight,
 } from './Combobox.styles';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;
@@ -144,12 +143,12 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
     const {
       darkMode,
+      theme,
       size,
       disabled,
       chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
-    const { theme } = useDarkMode(darkMode);
 
     const isTruncated =
       !!chipCharacterLimit &&
