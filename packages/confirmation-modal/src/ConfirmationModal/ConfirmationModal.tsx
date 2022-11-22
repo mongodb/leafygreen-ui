@@ -12,7 +12,7 @@ import {
   baseModalStyle,
   buttonStyle,
   contentStyle,
-  contentThemeStyles,
+  contentDarkModeStyles,
   contentVariantStyles,
   textEntryInputStyle,
   titleStyle,
@@ -68,11 +68,9 @@ export const ConfirmationModal = ({
       darkMode={darkMode}
     >
       <div
-        className={cx(
-          contentStyle,
-          contentThemeStyles[theme],
-          contentVariantStyles[variant],
-        )}
+        className={cx(contentStyle, contentVariantStyles[variant], {
+          [contentDarkModeStyles]: darkMode,
+        })}
       >
         {variant === Variant.Danger && (
           <div className={cx(warningIconStyle, warningIconThemeStyle[theme])}>

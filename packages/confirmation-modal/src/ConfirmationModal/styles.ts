@@ -20,12 +20,9 @@ export const contentStyle = css`
   line-height: ${typeScales.body1.lineHeight}px;
 `;
 
-export const contentThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css``,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light1};
-  `,
-};
+export const contentDarkModeStyles = css`
+  color: ${palette.gray.light1};
+`;
 
 export const contentVariantStyles: Record<Variant, string> = {
   [Variant.Default]: css`
