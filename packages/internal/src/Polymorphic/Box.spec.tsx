@@ -32,6 +32,16 @@ describe('packages/box', () => {
   }
 
   const sharedProps = { name: 'testName' };
+
+  const anchorPropsWithoutRef: React.ComponentPropsWithoutRef<'a'> & {
+    as: 'a';
+  } = {
+    as: 'a',
+    href: 'https://cloud.mongodb.com',
+    target: '_blank',
+    ...sharedProps,
+  };
+
   const anchorProps: React.ComponentPropsWithRef<'a'> & { as: 'a' } = {
     as: 'a',
     href: 'https://cloud.mongodb.com',
@@ -53,94 +63,193 @@ describe('packages/box', () => {
     });
   });
 
-  describe('when rendered with only shared props', () => {
-    let box: HTMLElement;
-    let child: HTMLElement;
+  describe('Basic rendering', () => {
+    describe('with default props', () => {
+      let box: HTMLElement;
+      let child: HTMLElement;
 
-    beforeEach(() => {
-      const { getByTestId } = render(
-        <Box data-testid="box" {...sharedProps}>
-          <div data-testid="child">Child Content</div>
-        </Box>,
-      );
+      beforeEach(() => {
+        const { getByTestId } = render(
+          <Box data-testid="box" {...sharedProps}>
+            <div data-testid="child">Child Content</div>
+          </Box>,
+        );
 
-      box = getByTestId('box');
-      child = getByTestId('child');
+        box = getByTestId('box');
+        child = getByTestId('child');
+      });
+
+      test('it renders the box component as a div', () => {
+        expect(box).toBeInTheDocument();
+        expect(box?.tagName.toLowerCase()).toBe('div');
+      });
+
+      test('it renders the child content', () => {
+        expect(child).toBeInTheDocument();
+      });
+
+      test('it preserves the shared props', () => {
+        expect(box).toHaveAttribute('name', sharedProps.name);
+      });
     });
 
-    test('it renders the box component as a div', () => {
-      expect(box).toBeInTheDocument();
-      expect(box?.tagName.toLowerCase()).toBe('div');
+    describe('as an anchor', () => {
+      let box: HTMLElement;
+      let child: HTMLElement;
+
+      beforeEach(() => {
+        const { getByTestId } = render(
+          <Box {...anchorProps} data-testid="anchor-component">
+            <span data-testid="anchor-child">hi</span>
+          </Box>,
+        );
+
+        box = getByTestId('anchor-component');
+        child = getByTestId('anchor-child');
+      });
+
+      test('it renders the box component as an anchor', () => {
+        expect(box).toBeInTheDocument();
+        expect(box?.tagName.toLowerCase()).toBe('a');
+      });
+
+      test('it renders the child content', () => {
+        expect(child).toBeInTheDocument();
+      });
+
+      test('it preserves the shared props', () => {
+        expect(box).toHaveAttribute('name', sharedProps.name);
+      });
+
+      test('it sets the anchor-specific attributes', () => {
+        expect(box).toHaveAttribute('href', anchorProps.href);
+        expect(box).toHaveAttribute('target', anchorProps.target);
+      });
     });
 
-    test('it renders the child content', () => {
-      expect(child).toBeInTheDocument();
-    });
+    describe('as a custom component', () => {
+      let box: HTMLElement;
+      let child: HTMLElement;
 
-    test('it preserves the shared props', () => {
-      expect(box).toHaveAttribute('name', sharedProps.name);
+      beforeEach(() => {
+        const { getByTestId } = render(
+          <Box
+            as={LinkWrapper}
+            href="https://cloud.mongodb.com"
+            target="_blank"
+            data-testid="custom-component"
+          />,
+        );
+        box = getByTestId('custom-component');
+        child = getByTestId('link-component');
+      });
+
+      test('it renders the box component as the custom component', () => {
+        expect(box).toBeInTheDocument();
+        expect(linkWrapperFn).toHaveBeenCalled();
+        expect(box?.tagName.toLowerCase()).toBe('span');
+      });
+
+      test('it renders the child content', () => {
+        expect(child).toBeInTheDocument();
+      });
     });
   });
 
-  describe('when rendered with the expected anchor props', () => {
-    let box: HTMLElement;
-    let child: HTMLElement;
+  describe('Higher-Order Components', () => {
+    type TestHocProps<T extends AsPropType> = BoxProps<
+      T,
+      {
+        name?: string;
+      }
+    >;
 
-    beforeEach(() => {
-      const { getByTestId } = render(
-        <Box {...anchorProps} data-testid="anchor-component">
-          <span data-testid="anchor-child">hi</span>
-        </Box>,
+    /**
+     * Test Higher-Order Component
+     */
+    function TestHoc<T extends AsPropType>({
+      as,
+      children,
+      ...rest
+    }: TestHocProps<T>) {
+      return (
+        <Box as={as} {...rest}>
+          {children}
+        </Box>
       );
+    }
 
-      box = getByTestId('anchor-component');
-      child = getByTestId('anchor-child');
+    describe('Basic HOC', () => {
+      test('Renders with default props', () => {
+        const { getByTestId } = render(
+          <TestHoc name="testName">
+            <span data-testid="HOC-child" />
+          </TestHoc>,
+        );
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
+
+      test('Renders as an anchor', () => {
+        const { getByTestId } = render(
+          <TestHoc {...anchorPropsWithoutRef} data-testid="anchor-node">
+            <span data-testid="HOC-child" />
+          </TestHoc>,
+        );
+
+        expect(getByTestId('anchor-node').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
+
+      test('Renders as custom component', () => {
+        const { getByTestId } = render(
+          <TestHoc as={LinkWrapper}>
+            <span data-testid="HOC-child" />
+          </TestHoc>,
+        );
+        expect(linkWrapperFn).toHaveBeenCalled();
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
     });
 
-    test('it renders the box component as an anchor', () => {
-      expect(box).toBeInTheDocument();
-      expect(box?.tagName.toLowerCase()).toBe('a');
-    });
+    // eslint-disable-next-line jest/no-disabled-tests, jest/no-commented-out-tests
+    describe.skip('HOC with forwardRef', () => {
+      const TestHocFwdRef = React.forwardRef(TestHoc) as <
+        T extends keyof JSX.IntrinsicElements,
+      >(
+        props: TestHocProps<T> & {
+          ref: React.ForwardedRef<JSX.IntrinsicElements[T]>;
+        },
+      ) => ReturnType<typeof TestHoc>;
 
-    test('it renders the child content', () => {
-      expect(child).toBeInTheDocument();
-    });
+      test('Renders with default props', () => {
+        const { getByTestId } = render(
+          <TestHocFwdRef {...sharedProps}>
+            <span data-testid="HOC-child" />
+          </TestHocFwdRef>,
+        );
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
 
-    test('it preserves the shared props', () => {
-      expect(box).toHaveAttribute('name', sharedProps.name);
-    });
+      test('Renders as an anchor', () => {
+        const { getByTestId } = render(
+          <TestHocFwdRef {...anchorPropsWithoutRef} data-testid="anchor-node">
+            <span data-testid="HOC-child" />
+          </TestHocFwdRef>,
+        );
 
-    test('it sets the anchor-specific attributes', () => {
-      expect(box).toHaveAttribute('href', anchorProps.href);
-      expect(box).toHaveAttribute('target', anchorProps.target);
-    });
-  });
+        expect(getByTestId('anchor-node').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
 
-  describe('when rendered as a custom component', () => {
-    let box: HTMLElement;
-    let child: HTMLElement;
-
-    beforeEach(() => {
-      const { getByTestId } = render(
-        <Box
-          as={LinkWrapper}
-          href="https://cloud.mongodb.com"
-          target="_blank"
-          data-testid="custom-component"
-        />,
-      );
-      box = getByTestId('custom-component');
-      child = getByTestId('link-component');
-    });
-
-    test('it renders the box component as the custom component', () => {
-      expect(box).toBeInTheDocument();
-      expect(linkWrapperFn).toHaveBeenCalled();
-      expect(box?.tagName.toLowerCase()).toBe('span');
-    });
-
-    test('it renders the child content', () => {
-      expect(child).toBeInTheDocument();
+      test('Renders as custom component', () => {
+        const { getByTestId } = render(
+          <TestHocFwdRef as={LinkWrapper}>
+            <span data-testid="HOC-child" />
+          </TestHocFwdRef>,
+        );
+        expect(linkWrapperFn).toHaveBeenCalled();
+        expect(getByTestId('HOC-child')).toBeInTheDocument();
+      });
     });
   });
 
