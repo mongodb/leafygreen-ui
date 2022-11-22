@@ -1,30 +1,14 @@
 import React from 'react';
 import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   baseTypographyStyles,
   bodyTypeScaleStyles,
   defaultTextColor,
-} from './styles';
-import { CommonTypographyProps } from './types';
-import { useUpdatedBaseFontSize } from '.';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-
-/**
- * Body
- */
-
-type BodyFontWeight = 'regular' | 'medium';
-type BodyProps<T extends keyof JSX.IntrinsicElements> = HTMLElementProps<T> &
-  CommonTypographyProps & {
-    /**
-     * font-weight applied to typography element
-     * default: `regular`
-     */
-    weight?: BodyFontWeight;
-    as?: T;
-  };
+} from '../styles';
+import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+import { BodyFontWeight, BodyProps } from './Body.types';
 
 const fontWeights: Record<
   'default' | 'strong',
