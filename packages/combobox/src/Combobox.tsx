@@ -1190,6 +1190,7 @@ export function Combobox<M extends boolean>({
       value={{
         multiselect,
         darkMode,
+        theme,
         size,
         withIcons,
         disabled,

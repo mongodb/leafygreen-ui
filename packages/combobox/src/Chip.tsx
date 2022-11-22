@@ -3,15 +3,16 @@ import Icon from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { keyMap } from '@leafygreen-ui/lib';
+import { keyMap, Theme } from '@leafygreen-ui/lib';
 import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
-import { ChipProps, ComboboxSize as Size, Theme } from './Combobox.types';
-import { ComboboxContext, useDarkMode } from './ComboboxContext';
+import { ChipProps, ComboboxSize as Size } from './Combobox.types';
+import { ComboboxContext } from './ComboboxContext';
 import {
   chipClassName,
   chipWrapperPaddingY,
   inputHeight,
 } from './Combobox.styles';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;
@@ -148,7 +149,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
-    const theme = useDarkMode(darkMode);
+    const { theme } = useDarkMode(darkMode);
 
     const isTruncated =
       !!chipCharacterLimit &&
