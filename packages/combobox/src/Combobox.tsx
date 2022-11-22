@@ -70,6 +70,7 @@ import {
   comboboxSelectionStyles,
 } from './Combobox.styles';
 import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
+import { useDarkMode as useLGProviderDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -84,7 +85,7 @@ export function Combobox<M extends boolean>({
   'aria-label': ariaLabel,
   disabled = false,
   size = ComboboxSize.Default,
-  darkMode = false,
+  darkMode: darkModeProp,
   state = 'none',
   errorMessage,
   searchState = 'unset',
@@ -110,6 +111,7 @@ export function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
+  const { darkMode } = useLGProviderDarkMode(darkModeProp);
   const theme = useDarkMode(darkMode);
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
