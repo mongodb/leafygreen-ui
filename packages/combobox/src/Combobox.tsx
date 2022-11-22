@@ -24,6 +24,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   ComboboxProps,
   getNullSelection,
@@ -44,7 +45,10 @@ import {
   getValueForDisplayName,
   getNameAndValue,
 } from './utils';
-import { ComboboxContext, useDarkMode } from './ComboboxContext';
+import {
+  ComboboxContext,
+  useDarkMode as useComboboxDarkMode,
+} from './ComboboxContext';
 import { InternalComboboxGroup } from './ComboboxGroup';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
@@ -70,7 +74,6 @@ import {
   comboboxSelectionStyles,
 } from './Combobox.styles';
 import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
-import { useDarkMode as useLGProviderDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -111,8 +114,8 @@ export function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
-  const { darkMode } = useLGProviderDarkMode(darkModeProp);
-  const theme = useDarkMode(darkMode);
+  const { darkMode } = useDarkMode(darkModeProp);
+  const theme = useComboboxDarkMode(darkMode);
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
 
