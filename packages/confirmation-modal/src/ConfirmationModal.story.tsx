@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
-import ConfirmationModal, { Variant } from '.';
+import { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Variant } from './ConfirmationModal/types';
 
 export default {
   title: 'Components/Modals/ConfirmationModal',
@@ -19,20 +20,33 @@ export default {
     title: { control: 'text' },
     buttonText: { control: 'text' },
     children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'onConfirm', 'onCancel', 'open', 'variant'],
+    },
   },
 };
 
-const ControlledTemplate: ComponentStory<typeof ConfirmationModal> = args => {
+const ControlledTemplate: ComponentStory<typeof ConfirmationModal> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        Open Modal
+      </Button>
       <ConfirmationModal
         {...args}
         open={open}
         onCancel={handleClose}
         onConfirm={handleClose}
+        darkMode={darkMode}
       />
     </>
   );

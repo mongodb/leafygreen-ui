@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Modal from '.';
+import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
 import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
-import { Subtitle, Body } from '@leafygreen-ui/typography';
+import { Subtitle, Body, H3 } from '@leafygreen-ui/typography';
 import Copyable from '@leafygreen-ui/copyable';
 import Code from '@leafygreen-ui/code';
 import { ComponentStory, Meta } from '@storybook/react';
-import { ModalProps } from './Modal';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Modals/Modal',
@@ -22,14 +22,31 @@ export default {
     children: {
       control: false,
     },
+    darkMode: storybookArgTypes.darkMode,
+    size: {
+      options: Object.values(ModalSize),
+      control: 'radio',
+    },
+    closeIconColor: {
+      options: Object.values(CloseIconColor),
+      control: 'radio',
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'setOpen', 'shouldClose', 'children', 'open'],
+    },
   },
 } as Meta<typeof Modal>;
 
 const ControlledTemplate: ComponentStory<typeof Modal> = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
+  const { darkMode } = args;
   return (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        Open Modal
+      </Button>
       <Modal {...args} open={open} setOpen={setOpen} />
     </>
   );
@@ -39,7 +56,7 @@ export const Controlled = ControlledTemplate.bind({});
 Controlled.args = {
   children: (
     <>
-      <Subtitle>Base modal</Subtitle>
+      <H3>Base modal</H3>
       <Body>Modal Content goes here.</Body>
     </>
   ),
@@ -53,7 +70,7 @@ Scroll.args = {
         height: 200vh;
       `}
     >
-      Modal Content goes here.
+      <div>Modal Content goes here.</div>
     </div>
   ),
 };
@@ -71,13 +88,16 @@ export const DefaultSelect = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('cat');
   const [valueB, setValueB] = useState('smallCat');
+  const { darkMode } = args;
 
   return (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        Open Modal
+      </Button>
       <Modal {...args} open={open} setOpen={setOpen}>
-        <div>Modal Content goes here.</div>
-        <p>
+        <Subtitle>Modal Content goes here.</Subtitle>
+        <Body>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
           tristique risus sed est finibus pellentesque. Vestibulum feugiat,
           libero in efficitur egestas, ipsum leo mattis purus, nec maximus nisl
@@ -87,8 +107,8 @@ export const DefaultSelect = (args: ModalProps) => {
           efficitur malesuada. In ut pretium risus. Etiam convallis rhoncus
           tempor. Donec ullamcorper maximus enim sed dapibus. Duis ac vehicula
           orci, et semper turpis.
-        </p>
-        <p>
+        </Body>
+        <Body>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
           tristique risus sed est finibus pellentesque. Vestibulum feugiat,
           libero in efficitur egestas, ipsum leo mattis purus, nec maximus nisl
@@ -98,7 +118,7 @@ export const DefaultSelect = (args: ModalProps) => {
           efficitur malesuada. In ut pretium risus. Etiam convallis rhoncus
           tempor. Donec ullamcorper maximus enim sed dapibus. Duis ac vehicula
           orci, et semper turpis.
-        </p>
+        </Body>
 
         <div>
           <Select
