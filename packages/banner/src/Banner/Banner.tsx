@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import XIcon from '@leafygreen-ui/icon/dist/X';
 import { cx } from '@leafygreen-ui/emotion';
-import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
@@ -11,16 +9,13 @@ import {
 } from '@leafygreen-ui/typography';
 import { BannerProps, Variant } from './types';
 import {
-  bannerIconPositionStyles,
-  bannerVariantStyles,
   baseBannerStyles,
-  dismissibleIconStyles,
-  getTextStyle,
-  iconStyles,
-  map,
-  renderedImageStyles,
+  textStyles,
   bannerDismissibleStyles,
+  variantStyles,
 } from './styles';
+import BannerIcon from '../BannerIcon';
+import BannerDismissButton from '../BannerDismissButton';
 
 /**
  *
@@ -45,19 +40,7 @@ export default function Banner({
   ...rest
 }: BannerProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-  const { icon: Icon, color } = map[theme][variant];
-
-  const renderIcon = image ? (
-    React.cloneElement(image, {
-      className: renderedImageStyles,
-    })
-  ) : (
-    <Icon
-      fill={color}
-      className={cx(iconStyles, bannerIconPositionStyles[baseFontSize])}
-    />
-  );
+  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
   return (
     <div
@@ -65,7 +48,7 @@ export default function Banner({
       className={cx(
         baseBannerStyles,
         bodyTypeScaleStyles[baseFontSize],
-        bannerVariantStyles[theme][variant].body,
+        variantStyles[theme][variant],
         {
           [bannerDismissibleStyles]: dismissible,
         },
@@ -73,20 +56,21 @@ export default function Banner({
       )}
       {...rest}
     >
-      {renderIcon}
-      <div className={getTextStyle(image != null, dismissible)}>{children}</div>
+      <BannerIcon
+        image={image}
+        theme={theme}
+        baseFontSize={baseFontSize}
+        variant={variant}
+      />
+      <div className={textStyles(image != null, dismissible)}>{children}</div>
       {dismissible && (
-        <IconButton
-          className={cx(
-            dismissibleIconStyles,
-            bannerVariantStyles[theme][variant].dismissButton,
-          )}
-          aria-label="Close Message"
-          onClick={onClose}
+        <BannerDismissButton
+          theme={theme}
+          baseFontSize={baseFontSize}
+          variant={variant}
+          onClose={onClose}
           darkMode={darkMode}
-        >
-          <XIcon />
-        </IconButton>
+        />
       )}
     </div>
   );
