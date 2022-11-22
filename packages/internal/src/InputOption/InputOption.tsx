@@ -10,7 +10,10 @@ import {
 } from './InputOption.style';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-function _InputOption(
+const _InputOption: React.ForwardRefRenderFunction<
+  HTMLLIElement,
+  InputOptionProps
+> = (
   {
     children,
     disabled,
@@ -22,7 +25,7 @@ function _InputOption(
     ...rest
   }: InputOptionProps,
   ref: React.ForwardedRef<HTMLLIElement>,
-) {
+) => {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <li
@@ -45,6 +48,9 @@ function _InputOption(
       {children}
     </li>
   );
-}
+};
 
-export const InputOption = React.forwardRef(_InputOption);
+// type InputOptionType = React.ForwardRefExoticComponent<InputOptionProps>;
+export const InputOption = React.forwardRef<HTMLLIElement, InputOptionProps>(
+  _InputOption,
+);

@@ -1,7 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  spacing,
+  transitionDuration,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 export const inputOptionStyles = css`
   position: relative;
@@ -16,7 +21,8 @@ export const inputOptionStyles = css`
 
   transition: background-color ${transitionDuration.default}ms ease-in-out;
 
-  &:focus, &:focus-visible {
+  &:focus,
+  &:focus-visible {
     outline: none;
     border: unset;
   }

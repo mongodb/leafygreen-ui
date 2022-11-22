@@ -9,9 +9,13 @@ import { HTMLElementProps, DarkModeProps } from '@leafygreen-ui/lib';
  * `active`: The element is selected, or otherwise active (including `:active`)
  */
 
-export interface InputOptionProps
-  extends HTMLElementProps<'li'>,
-    DarkModeProps {
+export interface BaseInputOptionProps
+  extends
+    DarkModeProps,
+    Omit<
+      HTMLElementProps<'li', HTMLLIElement>,
+      'aria-label' | 'aria-labelledby'
+    > {
   /**
    * Content to appear inside of option
    */
@@ -41,4 +45,36 @@ export interface InputOptionProps
    * Whether the component is active, regardless of keyboard navigation
    */
   active?: boolean;
+
+  // 'aria-label': string;
+  // 'aria-labelledby': string;
 }
+
+// export type InputOptionProps = Either<BaseInputOptionProps, 'aria-label' | 'aria-labelledby'>
+
+interface PropsWithAriaLabel extends BaseInputOptionProps {
+  'aria-label': string;
+  'aria-labelledby'?: string;
+}
+
+interface PropsWithLabelledBy extends BaseInputOptionProps {
+  'aria-label'?: string;
+  'aria-labelledby': string;
+}
+
+export type InputOptionProps = PropsWithAriaLabel | PropsWithLabelledBy
+
+// /// @ts-expect-error
+// export const XYZ: InputOptionProps = {
+//   darkMode: false,
+// }
+
+// export const ABC: InputOptionProps = {
+//   darkMode: false,
+//   'aria-label': 'abc'
+// }
+
+// export const DEF: InputOptionProps = {
+//   darkMode: false,
+//   'aria-labelledby': 'def'
+// }
