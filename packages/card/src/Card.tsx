@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Box, { BoxProps } from '@leafygreen-ui/box';
-import { fontFamilies, focusRing, typeScales } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  focusRing,
+  typeScales,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -88,7 +93,7 @@ const colorSet: Record<Theme, ColorSet> = {
 
 const containerStyle = css`
   position: relative;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border, box-shadow;
   border-radius: 24px;
   font-family: ${fontFamilies.default};

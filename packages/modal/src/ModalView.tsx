@@ -10,7 +10,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette, uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import {
   PortalContextProvider,
   usePopoverContext,
@@ -47,7 +47,7 @@ const backdrop = css`
   right: 0;
   bottom: 0;
   opacity: 0;
-  transition: opacity 150ms ease-in-out;
+  transition: opacity ${transitionDuration.default}ms ease-in-out;
 `;
 
 const visibleBackdrop = css`
@@ -66,7 +66,7 @@ const scrollContainer = css`
 `;
 
 const modalContentStyle = css`
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   margin: auto;
   max-height: calc(100% - ${defaultVerticalSpacing}px);
   position: relative;

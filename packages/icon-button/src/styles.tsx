@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { focusRing } from '@leafygreen-ui/tokens';
+import { focusRing, transitionDuration } from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 export const removeButtonStyle = css`
@@ -16,7 +16,7 @@ export const baseIconButtonStyle = css`
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: color, box-shadow;
 
   // Set background to fully-transparent white for cross-browser compatability with Safari
@@ -27,7 +27,7 @@ export const baseIconButtonStyle = css`
 
   &:before {
     content: '';
-    transition: 150ms all ease-in-out;
+    transition: ${transitionDuration.default}ms all ease-in-out;
     position: absolute;
     top: 0;
     bottom: 0;
