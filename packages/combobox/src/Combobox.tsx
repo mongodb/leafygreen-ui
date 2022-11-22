@@ -45,10 +45,7 @@ import {
   getValueForDisplayName,
   getNameAndValue,
 } from './utils';
-import {
-  ComboboxContext,
-  useDarkMode as useComboboxDarkMode,
-} from './ComboboxContext';
+import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxGroup } from './ComboboxGroup';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
@@ -114,8 +111,7 @@ export function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
-  const { darkMode } = useDarkMode(darkModeProp);
-  const theme = useComboboxDarkMode(darkMode);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
 
