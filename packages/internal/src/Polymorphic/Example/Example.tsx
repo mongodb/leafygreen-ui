@@ -13,9 +13,7 @@ type ExampleProps<T extends React.ElementType> = PolymorphicPropsWithRef<
 >;
 
 /**
- * ExampleComponent
  * Extends Polymorphic
- *
  * @test
  */
 export const ExampleComponent = <T extends React.ElementType = 'div'>({
@@ -31,9 +29,7 @@ export const ExampleComponent = <T extends React.ElementType = 'div'>({
 };
 
 /**
- * ExampleComponentForwardRef.
  * Extends Polymorphic
- *
  * @test
  */
 export const ExampleComponentForwardRef = React.forwardRef(
@@ -49,3 +45,19 @@ export const ExampleComponentForwardRef = React.forwardRef(
   },
 );
 ExampleComponentForwardRef.displayName = 'ExampleComponentForwardRef';
+
+type RestrictedType = 'a' | 'button' | React.ComponentType;
+
+type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
+  T,
+  {
+    title?: 'string';
+  }
+>;
+
+export const RestrictedExample = <T extends RestrictedType = 'button'>({
+  as,
+  ...rest
+}: RestrictedProps<T>) => {
+  return <Polymorphic as={as as RestrictedType} {...rest} />;
+};

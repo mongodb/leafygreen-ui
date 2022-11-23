@@ -33,7 +33,9 @@ type InheritedProps<T extends React.ElementType> = T extends 'a'
   : React.ComponentPropsWithoutRef<T>;
 
 /**
- * The basic props for the Polymorphic component
+ * The basic props for the Polymorphic component.
+ *
+ * Prefer using `PolymorphicPropsWithRef` in most cases
  */
 export type PolymorphicProps<
   T extends React.ElementType,
@@ -43,6 +45,8 @@ export type PolymorphicProps<
 
 /**
  * Add the `ref` prop type to PolymorphicProps
+ *
+ * Note: Prefer using this type even in cases where you do not intend to use ref
  *
  * @type {T}
  */

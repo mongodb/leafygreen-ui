@@ -3,32 +3,16 @@ import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
 import { Polymorphic, usePolymorphicRef } from '.';
 import { ExampleComponent, ExampleComponentForwardRef } from './Example';
+import { RestrictedExample } from './Example/Example';
 
 describe('packages/internal/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
     /* eslint-disable jest/no-disabled-tests */
     test.skip('Prop Types behave correctly', () => {
+      const { Wrapper } = makeWrapperComponent();
       const divRef = usePolymorphicRef<'div'>(); // React.useRef<HTMLDivElement | null>(null);
       const anchorRef = usePolymorphicRef<'a'>();
       const spanRef = usePolymorphicRef<'span'>();
-
-      type WrapperProps = React.ComponentPropsWithoutRef<'span'> & {
-        darkMode?: boolean;
-      };
-
-      // eslint-disable-next-line react/display-name
-      const Wrapper = React.forwardRef<HTMLSpanElement, WrapperProps>(
-        (
-          { children, ...rest }: WrapperProps,
-          ref: React.ForwardedRef<HTMLSpanElement>,
-        ) => {
-          return (
-            <span data-testid="wrapper" {...rest} ref={ref}>
-              {children}
-            </span>
-          );
-        },
-      );
 
       return (
         <>
@@ -187,13 +171,24 @@ describe('packages/internal/polymorphic', () => {
 
     test('renders as a custom component', () => {
       const { wrapperDidRender, Wrapper } = makeWrapperComponent();
-
       const { container, getByTestId } = render(
         <ExampleComponent as={Wrapper} />,
       );
       expect(getByTestId('wrapper')).toBeInTheDocument();
       expect(container.firstElementChild?.tagName.toLowerCase()).toBe('span');
       expect(wrapperDidRender).toHaveBeenCalled();
+    });
+
+    test('as type can be restricted', () => {
+      const { getByTestId } = render(
+        <RestrictedExample as="button" data-testid="restricted" />,
+      );
+      expect(getByTestId('restricted')).toBeInTheDocument();
+
+      render(
+        // @ts-expect-error - can't be a div
+        <RestrictedExample as="div" />,
+      );
     });
   });
 
@@ -284,16 +279,19 @@ describe('packages/internal/polymorphic', () => {
 });
 
 /** Test utility functions */
+type WrapperProps = React.ComponentPropsWithoutRef<'span'> & {
+  darkMode?: boolean;
+};
 function makeWrapperComponent(): {
   Wrapper: React.ForwardRefExoticComponent<
-    React.RefAttributes<HTMLSpanElement>
+    WrapperProps & React.RefAttributes<HTMLSpanElement>
   >;
   wrapperDidRender: jest.Mock;
 } {
   const wrapperDidRender = jest.fn();
-  // eslint-disable-next-line react/display-name
-  const Wrapper = React.forwardRef<HTMLSpanElement>(
-    ({ children, ...rest }: React.ComponentPropsWithoutRef<'span'>, ref) => {
+
+  const Wrapper = React.forwardRef<HTMLSpanElement, WrapperProps>(
+    ({ children, ...rest }: WrapperProps, ref) => {
       wrapperDidRender();
       return (
         <span data-testid="wrapper" {...rest} ref={ref}>
@@ -302,6 +300,8 @@ function makeWrapperComponent(): {
       );
     },
   );
+
+  Wrapper.displayName = 'Wrapper';
 
   return {
     Wrapper,
