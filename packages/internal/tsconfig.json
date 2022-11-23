@@ -4,7 +4,8 @@
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "noErrorTruncation": true,
   },
   "include": ["src/**/*"],
   "references": [

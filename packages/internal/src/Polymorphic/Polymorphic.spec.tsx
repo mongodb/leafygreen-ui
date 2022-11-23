@@ -11,15 +11,19 @@ describe('packages/internal/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
     /* eslint-disable jest/no-disabled-tests */
     test.skip('Prop Types behave correctly', () => {
-      const divRef = React.useRef<HTMLDivElement>();
-      const anchorRef = React.useRef<HTMLAnchorElement>();
-      const spanRef = React.useRef<HTMLSpanElement>();
+      const divRef = React.useRef<HTMLDivElement | null>(null);
+      const anchorRef = React.useRef<HTMLAnchorElement | null>(null);
+      const spanRef = React.useRef<HTMLSpanElement | null>(null);
+
+      type WrapperProps = React.ComponentPropsWithoutRef<'span'> & {
+        darkMode?: boolean;
+      };
 
       // eslint-disable-next-line react/display-name
-      const Wrapper = React.forwardRef<HTMLSpanElement>(
+      const Wrapper = React.forwardRef<HTMLSpanElement, WrapperProps>(
         (
-          { children, ...rest }: React.ComponentPropsWithoutRef<'span'>,
-          ref,
+          { children, ...rest }: WrapperProps,
+          ref: React.ForwardedRef<HTMLSpanElement>,
         ) => {
           return (
             <span data-testid="wrapper" {...rest} ref={ref}>
@@ -32,11 +36,16 @@ describe('packages/internal/polymorphic', () => {
       return (
         <>
           <Polymorphic />
+          <Polymorphic>some content</Polymorphic>
           <Polymorphic as="div" />
           <Polymorphic as="div" ref={divRef} />
           {/* @ts-expect-error - Must pass the correct ref type */}
           <Polymorphic as="div" ref={anchorRef} />
-          <Polymorphic>some content</Polymorphic>
+          <Polymorphic as="div" ref={divRef}>
+            some content
+          </Polymorphic>
+          {/* @ts-expect-error href is not allowed on div */}
+          <Polymorphic as="div" href="mongodb.design" />
 
           {/* @ts-expect-error - Require href when as="a" */}
           <Polymorphic as="a" />
@@ -48,12 +57,15 @@ describe('packages/internal/polymorphic', () => {
 
           <Polymorphic as="input" />
           {/* @ts-expect-error - Input should not accept children */}
-          <Polymorphic as="input"></Polymorphic>
+          <Polymorphic as="input">some content</Polymorphic>
 
           <Polymorphic as={Wrapper} />
           <Polymorphic as={Wrapper} ref={spanRef} />
           {/* @ts-expect-error - Must pass the correct ref type */}
           <Polymorphic as={Wrapper} ref={divRef} />
+          <Polymorphic as={Wrapper} ref={spanRef} darkMode={true} />
+          {/* @ts-expect-error - Theme is not a prop on Wrapper */}
+          <Polymorphic as={Wrapper} ref={spanRef} theme={'dark'} />
         </>
       );
     });
@@ -186,7 +198,7 @@ describe('packages/internal/polymorphic', () => {
       ...rest
     }: HOCProps<T>) => {
       return (
-        <Polymorphic as={as} {...rest}>
+        <Polymorphic as={as as React.ElementType} title={title} {...rest}>
           {title}
         </Polymorphic>
       );
@@ -202,7 +214,7 @@ describe('packages/internal/polymorphic', () => {
 
     test('renders as an HTML Element', () => {
       const { queryByTestId } = render(
-        <HigherOrderComponent as="a" data-testid="hoc" />,
+        <HigherOrderComponent as="a" data-testid="hoc" href="mongodb.design" />,
       );
       expect(queryByTestId('hoc')).toBeInTheDocument();
       expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
@@ -260,7 +272,7 @@ describe('packages/internal/polymorphic', () => {
         ref: PolymorphicRef<T>,
       ) => {
         return (
-          <Polymorphic as={as} {...rest} ref={ref}>
+          <Polymorphic as={as as React.ElementType} {...rest} ref={ref}>
             {title}
           </Polymorphic>
         );
