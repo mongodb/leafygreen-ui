@@ -1,6 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import React from 'react';
-import { Polymorphic, PolymorphicPropsWithRef, PolymorphicRef } from '.';
+import { Polymorphic, PolymorphicPropsWithRef, PolymorphicRef } from '..';
 
 interface ControlProps extends HTMLElementProps<'div'> {
   /** An arbitrary title */
@@ -13,6 +13,8 @@ interface ControlProps extends HTMLElementProps<'div'> {
 /**
  * A control component that should always output TSDoc
  *
+ * @test
+ *
  * */
 export const ControlTestComponent = ({ children, ...rest }: ControlProps) => (
   <div {...rest}>{children}</div>
@@ -20,6 +22,8 @@ export const ControlTestComponent = ({ children, ...rest }: ControlProps) => (
 
 /**
  * A control component using forwardRef that should always output TSDoc
+ *
+ * @test
  *
  * */
 export const ControlForwardRef = React.forwardRef<HTMLDivElement, ControlProps>(
@@ -50,6 +54,8 @@ type HOCProps<T extends React.ElementType> = PolymorphicPropsWithRef<
  *
  * Extends Polymorphic
  *
+ * @test
+ *
  */
 export const HigherOrderTestComponent = <T extends React.ElementType = 'div'>({
   as,
@@ -67,6 +73,8 @@ export const HigherOrderTestComponent = <T extends React.ElementType = 'div'>({
  * HigherOrderTestComponentForwardRef.
  *
  * Extends Polymorphic
+ *
+ * @test
  *
  */
 export const HigherOrderTestComponentForwardRef = React.forwardRef(

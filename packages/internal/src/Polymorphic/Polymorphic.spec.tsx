@@ -1,4 +1,5 @@
 import React from 'react';
+import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
 import {
   Polymorphic,
@@ -94,7 +95,7 @@ describe('packages/internal/polymorphic', () => {
     describe('as an HTML element', () => {
       test('renders as an HTML element', () => {
         const { getByTestId } = render(
-          <Polymorphic as="a" data-testid="poly" />,
+          <Polymorphic as="a" href="mongodb.design" data-testid="poly" />,
         );
         expect(getByTestId('poly')).toBeInTheDocument();
         expect(getByTestId('poly').tagName.toLowerCase()).toBe('a');
@@ -110,10 +111,10 @@ describe('packages/internal/polymorphic', () => {
       });
 
       test('accepts a ref', () => {
-        let testRef: React.MutableRefObject<HTMLAnchorElement | undefined>;
+        let testRef: React.MutableRefObject<HTMLAnchorElement | null>;
 
         const TestComponent = () => {
-          const myRef = React.useRef<HTMLAnchorElement>();
+          const myRef = React.useRef<HTMLAnchorElement | null>(null);
           testRef = myRef;
           return (
             <Polymorphic
@@ -166,10 +167,10 @@ describe('packages/internal/polymorphic', () => {
       });
 
       test('accepts a ref', () => {
-        let testRef: React.MutableRefObject<HTMLSpanElement | undefined>;
+        let testRef: React.MutableRefObject<HTMLSpanElement | null>;
 
         const TestComponent = () => {
-          const myRef = React.useRef<HTMLSpanElement>();
+          const myRef = React.useRef<HTMLSpanElement | null>(null);
           testRef = myRef;
           return <Polymorphic as={Wrapper} ref={myRef} data-testid="poly" />;
         };
@@ -344,6 +345,30 @@ describe('packages/internal/polymorphic', () => {
       expect(wrapperDidRender).toHaveBeenCalled();
       expect(testRef!).toBeDefined();
       expect(testRef!.current).toBeDefined();
+    });
+  });
+
+  describe('TSDoc output', () => {
+    const docs = parseTSDoc('internal/src/Polymorphic/TestComponent');
+
+    test('Docs for test components is generated', () => {
+      const componentNames = docs?.map(doc => doc.displayName);
+      expect(componentNames).toContain('HigherOrderTestComponent');
+      expect(componentNames).toContain('HigherOrderTestComponentForwardRef');
+    });
+
+    describe.each([
+      'HigherOrderTestComponent',
+      'HigherOrderTestComponentForwardRef',
+    ])('Docs for test components contain the expected props', displayName => {
+      test(`${displayName}`, () => {
+        const doc = docs?.find(doc => doc.displayName === displayName);
+        expect(doc).not.toBeUndefined();
+        expect(doc!.props).toHaveProperty('AsProp');
+        expect(doc!.props).toHaveProperty(`${displayName}Props`);
+        expect(doc!.props).toHaveProperty('AriaAttributes');
+        expect(doc!.props).toHaveProperty('DOMAttributes');
+      });
     });
   });
 });
