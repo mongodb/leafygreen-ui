@@ -1,7 +1,11 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, focusRing } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  focusRing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { Size } from './types';
 
 /**
@@ -109,7 +113,7 @@ export const optionStyle = ({
                 var(--divider-height)
             ) / 2
         );
-        transition: background-color 150ms ease-in-out;
+        transition: background-color ${transitionDuration.default}ms ease-in-out;
         background-color: var(--divider-background-color);
       }
     `,
@@ -146,7 +150,7 @@ export const buttonStyle = css`
   color: var(--base-text-color);
   box-shadow: 0px 1px 2px var(--base-shadow-color);
   cursor: pointer;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: color, box-shadow;
   text-decoration: none;
   outline: none;

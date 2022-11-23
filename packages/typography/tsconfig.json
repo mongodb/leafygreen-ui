@@ -6,7 +6,7 @@
     "rootDir": "src"
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
   ],
   "references": [
     {

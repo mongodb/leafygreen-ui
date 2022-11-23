@@ -2,7 +2,12 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  transitionDuration,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 import { labelTypeScaleStyles } from '@leafygreen-ui/typography';
 import { Size } from './types';
 
@@ -109,7 +114,7 @@ export const buttonWrapperStyleShadow = css`
     left: 0px;
     top: 3px;
     border-radius: 100%;
-    transition: box-shadow 100ms ease-in-out;
+    transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
   }
 `;
 
