@@ -63,7 +63,7 @@ export interface PolymorphicComponentType {
   <T extends React.ElementType = 'div'>(
     props: PolymorphicPropsWithRef<T>,
   ): React.ReactElement | null;
-  displayName?: string
+  displayName?: string;
 }
 
 // export type PolymorphicForwardedRefComponent = React.NamedExoticComponent<any>
