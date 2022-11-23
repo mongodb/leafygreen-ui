@@ -1,7 +1,7 @@
-
 # Internal
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/internal.svg)
+
 #### [View on MongoDB.design](https://www.mongodb.design/component/internal/example/)
 
 ## Installation
@@ -26,4 +26,3 @@ npm install @leafygreen-ui/internal
 
 | Prop | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
-

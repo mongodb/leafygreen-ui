@@ -105,7 +105,7 @@ export const Polymorphic = React.forwardRef(
 //   );
 // }
 
-type Q<T extends React.ElementType> = { as: T } & Omit<
-  PolymorphicProps<T, { title?: string | undefined }>,
-  'title' | 'as'
-> & { children: string | undefined };
+// type Q<T extends React.ElementType> = { as: T } & Omit<
+//   PolymorphicProps<T, { title?: string | undefined }>,
+//   'title' | 'as'
+// > & { children: string | undefined };

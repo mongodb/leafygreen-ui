@@ -1,11 +1,9 @@
-
-export { Polymorphic} from './Polymorphic';
+export { Polymorphic } from './Polymorphic';
 export type {
   PolymorphicProps,
   PolymorphicPropsWithRef,
-  PolymorphicRef
-} from './Polymorphic'
-
+  PolymorphicRef,
+} from './Polymorphic';
 
 // Uncomment these to debug tsdoc generation
 // export {

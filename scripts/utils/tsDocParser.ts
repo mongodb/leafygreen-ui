@@ -64,7 +64,7 @@ const Parser = withCompilerOptions(compilerOptions, TSDocOptions);
  */
 export function parseTSDoc(
   componentName: string,
-  packagesRoot = path.resolve(__dirname, '../../packages')
+  packagesRoot = path.resolve(__dirname, '../../packages'),
 ): Array<CustomComponentDoc> | undefined {
   const componentDir = path.resolve(
     __dirname,
@@ -110,7 +110,7 @@ export function parseTSDoc(
         chalk.bold(`\`${componentName}\``),
         'at',
         chalk.bold(`${componentDir}`),
-      )
+      ),
     );
   }
 
@@ -154,7 +154,7 @@ export function writeDocs(
   packagesRoot = path.resolve(__dirname, '../../packages'),
   outDir = path.resolve(__dirname, '../../packages'),
 ): void {
-  const docs = parseTSDoc(componentName)
+  const docs = parseTSDoc(componentName);
   const docString = JSON.stringify(docs, null, 2);
 
   console.log(

@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { Command } from 'commander';
 
-import {writeDocs} from './utils/tsDocParser'
+import { writeDocs } from './utils/tsDocParser';
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
@@ -34,5 +34,9 @@ if (cli.args.length) {
  * @param componentName string
  */
 function generateDocFiles(componentName: string): void {
-  writeDocs(componentName, path.resolve(__dirname, packagesRoot), path.resolve(__dirname, outDir));
+  writeDocs(
+    componentName,
+    path.resolve(__dirname, packagesRoot),
+    path.resolve(__dirname, outDir),
+  );
 }

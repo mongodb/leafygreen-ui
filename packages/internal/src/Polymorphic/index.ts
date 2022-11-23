@@ -3,4 +3,4 @@ export type {
   PolymorphicProps,
   PolymorphicPropsWithRef,
   PolymorphicRef,
-} from './Polymorphic'
+} from './Polymorphic';
