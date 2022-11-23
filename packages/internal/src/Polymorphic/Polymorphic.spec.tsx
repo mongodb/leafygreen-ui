@@ -1,20 +1,17 @@
 import React from 'react';
 import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
-import {
-  Polymorphic,
-  PolymorphicProps,
-  PolymorphicPropsWithRef,
-  PolymorphicRef,
-} from '.';
+import { Polymorphic } from '.';
+import { usePolymorphicRef } from './Polymorphic';
+import { ExampleComponent, ExampleComponentForwardRef } from './Example';
 
 describe('packages/internal/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
     /* eslint-disable jest/no-disabled-tests */
     test.skip('Prop Types behave correctly', () => {
-      const divRef = React.useRef<HTMLDivElement | null>(null);
-      const anchorRef = React.useRef<HTMLAnchorElement | null>(null);
-      const spanRef = React.useRef<HTMLSpanElement | null>(null);
+      const divRef = usePolymorphicRef<'div'>(); // React.useRef<HTMLDivElement | null>(null);
+      const anchorRef = usePolymorphicRef<'a'>();
+      const spanRef = usePolymorphicRef<'span'>();
 
       type WrapperProps = React.ComponentPropsWithoutRef<'span'> & {
         darkMode?: boolean;
@@ -57,12 +54,12 @@ describe('packages/internal/polymorphic', () => {
           </Polymorphic>
 
           <Polymorphic as="input" />
-          {/* @ts-expect-error - Input should not accept children */}
-          <Polymorphic as="input">some content</Polymorphic>
+          {/* TODO: ts-expect-error - Input should not accept children */}
+          {/* <Polymorphic as="input">some content</Polymorphic> */}
 
           <Polymorphic as={Wrapper} />
           <Polymorphic as={Wrapper} ref={spanRef} />
-          {/* @ts-expect-error - Must pass the correct ref type */}
+          {/* TODO:ts-expect-error - Must pass the correct ref type */}
           <Polymorphic as={Wrapper} ref={divRef} />
           <Polymorphic as={Wrapper} ref={spanRef} darkMode={true} />
           {/* @ts-expect-error - Theme is not a prop on Wrapper */}
@@ -186,28 +183,9 @@ describe('packages/internal/polymorphic', () => {
   });
 
   describe('Higher-Order Polymorphic Component', () => {
-    type HOCProps<T extends React.ElementType> = PolymorphicProps<
-      T,
-      {
-        title?: string;
-      }
-    >;
-
-    const HigherOrderComponent = <T extends React.ElementType = 'div'>({
-      as,
-      title,
-      ...rest
-    }: HOCProps<T>) => {
-      return (
-        <Polymorphic as={as as React.ElementType} title={title} {...rest}>
-          {title}
-        </Polymorphic>
-      );
-    };
-
     test('renders as a div by default & accepts custom props', () => {
       const { container, queryByText } = render(
-        <HigherOrderComponent title="Some Title" />,
+        <ExampleComponent title="Some Title" />,
       );
       expect(container.firstElementChild?.tagName.toLowerCase()).toBe('div');
       expect(queryByText('Some Title')).toBeInTheDocument();
@@ -215,7 +193,7 @@ describe('packages/internal/polymorphic', () => {
 
     test('renders as an HTML Element', () => {
       const { queryByTestId } = render(
-        <HigherOrderComponent as="a" data-testid="hoc" href="mongodb.design" />,
+        <ExampleComponent as="a" data-testid="hoc" href="mongodb.design" />,
       );
       expect(queryByTestId('hoc')).toBeInTheDocument();
       expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
@@ -223,11 +201,7 @@ describe('packages/internal/polymorphic', () => {
 
     test('accepts tag-specific HTML attributes', () => {
       const { getByTestId } = render(
-        <HigherOrderComponent
-          as="a"
-          data-testid="hoc"
-          href={'mongodb.design'}
-        />,
+        <ExampleComponent as="a" data-testid="hoc" href={'mongodb.design'} />,
       );
       expect(getByTestId('hoc').getAttribute('href')).toBe('mongodb.design');
     });
@@ -250,7 +224,7 @@ describe('packages/internal/polymorphic', () => {
       );
 
       const { container, getByTestId } = render(
-        <HigherOrderComponent as={Wrapper} />,
+        <ExampleComponent as={Wrapper} />,
       );
       expect(getByTestId('wrapper')).toBeInTheDocument();
       expect(container.firstElementChild?.tagName.toLowerCase()).toBe('strong');
@@ -259,34 +233,13 @@ describe('packages/internal/polymorphic', () => {
   });
 
   describe('Higher-Order Polymorphic Component with Ref', () => {
-    type HOCProps<T extends React.ElementType> = PolymorphicPropsWithRef<
-      T,
-      {
-        title?: string;
-      }
-    >;
-
-    // eslint-disable-next-line react/display-name
-    const HigherOrderWithRef = React.forwardRef(
-      <T extends React.ElementType = 'div'>(
-        { as, title, ...rest }: HOCProps<T>,
-        ref: PolymorphicRef<T>,
-      ) => {
-        return (
-          <Polymorphic as={as as React.ElementType} {...rest} ref={ref}>
-            {title}
-          </Polymorphic>
-        );
-      },
-    );
-
     test('renders as a div by default', () => {
       let testRef: React.MutableRefObject<HTMLDivElement | undefined>;
 
       const TestComponent = () => {
         const myRef = React.useRef<HTMLDivElement>();
         testRef = myRef;
-        return <HigherOrderWithRef ref={myRef} data-testid="hoc" />;
+        return <ExampleComponentForwardRef ref={myRef} data-testid="hoc" />;
       };
 
       const { getByTestId } = render(<TestComponent />);
@@ -302,7 +255,9 @@ describe('packages/internal/polymorphic', () => {
       const TestComponent = () => {
         const myRef = React.useRef<HTMLAnchorElement>();
         testRef = myRef;
-        return <HigherOrderWithRef ref={myRef} as="a" data-testid="hoc" />;
+        return (
+          <ExampleComponentForwardRef ref={myRef} as="a" data-testid="hoc" />
+        );
       };
 
       const { getByTestId } = render(<TestComponent />);
@@ -335,7 +290,11 @@ describe('packages/internal/polymorphic', () => {
         const myRef = React.useRef<HTMLAnchorElement>();
         testRef = myRef;
         return (
-          <HigherOrderWithRef ref={myRef} as={Wrapper} data-testid="hoc" />
+          <ExampleComponentForwardRef
+            ref={myRef}
+            as={Wrapper}
+            data-testid="hoc"
+          />
         );
       };
 
@@ -349,26 +308,26 @@ describe('packages/internal/polymorphic', () => {
   });
 
   describe('TSDoc output', () => {
-    const docs = parseTSDoc('internal/src/Polymorphic/TestComponent');
+    const docs = parseTSDoc('internal/src/Polymorphic/Example');
 
     test('Docs for test components is generated', () => {
       const componentNames = docs?.map(doc => doc.displayName);
-      expect(componentNames).toContain('HigherOrderTestComponent');
-      expect(componentNames).toContain('HigherOrderTestComponentForwardRef');
+      expect(componentNames).toContain('ExampleComponent');
+      expect(componentNames).toContain('ExampleComponentForwardRef');
     });
 
-    describe.each([
-      'HigherOrderTestComponent',
-      'HigherOrderTestComponentForwardRef',
-    ])('Docs for test components contain the expected props', displayName => {
-      test(`${displayName}`, () => {
-        const doc = docs?.find(doc => doc.displayName === displayName);
-        expect(doc).not.toBeUndefined();
-        expect(doc!.props).toHaveProperty('AsProp');
-        expect(doc!.props).toHaveProperty(`${displayName}Props`);
-        expect(doc!.props).toHaveProperty('AriaAttributes');
-        expect(doc!.props).toHaveProperty('DOMAttributes');
-      });
-    });
+    describe.each(['ExampleComponent', 'ExampleComponentForwardRef'])(
+      'Docs for test components contain the expected props',
+      displayName => {
+        test(`${displayName}`, () => {
+          const doc = docs?.find(doc => doc.displayName === displayName);
+          expect(doc).not.toBeUndefined();
+          expect(doc!.props).toHaveProperty('AsProp');
+          expect(doc!.props).toHaveProperty(`${displayName}Props`);
+          expect(doc!.props).toHaveProperty('AriaAttributes');
+          expect(doc!.props).toHaveProperty('DOMAttributes');
+        });
+      },
+    );
   });
 });

@@ -18,10 +18,15 @@ export type PolymorphicRef<T extends React.ElementType> =
   React.ComponentPropsWithRef<T>['ref'];
 
 /**
- * Union of re-declared types
+ * Union of types potentially re-defined in React.ComponentProps
  */
 type PropsToOmit<T extends React.ElementType, P> = keyof (P & AsProp<T>);
 
+/**
+ * Parses the expected inherited Props,
+ * and adds restrictions based on the passed in type
+ *
+ */
 type InheritedProps<T extends React.ElementType> = T extends 'a'
   ? Omit<React.ComponentPropsWithoutRef<T>, 'href'> & {
       /** `href` is required for Anchor tags */
@@ -78,34 +83,13 @@ export const Polymorphic = React.forwardRef(
   },
 ) as PolymorphicComponentType;
 
-// eslint-disable-next-line react/display-name
-// export const Polymorphic = PolymorphicForwardRef(
-//   <T extends React.ElementType = 'div'>(
-//     { as, children, ...rest }: PolymorphicPropsWithRef<T>,
-//     ref: PolymorphicRef<T>,
-//   ) => {
-//     const Component = as || 'div';
-
-//     return (
-//       <Component {...rest} ref={ref}>
-//         {children}
-//       </Component>
-//     );
-//   },
-// );
-
-// function PolymorphicForwardRef<T extends React.ElementType>(
-//   render: (
-//     props: PolymorphicPropsWithRef<T>,
-//     ref: PolymorphicRef<T>,
-//   ) => React.ReactElement,
-// ): React.ComponentType<PolymorphicPropsWithRef<T>> {
-//   return React.forwardRef<PolymorphicRef<T>, PolymorphicPropsWithRef<T>>(
-//     render,
-//   );
-// }
-
-// type Q<T extends React.ElementType> = { as: T } & Omit<
-//   PolymorphicProps<T, { title?: string | undefined }>,
-//   'title' | 'as'
-// > & { children: string | undefined };
+export const usePolymorphicRef = <
+  E extends keyof HTMLElementTagNameMap & React.ElementType,
+>() => {
+  return React.useRef<
+    | (E extends keyof HTMLElementTagNameMap
+        ? HTMLElementTagNameMap[E]
+        : unknown)
+    | null
+  >(null);
+};
