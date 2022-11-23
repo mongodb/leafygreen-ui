@@ -18,6 +18,7 @@ import {
 } from './SegmentedControlOption.styles';
 import { SegmentedControlOptionProps } from './types';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 /**
  * SegmentedControlOption
@@ -83,13 +84,12 @@ export const SegmentedControlOption = forwardRef<
       didComponentMount.current = true;
     }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
 
-    const isIconOnly = (glyph && !children) ?? false;
-
     const renderIcon = () => {
-      if (isComponentGlyph(glyph)) {
-        return glyph;
-      }
+      if (isComponentGlyph(glyph)) return glyph;
+      consoleOnce.warn('Please provide a LeafyGreen Icon or Glyph component');
     };
+
+    const isIconOnly = (glyph && !children) ?? false;
 
     return (
       <div
@@ -107,7 +107,7 @@ export const SegmentedControlOption = forwardRef<
             disabled={disabled}
             className={cx(buttonStyle, {
               [buttonFocusStyle[theme]]: usingKeyboard,
-              [iconOnlyThemeStyles]: isIconOnly, // Icons are different colors when there is text.
+              [iconOnlyThemeStyles]: isIconOnly,
             })}
             ref={buttonRef}
             onClick={onClick}
@@ -115,9 +115,6 @@ export const SegmentedControlOption = forwardRef<
             onMouseLeave={onMouseLeave}
             type="button"
           >
-            {/* <span className={labelStyle}>{children}</span> */}
-
-            {/* Need icon only styles */}
             <div className={labelStyle}>
               {glyph && renderIcon()}
               {!isIconOnly && (

@@ -176,7 +176,6 @@ export const buttonStyle = css`
   &[aria-selected='false']:not(:disabled):not(:hover) {
     svg {
       color: ${palette.gray.base};
-      // color: green;
     }
   }
 `;
@@ -185,7 +184,6 @@ export const iconOnlyThemeStyles = css`
   &[aria-selected='false']:not(:disabled):not(:hover) {
     svg {
       color: var(--base-text-color);
-      // color: purple;
     }
   }
 `;

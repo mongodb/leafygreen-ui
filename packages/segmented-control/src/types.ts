@@ -87,6 +87,7 @@ export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
 
   /**
    * The icon to display to the left of the option.
+   * @type `<Icon />`
    */
   glyph?: ReactElement;
 
