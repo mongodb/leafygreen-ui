@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { SegmentedControl, SegmentedControlOption } from '.';
 import Icon from '@leafygreen-ui/icon';
-import { SegmentedControlProps, Size } from './types';
+import { SegmentedControlProps, Size } from './SegmentedControl/types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {

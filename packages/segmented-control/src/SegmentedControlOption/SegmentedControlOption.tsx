@@ -6,7 +6,7 @@ import {
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import Box from '@leafygreen-ui/box';
-import { SegmentedControlContext } from './SegmentedControlContext';
+import { SegmentedControlContext } from '../SegmentedControlContext';
 import {
   optionStyle,
   boxStyle,
@@ -15,10 +15,9 @@ import {
   labelStyle,
   iconOnlyThemeStyles,
   labelTextStyles,
-} from './SegmentedControlOption.styles';
+} from './styles';
 import { SegmentedControlOptionProps } from './types';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { consoleOnce } from '@leafygreen-ui/lib';
 
 /**
  * SegmentedControlOption

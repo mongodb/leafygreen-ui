@@ -6,7 +6,7 @@ import {
   focusRing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
-import { Size } from './types';
+import { Size } from '../SegmentedControl/types';
 
 /**
  * Styles

@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
-import { Size } from './types';
+import { Size } from '../SegmentedControl/types';
 
 export const wrapperStyle = css`
   display: flex;
@@ -13,15 +13,23 @@ export const wrapperStyle = css`
   font-family: ${fontFamilies.default};
 `;
 
+const labelBaseStyles = css`
+  white-space: nowrap;
+`;
+
 export const labelThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
-    white-space: nowrap;
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light1};
-    white-space: nowrap;
-  `,
+  [Theme.Light]: cx(
+    labelBaseStyles,
+    css`
+      color: ${palette.gray.dark1};
+    `,
+  ),
+  [Theme.Dark]: cx(
+    labelBaseStyles,
+    css`
+      color: ${palette.gray.light1};
+    `,
+  ),
 };
 
 export const optionsWrapperStyleSize: Record<Size, string> = {

@@ -2,7 +2,7 @@ import React from 'react';
 import { axe } from 'jest-axe';
 import { getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SegmentedControlOption } from './SegmentedControlOption';
+import { SegmentedControlOption } from '../SegmentedControlOption/SegmentedControlOption';
 import { SegmentedControl } from './SegmentedControl';
 import { typeIs } from '@leafygreen-ui/lib';
 import Icon from '@leafygreen-ui/icon';
