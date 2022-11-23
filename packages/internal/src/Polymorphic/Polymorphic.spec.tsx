@@ -131,30 +131,8 @@ describe('packages/internal/polymorphic', () => {
     });
 
     describe('as a custom component', () => {
-      let wrapperDidRender: jest.Mock;
-      let Wrapper: React.ForwardRefExoticComponent<
-        React.RefAttributes<HTMLSpanElement>
-      >;
-
-      beforeEach(() => {
-        wrapperDidRender = jest.fn();
-        // eslint-disable-next-line react/display-name
-        Wrapper = React.forwardRef<HTMLSpanElement>(
-          (
-            { children, ...rest }: React.ComponentPropsWithoutRef<'span'>,
-            ref,
-          ) => {
-            wrapperDidRender();
-            return (
-              <span data-testid="wrapper" {...rest} ref={ref}>
-                {children}
-              </span>
-            );
-          },
-        );
-      });
-
       test('renders as a custom component', () => {
+        const { Wrapper, wrapperDidRender } = makeWrapperComponent();
         const { container, getByTestId } = render(<Polymorphic as={Wrapper} />);
         expect(getByTestId('wrapper')).toBeInTheDocument();
         // The root element of Polymorphic is the root span of Wrapper
@@ -163,6 +141,8 @@ describe('packages/internal/polymorphic', () => {
       });
 
       test('accepts a ref', () => {
+        const { Wrapper, wrapperDidRender } = makeWrapperComponent();
+
         let testRef: React.MutableRefObject<HTMLSpanElement | null>;
 
         const TestComponent = () => {
@@ -206,27 +186,13 @@ describe('packages/internal/polymorphic', () => {
     });
 
     test('renders as a custom component', () => {
-      const wrapperDidRender = jest.fn();
-      // eslint-disable-next-line react/display-name
-      const Wrapper = React.forwardRef<HTMLSpanElement>(
-        (
-          { children, ...rest }: React.ComponentPropsWithoutRef<'span'>,
-          ref,
-        ) => {
-          wrapperDidRender();
-          return (
-            <strong data-testid="wrapper" {...rest} ref={ref}>
-              {children}
-            </strong>
-          );
-        },
-      );
+      const { wrapperDidRender, Wrapper } = makeWrapperComponent();
 
       const { container, getByTestId } = render(
         <ExampleComponent as={Wrapper} />,
       );
       expect(getByTestId('wrapper')).toBeInTheDocument();
-      expect(container.firstElementChild?.tagName.toLowerCase()).toBe('strong');
+      expect(container.firstElementChild?.tagName.toLowerCase()).toBe('span');
       expect(wrapperDidRender).toHaveBeenCalled();
     });
   });
@@ -267,21 +233,7 @@ describe('packages/internal/polymorphic', () => {
     });
 
     test('renders as a custom component', () => {
-      const wrapperDidRender = jest.fn();
-      // eslint-disable-next-line react/display-name
-      const Wrapper = React.forwardRef<HTMLSpanElement>(
-        (
-          { children, ...rest }: React.ComponentPropsWithoutRef<'span'>,
-          ref,
-        ) => {
-          wrapperDidRender();
-          return (
-            <span data-testid="wrapper" {...rest} ref={ref}>
-              {children}
-            </span>
-          );
-        },
-      );
+      const { Wrapper, wrapperDidRender } = makeWrapperComponent();
 
       let testRef: React.MutableRefObject<HTMLAnchorElement | undefined>;
 
@@ -330,3 +282,29 @@ describe('packages/internal/polymorphic', () => {
     );
   });
 });
+
+/** Test utility functions */
+function makeWrapperComponent(): {
+  Wrapper: React.ForwardRefExoticComponent<
+    React.RefAttributes<HTMLSpanElement>
+  >;
+  wrapperDidRender: jest.Mock;
+} {
+  const wrapperDidRender = jest.fn();
+  // eslint-disable-next-line react/display-name
+  const Wrapper = React.forwardRef<HTMLSpanElement>(
+    ({ children, ...rest }: React.ComponentPropsWithoutRef<'span'>, ref) => {
+      wrapperDidRender();
+      return (
+        <span data-testid="wrapper" {...rest} ref={ref}>
+          {children}
+        </span>
+      );
+    },
+  );
+
+  return {
+    Wrapper,
+    wrapperDidRender,
+  };
+}
