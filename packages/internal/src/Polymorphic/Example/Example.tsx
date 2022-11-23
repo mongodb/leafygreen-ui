@@ -47,7 +47,6 @@ export const ExampleComponentForwardRef = React.forwardRef(
 ExampleComponentForwardRef.displayName = 'ExampleComponentForwardRef';
 
 type RestrictedType = 'a' | 'button' | React.ComponentType;
-
 type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
   T,
   {

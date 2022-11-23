@@ -5,7 +5,10 @@ import {
   PolymorphicRef,
 } from './Polymorphic.types';
 
-const _Polymorphic = <T extends React.ElementType = 'div'>(
+/**
+ * Base polymorphic component
+ */
+export const BasePolymorphic = <T extends React.ElementType = 'div'>(
   { as, children, ...rest }: PolymorphicPropsWithRef<T>,
   ref: PolymorphicRef<T>,
 ) => {
@@ -18,6 +21,12 @@ const _Polymorphic = <T extends React.ElementType = 'div'>(
   );
 };
 
+/**
+ * Polymorphic component wrapped in a forward ref
+ *
+ * With the `as` prop, Polymorphic can dynamically render
+ * as any HTML element or React Component.
+ */
 export const Polymorphic: PolymorphicComponentType =
-  React.forwardRef(_Polymorphic);
+  React.forwardRef(BasePolymorphic);
 Polymorphic.displayName = 'Polymorphic';

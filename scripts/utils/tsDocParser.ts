@@ -31,6 +31,8 @@ const TSDocOptions: ParserOptions = {
   shouldIncludePropTagMap: true,
   shouldRemoveUndefinedFromOptional: false,
   skipChildrenPropWithoutDoc: false,
+  /** Ensures the Polymorphic component gets documented */
+  customComponentTypes: ['PolymorphicComponentType'],
   propFilter: (prop, component) => {
     return (
       !skipComponents.includes(component.name) &&

@@ -25,6 +25,7 @@ describe('packages/internal/polymorphic', () => {
           <Polymorphic as="div" ref={divRef}>
             some content
           </Polymorphic>
+          <Polymorphic key="some-key" />
           {/* @ts-expect-error href is not allowed on div */}
           <Polymorphic as="div" href="mongodb.design" />
 
@@ -254,27 +255,42 @@ describe('packages/internal/polymorphic', () => {
   });
 
   describe('TSDoc output', () => {
-    const docs = parseTSDoc('internal/src/Polymorphic/Example');
+    describe('Polymorphic', () => {
+      const docs = parseTSDoc('internal/src/Polymorphic');
 
-    test('Docs for test components is generated', () => {
-      const componentNames = docs?.map(doc => doc.displayName);
-      expect(componentNames).toContain('ExampleComponent');
-      expect(componentNames).toContain('ExampleComponentForwardRef');
+      test('Docs for Polymorphic are generated', () => {
+        const doc = docs?.find(doc => doc.displayName === 'Polymorphic');
+        expect(doc).not.toBeUndefined();
+        expect(doc!.props).toHaveProperty('AsProp');
+        expect(doc!.props).toHaveProperty(`PolymorphicProps`);
+        expect(doc!.props).toHaveProperty('AriaAttributes');
+        expect(doc!.props).toHaveProperty('DOMAttributes');
+      });
     });
 
-    describe.each(['ExampleComponent', 'ExampleComponentForwardRef'])(
-      'Docs for test components contain the expected props',
-      displayName => {
-        test(`${displayName}`, () => {
-          const doc = docs?.find(doc => doc.displayName === displayName);
-          expect(doc).not.toBeUndefined();
-          expect(doc!.props).toHaveProperty('AsProp');
-          expect(doc!.props).toHaveProperty(`${displayName}Props`);
-          expect(doc!.props).toHaveProperty('AriaAttributes');
-          expect(doc!.props).toHaveProperty('DOMAttributes');
-        });
-      },
-    );
+    describe('Higher-Order components', () => {
+      const docs = parseTSDoc('internal/src/Polymorphic/Example');
+
+      test('Docs for test components are generated', () => {
+        const componentNames = docs?.map(doc => doc.displayName);
+        expect(componentNames).toContain('ExampleComponent');
+        expect(componentNames).toContain('ExampleComponentForwardRef');
+      });
+
+      describe.each(['ExampleComponent', 'ExampleComponentForwardRef'])(
+        'Docs for test components contain the expected props',
+        displayName => {
+          test(`${displayName}`, () => {
+            const doc = docs?.find(doc => doc.displayName === displayName);
+            expect(doc).not.toBeUndefined();
+            expect(doc!.props).toHaveProperty('AsProp');
+            expect(doc!.props).toHaveProperty(`${displayName}Props`);
+            expect(doc!.props).toHaveProperty('AriaAttributes');
+            expect(doc!.props).toHaveProperty('DOMAttributes');
+          });
+        },
+      );
+    });
   });
 });
 
