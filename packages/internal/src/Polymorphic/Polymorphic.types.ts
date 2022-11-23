@@ -3,6 +3,37 @@
  */
 import React from 'react';
 
+// TODO: Consider restricting HTML elements to only elements that accept children
+/**
+ * A subset of HTMLElements that accept children
+ */
+/*
+export type HTMLElements = Omit<
+  HTMLElementTagNameMap,
+  // Excludes Void & Foreign elements
+  // (https://html.spec.whatwg.org/multipage/syntax.html#void-elements)
+  | 'object'
+  | 'area'
+  | 'base'
+  | 'br'
+  | 'col'
+  | 'embed'
+  | 'hr'
+  | 'img'
+  | 'input'
+  | 'link'
+  | 'meta'
+  | 'source'
+  | 'track'
+  | 'wbr'
+  | 'template'
+  | 'script'
+  | 'style'
+  | keyof React.ReactSVG
+>;
+export type ElementTag = keyof HTMLElements
+*/
+
 /** An interface that defines the `as` prop */
 export interface AsProp<T extends React.ElementType> {
   /** The component or element to render as */
