@@ -1,4 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { ReactElement } from 'react';
 
 export const Size = {
   Small: 'small',
@@ -77,12 +78,17 @@ export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
   /**
    * Can be text and/or an icon element
    */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /**
    * The value of the option
    */
   value: string;
+
+  /**
+   * The icon to display to the left of the option.
+   */
+  glyph?: ReactElement;
 
   /**
    * Toggles whether the option is disabled. Defaults to `false`

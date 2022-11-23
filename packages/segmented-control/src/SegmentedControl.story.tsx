@@ -95,14 +95,23 @@ WithIcons.args = {
   label: 'View as',
   name: 'language',
   children: [
-    <SegmentedControlOption key="json" value="json">
-      <Icon glyph="CurlyBraces"></Icon> JSONNNNN and more
+    <SegmentedControlOption
+      key="json"
+      value="json"
+      glyph={<Icon glyph="CurlyBraces" />}
+    >
+      JSONNNNN and more
     </SegmentedControlOption>,
-    <SegmentedControlOption key="xml" value="xml">
-      <Icon glyph="Code"></Icon> XML
+    <SegmentedControlOption key="xml" value="xml" glyph={<Icon glyph="Code" />}>
+      XML
     </SegmentedControlOption>,
-    <SegmentedControlOption disabled key="shell" value="shell">
-      <Icon glyph="Shell"></Icon> Shell
+    <SegmentedControlOption
+      disabled
+      key="shell"
+      value="shell"
+      glyph={<Icon glyph="Shell" />}
+    >
+      Shell
     </SegmentedControlOption>,
   ],
 };
@@ -112,14 +121,21 @@ IconsOnly.args = {
   label: 'Location',
   name: 'location',
   children: [
-    <SegmentedControlOption key="cloud" value="cloud">
-      <Icon glyph="Cloud" />
-    </SegmentedControlOption>,
-    <SegmentedControlOption key="globe" value="globe">
-      <Icon glyph="GlobeAmericas" />
-    </SegmentedControlOption>,
-    <SegmentedControlOption disabled key="government" value="government">
-      <Icon glyph="GovernmentBuilding" />
-    </SegmentedControlOption>,
+    <SegmentedControlOption
+      key="cloud"
+      value="cloud"
+      glyph={<Icon glyph="Cloud" />}
+    />,
+    <SegmentedControlOption
+      key="globe"
+      value="globe"
+      glyph={<Icon glyph="GlobeAmericas" />}
+    />,
+    <SegmentedControlOption
+      disabled
+      key="government"
+      value="government"
+      glyph={<Icon glyph="GovernmentBuilding" />}
+    />,
   ],
 };

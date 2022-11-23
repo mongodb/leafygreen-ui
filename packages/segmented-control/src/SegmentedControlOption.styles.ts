@@ -156,6 +156,10 @@ export const buttonStyle = css`
   outline: none;
   border: none;
 
+  svg {
+    transition: color ${transitionDuration.default}ms ease-in-out;
+  }
+
   &:hover {
     color: var(--hover-text-color);
   }
@@ -172,6 +176,7 @@ export const buttonStyle = css`
   &[aria-selected='false']:not(:disabled):not(:hover) {
     svg {
       color: ${palette.gray.base};
+      // color: green;
     }
   }
 `;
@@ -180,6 +185,7 @@ export const iconOnlyThemeStyles = css`
   &[aria-selected='false']:not(:disabled):not(:hover) {
     svg {
       color: var(--base-text-color);
+      // color: purple;
     }
   }
 `;
@@ -209,7 +215,7 @@ export const labelStyle = css`
   }
 `;
 
-export const textEllipsisStyle = css`
+export const labelTextStyles = css`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

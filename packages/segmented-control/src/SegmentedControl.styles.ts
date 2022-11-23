@@ -15,11 +15,12 @@ export const wrapperStyle = css`
 
 export const labelThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    letter-spacing: 1.4px;
     color: ${palette.gray.dark1};
+    white-space: nowrap;
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.light1};
+    white-space: nowrap;
   `,
 };
 

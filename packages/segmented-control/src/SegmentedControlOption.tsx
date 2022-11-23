@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import {
@@ -21,9 +14,9 @@ import {
   buttonFocusStyle,
   labelStyle,
   iconOnlyThemeStyles,
+  labelTextStyles,
 } from './SegmentedControlOption.styles';
 import { SegmentedControlOptionProps } from './types';
-import { isComponentType } from '@leafygreen-ui/lib';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 
 /**
@@ -48,6 +41,7 @@ export const SegmentedControlOption = forwardRef<
       _onClick,
       _onHover,
       isfocusInComponent,
+      glyph,
       ...rest
     }: SegmentedControlOptionProps,
     forwardedRef,
@@ -55,7 +49,6 @@ export const SegmentedControlOption = forwardRef<
     const { size, theme, followFocus } = useContext(SegmentedControlContext);
     const { usingKeyboard } = useUsingKeyboardContext();
     const baseFontSize = useBaseFontSize();
-    const [hasIcon, setHasIcon] = useState<boolean>(false);
 
     const onClick = () => {
       _onClick?.(value);
@@ -90,17 +83,13 @@ export const SegmentedControlOption = forwardRef<
       didComponentMount.current = true;
     }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
 
-    // TODO: Remove this logic if slots are added, we will no longer need these check. https://jira.mongodb.org/browse/LG-2487
-    // Gets the number of children.
-    const childCount = React.Children.count(children);
-    useMemo(
-      () =>
-        React.Children.forEach(children, child => {
-          if (isComponentType(child, 'Icon') || isComponentGlyph(child))
-            setHasIcon(true);
-        }),
-      [children],
-    );
+    const isIconOnly = (glyph && !children) ?? false;
+
+    const renderIcon = () => {
+      if (isComponentGlyph(glyph)) {
+        return glyph;
+      }
+    };
 
     return (
       <div
@@ -118,7 +107,7 @@ export const SegmentedControlOption = forwardRef<
             disabled={disabled}
             className={cx(buttonStyle, {
               [buttonFocusStyle[theme]]: usingKeyboard,
-              [iconOnlyThemeStyles]: hasIcon && childCount === 1, // If there is only one child and that child is an icon. Icons are different colors when there is text.
+              [iconOnlyThemeStyles]: isIconOnly, // Icons are different colors when there is text.
             })}
             ref={buttonRef}
             onClick={onClick}
@@ -126,7 +115,15 @@ export const SegmentedControlOption = forwardRef<
             onMouseLeave={onMouseLeave}
             type="button"
           >
-            <span className={labelStyle}>{children}</span>
+            {/* <span className={labelStyle}>{children}</span> */}
+
+            {/* Need icon only styles */}
+            <div className={labelStyle}>
+              {glyph && renderIcon()}
+              {!isIconOnly && (
+                <span className={labelTextStyles}>{children}</span>
+              )}
+            </div>
           </button>
         </Box>
       </div>
