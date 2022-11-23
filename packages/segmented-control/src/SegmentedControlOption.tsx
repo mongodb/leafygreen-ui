@@ -134,4 +134,5 @@ SegmentedControlOption.propTypes = {
   value: PropTypes.string.isRequired,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  glyph: PropTypes.element
 };
