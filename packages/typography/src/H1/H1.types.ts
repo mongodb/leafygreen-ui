@@ -1,4 +1,4 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { CommonTypographyProps } from '../types';
+import { TypographyProps } from '../types';
 
-export type H1Props = HTMLElementProps<'h1'> & CommonTypographyProps;
+export type H1Props<T extends keyof JSX.IntrinsicElements> = TypographyProps<T>;
+

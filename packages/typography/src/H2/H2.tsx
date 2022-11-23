@@ -1,16 +1,16 @@
 import React from 'react';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { baseTypographyStyles } from '../styles';
 import { h2Styles, h2Color } from './H2.styles';
 import { H2Props } from './H2.types';
 
-const H2: ExtendableBox<H2Props, 'h2'> = ({
+const H2 = <T extends keyof JSX.IntrinsicElements>({
   darkMode: darkModeProp,
   className,
   ...rest
-}: H2Props) => {
+}: H2Props<T>) => {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <Box
