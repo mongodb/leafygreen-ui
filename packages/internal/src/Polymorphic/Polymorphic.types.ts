@@ -1,7 +1,6 @@
 /**
  * Based on https://blog.logrocket.com/build-strongly-typed-polymorphic-components-react-typescript/
  */
-
 import React from 'react';
 
 /** An interface that defines the `as` prop */
@@ -60,6 +59,11 @@ export type PolymorphicPropsWithRef<
  *
  * @type {T}
  */
-export type PolymorphicComponentType = <T extends React.ElementType = 'div'>(
-  props: PolymorphicPropsWithRef<T>,
-) => React.ReactElement | null;
+export interface PolymorphicComponentType {
+  <T extends React.ElementType = 'div'>(
+    props: PolymorphicPropsWithRef<T>,
+  ): React.ReactElement | null;
+  displayName?: string
+}
+
+// export type PolymorphicForwardedRefComponent = React.NamedExoticComponent<any>

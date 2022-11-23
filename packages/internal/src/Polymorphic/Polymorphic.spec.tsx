@@ -1,8 +1,7 @@
 import React from 'react';
 import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
-import { Polymorphic } from '.';
-import { usePolymorphicRef } from './Polymorphic';
+import { Polymorphic, usePolymorphicRef } from '.';
 import { ExampleComponent, ExampleComponentForwardRef } from './Example';
 
 describe('packages/internal/polymorphic', () => {
@@ -59,7 +58,7 @@ describe('packages/internal/polymorphic', () => {
 
           <Polymorphic as={Wrapper} />
           <Polymorphic as={Wrapper} ref={spanRef} />
-          {/* TODO:ts-expect-error - Must pass the correct ref type */}
+          {/* TODO: ts-expect-error - Must pass the correct ref type */}
           <Polymorphic as={Wrapper} ref={divRef} />
           <Polymorphic as={Wrapper} ref={spanRef} darkMode={true} />
           {/* @ts-expect-error - Theme is not a prop on Wrapper */}

@@ -5,29 +5,19 @@ import {
   PolymorphicRef,
 } from './Polymorphic.types';
 
-// eslint-disable-next-line react/display-name
-export const Polymorphic = React.forwardRef(
-  <T extends React.ElementType = 'div'>(
-    { as, children, ...rest }: PolymorphicPropsWithRef<T>,
-    ref: PolymorphicRef<T>,
-  ) => {
-    const Component = as || 'div';
+const _Polymorphic = <T extends React.ElementType = 'div'>(
+  { as, children, ...rest }: PolymorphicPropsWithRef<T>,
+  ref: PolymorphicRef<T>,
+) => {
+  const Component = as || 'div';
 
-    return (
-      <Component {...rest} ref={ref}>
-        {children}
-      </Component>
-    );
-  },
-) as PolymorphicComponentType;
-
-export const usePolymorphicRef = <
-  E extends keyof HTMLElementTagNameMap & React.ElementType,
->() => {
-  return React.useRef<
-    | (E extends keyof HTMLElementTagNameMap
-        ? HTMLElementTagNameMap[E]
-        : unknown)
-    | null
-  >(null);
+  return (
+    <Component {...rest} ref={ref}>
+      {children}
+    </Component>
+  );
 };
+
+export const Polymorphic: PolymorphicComponentType =
+  React.forwardRef(_Polymorphic);
+Polymorphic.displayName = 'Polymorphic';

@@ -1,4 +1,5 @@
 export { Polymorphic } from './Polymorphic';
+export { usePolymorphicRef } from './Polymorphic.hooks';
 export type {
   PolymorphicProps,
   PolymorphicPropsWithRef,
