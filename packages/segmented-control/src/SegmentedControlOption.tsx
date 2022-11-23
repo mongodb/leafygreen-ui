@@ -84,10 +84,12 @@ export const SegmentedControlOption = forwardRef<
       didComponentMount.current = true;
     }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
 
-    const renderIcon = () => {
-      if (isComponentGlyph(glyph)) return glyph;
-      consoleOnce.warn('Please provide a LeafyGreen Icon or Glyph component');
-    };
+    useEffect(() => {
+      // If consumer is not using Icon or Glyph component as the `glyph` show a warning
+      if (glyph && !isComponentGlyph(glyph)) {
+        console.warn('Please provide a LeafyGreen UI Icon or Glyph component.');
+      }
+    }, [glyph]);
 
     const isIconOnly = (glyph && !children) ?? false;
 
@@ -116,7 +118,7 @@ export const SegmentedControlOption = forwardRef<
             type="button"
           >
             <div className={labelStyle}>
-              {glyph && renderIcon()}
+              {glyph && isComponentGlyph(glyph) && glyph}
               {!isIconOnly && (
                 <span className={labelTextStyles}>{children}</span>
               )}
@@ -134,5 +136,5 @@ SegmentedControlOption.propTypes = {
   value: PropTypes.string.isRequired,
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  glyph: PropTypes.element
+  glyph: PropTypes.element,
 };
