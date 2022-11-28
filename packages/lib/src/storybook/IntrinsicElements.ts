@@ -117,7 +117,7 @@ const IntrinsicElements: Array<keyof JSX.IntrinsicElements> = [
   'video',
   // 'wbr', - Void element - cannot accept Children
   'webview',
-  'svg'
+  'svg',
 ];
 
 export default IntrinsicElements;
