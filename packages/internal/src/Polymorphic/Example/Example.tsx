@@ -6,7 +6,6 @@ import {
   usePolymorphic,
 } from '..';
 import { PolymorphicComponent } from '../Polymorphic';
-import { PolymorphicComponentType } from '../Polymorphic.types';
 
 interface BaseExampleProps {
   /** An arbitrary title */

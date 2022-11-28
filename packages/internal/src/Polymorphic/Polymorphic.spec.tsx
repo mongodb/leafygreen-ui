@@ -19,42 +19,40 @@ describe('packages/internal/polymorphic', () => {
       const anchorRef = usePolymorphicRef<'a'>();
       const spanRef = usePolymorphicRef<'span'>();
 
-      return (
-        <>
-          <Polymorphic />
-          <Polymorphic>some content</Polymorphic>
-          <Polymorphic as="div" />
-          <Polymorphic as="div" ref={divRef} />
-          {/* @ts-expect-error - Must pass the correct ref type */}
-          <Polymorphic as="div" ref={anchorRef} />
-          <Polymorphic as="div" ref={divRef}>
-            some content
-          </Polymorphic>
-          <Polymorphic key="some-key" />
-          {/* @ts-expect-error href is not allowed on div */}
-          <Polymorphic as="div" href="mongodb.design" />
+      <>
+        <Polymorphic />
+        <Polymorphic>some content</Polymorphic>
+        <Polymorphic as="div" />
+        <Polymorphic as="div" ref={divRef} />
+        {/* @ts-expect-error - Must pass the correct ref type */}
+        <Polymorphic as="div" ref={anchorRef} />
+        <Polymorphic as="div" ref={divRef}>
+          some content
+        </Polymorphic>
+        <Polymorphic key="some-key" />
+        {/* @ts-expect-error href is not allowed on div */}
+        <Polymorphic as="div" href="mongodb.design" />
 
-          {/* @ts-expect-error - Require href when as="a" */}
-          <Polymorphic as="a" />
-          <Polymorphic as="a" href="mongodb.design" />
-          <Polymorphic as="a" href="mongodb.design" ref={anchorRef} />
-          <Polymorphic as="a" href="mongodb.design">
-            some content
-          </Polymorphic>
+        {/* @ts-expect-error - Require href when as="a" */}
+        <Polymorphic as="a" />
+        <Polymorphic as="a" href="mongodb.design" />
+        <Polymorphic as="a" href="mongodb.design" ref={anchorRef} />
+        <Polymorphic as="a" href="mongodb.design">
+          some content
+        </Polymorphic>
 
-          <Polymorphic as="input" />
-          {/* TODO: ts-expect-error - Input should not accept children */}
-          {/* <Polymorphic as="input">some content</Polymorphic> */}
+        <Polymorphic as="input" />
+        {/* TODO: ts-expect-error - Input should not accept children */}
+        {/* <Polymorphic as="input">some content</Polymorphic> */}
 
-          <Polymorphic as={Wrapper} />
-          <Polymorphic as={Wrapper} ref={spanRef} />
-          {/* TODO: ts-expect-error - Must pass the correct ref type */}
-          <Polymorphic as={Wrapper} ref={divRef} />
-          <Polymorphic as={Wrapper} ref={spanRef} darkMode={true} />
-          {/* @ts-expect-error - Theme is not a prop on Wrapper */}
-          <Polymorphic as={Wrapper} ref={spanRef} theme={'dark'} />
-        </>
-      );
+        <Polymorphic as={Wrapper} />
+        <Polymorphic as={Wrapper} ref={spanRef} />
+        {/* TODO: ts-expect-error - Must pass the correct ref type */}
+        <Polymorphic as={Wrapper} ref={divRef} />
+        <Polymorphic as={Wrapper} ref={spanRef} darkMode={true} />
+        {/* @ts-expect-error - Theme is not a prop on Wrapper */}
+        <Polymorphic as={Wrapper} ref={spanRef} theme={'dark'} />
+      </>;
     });
     /* eslint-enable jest/no-disabled-tests */
 

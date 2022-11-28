@@ -1,6 +1,11 @@
 import React from 'react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { Polymorphic, usePolymorphic, PolymorphicComponent } from '.';
+import {
+  Polymorphic,
+  usePolymorphic,
+  PolymorphicComponent,
+  PolymorphicPropsWithRef,
+} from '.';
 
 export default {
   title: 'Components/Internal/Polymorphic',
@@ -25,7 +30,9 @@ export default {
   },
 };
 
-export const Basic = props => <Polymorphic {...props} />;
+export const Basic = (props: PolymorphicPropsWithRef<any>) => (
+  <Polymorphic {...props} />
+);
 
 export const HigherOrder = PolymorphicComponent<{
   /** An arbitrary title */

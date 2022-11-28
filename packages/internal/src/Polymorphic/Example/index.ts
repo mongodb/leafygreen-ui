@@ -4,5 +4,5 @@ export {
   ExampleWithHook,
   ExampleForwardRef,
   ExampleForwardRefWithHook,
-  RestrictedExample
+  RestrictedExample,
 } from './Example';
