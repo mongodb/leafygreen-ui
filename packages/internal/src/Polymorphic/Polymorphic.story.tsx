@@ -1,7 +1,6 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { Polymorphic } from '.';
+import { Polymorphic, usePolymorphic, PolymorphicComponent } from '.';
 
 export default {
   title: 'Components/Internal/Polymorphic',
@@ -26,6 +25,28 @@ export default {
   },
 };
 
-export const Basic: ComponentStory<typeof Polymorphic> = props => (
-  <Polymorphic {...props} />
-);
+export const Basic = props => <Polymorphic {...props} />;
+
+export const HigherOrder = PolymorphicComponent<{
+  /** An arbitrary title */
+  title?: string;
+}>(({ as, title = 'Title', ...rest }) => {
+  const { Component } = usePolymorphic(as);
+  return (
+    <Component as={as} {...rest}>
+      {title}
+    </Component>
+  );
+});
+
+export const HigherOrderWithRef = PolymorphicComponent<{
+  /** An arbitrary title */
+  title?: string;
+}>(({ as, title = 'Title', ...rest }, ref) => {
+  const { Component } = usePolymorphic(as);
+  return (
+    <Component as={as} ref={ref} {...rest}>
+      {title}
+    </Component>
+  );
+});

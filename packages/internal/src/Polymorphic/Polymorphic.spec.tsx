@@ -2,8 +2,13 @@ import React from 'react';
 import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
 import { Polymorphic, usePolymorphicRef } from '.';
-import { ExampleComponent, ExampleComponentForwardRef } from './Example';
-import { RestrictedExample } from './Example/Example';
+import {
+  ExampleComponent,
+  ExampleForwardRef,
+  ExampleForwardRefWithHook,
+  ExampleWithHook,
+  RestrictedExample,
+} from './Example';
 
 describe('packages/internal/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
@@ -146,113 +151,130 @@ describe('packages/internal/polymorphic', () => {
     });
   });
 
-  describe('Higher-Order Polymorphic Component', () => {
-    test('renders as a div by default & accepts custom props', () => {
-      const { container, queryByText } = render(
-        <ExampleComponent title="Some Title" />,
-      );
-      expect(container.firstElementChild?.tagName.toLowerCase()).toBe('div');
-      expect(queryByText('Some Title')).toBeInTheDocument();
+  describe.each([
+    ExampleComponent,
+    ExampleWithHook,
+    ExampleForwardRef,
+    ExampleForwardRefWithHook,
+  ])('Higher-Order Polymorphic Components', ExampleComponent => {
+    test(`displayName is defined for ${ExampleComponent.displayName!}`, () => {
+      expect(ExampleComponent.displayName).not.toBeUndefined();
     });
 
-    test('renders as an HTML Element', () => {
-      const { queryByTestId } = render(
-        <ExampleComponent as="a" data-testid="hoc" href="mongodb.design" />,
-      );
-      expect(queryByTestId('hoc')).toBeInTheDocument();
-      expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
-    });
+    describe(`${ExampleComponent.displayName!}`, () => {
+      test('renders as a div by default & accepts custom props', () => {
+        const { container, queryByText } = render(
+          <ExampleComponent title="Some Title" />,
+        );
+        expect(container.firstElementChild?.tagName.toLowerCase()).toBe('div');
+        expect(queryByText('Some Title')).toBeInTheDocument();
+      });
 
-    test('accepts tag-specific HTML attributes', () => {
-      const { getByTestId } = render(
-        <ExampleComponent as="a" data-testid="hoc" href={'mongodb.design'} />,
-      );
-      expect(getByTestId('hoc').getAttribute('href')).toBe('mongodb.design');
-    });
+      test('renders as an HTML Element', () => {
+        const { queryByTestId } = render(
+          <ExampleComponent as="span" data-testid="hoc" />,
+        );
+        expect(queryByTestId('hoc')).toBeInTheDocument();
+        expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('span');
+      });
 
-    test('renders as a custom component', () => {
-      const { wrapperDidRender, Wrapper } = makeWrapperComponent();
-      const { container, getByTestId } = render(
-        <ExampleComponent as={Wrapper} />,
-      );
-      expect(getByTestId('wrapper')).toBeInTheDocument();
-      expect(container.firstElementChild?.tagName.toLowerCase()).toBe('span');
-      expect(wrapperDidRender).toHaveBeenCalled();
-    });
+      test('accepts tag-specific HTML attributes', () => {
+        const { getByTestId } = render(
+          <ExampleComponent as="a" data-testid="hoc" href={'mongodb.design'} />,
+        );
+        expect(getByTestId('hoc').getAttribute('href')).toBe('mongodb.design');
+      });
 
-    test('as type can be restricted', () => {
-      const { getByTestId } = render(
-        <RestrictedExample as="button" data-testid="restricted" />,
-      );
-      expect(getByTestId('restricted')).toBeInTheDocument();
-
-      render(
-        // @ts-expect-error - can't be a div
-        <RestrictedExample as="div" />,
-      );
+      test('renders as a custom component', () => {
+        const { wrapperDidRender, Wrapper } = makeWrapperComponent();
+        const { container, getByTestId } = render(
+          <ExampleComponent as={Wrapper} />,
+        );
+        expect(getByTestId('wrapper')).toBeInTheDocument();
+        expect(container.firstElementChild?.tagName.toLowerCase()).toBe('span');
+        expect(wrapperDidRender).toHaveBeenCalled();
+      });
     });
   });
 
-  describe('Higher-Order Polymorphic Component with Ref', () => {
-    test('renders as a div by default', () => {
-      let testRef: React.MutableRefObject<HTMLDivElement | undefined>;
+  test('`as` type can be restricted', () => {
+    const { getByTestId } = render(
+      <RestrictedExample as="button" data-testid="restricted" />,
+    );
+    expect(getByTestId('restricted')).toBeInTheDocument();
 
-      const TestComponent = () => {
-        const myRef = React.useRef<HTMLDivElement>();
-        testRef = myRef;
-        return <ExampleComponentForwardRef ref={myRef} data-testid="hoc" />;
-      };
-
-      const { getByTestId } = render(<TestComponent />);
-      expect(getByTestId('hoc')).toBeInTheDocument();
-      expect(getByTestId('hoc').tagName.toLowerCase()).toBe('div');
-      expect(testRef!).toBeDefined();
-      expect(testRef!.current).toBeDefined();
-    });
-
-    test('renders as an HTML element', () => {
-      let testRef: React.MutableRefObject<HTMLAnchorElement | undefined>;
-
-      const TestComponent = () => {
-        const myRef = React.useRef<HTMLAnchorElement>();
-        testRef = myRef;
-        return (
-          <ExampleComponentForwardRef ref={myRef} as="a" data-testid="hoc" />
-        );
-      };
-
-      const { getByTestId } = render(<TestComponent />);
-      expect(getByTestId('hoc')).toBeInTheDocument();
-      expect(getByTestId('hoc').tagName.toLowerCase()).toBe('a');
-      expect(testRef!).toBeDefined();
-      expect(testRef!.current).toBeDefined();
-    });
-
-    test('renders as a custom component', () => {
-      const { Wrapper, wrapperDidRender } = makeWrapperComponent();
-
-      let testRef: React.MutableRefObject<HTMLAnchorElement | undefined>;
-
-      const TestComponent = () => {
-        const myRef = React.useRef<HTMLAnchorElement>();
-        testRef = myRef;
-        return (
-          <ExampleComponentForwardRef
-            ref={myRef}
-            as={Wrapper}
-            data-testid="hoc"
-          />
-        );
-      };
-
-      const { getByTestId } = render(<TestComponent />);
-      expect(getByTestId('hoc')).toBeInTheDocument();
-      expect(getByTestId('hoc').tagName.toLowerCase()).toBe('span');
-      expect(wrapperDidRender).toHaveBeenCalled();
-      expect(testRef!).toBeDefined();
-      expect(testRef!.current).toBeDefined();
-    });
+    render(
+      // @ts-expect-error - can't be a div
+      <RestrictedExample as="div" />,
+    );
   });
+
+  describe.each([ExampleForwardRef, ExampleForwardRefWithHook])(
+    'Higher-Order Polymorphic Components with Ref',
+    ExampleComponent => {
+      describe(`${ExampleComponent.displayName!}`, () => {
+        test('ref is defined with default props', () => {
+          let testRef: React.MutableRefObject<HTMLDivElement | null>;
+
+          const TestComponent = () => {
+            const myRef = usePolymorphicRef<'div'>();
+            testRef = myRef;
+            return <ExampleComponent ref={myRef} data-testid="hoc" />;
+          };
+
+          const { getByTestId } = render(<TestComponent />);
+          expect(getByTestId('hoc')).toBeInTheDocument();
+          expect(getByTestId('hoc').tagName.toLowerCase()).toBe('div');
+          expect(testRef!).toBeDefined();
+          expect(testRef!.current).toBeDefined();
+        });
+
+        test('ref is defined as an HTML element', () => {
+          let testRef: React.MutableRefObject<HTMLAnchorElement | null>;
+
+          const TestComponent = () => {
+            const myRef = usePolymorphicRef<'a'>();
+            testRef = myRef;
+            return (
+              <ExampleComponent
+                ref={myRef}
+                as="a"
+                href="mongodb.design"
+                data-testid="hoc"
+              />
+            );
+          };
+
+          const { getByTestId } = render(<TestComponent />);
+          expect(getByTestId('hoc')).toBeInTheDocument();
+          expect(getByTestId('hoc').tagName.toLowerCase()).toBe('a');
+          expect(testRef!).toBeDefined();
+          expect(testRef!.current).toBeDefined();
+        });
+
+        test('ref is defined as a custom component', () => {
+          const { Wrapper, wrapperDidRender } = makeWrapperComponent();
+
+          let testRef: React.MutableRefObject<HTMLAnchorElement | null>;
+
+          const TestComponent = () => {
+            const myRef = usePolymorphicRef<'a'>();
+            testRef = myRef;
+            return (
+              <ExampleComponent ref={myRef} as={Wrapper} data-testid="hoc" />
+            );
+          };
+
+          const { getByTestId } = render(<TestComponent />);
+          expect(getByTestId('hoc')).toBeInTheDocument();
+          expect(getByTestId('hoc').tagName.toLowerCase()).toBe('span');
+          expect(wrapperDidRender).toHaveBeenCalled();
+          expect(testRef!).toBeDefined();
+          expect(testRef!.current).toBeDefined();
+        });
+      });
+    },
+  );
 
   describe('TSDoc output', () => {
     describe('Polymorphic', () => {
@@ -268,23 +290,33 @@ describe('packages/internal/polymorphic', () => {
       });
     });
 
+    /**
+     * Ensure that any components that build on top of Polymorphic
+     * also generate TSDoc
+     */
     describe('Higher-Order components', () => {
       const docs = parseTSDoc('internal/src/Polymorphic/Example');
 
-      test('Docs for test components are generated', () => {
-        const componentNames = docs?.map(doc => doc.displayName);
-        expect(componentNames).toContain('ExampleComponent');
-        expect(componentNames).toContain('ExampleComponentForwardRef');
-      });
+      const exampleComponentNames = [
+        'ExampleComponent',
+        'ExampleWithHook',
+        'ExampleForwardRef',
+        'ExampleForwardRefWithHook',
+      ];
 
-      describe.each(['ExampleComponent', 'ExampleComponentForwardRef'])(
-        'Docs for test components contain the expected props',
+      describe.each(exampleComponentNames)(
+        'Docs for test components',
         displayName => {
-          test(`${displayName}`, () => {
+          test(`${displayName} docs exist`, () => {
             const doc = docs?.find(doc => doc.displayName === displayName);
             expect(doc).not.toBeUndefined();
+          });
+
+          test(`${displayName} docs contain the expected props`, () => {
+            const doc = docs?.find(doc => doc.displayName === displayName);
             expect(doc!.props).toHaveProperty('AsProp');
-            expect(doc!.props).toHaveProperty(`${displayName}Props`);
+            // expect(doc!.props).toHaveProperty(`${displayName}Props`);
+            expect(doc!.props).toHaveProperty(`BaseExampleProps`);
             expect(doc!.props).toHaveProperty('AriaAttributes');
             expect(doc!.props).toHaveProperty('DOMAttributes');
           });

@@ -1,15 +1,23 @@
 import React from 'react';
-import { Polymorphic, PolymorphicPropsWithRef, PolymorphicRef } from '..';
+import {
+  Polymorphic,
+  PolymorphicPropsWithRef,
+  PolymorphicRef,
+  usePolymorphic,
+} from '..';
+import { PolymorphicComponent } from '../Polymorphic';
+import { PolymorphicComponentType } from '../Polymorphic.types';
+
+interface BaseExampleProps {
+  /** An arbitrary title */
+  title?: string;
+  /** Flag for dark mode */
+  darkMode?: boolean;
+}
 
 type ExampleProps<T extends React.ElementType> = PolymorphicPropsWithRef<
   T,
-  {
-    /** An arbitrary title */
-    title?: string;
-
-    /** Flag for dark mode */
-    darkMode?: boolean;
-  }
+  BaseExampleProps
 >;
 
 /**
@@ -27,12 +35,28 @@ export const ExampleComponent = <T extends React.ElementType = 'div'>({
     </Polymorphic>
   );
 };
+ExampleComponent.displayName = 'ExampleComponent';
+
+/**
+ * Uses `usePolymorphic` hook
+ */
+export const ExampleWithHook = PolymorphicComponent<BaseExampleProps>(
+  ({ as, title, ...rest }) => {
+    const { Component, ref } = usePolymorphic(as);
+    return (
+      <Component as={as} ref={ref} {...rest}>
+        {title}
+      </Component>
+    );
+  },
+);
+ExampleWithHook.displayName = 'ExampleWithHook';
 
 /**
  * Extends Polymorphic
  * @test
  */
-export const ExampleComponentForwardRef = React.forwardRef(
+export const ExampleForwardRef = React.forwardRef(
   <T extends React.ElementType = 'div'>(
     { as, title, ...rest }: ExampleProps<T>,
     ref: PolymorphicRef<T>,
@@ -44,8 +68,23 @@ export const ExampleComponentForwardRef = React.forwardRef(
     );
   },
 );
-ExampleComponentForwardRef.displayName = 'ExampleComponentForwardRef';
+ExampleForwardRef.displayName = 'ExampleForwardRef';
 
+export const ExampleForwardRefWithHook = PolymorphicComponent<BaseExampleProps>(
+  ({ as, title, ...rest }, ref) => {
+    const { Component } = usePolymorphic(as);
+    return (
+      <Component as={as} ref={ref} {...rest}>
+        {title}
+      </Component>
+    );
+  },
+);
+ExampleForwardRefWithHook.displayName = 'ExampleForwardRefWithHook';
+
+/**
+ * Ensure `as` types can be restricted
+ */
 type RestrictedType = 'a' | 'button' | React.ComponentType;
 type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
   T,

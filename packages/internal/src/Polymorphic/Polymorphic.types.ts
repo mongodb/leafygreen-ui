@@ -41,20 +41,19 @@ export interface AsProp<T extends React.ElementType> {
 }
 
 /**
- * The type of the Ref element
+ * The type of the Ref element based on the `as` prop type
  */
 export type PolymorphicRef<T extends React.ElementType> =
   React.ComponentPropsWithRef<T>['ref'];
 
 /**
- * Union of types potentially re-defined in React.ComponentProps
+ * Union of prop types potentially re-defined in React.ComponentProps
  */
 type PropsToOmit<T extends React.ElementType, P> = keyof (P & AsProp<T>);
 
 /**
  * Parses the expected inherited Props,
  * and adds restrictions based on the passed in type
- *
  */
 type InheritedProps<T extends React.ElementType> = T extends 'a'
   ? Omit<React.ComponentPropsWithoutRef<T>, 'href'> & {
@@ -77,7 +76,8 @@ export type PolymorphicProps<
 /**
  * Add the `ref` prop type to PolymorphicProps
  *
- * Note: Prefer using this type even in cases where you do not intend to use ref
+ * Note: Prefer using this type
+ * even in cases where you do not anticipate using a ref
  *
  * @type {T}
  */
@@ -94,11 +94,10 @@ export type PolymorphicPropsWithRef<
  *
  * @type {T}
  */
-export interface PolymorphicComponentType {
+export interface PolymorphicComponentType<P = {}> {
   <T extends React.ElementType = 'div'>(
-    props: PolymorphicPropsWithRef<T>,
+    props: PolymorphicPropsWithRef<T, P>,
+    ref: PolymorphicRef<T>
   ): React.ReactElement | null;
   displayName?: string;
 }
-
-// export type PolymorphicForwardedRefComponent = React.NamedExoticComponent<any>
