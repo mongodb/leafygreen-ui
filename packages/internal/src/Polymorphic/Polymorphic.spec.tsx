@@ -56,6 +56,8 @@ describe('packages/internal/polymorphic', () => {
     });
     /* eslint-enable jest/no-disabled-tests */
 
+    test.todo('Renders with `styled` API');
+
     test('renders as a div by default', () => {
       const { container } = render(<Polymorphic />);
       expect(container.firstElementChild).toBeInTheDocument();

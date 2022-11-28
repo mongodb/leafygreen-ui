@@ -1,5 +1,4 @@
 import React from 'react';
-import { consoleOnce } from '@leafygreen-ui/lib';
 import { usePolymorphicComponent } from './Polymorphic.hooks';
 import {
   PolymorphicComponentType,
@@ -37,10 +36,11 @@ Polymorphic.displayName = 'Polymorphic';
 export const PolymorphicComponent = <P extends object = {}>(
   render: PolymorphicComponentType<P>,
 ): PolymorphicComponentType<P> => {
+  // If no `ref` arg was passed in
   if (render.length === 1) {
-    consoleOnce.error(
-      `Warning: PolymorphicComponent render functions require two parameters: props and ref. If you don't need to forward a ref, pass _ as the second argument of \`PolymorphicComponent\` callback`,
-    );
+    const polyComponent = render;
+    polyComponent.displayName = render.displayName;
+    return polyComponent;
   }
 
   const polyComponent = React.forwardRef(render);

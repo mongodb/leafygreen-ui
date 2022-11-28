@@ -43,7 +43,7 @@ export const ExampleWithHook = PolymorphicComponent<BaseExampleProps>(
   ({ as, title, ...rest }) => {
     const { Component, ref } = usePolymorphic(as);
     return (
-      <Component as={as} ref={ref} {...rest}>
+      <Component ref={ref} {...rest}>
         {title}
       </Component>
     );
@@ -73,7 +73,7 @@ export const ExampleForwardRefWithHook = PolymorphicComponent<BaseExampleProps>(
   ({ as, title, ...rest }, ref) => {
     const { Component } = usePolymorphic(as);
     return (
-      <Component as={as} ref={ref} {...rest}>
+      <Component ref={ref} {...rest}>
         {title}
       </Component>
     );
