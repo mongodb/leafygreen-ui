@@ -13,6 +13,9 @@
       "path": "../box"
     },
     {
+      "path": "../button"
+    },
+    {
       "path": "../emotion"
     },
     {

@@ -13,6 +13,9 @@
       "path": "../palette"
     },
     {
+      "path": "../typography"
+    },
+    {
       "path": "../emotion"
     }
   ]

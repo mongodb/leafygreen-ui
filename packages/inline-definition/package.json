@@ -23,7 +23,8 @@
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.4",
-    "@leafygreen-ui/tooltip": "^9.0.0"
+    "@leafygreen-ui/tooltip": "^9.0.0",
+    "@leafygreen-ui/typography": "^15.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"

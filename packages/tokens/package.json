@@ -20,10 +20,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/palette": "^3.4.4"
+    "@leafygreen-ui/palette": "^3.4.4",
+    "@leafygreen-ui/typography": "^15.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "^4.0.3"
+    "@leafygreen-ui/emotion": "^4.0.3",
+    "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tokens",
   "repository": {
