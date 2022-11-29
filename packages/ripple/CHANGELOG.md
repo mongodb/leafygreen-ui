@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.6
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+
 ## 1.1.5
 
 ### Patch Changes
