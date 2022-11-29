@@ -1,5 +1,24 @@
 # @leafygreen-ui/code
 
+## 14.0.1
+
+### Patch Changes
+
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [696adb1b6]
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [ed0e425e5]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [7ca2da507]
+  - @leafygreen-ui/select@10.1.0
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/button@19.0.1
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/icon-button@15.0.1
+
 ## 14.0.0
 
 ### Major Changes

@@ -1,5 +1,21 @@
 # @leafygreen-ui/banner
 
+## 7.0.1
+
+### Patch Changes
+
+- 5e3959eb9: File structure reorganization
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+  - @leafygreen-ui/icon-button@15.0.1
+
 ## 7.0.0
 
 ### Patch Changes

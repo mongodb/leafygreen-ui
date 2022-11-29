@@ -1,5 +1,13 @@
 # @leafygreen-ui/interaction-ring
 
+## 7.0.1
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+
 ## 7.0.0
 
 ### Patch Changes
