@@ -115,11 +115,7 @@ function fixDependencies(
   const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
   missing.dependencies.length > 0 &&
-    spawnSync(
-      'npx',
-      ['yarn@1.19.0', 'add', ...missing.dependencies],
-      cmdOpts,
-    );
+    spawnSync('npx', ['yarn@1.19.0', 'add', ...missing.dependencies], cmdOpts);
   // TODO: Make sure this actually installs as dev
   missing.devDependencies.length > 0 &&
     spawnSync(
