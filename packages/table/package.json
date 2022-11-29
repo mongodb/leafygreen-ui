@@ -28,6 +28,7 @@
     "@leafygreen-ui/palette": "^3.4.4",
     "@leafygreen-ui/tokens": "^1.3.4",
     "lodash": "^4.17.21",
+    "polished": "^4.2.2",
     "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {

@@ -30,6 +30,7 @@
     "@leafygreen-ui/tokens": "^1.3.4",
     "facepaint": "^1.2.1",
     "focus-trap-react": "^8.10.0",
+    "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "react-transition-group": "^4.4.1"
   },
