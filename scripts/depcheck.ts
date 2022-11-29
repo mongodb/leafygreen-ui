@@ -46,46 +46,54 @@ async function checkDependencies() {
     const {
       dependencies: _unused,
       devDependencies: unusedDev,
-      missing: missingLocal
+      missing: missingLocal,
     } = check;
 
-    const unused = {..._unused, unusedDev}
+    const unused = { ..._unused, unusedDev };
 
     // Decide which missing dependencies should just be devDependencies
     const missing = Object.entries(missingLocal)
       // If the package in provided globally, ignore it
       .filter(([dep]) => !devDependencies.includes(dep))
       // If a dependency is only used in tests or storybook, then we add it as a dev dependency
-      .reduce((_missing, [name, usedIn]) => {
-        if (usedIn.every(file => file.includes('.story.tsx') || file.includes('.spec.tsx'))) {
-          _missing.devDependencies.push(name)
-        } else {
-          _missing.dependencies.push(name)
-        }
+      .reduce(
+        (_missing, [name, usedIn]) => {
+          if (
+            usedIn.every(
+              file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
+            )
+          ) {
+            _missing.devDependencies.push(name);
+          } else {
+            _missing.dependencies.push(name);
+          }
 
-        return _missing
-    }, {
-      dependencies: [] as Array<string>,
-      devDependencies: [] as Array<string>
-    })
+          return _missing;
+        },
+        {
+          dependencies: [] as Array<string>,
+          devDependencies: [] as Array<string>,
+        },
+      );
 
-    const countMissing = Object.keys(missing.dependencies).length
-    const countMissingDev = Object.keys(missing.devDependencies).length
+    const countMissing = Object.keys(missing.dependencies).length;
+    const countMissingDev = Object.keys(missing.devDependencies).length;
 
     if (countMissing > 0 || countMissingDev > 0 || unused.length > 0) {
-
       countMissing > 0 &&
         console.log(
           `${chalk.green(`packages/${pkg}`)} is missing: ${chalk.redBright(
             missing.dependencies.join(', '),
-          )}`
+          )}`,
         );
 
       countMissingDev > 0 &&
         console.log(
-          `${chalk.green(`packages/${pkg}`)} is missing devDependencies: ${chalk.redBright(
+          `${chalk.green(
+            `packages/${pkg}`,
+          )} is missing devDependencies: ${chalk.redBright(
             missing.devDependencies.join(', '),
-          )}`
+          )}`,
         );
 
       unused.length > 0 &&
@@ -121,16 +129,23 @@ function fixDependencies(
   missing: {
     dependencies: Array<string>;
     devDependencies: Array<string>;
-} ,
+  },
   unused: Array<string>,
 ): void {
-
   const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
   missing.dependencies.length > 0 &&
-    spawnSync('npx', ['yarn@1.19.0', 'add', '-W', ...missing.dependencies], cmdOpts);
+    spawnSync(
+      'npx',
+      ['yarn@1.19.0', 'add', '-W', ...missing.dependencies],
+      cmdOpts,
+    );
   missing.devDependencies.length > 0 &&
-    spawnSync('npx', ['yarn@1.19.0', 'add', '-W', '-D', ...missing.devDependencies], cmdOpts);
+    spawnSync(
+      'npx',
+      ['yarn@1.19.0', 'add', '-W', '-D', ...missing.devDependencies],
+      cmdOpts,
+    );
   unused.length > 0 &&
     spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
 }

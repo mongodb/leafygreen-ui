@@ -5,9 +5,7 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/**/*"],
   "references": [
     {
       "path": "../box"
@@ -19,9 +17,6 @@
       "path": "../icon"
     },
     {
-      "path": "../inline-definition"
-    },
-    {
       "path": "../lib"
     },
     {
@@ -29,6 +24,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../inline-definition"
     },
     {
       "path": "../leafygreen-provider"

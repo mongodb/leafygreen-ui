@@ -5,10 +5,7 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": [
-    "src/**/*",
-    "../../typings/*"
-  ],
+  "include": ["src/**/*", "../../typings/*"],
   "references": [
     {
       "path": "../emotion"

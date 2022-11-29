@@ -5,11 +5,7 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": [
-    "src/**/*",
-    "../../typings/*",
-    "typings/**/*"
-  ],
+  "include": ["src/**/*", "../../typings/*", "typings/**/*"],
   "references": [
     {
       "path": "../lib"

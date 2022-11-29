@@ -5,10 +5,7 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": [
-    "src/**/*",
-    "../tooltip/src/getTooltipTriggerHandlers.ts"
-  ],
+  "include": ["src/**/*", "../tooltip/src/getTooltipTriggerHandlers.ts"],
   "references": [
     {
       "path": "../emotion"
