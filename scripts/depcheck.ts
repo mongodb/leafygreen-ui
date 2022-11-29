@@ -51,7 +51,7 @@ async function checkDependencies() {
     } = check;
 
     // Compile all unused dependencies
-    const unused = { ..._unused, unusedDev };
+    const unused = { ..._unused, ...unusedDev };
 
     // Decide which missing dependencies should just be devDependencies
     const missing = sortMissingDependencies(missingLocal, pkg);
