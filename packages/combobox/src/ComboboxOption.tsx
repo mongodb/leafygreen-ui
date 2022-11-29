@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { isComponentType, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Checkbox from '@leafygreen-ui/checkbox';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
@@ -209,7 +209,7 @@ const InternalComboboxOption = React.forwardRef<
 
     const renderedIcon = useMemo(() => {
       if (glyph) {
-        if (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon')) {
+        if (isComponentGlyph(glyph)) {
           return glyph;
         }
         console.error(

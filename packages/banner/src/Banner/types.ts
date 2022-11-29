@@ -1,4 +1,4 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 const Variant = {
@@ -12,7 +12,9 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
-export interface BannerProps extends HTMLElementProps<'div', never> {
+export interface BannerProps
+  extends HTMLElementProps<'div', never>,
+    DarkModeProps {
   /**
    * Sets the variant for the Banner
    *
@@ -38,13 +40,6 @@ export interface BannerProps extends HTMLElementProps<'div', never> {
    * @default `() => {}`
    */
   onClose?: React.MouseEventHandler;
-
-  /**
-   * Determines whether or not the component will be rendered in dark mode.
-   *
-   * @default `false`
-   */
-  darkMode?: boolean;
 
   /**
    * The base font size of the title and text rendered in children.

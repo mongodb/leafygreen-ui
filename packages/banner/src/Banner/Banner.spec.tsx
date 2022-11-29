@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import VerticalEllipsisIcon from '@leafygreen-ui/icon/dist/VerticalEllipsis';
-import Banner, { Variant } from '.';
+import Banner, { Variant } from '..';
 
 const className = 'test-classname';
 const children = 'this is the banner content.';
