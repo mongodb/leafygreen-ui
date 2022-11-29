@@ -14,8 +14,9 @@ function getViewportSize(): ViewportSize {
 }
 
 export default function useViewportSize(): ViewportSize | null {
-  const [viewportSize, setViewportUpdateVal] =
-    useState<ViewportSize | null>(null);
+  const [viewportSize, setViewportUpdateVal] = useState<ViewportSize | null>(
+    null,
+  );
 
   useEffect(() => {
     setViewportUpdateVal(getViewportSize());
