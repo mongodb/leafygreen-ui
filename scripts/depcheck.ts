@@ -43,12 +43,20 @@ async function checkDependencies() {
       resolve(__dirname, `../packages/${pkg}`),
       depcheckOptions,
     );
-    const { dependencies: unused, missing: missingLocal } = check;
+    const {
+      dependencies: _unused,
+      devDependencies: unusedDev,
+      missing: missingLocal
+    } = check;
 
+    const unused = {..._unused, unusedDev}
+
+    // Decide which missing dependencies should just be devDependencies
     const missing = Object.entries(missingLocal)
+      // If the package in provided globally, ignore it
       .filter(([dep]) => !devDependencies.includes(dep))
+      // If a dependency is only used in tests or storybook, then we add it as a dev dependency
       .reduce((_missing, [name, usedIn]) => {
-        // If a dependency is only used in tests or storybook, then we add it as a dev dependency
         if (usedIn.every(file => file.includes('.story.tsx') || file.includes('.spec.tsx'))) {
           _missing.devDependencies.push(name)
         } else {
