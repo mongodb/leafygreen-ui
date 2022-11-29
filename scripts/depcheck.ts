@@ -117,13 +117,14 @@ function fixDependencies(
   missing.dependencies.length > 0 &&
     spawnSync(
       'npx',
-      ['yarn@1.19.0', 'add', '-W', ...missing.dependencies],
+      ['yarn@1.19.0', 'add', ...missing.dependencies],
       cmdOpts,
     );
+  // TODO: Make sure this actually installs as dev
   missing.devDependencies.length > 0 &&
     spawnSync(
       'npx',
-      ['yarn@1.19.0', 'add', '-W', '-D', ...missing.devDependencies],
+      ['yarn@1.19.0', 'add', ...missing.devDependencies, '-D'],
       cmdOpts,
     );
   unused.length > 0 &&
