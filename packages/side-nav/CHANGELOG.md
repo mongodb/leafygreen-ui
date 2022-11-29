@@ -1,5 +1,24 @@
 # @leafygreen-ui/side-nav
 
+## 12.0.1
+
+### Patch Changes
+
+- 1a335d0b2: Migrate component internals to check for glyphs explicity, rather than for Icon components as well
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [ed0e425e5]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/tooltip@9.0.1
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+
 ## 12.0.0
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon
 
+## 11.12.1
+
+### Patch Changes
+
+- 4b4c2d27d: Added Biometric icon
+- 1a335d0b2: Explicitly include `data-testid` in allowed props for Glyph components
+
 ## 11.12.0
 
 ### Minor Changes

@@ -1,5 +1,21 @@
 # @leafygreen-ui/typography
 
+## 15.1.0
+
+### Minor Changes
+
+- 6a266b813: Adds internal `StaticWidthText` component to prevent layout shift on font-weight change
+
+### Patch Changes
+
+- ba97d1ef7: Refactors component to follow new directory file structure
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [1a335d0b2]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+
 ## 15.0.0
 
 ### Minor Changes
