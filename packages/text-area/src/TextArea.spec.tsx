@@ -136,6 +136,8 @@ describe('packages/text-area', () => {
     test('TextArea throws error when neither aria-labelledby or label is supplied', () => {
       // @ts-expect-error
       <TextArea />;
+      <TextArea label="Some label" />;
+      <TextArea aria-labelledby="some-id" />;
     });
   });
   /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
