@@ -67,9 +67,11 @@ type InheritedProps<T extends React.ElementType> = T extends 'a'
  *
  * Prefer using `PolymorphicPropsWithRef` in most cases
  */
-export type PolymorphicProps<T extends React.ElementType, P = {}> =
-  React.PropsWithChildren<P & AsProp<T>> &
-    Omit<InheritedProps<T>, PropsToOmit<T, P>>;
+export type PolymorphicProps<
+  T extends React.ElementType,
+  P = {},
+> = React.PropsWithChildren<P & AsProp<T>> &
+  Omit<InheritedProps<T>, PropsToOmit<T, P>>;
 
 /**
  * Add the `ref` prop type to PolymorphicProps
@@ -79,11 +81,13 @@ export type PolymorphicProps<T extends React.ElementType, P = {}> =
  *
  * @type {T}
  */
-export type PolymorphicPropsWithRef<T extends React.ElementType, P = {}> =
-  PolymorphicProps<T, P> & {
-    /** The ref object returned by `React.useRef` */
-    ref?: PolymorphicRef<T>;
-  };
+export type PolymorphicPropsWithRef<
+  T extends React.ElementType,
+  P = {},
+> = PolymorphicProps<T, P> & {
+  /** The ref object returned by `React.useRef` */
+  ref?: PolymorphicRef<T>;
+};
 
 /**
  * An explicit definition of the component type
