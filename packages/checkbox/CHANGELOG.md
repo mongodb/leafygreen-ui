@@ -1,5 +1,17 @@
 # @leafygreen-ui/checkbox
 
+## 12.0.1
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [6a266b813]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/typography@15.1.0
+
 ## 12.0.0
 
 ### Patch Changes
