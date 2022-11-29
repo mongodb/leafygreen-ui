@@ -4,7 +4,7 @@
 
 # Usage
 
-There are two main ways to use `Polymorphic`, depending on whether the `as` prop is defined internally or externally.
+There are two main ways to use `Polymorphic`, depending on whether the `as` prop is defined internally by your component, or passed in as an external prop.
 
 ## Basic Polymorphic
 
@@ -17,8 +17,7 @@ interface MyProps {
 
 const MyComponent = (props: MyProps) => {
   const shouldRenderAs = 'button';
-  const ref = usePolymorphicRef<'span'>();
-  return <Polymorphic as={shouldRenderAs} ref={ref} {...props} />;
+  return <Polymorphic as={shouldRenderAs} {...props} />;
 };
 ```
 
@@ -50,7 +49,7 @@ const MyComponent = PolymorphicComponent<MyProps>(
 );
 ```
 
-While it is possible to use the `Polymorphic` component to extend polymorphic behavior, it can be more verbose than using the factory function.
+While it is possible to use the `Polymorphic` component to extend polymorphic behavior, it can be much more verbose than using the factory function.
 
 ```tsx
 type MyProps<T extends React.ElementType> = PolymorphicPropsWithRef<
