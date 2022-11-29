@@ -22,11 +22,6 @@ const fix: boolean = cli.opts()['fix'];
 const fixTS = cli.opts()['fixTsconfig'];
 
 const depcheckOptions: depcheck.Options = {
-  ignorePatterns: [
-    // files matching these patterns will be ignored
-    // '*.spec.tsx',
-    // '*.story.tsx',
-  ],
   ignoreMatches: [
     // ignore dependencies that matches these globs
     '@leafygreen-ui/mongo-nav',
@@ -49,13 +44,15 @@ async function checkDependencies() {
       missing: missingLocal,
     } = check;
 
+    // Compile all unused dependencies
     const unused = { ..._unused, unusedDev };
 
     // Decide which missing dependencies should just be devDependencies
     const missing = Object.entries(missingLocal)
       // If the package in provided globally, ignore it
       .filter(([dep]) => !devDependencies.includes(dep))
-      // If a dependency is only used in tests or storybook, then we add it as a dev dependency
+      // If a dependency is only used in tests or storybook,
+      // then we add it as a dev dependency
       .reduce(
         (_missing, [name, usedIn]) => {
           if (
