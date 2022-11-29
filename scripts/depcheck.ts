@@ -13,6 +13,7 @@ const globalDevDependencies = Object.keys(packageJson.devDependencies);
 
 const cli = new Command('depcheck')
   .arguments('[...packages]')
+  .option('-v, --verbose', 'Verbose mode', false)
   .option('-f, --fix', 'Option to fix any errors found', false)
   .option(
     '--fix-tsconfig',
@@ -20,9 +21,9 @@ const cli = new Command('depcheck')
   )
   .parse(process.argv);
 
-const packages = cli.args;
 const fix: boolean = cli.opts()['fix'];
 const fixTS = cli.opts()['fixTsconfig'];
+const verbose = cli.opts()['verbose'];
 
 const depcheckOptions: depcheck.Options = {
   ignoreMatches: [
@@ -36,7 +37,9 @@ checkDependencies();
 async function checkDependencies() {
   let issuesFound = false;
 
-  for (const pkg of packages || lgPackages) {
+  const packages = cli.args.length > 0 ? cli.args : lgPackages;
+
+  for (const pkg of packages) {
     const check = await depcheck(
       resolve(__dirname, `../packages/${pkg}`),
       depcheckOptions,
@@ -51,36 +54,7 @@ async function checkDependencies() {
     const unused = { ..._unused, unusedDev };
 
     // Decide which missing dependencies should just be devDependencies
-    const missing = Object.entries(missingLocal)
-      // If the package in provided globally, ignore it
-      .filter(([dep]) => !globalDevDependencies.includes(dep))
-      // If a dependency is only used in tests or storybook,
-      // then we add it as a dev dependency
-      .reduce(
-        (_missing, [name, usedIn]) => {
-          if (
-            usedIn.every(
-              file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
-            )
-          ) {
-            _missing.devDependencies.push(name);
-          } else {
-            _missing.dependencies.push(name);
-          }
-
-          return _missing;
-        },
-        {
-          dependencies: [] as Array<string>,
-          devDependencies: [] as Array<string>,
-        },
-      );
-
-    console.log({
-      pkg,
-      unused,
-      missing,
-    });
+    const missing = sortMissingDependencies(missingLocal, pkg);
 
     const countMissing = Object.keys(missing.dependencies).length;
     const countMissingDev = Object.keys(missing.devDependencies).length;
@@ -170,8 +144,46 @@ function fixTSconfig(pkg: string) {
       .map(dep => ({
         path: `../${dep}`,
       }));
+    console.log(`Fixing ${pkg}/tsconfig`);
     writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
   } catch (error) {
     throw new Error(`Error in ${pkg}: ${error}`);
   }
+}
+
+function sortMissingDependencies(
+  missingLocal: Record<string, Array<string>>,
+  pkg: string,
+): {
+  dependencies: Array<string>;
+  devDependencies: Array<string>;
+} {
+  return (
+    Object.entries(missingLocal)
+      // If the package in provided globally, ignore it
+      .filter(([dep]) => !globalDevDependencies.includes(dep))
+      // If a dependency is only used in tests or storybook,
+      // then we add it as a dev dependency
+      .reduce(
+        (_missing, [name, usedIn]) => {
+          if (
+            usedIn.every(
+              file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
+            )
+          ) {
+            verbose && console.log(`${pkg} uses ${name} in a test file`);
+            _missing.devDependencies.push(name);
+          } else {
+            verbose && console.log(`${pkg} missing ${name}`);
+            _missing.dependencies.push(name);
+          }
+
+          return _missing;
+        },
+        {
+          dependencies: [] as Array<string>,
+          devDependencies: [] as Array<string>,
+        },
+      )
+  );
 }
