@@ -5,19 +5,22 @@ import { resolve } from 'path';
 import { exit } from 'process';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import packageJson from '../package.json';
 import { SpawnOptions, spawnSync } from 'child_process';
 import { getPackageLGDependencies } from './utils/getPackageDependencies';
+import packageJson from '../package.json';
 const lgPackages = readdirSync('packages/');
-const devDependencies = Object.keys(packageJson.devDependencies);
+const globalDevDependencies = Object.keys(packageJson.devDependencies);
 
 const cli = new Command('depcheck')
+  .arguments('[...packages]')
   .option('-f, --fix', 'Option to fix any errors found', false)
   .option(
     '--fix-tsconfig',
     'Optionally overwrite the tsconfig.json based on package.json',
   )
   .parse(process.argv);
+
+const packages = cli.args;
 const fix: boolean = cli.opts()['fix'];
 const fixTS = cli.opts()['fixTsconfig'];
 
@@ -33,7 +36,7 @@ checkDependencies();
 async function checkDependencies() {
   let issuesFound = false;
 
-  for (const pkg of lgPackages) {
+  for (const pkg of packages || lgPackages) {
     const check = await depcheck(
       resolve(__dirname, `../packages/${pkg}`),
       depcheckOptions,
@@ -50,7 +53,7 @@ async function checkDependencies() {
     // Decide which missing dependencies should just be devDependencies
     const missing = Object.entries(missingLocal)
       // If the package in provided globally, ignore it
-      .filter(([dep]) => !devDependencies.includes(dep))
+      .filter(([dep]) => !globalDevDependencies.includes(dep))
       // If a dependency is only used in tests or storybook,
       // then we add it as a dev dependency
       .reduce(
@@ -72,6 +75,12 @@ async function checkDependencies() {
           devDependencies: [] as Array<string>,
         },
       );
+
+    console.log({
+      pkg,
+      unused,
+      missing,
+    });
 
     const countMissing = Object.keys(missing.dependencies).length;
     const countMissingDev = Object.keys(missing.devDependencies).length;
