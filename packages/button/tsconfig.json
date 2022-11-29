@@ -5,25 +5,27 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../box"
     },
     {
-      "path": "../lib"
+      "path": "../emotion"
     },
     {
-      "path": "../tokens"
+      "path": "../lib"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../emotion"
+      "path": "../ripple"
     },
     {
-      "path": "../ripple"
+      "path": "../tokens"
     },
     {
       "path": "../icon"

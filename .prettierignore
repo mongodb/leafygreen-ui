@@ -8,4 +8,5 @@ storybook-static
 website/.next/
 website/hosting/
 **/package.json
+**/tsconfig.json
 **/tsdoc.json
