@@ -30,11 +30,6 @@ export interface MarketingModalProps extends ModalProps {
    * `fill` adds a curving effect to the bottom border of the graphic.
    */
   graphicStyle?: GraphicStyle;
-  children: React.ReactNode;
-  /**
-   * 	The component is shown when the value is set to `true`.
-   */
-  open?: boolean;
   /**
    * 	Callback fired when the primary action button is clicked.
    */
@@ -47,7 +42,6 @@ export interface MarketingModalProps extends ModalProps {
    * 	Callback fired when the modal is closed
    */
   onClose?: () => void;
-
   /**
    * 	Text of the primary CTA button
    */

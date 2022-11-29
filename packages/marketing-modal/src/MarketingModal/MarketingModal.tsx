@@ -35,7 +35,7 @@ export const renderCurvedSVG = (darkMode: boolean) => {
 
   return (
     <svg
-      className={cx(curvedSVGStyles)}
+      className={curvedSVGStyles}
       viewBox="0 0 600 49"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -52,13 +52,13 @@ const MarketingModal = ({
   children,
   title,
   graphic,
-  graphicStyle = GraphicStyle.Center,
   onButtonClick,
   onLinkClick,
   onClose,
   buttonText,
   linkText,
   darkMode: darkModeProp,
+  graphicStyle = GraphicStyle.Center,
   closeIconColor = CloseIconColor.Dark,
   blobPosition = BlobPosition.TopLeft,
   showBlob = false,
