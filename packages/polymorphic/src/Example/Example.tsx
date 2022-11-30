@@ -1,11 +1,11 @@
 import React from 'react';
 import {
+  Polymorph,
   Polymorphic,
   PolymorphicPropsWithRef,
   PolymorphicRef,
   usePolymorphic,
 } from '..';
-import { PolymorphicComponent } from '../Polymorphic';
 
 interface BaseExampleProps {
   /** An arbitrary title */
@@ -29,9 +29,9 @@ export const ExampleComponent = <T extends React.ElementType = 'div'>({
   ...rest
 }: ExampleProps<T>) => {
   return (
-    <Polymorphic as={as as React.ElementType} {...rest}>
+    <Polymorph as={as as React.ElementType} {...rest}>
       {title}
-    </Polymorphic>
+    </Polymorph>
   );
 };
 ExampleComponent.displayName = 'ExampleComponent';
@@ -39,7 +39,7 @@ ExampleComponent.displayName = 'ExampleComponent';
 /**
  * Uses `usePolymorphic` hook
  */
-export const ExampleWithHook = PolymorphicComponent<BaseExampleProps>(
+export const ExampleWithHook = Polymorphic<BaseExampleProps>(
   ({ as, title, ...rest }) => {
     const { Component, ref } = usePolymorphic(as);
     return (
@@ -61,15 +61,15 @@ export const ExampleForwardRef = React.forwardRef(
     ref: PolymorphicRef<T>,
   ) => {
     return (
-      <Polymorphic as={as as React.ElementType} {...rest} ref={ref}>
+      <Polymorph as={as as React.ElementType} {...rest} ref={ref}>
         {title}
-      </Polymorphic>
+      </Polymorph>
     );
   },
 );
 ExampleForwardRef.displayName = 'ExampleForwardRef';
 
-export const ExampleForwardRefWithHook = PolymorphicComponent<BaseExampleProps>(
+export const ExampleForwardRefWithHook = Polymorphic<BaseExampleProps>(
   ({ as, title, ...rest }, ref) => {
     const { Component } = usePolymorphic(as);
     return (
@@ -96,5 +96,5 @@ export const RestrictedExample = <T extends RestrictedType = 'button'>({
   as,
   ...rest
 }: RestrictedProps<T>) => {
-  return <Polymorphic as={as as RestrictedType} {...rest} />;
+  return <Polymorph as={as as RestrictedType} {...rest} />;
 };

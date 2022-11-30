@@ -1,7 +1,9 @@
 export {
-  Polymorphic,
-  BasePolymorphic,
-  PolymorphicComponent,
+  Polymorph,
+  BasePolymorph,
+} from './Polymorph';
+export {
+  Polymorphic
 } from './Polymorphic';
 export {
   usePolymorphicRef,
