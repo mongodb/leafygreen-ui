@@ -41,7 +41,7 @@ export const labelThemeStyles = {
 
     disabled: css`
       cursor: not-allowed;
-      color: ${palette.gray.dark1};
+      color: ${palette.gray.base};
     `,
   },
 };
