@@ -239,8 +239,7 @@ function Tooltip({
   useEffect(() => {
     // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
     if (
-      trigger &&
-      (isComponentType(trigger, 'Icon') || isComponentGlyph(trigger))
+      trigger && isComponentGlyph(trigger)
     ) {
       console.warn(
         'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip, as these components do not render their children. To use, please wrap your trigger element in another HTML tag.',
