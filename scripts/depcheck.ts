@@ -8,6 +8,7 @@ import { Command } from 'commander';
 import { SpawnOptions, spawnSync } from 'child_process';
 import { getPackageLGDependencies } from './utils/getPackageDependencies';
 import packageJson from '../package.json';
+import fetch from 'node-fetch';
 const lgPackages = readdirSync('packages/');
 const globalDevDependencies = Object.keys(packageJson.devDependencies);
 
@@ -26,6 +27,11 @@ const fixTS = cli.opts()['fixTsconfig'];
 const verbose = cli.opts()['verbose'];
 
 const depcheckOptions: depcheck.Options = {
+  ignorePatterns: [
+    // files matching these patterns will be ignored
+    // '*.spec.tsx',
+    // '*.story.tsx',
+  ],
   ignoreMatches: [
     // ignore dependencies that matches these globs
     '@leafygreen-ui/mongo-nav',
@@ -51,7 +57,7 @@ async function checkDependencies() {
     } = check;
 
     // Compile all unused dependencies
-    const unused = { ..._unused, ...unusedDev };
+    const unused = [ ..._unused, ...unusedDev ];
 
     // Decide which missing dependencies should just be devDependencies
     const missing = sortMissingDependencies(missingLocal, pkg);
@@ -71,20 +77,20 @@ async function checkDependencies() {
         console.log(
           `${chalk.green(
             `packages/${pkg}`,
-          )} is missing devDependencies: ${chalk.redBright(
+          )} is missing devDependencies: ${chalk.yellowBright(
             missing.devDependencies.join(', '),
           )}`,
         );
 
       unused.length > 0 &&
         console.log(
-          `${chalk.green(`packages/${pkg}`)} doesn't use ${chalk.blueBright(
+          `${chalk.green(`packages/${pkg}`)} does not use ${chalk.blueBright(
             unused.join(', '),
           )}`,
         );
 
       if (fix) {
-        fixDependencies(pkg, missing, unused);
+        await fixDependencies(pkg, missing, unused);
       } else {
         issuesFound = true;
       }
@@ -104,27 +110,46 @@ async function checkDependencies() {
   }
 }
 
-function fixDependencies(
+async function fixDependencies(
   pkg: string,
   missing: {
     dependencies: Array<string>;
     devDependencies: Array<string>;
   },
   unused: Array<string>,
-): void {
+) {
   const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
-  missing.dependencies.length > 0 &&
-    spawnSync('npx', ['yarn@1.19.0', 'add', ...missing.dependencies], cmdOpts);
-  // TODO: Make sure this actually installs as dev
-  missing.devDependencies.length > 0 &&
-    spawnSync(
-      'npx',
-      ['yarn@1.19.0', 'add', ...missing.devDependencies, '-D'],
-      cmdOpts,
-    );
-  unused.length > 0 &&
-    spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
+  // missing.dependencies.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'add', ...missing.dependencies], cmdOpts);
+  unused.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
+
+  // There's a bug in yarn where some packages don't install as devDependencies
+  // even if the `-D` flag is provided.
+  // So we have to install devDependencies manually
+  if (missing.devDependencies.length > 0) {
+    const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`)
+    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'))
+
+    const missingDevDepsObject = {} as {[key:string]: string}
+
+    for (const depName of missing.devDependencies) {
+      const searchUrl = `https://registry.npmjs.com/-/v1/search?text=${depName}`;
+      const {objects}: any = await fetch(searchUrl).then(data => data.json())
+      const pkgRef = objects ? objects.find((obj: any) => obj.package.name === depName) : null
+
+      if (!pkgRef) {
+          console.error(chalk.red(`Could not find ${depName} on npm`))
+          break;
+      }
+
+      const {version} = pkgRef.package
+      missingDevDepsObject[depName] = `^${version}`
+    }
+    pkgJson.devDependencies = {...pkgJson?.devDependencies, ...missingDevDepsObject}
+    writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2))
+    spawnSync(`yarn`, ['install'], cmdOpts)
+  }
+
 }
 
 /**
