@@ -1,5 +1,5 @@
 import React from 'react';
-import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
+import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
 import { Polymorphic, usePolymorphicRef } from '.';
 import {
@@ -10,7 +10,7 @@ import {
   RestrictedExample,
 } from './Example';
 
-describe('packages/internal/polymorphic', () => {
+describe('packages/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
     /* eslint-disable jest/no-disabled-tests */
     test.skip('Prop Types behave correctly', () => {
@@ -278,7 +278,7 @@ describe('packages/internal/polymorphic', () => {
 
   describe('TSDoc output', () => {
     describe('Polymorphic', () => {
-      const docs = parseTSDoc('internal/src/Polymorphic');
+      const docs = parseTSDoc('polymorphic/src');
 
       test('Docs for Polymorphic are generated', () => {
         const doc = docs?.find(doc => doc.displayName === 'Polymorphic');
@@ -295,7 +295,7 @@ describe('packages/internal/polymorphic', () => {
      * also generate TSDoc
      */
     describe('Higher-Order components', () => {
-      const docs = parseTSDoc('internal/src/Polymorphic/Example');
+      const docs = parseTSDoc('polymorphic/src/Example');
 
       const exampleComponentNames = [
         'ExampleComponent',
