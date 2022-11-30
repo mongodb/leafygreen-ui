@@ -12,6 +12,7 @@ import ArrowRight from './ArrowRight.svg';
 import ArrowUp from './ArrowUp.svg';
 import Beaker from './Beaker.svg';
 import Bell from './Bell.svg';
+import Biometric from './Biometric.svg';
 import Building from './Building.svg';
 import Bulb from './Bulb.svg';
 import Calendar from './Calendar.svg';
@@ -122,6 +123,7 @@ const _glyphs = {
   ArrowUp,
   Beaker,
   Bell,
+  Biometric,
   Building,
   Bulb,
   Calendar,

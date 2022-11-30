@@ -1,5 +1,6 @@
 import React, { useRef, useMemo, forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
@@ -70,7 +71,7 @@ const SideNavItem: ExtendableBox<
       };
 
   const accessibleGlyph =
-    (glyph && isComponentType(glyph, 'Glyph')) || isComponentType(glyph, 'Icon')
+    glyph && isComponentGlyph(glyph)
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 

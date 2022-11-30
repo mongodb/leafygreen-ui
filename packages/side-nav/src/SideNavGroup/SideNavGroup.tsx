@@ -116,7 +116,7 @@ function SideNavGroup({
 
   // render the provided glyph with appropriate aria roles
   const accessibleGlyph =
-    glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
+    glyph && isComponentGlyph(glyph)
       ? React.cloneElement(glyph, {
           className: cx(customIconStyles, glyph.props.className),
           role: 'presentation',
