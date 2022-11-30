@@ -20,8 +20,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/code": "^14.0.0",
-    "@leafygreen-ui/copyable": "^8.0.0",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
     "@leafygreen-ui/icon": "^11.12.1",
@@ -29,8 +27,6 @@
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.4",
     "@leafygreen-ui/portal": "^4.0.7",
-    "@leafygreen-ui/select": "^10.0.0",
-    "@leafygreen-ui/typography": "^15.0.0",
     "@leafygreen-ui/tokens": "^1.4.0",
     "facepaint": "^1.2.1",
     "focus-trap-react": "^8.10.0",
@@ -39,7 +35,11 @@
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^19.0.1"
+    "@leafygreen-ui/select": "^10.1.0",
+    "@leafygreen-ui/button": "^19.0.1",
+    "@leafygreen-ui/typography": "^15.1.0",
+    "@leafygreen-ui/copyable": "^8.0.1",
+    "@leafygreen-ui/code": "^14.0.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"

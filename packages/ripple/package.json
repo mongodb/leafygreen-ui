@@ -22,9 +22,7 @@
   "dependencies": {
     "@leafygreen-ui/tokens": "^1.4.0"
   },
-  "devDependencies": {
-    "react": "^17.0.0"
-  },
+  "devDependencies": {},
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ripple",
   "repository": {
     "type": "git",

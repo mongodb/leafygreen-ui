@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@leafygreen-ui/box": "^3.1.1",
-    "@leafygreen-ui/button": "^19.0.0",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
     "@leafygreen-ui/icon": "^11.12.1",
@@ -44,5 +43,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/button": "^19.0.1"
   }
 }

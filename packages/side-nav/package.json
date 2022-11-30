@@ -38,8 +38,8 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon-button": "^15.0.1",
-    "@leafygreen-ui/select": "^10.1.0"
+    "@leafygreen-ui/select": "^10.1.0",
+    "@leafygreen-ui/icon-button": "^15.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {

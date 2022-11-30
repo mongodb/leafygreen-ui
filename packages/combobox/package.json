@@ -38,8 +38,8 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^19.0.0",
-    "chalk": "^2.4.2"
+    "chalk": "^2.4.2",
+    "@leafygreen-ui/button": "^19.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {
