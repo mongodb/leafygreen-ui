@@ -18,15 +18,16 @@ import {
 import { isComponentType } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';
 import { SegmentedControlProps, Size } from './types';
-import { useEffectOnceOnMount } from './useEffectOnceOnMount';
+import { useEffectOnceOnMount } from '../useEffectOnceOnMount';
 import {
   wrapperStyle,
+  labelBaseStyles,
   labelThemeStyle,
   optionsWrapperStyle,
   selectionIndicatorStyle,
   hoverIndicatorStyle,
-} from './SegmentedControl.styles';
-import { SegmentedControlContext } from './SegmentedControlContext';
+} from './styles';
+import { SegmentedControlContext } from '../SegmentedControlContext';
 
 /**
  * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
@@ -306,7 +307,9 @@ export const SegmentedControl = forwardRef<
         {...rest}
       >
         {label && (
-          <Overline className={labelThemeStyle[theme]}>{label}</Overline>
+          <Overline className={cx(labelBaseStyles, labelThemeStyle[theme])}>
+            {label}
+          </Overline>
         )}
 
         <div
