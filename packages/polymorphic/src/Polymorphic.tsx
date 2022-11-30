@@ -4,15 +4,16 @@ import { PolymorphicComponentType } from './Polymorphic.types';
 /** Returns a polymorphic component */
 export const Polymorphic = <P extends object = {}>(
   render: PolymorphicComponentType<P>,
+  displayName?: string,
 ): PolymorphicComponentType<P> => {
   // If no `ref` arg was passed in
   if (render.length === 1) {
-    const polyComponent = render;
-    polyComponent.displayName = render.displayName;
-    return polyComponent;
+    const PolyComponent = render;
+    PolyComponent.displayName = displayName ?? render.displayName;
+    return PolyComponent;
   }
 
-  const polyComponent = React.forwardRef(render);
-  polyComponent.displayName = render.displayName;
-  return polyComponent;
+  const PolyComponent = React.forwardRef(render);
+  PolyComponent.displayName = displayName ?? render.displayName;
+  return PolyComponent;
 };

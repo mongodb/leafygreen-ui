@@ -1,6 +1,15 @@
 # Polymorphic
 
-`Polymorphic` is a suite of types, hooks, components and factories that allows users to create components that can render as any HTML element or React component
+> **pol·y·morph** _(noun)_
+>
+> - an organism, inorganic object or material which takes various forms.
+
+> **pol·y·mor·phic** _(adjective)_
+>
+> - occurring in several different forms, in particular with reference to species or genetic variation.
+> - (of a feature of a programming language) allowing routines to use variables of different types at different times.
+
+`Polymorphic` is a suite of types, hooks, components and factories that allows users to create components that can render as any HTML element or React component.
 
 # Usage
 
