@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import Popover from '@leafygreen-ui/popover';
-import { ComboboxContext, useDarkMode } from '../ComboboxContext';
+import { ComboboxContext } from '../ComboboxContext';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
 import {
   menuBaseStyle,
@@ -52,10 +52,9 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
     }: ComboboxMenuProps,
     forwardedRef,
   ) => {
-    const { disabled, darkMode, size, isOpen, searchState } =
+    const { disabled, darkMode, theme, size, isOpen, searchState } =
       useContext(ComboboxContext);
     const ref = useForwardedRef(forwardedRef, null);
-    const theme = useDarkMode(darkMode);
 
     /** The max height of the menu element */
     const availableSpace = useAvailableSpace(refEl);
