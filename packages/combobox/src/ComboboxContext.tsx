@@ -1,15 +1,16 @@
+import { Theme } from '@leafygreen-ui/lib';
 import { createContext } from 'react';
 import {
   ComboboxSize,
   SearchState,
   State,
-  Theme,
   TruncationLocation,
 } from './Combobox.types';
 
 interface ComboboxData {
   multiselect: boolean;
   darkMode: boolean;
+  theme: Theme;
   size: ComboboxSize;
   withIcons: boolean;
   disabled: boolean;
@@ -24,6 +25,7 @@ interface ComboboxData {
 export const ComboboxContext = createContext<ComboboxData>({
   multiselect: false,
   darkMode: false,
+  theme: Theme.Light,
   size: ComboboxSize.Default,
   withIcons: false,
   disabled: false,
@@ -31,6 +33,3 @@ export const ComboboxContext = createContext<ComboboxData>({
   state: State.none,
   searchState: SearchState.unset,
 });
-
-export const useDarkMode = (darkMode: boolean) =>
-  darkMode ? Theme.Dark : Theme.Light;

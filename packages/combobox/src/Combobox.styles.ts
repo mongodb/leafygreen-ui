@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
@@ -9,7 +9,7 @@ import {
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
-import { ComboboxSize as Size, Overflow, Theme } from './Combobox.types';
+import { ComboboxSize as Size, Overflow } from './Combobox.types';
 
 /**
  * Width of the widest character (in px)
