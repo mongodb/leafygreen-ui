@@ -131,7 +131,7 @@ import {
 
 | Prop              | Type                         | Description                                                                                                                                                                 | Default            |
 | ----------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `children`        | `React.ReactNode`            | Can be text.                                                                                                                                                                |                    |
+| `children`        | `React.ReactNode`            | Should be text.                                                                                                                                                             |                    |
 | `value`           | `string`                     | Required. The value of the option.                                                                                                                                          |                    |
 | `glyph`           | `React.ReactElement`         | The icon to display to the left of the option.                                                                                                                              |                    |
 | `disabled`        | `boolean`                    | Toggles whether the option is disabled.                                                                                                                                     | `false`            |

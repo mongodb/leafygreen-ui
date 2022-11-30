@@ -13,23 +13,17 @@ export const wrapperStyle = css`
   font-family: ${fontFamilies.default};
 `;
 
-const labelBaseStyles = css`
+export const labelBaseStyles = css`
   white-space: nowrap;
 `;
 
 export const labelThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: cx(
-    labelBaseStyles,
-    css`
-      color: ${palette.gray.dark1};
-    `,
-  ),
-  [Theme.Dark]: cx(
-    labelBaseStyles,
-    css`
-      color: ${palette.gray.light1};
-    `,
-  ),
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+  `,
 };
 
 export const optionsWrapperStyleSize: Record<Size, string> = {
