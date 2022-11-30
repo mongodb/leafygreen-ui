@@ -504,34 +504,38 @@ describe('packages/tooltip', () => {
   });
 
   describe('Renders warning when', () => {
-    test('LeafyGreen UI Glyph is passed to trigger', () => {
-      const spy = jest.spyOn(console, 'warn');
+    const expectedWarnMsg =
+      'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip,' +
+      ' as these components do not render their children.' +
+      ' To use, please wrap your trigger element in another HTML tag.';
+    let warn: jest.SpyInstance;
+    beforeEach(() => {
+      warn = jest.spyOn(global.console, 'warn').mockImplementation(() => {});
+    });
 
+    afterEach(() => {
+      warn.mockClear();
+      warn.mockRestore();
+    });
+
+    test('LeafyGreen UI Glyph is passed to trigger', () => {
       render(<Tooltip trigger={<CloudIcon />}>TooltipContent</Tooltip>);
 
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(
-        'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip,' +
-          ' as these components do not render their children.' +
-          ' To use, please wrap your trigger element in another HTML tag.',
-      );
-      spy.mockClear();
+      waitFor(() => {
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn).toHaveBeenCalledWith(expectedWarnMsg);
+      });
     });
 
     test('LeafyGreen UI Icon is passed to trigger', () => {
-      const spy = jest.spyOn(console, 'warn');
-
       render(
         <Tooltip trigger={<Icon glyph="Cloud" />}>TooltipContent</Tooltip>,
       );
 
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(
-        'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip,' +
-          ' as these components do not render their children.' +
-          ' To use, please wrap your trigger element in another HTML tag.',
-      );
-      spy.mockClear();
+      waitFor(() => {
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn).toHaveBeenCalledWith(expectedWarnMsg);
+      });
     });
 
     test('No warning for default props', () => {
@@ -540,9 +544,11 @@ describe('packages/tooltip', () => {
         trigger: <button>hi</button>,
       };
 
-      const spy = jest.spyOn(console, 'warn');
       render(<Tooltip {...defaultProps} />);
-      expect(spy).not.toHaveBeenCalled();
+
+      waitFor(() => {
+        expect(warn).not.toHaveBeenCalled();
+      });
     });
   });
 
