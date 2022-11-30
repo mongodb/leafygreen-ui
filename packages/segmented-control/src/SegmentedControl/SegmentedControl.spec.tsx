@@ -2,9 +2,11 @@ import React from 'react';
 import { axe } from 'jest-axe';
 import { getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SegmentedControlOption } from './SegmentedControlOption';
+import { SegmentedControlOption } from '../SegmentedControlOption/SegmentedControlOption';
 import { SegmentedControl } from './SegmentedControl';
 import { typeIs } from '@leafygreen-ui/lib';
+import Icon from '@leafygreen-ui/icon';
+import { H1 } from '@leafygreen-ui/typography';
 
 const testClassName = 'test-class-name';
 
@@ -18,15 +20,22 @@ const renderNewContainer = () => {
       <SegmentedControlOption value="apple" data-testid="apple">
         Apple
       </SegmentedControlOption>
-      <SegmentedControlOption value="banana" data-testid="banana">
+      <SegmentedControlOption
+        value="banana"
+        data-testid="banana"
+        glyph={<Icon glyph="Code" data-testid="glyph" />}
+      >
         Banana
       </SegmentedControlOption>
     </SegmentedControl>,
   );
 
-  const apple = getByText(rendered.container, 'Apple').parentElement as Element;
-  const banana = getByText(rendered.container, 'Banana')
-    .parentElement as Element;
+  const apple = getByText(rendered.container, 'Apple').closest(
+    'button',
+  ) as Element;
+  const banana = getByText(rendered.container, 'Banana').closest(
+    'button',
+  ) as Element;
 
   return {
     ...rendered,
@@ -130,8 +139,37 @@ describe('packages/segmented-control', () => {
         </SegmentedControl>,
       );
 
-      const banana = getByText(container, 'Banana').parentElement;
+      const banana = getByText(container, 'Banana').closest('button');
       expect(banana).toHaveAttribute('aria-selected', 'true');
+    });
+
+    test('glyph', () => {
+      const { getByTestId } = renderNewContainer();
+      expect(getByTestId('glyph')).toBeInTheDocument();
+    });
+
+    test('warning if LeafyGreen UI Glyph is not passed as Glyph', () => {
+      const spy = jest.spyOn(console, 'warn');
+
+      render(
+        <SegmentedControl
+          label="testLabel"
+          name="testName"
+          defaultValue={'banana'}
+        >
+          <SegmentedControlOption value="apple" glyph={<H1>You caught me</H1>}>
+            Apple
+          </SegmentedControlOption>
+          <SegmentedControlOption value="banana">Banana</SegmentedControlOption>
+          <SegmentedControlOption value="orange">Orange</SegmentedControlOption>
+        </SegmentedControl>,
+      );
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        'Please provide a LeafyGreen UI Icon or Glyph component.',
+      );
+      spy.mockClear();
     });
   });
 });
