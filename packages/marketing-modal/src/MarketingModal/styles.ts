@@ -13,29 +13,6 @@ export const baseModalStyle = css`
   overflow: hidden;
 `;
 
-export const baseGraphicContainerStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-export const baseGraphicStyle = css`
-  display: block;
-`;
-
-export const centeredGraphicContainerStyle = css`
-  padding-top: 48px;
-  padding-bottom: 24px;
-`;
-
-export const filledGraphicContainerStyle = css`
-  padding-bottom: 24px;
-  position: relative;
-`;
-
-export const filledGraphicStyle = css`
-  width: 100%;
-`;
-
 export const wrapperStyle = css`
   text-align: center;
   padding: 0 20px 32px;

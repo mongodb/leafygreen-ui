@@ -20,36 +20,44 @@ export interface MarketingModalProps extends ModalProps {
    * Text of header element
    */
   title: string;
+
   /**
    * React Element to be rendered as the modal's hero image
    */
   graphic: React.ReactElement;
+
   /**
    * Determines the rendering style of the graphic.
    *
    * `fill` adds a curving effect to the bottom border of the graphic.
    */
   graphicStyle?: GraphicStyle;
+
   /**
    * 	Callback fired when the primary action button is clicked.
    */
   onButtonClick?: () => void;
+
   /**
    * 	Callback fired when the secondary link element is clicked.
    */
   onLinkClick?: () => void;
+
   /**
    * 	Callback fired when the modal is closed
    */
   onClose?: () => void;
+
   /**
    * 	Text of the primary CTA button
    */
   buttonText: string;
+
   /**
    * 	Text of the secondary link element
    */
   linkText: string;
+
   /**
    * 	Position of the blob visual effect. Defaults to top-left.
    *
@@ -57,6 +65,7 @@ export interface MarketingModalProps extends ModalProps {
    *
    */
   blobPosition?: BlobPosition;
+
   /**
    * 	Determines whether the blob should be rendered.
    */
