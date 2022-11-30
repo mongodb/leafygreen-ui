@@ -3,7 +3,7 @@ import { render, fireEvent, screen, act } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import Toggle from '..';
 
-const className = 'test-className'
+const className = 'test-className';
 
 function renderToggle(props = {}) {
   const utils = render(
