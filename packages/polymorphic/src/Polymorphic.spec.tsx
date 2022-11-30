@@ -1,7 +1,7 @@
 import React from 'react';
 import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
-import { Polymorphic, usePolymorphicRef } from '.';
+import { Polymorph, usePolymorphicRef } from '.';
 import {
   ExampleComponent,
   ExampleForwardRef,
@@ -20,38 +20,38 @@ describe('packages/polymorphic', () => {
       const spanRef = usePolymorphicRef<'span'>();
 
       <>
-        <Polymorphic />
-        <Polymorphic>some content</Polymorphic>
-        <Polymorphic as="div" />
-        <Polymorphic as="div" ref={divRef} />
+        <Polymorph />
+        <Polymorph>some content</Polymorph>
+        <Polymorph as="div" />
+        <Polymorph as="div" ref={divRef} />
         {/* @ts-expect-error - Must pass the correct ref type */}
-        <Polymorphic as="div" ref={anchorRef} />
-        <Polymorphic as="div" ref={divRef}>
+        <Polymorph as="div" ref={anchorRef} />
+        <Polymorph as="div" ref={divRef}>
           some content
-        </Polymorphic>
-        <Polymorphic key="some-key" />
+        </Polymorph>
+        <Polymorph key="some-key" />
         {/* @ts-expect-error href is not allowed on div */}
-        <Polymorphic as="div" href="mongodb.design" />
+        <Polymorph as="div" href="mongodb.design" />
 
         {/* @ts-expect-error - Require href when as="a" */}
-        <Polymorphic as="a" />
-        <Polymorphic as="a" href="mongodb.design" />
-        <Polymorphic as="a" href="mongodb.design" ref={anchorRef} />
-        <Polymorphic as="a" href="mongodb.design">
+        <Polymorph as="a" />
+        <Polymorph as="a" href="mongodb.design" />
+        <Polymorph as="a" href="mongodb.design" ref={anchorRef} />
+        <Polymorph as="a" href="mongodb.design">
           some content
-        </Polymorphic>
+        </Polymorph>
 
-        <Polymorphic as="input" />
+        <Polymorph as="input" />
         {/* TODO: ts-expect-error - Input should not accept children */}
-        {/* <Polymorphic as="input">some content</Polymorphic> */}
+        {/* <Polymorph as="input">some content</Polymorph> */}
 
-        <Polymorphic as={Wrapper} />
-        <Polymorphic as={Wrapper} ref={spanRef} />
+        <Polymorph as={Wrapper} />
+        <Polymorph as={Wrapper} ref={spanRef} />
         {/* TODO: ts-expect-error - Must pass the correct ref type */}
-        <Polymorphic as={Wrapper} ref={divRef} />
-        <Polymorphic as={Wrapper} ref={spanRef} darkMode={true} />
+        <Polymorph as={Wrapper} ref={divRef} />
+        <Polymorph as={Wrapper} ref={spanRef} darkMode={true} />
         {/* @ts-expect-error - Theme is not a prop on Wrapper */}
-        <Polymorphic as={Wrapper} ref={spanRef} theme={'dark'} />
+        <Polymorph as={Wrapper} ref={spanRef} theme={'dark'} />
       </>;
     });
     /* eslint-enable jest/no-disabled-tests */
@@ -59,21 +59,21 @@ describe('packages/polymorphic', () => {
     test.todo('Renders with `styled` API');
 
     test('renders as a div by default', () => {
-      const { container } = render(<Polymorphic />);
+      const { container } = render(<Polymorph />);
       expect(container.firstElementChild).toBeInTheDocument();
       expect(container.firstElementChild?.tagName.toLowerCase()).toBe('div');
     });
 
     test('passes misc. props', () => {
-      const { getByTestId } = render(<Polymorphic data-testid="poly" />);
+      const { getByTestId } = render(<Polymorph data-testid="poly" />);
       expect(getByTestId('poly')).toBeInTheDocument();
     });
 
     test('renders children', () => {
       const { getByText } = render(
-        <Polymorphic>
+        <Polymorph>
           <span>child</span>
-        </Polymorphic>,
+        </Polymorph>,
       );
       expect(getByText('child')).toBeInTheDocument();
     });
@@ -81,7 +81,7 @@ describe('packages/polymorphic', () => {
     describe('as an HTML element', () => {
       test('renders as an HTML element', () => {
         const { getByTestId } = render(
-          <Polymorphic as="a" href="mongodb.design" data-testid="poly" />,
+          <Polymorph as="a" href="mongodb.design" data-testid="poly" />,
         );
         expect(getByTestId('poly')).toBeInTheDocument();
         expect(getByTestId('poly').tagName.toLowerCase()).toBe('a');
@@ -89,7 +89,7 @@ describe('packages/polymorphic', () => {
 
       test('accepts tag-specific HTML attributes', () => {
         const { getByTestId } = render(
-          <Polymorphic as="a" href="mongodb.design" data-testid="poly" />,
+          <Polymorph as="a" href="mongodb.design" data-testid="poly" />,
         );
         expect(getByTestId('poly')).toBeInTheDocument();
         expect(getByTestId('poly').tagName.toLowerCase()).toBe('a');
@@ -103,7 +103,7 @@ describe('packages/polymorphic', () => {
           const myRef = React.useRef<HTMLAnchorElement | null>(null);
           testRef = myRef;
           return (
-            <Polymorphic
+            <Polymorph
               as="a"
               href="mongodb.design"
               ref={myRef}
@@ -123,7 +123,7 @@ describe('packages/polymorphic', () => {
     describe('as a custom component', () => {
       test('renders as a custom component', () => {
         const { Wrapper, wrapperDidRender } = makeWrapperComponent();
-        const { container, getByTestId } = render(<Polymorphic as={Wrapper} />);
+        const { container, getByTestId } = render(<Polymorph as={Wrapper} />);
         expect(getByTestId('wrapper')).toBeInTheDocument();
         // The root element of Polymorphic is the root span of Wrapper
         expect(container.firstElementChild?.tagName.toLowerCase()).toBe('span');
@@ -138,7 +138,7 @@ describe('packages/polymorphic', () => {
         const TestComponent = () => {
           const myRef = React.useRef<HTMLSpanElement | null>(null);
           testRef = myRef;
-          return <Polymorphic as={Wrapper} ref={myRef} data-testid="poly" />;
+          return <Polymorph as={Wrapper} ref={myRef} data-testid="poly" />;
         };
 
         const { getByTestId } = render(<TestComponent />);

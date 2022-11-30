@@ -1,17 +1,17 @@
 import React from 'react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import {
+  Polymorph,
   Polymorphic,
   usePolymorphic,
-  PolymorphicComponent,
   PolymorphicPropsWithRef,
 } from '.';
 
 export default {
-  title: 'Components/Internal/Polymorphic',
-  component: Polymorphic,
+  title: 'Components/Internal/Polymorph',
+  component: Polymorph,
   args: {
-    children: 'Polymorphic',
+    children: 'Polymorph',
     as: 'button',
     href: 'mongodb.design',
   },
@@ -31,10 +31,10 @@ export default {
 };
 
 export const Basic = (props: PolymorphicPropsWithRef<any>) => (
-  <Polymorphic {...props} />
+  <Polymorph {...props} />
 );
 
-export const HigherOrder = PolymorphicComponent<{
+export const HigherOrder = Polymorphic<{
   /** An arbitrary title */
   title?: string;
 }>(({ as, title = 'Title', ...rest }) => {
@@ -46,7 +46,7 @@ export const HigherOrder = PolymorphicComponent<{
   );
 });
 
-export const HigherOrderWithRef = PolymorphicComponent<{
+export const HigherOrderWithRef = Polymorphic<{
   /** An arbitrary title */
   title?: string;
 }>(({ as, title = 'Title', ...rest }, ref) => {
