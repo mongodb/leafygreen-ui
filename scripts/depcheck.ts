@@ -57,7 +57,7 @@ async function checkDependencies() {
     } = check;
 
     // Compile all unused dependencies
-    const unused = [ ..._unused, ...unusedDev ];
+    const unused = [..._unused, ...unusedDev];
 
     // Decide which missing dependencies should just be devDependencies
     const missing = sortMissingDependencies(missingLocal, pkg);
@@ -121,35 +121,40 @@ async function fixDependencies(
   const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
   // missing.dependencies.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'add', ...missing.dependencies], cmdOpts);
-  unused.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
+  unused.length > 0 &&
+    spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
 
   // There's a bug in yarn where some packages don't install as devDependencies
   // even if the `-D` flag is provided.
   // So we have to install devDependencies manually
   if (missing.devDependencies.length > 0) {
-    const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`)
-    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'))
+    const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
+    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
 
-    const missingDevDepsObject = {} as {[key:string]: string}
+    const missingDevDepsObject = {} as { [key: string]: string };
 
     for (const depName of missing.devDependencies) {
       const searchUrl = `https://registry.npmjs.com/-/v1/search?text=${depName}`;
-      const {objects}: any = await fetch(searchUrl).then(data => data.json())
-      const pkgRef = objects ? objects.find((obj: any) => obj.package.name === depName) : null
+      const { objects }: any = await fetch(searchUrl).then(data => data.json());
+      const pkgRef = objects
+        ? objects.find((obj: any) => obj.package.name === depName)
+        : null;
 
       if (!pkgRef) {
-          console.error(chalk.red(`Could not find ${depName} on npm`))
-          break;
+        console.error(chalk.red(`Could not find ${depName} on npm`));
+        break;
       }
 
-      const {version} = pkgRef.package
-      missingDevDepsObject[depName] = `^${version}`
+      const { version } = pkgRef.package;
+      missingDevDepsObject[depName] = `^${version}`;
     }
-    pkgJson.devDependencies = {...pkgJson?.devDependencies, ...missingDevDepsObject}
-    writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2))
-    spawnSync(`yarn`, ['install'], cmdOpts)
+    pkgJson.devDependencies = {
+      ...pkgJson?.devDependencies,
+      ...missingDevDepsObject,
+    };
+    writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+    spawnSync(`yarn`, ['install'], cmdOpts);
   }
-
 }
 
 /**
