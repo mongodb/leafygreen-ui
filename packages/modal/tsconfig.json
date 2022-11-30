@@ -11,12 +11,6 @@
   ],
   "references": [
     {
-      "path": "../code"
-    },
-    {
-      "path": "../copyable"
-    },
-    {
       "path": "../emotion"
     },
     {
@@ -38,16 +32,22 @@
       "path": "../portal"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../select"
     },
     {
-      "path": "../tokens"
+      "path": "../button"
     },
     {
       "path": "../typography"
     },
     {
-      "path": "../button"
+      "path": "../copyable"
+    },
+    {
+      "path": "../code"
     },
     {
       "path": "../leafygreen-provider"

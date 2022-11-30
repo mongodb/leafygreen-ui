@@ -10,9 +10,6 @@
   ],
   "references": [
     {
-      "path": "../button"
-    },
-    {
       "path": "../checkbox"
     },
     {
@@ -44,6 +41,9 @@
     },
     {
       "path": "../typography"
+    },
+    {
+      "path": "../button"
     },
     {
       "path": "../leafygreen-provider"

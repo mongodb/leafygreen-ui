@@ -13,9 +13,6 @@
       "path": "../box"
     },
     {
-      "path": "../button"
-    },
-    {
       "path": "../emotion"
     },
     {
@@ -38,6 +35,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../button"
     },
     {
       "path": "../leafygreen-provider"

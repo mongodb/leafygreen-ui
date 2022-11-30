@@ -16,22 +16,10 @@
       "path": "../box"
     },
     {
-      "path": "../button"
-    },
-    {
-      "path": "../card"
-    },
-    {
       "path": "../emotion"
     },
     {
       "path": "../hooks"
-    },
-    {
-      "path": "../icon"
-    },
-    {
-      "path": "../icon-button"
     },
     {
       "path": "../lib"
@@ -44,6 +32,18 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../card"
+    },
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../icon"
     },
     {
       "path": "../leafygreen-provider"

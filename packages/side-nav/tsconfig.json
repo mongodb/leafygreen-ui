@@ -43,10 +43,10 @@
       "path": "../typography"
     },
     {
-      "path": "../icon-button"
+      "path": "../select"
     },
     {
-      "path": "../select"
+      "path": "../icon-button"
     },
     {
       "path": "../leafygreen-provider"

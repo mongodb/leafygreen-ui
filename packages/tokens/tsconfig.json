@@ -13,10 +13,10 @@
       "path": "../palette"
     },
     {
-      "path": "../typography"
+      "path": "../emotion"
     },
     {
-      "path": "../emotion"
+      "path": "../typography"
     }
   ]
 }
