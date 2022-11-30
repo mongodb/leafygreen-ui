@@ -152,7 +152,7 @@ async function fixDependencies(
       ...pkgJson?.devDependencies,
       ...missingDevDepsObject,
     };
-    writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + "\n");
+    writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
     spawnSync(`yarn`, ['install'], cmdOpts);
   }
 }
