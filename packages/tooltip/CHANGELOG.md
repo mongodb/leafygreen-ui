@@ -1,5 +1,11 @@
 # @leafygreen-ui/tooltip
 
+## 9.0.2
+
+### Patch Changes
+
+- 0020689d0: Fixes failing tests. Console warning will appear if an Icon is passed as a trigger
+
 ## 9.0.1
 
 ### Patch Changes
