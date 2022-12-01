@@ -92,3 +92,14 @@ export interface PolymorphicComponentType<P = {}> {
   ): ReactElement | null;
   displayName?: string;
 }
+
+/**
+ * Wrapping props in this type ensures that if `href` is defined,
+ * the `as` type is set to `'a'`
+ */
+export type PropsWithHref<P = {}> =
+  | (P & {
+      href: string;
+      as?: 'a';
+    } & AnchorProps)
+  | P;

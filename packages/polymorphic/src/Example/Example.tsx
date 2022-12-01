@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   PolymorphicAs,
+  PropsWithHref,
   Polymorph,
   Polymorphic,
   PolymorphicPropsWithRef,
@@ -40,7 +41,7 @@ ExampleComponent.displayName = 'ExampleComponent';
 /**
  * Uses `usePolymorphic` hook
  */
-export const ExampleWithFactory = Polymorphic<BaseExampleProps>(
+export const ExampleWithFactory = Polymorphic<PropsWithHref<BaseExampleProps>>(
   ({ as, title, ...rest }) => {
     const { Component, ref } = usePolymorphic(as, rest);
     return (
@@ -70,16 +71,16 @@ export const ExampleForwardRef = React.forwardRef(
 );
 ExampleForwardRef.displayName = 'ExampleForwardRef';
 
-export const ExampleForwardRefWithFactory = Polymorphic<BaseExampleProps>(
-  ({ as, title, ...rest }, ref) => {
-    const { Component } = usePolymorphic(as, rest);
-    return (
-      <Component ref={ref} {...rest}>
-        {title}
-      </Component>
-    );
-  },
-);
+export const ExampleForwardRefWithFactory = Polymorphic<
+  PropsWithHref<BaseExampleProps>
+>(({ as, title, ...rest }, ref) => {
+  const { Component } = usePolymorphic(as, rest);
+  return (
+    <Component ref={ref} {...rest}>
+      {title}
+    </Component>
+  );
+});
 ExampleForwardRefWithFactory.displayName = 'ExampleForwardRefWithFactory';
 
 /**

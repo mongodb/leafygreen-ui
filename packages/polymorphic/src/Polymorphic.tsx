@@ -1,21 +1,11 @@
 import React from 'react';
-import { AsProp, PolymorphicComponentType } from './Polymorphic.types';
-
-/**
- * Wrapping props in this type ensures that if `href` is defined,
- * the `as` type is set to `'a'`
- */
-export type PropsWithHref<P = {}> =
-  | (P & {
-      href: string;
-    } & AsProp<'a'>)
-  | P;
+import { PolymorphicComponentType } from './Polymorphic.types';
 
 /** Returns a polymorphic component */
 export const Polymorphic = <P extends object = {}>(
-  render: PolymorphicComponentType<PropsWithHref<P>>,
+  render: PolymorphicComponentType<P>,
   displayName?: string,
-): PolymorphicComponentType<PropsWithHref<P>> => {
+): PolymorphicComponentType<P> => {
   // Here we only know the additional props,
   // but don' t know what `as` is, or what props to inherit
 

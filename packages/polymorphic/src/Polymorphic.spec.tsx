@@ -40,7 +40,7 @@ describe('packages/polymorphic', () => {
         <Polymorph as="a" href="mongodb.design">
           some content
         </Polymorph>
-        {/* Should accept href and render it as 'a' */}
+        {/* Should accept href (and render it as 'a') */}
         {/* <Polymorph href="mongodb.design" /> */}
 
         <Polymorph as="input" />
@@ -187,8 +187,6 @@ describe('packages/polymorphic', () => {
           some content
         </ExampleComponent>
         <ExampleComponent key="some-key" />
-        {/* @ts-expect-error href is not allowed on explicit div */}
-        <ExampleComponent as="div" href="mongodb.design" />
 
         {/* @ts-expect-error - Require href when as="a" */}
         <ExampleComponent as="a" />
@@ -197,8 +195,18 @@ describe('packages/polymorphic', () => {
         <ExampleComponent as="a" href="mongodb.design">
           some content
         </ExampleComponent>
-        {/* Should accept href and render it as 'a' */}
+
+        {/* @ts-expect-error href is not allowed on explicit div */}
+        <ExampleComponent as="div" href="mongodb.design" />
+        {/* Should accept href (and render it as 'a') */}
         <ExampleComponent href="mongodb.design" />
+
+        {/* Should accept other anchor props if only href is defined */}
+        <ExampleComponent
+          href="mongodb.design"
+          target="_blank"
+          rel="noopener"
+        />
 
         <ExampleComponent as="input" />
         {/* TODO: ts-expect-error - Input should not accept children */}
