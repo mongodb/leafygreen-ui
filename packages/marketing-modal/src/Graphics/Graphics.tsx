@@ -1,11 +1,10 @@
 import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import {
-  baseGraphicContainerStyle,
-  centeredGraphicContainerStyle,
-  filledGraphicContainerStyle,
-  baseGraphicStyle,
-  filledGraphicStyle,
+  graphicContainerBaseStyle,
+  graphicContainerStyleStyles,
+  graphicBaseStyle,
+  graphicFilledStyle,
   curvedSVGBaseStyles,
   curvedSVGThemeStyles,
 } from './styles';
@@ -24,23 +23,25 @@ const Graphics = ({
   showBlob,
   theme,
 }: GraphicProps) => {
+  const filledGraphic = graphicStyle === GraphicStyle.Fill;
+
   return (
     <>
       {showBlob && graphicStyle === GraphicStyle.Center && (
         <BlobSVG blobPosition={blobPosition} theme={theme} />
       )}
       <div
-        className={cx(baseGraphicContainerStyle, {
-          [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
-          [filledGraphicContainerStyle]: graphicStyle === GraphicStyle.Fill,
-        })}
+        className={cx(
+          graphicContainerBaseStyle,
+          graphicContainerStyleStyles[graphicStyle],
+        )}
       >
         {React.cloneElement(graphic, {
-          className: `${graphic.props.className ?? ''} ${cx(baseGraphicStyle, {
-            [filledGraphicStyle]: graphicStyle === GraphicStyle.Fill,
+          className: `${graphic.props.className ?? ''} ${cx(graphicBaseStyle, {
+            [graphicFilledStyle]: filledGraphic,
           })}`,
         })}
-        {graphicStyle === GraphicStyle.Fill && (
+        {filledGraphic && (
           <svg
             className={cx(curvedSVGBaseStyles, curvedSVGThemeStyles[theme])}
             viewBox="0 0 600 49"
