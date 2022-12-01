@@ -61,6 +61,7 @@ function Toggle({
       disabled={disabled}
       aria-disabled={disabled}
       className={cx(
+        className,
         toggleButtonClassName,
         buttonBaseStyles,
         buttonThemeStyles[theme],
