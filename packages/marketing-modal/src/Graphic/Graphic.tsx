@@ -1,22 +1,22 @@
 import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import {
-  graphicContainerBaseStyle,
-  graphicContainerStyleStyles,
-  graphicBaseStyle,
-  graphicFilledStyle,
+  containerBaseStyle,
+  containerStyleStyles,
+  baseStyle,
+  filledStyle,
   curvedSVGBaseStyles,
   curvedSVGThemeStyles,
 } from './styles';
 import { GraphicStyle } from '../MarketingModal/types';
 import { GraphicProps } from './types';
-import BlobSVG from '../BlobSVG/BlobSVG';
+import { BlobSVG } from '../BlobSVG/BlobSVG';
 
 /**
  *
  * @internal
  */
-const Graphics = ({
+export const Graphic = ({
   graphic,
   graphicStyle,
   blobPosition,
@@ -31,14 +31,11 @@ const Graphics = ({
         <BlobSVG blobPosition={blobPosition} theme={theme} />
       )}
       <div
-        className={cx(
-          graphicContainerBaseStyle,
-          graphicContainerStyleStyles[graphicStyle],
-        )}
+        className={cx(containerBaseStyle, containerStyleStyles[graphicStyle])}
       >
         {React.cloneElement(graphic, {
-          className: `${graphic.props.className ?? ''} ${cx(graphicBaseStyle, {
-            [graphicFilledStyle]: filledGraphic,
+          className: `${graphic.props.className ?? ''} ${cx(baseStyle, {
+            [filledStyle]: filledGraphic,
           })}`,
         })}
         {filledGraphic && (
@@ -58,5 +55,3 @@ const Graphics = ({
     </>
   );
 };
-
-export default Graphics;

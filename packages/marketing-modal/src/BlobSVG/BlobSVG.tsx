@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import React from 'react';
 import { BlobPosition } from '../MarketingModal/types';
-import { blobBaseStyles, blobThemeStyles } from './styles';
+import { baseStyles, themeStyles } from './styles';
 import { BlobSVGProperties, BlobSVGProps } from './types';
 
 const blobSVGPaths: Record<BlobPosition, Record<BlobSVGProperties, string>> = {
@@ -41,7 +41,7 @@ const blobSVGPaths: Record<BlobPosition, Record<BlobSVGProperties, string>> = {
  *
  * @internal
  */
-const BlobsSVG = ({ blobPosition, theme }: BlobSVGProps) => {
+export const BlobSVG = ({ blobPosition, theme }: BlobSVGProps) => {
   const { viewBox, path, styles: positionStyles } = blobSVGPaths[blobPosition];
 
   return (
@@ -49,7 +49,7 @@ const BlobsSVG = ({ blobPosition, theme }: BlobSVGProps) => {
       viewBox={viewBox}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cx(blobBaseStyles, blobThemeStyles[theme], positionStyles)}
+      className={cx(baseStyles, themeStyles[theme], positionStyles)}
       aria-hidden="true"
       data-testid="svg-blob"
     >
@@ -57,5 +57,3 @@ const BlobsSVG = ({ blobPosition, theme }: BlobSVGProps) => {
     </svg>
   );
 };
-
-export default BlobsSVG;

@@ -4,32 +4,32 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { GraphicStyle } from '../MarketingModal/types';
 
-const centeredGraphicContainerStyle = css`
+const centeredContainerStyle = css`
   padding-top: 48px;
   padding-bottom: ${spacing[4]}px;
 `;
 
-const filledGraphicContainerStyle = css`
+const filledContainerStyle = css`
   padding-bottom: ${spacing[4]}px;
   position: relative;
 `;
 
-export const graphicContainerStyleStyles: Record<GraphicStyle, string> = {
-  [GraphicStyle.Center]: centeredGraphicContainerStyle,
-  [GraphicStyle.Fill]: filledGraphicContainerStyle,
+export const containerStyleStyles: Record<GraphicStyle, string> = {
+  [GraphicStyle.Center]: centeredContainerStyle,
+  [GraphicStyle.Fill]: filledContainerStyle,
 };
 
-export const graphicContainerBaseStyle = css`
+export const containerBaseStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-export const graphicFilledStyle = css`
+export const filledStyle = css`
   width: 100%;
 `;
 
-export const graphicBaseStyle = css`
+export const baseStyle = css`
   display: block;
 `;
 

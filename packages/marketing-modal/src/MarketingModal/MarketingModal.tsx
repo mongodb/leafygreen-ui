@@ -17,7 +17,7 @@ import {
   wrapperStyle,
 } from './styles';
 import { BlobPosition, GraphicStyle, MarketingModalProps } from './types';
-import Graphics from '../Graphics/Graphics';
+import { Graphic } from '../Graphic/Graphic';
 
 const MarketingModal = ({
   children,
@@ -45,7 +45,7 @@ const MarketingModal = ({
       darkMode={darkMode}
       closeIconColor={closeIconColor}
     >
-      <Graphics
+      <Graphic
         theme={theme}
         graphic={graphic}
         graphicStyle={graphicStyle}
