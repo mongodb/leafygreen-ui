@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 import { SegmentedControl, SegmentedControlOption } from '.';
-import { Body } from '@leafygreen-ui/typography';
-import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { SegmentedControlProps, Size } from './SegmentedControl/types';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
@@ -63,42 +61,14 @@ Uncontrolled.args = {
 };
 
 export const Controlled = (args: SegmentedControlProps) => {
-  // const [selectedFruit, setSelectedFruit] = useState('eggplant');
-  const [selected, setSelected] = useState('foo');
+  const [selectedFruit, setSelectedFruit] = useState('eggplant');
   return (
-    // <Uncontrolled
-    //   {...args}
-    //   key="selectedFruit"
-    //   value={selectedFruit}
-    //   onChange={setSelectedFruit}
-    // />
-    <div className="App">
-      <Body>
-        <ol>
-          <li>Click "Select Bar"</li>
-          <li>Click "Foo"</li>
-          <li>Note that Foo does not select until "Bar" is clicked first</li>
-        </ol>
-      </Body>
-
-      <SegmentedControl
-        value={selected}
-        onChange={val => {
-          setSelected(val);
-        }}
-      >
-        <SegmentedControlOption value="foo">Foo</SegmentedControlOption>
-        <SegmentedControlOption value="bar">Bar</SegmentedControlOption>
-      </SegmentedControl>
-      <br />
-      <Button
-        onClick={() => {
-          setSelected('bar');
-        }}
-      >
-        Select Bar
-      </Button>
-    </div>
+    <Uncontrolled
+      {...args}
+      key="selectedFruit"
+      value={selectedFruit}
+      onChange={setSelectedFruit}
+    />
   );
 };
 Controlled.args = {
