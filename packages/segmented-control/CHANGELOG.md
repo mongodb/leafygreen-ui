@@ -1,5 +1,11 @@
 # @leafygreen-ui/segmented-control
 
+## 7.0.0
+
+### Major Changes
+
+- 8d520f6d2: Adds slot for `glyph` and adds an ellipsis to prevent wrapping of long text. Passing in an `<Icon>` as a child will not produce an error but is discouraged because styles will be broken. A slot was introduced to separate icon from text which makes it easier to apply icon only and text only styles.
+
 ## 6.0.1
 
 ### Patch Changes
