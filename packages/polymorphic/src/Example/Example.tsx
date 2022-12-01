@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  PolymorphicAs,
   Polymorph,
   Polymorphic,
   PolymorphicPropsWithRef,
@@ -14,7 +15,7 @@ interface BaseExampleProps {
   darkMode?: boolean;
 }
 
-type ExampleProps<T extends React.ElementType> = PolymorphicPropsWithRef<
+type ExampleProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
   T,
   BaseExampleProps
 >;
@@ -23,7 +24,7 @@ type ExampleProps<T extends React.ElementType> = PolymorphicPropsWithRef<
  * Extends Polymorphic
  * @test
  */
-export const ExampleComponent = <T extends React.ElementType = 'div'>({
+export const ExampleComponent = <T extends PolymorphicAs = 'div'>({
   as,
   title,
   ...rest
@@ -39,9 +40,9 @@ ExampleComponent.displayName = 'ExampleComponent';
 /**
  * Uses `usePolymorphic` hook
  */
-export const ExampleWithHook = Polymorphic<BaseExampleProps>(
+export const ExampleWithFactory = Polymorphic<BaseExampleProps>(
   ({ as, title, ...rest }) => {
-    const { Component, ref } = usePolymorphic(as);
+    const { Component, ref } = usePolymorphic(as, rest);
     return (
       <Component ref={ref} {...rest}>
         {title}
@@ -49,14 +50,14 @@ export const ExampleWithHook = Polymorphic<BaseExampleProps>(
     );
   },
 );
-ExampleWithHook.displayName = 'ExampleWithHook';
+ExampleWithFactory.displayName = 'ExampleWithFactory';
 
 /**
  * Extends Polymorphic
  * @test
  */
 export const ExampleForwardRef = React.forwardRef(
-  <T extends React.ElementType = 'div'>(
+  <T extends PolymorphicAs = 'div'>(
     { as, title, ...rest }: ExampleProps<T>,
     ref: PolymorphicRef<T>,
   ) => {
@@ -69,9 +70,9 @@ export const ExampleForwardRef = React.forwardRef(
 );
 ExampleForwardRef.displayName = 'ExampleForwardRef';
 
-export const ExampleForwardRefWithHook = Polymorphic<BaseExampleProps>(
+export const ExampleForwardRefWithFactory = Polymorphic<BaseExampleProps>(
   ({ as, title, ...rest }, ref) => {
-    const { Component } = usePolymorphic(as);
+    const { Component } = usePolymorphic(as, rest);
     return (
       <Component ref={ref} {...rest}>
         {title}
@@ -79,7 +80,7 @@ export const ExampleForwardRefWithHook = Polymorphic<BaseExampleProps>(
     );
   },
 );
-ExampleForwardRefWithHook.displayName = 'ExampleForwardRefWithHook';
+ExampleForwardRefWithFactory.displayName = 'ExampleForwardRefWithFactory';
 
 /**
  * Ensure `as` types can be restricted

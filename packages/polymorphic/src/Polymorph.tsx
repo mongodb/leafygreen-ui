@@ -1,6 +1,7 @@
 import React from 'react';
 import { usePolymorphicComponent } from './Polymorphic.hooks';
 import {
+  PolymorphicAs,
   PolymorphicComponentType,
   PolymorphicPropsWithRef,
   PolymorphicRef,
@@ -9,7 +10,7 @@ import {
 /**
  * Base polymorphic component
  */
-export const BasePolymorph = <T extends React.ElementType = 'div'>(
+export const BasePolymorph = <T extends PolymorphicAs = 'div'>(
   { as, children, ...rest }: PolymorphicPropsWithRef<T>,
   ref: PolymorphicRef<T>,
 ) => {

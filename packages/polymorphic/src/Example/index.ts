@@ -1,8 +1,8 @@
 // Uncomment these to debug tsdoc generation
 export {
   ExampleComponent,
-  ExampleWithHook,
+  ExampleWithFactory,
   ExampleForwardRef,
-  ExampleForwardRefWithHook,
+  ExampleForwardRefWithFactory,
   RestrictedExample,
 } from './Example';

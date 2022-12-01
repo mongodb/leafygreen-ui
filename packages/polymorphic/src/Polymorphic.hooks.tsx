@@ -1,4 +1,5 @@
 import React from 'react';
+import { PolymorphicRef } from './Polymorphic.types';
 
 /**
  * A wrapper around `React.useRef`
@@ -13,18 +14,29 @@ export const usePolymorphicRef = <E extends React.ElementType>() => {
   >(null);
 };
 
-export const usePolymorphicComponent = (
-  as?: React.ElementType,
-): React.ElementType => {
+export function usePolymorphicComponent<T extends React.ElementType>(
+  as?: T,
+): React.ElementType {
   const Component = as || 'div';
   return Component;
-};
+}
 
-export const usePolymorphic = <T extends React.ElementType>(as?: T) => {
+export function usePolymorphic<T extends React.ElementType>(
+  as?: T,
+  props?: { [key: string]: any },
+): {
+  Component: React.ElementType;
+  ref: PolymorphicRef<T>;
+} {
+  if (typeof props?.href === 'string') {
+    as = 'a';
+  }
+
   const Component = usePolymorphicComponent(as);
+
   const ref = usePolymorphicRef<T>();
   return {
     Component,
     ref,
   };
-};
+}

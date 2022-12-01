@@ -1,41 +1,24 @@
 /**
  * Based on https://blog.logrocket.com/build-strongly-typed-polymorphic-components-react-typescript/
  */
-import React from 'react';
-
 // TODO: Consider restricting HTML elements to only elements that accept children
-/**
- * A subset of HTMLElements that accept children
- */
-/*
-export type HTMLElements = Omit<
-  HTMLElementTagNameMap,
-  // Excludes Void & Foreign elements
-  // (https://html.spec.whatwg.org/multipage/syntax.html#void-elements)
-  | 'object'
-  | 'area'
-  | 'base'
-  | 'br'
-  | 'col'
-  | 'embed'
-  | 'hr'
-  | 'img'
-  | 'input'
-  | 'link'
-  | 'meta'
-  | 'source'
-  | 'track'
-  | 'wbr'
-  | 'template'
-  | 'script'
-  | 'style'
-  | keyof React.ReactSVG
->;
-export type ElementTag = keyof HTMLElements
-*/
+import {
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  ElementType,
+  PropsWithChildren,
+  ReactElement,
+} from 'react';
 
-/** An interface that defines the `as` prop */
-export interface AsProp<T extends React.ElementType> {
+export type PolymorphicAs = ElementType;
+
+/**
+ * An interface that enables the `as` prop.
+ *
+ * By defining an `as` prop on a component,
+ * we set the type T for all related types/interfaces
+ */
+export interface AsProp<T extends PolymorphicAs> {
   /** The component or element to render as */
   as?: T;
 }
@@ -43,46 +26,50 @@ export interface AsProp<T extends React.ElementType> {
 /**
  * The type of the Ref element based on the `as` prop type
  */
-export type PolymorphicRef<T extends React.ElementType> =
-  React.ComponentPropsWithRef<T>['ref'];
+export type PolymorphicRef<T extends PolymorphicAs> =
+  ComponentPropsWithRef<T>['ref'];
 
 /**
  * Union of prop types potentially re-defined in React.ComponentProps
  */
-type PropsToOmit<T extends React.ElementType, P> = keyof (P & AsProp<T>);
+type PropsToOmit<T extends PolymorphicAs, P> = keyof (P & AsProp<T>);
+
+/**
+ * Ensures `href` is required for anchors
+ */
+export type AnchorProps = Omit<ComponentPropsWithoutRef<'a'>, 'href'> & {
+  /** `href` is required for Anchor tags */
+  href: string;
+};
 
 /**
  * Parses the expected inherited Props,
  * and adds restrictions based on the passed in type
  */
-type InheritedProps<T extends React.ElementType> = T extends 'a'
-  ? Omit<React.ComponentPropsWithoutRef<T>, 'href'> & {
-      /** `href` is required for Anchor tags */
-      href: string;
-    }
-  : React.ComponentPropsWithoutRef<T>;
+type InheritedProps<T extends PolymorphicAs> = T extends 'a'
+  ? AnchorProps
+  : ComponentPropsWithoutRef<T>;
 
 /**
  * The basic props for the Polymorphic component.
  *
- * Prefer using `PolymorphicPropsWithRef` in most cases
+ * Note: Prefer using `PolymorphicPropsWithRef` in most cases
  */
 export type PolymorphicProps<
-  T extends React.ElementType,
+  T extends PolymorphicAs,
   P = {},
-> = React.PropsWithChildren<P & AsProp<T>> &
+> = PropsWithChildren<P & AsProp<T>> &
   Omit<InheritedProps<T>, PropsToOmit<T, P>>;
 
 /**
  * Add the `ref` prop type to PolymorphicProps
  *
- * Note: Prefer using this type
- * even in cases where you do not anticipate using a ref
+ * Prefer this type even in cases where you do not anticipate using a ref
  *
  * @type {T}
  */
 export type PolymorphicPropsWithRef<
-  T extends React.ElementType,
+  T extends PolymorphicAs,
   P = {},
 > = PolymorphicProps<T, P> & {
   /** The ref object returned by `React.useRef` */
@@ -92,12 +79,16 @@ export type PolymorphicPropsWithRef<
 /**
  * An explicit definition of the component type
  *
- * @type {T}
+ * Components returned by the `Polymorphic` factory function
+ * have this type
+ *
+ * PolymorphicComponentType is an interface with a generic function,
+ * and a displayName.
  */
 export interface PolymorphicComponentType<P = {}> {
-  <T extends React.ElementType = 'div'>(
+  <T extends PolymorphicAs>(
     props: PolymorphicPropsWithRef<T, P>,
     ref: PolymorphicRef<T>,
-  ): React.ReactElement | null;
+  ): ReactElement | null;
   displayName?: string;
 }
