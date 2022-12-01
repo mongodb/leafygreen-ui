@@ -127,7 +127,7 @@ export interface CardProps extends HTMLElementProps<'div'> {
 export const Card = ({
   className,
   contentStyle,
-  darkMode = false,
+  darkMode: darkModeProp,
   ...rest
 }: BoxProps<'div', CardProps>) => {
   if (
@@ -138,7 +138,7 @@ export const Card = ({
     contentStyle = ContentStyle.Clickable;
   }
 
-  const { theme } = useDarkMode(darkMode);
+  const { theme } = useDarkMode(darkModeProp);
 
   return (
     <Box
