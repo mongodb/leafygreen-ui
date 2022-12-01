@@ -14,10 +14,6 @@ export type {
   PolymorphicRef,
 } from './Polymorphic.types';
 
-export {
-  useImplicitPolymorphic,
-} from './ImplicitPolymorphic'
+export { useImplicitPolymorphic } from './ImplicitPolymorphic';
 
-export type {
-  ImplicitPolymorphicProps,
-} from './ImplicitPolymorphic'
+export type { ImplicitPolymorphicProps } from './ImplicitPolymorphic';
