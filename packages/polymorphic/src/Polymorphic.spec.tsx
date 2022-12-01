@@ -1,6 +1,7 @@
 import React from 'react';
 import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
+import styled from '@emotion/styled';
 import { Polymorph, usePolymorphicRef } from '.';
 import {
   ExamplePolymorphic,
@@ -58,8 +59,6 @@ describe('packages/polymorphic', () => {
       </>;
     });
     /* eslint-enable jest/no-disabled-tests */
-
-    test.todo('Renders with `styled` API');
 
     test('renders as a div by default', () => {
       const { container } = render(<Polymorph />);
@@ -152,6 +151,53 @@ describe('packages/polymorphic', () => {
         expect(testRef!.current).toBeDefined();
       });
     });
+
+    describe('With Emotion `styled` API', () => {
+      test('Basic styled component', () => {
+        const StyledPolymorph = styled(Polymorph)`
+          color: #ff69b4;
+        `;
+
+        const { getByTestId } = render(
+          <StyledPolymorph data-testid="styled">Some text</StyledPolymorph>,
+        );
+        expect(getByTestId('styled')).toBeInTheDocument();
+        expect(getByTestId('styled').tagName.toLowerCase()).toBe('div');
+        expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      });
+
+      test('as an HTML element', () => {
+        const StyledPolymorph = styled(Polymorph)`
+          color: #ff69b4;
+        `;
+
+        const { getByTestId } = render(
+          <StyledPolymorph as="a" href="mongodb.design" data-testid="styled">
+            Some text
+          </StyledPolymorph>,
+        );
+        expect(getByTestId('styled')).toBeInTheDocument();
+        expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
+        expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      });
+
+      test('as a custom component', () => {
+        const { Wrapper } = makeWrapperComponent();
+        const StyledPolymorph = styled(Polymorph)`
+          color: #ff69b4;
+        `;
+        const { getByTestId } = render(
+          <StyledPolymorph as={Wrapper} data-testid="styled">
+            Some text
+          </StyledPolymorph>,
+        );
+
+        expect(getByTestId('styled')).toBeInTheDocument();
+        expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
+        expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      });
+    });
   });
 
   describe.each([
@@ -242,6 +288,56 @@ describe('packages/polymorphic', () => {
         expect(getByTestId('wrapper')).toBeInTheDocument();
         expect(container.firstElementChild?.tagName.toLowerCase()).toBe('span');
         expect(wrapperDidRender).toHaveBeenCalled();
+      });
+
+      describe('With Emotion `styled` API', () => {
+        test('Basic styled component', () => {
+          const StyledExample = styled(ExampleComponent)`
+            color: #ff69b4;
+          `;
+
+          const { getByTestId } = render(
+            <StyledExample data-testid="styled">Some text</StyledExample>,
+          );
+          expect(getByTestId('styled')).toBeInTheDocument();
+          expect(getByTestId('styled').tagName.toLowerCase()).toBe('div');
+          expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+        });
+
+        test('as an HTML element', () => {
+          const StyledExample = styled(ExampleComponent)`
+            color: #ff69b4;
+          `;
+
+          const { getByTestId } = render(
+            <StyledExample as="a" href="mongodb.design" data-testid="styled">
+              Some text
+            </StyledExample>,
+          );
+          expect(getByTestId('styled')).toBeInTheDocument();
+          expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
+          expect(getByTestId('styled')).toHaveAttribute(
+            'href',
+            'mongodb.design',
+          );
+          expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+        });
+
+        test('as a custom component', () => {
+          const { Wrapper } = makeWrapperComponent();
+          const StyledExample = styled(ExampleComponent)`
+            color: #ff69b4;
+          `;
+          const { getByTestId } = render(
+            <StyledExample as={Wrapper} data-testid="styled">
+              Some text
+            </StyledExample>,
+          );
+
+          expect(getByTestId('styled')).toBeInTheDocument();
+          expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
+          expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+        });
       });
     });
   });

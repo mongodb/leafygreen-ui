@@ -27,5 +27,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@leafygreen-ui/emotion": "4.0.3",
+    "@emotion/styled": "11.10.5"
+  }
 }
