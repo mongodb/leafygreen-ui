@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/internal",
+  "name": "@leafygreen-ui/polymorphic",
   "version": "0.9.0",
-  "description": "leafyGreen UI Kit Internal",
+  "description": "LeafyGreen UI Kit Polymorphic",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
@@ -16,13 +16,13 @@
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
   "license": "Apache-2.0",
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/internal",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/polymorphic",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"
   },
   "bugs": {
-    "url": "https://jira.mongodb.org/projects/PD/summary"
+    "url": "https://jira.mongodb.org/projects/LG/summary"
   },
   "publishConfig": {
     "access": "public"

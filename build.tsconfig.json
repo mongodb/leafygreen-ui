@@ -90,6 +90,9 @@
       "path": "./packages/popover"
     },
     {
+      "path": "./packages/polymorphic"
+    },
+    {
       "path": "./packages/portal"
     },
     {
