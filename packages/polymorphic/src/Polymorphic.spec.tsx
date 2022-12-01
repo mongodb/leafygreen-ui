@@ -3,10 +3,11 @@ import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
 import { Polymorph, usePolymorphicRef } from '.';
 import {
-  ExampleComponent,
-  ExampleForwardRef,
-  ExampleForwardRefWithFactory,
-  ExampleWithFactory,
+  ExamplePolymorphic,
+  ExamplePolymorphicWithRef,
+  ExampleImplicit,
+  AdvancedPolymorphic,
+  AdvancedPolymorphicWithRef,
   RestrictedExample,
 } from './Example';
 
@@ -98,16 +99,6 @@ describe('packages/polymorphic', () => {
         expect(getByTestId('poly').getAttribute('href')).toBe('mongodb.design');
       });
 
-      // eslint-disable-next-line jest/no-commented-out-tests
-      // test.skip('renders as anchor if href is provided', () => {
-      //   const { queryByTestId } = render(
-      //     <Polymorph href="mongodb.design" data-testid="hoc" />,
-      //   );
-
-      //   expect(queryByTestId('hoc')).toBeInTheDocument();
-      //   expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
-      // });
-
       test('accepts a ref', () => {
         let testRef: React.MutableRefObject<HTMLAnchorElement | null>;
 
@@ -164,11 +155,12 @@ describe('packages/polymorphic', () => {
   });
 
   describe.each([
-    ExampleComponent,
-    ExampleWithFactory,
-    ExampleForwardRef,
-    ExampleForwardRefWithFactory,
-  ])('All Higher-Order Polymorphic Components', ExampleComponent => {
+    ExamplePolymorphic,
+    ExamplePolymorphicWithRef,
+    ExampleImplicit,
+    AdvancedPolymorphic,
+    AdvancedPolymorphicWithRef,
+  ])('Higher-Order Polymorphic Components', ExampleComponent => {
     /* eslint-disable jest/no-disabled-tests */
     test.skip('Prop Types behave correctly', () => {
       const { Wrapper } = makeWrapperComponent();
@@ -198,15 +190,6 @@ describe('packages/polymorphic', () => {
 
         {/* @ts-expect-error href is not allowed on explicit div */}
         <ExampleComponent as="div" href="mongodb.design" />
-        {/* Should accept href (and render it as 'a') */}
-        <ExampleComponent href="mongodb.design" />
-
-        {/* Should accept other anchor props if only href is defined */}
-        <ExampleComponent
-          href="mongodb.design"
-          target="_blank"
-          rel="noopener"
-        />
 
         <ExampleComponent as="input" />
         {/* TODO: ts-expect-error - Input should not accept children */}
@@ -275,21 +258,18 @@ describe('packages/polymorphic', () => {
     );
   });
 
-  describe.each([ExampleWithFactory, ExampleForwardRefWithFactory])(
-    'Higher-Order Polymorphic components using Factory',
-    ExampleComponent => {
-      test('render as an anchor if only href is provided', () => {
-        const { queryByTestId } = render(
-          <ExampleComponent href="mongodb.design" data-testid="hoc" />,
-        );
-        expect(queryByTestId('hoc')).toBeInTheDocument();
-        expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
-        expect(queryByTestId('hoc')).toHaveAttribute('href', 'mongodb.design');
-      });
-    },
-  );
+  describe('Higher-Order Implicit Polymorph', () => {
+    test('renders as an anchor if only href is provided', () => {
+      const { queryByTestId } = render(
+        <ExampleImplicit href="mongodb.design" data-testid="hoc" />,
+      );
+      expect(queryByTestId('hoc')).toBeInTheDocument();
+      expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
+      expect(queryByTestId('hoc')).toHaveAttribute('href', 'mongodb.design');
+    });
+  });
 
-  describe.each([ExampleForwardRef, ExampleForwardRefWithFactory])(
+  describe.each([ExamplePolymorphicWithRef, AdvancedPolymorphicWithRef])(
     'Higher-Order Polymorphic Components with Ref',
     ExampleComponent => {
       describe(`${ExampleComponent.displayName!}`, () => {
@@ -378,10 +358,10 @@ describe('packages/polymorphic', () => {
       const docs = parseTSDoc('polymorphic/src/Example');
 
       const exampleComponentNames = [
-        'ExampleComponent',
-        'ExampleWithFactory',
-        'ExampleForwardRef',
-        'ExampleForwardRefWithFactory',
+        'ExamplePolymorphic',
+        'ExamplePolymorphicWithRef',
+        'AdvancedPolymorphic',
+        'AdvancedPolymorphicWithRef',
       ];
 
       describe.each(exampleComponentNames)(
@@ -395,8 +375,7 @@ describe('packages/polymorphic', () => {
           test(`${displayName} docs contain the expected props`, () => {
             const doc = docs?.find(doc => doc.displayName === displayName);
             expect(doc!.props).toHaveProperty('AsProp');
-            // expect(doc!.props).toHaveProperty(`${displayName}Props`);
-            expect(doc!.props).toHaveProperty(`BaseExampleProps`);
+            expect(doc!.props).toHaveProperty(`ExampleProps`);
             expect(doc!.props).toHaveProperty('AriaAttributes');
             expect(doc!.props).toHaveProperty('DOMAttributes');
           });

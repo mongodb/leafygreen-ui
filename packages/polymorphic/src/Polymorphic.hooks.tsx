@@ -22,17 +22,10 @@ export function usePolymorphicComponent<T extends PolymorphicAs>(
   return Component;
 }
 
-export function usePolymorphic(
-  as?: PolymorphicAs,
-  props?: { [key: string]: any },
-): {
+export function usePolymorphic(as?: PolymorphicAs): {
   Component: PolymorphicAs;
   ref: PolymorphicRef<PolymorphicAs>;
 } {
-  if (typeof props?.href === 'string') {
-    as = 'a' as PolymorphicAs;
-  }
-
   const Component = usePolymorphicComponent(as);
   const ref = usePolymorphicRef(as);
 

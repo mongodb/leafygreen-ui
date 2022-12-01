@@ -26,7 +26,7 @@ interface MyProps {
 
 const MyComponent = (props: MyProps) => {
   const shouldRenderAs = 'button';
-  return <Polymorphic as={shouldRenderAs} {...props} />;
+  return <Polymorph as={shouldRenderAs} {...props} />;
 };
 ```
 
@@ -73,9 +73,9 @@ export const MyComponent = <T extends React.ElementType = 'div'>(
   forwardedRef: PolymorphicRef<T>,
 ) => {
   return (
-    <Polymorphic as={as as React.ElementType} ref={forwardedRef} {...rest}>
+    <Polymorph as={as as React.ElementType} ref={forwardedRef} {...rest}>
       {title}
-    </Polymorphic>
+    </Polymorph>
   );
 };
 ```

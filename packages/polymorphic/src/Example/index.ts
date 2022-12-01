@@ -1,8 +1,9 @@
 // Uncomment these to debug tsdoc generation
 export {
-  ExampleComponent,
-  ExampleWithFactory,
-  ExampleForwardRef,
-  ExampleForwardRefWithFactory,
+  ExamplePolymorphic,
+  ExamplePolymorphicWithRef,
+  AdvancedPolymorphic,
+  AdvancedPolymorphicWithRef,
+  ExampleImplicit,
   RestrictedExample,
 } from './Example';
