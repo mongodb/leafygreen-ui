@@ -74,12 +74,12 @@ export const SegmentedControl = forwardRef<
 
   // Keep track of the value internally
   const [internalValue, setInternalValue] = useState<string | undefined>(
-    controlledValue,
+    defaultValue ?? controlledValue,
   );
 
   const [focusedOptionValue, setFocusedOptionValue] = useState<
     string | undefined
-  >(controlledValue);
+  >(defaultValue ?? controlledValue);
 
   // If no default or controlled value is given, set it to the first option
   useEffectOnceOnMount(() => {
@@ -242,8 +242,8 @@ export const SegmentedControl = forwardRef<
       newIndex >= length
         ? newIndex % length
         : newIndex < 0
-        ? length + newIndex
-        : newIndex;
+          ? length + newIndex
+          : newIndex;
 
     const { value } = children[newIndex].props;
     setFocusedOptionValue(value);
