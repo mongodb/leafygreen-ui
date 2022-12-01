@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 9.0.2
+
+### Patch Changes
+
+- 38181cc1d: Update to consume darkMode from `useDarkMode`. Some components were setting `darkMode = false` as a default which would override the default value provided by the `LeafyGreenProvider`.
+
 ## 9.0.1
 
 ### Patch Changes

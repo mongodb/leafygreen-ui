@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 10.0.2
+
+### Patch Changes
+
+- dbcf23db0: Spreads `className` prop on root button element
+
 ## 10.0.1
 
 ### Patch Changes
