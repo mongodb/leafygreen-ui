@@ -19,15 +19,15 @@ import BlobSVG from '../BlobSVG/BlobSVG';
  */
 const Graphics = ({
   graphic,
-  darkMode,
   graphicStyle,
   blobPosition,
   showBlob,
+  theme,
 }: GraphicProps) => {
   return (
     <>
       {showBlob && graphicStyle === GraphicStyle.Center && (
-        <BlobSVG darkMode={darkMode} blobPosition={blobPosition} />
+        <BlobSVG blobPosition={blobPosition} theme={theme} />
       )}
       <div
         className={cx(baseGraphicContainerStyle, {
@@ -42,7 +42,7 @@ const Graphics = ({
         })}
         {graphicStyle === GraphicStyle.Fill && (
           <svg
-            className={cx(curvedSVGBaseStyles, curvedSVGThemeStyles(darkMode))}
+            className={cx(curvedSVGBaseStyles, curvedSVGThemeStyles[theme])}
             viewBox="0 0 600 49"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

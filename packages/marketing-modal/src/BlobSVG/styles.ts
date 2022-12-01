@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 export const blobBaseStyles = css`
@@ -6,7 +7,11 @@ export const blobBaseStyles = css`
   z-index: -1;
 `;
 
-export const blobThemeStyles = (darkMode: boolean) =>
-  css`
-    color: ${darkMode ? palette.gray.dark3 : palette.purple.light3};
-  `;
+export const blobThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.purple.light3};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark3};
+  `,
+};

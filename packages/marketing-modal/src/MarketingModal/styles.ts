@@ -1,10 +1,10 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { typeScales } from '@leafygreen-ui/tokens';
+import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 export const titleStyle = css`
-  margin-bottom: 4px;
+  margin-bottom: ${spacing[1]}px;
 `;
 
 export const baseModalStyle = css`
@@ -48,5 +48,5 @@ export const buttonStyle = css`
 `;
 
 export const linkStyle = css`
-  margin-top: 16px;
+  margin-top: ${spacing[3]}px;
 `;

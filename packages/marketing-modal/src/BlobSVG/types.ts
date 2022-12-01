@@ -1,8 +1,9 @@
+import { Theme } from '@leafygreen-ui/lib';
 import { BlobPosition } from '../MarketingModal/types';
 
 export interface BlobSVGProps {
-  darkMode: boolean;
   blobPosition: BlobPosition;
+  theme: Theme;
 }
 
 export type BlobSVGProperties = 'viewBox' | 'path' | 'styles';

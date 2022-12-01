@@ -41,15 +41,15 @@ const blobSVGPaths: Record<BlobPosition, Record<BlobSVGProperties, string>> = {
  *
  * @internal
  */
-const BlobsSVG = ({ blobPosition, darkMode }: BlobSVGProps) => {
-  const { viewBox, path, styles } = blobSVGPaths[blobPosition];
+const BlobsSVG = ({ blobPosition, theme }: BlobSVGProps) => {
+  const { viewBox, path, styles: positionStyles } = blobSVGPaths[blobPosition];
 
   return (
     <svg
       viewBox={viewBox}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cx(blobBaseStyles, blobThemeStyles(darkMode), styles)}
+      className={cx(blobBaseStyles, blobThemeStyles[theme], positionStyles)}
       aria-hidden="true"
       data-testid="svg-blob"
     >
