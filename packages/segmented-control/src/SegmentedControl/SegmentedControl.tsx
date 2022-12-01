@@ -77,8 +77,6 @@ export const SegmentedControl = forwardRef<
     controlledValue,
   );
 
-  console.log({ controlledValue, internalValue })
-
   const [focusedOptionValue, setFocusedOptionValue] = useState<
     string | undefined
   >(controlledValue);
@@ -118,9 +116,9 @@ export const SegmentedControl = forwardRef<
 
   useEffect(() => {
     if (isControlled) {
-      setInternalValue(controlledValue)
+      setInternalValue(controlledValue);
     }
-  }, [controlledValue])
+  }, [controlledValue, isControlled]);
 
   // Handle value updates
   const updateValue = useCallback(
@@ -244,8 +242,8 @@ export const SegmentedControl = forwardRef<
       newIndex >= length
         ? newIndex % length
         : newIndex < 0
-          ? length + newIndex
-          : newIndex;
+        ? length + newIndex
+        : newIndex;
 
     const { value } = children[newIndex].props;
     setFocusedOptionValue(value);
