@@ -32,7 +32,7 @@ const MyComponent = (props: MyProps) => {
 
 ## Extending Polymorphic behavior
 
-If you want to expose `as` as a prop of your component, use the `Polymorphic` factory function and hooks.
+If you want to expose `as` as a prop of your component, use the `Polymorphic` factory function and related hooks.
 
 Note that any inherited props will be indeterminate in the factory function, since the value `as` is not known. (i.e. the attributes of `rest` in the following example are not definitely known).
 
@@ -62,9 +62,49 @@ const MyComponent = PolymorphicComponent<MyProps>(
 );
 ```
 
-### Supported, but not recommended usage
+### Implicit `as` prop
 
-While it is possible to use the `Polymorph` component to extend polymorphic behavior, it can be much more verbose and error prone than using the factory function. But, for completeness, an example of how to do this is shown below.
+Components extended using the `Polymorphic` factory function can be made to imply the `as` prop value based on the `href` passed in.
+Ensure the custom props are wrapped in `ImplicitPolymorphicProps`, and use the `useImplicitPolymorphic` hook. Make sure to pass both `as` and `rest` (or an object that contains `href`) into the hook.
+
+```tsx
+export const MyImplicitComponent = Polymorphic<
+  ImplicitPolymorphicProps<MyProps>
+>(({ as, ...rest }) => {
+  const { Component, ref } = useImplicitPolymorphic(as, rest);
+  return (
+    <Component ref={ref} {...rest}>
+      {title}
+    </Component>
+  );
+});
+
+//
+
+<MyImplicitComponent href="mongodb.design" />; // renders as <a>
+```
+
+## With Emotion `styled` API
+
+`Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accepts the Polymorphic props, explicitly type your styled component as `PolymorphicComponentType`.
+
+```tsx
+const StyledPolymorph = styled(Polymorph)`
+  color: hotpink;
+` as PolymorphicComponentType;
+
+// or
+
+const MyStyledComponent = styled(MyComponent)`
+  color: hotpink;
+` as PolymorphicComponentType;
+```
+
+Note: TSDocs will not compile for styled polymorphs. This can be remedied by creating a wrapper around the styled function that explicitly returns a PolymorphicComponentType
+
+## Supported (but not recommended) usage
+
+While it is possible to use the `Polymorph` component to extend polymorphic behavior, it can be much more verbose and error prone than using the `Polymorphic` factory function. For completeness, an example of how to do this is provided below:
 
 ```tsx
 type MyProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
@@ -85,24 +125,6 @@ export const MyComponent = <T extends PolymorphicAs = 'div'>(
   );
 };
 ```
-
-## With Emotion `styled` API
-
-`Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accepts the Polymorphic props, explicitly type your styled component as `PolymorphicComponentType`.
-
-```tsx
-const StyledPolymorph = styled(Polymorph)`
-  color: hotpink;
-` as PolymorphicComponentType;
-
-// or
-
-const MyStyledComponent = styled(MyComponent)`
-  color: hotpink;
-` as PolymorphicComponentType;
-```
-
-Note: TSDocs will not compile for styled polymorphs. This can be remedied by creating a wrapper around the styled function that explicitly returns a PolymorphicComponentType
 
 # Prior art
 
