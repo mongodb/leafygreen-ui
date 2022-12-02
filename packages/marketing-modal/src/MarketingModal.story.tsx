@@ -16,6 +16,7 @@ export default {
     graphicStyle: 'center',
     children:
       'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
+    closeIconColor: CloseIconColor.Default,
   },
   argTypes: {
     open: { control: false },
@@ -44,17 +45,17 @@ const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
   darkMode,
   ...args
 }) => {
-  const graphicCenterImage = darkMode
-    ? 'DataLake.png'
-    : 'marketing-center-light.svg';
+  const graphicCenterImage = 'marketing-center-light.svg';
   const graphicFillImage = darkMode
-    ? 'Realm_Rebrand_Image.png'
+    ? 'marketing-fill-dark.jpg'
     : 'marketing-fill-light.jpg';
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        Open Modal
+      </Button>
       <MarketingModal
         {...args}
         graphicStyle={graphicStyle}
@@ -64,8 +65,8 @@ const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
             <img
               alt=""
               src={`examples/${graphicCenterImage}`}
-              width={darkMode ? 275 : 278}
-              height={darkMode ? 220 : 252.6}
+              width={275}
+              height={220}
             />
           ) : (
             <img alt="Marketing Modal" src={`examples/${graphicFillImage}`} />

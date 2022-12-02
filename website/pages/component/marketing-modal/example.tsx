@@ -89,11 +89,9 @@ export default function MarketingModalLiveExample() {
         showBlob,
         blobPosition,
       }) => {
-        const graphicCenterImage = darkMode
-          ? 'DataLake.png'
-          : 'marketing-center-light.svg';
+        const graphicCenterImage = 'marketing-center-light.svg';
         const graphicFillImage = darkMode
-          ? 'Realm_Rebrand_Image.png'
+          ? 'marketing-fill-dark.jpg'
           : 'marketing-fill-light.jpg';
 
         return (
