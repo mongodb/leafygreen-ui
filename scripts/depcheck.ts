@@ -56,10 +56,10 @@ async function checkDependencies() {
       dependencies: unusedDeps,
       devDependencies: unusedDev,
       missing: missingLocal,
-      using
+      using,
     } = check;
 
-    const pkgJson = readPackageJson(pkg)
+    const pkgJson = readPackageJson(pkg);
 
     // Decide which missing dependencies should just be devDependencies
     const missing = sortDependenciesByUsage(missingLocal, pkg);
@@ -68,17 +68,22 @@ async function checkDependencies() {
     // i.e. every listed devDep should _only_ be used in .story or .spec files
     // If it's used in other files, we remove it and re-install it as a regular dependency
     {
-      const usedAsDev = sortDependenciesByUsage(using, pkg).devDependencies
-      const listed = pick(pkgJson, ['devDependencies']).devDependencies
-      const listedDev = listed ? Object.keys(listed) : []
+      const usedAsDev = sortDependenciesByUsage(using, pkg).devDependencies;
+      const listed = pick(pkgJson, ['devDependencies']).devDependencies;
+      const listedDev = listed ? Object.keys(listed) : [];
 
-      if(listedDev.length && !listedDev.every(depName => using[depName].every(
-        file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
-      ))) {
-        const notUsedAsDev = listedDev.filter(dep => !usedAsDev.includes(dep))
+      if (
+        listedDev.length &&
+        !listedDev.every(depName =>
+          using[depName].every(
+            file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
+          ),
+        )
+      ) {
+        const notUsedAsDev = listedDev.filter(dep => !usedAsDev.includes(dep));
         // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
-        unusedDev.push(...notUsedAsDev)
-        missing.dependencies.push(...notUsedAsDev)
+        unusedDev.push(...notUsedAsDev);
+        missing.dependencies.push(...notUsedAsDev);
       }
     }
 
@@ -86,28 +91,41 @@ async function checkDependencies() {
     // Ensure dependencies listed as `dependencies` are used in files other than .story or .spec files
     // i.e. Every listed dependency should be used in at leas one file that is not .story or .spec
     {
-      const usedAsDependency = sortDependenciesByUsage(using, pkg).dependencies
-      const listed = pick(pkgJson, ['dependencies']).dependencies
-      const listedDeps = listed ? Object.keys(listed) : []
+      const usedAsDependency = sortDependenciesByUsage(using, pkg).dependencies;
+      const listed = pick(pkgJson, ['dependencies']).dependencies;
+      const listedDeps = listed ? Object.keys(listed) : [];
 
-      if (usedAsDependency && listedDeps && !listedDeps.every(depName => using[depName].some(
-        file => !file.includes('.story.tsx') && !file.includes('.spec.tsx'),
-      ))) {
-        const notUsedAsDep = listedDeps.filter(dep => !usedAsDependency.includes(dep))
-        unusedDeps.push(...notUsedAsDep)
+      if (
+        usedAsDependency &&
+        listedDeps &&
+        !listedDeps.every(depName =>
+          using[depName].some(
+            file => !file.includes('.story.tsx') && !file.includes('.spec.tsx'),
+          ),
+        )
+      ) {
+        const notUsedAsDep = listedDeps.filter(
+          dep => !usedAsDependency.includes(dep),
+        );
+        unusedDeps.push(...notUsedAsDep);
       }
     }
 
     const countMissing = Object.keys(missing.dependencies).length;
     const countMissingDev = Object.keys(missing.devDependencies).length;
 
-    if (countMissing > 0 || countMissingDev > 0 || unusedDeps.length > 0 || unusedDev.length > 0) {
+    if (
+      countMissing > 0 ||
+      countMissingDev > 0 ||
+      unusedDeps.length > 0 ||
+      unusedDev.length > 0
+    ) {
       unusedDeps.length > 0 &&
-      console.log(
-        `${chalk.green(`packages/${pkg}`)} does not use ${chalk.blueBright(
-          unusedDeps.join(', '),
-        )}`,
-      );
+        console.log(
+          `${chalk.green(`packages/${pkg}`)} does not use ${chalk.blueBright(
+            unusedDeps.join(', '),
+          )}`,
+        );
 
       unusedDev.length > 0 &&
         console.log(
@@ -118,7 +136,9 @@ async function checkDependencies() {
 
       countMissing > 0 &&
         console.log(
-          `${chalk.green(`packages/${pkg}`)} is missing dependencies: ${chalk.redBright(
+          `${chalk.green(
+            `packages/${pkg}`,
+          )} is missing dependencies: ${chalk.redBright(
             missing.dependencies.join(', '),
           )}`,
         );
@@ -163,15 +183,17 @@ async function fixDependencies(
 ) {
   const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
-  unused.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
+  unused.length > 0 &&
+    spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
 
-  missing.dependencies.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'add', ...missing.dependencies], cmdOpts);
+  missing.dependencies.length > 0 &&
+    spawnSync('npx', ['yarn@1.19.0', 'add', ...missing.dependencies], cmdOpts);
 
   // There's a bug in yarn@1.19.0 where some packages don't install as devDependencies
   // even if the `-D` flag is provided.
   // So we have to install devDependencies manually
   if (missing.devDependencies.length > 0) {
-    const pkgJson = readPackageJson(pkg)
+    const pkgJson = readPackageJson(pkg);
 
     const missingDevDepsObject = {} as { [key: string]: string };
 
@@ -216,11 +238,11 @@ function fixTSconfig(pkg: string) {
         path: `../${dep}`,
       }));
 
-      if (!isEqual(tsconfig.references, refs)) {
-        tsconfig.references = refs
-        console.log(chalk.gray(`Fixing ${pkg}/tsconfig.json`));
-        writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
-      }
+    if (!isEqual(tsconfig.references, refs)) {
+      tsconfig.references = refs;
+      console.log(chalk.gray(`Fixing ${pkg}/tsconfig.json`));
+      writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
+    }
   } catch (error) {
     throw new Error(`Error in ${pkg}/tsconfig.json: ${error}`);
   }
@@ -263,8 +285,8 @@ function sortDependenciesByUsage(
   );
 }
 
-function readPackageJson(pkg: string): {[key: string]: any } {
+function readPackageJson(pkg: string): { [key: string]: any } {
   const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
   const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
-  return pkgJson
+  return pkgJson;
 }
