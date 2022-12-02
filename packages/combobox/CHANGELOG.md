@@ -1,5 +1,13 @@
 # @leafygreen-ui/combobox
 
+## 5.0.2
+
+### Patch Changes
+
+- 38181cc1d: Update to consume darkMode from `useDarkMode`. Some components were setting `darkMode = false` as a default which would override the default value provided by the `LeafyGreenProvider`.
+- Updated dependencies [38181cc1d]
+  - @leafygreen-ui/checkbox@12.0.2
+
 ## 5.0.1
 
 ### Patch Changes
