@@ -35,21 +35,6 @@
       "path": "../tokens"
     },
     {
-      "path": "../select"
-    },
-    {
-      "path": "../button"
-    },
-    {
-      "path": "../typography"
-    },
-    {
-      "path": "../copyable"
-    },
-    {
-      "path": "../code"
-    },
-    {
       "path": "../leafygreen-provider"
     }
   ]

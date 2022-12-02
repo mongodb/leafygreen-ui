@@ -30,9 +30,6 @@
       "path": "../box"
     },
     {
-      "path": "../icon"
-    },
-    {
       "path": "../leafygreen-provider"
     }
   ]

@@ -30,9 +30,6 @@
       "path": "../emotion"
     },
     {
-      "path": "../palette"
-    },
-    {
       "path": "../leafygreen-provider"
     }
   ]

@@ -11,12 +11,6 @@
   "references": [
     {
       "path": "../palette"
-    },
-    {
-      "path": "../emotion"
-    },
-    {
-      "path": "../typography"
     }
   ]
 }

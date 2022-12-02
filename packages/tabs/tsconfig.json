@@ -34,18 +34,6 @@
       "path": "../tokens"
     },
     {
-      "path": "../card"
-    },
-    {
-      "path": "../button"
-    },
-    {
-      "path": "../icon-button"
-    },
-    {
-      "path": "../icon"
-    },
-    {
       "path": "../leafygreen-provider"
     }
   ]
