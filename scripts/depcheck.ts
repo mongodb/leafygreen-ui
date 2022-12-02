@@ -162,7 +162,8 @@ async function fixDependencies(
  */
 function fixTSconfig(pkg: string) {
   const tsConfigFileName = `packages/${pkg}/tsconfig.json`;
-  const dependencies = getPackageLGDependencies(pkg);
+  // Including devDependencies in tsconfig can introduce circular dependencies
+  const dependencies = getPackageLGDependencies(pkg, { dev: false });
 
   try {
     const tsconfig = JSON.parse(readFileSync(tsConfigFileName, 'utf-8'));
@@ -171,10 +172,10 @@ function fixTSconfig(pkg: string) {
       .map(dep => ({
         path: `../${dep}`,
       }));
-    console.log(`Fixing ${pkg}/tsconfig`);
+    console.log(chalk.gray(`Fixing ${pkg}/tsconfig.json`));
     writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
   } catch (error) {
-    throw new Error(`Error in ${pkg}: ${error}`);
+    throw new Error(`Error in ${pkg}/tsconfig.json: ${error}`);
   }
 }
 
