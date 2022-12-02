@@ -30,7 +30,7 @@ const MyComponent = (props: MyProps) => {
 };
 ```
 
-## Extending Polymorphic
+## Extending Polymorphic behavior
 
 If you want to expose `as` as a prop of your component, use the `Polymorphic` factory function and hooks.
 
@@ -101,6 +101,8 @@ const MyStyledComponent = styled(MyComponent)`
   color: hotpink;
 ` as PolymorphicComponentType;
 ```
+
+Note: TSDocs will not compile for styled polymorphs. This can be remedied by creating a wrapper around the styled function that explicitly returns a PolymorphicComponentType
 
 # Prior art
 
