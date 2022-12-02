@@ -216,6 +216,11 @@ async function fixDependencies(
       ...pkgJson?.devDependencies,
       ...missingDevDepsObject,
     };
+
+    if (pkgJson.devDependencies.length <= 0) {
+      delete pkgJson.devDependencies
+    }
+
     const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
     writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
     spawnSync(`yarn`, ['install'], cmdOpts);
