@@ -1,13 +1,15 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import {
-  PolymorphicAs,
   Polymorph,
   Polymorphic,
-  PolymorphicPropsWithRef,
-  PolymorphicRef,
+  PolymorphicAs,
   usePolymorphic,
-  ImplicitPolymorphicProps,
   useImplicitPolymorphic,
+  type ImplicitPolymorphicProps,
+  type PolymorphicPropsWithRef,
+  type PolymorphicRef,
+  type PolymorphicComponentType,
 } from '..';
 
 interface ExampleProps {
@@ -109,9 +111,21 @@ type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
   }
 >;
 
+/**
+ *
+ * @test
+ */
 export const RestrictedExample = <T extends RestrictedType = 'button'>({
   as,
   ...rest
 }: RestrictedProps<T>) => {
   return <Polymorph as={as as RestrictedType} {...rest} />;
 };
+
+/**
+ * Styled version of ExampleComponent
+ * @test
+ */
+export const StyledExample = styled(ExamplePolymorphic)`
+  color: hotpink;
+` as PolymorphicComponentType;

@@ -154,9 +154,9 @@ describe('packages/polymorphic', () => {
 
     describe('With Emotion `styled` API', () => {
       test('Basic styled component', () => {
-        const StyledPolymorph: PolymorphicComponentType = styled(Polymorph)`
+        const StyledPolymorph = styled(Polymorph)`
           color: #ff69b4;
-        `;
+        ` as PolymorphicComponentType;
 
         const { getByTestId } = render(
           <StyledPolymorph data-testid="styled">Some text</StyledPolymorph>,
@@ -167,9 +167,9 @@ describe('packages/polymorphic', () => {
       });
 
       test('as an HTML element', () => {
-        const StyledPolymorph: PolymorphicComponentType = styled(Polymorph)`
+        const StyledPolymorph = styled(Polymorph)`
           color: #ff69b4;
-        `;
+        ` as PolymorphicComponentType;
 
         const { getByTestId } = render(
           <StyledPolymorph
@@ -189,9 +189,9 @@ describe('packages/polymorphic', () => {
 
       test('as a custom component', () => {
         const { Wrapper } = makeWrapperComponent();
-        const StyledPolymorph: PolymorphicComponentType = styled(Polymorph)`
+        const StyledPolymorph = styled(Polymorph)`
           color: #ff69b4;
-        `;
+        ` as PolymorphicComponentType;
         const { getByTestId } = render(
           <StyledPolymorph as={Wrapper} data-testid="styled">
             Some text
@@ -317,11 +317,9 @@ describe('packages/polymorphic', () => {
         });
 
         test('as an HTML element', () => {
-          const StyledExample: PolymorphicComponentType = styled(
-            ExampleComponent,
-          )`
+          const StyledExample = styled(ExampleComponent)`
             color: #ff69b4;
-          `;
+          ` as PolymorphicComponentType;
 
           const { getByTestId } = render(
             <StyledExample
@@ -344,11 +342,9 @@ describe('packages/polymorphic', () => {
 
         test('as a custom component', () => {
           const { Wrapper } = makeWrapperComponent();
-          const StyledExample: PolymorphicComponentType = styled(
-            ExampleComponent,
-          )`
+          const StyledExample = styled(ExampleComponent)`
             color: #ff69b4;
-          `;
+          ` as PolymorphicComponentType;
           const { getByTestId } = render(
             <StyledExample as={Wrapper} title="Title" data-testid="styled">
               Some text
@@ -479,6 +475,7 @@ describe('packages/polymorphic', () => {
         'ExamplePolymorphicWithRef',
         'AdvancedPolymorphic',
         'AdvancedPolymorphicWithRef',
+        // 'StyledExample', // Styled does not work with TSDoc
       ];
 
       describe.each(exampleComponentNames)(

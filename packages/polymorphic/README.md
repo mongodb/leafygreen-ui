@@ -91,15 +91,15 @@ export const MyComponent = <T extends PolymorphicAs = 'div'>(
 `Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accepts the Polymorphic props, explicitly type your styled component as `PolymorphicComponentType`.
 
 ```tsx
-const StyledPolymorph: PolymorphicComponentType = styled(Polymorph)`
+const StyledPolymorph = styled(Polymorph)`
   color: hotpink;
-`;
+` as PolymorphicComponentType;
 
 // or
 
-const MyStyledComponent: PolymorphicComponentType = styled(MyComponent)`
+const MyStyledComponent = styled(MyComponent)`
   color: hotpink;
-`;
+` as PolymorphicComponentType;
 ```
 
 # Prior art
