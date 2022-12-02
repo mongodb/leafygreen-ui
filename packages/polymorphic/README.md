@@ -13,11 +13,11 @@
 
 # Usage
 
-There are two main ways to use `Polymorphic`, depending on whether the `as` prop is defined internally by your component, or passed in as an external prop.
+There are two main ways to use `Polymorphic`, depending on whether the `as` prop is defined _internally_ by your component, or passed in as an external prop.
 
-## Basic Polymorphic
+## Basic usage
 
-If the logic defining the `as` prop is defined internally within your component, use the standalone Polymorphic component.
+If the logic defining the `as` prop is defined internally within your component, use the standalone `Polymorph` component.
 
 ```tsx
 interface MyProps {
@@ -32,17 +32,21 @@ const MyComponent = (props: MyProps) => {
 
 ## Extending Polymorphic
 
-If you want to expose the `as` prop in your component, it's recommended to use the Polymorphic factory function and hooks. Note the types of `props` are inferred by using the factory function.
+If you want to expose `as` as a prop of your component, use the `Polymorphic` factory function and hooks.
+
+Note that any inherited props will be indeterminate in the factory function, since the value `as` is not known. (i.e. the attributes of `rest` in the following example are not definitely known).
 
 ```tsx
 interface MyProps {
   someProp: string;
 }
-const MyComponent = PolymorphicComponent<MyProps>(({ as, ...rest }) => {
+const MyComponent = Polymorphic<MyProps>(({ as, ...rest }) => {
   const { Component, ref } = usePolymorphic(as);
   return <Component ref={ref} {...rest} />;
 });
 ```
+
+### With Refs
 
 Accepting a forwarded ref to a Polymorphic component is as simple as passing in a ref into the render function (same as `React.forwardRef`).
 
@@ -58,26 +62,44 @@ const MyComponent = PolymorphicComponent<MyProps>(
 );
 ```
 
-While it is possible to use the `Polymorphic` component to extend polymorphic behavior, it can be much more verbose than using the factory function.
+### Supported, but not recommended usage
+
+While it is possible to use the `Polymorph` component to extend polymorphic behavior, it can be much more verbose and error prone than using the factory function. But, for completeness, an example of how to do this is shown below.
 
 ```tsx
-type MyProps<T extends React.ElementType> = PolymorphicPropsWithRef<
+type MyProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
   T,
   {
     someProp: string;
   }
 >;
 
-export const MyComponent = <T extends React.ElementType = 'div'>(
+export const MyComponent = <T extends PolymorphicAs = 'div'>(
   { as, title, ...rest }: MyProps<T>,
   forwardedRef: PolymorphicRef<T>,
 ) => {
   return (
-    <Polymorph as={as as React.ElementType} ref={forwardedRef} {...rest}>
+    <Polymorph as={as as PolymorphicAs} ref={forwardedRef} {...rest}>
       {title}
     </Polymorph>
   );
 };
+```
+
+## With Emotion `styled` API
+
+`Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accepts the Polymorphic props, explicitly type your styled component as `PolymorphicComponentType`.
+
+```tsx
+const StyledPolymorph: PolymorphicComponentType = styled(Polymorph)`
+  color: hotpink;
+`;
+
+// or
+
+const MyStyledComponent: PolymorphicComponentType = styled(MyComponent)`
+  color: hotpink;
+`;
 ```
 
 # Prior art

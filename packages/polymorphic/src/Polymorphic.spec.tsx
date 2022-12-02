@@ -2,7 +2,8 @@ import React from 'react';
 import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
 import styled from '@emotion/styled';
-import { Polymorph, usePolymorphicRef } from '.';
+import Box from '@leafygreen-ui/box';
+import { Polymorph, usePolymorphicRef, type PolymorphicComponentType } from '.';
 import {
   ExamplePolymorphic,
   ExamplePolymorphicWithRef,
@@ -154,7 +155,7 @@ describe('packages/polymorphic', () => {
 
     describe('With Emotion `styled` API', () => {
       test('Basic styled component', () => {
-        const StyledPolymorph = styled(Polymorph)`
+        const StyledPolymorph: PolymorphicComponentType = styled(Polymorph)`
           color: #ff69b4;
         `;
 
@@ -167,12 +168,17 @@ describe('packages/polymorphic', () => {
       });
 
       test('as an HTML element', () => {
-        const StyledPolymorph = styled(Polymorph)`
+        const StyledPolymorph: PolymorphicComponentType = styled(Polymorph)`
           color: #ff69b4;
         `;
 
         const { getByTestId } = render(
-          <StyledPolymorph as="a" href="mongodb.design" data-testid="styled">
+          <StyledPolymorph
+            as="a"
+            href="mongodb.design"
+            target="_blank"
+            data-testid="styled"
+          >
             Some text
           </StyledPolymorph>,
         );
@@ -184,7 +190,7 @@ describe('packages/polymorphic', () => {
 
       test('as a custom component', () => {
         const { Wrapper } = makeWrapperComponent();
-        const StyledPolymorph = styled(Polymorph)`
+        const StyledPolymorph: PolymorphicComponentType = styled(Polymorph)`
           color: #ff69b4;
         `;
         const { getByTestId } = render(
@@ -267,7 +273,7 @@ describe('packages/polymorphic', () => {
 
       test('renders as an HTML Element', () => {
         const { queryByTestId } = render(
-          <ExampleComponent as="span" data-testid="hoc" />,
+          <ExampleComponent as="span" data-testid="hoc" title="Title" />,
         );
         expect(queryByTestId('hoc')).toBeInTheDocument();
         expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('span');
@@ -275,7 +281,12 @@ describe('packages/polymorphic', () => {
 
       test('accepts tag-specific HTML attributes', () => {
         const { getByTestId } = render(
-          <ExampleComponent as="a" data-testid="hoc" href={'mongodb.design'} />,
+          <ExampleComponent
+            as="a"
+            data-testid="hoc"
+            href={'mongodb.design'}
+            title="Title"
+          />,
         );
         expect(getByTestId('hoc').getAttribute('href')).toBe('mongodb.design');
       });
@@ -283,7 +294,7 @@ describe('packages/polymorphic', () => {
       test('renders as a custom component', () => {
         const { wrapperDidRender, Wrapper } = makeWrapperComponent();
         const { container, getByTestId } = render(
-          <ExampleComponent as={Wrapper} />,
+          <ExampleComponent as={Wrapper} title="Title" />,
         );
         expect(getByTestId('wrapper')).toBeInTheDocument();
         expect(container.firstElementChild?.tagName.toLowerCase()).toBe('span');
@@ -297,7 +308,9 @@ describe('packages/polymorphic', () => {
           `;
 
           const { getByTestId } = render(
-            <StyledExample data-testid="styled">Some text</StyledExample>,
+            <StyledExample title="Title" data-testid="styled">
+              Some text
+            </StyledExample>,
           );
           expect(getByTestId('styled')).toBeInTheDocument();
           expect(getByTestId('styled').tagName.toLowerCase()).toBe('div');
@@ -305,12 +318,19 @@ describe('packages/polymorphic', () => {
         });
 
         test('as an HTML element', () => {
-          const StyledExample = styled(ExampleComponent)`
+          const StyledExample: PolymorphicComponentType = styled(
+            ExampleComponent,
+          )`
             color: #ff69b4;
           `;
 
           const { getByTestId } = render(
-            <StyledExample as="a" href="mongodb.design" data-testid="styled">
+            <StyledExample
+              as="a"
+              href="mongodb.design"
+              title="Title"
+              data-testid="styled"
+            >
               Some text
             </StyledExample>,
           );
@@ -325,11 +345,13 @@ describe('packages/polymorphic', () => {
 
         test('as a custom component', () => {
           const { Wrapper } = makeWrapperComponent();
-          const StyledExample = styled(ExampleComponent)`
+          const StyledExample: PolymorphicComponentType = styled(
+            ExampleComponent,
+          )`
             color: #ff69b4;
           `;
           const { getByTestId } = render(
-            <StyledExample as={Wrapper} data-testid="styled">
+            <StyledExample as={Wrapper} title="Title" data-testid="styled">
               Some text
             </StyledExample>,
           );

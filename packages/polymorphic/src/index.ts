@@ -12,6 +12,7 @@ export type {
   PolymorphicProps,
   PolymorphicPropsWithRef,
   PolymorphicRef,
+  PolymorphicComponentType,
 } from './Polymorphic.types';
 
 export { useImplicitPolymorphic } from './ImplicitPolymorphic';
