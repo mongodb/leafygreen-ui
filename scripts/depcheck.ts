@@ -9,6 +9,7 @@ import { SpawnOptions, spawnSync } from 'child_process';
 import { getPackageLGDependencies } from './utils/getPackageDependencies';
 import packageJson from '../package.json';
 import fetch from 'node-fetch';
+import { isEqual } from 'lodash';
 const lgPackages = readdirSync('packages/');
 const globalDevDependencies = Object.keys(packageJson.devDependencies);
 
@@ -167,13 +168,17 @@ function fixTSconfig(pkg: string) {
 
   try {
     const tsconfig = JSON.parse(readFileSync(tsConfigFileName, 'utf-8'));
-    tsconfig.references = dependencies
+    const refs = dependencies
       .filter(dep => dep !== 'mongo-nav')
       .map(dep => ({
         path: `../${dep}`,
       }));
-    console.log(chalk.gray(`Fixing ${pkg}/tsconfig.json`));
-    writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
+
+      if (!isEqual(tsconfig.references, refs)) {
+        tsconfig.references = refs
+        console.log(chalk.gray(`Fixing ${pkg}/tsconfig.json`));
+        writeFileSync(tsConfigFileName, JSON.stringify(tsconfig, null, 2) + '\n');
+      }
   } catch (error) {
     throw new Error(`Error in ${pkg}/tsconfig.json: ${error}`);
   }
