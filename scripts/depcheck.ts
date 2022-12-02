@@ -218,7 +218,7 @@ async function fixDependencies(
     };
 
     if (pkgJson.devDependencies.length <= 0) {
-      delete pkgJson.devDependencies
+      delete pkgJson.devDependencies;
     }
 
     const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
