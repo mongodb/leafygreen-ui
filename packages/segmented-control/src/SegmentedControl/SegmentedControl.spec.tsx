@@ -172,4 +172,50 @@ describe('packages/segmented-control', () => {
       spy.mockClear();
     });
   });
+
+  describe('when uncontrolled', () => {
+    test('clicking a new option changes the selected option', () => {
+      const { apple, banana } = renderNewContainer();
+
+      userEvent.click(banana);
+      expect(banana).toHaveAttribute('aria-selected', 'true');
+      userEvent.click(apple);
+      expect(apple).toHaveAttribute('aria-selected', 'true');
+    });
+  });
+
+  describe('when controlled', () => {
+    test('changing the "value" prop changes the selected option', () => {
+      const testControlledComponent = (value: string) => {
+        return (
+          <SegmentedControl
+            label="testLabel"
+            name="testName"
+            className={testClassName}
+            value={value}
+          >
+            <SegmentedControlOption value="apple" data-testid="apple">
+              Apple
+            </SegmentedControlOption>
+            <SegmentedControlOption
+              value="banana"
+              data-testid="banana"
+              glyph={<Icon glyph="Code" data-testid="glyph" />}
+            >
+              Banana
+            </SegmentedControlOption>
+          </SegmentedControl>
+        );
+      };
+
+      const { container, rerender } = render(testControlledComponent('banana'));
+
+      const banana = getByText(container, 'Banana').closest('button');
+      const apple = getByText(container, 'Apple').closest('button');
+
+      expect(banana).toHaveAttribute('aria-selected', 'true');
+      rerender(testControlledComponent('apple'));
+      expect(apple).toHaveAttribute('aria-selected', 'true');
+    });
+  });
 });
