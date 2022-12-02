@@ -7,11 +7,12 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import { SpawnOptions, spawnSync } from 'child_process';
 import { getPackageLGDependencies } from './utils/getPackageDependencies';
-import packageJson from '../package.json';
+import globalPackageJson from '../package.json';
 import fetch from 'node-fetch';
-import { isEqual } from 'lodash';
+import { isEqual, pick } from 'lodash';
+
 const lgPackages = readdirSync('packages/');
-const globalDevDependencies = Object.keys(packageJson.devDependencies);
+const globalDevDependencies = Object.keys(globalPackageJson.devDependencies);
 
 const cli = new Command('depcheck')
   .arguments('[...packages]')
@@ -52,24 +53,55 @@ async function checkDependencies() {
       depcheckOptions,
     );
     const {
-      dependencies: _unused,
+      dependencies: unusedDeps,
       devDependencies: unusedDev,
       missing: missingLocal,
+      using
     } = check;
 
-    // Compile all unused dependencies
-    const unused = [..._unused, ...unusedDev];
+    const pkgJson = readPackageJson(pkg)
 
+    // Compile all unused dependencies
+    // const unused = [...unusedDeps, ...unusedDev];
     // Decide which missing dependencies should just be devDependencies
-    const missing = sortMissingDependencies(missingLocal, pkg);
+    const missing = sortDependenciesByUsage(missingLocal, pkg);
+
+    // Ensure used dependencies are listed correctly per their usage
+    // i.e. every listed devDep should only be used in .story or .spec files
+    const usedAsDev = sortDependenciesByUsage(using, pkg).devDependencies
+    const listed = pick(pkgJson, ['dependencies', 'devDependencies', 'peerDependencies'])
+    const listedDev = listed && listed.devDependencies ? Object.keys(listed.devDependencies) : []
+
+    if(listedDev.length && !listedDev.every(depName => using[depName].every(
+      file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
+    ))) {
+      const notUsedAsDev = listedDev.filter(dep => !usedAsDev.includes(dep))
+      // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
+      unusedDev.push(...notUsedAsDev)
+      missing.dependencies.push(...notUsedAsDev)
+    }
 
     const countMissing = Object.keys(missing.dependencies).length;
     const countMissingDev = Object.keys(missing.devDependencies).length;
 
-    if (countMissing > 0 || countMissingDev > 0 || unused.length > 0) {
+    if (countMissing > 0 || countMissingDev > 0 || unusedDeps.length > 0 || unusedDev.length > 0) {
+      unusedDeps.length > 0 &&
+      console.log(
+        `${chalk.green(`packages/${pkg}`)} does not use ${chalk.blueBright(
+          unusedDeps.join(', '),
+        )}`,
+      );
+
+      unusedDev.length > 0 &&
+        console.log(
+          `${chalk.green(`packages/${pkg}`)} does not use ${chalk.blueBright(
+            unusedDev.join(', '),
+          )} as devDependencies`,
+        );
+
       countMissing > 0 &&
         console.log(
-          `${chalk.green(`packages/${pkg}`)} is missing: ${chalk.redBright(
+          `${chalk.green(`packages/${pkg}`)} is missing dependencies: ${chalk.redBright(
             missing.dependencies.join(', '),
           )}`,
         );
@@ -83,15 +115,8 @@ async function checkDependencies() {
           )}`,
         );
 
-      unused.length > 0 &&
-        console.log(
-          `${chalk.green(`packages/${pkg}`)} does not use ${chalk.blueBright(
-            unused.join(', '),
-          )}`,
-        );
-
       if (fix) {
-        await fixDependencies(pkg, missing, unused);
+        await fixDependencies(pkg, missing, [...unusedDeps, ...unusedDev]);
       } else {
         issuesFound = true;
       }
@@ -121,16 +146,15 @@ async function fixDependencies(
 ) {
   const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
-  // missing.dependencies.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'add', ...missing.dependencies], cmdOpts);
-  unused.length > 0 &&
-    spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
+  unused.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
 
-  // There's a bug in yarn where some packages don't install as devDependencies
+  missing.dependencies.length > 0 && spawnSync('npx', ['yarn@1.19.0', 'add', ...missing.dependencies], cmdOpts);
+
+  // There's a bug in yarn@1.19.0 where some packages don't install as devDependencies
   // even if the `-D` flag is provided.
   // So we have to install devDependencies manually
   if (missing.devDependencies.length > 0) {
-    const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
-    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
+    const pkgJson = readPackageJson(pkg)
 
     const missingDevDepsObject = {} as { [key: string]: string };
 
@@ -153,6 +177,7 @@ async function fixDependencies(
       ...pkgJson?.devDependencies,
       ...missingDevDepsObject,
     };
+    const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
     writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
     spawnSync(`yarn`, ['install'], cmdOpts);
   }
@@ -184,15 +209,15 @@ function fixTSconfig(pkg: string) {
   }
 }
 
-function sortMissingDependencies(
-  missingLocal: Record<string, Array<string>>,
+function sortDependenciesByUsage(
+  localDeps: Record<string, Array<string>>,
   pkg: string,
 ): {
   dependencies: Array<string>;
   devDependencies: Array<string>;
 } {
   return (
-    Object.entries(missingLocal)
+    Object.entries(localDeps)
       // If the package in provided globally, ignore it
       .filter(([dep]) => !globalDevDependencies.includes(dep))
       // If a dependency is only used in tests or storybook,
@@ -219,4 +244,10 @@ function sortMissingDependencies(
         },
       )
   );
+}
+
+function readPackageJson(pkg: string): {[key: string]: any } {
+  const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
+  const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
+  return pkgJson
 }
