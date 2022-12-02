@@ -15,19 +15,22 @@
       "path": "../a11y"
     },
     {
-      "path": "../lib"
+      "path": "../box"
     },
     {
       "path": "../emotion"
     },
     {
-      "path": "../tokens"
+      "path": "../icon"
+    },
+    {
+      "path": "../lib"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../box"
+      "path": "../tokens"
     },
     {
       "path": "../leafygreen-provider"
