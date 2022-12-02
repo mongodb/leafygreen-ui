@@ -61,24 +61,41 @@ async function checkDependencies() {
 
     const pkgJson = readPackageJson(pkg)
 
-    // Compile all unused dependencies
-    // const unused = [...unusedDeps, ...unusedDev];
     // Decide which missing dependencies should just be devDependencies
     const missing = sortDependenciesByUsage(missingLocal, pkg);
 
     // Ensure used dependencies are listed correctly per their usage
-    // i.e. every listed devDep should only be used in .story or .spec files
-    const usedAsDev = sortDependenciesByUsage(using, pkg).devDependencies
-    const listed = pick(pkgJson, ['dependencies', 'devDependencies', 'peerDependencies'])
-    const listedDev = listed && listed.devDependencies ? Object.keys(listed.devDependencies) : []
+    // i.e. every listed devDep should _only_ be used in .story or .spec files
+    // If it's used in other files, we remove it and re-install it as a regular dependency
+    {
+      const usedAsDev = sortDependenciesByUsage(using, pkg).devDependencies
+      const listed = pick(pkgJson, ['devDependencies']).devDependencies
+      const listedDev = listed ? Object.keys(listed) : []
 
-    if(listedDev.length && !listedDev.every(depName => using[depName].every(
-      file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
-    ))) {
-      const notUsedAsDev = listedDev.filter(dep => !usedAsDev.includes(dep))
-      // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
-      unusedDev.push(...notUsedAsDev)
-      missing.dependencies.push(...notUsedAsDev)
+      if(listedDev.length && !listedDev.every(depName => using[depName].every(
+        file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
+      ))) {
+        const notUsedAsDev = listedDev.filter(dep => !usedAsDev.includes(dep))
+        // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
+        unusedDev.push(...notUsedAsDev)
+        missing.dependencies.push(...notUsedAsDev)
+      }
+    }
+
+    // Do the inverse of above
+    // Ensure dependencies listed as `dependencies` are used in files other than .story or .spec files
+    // i.e. Every listed dependency should be used in at leas one file that is not .story or .spec
+    {
+      const usedAsDependency = sortDependenciesByUsage(using, pkg).dependencies
+      const listed = pick(pkgJson, ['dependencies']).dependencies
+      const listedDeps = listed ? Object.keys(listed) : []
+
+      if (usedAsDependency && listedDeps && !listedDeps.every(depName => using[depName].some(
+        file => !file.includes('.story.tsx') && !file.includes('.spec.tsx'),
+      ))) {
+        const notUsedAsDep = listedDeps.filter(dep => !usedAsDependency.includes(dep))
+        unusedDeps.push(...notUsedAsDep)
+      }
     }
 
     const countMissing = Object.keys(missing.dependencies).length;
