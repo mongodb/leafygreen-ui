@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/card",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "leafyGreen UI Kit Card",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

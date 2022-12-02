@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 10.0.2
+
+### Patch Changes
+
+- a593238ff: Change darkMode disabled color from gray.dark1 to gray.base
+
 ## 10.0.1
 
 ### Patch Changes
