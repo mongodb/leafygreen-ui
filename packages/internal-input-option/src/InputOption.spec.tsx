@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { InputOption, type InputOptionProps } from '.';
+import { InputOption } from '.';
 
 describe('packages/internal/input-option', () => {
   test('renders', () => {

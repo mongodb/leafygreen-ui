@@ -32,6 +32,7 @@ export const storybookExcludedControlParams = [
   'onFilter',
   'onClear',
   'onChange',
+  'onClick',
   'ref',
   'className',
   'usePortal',

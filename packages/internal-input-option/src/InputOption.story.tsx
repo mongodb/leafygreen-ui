@@ -13,6 +13,7 @@ export default {
       exclude: [
         ...storybookExcludedControlParams,
         'aria-label',
+        'aria-labelledby',
         'setError',
         'filteredOptions',
         'initialValue',
