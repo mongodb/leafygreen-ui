@@ -34,9 +34,6 @@
       "path": "../typography"
     },
     {
-      "path": "../button"
-    },
-    {
       "path": "../leafygreen-provider"
     }
   ]

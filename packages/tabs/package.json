@@ -39,5 +39,11 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/card": "^9.0.1",
+    "@leafygreen-ui/button": "^19.0.1",
+    "@leafygreen-ui/icon-button": "^15.0.1",
+    "@leafygreen-ui/icon": "^11.12.1"
   }
 }
