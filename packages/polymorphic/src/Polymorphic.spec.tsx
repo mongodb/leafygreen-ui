@@ -2,6 +2,7 @@ import React from 'react';
 import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
 import styled from '@emotion/styled';
+import './utils/PolymorphicTest.utils';
 import { Polymorph, usePolymorphicRef, type PolymorphicComponentType } from '.';
 import {
   ExamplePolymorphic,
@@ -11,6 +12,7 @@ import {
   AdvancedPolymorphicWithRef,
   RestrictedExample,
 } from './Example';
+import { makeWrapperComponent } from './utils/PolymorphicTest.utils';
 
 describe('packages/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
@@ -202,6 +204,10 @@ describe('packages/polymorphic', () => {
         expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
         expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
       });
+    });
+
+    test('Passes the `expect.toBePolymorphic` rule', () => {
+      expect(Polymorph).toBePolymorphic();
     });
   });
 
@@ -498,34 +504,3 @@ describe('packages/polymorphic', () => {
     });
   });
 });
-
-/** Test utility functions */
-type WrapperProps = React.ComponentPropsWithoutRef<'span'> & {
-  darkMode?: boolean;
-};
-function makeWrapperComponent(): {
-  Wrapper: React.ForwardRefExoticComponent<
-    WrapperProps & React.RefAttributes<HTMLSpanElement>
-  >;
-  wrapperDidRender: jest.Mock;
-} {
-  const wrapperDidRender = jest.fn();
-
-  const Wrapper = React.forwardRef<HTMLSpanElement, WrapperProps>(
-    ({ children, ...rest }: WrapperProps, ref) => {
-      wrapperDidRender();
-      return (
-        <span data-testid="wrapper" {...rest} ref={ref}>
-          {children}
-        </span>
-      );
-    },
-  );
-
-  Wrapper.displayName = 'Wrapper';
-
-  return {
-    Wrapper,
-    wrapperDidRender,
-  };
-}
