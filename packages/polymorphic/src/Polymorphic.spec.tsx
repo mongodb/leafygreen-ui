@@ -11,7 +11,7 @@ import {
   AdvancedPolymorphicWithRef,
   RestrictedExample,
 } from './Example';
-import { makeWrapperComponent } from './utils/PolymorphicTest.utils';
+import { makeWrapperComponent } from './utils/Polymorphic.testutils';
 
 describe('packages/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
