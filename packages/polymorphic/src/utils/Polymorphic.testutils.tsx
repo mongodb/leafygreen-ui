@@ -36,7 +36,7 @@ export function toBePolymorphic(Component: React.ElementType) {
   const { Wrapper } = makeWrapperComponent();
   const { getByTestId, unmount } = render(
     <>
-      <Component data-testid="test-1" />;
+      <Component as="div" data-testid="test-1" />;
       <Component as="span" data-testid="test-2" />;
       <Component as="a" href="mongodb.design" data-testid="test-3" />;
       <Component as={Wrapper} data-testid="test-4" />;
