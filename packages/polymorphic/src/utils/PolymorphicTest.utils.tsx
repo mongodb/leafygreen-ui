@@ -74,9 +74,3 @@ expect.extend({
     };
   },
 });
-
-// namespace jest {
-//   interface Matchers<R> {
-//     toBePolymorphic(): R;
-//   }
-// }
