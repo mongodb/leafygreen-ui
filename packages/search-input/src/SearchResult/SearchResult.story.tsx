@@ -11,13 +11,34 @@ export default {
   component: SearchResult,
   args: {
     children: 'Some text',
+    description: 'This is a description',
   },
   argTypes: {
     ...storybookArgTypes,
+    disabled: {
+      control: 'boolean',
+    },
+    focused: {
+      control: 'boolean',
+    },
+    active: {
+      control: 'boolean',
+    },
+    showWedge: {
+      control: 'boolean',
+    },
+    href: {
+      control: 'text',
+      if: { arg: 'as', eq: 'a' },
+    },
   },
   parameters: {
     controls: {
-      exclude: [...storybookExcludedControlParams],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'aria-label',
+        'aria-labelledby',
+      ],
     },
   },
 };

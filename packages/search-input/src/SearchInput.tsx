@@ -1,7 +1,7 @@
 import React from 'react';
-import { SearchInputProps, SizeVariant } from './types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
+import { SearchInputProps, SizeVariant } from './types';
 import {
   baseInputStyle,
   wrapperFontStyle,

@@ -13,6 +13,10 @@ export const inputOptionStyles = css`
   list-style: none;
   cursor: pointer;
   outline: none;
+  border: unset;
+  margin: 0;
+  text-align: left;
+  text-decoration: none;
 
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
@@ -49,18 +53,24 @@ export const inputOptionThemeStyles: Record<Theme, string> = {
   `,
 };
 
-const wedgeWidth = 4;
+/** in px */
+const wedgeWidth = spacing[1];
+/** in px */
+const wedgePaddingY = spacing[2];
+
 export const inputOptionWedge = css`
   // Left wedge
   &:before {
     content: '';
     position: absolute;
     left: 0;
+    top: 50%;
     width: ${wedgeWidth}px;
-    height: calc(100% - 14px);
+    height: calc(100% - ${2 * wedgePaddingY}px);
     background-color: rgba(255, 255, 255, 0);
     border-radius: 0 6px 6px 0;
-    transform: scale3d(0, 0.3, 0);
+    transform: scale3d(0, 0.3, 0) translateY(-50%);
+    transform-origin: 0%; // 0% since we use translateY
     transition: 200ms ease-in-out;
     transition-property: transform, background-color;
   }
@@ -72,7 +82,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
     background-color: ${palette.blue.light3};
 
     &:before {
-      transform: scaleY(1);
+      transform: scaleY(1) translateY(-50%);;
       background-color: ${palette.blue.base};
     }
   `,
@@ -81,7 +91,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
     background-color: ${palette.blue.dark3};
 
     &:before {
-      transform: scaleY(1);
+      transform: scaleY(1) translateY(-50%);;
       background-color: ${palette.blue.light1};
     }
   `,
