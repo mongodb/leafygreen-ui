@@ -3,6 +3,10 @@ import { render } from '@testing-library/react';
 import { InputOption } from '.';
 
 describe('packages/internal/input-option', () => {
+  test('isPolymorphic', () => {
+    expect(InputOption).toBePolymorphic();
+  });
+
   test('renders', () => {
     const { container } = render(<InputOption aria-label="" />);
 
