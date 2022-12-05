@@ -3,6 +3,6 @@ export {
   ExamplePolymorphicWithRef,
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
-  ExampleImplicit,
+  ExampleInferred,
   RestrictedExample,
 } from './Example';

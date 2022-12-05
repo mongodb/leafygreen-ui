@@ -6,7 +6,7 @@ import { Polymorph, usePolymorphicRef, type PolymorphicComponentType } from '.';
 import {
   ExamplePolymorphic,
   ExamplePolymorphicWithRef,
-  ExampleImplicit,
+  ExampleInferred,
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
   RestrictedExample,
@@ -208,7 +208,7 @@ describe('packages/polymorphic', () => {
   describe.each([
     ExamplePolymorphic,
     ExamplePolymorphicWithRef,
-    ExampleImplicit,
+    ExampleInferred,
     AdvancedPolymorphic,
     AdvancedPolymorphicWithRef,
   ])('Higher-Order Polymorphic Components', ExampleComponent => {
@@ -374,7 +374,7 @@ describe('packages/polymorphic', () => {
   describe('Higher-Order Implicit Polymorph', () => {
     test('renders as an anchor if only href is provided', () => {
       const { queryByTestId } = render(
-        <ExampleImplicit href="mongodb.design" data-testid="hoc" />,
+        <ExampleInferred href="mongodb.design" data-testid="hoc" />,
       );
       expect(queryByTestId('hoc')).toBeInTheDocument();
       expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');

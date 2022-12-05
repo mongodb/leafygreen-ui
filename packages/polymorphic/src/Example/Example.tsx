@@ -5,8 +5,8 @@ import {
   Polymorphic,
   PolymorphicAs,
   usePolymorphic,
-  useImplicitPolymorphic,
-  type ImplicitPolymorphicProps,
+  useInferredPolymorphic,
+  type InferredPolymorphicProps,
   type PolymorphicPropsWithRef,
   type PolymorphicRef,
   type PolymorphicComponentType,
@@ -47,16 +47,16 @@ export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
   'ExamplePolymorphicWithRef',
 );
 
-export const ExampleImplicit = Polymorphic<
-  ImplicitPolymorphicProps<ExampleProps>
+export const ExampleInferred = Polymorphic<
+  InferredPolymorphicProps<ExampleProps>
 >(({ as, title, ...rest }) => {
-  const { Component, ref } = useImplicitPolymorphic(as, rest);
+  const { Component, ref } = useInferredPolymorphic(as, rest);
   return (
     <Component ref={ref} {...rest}>
       {title}
     </Component>
   );
-}, 'ExampleImplicit');
+}, 'ExampleInferred');
 
 /**
  * Advanced usage, not recommended
