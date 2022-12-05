@@ -29,8 +29,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@emotion/styled": "11.10.5",
-    "@leafygreen-ui/box": "3.1.1",
-    "@leafygreen-ui/emotion": "4.0.3"
+    "@emotion/styled": "11.10.5"
   }
 }
