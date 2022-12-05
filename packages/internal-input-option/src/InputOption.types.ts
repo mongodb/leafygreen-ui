@@ -1,4 +1,5 @@
-import { HTMLElementProps, DarkModeProps, Either } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
+import { AriaLabelProps } from '@leafygreen-ui/a11y'
 
 /**
  * TERMINOLOGY
@@ -9,12 +10,7 @@ import { HTMLElementProps, DarkModeProps, Either } from '@leafygreen-ui/lib';
  * `active`: The element is selected, or otherwise active (including `:active`)
  */
 
-export interface BaseInputOptionProps
-  extends DarkModeProps,
-    Omit<
-      HTMLElementProps<'li', HTMLLIElement>,
-      'aria-label' | 'aria-labelledby'
-    > {
+export type InputOptionProps = AriaLabelProps & DarkModeProps & {
   /**
    * Content to appear inside of option
    */
@@ -44,19 +40,4 @@ export interface BaseInputOptionProps
    * Whether the component is active, regardless of keyboard navigation
    */
   active?: boolean;
-
-  /**
-   * The screen reader label
-   */
-  'aria-label': string;
-
-  /**
-   * An id reference to the label element
-   */
-  'aria-labelledby': string;
 }
-
-export type InputOptionProps = Either<
-  BaseInputOptionProps,
-  'aria-label' | 'aria-labelledby'
->;

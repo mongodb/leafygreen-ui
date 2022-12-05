@@ -12,13 +12,10 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   Polymorphic,
   PolymorphicAs,
-  useInferredPolymorphic,
-  type InferredPolymorphicProps,
+  usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-export const InputOption = Polymorphic<
-  InferredPolymorphicProps<InputOptionProps>
->(
+export const InputOption = Polymorphic<InputOptionProps>(
   (
     {
       as = 'li' as PolymorphicAs,
@@ -33,7 +30,7 @@ export const InputOption = Polymorphic<
     },
     ref,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest);
+    const { Component } = usePolymorphic(as);
     const { theme } = useDarkMode(darkModeProp);
     return (
       <Component

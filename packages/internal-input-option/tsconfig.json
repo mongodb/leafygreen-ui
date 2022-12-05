@@ -10,6 +10,9 @@
   ],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
       "path": "../emotion"
     },
     {

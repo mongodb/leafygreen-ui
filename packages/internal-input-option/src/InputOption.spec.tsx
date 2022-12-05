@@ -8,19 +8,31 @@ describe('packages/internal-input-option', () => {
   });
 
   test('renders', () => {
-    const { container } = render(<InputOption aria-label="" />);
-
+    const { container } = render(<InputOption aria-label="Some label" />);
     expect(container.firstElementChild).toBeInTheDocument();
   });
 
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('Types behave as expected', () => {
     // eslint-disable-next-line jest/expect-expect
-    test('types', () => {
+    test('Aria labels', () => {
       /** @ts-expect-error */
       render(<InputOption />);
       render(<InputOption aria-label="Some Label" />);
       render(<InputOption aria-labelledby="some-id" />);
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    test('as prop', () => {
+      /** @ts-expect-error */
+      render(<InputOption as="a" />);
+      /** @ts-expect-error */
+      render(<InputOption as="a" aria-label="Some-label" />);
+      /** @ts-expect-error */
+      render(<InputOption as="a" href="mongodb.design" />);
+      render(
+        <InputOption as="a" href="mongodb.design" aria-label="Some Label" />,
+      );
     });
   });
 });
