@@ -5,4 +5,4 @@ export {
   AdvancedPolymorphicWithRef,
   ExampleInferred,
   RestrictedExample,
-} from './Example';
+} from './Polymorphic.example';
