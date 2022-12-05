@@ -10,16 +10,25 @@
   ],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
       "path": "../emotion"
     },
     {
       "path": "../icon"
     },
     {
+      "path": "../internal-input-option"
+    },
+    {
       "path": "../lib"
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../polymorphic"
     },
     {
       "path": "../tokens"
