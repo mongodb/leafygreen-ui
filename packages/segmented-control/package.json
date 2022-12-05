@@ -32,7 +32,7 @@
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "@leafygreen-ui/buttton": "^19.0.1"
+    "@leafygreen-ui/button": "^19.0.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
