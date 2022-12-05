@@ -19,10 +19,10 @@
       "path": "../palette"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../tokens"
     },
     {
-      "path": "../tokens"
+      "path": "../leafygreen-provider"
     }
   ]
 }
