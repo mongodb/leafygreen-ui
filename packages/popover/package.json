@@ -27,9 +27,6 @@
     "@leafygreen-ui/tokens": "^1.4.0",
     "react-transition-group": "^4.4.1"
   },
-  "devDependencies": {
-    "@leafygreen-ui/palette": "^3.4.4"
-  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
   },
@@ -41,5 +38,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/palette": "^3.4.4"
   }
 }
