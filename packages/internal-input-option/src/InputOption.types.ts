@@ -1,4 +1,4 @@
-import { HTMLElementProps, DarkModeProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, DarkModeProps, Either } from '@leafygreen-ui/lib';
 
 /**
  * TERMINOLOGY
@@ -45,20 +45,16 @@ export interface BaseInputOptionProps
    */
   active?: boolean;
 
-  // 'aria-label': string;
-  // 'aria-labelledby': string;
-}
-
-// export type InputOptionProps = Either<BaseInputOptionProps, 'aria-label' | 'aria-labelledby'>
-
-interface PropsWithAriaLabel extends BaseInputOptionProps {
+  /**
+   * The screen reader label
+   */
   'aria-label': string;
-  'aria-labelledby'?: string;
-}
 
-interface PropsWithLabelledBy extends BaseInputOptionProps {
-  'aria-label'?: string;
+  /**
+   * An id reference to the label element
+   */
   'aria-labelledby': string;
 }
 
-export type InputOptionProps = PropsWithAriaLabel | PropsWithLabelledBy;
+export type InputOptionProps = Either<BaseInputOptionProps, 'aria-label' | 'aria-labelledby'>
+
