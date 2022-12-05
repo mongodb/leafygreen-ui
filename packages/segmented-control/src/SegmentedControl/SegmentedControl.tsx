@@ -114,6 +114,12 @@ export const SegmentedControl = forwardRef<
     };
   }, [handleFocusIn]);
 
+  useEffect(() => {
+    if (isControlled) {
+      setInternalValue(controlledValue);
+    }
+  }, [controlledValue, isControlled]);
+
   // Handle value updates
   const updateValue = useCallback(
     (value: string) => {
