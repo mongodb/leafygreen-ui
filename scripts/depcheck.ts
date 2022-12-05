@@ -28,12 +28,14 @@ const fix: boolean = cli.opts()['fix'];
 const fixTS = cli.opts()['fixTsconfig'];
 const verbose = cli.opts()['verbose'];
 
+const testFilePatterns = [
+  // files matching these patterns will be ignored
+  /.*.spec.tsx?/,
+  /.*.story.tsx?/,
+  /.*.example.tsx?/
+]
+
 const depcheckOptions: depcheck.Options = {
-  ignorePatterns: [
-    // files matching these patterns will be ignored
-    // '*.spec.tsx',
-    // '*.story.tsx',
-  ],
   ignoreMatches: [
     // ignore dependencies that matches these globs
     '@leafygreen-ui/mongo-nav',
@@ -74,16 +76,17 @@ async function checkDependencies() {
 
       if (
         listedDev.length &&
+        // Check if every usage of every listed devDep is in some test file
         !listedDev.every(depName =>
           using[depName].every(
-            file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
+            file => testFilePatterns.some(pattern => pattern.test(file))
           ),
         )
       ) {
-        const notUsedAsDev = listedDev.filter(dep => !usedAsDev.includes(dep));
         // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
-        unusedDev.push(...notUsedAsDev);
-        missing.dependencies.push(...notUsedAsDev);
+        const listedButNotUsedAsDev = listedDev.filter(dep => !usedAsDev.includes(dep));
+        unusedDev.push(...listedButNotUsedAsDev);
+        missing.dependencies.push(...listedButNotUsedAsDev);
       }
     }
 
@@ -98,16 +101,17 @@ async function checkDependencies() {
       if (
         usedAsDependency &&
         listedDeps &&
+        // Check if at least one usage of every listed dep is not in any test file
         !listedDeps.every(depName =>
           using[depName].some(
-            file => !file.includes('.story.tsx') && !file.includes('.spec.tsx'),
+            file => !testFilePatterns.some(pattern => pattern.test(file))
           ),
         )
       ) {
-        const notUsedAsDep = listedDeps.filter(
+        const listedButOnlyUsedAsDev = listedDeps.filter(
           dep => !usedAsDependency.includes(dep),
         );
-        unusedDeps.push(...notUsedAsDep);
+        unusedDeps.push(...listedButOnlyUsedAsDev);
       }
     }
 
@@ -267,10 +271,11 @@ function sortDependenciesByUsage(
       // If a dependency is only used in tests or storybook,
       // then we add it as a dev dependency
       .reduce(
-        (_missing, [name, usedIn]) => {
+        (_missing, [name, fileUsedIn]) => {
           if (
-            usedIn.every(
-              file => file.includes('.story.tsx') || file.includes('.spec.tsx'),
+            // If every file used in is a test file...
+            fileUsedIn.every(
+              file => testFilePatterns.some(pattern => pattern.test(file)),
             )
           ) {
             verbose && console.log(`${pkg} uses ${name} in a test file`);
