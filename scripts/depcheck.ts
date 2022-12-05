@@ -32,8 +32,8 @@ const testFilePatterns = [
   // files matching these patterns will be ignored
   /.*.spec.tsx?/,
   /.*.story.tsx?/,
-  /.*.example.tsx?/
-]
+  /.*.example.tsx?/,
+];
 
 const depcheckOptions: depcheck.Options = {
   ignoreMatches: [
@@ -78,13 +78,15 @@ async function checkDependencies() {
         listedDev.length &&
         // Check if every usage of every listed devDep is in some test file
         !listedDev.every(depName =>
-          using[depName].every(
-            file => testFilePatterns.some(pattern => pattern.test(file))
+          using[depName].every(file =>
+            testFilePatterns.some(pattern => pattern.test(file)),
           ),
         )
       ) {
         // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
-        const listedButNotUsedAsDev = listedDev.filter(dep => !usedAsDev.includes(dep));
+        const listedButNotUsedAsDev = listedDev.filter(
+          dep => !usedAsDev.includes(dep),
+        );
         unusedDev.push(...listedButNotUsedAsDev);
         missing.dependencies.push(...listedButNotUsedAsDev);
       }
@@ -104,7 +106,7 @@ async function checkDependencies() {
         // Check if at least one usage of every listed dep is not in any test file
         !listedDeps.every(depName =>
           using[depName].some(
-            file => !testFilePatterns.some(pattern => pattern.test(file))
+            file => !testFilePatterns.some(pattern => pattern.test(file)),
           ),
         )
       ) {
@@ -274,8 +276,8 @@ function sortDependenciesByUsage(
         (_missing, [name, fileUsedIn]) => {
           if (
             // If every file used in is a test file...
-            fileUsedIn.every(
-              file => testFilePatterns.some(pattern => pattern.test(file)),
+            fileUsedIn.every(file =>
+              testFilePatterns.some(pattern => pattern.test(file)),
             )
           ) {
             verbose && console.log(`${pkg} uses ${name} in a test file`);
