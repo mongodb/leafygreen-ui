@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/internal-input-option",
-  "version": "0.9.0",
+  "version": "0.0.0",
   "description": "leafyGreen UI Kit Internal Input Option",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,7 +31,7 @@
     "@leafygreen-ui/emotion": "4.0.3",
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.4",
-    "@leafygreen-ui/polymorphic": "^0.1.0-next.0",
+    "@leafygreen-ui/polymorphic": "^0.1.0-next.1",
     "@leafygreen-ui/tokens": "^1.4.0"
   },
   "peerDependencies": {

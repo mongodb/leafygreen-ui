@@ -1,6 +1,9 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { InputOption } from '.';
+import { InputOption, type InputOptionProps } from '.';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+} from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Internal/InputOption',
@@ -8,19 +11,10 @@ export default {
   parameters: {
     controls: {
       exclude: [
-        'children',
+        ...storybookExcludedControlParams,
         'aria-label',
         'setError',
-        'onFilter',
-        'onClear',
-        'onChange',
         'filteredOptions',
-        'className',
-        'usePortal',
-        'portalClassName',
-        'portalContainer',
-        'scrollContainer',
-        'popoverZIndex',
         'initialValue',
         'value',
       ],
@@ -36,16 +30,14 @@ export default {
     active: {
       control: 'boolean',
     },
-    darkMode: {
-      control: 'boolean',
-    },
     showWedge: {
       control: 'boolean',
     },
+    ...storybookArgTypes,
   },
-} as ComponentMeta<typeof InputOption>;
+};
 
-const Template: ComponentStory<typeof InputOption> = props => (
+const Template = (props: InputOptionProps) => (
   <InputOption {...props}>Some text</InputOption>
 );
 

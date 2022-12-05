@@ -25,3 +25,18 @@ export const storybookArgTypes = {
     control: { type: 'select' },
   },
 };
+
+export const storybookExcludedControlParams = [
+  'children',
+  'aria-label',
+  'onFilter',
+  'onClear',
+  'onChange',
+  'ref',
+  'className',
+  'usePortal',
+  'portalClassName',
+  'portalContainer',
+  'scrollContainer',
+  'popoverZIndex',
+]
