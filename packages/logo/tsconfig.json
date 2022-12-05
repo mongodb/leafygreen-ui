@@ -12,10 +12,10 @@
   ],
   "references": [
     {
-      "path": "../lib"
+      "path": "../emotion"
     },
     {
-      "path": "../emotion"
+      "path": "../lib"
     },
     {
       "path": "../palette"

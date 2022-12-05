@@ -13,22 +13,19 @@
       "path": "../box"
     },
     {
-      "path": "../lib"
+      "path": "../emotion"
     },
     {
-      "path": "../tokens"
+      "path": "../lib"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../emotion"
-    },
-    {
       "path": "../ripple"
     },
     {
-      "path": "../icon"
+      "path": "../tokens"
     },
     {
       "path": "../leafygreen-provider"
