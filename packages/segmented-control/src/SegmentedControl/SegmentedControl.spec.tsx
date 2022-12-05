@@ -4,7 +4,7 @@ import { fireEvent, getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SegmentedControlOption } from '../SegmentedControlOption/SegmentedControlOption';
 import { SegmentedControl } from './SegmentedControl';
-import Button from '@leafygreen-ui/button'
+import Button from '@leafygreen-ui/button';
 import { typeIs } from '@leafygreen-ui/lib';
 import Icon from '@leafygreen-ui/icon';
 import { H1 } from '@leafygreen-ui/typography';
@@ -46,13 +46,13 @@ const renderNewContainer = () => {
 };
 
 const ExternallyControlledExample = () => {
-  const [selected, setSelected] = useState("foo");
+  const [selected, setSelected] = useState('foo');
 
   return (
     <div>
       <SegmentedControl
         value={selected}
-        onChange={(val) => {
+        onChange={val => {
           setSelected(val);
         }}
       >
@@ -62,14 +62,14 @@ const ExternallyControlledExample = () => {
       <br />
       <Button
         onClick={() => {
-          setSelected("bar");
+          setSelected('bar');
         }}
       >
         Select Bar
       </Button>
     </div>
-  )
-}
+  );
+};
 
 const getComponentFromContainer = (container: HTMLElement) => {
   const { firstChild: component } = container;
@@ -250,13 +250,13 @@ describe('packages/segmented-control', () => {
 
       const foo = getByText(container, 'Foo').closest('button');
       const bar = getByText(container, 'Bar').closest('button');
-      const button = getByText(container, 'Select Bar').closest('button')
+      const button = getByText(container, 'Select Bar').closest('button');
 
       expect(foo).toHaveAttribute('aria-selected', 'true');
-      fireEvent.click(button!)
+      fireEvent.click(button!);
       expect(bar).toHaveAttribute('aria-selected', 'true');
-      fireEvent.click(foo!)
+      fireEvent.click(foo!);
       expect(foo).toHaveAttribute('aria-selected', 'true');
-    })
+    });
   });
 });
