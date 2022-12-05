@@ -2392,6 +2392,11 @@
     "@leafygreen-ui/typography" "^8.0.4"
     lodash "^4.17.21"
 
+"@leafygreen-ui/polymorphic@^0.1.0-next.0":
+  version "0.1.0-next.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/polymorphic/-/polymorphic-0.1.0-next.0.tgz#242d703a3b347b257af139fdaf5e7d8cc378d3d9"
+  integrity sha512-JACUlyRJDSMju6Rohqoz4O47tqMSbOEe9HqX09/TfweHC3ltlu5k1vbKspkWEyC9SG/B2nyLE3gxedkrT7v05A==
+
 "@leafygreen-ui/popover@^7.2.2":
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/popover/-/popover-7.2.3.tgz#1a7bdd170b5cf006111b74068aff864eabb62656"

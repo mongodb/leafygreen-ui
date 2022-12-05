@@ -62,18 +62,3 @@ interface PropsWithLabelledBy extends BaseInputOptionProps {
 }
 
 export type InputOptionProps = PropsWithAriaLabel | PropsWithLabelledBy;
-
-// /// @ts-expect-error
-// export const XYZ: InputOptionProps = {
-//   darkMode: false,
-// }
-
-// export const ABC: InputOptionProps = {
-//   darkMode: false,
-//   'aria-label': 'abc'
-// }
-
-// export const DEF: InputOptionProps = {
-//   darkMode: false,
-//   'aria-labelledby': 'def'
-// }

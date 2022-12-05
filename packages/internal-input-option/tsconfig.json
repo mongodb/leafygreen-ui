@@ -19,6 +19,9 @@
       "path": "../palette"
     },
     {
+      "path": "../polymorphic"
+    },
+    {
       "path": "../tokens"
     },
     {
