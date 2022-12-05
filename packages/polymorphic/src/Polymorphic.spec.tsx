@@ -2,7 +2,6 @@ import React from 'react';
 import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
 import { render } from '@testing-library/react';
 import styled from '@emotion/styled';
-import './utils/PolymorphicTest.utils';
 import { Polymorph, usePolymorphicRef, type PolymorphicComponentType } from '.';
 import {
   ExamplePolymorphic,
