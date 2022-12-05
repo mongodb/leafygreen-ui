@@ -1,8 +1,9 @@
-import React from 'react';
-import { getByText, render } from '@testing-library/react';
+import React, { useState } from 'react';
+import { fireEvent, getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { typeIs } from '@leafygreen-ui/lib';
 import { H1 } from '@leafygreen-ui/typography';
@@ -45,6 +46,32 @@ const renderNewContainer = () => {
     apple,
     banana,
   };
+};
+
+const ExternallyControlledExample = () => {
+  const [selected, setSelected] = useState('foo');
+
+  return (
+    <div>
+      <SegmentedControl
+        value={selected}
+        onChange={val => {
+          setSelected(val);
+        }}
+      >
+        <SegmentedControlOption value="foo">Foo</SegmentedControlOption>
+        <SegmentedControlOption value="bar">Bar</SegmentedControlOption>
+      </SegmentedControl>
+      <br />
+      <Button
+        onClick={() => {
+          setSelected('bar');
+        }}
+      >
+        Select Bar
+      </Button>
+    </div>
+  );
 };
 
 const getComponentFromContainer = (container: HTMLElement) => {
@@ -173,6 +200,66 @@ describe('packages/segmented-control', () => {
         'Please provide a LeafyGreen UI Icon or Glyph component.',
       );
       spy.mockClear();
+    });
+  });
+
+  describe('when uncontrolled', () => {
+    test('clicking a new option changes the selected option', () => {
+      const { apple, banana } = renderNewContainer();
+
+      userEvent.click(banana);
+      expect(banana).toHaveAttribute('aria-selected', 'true');
+      userEvent.click(apple);
+      expect(apple).toHaveAttribute('aria-selected', 'true');
+    });
+  });
+
+  describe('when controlled', () => {
+    test('changing the "value" prop changes the selected option', () => {
+      const testControlledComponent = (value: string) => {
+        return (
+          <SegmentedControl
+            label="testLabel"
+            name="testName"
+            className={testClassName}
+            value={value}
+          >
+            <SegmentedControlOption value="apple" data-testid="apple">
+              Apple
+            </SegmentedControlOption>
+            <SegmentedControlOption
+              value="banana"
+              data-testid="banana"
+              glyph={<Icon glyph="Code" data-testid="glyph" />}
+            >
+              Banana
+            </SegmentedControlOption>
+          </SegmentedControl>
+        );
+      };
+
+      const { container, rerender } = render(testControlledComponent('banana'));
+
+      const banana = getByText(container, 'Banana').closest('button');
+      const apple = getByText(container, 'Apple').closest('button');
+
+      expect(banana).toHaveAttribute('aria-selected', 'true');
+      rerender(testControlledComponent('apple'));
+      expect(apple).toHaveAttribute('aria-selected', 'true');
+    });
+
+    test('when controlled externally', () => {
+      const { container } = render(<ExternallyControlledExample />);
+
+      const foo = getByText(container, 'Foo').closest('button');
+      const bar = getByText(container, 'Bar').closest('button');
+      const button = getByText(container, 'Select Bar').closest('button');
+
+      expect(foo).toHaveAttribute('aria-selected', 'true');
+      fireEvent.click(button!);
+      expect(bar).toHaveAttribute('aria-selected', 'true');
+      fireEvent.click(foo!);
+      expect(foo).toHaveAttribute('aria-selected', 'true');
     });
   });
 });

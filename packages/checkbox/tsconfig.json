@@ -12,25 +12,25 @@
   ],
   "references": [
     {
-      "path": "../hooks"
-    },
-    {
-      "path": "../lib"
-    },
-    {
-      "path": "../tokens"
-    },
-    {
-      "path": "../typography"
-    },
-    {
       "path": "../a11y"
     },
     {
       "path": "../emotion"
     },
     {
+      "path": "../hooks"
+    },
+    {
+      "path": "../lib"
+    },
+    {
       "path": "../palette"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     },
     {
       "path": "../leafygreen-provider"

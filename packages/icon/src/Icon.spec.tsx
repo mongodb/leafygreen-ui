@@ -6,9 +6,9 @@ import { axe } from 'jest-axe';
 import path from 'path';
 import { toJson } from 'xml2json';
 
-import EditIcon from '@leafygreen-ui/icon/dist/Edit';
 import { typeIs } from '@leafygreen-ui/lib';
 
+import EditIcon from './generated/Edit';
 import { Size } from './glyphCommon';
 import { isComponentGlyph } from './isComponentGlyph';
 import { SVGR } from './types';
