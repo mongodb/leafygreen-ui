@@ -39,4 +39,4 @@ export const storybookExcludedControlParams = [
   'portalContainer',
   'scrollContainer',
   'popoverZIndex',
-]
+];
