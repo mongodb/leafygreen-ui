@@ -1,0 +1,16 @@
+
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src",
+    "noErrorTruncation": true,
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../lib"
+    }
+  ]
+}
