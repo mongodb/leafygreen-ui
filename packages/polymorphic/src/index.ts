@@ -1,3 +1,4 @@
+import { toBePolymorphic } from './utils/Polymorphic.testutils'
 export { Polymorph, BasePolymorph } from './Polymorph';
 export { Polymorphic } from './Polymorphic';
 
@@ -18,6 +19,10 @@ export type {
 export { useInferredPolymorphic } from './InferredPolymorphic';
 
 export type { InferredPolymorphicProps } from './InferredPolymorphic';
+
+expect.extend({
+  toBePolymorphic
+});
 
 declare global {
   namespace jest {
