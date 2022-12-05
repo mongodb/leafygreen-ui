@@ -9,7 +9,7 @@ export const searchResultStyles = css`
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${spacing[3]}px;
   padding: ${spacing[1]}px ${spacing[3]}px;
-`
+`;
 
 export const searchResultTitleStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -19,16 +19,14 @@ export const searchResultTitleStyle: Record<Theme, string> = {
   [Theme.Dark]: css`
     font-weight: 700;
     color: ${palette.gray.light2};
-  `
-}
+  `,
+};
 
 export const searchResultDescriptionStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark1};
-
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.light1};
-
-  `
-}
+  `,
+};

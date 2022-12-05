@@ -82,7 +82,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
     background-color: ${palette.blue.light3};
 
     &:before {
-      transform: scaleY(1) translateY(-50%);;
+      transform: scaleY(1) translateY(-50%);
       background-color: ${palette.blue.base};
     }
   `,
@@ -91,7 +91,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
     background-color: ${palette.blue.dark3};
 
     &:before {
-      transform: scaleY(1) translateY(-50%);;
+      transform: scaleY(1) translateY(-50%);
       background-color: ${palette.blue.light1};
     }
   `,

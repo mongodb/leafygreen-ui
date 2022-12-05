@@ -3,9 +3,9 @@ import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { InputOptionProps } from '@leafygreen-ui/internal-input-option';
 
-export type SearchResultProps =
-  AriaLabelProps & DarkModeProps & InputOptionProps & {
-
+export type SearchResultProps = AriaLabelProps &
+  DarkModeProps &
+  InputOptionProps & {
     /**
      * The value of the result
      */
@@ -14,10 +14,10 @@ export type SearchResultProps =
     /**
      * Optional description text
      */
-    description?: React.ReactNode
+    description?: React.ReactNode;
 
     /**
      * Callback fired when the option is clicked
      */
-    onClick?: React.MouseEventHandler
-  }
+    onClick?: React.MouseEventHandler;
+  };
