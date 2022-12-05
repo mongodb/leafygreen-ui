@@ -15,6 +15,6 @@ export type {
   PolymorphicComponentType,
 } from './Polymorphic.types';
 
-export { useImplicitPolymorphic } from './ImplicitPolymorphic';
+export { useInferredPolymorphic } from './InferredPolymorphic';
 
-export type { ImplicitPolymorphicProps } from './ImplicitPolymorphic';
+export type { InferredPolymorphicProps } from './InferredPolymorphic';

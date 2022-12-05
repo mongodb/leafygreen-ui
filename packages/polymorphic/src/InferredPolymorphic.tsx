@@ -5,14 +5,14 @@ import { AnchorProps, PolymorphicAs } from './Polymorphic.types';
  * Wrapping props in this type ensures that if `href` is defined,
  * the `as` type is set to `'a'`, and all anchor props are accepted
  */
-export type ImplicitPolymorphicProps<P = {}> =
+export type InferredPolymorphicProps<P = {}> =
   | (P & {
       href: string;
       as?: 'a';
     } & AnchorProps)
   | P;
 
-export function getImplicitPolymorphComponent(
+export function getInferredPolymorphComponent(
   as?: PolymorphicAs,
   rest?: { [key: string]: any },
 ): PolymorphicAs | undefined {
@@ -28,10 +28,10 @@ export function getImplicitPolymorphComponent(
 /**
  *
  */
-export function useImplicitPolymorphic(
+export function useInferredPolymorphic(
   as?: PolymorphicAs,
   rest?: { [key: string]: any },
 ) {
-  as = getImplicitPolymorphComponent(as, rest);
+  as = getInferredPolymorphComponent(as, rest);
   return usePolymorphic(as);
 }

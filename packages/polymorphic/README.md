@@ -62,16 +62,17 @@ const MyComponent = PolymorphicComponent<MyProps>(
 );
 ```
 
-### Implicit `as` prop
+### Inferred `as` prop
 
-Components extended using the `Polymorphic` factory function can be made to imply the `as` prop value based on the `href` passed in.
-Ensure the custom props are wrapped in `ImplicitPolymorphicProps`, and use the `useImplicitPolymorphic` hook. Make sure to pass both `as` and `rest` (or an object that contains `href`) into the hook.
+Components extended using the `Polymorphic` factory function can be made to infer the `as` prop value based on the `href` passed in.
+Ensure the custom props are wrapped in `InferredPolymorphicProps`, and use the `useInferredPolymorphic` hook.
+Make sure to pass both `as` and a `rest` object (that may contain `href`) into the hook.
 
 ```tsx
-export const MyImplicitComponent = Polymorphic<
-  ImplicitPolymorphicProps<MyProps>
+export const MyInferredComponent = Polymorphic<
+  InferredPolymorphicProps<MyProps>
 >(({ as, ...rest }) => {
-  const { Component, ref } = useImplicitPolymorphic(as, rest);
+  const { Component, ref } = useInferredPolymorphic(as, rest);
   return (
     <Component ref={ref} {...rest}>
       {title}
@@ -81,7 +82,7 @@ export const MyImplicitComponent = Polymorphic<
 
 //
 
-<MyImplicitComponent href="mongodb.design" />; // renders as <a>
+<MyInferredComponent href="mongodb.design" />; // renders as <a>
 ```
 
 ## With Emotion `styled` API

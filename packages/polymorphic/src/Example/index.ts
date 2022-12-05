@@ -1,4 +1,3 @@
-// Uncomment these to debug tsdoc generation
 export {
   ExamplePolymorphic,
   ExamplePolymorphicWithRef,
