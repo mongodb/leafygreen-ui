@@ -1,16 +1,18 @@
 import React from 'react';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import SortAscendingIcon from '@leafygreen-ui/icon/dist/SortAscending';
 import SortDescendingIcon from '@leafygreen-ui/icon/dist/SortDescending';
 import UnsortedIcon from '@leafygreen-ui/icon/dist/Unsorted';
 import IconButton from '@leafygreen-ui/icon-button';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette, uiColors } from '@leafygreen-ui/palette';
-import { getCommonCellStyles } from './styles';
-import { SortDirection, useSortContext } from './SortContext';
-import { useFontSizeContext } from './FontSizeContext';
-import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { enforceExhaustive } from '@leafygreen-ui/lib';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+
 import { useDarkModeContext } from './DarkModeContext';
+import { useFontSizeContext } from './FontSizeContext';
+import { SortDirection, useSortContext } from './SortContext';
+import { getCommonCellStyles } from './styles';
+import { DataType, TableActionTypes, useTableContext } from './TableContext';
 
 const Mode = {
   Light: 'light',

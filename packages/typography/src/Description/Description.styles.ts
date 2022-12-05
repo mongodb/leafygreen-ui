@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { palette } from '@leafygreen-ui/palette';
+import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 
 export const descriptionStyle = css`
   font-family: ${fontFamilies.default};

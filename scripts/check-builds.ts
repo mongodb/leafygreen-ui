@@ -3,12 +3,13 @@
  */
 
 /* eslint-disable no-console */
+import chalk from 'chalk';
+import { spawnSync } from 'child_process';
+import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
-import { spawnSync } from 'child_process';
-import { Command } from 'commander';
-import chalk from 'chalk';
+
 import { getRelevantPackages } from './utils/getRelevantPackages';
 
 const ModuleType = {

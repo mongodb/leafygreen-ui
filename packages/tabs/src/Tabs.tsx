@@ -1,11 +1,13 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { keyMap, isComponentType, Theme } from '@leafygreen-ui/lib';
+
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import InternalTab from './InternalTab';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
+import InternalTab from './InternalTab';
 import { AccessibleTabsProps } from './types';
 
 // Using a background allows the "border" to appear underneath the individual tab color

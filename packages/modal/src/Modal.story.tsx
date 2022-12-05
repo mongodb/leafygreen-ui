@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
-import Modal from '.';
-import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
-import { Subtitle, Body } from '@leafygreen-ui/typography';
-import Copyable from '@leafygreen-ui/copyable';
-import Code from '@leafygreen-ui/code';
 import { ComponentStory, Meta } from '@storybook/react';
+
+import Button from '@leafygreen-ui/button';
+import Code from '@leafygreen-ui/code';
+import Copyable from '@leafygreen-ui/copyable';
+import { css } from '@leafygreen-ui/emotion';
+import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
+import { Body, Subtitle } from '@leafygreen-ui/typography';
+
 import { ModalProps } from './Modal';
+import Modal from '.';
 
 export default {
   title: 'Components/Modals/Modal',

@@ -1,6 +1,8 @@
 import React from 'react';
-import Checkbox from '@leafygreen-ui/checkbox';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import Checkbox from '@leafygreen-ui/checkbox';
 
 const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;

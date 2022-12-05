@@ -1,23 +1,25 @@
 import React from 'react';
 import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { cx, css } from '@leafygreen-ui/emotion';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useIsomorphicLayoutEffect,
   useViewportSize,
 } from '@leafygreen-ui/hooks';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+
+import { DarkModeProvider } from './DarkModeContext';
+import { FontSizeProvider } from './FontSizeContext';
 import { HeaderRowProps } from './HeaderRow';
-import { TableHeaderProps } from './TableHeader';
+import { SortProvider } from './SortContext';
+import TableBody from './TableBody';
 import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
-import TableBody from './TableBody';
-import { SortProvider } from './SortContext';
-import { FontSizeProvider } from './FontSizeContext';
-import { DarkModeProvider } from './DarkModeContext';
+import { TableHeaderProps } from './TableHeader';
 
 const lmShadowColor = transparentize(0.7, palette.black);
 const dmShadowColor = transparentize(0.2, uiColors.black);

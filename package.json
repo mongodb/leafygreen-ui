@@ -193,5 +193,8 @@
     "packages/*",
     "website"
   ],
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": {
+    "eslint-plugin-simple-import-sort": "^8.0.0"
+  }
 }

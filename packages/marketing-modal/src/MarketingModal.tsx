@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
+
 import Button from '@leafygreen-ui/button';
-import { Link } from '@leafygreen-ui/typography';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Modal, { ModalProps } from '@leafygreen-ui/modal';
-import { uiColors, palette } from '@leafygreen-ui/palette';
 import { CloseIconColor } from '@leafygreen-ui/modal';
+import { palette, uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { Link } from '@leafygreen-ui/typography';
+
 import { svgBlobs } from '.';
 
 const Mode = {

@@ -1,8 +1,10 @@
 import React from 'react';
+
+import { isComponentType } from '@leafygreen-ui/lib';
+
 import HeaderRow, { HeaderRowElement } from './HeaderRow';
 import { TableProps } from './Table';
 import { TableHeaderElement } from './TableHeader';
-import { isComponentType } from '@leafygreen-ui/lib';
 
 type TableHeaderProps<Shape> = Pick<TableProps<Shape>, 'columns'>;
 

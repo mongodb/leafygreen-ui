@@ -1,6 +1,8 @@
+import clamp from 'lodash/clamp';
+
 import { css } from '@leafygreen-ui/emotion';
 import { Align, ElementPosition, Justify } from '@leafygreen-ui/popover';
-import clamp from 'lodash/clamp';
+
 import { borderRadius, notchHeight, notchWidth } from './tooltipConstants';
 
 interface NotchPositionStylesArgs {

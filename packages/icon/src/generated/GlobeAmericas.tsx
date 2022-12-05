@@ -6,7 +6,9 @@
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface GlobeAmericasProps extends LGGlyph.ComponentProps {}

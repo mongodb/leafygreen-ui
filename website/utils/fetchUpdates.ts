@@ -1,7 +1,7 @@
 import fs from 'fs';
-import util from 'util';
-import { join } from 'path';
 import matter from 'gray-matter';
+import { join } from 'path';
+import util from 'util';
 
 export interface UpdateProps {
   date: string;

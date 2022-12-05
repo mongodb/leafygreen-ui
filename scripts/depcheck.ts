@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
+import chalk from 'chalk';
+import { SpawnOptions, spawnSync } from 'child_process';
+import { Command } from 'commander';
 import depcheck from 'depcheck';
 import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { exit } from 'process';
-import chalk from 'chalk';
-import { Command } from 'commander';
+
 import packageJson from '../package.json';
-import { SpawnOptions, spawnSync } from 'child_process';
+
 import { getPackageLGDependencies } from './utils/getPackageDependencies';
 const lgPackages = readdirSync('packages/');
 const devDependencies = Object.keys(packageJson.devDependencies);

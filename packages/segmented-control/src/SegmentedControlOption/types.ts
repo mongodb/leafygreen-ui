@@ -1,5 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { ReactElement } from 'react';
+
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
   /**

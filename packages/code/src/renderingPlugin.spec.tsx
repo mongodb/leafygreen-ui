@@ -1,11 +1,12 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
+
 import {
-  processToken,
-  LineTableRow,
-  treeToLines,
   flattenNestedTree,
   generateKindClassName,
+  LineTableRow,
+  processToken,
+  treeToLines,
 } from './renderingPlugin';
 
 describe('processToken()', () => {

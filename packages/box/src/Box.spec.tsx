@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import Box, { ExtendableBox, BoxProps } from '.';
+
+import Box, { BoxProps, ExtendableBox } from '.';
 
 interface LinkWrapperProps {
   href?: string;

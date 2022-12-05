@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { palette } from '@leafygreen-ui/palette';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
+
 import { BlobPosition } from '.';
 
 type SvgBlobProperties = 'viewBox' | 'path' | 'fill' | 'styles';

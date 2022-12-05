@@ -1,6 +1,8 @@
 import React from 'react';
-import Callout, { Variant } from '@leafygreen-ui/callout';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import Callout, { Variant } from '@leafygreen-ui/callout';
 
 const knobsConfig: KnobsConfigInterface<{
   variant: Variant;

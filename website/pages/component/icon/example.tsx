@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ClipboardJS from 'clipboard';
-import { css } from '@emotion/css';
-import { keyMap } from '@leafygreen-ui/lib';
-import Tooltip from '@leafygreen-ui/tooltip';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
-import Icon, { Size, glyphs } from '@leafygreen-ui/icon';
-import { uiColors } from '@leafygreen-ui/palette/';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import Icon, { glyphs, Size } from '@leafygreen-ui/icon';
 import { GlyphName } from '@leafygreen-ui/icon/dist/glyphs';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
+import { keyMap } from '@leafygreen-ui/lib';
+import { uiColors } from '@leafygreen-ui/palette/';
+import Tooltip from '@leafygreen-ui/tooltip';
+
+import { css } from '@emotion/css';
 
 const resetButtonStyles = css`
   display: inline;

@@ -1,8 +1,10 @@
+import { transparentize } from 'polished';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
+
 import { Size } from '../SegmentedControl/types';
 
 export const wrapperStyle = css`

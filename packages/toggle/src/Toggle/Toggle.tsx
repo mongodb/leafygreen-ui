@@ -1,22 +1,24 @@
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import React, { useState, useCallback } from 'react';
+
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Size, ToggleProps } from './types';
+
 import {
   buttonBaseStyles,
-  checkmarkBaseStyles,
-  sliderBaseStyles,
-  checkmarkThemeStyles,
-  checkmarkSize,
-  buttonThemeStyles,
   buttonSizeStyles,
-  sliderThemeStyles,
+  buttonThemeStyles,
+  checkmarkBaseStyles,
+  checkmarkSize,
+  checkmarkThemeStyles,
+  sliderBaseStyles,
   sliderSizeStyles,
+  sliderThemeStyles,
   toggleButtonClassName,
 } from './styles';
+import { Size, ToggleProps } from './types';
 
 function Toggle({
   className,

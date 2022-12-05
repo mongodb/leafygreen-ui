@@ -1,8 +1,10 @@
 import React, { SetStateAction } from 'react';
 import PropTypes from 'prop-types';
+
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
-import { ModalView } from '.';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+import { ModalView } from '.';
 
 export const CloseIconColor = {
   Default: 'default',

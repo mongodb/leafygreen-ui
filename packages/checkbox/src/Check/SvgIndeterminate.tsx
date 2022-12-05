@@ -1,5 +1,6 @@
-import { palette } from '@leafygreen-ui/palette';
 import React from 'react';
+
+import { palette } from '@leafygreen-ui/palette';
 
 const SvgIndeterminate = (props: any) => {
   return (

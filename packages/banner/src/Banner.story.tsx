@@ -1,10 +1,12 @@
 import React from 'react';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
-import Banner from './Banner/Banner';
-import { Variant } from './Banner/types';
 import { ComponentStory, Meta } from '@storybook/react';
+
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
+
+import Banner from './Banner/Banner';
+import { Variant } from './Banner/types';
 
 export default {
   title: 'Components/Banner',

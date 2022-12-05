@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, getByText } from '@testing-library/react';
+import { getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ExpandableCard from '.';
 import { axe } from 'jest-axe';
+
+import ExpandableCard from '.';
 
 const renderCard = () =>
   render(

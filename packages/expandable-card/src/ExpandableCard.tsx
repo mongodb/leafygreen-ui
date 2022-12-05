@@ -1,25 +1,27 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import Card, { CardProps } from '@leafygreen-ui/card';
-import Icon from '@leafygreen-ui/icon';
-import { Body, Subtitle } from '@leafygreen-ui/typography';
-import IconButton from '@leafygreen-ui/icon-button';
-import { cx } from '@leafygreen-ui/emotion';
 import { Transition } from 'react-transition-group';
+
+import Card, { CardProps } from '@leafygreen-ui/card';
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { Body, Subtitle } from '@leafygreen-ui/typography';
+
 import {
   cardStyle,
-  summaryStyle,
-  summaryHeader,
-  flagTextStyle,
-  summaryTextThemeStyle,
-  transitionDuration,
-  iconThemeStyle,
-  iconTransitionStyle,
   childrenWrapperStyle,
   childrenWrapperTransitionStyle,
+  flagTextStyle,
+  iconThemeStyle,
+  iconTransitionStyle,
+  summaryHeader,
+  summaryStyle,
+  summaryTextThemeStyle,
+  transitionDuration,
 } from './styles';
 
 /**

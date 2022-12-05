@@ -2,8 +2,9 @@
 import { spawnSync } from 'child_process';
 import { Command } from 'commander';
 import { uniq } from 'lodash';
-import { getGitDiff } from './utils/getGitDiff';
+
 import { getAllPackageNames } from './utils/getAllPackageNames';
+import { getGitDiff } from './utils/getGitDiff';
 import {
   getPackageDependents,
   getPackageLGDependencies,

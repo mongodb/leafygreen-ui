@@ -1,9 +1,11 @@
 import React from 'react';
-import { css } from '@emotion/css';
-import { uiColors } from '@leafygreen-ui/palette';
-import { Subtitle } from '@leafygreen-ui/typography';
-import { spacing } from '@leafygreen-ui/tokens';
 import { CDN } from 'utils/routes';
+
+import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
+import { Subtitle } from '@leafygreen-ui/typography';
+
+import { css } from '@emotion/css';
 
 const containerStyle = css`
   width: 100%;

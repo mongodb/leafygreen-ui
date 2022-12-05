@@ -1,11 +1,12 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+
 import {
   useEventListener,
-  useViewportSize,
+  useIdAllocator,
+  useObjectDependency,
   usePoller,
   usePrevious,
-  useObjectDependency,
-  useIdAllocator,
+  useViewportSize,
 } from './index';
 import useValidation from './useValidation';
 

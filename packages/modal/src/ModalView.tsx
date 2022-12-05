@@ -1,22 +1,24 @@
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
-import FocusTrap from 'focus-trap-react';
 import { Transition } from 'react-transition-group';
-import { transparentize } from 'polished';
 import facepaint from 'facepaint';
-import Portal from '@leafygreen-ui/portal';
+import FocusTrap from 'focus-trap-react';
+import { transparentize } from 'polished';
+import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
-import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
-import { palette, uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 import {
   PortalContextProvider,
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { CloseIconColor, ModalProps, ModalSize } from './Modal';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import Portal from '@leafygreen-ui/portal';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+
+import { CloseIconColor, ModalProps, ModalSize } from './Modal';
 
 const Mode = {
   Dark: 'dark',

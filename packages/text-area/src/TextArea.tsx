@@ -1,24 +1,26 @@
-import React, { useState, forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
+import Warning from '@leafygreen-ui/icon/dist/Warning';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
+  bodyTypeScaleStyles,
   Description,
   Label,
-  bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
-import Warning from '@leafygreen-ui/icon/dist/Warning';
-import { State, TextAreaProps } from './types';
+
 import {
-  containerStyles,
-  textAreaStyle,
   colorSets,
-  errorMessageStyle,
+  containerStyles,
   errorIconStyle,
   errorMessageLabelStyles,
+  errorMessageStyle,
+  textAreaStyle,
 } from './styles';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { State, TextAreaProps } from './types';
 
 /**
  * # TextArea

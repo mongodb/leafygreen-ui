@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+
 import { getAllPackageNames } from './getAllPackageNames';
 
 export function getPackageLGDependencies(pkg: string) {

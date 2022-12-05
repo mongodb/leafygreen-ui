@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
+
 import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
-import Modal, { Footer, ModalProps } from '@leafygreen-ui/modal';
-import { uiColors, palette } from '@leafygreen-ui/palette';
-import TextInput from '@leafygreen-ui/text-input';
+import { css, cx } from '@leafygreen-ui/emotion';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import Modal, { Footer, ModalProps } from '@leafygreen-ui/modal';
+import { palette, uiColors } from '@leafygreen-ui/palette';
+import TextInput from '@leafygreen-ui/text-input';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const Mode = {
