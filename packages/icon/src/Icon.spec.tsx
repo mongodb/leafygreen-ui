@@ -8,7 +8,7 @@ import { axe } from 'jest-axe';
 import { typeIs } from '@leafygreen-ui/lib';
 import { SVGR } from './types';
 import { createGlyphComponent, createIconComponent, glyphs } from '.';
-import EditIcon from '@leafygreen-ui/icon/dist/Edit';
+import EditIcon from './generated/Edit';
 import { Size } from './glyphCommon';
 import { isComponentGlyph } from './isComponentGlyph';
 

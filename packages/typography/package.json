@@ -27,6 +27,9 @@
     "@leafygreen-ui/palette": "^3.4.4",
     "@leafygreen-ui/tokens": "^1.4.0"
   },
+  "devDependencies": {
+    "@leafygreen-ui/inline-definition": "^6.0.0"
+  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
   },
