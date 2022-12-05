@@ -33,6 +33,7 @@ const testFilePatterns = [
   /.*.spec.tsx?/,
   /.*.story.tsx?/,
   /.*.example.tsx?/,
+  /.*.testutils.tsx?/,
 ];
 
 const depcheckOptions: depcheck.Options = {

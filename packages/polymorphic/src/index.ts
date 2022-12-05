@@ -18,3 +18,11 @@ export type {
 export { useInferredPolymorphic } from './InferredPolymorphic';
 
 export type { InferredPolymorphicProps } from './InferredPolymorphic';
+
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toBePolymorphic(): R;
+    }
+  }
+}
