@@ -6,8 +6,8 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
-import { useSideNavContext } from '../SideNavContext';
-import { getIndentLevelStyle, typographyStyle } from '../styles';
+import { useSideNavContext } from '../SideNav/SideNavContext';
+import { getIndentLevelStyle, typographyStyle } from '../SideNav/styles';
 import {
   baseNavItemStyle,
   activeNavItemStyle,

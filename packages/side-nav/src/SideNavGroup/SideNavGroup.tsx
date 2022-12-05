@@ -9,8 +9,8 @@ import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { CollapsedSideNavItem } from '../SideNavItem';
-import { useSideNavContext } from '../SideNavContext';
-import { ulStyleOverrides, getIndentLevelStyle } from '../styles';
+import { useSideNavContext } from '../SideNav/SideNavContext';
+import { ulStyleOverrides, getIndentLevelStyle } from '../SideNav/styles';
 import {
   buttonClassName,
   collapsibleHeaderFocusStyle,

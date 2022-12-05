@@ -1,6 +1,6 @@
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
@@ -56,10 +56,10 @@ export const innerNavWrapperStyle = css`
   display: flex;
 `;
 
-export const navStyles = css`
+export const navBaseStyles = css`
   position: relative;
   font-family: ${fontFamilies.default};
-  background-color: ${palette.gray.light3};
+
   z-index: 0;
   transition: ${collapseDuration}ms ease-in-out;
   transition-property: box-shadow, border-color, width;
@@ -68,6 +68,15 @@ export const navStyles = css`
     transition-property: box-shadow, border-color;
   `)}
 `;
+
+export const navThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.gray.light3};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+  `,
+};
 
 export const hoverNavStyles = css`
   box-shadow: 2px 0 4px ${transparentize(0.9, palette.black)};

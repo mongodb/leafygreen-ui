@@ -5,10 +5,13 @@ import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import SideNavContext from './SideNavContext';
-import CollapseToggle from './CollapseToggle';
+import CollapseToggle from '../CollaspeToggle/CollapseToggle';
 import { SideNavProps } from './types';
 import {
   sideNavWidth,
@@ -17,7 +20,8 @@ import {
   outerContainerStyle,
   outerContainerCollapsedStyle,
   innerNavWrapperStyle,
-  navStyles,
+  navBaseStyles,
+  navThemeStyles,
   collapsedNavStyles,
   hoverNavStyles,
   listWrapperStyle,
@@ -59,12 +63,15 @@ function SideNav({
   widthOverride,
   collapsed: controlledCollapsed,
   setCollapsed: setControlledCollapsed = () => {},
+  darkMode: darkModeProp,
   ...rest
 }: SideNavProps) {
   const { Provider: SideNavProvider } = SideNavContext;
   const [uncontrolledCollapsed, uncontrolledSetCollapsed] = useState(false);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { usingKeyboard } = useUsingKeyboardContext();
+
+  const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
@@ -128,6 +135,8 @@ function SideNav({
             width,
             transitionState: state,
             baseFontSize,
+            darkMode,
+            theme,
           }}
         >
           <div
@@ -149,7 +158,8 @@ function SideNav({
               <nav
                 id={navId}
                 className={cx(
-                  navStyles,
+                  navBaseStyles,
+                  navThemeStyles[theme],
                   css`
                     width: ${width}px;
                   `,
@@ -223,6 +233,7 @@ SideNav.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   id: PropTypes.string,
+  darkMode: PropTypes.bool,
 };
 
 export default SideNav;

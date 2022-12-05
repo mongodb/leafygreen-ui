@@ -9,11 +9,15 @@ import { palette } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import { SideNav, SideNavItem, SideNavGroup } from '.';
 import { Body, H1 } from '@leafygreen-ui/typography';
-import { SideNavProps } from './types';
+import { SideNavProps } from './SideNav/types';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/SideNav',
   component: SideNav,
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+  },
 } as ComponentMeta<typeof SideNav>;
 
 const basicStyles = css`
