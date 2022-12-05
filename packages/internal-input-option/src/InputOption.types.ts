@@ -10,8 +10,7 @@ import { HTMLElementProps, DarkModeProps } from '@leafygreen-ui/lib';
  */
 
 export interface BaseInputOptionProps
-  extends
-    DarkModeProps,
+  extends DarkModeProps,
     Omit<
       HTMLElementProps<'li', HTMLLIElement>,
       'aria-label' | 'aria-labelledby'
@@ -62,7 +61,7 @@ interface PropsWithLabelledBy extends BaseInputOptionProps {
   'aria-labelledby': string;
 }
 
-export type InputOptionProps = PropsWithAriaLabel | PropsWithLabelledBy
+export type InputOptionProps = PropsWithAriaLabel | PropsWithLabelledBy;
 
 // /// @ts-expect-error
 // export const XYZ: InputOptionProps = {

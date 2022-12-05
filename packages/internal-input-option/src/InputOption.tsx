@@ -51,6 +51,5 @@ const _InputOption: React.ForwardRefRenderFunction<
 };
 
 // type InputOptionType = React.ForwardRefExoticComponent<InputOptionProps>;
-export const InputOption = React.forwardRef<HTMLLIElement, InputOptionProps>(
-  _InputOption,
-);
+export const InputOption =
+  React.forwardRef<HTMLLIElement, InputOptionProps>(_InputOption);
