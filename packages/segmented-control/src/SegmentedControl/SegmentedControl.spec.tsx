@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { axe } from 'jest-axe';
-import { getByText, render } from '@testing-library/react';
+import { fireEvent, getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SegmentedControlOption } from '../SegmentedControlOption/SegmentedControlOption';
 import { SegmentedControl } from './SegmentedControl';
+import Button from '@leafygreen-ui/button'
 import { typeIs } from '@leafygreen-ui/lib';
 import Icon from '@leafygreen-ui/icon';
 import { H1 } from '@leafygreen-ui/typography';
@@ -43,6 +44,32 @@ const renderNewContainer = () => {
     banana,
   };
 };
+
+const ExternallyControlledExample = () => {
+  const [selected, setSelected] = useState("foo");
+
+  return (
+    <div>
+      <SegmentedControl
+        value={selected}
+        onChange={(val) => {
+          setSelected(val);
+        }}
+      >
+        <SegmentedControlOption value="foo">Foo</SegmentedControlOption>
+        <SegmentedControlOption value="bar">Bar</SegmentedControlOption>
+      </SegmentedControl>
+      <br />
+      <Button
+        onClick={() => {
+          setSelected("bar");
+        }}
+      >
+        Select Bar
+      </Button>
+    </div>
+  )
+}
 
 const getComponentFromContainer = (container: HTMLElement) => {
   const { firstChild: component } = container;
@@ -217,5 +244,19 @@ describe('packages/segmented-control', () => {
       rerender(testControlledComponent('apple'));
       expect(apple).toHaveAttribute('aria-selected', 'true');
     });
+
+    test('when controlled externally', () => {
+      const { container } = render(<ExternallyControlledExample />);
+
+      const foo = getByText(container, 'Foo').closest('button');
+      const bar = getByText(container, 'Bar').closest('button');
+      const button = getByText(container, 'Select Bar').closest('button')
+
+      expect(foo).toHaveAttribute('aria-selected', 'true');
+      fireEvent.click(button!)
+      expect(bar).toHaveAttribute('aria-selected', 'true');
+      fireEvent.click(foo!)
+      expect(foo).toHaveAttribute('aria-selected', 'true');
+    })
   });
 });
