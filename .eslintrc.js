@@ -137,9 +137,8 @@ module.exports = {
               ['^react', '^@?\\w'],
               // Internal packages.
               ['^(@|components)(/.*|$)'],
-              // Side effect imports.
-              // Packages `react` related packages come first.
               ['^@leafygreen-ui', '^@?\\w'],
+              // Side effect imports.
               ['^\\u0000'],
               // Parent imports. Put `..` last.
               ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
