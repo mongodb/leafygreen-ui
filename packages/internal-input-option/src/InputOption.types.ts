@@ -56,5 +56,7 @@ export interface BaseInputOptionProps
   'aria-labelledby': string;
 }
 
-export type InputOptionProps = Either<BaseInputOptionProps, 'aria-label' | 'aria-labelledby'>
-
+export type InputOptionProps = Either<
+  BaseInputOptionProps,
+  'aria-label' | 'aria-labelledby'
+>;
