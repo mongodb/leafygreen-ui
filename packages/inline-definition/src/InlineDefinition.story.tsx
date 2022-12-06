@@ -1,9 +1,11 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
-import { H2, Body, Link } from '@leafygreen-ui/typography';
-import InlineDefinition from '.';
 import { ComponentStory } from '@storybook/react';
+
+import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Body, H2, Link } from '@leafygreen-ui/typography';
+
+import InlineDefinition from '.';
 
 export default {
   title: 'Components/InlineDefinition',

@@ -1,9 +1,13 @@
 /* eslint-disable no-console */
-import fs from 'fs';
-import path from 'path';
 import { Command } from 'commander';
+import fs from 'fs';
+import { camelCase} from 'lodash';
+import path from 'path';
 
 import { writeDocs } from './utils/tsDocParser';
+
+const pascalCase = (str: string) =>
+  camelCase(str).slice(0, 1).toUpperCase() + camelCase(str).slice(1);
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')

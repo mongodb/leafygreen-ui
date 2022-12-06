@@ -1,9 +1,3 @@
-import clone from 'lodash/clone';
-import isArray from 'lodash/isArray';
-import isEqual from 'lodash/isEqual';
-import isNull from 'lodash/isNull';
-import isString from 'lodash/isString';
-import isUndefined from 'lodash/isUndefined';
 import React, {
   useCallback,
   useEffect,
@@ -11,8 +5,15 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import clone from 'lodash/clone';
+import isArray from 'lodash/isArray';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
-import { Description, Label } from '@leafygreen-ui/typography';
+
+import { cx } from '@leafygreen-ui/emotion';
 import {
   useDynamicRefs,
   useEventListener,
@@ -21,56 +22,57 @@ import {
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { Description, Label } from '@leafygreen-ui/typography';
+
+import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
+import { Chip } from './Chip';
 import {
+  baseComboboxStyles,
+  baseInputElementStyle,
+  clearButtonStyle,
+  comboboxDisabledStyles,
+  comboboxErrorStyles,
+  comboboxFocusStyle,
+  comboboxParentStyle,
+  comboboxSelectionStyles,
+  comboboxSizeStyles,
+  comboboxThemeStyles,
+  endIconStyle,
+  errorMessageSizeStyle,
+  errorMessageThemeStyle,
+  inputElementSizeStyle,
+  inputElementThemeStyle,
+  inputElementTransitionStyles,
+  inputWrapperStyle,
+  labelDescriptionContainerStyle,
+  multiselectInputElementStyle,
+} from './Combobox.styles';
+import {
+  ComboboxElement,
   ComboboxProps,
+  ComboboxSize,
   getNullSelection,
   onChangeType,
-  SelectValueType,
   OptionObject,
-  ComboboxElement,
-  ComboboxSize,
-  State,
   Overflow,
-  TruncationLocation,
   SearchState,
+  SelectValueType,
+  State,
+  TruncationLocation,
 } from './Combobox.types';
-import {
-  flattenChildren,
-  getOptionObjectFromValue,
-  getDisplayNameForValue,
-  getValueForDisplayName,
-  getNameAndValue,
-} from './utils';
 import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxGroup } from './ComboboxGroup';
 import { InternalComboboxOption } from './ComboboxOption';
-import { Chip } from './Chip';
 import {
-  comboboxFocusStyle,
-  inputWrapperStyle,
-  baseComboboxStyles,
-  comboboxThemeStyles,
-  comboboxSizeStyles,
-  comboboxDisabledStyles,
-  comboboxErrorStyles,
-  comboboxParentStyle,
-  baseInputElementStyle,
-  inputElementSizeStyle,
-  inputElementTransitionStyles,
-  multiselectInputElementStyle,
-  clearButtonStyle,
-  endIconStyle,
-  errorMessageThemeStyle,
-  errorMessageSizeStyle,
-  labelDescriptionContainerStyle,
-  inputElementThemeStyle,
-  comboboxSelectionStyles,
-} from './Combobox.styles';
-import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
+  flattenChildren,
+  getDisplayNameForValue,
+  getNameAndValue,
+  getOptionObjectFromValue,
+  getValueForDisplayName,
+} from './utils';
 
 /**
  * Combobox is a combination of a Select and TextInput,

@@ -11,7 +11,7 @@ export { labelTypeScaleStyles } from './Label/Label.styles';
 export { default as Link } from './Link/Link';
 export { anchorClassName } from './Link/Link.styles';
 export { default as Overline } from './Overline/Overline';
-export { default as Subtitle } from './Subtitle/Subtitle';
 export { bodyTypeScaleStyles } from './styles';
+export { default as Subtitle } from './Subtitle/Subtitle';
 export { StaticWidthText } from './utils/StaticWidthText';
 export { useUpdatedBaseFontSize } from './utils/useUpdatedBaseFontSize';

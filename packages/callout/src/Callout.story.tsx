@@ -1,9 +1,11 @@
 import React from 'react';
-import Code from '@leafygreen-ui/code';
-import { Link } from '@leafygreen-ui/typography';
-import Callout, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
+
+import Code from '@leafygreen-ui/code';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Link } from '@leafygreen-ui/typography';
+
+import Callout, { Variant } from '.';
 
 export default {
   title: 'Components/Callout',

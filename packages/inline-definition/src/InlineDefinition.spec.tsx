@@ -1,14 +1,16 @@
 import React from 'react';
 import {
-  render,
-  screen,
   act,
   fireEvent,
+  render,
+  screen,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import { H2 } from '@leafygreen-ui/typography';
+
 import InlineDefinition from '.';
 
 const shardDefinition =

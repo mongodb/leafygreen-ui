@@ -1,14 +1,14 @@
 import SideNav, { sideNavSelector } from './SideNav';
-import { SideNavItem, CollapsedSideNavItem } from './SideNavItem';
 import { SideNavGroup } from './SideNavGroup';
-import { sideNavWidth, sideNavItemSidePadding } from './styles';
+import { CollapsedSideNavItem, SideNavItem } from './SideNavItem';
+import { sideNavItemSidePadding, sideNavWidth } from './styles';
 
 export {
-  SideNav,
-  SideNavItem,
-  SideNavGroup,
-  sideNavWidth,
   CollapsedSideNavItem,
+  SideNav,
+  SideNavGroup,
+  SideNavItem,
   sideNavItemSidePadding,
   sideNavSelector,
+  sideNavWidth,
 };

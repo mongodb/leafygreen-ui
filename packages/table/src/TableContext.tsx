@@ -1,9 +1,9 @@
 import React, {
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useReducer,
-  useEffect,
 } from 'react';
 
 const TableActionTypes = {

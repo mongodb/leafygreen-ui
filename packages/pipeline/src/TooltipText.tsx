@@ -1,7 +1,9 @@
 import React from 'react';
+
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import { tooltipTextStyles } from './styles';
 import { palette } from '@leafygreen-ui/palette';
+
+import { tooltipTextStyles } from './styles';
 
 export interface TooltipTextProps {
   hiddenStages: Array<string | null>;

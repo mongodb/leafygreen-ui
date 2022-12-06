@@ -1,15 +1,18 @@
 import React, { useCallback, useState } from 'react';
-import { useRouter } from 'next/router';
-import { css, cx } from '@emotion/css';
 import { Transition } from 'react-transition-group';
+import { useRouter } from 'next/router';
+import { HOME_PAGE } from 'utils/routes';
+
+import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
+import IconButton from '@leafygreen-ui/icon-button';
+import { MongoDBLogo } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
-import IconButton from '@leafygreen-ui/icon-button';
-import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
-import { MongoDBLogo } from '@leafygreen-ui/logo';
-import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
+
 import MobileNavigationProvider from './NavigationContext';
-import { HOME_PAGE } from 'utils/routes';
+import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
+
+import { css, cx } from '@emotion/css';
 
 const resetButtonStyle = css`
   background-color: white;

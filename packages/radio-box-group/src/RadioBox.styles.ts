@@ -6,6 +6,7 @@ import {
   hoverRing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
+
 import { Size } from './types';
 
 export const radioBoxSizes: { [K in Size]: string } = {

@@ -1,18 +1,20 @@
 import React, { ReactElement } from 'react';
 import {
   act,
-  render,
   fireEvent,
+  render,
   screen,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import Tooltip, { TooltipProps } from './Tooltip';
+
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+
+import Tooltip, { TooltipProps } from './Tooltip';
 
 const buttonText = 'trigger button';
 const tooltipTestId = 'tooltip-test-id';

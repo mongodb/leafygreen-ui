@@ -1,20 +1,22 @@
 import React from 'react';
-import { SearchInputProps, SizeVariant } from './types';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+import { cx } from '@leafygreen-ui/emotion';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import {
   baseInputStyle,
-  wrapperFontStyle,
   inputContainerStyle,
   inputFocusStyles,
-  inputThemeStyle,
   inputSizeStyles,
+  inputThemeStyle,
+  searchIconDisabledStyle,
+  searchIconSizeStyle,
   searchIconStyle,
   searchIconThemeStyle,
-  searchIconSizeStyle,
-  searchIconDisabledStyle,
+  wrapperFontStyle,
 } from './styles';
-import { cx } from '@leafygreen-ui/emotion';
+import { SearchInputProps, SizeVariant } from './types';
 
 /**
  * # SearchInput

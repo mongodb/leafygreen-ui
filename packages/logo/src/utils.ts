@@ -1,6 +1,6 @@
-import { palette } from '@leafygreen-ui/palette';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 
 const SupportedColors = {
   White: 'white',

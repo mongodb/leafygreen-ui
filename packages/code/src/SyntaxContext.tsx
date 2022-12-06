@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+
 import { LineHighlightingDefinition } from './types';
 
 interface SyntaxContext {

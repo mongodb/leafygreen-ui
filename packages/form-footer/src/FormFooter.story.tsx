@@ -1,11 +1,13 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
+
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import FormFooter from '.';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import { FormFooterProps } from './FormFooter';
+import FormFooter from '.';
 
 export default {
   title: 'Components/FormFooter',

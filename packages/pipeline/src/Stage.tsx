@@ -1,16 +1,18 @@
-import React, { forwardRef, Ref, ReactElement, useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { forwardRef, ReactElement, Ref, useContext } from 'react';
 import { useInView } from 'react-intersection-observer';
+import PropTypes from 'prop-types';
+
 import { cx } from '@leafygreen-ui/emotion';
+
+import PipelineContext from './PipelineContext';
 import {
-  stageTextThemeStyles,
-  stageTextStyles,
   stageBaseStyles,
+  stageSvgSizeStyles,
   stageSvgThemeStyles,
   stageTextSizeStyles,
-  stageSvgSizeStyles,
+  stageTextStyles,
+  stageTextThemeStyles,
 } from './styles';
-import PipelineContext from './PipelineContext';
 import { Size, StageProps } from './types';
 
 /**

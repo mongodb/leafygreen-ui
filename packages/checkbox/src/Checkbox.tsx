@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Description, Label } from '@leafygreen-ui/typography';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { Description, Label } from '@leafygreen-ui/typography';
+
 import { Check } from './Check';
-import { CheckboxProps } from './types';
 import {
   checkWrapperClassName,
   containerStyle,
   descriptionStyle,
   disabledContainerStyle,
-  disabledLabelStyle,
   disabledLabelDarkThemeOverrideStyle,
+  disabledLabelStyle,
   inputClassName,
   inputFocusStyles,
   inputStyle,
@@ -23,6 +24,7 @@ import {
   labelStyle,
   labelTextStyle,
 } from './Checkbox.style';
+import { CheckboxProps } from './types';
 
 /**
  * Checkboxes should be used whenever a user has an option they’d like to opt in or out of.

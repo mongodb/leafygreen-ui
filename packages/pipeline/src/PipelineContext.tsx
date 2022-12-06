@@ -1,5 +1,7 @@
 import { createContext } from 'react';
+
 import { Theme } from '@leafygreen-ui/lib';
+
 import { Size } from './types';
 
 interface PipelineData {

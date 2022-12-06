@@ -1,31 +1,31 @@
 import React, {
-  forwardRef,
   createRef,
-  useState,
-  Ref,
+  forwardRef,
   ReactElement,
+  Ref,
   useMemo,
+  useState,
 } from 'react';
-
 import PropTypes from 'prop-types';
-import Tooltip from '@leafygreen-ui/tooltip';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { useMutationObserver } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
+import Tooltip from '@leafygreen-ui/tooltip';
+
+import Counter from './Counter';
 import { PipelineContext } from './PipelineContext';
 import Stage from './Stage';
-import Counter from './Counter';
-
 import {
-  baseSizeStyles,
   basePipelineListStyles,
   basePipelineStyles,
+  baseSizeStyles,
   counterVisibleStyles,
   tooltipStyles,
 } from './styles';
-import { PipelineProps, Size } from './types';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
 import TooltipText from './TooltipText';
+import { PipelineProps, Size } from './types';
 
 /**
  *

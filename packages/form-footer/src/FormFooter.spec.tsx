@@ -1,9 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Button from '@leafygreen-ui/button';
-import FormFooter from '.';
 import { axe } from 'jest-axe';
+
+import Button from '@leafygreen-ui/button';
+
 import { FormFooterProps } from './FormFooter';
+import FormFooter from '.';
 
 const renderFooter = (props: FormFooterProps) => {
   return render(<FormFooter {...props} />);

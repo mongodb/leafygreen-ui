@@ -1,36 +1,38 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
 import Box, { BoxProps } from '@leafygreen-ui/box';
+import { cx } from '@leafygreen-ui/emotion';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   createUniqueClassName,
   getNodeTextContent,
   HTMLElementProps,
 } from '@leafygreen-ui/lib';
-import { cx } from '@leafygreen-ui/emotion';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
+import MenuContext from './MenuContext';
 import {
-  menuItemContainerStyle,
-  menuItemContainerThemeStyle,
-  activeMenuItemContainerStyle,
-  disabledMenuItemContainerThemeStyle,
-  focusedMenuItemContainerStyle,
-  linkStyle,
-  disabledTextStyle,
-  mainIconStyle,
+  activeDescriptionTextStyle,
   activeIconStyle,
-  disabledIconStyle,
-  titleTextStyle,
+  activeMenuItemContainerStyle,
   activeTitleTextStyle,
   descriptionTextThemeStyle,
-  linkDescriptionTextStyle,
-  activeDescriptionTextStyle,
-  textContainer,
-  menuItemHeight,
+  disabledIconStyle,
+  disabledMenuItemContainerThemeStyle,
+  disabledTextStyle,
+  focusedMenuItemContainerStyle,
   getFocusedStyles,
   getHoverStyles,
+  linkDescriptionTextStyle,
+  linkStyle,
+  mainIconStyle,
+  menuItemContainerStyle,
+  menuItemContainerThemeStyle,
+  menuItemHeight,
+  textContainer,
+  titleTextStyle,
 } from './styles';
 import { Size } from './types';
-import MenuContext from './MenuContext';
 
 const MenuItemContainerClassName = createUniqueClassName('menu-item-container');
 interface BaseMenuItemProps extends HTMLElementProps<'button'> {

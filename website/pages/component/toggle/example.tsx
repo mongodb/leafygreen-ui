@@ -1,9 +1,12 @@
 import React from 'react';
-import { css } from '@emotion/css';
-import { Label } from '@leafygreen-ui/typography';
-import Toggle, { Size } from '@leafygreen-ui/toggle';
-import { uiColors } from '@leafygreen-ui/palette';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { uiColors } from '@leafygreen-ui/palette';
+import Toggle, { Size } from '@leafygreen-ui/toggle';
+import { Label } from '@leafygreen-ui/typography';
+
+import { css } from '@emotion/css';
 
 const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;
