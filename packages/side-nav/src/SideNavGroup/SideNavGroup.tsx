@@ -168,7 +168,8 @@ function SideNavGroup({
     transitionStyles['entered'] = css`
       opacity: 1;
       max-height: ${ulHeight + 1}px; // +1 for border
-      border-bottom: 1px solid ${darkMode ? palette.gray.dark1 : palette.gray.light2};
+      border-bottom: 1px solid
+        ${darkMode ? palette.gray.dark1 : palette.gray.light2};
     `;
   }, [open, ulRef, darkMode]);
 

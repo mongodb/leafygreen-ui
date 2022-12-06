@@ -17,7 +17,7 @@ import {
 
 export const iconClassName = createUniqueClassName('collapse-menu');
 
-function CollapseToggle({
+export function CollapseToggle({
   className,
   collapsed,
   hideTooltip,
@@ -64,5 +64,3 @@ function CollapseToggle({
     </Tooltip>
   );
 }
-
-export default CollapseToggle;

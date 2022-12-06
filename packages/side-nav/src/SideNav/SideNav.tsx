@@ -11,7 +11,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import SideNavContext from './SideNavContext';
-import CollapseToggle from '../CollaspeToggle/CollapseToggle';
+import { CollapseToggle } from '../CollaspeToggle/CollapseToggle';
 import { SideNavProps } from './types';
 import {
   sideNavWidth,
@@ -140,88 +140,91 @@ function SideNav({
           }}
         >
           <LeafyGreenProvider darkMode={darkMode}>
-          <div
-            data-testid="side-nav-container"
-            className={cx(
-              sideNavClassName,
-              outerContainerStyle,
-              css`
-                width: ${width}px;
-              `,
-              { [outerContainerCollapsedStyle]: collapsed },
-              className,
-            )}
-          >
             <div
-              className={innerNavWrapperStyle}
-              onMouseLeave={() => setHover(false)}
+              data-testid="side-nav-container"
+              className={cx(
+                sideNavClassName,
+                outerContainerStyle,
+                css`
+                  width: ${width}px;
+                `,
+                { [outerContainerCollapsedStyle]: collapsed },
+                className,
+              )}
             >
-              <nav
-                id={navId}
-                className={cx(
-                  navBaseStyles,
-                  navThemeStyles[theme],
-                  css`
-                    width: ${width}px;
-                  `,
-                  {
-                    [collapsedNavStyles]: ['entering', 'entered'].includes(
-                      state,
-                    ),
-                    [hoverNavStyles]: (hover || focusExpand) && collapsed,
-                  },
-                )}
-                onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
-                onMouseEnter={() => setHover(true)}
-                {...rest}
+              <div
+                className={innerNavWrapperStyle}
+                onMouseLeave={() => setHover(false)}
               >
-                {/**
-                 * We render the sidenav items in both the expanded and collapsed states,
-                 * and transition between them. This way we can reduce layout shift from
-                 * elements appearing and disappearing
-                 */}
-                <div
-                  className={cx(listWrapperStyle, expandedStateStyles[state])}
+                <nav
+                  id={navId}
+                  className={cx(
+                    navBaseStyles,
+                    navThemeStyles[theme],
+                    css`
+                      width: ${width}px;
+                    `,
+                    {
+                      [collapsedNavStyles]: ['entering', 'entered'].includes(
+                        state,
+                      ),
+                      [hoverNavStyles]: (hover || focusExpand) && collapsed,
+                    },
+                  )}
+                  onFocus={() => setFocus(true)}
+                  onBlur={() => setFocus(false)}
+                  onMouseEnter={() => setHover(true)}
+                  {...rest}
                 >
-                  <ul
+                  {/**
+                   * We render the sidenav items in both the expanded and collapsed states,
+                   * and transition between them. This way we can reduce layout shift from
+                   * elements appearing and disappearing
+                   */}
+                  <div
+                    className={cx(listWrapperStyle, expandedStateStyles[state])}
+                  >
+                    <ul
+                      className={cx(
+                        ulStyleOverrides,
+                        listStyles,
+                        css`
+                          width: ${width}px;
+                        `,
+                      )}
+                    >
+                      {children}
+                    </ul>
+                  </div>
+
+                  <div
                     className={cx(
-                      ulStyleOverrides,
-                      listStyles,
-                      css`
-                        width: ${width}px;
-                      `,
+                      listWrapperStyle,
+                      collapsedStateStyles[state],
                     )}
                   >
-                    {children}
-                  </ul>
-                </div>
+                    <ul
+                      // We hide the duplicate items from screen readers.
+                      aria-hidden
+                      className={cx(ulStyleOverrides, listStyles)}
+                      ref={setPortalContainer}
+                    />
+                  </div>
+                </nav>
 
-                <div
-                  className={cx(listWrapperStyle, collapsedStateStyles[state])}
-                >
-                  <ul
-                    // We hide the duplicate items from screen readers.
-                    aria-hidden
-                    className={cx(ulStyleOverrides, listStyles)}
-                    ref={setPortalContainer}
-                  />
-                </div>
-              </nav>
-
-              <CollapseToggle
-                collapsed={collapsed || (!hover && !focusExpand && collapsed)}
-                onClick={() => {
-                  setCollapsed(curr => !curr);
-                  setHover(false);
-                }}
-                // This prevents any strange flickering while the navigation is transitioning.
-                hideTooltip={
-                  ['entering', 'exiting'].includes(state) || undefined
-                }
-              />
+                <CollapseToggle
+                  collapsed={collapsed || (!hover && !focusExpand && collapsed)}
+                  onClick={() => {
+                    setCollapsed(curr => !curr);
+                    setHover(false);
+                  }}
+                  // This prevents any strange flickering while the navigation is transitioning.
+                  hideTooltip={
+                    ['entering', 'exiting'].includes(state) || undefined
+                  }
+                />
+              </div>
             </div>
-          </div>
           </LeafyGreenProvider>
         </SideNavProvider>
       )}

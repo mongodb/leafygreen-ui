@@ -5,7 +5,7 @@ import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
-import CollapsedSideNavItem from './CollapsedSideNavItem';
+import { CollapsedSideNavItem } from '../CollaspedSideNavItem/CollapsedSideNavItem';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { getIndentLevelStyle, typographyStyle } from '../SideNav/styles';
 import {
@@ -147,9 +147,7 @@ const SideNavItem: ExtendableBox<
   }, [children]);
 
   return (
-    <li
-      className={liStyle}
-    >
+    <li className={liStyle}>
       <Box
         as={props.href ? 'a' : 'button'}
         {...rest}
@@ -162,7 +160,8 @@ const SideNavItem: ExtendableBox<
             [cx(activeBaseStyle, activeThemeStyle[theme])]: active,
             [disabledStyle]: disabled,
             [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard, // TODO: consider focus-visible
-            [cx(focusedDisabledStyle,focusedDisabledThemeStyle[theme])]: usingKeyboard && disabled,
+            [cx(focusedDisabledStyle, focusedDisabledThemeStyle[theme])]:
+              usingKeyboard && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
             [getIndentLevelStyle(indentLevel, darkMode)]: indentLevel > 1,
           },
@@ -187,11 +186,7 @@ const SideNavItem: ExtendableBox<
       </Box>
 
       {hasNestedItems && (
-        <ul
-          className={nestedULStyle}
-        >
-          {renderedNestedItems}
-        </ul>
+        <ul className={nestedULStyle}>{renderedNestedItems}</ul>
       )}
     </li>
   );
