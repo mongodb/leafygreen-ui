@@ -29,6 +29,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@emotion/styled": "11.10.5"
+    "@emotion/styled": "^11.10.5"
   }
 }
