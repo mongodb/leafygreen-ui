@@ -1,6 +1,24 @@
-import { enforceExhaustive, OneOf } from './index';
+// @ts-ignore
+import {
+  OneOf,
+  isComponentType,
+  createDataProp,
+  keyMap,
+  AriaCurrentValue,
+  enforceExhaustive,
+  consoleOnce,
+} from './';
 
 describe('packages/lib', () => {
+  test('exported packages exist', () => {
+    expect(isComponentType).toBeDefined();
+    expect(createDataProp).toBeDefined();
+    expect(keyMap).toBeDefined();
+    expect(AriaCurrentValue).toBeDefined();
+    expect(enforceExhaustive).toBeDefined();
+    expect(consoleOnce).toBeDefined();
+  });
+
   describe('OneOf', () => {
     test('Basic usage', () => {
       type Test = OneOf<{ foo: number }, { bar: string }>;

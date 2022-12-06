@@ -11,4 +11,9 @@ export { createDataProp } from './utils/createDataProp';
 export { enforceExhaustive } from './utils/enforceExhaustive';
 export { isComponentType } from './utils/isComponentType';
 
-export type { HTMLElementProps, Either, OneOf, RecursivePartial } from './types';
+export type {
+  HTMLElementProps,
+  Either,
+  OneOf,
+  RecursivePartial,
+} from './types';
