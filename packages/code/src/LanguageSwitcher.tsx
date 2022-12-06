@@ -1,18 +1,20 @@
 import React from 'react';
-import { usePrevious } from '@leafygreen-ui/hooks';
-import { isComponentType, Theme } from '@leafygreen-ui/lib';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
+
+import Button, { ButtonProps } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { usePrevious } from '@leafygreen-ui/hooks';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
+import FileIcon from '@leafygreen-ui/icon/dist/File';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import Button, { ButtonProps } from '@leafygreen-ui/button';
-import FileIcon from '@leafygreen-ui/icon/dist/File';
-import { Select, Option } from '@leafygreen-ui/select';
-import { LanguageOption, PopoverProps } from './types';
+import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { Option, Select } from '@leafygreen-ui/select';
+import { spacing } from '@leafygreen-ui/tokens';
+
+import { LanguageOption, PopoverProps } from './types';
 
 const containerStyle = css`
   display: flex;

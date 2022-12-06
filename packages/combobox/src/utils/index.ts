@@ -1,8 +1,8 @@
-export { wrapJSX } from './wrapJSX';
+export { flattenChildren } from './flattenChildren';
 export { getNameAndValue } from './getNameAndValue';
 export {
-  getOptionObjectFromValue,
   getDisplayNameForValue,
+  getOptionObjectFromValue,
   getValueForDisplayName,
 } from './OptionObjectUtils';
-export { flattenChildren } from './flattenChildren';
+export { wrapJSX } from './wrapJSX';

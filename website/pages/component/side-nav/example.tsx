@@ -1,9 +1,12 @@
 import React from 'react';
-import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
-import Icon from '@leafygreen-ui/icon';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
-import { css } from '@emotion/css';
+
+import Icon from '@leafygreen-ui/icon';
 import { uiColors } from '@leafygreen-ui/palette/dist';
+import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
+
+import { css } from '@emotion/css';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

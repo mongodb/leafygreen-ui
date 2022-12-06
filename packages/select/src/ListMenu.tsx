@@ -1,14 +1,16 @@
 import React, { useCallback, useContext } from 'react';
+import isUndefined from 'lodash/isUndefined';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { fontFamilies } from '@leafygreen-ui/tokens';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import { Theme } from '@leafygreen-ui/lib';
+import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
-import { MobileMediaQuery, useForwardedRef } from './utils';
 import { Size } from './types';
-import isUndefined from 'lodash/isUndefined';
+import { MobileMediaQuery, useForwardedRef } from './utils';
 
 const maxMenuHeight = 274;
 const menuMargin = 8;

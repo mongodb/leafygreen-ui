@@ -1,6 +1,6 @@
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import nextMdx from '@next/mdx';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeSlug from 'rehype-slug';
 
 const withMDX = nextMdx({
   extension: /\.mdx?$/,

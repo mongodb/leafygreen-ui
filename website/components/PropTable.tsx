@@ -1,16 +1,19 @@
 import React from 'react';
-import { css } from '@emotion/css';
-import Card from '@leafygreen-ui/card';
-import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
-import { Subtitle, InlineCode } from '@leafygreen-ui/typography';
-import { OneOf } from '@leafygreen-ui/lib';
-import { useViewportSize } from '@leafygreen-ui/hooks';
-import { breakpoints } from '@leafygreen-ui/tokens';
-import PropDefinition from 'components/PropDefinition';
-import TypographyPropTable from 'components/TypographyPropTable';
+import { pageContainerWidth } from 'styles/constants';
 import formatType from 'utils/formatType';
 import { mq } from 'utils/mediaQuery';
-import { pageContainerWidth } from 'styles/constants';
+
+import PropDefinition from 'components/PropDefinition';
+import TypographyPropTable from 'components/TypographyPropTable';
+
+import Card from '@leafygreen-ui/card';
+import { useViewportSize } from '@leafygreen-ui/hooks';
+import { OneOf } from '@leafygreen-ui/lib';
+import { Cell, Row, Table, TableHeader } from '@leafygreen-ui/table';
+import { breakpoints } from '@leafygreen-ui/tokens';
+import { InlineCode, Subtitle } from '@leafygreen-ui/typography';
+
+import { css } from '@emotion/css';
 
 const tableWrapper = css`
   ${mq({

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { uniq } from 'lodash';
+
 import { getAllPackageNames } from './getAllPackageNames';
 import { getGitDiff } from './getGitDiff';
 import {

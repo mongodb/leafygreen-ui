@@ -2,11 +2,13 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 01a1f4958bba92022836bed73ba25a03
+ * @checksum f4e2adddd3d16cc981367ddef65fdddd
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TimeSeriesProps extends LGGlyph.ComponentProps {}

@@ -1,14 +1,15 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { Variant } from './types';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
+
+import { Variant } from './types';
 
 export const baseStyle = css`
   font-family: ${fontFamilies.default};

@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { useEventListener } from '@leafygreen-ui/hooks';
 
 interface UsingKeyboardState {

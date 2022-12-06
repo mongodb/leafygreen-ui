@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 require('dotenv').config();
 import { WebClient } from '@slack/web-api';
-import _, { isUndefined, sample } from 'lodash';
-import { Command } from 'commander';
 import chalk from 'chalk';
+import { Command } from 'commander';
+import _, { isUndefined, sample } from 'lodash';
 import fetch from 'node-fetch';
 
 interface ComponentUpdateObject {

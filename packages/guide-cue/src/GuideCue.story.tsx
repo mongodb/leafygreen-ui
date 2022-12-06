@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { ComponentStory } from '@storybook/react';
+
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { GuideCue } from '.';
-import { GuideCueProps } from './types';
 import { Body } from '@leafygreen-ui/typography';
+
+import { GuideCueProps } from './types';
+import { GuideCue } from '.';
 
 export default {
   title: 'Components/GuideCue',

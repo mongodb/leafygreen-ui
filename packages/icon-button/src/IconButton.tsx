@@ -1,15 +1,16 @@
 import React from 'react';
-import { cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
+
+import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import Box from '@leafygreen-ui/box';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { cx } from '@leafygreen-ui/emotion';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import { AccessibleIconButtonProps, IconProps, Size } from './types';
+import { isComponentType } from '@leafygreen-ui/lib';
+
 import {
   activeStyle,
   baseIconButtonStyle,
@@ -20,6 +21,7 @@ import {
   iconStyle,
   removeButtonStyle,
 } from './styles';
+import { AccessibleIconButtonProps, IconProps, Size } from './types';
 
 export const IconButton = React.forwardRef(
   (

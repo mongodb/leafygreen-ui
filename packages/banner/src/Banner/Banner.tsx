@@ -1,21 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
-  useUpdatedBaseFontSize,
   bodyTypeScaleStyles,
+  useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
-import { BannerProps, Variant } from './types';
+
+import BannerDismissButton from '../BannerDismissButton';
+import BannerIcon from '../BannerIcon';
+
 import {
+  bannerDismissibleStyles,
   baseBannerStyles,
   textStyles,
-  bannerDismissibleStyles,
   variantStyles,
 } from './styles';
-import BannerIcon from '../BannerIcon';
-import BannerDismissButton from '../BannerDismissButton';
+import { BannerProps, Variant } from './types';
 
 /**
  *

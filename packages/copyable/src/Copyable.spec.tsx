@@ -1,14 +1,16 @@
 import React from 'react';
-import ClipboardJS from 'clipboard';
 import {
-  render,
-  fireEvent,
   act,
+  fireEvent,
+  render,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import ClipboardJS from 'clipboard';
 import { axe } from 'jest-axe';
+
 import { Context, jest } from '@leafygreen-ui/testing-lib';
+
 import Copyable from '.';
 
 describe('packages/copyable', () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { act, render } from '@testing-library/react';
+
 import InteractionRing from '.';
 
 describe('packages/interaction-ring', () => {
