@@ -5,7 +5,7 @@ import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import {
+import LeafyGreenProvider, {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -139,6 +139,7 @@ function SideNav({
             theme,
           }}
         >
+          <LeafyGreenProvider darkMode={darkMode}>
           <div
             data-testid="side-nav-container"
             className={cx(
@@ -221,6 +222,7 @@ function SideNav({
               />
             </div>
           </div>
+          </LeafyGreenProvider>
         </SideNavProvider>
       )}
     </Transition>

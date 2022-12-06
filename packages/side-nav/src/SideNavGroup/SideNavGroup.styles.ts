@@ -1,6 +1,6 @@
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { sideNavItemSidePadding } from '../SideNav/styles';
@@ -13,39 +13,61 @@ export const listItemStyle = css`
   position: relative;
 
   & ~ & > .${buttonClassName} {
-    padding: 16px ${sideNavItemSidePadding}px 8px ${sideNavItemSidePadding}px;
+    padding: ${spacing[3]}px ${sideNavItemSidePadding}px ${spacing[2]}px
+      ${sideNavItemSidePadding}px;
   }
 `;
 
-export const headerStyle = css`
+export const headerBaseStyle = css`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 16px 16px 8px;
-  color: ${palette.green.dark2};
+  padding: ${spacing[3]}px ${spacing[3]}px ${spacing[2]}px;
 `;
 
-export const collapsibleHeaderStyle = css`
+export const headerThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.green.dark2};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.green.light1};
+  `,
+};
+
+export const collapsibleHeaderBaseStyle = css`
   background-color: transparent;
   border: none;
   margin: 0px;
   transition: ${transitionDuration.faster}ms ease-in-out;
   transition-property: border-color, background-color, color;
   cursor: pointer;
-  border-bottom: 1px solid ${palette.gray.light2};
-
-  &:hover {
-    background-color: ${palette.gray.light2};
-    border-color: ${palette.green.dark1};
-  }
 
   &:focus {
     outline: none;
   }
 `;
+
+export const collapsibleHeaderThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    border-bottom: 1px solid ${palette.gray.light2};
+
+    &:hover {
+      background-color: ${palette.gray.light2};
+      border-color: ${palette.green.dark1};
+    }
+  `,
+  [Theme.Dark]: css`
+    border-bottom: 1px solid ${palette.gray.dark1};
+
+    &:hover {
+      background-color: ${palette.gray.dark3};
+      border-color: ${palette.green.base};
+    }
+  `,
+};
 
 export const collapsibleHeaderFocusStyle = css`
   &:focus {

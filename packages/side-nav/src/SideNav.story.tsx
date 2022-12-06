@@ -58,15 +58,15 @@ const realmAppContainer = css`
   flex-grow: 1;
 `;
 
-const mongoNavStyles = css`
+const mongoNavStyles = (darkMode: boolean) => css`
   grid-area: mongonav;
   width: 100%;
   height: 105px;
-  background-color: ${palette.white};
+  background-color: ${darkMode ? palette.gray.dark4 : palette.white};
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 4px 0 ${palette.gray.light2};
+  box-shadow: 0 2px 4px 0 ${darkMode ? palette.black : palette.gray.light2};
   z-index: 1;
 `;
 
@@ -90,9 +90,9 @@ const realmAppId = css`
   align-items: center;
 `;
 
-const MongoNavPlaceholder = ({ ...props }) => (
-  <header className={mongoNavStyles} {...props}>
-    <H1>
+const MongoNavPlaceholder = ({darkMode, ...props }: any) => (
+  <header className={mongoNavStyles(darkMode)} {...props}>
+    <H1 darkMode={darkMode}>
       {'<'}MongoNav Placeholder{'>'}
     </H1>
   </header>
@@ -117,6 +117,7 @@ export const InLayout = ({
   groupHeaderText,
   navItemText,
   hasActiveItem,
+  darkMode,
 }: any) => {
   const [collapsed, setCollapsed] = useState(false);
   const textHeader = 'States';
@@ -124,12 +125,13 @@ export const InLayout = ({
   return (
     <LeafyGreenProvider>
       <div className={appContainer}>
-        <MongoNavPlaceholder />
+        <MongoNavPlaceholder darkMode={darkMode} />
         <SideNav
           collapsed={collapsed}
           setCollapsed={setCollapsed}
           className={sideNavStyles}
           aria-label="General example"
+          darkMode={darkMode}
         >
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
             <SideNavItem active>Active State</SideNavItem>
@@ -173,15 +175,15 @@ InLayout.args = {
   hasActiveItem: false,
 };
 
-export const Realm = () => {
+export const Realm = ({darkMode}: SideNavProps) => {
   return (
     <LeafyGreenProvider>
-      <MongoNavPlaceholder />
+      <MongoNavPlaceholder darkMode={darkMode} />
       <div className={realmAppContainer}>
-        <SideNav className={sideNavStyles} aria-label="Realm app">
+        <SideNav className={sideNavStyles} aria-label="Realm app" darkMode={darkMode}>
           <SideNavItem
             href="https://realm.mongodb.com"
-            glyph={<Icon glyph="Apps" fill={palette.blue.base} />}
+            glyph={<Icon glyph="Apps" fill={darkMode ? palette.blue.light1 : palette.blue.base} />}
           >
             Realm Apps
           </SideNavItem>
@@ -235,16 +237,17 @@ export const Realm = () => {
   );
 };
 
-export const OrgSettings = ({ baseFontSize, widthOverride }: any) => {
+export const OrgSettings = ({ baseFontSize, widthOverride, darkMode }: SideNavProps) => {
   return (
     <LeafyGreenProvider>
       <div className={appContainer}>
-        <MongoNavPlaceholder />
+        <MongoNavPlaceholder darkMode={darkMode} />
         <SideNav
           className={sideNavStyles}
           aria-label="Realm app"
           baseFontSize={baseFontSize}
           widthOverride={widthOverride}
+          darkMode={darkMode}
         >
           <SideNavGroup
             glyph={<Icon glyph="Cloud" />}
@@ -318,12 +321,12 @@ OrgSettings.argTypes = {
   },
 };
 
-export const Nested = () => {
+export const Nested = ({darkMode}: SideNavProps) => {
   return (
     <LeafyGreenProvider>
       <div className={appContainer}>
-        <MongoNavPlaceholder />
-        <SideNav widthOverride={300}>
+        <MongoNavPlaceholder darkMode={darkMode} />
+        <SideNav widthOverride={300} darkMode={darkMode}>
           <SideNavItem>Overview</SideNavItem>
           <SideNavItem>Introduction</SideNavItem>
           <SideNavItem>
@@ -350,4 +353,8 @@ export const Nested = () => {
       </div>
     </LeafyGreenProvider>
   );
+};
+
+Nested.argTypes = {
+  darkMode: storybookArgTypes.darkMode,
 };

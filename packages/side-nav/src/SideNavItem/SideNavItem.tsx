@@ -9,11 +9,15 @@ import CollapsedSideNavItem from './CollapsedSideNavItem';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { getIndentLevelStyle, typographyStyle } from '../SideNav/styles';
 import {
-  baseNavItemStyle,
-  activeNavItemStyle,
-  disabledNavItemStyle,
-  focusedNavItemStyle,
-  focusedDisabledNavItemStyle,
+  activeBaseStyle,
+  activeThemeStyle,
+  baseStyle,
+  themeStyle,
+  disabledStyle,
+  focusedStyle,
+  focusedThemeStyle,
+  focusedDisabledStyle,
+  focusedDisabledThemeStyle,
   glyphWrapper,
   nestedChildrenStyles,
   sideNavItemClassName,
@@ -58,7 +62,7 @@ const SideNavItem: ExtendableBox<
     ...rest
   } = props;
   const { usingKeyboard } = useUsingKeyboardContext();
-  const { baseFontSize } = useSideNavContext();
+  const { baseFontSize, theme } = useSideNavContext();
   const hasNestedChildren = useRef(false);
 
   const onClick = disabled
@@ -151,13 +155,14 @@ const SideNavItem: ExtendableBox<
         {...rest}
         className={cx(
           sideNavItemClassName,
-          baseNavItemStyle,
+          baseStyle,
+          themeStyle[theme],
           typographyStyle[baseFontSize],
           {
-            [activeNavItemStyle]: active,
-            [disabledNavItemStyle]: disabled,
-            [focusedNavItemStyle]: usingKeyboard,
-            [focusedDisabledNavItemStyle]: usingKeyboard && disabled,
+            [cx(activeBaseStyle, activeThemeStyle[theme])]: active,
+            [disabledStyle]: disabled,
+            [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard, // TODO; consider focus-visible
+            [cx(focusedDisabledStyle,focusedDisabledThemeStyle[theme])]: usingKeyboard && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
             [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
           },

@@ -14,11 +14,13 @@ import { ulStyleOverrides, getIndentLevelStyle } from '../SideNav/styles';
 import {
   buttonClassName,
   collapsibleHeaderFocusStyle,
-  collapsibleHeaderStyle,
+  collapsibleHeaderBaseStyle,
+  collapsibleHeaderThemeStyle,
   customIconStyles,
   sideNavCollapsibleGroupBaseStyles,
   expandIconStyle,
-  headerStyle,
+  headerBaseStyle,
+  headerThemeStyle,
   listItemStyle,
   openExpandIconStyle,
   transitionStyles,
@@ -63,7 +65,7 @@ function SideNavGroup({
 
   const menuGroupLabelId = useIdAllocator({ prefix: 'menu-group-label-id' });
   const menuId = useIdAllocator({ prefix: 'menu' });
-  const { width } = useSideNavContext();
+  const { width, theme, darkMode } = useSideNavContext();
 
   // Iterate over `children` and render them appropriately
   const renderedChildren = useMemo(() => {
@@ -166,9 +168,9 @@ function SideNavGroup({
     transitionStyles['entered'] = css`
       opacity: 1;
       max-height: ${ulHeight + 1}px; // +1 for border
-      border-bottom: 1px solid ${palette.gray.light2};
+      border-bottom: 1px solid ${darkMode ? palette.gray.dark1 : palette.gray.light2};
     `;
-  }, [open, ulRef]);
+  }, [open, ulRef, darkMode]);
 
   // generate shared props for collapsible and static headers
   const groupHeaderProps = {
@@ -186,8 +188,10 @@ function SideNavGroup({
             aria-expanded={open}
             className={cx(
               buttonClassName,
-              headerStyle,
-              collapsibleHeaderStyle,
+              headerBaseStyle,
+              headerThemeStyle[theme],
+              collapsibleHeaderBaseStyle,
+              collapsibleHeaderThemeStyle[theme],
               css`
                 width: ${width}px;
               `,
@@ -222,6 +226,9 @@ function SideNavGroup({
                 className={cx(
                   sideNavCollapsibleGroupBaseStyles,
                   transitionStyles[state],
+                  // {
+                  //   [enteredTransitionStyles[theme]]: state = 'entered'
+                  // }
                 )}
               >
                 <ul
@@ -253,7 +260,7 @@ function SideNavGroup({
         <>
           <div
             {...groupHeaderProps}
-            className={cx(headerStyle, {
+            className={cx(headerBaseStyle, headerThemeStyle[theme], {
               [indentedStyle]: indentLevel > 1,
             })}
           >
