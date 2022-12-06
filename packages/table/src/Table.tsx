@@ -2,7 +2,7 @@ import React from 'react';
 import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
 
-import { css,cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useIsomorphicLayoutEffect,
   useViewportSize,

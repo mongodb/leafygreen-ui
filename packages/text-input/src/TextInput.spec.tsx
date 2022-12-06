@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import TextInput from './TextInput';
-import { SizeVariant,State } from './types';
+import { SizeVariant, State } from './types';
 
 const error = 'This is the error message';
 const validEmail = 'test.email@mongodb.com';

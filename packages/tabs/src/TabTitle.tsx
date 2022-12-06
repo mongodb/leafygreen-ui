@@ -1,4 +1,4 @@
-import React, { RefObject,useEffect, useRef } from 'react';
+import React, { RefObject, useEffect, useRef } from 'react';
 
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';

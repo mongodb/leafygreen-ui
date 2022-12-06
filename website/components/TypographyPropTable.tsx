@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Cell,Row, Table, TableHeader } from '@leafygreen-ui/table';
-import { InlineCode,Subtitle } from '@leafygreen-ui/typography';
+import { Cell, Row, Table, TableHeader } from '@leafygreen-ui/table';
+import { InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
 import { css } from '@emotion/css';
 

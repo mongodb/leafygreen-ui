@@ -8,7 +8,7 @@ import { stepIconClassName } from './constants';
 import StepIcon from './StepIcon';
 import StepLabel from './StepLabel';
 import { useStepperContext } from './StepperContext';
-import { InternalStepProps,StepStates } from './types';
+import { InternalStepProps, StepStates } from './types';
 
 const Step = ({
   children,

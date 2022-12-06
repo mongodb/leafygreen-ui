@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { fireEvent,render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { LGWindow } from './getRippleGlobalNamespace';
 import { registerRipple } from './index';

@@ -5,7 +5,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import { RadioBoxGroupProps } from './types';
-import { RadioBox,RadioBoxGroup } from '.';
+import { RadioBox, RadioBoxGroup } from '.';
 
 export default {
   title: 'Components/RadioBoxGroup',

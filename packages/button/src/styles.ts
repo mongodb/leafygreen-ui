@@ -10,7 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { ButtonProps,Size, Variant } from './types';
+import { ButtonProps, Size, Variant } from './types';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 

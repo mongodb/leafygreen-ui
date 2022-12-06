@@ -1,9 +1,9 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
-import Icon, { glyphs,Size } from '@leafygreen-ui/icon';
+import Icon, { glyphs, Size } from '@leafygreen-ui/icon';
 import { GlyphName } from '@leafygreen-ui/icon/dist/glyphs';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { keyMap } from '@leafygreen-ui/lib';

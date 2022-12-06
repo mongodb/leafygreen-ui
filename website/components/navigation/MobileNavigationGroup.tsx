@@ -1,4 +1,4 @@
-import React, { useRef,useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';

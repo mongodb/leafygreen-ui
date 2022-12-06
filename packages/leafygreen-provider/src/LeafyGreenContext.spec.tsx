@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup,render } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 
 import { LeafyGreenProviderProps } from './LeafyGreenContext';
 import LeafyGreenProvider, {

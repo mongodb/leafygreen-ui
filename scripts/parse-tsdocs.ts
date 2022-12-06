@@ -8,7 +8,7 @@ import {
 import chalk from 'chalk';
 import { Command } from 'commander';
 import fs from 'fs';
-import { camelCase,isUndefined, uniqBy } from 'lodash';
+import { camelCase, isUndefined, uniqBy } from 'lodash';
 import path from 'path';
 import { CompilerOptions, JsxEmit } from 'typescript';
 

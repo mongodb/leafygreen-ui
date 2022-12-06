@@ -1,4 +1,4 @@
-export { useDarkMode,useDarkModeContext } from './DarkModeContext';
+export { useDarkMode, useDarkModeContext } from './DarkModeContext';
 export { default } from './LeafyGreenContext';
 export {
   PopoverContext,

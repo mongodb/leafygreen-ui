@@ -3,7 +3,7 @@ import React from 'react';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 import { palette } from '@leafygreen-ui/palette';
-import { Pipeline, Size,Stage } from '@leafygreen-ui/pipeline';
+import { Pipeline, Size, Stage } from '@leafygreen-ui/pipeline';
 
 import { css } from '@emotion/css';
 

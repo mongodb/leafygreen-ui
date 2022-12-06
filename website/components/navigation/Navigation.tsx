@@ -12,7 +12,7 @@ import {
   SideNavGroup,
   SideNavItem,
 } from '@leafygreen-ui/side-nav';
-import { breakpoints,spacing } from '@leafygreen-ui/tokens';
+import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 
 import MobileNavigation from './MobileNavigation';
 import MobileNavigationGroup from './MobileNavigationGroup';

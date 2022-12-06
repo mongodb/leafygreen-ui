@@ -13,7 +13,7 @@ import {
   svgLayer1Styles,
   svgLayer2Styles,
 } from './styles';
-import { SegmentL,SegmentM, SegmentS, SegmentXs } from './svgs';
+import { SegmentL, SegmentM, SegmentS, SegmentXs } from './svgs';
 import { CounterProps, Size } from './types';
 
 const segments: Record<Size, React.ComponentType<any>> = {

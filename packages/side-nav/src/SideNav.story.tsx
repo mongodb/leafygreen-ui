@@ -11,7 +11,7 @@ import { Option, Select, Size } from '@leafygreen-ui/select';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
 import { SideNavProps } from './types';
-import { SideNav, SideNavGroup,SideNavItem } from '.';
+import { SideNav, SideNavGroup, SideNavItem } from '.';
 
 export default {
   title: 'Components/SideNav',

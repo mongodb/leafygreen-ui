@@ -9,9 +9,9 @@ import TypographyPropTable from 'components/TypographyPropTable';
 import Card from '@leafygreen-ui/card';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { OneOf } from '@leafygreen-ui/lib';
-import { Cell,Row, Table, TableHeader } from '@leafygreen-ui/table';
+import { Cell, Row, Table, TableHeader } from '@leafygreen-ui/table';
 import { breakpoints } from '@leafygreen-ui/tokens';
-import { InlineCode,Subtitle } from '@leafygreen-ui/typography';
+import { InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
 import { css } from '@emotion/css';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent,render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';

@@ -8,7 +8,7 @@ import {
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { RadioBoxGroupContext,useRadioBoxGroupContext } from './context';
+import { RadioBoxGroupContext, useRadioBoxGroupContext } from './context';
 import {
   getRadioDisplayStyles,
   inputStyles,

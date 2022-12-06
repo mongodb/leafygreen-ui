@@ -2,7 +2,7 @@ import React from 'react';
 
 import LiveExample from 'components/live-example';
 
-import { fontFamilies,spacing } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 import { Subtitle } from '@leafygreen-ui/typography';
 
 import { css } from '@emotion/css';

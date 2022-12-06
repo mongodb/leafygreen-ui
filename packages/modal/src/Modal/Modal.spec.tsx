@@ -7,7 +7,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Option, OptionGroup,Select } from '@leafygreen-ui/select';
+import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 
 import ModalView from '..';
 

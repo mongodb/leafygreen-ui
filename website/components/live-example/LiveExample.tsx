@@ -7,12 +7,12 @@ import { pageContainerWidth } from 'styles/constants';
 import { mq } from 'utils/mediaQuery';
 
 import Card from '@leafygreen-ui/card';
-import { css,cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { enforceExhaustive } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { Area, Boolean, Knob, Number, Select,Text } from './Knobs';
+import { Area, Boolean, Knob, Number, Select, Text } from './Knobs';
 
 const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
 

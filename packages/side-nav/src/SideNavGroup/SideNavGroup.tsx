@@ -14,7 +14,7 @@ import { Overline } from '@leafygreen-ui/typography';
 
 import { useSideNavContext } from '../SideNavContext';
 import { CollapsedSideNavItem } from '../SideNavItem';
-import { getIndentLevelStyle,ulStyleOverrides } from '../styles';
+import { getIndentLevelStyle, ulStyleOverrides } from '../styles';
 
 import {
   buttonClassName,

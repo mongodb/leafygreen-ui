@@ -1,12 +1,12 @@
 import React from 'react';
-import { fireEvent, render,screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import { testTableDataShape } from './fixtures';
 import { defaultColumns, renderTable } from './testUtils';
-import { Cell,Row, Table, TableHeader } from '.';
+import { Cell, Row, Table, TableHeader } from '.';
 
 const className = 'test-className';
 

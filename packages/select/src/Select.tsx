@@ -16,13 +16,13 @@ import {
   spacing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
-import { Description,Label } from '@leafygreen-ui/typography';
+import { Description, Label } from '@leafygreen-ui/typography';
 
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
 import { InternalOption, OptionElement } from './Option';
 import SelectContext from './SelectContext';
-import { mobileSizeSet, SizeSet,sizeSets } from './styleSets';
+import { mobileSizeSet, SizeSet, sizeSets } from './styleSets';
 import { SelectProps, Size, State } from './types';
 import {
   convertToInternalElements,

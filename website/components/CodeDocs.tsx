@@ -17,9 +17,9 @@ import { useViewportSize } from '@leafygreen-ui/hooks';
 import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
 import Modal from '@leafygreen-ui/modal';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Tab,Tabs } from '@leafygreen-ui/tabs';
-import { breakpoints,spacing } from '@leafygreen-ui/tokens';
-import { Body,Subtitle } from '@leafygreen-ui/typography';
+import { Tab, Tabs } from '@leafygreen-ui/tabs';
+import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { css, cx } from '@emotion/css';
 

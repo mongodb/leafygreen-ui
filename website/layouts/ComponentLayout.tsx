@@ -14,8 +14,8 @@ import Button from '@leafygreen-ui/button';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Tab,Tabs } from '@leafygreen-ui/tabs';
-import { breakpoints,spacing } from '@leafygreen-ui/tokens';
+import { Tab, Tabs } from '@leafygreen-ui/tabs';
+import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 
 import { css } from '@emotion/css';

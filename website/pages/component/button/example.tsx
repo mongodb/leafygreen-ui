@@ -2,7 +2,7 @@ import React from 'react';
 
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
-import Button, { Size,Variant } from '@leafygreen-ui/button';
+import Button, { Size, Variant } from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { GlyphName } from '@leafygreen-ui/icon/dist/glyphs';
 

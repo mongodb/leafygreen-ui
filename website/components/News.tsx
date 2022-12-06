@@ -1,11 +1,11 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { UpdateProps } from 'utils/fetchUpdates';
 import { mq } from 'utils/mediaQuery';
 
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { H2,Overline, Subtitle } from '@leafygreen-ui/typography';
+import { H2, Overline, Subtitle } from '@leafygreen-ui/typography';
 
 import { css } from '@emotion/css';
 

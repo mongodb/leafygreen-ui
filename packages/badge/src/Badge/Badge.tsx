@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { badgeVariants,baseStyle } from './styles';
+import { badgeVariants, baseStyle } from './styles';
 import BadgeProps, { Variant } from './types';
 
 /**

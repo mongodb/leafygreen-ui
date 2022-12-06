@@ -4,7 +4,7 @@ import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import PropTypes from 'prop-types';
 
-import { css,cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useBaseFontSize,
   useDarkMode,
@@ -13,7 +13,7 @@ import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 
 import { injectGlobalStyles } from './globalStyles';
 import { LeafyGreenHighlightResult } from './highlight';
-import { languageParsers,SupportedLanguages } from './languages';
+import { languageParsers, SupportedLanguages } from './languages';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
 import { Language, SyntaxProps } from './types';

@@ -19,7 +19,7 @@ import {
   underlineModeStyles,
   underlineStyles,
 } from './Link.styles';
-import { ArrowAppearance,LinkProps } from './Link.types';
+import { ArrowAppearance, LinkProps } from './Link.types';
 
 const Link: ExtendableBox<LinkProps, 'a'> = ({
   href,

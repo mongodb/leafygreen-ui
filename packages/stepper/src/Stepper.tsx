@@ -6,7 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import EllipsesStep from './EllipsesStep';
 import Step from './InternalStep';
 import StepperContextProvider from './StepperContext';
-import { StepperProps,StepStates } from './types';
+import { StepperProps, StepStates } from './types';
 
 const baseStyles = css`
   list-style: none;

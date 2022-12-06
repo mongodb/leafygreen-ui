@@ -16,7 +16,7 @@ import {
 
 import SelectContext from './SelectContext';
 import { mobileSizeSet, sizeSets } from './styleSets';
-import { Size,State } from './types';
+import { Size, State } from './types';
 import { MobileMediaQuery, useForwardedRef } from './utils';
 
 const menuButtonStyleOverrides = css`

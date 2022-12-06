@@ -1,4 +1,4 @@
-import React, { forwardRef,useMemo, useRef } from 'react';
+import React, { forwardRef, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Box, { ExtendableBox } from '@leafygreen-ui/box';

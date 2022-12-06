@@ -7,7 +7,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { Provider } from './context';
 import { baseGroupStyle } from './RadioBoxGroup.styles';
-import { RadioBoxGroupProps,Size } from './types';
+import { RadioBoxGroupProps, Size } from './types';
 
 /**
  *

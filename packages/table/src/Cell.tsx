@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { createUniqueClassName,HTMLElementProps } from '@leafygreen-ui/lib';
+import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 

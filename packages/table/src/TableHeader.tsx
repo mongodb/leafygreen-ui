@@ -12,7 +12,7 @@ import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { SortDirection, useSortContext } from './SortContext';
 import { getCommonCellStyles } from './styles';
-import { DataType,TableActionTypes, useTableContext } from './TableContext';
+import { DataType, TableActionTypes, useTableContext } from './TableContext';
 
 type StyledElements = 'thStyle' | 'labelStyle' | 'glyphColor';
 

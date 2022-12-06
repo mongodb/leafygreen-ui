@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent,render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import VerticalEllipsisIcon from '@leafygreen-ui/icon/dist/VerticalEllipsis';

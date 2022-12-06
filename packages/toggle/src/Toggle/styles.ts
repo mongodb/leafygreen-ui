@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName,Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,

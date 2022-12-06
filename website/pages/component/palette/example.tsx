@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ClipboardJS from 'clipboard';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
@@ -10,7 +10,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 
-import { css,cx } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 
 const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;

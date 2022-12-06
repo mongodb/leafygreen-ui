@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, fireEvent,render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 import Icon from '@leafygreen-ui/icon';
 

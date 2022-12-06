@@ -8,7 +8,7 @@ import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
 import { stepIconClassName } from './constants';
 import Step from './InternalStep';
 import { useStepperContext } from './StepperContext';
-import { EllipsesStepProps, EllipsesStepStates,StepStates } from './types';
+import { EllipsesStepProps, EllipsesStepStates, StepStates } from './types';
 
 const EllipsesStep = ({
   state,

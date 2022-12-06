@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, fireEvent,render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import Checkbox from '.';

@@ -6,9 +6,9 @@ import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { Option, OptionGroup,Select } from '@leafygreen-ui/select';
+import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Body, H3,Subtitle } from '@leafygreen-ui/typography';
+import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
 
 import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
 

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { generateAccessibleProps, Size,sizeMap } from './glyphCommon';
-import { LGGlyph,SVGR } from './types';
+import { generateAccessibleProps, Size, sizeMap } from './glyphCommon';
+import { LGGlyph, SVGR } from './types';
 
 /**
  * Returns a single glyph component.

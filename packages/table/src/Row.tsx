@@ -1,4 +1,4 @@
-import React, { forwardRef,useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -12,7 +12,7 @@ import { palette } from '@leafygreen-ui/palette';
 
 import { CellElement, tdInnerDivClassName } from './Cell';
 import NestedRow from './NestedRow';
-import { DataType,TableActionTypes, useTableContext } from './TableContext';
+import { DataType, TableActionTypes, useTableContext } from './TableContext';
 import useSSR from './useSSR';
 
 /**

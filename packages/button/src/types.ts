@@ -131,4 +131,4 @@ interface ButtonProps {
   as?: React.ElementType<any>;
 }
 
-export { ButtonProps,Size, Variant };
+export { ButtonProps, Size, Variant };

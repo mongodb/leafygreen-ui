@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
 import { LogoNames } from './Logo';
-import { LogoProps,SupportedColors } from './utils';
+import { LogoProps, SupportedColors } from './utils';
 import {
   AtlasForGovernmentLogoLockup,
   AtlasLogoLockup,

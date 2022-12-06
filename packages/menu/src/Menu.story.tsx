@@ -8,7 +8,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
-import { Menu, MenuItem, MenuProps, MenuSeparator,SubMenu } from '.';
+import { Menu, MenuItem, MenuProps, MenuSeparator, SubMenu } from '.';
 
 export default {
   title: 'Components/Menu',

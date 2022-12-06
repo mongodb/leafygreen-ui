@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo,useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 import facepaint from 'facepaint';
 import debounce from 'lodash/debounce';
@@ -18,7 +18,7 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { variantColors } from './globalStyles';
 import Panel from './Panel';
 import Syntax from './Syntax';
-import { CodeProps,Language } from './types';
+import { CodeProps, Language } from './types';
 import WindowChrome from './WindowChrome';
 
 export function hasMultipleLines(string: string): boolean {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { act } from 'react-dom/test-utils';
-import { cleanup,render } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 
 import { typeIs } from '@leafygreen-ui/lib';
 

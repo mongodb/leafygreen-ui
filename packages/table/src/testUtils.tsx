@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import { defaultData, testTableDataShape } from './fixtures';
-import { Cell,Row, Table, TableHeader } from '.';
+import { Cell, Row, Table, TableHeader } from '.';
 
 interface Props {
   table?: any;

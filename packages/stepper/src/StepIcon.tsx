@@ -9,7 +9,7 @@ import { Overline } from '@leafygreen-ui/typography';
 
 import { stepIconClassName } from './constants';
 import { useStepperContext } from './StepperContext';
-import { Mode,StepIconProps, StepStates } from './types';
+import { Mode, StepIconProps, StepStates } from './types';
 
 const StepIconGlyph = ({ state, content }: StepIconProps) => {
   if (state === StepStates.Completed) {

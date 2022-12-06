@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComponentMeta,ComponentStory } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -12,7 +12,7 @@ import {
   State,
   TruncationLocation,
 } from './Combobox.types';
-import { Combobox, ComboboxGroup,ComboboxOption } from '.';
+import { Combobox, ComboboxGroup, ComboboxOption } from '.';
 
 const wrapperStyle = css`
   width: 256px;

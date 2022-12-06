@@ -8,7 +8,7 @@ import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
 import Tooltip from '@leafygreen-ui/tooltip';
-import { Body,Disclaimer } from '@leafygreen-ui/typography';
+import { Body, Disclaimer } from '@leafygreen-ui/typography';
 
 import {
   bodyThemeStyles,

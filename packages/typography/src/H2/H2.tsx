@@ -6,7 +6,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { baseTypographyStyles } from '../styles';
 
-import { h2Color,h2Styles } from './H2.styles';
+import { h2Color, h2Styles } from './H2.styles';
 import { H2Props } from './H2.types';
 
 const H2: ExtendableBox<H2Props, 'h2'> = ({

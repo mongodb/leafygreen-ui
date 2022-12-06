@@ -2,7 +2,7 @@ import React from 'react';
 
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
-import { Cell, HeaderRow,Row, Table, TableHeader } from '@leafygreen-ui/table';
+import { Cell, HeaderRow, Row, Table, TableHeader } from '@leafygreen-ui/table';
 
 const defaultData = [
   {

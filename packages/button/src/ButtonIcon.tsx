@@ -5,7 +5,7 @@ import { getTheme, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { ButtonClassName } from './styles';
-import { ButtonProps, Size,Variant } from './types';
+import { ButtonProps, Size, Variant } from './types';
 
 const baseIconStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {

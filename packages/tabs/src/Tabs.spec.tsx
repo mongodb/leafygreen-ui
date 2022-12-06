@@ -8,7 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Tab,Tabs } from '.';
+import { Tab, Tabs } from '.';
 
 const tabsClassName = 'tabs-class-name';
 const tabsTestId = 'tabs-component';

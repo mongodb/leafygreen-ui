@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import { renderTable } from './testUtils';
-import { HeaderRow,TableHeader } from '.';
+import { HeaderRow, TableHeader } from '.';
 
 describe('packages/table/table-head', () => {
   test('it renders "thead" tags', () => {

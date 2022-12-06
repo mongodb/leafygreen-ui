@@ -10,7 +10,7 @@ import isNull from 'lodash/isNull';
 import once from 'lodash/once';
 import PropTypes from 'prop-types';
 
-import { css,cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
 import {
   useDarkMode,

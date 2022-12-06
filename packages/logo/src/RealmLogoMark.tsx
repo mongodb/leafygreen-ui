@@ -2,7 +2,7 @@ import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { getAccessibleProps,getColor, ProductLogoProps } from './utils';
+import { getAccessibleProps, getColor, ProductLogoProps } from './utils';
 
 /**
  * @deprecated

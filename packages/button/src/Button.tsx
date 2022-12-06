@@ -10,8 +10,8 @@ import {
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { ButtonContent } from './ButtonContent';
-import { ButtonClassName,getClassName } from './styles';
-import { ButtonProps,Size, Variant } from './types';
+import { ButtonClassName, getClassName } from './styles';
+import { ButtonProps, Size, Variant } from './types';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.

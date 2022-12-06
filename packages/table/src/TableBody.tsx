@@ -1,4 +1,4 @@
-import React, { useCallback,useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { getDataComparisonFunction, useSortContext } from './SortContext';
 import { TableProps, TableRowInterface } from './Table';

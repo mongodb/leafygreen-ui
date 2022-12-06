@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 
 import Icon from '@leafygreen-ui/icon';
 
-import { ComboboxGroup,ComboboxOption } from '..';
+import { ComboboxGroup, ComboboxOption } from '..';
 
-import { flattenChildren,getNameAndValue, wrapJSX } from '.';
+import { flattenChildren, getNameAndValue, wrapJSX } from '.';
 
 describe('packages/combobox/utils', () => {
   describe('wrapJSX', () => {
