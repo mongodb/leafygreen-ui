@@ -1,6 +1,8 @@
 import React from 'react';
-import TextArea, { State } from '@leafygreen-ui/text-area';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import TextArea, { State } from '@leafygreen-ui/text-area';
 
 const knobsConfig: KnobsConfigInterface<{
   label: string;

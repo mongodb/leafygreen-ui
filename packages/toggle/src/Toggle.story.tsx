@@ -1,9 +1,11 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
+
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import Toggle from '.';
+
 import { Size } from './Toggle/types';
+import Toggle from '.';
 
 export default {
   title: 'Components/Toggle',

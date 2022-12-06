@@ -1,29 +1,32 @@
 import React from 'react';
 import { Transition } from 'react-transition-group';
-import { cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
+import { cx } from '@leafygreen-ui/emotion';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
 import { checkAnimationDuration } from '../constants';
 import { CheckProps } from '../types';
-import SvgCheck from './SvgCheck';
-import SvgIndeterminate from './SvgIndeterminate';
+
 import {
   checkIconStyles,
   checkIconTransitionStyles,
-  wrapperBaseStyle,
-  wrapperThemeStyle,
-  wrapperCheckedBaseStyle,
-  wrapperCheckedThemeStyle,
-  wrapperCheckedDisabledStyle,
-  wrapperDisabledStyle,
   disableAnimation,
-  rippleClassName,
   rippleBaseStyles,
   rippleCheckedStyles,
+  rippleClassName,
   rippleThemeStyles,
+  wrapperBaseStyle,
+  wrapperCheckedBaseStyle,
+  wrapperCheckedDisabledStyle,
+  wrapperCheckedThemeStyle,
+  wrapperDisabledStyle,
+  wrapperThemeStyle,
 } from './Check.style';
+import SvgCheck from './SvgCheck';
+import SvgIndeterminate from './SvgIndeterminate';
 
 const checkIconColor: Record<Theme, Record<'default' | 'disabled', string>> = {
   [Theme.Light]: {

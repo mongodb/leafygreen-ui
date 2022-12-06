@@ -1,11 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme, createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   hoverRing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
+
 import { Size } from './types';
 
 export const toggleButtonClassName = createUniqueClassName('toggle-button');

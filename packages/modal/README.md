@@ -93,7 +93,7 @@ It is HIGHLY encouraged that any children inside of `Modal` should refrain from 
 | `contentClassName` | `string`                          | Style to be applied to the content div.                                                                                                              |              |
 | `initialFocus`     | `string`                          | A selector string for the element to move focus to when the modal is opened. The first focusable element in the modal will receive focus by default. |              |
 | `darkMode`         | `boolean`                         | Determines if the component will appear in dark mode.                                                                                                | `false`      |
-| `closeIconColor`   | `'default'`, `'dark'`, `'light'`  | Determines the color of the close icon. Currently will only work if `darkMode` is set to false.                                                      | `default`    |
+| `closeIconColor`   | `'default'`, `'dark'`, `'light'`  | Determines the color of the close icon.                                                                                                              | `default`    |
 
 ## Using `Clipboard.js` inside `Modal`
 

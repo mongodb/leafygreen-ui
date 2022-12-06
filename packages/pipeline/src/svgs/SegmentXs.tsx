@@ -1,8 +1,9 @@
 import * as React from 'react';
+
 import {
+  svgInnerClassName,
   svgInnerOutlineClassName,
   svgOuterOutlineClassName,
-  svgInnerClassName,
 } from '../styles';
 
 export const SegmentXs = ({ className }: { className: string }) => {

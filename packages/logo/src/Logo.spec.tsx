@@ -1,18 +1,19 @@
 import React from 'react';
-import { axe } from 'jest-axe';
 import { render } from '@testing-library/react';
+import { axe } from 'jest-axe';
+
 import {
-  MongoDBLogo,
-  MongoDBLogoMark,
-  AtlasNavGraphic,
+  AtlasForGovernmentLogoLockup,
   AtlasLogoLockup,
   AtlasLogoMark,
-  AtlasForGovernmentLogoLockup,
+  AtlasNavGraphic,
+  ChartsLogoMark,
+  CommunityEditionLogoLockup,
+  EnterpriseAdvancedLogoLockup,
+  MongoDBLogo,
+  MongoDBLogoMark,
   RealmLogoLockup,
   RealmLogoMark,
-  ChartsLogoMark,
-  EnterpriseAdvancedLogoLockup,
-  CommunityEditionLogoLockup,
   UniversityLogoLockup,
 } from '.';
 

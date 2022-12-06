@@ -16,6 +16,9 @@
       "path": "../emotion"
     },
     {
+      "path": "../leafygreen-provider"
+    },
+    {
       "path": "../modal"
     },
     {

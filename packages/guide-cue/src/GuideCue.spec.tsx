@@ -5,10 +5,11 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { axe } from 'jest-axe';
-import { GuideCue } from '.';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'jest-axe';
+
 import { timeout1 } from './styles';
+import { GuideCue } from '.';
 
 // TODO: maybe add globally
 async function expectElementToNotBeRemoved(element: HTMLElement) {

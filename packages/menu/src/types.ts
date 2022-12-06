@@ -1,5 +1,6 @@
-import { PopoverProps } from '@leafygreen-ui/popover';
 import { ReactNode } from 'react';
+
+import { PopoverProps } from '@leafygreen-ui/popover';
 
 export const Size = {
   Default: 'default',

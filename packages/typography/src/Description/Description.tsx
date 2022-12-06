@@ -1,12 +1,15 @@
 import React from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+
 import {
-  descriptionStyle,
   descriptionColorStyle,
-  disabledDescriptionColorStyle,
+  descriptionStyle,
   descriptionTypeScaleStyles,
+  disabledDescriptionColorStyle,
 } from './Description.styles';
 import { DescriptionProps } from './Description.types';
 

@@ -3,6 +3,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+
 import { sideNavItemSidePadding } from '../styles';
 
 export const buttonClassName = createUniqueClassName('side-nav-group-button');

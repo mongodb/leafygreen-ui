@@ -1,9 +1,9 @@
-import { mockIsIntersecting } from './mocks/IntersectionObserver';
-
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import Stage from './Stage';
+import { cleanup, render } from '@testing-library/react';
+
+import { mockIsIntersecting } from './mocks/IntersectionObserver';
 import Pipeline from './Pipeline';
+import Stage from './Stage';
 import { Size } from './types';
 
 const className = 'test-stage-class';

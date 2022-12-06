@@ -6,11 +6,12 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { Menu, MenuSeparator, MenuItem, SubMenu } from '.';
 import userEvent from '@testing-library/user-event';
+
 import { MenuItemProps } from './MenuItem';
 import { SubMenuProps } from './SubMenu';
 import { MenuProps } from './types';
+import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
 const className = 'menu-item-class-name';

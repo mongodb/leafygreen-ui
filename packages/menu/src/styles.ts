@@ -1,7 +1,8 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
-import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+
 import { Size } from './types';
 
 export const svgWidth = 24;

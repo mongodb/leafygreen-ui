@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { css } from '@emotion/css';
-import Portal from '@leafygreen-ui/portal';
+
 import LiveExample from 'components/live-example';
+
+import Portal from '@leafygreen-ui/portal';
+
+import { css } from '@emotion/css';
 
 const portalChildrenStyle = css`
   text-align: center;

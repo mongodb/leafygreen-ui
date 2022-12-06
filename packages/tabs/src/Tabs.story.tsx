@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
-import Card from '@leafygreen-ui/card';
+import { Story } from '@storybook/react';
+
 import Button from '@leafygreen-ui/button';
-import IconButton from '@leafygreen-ui/icon-button';
+import Card from '@leafygreen-ui/card';
+import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
+import IconButton from '@leafygreen-ui/icon-button';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import { Tab, Tabs } from './index';
 import { TabsProps } from './types';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { css } from '@leafygreen-ui/emotion';
-import { Story } from '@storybook/react';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
 export default {

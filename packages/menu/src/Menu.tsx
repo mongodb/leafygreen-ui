@@ -5,20 +5,22 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import isUndefined from 'lodash/isUndefined';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
-import { useAvailableSpace, useEventListener } from '@leafygreen-ui/hooks';
-import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useAvailableSpace, useEventListener } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+
 import { FocusableMenuItemElement } from './FocusableMenuItem';
-import { MenuItemElement } from './MenuItem';
-import { SubMenuElement } from './SubMenu';
-import MenuSeparator, { MenuSeparatorElement } from './MenuSeparator';
-import { MenuProps } from './types';
 import { MenuContext } from './MenuContext';
+import { MenuItemElement } from './MenuItem';
+import MenuSeparator, { MenuSeparatorElement } from './MenuSeparator';
+import { SubMenuElement } from './SubMenu';
+import { MenuProps } from './types';
 
 const rootMenuStyle = css`
   width: 210px;

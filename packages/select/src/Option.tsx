@@ -1,15 +1,17 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
-import { colorSets } from './styleSets';
-import SelectContext from './SelectContext';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+
+import SelectContext from './SelectContext';
+import { colorSets } from './styleSets';
 
 const OptionClassName = createUniqueClassName('option');
 

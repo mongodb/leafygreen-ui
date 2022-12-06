@@ -1,5 +1,7 @@
-import { css, cx } from '@leafygreen-ui/emotion';
 import * as React from 'react';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+
 import {
   getAccessibleProps,
   LogoProps,

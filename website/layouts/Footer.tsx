@@ -1,9 +1,11 @@
 import React from 'react';
-import { css } from '@emotion/css';
+import { mq } from 'utils/mediaQuery';
+
 import { MongoDBLogo } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { mq } from 'utils/mediaQuery';
+
+import { css } from '@emotion/css';
 
 const footerContainer = css`
   border-top: 1px solid ${uiColors.gray.light2};

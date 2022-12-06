@@ -1,6 +1,8 @@
 import React from 'react';
-import FormFooter from '@leafygreen-ui/form-footer';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import FormFooter from '@leafygreen-ui/form-footer';
 
 const knobsConfig: KnobsConfigInterface<{
   primaryButtonText: string;

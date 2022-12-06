@@ -1,11 +1,13 @@
 import React from 'react';
-import { Body } from '@leafygreen-ui/typography';
 import { PropsWithChildren } from 'react';
-import { StepLabelProps, StepStates } from './types';
-import { palette } from '@leafygreen-ui/palette';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useStepperContext } from './StepperContext';
+import { palette } from '@leafygreen-ui/palette';
+import { Body } from '@leafygreen-ui/typography';
+
 import { stepLabelClassName } from './constants';
+import { useStepperContext } from './StepperContext';
+import { StepLabelProps, StepStates } from './types';
 
 const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
   const isCurrent = state === StepStates.Current;
