@@ -27,7 +27,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {},
   "devDependencies": {
     "@emotion/styled": "^11.10.5"
   }
