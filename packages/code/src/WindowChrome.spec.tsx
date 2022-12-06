@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { cleanup,render } from '@testing-library/react';
+
 import { typeIs } from '@leafygreen-ui/lib';
+
 import WindowChrome from './WindowChrome';
 
 afterAll(cleanup);

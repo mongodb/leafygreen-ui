@@ -1,23 +1,25 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useMemo,useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 import facepaint from 'facepaint';
 import debounce from 'lodash/debounce';
+import { transparentize } from 'polished';
+import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import LeafyGreenProvider, {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { variantColors } from './globalStyles';
-import { Language, CodeProps } from './types';
-import Syntax from './Syntax';
-import Panel from './Panel';
-import WindowChrome from './WindowChrome';
 import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { transparentize } from 'polished';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+
+import { variantColors } from './globalStyles';
+import Panel from './Panel';
+import Syntax from './Syntax';
+import { CodeProps,Language } from './types';
+import WindowChrome from './WindowChrome';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');

@@ -1,21 +1,24 @@
 import React, { Key } from 'react';
 import { useRouter } from 'next/router';
-import { css } from '@emotion/css';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
-import {
-  SideNav,
-  SideNavGroup,
-  SideNavItem,
-  CollapsedSideNavItem,
-} from '@leafygreen-ui/side-nav';
+import { HOME_PAGE } from 'utils/routes';
+import { Component } from 'utils/types';
+
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import { MongoDBLogo, MongoDBLogoMark } from '@leafygreen-ui/logo';
-import { HOME_PAGE } from 'utils/routes';
-import { Component } from 'utils/types';
+import {
+  CollapsedSideNavItem,
+  SideNav,
+  SideNavGroup,
+  SideNavItem,
+} from '@leafygreen-ui/side-nav';
+import { breakpoints,spacing } from '@leafygreen-ui/tokens';
+
+import MobileNavigation from './MobileNavigation';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
-import MobileNavigation from './MobileNavigation';
+
+import { css } from '@emotion/css';
 
 const sideNavStyles = css`
   z-index: 1;

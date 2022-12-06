@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, act, fireEvent } from '@testing-library/react';
+import { act, fireEvent,render } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import Checkbox from '.';
 
 const className = 'test-classname';

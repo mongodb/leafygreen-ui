@@ -1,6 +1,7 @@
 import React from 'react';
-import { fireEvent, render, act } from '@testing-library/react';
+import { act,fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import Popover from './Popover';
 import { PopoverProps } from './types';
 

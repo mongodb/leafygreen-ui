@@ -1,4 +1,4 @@
-import { HTMLElementProps, Either } from '@leafygreen-ui/lib';
+import { Either,HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {

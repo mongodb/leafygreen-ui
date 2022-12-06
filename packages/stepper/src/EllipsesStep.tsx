@@ -1,12 +1,14 @@
+import React from 'react';
+
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
-import React from 'react';
+
 import { stepIconClassName } from './constants';
 import Step from './InternalStep';
 import { useStepperContext } from './StepperContext';
-import { StepStates, EllipsesStepProps, EllipsesStepStates } from './types';
+import { EllipsesStepProps, EllipsesStepStates,StepStates } from './types';
 
 const EllipsesStep = ({
   state,

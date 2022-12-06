@@ -1,6 +1,11 @@
 import React from 'react';
-import { cx, css } from '@leafygreen-ui/emotion';
+
+import { css,cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
+
 import CopyButton from './CopyButton';
 import LanguageSwitcher from './LanguageSwitcher';
 import { PopoverProps } from './types';
@@ -8,9 +13,6 @@ import {
   LanguageOption,
   LanguageSwitcher as LanguageSwitcherProps,
 } from './types';
-import { palette } from '@leafygreen-ui/palette';
-import { Theme } from '@leafygreen-ui/lib';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const basePanelStyle = css`
   display: flex;

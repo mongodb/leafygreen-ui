@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cx } from '@leafygreen-ui/emotion';
+
 import Button from '@leafygreen-ui/button';
-import { H3, Link } from '@leafygreen-ui/typography';
+import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { H3, Link } from '@leafygreen-ui/typography';
+
+import { Graphic } from '../Graphic/Graphic';
+
 import {
   baseModalStyle,
   buttonStyle,
   contentStyle,
   contentThemeStyle,
-  titleStyle,
   footerContentStyle,
   linkStyle,
+  titleStyle,
   wrapperStyle,
 } from './styles';
 import { BlobPosition, GraphicStyle, MarketingModalProps } from './types';
-import { Graphic } from '../Graphic/Graphic';
 
 const MarketingModal = ({
   children,

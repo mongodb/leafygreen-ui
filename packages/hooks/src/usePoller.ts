@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect,useRef, useState } from 'react';
+
 import useEventListener from './useEventListener';
 
 function useVisibilityChange() {

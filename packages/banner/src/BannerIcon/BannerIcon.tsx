@@ -1,17 +1,20 @@
-import { cx } from '@leafygreen-ui/emotion';
 import React from 'react';
-import { Variant } from '../Banner/types';
-import {
-  baseStyles,
-  renderedImageStyles,
-  bannerIconPositionStyles,
-  themeStyles,
-} from './styles';
-import BannerIconProps from './types';
+
+import { cx } from '@leafygreen-ui/emotion';
+import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
+
+import { Variant } from '../Banner/types';
+
+import {
+  bannerIconPositionStyles,
+  baseStyles,
+  renderedImageStyles,
+  themeStyles,
+} from './styles';
+import BannerIconProps from './types';
 
 const Icons: Record<Variant, React.ComponentType<any>> = {
   [Variant.Info]: InfoWithCircleIcon,

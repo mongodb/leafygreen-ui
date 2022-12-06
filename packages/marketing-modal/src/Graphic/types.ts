@@ -1,4 +1,5 @@
 import { Theme } from '@leafygreen-ui/lib';
+
 import { BlobPosition, GraphicStyle } from '../MarketingModal/types';
 
 export interface GraphicProps {

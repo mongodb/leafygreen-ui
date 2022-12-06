@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { act,fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import Toggle from '..';
 
 const className = 'test-className';

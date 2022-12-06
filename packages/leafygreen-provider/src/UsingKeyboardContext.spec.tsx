@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent,render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import UsingKeyboardProvider, {
   NavigationKeyCodes,
-  UsingKeyboardContext,
   useUsingKeyboardContext,
+  UsingKeyboardContext,
 } from './UsingKeyboardContext';
-import userEvent from '@testing-library/user-event';
 
 const childTestID = 'using-keyboard-provider';
 const buttonTestId = 'test-button';

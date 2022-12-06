@@ -1,13 +1,15 @@
 import React from 'react';
-import { StepStates, StepIconProps, Mode } from './types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
-import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
-import { useStepperContext } from './StepperContext';
+
 import { stepIconClassName } from './constants';
+import { useStepperContext } from './StepperContext';
+import { Mode,StepIconProps, StepStates } from './types';
 
 const StepIconGlyph = ({ state, content }: StepIconProps) => {
   if (state === StepStates.Completed) {

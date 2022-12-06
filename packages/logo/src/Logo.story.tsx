@@ -1,24 +1,26 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
+
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { SupportedColors, LogoProps } from './utils';
+
+import { LogoNames } from './Logo';
+import { LogoProps,SupportedColors } from './utils';
 import {
+  AtlasForGovernmentLogoLockup,
+  AtlasLogoLockup,
+  AtlasLogoMark,
+  AtlasNavGraphic,
+  ChartsLogoMark,
+  CommunityEditionLogoLockup,
+  EnterpriseAdvancedLogoLockup,
   MongoDBLogo,
   MongoDBLogoMark,
-  AtlasNavGraphic,
-  AtlasLogoLockup,
-  AtlasForGovernmentLogoLockup,
   RealmLogoLockup,
-  EnterpriseAdvancedLogoLockup,
-  CommunityEditionLogoLockup,
-  UniversityLogoLockup,
-  AtlasLogoMark,
   RealmLogoMark,
-  ChartsLogoMark,
+  UniversityLogoLockup,
 } from '.';
 import Logo, { LogoName } from '.';
-import { LogoNames } from './Logo';
 
 export default {
   title: 'Components/Logo',

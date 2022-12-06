@@ -1,9 +1,11 @@
 import React from 'react';
-import { palette } from '@leafygreen-ui/palette';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { ButtonProps, Variant, Size } from './types';
-import { ButtonClassName } from './styles';
 import { getTheme, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
+import { ButtonClassName } from './styles';
+import { ButtonProps, Size,Variant } from './types';
 
 const baseIconStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {

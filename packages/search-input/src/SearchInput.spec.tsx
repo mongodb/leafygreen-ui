@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import SearchInput from '.';
+import { fireEvent,render } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import { SizeVariant } from './types';
+import SearchInput from '.';
 
 const defaultProps = {
   className: 'test-text-input-class',

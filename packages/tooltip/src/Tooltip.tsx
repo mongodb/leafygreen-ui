@@ -1,33 +1,35 @@
-import React, { useEffect, useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
-import { transparentize } from 'polished';
+import React, { useCallback, useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
-import Popover, {
-  PopoverProps,
-  Align as PopoverAlign,
-  Justify,
-  ElementPosition,
-} from '@leafygreen-ui/popover';
+import { transparentize } from 'polished';
+import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  useEventListener,
   useEscapeKey,
+  useEventListener,
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
-import {
-  useUpdatedBaseFontSize,
-  bodyTypeScaleStyles,
-} from '@leafygreen-ui/typography';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { notchPositionStyles } from './tooltipUtils';
-import SvgNotch from './Notch';
-import { borderRadius, notchWidth } from './tooltipConstants';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import Popover, {
+  Align as PopoverAlign,
+  ElementPosition,
+  Justify,
+  PopoverProps,
+} from '@leafygreen-ui/popover';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+import {
+  bodyTypeScaleStyles,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
+
+import SvgNotch from './Notch';
+import { borderRadius, notchWidth } from './tooltipConstants';
+import { notchPositionStyles } from './tooltipUtils';
 
 export const TriggerEvent = {
   Hover: 'hover',

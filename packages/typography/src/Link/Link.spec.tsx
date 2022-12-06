@@ -1,8 +1,11 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Link } from '..';
-import { LinkProps } from './Link.types';
+import { fireEvent,render, screen } from '@testing-library/react';
+
 import { BoxProps } from '@leafygreen-ui/box/src';
+
+import { Link } from '..';
+
+import { LinkProps } from './Link.types';
 
 const renderLink = (props: BoxProps<'a', LinkProps>) => {
   render(<Link {...(props as Parameters<typeof Link>)}>Link</Link>);

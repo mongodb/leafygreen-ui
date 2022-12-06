@@ -1,7 +1,9 @@
 import React from 'react';
+
+import { Cell,Row, Table, TableHeader } from '@leafygreen-ui/table';
+import { InlineCode,Subtitle } from '@leafygreen-ui/typography';
+
 import { css } from '@emotion/css';
-import { Subtitle, InlineCode } from '@leafygreen-ui/typography';
-import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 const subtTitleBottomMargin = css`
   margin-bottom: 24px;

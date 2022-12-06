@@ -1,8 +1,11 @@
-import { render } from '@testing-library/react';
 import React from 'react';
+import { render } from '@testing-library/react';
+
 import Icon from '@leafygreen-ui/icon';
-import { wrapJSX, getNameAndValue, flattenChildren } from '.';
-import { ComboboxOption, ComboboxGroup } from '..';
+
+import { ComboboxGroup,ComboboxOption } from '..';
+
+import { flattenChildren,getNameAndValue, wrapJSX } from '.';
 
 describe('packages/combobox/utils', () => {
   describe('wrapJSX', () => {

@@ -1,18 +1,20 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { cx } from '@leafygreen-ui/emotion';
+
 import Button from '@leafygreen-ui/button';
+import { cx } from '@leafygreen-ui/emotion';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Modal, { Footer } from '@leafygreen-ui/modal';
 import { palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
-import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { H3 } from '@leafygreen-ui/typography';
+
 import {
   baseModalStyle,
   buttonStyle,
-  contentStyle,
   contentDarkModeStyles,
+  contentStyle,
   contentVariantStyles,
   textEntryInputStyle,
   titleStyle,

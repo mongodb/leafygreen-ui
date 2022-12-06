@@ -1,5 +1,5 @@
-import Tooltip, { TriggerEvent, Align, Justify } from './Tooltip';
+import Tooltip, { Align, Justify,TriggerEvent } from './Tooltip';
 export type { TooltipProps } from './Tooltip';
 
-export { TriggerEvent, Align, Justify };
+export { Align, Justify,TriggerEvent };
 export default Tooltip;

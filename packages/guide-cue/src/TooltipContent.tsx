@@ -1,26 +1,28 @@
 import React from 'react';
-import Tooltip from '@leafygreen-ui/tooltip';
+import FocusTrap from 'focus-trap-react';
+
+import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
+import { Theme } from '@leafygreen-ui/lib';
+import Tooltip from '@leafygreen-ui/tooltip';
+import { Body,Disclaimer } from '@leafygreen-ui/typography';
+
 import {
   bodyThemeStyles,
   bodyTitleStyles,
   buttonStyles,
-  closeStyles,
   closeHoverStyles,
+  closeStyles,
   contentStyles,
   footerStyles,
   stepStyles,
-  tooltipStyles,
   tooltipMultistepStyles,
+  tooltipStyles,
 } from './styles';
 import { GuideCueProps } from './types';
-import FocusTrap from 'focus-trap-react';
-import Button from '@leafygreen-ui/button';
-import { Disclaimer, Body } from '@leafygreen-ui/typography';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 const ariaLabelledby = 'guide-cue-label';
 const ariaDescribedby = 'guide-cue-desc';

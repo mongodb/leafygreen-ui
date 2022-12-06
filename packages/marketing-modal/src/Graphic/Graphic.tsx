@@ -1,16 +1,19 @@
 import React from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
+
+import { BlobSVG } from '../BlobSVG/BlobSVG';
+import { GraphicStyle } from '../MarketingModal/types';
+
 import {
+  baseStyle,
   containerBaseStyle,
   containerStyleStyles,
-  baseStyle,
-  filledStyle,
   curvedSVGBaseStyles,
   curvedSVGThemeStyles,
+  filledStyle,
 } from './styles';
-import { GraphicStyle } from '../MarketingModal/types';
 import { GraphicProps } from './types';
-import { BlobSVG } from '../BlobSVG/BlobSVG';
 
 /**
  *

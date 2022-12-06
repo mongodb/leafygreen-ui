@@ -1,9 +1,11 @@
 import React from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import Row, { RowProps } from './Row';
-import { tdInnerDivClassName } from './Cell';
-import { TransitionStatus } from 'react-transition-group/Transition';
 import { useEffect, useRef, useState } from 'react';
+import { TransitionStatus } from 'react-transition-group/Transition';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+
+import { tdInnerDivClassName } from './Cell';
+import Row, { RowProps } from './Row';
 
 const transitionTime = 200;
 

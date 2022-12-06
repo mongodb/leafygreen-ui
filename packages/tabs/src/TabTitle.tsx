@@ -1,14 +1,15 @@
-import React, { useRef, useEffect, RefObject } from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import React, { RefObject,useEffect, useRef } from 'react';
+
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   fontFamilies,
-  typeScales,
   transitionDuration,
+  typeScales,
 } from '@leafygreen-ui/tokens';
-import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 
 interface ListTitleMode {
   base: string;

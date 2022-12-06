@@ -1,12 +1,14 @@
 import React from 'react';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { StepStates, InternalStepProps } from './types';
-import StepIcon from './StepIcon';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { useStepperContext } from './StepperContext';
-import StepLabel from './StepLabel';
+
 import { stepIconClassName } from './constants';
+import StepIcon from './StepIcon';
+import StepLabel from './StepLabel';
+import { useStepperContext } from './StepperContext';
+import { InternalStepProps,StepStates } from './types';
 
 const Step = ({
   children,

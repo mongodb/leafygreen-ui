@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cx, css } from '@leafygreen-ui/emotion';
-import { variantColors } from './globalStyles';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+
+import { css,cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+
+import { variantColors } from './globalStyles';
 
 export const windowChromeHeight = 28;
 const controlSize = 12;

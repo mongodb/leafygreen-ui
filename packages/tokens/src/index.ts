@@ -4,5 +4,5 @@ export { default as fontFamilies } from './fontFamilies';
 export { default as hoverRing } from './hoverRing';
 export { Mode } from './mode';
 export { default as spacing } from './spacing';
-export { default as typeScales, BaseFontSize } from './typeScales';
 export { default as transitionDuration } from './transitions';
+export { BaseFontSize,default as typeScales } from './typeScales';

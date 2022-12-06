@@ -1,5 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { SetStateAction } from 'react';
+
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const CloseIconColor = {
   Default: 'default',

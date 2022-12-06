@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
+  act,
   fireEvent,
   render,
-  act,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import ConfirmationModal from '..';
 
 const WrappedModal = ({

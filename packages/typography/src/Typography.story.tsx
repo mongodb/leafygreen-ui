@@ -1,25 +1,27 @@
 import React from 'react';
+
+import { css,cx } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
+import InlineDefinition from '@leafygreen-ui/inline-definition';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
 import {
+  Body,
+  Description,
+  Disclaimer,
   H1,
   H2,
   H3,
-  Subtitle,
-  Body,
   InlineCode,
   InlineKeyCode,
-  Disclaimer,
-  Overline,
   Label,
-  Description,
   Link,
+  Overline,
   StaticWidthText,
+  Subtitle,
 } from '.';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { cx, css } from '@leafygreen-ui/emotion';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import Icon from '@leafygreen-ui/icon';
 
 const wrapperStyles = css`
   padding: 0;

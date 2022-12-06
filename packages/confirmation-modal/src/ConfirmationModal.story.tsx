@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
+
 import Button from '@leafygreen-ui/button';
-import { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
 import { Variant } from './ConfirmationModal/types';
 
 export default {

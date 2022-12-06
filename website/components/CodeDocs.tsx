@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
-import { css, cx } from '@emotion/css';
-import { unified } from 'unified';
-import markdown from 'remark-parse';
 import remarkGfm from 'remark-gfm';
-import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
+import markdown from 'remark-parse';
+import { pageContainerWidth } from 'styles/constants';
+import { unified } from 'unified';
+import { BaseLayoutProps } from 'utils/types';
+
+import { GridContainer, GridItem } from 'components/Grid';
+import PropTable, { ReadmeMarkdown } from 'components/PropTable';
+import TypeDefinition from 'components/TypeDefinition';
+
 import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
 import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
-import Modal from '@leafygreen-ui/modal';
-import { Tabs, Tab } from '@leafygreen-ui/tabs';
-import { Subtitle, Body } from '@leafygreen-ui/typography';
-import { uiColors } from '@leafygreen-ui/palette';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { BaseLayoutProps } from 'utils/types';
-import { pageContainerWidth } from 'styles/constants';
-import { GridContainer, GridItem } from 'components/Grid';
-import PropTable, { ReadmeMarkdown } from 'components/PropTable';
-import TypeDefinition from 'components/TypeDefinition';
+import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
+import Modal from '@leafygreen-ui/modal';
+import { uiColors } from '@leafygreen-ui/palette';
+import { Tab,Tabs } from '@leafygreen-ui/tabs';
+import { breakpoints,spacing } from '@leafygreen-ui/tokens';
+import { Body,Subtitle } from '@leafygreen-ui/typography';
+
+import { css, cx } from '@emotion/css';
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;

@@ -1,4 +1,5 @@
 import { Theme } from '@leafygreen-ui/lib';
+
 import { BlobPosition } from '../MarketingModal/types';
 
 export interface BlobSVGProps {

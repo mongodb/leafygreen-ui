@@ -1,27 +1,29 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  useViewportSize,
-  useIdAllocator,
   useEventListener,
+  useIdAllocator,
+  useViewportSize,
 } from '@leafygreen-ui/hooks';
-import { palette } from '@leafygreen-ui/palette';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
+  BaseFontSize,
   fontFamilies,
   spacing,
-  BaseFontSize,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
-import { Label, Description } from '@leafygreen-ui/typography';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { mobileSizeSet, sizeSets, SizeSet } from './styleSets';
-import { SelectProps, Size, State } from './types';
+import { Description,Label } from '@leafygreen-ui/typography';
+
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
-import SelectContext from './SelectContext';
 import { InternalOption, OptionElement } from './Option';
+import SelectContext from './SelectContext';
+import { mobileSizeSet, SizeSet,sizeSets } from './styleSets';
+import { SelectProps, Size, State } from './types';
 import {
   convertToInternalElements,
   getOptionValue,

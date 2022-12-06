@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
+import PropTypes from 'prop-types';
+
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
-import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
+import {
+  useDarkMode,
+  usePopoverPortalContainer,
+} from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import {
   Description,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
-import {
-  useDarkMode,
-  usePopoverPortalContainer,
-} from '@leafygreen-ui/leafygreen-provider';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { CopyableProps, Size } from './types';
+
 import {
   buttonContainerStyle,
   buttonStyle,
@@ -34,6 +35,7 @@ import {
   noButtonContainerStyle,
   noButtonContainerStyleMode,
 } from './styles';
+import { CopyableProps, Size } from './types';
 
 export default function Copyable({
   darkMode: darkModeProp,

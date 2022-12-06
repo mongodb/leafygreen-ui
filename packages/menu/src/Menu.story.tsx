@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Menu, MenuProps, SubMenu, MenuItem, MenuSeparator } from '.';
+
+import Button from '@leafygreen-ui/button';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
-import Button from '@leafygreen-ui/button';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 import IconButton from '@leafygreen-ui/icon-button';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import { Size } from './types';
+import { Menu, MenuItem, MenuProps, MenuSeparator,SubMenu } from '.';
 
 export default {
   title: 'Components/Menu',

@@ -1,13 +1,15 @@
 import React from 'react';
+import { fireEvent,render, screen } from '@testing-library/react';
 import ClipboardJS from 'clipboard';
 import { axe } from 'jest-axe';
-import { render, screen, fireEvent } from '@testing-library/react';
+
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
+
 import Code, { hasMultipleLines } from './Code';
 import LanguageSwitcherExample, { PythonLogo } from './LanguageSwitcherExample';
-import IconButton from '@leafygreen-ui/icon-button';
-import Icon from '@leafygreen-ui/icon';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';

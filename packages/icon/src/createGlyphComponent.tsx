@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SVGR, LGGlyph } from './types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { generateAccessibleProps, sizeMap, Size } from './glyphCommon';
+
+import { generateAccessibleProps, Size,sizeMap } from './glyphCommon';
+import { LGGlyph,SVGR } from './types';
 
 /**
  * Returns a single glyph component.

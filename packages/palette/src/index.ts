@@ -4,10 +4,10 @@
  * @packageDocumentation
  */
 
-import palette from './palette';
 import './palette.less';
-
-import uiColors from './uiColors';
 import './ui-colors.less';
 
-export { uiColors, palette };
+import palette from './palette';
+import uiColors from './uiColors';
+
+export { palette,uiColors };

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import {
-  render,
   fireEvent,
-  screen,
+  render,
   RenderResult,
+  screen,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { Tabs, Tab } from '.';
+
+import { Tab,Tabs } from '.';
 
 const tabsClassName = 'tabs-class-name';
 const tabsTestId = 'tabs-component';

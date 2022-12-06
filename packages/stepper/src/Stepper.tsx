@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import Step from './InternalStep';
-import { StepStates, StepperProps } from './types';
+
 import EllipsesStep from './EllipsesStep';
+import Step from './InternalStep';
 import StepperContextProvider from './StepperContext';
+import { StepperProps,StepStates } from './types';
 
 const baseStyles = css`
   list-style: none;

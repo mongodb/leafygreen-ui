@@ -1,8 +1,9 @@
-import React, { useEffect, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { uiColors, palette } from '@leafygreen-ui/palette';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { palette,uiColors } from '@leafygreen-ui/palette';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const Mode = {

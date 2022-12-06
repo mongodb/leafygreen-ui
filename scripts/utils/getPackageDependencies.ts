@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { defaults } from 'lodash';
+
 import { getAllPackageNames } from './getAllPackageNames';
 
 interface DependenciesOptions {

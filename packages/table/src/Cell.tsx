@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react';
-import { HTMLElementProps, createUniqueClassName } from '@leafygreen-ui/lib';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { getCommonCellStyles } from './styles';
-import { palette } from '@leafygreen-ui/palette';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { createUniqueClassName,HTMLElementProps } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+
+import { getCommonCellStyles } from './styles';
 
 export const tdInnerDivClassName = createUniqueClassName('td-inner-div');
 

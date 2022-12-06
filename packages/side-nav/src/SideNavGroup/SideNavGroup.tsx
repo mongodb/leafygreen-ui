@@ -1,31 +1,34 @@
 import React, { useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Transition, TransitionStatus } from 'react-transition-group';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
-import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import { palette } from '@leafygreen-ui/palette';
+import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { CollapsedSideNavItem } from '../SideNavItem';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
+import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { transitionDuration } from '@leafygreen-ui/tokens';
+import { Overline } from '@leafygreen-ui/typography';
+
 import { useSideNavContext } from '../SideNavContext';
-import { ulStyleOverrides, getIndentLevelStyle } from '../styles';
+import { CollapsedSideNavItem } from '../SideNavItem';
+import { getIndentLevelStyle,ulStyleOverrides } from '../styles';
+
 import {
   buttonClassName,
   collapsibleHeaderFocusStyle,
   collapsibleHeaderStyle,
   customIconStyles,
-  sideNavCollapsibleGroupBaseStyles,
   expandIconStyle,
   headerStyle,
   listItemStyle,
   openExpandIconStyle,
+  sideNavCollapsibleGroupBaseStyles,
   transitionStyles,
 } from './SideNavGroup.styles';
 import { SideNavGroupProps } from './types';
-import { Overline } from '@leafygreen-ui/typography';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 /**
  * # SideNavGroup

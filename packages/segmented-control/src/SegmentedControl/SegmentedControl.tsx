@@ -6,28 +6,31 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
+import PropTypes from 'prop-types';
+
+import { css,cx } from '@leafygreen-ui/emotion';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
-import { cx, css } from '@leafygreen-ui/emotion';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';
-import { SegmentedControlProps, Size } from './types';
+
+import { SegmentedControlContext } from '../SegmentedControlContext';
 import { useEffectOnceOnMount } from '../useEffectOnceOnMount';
+
 import {
-  wrapperStyle,
+  hoverIndicatorStyle,
   labelBaseStyles,
   labelThemeStyle,
   optionsWrapperStyle,
   selectionIndicatorStyle,
-  hoverIndicatorStyle,
+  wrapperStyle,
 } from './styles';
-import { SegmentedControlContext } from '../SegmentedControlContext';
+import { SegmentedControlProps, Size } from './types';
 
 /**
  * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.

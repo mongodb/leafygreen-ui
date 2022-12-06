@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { cleanup,render } from '@testing-library/react';
+
 import LeafyGreenProvider, { useBaseFontSize } from '.';
 
 afterAll(cleanup);

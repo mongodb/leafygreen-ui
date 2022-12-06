@@ -1,29 +1,31 @@
 import React, { useCallback, useState } from 'react';
-import FocusTrap from 'focus-trap-react';
 import { Transition, TransitionStatus } from 'react-transition-group';
-import Portal from '@leafygreen-ui/portal';
+import FocusTrap from 'focus-trap-react';
+
+import { cx } from '@leafygreen-ui/emotion';
+import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
-import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
-import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   PortalContextProvider,
   useDarkMode,
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { CloseIconColor, ModalProps, ModalSize } from './types';
+import Portal from '@leafygreen-ui/portal';
+
 import {
   backdropBaseStyle,
-  visibleBackdrop,
-  scrollContainer,
-  modalContentStyle,
-  modalSizes,
-  visibleModalContentStyle,
+  backdropThemeStyles,
   baseCloseButtonStyles,
   closeButton,
+  modalContentStyle,
+  modalSizes,
   modalThemeStyles,
-  backdropThemeStyles,
+  scrollContainer,
+  visibleBackdrop,
+  visibleModalContentStyle,
 } from './styles';
+import { CloseIconColor, ModalProps, ModalSize } from './types';
 
 /**
  * @internal

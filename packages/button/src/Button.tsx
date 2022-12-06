@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Variant, Size, ButtonProps } from './types';
-import { getClassName, ButtonClassName } from './styles';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+
 import { ButtonContent } from './ButtonContent';
+import { ButtonClassName,getClassName } from './styles';
+import { ButtonProps,Size, Variant } from './types';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.

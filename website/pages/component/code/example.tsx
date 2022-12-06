@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import Code, { Language } from '@leafygreen-ui/code';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import Code, { Language } from '@leafygreen-ui/code';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 

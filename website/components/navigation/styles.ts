@@ -1,6 +1,7 @@
-import { css } from '@emotion/css';
-import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
+
+import { css } from '@emotion/css';
 
 export const leftRightPadding = css`
   padding-left: ${spacing[4]}px;

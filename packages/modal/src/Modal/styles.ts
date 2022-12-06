@@ -1,12 +1,14 @@
+import { transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  breakpoints,
   fontFamilies,
   transitionDuration,
-  breakpoints,
 } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
+
 import { CloseIconColor, ModalSize } from './types';
 
 // breakpoints for different screen sizes

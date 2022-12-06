@@ -1,6 +1,9 @@
-import { css, cx } from '@leafygreen-ui/emotion';
 import React from 'react';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+
 import { BlobPosition } from '../MarketingModal/types';
+
 import { baseStyles, themeStyles } from './styles';
 import { BlobSVGProperties, BlobSVGProps } from './types';
 

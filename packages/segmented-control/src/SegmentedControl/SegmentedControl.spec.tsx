@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { axe } from 'jest-axe';
 import { fireEvent, getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SegmentedControlOption } from '../SegmentedControlOption/SegmentedControlOption';
-import { SegmentedControl } from './SegmentedControl';
+import { axe } from 'jest-axe';
+
 import Button from '@leafygreen-ui/button';
-import { typeIs } from '@leafygreen-ui/lib';
 import Icon from '@leafygreen-ui/icon';
+import { typeIs } from '@leafygreen-ui/lib';
 import { H1 } from '@leafygreen-ui/typography';
+
+import { SegmentedControlOption } from '../SegmentedControlOption/SegmentedControlOption';
+
+import { SegmentedControl } from './SegmentedControl';
 
 const testClassName = 'test-class-name';
 

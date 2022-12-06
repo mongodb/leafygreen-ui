@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef, useMemo, forwardRef } from 'react';
-import useSSR from './useSSR';
+import React, { forwardRef,useEffect, useMemo, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
-import IconButton from '@leafygreen-ui/icon-button';
-import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
-import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import { isComponentType, HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { useTableContext, TableActionTypes, DataType } from './TableContext';
+import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
+import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
+import IconButton from '@leafygreen-ui/icon-button';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps, isComponentType, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
 import { CellElement, tdInnerDivClassName } from './Cell';
 import NestedRow from './NestedRow';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { DataType,TableActionTypes, useTableContext } from './TableContext';
+import useSSR from './useSSR';
 
 /**
  * Types & Constants

@@ -1,13 +1,15 @@
 import React, { useCallback } from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
-import { uiColors } from '@leafygreen-ui/palette';
-import { useViewportSize, useIdAllocator } from '@leafygreen-ui/hooks';
-import { Select as LGUISelect, Option } from '@leafygreen-ui/select';
-import TextInput from '@leafygreen-ui/text-input';
-import TextArea from '@leafygreen-ui/text-area';
-import Toggle from '@leafygreen-ui/toggle';
 import { mq } from 'utils/mediaQuery';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator,useViewportSize } from '@leafygreen-ui/hooks';
+import { uiColors } from '@leafygreen-ui/palette';
+import { Option,Select as LGUISelect } from '@leafygreen-ui/select';
+import TextArea from '@leafygreen-ui/text-area';
+import TextInput from '@leafygreen-ui/text-input';
+import Toggle from '@leafygreen-ui/toggle';
+import { breakpoints,spacing } from '@leafygreen-ui/tokens';
+
 import { useBodyContainerRef } from '../LayoutContext';
 
 const knobsWidth = 326; // totalWidth (700px) - padding on both sides (24px on each side) / 2
@@ -344,4 +346,4 @@ function Select({
 
 Select.displayName = 'Select';
 
-export { Knob, Boolean, Text, Area, Number, Select };
+export { Area, Boolean, Knob, Number, Select,Text };

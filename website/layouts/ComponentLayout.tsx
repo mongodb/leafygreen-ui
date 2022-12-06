@@ -1,21 +1,24 @@
 import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { css } from '@emotion/css';
-import Button from '@leafygreen-ui/button';
-import { useViewportSize } from '@leafygreen-ui/hooks';
-import { uiColors } from '@leafygreen-ui/palette';
-import { Tabs, Tab } from '@leafygreen-ui/tabs';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
-import { H2 } from '@leafygreen-ui/typography';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import ReactIcon from 'components/svgs/ReactIcon';
-import FigmaIcon from 'components/svgs/FigmaIcon';
-import { mq } from 'utils/mediaQuery';
 import { pageContainerWidth } from 'styles/constants';
 import componentData from 'utils/componentData';
-import { Component } from 'utils/types';
+import { mq } from 'utils/mediaQuery';
 import metaTagKey from 'utils/metaTagKey';
+import { Component } from 'utils/types';
+
+import FigmaIcon from 'components/svgs/FigmaIcon';
+import ReactIcon from 'components/svgs/ReactIcon';
+
+import Button from '@leafygreen-ui/button';
+import { useViewportSize } from '@leafygreen-ui/hooks';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { uiColors } from '@leafygreen-ui/palette';
+import { Tab,Tabs } from '@leafygreen-ui/tabs';
+import { breakpoints,spacing } from '@leafygreen-ui/tokens';
+import { H2 } from '@leafygreen-ui/typography';
+
+import { css } from '@emotion/css';
 
 const layout = css`
   ${mq({

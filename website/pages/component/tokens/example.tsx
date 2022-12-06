@@ -1,8 +1,11 @@
 import React from 'react';
-import { css } from '@emotion/css';
-import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
-import { Subtitle } from '@leafygreen-ui/typography';
+
 import LiveExample from 'components/live-example';
+
+import { fontFamilies,spacing } from '@leafygreen-ui/tokens';
+import { Subtitle } from '@leafygreen-ui/typography';
+
+import { css } from '@emotion/css';
 
 const gutter = css`
   margin-right: ${spacing[3]}px;

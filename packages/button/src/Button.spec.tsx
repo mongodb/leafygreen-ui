@@ -1,8 +1,10 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent,render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
+
 import { BoxProps } from '@leafygreen-ui/box';
+
 import { ButtonProps } from './types';
 import Button from '.';
 

@@ -1,20 +1,22 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { cx, css } from '@leafygreen-ui/emotion';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { LeafyGreenHighlightResult } from './highlight';
-import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import { HLJSOptions, HLJSPlugin } from 'highlight.js';
+import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import hljsDefineGraphQL from 'highlightjs-graphql';
-import { Language, SyntaxProps } from './types';
-import { SupportedLanguages, languageParsers } from './languages';
-import { injectGlobalStyles } from './globalStyles';
-import renderingPlugin, { TableContent } from './renderingPlugin';
-import { SyntaxContext } from './SyntaxContext';
+import PropTypes from 'prop-types';
+
+import { css,cx } from '@leafygreen-ui/emotion';
 import {
   useBaseFontSize,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+
+import { injectGlobalStyles } from './globalStyles';
+import { LeafyGreenHighlightResult } from './highlight';
+import { languageParsers,SupportedLanguages } from './languages';
+import renderingPlugin, { TableContent } from './renderingPlugin';
+import { SyntaxContext } from './SyntaxContext';
+import { Language, SyntaxProps } from './types';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
