@@ -2,8 +2,13 @@
 import {
   OneOf,
   isComponentType,
+  createUniqueClassName,
+  getNodeTextContent,
   createDataProp,
+  Theme,
+  getTheme,
   keyMap,
+  storybookArgTypes,
   AriaCurrentValue,
   enforceExhaustive,
   consoleOnce,
@@ -12,8 +17,13 @@ import {
 describe('packages/lib', () => {
   test('exported packages exist', () => {
     expect(isComponentType).toBeDefined();
+    expect(createUniqueClassName).toBeDefined();
+    expect(getNodeTextContent).toBeDefined();
     expect(createDataProp).toBeDefined();
+    expect(storybookArgTypes).toBeDefined();
     expect(keyMap).toBeDefined();
+    expect(Theme).toBeDefined();
+    expect(getTheme).toBeDefined();
     expect(AriaCurrentValue).toBeDefined();
     expect(enforceExhaustive).toBeDefined();
     expect(consoleOnce).toBeDefined();

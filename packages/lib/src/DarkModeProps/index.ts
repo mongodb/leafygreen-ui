@@ -1,2 +1,2 @@
-export { DarkModeProps } from './DarkModeProps';
+export type { DarkModeProps } from './DarkModeProps';
 export { Theme, getTheme } from './theme';
