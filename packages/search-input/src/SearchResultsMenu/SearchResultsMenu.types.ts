@@ -1,3 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { PortalControlProps } from '@leafygreen-ui/popover';
 
-export interface SearchResultsMenuProps extends HTMLElementProps<'ul', HTMLUListElement> {}
+export type SearchResultsMenuProps =
+  HTMLElementProps<'ul', HTMLUListElement> &
+  PortalControlProps & {}
