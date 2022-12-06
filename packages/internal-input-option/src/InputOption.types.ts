@@ -40,7 +40,8 @@ export interface BaseInputOptionProps {
    * Whether the component is active, regardless of keyboard navigation
    */
   active?: boolean;
-};
+}
 
 export type InputOptionProps = AriaLabelProps &
-  DarkModeProps & BaseInputOptionProps
+  DarkModeProps &
+  BaseInputOptionProps;

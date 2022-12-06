@@ -13,4 +13,4 @@ export const searchResultsMenuStyles = css`
 export const searchResultsListStyles = css`
   padding: 0;
   margin: 0;
-`
+`;

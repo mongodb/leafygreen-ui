@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
@@ -17,6 +17,7 @@ import {
 } from './styles';
 import { cx } from '@leafygreen-ui/emotion';
 import { SearchResultsMenu } from './SearchResultsMenu';
+import { useBackdropClick } from '@leafygreen-ui/hooks';
 
 /**
  * # SearchInput
@@ -33,7 +34,7 @@ import { SearchResultsMenu } from './SearchResultsMenu';
  */
 
 type SearchInputType = React.ForwardRefExoticComponent<SearchInputProps>;
-const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
+export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
   function SearchInput(
     {
       placeholder = 'Search',
@@ -47,14 +48,40 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     forwardRef: React.Ref<HTMLInputElement>,
   ) {
     const { theme } = useDarkMode(darkModeProp);
+    const [isOpen, setOpen] = useState(false);
+    const closeMenu = () => setOpen(false);
+    const openMenu = () => setOpen(true);
 
     const searchBoxRef = useRef<HTMLDivElement>(null);
-    const withTypeahead = !isUndefined(children);
+    const menuRef = useRef<HTMLUListElement>(null);
+    const withTypeAhead = !isUndefined(children);
+
+    const handleInputClick = () => {
+      openMenu();
+    };
+
+    const handleInputFocus = () => {
+      openMenu();
+    };
+
+    useBackdropClick(
+      () => {
+        closeMenu();
+      },
+      [searchBoxRef, menuRef],
+      isOpen,
+    );
 
     return (
-      <div>
+      <form role="search">
+        {/* Disable eslint: onClick sets focus. Key events would already have focus */}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <div
           ref={searchBoxRef}
+          role="searchbox"
+          tabIndex={-1}
+          onClick={handleInputClick}
+          onFocus={handleInputFocus}
           className={cx(
             inputContainerStyle,
             wrapperFontStyle[sizeVariant],
@@ -85,14 +112,14 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             {...rest}
           />
         </div>
-        {withTypeahead && (
-          <SearchResultsMenu refEl={searchBoxRef}>{children}</SearchResultsMenu>
+        {withTypeAhead && (
+          <SearchResultsMenu open={isOpen} refEl={searchBoxRef} ref={menuRef}>
+            {children}
+          </SearchResultsMenu>
         )}
-      </div>
+      </form>
     );
   },
 ) as SearchInputType;
 
 SearchInput.displayName = 'SearchInput';
-
-export default SearchInput;

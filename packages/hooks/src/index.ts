@@ -11,3 +11,4 @@ export { default as useValidation } from './useValidation';
 export { default as useDynamicRefs } from './useDynamicRefs';
 export { default as useAvailableSpace } from './useAvailableSpace';
 export { useObservedRef, useForwardedRef } from './useForwardedRef';
+export { useBackdropClick } from './useBackdropClick';

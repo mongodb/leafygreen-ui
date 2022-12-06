@@ -2,8 +2,7 @@ import React from 'react';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseInputOptionProps } from '@leafygreen-ui/internal-input-option';
 
-export type SearchResultProps =
-  DarkModeProps &
+export type SearchResultProps = DarkModeProps &
   BaseInputOptionProps & {
     /**
      * The value of the result

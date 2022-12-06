@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
-import SearchInput from '.';
+import { SearchInput } from '.';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { SearchResult } from './SearchResult';
 

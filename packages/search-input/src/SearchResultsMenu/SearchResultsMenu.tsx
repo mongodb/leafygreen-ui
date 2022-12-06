@@ -8,7 +8,7 @@ import {
 import { spacing } from '@leafygreen-ui/tokens';
 import { css, cx } from '@leafygreen-ui/emotion';
 
-export const SearchResultsMenu = React.forwardRef<
+const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,
   SearchResultsMenuProps
 >(({ children, open = false, refEl }: SearchResultsMenuProps, ref) => {
@@ -19,7 +19,7 @@ export const SearchResultsMenu = React.forwardRef<
 
   return (
     <Popover
-      spacing={spacing[2]}
+      spacing={spacing[1]}
       active={open}
       align="bottom"
       justify="start"
@@ -31,7 +31,14 @@ export const SearchResultsMenu = React.forwardRef<
       )}
       refEl={refEl}
     >
-      <ul role="listbox" ref={ref} className={searchResultsListStyles}>
+      <ul
+        role="listbox"
+        aria-live="polite"
+        aria-relevant="additions removals"
+        aria-expanded={open}
+        ref={ref}
+        className={searchResultsListStyles}
+      >
         {children}
       </ul>
     </Popover>
@@ -39,3 +46,5 @@ export const SearchResultsMenu = React.forwardRef<
 });
 
 SearchResultsMenu.displayName = 'SearchResultsMenu';
+
+export { SearchResultsMenu };

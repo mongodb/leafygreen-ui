@@ -57,6 +57,7 @@ const SearchResult = Polymorphic<InferredPolymorphicProps<SearchResultProps>>(
       </InputOption>
     );
   },
+  'SearchResult',
 );
 
 SearchResult.displayName = 'SearchResult';
