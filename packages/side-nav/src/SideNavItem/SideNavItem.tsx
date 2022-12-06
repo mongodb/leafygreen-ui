@@ -4,7 +4,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import CollapsedSideNavItem from './CollapsedSideNavItem';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { getIndentLevelStyle, typographyStyle } from '../SideNav/styles';
@@ -21,6 +21,8 @@ import {
   glyphWrapper,
   nestedChildrenStyles,
   sideNavItemClassName,
+  liStyle,
+  nestedULStyle,
 } from './SideNavItem.styles';
 import { SideNavItemProps } from './types';
 
@@ -146,9 +148,7 @@ const SideNavItem: ExtendableBox<
 
   return (
     <li
-      className={css`
-        width: 100%;
-      `}
+      className={liStyle}
     >
       <Box
         as={props.href ? 'a' : 'button'}
@@ -188,10 +188,7 @@ const SideNavItem: ExtendableBox<
 
       {hasNestedItems && (
         <ul
-          className={css`
-            list-style: none;
-            padding-inline-start: 0;
-          `}
+          className={nestedULStyle}
         >
           {renderedNestedItems}
         </ul>

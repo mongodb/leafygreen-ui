@@ -10,6 +10,10 @@ import { transparentize } from 'polished';
 
 export const sideNavItemClassName = createUniqueClassName('side-nav-item');
 
+export const liStyle = css`
+  width: 100%;
+`;
+
 // container styles
 export const baseStyle = css`
   // Unset defaults
@@ -209,4 +213,9 @@ export const nestedChildrenStyles = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+`;
+
+export const nestedULStyle = css`
+  list-style: none;
+  padding-inline-start: 0;
 `;
