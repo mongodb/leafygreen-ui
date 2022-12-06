@@ -155,7 +155,7 @@ function SideNavGroup({
 
   // compute styles for indented items
   const indentedStyle = cx(
-    getIndentLevelStyle(indentLevel),
+    getIndentLevelStyle(indentLevel, darkMode),
     css`
       padding-top: 16px;
       padding-bottom: 8px;

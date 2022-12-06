@@ -24,9 +24,10 @@ export const ulStyleOverrides = css`
   list-style-type: none;
 `;
 
-export function getIndentLevelStyle(indentLevel: number) {
+export function getIndentLevelStyle(indentLevel: number, darkMode: boolean) {
   return css`
-    border-left: 3px solid ${palette.gray.light1};
+    border-left: 3px solid
+      ${darkMode ? palette.gray.dark2 : palette.gray.light1};
     padding-left: ${8 + indentLevel * 8}px;
   `;
 }

@@ -62,7 +62,7 @@ const SideNavItem: ExtendableBox<
     ...rest
   } = props;
   const { usingKeyboard } = useUsingKeyboardContext();
-  const { baseFontSize, theme } = useSideNavContext();
+  const { baseFontSize, theme, darkMode } = useSideNavContext();
   const hasNestedChildren = useRef(false);
 
   const onClick = disabled
@@ -161,10 +161,10 @@ const SideNavItem: ExtendableBox<
           {
             [cx(activeBaseStyle, activeThemeStyle[theme])]: active,
             [disabledStyle]: disabled,
-            [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard, // TODO; consider focus-visible
+            [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard, // TODO: consider focus-visible
             [cx(focusedDisabledStyle,focusedDisabledThemeStyle[theme])]: usingKeyboard && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
-            [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
+            [getIndentLevelStyle(indentLevel, darkMode)]: indentLevel > 1,
           },
           className,
         )}
