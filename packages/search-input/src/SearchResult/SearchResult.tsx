@@ -17,9 +17,7 @@ import {
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 
-export const SearchResult = Polymorphic<
-  InferredPolymorphicProps<SearchResultProps>
->(
+const SearchResult = Polymorphic<InferredPolymorphicProps<SearchResultProps>>(
   (
     {
       as = 'li' as PolymorphicAs,
@@ -59,5 +57,8 @@ export const SearchResult = Polymorphic<
       </InputOption>
     );
   },
-  'SearchResult',
 );
+
+SearchResult.displayName = 'SearchResult';
+
+export { SearchResult };

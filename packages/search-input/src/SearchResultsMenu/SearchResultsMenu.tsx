@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Popover from '@leafygreen-ui/popover';
 import { SearchResultsMenuProps } from './SearchResultsMenu.types';
 import {
   searchResultsListStyles,
   searchResultsMenuStyles,
 } from './SearchResultsMenu.style';
+import { spacing } from '@leafygreen-ui/tokens';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 export const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,
   SearchResultsMenuProps
->(({ children, refEl }: SearchResultsMenuProps, ref) => {
+>(({ children, open = false, refEl }: SearchResultsMenuProps, ref) => {
+  const menuWidth = useMemo(
+    () => (open ? refEl.current?.clientWidth ?? 0 : 0),
+    [refEl, open],
+  );
+
   return (
     <Popover
-      active
+      spacing={spacing[2]}
+      active={open}
       align="bottom"
       justify="start"
-      className={searchResultsMenuStyles}
+      className={cx(
+        searchResultsMenuStyles,
+        css`
+          min-width: ${menuWidth}px;
+        `,
+      )}
       refEl={refEl}
     >
       <ul role="listbox" ref={ref} className={searchResultsListStyles}>

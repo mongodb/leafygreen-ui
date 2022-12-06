@@ -12,7 +12,7 @@ const Template = () => {
   return (
     <>
       <div ref={divRef}>SearchInput Placeholder</div>
-      <SearchResultsMenu refEl={divRef}>
+      <SearchResultsMenu refEl={divRef} open>
         <SearchResult description="This is a description">
           Example 1
         </SearchResult>

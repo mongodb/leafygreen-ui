@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import isUndefined from 'lodash/isUndefined';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
 import { SearchInputProps, SizeVariant } from './types';
@@ -15,6 +16,7 @@ import {
   searchIconDisabledStyle,
 } from './styles';
 import { cx } from '@leafygreen-ui/emotion';
+import { SearchResultsMenu } from './SearchResultsMenu';
 
 /**
  * # SearchInput
@@ -39,43 +41,53 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       darkMode: darkModeProp,
       sizeVariant = SizeVariant.Default,
       disabled,
+      children,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) {
     const { theme } = useDarkMode(darkModeProp);
 
+    const searchBoxRef = useRef<HTMLDivElement>(null);
+    const withTypeahead = !isUndefined(children);
+
     return (
-      <div
-        className={cx(
-          inputContainerStyle,
-          wrapperFontStyle[sizeVariant],
-          className,
+      <div>
+        <div
+          ref={searchBoxRef}
+          className={cx(
+            inputContainerStyle,
+            wrapperFontStyle[sizeVariant],
+            className,
+          )}
+        >
+          <MagnifyingGlass
+            className={cx(
+              searchIconStyle,
+              searchIconThemeStyle[theme],
+              searchIconSizeStyle[sizeVariant],
+              { [searchIconDisabledStyle[theme]]: disabled },
+            )}
+            aria-label="Search Icon"
+            role="presentation"
+          />
+          <input
+            type="search"
+            className={cx(
+              baseInputStyle,
+              inputThemeStyle[theme],
+              inputSizeStyles[sizeVariant],
+              inputFocusStyles[theme], // Always show focus styles
+            )}
+            placeholder={placeholder}
+            ref={forwardRef}
+            disabled={disabled}
+            {...rest}
+          />
+        </div>
+        {withTypeahead && (
+          <SearchResultsMenu refEl={searchBoxRef}>{children}</SearchResultsMenu>
         )}
-      >
-        <MagnifyingGlass
-          className={cx(
-            searchIconStyle,
-            searchIconThemeStyle[theme],
-            searchIconSizeStyle[sizeVariant],
-            { [searchIconDisabledStyle[theme]]: disabled },
-          )}
-          aria-label="Search Icon"
-          role="presentation"
-        />
-        <input
-          type="search"
-          className={cx(
-            baseInputStyle,
-            inputThemeStyle[theme],
-            inputSizeStyles[sizeVariant],
-            inputFocusStyles[theme], // Always show focus styles
-          )}
-          placeholder={placeholder}
-          ref={forwardRef}
-          disabled={disabled}
-          {...rest}
-        />
       </div>
     );
   },

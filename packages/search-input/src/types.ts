@@ -1,4 +1,5 @@
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import { AriaLabelProps } from '@leafygreen-ui/a11y';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const State = {
   None: 'none',
@@ -40,6 +41,4 @@ interface BaseSearchInputProps
   disabled?: boolean;
 }
 
-type AriaLabels = 'aria-label' | 'aria-labelledby';
-export type SearchInputProps = Either<BaseSearchInputProps, AriaLabels>;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type SearchInputProps = BaseSearchInputProps & AriaLabelProps;

@@ -15,7 +15,7 @@ import {
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-export const InputOption = Polymorphic<InputOptionProps>(
+const InputOption = Polymorphic<InputOptionProps>(
   (
     {
       as = 'li' as PolymorphicAs,
@@ -54,5 +54,8 @@ export const InputOption = Polymorphic<InputOptionProps>(
       </Component>
     );
   },
-  'InputOption',
 );
+
+InputOption.displayName = 'InputOption';
+
+export { InputOption };
