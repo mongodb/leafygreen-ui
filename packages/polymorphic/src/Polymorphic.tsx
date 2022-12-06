@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { PolymorphicComponentType } from './Polymorphic.types';
 
 /** Returns a polymorphic component */

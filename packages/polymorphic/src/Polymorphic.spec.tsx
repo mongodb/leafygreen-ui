@@ -1,9 +1,11 @@
 import React from 'react';
-import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
-import { render } from '@testing-library/react';
 import styled from '@emotion/styled';
-import { Polymorph, usePolymorphicRef, type PolymorphicComponentType } from '.';
+import { render } from '@testing-library/react';
+
+import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
+
 import { makeWrapperComponent } from './utils/Polymorphic.testutils';
+import { Polymorph, type PolymorphicComponentType,usePolymorphicRef } from '.';
 
 describe('packages/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {

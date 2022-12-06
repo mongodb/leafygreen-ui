@@ -1,17 +1,19 @@
 import React from 'react';
-import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
-import { render } from '@testing-library/react';
 import styled from '@emotion/styled';
-import { usePolymorphicRef, type PolymorphicComponentType } from '..';
+import { render } from '@testing-library/react';
+
+import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
+import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
+import { type PolymorphicComponentType,usePolymorphicRef } from '..';
+
 import {
-  ExamplePolymorphic,
-  ExamplePolymorphicWithRef,
-  ExampleInferred,
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
+  ExampleInferred,
+  ExamplePolymorphic,
+  ExamplePolymorphicWithRef,
   RestrictedExample,
 } from '.';
-import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
 
 /**
  * Here we test Example Higher-order components

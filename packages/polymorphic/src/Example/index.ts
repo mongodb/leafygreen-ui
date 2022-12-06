@@ -1,8 +1,8 @@
 export {
-  ExamplePolymorphic,
-  ExamplePolymorphicWithRef,
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
   ExampleInferred,
+  ExamplePolymorphic,
+  ExamplePolymorphicWithRef,
   RestrictedExample,
 } from './Polymorphic.example';

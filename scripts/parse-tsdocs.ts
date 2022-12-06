@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Command } from 'commander';
 import fs from 'fs';
-import { camelCase} from 'lodash';
+import { camelCase } from 'lodash';
 import path from 'path';
 
 import { writeDocs } from './utils/tsDocParser';

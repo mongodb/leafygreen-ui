@@ -1,24 +1,20 @@
 import { toBePolymorphic } from './utils/Polymorphic.testutils';
-export { Polymorph, BasePolymorph } from './Polymorph';
+export type { InferredPolymorphicProps } from './InferredPolymorphic';
+export { useInferredPolymorphic } from './InferredPolymorphic';
+export { BasePolymorph,Polymorph } from './Polymorph';
 export { Polymorphic } from './Polymorphic';
-
 export {
-  usePolymorphicRef,
   getPolymorphicComponent,
   usePolymorphic,
+  usePolymorphicRef,
 } from './Polymorphic.hooks';
-
 export type {
   PolymorphicAs,
+  PolymorphicComponentType,
   PolymorphicProps,
   PolymorphicPropsWithRef,
   PolymorphicRef,
-  PolymorphicComponentType,
 } from './Polymorphic.types';
-
-export { useInferredPolymorphic } from './InferredPolymorphic';
-
-export type { InferredPolymorphicProps } from './InferredPolymorphic';
 
 expect.extend({
   toBePolymorphic,

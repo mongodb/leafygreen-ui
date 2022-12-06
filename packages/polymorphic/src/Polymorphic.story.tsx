@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import {
   Polymorph,
   Polymorphic,
-  usePolymorphic,
   PolymorphicPropsWithRef,
+  usePolymorphic,
 } from '.';
 
 export default {

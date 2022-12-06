@@ -1,23 +1,24 @@
 /* eslint-disable no-console */
 import {
-  withCompilerOptions,
+  ComponentDoc,
   ParserOptions,
   Props as TSDocProps,
-  ComponentDoc,
+  withCompilerOptions,
 } from 'react-docgen-typescript';
+import chalk from 'chalk';
+import fs from 'fs';
+import { camelCase,isUndefined, uniqBy } from 'lodash';
+import path from 'path';
+import { CompilerOptions, JsxEmit } from 'typescript';
+
 import {
   CustomComponentDoc,
+  getHTMLAttributesLink,
   GroupedPropRecord,
+  isInheritableGroup,
   PropItem,
   Props,
-  isInheritableGroup,
-  getHTMLAttributesLink,
 } from './tsDoc.utils';
-import fs from 'fs';
-import path from 'path';
-import chalk from 'chalk';
-import { isUndefined, uniqBy, camelCase } from 'lodash';
-import { CompilerOptions, JsxEmit } from 'typescript';
 
 const pascalCase = (str: string) =>
   camelCase(str).slice(0, 1).toUpperCase() + camelCase(str).slice(1);

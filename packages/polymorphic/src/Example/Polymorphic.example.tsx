@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
+
 import {
+  type InferredPolymorphicProps,
   Polymorph,
   Polymorphic,
   PolymorphicAs,
-  usePolymorphic,
-  useInferredPolymorphic,
-  type InferredPolymorphicProps,
+  type PolymorphicComponentType,
   type PolymorphicPropsWithRef,
   type PolymorphicRef,
-  type PolymorphicComponentType,
+  useInferredPolymorphic,
+  usePolymorphic,
 } from '..';
 
 interface ExampleProps {
