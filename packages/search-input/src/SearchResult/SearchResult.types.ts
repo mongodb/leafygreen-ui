@@ -1,11 +1,10 @@
 import React from 'react';
-import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { InputOptionProps } from '@leafygreen-ui/internal-input-option';
+import { BaseInputOptionProps } from '@leafygreen-ui/internal-input-option';
 
-export type SearchResultProps = AriaLabelProps &
+export type SearchResultProps =
   DarkModeProps &
-  InputOptionProps & {
+  BaseInputOptionProps & {
     /**
      * The value of the result
      */

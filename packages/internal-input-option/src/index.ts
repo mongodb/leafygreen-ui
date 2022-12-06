@@ -1,2 +1,2 @@
 export { InputOption } from './InputOption';
-export type { InputOptionProps } from './InputOption.types';
+export type { BaseInputOptionProps, InputOptionProps } from './InputOption.types';

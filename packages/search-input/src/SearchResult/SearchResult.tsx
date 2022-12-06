@@ -15,6 +15,7 @@ import {
   searchResultDisabledStyle,
 } from './SearchResult.styles';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { getNodeTextContent } from '@leafygreen-ui/lib';
 
 export const SearchResult = Polymorphic<
   InferredPolymorphicProps<SearchResultProps>
@@ -31,7 +32,9 @@ export const SearchResult = Polymorphic<
     ref,
   ) => {
     const { theme } = useDarkMode(rest.darkMode);
-
+    const textContent = getNodeTextContent(children);
+    const ariaLabel =
+      rest['aria-label'] ?? rest['aria-labelledby'] ? '' : textContent;
     return (
       <InputOption
         as={as}
@@ -45,6 +48,8 @@ export const SearchResult = Polymorphic<
           className,
         )}
         disabled={disabled}
+        aria-labelledby={rest['aria-labelledby']}
+        aria-label={ariaLabel}
         {...rest}
       >
         <div className={titleClassName}>{children}</div>
@@ -54,4 +59,5 @@ export const SearchResult = Polymorphic<
       </InputOption>
     );
   },
+  'SearchResult',
 );

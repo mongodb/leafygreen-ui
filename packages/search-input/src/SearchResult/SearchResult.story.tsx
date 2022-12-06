@@ -4,7 +4,7 @@ import {
 } from '@leafygreen-ui/lib';
 import React from 'react';
 import { SearchResult } from './SearchResult';
-import { SearchResultProps } from './SearchResult.types';
+import type { SearchResultProps } from './SearchResult.types';
 
 export default {
   title: 'Components/SearchInput/SearchResult',

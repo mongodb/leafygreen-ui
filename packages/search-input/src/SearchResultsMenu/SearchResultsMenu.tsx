@@ -1,15 +1,24 @@
 import React from 'react';
 import Popover from '@leafygreen-ui/popover';
 import { SearchResultsMenuProps } from './SearchResultsMenu.types';
-import { searchResultsMenuStyles } from './SearchResultsMenu.style';
+import {
+  searchResultsListStyles,
+  searchResultsMenuStyles,
+} from './SearchResultsMenu.style';
 
 export const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,
   SearchResultsMenuProps
->(({ children }: SearchResultsMenuProps, ref) => {
+>(({ children, refEl }: SearchResultsMenuProps, ref) => {
   return (
-    <Popover align="bottom" justify="start" className={searchResultsMenuStyles}>
-      <ul role="listbox" ref={ref}>
+    <Popover
+      active
+      align="bottom"
+      justify="start"
+      className={searchResultsMenuStyles}
+      refEl={refEl}
+    >
+      <ul role="listbox" ref={ref} className={searchResultsListStyles}>
         {children}
       </ul>
     </Popover>
