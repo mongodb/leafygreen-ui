@@ -24,6 +24,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   ComboboxProps,
   getNullSelection,
@@ -44,7 +45,7 @@ import {
   getValueForDisplayName,
   getNameAndValue,
 } from './utils';
-import { ComboboxContext, useDarkMode } from './ComboboxContext';
+import { ComboboxContext } from './ComboboxContext';
 import { InternalComboboxGroup } from './ComboboxGroup';
 import { InternalComboboxOption } from './ComboboxOption';
 import { Chip } from './Chip';
@@ -84,7 +85,7 @@ export function Combobox<M extends boolean>({
   'aria-label': ariaLabel,
   disabled = false,
   size = ComboboxSize.Default,
-  darkMode = false,
+  darkMode: darkModeProp,
   state = 'none',
   errorMessage,
   searchState = 'unset',
@@ -110,7 +111,7 @@ export function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
-  const theme = useDarkMode(darkMode);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
 
@@ -1189,6 +1190,7 @@ export function Combobox<M extends boolean>({
       value={{
         multiselect,
         darkMode,
+        theme,
         size,
         withIcons,
         disabled,

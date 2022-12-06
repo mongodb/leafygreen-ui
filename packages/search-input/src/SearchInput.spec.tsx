@@ -96,9 +96,12 @@ describe('packages/search-input', () => {
 
   /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
-    test('SearchInput throws error when aria-labelledby is not supplied', () => {
+    test('SearchInput throws error when no `aria-label` or `aria-labelledby` is supplied', () => {
       // @ts-expect-error
       <SearchInput />;
+      <SearchInput aria-label="some label" />;
+      <SearchInput aria-labelledby="some-id" />;
     });
   });
+  /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
 });

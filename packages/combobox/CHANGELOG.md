@@ -1,5 +1,33 @@
 # @leafygreen-ui/combobox
 
+## 5.0.2
+
+### Patch Changes
+
+- 38181cc1d: Update to consume darkMode from `useDarkMode`. Some components were setting `darkMode = false` as a default which would override the default value provided by the `LeafyGreenProvider`.
+- Updated dependencies [38181cc1d]
+  - @leafygreen-ui/checkbox@12.0.2
+
+## 5.0.1
+
+### Patch Changes
+
+- 1a335d0b2: Migrate component internals to check for glyphs explicity, rather than for Icon components as well
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+  - @leafygreen-ui/checkbox@12.0.1
+  - @leafygreen-ui/icon-button@15.0.1
+  - @leafygreen-ui/popover@11.0.1
+
 ## 5.0.0
 
 ### Patch Changes

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import Box, { BoxProps } from '@leafygreen-ui/box';
 import {
   createUniqueClassName,
   getNodeTextContent,
@@ -7,7 +8,6 @@ import {
 } from '@leafygreen-ui/lib';
 import { cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import Box, { BoxProps } from '@leafygreen-ui/box';
 import {
   menuItemContainerStyle,
   menuItemContainerThemeStyle,

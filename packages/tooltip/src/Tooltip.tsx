@@ -16,7 +16,7 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, isComponentType, Theme } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import {
   useUpdatedBaseFontSize,
   bodyTypeScaleStyles,
@@ -238,10 +238,7 @@ function Tooltip({
 
   useEffect(() => {
     // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
-    if (
-      (trigger && isComponentType(trigger, 'Icon')) ||
-      isComponentGlyph(trigger)
-    ) {
+    if (trigger && isComponentGlyph(trigger)) {
       console.warn(
         'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip, as these components do not render their children. To use, please wrap your trigger element in another HTML tag.',
       );

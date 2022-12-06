@@ -3,7 +3,7 @@ import { ComponentStory } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import Toggle from '.';
-import { Size } from './types';
+import { Size } from './Toggle/types';
 
 export default {
   title: 'Components/Toggle',

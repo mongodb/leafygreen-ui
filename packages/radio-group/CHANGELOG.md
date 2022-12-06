@@ -1,5 +1,19 @@
 # @leafygreen-ui/radio-group
 
+## 10.0.2
+
+### Patch Changes
+
+- a593238ff: Change darkMode disabled color from gray.dark1 to gray.base
+
+## 10.0.1
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+
 ## 10.0.0
 
 ### Major Changes

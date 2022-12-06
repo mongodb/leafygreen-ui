@@ -28,9 +28,6 @@
       "path": "../typography"
     },
     {
-      "path": "../code"
-    },
-    {
       "path": "../leafygreen-provider"
     }
   ]

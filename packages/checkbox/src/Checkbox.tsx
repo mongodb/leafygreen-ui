@@ -30,7 +30,7 @@ import {
  * Unlike toggles, checkboxes are used for actions, or features, that don’t immediately turn on or off. Checkboxes are usually found in forms as opposed to config pages.
  */
 function Checkbox({
-  darkMode = false,
+  darkMode: darkModeProp,
   checked: checkedProp,
   label = '',
   description,
@@ -52,7 +52,7 @@ function Checkbox({
     [checkedProp, checked],
   );
   const { usingKeyboard } = useUsingKeyboardContext();
-  const { theme } = useDarkMode(darkMode);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
   const labelId = `${checkboxId}-label`;

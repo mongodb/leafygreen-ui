@@ -3,8 +3,9 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { palette } from '@leafygreen-ui/palette';
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { ComboboxGroupProps, Theme } from './Combobox.types';
-import { ComboboxContext, useDarkMode } from './ComboboxContext';
+import { ComboboxGroupProps } from './Combobox.types';
+import { ComboboxContext } from './ComboboxContext';
+import { Theme } from '@leafygreen-ui/lib';
 
 const comboboxGroupStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -42,8 +43,7 @@ export function InternalComboboxGroup({
   className,
   children,
 }: ComboboxGroupProps): JSX.Element {
-  const { darkMode } = useContext(ComboboxContext);
-  const theme = useDarkMode(darkMode);
+  const { theme } = useContext(ComboboxContext);
 
   const groupId = useIdAllocator({ prefix: 'combobox-group' });
   const childCount = React.Children.count(children);
