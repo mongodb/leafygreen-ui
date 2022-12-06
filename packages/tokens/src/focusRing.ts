@@ -2,7 +2,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { Mode } from './mode';
 
 /**
- * Apply the `focusRing` token as the `box-shadow` value for any elemnent when focused
+ * Apply the `focusRing` token as the `box-shadow` value for any element when focused
  */
 const focusRing = {
   [Mode.Light]: {
