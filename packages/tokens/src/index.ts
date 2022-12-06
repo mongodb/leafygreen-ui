@@ -6,4 +6,4 @@ export { Mode } from './mode';
 export { default as spacing } from './spacing';
 export { default as typeScales, BaseFontSize } from './typeScales';
 export { default as transitionDuration } from './transitions';
-export { default as shadows } from './shadows'
+export { default as shadows } from './shadows';
