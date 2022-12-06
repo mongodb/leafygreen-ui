@@ -18,7 +18,7 @@ import {
   focusedThemeStyle,
   focusedDisabledStyle,
   focusedDisabledThemeStyle,
-  glyphWrapper,
+  glyphWrapperStyle,
   nestedChildrenStyles,
   sideNavItemClassName,
   liStyle,
@@ -173,7 +173,7 @@ const SideNavItem: ExtendableBox<
         onClick={onClick}
       >
         {accessibleGlyph && (
-          <span className={glyphWrapper}>
+          <span className={glyphWrapperStyle}>
             {accessibleGlyph}
 
             <CollapsedSideNavItem active={active}>

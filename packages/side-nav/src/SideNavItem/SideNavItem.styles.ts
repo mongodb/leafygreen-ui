@@ -203,7 +203,7 @@ export const focusedDisabledThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const glyphWrapper = css`
+export const glyphWrapperStyle = css`
   margin-right: ${spacing[2]}px;
   display: inline-flex;
   align-items: center;
