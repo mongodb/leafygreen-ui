@@ -11,6 +11,7 @@ export const Polymorphic = <P extends object = {}>(
 
   // If no `ref` arg was passed in, we use the plain render function
   const PolyComponent = render.length === 1 ? render : React.forwardRef(render);
-  PolyComponent.displayName = displayName ?? render.displayName;
-  return PolyComponent;
+  displayName = displayName ?? render.displayName ?? 'PolymorphicComponent';
+  PolyComponent.displayName = displayName;
+  return PolyComponent as PolymorphicComponentType<P>;
 };
