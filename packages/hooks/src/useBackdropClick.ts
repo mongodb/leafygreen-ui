@@ -51,7 +51,7 @@ export function useBackdropClick(
     },
     {
       options: { capture: true },
-      enabled
+      enabled,
     },
   );
 
