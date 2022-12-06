@@ -1,16 +1,18 @@
 import React from 'react';
 import { transparentize } from 'polished';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
-import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
+import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
+import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
-import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
-import { useSideNavContext } from './SideNavContext';
 import { InlineKeyCode } from '@leafygreen-ui/typography';
+
+import { useSideNavContext } from './SideNavContext';
 
 const iconClassName = createUniqueClassName('collapse-menu');
 

@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { RadioProps, Size } from './types';
+
 import {
   containerMargin,
-  inputDisplayThemeStyles,
   hoverThemeStyles,
-  inputClassName,
-  inputDisplayClassName,
-  inputDisplayWrapperClassName,
-  labelThemeStyles,
-  inputDisplaySizeStyles,
-  radioBoxSizeStyles,
-  inputDisplayBaseStyle,
-  labelBaseStyle,
-  inputThemeStyles,
   inputBaseStyle,
+  inputClassName,
+  inputDisplayBaseStyle,
+  inputDisplayClassName,
+  inputDisplaySizeStyles,
+  inputDisplayThemeStyles,
+  inputDisplayWrapperClassName,
+  inputThemeStyles,
+  labelBaseStyle,
+  labelThemeStyles,
   radioBoxBaseStyle,
+  radioBoxSizeStyles,
 } from './styles';
+import { RadioProps, Size } from './types';
 
 /**
  * # Radio

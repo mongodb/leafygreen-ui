@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
 import MenuContext from './MenuContext';
 
 const borderStyle = css`

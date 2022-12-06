@@ -1,5 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import React, { Dispatch } from 'react';
+
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export interface StepperContextValues {
   isDarkMode: boolean;

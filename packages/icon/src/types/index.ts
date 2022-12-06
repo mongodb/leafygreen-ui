@@ -1,2 +1,2 @@
-export * as SVGR from './SVGR';
 export * as LGGlyph from './LGGlyph';
+export * as SVGR from './SVGR';

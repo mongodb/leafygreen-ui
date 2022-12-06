@@ -1,9 +1,10 @@
-import { palette } from '@leafygreen-ui/palette';
-import { Theme } from '@leafygreen-ui/lib';
-import { fontFamilies } from '@leafygreen-ui/tokens';
 import { css } from '@leafygreen-ui/emotion';
-import { Variant } from './types';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
+
+import { Variant } from './types';
 
 export const baseBannerStyles = css`
   position: relative;

@@ -1,18 +1,19 @@
 import React, { forwardRef, ReactElement, Ref, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { cx } from '@leafygreen-ui/emotion';
-import { SegmentXs, SegmentS, SegmentM, SegmentL } from './svgs';
 
+import { cx } from '@leafygreen-ui/emotion';
+
+import PipelineContext from './PipelineContext';
 import {
-  counterThemeStyles,
   counterBaseStyles,
   counterSizeStyles,
-  svgLayer1Styles,
-  svgLayer2Styles,
   counterSvgBaseStyles,
   counterSvgColStyles,
+  counterThemeStyles,
+  svgLayer1Styles,
+  svgLayer2Styles,
 } from './styles';
-import PipelineContext from './PipelineContext';
+import { SegmentL, SegmentM, SegmentS, SegmentXs } from './svgs';
 import { CounterProps, Size } from './types';
 
 const segments: Record<Size, React.ComponentType<any>> = {

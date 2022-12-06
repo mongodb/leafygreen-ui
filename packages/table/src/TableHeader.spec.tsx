@@ -1,5 +1,7 @@
-import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
+
+import '@testing-library/jest-dom/extend-expect';
+
 import { normalizeAccessor } from './TableHeader';
 import { renderTable } from './testUtils';
 

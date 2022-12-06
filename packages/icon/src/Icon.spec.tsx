@@ -1,16 +1,18 @@
 import React from 'react';
-import path from 'path';
-import fs from 'fs';
-import { createHash } from 'crypto';
-import { toJson } from 'xml2json';
 import { render, screen } from '@testing-library/react';
+import { createHash } from 'crypto';
+import fs from 'fs';
 import { axe } from 'jest-axe';
+import path from 'path';
+import { toJson } from 'xml2json';
+
 import { typeIs } from '@leafygreen-ui/lib';
-import { SVGR } from './types';
-import { createGlyphComponent, createIconComponent, glyphs } from '.';
+
 import EditIcon from './generated/Edit';
 import { Size } from './glyphCommon';
 import { isComponentGlyph } from './isComponentGlyph';
+import { SVGR } from './types';
+import { createGlyphComponent, createIconComponent, glyphs } from '.';
 
 function getBaseName(filePath: string): string {
   return path.basename(filePath, path.extname(filePath));

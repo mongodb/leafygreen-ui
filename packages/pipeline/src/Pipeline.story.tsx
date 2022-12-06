@@ -1,9 +1,11 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
+
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import Pipeline from './Pipeline';
 import Stage from './Stage';
 import { PipelineProps, Size } from './types';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Pipeline',

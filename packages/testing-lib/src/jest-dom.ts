@@ -1,5 +1,5 @@
-import { spyContext, SpyHandle } from './jest';
 import { within } from './context';
+import { spyContext, SpyHandle } from './jest';
 
 const errorMatcher = /Error: Not implemented: navigation/;
 

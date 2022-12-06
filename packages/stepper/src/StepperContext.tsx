@@ -2,9 +2,10 @@ import React, {
   createContext,
   ReactNode,
   useContext,
-  useState,
   useEffect,
+  useState,
 } from 'react';
+
 import { StepperContextValues } from './types';
 
 export const StepperContext = createContext({});

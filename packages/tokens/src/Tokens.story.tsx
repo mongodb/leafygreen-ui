@@ -1,18 +1,20 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React from 'react';
+import { startCase } from 'lodash';
+
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { H2, InlineCode } from '@leafygreen-ui/typography';
-import {
-  spacing,
-  hoverRing,
-  fontFamilies,
-  typeScales,
-  focusRing,
-  transitionDuration,
-} from '.';
+
 import { Mode } from './mode';
-import { startCase } from 'lodash';
+import {
+  focusRing,
+  fontFamilies,
+  hoverRing,
+  spacing,
+  transitionDuration,
+  typeScales,
+} from '.';
 
 export default {
   title: 'Components/Tokens',

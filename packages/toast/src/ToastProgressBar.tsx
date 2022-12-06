@@ -1,9 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import clamp from 'lodash/clamp';
-import { cx, css, keyframes } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import PropTypes from 'prop-types';
+
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const toastWidth = 400;

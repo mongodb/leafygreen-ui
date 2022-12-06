@@ -1,15 +1,17 @@
-import { css, cx } from '@leafygreen-ui/emotion';
 import React, { useEffect, useRef } from 'react';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { registerRipple } from '@leafygreen-ui/ripple';
+
+import ButtonIcon from './ButtonIcon';
 import {
   buttonContentSizeStyle,
   buttonContentStyle,
   rippleColors,
   rippleStyle,
 } from './styles';
-import ButtonIcon from './ButtonIcon';
 import { ButtonProps, Size, Variant } from './types';
-import { registerRipple } from '@leafygreen-ui/ripple';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 type ButtonContentProps = Omit<ButtonProps, 'as'>;
 

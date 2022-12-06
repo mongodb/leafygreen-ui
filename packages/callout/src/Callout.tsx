@@ -1,29 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
+  anchorClassName,
   bodyTypeScaleStyles,
   Overline,
   Subtitle,
   useUpdatedBaseFontSize,
-  anchorClassName,
 } from '@leafygreen-ui/typography';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { CalloutProps, Variant } from './types';
+
 import {
-  colorSets,
-  headerIcons,
   baseStyle,
   baseThemeStyles,
-  headerStyle,
-  headerIconStyle,
-  headerLabels,
   bodyStyle,
-  titleStyle,
+  colorSets,
   contentStyles,
   focusThemeStyles,
+  headerIcons,
+  headerIconStyle,
+  headerLabels,
+  headerStyle,
+  titleStyle,
 } from './styles';
+import { CalloutProps, Variant } from './types';
 
 /**
  * Callouts should be used when you want to call out information to the user. Unlike banners, callouts cannot be dismissed. They’re optimized for long form copy (banners are optimized to save space).
