@@ -9,14 +9,8 @@ export const Polymorphic = <P extends object = {}>(
   // Here we only know the additional props,
   // but don' t know what `as` is, or what props to inherit
 
-  if (render.length === 1) {
-    // If no `ref` arg was passed in
-    const PolyComponent = render;
-    PolyComponent.displayName = displayName ?? render.displayName;
-    return PolyComponent;
-  }
-
-  const PolyComponent = React.forwardRef(render);
+  // If no `ref` arg was passed in, we use the plain render function
+  const PolyComponent = render.length === 1 ? render : React.forwardRef(render);
   PolyComponent.displayName = displayName ?? render.displayName;
   return PolyComponent;
 };

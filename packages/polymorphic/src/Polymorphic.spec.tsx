@@ -18,7 +18,7 @@ describe('packages/polymorphic', () => {
     /* eslint-disable jest/no-disabled-tests */
     test.skip('Prop Types behave correctly', () => {
       const { Wrapper } = makeWrapperComponent();
-      const divRef = usePolymorphicRef<'div'>(); // React.useRef<HTMLDivElement | null>(null);
+      const divRef = usePolymorphicRef<'div'>();
       const anchorRef = usePolymorphicRef<'a'>();
       const spanRef = usePolymorphicRef<'span'>();
 
@@ -43,17 +43,11 @@ describe('packages/polymorphic', () => {
         <Polymorph as="a" href="mongodb.design">
           some content
         </Polymorph>
-        {/* Should accept href (and render it as 'a') */}
-        {/* <Polymorph href="mongodb.design" /> */}
 
         <Polymorph as="input" />
-        {/* TODO: ts-expect-error - Input should not accept children */}
-        {/* <Polymorph as="input">some content</Polymorph> */}
 
         <Polymorph as={Wrapper} />
         <Polymorph as={Wrapper} ref={spanRef} />
-        {/* TODO: ts-expect-error - Must pass the correct ref type */}
-        <Polymorph as={Wrapper} ref={divRef} />
         <Polymorph as={Wrapper} ref={spanRef} darkMode={true} />
         {/* @ts-expect-error - Theme is not a prop on Wrapper */}
         <Polymorph as={Wrapper} ref={spanRef} theme={'dark'} />

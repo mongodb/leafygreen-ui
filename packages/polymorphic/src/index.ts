@@ -4,7 +4,7 @@ export { Polymorphic } from './Polymorphic';
 
 export {
   usePolymorphicRef,
-  usePolymorphicComponent,
+  getPolymorphicComponent,
   usePolymorphic,
 } from './Polymorphic.hooks';
 
