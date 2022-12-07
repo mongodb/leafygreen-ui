@@ -1,12 +1,7 @@
 import React from 'react';
-<<<<<<< HEAD:packages/side-nav/src/SideNav/SideNav.spec.tsx
-import { render, screen, cleanup, fireEvent } from '@testing-library/react';
-import { SideNav, SideNavGroup, SideNavItem } from '..';
-=======
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
-import { SideNav, SideNavGroup, SideNavItem } from '.';
->>>>>>> 07331dad9b1487b3f3a15ae99b6ef3a7925f1fbb:packages/side-nav/src/SideNav.spec.tsx
+import { SideNav, SideNavGroup, SideNavItem } from '..';
 
 type renderedElement = HTMLElement | null;
 
