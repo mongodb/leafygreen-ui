@@ -56,6 +56,7 @@ export const buttonThemeStyles: Record<Theme, string> = {
     &:focus-visible {
       color: ${palette.blue.base};
       box-shadow: ${focusRing.light.default};
+      background-color: ${palette.gray.light3};
     }
   `,
   [Theme.Dark]: css`
@@ -72,6 +73,7 @@ export const buttonThemeStyles: Record<Theme, string> = {
     &:focus-visible {
       color: ${palette.blue.light2};
       box-shadow: ${focusRing.dark.default};
+      background-color: ${palette.gray.dark2};
     }
   `,
 };
