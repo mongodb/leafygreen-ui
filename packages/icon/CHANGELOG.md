@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.12.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+
 ## 11.12.1
 
 ### Patch Changes
