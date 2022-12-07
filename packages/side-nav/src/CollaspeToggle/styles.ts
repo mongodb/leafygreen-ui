@@ -99,9 +99,6 @@ export const iconWrapper = css`
 
 export const keyboardShortcut = css`
   padding: 0 3px 2px 2px;
-  // TODO: do we need a box-shadow?
-  box-shadow: 0 3px 3px -2px rgba(113, 39, 39, 0.3), 0 0 2px rgba(0, 0, 0, 0.3),
-    inset 0 1px 2px rgba(255, 255, 255, 0.15);
   line-height: 1em;
   margin-left: ${spacing[2]}px;
 `;

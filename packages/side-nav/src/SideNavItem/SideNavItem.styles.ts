@@ -38,11 +38,9 @@ export const baseStyle = css`
   text-align: left;
   text-decoration: none;
   text-transform: capitalize;
-  // color: ${palette.black};
 
   // Stateful transitions
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
-  // background-color: ${transparentize(100, palette.gray.light3)};
 
   &:hover {
     background-color: ${palette.gray.light2};

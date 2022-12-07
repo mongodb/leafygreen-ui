@@ -124,7 +124,7 @@ export const indentedStyle = (indentLevel: number, darkMode: boolean) =>
   cx(
     getIndentLevelStyle(indentLevel, darkMode),
     css`
-      padding-top: 16px;
-      padding-bottom: 8px;
+      padding-top: ${spacing[3]}px;
+      padding-bottom: ${spacing[2]}px;
     `,
   );
