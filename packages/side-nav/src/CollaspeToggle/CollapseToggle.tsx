@@ -1,5 +1,4 @@
 import React from 'react';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { cx } from '@leafygreen-ui/emotion';
 import Tooltip from '@leafygreen-ui/tooltip';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
@@ -13,10 +12,12 @@ import {
   buttonCollapsedStyles,
   iconWrapper,
   keyboardShortcut,
+  iconClassName,
 } from './styles';
 
-export const iconClassName = createUniqueClassName('collapse-menu');
-
+/**
+ * @internal
+ */
 export function CollapseToggle({
   className,
   collapsed,

@@ -1,10 +1,11 @@
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { focusRing, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { transparentize } from 'polished';
-import { iconClassName } from './CollapseToggle';
+
+export const iconClassName = createUniqueClassName('collapse-menu');
 
 export const buttonBaseStyles = css`
   position: absolute;

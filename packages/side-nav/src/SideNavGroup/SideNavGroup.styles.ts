@@ -81,25 +81,6 @@ export const collapsibleFocusStyle = css`
   }
 `;
 
-export const customIconStyle = css`
-  display: inline-flex;
-`;
-
-export const customIconThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.green.dark2};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.green.dark1};
-  `,
-};
-
-export const headerStyles = css`
-  display: inline-flex;
-  align-items: center;
-  gap: ${spacing[2]}px;
-`;
-
 export const expandIconStyle = css`
   transition: ${transitionDuration.default}ms all ease-in-out;
   margin-left: ${spacing[2]}px;
@@ -138,10 +119,6 @@ export const transitionStyles = {
   `,
   unmounted: undefined,
 };
-
-export const overlineStyle = css`
-  color: inherit;
-`;
 
 export const indentedStyle = (indentLevel: number, darkMode: boolean) =>
   cx(
