@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ClipboardJS from 'clipboard';
+
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import { cx, css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -11,6 +11,7 @@ import {
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 
 const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`

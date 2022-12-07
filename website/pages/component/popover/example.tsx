@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { css } from '@emotion/css';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import Button from '@leafygreen-ui/button';
 import { uiColors } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
-import Button from '@leafygreen-ui/button';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { css } from '@emotion/css';
 
 const wrapper = css`
   width: 100%;

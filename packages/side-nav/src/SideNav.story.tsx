@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Select, Option, Size } from '@leafygreen-ui/select';
-import { palette } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
-import { SideNav, SideNavItem, SideNavGroup } from '.';
-import { Body, H1 } from '@leafygreen-ui/typography';
-import { SideNavProps } from './SideNav/types';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { Option, Select, Size } from '@leafygreen-ui/select';
+import { Body, H1 } from '@leafygreen-ui/typography';
+
+import { SideNavProps } from './SideNav/types';
+import { SideNav, SideNavGroup, SideNavItem } from '.';
 
 export default {
   title: 'Components/SideNav',

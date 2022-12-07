@@ -1,4 +1,5 @@
 import { Theme } from '@leafygreen-ui/lib';
+
 import { SideNavGroupProps } from '../SideNavGroup/types';
 
 export interface SideNavHeaderProps {

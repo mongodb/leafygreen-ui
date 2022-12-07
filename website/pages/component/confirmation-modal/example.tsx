@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { css } from '@emotion/css';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import Button from '@leafygreen-ui/button';
 import ConfirmationModal, { Variant } from '@leafygreen-ui/confirmation-modal';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { css } from '@emotion/css';
 
 // TODO: import ConfirmationModalProps from component
 // When interface is used, ts complains that index signature is missing

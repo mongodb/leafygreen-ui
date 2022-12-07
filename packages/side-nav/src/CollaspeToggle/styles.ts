@@ -1,9 +1,10 @@
+import { transparentize } from 'polished';
+
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { focusRing, spacing, transitionDuration } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
 
 export const iconClassName = createUniqueClassName('collapse-menu');
 

@@ -1,5 +1,5 @@
-import isUndefined from 'lodash/isUndefined';
 import { useState } from 'react';
+import isUndefined from 'lodash/isUndefined';
 
 export default function useValidation<
   T extends HTMLInputElement | HTMLTextAreaElement,

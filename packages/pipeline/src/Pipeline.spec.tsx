@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { typeIs } from '@leafygreen-ui/lib';
 import { axe } from 'jest-axe';
+
+import { typeIs } from '@leafygreen-ui/lib';
+
 import Pipeline from './Pipeline';
 import Stage from './Stage';
 import { Size } from './types';

@@ -1,10 +1,12 @@
 import React, { ElementType } from 'react';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
-import Button, { Variant, ButtonProps } from '.';
-import { BoxProps } from '@leafygreen-ui/box';
 import { Meta, Story } from '@storybook/react';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import { BoxProps } from '@leafygreen-ui/box';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import Button, { ButtonProps, Variant } from '.';
 
 type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
 

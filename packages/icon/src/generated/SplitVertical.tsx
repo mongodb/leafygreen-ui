@@ -2,11 +2,13 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 9a3a57cb8dea1cccebc8966b3d72380e
+ * @checksum d3ffc8de29ebf919cdd53acc9c3d22f1
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SplitVerticalProps extends LGGlyph.ComponentProps {}

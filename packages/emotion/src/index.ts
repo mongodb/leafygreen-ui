@@ -1,5 +1,6 @@
-import emotion from './emotion';
 import createEmotionServer from '@emotion/server/create-instance';
+
+import emotion from './emotion';
 
 export const {
   flush,

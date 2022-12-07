@@ -1,10 +1,11 @@
 import React from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import Row, { RowProps } from './Row';
-import { tdInnerDivClassName } from './Cell';
-import { TransitionStatus } from 'react-transition-group/Transition';
 import { useEffect, useRef, useState } from 'react';
-import { useDarkModeContext } from './DarkModeContext';
+import { TransitionStatus } from 'react-transition-group/Transition';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+
+import { tdInnerDivClassName } from './Cell';
+import Row, { RowProps } from './Row';
 
 const transitionTime = 200;
 
@@ -72,7 +73,6 @@ interface NestedRowProps extends RowProps {
 
 const NestedRow = ({ ref, className, state, ...rest }: NestedRowProps) => {
   const [nestedRowHeight, setNestedRowHeight] = useState(0);
-  const darkMode = useDarkModeContext();
   const nestedRowNodeRef = useRef<HTMLTableRowElement>(null);
 
   const calculateRowContentHeight = () => {
@@ -100,12 +100,6 @@ const NestedRow = ({ ref, className, state, ...rest }: NestedRowProps) => {
       className={cx(
         nestedRowInitialStyle,
         nestedRowTransitionStyles(state, nestedRowHeight),
-        {
-          // TODO: Refresh - remove dark mode overrides
-          [css`
-            --lg-cell-min-height: 24px;
-          `]: darkMode,
-        },
         className,
       )}
     />

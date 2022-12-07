@@ -1,20 +1,22 @@
 import React from 'react';
-import { css, cx } from '@emotion/css';
-import { Overline } from '@leafygreen-ui/typography';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import {
+  AtlasForGovernmentLogoLockup,
+  AtlasLogoLockup,
+  CommunityEditionLogoLockup,
+  EnterpriseAdvancedLogoLockup,
   MongoDBLogo,
   MongoDBLogoMark,
-  AtlasLogoLockup,
-  AtlasForGovernmentLogoLockup,
   RealmLogoLockup,
-  EnterpriseAdvancedLogoLockup,
-  CommunityEditionLogoLockup,
   UniversityLogoLockup,
 } from '@leafygreen-ui/logo';
-
-import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import { spacing } from '@leafygreen-ui/tokens';
+import { Overline } from '@leafygreen-ui/typography';
+
+import { css, cx } from '@emotion/css';
 
 const overlineStyle = css`
   margin-bottom: ${spacing[3]}px;

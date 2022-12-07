@@ -1,8 +1,11 @@
+import React from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { Overline } from '@leafygreen-ui/typography';
-import React from 'react';
+
 import { CollapsedSideNavItem } from '../CollaspedSideNavItem/CollapsedSideNavItem';
+
 import {
   baseStyles,
   customIconStyle,

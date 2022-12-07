@@ -1,8 +1,11 @@
 import React from 'react';
-import { css } from '@emotion/css';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import Button from '@leafygreen-ui/button';
 import Toast, { Variant } from '@leafygreen-ui/toast';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { css } from '@emotion/css';
 
 const knobsConfig: KnobsConfigInterface<{
   variant: Variant;

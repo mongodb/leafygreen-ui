@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-  render,
   fireEvent,
-  screen,
   getByLabelText,
+  render,
+  screen,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
+
 import TextArea, { State } from './';
 
 const onChange = jest.fn();

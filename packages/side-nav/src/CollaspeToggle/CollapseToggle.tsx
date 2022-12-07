@@ -1,19 +1,22 @@
 import React from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
-import Tooltip from '@leafygreen-ui/tooltip';
-import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
-import { useSideNavContext } from '../SideNav/SideNavContext';
+import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
+import Tooltip from '@leafygreen-ui/tooltip';
 import { InlineKeyCode } from '@leafygreen-ui/typography';
-import { CollapseToggleProps } from './types';
+
+import { useSideNavContext } from '../SideNav/SideNavContext';
+
 import {
   buttonBaseStyles,
-  buttonThemeStyles,
   buttonCollapsedStyles,
+  buttonThemeStyles,
+  iconClassName,
   iconWrapper,
   keyboardShortcut,
-  iconClassName,
 } from './styles';
+import { CollapseToggleProps } from './types';
 
 /**
  * @internal

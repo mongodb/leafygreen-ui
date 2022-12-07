@@ -1,28 +1,31 @@
-import React, { useRef, useMemo, forwardRef } from 'react';
+import React, { forwardRef, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
+
 import { CollapsedSideNavItem } from '../CollaspedSideNavItem/CollapsedSideNavItem';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { getIndentLevelStyle, typographyStyle } from '../SideNav/styles';
+
 import {
   activeBaseStyle,
   activeThemeStyle,
   baseStyle,
-  themeStyle,
   disabledStyle,
-  focusedStyle,
-  focusedThemeStyle,
   focusedDisabledStyle,
   focusedDisabledThemeStyle,
+  focusedStyle,
+  focusedThemeStyle,
   glyphWrapperStyle,
-  nestedChildrenStyles,
-  sideNavItemClassName,
   liStyle,
+  nestedChildrenStyles,
   nestedULStyle,
+  sideNavItemClassName,
+  themeStyle,
 } from './SideNavItem.styles';
 import { SideNavItemProps } from './types';
 

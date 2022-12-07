@@ -1,35 +1,38 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { keyMap } from '@leafygreen-ui/lib';
+import PropTypes from 'prop-types';
+
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
+import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
-import SideNavContext from './SideNavContext';
+
 import { CollapseToggle } from '../CollaspeToggle/CollapseToggle';
-import { SideNavProps } from './types';
+
+import SideNavContext from './SideNavContext';
 import {
-  sideNavWidth,
-  ulStyleOverrides,
+  collapsedNavStyles,
+  collapsedStateStyles,
   collapseDuration,
-  outerContainerStyle,
-  outerContainerCollapsedStyle,
+  expandedStateStyles,
+  hoverNavStyles,
   innerNavWrapperStyle,
+  listStyles,
+  listWrapperStyle,
   navBaseStyles,
   navThemeStyles,
-  collapsedNavStyles,
-  hoverNavStyles,
-  listWrapperStyle,
-  listStyles,
+  outerContainerCollapsedStyle,
+  outerContainerStyle,
   sideNavClassName,
-  expandedStateStyles,
-  collapsedStateStyles,
+  sideNavWidth,
+  ulStyleOverrides,
 } from './styles';
+import { SideNavProps } from './types';
 
 const sideNavSelector = `.${sideNavClassName}`;
 

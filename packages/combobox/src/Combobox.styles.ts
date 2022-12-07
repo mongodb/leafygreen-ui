@@ -9,6 +9,7 @@ import {
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
+
 import { ComboboxSize as Size, Overflow } from './Combobox.types';
 
 /**

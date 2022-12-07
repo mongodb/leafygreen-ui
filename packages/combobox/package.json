@@ -31,6 +31,7 @@
     "@leafygreen-ui/popover": "^11.0.1",
     "@leafygreen-ui/tokens": "^1.4.0",
     "@leafygreen-ui/typography": "^15.1.0",
+    "chalk": "^5.1.2",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
@@ -38,7 +39,7 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
   },
   "devDependencies": {
-    "chalk": "^2.4.2"
+    "@leafygreen-ui/button": "^19.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {

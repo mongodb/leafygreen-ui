@@ -1,14 +1,16 @@
 import { mix, transparentize } from 'polished';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+import { createUniqueClassName, getTheme, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { Size, Variant, ButtonProps } from './types';
 import {
   BaseFontSize,
   fontFamilies,
-  typeScales,
   transitionDuration,
+  typeScales,
 } from '@leafygreen-ui/tokens';
-import { createUniqueClassName, getTheme, Theme } from '@leafygreen-ui/lib';
+
+import { ButtonProps, Size, Variant } from './types';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 

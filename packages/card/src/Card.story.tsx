@@ -1,8 +1,10 @@
 /* eslint react/prop-types: 0 */
-import { BoxProps } from '@leafygreen-ui/box';
-import { Story } from '@storybook/react';
 import React from 'react';
+import { Story } from '@storybook/react';
+
+import { BoxProps } from '@leafygreen-ui/box';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import { Card as LGCard, CardProps } from './Card';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef

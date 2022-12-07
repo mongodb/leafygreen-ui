@@ -1,7 +1,9 @@
-import { ComponentStory } from '@storybook/react';
 import React from 'react';
-import Copyable from '.';
+import { ComponentStory } from '@storybook/react';
+
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import Copyable from '.';
 
 export default {
   title: 'Components/Copyable',

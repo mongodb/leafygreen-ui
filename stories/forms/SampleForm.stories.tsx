@@ -1,6 +1,7 @@
 import React from 'react';
-import TextInput from '@leafygreen-ui/text-input';
+
 import { Select } from '@leafygreen-ui/select';
+import TextInput from '@leafygreen-ui/text-input';
 
 export default {
   title: 'Form/Sample Forms',

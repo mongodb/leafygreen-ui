@@ -1,5 +1,5 @@
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {
   None: 'none',

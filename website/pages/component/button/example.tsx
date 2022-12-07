@@ -1,7 +1,9 @@
 import React from 'react';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
-import Button, { Variant, Size } from '@leafygreen-ui/button';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import Button, { Size, Variant } from '@leafygreen-ui/button';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { GlyphName } from '@leafygreen-ui/icon/dist/glyphs';
 
 const knobsConfig: KnobsConfigInterface<{

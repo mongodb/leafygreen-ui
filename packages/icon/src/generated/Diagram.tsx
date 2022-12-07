@@ -2,11 +2,13 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 8ea08d4796618261a6aca880f6bd8591
+ * @checksum 6b6e63ed9e2340572118749402023c76
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface DiagramProps extends LGGlyph.ComponentProps {}

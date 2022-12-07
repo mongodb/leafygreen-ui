@@ -1,17 +1,18 @@
 import React from 'react';
 import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+
 import Box, { BoxProps } from '@leafygreen-ui/box';
-import {
-  fontFamilies,
-  focusRing,
-  typeScales,
-  transitionDuration,
-} from '@leafygreen-ui/tokens';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import {
+  focusRing,
+  fontFamilies,
+  transitionDuration,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 export const ContentStyle = {
   None: 'none',

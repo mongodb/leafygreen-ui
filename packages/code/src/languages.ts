@@ -1,10 +1,15 @@
-import javascript from 'highlight.js/lib/languages/javascript';
-import typescript from 'highlight.js/lib/languages/typescript';
+import bash from 'highlight.js/lib/languages/bash';
 import csharp from 'highlight.js/lib/languages/csharp';
+import dart from 'highlight.js/lib/languages/dart';
+import diff from 'highlight.js/lib/languages/diff';
 import go from 'highlight.js/lib/languages/go';
 import http from 'highlight.js/lib/languages/http';
 import ini from 'highlight.js/lib/languages/ini';
 import java from 'highlight.js/lib/languages/java';
+import javascript from 'highlight.js/lib/languages/javascript';
+import json from 'highlight.js/lib/languages/json';
+import kotlin from 'highlight.js/lib/languages/kotlin';
+import objectivec from 'highlight.js/lib/languages/objectivec';
 import perl from 'highlight.js/lib/languages/perl';
 import php from 'highlight.js/lib/languages/php';
 import properties from 'highlight.js/lib/languages/properties';
@@ -12,17 +17,12 @@ import python from 'highlight.js/lib/languages/python';
 import ruby from 'highlight.js/lib/languages/ruby';
 import rust from 'highlight.js/lib/languages/rust';
 import scala from 'highlight.js/lib/languages/scala';
-import swift from 'highlight.js/lib/languages/swift';
-import kotlin from 'highlight.js/lib/languages/kotlin';
-import objectivec from 'highlight.js/lib/languages/objectivec';
-import dart from 'highlight.js/lib/languages/dart';
-import bash from 'highlight.js/lib/languages/bash';
 import shell from 'highlight.js/lib/languages/shell';
 import sql from 'highlight.js/lib/languages/sql';
-import yaml from 'highlight.js/lib/languages/yaml';
-import json from 'highlight.js/lib/languages/json';
-import diff from 'highlight.js/lib/languages/diff';
+import swift from 'highlight.js/lib/languages/swift';
+import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
+import yaml from 'highlight.js/lib/languages/yaml';
 
 export const languageParsers = {
   javascript,

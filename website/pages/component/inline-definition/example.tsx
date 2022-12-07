@@ -1,8 +1,10 @@
 import React from 'react';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { Align, Justify } from '@leafygreen-ui/tooltip';
 import { H2 } from '@leafygreen-ui/typography';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const shardDefinition =
   'Sharding is a method for horizontally scaling across multiple replica sets by breaking up large datasets (e.g. partitioning) into smaller parts. Sharding is native to MongoDB.';

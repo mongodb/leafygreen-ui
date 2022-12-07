@@ -1,23 +1,26 @@
 import React, { forwardRef, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+
+import Box from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import {
   useBaseFontSize,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import Box from '@leafygreen-ui/box';
+
 import { SegmentedControlContext } from '../SegmentedControlContext';
+
 import {
-  optionStyle,
   boxStyle,
-  buttonStyle,
   buttonFocusStyle,
-  labelStyle,
+  buttonStyle,
   iconOnlyThemeStyles,
+  labelStyle,
   labelTextStyles,
+  optionStyle,
 } from './styles';
 import { SegmentedControlOptionProps } from './types';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
 
 /**
  * SegmentedControlOption
