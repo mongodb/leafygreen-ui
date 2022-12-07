@@ -10,20 +10,24 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { CollapsedSideNavItem } from '../SideNavItem';
 import { useSideNavContext } from '../SideNav/SideNavContext';
-import { ulStyleOverrides, getIndentLevelStyle } from '../SideNav/styles';
+import { ulStyleOverrides } from '../SideNav/styles';
 import {
   buttonClassName,
-  collapsibleHeaderFocusStyle,
-  collapsibleHeaderBaseStyle,
-  collapsibleHeaderThemeStyle,
-  customIconStyles,
-  sideNavCollapsibleGroupBaseStyles,
+  collapsibleFocusStyle,
+  collapsibleBaseStyle,
+  collapsibleThemeStyle,
+  customIconStyle,
+  customIconThemeStyle,
+  collapsibleGroupBaseStyles,
   expandIconStyle,
-  headerBaseStyle,
-  headerThemeStyle,
+  baseStyle,
+  themeStyle,
   listItemStyle,
   openExpandIconStyle,
   transitionStyles,
+  headerStyles,
+  overlineStyle,
+  indentedStyle,
 } from './SideNavGroup.styles';
 import { SideNavGroupProps } from './types';
 import { Overline } from '@leafygreen-ui/typography';
@@ -120,7 +124,7 @@ function SideNavGroup({
   const accessibleGlyph =
     glyph && isComponentGlyph(glyph)
       ? React.cloneElement(glyph, {
-          className: cx(customIconStyles, glyph.props.className),
+          className: cx(glyph.props.className),
           role: 'presentation',
           'data-testid': 'side-nav-group-header-icon',
         })
@@ -128,38 +132,19 @@ function SideNavGroup({
 
   // Render the header text
   const renderedHeader = (
-    <div
-      className={css`
-        display: inline-flex;
-        align-items: center;
-      `}
-    >
+    <div className={headerStyles}>
       {accessibleGlyph && (
         <>
-          {accessibleGlyph}
-
+          <span className={cx(customIconStyle, customIconThemeStyle[theme])}>
+            {accessibleGlyph}
+          </span>
           <CollapsedSideNavItem active={isActiveGroup}>
             {accessibleGlyph}
           </CollapsedSideNavItem>
         </>
       )}
-      <Overline
-        className={css`
-          color: inherit;
-        `}
-      >
-        {header}
-      </Overline>
+      <Overline className={overlineStyle}>{header}</Overline>
     </div>
-  );
-
-  // compute styles for indented items
-  const indentedStyle = cx(
-    getIndentLevelStyle(indentLevel, darkMode),
-    css`
-      padding-top: 16px;
-      padding-bottom: 8px;
-    `,
   );
 
   // compute the entered ul wrapper styles based on the ul height
@@ -189,16 +174,16 @@ function SideNavGroup({
             aria-expanded={open}
             className={cx(
               buttonClassName,
-              headerBaseStyle,
-              headerThemeStyle[theme],
-              collapsibleHeaderBaseStyle,
-              collapsibleHeaderThemeStyle[theme],
+              baseStyle,
+              themeStyle[theme],
+              collapsibleBaseStyle,
+              collapsibleThemeStyle[theme],
               css`
                 width: ${width}px;
               `,
               {
-                [collapsibleHeaderFocusStyle]: usingKeyboard,
-                [indentedStyle]: indentLevel > 1,
+                [collapsibleFocusStyle]: usingKeyboard,
+                [indentedStyle(indentLevel, darkMode)]: indentLevel > 1,
               },
             )}
             onClick={() => setOpen(curr => !curr)}
@@ -225,7 +210,7 @@ function SideNavGroup({
               <div
                 ref={nodeRef}
                 className={cx(
-                  sideNavCollapsibleGroupBaseStyles,
+                  collapsibleGroupBaseStyles,
                   transitionStyles[state],
                   // {
                   //   [enteredTransitionStyles[theme]]: state = 'entered'
@@ -261,8 +246,8 @@ function SideNavGroup({
         <>
           <div
             {...groupHeaderProps}
-            className={cx(headerBaseStyle, headerThemeStyle[theme], {
-              [indentedStyle]: indentLevel > 1,
+            className={cx(baseStyle, themeStyle[theme], {
+              [indentedStyle(indentLevel, darkMode)]: indentLevel > 1,
             })}
           >
             {renderedHeader}

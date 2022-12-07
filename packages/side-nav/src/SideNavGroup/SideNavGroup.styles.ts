@@ -1,9 +1,9 @@
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
-import { sideNavItemSidePadding } from '../SideNav/styles';
+import { getIndentLevelStyle, sideNavItemSidePadding } from '../SideNav/styles';
 
 export const buttonClassName = createUniqueClassName('side-nav-group-button');
 
@@ -18,7 +18,7 @@ export const listItemStyle = css`
   }
 `;
 
-export const headerBaseStyle = css`
+export const baseStyle = css`
   position: relative;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@ export const headerBaseStyle = css`
   padding: ${spacing[3]}px ${spacing[3]}px ${spacing[2]}px;
 `;
 
-export const headerThemeStyle: Record<Theme, string> = {
+export const themeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.green.dark2};
   `,
@@ -37,7 +37,7 @@ export const headerThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const collapsibleHeaderBaseStyle = css`
+export const collapsibleBaseStyle = css`
   background-color: transparent;
   border: none;
   margin: 0px;
@@ -50,7 +50,7 @@ export const collapsibleHeaderBaseStyle = css`
   }
 `;
 
-export const collapsibleHeaderThemeStyle: Record<Theme, string> = {
+export const collapsibleThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     border-bottom: 1px solid ${palette.gray.light2};
 
@@ -69,7 +69,7 @@ export const collapsibleHeaderThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const collapsibleHeaderFocusStyle = css`
+export const collapsibleFocusStyle = css`
   &:focus {
     color: ${palette.blue.dark3};
     border-color: ${palette.blue.light1};
@@ -81,15 +81,23 @@ export const collapsibleHeaderFocusStyle = css`
   }
 `;
 
-export const customIconStyles = css`
-  margin-right: ${spacing[2]}px;
+export const customIconStyle = css`
+  display: inline-flex;
+`;
 
-  // When the glyph is the last child, we remove the margin
-  // used to space it from the text. This matters in the navigation
-  // collapsed state.
-  &:last-child {
-    margin-right: 0;
-  }
+export const customIconThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.green.dark2};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.green.dark1};
+  `,
+};
+
+export const headerStyles = css`
+  display: inline-flex;
+  align-items: center;
+  gap: ${spacing[2]}px;
 `;
 
 export const expandIconStyle = css`
@@ -105,7 +113,7 @@ export const openExpandIconStyle = css`
   transform: rotate(90deg);
 `;
 
-export const sideNavCollapsibleGroupBaseStyles = css`
+export const collapsibleGroupBaseStyles = css`
   max-height: 0;
   overflow: hidden;
   opacity: 1;
@@ -130,3 +138,16 @@ export const transitionStyles = {
   `,
   unmounted: undefined,
 };
+
+export const overlineStyle = css`
+  color: inherit;
+`;
+
+export const indentedStyle = (indentLevel: number, darkMode: boolean) =>
+  cx(
+    getIndentLevelStyle(indentLevel, darkMode),
+    css`
+      padding-top: 16px;
+      padding-bottom: 8px;
+    `,
+  );
