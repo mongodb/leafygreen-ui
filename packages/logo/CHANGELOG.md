@@ -1,5 +1,13 @@
 # @leafygreen-ui/logo
 
+## 7.0.1
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/palette@3.4.5
+
 ## 7.0.0
 
 ### Major Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/guide-cue",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "leafyGreen UI Kit GuideCue",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,16 +31,16 @@
     "focus-trap-react": "^10.0.0",
     "polished": "^4.2.2",
     "@leafygreen-ui/a11y": "^1.3.4",
-    "@leafygreen-ui/button": "^19.0.0",
+    "@leafygreen-ui/button": "^19.0.2",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
-    "@leafygreen-ui/icon": "^11.12.0",
-    "@leafygreen-ui/icon-button": "^15.0.0",
+    "@leafygreen-ui/icon": "^11.12.2",
+    "@leafygreen-ui/icon-button": "^15.0.2",
     "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/palette": "^3.4.4",
-    "@leafygreen-ui/popover": "^11.0.0",
-    "@leafygreen-ui/tooltip": "^9.0.0",
-    "@leafygreen-ui/typography": "^15.0.0"
+    "@leafygreen-ui/palette": "^3.4.5",
+    "@leafygreen-ui/popover": "^11.0.2",
+    "@leafygreen-ui/tooltip": "^9.0.3",
+    "@leafygreen-ui/typography": "^15.1.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"

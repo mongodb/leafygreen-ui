@@ -1,5 +1,16 @@
 # @leafygreen-ui/segmented-control
 
+## 7.0.1
+
+### Patch Changes
+
+- 9854dfd33: Fixes bug where SegmentedControl component was not properly keeping track of externally set state.
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/typography@15.1.1
+
 ## 7.0.0
 
 ### Major Changes
