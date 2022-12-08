@@ -1,5 +1,5 @@
 import { BoxProps } from '@leafygreen-ui/box';
-import { Either } from '@leafygreen-ui/lib';
+import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const Size = {
   Default: 'default',
@@ -65,6 +65,11 @@ export interface BaseIconButtonProps {
    * The component or HTML Element that the button is rendered as.
    */
   as?: React.ElementType<any>;
+
+  /**
+   * Sets the tabIndex for IconButton component.
+   */
+  tabIndex?: HTMLElementProps<'button'>['tabIndex'];
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
