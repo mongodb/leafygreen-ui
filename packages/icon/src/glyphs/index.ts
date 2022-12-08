@@ -43,6 +43,7 @@ import Diagram2 from './Diagram2.svg';
 import Diagram3 from './Diagram3.svg';
 import Disconnect from './Disconnect.svg';
 import Download from './Download.svg';
+import Drag from './Drag.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Email from './Email.svg';
@@ -79,10 +80,12 @@ import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
+import Read from './Read.svg';
 import Redo from './Redo.svg';
 import Refresh from './Refresh.svg';
 import Relationship from './Relationship.svg';
 import ReplicaSet from './ReplicaSet.svg';
+import Resize from './Resize.svg';
 import Save from './Save.svg';
 import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
@@ -109,6 +112,7 @@ import VerticalEllipsis from './VerticalEllipsis.svg';
 import Visibility from './Visibility.svg';
 import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
+import Write from './Write.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
@@ -154,6 +158,7 @@ const _glyphs = {
   Diagram3,
   Disconnect,
   Download,
+  Drag,
   Edit,
   Ellipsis,
   Email,
@@ -190,10 +195,12 @@ const _glyphs = {
   Plus,
   PlusWithCircle,
   QuestionMarkWithCircle,
+  Read,
   Redo,
   Refresh,
   Relationship,
   ReplicaSet,
+  Resize,
   Save,
   Serverless,
   ShardedCluster,
@@ -220,6 +227,7 @@ const _glyphs = {
   Visibility,
   VisibilityOff,
   Warning,
+  Write,
   X,
   XWithCircle,
 } as const;
