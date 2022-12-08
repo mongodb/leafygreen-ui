@@ -6,6 +6,7 @@ import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { codeTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
@@ -24,15 +25,23 @@ import { InlineCodeProps } from './InlineCode.types';
 
 const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
   (
-    { children, className, darkMode: darkModeProp, ...rest }: InlineCodeProps,
+    {
+      children,
+      className,
+      darkMode: darkModeProp,
+      baseFontSize: baseFontSizeOverride,
+      ...rest
+    }: InlineCodeProps,
     forwardedRef,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const baseFontSize = useUpdatedBaseFontSize();
     const { theme } = useDarkMode(darkModeProp);
+    const providerBaseFontSize = useUpdatedBaseFontSize();
+    const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
+
     const whiteSpace =
       ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <=
-      30
+        30
         ? nowrap
         : normal;
     const isAnchor = rest?.href !== undefined || rest.onClick !== undefined;
@@ -76,6 +85,7 @@ InlineCode.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   darkMode: PropTypes.bool,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };
 
 export default InlineCode;

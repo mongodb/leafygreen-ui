@@ -25,9 +25,10 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   href,
   children,
   className,
-  target: targetProp,
   arrowAppearance = ArrowAppearance.None,
   hideExternalIcon = false,
+  baseFontSize: baseFontSizeOverride,
+  target: targetProp,
   darkMode: darkModeProp,
   ...rest
 }: LinkProps) => {
@@ -44,7 +45,8 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
   }, [href, currentHostname]);
 
-  const baseFontSize = useUpdatedBaseFontSize();
+  const providerBaseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
 
   let target, icon, rel;
 

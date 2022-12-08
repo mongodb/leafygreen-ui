@@ -13,12 +13,14 @@ import {
 import { InlineKeyCodeProps } from './InlineKeyCode.types';
 
 function InlineKeyCode({
+  baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   children,
   className,
   ...rest
 }: InlineKeyCodeProps) {
-  const baseFontSize = useUpdatedBaseFontSize();
+  const providerBaseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
 
   const { theme } = useDarkMode(darkModeProp);
 

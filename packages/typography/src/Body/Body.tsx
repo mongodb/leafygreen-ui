@@ -28,6 +28,7 @@ const fontWeights: Record<
 } as const;
 
 export function Body<T extends keyof JSX.IntrinsicElements>({
+  baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   className,
   weight = 'regular',
@@ -35,7 +36,8 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
   ...rest
 }: BodyProps<T>) {
   const { theme } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize();
+  const providerBaseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
 
   // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
   const fontWeight = css`

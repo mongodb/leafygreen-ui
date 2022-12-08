@@ -1,7 +1,9 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export type LabelProps = HTMLElementProps<'label', never> & {
-  darkMode?: boolean;
-  htmlFor: string;
-  disabled?: boolean;
-};
+import { CommonTypographyProps } from '../types';
+
+export type LabelProps = CommonTypographyProps &
+  HTMLElementProps<'label', never> & {
+    htmlFor: string;
+    disabled?: boolean;
+  };
