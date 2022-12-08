@@ -30,6 +30,7 @@ export const IconButton = React.forwardRef(
       darkMode: darkModeProp,
       disabled = false,
       active = false,
+      tabIndex = 0,
       className,
       children,
       ...rest
@@ -73,7 +74,7 @@ export const IconButton = React.forwardRef(
     const iconButtonProps = {
       ...rest,
       ref,
-      tabIndex: 0,
+      tabIndex,
       // We don't set the `disabled` prop since we want the button to be focusable
       ['aria-disabled']: disabled,
       // Override any actions if it's disabled
