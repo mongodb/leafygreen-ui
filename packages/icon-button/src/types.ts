@@ -67,8 +67,8 @@ export interface BaseIconButtonProps {
   as?: React.ElementType<any>;
 
   /**
-  * Sets the tabIndex for IconButton component.
-  */
+   * Sets the tabIndex for IconButton component.
+   */
   tabIndex?: HTMLElementProps<'button'>['tabIndex'];
 }
 
