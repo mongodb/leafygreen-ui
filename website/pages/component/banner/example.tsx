@@ -1,6 +1,8 @@
 import React from 'react';
-import Banner, { Variant } from '@leafygreen-ui/banner';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import Banner, { Variant } from '@leafygreen-ui/banner';
 
 const knobsConfig: KnobsConfigInterface<{
   variant?: Variant;

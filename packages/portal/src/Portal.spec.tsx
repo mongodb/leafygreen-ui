@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { typeIs } from '@leafygreen-ui/lib';
-import Portal from '.';
 import { act } from 'react-dom/test-utils';
+import { cleanup, render } from '@testing-library/react';
+
+import { typeIs } from '@leafygreen-ui/lib';
+
+import Portal from '.';
 
 afterEach(async () => {
   await cleanup();

@@ -1,7 +1,9 @@
 import React from 'react';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import Box from '@leafygreen-ui/box';
 import { Body } from '@leafygreen-ui/typography';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   as: 'div' | 'span' | 'button';

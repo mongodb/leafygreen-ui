@@ -1,2 +1,3 @@
-export { default, GraphicStyle, BlobPosition } from './MarketingModal';
-export { default as svgBlobs } from './blobs';
+export { default } from './MarketingModal/MarketingModal';
+export type { MarketingModalProps } from './MarketingModal/types';
+export { BlobPosition, GraphicStyle } from './MarketingModal/types';

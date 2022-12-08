@@ -1,7 +1,9 @@
 import React from 'react';
-import Portal from '@leafygreen-ui/portal';
-import { cx, css } from '@leafygreen-ui/emotion';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import Portal from '@leafygreen-ui/portal';
+
 import { useSideNavContext } from '../SideNavContext';
 
 const collapsedItemStyles = css`

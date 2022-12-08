@@ -1,30 +1,26 @@
-import React, {
-  forwardRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+
+import Box from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import {
   useBaseFontSize,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import Box from '@leafygreen-ui/box';
-import { SegmentedControlContext } from './SegmentedControlContext';
+
+import { SegmentedControlContext } from '../SegmentedControlContext';
+
 import {
-  optionStyle,
   boxStyle,
-  buttonStyle,
   buttonFocusStyle,
-  labelStyle,
+  buttonStyle,
   iconOnlyThemeStyles,
-} from './SegmentedControlOption.styles';
+  labelStyle,
+  labelTextStyles,
+  optionStyle,
+} from './styles';
 import { SegmentedControlOptionProps } from './types';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
 
 /**
  * SegmentedControlOption
@@ -48,6 +44,7 @@ export const SegmentedControlOption = forwardRef<
       _onClick,
       _onHover,
       isfocusInComponent,
+      glyph,
       ...rest
     }: SegmentedControlOptionProps,
     forwardedRef,
@@ -55,7 +52,6 @@ export const SegmentedControlOption = forwardRef<
     const { size, theme, followFocus } = useContext(SegmentedControlContext);
     const { usingKeyboard } = useUsingKeyboardContext();
     const baseFontSize = useBaseFontSize();
-    const [hasIcon, setHasIcon] = useState<boolean>(false);
 
     const onClick = () => {
       _onClick?.(value);
@@ -90,17 +86,14 @@ export const SegmentedControlOption = forwardRef<
       didComponentMount.current = true;
     }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
 
-    // TODO: Remove this logic if slots are added, we will no longer need these check. https://jira.mongodb.org/browse/LG-2487
-    // Gets the number of children.
-    const childCount = React.Children.count(children);
-    useMemo(
-      () =>
-        React.Children.forEach(children, child => {
-          if (isComponentType(child, 'Icon') || isComponentGlyph(child))
-            setHasIcon(true);
-        }),
-      [children],
-    );
+    useEffect(() => {
+      // If consumer is not using Icon or Glyph component as the `glyph` show a warning
+      if (glyph && !isComponentGlyph(glyph)) {
+        console.warn('Please provide a LeafyGreen UI Icon or Glyph component.');
+      }
+    }, [glyph]);
+
+    const isIconOnly = (glyph && !children) ?? false;
 
     return (
       <div
@@ -118,7 +111,7 @@ export const SegmentedControlOption = forwardRef<
             disabled={disabled}
             className={cx(buttonStyle, {
               [buttonFocusStyle[theme]]: usingKeyboard,
-              [iconOnlyThemeStyles]: hasIcon && childCount === 1, // If there is only one child and that child is an icon. Icons are different colors when there is text.
+              [iconOnlyThemeStyles]: isIconOnly,
             })}
             ref={buttonRef}
             onClick={onClick}
@@ -126,7 +119,12 @@ export const SegmentedControlOption = forwardRef<
             onMouseLeave={onMouseLeave}
             type="button"
           >
-            <span className={labelStyle}>{children}</span>
+            <div className={labelStyle}>
+              {glyph && isComponentGlyph(glyph) && glyph}
+              {!isIconOnly && (
+                <span className={labelTextStyles}>{children}</span>
+              )}
+            </div>
           </button>
         </Box>
       </div>
@@ -140,4 +138,5 @@ SegmentedControlOption.propTypes = {
   value: PropTypes.string.isRequired,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  glyph: PropTypes.element,
 };

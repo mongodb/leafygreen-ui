@@ -1,9 +1,11 @@
+import { transparentize } from 'polished';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
-import { Size } from './types';
+
+import { Size } from '../SegmentedControl/types';
 
 export const wrapperStyle = css`
   display: flex;
@@ -13,9 +15,12 @@ export const wrapperStyle = css`
   font-family: ${fontFamilies.default};
 `;
 
+export const labelBaseStyles = css`
+  white-space: nowrap;
+`;
+
 export const labelThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    letter-spacing: 1.4px;
     color: ${palette.gray.dark1};
   `,
   [Theme.Dark]: css`

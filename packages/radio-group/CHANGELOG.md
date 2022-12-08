@@ -1,5 +1,20 @@
 # @leafygreen-ui/radio-group
 
+## 10.0.3
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+
+## 10.0.2
+
+### Patch Changes
+
+- a593238ff: Change darkMode disabled color from gray.dark1 to gray.base
+
 ## 10.0.1
 
 ### Patch Changes

@@ -1,4 +1,5 @@
 import { ComponentType, isValidElement, ReactNode } from 'react';
+
 import { LGGlyph } from './types';
 
 type ExtendedComponentType = ComponentType<any> & {

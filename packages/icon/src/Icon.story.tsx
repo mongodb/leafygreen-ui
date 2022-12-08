@@ -1,11 +1,13 @@
 // TODO: Generate Icon props with controls
 import React from 'react';
-import Icon, { glyphs } from '.';
-import { css } from '@leafygreen-ui/emotion';
 import { ComponentStory, Meta } from '@storybook/react';
+
+import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+
 import { IconProps } from './createIconComponent';
 import { GlyphName } from './glyphs';
+import Icon, { glyphs } from '.';
 
 export default {
   title: 'Components/Icons',

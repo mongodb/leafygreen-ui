@@ -1,7 +1,9 @@
 import { css, keyframes } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { ComboboxSize, Theme } from './Combobox.types';
+
+import { ComboboxSize } from './Combobox.types';
 
 /** Height of a menu item (in px) */
 export const menuItemHeight = 36;

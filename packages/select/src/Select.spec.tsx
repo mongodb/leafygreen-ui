@@ -5,15 +5,17 @@ import {
   getByText as getByTextFor,
   render,
   RenderResult,
-  waitForElementToBeRemoved,
   waitFor,
+  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
+
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+import { keyMap } from '@leafygreen-ui/lib';
+import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
+
 import { State } from './types';
 import { Option, OptionGroup, Select } from '.';
-import { keyMap } from '@leafygreen-ui/lib';
 
 const Color = {
   Red: 'Explicit value: Red',

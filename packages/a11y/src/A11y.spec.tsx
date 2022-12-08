@@ -2,11 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { axe } from 'jest-axe';
+
 import {
-  VisuallyHidden,
+  prefersReducedMotion,
   useAccessibleForm,
   validateAriaLabelProps,
-  prefersReducedMotion,
+  VisuallyHidden,
 } from '.';
 
 describe('packages/a11y', () => {

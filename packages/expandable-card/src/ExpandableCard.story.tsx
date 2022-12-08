@@ -1,7 +1,9 @@
-import { ComponentStory } from '@storybook/react';
 import React, { SyntheticEvent, useState } from 'react';
-import ExpandableCard from '.';
+import { ComponentStory } from '@storybook/react';
+
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import ExpandableCard from '.';
 
 export default {
   title: 'Components/ExpandableCard',

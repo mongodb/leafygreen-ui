@@ -1,21 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { cx } from '@leafygreen-ui/emotion';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
+
 import { codeTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+
 import {
   anchorClassName,
-  nowrap,
-  normal,
   code,
-  codeModes,
+  codeFocusModes,
   codeLinkStyleModes,
   codeLinkWrapper,
-  codeFocusModes,
+  codeModes,
+  normal,
+  nowrap,
 } from './InlineCode.styles';
 import { InlineCodeProps } from './InlineCode.types';
 

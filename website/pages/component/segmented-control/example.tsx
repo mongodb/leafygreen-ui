@@ -1,9 +1,11 @@
 import React from 'react';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import {
   SegmentedControl,
   SegmentedControlOption,
 } from '@leafygreen-ui/segmented-control';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   size: 'small' | 'default' | 'large';

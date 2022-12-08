@@ -2,11 +2,12 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
-  fontFamilies,
   focusRing,
+  fontFamilies,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
-import { Size } from './types';
+
+import { Size } from '../SegmentedControl/types';
 
 /**
  * Styles
@@ -156,6 +157,10 @@ export const buttonStyle = css`
   outline: none;
   border: none;
 
+  svg {
+    transition: color ${transitionDuration.default}ms ease-in-out;
+  }
+
   &:hover {
     color: var(--hover-text-color);
   }
@@ -209,7 +214,7 @@ export const labelStyle = css`
   }
 `;
 
-export const textEllipsisStyle = css`
+export const labelTextStyles = css`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

@@ -1,8 +1,11 @@
 import React from 'react';
+
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { baseTypographyStyles, defaultTextColor } from '../styles';
+
 import { h3Styles } from './H3.styles';
 import { H3Props } from './H3.types';
 

@@ -16,9 +16,6 @@
       "path": "../hooks"
     },
     {
-      "path": "../leafygreen-provider"
-    },
-    {
       "path": "../lib"
     },
     {
@@ -26,6 +23,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

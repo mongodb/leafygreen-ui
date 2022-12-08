@@ -1,1 +1,2 @@
-export { ConfirmationModal as default, Variant } from './ConfirmationModal';
+export { ConfirmationModal as default } from './ConfirmationModal/ConfirmationModal';
+export { Variant } from './ConfirmationModal/types';

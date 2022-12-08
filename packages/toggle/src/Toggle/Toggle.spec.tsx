@@ -1,7 +1,10 @@
 import React from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import Toggle from '.';
+
+import Toggle from '..';
+
+const className = 'test-className';
 
 function renderToggle(props = {}) {
   const utils = render(
@@ -55,6 +58,14 @@ describe('packages/Toggle', () => {
 
     expect(toggle.disabled).toBe(true);
     expect(toggle.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  test(`renders "${className}" in the component's markup`, () => {
+    const { toggle } = renderToggle({
+      className,
+    });
+
+    expect(toggle.closest(`.${className}`)).toBeVisible();
   });
 
   describe('when controlled', () => {

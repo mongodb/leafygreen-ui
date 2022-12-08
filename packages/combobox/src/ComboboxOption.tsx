@@ -1,20 +1,22 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
+
 import Checkbox from '@leafygreen-ui/checkbox';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
+
+import { menuItemHeight, menuItemPadding } from './ComboboxMenu/Menu.styles';
 import {
   ComboboxOptionProps,
-  InternalComboboxOptionProps,
   ComboboxSize as Size,
-  Theme,
+  InternalComboboxOptionProps,
 } from './Combobox.types';
-import { ComboboxContext, useDarkMode } from './ComboboxContext';
+import { ComboboxContext } from './ComboboxContext';
 import { wrapJSX } from './utils';
-import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
-import { menuItemHeight, menuItemPadding } from './ComboboxMenu/Menu.styles';
 
 /**
  * Styles
@@ -182,9 +184,8 @@ const InternalComboboxOption = React.forwardRef<
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
-    const { multiselect, darkMode, withIcons, inputValue, size } =
+    const { multiselect, darkMode, theme, withIcons, inputValue, size } =
       useContext(ComboboxContext);
-    const theme = useDarkMode(darkMode);
     const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
     const optionRef = useForwardedRef(forwardedRef, null);
 

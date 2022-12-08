@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+
 import { InlineCode } from '@leafygreen-ui/typography';
 
 // Takes a string of possible `type` values of a component's prop and separates them such that they are more readable.

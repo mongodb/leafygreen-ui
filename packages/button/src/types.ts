@@ -1,5 +1,6 @@
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 import React, { HTMLProps } from 'react';
+
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 const Variant = {
   Default: 'default',
@@ -130,4 +131,4 @@ interface ButtonProps {
   as?: React.ElementType<any>;
 }
 
-export { Variant, Size, ButtonProps };
+export { ButtonProps, Size, Variant };

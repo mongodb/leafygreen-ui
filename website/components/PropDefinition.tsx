@@ -1,10 +1,12 @@
 import React from 'react';
-import { css } from '@emotion/css';
+import formatType from 'utils/formatType';
+
+import InlineDefinition from '@leafygreen-ui/inline-definition';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
-import formatType from 'utils/formatType';
-import { palette } from '@leafygreen-ui/palette';
+
+import { css } from '@emotion/css';
 
 interface PropDefinitionProps {
   defaultValue: string;

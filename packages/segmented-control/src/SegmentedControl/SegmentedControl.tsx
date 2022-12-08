@@ -6,27 +6,31 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
+import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
-import { cx, css } from '@leafygreen-ui/emotion';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';
-import { SegmentedControlProps, Size } from './types';
-import { useEffectOnceOnMount } from './useEffectOnceOnMount';
+
+import { SegmentedControlContext } from '../SegmentedControlContext';
+import { useEffectOnceOnMount } from '../useEffectOnceOnMount';
+
 import {
-  wrapperStyle,
+  hoverIndicatorStyle,
+  labelBaseStyles,
   labelThemeStyle,
   optionsWrapperStyle,
   selectionIndicatorStyle,
-  hoverIndicatorStyle,
-} from './SegmentedControl.styles';
-import { SegmentedControlContext } from './SegmentedControlContext';
+  wrapperStyle,
+} from './styles';
+import { SegmentedControlProps, Size } from './types';
 
 /**
  * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
@@ -112,6 +116,12 @@ export const SegmentedControl = forwardRef<
       document.removeEventListener('focusin', handleFocusIn);
     };
   }, [handleFocusIn]);
+
+  useEffect(() => {
+    if (isControlled) {
+      setInternalValue(controlledValue);
+    }
+  }, [controlledValue, isControlled]);
 
   // Handle value updates
   const updateValue = useCallback(
@@ -306,7 +316,9 @@ export const SegmentedControl = forwardRef<
         {...rest}
       >
         {label && (
-          <Overline className={labelThemeStyle[theme]}>{label}</Overline>
+          <Overline className={cx(labelBaseStyles, labelThemeStyle[theme])}>
+            {label}
+          </Overline>
         )}
 
         <div

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
 export default {

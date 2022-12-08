@@ -1,9 +1,12 @@
 import React from 'react';
-import { css, cx } from '@emotion/css';
-import { uiColors } from '@leafygreen-ui/palette';
+
 import { keyMap } from '@leafygreen-ui/lib';
-import { borderColor, leftRightPadding } from './styles';
+import { uiColors } from '@leafygreen-ui/palette';
+
 import { useMobileNavigation } from './NavigationContext';
+import { borderColor, leftRightPadding } from './styles';
+
+import { css, cx } from '@emotion/css';
 
 const listItemStyle = css`
   ${leftRightPadding}

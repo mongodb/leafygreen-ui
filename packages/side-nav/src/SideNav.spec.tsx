@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, cleanup, fireEvent } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+
 import { SideNav, SideNavGroup, SideNavItem } from '.';
 
 type renderedElement = HTMLElement | null;

@@ -1,19 +1,24 @@
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import flatten from 'lodash/flatten';
-import isUndefined from 'lodash/isUndefined';
-import startCase from 'lodash/startCase';
 import React from 'react';
 import {
-  waitForElementToBeRemoved,
   act,
-  waitFor,
+  fireEvent,
   queryByText,
   render,
-  fireEvent,
+  waitFor,
+  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
+import flatten from 'lodash/flatten';
+import isUndefined from 'lodash/isUndefined';
+import startCase from 'lodash/startCase';
+
+import Button from '@leafygreen-ui/button';
+import { keyMap } from '@leafygreen-ui/lib';
+
+import { OptionObject } from './Combobox.types';
 import {
   defaultOptions,
   getComboboxJSX,
@@ -23,9 +28,6 @@ import {
   Select,
   testif,
 } from './ComboboxTestUtils';
-import { OptionObject } from './Combobox.types';
-import Button from '@leafygreen-ui/button';
-import { keyMap } from '@leafygreen-ui/lib';
 
 /**
  * Tests
