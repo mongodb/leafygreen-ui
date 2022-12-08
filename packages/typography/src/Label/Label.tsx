@@ -21,8 +21,7 @@ export const Label = ({
   disabled = false,
   ...rest
 }: LabelProps) => {
-  const providerBaseFontSize = useUpdatedBaseFontSize();
-  const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
   const { theme } = useDarkMode(darkModeProp);
 
   return (

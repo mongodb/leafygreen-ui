@@ -45,8 +45,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
   }, [href, currentHostname]);
 
-  const providerBaseFontSize = useUpdatedBaseFontSize();
-  const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
   let target, icon, rel;
 

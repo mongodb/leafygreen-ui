@@ -19,9 +19,7 @@ function InlineKeyCode({
   className,
   ...rest
 }: InlineKeyCodeProps) {
-  const providerBaseFontSize = useUpdatedBaseFontSize();
-  const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
-
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
   const { theme } = useDarkMode(darkModeProp);
 
   return (

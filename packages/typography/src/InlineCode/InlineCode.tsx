@@ -36,12 +36,11 @@ const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const { theme } = useDarkMode(darkModeProp);
-    const providerBaseFontSize = useUpdatedBaseFontSize();
-    const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
     const whiteSpace =
       ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <=
-        30
+      30
         ? nowrap
         : normal;
     const isAnchor = rest?.href !== undefined || rest.onClick !== undefined;

@@ -22,8 +22,7 @@ export const Description = ({
   ...rest
 }: DescriptionProps) => {
   const { theme } = useDarkMode(darkModeProp);
-  const providerBaseFontSize = useUpdatedBaseFontSize();
-  const baseFontSize = baseFontSizeOverride ?? providerBaseFontSize;
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
   return (
     <p
