@@ -12,7 +12,7 @@ import { Option, Select, Size } from '@leafygreen-ui/select';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
 import { SideNavProps } from './SideNav/types';
-import { SideNav, SideNavGroup, SideNavItem } from '.';
+import { CollapsedSideNavItem, SideNav, SideNavGroup, SideNavItem } from '.';
 
 export default {
   title: 'Components/SideNav',
@@ -163,6 +163,10 @@ export const InLayout = ({
             <SideNavItem>Kelsey</SideNavItem>
             <SideNavItem>Fred</SideNavItem>
           </SideNavGroup>
+
+          <CollapsedSideNavItem>
+            <Icon glyph="Favorite" />
+          </CollapsedSideNavItem>
         </SideNav>
         {content}
       </div>

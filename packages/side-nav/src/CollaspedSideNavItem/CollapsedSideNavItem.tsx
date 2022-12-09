@@ -8,9 +8,6 @@ import { useSideNavContext } from '../SideNav/SideNavContext';
 import { activeThemeStyle, baseStyles, themeStyle } from './styles';
 import { CollapsedSideNavItemProps } from './types';
 
-/**
- * @internal
- */
 export function CollapsedSideNavItem({
   children,
   active = false,
