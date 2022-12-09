@@ -5,7 +5,7 @@ import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { colorSet,containerStyle } from './styles';
+import { colorSet, containerStyle } from './styles';
 import { CardProps, ContentStyle } from './types';
 
 /**
@@ -49,5 +49,5 @@ Card.displayName = 'Card';
 Card.propTypes = {
   className: PropTypes.string,
   darkMode: PropTypes.bool,
-  contentStyle: PropTypes.oneOf(['None', 'Clickable'])
+  contentStyle: PropTypes.oneOf(['None', 'Clickable']),
 };
