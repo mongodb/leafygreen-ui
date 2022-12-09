@@ -86,3 +86,12 @@ export const transitionStyles = {
   `,
   unmounted: undefined,
 };
+
+export const ulStyles = css`
+  transition: opacity ${transitionDuration.default}ms ease-in-out;
+  opacity: 0;
+`;
+
+export const ulTransitionStyles = css`
+  opacity: 1;
+`;

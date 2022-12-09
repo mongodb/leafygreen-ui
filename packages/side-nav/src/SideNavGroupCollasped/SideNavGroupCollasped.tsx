@@ -6,7 +6,6 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { ulStyleOverrides } from '../SideNav/styles';
@@ -25,6 +24,8 @@ import {
   expandIconStyle,
   openExpandIconStyle,
   transitionStyles,
+  ulStyles,
+  ulTransitionStyles,
 } from './styles';
 import { SideNavGroupCollapsedProps } from './Types';
 
@@ -108,20 +109,9 @@ export function SideNavGroupCollapsed({
               ref={ulRef}
               id={menuId}
               aria-labelledby={menuGroupLabelId}
-              className={cx(
-                ulStyleOverrides,
-                // TODO: add to styles
-                css`
-                  transition: opacity ${transitionDuration.default}ms
-                    ease-in-out;
-                  opacity: 0;
-                `,
-                {
-                  [css`
-                    opacity: 1;
-                  `]: ['entering', 'entered'].includes(state),
-                },
-              )}
+              className={cx(ulStyleOverrides, ulStyles, {
+                [ulTransitionStyles]: ['entering', 'entered'].includes(state),
+              })}
             >
               {children}
             </ul>

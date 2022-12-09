@@ -44,6 +44,7 @@ import { SideNavItemProps } from './types';
  @param props.ariaCurrentValue The aria-current attribute value set when the component is active.
  @param props.className Class name that will be applied to the root-level element.
  @param props.children Content that will be rendered inside the root-level element.
+ @param props.indentLevel Change the indentation. Will not work if `<SideNavItem>` is a child of `<SideNavGroup>`
  *
  ### Optional Polymorphic Props
  @param props.href When provided, the component will be rendered as an anchor element. This and
@@ -162,7 +163,7 @@ const SideNavItem: ExtendableBox<
           {
             [cx(activeBaseStyle, activeThemeStyle[theme])]: active,
             [disabledStyle]: disabled,
-            [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard, // TODO: consider focus-visible
+            [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard,
             [cx(focusedDisabledStyle, focusedDisabledThemeStyle[theme])]:
               usingKeyboard && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,

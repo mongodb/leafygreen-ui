@@ -8,7 +8,7 @@ interface SideNavGroupBaseProps extends HTMLElementProps<'li'> {
   header?: React.ReactNode;
 
   /**
-   * Content that will be rendered inside the root-level element.\
+   * Content that will be rendered inside the root-level element.
    *
    * @type `<SideNavItem />`
    */
@@ -27,6 +27,11 @@ interface SideNavGroupBaseProps extends HTMLElementProps<'li'> {
    */
   hasActiveItem?: boolean;
 
+  /**
+   * Change the indentation. Will not work if `<SideNavItem>` is a child of `<SideNavGroup>`.
+   *
+   * @default 1
+   */
   indentLevel?: number;
 }
 
