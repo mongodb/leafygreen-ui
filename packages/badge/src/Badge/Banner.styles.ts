@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 
-import { Variant } from './types';
+import { Variant } from './Banner.types';
 
 export const baseStyle = css`
   font-family: ${fontFamilies.default};

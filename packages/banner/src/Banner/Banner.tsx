@@ -17,8 +17,8 @@ import {
   baseBannerStyles,
   textStyles,
   variantStyles,
-} from './styles';
-import { BannerProps, Variant } from './types';
+} from './Banner.styles';
+import { BannerProps, Variant } from './Banner.types';
 
 /**
  *
@@ -34,7 +34,7 @@ import { BannerProps, Variant } from './types';
 export default function Banner({
   variant = Variant.Info,
   dismissible = false,
-  onClose = () => {},
+  onClose = () => { },
   image,
   children,
   className,

@@ -6,7 +6,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Banner from './Banner/Banner';
-import { Variant } from './Banner/types';
+import { Variant } from './Banner/Banner.types';
 
 export default {
   title: 'Components/Banner',

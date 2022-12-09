@@ -6,15 +6,15 @@ import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircl
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
-import { Variant } from '../Banner/types';
+import { Variant } from '../Banner/Banner.types';
 
 import {
   bannerIconPositionStyles,
   baseStyles,
   renderedImageStyles,
   themeStyles,
-} from './styles';
-import BannerIconProps from './types';
+} from './BannerIcon.styles';
+import BannerIconProps from './BannerIcon.types';
 
 const Icons: Record<Variant, React.ComponentType<any>> = {
   [Variant.Info]: InfoWithCircleIcon,

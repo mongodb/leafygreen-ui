@@ -2,7 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { Variant } from '../Banner/types';
+import { Variant } from '../Banner/Banner.types';
 
 export const baseStyles = css`
   width: 24px;

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { badgeVariants, baseStyle } from './styles';
-import BadgeProps, { Variant } from './types';
+import { badgeVariants, baseStyle } from './Banner.styles';
+import BadgeProps, { Variant } from './Banner.types';
 
 /**
  * Badges can be used to highlight information or the status of something.

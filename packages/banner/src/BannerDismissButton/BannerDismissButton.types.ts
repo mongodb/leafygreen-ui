@@ -1,7 +1,7 @@
 import { Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { BannerProps, Variant } from '../Banner/types';
+import { BannerProps, Variant } from '../Banner/Banner.types';
 
 type BannerDismissButtonProps = Pick<BannerProps, 'onClose' | 'darkMode'> & {
   theme: Theme;

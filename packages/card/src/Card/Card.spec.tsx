@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { Card, ContentStyle } from './Card';
+import { Card } from './Card';
+import { ContentStyle } from './Card.types'
 
 const defaultClassName = 'card-className';
 const defaultChildren = 'this is my card component';
@@ -77,7 +78,7 @@ describe('packages/Card', () => {
       });
 
       test('when `onClick` is provided', () => {
-        const { renderedCard } = renderCard({ onClick: () => {} });
+        const { renderedCard } = renderCard({ onClick: () => { } });
         expect(isVisuallyClickable(renderedCard)).toBe(true);
       });
 
@@ -105,7 +106,7 @@ describe('packages/Card', () => {
 
       test('when `onClick` and explicit `contentStyle` are provided', () => {
         const { renderedCard } = renderCard({
-          onClick: () => {},
+          onClick: () => { },
           contentStyle: ContentStyle.None,
         });
         expect(isVisuallyClickable(renderedCard)).toBe(false);

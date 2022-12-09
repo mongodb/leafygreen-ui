@@ -4,7 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
-import { Variant } from './types';
+import { Variant } from './Banner.types';
 
 export const baseBannerStyles = css`
   position: relative;
