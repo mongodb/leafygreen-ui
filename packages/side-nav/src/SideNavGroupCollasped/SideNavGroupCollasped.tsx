@@ -27,7 +27,7 @@ import {
   ulStyles,
   ulTransitionStyles,
 } from './styles';
-import { SideNavGroupCollapsedProps } from './Types';
+import { SideNavGroupCollapsedProps } from './types';
 
 /**
  * @internal
@@ -80,7 +80,7 @@ export function SideNavGroupCollapsed({
             [indentedStyle(indentLevel, darkMode)]: indentLevel > 1,
           },
         )}
-        onClick={() => setOpen(curr => !curr)}
+        onClick={() => setOpen((curr: boolean) => !curr)}
       >
         {renderHeader()}
         <ChevronRight
@@ -91,7 +91,6 @@ export function SideNavGroupCollapsed({
           })}
         />
       </button>
-
       <Transition
         in={open}
         appear
