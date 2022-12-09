@@ -1,8 +1,8 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { CommonTypographyProps } from '../types';
+import { ResponsiveTypographyProps } from '../types';
 
-export type LabelProps = CommonTypographyProps &
+export type LabelProps = ResponsiveTypographyProps &
   HTMLElementProps<'label', never> & {
     htmlFor: string;
     disabled?: boolean;
