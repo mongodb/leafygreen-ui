@@ -1,38 +1,23 @@
-import React, { useEffect, useMemo } from 'react';
-import { Transition, TransitionStatus } from 'react-transition-group';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 
 import { AccessibleGlyph } from '../AccessibleGlyph/AccessibleGlyph';
 import { useSideNavContext } from '../SideNav/SideNavContext';
-import { ulStyleOverrides } from '../SideNav/styles';
+import { SideNavGroupCollapsed } from '../SideNavGroupCollasped/SideNavGroupCollasped';
+import { SideNavGroupOpen } from '../SideNavGroupOpen/SideNavGroupOpen';
 
 import {
-  baseStyle,
-  buttonClassName,
-  collapsibleBaseStyle,
-  collapsibleFocusStyle,
-  collapsibleGroupBaseStyles,
-  collapsibleThemeStyle,
-  expandIconStyle,
   iconBaseStyles,
   iconCustomStyle,
   iconCustomThemeStyle,
-  indentedStyle,
   listItemStyle,
-  openExpandIconStyle,
   overlineStyle,
-  themeStyle,
-  transitionStyles,
 } from './SideNavGroup.styles';
 import { SideNavGroupProps } from './types';
 
@@ -66,13 +51,10 @@ function SideNavGroup({
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
-  const nodeRef = React.useRef(null);
-  const ulRef = React.useRef<HTMLUListElement>(null);
-  const { usingKeyboard } = useUsingKeyboardContext();
 
   const menuGroupLabelId = useIdAllocator({ prefix: 'menu-group-label-id' });
-  const menuId = useIdAllocator({ prefix: 'menu' });
-  const { width, theme, darkMode } = useSideNavContext();
+
+  const { theme } = useSideNavContext();
 
   // Iterate over `children` and render them appropriately
   const renderedChildren = useMemo(() => {
@@ -144,114 +126,30 @@ function SideNavGroup({
     </div>
   );
 
-  // compute the entered ul wrapper styles based on the ul height
-  useEffect(() => {
-    const ulHeight = ulRef?.current?.getBoundingClientRect().height ?? 0;
-    transitionStyles['entered'] = css`
-      opacity: 1;
-      max-height: ${ulHeight + 1}px; // +1 for border
-      border-bottom: 1px solid
-        ${darkMode ? palette.gray.dark1 : palette.gray.light2};
-    `;
-  }, [open, ulRef, darkMode]);
-
   // generate shared props for collapsible and static headers
   const groupHeaderProps = {
     'data-testid': 'side-nav-group-header-label',
     id: menuGroupLabelId,
   };
 
+  const sharedProps = {
+    groupHeaderProps,
+    indentLevel,
+    renderHeader: () => renderHeader(),
+    menuGroupLabelId,
+  };
+
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
       {collapsible ? (
         <>
-          <button
-            {...groupHeaderProps}
-            aria-controls={menuId}
-            aria-expanded={open}
-            className={cx(
-              buttonClassName,
-              baseStyle,
-              themeStyle[theme],
-              collapsibleBaseStyle,
-              collapsibleThemeStyle[theme],
-              css`
-                width: ${width}px;
-              `,
-              {
-                [collapsibleFocusStyle]: usingKeyboard,
-                [indentedStyle(indentLevel, darkMode)]: indentLevel > 1,
-              },
-            )}
-            onClick={() => setOpen(curr => !curr)}
-          >
-            {renderHeader()}
-            <ChevronRight
-              role="presentation"
-              size={12}
-              className={cx(expandIconStyle, {
-                [openExpandIconStyle]: open,
-              })}
-            />
-          </button>
-
-          <Transition
-            in={open}
-            appear
-            timeout={150}
-            nodeRef={nodeRef}
-            mountOnEnter
-            unmountOnExit
-          >
-            {(state: TransitionStatus) => (
-              <div
-                ref={nodeRef}
-                className={cx(
-                  collapsibleGroupBaseStyles,
-                  transitionStyles[state],
-                )}
-              >
-                <ul
-                  ref={ulRef}
-                  id={menuId}
-                  aria-labelledby={menuGroupLabelId}
-                  className={cx(
-                    ulStyleOverrides,
-                    // TODO: add to styles
-                    css`
-                      transition: opacity ${transitionDuration.default}ms
-                        ease-in-out;
-                      opacity: 0;
-                    `,
-                    {
-                      [css`
-                        opacity: 1;
-                      `]: ['entering', 'entered'].includes(state),
-                    },
-                  )}
-                >
-                  {renderedChildren}
-                </ul>
-              </div>
-            )}
-          </Transition>
+          <SideNavGroupCollapsed open={open} setOpen={setOpen} {...sharedProps}>
+            {renderedChildren}
+          </SideNavGroupCollapsed>
         </>
       ) : (
         // not collapsible
-        <>
-          <div
-            {...groupHeaderProps}
-            className={cx(baseStyle, themeStyle[theme], {
-              [indentedStyle(indentLevel, darkMode)]: indentLevel > 1,
-            })}
-          >
-            {renderHeader()}
-          </div>
-
-          <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
-            {renderedChildren}
-          </ul>
-        </>
+        <SideNavGroupOpen {...sharedProps}>{renderedChildren}</SideNavGroupOpen>
       )}
     </li>
   );
