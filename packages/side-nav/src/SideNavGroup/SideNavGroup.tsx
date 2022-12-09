@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration } from '@leafygreen-ui/tokens';
+import { Overline } from '@leafygreen-ui/typography';
 
+import { AccessibleGlyph } from '../AccessibleGlyph/AccessibleGlyph';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { ulStyleOverrides } from '../SideNav/styles';
-import { SideNavHeader } from '../SideNavHeader/SideNavHeader';
 
 import {
   baseStyle,
@@ -22,9 +24,13 @@ import {
   collapsibleGroupBaseStyles,
   collapsibleThemeStyle,
   expandIconStyle,
+  iconBaseStyles,
+  iconCustomStyle,
+  iconCustomThemeStyle,
   indentedStyle,
   listItemStyle,
   openExpandIconStyle,
+  overlineStyle,
   themeStyle,
   transitionStyles,
 } from './SideNavGroup.styles';
@@ -117,6 +123,27 @@ function SideNavGroup({
     return checkForActiveNestedItems(children);
   }, [hasActiveItem, children]);
 
+  // render the provided glyph with appropriate aria roles
+  const accessibleGlyph =
+    glyph && isComponentGlyph(glyph)
+      ? React.cloneElement(glyph, {
+          className: glyph.props.className,
+          role: 'presentation',
+          'data-testid': 'side-nav-group-header-icon',
+        })
+      : null;
+
+  const renderHeader = () => (
+    <div className={iconBaseStyles}>
+      <AccessibleGlyph
+        isActiveGroup={isActiveGroup}
+        accessibleGlyph={accessibleGlyph}
+        className={cx(iconCustomStyle, iconCustomThemeStyle[theme])}
+      />
+      <Overline className={overlineStyle}>{header}</Overline>
+    </div>
+  );
+
   // compute the entered ul wrapper styles based on the ul height
   useEffect(() => {
     const ulHeight = ulRef?.current?.getBoundingClientRect().height ?? 0;
@@ -158,12 +185,7 @@ function SideNavGroup({
             )}
             onClick={() => setOpen(curr => !curr)}
           >
-            <SideNavHeader
-              theme={theme}
-              header={header}
-              isActiveGroup={isActiveGroup}
-              glyph={glyph}
-            />
+            {renderHeader()}
             <ChevronRight
               role="presentation"
               size={12}
@@ -195,6 +217,7 @@ function SideNavGroup({
                   aria-labelledby={menuGroupLabelId}
                   className={cx(
                     ulStyleOverrides,
+                    // TODO: add to styles
                     css`
                       transition: opacity ${transitionDuration.default}ms
                         ease-in-out;
@@ -222,12 +245,7 @@ function SideNavGroup({
               [indentedStyle(indentLevel, darkMode)]: indentLevel > 1,
             })}
           >
-            <SideNavHeader
-              theme={theme}
-              header={header}
-              isActiveGroup={isActiveGroup}
-              glyph={glyph}
-            />
+            {renderHeader()}
           </div>
 
           <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>

@@ -129,3 +129,26 @@ export const indentedStyle = (indentLevel: number, darkMode: boolean) =>
       padding-bottom: ${spacing[2]}px;
     `,
   );
+
+export const iconBaseStyles = css`
+  display: inline-flex;
+  align-items: center;
+  gap: ${spacing[2]}px;
+`;
+
+export const iconCustomStyle = css`
+  display: inline-flex;
+`;
+
+export const iconCustomThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.green.dark2};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.green.dark1};
+  `,
+};
+
+export const overlineStyle = css`
+  color: inherit;
+`;

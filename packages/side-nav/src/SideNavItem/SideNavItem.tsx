@@ -7,7 +7,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 
-import { CollapsedSideNavItem } from '../CollaspedSideNavItem/CollapsedSideNavItem';
+import { AccessibleGlyph } from '../AccessibleGlyph/AccessibleGlyph';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { getIndentLevelStyle, typographyStyle } from '../SideNav/styles';
 
@@ -175,15 +175,11 @@ const SideNavItem: ExtendableBox<
         ref={forwardedRef}
         onClick={onClick}
       >
-        {accessibleGlyph && (
-          <span className={glyphWrapperStyle}>
-            {accessibleGlyph}
-
-            <CollapsedSideNavItem active={active}>
-              {accessibleGlyph}
-            </CollapsedSideNavItem>
-          </span>
-        )}
+        <AccessibleGlyph
+          isActiveGroup={active}
+          accessibleGlyph={accessibleGlyph}
+          className={glyphWrapperStyle}
+        />
 
         {renderedChildren}
       </Box>

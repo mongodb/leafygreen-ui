@@ -153,7 +153,7 @@ export const InLayout = ({
             collapsible={isCollapsible}
           >
             <SideNavItem disabled={isDisabled}>{navItemText}</SideNavItem>
-            <SideNavItem>Dave</SideNavItem>
+            <SideNavItem indentLevel={10}>Dave</SideNavItem>
             <SideNavItem>Robert Arnold Audroue</SideNavItem>
             <SideNavItem>Adam Michael Thompson</SideNavItem>
             <SideNavItem>Shaneeza</SideNavItem>
