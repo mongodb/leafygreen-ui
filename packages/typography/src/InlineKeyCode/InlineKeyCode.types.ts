@@ -1,5 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { CommonTypographyProps } from '../types';
+import { ResponsiveTypographyProps } from '../types';
 
-export type InlineKeyCodeProps = HTMLElementProps<'h1'> & CommonTypographyProps;
+export type InlineKeyCodeProps = HTMLElementProps<'h1'> &
+  ResponsiveTypographyProps;
