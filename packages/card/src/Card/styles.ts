@@ -4,24 +4,24 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
-    focusRing,
-    fontFamilies,
-    transitionDuration,
-    typeScales,
+  focusRing,
+  fontFamilies,
+  transitionDuration,
+  typeScales,
 } from '@leafygreen-ui/tokens';
 
 interface ColorSet {
-    containerStyle: string;
-    clickableStyle: string;
+  containerStyle: string;
+  clickableStyle: string;
 }
 
 const lightBaseBoxShadow = `0 4px 10px -4px ${transparentize(
-    0.7,
-    palette.black,
+  0.7,
+  palette.black,
 )}`;
 const lightHoverBoxShadow = `0 4px 20px -4px ${transparentize(
-    0.8,
-    palette.black,
+  0.8,
+  palette.black,
 )}`;
 const lightFocusBoxShadow = focusRing.light.default;
 const darkBaseBoxShadow = `0 4px 20px -4px #01121A`;
@@ -29,14 +29,14 @@ const darkHoverBoxShadow = `0 4px 20px -4px ${transparentize(0.3, '#000000')}`;
 const darkFocusBoxShadow = focusRing.dark.default;
 
 export const colorSet: Record<Theme, ColorSet> = {
-    [Theme.Light]: {
-        containerStyle: css`
+  [Theme.Light]: {
+    containerStyle: css`
       border: 1px solid ${palette.gray.light2};
       box-shadow: ${lightBaseBoxShadow};
       background-color: ${palette.white};
       color: ${palette.gray.dark3};
     `,
-        clickableStyle: css`
+    clickableStyle: css`
       cursor: pointer;
 
       &:focus {
@@ -54,15 +54,15 @@ export const colorSet: Record<Theme, ColorSet> = {
         }
       }
     `,
-    },
-    [Theme.Dark]: {
-        containerStyle: css`
+  },
+  [Theme.Dark]: {
+    containerStyle: css`
       border: 1px solid ${palette.gray.dark2};
       box-shadow: ${darkBaseBoxShadow};
       background-color: ${palette.black};
       color: ${palette.white};
     `,
-        clickableStyle: css`
+    clickableStyle: css`
       cursor: pointer;
 
       &:focus {
@@ -78,7 +78,7 @@ export const colorSet: Record<Theme, ColorSet> = {
         }
       }
     `,
-    },
+  },
 };
 
 export const containerStyle = css`

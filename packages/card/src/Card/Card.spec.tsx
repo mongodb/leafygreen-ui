@@ -77,7 +77,7 @@ describe('packages/Card', () => {
       });
 
       test('when `onClick` is provided', () => {
-        const { renderedCard } = renderCard({ onClick: () => { } });
+        const { renderedCard } = renderCard({ onClick: () => {} });
         expect(isVisuallyClickable(renderedCard)).toBe(true);
       });
 
@@ -105,7 +105,7 @@ describe('packages/Card', () => {
 
       test('when `onClick` and explicit `contentStyle` are provided', () => {
         const { renderedCard } = renderCard({
-          onClick: () => { },
+          onClick: () => {},
           contentStyle: ContentStyle.None,
         });
         expect(isVisuallyClickable(renderedCard)).toBe(false);

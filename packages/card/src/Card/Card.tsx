@@ -5,8 +5,8 @@ import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { colorSet,containerStyle } from './styles';
 import { CardProps, ContentStyle } from './types';
-import { containerStyle, colorSet } from './styles';
 
 /**
  * Cards are used to organize information into consumable chunks.
