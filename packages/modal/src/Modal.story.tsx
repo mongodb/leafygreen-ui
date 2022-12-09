@@ -56,14 +56,7 @@ const ControlledTemplate: ComponentStory<typeof Modal> = (args: ModalProps) => {
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         Open Modal
       </Button>
-      <Modal
-        {...args}
-        contentClassName={css`
-          max-height: 75vh;
-        `}
-        open={open}
-        setOpen={setOpen}
-      />
+      <Modal {...args} open={open} setOpen={setOpen} />
     </>
   );
 };
