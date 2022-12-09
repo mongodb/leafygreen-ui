@@ -14,14 +14,15 @@ import {
 import { DescriptionProps } from './Description.types';
 
 export const Description = ({
+  baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   disabled = false,
   children,
   className,
   ...rest
 }: DescriptionProps) => {
-  const baseFontSize = useUpdatedBaseFontSize();
   const { theme } = useDarkMode(darkModeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
   return (
     <p
