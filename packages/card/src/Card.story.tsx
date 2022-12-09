@@ -5,7 +5,7 @@ import { Story } from '@storybook/react';
 import { BoxProps } from '@leafygreen-ui/box';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { Card as LGCard, CardProps } from './Card';
+import { Card as LGCard, CardProps } from './Card/Card';
 
 // This is a workaround to make sure props are correctly imported despite Button using forwardRef
 // https://github.com/storybookjs/storybook/issues/15334
