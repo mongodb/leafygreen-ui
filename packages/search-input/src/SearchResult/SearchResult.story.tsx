@@ -1,8 +1,10 @@
+import React from 'react';
+
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
-import React from 'react';
+
 import { SearchResult } from './SearchResult';
 import type { SearchResultProps } from './SearchResult.types';
 

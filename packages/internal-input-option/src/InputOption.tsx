@@ -1,6 +1,13 @@
 import React from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
-import { InputOptionProps } from './InputOption.types';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  Polymorphic,
+  PolymorphicAs,
+  usePolymorphic,
+} from '@leafygreen-ui/polymorphic';
+
 import {
   inputOptionActiveStyles,
   inputOptionDisabledStyles,
@@ -8,12 +15,7 @@ import {
   inputOptionThemeStyles,
   inputOptionWedge,
 } from './InputOption.style';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import {
-  Polymorphic,
-  PolymorphicAs,
-  usePolymorphic,
-} from '@leafygreen-ui/polymorphic';
+import { InputOptionProps } from './InputOption.types';
 
 const InputOption = Polymorphic<InputOptionProps>(
   (

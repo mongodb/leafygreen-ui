@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import Popover from '@leafygreen-ui/popover';
-import { SearchResultsMenuProps } from './SearchResultsMenu.types';
+import { spacing } from '@leafygreen-ui/tokens';
+
 import {
   searchResultsListStyles,
   searchResultsMenuStyles,
 } from './SearchResultsMenu.style';
-import { spacing } from '@leafygreen-ui/tokens';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { SearchResultsMenuProps } from './SearchResultsMenu.types';
 
 const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,

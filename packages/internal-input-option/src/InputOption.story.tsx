@@ -1,9 +1,11 @@
 import React from 'react';
-import { InputOption, type InputOptionProps } from '.';
+
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
+
+import { InputOption, type InputOptionProps } from '.';
 
 export default {
   title: 'Components/Internal/InputOption',

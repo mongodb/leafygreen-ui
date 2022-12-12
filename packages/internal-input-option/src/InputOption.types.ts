@@ -1,5 +1,5 @@
-import { DarkModeProps } from '@leafygreen-ui/lib';
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 /**
  * TERMINOLOGY

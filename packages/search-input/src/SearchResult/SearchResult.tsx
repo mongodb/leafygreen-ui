@@ -1,21 +1,23 @@
 import React from 'react';
+
+import { cx } from '@leafygreen-ui/emotion';
+import { InputOption } from '@leafygreen-ui/internal-input-option';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphicProps,
   Polymorphic,
   PolymorphicAs,
 } from '@leafygreen-ui/polymorphic';
-import { InputOption } from '@leafygreen-ui/internal-input-option';
-import { cx } from '@leafygreen-ui/emotion';
-import { SearchResultProps } from './SearchResult.types';
+
 import {
+  descriptionClassName,
+  searchResultDisabledStyle,
   searchResultStyles,
   searchResultThemeStyles,
   titleClassName,
-  descriptionClassName,
-  searchResultDisabledStyle,
 } from './SearchResult.styles';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
+import { SearchResultProps } from './SearchResult.types';
 
 const SearchResult = Polymorphic<InferredPolymorphicProps<SearchResultProps>>(
   (

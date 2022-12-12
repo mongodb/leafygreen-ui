@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import { SearchResult } from './SearchResult';
 
 describe('packages/search-input/search-result', () => {

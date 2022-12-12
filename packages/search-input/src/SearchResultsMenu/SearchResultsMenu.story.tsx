@@ -1,6 +1,8 @@
 import React from 'react';
-import { SearchResultsMenu } from '.';
+
 import { SearchResult } from '../SearchResult';
+
+import { SearchResultsMenu } from '.';
 
 export default {
   title: 'Components/SearchInput/Menu',
