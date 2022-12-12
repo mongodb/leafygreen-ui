@@ -1,5 +1,6 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
+
 import { getTheme, Theme } from '@leafygreen-ui/lib';
 
 interface DarkModeContextProps {

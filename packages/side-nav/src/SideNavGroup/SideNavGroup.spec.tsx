@@ -1,9 +1,12 @@
 import React from 'react';
-import { render, cleanup, screen, fireEvent } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+
 import Icon from '@leafygreen-ui/icon';
-import { SideNavGroup } from './';
-import { SideNavGroupProps } from './types';
+
 import { SideNavItem } from '../SideNavItem';
+
+import { SideNavGroupProps } from './types';
+import { SideNavGroup } from './';
 
 describe('packages/side-nav', () => {
   const testIds = {

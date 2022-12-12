@@ -1,8 +1,9 @@
-import { OneOf } from '@leafygreen-ui/lib';
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
+
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
+import { OneOf } from '@leafygreen-ui/lib';
 
 type PortalProps = {
   children?: React.ReactNode;

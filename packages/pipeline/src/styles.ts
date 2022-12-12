@@ -1,9 +1,10 @@
-import { palette } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
-import { Size } from './types';
+
 import { edges } from './svgs/edges';
+import { Size } from './types';
 
 export const svgInnerOutlineClassName = createUniqueClassName('pipeline');
 export const svgOuterOutlineClassName = createUniqueClassName('pipeline');

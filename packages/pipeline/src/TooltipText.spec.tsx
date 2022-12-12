@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+
 import { typeIs } from '@leafygreen-ui/lib';
+
 import TooltipText from './TooltipText';
 
 function renderTooltipText({

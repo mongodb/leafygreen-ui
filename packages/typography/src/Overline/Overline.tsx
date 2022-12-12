@@ -1,8 +1,11 @@
 import React from 'react';
+
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { baseTypographyStyles, defaultTextColor } from '../styles';
+
 import { overlineStyles } from './Overline.styles';
 import { OverlineProps } from './Overline.types';
 

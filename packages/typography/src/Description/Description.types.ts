@@ -1,5 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { CommonTypographyProps } from '../types';
+
+import { ResponsiveTypographyProps } from '../types';
 
 export type DescriptionProps = HTMLElementProps<'p'> &
-  CommonTypographyProps & { disabled?: boolean };
+  ResponsiveTypographyProps & { disabled?: boolean };

@@ -1,8 +1,11 @@
 import React from 'react';
-import { css } from '@emotion/css';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import Button from '@leafygreen-ui/button';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { css } from '@emotion/css';
 
 const knobsConfig: KnobsConfigInterface<{
   align: Align;

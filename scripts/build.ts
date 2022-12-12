@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
-import { spawn, spawnSync } from 'child_process';
 import chalk from 'chalk';
+import { spawn, spawnSync } from 'child_process';
 import { Command } from 'commander';
+
 import { getRelevantPackages } from './utils/getRelevantPackages';
 
 interface Opts {

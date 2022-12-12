@@ -1,8 +1,11 @@
 import React from 'react';
-import { css } from '@emotion/css';
-import { RadioGroup, Radio, Size } from '@leafygreen-ui/radio-group';
-import { uiColors } from '@leafygreen-ui/palette';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { uiColors } from '@leafygreen-ui/palette';
+import { Radio, RadioGroup, Size } from '@leafygreen-ui/radio-group';
+
+import { css } from '@emotion/css';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

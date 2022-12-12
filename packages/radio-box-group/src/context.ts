@@ -1,4 +1,5 @@
-import { createContext, ChangeEventHandler, useContext } from 'react';
+import { ChangeEventHandler, createContext, useContext } from 'react';
+
 import { Size } from './types';
 
 export interface RadioBoxGroupContext {

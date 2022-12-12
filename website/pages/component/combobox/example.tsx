@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import {
   Combobox,
-  ComboboxOption,
   ComboboxGroup,
+  ComboboxOption,
 } from '@leafygreen-ui/combobox';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import { css, cx } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
 
 const knobsConfig: KnobsConfigInterface<{
   multiselect: boolean;

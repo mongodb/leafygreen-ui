@@ -1,6 +1,8 @@
 import React from 'react';
+import { darken, lighten, readableColor, transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
-import { lighten, darken, readableColor, transparentize } from 'polished';
+
 import palette from './palette';
 
 interface ColorBlockProps {

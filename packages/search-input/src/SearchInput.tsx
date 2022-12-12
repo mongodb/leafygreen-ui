@@ -1,23 +1,25 @@
 import React, { useRef, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+import { cx } from '@leafygreen-ui/emotion';
+import { useBackdropClick } from '@leafygreen-ui/hooks';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
-import { SearchInputProps, SizeVariant } from './types';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+import { SearchResultsMenu } from './SearchResultsMenu';
 import {
   baseInputStyle,
-  wrapperFontStyle,
   inputContainerStyle,
   inputFocusStyles,
-  inputThemeStyle,
   inputSizeStyles,
+  inputThemeStyle,
+  searchIconDisabledStyle,
+  searchIconSizeStyle,
   searchIconStyle,
   searchIconThemeStyle,
-  searchIconSizeStyle,
-  searchIconDisabledStyle,
+  wrapperFontStyle,
 } from './styles';
-import { cx } from '@leafygreen-ui/emotion';
-import { SearchResultsMenu } from './SearchResultsMenu';
-import { useBackdropClick } from '@leafygreen-ui/hooks';
+import { SearchInputProps, SizeVariant } from './types';
 
 /**
  * # SearchInput

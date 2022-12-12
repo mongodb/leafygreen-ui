@@ -1,4 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import { SupportedLanguages } from './languages';
 
 export const Mode = {

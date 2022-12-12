@@ -1,5 +1,7 @@
+import { fireEvent, screen } from '@testing-library/react';
+
 import '@testing-library/jest-dom/extend-expect';
-import { screen, fireEvent } from '@testing-library/react';
+
 import { defaultData } from './fixtures';
 import { renderTable } from './testUtils';
 

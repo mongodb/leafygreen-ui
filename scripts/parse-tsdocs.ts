@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
+import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
-import { Command } from 'commander';
 
 import { writeDocs } from './utils/tsDocParser';
 

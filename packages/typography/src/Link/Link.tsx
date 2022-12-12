@@ -1,30 +1,34 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
-import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
+
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
+import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
+import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { bodyTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+
 import {
-  openInNewTabStyles,
+  anchorClassName,
   arrowRightIconHover,
   arrowRightIconPersist,
-  anchorClassName,
-  linkStyles,
   linkModeStyles,
+  linkStyles,
+  openInNewTabStyles,
   underlineModeStyles,
   underlineStyles,
 } from './Link.styles';
-import { LinkProps, ArrowAppearance } from './Link.types';
+import { ArrowAppearance, LinkProps } from './Link.types';
 
 const Link: ExtendableBox<LinkProps, 'a'> = ({
   href,
   children,
   className,
-  target: targetProp,
   arrowAppearance = ArrowAppearance.None,
   hideExternalIcon = false,
+  baseFontSize: baseFontSizeOverride,
+  target: targetProp,
   darkMode: darkModeProp,
   ...rest
 }: LinkProps) => {
@@ -41,7 +45,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
   }, [href, currentHostname]);
 
-  const baseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
   let target, icon, rel;
 

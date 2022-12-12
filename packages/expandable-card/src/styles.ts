@@ -1,8 +1,9 @@
+import { TransitionStatus } from 'react-transition-group';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { transitionDuration as transitionDurationToken } from '@leafygreen-ui/tokens';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { TransitionStatus } from 'react-transition-group';
+import { transitionDuration as transitionDurationToken } from '@leafygreen-ui/tokens';
 
 export const transitionDuration = transitionDurationToken.slower;
 

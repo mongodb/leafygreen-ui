@@ -1,19 +1,21 @@
 import React, { HTMLProps, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { useRadioBoxGroupContext, RadioBoxGroupContext } from './context';
-import { RadioBoxProps, Size } from './types';
+
+import { RadioBoxGroupContext, useRadioBoxGroupContext } from './context';
 import {
   getRadioDisplayStyles,
   inputStyles,
   radioBoxSizes,
   radioWrapper,
 } from './RadioBox.styles';
+import { RadioBoxProps, Size } from './types';
 
 function isChecked({
   checkedProp,

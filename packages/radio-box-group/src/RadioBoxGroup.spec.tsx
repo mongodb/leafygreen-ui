@@ -1,7 +1,9 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import { typeIs } from '@leafygreen-ui/lib';
+
 import { RadioBox } from './RadioBox';
 import { RadioBoxGroup } from './RadioBoxGroup';
 

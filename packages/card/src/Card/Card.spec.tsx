@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import { Card, ContentStyle } from './Card';
+
+import { Card, ContentStyle } from '.';
 
 const defaultClassName = 'card-className';
 const defaultChildren = 'this is my card component';

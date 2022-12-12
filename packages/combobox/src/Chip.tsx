@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import Icon from '@leafygreen-ui/icon';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import Icon from '@leafygreen-ui/icon';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { keyMap, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
-import { ChipProps, ComboboxSize as Size } from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
+
 import {
   chipClassName,
   chipWrapperPaddingY,
   inputHeight,
 } from './Combobox.styles';
+import { ChipProps, ComboboxSize as Size } from './Combobox.types';
+import { ComboboxContext } from './ComboboxContext';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;

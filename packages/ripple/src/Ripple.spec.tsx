@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+
+import { LGWindow } from './getRippleGlobalNamespace';
 import { registerRipple } from './index';
 import { Options } from './utils';
-import { LGWindow } from './getRippleGlobalNamespace';
 
 const lgNamespace = '__LEAFYGREEN_UTILS__';
 const buttonText = 'click me';

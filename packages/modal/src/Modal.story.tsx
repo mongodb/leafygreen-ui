@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
-import Modal from '.';
-import { Select, Option, OptionGroup } from '@leafygreen-ui/select';
-import { Subtitle, Body } from '@leafygreen-ui/typography';
-import Copyable from '@leafygreen-ui/copyable';
-import Code from '@leafygreen-ui/code';
 import { ComponentStory, Meta } from '@storybook/react';
-import { ModalProps } from './Modal';
+
+import Button from '@leafygreen-ui/button';
+import Code from '@leafygreen-ui/code';
+import Copyable from '@leafygreen-ui/copyable';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
+import { spacing } from '@leafygreen-ui/tokens';
+import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
+
+import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
 
 export default {
   title: 'Components/Modals/Modal',
@@ -22,14 +25,37 @@ export default {
     children: {
       control: false,
     },
+    darkMode: storybookArgTypes.darkMode,
+    size: {
+      options: Object.values(ModalSize),
+      control: 'radio',
+    },
+    closeIconColor: {
+      options: Object.values(CloseIconColor),
+      control: 'radio',
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'setOpen', 'shouldClose', 'children', 'open'],
+    },
   },
 } as Meta<typeof Modal>;
 
+const margin = css`
+  & > * + * {
+    margin-top: ${spacing[3]}px;
+  }
+`;
+
 const ControlledTemplate: ComponentStory<typeof Modal> = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
+  const { darkMode } = args;
   return (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        Open Modal
+      </Button>
       <Modal {...args} open={open} setOpen={setOpen} />
     </>
   );
@@ -38,10 +64,10 @@ const ControlledTemplate: ComponentStory<typeof Modal> = (args: ModalProps) => {
 export const Controlled = ControlledTemplate.bind({});
 Controlled.args = {
   children: (
-    <>
-      <Subtitle>Base modal</Subtitle>
+    <div className={margin}>
+      <H3>Base modal</H3>
       <Body>Modal Content goes here.</Body>
-    </>
+    </div>
   ),
 };
 
@@ -49,11 +75,14 @@ export const Scroll = ControlledTemplate.bind({});
 Scroll.args = {
   children: (
     <div
-      className={css`
-        height: 200vh;
-      `}
+      className={cx(
+        css`
+          height: 200vh;
+        `,
+        margin,
+      )}
     >
-      Modal Content goes here.
+      <div>Modal Content goes here.</div>
     </div>
   ),
 };
@@ -71,69 +100,74 @@ export const DefaultSelect = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('cat');
   const [valueB, setValueB] = useState('smallCat');
+  const { darkMode } = args;
 
   return (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        Open Modal
+      </Button>
       <Modal {...args} open={open} setOpen={setOpen}>
-        <div>Modal Content goes here.</div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-          tristique risus sed est finibus pellentesque. Vestibulum feugiat,
-          libero in efficitur egestas, ipsum leo mattis purus, nec maximus nisl
-          lorem at orci. Nam nunc turpis, vehicula ac aliquam vitae, convallis
-          et turpis. Fusce fermentum laoreet gravida. Nam malesuada nisl eget
-          blandit auctor. Quisque quis posuere enim. Etiam non est sit amet diam
-          efficitur malesuada. In ut pretium risus. Etiam convallis rhoncus
-          tempor. Donec ullamcorper maximus enim sed dapibus. Duis ac vehicula
-          orci, et semper turpis.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-          tristique risus sed est finibus pellentesque. Vestibulum feugiat,
-          libero in efficitur egestas, ipsum leo mattis purus, nec maximus nisl
-          lorem at orci. Nam nunc turpis, vehicula ac aliquam vitae, convallis
-          et turpis. Fusce fermentum laoreet gravida. Nam malesuada nisl eget
-          blandit auctor. Quisque quis posuere enim. Etiam non est sit amet diam
-          efficitur malesuada. In ut pretium risus. Etiam convallis rhoncus
-          tempor. Donec ullamcorper maximus enim sed dapibus. Duis ac vehicula
-          orci, et semper turpis.
-        </p>
+        <div className={margin}>
+          <Subtitle>Modal Content goes here.</Subtitle>
+          <Body>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+            tristique risus sed est finibus pellentesque. Vestibulum feugiat,
+            libero in efficitur egestas, ipsum leo mattis purus, nec maximus
+            nisl lorem at orci. Nam nunc turpis, vehicula ac aliquam vitae,
+            convallis et turpis. Fusce fermentum laoreet gravida. Nam malesuada
+            nisl eget blandit auctor. Quisque quis posuere enim. Etiam non est
+            sit amet diam efficitur malesuada. In ut pretium risus. Etiam
+            convallis rhoncus tempor. Donec ullamcorper maximus enim sed
+            dapibus. Duis ac vehicula orci, et semper turpis.
+          </Body>
+          <Body>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+            tristique risus sed est finibus pellentesque. Vestibulum feugiat,
+            libero in efficitur egestas, ipsum leo mattis purus, nec maximus
+            nisl lorem at orci. Nam nunc turpis, vehicula ac aliquam vitae,
+            convallis et turpis. Fusce fermentum laoreet gravida. Nam malesuada
+            nisl eget blandit auctor. Quisque quis posuere enim. Etiam non est
+            sit amet diam efficitur malesuada. In ut pretium risus. Etiam
+            convallis rhoncus tempor. Donec ullamcorper maximus enim sed
+            dapibus. Duis ac vehicula orci, et semper turpis.
+          </Body>
 
-        <div>
-          <Select
-            label="label"
-            size="small"
-            placeholder="animals"
-            name="pets"
-            value={value}
-            onChange={setValue}
-            usePortal={true}
-          >
-            <OptionGroup label="Common">
-              <Option value="dog">Dog</Option>
-              <Option value="cat">Cat</Option>
-              <Option value="axolotl">Axolotl</Option>
-            </OptionGroup>
-          </Select>
-        </div>
+          <div>
+            <Select
+              label="label"
+              size="small"
+              placeholder="animals"
+              name="pets"
+              value={value}
+              onChange={setValue}
+              usePortal={true}
+            >
+              <OptionGroup label="Common">
+                <Option value="dog">Dog</Option>
+                <Option value="cat">Cat</Option>
+                <Option value="axolotl">Axolotl</Option>
+              </OptionGroup>
+            </Select>
+          </div>
 
-        <div>
-          <Select
-            label="label2"
-            size="small"
-            placeholder="types of cat"
-            name="cats"
-            value={valueB}
-            onChange={setValueB}
-            usePortal={true}
-          >
-            <OptionGroup label="Common">
-              <Option value="smallCat">smallCat</Option>
-              <Option value="largeCat">largeCat</Option>
-              <Option value="mediumCat">mediumCat</Option>
-            </OptionGroup>
-          </Select>
+          <div>
+            <Select
+              label="label2"
+              size="small"
+              placeholder="types of cat"
+              name="cats"
+              value={valueB}
+              onChange={setValueB}
+              usePortal={true}
+            >
+              <OptionGroup label="Common">
+                <Option value="smallCat">smallCat</Option>
+                <Option value="largeCat">largeCat</Option>
+                <Option value="mediumCat">mediumCat</Option>
+              </OptionGroup>
+            </Select>
+          </div>
         </div>
       </Modal>
     </>
@@ -171,12 +205,14 @@ console.log(greeting('World'));
     <>
       <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <Modal {...args} open={open} setOpen={setOpen}>
-        <div>Modal Content goes here.</div>
-        <Copyable>Hello world in a modal</Copyable>
+        <div className={margin}>
+          <div>Modal Content goes here.</div>
+          <Copyable>Hello world in a modal</Copyable>
 
-        <Code copyable={true} language="javascript">
-          {jsSnippet}
-        </Code>
+          <Code copyable={true} language="javascript">
+            {jsSnippet}
+          </Code>
+        </div>
       </Modal>
     </>
   );

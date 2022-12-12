@@ -1,6 +1,8 @@
 import { createContext } from 'react';
-import { Size } from './types';
+
 import { Theme } from '@leafygreen-ui/lib';
+
+import { Size } from './types';
 
 interface SelectData {
   theme: Theme;

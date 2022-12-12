@@ -2,11 +2,13 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 1a497fd4793d0a174be2452f388b860f
+ * @checksum 97c8cf87b448e0be8c05a900432fc695
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MegaphoneProps extends LGGlyph.ComponentProps {}

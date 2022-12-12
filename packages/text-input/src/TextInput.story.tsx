@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
-import TextInput, { TextInputProps, State, SizeVariant } from '.';
+
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+
+import TextInput, { SizeVariant, State, TextInputProps } from '.';
 
 export const StoryTextInput: React.FC<TextInputProps> = props => (
   <TextInput {...props} />

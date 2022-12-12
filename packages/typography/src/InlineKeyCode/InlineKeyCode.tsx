@@ -1,22 +1,25 @@
 import React from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { codeTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import {
-  inlineKeyCodeStyles,
   inlineKeyCodeColor,
+  inlineKeyCodeStyles,
 } from './InlineKeyCode.styles';
 import { InlineKeyCodeProps } from './InlineKeyCode.types';
 
 function InlineKeyCode({
+  baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   children,
   className,
   ...rest
 }: InlineKeyCodeProps) {
-  const baseFontSize = useUpdatedBaseFontSize();
-
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
   const { theme } = useDarkMode(darkModeProp);
 
   return (

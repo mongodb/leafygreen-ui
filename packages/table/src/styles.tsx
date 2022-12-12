@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { bodyTypeScaleStyles } from '@leafygreen-ui/typography';
 
 const sharedStyles = css`
   --lg-cell-padding-block: 10px;
@@ -9,31 +10,9 @@ const sharedStyles = css`
   text-align: left; // Justification is updated in \`Row.tsx\` for number cells
 `;
 
-export const getCommonCellStyles = (
-  baseFontSize: 14 | 16,
-  darkMode?: boolean,
-): string => {
-  if (baseFontSize === 16) {
-    return css`
-      ${sharedStyles}
-      font-size: 16px;
-      line-height: 24px;
-    `;
-  }
-
-  // TODO: Refresh - remove darkMode override
-  if (darkMode) {
-    return css`
-      --lg-cell-padding-block: 8px;
-      ${sharedStyles}
-      font-size: 14px;
-      line-height: 20px;
-    `;
-  }
-
+export const getCommonCellStyles = (baseFontSize: 13 | 16): string => {
   return css`
     ${sharedStyles}
-    font-size: 13px;
-    line-height: 20px;
+    ${bodyTypeScaleStyles[baseFontSize]}
   `;
 };

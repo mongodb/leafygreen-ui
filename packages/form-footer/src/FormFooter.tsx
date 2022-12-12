@@ -1,13 +1,15 @@
 import React from 'react';
+import { transparentize } from 'polished';
+
 import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { HTMLElementProps, isComponentType, Theme } from '@leafygreen-ui/lib';
-import { transparentize } from 'polished';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
-import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps, isComponentType, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
+import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 
 const footerBaseStyle = css`
   min-height: 92px;

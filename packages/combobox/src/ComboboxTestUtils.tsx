@@ -1,23 +1,25 @@
-import isArray from 'lodash/isArray';
-import isNull from 'lodash/isNull';
 import React from 'react';
 import {
-  render,
   configure,
-  queryByText,
-  queryByAttribute,
-  queryAllByTestId,
   queryAllByAttribute,
+  queryAllByTestId,
+  queryByAttribute,
+  queryByText,
+  render,
 } from '@testing-library/react';
-import chalk from 'chalk';
 import userEvent from '@testing-library/user-event';
+import chalk from 'chalk';
+import isArray from 'lodash/isArray';
+import isNull from 'lodash/isNull';
+
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Combobox, ComboboxGroup, ComboboxOption } from '.';
+
 import {
   BaseComboboxProps,
   ComboboxMultiselectProps,
   OptionObject,
 } from './Combobox.types';
+import { Combobox, ComboboxGroup, ComboboxOption } from '.';
 
 export interface NestedObject {
   label: string;

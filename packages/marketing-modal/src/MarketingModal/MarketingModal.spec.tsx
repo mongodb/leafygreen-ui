@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import {
+  act,
   fireEvent,
   render,
   waitForElementToBeRemoved,
-  act,
 } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import MarketingModal from '.';
+
+import MarketingModal from '..';
 
 const WrappedModal = ({
   open: initialOpen,

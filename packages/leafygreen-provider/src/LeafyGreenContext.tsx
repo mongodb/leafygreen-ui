@@ -1,16 +1,18 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import UsingKeyboardProvider from './UsingKeyboardContext';
-import TypographyProvider, {
-  TypographyProviderProps,
-  useBaseFontSize,
-} from './TypographyContext';
+
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
+import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
 import PortalContextProvider, {
   PortalContextValues,
   usePopoverPortalContainer,
 } from './PortalContext';
-import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import TypographyProvider, {
+  TypographyProviderProps,
+  useBaseFontSize,
+} from './TypographyContext';
+import UsingKeyboardProvider from './UsingKeyboardContext';
 
 export type LeafyGreenProviderProps = {
   /**
