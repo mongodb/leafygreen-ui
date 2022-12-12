@@ -4,7 +4,6 @@ import {
   isComponentType,
   createUniqueClassName,
   getNodeTextContent,
-  createDataProp,
   Theme,
   getTheme,
   keyMap,
@@ -19,7 +18,6 @@ describe('packages/lib', () => {
     expect(isComponentType).toBeDefined();
     expect(createUniqueClassName).toBeDefined();
     expect(getNodeTextContent).toBeDefined();
-    expect(createDataProp).toBeDefined();
     expect(storybookArgTypes).toBeDefined();
     expect(keyMap).toBeDefined();
     expect(Theme).toBeDefined();
