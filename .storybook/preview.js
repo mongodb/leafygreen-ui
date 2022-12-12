@@ -42,7 +42,13 @@ export const parameters = {
   options: {
     storySort: {
       method: '',
-      order: ['Overview', 'Developer Guide', 'Sample Pages (WIP)', 'Contexts', 'Packages'],
+      order: [
+        'Overview',
+        'Developer Guide',
+        'Sample Pages (WIP)',
+        'Contexts',
+        'Packages',
+      ],
       locales: '',
     },
   },
