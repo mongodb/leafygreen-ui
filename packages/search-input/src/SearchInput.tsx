@@ -4,7 +4,9 @@ import isUndefined from 'lodash/isUndefined';
 import { cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 
 import { SearchResultsMenu } from './SearchResultsMenu';
 import {
@@ -49,7 +51,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) {
-    const { theme } = useDarkMode(darkModeProp);
+    const { theme, darkMode } = useDarkMode(darkModeProp);
     const [isOpen, setOpen] = useState(false);
     const closeMenu = () => setOpen(false);
     const openMenu = () => setOpen(true);
@@ -75,51 +77,53 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     );
 
     return (
-      <form role="search">
-        {/* Disable eslint: onClick sets focus. Key events would already have focus */}
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-        <div
-          ref={searchBoxRef}
-          role="searchbox"
-          tabIndex={-1}
-          onClick={handleInputClick}
-          onFocus={handleInputFocus}
-          className={cx(
-            inputContainerStyle,
-            wrapperFontStyle[sizeVariant],
-            className,
+      <LeafyGreenProvider darkMode={darkMode}>
+        <form role="search">
+          {/* Disable eslint: onClick sets focus. Key events would already have focus */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+          <div
+            ref={searchBoxRef}
+            role="searchbox"
+            tabIndex={-1}
+            onClick={handleInputClick}
+            onFocus={handleInputFocus}
+            className={cx(
+              inputContainerStyle,
+              wrapperFontStyle[sizeVariant],
+              className,
+            )}
+          >
+            <MagnifyingGlass
+              className={cx(
+                searchIconStyle,
+                searchIconThemeStyle[theme],
+                searchIconSizeStyle[sizeVariant],
+                { [searchIconDisabledStyle[theme]]: disabled },
+              )}
+              aria-label="Search Icon"
+              role="presentation"
+            />
+            <input
+              type="search"
+              className={cx(
+                baseInputStyle,
+                inputThemeStyle[theme],
+                inputSizeStyles[sizeVariant],
+                inputFocusStyles[theme], // Always show focus styles
+              )}
+              placeholder={placeholder}
+              ref={forwardRef}
+              disabled={disabled}
+              {...rest}
+            />
+          </div>
+          {withTypeAhead && (
+            <SearchResultsMenu open={isOpen} refEl={searchBoxRef} ref={menuRef}>
+              {children}
+            </SearchResultsMenu>
           )}
-        >
-          <MagnifyingGlass
-            className={cx(
-              searchIconStyle,
-              searchIconThemeStyle[theme],
-              searchIconSizeStyle[sizeVariant],
-              { [searchIconDisabledStyle[theme]]: disabled },
-            )}
-            aria-label="Search Icon"
-            role="presentation"
-          />
-          <input
-            type="search"
-            className={cx(
-              baseInputStyle,
-              inputThemeStyle[theme],
-              inputSizeStyles[sizeVariant],
-              inputFocusStyles[theme], // Always show focus styles
-            )}
-            placeholder={placeholder}
-            ref={forwardRef}
-            disabled={disabled}
-            {...rest}
-          />
-        </div>
-        {withTypeAhead && (
-          <SearchResultsMenu open={isOpen} refEl={searchBoxRef} ref={menuRef}>
-            {children}
-          </SearchResultsMenu>
-        )}
-      </form>
+        </form>
+      </LeafyGreenProvider>
     );
   },
 ) as SearchInputType;

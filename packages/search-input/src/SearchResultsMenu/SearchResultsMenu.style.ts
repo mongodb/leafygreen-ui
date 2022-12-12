@@ -1,15 +1,23 @@
 import { transparentize } from 'polished';
 
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
 
 export const searchResultsMenuStyles = css`
-  background-color: ${palette.white};
-  box-shadow: 0px 4px 4px ${transparentize(0.75, '#000000')};
-  padding: ${spacing[2]}px 0;
+  box-shadow: 0px 4px 7px ${transparentize(0.75, '#000000')};
+  padding: 12px 0;
   border-radius: 12px;
 `;
+
+export const searchResultsMenuThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.white};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark3};
+  `,
+}
 
 export const searchResultsListStyles = css`
   padding: 0;

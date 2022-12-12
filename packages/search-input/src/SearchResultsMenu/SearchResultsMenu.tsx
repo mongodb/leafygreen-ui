@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Popover from '@leafygreen-ui/popover';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import {
   searchResultsListStyles,
   searchResultsMenuStyles,
+  searchResultsMenuThemeStyles,
 } from './SearchResultsMenu.style';
 import { SearchResultsMenuProps } from './SearchResultsMenu.types';
 
@@ -14,20 +16,25 @@ const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,
   SearchResultsMenuProps
 >(({ children, open = false, refEl }: SearchResultsMenuProps, ref) => {
+  const { theme } = useDarkMode();
+
   const menuWidth = useMemo(
-    () => (open ? refEl.current?.clientWidth ?? 0 : 0),
+    () => refEl.current?.clientWidth ?? 0,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [refEl, open],
   );
 
   return (
     <Popover
-      spacing={spacing[1]}
+      spacing={spacing[2]}
       active={open}
       align="bottom"
       justify="start"
       className={cx(
         searchResultsMenuStyles,
+        searchResultsMenuThemeStyles[theme],
         css`
+          width: ${menuWidth}px;
           min-width: ${menuWidth}px;
         `,
       )}

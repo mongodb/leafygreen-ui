@@ -12,6 +12,7 @@ import {
 
 import {
   descriptionClassName,
+  descriptionStyle,
   searchResultDisabledStyle,
   searchResultStyles,
   searchResultThemeStyles,
@@ -27,11 +28,12 @@ const SearchResult = Polymorphic<InferredPolymorphicProps<SearchResultProps>>(
       description,
       disabled,
       className,
+      darkMode,
       ...rest
     },
     ref,
   ) => {
-    const { theme } = useDarkMode(rest.darkMode);
+    const { theme } = useDarkMode(darkMode);
     const textContent = getNodeTextContent(children);
     const ariaLabel =
       rest['aria-label'] ?? rest['aria-labelledby'] ? '' : textContent;
@@ -54,7 +56,9 @@ const SearchResult = Polymorphic<InferredPolymorphicProps<SearchResultProps>>(
       >
         <div className={titleClassName}>{children}</div>
         {description && (
-          <span className={descriptionClassName}>{description}</span>
+          <div className={cx(descriptionClassName, descriptionStyle)}>
+            {description}
+          </div>
         )}
       </InputOption>
     );
