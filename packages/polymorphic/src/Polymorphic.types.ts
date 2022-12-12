@@ -1,7 +1,6 @@
 /**
  * Based on https://blog.logrocket.com/build-strongly-typed-polymorphic-components-react-typescript/
  */
-// TODO: Consider restricting HTML elements to only elements that accept children
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
