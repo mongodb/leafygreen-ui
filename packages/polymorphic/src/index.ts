@@ -4,10 +4,9 @@ export {
   type InferredPolymorphicProps,
   useInferredPolymorphic,
 } from './InferredPolymorphic';
-export { BasePolymorph, Polymorph } from './Polymorph';
+export { Polymorph } from './Polymorph';
 export { Polymorphic } from './Polymorphic';
 export {
-  getPolymorphicComponent,
   usePolymorphic,
   usePolymorphicRef,
 } from './Polymorphic.hooks';

@@ -19,7 +19,7 @@ export const usePolymorphicRef = <E extends PolymorphicAs>(_?: E) => {
   >(null);
 };
 
-export function getPolymorphicComponent<T extends PolymorphicAs>(
+function getPolymorphicComponent<T extends PolymorphicAs>(
   as?: T,
 ): React.ElementType {
   return as || 'div';
