@@ -59,9 +59,9 @@ type InheritedProps<T extends PolymorphicAs> = T extends 'a'
  */
 export type PolymorphicProps<
   T extends PolymorphicAs,
-  P = {},
-> = PropsWithChildren<P & AsProp<T>> &
-  Omit<InheritedProps<T>, PropsToOmit<T, P>>;
+  XP = {},
+> = PropsWithChildren<XP & AsProp<T>> &
+  Omit<InheritedProps<T>, PropsToOmit<T, XP>>;
 
 /**
  * Add the `ref` prop type to PolymorphicProps
@@ -72,8 +72,8 @@ export type PolymorphicProps<
  */
 export type PolymorphicPropsWithRef<
   T extends PolymorphicAs,
-  P = {},
-> = PolymorphicProps<T, P> & {
+  XP = {},
+> = PolymorphicProps<T, XP> & {
   /** The ref object returned by `React.useRef` */
   ref?: PolymorphicRef<T>;
 };
