@@ -14,13 +14,14 @@ import {
 import { LabelProps } from './Label.types';
 
 export const Label = ({
+  baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   className,
   children,
   disabled = false,
   ...rest
 }: LabelProps) => {
-  const baseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
   const { theme } = useDarkMode(darkModeProp);
 
   return (

@@ -1,6 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { CommonTypographyProps } from '../types';
+import { ResponsiveTypographyProps } from '../types';
 
 const ArrowAppearance = {
   Hover: 'hover',
@@ -13,7 +13,7 @@ type ArrowAppearance = typeof ArrowAppearance[keyof typeof ArrowAppearance];
 export { ArrowAppearance };
 
 export interface LinkProps
-  extends CommonTypographyProps,
+  extends ResponsiveTypographyProps,
     HTMLElementProps<'a'> {
   arrowAppearance?: ArrowAppearance;
   hideExternalIcon?: boolean;

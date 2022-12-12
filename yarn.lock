@@ -2304,18 +2304,6 @@
   dependencies:
     lodash "^4.17.21"
 
-"@leafygreen-ui/typography@^14.0.1":
-  version "14.0.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-14.0.1.tgz#a671fa6701b73b34734e47c2a8f3a863d63bb529"
-  integrity sha512-SU0dowe8j8oZ6b45G8Axdq+aZ1+LHv0uW2V7l5m0PBYjk4WKf+3qzzKJdfDx3/cuY4zKa6xUJG1mlyXkLAsLag==
-  dependencies:
-    "@leafygreen-ui/box" "^3.1.1"
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/icon" "^11.12.0"
-    "@leafygreen-ui/lib" "^10.0.0"
-    "@leafygreen-ui/palette" "^3.4.4"
-    "@leafygreen-ui/tokens" "^1.3.4"
-
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"
