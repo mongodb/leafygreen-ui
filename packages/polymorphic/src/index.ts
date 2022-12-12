@@ -1,5 +1,6 @@
 import { toBePolymorphic } from './utils/Polymorphic.testutils';
 export {
+  type InferredPolymorphicComponentType,
   type InferredPolymorphicProps,
   useInferredPolymorphic,
 } from './InferredPolymorphic';

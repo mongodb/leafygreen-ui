@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { render } from '@testing-library/react';
 
 import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
+import { InferredPolymorphicComponentType } from '../InferredPolymorphic';
 import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
 import { type PolymorphicComponentType, usePolymorphicRef } from '..';
 
@@ -41,6 +42,22 @@ describe('Polymorphic Higher-order Components', () => {
       expect(queryByTestId('hoc')).toBeInTheDocument();
       expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
       expect(queryByTestId('hoc')).toHaveAttribute('href', 'mongodb.design');
+    });
+
+    test('works with `styled`', () => {
+      const StyledExample = styled(ExampleInferred)`
+        color: #ff69b4;
+      ` as InferredPolymorphicComponentType;
+
+      const { getByTestId } = render(
+        <StyledExample href="mongodb.design" data-testid="styled">
+          Some text
+        </StyledExample>,
+      );
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
+      expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
+      expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
     });
   });
 

@@ -149,7 +149,7 @@ describe('packages/polymorphic', () => {
       test('Basic styled component', () => {
         const StyledPolymorph = styled(Polymorph)`
           color: #ff69b4;
-        ` as PolymorphicComponentType;
+        `; // as PolymorphicComponentType;
 
         const { getByTestId } = render(
           <StyledPolymorph data-testid="styled">Some text</StyledPolymorph>,

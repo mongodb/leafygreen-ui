@@ -99,6 +99,14 @@ const MyStyledComponent = styled(MyComponent)`
 ` as PolymorphicComponentType;
 ```
 
+This also works with InferredPolymorphic components
+
+```tsx
+const StyledInferred = styled(MyInferredComponent)`
+  color: hotpink;
+` as InferredPolymorphicComponentType;
+```
+
 Note: TSDocs will not compile for styled polymorphs. This can be remedied by creating a wrapper around the styled function that explicitly returns a PolymorphicComponentType
 
 ## Supported (but not recommended) usage

@@ -1,4 +1,4 @@
-import { AnchorProps } from '../Polymorphic.types';
+import { AnchorProps, PolymorphicComponentType } from '../Polymorphic.types';
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,
@@ -10,3 +10,9 @@ export type InferredPolymorphicProps<P = {}> =
       as?: 'a';
     } & AnchorProps)
   | P;
+
+/**
+ * An extension of `PolymorphicComponentType` that wraps additional props in `InferredPolymorphicProps`
+ */
+export type InferredPolymorphicComponentType<XP = {}> =
+  PolymorphicComponentType<InferredPolymorphicProps<XP>>;
