@@ -7,7 +7,6 @@ import path from 'path';
 
 import { CustomComponentDoc } from './utils/tsDoc.utils';
 
-
 /**
  * A simple script to get a quick & dirty first pass of React `propTypes` from the generated `tsdoc.json`
  */

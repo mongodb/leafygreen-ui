@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
-import { type PolymorphicComponentType,usePolymorphicRef } from '..';
+import { type PolymorphicComponentType, usePolymorphicRef } from '..';
 
 import {
   AdvancedPolymorphic,
