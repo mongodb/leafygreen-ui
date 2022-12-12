@@ -195,6 +195,49 @@ describe('packages/polymorphic', () => {
         expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
         expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
       });
+
+      /* eslint-disable jest/no-disabled-tests */
+      test.skip('TypeScript types are still correct using Styled ', () => {
+        const StyledPolymorph = styled(Polymorph)`
+          color: #ff69b4;
+        ` as PolymorphicComponentType;
+        const { Wrapper } = makeWrapperComponent();
+        const divRef = usePolymorphicRef<'div'>();
+        const anchorRef = usePolymorphicRef<'a'>();
+        const spanRef = usePolymorphicRef<'span'>();
+
+        <>
+          <StyledPolymorph />
+          <StyledPolymorph>some content</StyledPolymorph>
+          <StyledPolymorph as="div" />
+          <StyledPolymorph as="div" ref={divRef} />
+          {/* @ts-expect-error - Must pass the correct ref type */}
+          <StyledPolymorph as="div" ref={anchorRef} />
+          <StyledPolymorph as="div" ref={divRef}>
+            some content
+          </StyledPolymorph>
+          <StyledPolymorph key="some-key" />
+          {/* @ts-expect-error href is not allowed on explicit div */}
+          <StyledPolymorph as="div" href="mongodb.design" />
+
+          {/* @ts-expect-error - Require href when as="a" */}
+          <StyledPolymorph as="a" />
+          <StyledPolymorph as="a" href="mongodb.design" />
+          <StyledPolymorph as="a" href="mongodb.design" ref={anchorRef} />
+          <StyledPolymorph as="a" href="mongodb.design">
+            some content
+          </StyledPolymorph>
+
+          <StyledPolymorph as="input" />
+
+          <StyledPolymorph as={Wrapper} />
+          <StyledPolymorph as={Wrapper} ref={spanRef} />
+          <StyledPolymorph as={Wrapper} ref={spanRef} darkMode={true} />
+          {/* @ts-expect-error - Theme is not a prop on Wrapper */}
+          <StyledPolymorph as={Wrapper} ref={spanRef} theme={'dark'} />
+        </>;
+      });
+      /* eslint-enable jest/no-disabled-tests */
     });
 
     test('Passes the `expect.toBePolymorphic` rule', () => {
