@@ -4,11 +4,7 @@ import { cx } from '@leafygreen-ui/emotion';
 
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { ulStyleOverrides } from '../SideNav/styles';
-import {
-  baseStyle,
-  indentedStyle,
-  themeStyle,
-} from '../SideNavGroup/SideNavGroup.styles';
+import { baseStyle, indentedStyle, themeStyle } from '../SideNavGroup/styles';
 
 import { SideNavGroupOpenProps } from './types';
 

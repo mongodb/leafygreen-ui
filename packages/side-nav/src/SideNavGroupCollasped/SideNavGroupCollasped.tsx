@@ -14,7 +14,7 @@ import {
   buttonClassName,
   indentedStyle,
   themeStyle,
-} from '../SideNavGroup/SideNavGroup.styles';
+} from '../SideNavGroup/styles';
 
 import {
   collapsibleBaseStyle,

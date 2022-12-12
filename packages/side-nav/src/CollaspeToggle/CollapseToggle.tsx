@@ -27,13 +27,12 @@ export function CollapseToggle({
   hideTooltip,
   ...rest
 }: CollapseToggleProps) {
-  const { navId, darkMode, theme } = useSideNavContext();
+  const { navId, theme } = useSideNavContext();
 
   const Chevron = collapsed ? ChevronRight : ChevronLeft;
 
   return (
     <Tooltip
-      darkMode={darkMode}
       align="right"
       justify="middle"
       open={typeof hideTooltip === 'boolean' ? !hideTooltip : undefined}
@@ -61,9 +60,7 @@ export function CollapseToggle({
     >
       <span aria-hidden>
         {collapsed ? 'Expand' : 'Collapse'}
-        <InlineKeyCode className={keyboardShortcut} darkMode={!darkMode}>
-          [
-        </InlineKeyCode>
+        <InlineKeyCode className={keyboardShortcut}>[</InlineKeyCode>
       </span>
     </Tooltip>
   );

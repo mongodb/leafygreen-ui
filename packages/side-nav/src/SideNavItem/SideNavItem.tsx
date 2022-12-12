@@ -26,7 +26,7 @@ import {
   nestedULStyle,
   sideNavItemClassName,
   themeStyle,
-} from './SideNavItem.styles';
+} from './styles';
 import { SideNavItemProps } from './types';
 
 /**

@@ -18,7 +18,7 @@ import {
   iconCustomThemeStyle,
   listItemStyle,
   overlineStyle,
-} from './SideNavGroup.styles';
+} from './styles';
 import { SideNavGroupProps } from './types';
 
 /**
