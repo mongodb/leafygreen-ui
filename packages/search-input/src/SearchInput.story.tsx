@@ -1,7 +1,10 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+} from '@leafygreen-ui/lib';
 
 import { SearchResult } from './SearchResult';
 import { SearchInput } from '.';
@@ -17,7 +20,12 @@ export default {
     disabled: { control: 'boolean' },
     ref: { control: 'none' },
   },
-};
+  parameters: {
+    controls: {
+      exclude: [...storybookExcludedControlParams],
+    },
+  },
+} as ComponentMeta<typeof SearchInput>;
 
 const Template: ComponentStory<typeof SearchInput> = props => (
   <SearchInput {...props} />
