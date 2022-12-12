@@ -6,7 +6,7 @@ import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Option, Select, Size } from '@leafygreen-ui/select';
 import { Body, H1 } from '@leafygreen-ui/typography';
@@ -60,17 +60,26 @@ const realmAppContainer = css`
   flex-grow: 1;
 `;
 
-const mongoNavStyles = (darkMode: boolean) => css`
+const mongoNavBaseStyles = css`
   grid-area: mongonav;
   width: 100%;
   height: 105px;
-  background-color: ${darkMode ? palette.gray.dark4 : palette.white};
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 4px 0 ${darkMode ? palette.black : palette.gray.light2};
   z-index: 1;
 `;
+
+const mongoNavThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.white};
+    box-shadow: 0 2px 4px 0 ${palette.gray.light2};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+    box-shadow: 0 2px 4px 0 ${palette.black};
+  `,
+};
 
 const sideNavStyles = css`
   grid-area: nav;
@@ -93,7 +102,13 @@ const realmAppId = css`
 `;
 
 const MongoNavPlaceholder = ({ darkMode, ...props }: any) => (
-  <header className={mongoNavStyles(darkMode)} {...props}>
+  <header
+    className={cx(
+      mongoNavBaseStyles,
+      mongoNavThemeStyles[darkMode ? Theme.Dark : Theme.Light],
+    )}
+    {...props}
+  >
     <H1 darkMode={darkMode}>
       {'<'}MongoNav Placeholder{'>'}
     </H1>
