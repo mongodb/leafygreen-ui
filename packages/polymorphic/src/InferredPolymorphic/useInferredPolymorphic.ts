@@ -13,7 +13,7 @@ function getInferredPolymorphComponent(
     if (typeof rest?.href === 'string') {
       as = 'a' as PolymorphicAs;
     } else {
-      as = 'div' as PolymorphicAs
+      as = 'div' as PolymorphicAs;
     }
   }
 
@@ -28,7 +28,7 @@ function getInferredPolymorphComponent(
  * (i.e. if no `as` prop is provided, but an `href` prop is defined, then `as` will
  * be inferred to be `a`
  */
- export function useInferredPolymorphic(
+export function useInferredPolymorphic(
   as?: PolymorphicAs,
   rest?: { [key: string]: any },
 ) {
