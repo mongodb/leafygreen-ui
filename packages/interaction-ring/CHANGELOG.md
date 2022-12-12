@@ -1,5 +1,14 @@
 # @leafygreen-ui/interaction-ring
 
+## 7.0.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+
 ## 7.0.1
 
 ### Patch Changes

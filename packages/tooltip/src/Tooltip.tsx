@@ -21,7 +21,7 @@ import Popover, {
   Justify,
   PopoverProps,
 } from '@leafygreen-ui/popover';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
@@ -166,6 +166,12 @@ export type TooltipProps = Omit<
      *
      */
     onClose?: () => void;
+
+    /**
+     * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
+     *
+     */
+    baseFontSize?: BaseFontSize;
   };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
@@ -204,29 +210,30 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
 function Tooltip({
   open: controlledOpen,
   setOpen: controlledSetOpen,
-  className,
-  children,
-  trigger,
-  triggerEvent = TriggerEvent.Hover,
   darkMode: darkThemeProp,
+  baseFontSize: baseFontSizeOverride,
+  triggerEvent = TriggerEvent.Hover,
   enabled = true,
   align = 'top',
   justify = 'start',
   spacing = 12,
+  usePortal = true,
+  onClose = () => {},
   id,
   shouldClose,
-  usePortal = true,
   portalClassName,
   portalContainer,
   scrollContainer,
   popoverZIndex,
   refEl,
-  onClose = () => {},
+  className,
+  children,
+  trigger,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const size = useUpdatedBaseFontSize();
+  const size = useUpdatedBaseFontSize(baseFontSizeOverride);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =
