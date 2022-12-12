@@ -62,4 +62,4 @@ export const descriptionStyle = css`
   max-height: ${spacing[3] * 3}px;
   overflow: hidden;
   text-overflow: ellipsis;
-`
+`;

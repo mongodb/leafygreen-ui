@@ -1,1 +1,1 @@
-export { LoadingOption } from './LoadingOption'
+export { LoadingOption } from './LoadingOption';

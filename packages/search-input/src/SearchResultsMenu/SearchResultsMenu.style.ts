@@ -17,7 +17,7 @@ export const searchResultsMenuThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark3};
   `,
-}
+};
 
 export const searchResultsListStyles = css`
   padding: 0;

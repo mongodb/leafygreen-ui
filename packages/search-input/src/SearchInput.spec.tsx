@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { SizeVariant } from './types';
-import SearchInput from '.';
+import { SearchInput } from '.';
 
 const defaultProps = {
   className: 'test-text-input-class',
