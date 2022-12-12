@@ -1,0 +1,42 @@
+import { Meta } from '@storybook/addon-docs';
+import { H1 } from '@leafygreen-ui/typography';
+import BannerImage from '../.storybook/static/leafygreen-ui-banner.png';
+
+<Meta title="Developer Guide/Package Folder Structure" />
+
+### Folder Structure
+
+- `index.tsx`
+- `styles.ts`
+- `types.ts`
+- `<ComponentName>.tsx`
+- `<ComponentName>.spec.tsx**`
+- `<ComponentName>.stories.tsx**`
+- `any subcomponent directories`
+
+***only if the stories pertain specifically to the component in this directory; meaning it may not be necessary for many internal subcomponents*
+
+The folder structure should be identical for all components - whether they are considered components that are exported to npm, or subcomponents contained within those packages. In other words, **all subcomponents are simply components**, and they should be structured identically to reflect that.
+
+### Subcomponentization
+
+When considering whether to break some logic / style into a subcomponent, consider -
+
+- Does it involve logic in its style or function that is independent of what the current layer of componentization should concern?
+
+If done correctly, every layer of componentization should only need two large categories of styles - a base set of styles, and a different set of styles for every style-determining variant prop of this component (e.g. `Variant`, `Size`, etc).
+
+Subcomponentizing correctly should mean that all rendered React components or elements are contained inside the final `return ( <>{...}</> )`.
+There should not be a need for direct function calls inside the render function as any logic specific to a block of rendering should be broken out into a separate component. In other words, prefer `return ( <><Subcomponent />{...more JSX></>)` to `return ( <>{renderSubcomponent()}<...more JSX></> )`.
+
+### FAQ
+
+###### Why an `index.tsx` for subcomponents?
+
+Having an `index.tsx` file for single component directories can be considered clutter. However, this would mean our import statements for this subcomponent would have to be `@leafygreen-ui/<package-name>/<SubcomponentName>/<SubcomponentName>`. Our alternative would be to place our component logic in an `index.tsx` file, but that would break our pattern of standardizing across all component directories.
+
+This approach would also be more future-proof in case we decide to allow developers to import our subcomponents directly; all exports from the subcomponents would already be controlled through the `index.tsx` file in each directory.
+
+###### Why `*.stories.tsx` over `*.story.tsx`?
+
+`*.stories.tsx` is the standard [preferred](https://storybook.js.org/docs/react/writing-stories/introduction) by Storybook. While DS has used `*.story.tsx` in the past, we should standardize to match the latest pattern moving forward.
