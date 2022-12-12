@@ -34,7 +34,7 @@ const MyComponent = (props: MyProps) => {
 
 If you want to expose `as` as a prop of your component, use the `Polymorphic` factory function and related hooks.
 
-Note that any inherited props will be indeterminate in the factory function, since the value `as` is not known. (i.e. the attributes of `rest` in the following example are not definitely known).
+Note that any inherited props will be indeterminate in the factory function, since the value `as` is not known. (i.e. the attributes of `rest` in the following example are unknown).
 
 ```tsx
 interface MyProps {
@@ -54,12 +54,10 @@ Accepting a forwarded ref to a Polymorphic component is as simple as passing in 
 interface MyProps {
   someProp: string;
 }
-const MyComponent = PolymorphicComponent<MyProps>(
-  ({ as, ...rest }, forwardedRef) => {
-    const { Component } = usePolymorphic(as);
-    return <Component ref={forwardedRef} {...rest} />;
-  },
-);
+const MyComponent = Polymorphic<MyProps>(({ as, ...rest }, forwardedRef) => {
+  const { Component } = usePolymorphic(as);
+  return <Component ref={forwardedRef} {...rest} />;
+});
 ```
 
 ### Inferred `as` prop
@@ -99,6 +97,14 @@ const StyledPolymorph = styled(Polymorph)`
 const MyStyledComponent = styled(MyComponent)`
   color: hotpink;
 ` as PolymorphicComponentType;
+```
+
+This also works with InferredPolymorphic components
+
+```tsx
+const StyledInferred = styled(MyInferredComponent)`
+  color: hotpink;
+` as InferredPolymorphicComponentType;
 ```
 
 Note: TSDocs will not compile for styled polymorphs. This can be remedied by creating a wrapper around the styled function that explicitly returns a PolymorphicComponentType

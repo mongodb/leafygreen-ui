@@ -1,14 +1,16 @@
 import React from 'react';
-import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
-import { render } from '@testing-library/react';
 import styled from '@emotion/styled';
-import { Polymorph, usePolymorphicRef, type PolymorphicComponentType } from '.';
+import { render } from '@testing-library/react';
+
+import { parseTSDoc } from '../../../scripts/utils/tsDocParser';
+
 import { makeWrapperComponent } from './utils/Polymorphic.testutils';
+import { Polymorph, type PolymorphicComponentType, usePolymorphicRef } from '.';
 
 describe('packages/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
     /* eslint-disable jest/no-disabled-tests */
-    test.skip('Prop Types behave correctly', () => {
+    test.skip('TypeScript types for Props are correct', () => {
       const { Wrapper } = makeWrapperComponent();
       const divRef = usePolymorphicRef<'div'>();
       const anchorRef = usePolymorphicRef<'a'>();
@@ -44,6 +46,10 @@ describe('packages/polymorphic', () => {
         {/* @ts-expect-error - Theme is not a prop on Wrapper */}
         <Polymorph as={Wrapper} ref={spanRef} theme={'dark'} />
       </>;
+    });
+
+    test.skip('Typescript allows `propTypes` attribute', () => {
+      Polymorph.propTypes;
     });
     /* eslint-enable jest/no-disabled-tests */
 
@@ -143,7 +149,7 @@ describe('packages/polymorphic', () => {
       test('Basic styled component', () => {
         const StyledPolymorph = styled(Polymorph)`
           color: #ff69b4;
-        ` as PolymorphicComponentType;
+        `; // as PolymorphicComponentType;
 
         const { getByTestId } = render(
           <StyledPolymorph data-testid="styled">Some text</StyledPolymorph>,
@@ -189,6 +195,49 @@ describe('packages/polymorphic', () => {
         expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
         expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
       });
+
+      /* eslint-disable jest/no-disabled-tests */
+      test.skip('TypeScript types are still correct using Styled ', () => {
+        const StyledPolymorph = styled(Polymorph)`
+          color: #ff69b4;
+        ` as PolymorphicComponentType;
+        const { Wrapper } = makeWrapperComponent();
+        const divRef = usePolymorphicRef<'div'>();
+        const anchorRef = usePolymorphicRef<'a'>();
+        const spanRef = usePolymorphicRef<'span'>();
+
+        <>
+          <StyledPolymorph />
+          <StyledPolymorph>some content</StyledPolymorph>
+          <StyledPolymorph as="div" />
+          <StyledPolymorph as="div" ref={divRef} />
+          {/* @ts-expect-error - Must pass the correct ref type */}
+          <StyledPolymorph as="div" ref={anchorRef} />
+          <StyledPolymorph as="div" ref={divRef}>
+            some content
+          </StyledPolymorph>
+          <StyledPolymorph key="some-key" />
+          {/* @ts-expect-error href is not allowed on explicit div */}
+          <StyledPolymorph as="div" href="mongodb.design" />
+
+          {/* @ts-expect-error - Require href when as="a" */}
+          <StyledPolymorph as="a" />
+          <StyledPolymorph as="a" href="mongodb.design" />
+          <StyledPolymorph as="a" href="mongodb.design" ref={anchorRef} />
+          <StyledPolymorph as="a" href="mongodb.design">
+            some content
+          </StyledPolymorph>
+
+          <StyledPolymorph as="input" />
+
+          <StyledPolymorph as={Wrapper} />
+          <StyledPolymorph as={Wrapper} ref={spanRef} />
+          <StyledPolymorph as={Wrapper} ref={spanRef} darkMode={true} />
+          {/* @ts-expect-error - Theme is not a prop on Wrapper */}
+          <StyledPolymorph as={Wrapper} ref={spanRef} theme={'dark'} />
+        </>;
+      });
+      /* eslint-enable jest/no-disabled-tests */
     });
 
     test('Passes the `expect.toBePolymorphic` rule', () => {

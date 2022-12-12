@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { PolymorphicAs, PolymorphicRef } from './Polymorphic.types';
 
 /**
@@ -6,7 +7,10 @@ import { PolymorphicAs, PolymorphicRef } from './Polymorphic.types';
  * that provides an accurately typed Ref object
  */
 export const usePolymorphicRef = <E extends PolymorphicAs>(_?: E) => {
-  // By accepting a prop with a generic type, we can type this function using JS-domain vars
+  // By accepting a prop with a generic type, we can set the type E using JS vars.
+  // i.e. instead of calling `usePolymorphicRef<'div'>()`
+  // we can instead call `usePolymorphicRef('div')`
+
   return React.useRef<
     | (E extends keyof HTMLElementTagNameMap
         ? HTMLElementTagNameMap[E]
@@ -15,7 +19,7 @@ export const usePolymorphicRef = <E extends PolymorphicAs>(_?: E) => {
   >(null);
 };
 
-export function getPolymorphicComponent<T extends PolymorphicAs>(
+function getPolymorphicComponent<T extends PolymorphicAs>(
   as?: T,
 ): React.ElementType {
   return as || 'div';

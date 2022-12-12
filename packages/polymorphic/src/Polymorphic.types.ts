@@ -1,13 +1,15 @@
 /**
  * Based on https://blog.logrocket.com/build-strongly-typed-polymorphic-components-react-typescript/
  */
-// TODO: Consider restricting HTML elements to only elements that accept children
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
   ElementType,
   PropsWithChildren,
+  PropsWithoutRef,
   ReactElement,
+  RefAttributes,
+  WeakValidationMap,
 } from 'react';
 
 export type PolymorphicAs = ElementType;
@@ -57,9 +59,9 @@ type InheritedProps<T extends PolymorphicAs> = T extends 'a'
  */
 export type PolymorphicProps<
   T extends PolymorphicAs,
-  P = {},
-> = PropsWithChildren<P & AsProp<T>> &
-  Omit<InheritedProps<T>, PropsToOmit<T, P>>;
+  XP = {},
+> = PropsWithChildren<XP & AsProp<T>> &
+  Omit<InheritedProps<T>, PropsToOmit<T, XP>>;
 
 /**
  * Add the `ref` prop type to PolymorphicProps
@@ -70,12 +72,20 @@ export type PolymorphicProps<
  */
 export type PolymorphicPropsWithRef<
   T extends PolymorphicAs,
-  P = {},
-> = PolymorphicProps<T, P> & {
+  XP = {},
+> = PolymorphicProps<T, XP> & {
   /** The ref object returned by `React.useRef` */
   ref?: PolymorphicRef<T>;
 };
 
+export interface PolymorphicRenderFunction<XP = {}> {
+  <T extends PolymorphicAs>(
+    props: PolymorphicPropsWithRef<T, XP>,
+    ref: PolymorphicRef<T>,
+  ): ReactElement | null;
+  displayName?: string;
+  propTypes?: never;
+}
 /**
  * An explicit definition of the component type
  *
@@ -85,10 +95,14 @@ export type PolymorphicPropsWithRef<
  * PolymorphicComponentType is an interface with a generic function,
  * and a displayName.
  */
-export interface PolymorphicComponentType<P = {}> {
+export interface PolymorphicComponentType<XP = {}> {
   <T extends PolymorphicAs>(
-    props: PolymorphicPropsWithRef<T, P>,
+    props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
   ): ReactElement | null;
   displayName?: string;
+  propTypes?: WeakValidationMap<
+    PropsWithoutRef<PolymorphicPropsWithRef<PolymorphicAs, XP>> &
+      RefAttributes<any>
+  >;
 }

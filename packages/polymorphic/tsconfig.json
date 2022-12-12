@@ -4,7 +4,7 @@
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
-    "noErrorTruncation": true
+    "noErrorTruncation": false,
   },
   "include": [
     "src/**/*"
