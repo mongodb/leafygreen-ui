@@ -49,8 +49,7 @@ describe('packages/polymorphic', () => {
     });
 
     test.skip('Typescript allows `propTypes` attribute', () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const PT: React.WeakValidationMap<any> | undefined = Polymorph.propTypes;
+      Polymorph.propTypes;
     });
     /* eslint-enable jest/no-disabled-tests */
 
