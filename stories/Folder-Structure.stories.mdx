@@ -18,7 +18,7 @@ import BannerImage from '../.storybook/static/leafygreen-ui-banner.png';
 
 The folder structure should be identical for all components - whether they are considered components that are exported to npm, or subcomponents contained within those packages. In other words, **all subcomponents are simply components**, and they should be structured identically to reflect that.
 
-Even if a package only has one component, it should have a subdirectory. For example, the path to the component file for `Badge` would be `/badge/src/Badge/Badge.tsx`. While this could be seen as clutter, it allows us to differentiate code that is relevant to the entire *package* from code that only pertains to the *component*.
+Even if a package only has one component, it should have a subdirectory. For example, the path to the component file for `Badge` would be `/badge/src/Badge/Badge.tsx`. While this could be seen as clutter, it allows us to differentiate code that is relevant to the entire *package* from code that only pertains to the *component*. It is also more scalable as adding subcomponents in the future would simply involve adding a new directory, instead of having to move all files in the package.
 
 ### Subcomponentization
 
