@@ -1,7 +1,8 @@
 import React from 'react';
+
 import Box from '@leafygreen-ui/box';
-import { getNodeTextContent, HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { getNodeTextContent, HTMLElementProps } from '@leafygreen-ui/lib';
 
 type StaticWidthTextProps<T extends keyof JSX.IntrinsicElements> = Omit<
   HTMLElementProps<T>,

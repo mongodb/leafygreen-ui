@@ -1,15 +1,18 @@
 import React from 'react';
-import { css } from '@emotion/css';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import {
-  Select,
   Option,
   OptionGroup,
+  Select,
   Size,
   State,
 } from '@leafygreen-ui/select';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { css } from '@emotion/css';
 
 const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;

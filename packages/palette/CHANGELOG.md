@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.4.5
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+
 ## 3.4.4
 
 ### Patch Changes

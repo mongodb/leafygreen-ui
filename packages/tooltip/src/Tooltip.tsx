@@ -1,33 +1,35 @@
-import React, { useEffect, useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
-import { transparentize } from 'polished';
+import React, { useCallback, useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
-import Popover, {
-  PopoverProps,
-  Align as PopoverAlign,
-  Justify,
-  ElementPosition,
-} from '@leafygreen-ui/popover';
+import { transparentize } from 'polished';
+import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  useEventListener,
   useEscapeKey,
+  useEventListener,
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
-import {
-  useUpdatedBaseFontSize,
-  bodyTypeScaleStyles,
-} from '@leafygreen-ui/typography';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { notchPositionStyles } from './tooltipUtils';
-import SvgNotch from './Notch';
-import { borderRadius, notchWidth } from './tooltipConstants';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import Popover, {
+  Align as PopoverAlign,
+  ElementPosition,
+  Justify,
+  PopoverProps,
+} from '@leafygreen-ui/popover';
+import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
+import {
+  bodyTypeScaleStyles,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
+
+import SvgNotch from './Notch';
+import { borderRadius, notchWidth } from './tooltipConstants';
+import { notchPositionStyles } from './tooltipUtils';
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -164,6 +166,12 @@ export type TooltipProps = Omit<
      *
      */
     onClose?: () => void;
+
+    /**
+     * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
+     *
+     */
+    baseFontSize?: BaseFontSize;
   };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
@@ -202,29 +210,30 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
 function Tooltip({
   open: controlledOpen,
   setOpen: controlledSetOpen,
-  className,
-  children,
-  trigger,
-  triggerEvent = TriggerEvent.Hover,
   darkMode: darkThemeProp,
+  baseFontSize: baseFontSizeOverride,
+  triggerEvent = TriggerEvent.Hover,
   enabled = true,
   align = 'top',
   justify = 'start',
   spacing = 12,
+  usePortal = true,
+  onClose = () => {},
   id,
   shouldClose,
-  usePortal = true,
   portalClassName,
   portalContainer,
   scrollContainer,
   popoverZIndex,
   refEl,
-  onClose = () => {},
+  className,
+  children,
+  trigger,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const size = useUpdatedBaseFontSize();
+  const size = useUpdatedBaseFontSize(baseFontSizeOverride);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =

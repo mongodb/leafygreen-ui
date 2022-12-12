@@ -1,10 +1,10 @@
-import fs from 'fs';
-import path from 'path';
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
-import svgr from '@svgr/rollup';
-import { terser } from 'rollup-plugin-terser';
 import urlPlugin from '@rollup/plugin-url';
+import svgr from '@svgr/rollup';
+import fs from 'fs';
+import path from 'path';
+import { terser } from 'rollup-plugin-terser';
 
 const extensions = ['.ts', '.tsx'];
 

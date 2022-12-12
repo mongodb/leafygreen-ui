@@ -1,24 +1,28 @@
 import React from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+
 import {
-  descriptionStyle,
   descriptionColorStyle,
-  disabledDescriptionColorStyle,
+  descriptionStyle,
   descriptionTypeScaleStyles,
+  disabledDescriptionColorStyle,
 } from './Description.styles';
 import { DescriptionProps } from './Description.types';
 
 export const Description = ({
+  baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   disabled = false,
   children,
   className,
   ...rest
 }: DescriptionProps) => {
-  const baseFontSize = useUpdatedBaseFontSize();
   const { theme } = useDarkMode(darkModeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
   return (
     <p

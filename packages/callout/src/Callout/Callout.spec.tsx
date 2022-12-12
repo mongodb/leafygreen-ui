@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import Callout from './Callout';
 import { headerIcons, headerLabels } from './styles';
 import { Variant } from './types';

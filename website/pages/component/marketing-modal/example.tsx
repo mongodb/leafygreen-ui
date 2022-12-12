@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { css } from '@emotion/css';
+import { CDN } from 'utils/routes';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import Button from '@leafygreen-ui/button';
 import MarketingModal, {
   BlobPosition,
   GraphicStyle,
 } from '@leafygreen-ui/marketing-modal';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
-import { CDN } from 'utils/routes';
 import { CloseIconColor } from '@leafygreen-ui/modal';
+
+import { css } from '@emotion/css';
 
 const children =
   'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.';
@@ -89,11 +92,9 @@ export default function MarketingModalLiveExample() {
         showBlob,
         blobPosition,
       }) => {
-        const graphicCenterImage = darkMode
-          ? 'DataLake.png'
-          : 'marketing-center-light.svg';
+        const graphicCenterImage = 'marketing-center-light.svg';
         const graphicFillImage = darkMode
-          ? 'Realm_Rebrand_Image.png'
+          ? 'marketing-fill-dark.jpg'
           : 'marketing-fill-light.jpg';
 
         return (

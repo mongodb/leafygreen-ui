@@ -1,13 +1,16 @@
 import React from 'react';
+
 import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import {
   baseTypographyStyles,
   bodyTypeScaleStyles,
   defaultTextColor,
 } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+
 import { BodyFontWeight, BodyProps } from './Body.types';
 
 const fontWeights: Record<
@@ -25,6 +28,7 @@ const fontWeights: Record<
 } as const;
 
 export function Body<T extends keyof JSX.IntrinsicElements>({
+  baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   className,
   weight = 'regular',
@@ -32,7 +36,7 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
   ...rest
 }: BodyProps<T>) {
   const { theme } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
   // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
   const fontWeight = css`

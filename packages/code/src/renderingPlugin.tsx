@@ -1,14 +1,16 @@
 import React from 'react';
 import flatMap from 'lodash/flatMap';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import { useSyntaxContext } from './SyntaxContext';
+
 import {
   LeafyGreenHighlightResult,
   LeafyGreenHLJSPlugin,
   TokenObject,
 } from './highlight';
+import { useSyntaxContext } from './SyntaxContext';
 
 interface TokenProps {
   kind?: string;

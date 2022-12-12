@@ -1,22 +1,25 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { css, cx } from '@emotion/css';
 import { transparentize } from 'polished';
-import { Overline } from '@leafygreen-ui/typography';
-import { uiColors } from '@leafygreen-ui/palette';
-import { useViewportSize } from '@leafygreen-ui/hooks';
-import {
-  spacing,
-  breakpoints,
-  transitionDuration,
-} from '@leafygreen-ui/tokens';
-import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import { GridContainer, GridItem } from 'components/Grid';
+import { pageContainerWidth } from 'styles/constants';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import { mq } from 'utils/mediaQuery';
 import { CDN } from 'utils/routes';
-import { pageContainerWidth } from 'styles/constants';
+
+import { GridContainer, GridItem } from 'components/Grid';
 import News from 'components/News';
+
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
+import { useViewportSize } from '@leafygreen-ui/hooks';
+import { uiColors } from '@leafygreen-ui/palette';
+import {
+  breakpoints,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
+import { Overline } from '@leafygreen-ui/typography';
+
+import { css, cx } from '@emotion/css';
 
 const landingURL = `${CDN}/images/landing`;
 

@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
-import Portal from '@leafygreen-ui/portal';
+
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import Portal from '@leafygreen-ui/portal';
+
 import TabTitle from './TabTitle';
 import { TabsProps } from './types';
 

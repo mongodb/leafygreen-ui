@@ -1,46 +1,48 @@
 import React, { useCallback, useContext, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import IconButton from '@leafygreen-ui/icon-button';
+import { ExitHandler } from 'react-transition-group/Transition';
+import PropTypes from 'prop-types';
+
 import Box, { BoxProps } from '@leafygreen-ui/box';
-import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
-import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
+import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
+import IconButton from '@leafygreen-ui/icon-button';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   createUniqueClassName,
   getNodeTextContent,
   HTMLElementProps,
   Theme,
 } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { ExitHandler } from 'react-transition-group/Transition';
+import { palette } from '@leafygreen-ui/palette';
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
+import MenuContext from './MenuContext';
 import {
-  menuItemContainerStyle,
-  activeMenuItemContainerStyle,
-  disabledMenuItemContainerThemeStyle,
-  focusedMenuItemContainerStyle,
-  linkStyle,
-  disabledTextStyle,
-  mainIconStyle,
+  activeDescriptionTextStyle,
   activeIconStyle,
-  titleTextStyle,
+  activeMenuItemContainerStyle,
   activeTitleTextStyle,
   descriptionTextThemeStyle,
-  linkDescriptionTextStyle,
-  activeDescriptionTextStyle,
-  textContainer,
+  disabledMenuItemContainerThemeStyle,
+  disabledTextStyle,
+  focusedMenuItemContainerStyle,
+  focusedSubMenuItemBorderStyles,
   getFocusedStyles,
   getHoverStyles,
+  linkDescriptionTextStyle,
+  linkStyle,
+  mainIconStyle,
+  menuItemContainerStyle,
+  menuItemContainerThemeStyle,
   menuItemHeight,
   paddingLeftWithGlyph,
   paddingLeftWithoutGlyph,
-  menuItemContainerThemeStyle,
-  focusedSubMenuItemBorderStyles,
+  textContainer,
+  titleTextStyle,
 } from './styles';
 import { Size } from './types';
-import MenuContext from './MenuContext';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const SubMenuContainerClassName = createUniqueClassName('sub-menu-container');
 const IconButtonClassName = createUniqueClassName('icon-button');

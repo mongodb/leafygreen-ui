@@ -1,11 +1,13 @@
-import { css, cx } from '@leafygreen-ui/emotion';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { palette } from '@leafygreen-ui/palette';
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
 import { ComboboxGroupProps } from './Combobox.types';
 import { ComboboxContext } from './ComboboxContext';
-import { Theme } from '@leafygreen-ui/lib';
 
 const comboboxGroupStyle: Record<Theme, string> = {
   [Theme.Light]: css`

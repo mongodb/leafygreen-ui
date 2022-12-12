@@ -1,7 +1,8 @@
-import React, { useMemo, useCallback } from 'react';
-import { useTableContext } from './TableContext';
+import React, { useCallback, useMemo } from 'react';
+
 import { getDataComparisonFunction, useSortContext } from './SortContext';
 import { TableProps, TableRowInterface } from './Table';
+import { useTableContext } from './TableContext';
 
 type TableBodyProps<Shape> = Pick<TableProps<Shape>, 'children'>;
 

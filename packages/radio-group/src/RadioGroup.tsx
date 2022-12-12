@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isComponentType } from '@leafygreen-ui/lib';
+
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { isComponentType } from '@leafygreen-ui/lib';
+
 import { RadioGroupProps, Size } from './types';
 
 /**

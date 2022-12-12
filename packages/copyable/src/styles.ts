@@ -1,4 +1,5 @@
 import { transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -9,6 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 import { labelTypeScaleStyles } from '@leafygreen-ui/typography';
+
 import { Size } from './types';
 
 export const containerStyle = css`

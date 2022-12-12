@@ -1,7 +1,9 @@
 import { TransitionStatus } from 'react-transition-group';
+
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+
 import {
   checkAnimationDuration,
   checkBoxSize,

@@ -9,6 +9,7 @@ import {
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
+
 import { SizeVariant, State } from './types';
 
 /**

@@ -1,23 +1,26 @@
 import React, { useContext, useMemo } from 'react';
-import Popover from '@leafygreen-ui/popover';
-import { ComboboxContext } from '../ComboboxContext';
+import isUndefined from 'lodash/isUndefined';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
+import Icon from '@leafygreen-ui/icon';
+import { palette } from '@leafygreen-ui/palette';
+import Popover from '@leafygreen-ui/popover';
+
+import { ComboboxProps } from '../Combobox.types';
+import { ComboboxContext } from '../ComboboxContext';
+
 import {
+  loadingIconStyle,
   menuBaseStyle,
   menuList,
   menuMessageBaseStyle,
-  menuMessageThemeStyle,
   menuMessageSizeStyle,
+  menuMessageThemeStyle,
   menuThemeStyle,
   popoverStyle,
-  loadingIconStyle,
   popoverThemeStyle,
 } from './Menu.styles';
-import { css, cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import { ComboboxProps } from '../Combobox.types';
-import { palette } from '@leafygreen-ui/palette';
-import isUndefined from 'lodash/isUndefined';
 
 type ComboboxMenuProps = {
   children?: React.ReactNode;

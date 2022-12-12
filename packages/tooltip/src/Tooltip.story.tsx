@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
-import Tooltip, { Align, Justify, TooltipProps } from '.';
+
 import Button from '@leafygreen-ui/button';
-import Icon from '@leafygreen-ui/icon';
 import { css } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
+
+import Tooltip, { Align, Justify, TooltipProps } from '.';
 
 export default {
   title: 'Components/Tooltip',

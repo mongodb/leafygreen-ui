@@ -1,26 +1,28 @@
 import React from 'react';
 import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { cx, css } from '@leafygreen-ui/emotion';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
-import { palette, uiColors } from '@leafygreen-ui/palette';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useIsomorphicLayoutEffect,
   useViewportSize,
 } from '@leafygreen-ui/hooks';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+
 import { HeaderRowProps } from './HeaderRow';
-import { TableHeaderProps } from './TableHeader';
+import { SortProvider } from './SortContext';
+import TableBody from './TableBody';
 import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
-import TableBody from './TableBody';
-import { SortProvider } from './SortContext';
-import { FontSizeProvider } from './FontSizeContext';
-import { DarkModeProvider } from './DarkModeContext';
+import { TableHeaderProps } from './TableHeader';
 
 const lmShadowColor = transparentize(0.7, palette.black);
-const dmShadowColor = transparentize(0.2, uiColors.black);
+const dmShadowColor = transparentize(0.3, 'black');
 
 const containerStyle = css`
   position: relative;
@@ -61,7 +63,10 @@ const leftShadow = (darkMode: boolean) => css`
 
   &:after {
     right: 100%;
-    box-shadow: 4px 0 4px ${darkMode ? dmShadowColor : lmShadowColor};
+    box-shadow: ${darkMode
+      ? '4px 0 9px 5px ' + dmShadowColor
+      : '4px 0 4px ' +
+        lmShadowColor}; //TODO: Bug: currently the full height of the shadow is not showing unless the background color is removed from <tr>
   }
 `;
 
@@ -70,7 +75,9 @@ const rightShadow = (darkMode: boolean) => css`
 
   &:after {
     left: 100%;
-    box-shadow: -4px 0 4px ${darkMode ? dmShadowColor : lmShadowColor};
+    box-shadow: ${darkMode
+      ? '-4px 0 9px 5px ' + dmShadowColor
+      : '-4px 0 4px ' + lmShadowColor};
   }
 `;
 
@@ -134,8 +141,8 @@ export default function Table<Shape>({
   data: dataProp = [],
   children,
   className,
-  baseFontSize: baseFontSizeProp,
-  darkMode = false,
+  baseFontSize,
+  darkMode: darkModeProp,
   ...rest
 }: TableProps<Shape>) {
   const [scrollState, setScrollState] = React.useState<ScrollState>(
@@ -143,11 +150,7 @@ export default function Table<Shape>({
   );
   const divRef = React.useRef<HTMLDivElement>(null);
   const viewportSize = useViewportSize();
-
-  const providerFontSize = useBaseFontSize();
-  const normalizedProviderFontSize =
-    providerFontSize === 14 || providerFontSize === 16 ? providerFontSize : 14;
-  const baseFontSize = baseFontSizeProp ?? normalizedProviderFontSize;
+  const { darkMode } = useDarkMode(darkModeProp);
 
   useIsomorphicLayoutEffect(() => {
     const divNode = divRef.current;
@@ -222,27 +225,18 @@ export default function Table<Shape>({
         <table
           cellSpacing="0"
           cellPadding="0"
-          className={cx(
-            tableStyles,
-            {
-              // TODO: Refresh - remove darkMode override
-              [css`
-                border-bottom: 1px solid ${uiColors.gray.dark1};
-                font-family: ${fontFamilies.legacy};
-              `]: darkMode,
-            },
-            className,
-          )}
+          className={cx(tableStyles, className)}
           {...rest}
         >
           <TableProvider data={dataProp}>
             <SortProvider>
-              <FontSizeProvider baseFontSize={baseFontSize}>
-                <DarkModeProvider darkMode={darkMode}>
-                  <TableHead columns={columns} />
-                  <TableBody>{children}</TableBody>
-                </DarkModeProvider>
-              </FontSizeProvider>
+              <LeafyGreenProvider
+                darkMode={darkMode}
+                baseFontSize={baseFontSize}
+              >
+                <TableHead columns={columns} />
+                <TableBody>{children}</TableBody>
+              </LeafyGreenProvider>
             </SortProvider>
           </TableProvider>
         </table>
@@ -250,3 +244,4 @@ export default function Table<Shape>({
     </div>
   );
 }
+//  TODO: missing proptypes

@@ -2,6 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { focusRing, transitionDuration } from '@leafygreen-ui/tokens';
+
 import { Size } from './types';
 
 export const removeButtonStyle = css`

@@ -1,3 +1,6 @@
+import { TransitionStatus } from 'react-transition-group';
+import { transparentize } from 'polished';
+
 import { prefersReducedMotion } from '@leafygreen-ui/a11y';
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
@@ -8,8 +11,6 @@ import {
   spacing,
   typeScales,
 } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
-import { TransitionStatus } from 'react-transition-group';
 
 export const sideNavClassName = createUniqueClassName('side-nav');
 export const sideNavItemSidePadding = 16;

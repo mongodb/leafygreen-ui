@@ -82,10 +82,10 @@ window.IntersectionObserver = jest
   .mockImplementation(IntersectionObserver);
 
 export {
+  instanceMap,
+  intersectionMockInstance,
   IntersectionObserver,
   mockAllIsIntersecting,
   mockIsIntersecting,
-  intersectionMockInstance,
   observerMap,
-  instanceMap,
 };

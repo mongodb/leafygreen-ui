@@ -1,6 +1,7 @@
 // tsc --build build.tsconfig.json
 import { spawnSync } from 'child_process';
 import { Command } from 'commander';
+
 import { getRelevantPackages } from './utils/getRelevantPackages';
 
 const cli = new Command('build-TS')

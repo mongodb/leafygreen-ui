@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ClipboardJS from 'clipboard';
-import { cx, css } from '@emotion/css';
-import { lighten, darken, readableColor, transparentize } from 'polished';
+import { darken, lighten, readableColor, transparentize } from 'polished';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { keyMap } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Tooltip from '@leafygreen-ui/tooltip';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { css, cx } from '@emotion/css';
 
 const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;
