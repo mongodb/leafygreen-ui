@@ -10,7 +10,7 @@ import { Polymorph, type PolymorphicComponentType, usePolymorphicRef } from '.';
 describe('packages/polymorphic', () => {
   describe('Basic Polymorphic Component', () => {
     /* eslint-disable jest/no-disabled-tests */
-    test.skip('Prop Types behave correctly', () => {
+    test.skip('TypeScript types for Props are correct', () => {
       const { Wrapper } = makeWrapperComponent();
       const divRef = usePolymorphicRef<'div'>();
       const anchorRef = usePolymorphicRef<'a'>();
@@ -46,6 +46,11 @@ describe('packages/polymorphic', () => {
         {/* @ts-expect-error - Theme is not a prop on Wrapper */}
         <Polymorph as={Wrapper} ref={spanRef} theme={'dark'} />
       </>;
+    });
+
+    test.skip('Typescript allows `propTypes` attribute', () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const PT: React.WeakValidationMap<any> | undefined = Polymorph.propTypes;
     });
     /* eslint-enable jest/no-disabled-tests */
 

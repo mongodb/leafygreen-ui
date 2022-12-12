@@ -6,7 +6,10 @@ import {
   ComponentPropsWithRef,
   ElementType,
   PropsWithChildren,
+  PropsWithoutRef,
   ReactElement,
+  RefAttributes,
+  WeakValidationMap,
 } from 'react';
 
 export type PolymorphicAs = ElementType;
@@ -75,6 +78,14 @@ export type PolymorphicPropsWithRef<
   ref?: PolymorphicRef<T>;
 };
 
+export interface PolymorphicRenderFunction<XP = {}> {
+  <T extends PolymorphicAs>(
+    props: PolymorphicPropsWithRef<T, XP>,
+    ref: PolymorphicRef<T>,
+  ): ReactElement | null;
+  displayName?: string;
+  propTypes?: never;
+}
 /**
  * An explicit definition of the component type
  *
@@ -84,10 +95,14 @@ export type PolymorphicPropsWithRef<
  * PolymorphicComponentType is an interface with a generic function,
  * and a displayName.
  */
-export interface PolymorphicComponentType<P = {}> {
+export interface PolymorphicComponentType<XP = {}> {
   <T extends PolymorphicAs>(
-    props: PolymorphicPropsWithRef<T, P>,
+    props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
   ): ReactElement | null;
   displayName?: string;
+  propTypes?: WeakValidationMap<
+    PropsWithoutRef<PolymorphicPropsWithRef<PolymorphicAs, XP>> &
+      RefAttributes<any>
+  >;
 }
