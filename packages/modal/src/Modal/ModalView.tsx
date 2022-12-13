@@ -25,7 +25,7 @@ import {
   visibleBackdrop,
   visibleModalContentStyle,
 } from './styles';
-import { CloseIconColor, ModalProps, ModalSize } from './types';
+import { CloseIconColor, ForwardedRef, ModalProps, ModalSize } from './types';
 
 /**
  * @internal
@@ -47,7 +47,7 @@ const ModalView = React.forwardRef(
       initialFocus,
       ...rest
     }: ModalProps,
-    forwardedRef: React.ForwardedRef<HTMLDivElement>,
+    forwardedRef: ForwardedRef,
   ) => {
     const { theme, darkMode } = useDarkMode(darkModeProp);
 

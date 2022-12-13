@@ -18,6 +18,11 @@ export const ModalSize = {
 
 export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 
+export type ForwardedRef =
+  | React.ForwardedRef<HTMLDivElement | null>
+  | null
+  | undefined;
+
 export interface ModalProps extends HTMLElementProps<'div'>, DarkModeProps {
   /**
    * Content that will appear inside of the Modal component.
