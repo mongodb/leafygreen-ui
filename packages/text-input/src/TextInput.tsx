@@ -29,7 +29,8 @@ import {
   inputModeStyles,
   inputSizeStyles,
   inputStateStyles,
-  optionalTextStyle,
+  optionalTextBaseStyle,
+  optionalTextThemeStyle,
   stateIndicatorStyles,
   textContainerStyle,
   wrapperStyle,
@@ -220,7 +221,12 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             )}
 
             {state === State.None && !disabled && optional && (
-              <div className={optionalTextStyle}>
+              <div
+                className={cx(
+                  optionalTextBaseStyle,
+                  optionalTextThemeStyle[theme],
+                )}
+              >
                 <p>Optional</p>
               </div>
             )}
