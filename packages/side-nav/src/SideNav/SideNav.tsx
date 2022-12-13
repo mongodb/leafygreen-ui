@@ -12,7 +12,7 @@ import LeafyGreenProvider, {
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { CollapseToggle } from '../CollaspeToggle/CollapseToggle';
+import { CollapseToggle } from '../CollapseToggle/CollapseToggle';
 
 import SideNavContext from './SideNavContext';
 import {
