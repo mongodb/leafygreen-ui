@@ -1,2 +1,2 @@
-export { CollapsedSideNavItem } from '../CollaspedSideNavItem/CollapsedSideNavItem';
+export { CollapsedSideNavItem } from '../CollapsedSideNavItem/CollapsedSideNavItem';
 export { default as SideNavItem } from './SideNavItem';
