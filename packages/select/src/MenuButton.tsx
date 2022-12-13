@@ -113,7 +113,7 @@ const menuButtonDeselectedStyles: Record<Theme, string> = {
     color: ${palette.gray.dark1};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark1};
+    color: ${palette.gray.light1};
 
     &:hover,
     &:active,
