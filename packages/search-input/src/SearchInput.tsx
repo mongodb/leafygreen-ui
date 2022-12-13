@@ -131,7 +131,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 disabled={disabled}
               />
             </div>
-            {/* {withTypeAhead && (
+            {withTypeAhead && (
               <SearchResultsMenu
                 open={isOpen}
                 refEl={searchBoxRef}
@@ -139,7 +139,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               >
                 {children}
               </SearchResultsMenu>
-            )} */}
+            )}
           </form>
         </SearchInputContextProvider>
       </LeafyGreenProvider>

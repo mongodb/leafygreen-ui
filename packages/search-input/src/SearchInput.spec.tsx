@@ -77,7 +77,9 @@ describe('packages/search-input', () => {
 
   describe('Search Results', () => {
     test('No results appear when there are no children', () => {
-      const { inputEl } = renderSearchInput();
+      const { getMenuElements } = renderSearchInput();
+      const { menuContainerEl } = getMenuElements();
+      expect(menuContainerEl).not.toBeInTheDocument();
     });
     test.todo('Results menu opens on focus');
     test.todo('All children Results render in the menu');

@@ -49,7 +49,7 @@ interface BaseSearchInputProps
   /**
    * Callback fired when the input value changes
    */
-  onChange?: ChangeEventHandler<HTMLInputElement>
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export type SearchInputProps = BaseSearchInputProps & AriaLabelProps;

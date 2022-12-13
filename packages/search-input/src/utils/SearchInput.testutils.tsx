@@ -16,5 +16,13 @@ export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
   const containerEl = renderResult.getByTestId('search-input');
   const inputEl = containerEl.getElementsByTagName('input')[0];
 
-  return { ...renderResult, containerEl, inputEl };
+  function getMenuElements() {
+    const menuContainerEl = renderResult.queryByRole('listbox');
+
+    return {
+      menuContainerEl,
+    };
+  }
+
+  return { ...renderResult, containerEl, inputEl, getMenuElements };
 }
