@@ -36,12 +36,13 @@ function ModalView({
   size = ModalSize.Default,
   setOpen = () => {},
   shouldClose = () => true,
+  closeIconColor = CloseIconColor.Default,
   darkMode: darkModeProp,
+  id: idProp,
   children,
   className,
   contentClassName,
   initialFocus,
-  closeIconColor = CloseIconColor.Default,
   ...rest
 }: ModalProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -59,7 +60,7 @@ function ModalView({
     }
   }, [setOpen, shouldClose]);
 
-  const id = useIdAllocator({ prefix: 'modal' });
+  const id = useIdAllocator({ prefix: 'modal', id: idProp });
   const closeId = useIdAllocator({ prefix: 'modal' });
 
   useEscapeKey(handleClose, { enabled: open && !isPopoverOpen });
