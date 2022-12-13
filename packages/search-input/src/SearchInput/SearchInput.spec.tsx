@@ -2,9 +2,8 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { renderSearchInput } from './utils/SearchInput.testutils';
-import { SizeVariant } from './SearchInput.types';
-import { SearchInput } from '.';
+import { renderSearchInput } from '../utils/SearchInput.testutils';
+import { SearchInput, SizeVariant } from '..';
 
 const defaultProps = {
   className: 'test-text-input-class',

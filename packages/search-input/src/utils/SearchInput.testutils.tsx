@@ -1,8 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { SearchInputProps } from '../SearchInput.types';
-import { SearchInput } from '..';
+import { SearchInput, type SearchInputProps } from '..';
 
 export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
   const renderResult = render(

@@ -15,6 +15,9 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
+import { SearchInputContextProvider } from '../SearchInputContext';
+import { SearchResultsMenu } from '../SearchResultsMenu';
+
 import {
   baseInputStyle,
   inputContainerStyle,
@@ -28,8 +31,6 @@ import {
   wrapperFontStyle,
 } from './SearchInput.styles';
 import { SearchInputProps, SizeVariant } from './SearchInput.types';
-import { SearchInputContextProvider } from './SearchInputContext';
-import { SearchResultsMenu } from './SearchResultsMenu';
 
 /**
  * # SearchInput
