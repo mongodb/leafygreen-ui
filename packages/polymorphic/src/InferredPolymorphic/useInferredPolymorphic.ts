@@ -1,5 +1,5 @@
-import { usePolymorphic } from '../Polymorphic.hooks';
-import { PolymorphicAs } from '../Polymorphic.types';
+import { usePolymorphic } from '../Polymorphic/Polymorphic.hooks';
+import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
 
 /**
  * Internal function to compute the inferred polymorphic component based on the `as` prop, and any other props passed in
