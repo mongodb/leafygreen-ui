@@ -20,13 +20,15 @@ import { CloseIconColor, ModalProps, ModalSize } from './types';
  * @param props.initialFocus By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus. With this option you can specify a different element to receive that initial focus. Selector string (which will be passed to document.querySelector() to find the DOM node).
  * @param props.closeIconColor Choose between dark or light close icon. Default is dark.
  */
-const Modal = React.forwardRef((props: ModalProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-  return (
-    <PopoverProvider>
-      <ModalView {...props} ref={ref} />
-    </PopoverProvider>
-  );
-})
+const Modal = React.forwardRef(
+  (props: ModalProps, ref: React.ForwardedRef<HTMLDivElement>) => {
+    return (
+      <PopoverProvider>
+        <ModalView {...props} ref={ref} />
+      </PopoverProvider>
+    );
+  },
+);
 
 Modal.displayName = 'Modal';
 
