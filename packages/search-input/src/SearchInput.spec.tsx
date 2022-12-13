@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { SizeVariant } from './types';
+import { SizeVariant } from './SearchInput.types';
 import { SearchInput } from '.';
 
 const defaultProps = {

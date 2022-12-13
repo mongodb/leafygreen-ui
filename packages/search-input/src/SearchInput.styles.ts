@@ -9,7 +9,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { SizeVariant } from './types';
+import { SizeVariant } from './SearchInput.types';
 
 /**
  * Adds an inset box shadow to hide the UA background styles for autofilled inputs
