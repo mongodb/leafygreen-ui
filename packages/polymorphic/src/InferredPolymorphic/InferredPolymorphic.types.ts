@@ -1,4 +1,7 @@
-import { AnchorProps, PolymorphicComponentType } from '../Polymorphic/Polymorphic.types';
+import {
+  AnchorProps,
+  PolymorphicComponentType,
+} from '../Polymorphic/Polymorphic.types';
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,
