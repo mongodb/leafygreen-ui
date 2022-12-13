@@ -2297,17 +2297,12 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@leafygreen-ui/lib@^9.2.1", "@leafygreen-ui/lib@^9.4.2":
+"@leafygreen-ui/lib@^9.2.1":
   version "9.5.2"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-9.5.2.tgz#c80d7920e819c89ee544866b1046667fe99ea8d3"
   integrity sha512-soC5ZSnhqoqbFv9b2kAe+1s7nUnAcdcBzrI0yIJZymExCJsZnmI3VWjLTUbViuTrsO1GfnmLDdsUeDr3ezTOOg==
   dependencies:
     lodash "^4.17.21"
-
-"@leafygreen-ui/polymorphic@^0.1.0-next.1":
-  version "0.1.0-next.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/polymorphic/-/polymorphic-0.1.0-next.1.tgz#28ab5f405ccacf827d9314a1ee45283d6b851444"
-  integrity sha512-yQX3Twj2+QZ9Wyi6Y8bcdpmQa6L/YcNKQdvjDr15Ip+/piZoyZYi71b3mHVmd0E3Mq+u1xqdJsm5xTtq9QLbUg==
 
 "@lerna/add@3.20.0":
   version "3.20.0"
