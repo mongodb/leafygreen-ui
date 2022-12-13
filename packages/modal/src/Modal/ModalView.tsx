@@ -31,10 +31,10 @@ import { CloseIconColor, ModalProps, ModalSize } from './types';
  * @internal
  * Internal Modal View component
  */
-function ModalView({
+const ModalView = React.forwardRef(({
   open = false,
   size = ModalSize.Default,
-  setOpen = () => {},
+  setOpen = () => { },
   shouldClose = () => true,
   closeIconColor = CloseIconColor.Default,
   darkMode: darkModeProp,
@@ -44,10 +44,11 @@ function ModalView({
   contentClassName,
   initialFocus,
   ...rest
-}: ModalProps) {
+}: ModalProps, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
-  const nodeRef = React.useRef(null);
+  const nodeRef = React.useRef<HTMLDivElement | null>(null);
+  const ref = forwardedRef ?? nodeRef
 
   const [scrollContainerRef, setScrollContainerRef] =
     useState<null | HTMLDivElement>(null);
@@ -67,12 +68,12 @@ function ModalView({
 
   const focusTrapOptions = initialFocus
     ? {
-        initialFocus: `#${id} ${initialFocus}`,
-        fallbackFocus: `#${closeId}`,
-      }
+      initialFocus: `#${id} ${initialFocus}`,
+      fallbackFocus: `#${closeId}`,
+    }
     : {
-        fallbackFocus: `#${closeId}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
-      };
+      fallbackFocus: `#${closeId}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
+    };
 
   return (
     <Transition
@@ -87,7 +88,7 @@ function ModalView({
           <div
             {...rest}
             id={id}
-            ref={nodeRef}
+            ref={ref}
             className={cx(
               className,
               backdropBaseStyle,
@@ -145,7 +146,7 @@ function ModalView({
       )}
     </Transition>
   );
-}
+})
 
 ModalView.displayName = 'ModalView';
 export default ModalView;

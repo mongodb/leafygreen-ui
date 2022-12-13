@@ -64,9 +64,8 @@ describe('packages/modal', () => {
       const { getByTestId } = renderModal({
         id: 'id-test',
         open: true,
-        'data-testid': 'data-test',
       });
-      const container = getByTestId('data-test');
+      const container = getByTestId('modal-test-id');
       expect(container.getAttribute('id')).toBe('id-test');
     });
 

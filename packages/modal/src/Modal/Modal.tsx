@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 
 import ModalView from './ModalView';
-import { CloseIconColor, ModalProps } from './types';
+import { CloseIconColor, ModalProps, ModalSize } from './types';
 
 /**
  *
@@ -20,45 +20,19 @@ import { CloseIconColor, ModalProps } from './types';
  * @param props.initialFocus By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus. With this option you can specify a different element to receive that initial focus. Selector string (which will be passed to document.querySelector() to find the DOM node).
  * @param props.closeIconColor Choose between dark or light close icon. Default is dark.
  */
-function Modal({
-  open,
-  size,
-  setOpen,
-  shouldClose,
-  darkMode,
-  children,
-  className,
-  contentClassName,
-  initialFocus,
-  closeIconColor,
-  ...rest
-}: ModalProps) {
-  const props = {
-    open,
-    size,
-    setOpen,
-    shouldClose,
-    darkMode,
-    children,
-    className,
-    contentClassName,
-    initialFocus,
-    closeIconColor,
-    ...rest,
-  };
-
+const Modal = React.forwardRef((props: ModalProps, ref: React.ForwardedRef<HTMLDivElement>) => {
   return (
     <PopoverProvider>
-      <ModalView {...props} />
+      <ModalView {...props} ref={ref} />
     </PopoverProvider>
   );
-}
+})
 
 Modal.displayName = 'Modal';
 
 Modal.propTypes = {
   open: PropTypes.bool,
-  size: PropTypes.string,
+  size: PropTypes.oneOf(Object.values(ModalSize)),
   children: PropTypes.node,
   shouldClose: PropTypes.func,
   className: PropTypes.string,
