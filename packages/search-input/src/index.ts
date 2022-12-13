@@ -1,1 +1,1 @@
-export { SearchInput, type SearchInputProps, SizeVariant } from './SearchInput'
+export { SearchInput, type SearchInputProps, SizeVariant } from './SearchInput';

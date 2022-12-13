@@ -1,6 +1,6 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
-import { SearchInputProps } from './SearchInput.types';
+import { SearchInputProps } from '.';
 
 export interface SearchInputContextProps
   extends Pick<SearchInputProps, 'state'> {}

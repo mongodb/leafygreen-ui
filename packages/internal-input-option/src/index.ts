@@ -1,4 +1,5 @@
 export {
+  type BaseInputOptionProps,
   InputOption,
-  type InputOptionProps
+  type InputOptionProps,
 } from './InputOption';
