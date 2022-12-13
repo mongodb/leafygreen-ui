@@ -149,7 +149,7 @@ describe('packages/polymorphic', () => {
       test('Basic styled component', () => {
         const StyledPolymorph = styled(Polymorph)`
           color: #ff69b4;
-        `; // as PolymorphicComponentType;
+        `;
 
         const { getByTestId } = render(
           <StyledPolymorph data-testid="styled">Some text</StyledPolymorph>,
@@ -185,6 +185,7 @@ describe('packages/polymorphic', () => {
         const StyledPolymorph = styled(Polymorph)`
           color: #ff69b4;
         ` as PolymorphicComponentType;
+
         const { getByTestId } = render(
           <StyledPolymorph as={Wrapper} data-testid="styled">
             Some text
@@ -201,6 +202,7 @@ describe('packages/polymorphic', () => {
         const StyledPolymorph = styled(Polymorph)`
           color: #ff69b4;
         ` as PolymorphicComponentType;
+
         const { Wrapper } = makeWrapperComponent();
         const divRef = usePolymorphicRef<'div'>();
         const anchorRef = usePolymorphicRef<'a'>();

@@ -85,7 +85,7 @@ export const MyInferredComponent = Polymorphic<
 
 ## With Emotion `styled` API
 
-`Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accepts the Polymorphic props, explicitly type your styled component as `PolymorphicComponentType`.
+`Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accept the Polymorphic props you'll need to explicitly type your styled component as `PolymorphicComponentType`.
 
 ```tsx
 const StyledPolymorph = styled(Polymorph)`
