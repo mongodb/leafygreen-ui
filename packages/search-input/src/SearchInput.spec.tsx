@@ -1,8 +1,9 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { SearchInputProps, SizeVariant } from './SearchInput.types';
+import { renderSearchInput } from './utils/SearchInput.testutils';
+import { SizeVariant } from './SearchInput.types';
 import { SearchInput } from '.';
 
 const defaultProps = {
@@ -11,18 +12,6 @@ const defaultProps = {
   onChange: jest.fn(),
   onBlur: jest.fn(),
 };
-
-function renderSearchInput(props: Partial<SearchInputProps> = {}) {
-  const utils = render(
-    <SearchInput
-      data-testid="search-input"
-      aria-label="test-search-input"
-      {...props}
-    />,
-  );
-  const searchInput = utils.getByTestId('search-input');
-  return { ...utils, searchInput };
-}
 
 describe('packages/search-input', () => {
   describe('a11y', () => {
@@ -34,9 +23,9 @@ describe('packages/search-input', () => {
   });
 
   describe('Basic rendering', () => {
-    test('renders type as "search" by default', () => {
-      const { searchInput } = renderSearchInput();
-      expect(searchInput.getAttribute('type')).toBe('search');
+    test('renders type as "search"', () => {
+      const { inputEl } = renderSearchInput();
+      expect(inputEl.getAttribute('type')).toBe('search');
     });
 
     test(`renders provided placeholder text`, () => {
@@ -45,24 +34,10 @@ describe('packages/search-input', () => {
     });
 
     test(`Passes className to root element`, () => {
-      const { container } = renderSearchInput(defaultProps);
+      const { containerEl } = renderSearchInput(defaultProps);
       expect(
-        (container?.firstChild as HTMLElement)?.classList.contains(
-          defaultProps.className,
-        ),
-      ).toBe(true);
-    });
-
-    test('key presses are reflected in component and onChange function is called when value changes', () => {
-      const { searchInput } = renderSearchInput(defaultProps);
-      expect((searchInput as HTMLInputElement).value).toBe('');
-
-      fireEvent.change(searchInput, {
-        target: { value: 'a' },
-      });
-
-      expect((searchInput as HTMLInputElement).value).toBe('a');
-      expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+        containerEl.classList.contains(defaultProps.className),
+      ).toBeTruthy();
     });
 
     test.todo('Clear button is rendered when there is text');
@@ -73,11 +48,11 @@ describe('packages/search-input', () => {
       // As written this test does not pass even if the font-size is inherited correctly
       // eslint-disable-next-line jest/no-disabled-tests
       test.skip('check if font-size is 13px', () => {
-        const { searchInput } = renderSearchInput({
+        const { containerEl } = renderSearchInput({
           value: 'test',
         });
 
-        expect(searchInput).toHaveStyle({
+        expect(containerEl).toHaveStyle({
           fontSize: '13px',
         });
       });
@@ -88,12 +63,12 @@ describe('packages/search-input', () => {
       // As written this test does not pass even if the font-size is inherited correctly
       // eslint-disable-next-line jest/no-disabled-tests
       test.skip('check if font-size is 18px', () => {
-        const { searchInput } = renderSearchInput({
+        const { containerEl } = renderSearchInput({
           value: 'test',
           sizeVariant: SizeVariant.Large,
         });
 
-        expect(searchInput).toHaveStyle({
+        expect(containerEl).toHaveStyle({
           fontSize: '18px',
         });
       });
@@ -101,8 +76,10 @@ describe('packages/search-input', () => {
   });
 
   describe('Search Results', () => {
+    test('No results appear when there are no children', () => {
+      const { inputEl } = renderSearchInput();
+    });
     test.todo('Results menu opens on focus');
-    test.todo('No results appear when there are no children');
     test.todo('All children Results render in the menu');
 
     test.todo('Results change dynamically while menu is open');
@@ -111,6 +88,14 @@ describe('packages/search-input', () => {
   describe('Interaction', () => {
     test.todo('Typing any character updates the input');
     test.todo('Clear button clears any input');
+
+    test('key presses are reflected in component, and onChange function is called when value changes', () => {
+      const { inputEl } = renderSearchInput({ ...defaultProps });
+      expect(inputEl.value).toBe('');
+      userEvent.type(inputEl, 'a');
+      expect(inputEl.value).toBe('a');
+      expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+    });
 
     describe('Mouse interaction', () => {
       test.todo('Menu is not initially opened');

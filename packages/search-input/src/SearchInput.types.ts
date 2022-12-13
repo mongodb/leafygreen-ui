@@ -1,5 +1,6 @@
+import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
+
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const State = {
   None: 'none',
@@ -17,7 +18,7 @@ export const SizeVariant = {
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
 interface BaseSearchInputProps
-  extends HTMLElementProps<'input', HTMLInputElement> {
+  extends Omit<ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /**
    * The current state of the SearchInput. This can be none, or loading.
    */
@@ -39,6 +40,16 @@ interface BaseSearchInputProps
    * Default: false
    */
   disabled?: boolean;
+
+  /**
+   * The current value of the text box
+   */
+  value?: string;
+
+  /**
+   * Callback fired when the input value changes
+   */
+  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 export type SearchInputProps = BaseSearchInputProps & AriaLabelProps;

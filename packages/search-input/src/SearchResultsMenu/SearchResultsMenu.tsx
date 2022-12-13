@@ -15,7 +15,7 @@ import {
 } from './SearchResultsMenu.style';
 import { SearchResultsMenuProps } from './SearchResultsMenu.types';
 
-const SearchResultsMenu = React.forwardRef<
+export const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,
   SearchResultsMenuProps
 >(({ children, open = false, refEl }: SearchResultsMenuProps, ref) => {
@@ -63,5 +63,3 @@ const SearchResultsMenu = React.forwardRef<
 });
 
 SearchResultsMenu.displayName = 'SearchResultsMenu';
-
-export { SearchResultsMenu };

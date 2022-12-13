@@ -20,7 +20,9 @@ import {
 } from './SearchResult.styles';
 import { SearchResultProps } from './SearchResult.types';
 
-const SearchResult = Polymorphic<InferredPolymorphicProps<SearchResultProps>>(
+export const SearchResult = Polymorphic<
+  InferredPolymorphicProps<SearchResultProps>
+>(
   (
     {
       as = 'li' as PolymorphicAs,
@@ -67,5 +69,3 @@ const SearchResult = Polymorphic<InferredPolymorphicProps<SearchResultProps>>(
 );
 
 SearchResult.displayName = 'SearchResult';
-
-export { SearchResult };

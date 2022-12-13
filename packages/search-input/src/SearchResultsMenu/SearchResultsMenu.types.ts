@@ -3,6 +3,6 @@ import { PortalControlProps } from '@leafygreen-ui/popover';
 
 export type SearchResultsMenuProps = HTMLElementProps<'ul', HTMLUListElement> &
   PortalControlProps & {
-    refEl: React.RefObject<HTMLDivElement>;
+    refEl: React.RefObject<HTMLElement>;
     open?: boolean;
   };

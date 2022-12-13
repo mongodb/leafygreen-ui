@@ -5,8 +5,7 @@ import {
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 
-import { SearchResult } from './SearchResult';
-import type { SearchResultProps } from './SearchResult.types';
+import { SearchResult, type SearchResultProps } from '.';
 
 export default {
   title: 'Components/SearchInput/SearchResult',

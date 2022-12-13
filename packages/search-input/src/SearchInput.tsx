@@ -45,7 +45,6 @@ import { SearchResultsMenu } from './SearchResultsMenu';
  * @param props.baseFontSize determines the base font size if sizeVariant is set to default.
  */
 
-type SearchInputType = React.ForwardRefExoticComponent<SearchInputProps>;
 export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
   function SearchInput(
     {
@@ -56,6 +55,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       disabled,
       children,
       state,
+      onChange,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -93,7 +93,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         <SearchInputContextProvider state={state}>
           <form role="search">
             {/* Disable eslint: onClick sets focus. Key events would already have focus */}
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
             <div
               ref={searchBoxRef}
               role="searchbox"
@@ -105,6 +105,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 wrapperFontStyle[sizeVariant],
                 className,
               )}
+              {...rest}
             >
               <MagnifyingGlass
                 className={cx(
@@ -124,13 +125,13 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   inputSizeStyles[sizeVariant],
                   inputFocusStyles[theme], // Always show focus styles
                 )}
+                onChange={onChange}
                 placeholder={placeholder}
                 ref={forwardRef}
                 disabled={disabled}
-                {...rest}
               />
             </div>
-            {withTypeAhead && (
+            {/* {withTypeAhead && (
               <SearchResultsMenu
                 open={isOpen}
                 refEl={searchBoxRef}
@@ -138,12 +139,12 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               >
                 {children}
               </SearchResultsMenu>
-            )}
+            )} */}
           </form>
         </SearchInputContextProvider>
       </LeafyGreenProvider>
     );
   },
-) as SearchInputType;
+);
 
 SearchInput.displayName = 'SearchInput';
