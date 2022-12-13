@@ -4,8 +4,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
-concurrency: 
-  group:  ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
