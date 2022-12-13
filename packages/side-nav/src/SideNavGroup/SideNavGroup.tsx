@@ -9,7 +9,7 @@ import { Overline } from '@leafygreen-ui/typography';
 
 import { AccessibleGlyph } from '../AccessibleGlyph/AccessibleGlyph';
 import { useSideNavContext } from '../SideNav/SideNavContext';
-import { SideNavGroupCollapsed } from '../SideNavGroupCollasped/SideNavGroupCollasped';
+import { SideNavGroupCollapsed } from '../SideNavGroupCollapsed/SideNavGroupCollapsed';
 import { SideNavGroupOpen } from '../SideNavGroupOpen/SideNavGroupOpen';
 
 import {
@@ -142,13 +142,14 @@ function SideNavGroup({
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
       {collapsible ? (
+        // collapsed, all items are inside a dropdown
         <>
           <SideNavGroupCollapsed open={open} setOpen={setOpen} {...sharedProps}>
             {renderedChildren}
           </SideNavGroupCollapsed>
         </>
       ) : (
-        // not collapsible
+        // not collapsible, all items are visible
         <SideNavGroupOpen {...sharedProps}>{renderedChildren}</SideNavGroupOpen>
       )}
     </li>
