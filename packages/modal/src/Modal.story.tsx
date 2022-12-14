@@ -12,6 +12,8 @@ import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
 
 import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
 
+type StoryModal = React.FC<ModalProps>;
+
 export default {
   title: 'Components/Modals/Modal',
   component: Modal,
@@ -48,7 +50,7 @@ const margin = css`
   }
 `;
 
-const ControlledTemplate: ComponentStory<typeof Modal> = (args: ModalProps) => {
+const ControlledTemplate: ComponentStory<StoryModal> = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
   const { darkMode } = args;
   return (

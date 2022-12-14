@@ -217,7 +217,7 @@ export const inputModeStyles: Record<Theme, string> = {
     }
 
     &::placeholder {
-      color: ${palette.gray.base};
+      color: ${palette.gray.dark1};
       font-weight: normal;
     }
 
@@ -385,12 +385,20 @@ export const stateIndicatorStyles: Record<
   },
 };
 
-export const optionalTextStyle = css`
+export const optionalTextBaseStyle = css`
   font-size: 12px;
   font-style: italic;
   font-weight: normal;
-  color: ${palette.gray.dark1}; // Same in light & dark theme
 `;
+
+export const optionalTextThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
+  `,
+};
 
 export const errorMessageStyle = css`
   ${inheritTypeScale};
