@@ -39,6 +39,7 @@ export const SearchResult = Polymorphic<
     const textContent = getNodeTextContent(children);
     const ariaLabel =
       rest['aria-label'] ?? rest['aria-labelledby'] ? '' : textContent;
+
     return (
       <InputOption
         as={as}

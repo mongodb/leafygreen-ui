@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 import Popover from '@leafygreen-ui/popover';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -20,7 +21,7 @@ export const SearchResultsMenu = React.forwardRef<
   SearchResultsMenuProps
 >(({ children, open = false, refEl }: SearchResultsMenuProps, ref) => {
   const { theme } = useDarkMode();
-  const { state } = useSearchInputContext();
+  const { state, highlight } = useSearchInputContext();
 
   const menuWidth = useMemo(
     () => refEl.current?.clientWidth ?? 0,
@@ -55,7 +56,18 @@ export const SearchResultsMenu = React.forwardRef<
           ref={ref}
           className={searchResultsListStyles}
         >
-          {children}
+          {React.Children.map(children, (child, index) => {
+            if (isComponentType(child, 'SearchResult')) {
+              if (index === highlight) {
+                child = React.cloneElement(child, {
+                  ...child.props,
+                  focused: true,
+                });
+              }
+
+              return child;
+            }
+          })}
         </ul>
       )}
     </Popover>

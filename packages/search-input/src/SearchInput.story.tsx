@@ -40,9 +40,18 @@ export const WithResults: ComponentStory<typeof SearchInput> = props => (
     `}
     {...props}
   >
-    <SearchResult description="This is a description">Example 1</SearchResult>
-    <SearchResult>Example 2</SearchResult>
-    <SearchResult description="This is a description">Example 3</SearchResult>
+    <SearchResult
+      onClick={() => {
+        console.log('Click');
+      }}
+      description="This is a description"
+    >
+      Apple
+    </SearchResult>
+    <SearchResult>Banana</SearchResult>
+    <SearchResult as="a" href="#" description="This is a link">
+      Carrot
+    </SearchResult>
     <SearchResult description="This is a very very long description. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.">
       Example 4
     </SearchResult>

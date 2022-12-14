@@ -3,7 +3,9 @@ import React, { createContext, PropsWithChildren, useContext } from 'react';
 import { SearchInputProps } from '.';
 
 export interface SearchInputContextProps
-  extends Pick<SearchInputProps, 'state'> {}
+  extends Pick<SearchInputProps, 'state'> {
+  highlight?: number;
+}
 
 const SearchInputContext = createContext<SearchInputContextProps>({});
 

@@ -1,6 +1,7 @@
 import React, {
   EventHandler,
   FocusEventHandler,
+  KeyboardEventHandler,
   MouseEventHandler,
   SyntheticEvent,
   useRef,
@@ -11,6 +12,7 @@ import isUndefined from 'lodash/isUndefined';
 import { cx } from '@leafygreen-ui/emotion';
 import {
   useBackdropClick,
+  useDynamicRefs,
   useForwardedRef,
   useValue,
 } from '@leafygreen-ui/hooks';
@@ -20,6 +22,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType, keyMap, validateChildren } from '@leafygreen-ui/lib';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultsMenu } from '../SearchResultsMenu';
@@ -73,12 +76,15 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
   ) {
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const [isOpen, setOpen] = useState(false);
+    // The index of the currently highlighted result option
+    const [highlightIndex, setHighlightIndex] = useState<number>(0);
     const closeMenu = () => setOpen(false);
     const openMenu = () => setOpen(true);
 
     const searchBoxRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLUListElement>(null);
     const inputRef = useForwardedRef(forwardRef, null);
+    const resultRefs = useDynamicRefs<HTMLElement>({ prefix: 'result' });
     const withTypeAhead = !isUndefined(children);
 
     const { value, onChange, onClear } = useValue(
@@ -86,6 +92,51 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       onChangeProp,
       onClearProp,
     );
+
+    const validatedChildren = validateChildren(children, [
+      'SearchResult',
+      'SearchResultGroup',
+    ])?.map((child, index) =>
+      React.cloneElement(child, {
+        ...child.props,
+        ref: resultRefs(`${index}`),
+      }),
+    );
+
+    type Direction = 'next' | 'prev' | 'first' | 'last';
+
+    const updateHighlight = (direction: Direction) => {
+      const resultsCount = React.Children.count(children);
+
+      switch (direction) {
+        case 'first': {
+          setHighlightIndex(0);
+          break;
+        }
+
+        case 'last': {
+          setHighlightIndex(resultsCount);
+          break;
+        }
+
+        case 'next': {
+          const nextIndex =
+            !isUndefined(highlightIndex) && highlightIndex + 1 < resultsCount
+              ? highlightIndex + 1
+              : 0;
+          setHighlightIndex(nextIndex);
+          break;
+        }
+
+        case 'prev': {
+          const nextIndex =
+            !isUndefined(highlightIndex) && highlightIndex - 1 >= 0
+              ? highlightIndex - 1
+              : resultsCount - 1;
+          setHighlightIndex(nextIndex);
+        }
+      }
+    };
 
     /** Event Handlers */
 
@@ -95,6 +146,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         e.stopPropagation();
       } else {
         openMenu();
+        updateHighlight('first');
       }
     };
 
@@ -113,12 +165,50 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       inputRef?.current?.focus();
     };
 
+    const handleKeyDown: KeyboardEventHandler = e => {
+      const isFocusInMenu = menuRef.current?.contains(document.activeElement);
+      const isFocusOnSearchBox = searchBoxRef.current?.contains(
+        document.activeElement,
+      );
+
+      const isFocusInComponent = isFocusOnSearchBox || isFocusInMenu;
+
+      if (isFocusInComponent) {
+        switch (e.keyCode) {
+          case keyMap.Enter: {
+            const highlightedElementRef = resultRefs(`${highlightIndex}`);
+            // const highlightedElement = validatedChildren?.[highlightIndex];
+            highlightedElementRef?.current?.click();
+
+            // highlightedElement?
+
+            break;
+          }
+
+          case keyMap.ArrowDown: {
+            updateHighlight('next');
+            break;
+          }
+
+          case keyMap.ArrowUp: {
+            updateHighlight('prev');
+            break;
+          }
+        }
+      }
+    };
+
     useBackdropClick(closeMenu, [searchBoxRef, menuRef], isOpen);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <SearchInputContextProvider state={state}>
-          <form role="search" className={className} {...rest}>
+        <SearchInputContextProvider state={state} highlight={highlightIndex}>
+          <form
+            role="search"
+            className={className}
+            onSubmit={e => e.preventDefault()}
+            {...rest}
+          >
             {/* Disable eslint: onClick sets focus. Key events would already have focus */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
             <div
@@ -128,6 +218,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               onMouseDown={handleInputWrapperMousedown}
               onClick={handleInputWrapperClick}
               onFocus={handleInputWrapperFocus}
+              onKeyDown={handleKeyDown}
               className={cx(
                 inputWrapperStyle,
                 inputWrapperSizeStyle[sizeVariant],
@@ -174,7 +265,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 refEl={searchBoxRef}
                 ref={menuRef}
               >
-                {children}
+                {validatedChildren}
               </SearchResultsMenu>
             )}
           </form>
