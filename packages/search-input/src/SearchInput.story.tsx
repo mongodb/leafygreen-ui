@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -24,7 +25,7 @@ export default {
       exclude: [...storybookExcludedControlParams],
     },
   },
-} as ComponentMeta<typeof SearchInput>;
+} as unknown as ComponentMeta<typeof SearchInput>;
 
 const Template: ComponentStory<typeof SearchInput> = props => (
   <SearchInput {...props} />
@@ -33,7 +34,12 @@ const Template: ComponentStory<typeof SearchInput> = props => (
 export const Basic = Template.bind({});
 
 export const WithResults: ComponentStory<typeof SearchInput> = props => (
-  <SearchInput {...props}>
+  <SearchInput
+    className={css`
+      width: 200px;
+    `}
+    {...props}
+  >
     <SearchResult description="This is a description">Example 1</SearchResult>
     <SearchResult>Example 2</SearchResult>
     <SearchResult description="This is a description">Example 3</SearchResult>

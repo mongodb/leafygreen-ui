@@ -18,7 +18,7 @@ export const SizeVariant = {
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
 interface BaseSearchInputProps
-  extends Omit<ComponentPropsWithoutRef<'div'>, 'onChange'> {
+  extends Omit<ComponentPropsWithoutRef<'form'>, 'onChange'> {
   /**
    * The current state of the SearchInput. This can be none, or loading.
    */

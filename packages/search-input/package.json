@@ -32,6 +32,7 @@
     "@leafygreen-ui/emotion": "^4.0.1",
     "@leafygreen-ui/hooks": "^7.3.3",
     "@leafygreen-ui/icon": "^11.12.2",
+    "@leafygreen-ui/icon-button": "^15.0.2",
     "@leafygreen-ui/internal-input-option": "^0.0.0",
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.2",

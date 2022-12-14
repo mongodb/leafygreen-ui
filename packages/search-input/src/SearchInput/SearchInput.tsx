@@ -9,8 +9,10 @@ import React, {
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useBackdropClick } from '@leafygreen-ui/hooks';
+import { useBackdropClick, useValue } from '@leafygreen-ui/hooks';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
+import XIcon from '@leafygreen-ui/icon/dist/X';
+import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -20,15 +22,16 @@ import { SearchResultsMenu } from '../SearchResultsMenu';
 
 import {
   baseInputStyle,
-  inputContainerStyle,
-  inputFocusStyles,
-  inputSizeStyles,
   inputThemeStyle,
+  inputWrapperDisabledStyle,
+  inputWrapperFocusStyles,
+  inputWrapperSizeStyle,
+  inputWrapperStyle,
+  inputWrapperThemeStyle,
   searchIconDisabledStyle,
   searchIconSizeStyle,
   searchIconStyle,
   searchIconThemeStyle,
-  wrapperFontStyle,
 } from './SearchInput.styles';
 import { SearchInputProps, SizeVariant } from './SearchInput.types';
 
@@ -56,6 +59,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       disabled,
       children,
       state,
+      value,
       onChange,
       ...rest
     }: SearchInputProps,
@@ -70,6 +74,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const menuRef = useRef<HTMLUListElement>(null);
     const withTypeAhead = !isUndefined(children);
 
+    const { internalValue, handleValueChange } = useValue(value, onChange);
+
     const handleOpenMenuAction: EventHandler<SyntheticEvent<any>> = e => {
       if (disabled) {
         e.preventDefault();
@@ -81,18 +87,12 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const handleInputClick: MouseEventHandler = handleOpenMenuAction;
     const handleInputFocus: FocusEventHandler = handleOpenMenuAction;
 
-    useBackdropClick(
-      () => {
-        closeMenu();
-      },
-      [searchBoxRef, menuRef],
-      isOpen,
-    );
+    useBackdropClick(closeMenu, [searchBoxRef, menuRef], isOpen);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <SearchInputContextProvider state={state}>
-          <form role="search">
+          <form role="search" className={className} {...rest}>
             {/* Disable eslint: onClick sets focus. Key events would already have focus */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
             <div
@@ -102,11 +102,12 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               onClick={handleInputClick}
               onFocus={handleInputFocus}
               className={cx(
-                inputContainerStyle,
-                wrapperFontStyle[sizeVariant],
-                className,
+                inputWrapperStyle,
+                inputWrapperSizeStyle[sizeVariant],
+                inputWrapperThemeStyle[theme],
+                inputWrapperFocusStyles[theme], // Always show focus styles
+                { [inputWrapperDisabledStyle[theme]]: disabled },
               )}
-              {...rest}
             >
               <MagnifyingGlass
                 className={cx(
@@ -120,17 +121,17 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               />
               <input
                 type="search"
-                className={cx(
-                  baseInputStyle,
-                  inputThemeStyle[theme],
-                  inputSizeStyles[sizeVariant],
-                  inputFocusStyles[theme], // Always show focus styles
-                )}
-                onChange={onChange}
+                className={cx(baseInputStyle, inputThemeStyle[theme])}
+                onChange={handleValueChange}
                 placeholder={placeholder}
                 ref={forwardRef}
                 disabled={disabled}
               />
+              {internalValue && (
+                <IconButton type="button" aria-label="Clear search">
+                  <XIcon />
+                </IconButton>
+              )}
             </div>
             {withTypeAhead && (
               <SearchResultsMenu

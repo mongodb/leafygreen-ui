@@ -11,4 +11,5 @@ export { default as useObjectDependency } from './useObjectDependency';
 export { default as usePoller } from './usePoller';
 export { default as usePrevious } from './usePrevious';
 export { default as useValidation } from './useValidation';
+export { useValue } from './useValue';
 export { default as useViewportSize } from './useViewportSize';
