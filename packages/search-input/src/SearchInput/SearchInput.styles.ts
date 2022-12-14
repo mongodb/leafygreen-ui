@@ -58,6 +58,16 @@ export const inputWrapperThemeStyle: Record<Theme, string> = {
     color: ${palette.black};
     background: ${palette.white};
     border-color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark4};
+    border-color: ${palette.gray.base};
+  `,
+};
+
+export const inputWrapperInteractiveStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
 
     &:hover,
     &:active {
@@ -65,20 +75,16 @@ export const inputWrapperThemeStyle: Record<Theme, string> = {
         box-shadow: ${hoverRing.light.gray};
       }
     }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light2};
-    background-color: ${palette.gray.dark4};
-    border-color: ${palette.gray.base};
-
-    &:hover,
-    &:active {
-      &:not(:disabled):not(:focus-within) {
-        box-shadow: ${hoverRing.dark.gray};
-      }
+`,
+[Theme.Dark]: css`
+  &:hover,
+  &:active {
+    &:not(:disabled):not(:focus-within) {
+      box-shadow: ${hoverRing.dark.gray};
     }
-  `,
-};
+  }
+`,
+}
 
 export const inputWrapperFocusStyles: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -97,11 +103,13 @@ export const inputWrapperFocusStyles: Record<Theme, string> = {
 
 export const inputWrapperDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
+  cursor: not-allowed;
     color: ${palette.gray.base};
     background-color: ${palette.gray.light2};
     border-color: ${palette.gray.light1};
   `,
   [Theme.Dark]: css`
+  cursor: not-allowed;
     color: ${palette.gray.dark2};
     background-color: ${palette.gray.dark3};
     border-color: ${palette.gray.dark2};
@@ -111,6 +119,8 @@ export const inputWrapperDisabledStyle: Record<Theme, string> = {
 export const baseInputStyle = css`
   font-size: inherit;
   line-height: inherit;
+  color: inherit;
+  background-color: inherit;
   font-family: ${fontFamilies.default};
   width: 100%;
   height: 2em;

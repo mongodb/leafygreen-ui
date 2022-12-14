@@ -29,6 +29,7 @@ import {
   inputThemeStyle,
   inputWrapperDisabledStyle,
   inputWrapperFocusStyles,
+  inputWrapperInteractiveStyles,
   inputWrapperSizeStyle,
   inputWrapperStyle,
   inputWrapperThemeStyle,
@@ -91,13 +92,21 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const handleOpenMenuAction: EventHandler<SyntheticEvent<any>> = e => {
       if (disabled) {
         e.preventDefault();
+        e.stopPropagation();
       } else {
         openMenu();
       }
     };
 
-    const handleInputClick: MouseEventHandler = handleOpenMenuAction;
-    const handleInputFocus: FocusEventHandler = handleOpenMenuAction;
+    // Prevent container from gaining focus by default
+    const handleInputWrapperMousedown = (e: React.MouseEvent) => {
+      if (disabled) {
+        e.preventDefault();
+      }
+    };
+
+    const handleInputWrapperClick: MouseEventHandler = handleOpenMenuAction;
+    const handleInputWrapperFocus: FocusEventHandler = handleOpenMenuAction;
 
     const handleClearButton: MouseEventHandler<HTMLButtonElement> = e => {
       onClear(e);
@@ -116,14 +125,18 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               ref={searchBoxRef}
               role="searchbox"
               tabIndex={-1}
-              onClick={handleInputClick}
-              onFocus={handleInputFocus}
+              onMouseDown={handleInputWrapperMousedown}
+              onClick={handleInputWrapperClick}
+              onFocus={handleInputWrapperFocus}
               className={cx(
                 inputWrapperStyle,
                 inputWrapperSizeStyle[sizeVariant],
                 inputWrapperThemeStyle[theme],
                 inputWrapperFocusStyles[theme], // Always show focus styles
-                { [inputWrapperDisabledStyle[theme]]: disabled },
+                {
+                  [inputWrapperDisabledStyle[theme]]: disabled,
+                  [inputWrapperInteractiveStyles[theme]]: !disabled,
+                },
               )}
             >
               <MagnifyingGlass

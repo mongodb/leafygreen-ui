@@ -22,7 +22,7 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: [...storybookExcludedControlParams],
+      exclude: [...storybookExcludedControlParams, 'value', 'id'],
     },
   },
 } as unknown as ComponentMeta<typeof SearchInput>;
