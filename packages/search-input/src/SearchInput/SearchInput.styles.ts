@@ -63,7 +63,6 @@ export const inputWrapperThemeStyle: Record<Theme, string> = {
     &:active {
       &:not(:disabled):not(:focus-within) {
         box-shadow: ${hoverRing.light.gray};
-        border-color: ${palette.gray.light2};
       }
     }
   `,
@@ -76,7 +75,6 @@ export const inputWrapperThemeStyle: Record<Theme, string> = {
     &:active {
       &:not(:disabled):not(:focus-within) {
         box-shadow: ${hoverRing.dark.gray};
-        border-color: ${palette.gray.dark2};
       }
     }
   `,

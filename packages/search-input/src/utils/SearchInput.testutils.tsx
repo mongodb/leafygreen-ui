@@ -23,6 +23,7 @@ export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
 
   const containerEl = renderResult.getByTestId('search-input');
   const inputEl = containerEl.getElementsByTagName('input')[0];
+  const clearButton = renderResult.queryByRole('button');
 
   /**
    * Opens the menu by simulating a click on the combobox.
@@ -48,6 +49,7 @@ export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
     rerenderWithProps,
     containerEl,
     inputEl,
+    clearButton,
     openMenu,
     getMenuElements,
   };

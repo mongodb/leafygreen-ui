@@ -9,7 +9,11 @@ import React, {
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useBackdropClick, useValue } from '@leafygreen-ui/hooks';
+import {
+  useBackdropClick,
+  useForwardedRef,
+  useValue,
+} from '@leafygreen-ui/hooks';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -59,8 +63,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       disabled,
       children,
       state,
-      value,
-      onChange,
+      value: valueProp,
+      onChange: onChangeProp,
+      onClear: onClearProp,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -72,9 +77,16 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const searchBoxRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLUListElement>(null);
+    const inputRef = useForwardedRef(forwardRef, null);
     const withTypeAhead = !isUndefined(children);
 
-    const { internalValue, handleValueChange } = useValue(value, onChange);
+    const { value, onChange, onClear } = useValue(
+      valueProp,
+      onChangeProp,
+      onClearProp,
+    );
+
+    /** Event Handlers */
 
     const handleOpenMenuAction: EventHandler<SyntheticEvent<any>> = e => {
       if (disabled) {
@@ -86,6 +98,11 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const handleInputClick: MouseEventHandler = handleOpenMenuAction;
     const handleInputFocus: FocusEventHandler = handleOpenMenuAction;
+
+    const handleClearButton: MouseEventHandler<HTMLButtonElement> = e => {
+      onClear(e);
+      inputRef?.current?.focus();
+    };
 
     useBackdropClick(closeMenu, [searchBoxRef, menuRef], isOpen);
 
@@ -122,13 +139,18 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               <input
                 type="search"
                 className={cx(baseInputStyle, inputThemeStyle[theme])}
-                onChange={handleValueChange}
+                value={value}
+                onChange={onChange}
                 placeholder={placeholder}
-                ref={forwardRef}
+                ref={inputRef}
                 disabled={disabled}
               />
-              {internalValue && (
-                <IconButton type="button" aria-label="Clear search">
+              {value && (
+                <IconButton
+                  type="button"
+                  aria-label="Clear search"
+                  onClick={handleClearButton}
+                >
                   <XIcon />
                 </IconButton>
               )}

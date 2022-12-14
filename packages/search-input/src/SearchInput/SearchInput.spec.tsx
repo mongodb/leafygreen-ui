@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElementToBeRemoved } from '@testing-library/dom';
+import { waitFor, waitForElementToBeRemoved } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -52,8 +52,18 @@ describe('packages/search-input', () => {
       ).toBeTruthy();
     });
 
-    test.todo('Clear button is rendered when there is text');
-    test.todo('Clear button is not rendered when there is no text');
+    test('Clear button is not rendered when there is no text', () => {
+      const { clearButton } = renderSearchInput();
+      expect(clearButton).not.toBeInTheDocument();
+    });
+
+    test('Clear button is rendered when there is text', () => {
+      const { clearButton, inputEl } = renderSearchInput();
+      userEvent.type(inputEl, 'abc');
+      waitFor(() => {
+        expect(clearButton).toBeInTheDocument();
+      });
+    });
 
     describe('when the "sizeVariant" is not "large"', () => {
       // TODO: This type of check should be done with a visual regression test
@@ -150,7 +160,15 @@ describe('packages/search-input', () => {
       });
     });
 
-    test.todo('Clear button clears any input');
+    test('Clear button clears any input', () => {
+      const { clearButton, inputEl } = renderSearchInput();
+      userEvent.type(inputEl, 'abc');
+      waitFor(() => {
+        userEvent.click(clearButton!);
+        expect(inputEl).toHaveValue('');
+        expect(inputEl).toHaveFocus();
+      });
+    });
 
     describe('Mouse interaction', () => {
       test('Clicking the input sets focus to the input', () => {

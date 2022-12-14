@@ -1,4 +1,4 @@
-import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
+import { ChangeEventHandler, ComponentPropsWithoutRef, MouseEventHandler } from 'react';
 
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 
@@ -50,6 +50,11 @@ interface BaseSearchInputProps
    * Callback fired when the input value changes
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Callback fired when the clear button is clicked
+   */
+  onClear?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export type SearchInputProps = BaseSearchInputProps & AriaLabelProps;
