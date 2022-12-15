@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 9.0.3
+
+### Patch Changes
+
+- 737691760: Reorganizes files internally to match new Design Systems style guide
+
 ## 9.0.2
 
 ### Patch Changes

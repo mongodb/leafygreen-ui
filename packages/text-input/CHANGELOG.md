@@ -1,5 +1,16 @@
 # @leafygreen-ui/text-input
 
+## 12.1.1
+
+### Patch Changes
+
+- 1271944b2: Updates darkMode placeholder and optional text colors to match figma specs.
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+- Updated dependencies [a0d6638c4]
+  - @leafygreen-ui/icon@11.12.3
+  - @leafygreen-ui/typography@15.2.0
+
 ## 12.1.0
 
 ### Minor Changes
