@@ -8,7 +8,7 @@ import {
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 
-import { SearchInput, SearchResult } from '.';
+import { SearchInput, SearchResult } from '..';
 
 export default {
   title: 'Components/SearchInput',
