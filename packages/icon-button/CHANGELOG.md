@@ -1,5 +1,14 @@
 # @leafygreen-ui/icon-button
 
+## 15.0.3
+
+### Patch Changes
+
+- 75f26afbc: Allows users to override default `tabIndex` value being set on component
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+  - @leafygreen-ui/icon@11.12.3
+
 ## 15.0.2
 
 ### Patch Changes

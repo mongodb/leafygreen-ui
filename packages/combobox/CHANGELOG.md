@@ -1,5 +1,18 @@
 # @leafygreen-ui/combobox
 
+## 5.0.4
+
+### Patch Changes
+
+- 4215ef424: Update some PropTypes to use `oneOfType` instead of `oneOf`. Also downgrades `Chalk` package.
+- Updated dependencies [75f26afbc]
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+- Updated dependencies [a0d6638c4]
+  - @leafygreen-ui/icon-button@15.0.3
+  - @leafygreen-ui/icon@11.12.3
+  - @leafygreen-ui/typography@15.2.0
+
 ## 5.0.3
 
 ### Patch Changes
