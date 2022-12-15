@@ -11,7 +11,11 @@ export const LoadingOption = () => {
   const { darkMode } = useDarkMode();
 
   return (
-    <InputOption aria-label="Loading results" className={loadingOptionStyles}>
+    <InputOption
+      aria-label="Loading results"
+      isInteractive={false}
+      className={loadingOptionStyles}
+    >
       <RefreshIcon
         color={darkMode ? palette.blue.light1 : palette.blue.base}
         className={loadingOptionIcon}

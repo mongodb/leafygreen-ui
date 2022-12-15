@@ -40,6 +40,13 @@ export interface BaseInputOptionProps {
    * Whether the component is active, regardless of keyboard navigation
    */
   active?: boolean;
+
+  /**
+   * Determines whether to show hover, focus and active styles
+   *
+   * @default true
+   */
+  isInteractive?: boolean;
 }
 
 export type InputOptionProps = AriaLabelProps &

@@ -11,7 +11,6 @@ import {
 export const inputOptionStyles = css`
   position: relative;
   list-style: none;
-  cursor: pointer;
   outline: none;
   border: unset;
   margin: 0;
@@ -36,16 +35,23 @@ export const inputOptionThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.black};
     background-color: ${palette.white};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.white};
+    background-color: ${palette.gray.dark3};
+  `,
+};
 
+export const inputOptionHoverStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    cursor: pointer;
     &:hover {
       outline: none;
       background-color: ${palette.gray.light2};
     }
   `,
   [Theme.Dark]: css`
-    color: ${palette.white};
-    background-color: ${palette.gray.dark3};
-
+    cursor: pointer;
     &:hover {
       outline: none;
       background-color: ${palette.gray.dark4};

@@ -11,6 +11,7 @@ import {
 import {
   inputOptionActiveStyles,
   inputOptionDisabledStyles,
+  inputOptionHoverStyles,
   inputOptionStyles,
   inputOptionThemeStyles,
   inputOptionWedge,
@@ -27,6 +28,7 @@ const InputOption = Polymorphic<InputOptionProps>(
       active,
       darkMode: darkModeProp,
       showWedge = true,
+      isInteractive = true,
       className,
       ...rest
     },
@@ -44,8 +46,10 @@ const InputOption = Polymorphic<InputOptionProps>(
           inputOptionStyles,
           inputOptionThemeStyles[theme],
           {
+            [inputOptionHoverStyles[theme]]: isInteractive,
+            [inputOptionActiveStyles[theme]]:
+              isInteractive && (active || focused),
             [inputOptionWedge]: showWedge,
-            [inputOptionActiveStyles[theme]]: active || focused,
             [inputOptionDisabledStyles[theme]]: disabled,
           },
           className,
