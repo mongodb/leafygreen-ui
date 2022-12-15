@@ -60,6 +60,15 @@ describe('packages/modal', () => {
       expect(content).toBeVisible();
     });
 
+    test('uses "id" from props when set', () => {
+      const { getByTestId } = renderModal({
+        id: 'id-test',
+        open: true,
+      });
+      const container = getByTestId('modal-test-id');
+      expect(container.getAttribute('id')).toBe('id-test');
+    });
+
     test('closes modal when button is clicked', async () => {
       const { getByRole } = renderModal({ open: true });
       const modal = getByRole('dialog');

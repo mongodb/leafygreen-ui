@@ -1371,11 +1371,11 @@ export function Combobox<M extends boolean>({
 Combobox.propTypes = {
   // Multiselect props
   multiselect: PropTypes.bool,
-  value: PropTypes.oneOf([
+  value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),
-  initialValue: PropTypes.oneOf([
+  initialValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),

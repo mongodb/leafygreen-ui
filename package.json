@@ -194,5 +194,8 @@
     "packages/*",
     "website"
   ],
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": {
+    "@mdx-js/react": "1.6.22"
+  }
 }

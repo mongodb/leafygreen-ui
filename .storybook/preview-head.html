@@ -41,8 +41,18 @@
     margin-bottom: 16px;
   }
 
+  #docs-root h1:not(:nth-child(1)),
+  #docs-root h2:not(:nth-child(1)),
+  #docs-root h3:not(:nth-child(1)),
+  #docs-root h4:not(:nth-child(1)),
+  #docs-root h5:not(:nth-child(1)),
+  #docs-root h6:not(:nth-child(1)) {
+    /* this acts like a margin-bottom for the following p tag in lieu of a previous sibling selector */
+    margin-top: 40px !important;
+  }
+
   #docs-root p {
-    margin-bottom: 8px;
+    margin-bottom: 16px;
   }
 
   @font-face {
