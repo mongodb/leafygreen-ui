@@ -4,6 +4,7 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
   SyntheticEvent,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -25,6 +26,7 @@ import LeafyGreenProvider, {
 import { keyMap, validateChildren } from '@leafygreen-ui/lib';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
+import { titleClassName } from '../SearchResult/SearchResult.styles';
 import { SearchResultsMenu } from '../SearchResultsMenu';
 
 import {
@@ -103,8 +105,19 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }),
     );
 
-    type Direction = 'next' | 'prev' | 'first' | 'last';
+    // on Highlight Change
+    useEffect(() => {
+      const highlightedElementRef = resultRefs(`${highlightIndex}`);
+      const titleElement =
+        highlightedElementRef?.current?.getElementsByClassName(
+          titleClassName,
+        )[0];
+      const highlightText = titleElement?.textContent;
 
+      console.log(highlightText);
+    }, [highlightIndex, resultRefs]);
+
+    type Direction = 'next' | 'prev' | 'first' | 'last';
     const updateHighlight = (direction: Direction) => {
       const resultsCount = React.Children.count(children);
 
