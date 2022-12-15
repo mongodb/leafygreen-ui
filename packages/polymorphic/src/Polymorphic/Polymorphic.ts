@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef } from 'react';
 
 import {
   PolymorphicComponentType,
@@ -17,7 +17,7 @@ export const Polymorphic = <XP extends object = {}>(
 
   // If no `ref` arg was passed in, we use the plain render function
   const PolyComponent: PolymorphicComponentType<XP> =
-    render.length === 1 ? render : React.forwardRef(render);
+    render.length === 1 ? render : forwardRef(render);
 
   PolyComponent.displayName =
     displayName ?? render.displayName ?? 'PolymorphicComponent';
