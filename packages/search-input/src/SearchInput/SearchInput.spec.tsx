@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitFor, waitForElementToBeRemoved } from '@testing-library/dom';
+import { waitForElementToBeRemoved } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -15,14 +15,20 @@ const defaultProps = {
   placeholder: 'This is some placeholder text',
   onChange: jest.fn(),
   onBlur: jest.fn(),
-  children: (
-    <>
-      <SearchResult onClick={onClickHandler}>Apple</SearchResult>
-      <SearchResult onClick={onClickHandler}>Banana</SearchResult>
-      <SearchResult onClick={onClickHandler}>Carrot</SearchResult>
-      <SearchResult onClick={onClickHandler}>Dragonfruit</SearchResult>
-    </>
-  ),
+  children: [
+    <SearchResult key="a" onClick={onClickHandler}>
+      Apple
+    </SearchResult>,
+    <SearchResult key="b" onClick={onClickHandler}>
+      Banana
+    </SearchResult>,
+    <SearchResult key="c" onClick={onClickHandler}>
+      Carrot
+    </SearchResult>,
+    <SearchResult key="d" onClick={onClickHandler}>
+      Dragonfruit
+    </SearchResult>,
+  ],
 };
 
 describe('packages/search-input', () => {
@@ -53,16 +59,14 @@ describe('packages/search-input', () => {
     });
 
     test('Clear button is not rendered when there is no text', () => {
-      const { clearButton } = renderSearchInput();
-      expect(clearButton).not.toBeInTheDocument();
+      const { queryByRole } = renderSearchInput();
+      expect(queryByRole('button')).not.toBeInTheDocument();
     });
 
     test('Clear button is rendered when there is text', () => {
-      const { clearButton, inputEl } = renderSearchInput();
+      const { queryByRole, inputEl } = renderSearchInput();
       userEvent.type(inputEl, 'abc');
-      waitFor(() => {
-        expect(clearButton).toBeInTheDocument();
-      });
+      expect(queryByRole('button')).toBeInTheDocument();
     });
 
     describe('when the "sizeVariant" is not "large"', () => {
@@ -106,11 +110,10 @@ describe('packages/search-input', () => {
     });
 
     test('All children render in the menu', () => {
-      const { getMenuElements, openMenu } = renderSearchInput({
-        children: defaultProps.children,
+      const { openMenu } = renderSearchInput({
+        ...defaultProps,
       });
-      openMenu();
-      const { resultsElements } = getMenuElements();
+      const { resultsElements } = openMenu();
       expect(resultsElements).toHaveLength(4);
     });
 
@@ -161,13 +164,11 @@ describe('packages/search-input', () => {
     });
 
     test('Clear button clears any input', () => {
-      const { clearButton, inputEl } = renderSearchInput();
+      const { queryByRole, inputEl } = renderSearchInput();
       userEvent.type(inputEl, 'abc');
-      waitFor(() => {
-        userEvent.click(clearButton!);
-        expect(inputEl).toHaveValue('');
-        expect(inputEl).toHaveFocus();
-      });
+      userEvent.click(queryByRole('button')!);
+      expect(inputEl).toHaveValue('');
+      expect(inputEl).toHaveFocus();
     });
 
     describe('Mouse interaction', () => {
@@ -180,22 +181,33 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveFocus();
       });
 
-      test('Results menu opens on click', () => {
-        const { getMenuElements, containerEl } = renderSearchInput({
+      test('Clicking the input opens the menu', () => {
+        const { getMenuElements, inputEl } = renderSearchInput({
           ...defaultProps,
         });
 
-        userEvent.click(containerEl);
+        userEvent.click(inputEl);
         const { menuContainerEl } = getMenuElements();
+        expect(menuContainerEl).not.toBeNull();
+        expect(menuContainerEl).toBeInTheDocument();
+      });
+
+      test('Clicking elsewhere on the searchBox opens the menu', () => {
+        const { getMenuElements, searchBoxEl } = renderSearchInput({
+          ...defaultProps,
+        });
+
+        userEvent.click(searchBoxEl);
+        const { menuContainerEl } = getMenuElements();
+        expect(menuContainerEl).not.toBeNull();
         expect(menuContainerEl).toBeInTheDocument();
       });
 
       test('Menu closes on click-away', async () => {
-        const { getMenuElements, containerEl, inputEl } = renderSearchInput({
+        const { openMenu, containerEl, inputEl } = renderSearchInput({
           ...defaultProps,
         });
-        userEvent.click(containerEl);
-        const { menuContainerEl } = getMenuElements();
+        const { menuContainerEl } = openMenu();
         userEvent.click(containerEl.parentElement!);
         await waitForElementToBeRemoved(menuContainerEl);
         expect(menuContainerEl).not.toBeInTheDocument();
@@ -203,24 +215,24 @@ describe('packages/search-input', () => {
       });
 
       test('Text remains when the menu closes', async () => {
-        const { getMenuElements, containerEl, inputEl } = renderSearchInput({
+        const { openMenu, containerEl, inputEl } = renderSearchInput({
           ...defaultProps,
         });
 
-        const { menuContainerEl } = getMenuElements();
         userEvent.type(inputEl, 'abc');
-        expect(menuContainerEl).toBeInTheDocument();
+        const { menuContainerEl } = openMenu();
         userEvent.click(containerEl.parentElement!);
         await waitForElementToBeRemoved(menuContainerEl);
         expect(inputEl).toHaveValue('abc');
       });
 
       test('Clicking a result fires its onClick handler', () => {
-        const { getMenuElements, openMenu } = renderSearchInput({
+        const { getMenuElements, inputEl } = renderSearchInput({
           ...defaultProps,
         });
-        openMenu();
+        userEvent.click(inputEl);
         const { resultsElements } = getMenuElements();
+
         userEvent.click(resultsElements![0]);
         expect(onClickHandler).toHaveBeenCalled();
       });
@@ -245,14 +257,30 @@ describe('packages/search-input', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
-        test.todo('Focuses clear button');
+        test('Focuses clear button', () => {
+          const { inputEl, queryByRole } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.type(inputEl, 'abc');
+          userEvent.tab();
+          expect(queryByRole('button')).toHaveFocus();
+        });
 
-        test('Moves focus off input if no input & closes menu', async () => {
-          const { getMenuElements, inputEl } = renderSearchInput({
+        test('Moves focus off input if there is no input value', () => {
+          const { inputEl } = renderSearchInput({
             ...defaultProps,
           });
           userEvent.tab();
           expect(inputEl).toHaveFocus();
+          userEvent.tab();
+          expect(inputEl).not.toHaveFocus();
+        });
+
+        test('Closes menu when tabbing away', async () => {
+          const { getMenuElements, inputEl } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.tab();
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
           userEvent.tab();
@@ -264,11 +292,11 @@ describe('packages/search-input', () => {
 
       describe('Escape key', () => {
         test('Closes the menu', async () => {
-          const { containerEl, openMenu } = renderSearchInput({
+          const { inputEl, openMenu } = renderSearchInput({
             ...defaultProps,
           });
           const { menuContainerEl } = openMenu();
-          userEvent.type(containerEl, '{esc}');
+          userEvent.type(inputEl, '{esc}');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
@@ -291,33 +319,33 @@ describe('packages/search-input', () => {
       });
 
       describe('Arrow keys', () => {
-        test('Down arrow moves highlight down', async () => {
-          const { openMenu, inputEl, findByRole } = renderSearchInput({
+        test('Down arrow moves highlight down', () => {
+          const { openMenu, inputEl, getByRole } = renderSearchInput({
             ...defaultProps,
           });
           openMenu();
           userEvent.type(inputEl, '{arrowdown}');
-          const highlight = await findByRole('option', {
+          const highlight = getByRole('option', {
             selected: true,
           });
           expect(highlight).toBeInTheDocument();
           expect(highlight).toHaveTextContent('Banana');
         });
 
-        test('Up arrow moves highlight up', async () => {
-          const { openMenu, inputEl, findByRole } = renderSearchInput({
+        test('Up arrow moves highlight up', () => {
+          const { openMenu, inputEl, getByRole } = renderSearchInput({
             ...defaultProps,
           });
           openMenu();
           userEvent.type(inputEl, '{arrowdown}{arrowdown}{arrowup}');
-          const highlight = await findByRole('option', {
+          const highlight = getByRole('option', {
             selected: true,
           });
           expect(highlight).toBeInTheDocument();
           expect(highlight).toHaveTextContent('Banana');
         });
 
-        test('Down arrow key opens menu when its closed', async () => {
+        test('Down arrow key opens menu when its closed', () => {
           const { inputEl, getMenuElements } = renderSearchInput({
             ...defaultProps,
           });

@@ -8,7 +8,7 @@ export function getSearchInputJSX(props?: Partial<SearchInputProps>) {
   return (
     <SearchInput
       data-testid="search-input"
-      aria-label="test-search-input"
+      aria-label="Test search input"
       {...props}
     />
   );
@@ -22,8 +22,8 @@ export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
   }
 
   const containerEl = renderResult.getByTestId('search-input');
+  const searchBoxEl = renderResult.getAllByRole('searchbox')[0];
   const inputEl = containerEl.getElementsByTagName('input')[0];
-  const clearButton = renderResult.queryByRole('button');
 
   /**
    * Opens the menu by simulating a click on the combobox.
@@ -34,9 +34,12 @@ export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
     return getMenuElements();
   };
 
+  /**
+   * Returns the menu element and its contents
+   */
   function getMenuElements() {
     const menuContainerEl = renderResult.queryByRole('listbox');
-    const resultsElements = menuContainerEl?.getElementsByTagName('li');
+    const resultsElements = renderResult.queryAllByRole('option');
 
     return {
       menuContainerEl,
@@ -48,8 +51,8 @@ export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
     ...renderResult,
     rerenderWithProps,
     containerEl,
+    searchBoxEl,
     inputEl,
-    clearButton,
     openMenu,
     getMenuElements,
   };

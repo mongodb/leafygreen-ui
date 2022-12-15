@@ -138,6 +138,12 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
+    const isElementInComponent = (el: Element | null) => {
+      return (
+        searchBoxRef.current?.contains(el) || menuRef.current?.contains(el)
+      );
+    };
+
     /** Event Handlers */
 
     const handleOpenMenuAction: EventHandler<SyntheticEvent<any>> = e => {
@@ -177,11 +183,13 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         switch (e.keyCode) {
           case keyMap.Enter: {
             const highlightedElementRef = resultRefs(`${highlightIndex}`);
-            // const highlightedElement = validatedChildren?.[highlightIndex];
             highlightedElementRef?.current?.click();
+            break;
+          }
 
-            // highlightedElement?
-
+          case keyMap.Escape: {
+            closeMenu();
+            inputRef.current?.focus();
             break;
           }
 
@@ -198,6 +206,15 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
+    const handleBlur: FocusEventHandler = e => {
+      if (
+        !isElementInComponent(e.target) ||
+        !isElementInComponent(document.activeElement)
+      ) {
+        closeMenu();
+      }
+    };
+
     useBackdropClick(closeMenu, [searchBoxRef, menuRef], isOpen);
 
     return (
@@ -207,6 +224,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             role="search"
             className={className}
             onSubmit={e => e.preventDefault()}
+            onBlur={handleBlur}
             {...rest}
           >
             {/* Disable eslint: onClick sets focus. Key events would already have focus */}
@@ -229,6 +247,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   [inputWrapperInteractiveStyles[theme]]: !disabled,
                 },
               )}
+              aria-label={rest['aria-label']}
+              aria-labelledby={rest['aria-labelledby']}
             >
               <MagnifyingGlass
                 className={cx(

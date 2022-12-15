@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -38,11 +39,17 @@ export const WithResults: ComponentStory<typeof SearchInput> = props => (
     className={css`
       width: 200px;
     `}
+    onChange={() => {
+      console.log('Change');
+    }}
+    onClear={() => {
+      console.log('Clear');
+    }}
     {...props}
   >
     <SearchResult
       onClick={() => {
-        console.log('Click');
+        console.log('Click Apple');
       }}
       description="This is a description"
     >

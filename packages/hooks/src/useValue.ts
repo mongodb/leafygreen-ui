@@ -10,31 +10,29 @@ export const useValue = <T extends string>(
   const isControlled = !isUndefined(controlledValue)
 
   // Keep track of state internally, initializing it to the controlled value
-  const [value, setInternalValue] = useState<T | undefined>(
-    controlledValue,
+  const [value, setInternalValue] = useState<T>(
+    controlledValue ?? '' as T,
   );
 
   // If the controlled value changes, update the internal state variable
   useEffect(() => {
-    setInternalValue(controlledValue);
+    if (!isUndefined(controlledValue)) {
+      setInternalValue(controlledValue);
+    }
   }, [controlledValue]);
 
   // Create a change event handler that either updates the internal state
   // or fires an external change handler
   const onChange: ChangeEventHandler<any> = e => {
-    if (isControlled) {
-      // we fire an external change handler,
-      // expecting that `controlledValue` will be updated
-      onChangeArg?.(e);
-    } else {
+    onChangeArg?.(e);
+    if (!isControlled) {
       setInternalValue(e.target.value as T);
     }
   };
 
   const onClear: EventHandler<SyntheticEvent<any>> = e => {
-    if (isControlled) {
-      onClearArg?.(e);
-    } else {
+    onClearArg?.(e);
+    if (!isControlled) {
       setInternalValue("" as T);
     }
   }

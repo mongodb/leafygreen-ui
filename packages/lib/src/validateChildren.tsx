@@ -7,11 +7,11 @@ export const validateChildren = (
   validTypes: Array<string>,
 ) => {
   return React.Children.map(children, child => {
-    return validTypes.some(type => isComponentType(child, type))
-      ? (child as React.ReactElement<
-          any,
-          string | React.JSXElementConstructor<any>
-        >)
-      : undefined;
+    if (validTypes.some(type => isComponentType(child, type))) {
+      return child as React.ReactElement<
+        any,
+        string | React.JSXElementConstructor<any>
+      >;
+    }
   })?.filter(child => !isUndefined(child));
 };
