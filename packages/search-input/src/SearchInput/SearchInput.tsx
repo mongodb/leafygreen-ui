@@ -12,9 +12,9 @@ import isUndefined from 'lodash/isUndefined';
 import { cx } from '@leafygreen-ui/emotion';
 import {
   useBackdropClick,
+  useControlledValue,
   useDynamicRefs,
   useForwardedRef,
-  useValue,
 } from '@leafygreen-ui/hooks';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
 import XIcon from '@leafygreen-ui/icon/dist/X';
@@ -87,7 +87,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const resultRefs = useDynamicRefs<HTMLElement>({ prefix: 'result' });
     const withTypeAhead = !isUndefined(children);
 
-    const { value, onChange, onClear } = useValue(
+    const { value, onChange, onClear } = useControlledValue(
       valueProp,
       onChangeProp,
       onClearProp,
