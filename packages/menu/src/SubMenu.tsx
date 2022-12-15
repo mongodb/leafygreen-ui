@@ -46,7 +46,6 @@ import { Size } from './types';
 
 const subMenuContainerClassName = createUniqueClassName('sub-menu-container');
 const iconButtonClassName = createUniqueClassName('icon-button');
-const chevronClassName = createUniqueClassName('icon-button-chevron');
 
 const iconButtonContainerSize = 28;
 
@@ -88,6 +87,19 @@ const subMenuOpenStyle: Record<Theme, string> = {
   `,
 };
 
+const focusedIconStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    .${subMenuContainerClassName}:focus + .${iconButtonClassName} & {
+      color: ${palette.white};
+    }
+  `,
+  [Theme.Dark]: css`
+    .${subMenuContainerClassName}&:focus + .${iconButtonClassName} & {
+      color: ${palette.black};
+    }
+  `,
+};
+
 const closedIconStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     transition: color 200ms ease-in-out;
@@ -125,12 +137,6 @@ const iconButtonThemeStyle: Record<Theme, string> = {
     &:hover {
       background-color: ${palette.gray.dark2};
     }
-
-    .${subMenuContainerClassName} {
-      &:hover + & {
-        background-color: ${palette.gray.dark3};
-      }
-    }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.light2};
@@ -138,29 +144,6 @@ const iconButtonThemeStyle: Record<Theme, string> = {
     &:hover {
       &:before {
         background-color: ${palette.gray.light3};
-      }
-    }
-
-    .${subMenuContainerClassName} {
-      &:hover + & {
-        background-color: ${palette.gray.light2};
-      }
-    }
-  `,
-};
-
-const iconButtonFocusedThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &:focus {
-      .${chevronClassName} {
-        color: ${palette.white};
-      }
-    }
-  `,
-  [Theme.Dark]: css`
-    &:focus {
-      .${chevronClassName} {
-        color: ${palette.black};
       }
     }
   `,
@@ -410,6 +393,7 @@ const SubMenu = React.forwardRef(
     const chevronIconStyles = cx({
       [openIconStyle[theme]]: open,
       [closedIconStyle[theme]]: !open,
+      [focusedIconStyle[theme]]: showFocus,
     });
 
     const handleChevronClick = (e: React.MouseEvent) => {
@@ -526,14 +510,13 @@ const SubMenu = React.forwardRef(
               iconButtonThemeStyle[theme],
               {
                 [openIconButtonStyle[theme]]: open,
-                [iconButtonFocusedThemeStyle[theme]]: showFocus,
               },
             )}
             onClick={handleChevronClick}
           >
             <ChevronIcon
               role="presentation"
-              className={cx(chevronClassName, chevronIconStyles)}
+              className={chevronIconStyles}
               size={14}
             />
           </IconButton>
