@@ -11,7 +11,13 @@ import {
   Link,
 } from '@leafygreen-ui/typography';
 
-const H6 = ({ children, ...rest }) => (
+const H4 = ({ children, ...rest }) => (
+  <Subtitle as="h4" {...rest}>
+    <strong>{children}</strong>
+  </Subtitle>
+);
+
+const H5 = ({ children, ...rest }) => (
   <Body {...rest}>
     <strong>{children}</strong>
   </Body>
@@ -36,7 +42,13 @@ export const parameters = {
   options: {
     storySort: {
       method: '',
-      order: ['Overview', 'Sample Pages', 'Packages'],
+      order: [
+        'Overview',
+        'Developer Guide',
+        'Sample Pages (WIP)',
+        'Contexts',
+        'Packages',
+      ],
       locales: '',
     },
   },
@@ -45,9 +57,8 @@ export const parameters = {
       h1: H1,
       h2: H2,
       h3: H3,
-      h4: Subtitle,
-      h5: Subtitle,
-      h6: H6,
+      h4: H4,
+      h5: H5,
       p: Body,
       a: Link,
       code: InlineCode,
