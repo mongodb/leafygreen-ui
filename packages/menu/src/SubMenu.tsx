@@ -44,9 +44,9 @@ import {
 } from './styles';
 import { Size } from './types';
 
-const SubMenuContainerClassName = createUniqueClassName('sub-menu-container');
-const IconButtonClassName = createUniqueClassName('icon-button');
-const ChevronClassName = createUniqueClassName('icon-button-chevron');
+const subMenuContainerClassName = createUniqueClassName('sub-menu-container');
+const iconButtonClassName = createUniqueClassName('icon-button');
+const chevronClassName = createUniqueClassName('icon-button-chevron');
 
 const iconButtonContainerSize = 28;
 
@@ -126,7 +126,7 @@ const iconButtonThemeStyle: Record<Theme, string> = {
       background-color: ${palette.gray.dark2};
     }
 
-    .${SubMenuContainerClassName} {
+    .${subMenuContainerClassName} {
       &:hover + & {
         background-color: ${palette.gray.dark3};
       }
@@ -141,7 +141,7 @@ const iconButtonThemeStyle: Record<Theme, string> = {
       }
     }
 
-    .${SubMenuContainerClassName} {
+    .${subMenuContainerClassName} {
       &:hover + & {
         background-color: ${palette.gray.light2};
       }
@@ -152,14 +152,14 @@ const iconButtonThemeStyle: Record<Theme, string> = {
 const iconButtonFocusedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &:focus {
-      .${ChevronClassName} {
+      .${chevronClassName} {
         color: ${palette.white};
       }
     }
   `,
   [Theme.Dark]: css`
     &:focus {
-      .${ChevronClassName} {
+      .${chevronClassName} {
         color: ${palette.black};
       }
     }
@@ -382,8 +382,8 @@ const SubMenu = React.forwardRef(
   ) => {
     const { theme, darkMode } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(SubMenuContainerClassName, theme);
-    const focusStyles = getFocusedStyles(SubMenuContainerClassName, theme);
+    const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);
+    const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
 
     const nodeRef = React.useRef(null);
 
@@ -499,7 +499,7 @@ const SubMenu = React.forwardRef(
           {...anchorProps}
           {...rest}
           className={cx(
-            SubMenuContainerClassName,
+            subMenuContainerClassName,
             menuItemContainerStyle,
             menuItemContainerThemeStyle[theme],
             menuItemHeight(size),
@@ -521,7 +521,7 @@ const SubMenu = React.forwardRef(
             ref={setIconButtonElement}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
             className={cx(
-              IconButtonClassName,
+              iconButtonClassName,
               iconButtonStyle,
               iconButtonThemeStyle[theme],
               {
@@ -533,7 +533,7 @@ const SubMenu = React.forwardRef(
           >
             <ChevronIcon
               role="presentation"
-              className={cx(ChevronClassName, chevronIconStyles)}
+              className={cx(chevronClassName, chevronIconStyles)}
               size={14}
             />
           </IconButton>
