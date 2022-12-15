@@ -328,7 +328,9 @@ export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
   return {
     textStyle: css`
       .${containerClassName}:focus & {
-        color: ${theme === Theme.Light ? palette.white : palette.blue.dark1};
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.dark1};
       }
     `,
     descriptionStyle: css`
