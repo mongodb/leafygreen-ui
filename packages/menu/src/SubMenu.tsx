@@ -46,6 +46,7 @@ import { Size } from './types';
 
 const subMenuContainerClassName = createUniqueClassName('sub-menu-container');
 const iconButtonClassName = createUniqueClassName('icon-button');
+const chevronClassName = createUniqueClassName('icon-button-chevron');
 
 const iconButtonContainerSize = 28;
 
@@ -83,19 +84,6 @@ const subMenuOpenStyle: Record<Theme, string> = {
 
     &:hover {
       background-color: ${palette.gray.light1};
-    }
-  `,
-};
-
-const focusedIconStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    .${subMenuContainerClassName}:focus + .${iconButtonClassName} & {
-      color: ${palette.white};
-    }
-  `,
-  [Theme.Dark]: css`
-    .${subMenuContainerClassName}&:focus + .${iconButtonClassName} & {
-      color: ${palette.black};
     }
   `,
 };
@@ -144,6 +132,23 @@ const iconButtonThemeStyle: Record<Theme, string> = {
     &:hover {
       &:before {
         background-color: ${palette.gray.light3};
+      }
+    }
+  `,
+};
+
+const iconButtonFocusedThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:focus {
+      .${chevronClassName} {
+        color: ${palette.white};
+      }
+    }
+  `,
+  [Theme.Dark]: css`
+    &:focus {
+      .${chevronClassName} {
+        color: ${palette.black};
       }
     }
   `,
@@ -393,7 +398,6 @@ const SubMenu = React.forwardRef(
     const chevronIconStyles = cx({
       [openIconStyle[theme]]: open,
       [closedIconStyle[theme]]: !open,
-      [focusedIconStyle[theme]]: showFocus,
     });
 
     const handleChevronClick = (e: React.MouseEvent) => {
@@ -510,13 +514,14 @@ const SubMenu = React.forwardRef(
               iconButtonThemeStyle[theme],
               {
                 [openIconButtonStyle[theme]]: open,
+                [iconButtonFocusedThemeStyle[theme]]: showFocus,
               },
             )}
             onClick={handleChevronClick}
           >
             <ChevronIcon
               role="presentation"
-              className={chevronIconStyles}
+              className={cx(chevronClassName, chevronIconStyles)}
               size={14}
             />
           </IconButton>
