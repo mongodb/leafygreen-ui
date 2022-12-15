@@ -22,7 +22,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType, keyMap, validateChildren } from '@leafygreen-ui/lib';
+import { keyMap, validateChildren } from '@leafygreen-ui/lib';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultsMenu } from '../SearchResultsMenu';

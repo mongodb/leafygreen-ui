@@ -1,18 +1,21 @@
-import { ChangeEventHandler, EventHandler, SyntheticEvent, useEffect, useState } from 'react';
+import {
+  ChangeEventHandler,
+  EventHandler,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from 'react';
 import isUndefined from 'lodash/isUndefined';
 
 export const useValue = <T extends string>(
   controlledValue?: T,
   onChangeArg?: ChangeEventHandler<any>,
-  onClearArg?: EventHandler<SyntheticEvent<any>>
+  onClearArg?: EventHandler<SyntheticEvent<any>>,
 ) => {
-
-  const isControlled = !isUndefined(controlledValue)
+  const isControlled = !isUndefined(controlledValue);
 
   // Keep track of state internally, initializing it to the controlled value
-  const [value, setInternalValue] = useState<T>(
-    controlledValue ?? '' as T,
-  );
+  const [value, setInternalValue] = useState<T>(controlledValue ?? ('' as T));
 
   // If the controlled value changes, update the internal state variable
   useEffect(() => {
@@ -33,9 +36,9 @@ export const useValue = <T extends string>(
   const onClear: EventHandler<SyntheticEvent<any>> = e => {
     onClearArg?.(e);
     if (!isControlled) {
-      setInternalValue("" as T);
+      setInternalValue('' as T);
     }
-  }
+  };
 
   return {
     isControlled,

@@ -4,7 +4,7 @@ import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
-export {validateChildren} from './validateChildren'
+export { validateChildren } from './validateChildren';
 
 export { storybookArgTypes } from './storybook/storybookArgTypes';
 export { storybookExcludedControlParams } from './storybook/storybookExcludedControlParams';

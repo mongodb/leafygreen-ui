@@ -1,4 +1,8 @@
-import { ChangeEventHandler, ComponentPropsWithoutRef, MouseEventHandler } from 'react';
+import {
+  ChangeEventHandler,
+  ComponentPropsWithoutRef,
+  MouseEventHandler,
+} from 'react';
 
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 
