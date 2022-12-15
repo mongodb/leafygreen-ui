@@ -6,7 +6,15 @@ import {
 } from './Polymorphic.types';
 
 /**
- * Factory function that returns a polymorphic component
+ * Factory function that returns a polymorphic component.
+ * 
+ * If you want to expose `as` as a prop of your component,
+ * use this `Polymorphic` factory function and related hooks.
+ * 
+ * However, if the logic defining the `as` prop is defined internally within your component,
+ * use the standalone `Polymorph` component.
+ *
+ * For more, see {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/polymorphic/README.md | README.md} 
  */
 export const Polymorphic = <XP extends object = {}>(
   render: PolymorphicRenderFunction<XP>,
