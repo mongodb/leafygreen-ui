@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon
 
+## 11.12.3
+
+### Patch Changes
+
+- 95bd93ef9: Adds Drag, Read, Resize, and Write icons
+- 3bb4b7506: Removing clipPath from Edit icon
+
 ## 11.12.2
 
 ### Patch Changes
