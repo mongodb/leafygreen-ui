@@ -122,7 +122,6 @@ const MenuItem = React.forwardRef(
       React.cloneElement(glyph, {
         role: 'presentation',
         className: cx(
-          MenuItemContainerClassName,
           mainIconStyle,
           {
             [activeIconStyle[theme]]: active,
@@ -192,6 +191,7 @@ const MenuItem = React.forwardRef(
           {...anchorProps}
           {...rest}
           className={cx(
+            MenuItemContainerClassName,
             menuItemContainerStyle,
             menuItemContainerThemeStyle[theme],
             menuItemHeight(size),

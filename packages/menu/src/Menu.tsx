@@ -86,7 +86,7 @@ function Menu({
   darkMode: darkModeProp,
   ...rest
 }: MenuProps) {
-  const { theme } = useDarkMode(darkModeProp);
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
@@ -343,8 +343,8 @@ function Menu({
   };
 
   const providerData = useMemo(() => {
-    return { theme };
-  }, [theme]);
+    return { theme, darkMode };
+  }, [theme, darkMode]);
 
   const popoverContent = (
     <MenuContext.Provider value={providerData}>
