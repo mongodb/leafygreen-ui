@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -8,15 +7,19 @@ import { baseTypographyStyles, defaultTextColor } from '../styles';
 
 import { overlineStyles } from './Overline.styles';
 import { OverlineProps } from './Overline.types';
+import { Polymorphic, PolymorphicAs, usePolymorphic } from '@leafygreen-ui/polymorphic';
 
-export const Overline: ExtendableBox<OverlineProps, 'div'> = ({
+export const Overline = Polymorphic<OverlineProps>(({
   darkMode: darkModeProp,
   className,
+  as = 'div' as PolymorphicAs,
   ...rest
-}: OverlineProps) => {
+}) => {
   const { theme } = useDarkMode(darkModeProp);
+  const { Component } = usePolymorphic(as)
+
   return (
-    <Box
+    <Component
       className={cx(
         baseTypographyStyles,
         overlineStyles,
@@ -26,7 +29,7 @@ export const Overline: ExtendableBox<OverlineProps, 'div'> = ({
       {...rest}
     />
   );
-};
+});
 
 Overline.displayName = 'Overline';
 

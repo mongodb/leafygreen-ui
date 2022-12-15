@@ -1,13 +1,18 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { BoxProps } from '@leafygreen-ui/box/src';
+import { PolymorphicProps, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 import { Link } from '..';
 
 import { LinkProps } from './Link.types';
 
-const renderLink = (props: BoxProps<'a', LinkProps>) => {
+type TypedLinkProps<T extends PolymorphicAs> = PolymorphicProps<
+  T,
+  LinkProps
+>;
+
+const renderLink = (props: TypedLinkProps<T>) => {
   render(<Link {...(props as Parameters<typeof Link>)}>Link</Link>);
 };
 

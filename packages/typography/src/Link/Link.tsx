@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Polymorphic, PolymorphicAs, usePolymorphic } from '@leafygreen-ui/polymorphic'
 
 import { bodyTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
@@ -21,7 +21,8 @@ import {
 } from './Link.styles';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
-const Link: ExtendableBox<LinkProps, 'a'> = ({
+
+const Link = Polymorphic<LinkProps>(({
   href,
   children,
   className,
@@ -30,14 +31,16 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   baseFontSize: baseFontSizeOverride,
   target: targetProp,
   darkMode: darkModeProp,
+  as = 'a' as PolymorphicAs,
   ...rest
-}: LinkProps) => {
+}) => {
   const [currentHostname, setCurrentHostname] = useState('');
   useEffect(() => {
     setCurrentHostname(window.location.hostname);
   }, []);
 
   const { theme } = useDarkMode(darkModeProp);
+  const { Component } = usePolymorphic(as)
 
   const hrefHostname = useMemo(() => {
     if (!href) return;
@@ -82,7 +85,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     : ({ as: 'span' } as const);
 
   return (
-    <Box
+    <Component
       className={cx(
         anchorClassName,
         bodyTypeScaleStyles[baseFontSize],
@@ -97,8 +100,8 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
         {children}
       </span>
       {icon}
-    </Box>
+    </Component>
   );
-};
+});
 
 export default Link;

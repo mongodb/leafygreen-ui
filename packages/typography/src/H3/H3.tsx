@@ -1,23 +1,25 @@
 import React from 'react';
 
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Polymorphic, PolymorphicAs, usePolymorphic } from '@leafygreen-ui/polymorphic';
 
 import { baseTypographyStyles, defaultTextColor } from '../styles';
 
 import { h3Styles } from './H3.styles';
 import { H3Props } from './H3.types';
 
-const H3: ExtendableBox<H3Props, 'h3'> = ({
+const H3 = Polymorphic<H3Props>(({
   darkMode: darkModeProp,
   className,
+  as = 'h3' as PolymorphicAs,
   ...rest
-}: H3Props) => {
+}) => {
   const { theme } = useDarkMode(darkModeProp);
+  const {Component} = usePolymorphic(as)
+  
   return (
-    <Box
-      as="h3"
+    <Component
       className={cx(
         baseTypographyStyles,
         h3Styles,
@@ -27,8 +29,10 @@ const H3: ExtendableBox<H3Props, 'h3'> = ({
       {...rest}
     />
   );
-};
+});
 
 H3.displayName = 'H3';
 
 export default H3;
+
+

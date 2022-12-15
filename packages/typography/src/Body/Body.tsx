@@ -1,13 +1,13 @@
 import React from 'react';
 
-import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Polymorphic, PolymorphicAs, usePolymorphic } from '@leafygreen-ui/polymorphic';
 
 import {
   baseTypographyStyles,
   bodyTypeScaleStyles,
-  defaultTextColor,
+  defaultTextColor
 } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
@@ -27,16 +27,17 @@ const fontWeights: Record<
   },
 } as const;
 
-export function Body<T extends keyof JSX.IntrinsicElements>({
+const Body = Polymorphic<BodyProps>(({
   baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   className,
   weight = 'regular',
-  as = 'p' as T,
+  as = 'p' as PolymorphicAs,
   ...rest
-}: BodyProps<T>) {
+}) => {
   const { theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+  const {Component} = usePolymorphic(as)
 
   // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
   const fontWeight = css`
@@ -48,8 +49,7 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
   `;
 
   return (
-    <Box
-      as={as}
+    <Component
       className={cx(
         baseTypographyStyles,
         bodyTypeScaleStyles[baseFontSize],
@@ -60,7 +60,7 @@ export function Body<T extends keyof JSX.IntrinsicElements>({
       {...rest}
     />
   );
-}
+})
 
 Body.displayName = 'Body';
 
