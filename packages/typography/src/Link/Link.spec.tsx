@@ -9,8 +9,8 @@ import { LinkProps } from './Link.types';
 
 type TypedLinkProps<T extends PolymorphicAs> = PolymorphicProps<T, LinkProps>;
 
-const renderLink = (props: TypedLinkProps<T>) => {
-  render(<Link {...(props as Parameters<typeof Link>)}>Link</Link>);
+const renderLink = <T extends PolymorphicAs>(props: TypedLinkProps<T>) => {
+  render(<Link {...props}>Link</Link>);
 };
 
 describe('packages/typography', () => {
