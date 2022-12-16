@@ -1,5 +1,9 @@
 import React from 'react';
-import { waitForElementToBeRemoved } from '@testing-library/dom';
+import {
+  createEvent,
+  fireEvent,
+  waitForElementToBeRemoved,
+} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -8,7 +12,7 @@ import * as _LGTL from '@leafygreen-ui/testing-lib';
 import { renderSearchInput } from '../utils/SearchInput.testutils';
 import { SearchInput, SearchResult, SizeVariant } from '..';
 
-const onClickHandler = jest.fn();
+const resultClickHandler = jest.fn();
 
 const defaultProps = {
   className: 'test-text-input-class',
@@ -16,16 +20,16 @@ const defaultProps = {
   onChange: jest.fn(),
   onBlur: jest.fn(),
   children: [
-    <SearchResult key="a" onClick={onClickHandler}>
+    <SearchResult key="a" onClick={resultClickHandler}>
       Apple
     </SearchResult>,
-    <SearchResult key="b" onClick={onClickHandler}>
+    <SearchResult key="b" onClick={resultClickHandler}>
       Banana
     </SearchResult>,
-    <SearchResult key="c" onClick={onClickHandler}>
+    <SearchResult key="c" onClick={resultClickHandler}>
       Carrot
     </SearchResult>,
-    <SearchResult key="d" onClick={onClickHandler}>
+    <SearchResult key="d" onClick={resultClickHandler}>
       Dragonfruit
     </SearchResult>,
   ],
@@ -234,7 +238,7 @@ describe('packages/search-input', () => {
         const { resultsElements } = getMenuElements();
 
         userEvent.click(resultsElements![0]);
-        expect(onClickHandler).toHaveBeenCalled();
+        expect(resultClickHandler).toHaveBeenCalled();
       });
     });
 
@@ -276,7 +280,7 @@ describe('packages/search-input', () => {
           expect(inputEl).not.toHaveFocus();
         });
 
-        test('Closes menu when tabbing away', async () => {
+        test.skip('Closes menu when tabbing away', async () => {
           const { getMenuElements, inputEl } = renderSearchInput({
             ...defaultProps,
           });
@@ -355,13 +359,50 @@ describe('packages/search-input', () => {
         });
       });
 
-      test('Enter key selects the highlighted result', () => {
-        const { inputEl, openMenu } = renderSearchInput({
-          ...defaultProps,
+      describe('Enter key', () => {
+        test('submit event prevents default with typeahead', () => {
+          const { containerEl } = renderSearchInput({
+            ...defaultProps,
+          });
+          const submitEvent = createEvent.submit(containerEl);
+          fireEvent(containerEl, submitEvent);
+          expect(submitEvent.defaultPrevented).toBeTruthy();
         });
-        openMenu();
-        userEvent.type(inputEl, '{arrowdown}{enter}');
-        expect(onClickHandler).toHaveBeenCalled();
+
+        test('submit event does not prevent default without typeahead', () => {
+          const { containerEl } = renderSearchInput({
+            ...defaultProps,
+            children: undefined,
+          });
+          const submitEvent = createEvent.submit(containerEl);
+          fireEvent(containerEl, submitEvent);
+          expect(submitEvent.defaultPrevented).toBeFalsy();
+        });
+
+        test('fires onSubmit without typeahead', () => {
+          const submitHandler = jest.fn();
+          const { inputEl } = renderSearchInput({
+            ...defaultProps,
+            children: undefined,
+            onSubmit: submitHandler,
+          });
+          userEvent.type(inputEl, 'abc{enter}');
+
+          expect(submitHandler).toHaveBeenCalled();
+        });
+
+        test('selects the highlighted result with typeahead', () => {
+          const submitHandler = jest.fn();
+
+          const { inputEl, openMenu } = renderSearchInput({
+            ...defaultProps,
+            onSubmit: submitHandler,
+          });
+          openMenu();
+          userEvent.type(inputEl, '{arrowdown}{enter}');
+          expect(resultClickHandler).toHaveBeenCalled();
+          expect(submitHandler).not.toHaveBeenCalled();
+        });
       });
     });
 

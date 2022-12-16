@@ -46,10 +46,10 @@ const InputOption = Polymorphic<InputOptionProps>(
           inputOptionStyles,
           inputOptionThemeStyles[theme],
           {
+            [inputOptionWedge]: showWedge,
             [inputOptionHoverStyles[theme]]: isInteractive,
             [inputOptionActiveStyles[theme]]:
               isInteractive && (active || focused),
-            [inputOptionWedge]: showWedge,
             [inputOptionDisabledStyles[theme]]: disabled,
           },
           className,

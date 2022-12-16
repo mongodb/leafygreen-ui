@@ -1,6 +1,7 @@
 import {
   ChangeEventHandler,
   ComponentPropsWithoutRef,
+  FormEventHandler,
   MouseEventHandler,
 } from 'react';
 
@@ -59,6 +60,14 @@ interface BaseSearchInputProps
    * Callback fired when the clear button is clicked
    */
   onClear?: MouseEventHandler<HTMLButtonElement>;
+
+  /**
+   * Callback fired when the enter key is pressed.
+   *
+   * Ignored when there search results available
+   * (in this case the enter key fires the `onClick` handler on the search result)
+   */
+  onSubmit?: FormEventHandler<HTMLFormElement>
 }
 
 export type SearchInputProps = BaseSearchInputProps & AriaLabelProps;

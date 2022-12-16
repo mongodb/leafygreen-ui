@@ -1,6 +1,7 @@
 import React, {
   EventHandler,
   FocusEventHandler,
+  FormEventHandler,
   KeyboardEventHandler,
   MouseEventHandler,
   SyntheticEvent,
@@ -70,6 +71,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       value: valueProp,
       onChange: onChangeProp,
       onClear: onClearProp,
+      onSubmit: onSubmitProp,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -217,6 +219,14 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
+    const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
+      if (withTypeAhead) {
+        e.preventDefault();
+      } else {
+        onSubmitProp?.(e);
+      }
+    };
+
     useBackdropClick(closeMenu, [searchBoxRef, menuRef], isOpen);
 
     return (
@@ -225,7 +235,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           <form
             role="search"
             className={className}
-            onSubmit={e => e.preventDefault()}
+            onSubmit={handleSubmit}
             onBlur={handleBlur}
             {...rest}
           >

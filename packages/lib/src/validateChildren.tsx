@@ -12,8 +12,15 @@ export const validateChildren = (
     }
   })?.filter(child => !isUndefined(child));
 
-  if (validChildren?.length !== React.Children.count(children)) {
-    consoleOnce.warn(`Children must be one of: ${validTypes.join(', ')}`);
+  if (
+    !isUndefined(children) &&
+    validChildren?.length !== React.Children.count(children)
+  ) {
+    consoleOnce.error(
+      `Children must be one of: ${validTypes.join(', ')}`,
+      `Received children: `,
+      children,
+    );
   }
 
   return validChildren;
