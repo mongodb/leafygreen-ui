@@ -13,8 +13,8 @@ export const usePolymorphicRef = <E extends PolymorphicAs>(_?: E) => {
 
   return React.useRef<
     | (E extends keyof HTMLElementTagNameMap
-      ? HTMLElementTagNameMap[E]
-      : unknown)
+        ? HTMLElementTagNameMap[E]
+        : unknown)
     | null
   >(null);
 };

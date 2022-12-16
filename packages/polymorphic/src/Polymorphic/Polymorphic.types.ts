@@ -109,6 +109,6 @@ export interface PolymorphicComponentType<XP = {}> {
   displayName?: string;
   propTypes?: WeakValidationMap<
     PropsWithoutRef<PolymorphicPropsWithRef<PolymorphicAs, XP>> &
-    RefAttributes<any>
+      RefAttributes<any>
   >;
 }

@@ -2,7 +2,11 @@ import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
-import { Polymorph, PolymorphicAs, PolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic'
+import {
+  Polymorph,
+  PolymorphicAs,
+  PolymorphicPropsWithRef,
+} from '@leafygreen-ui/polymorphic';
 
 interface LocalProps {
   /**
@@ -20,8 +24,6 @@ type StaticWidthTextProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
   T,
   LocalProps
 >;
-
-
 
 const staticWidthTextStyle = ({
   pseudoElement,
@@ -101,7 +103,7 @@ export function StaticWidthText<T extends PolymorphicAs = 'span'>({
         staticWidthTextStyle({ pseudoElement, maxFontWeight }),
         className,
       )}
-      as={as ?? 'span' as PolymorphicAs}
+      as={as ?? ('span' as PolymorphicAs)}
       data-text={textContent}
       {...rest}
     >
