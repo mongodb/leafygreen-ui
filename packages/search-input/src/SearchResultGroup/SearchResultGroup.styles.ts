@@ -4,9 +4,9 @@ import { palette } from '@leafygreen-ui/palette';
 
 export const searchResultLabelStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-  color: ${palette.gray.dark1};
+    color: ${palette.gray.dark1};
   `,
   [Theme.Dark]: css`
-  color: ${palette.gray.base};
-  `
-}
+    color: ${palette.gray.base};
+  `,
+};

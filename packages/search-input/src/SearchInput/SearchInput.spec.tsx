@@ -280,6 +280,7 @@ describe('packages/search-input', () => {
           expect(inputEl).not.toHaveFocus();
         });
 
+        // eslint-disable-next-line jest/no-disabled-tests
         test.skip('Closes menu when tabbing away', async () => {
           const { getMenuElements, inputEl } = renderSearchInput({
             ...defaultProps,

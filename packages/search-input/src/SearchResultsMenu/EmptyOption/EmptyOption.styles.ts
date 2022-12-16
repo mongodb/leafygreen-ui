@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import {palette} from '@leafygreen-ui/palette'
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 export const emptyOptionStyles = css`
@@ -17,5 +17,5 @@ export const emptyOptionThemeStyles: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.light1};
-  `
-}
+  `,
+};

@@ -4,7 +4,6 @@ import React, {
   FormEventHandler,
   KeyboardEventHandler,
   MouseEventHandler,
-  MutableRefObject,
   SyntheticEvent,
   useRef,
   useState,
