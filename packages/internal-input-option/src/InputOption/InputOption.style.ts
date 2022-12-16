@@ -77,7 +77,7 @@ export const inputOptionWedge = css`
     border-radius: 0 6px 6px 0;
     transform: scale3d(0, 0.3, 0) translateY(-50%);
     transform-origin: 0%; // 0% since we use translateY
-    transition: 200ms ease-in-out;
+    transition: ${transitionDuration.default}ms ease-in-out;
     transition-property: transform, background-color;
   }
 `;
