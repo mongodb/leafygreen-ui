@@ -39,6 +39,7 @@
     "@leafygreen-ui/polymorphic": "^0.0.0",
     "@leafygreen-ui/popover": "^11.0.1",
     "@leafygreen-ui/tokens": "^1.4.1",
+    "@leafygreen-ui/typography": "^15.2.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },

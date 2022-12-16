@@ -22,7 +22,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap, validateChildren } from '@leafygreen-ui/lib';
+import { isComponentType, keyMap, validateChildren } from '@leafygreen-ui/lib';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultsMenu } from '../SearchResultsMenu';
@@ -97,10 +97,13 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       'SearchResult',
       'SearchResultGroup',
     ])?.map((child, index) =>
-      React.cloneElement(child, {
-        ...child.props,
-        ref: resultRefs(`${index}`),
-      }),
+      // TODO: Do this recursively
+      isComponentType(child, 'SearchResult')
+        ? React.cloneElement(child, {
+            ...child.props,
+            ref: resultRefs(`${index}`),
+          })
+        : child,
     );
 
     type Direction = 'next' | 'prev' | 'first' | 'last';
@@ -278,7 +281,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 </IconButton>
               )}
             </div>
-            {withTypeAhead && (
+            {withTypeAhead && !isUndefined(validatedChildren) && (
               <SearchResultsMenu
                 open={isOpen}
                 refEl={searchBoxRef}

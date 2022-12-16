@@ -8,7 +8,7 @@ import {
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 
-import { SearchInput, SearchResult } from '..';
+import { SearchInput, SearchResult, SearchResultGroup } from '..';
 
 export default {
   title: 'Components/SearchInput',
@@ -26,13 +26,15 @@ export default {
       exclude: [...storybookExcludedControlParams, 'value', 'id'],
     },
   },
-} as unknown as ComponentMeta<typeof SearchInput>;
+} as ComponentMeta<typeof SearchInput>;
 
 const Template: ComponentStory<typeof SearchInput> = props => (
   <SearchInput {...props} />
 );
 
 export const Basic = Template.bind({});
+
+console.log(SearchResultGroup);
 
 export const WithResults: ComponentStory<typeof SearchInput> = props => (
   <SearchInput
@@ -60,7 +62,15 @@ export const WithResults: ComponentStory<typeof SearchInput> = props => (
       Carrot
     </SearchResult>
     <SearchResult description="This is a very very long description. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.">
-      Example 4
+      Dragonfruit
     </SearchResult>
+    <SearchResultGroup label="Peppers">
+      <SearchResult>Cayenne</SearchResult>
+      <SearchResult>Ghost pepper</SearchResult>
+      <SearchResult>Habanero</SearchResult>
+      <SearchResult>Jalapeño</SearchResult>
+      <SearchResult>Red pepper</SearchResult>
+      <SearchResult>Scotch bonnet</SearchResult>
+    </SearchResultGroup>
   </SearchInput>
 );
