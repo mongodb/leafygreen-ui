@@ -4,6 +4,7 @@ import React, {
   FormEventHandler,
   KeyboardEventHandler,
   MouseEventHandler,
+  MutableRefObject,
   SyntheticEvent,
   useRef,
   useState,
@@ -89,6 +90,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const inputRef = useForwardedRef(forwardRef, null);
     const resultRefs = useDynamicRefs<HTMLElement>({ prefix: 'result' });
     const withTypeAhead = !isUndefined(children);
+    const [focusedElement, trackFocusedElement] = useState<Element>();
 
     const { value, onChange, onClear } = useControlledValue(
       valueProp,
@@ -184,19 +186,24 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         e.stopPropagation();
       } else {
         openMenu();
-        updateHighlight('first');
       }
     };
 
-    // Prevent container from gaining focus by default
-    const handleInputWrapperMousedown = (e: React.MouseEvent) => {
+    const handleSearchBoxMousedown = (e: React.MouseEvent) => {
       if (disabled) {
+        // Prevent container from gaining focus by default
         e.preventDefault();
       }
     };
 
-    const handleInputWrapperClick: MouseEventHandler = handleOpenMenuAction;
-    const handleInputWrapperFocus: FocusEventHandler = handleOpenMenuAction;
+    const handleSearchBoxClick: MouseEventHandler = handleOpenMenuAction;
+
+    const handleSearchBoxFocus: FocusEventHandler = e => {
+      // Fired whenever the wrapper gains focus,
+      // and any time the focus within changes
+      trackFocusedElement(e.target);
+      handleOpenMenuAction(e);
+    };
 
     const handleClearButton: MouseEventHandler<HTMLButtonElement> = e => {
       onClear(e);
@@ -227,6 +234,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
           case keyMap.ArrowDown: {
             if (withTypeAhead) {
+              inputRef.current?.focus();
               e.preventDefault(); // Stop page scroll
               updateHighlight('next');
             }
@@ -235,6 +243,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
           case keyMap.ArrowUp: {
             if (withTypeAhead) {
+              inputRef.current?.focus();
               e.preventDefault(); // Stop page scroll
               updateHighlight('prev');
             }
@@ -284,16 +293,17 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               ref={searchBoxRef}
               role="searchbox"
               tabIndex={-1}
-              onMouseDown={handleInputWrapperMousedown}
-              onClick={handleInputWrapperClick}
-              onFocus={handleInputWrapperFocus}
+              onMouseDown={handleSearchBoxMousedown}
+              onClick={handleSearchBoxClick}
+              onFocus={handleSearchBoxFocus}
               onKeyDown={handleKeyDown}
               className={cx(
                 inputWrapperStyle,
                 inputWrapperSizeStyle[sizeVariant],
                 inputWrapperThemeStyle[theme],
-                inputWrapperFocusStyles[theme], // Always show focus styles
                 {
+                  [inputWrapperFocusStyles[theme]]:
+                    focusedElement === inputRef.current,
                   [inputWrapperDisabledStyle[theme]]: disabled,
                   [inputWrapperInteractiveStyles[theme]]: !disabled,
                 },

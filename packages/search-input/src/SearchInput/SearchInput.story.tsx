@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { startCase } from 'lodash';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
@@ -72,3 +73,54 @@ export const WithResults: ComponentStory<typeof SearchInput> = props => (
     </SearchResultGroup>
   </SearchInput>
 );
+
+export const LiveSearch: ComponentStory<typeof SearchInput> = () => {
+  const data = [
+    'apple',
+    'banana',
+    'carrot',
+    'dragonfruit',
+    'eggplant',
+    'fig',
+    'grape',
+    'honeydew',
+    'iceberg-lettuce',
+    'jalapeño',
+    'kiwi',
+    'lemon',
+    'melon',
+    'nectarine',
+    'orange',
+    'pomegranate',
+    'quince',
+    'raspberry',
+    'strawberry',
+    'tomato',
+    'ugli-fruit',
+    'viola',
+    'watermelon',
+    'xylophone',
+    'yam',
+    'zebra',
+  ];
+
+  const [searchResults, setSearchResults] = useState(data);
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    setSearchResults(data.filter(datum => datum.includes(target.value)));
+  };
+
+  return (
+    <SearchInput
+      aria-label="Item"
+      onChange={handleChange}
+      className={css`
+        width: 256px;
+      `}
+    >
+      {searchResults.map(datum => (
+        <SearchResult key={datum}>{startCase(datum)}</SearchResult>
+      ))}
+    </SearchInput>
+  );
+};
