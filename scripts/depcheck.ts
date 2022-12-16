@@ -34,6 +34,10 @@ const testFilePatterns = [
   // files matching these patterns will be ignored
   /.*.spec.tsx?/,
   /.*.story.tsx?/,
+<<<<<<< HEAD
+=======
+  /.*.stories.tsx?/,
+>>>>>>> origin
   /.*.example.tsx?/,
   /.*.testutils.tsx?/,
 ];

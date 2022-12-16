@@ -13,18 +13,26 @@ export const usePolymorphicRef = <E extends PolymorphicAs>(_?: E) => {
 
   return React.useRef<
     | (E extends keyof HTMLElementTagNameMap
-        ? HTMLElementTagNameMap[E]
-        : unknown)
+      ? HTMLElementTagNameMap[E]
+      : unknown)
     | null
   >(null);
 };
 
+/**
+ * Internal utility to convert the generic `PolymorphicAs` prop
+ * to a ReactElement
+ */
 function getPolymorphicComponent<T extends PolymorphicAs>(
   as?: T,
 ): React.ElementType {
   return as || 'div';
 }
 
+/**
+ * A hook that returns an accurately typed polymorphic `Component` and `ref`,
+ * given an `as` prop
+ */
 export function usePolymorphic<T extends PolymorphicAs>(
   as?: T,
 ): {

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tooltip",
-  "version": "9.0.3",
+  "version": "9.1.0",
   "description": "LeafyGreen UI Kit Tooltip",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,12 +25,12 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
-    "@leafygreen-ui/icon": "^11.12.2",
+    "@leafygreen-ui/icon": "^11.12.3",
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.5",
     "@leafygreen-ui/popover": "^11.0.2",
     "@leafygreen-ui/tokens": "^1.4.1",
-    "@leafygreen-ui/typography": "^15.1.1",
+    "@leafygreen-ui/typography": "^15.2.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },

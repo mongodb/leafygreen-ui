@@ -101,7 +101,7 @@ export function StaticWidthText<T extends PolymorphicAs = 'span'>({
         staticWidthTextStyle({ pseudoElement, maxFontWeight }),
         className,
       )}
-      as={as ?? 'span'}
+      as={as ?? 'span' as PolymorphicAs}
       data-text={textContent}
       {...rest}
     >

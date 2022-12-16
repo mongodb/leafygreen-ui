@@ -29,6 +29,12 @@ export const BasePolymorph = <T extends PolymorphicAs = 'div'>(
  *
  * With the `as` prop, Polymorphic can dynamically render
  * as any HTML element or React Component.
+ *
+ * If the logic defining the `as` prop is defined internally within your component,
+ * use this standalone `Polymorph` component.
+ *
+ * However: If you want to expose `as` as a prop of your component,
+ * prefer the `{@link Polymorphic}` factory function and related hooks.
  */
 export const Polymorph: PolymorphicComponentType =
   React.forwardRef(BasePolymorph);

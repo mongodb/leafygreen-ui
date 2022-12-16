@@ -78,6 +78,12 @@ export type PolymorphicPropsWithRef<
   ref?: PolymorphicRef<T>;
 };
 
+/**
+ * An explicit definition of the component render function
+ *
+ * Differs from `PolymorphicComponentType` only by the `propTypes` attribute
+ *
+ */
 export interface PolymorphicRenderFunction<XP = {}> {
   <T extends PolymorphicAs>(
     props: PolymorphicPropsWithRef<T, XP>,
@@ -103,6 +109,6 @@ export interface PolymorphicComponentType<XP = {}> {
   displayName?: string;
   propTypes?: WeakValidationMap<
     PropsWithoutRef<PolymorphicPropsWithRef<PolymorphicAs, XP>> &
-      RefAttributes<any>
+    RefAttributes<any>
   >;
 }
