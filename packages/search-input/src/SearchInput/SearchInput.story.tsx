@@ -34,8 +34,6 @@ const Template: ComponentStory<typeof SearchInput> = props => (
 
 export const Basic = Template.bind({});
 
-console.log(SearchResultGroup);
-
 export const WithResults: ComponentStory<typeof SearchInput> = props => (
   <SearchInput
     className={css`

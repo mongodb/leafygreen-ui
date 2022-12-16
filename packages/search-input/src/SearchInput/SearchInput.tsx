@@ -23,7 +23,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType, keyMap, validateChildren } from '@leafygreen-ui/lib';
+import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultsMenu } from '../SearchResultsMenu';
@@ -83,6 +83,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const closeMenu = () => setOpen(false);
     const openMenu = () => setOpen(true);
 
+    const formRef = useRef<HTMLFormElement>(null);
     const searchBoxRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLUListElement>(null);
     const inputRef = useForwardedRef(forwardRef, null);
@@ -95,23 +96,54 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       onClearProp,
     );
 
-    const validatedChildren = validateChildren(children, [
-      'SearchResult',
-      'SearchResultGroup',
-    ])?.map((child, index) =>
-      // TODO: Do this recursively
-      isComponentType(child, 'SearchResult')
-        ? React.cloneElement(child, {
+    /**
+     * Helper function that both counts the number of `SearchResult` descendants
+     * and adds the appropriate props to said children
+     */
+    const processChildren = () => {
+      let resultsCount = 0;
+
+      const processChild = (
+        child: React.ReactNode,
+      ): JSX.Element | undefined => {
+        if (isComponentType(child, 'SearchResult')) {
+          resultsCount += 1;
+          const index = resultsCount - 1;
+          return React.cloneElement(child, {
             ...child.props,
-            ref: resultRefs(`${index}`),
-          })
-        : child,
-    );
+            // TODO: use something other than index
+            // (since Groups will mess with the index)
+            id: `result-${index}`,
+            ref: child.props.ref ?? resultRefs?.(`${index}`),
+            focused: index === highlightIndex,
+          });
+        } else if (isComponentType(child, 'SearchResultGroup')) {
+          const nestedChildren = React.Children.map(
+            child.props.children,
+            processChild,
+          );
+
+          if (nestedChildren && nestedChildren.length > 0) {
+            return React.cloneElement(child, {
+              ...child.props,
+              children: nestedChildren,
+            });
+          }
+        }
+      };
+
+      const updatedChildren = React.Children.map(children, processChild);
+
+      return {
+        resultsCount,
+        updatedChildren,
+      };
+    };
+
+    const { updatedChildren, resultsCount } = processChildren();
 
     type Direction = 'next' | 'prev' | 'first' | 'last';
     const updateHighlight = (direction: Direction) => {
-      const resultsCount = React.Children.count(children);
-
       switch (direction) {
         case 'first': {
           setHighlightIndex(0);
@@ -143,9 +175,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     };
 
     const isElementInComponent = (el: Element | null) => {
-      return (
-        searchBoxRef.current?.contains(el) || menuRef.current?.contains(el)
-      );
+      return formRef.current?.contains(el) || menuRef.current?.contains(el);
     };
 
     /** Event Handlers */
@@ -198,12 +228,18 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           }
 
           case keyMap.ArrowDown: {
-            updateHighlight('next');
+            if (withTypeAhead) {
+              e.preventDefault(); // Stop page scroll
+              updateHighlight('next');
+            }
             break;
           }
 
           case keyMap.ArrowUp: {
-            updateHighlight('prev');
+            if (withTypeAhead) {
+              e.preventDefault(); // Stop page scroll
+              updateHighlight('prev');
+            }
             break;
           }
         }
@@ -212,7 +248,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const handleBlur: FocusEventHandler = e => {
       if (
-        !isElementInComponent(e.target) ||
+        !isElementInComponent(e.target) &&
         !isElementInComponent(document.activeElement)
       ) {
         closeMenu();
@@ -231,9 +267,14 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <SearchInputContextProvider state={state} highlight={highlightIndex}>
+        <SearchInputContextProvider
+          state={state}
+          highlight={highlightIndex}
+          resultDynamicRefs={resultRefs}
+        >
           <form
             role="search"
+            ref={formRef}
             className={className}
             onSubmit={handleSubmit}
             onBlur={handleBlur}
@@ -291,13 +332,13 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 </IconButton>
               )}
             </div>
-            {withTypeAhead && !isUndefined(validatedChildren) && (
+            {withTypeAhead && (
               <SearchResultsMenu
                 open={isOpen}
                 refEl={searchBoxRef}
                 ref={menuRef}
               >
-                {validatedChildren}
+                {updatedChildren}
               </SearchResultsMenu>
             )}
           </form>
