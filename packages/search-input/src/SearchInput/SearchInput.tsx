@@ -111,8 +111,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           const index = resultsCount - 1;
           return React.cloneElement(child, {
             ...child.props,
-            // TODO: use something other than index
-            // (since Groups will mess with the index)
             id: `result-${index}`,
             ref: child.props.ref ?? resultRefs?.(`${index}`),
             focused: index === highlightIndex,
