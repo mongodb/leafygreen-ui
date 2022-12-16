@@ -6,8 +6,10 @@
     "rootDir": "src",
     "noErrorTruncation": false,
   },
-  "include": [
-    "src/**/*"
-  ],
-  "references": []
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../lib"
+    }
+  ]
 }
