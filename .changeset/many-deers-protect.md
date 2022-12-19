@@ -2,4 +2,4 @@
 '@leafygreen-ui/menu': patch
 ---
 
-Updates focus styles in darkMode.
+Updates disabled and focus styles.
