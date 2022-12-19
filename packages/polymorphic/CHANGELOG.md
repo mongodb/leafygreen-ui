@@ -1,7 +1,7 @@
 # @leafygreen-ui/polymorphic
 
-## 0.1.0
+## 1.0.0
 
-### Minor Changes
+### Major Changes
 
 - 45dd84e9b: Releases the Polymorphic component
