@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -39,7 +40,9 @@ export default {
 };
 
 const Template = ({ children, ...rest }: SearchResultProps) => (
-  <SearchResult {...rest}>{children}</SearchResult>
+  <LeafyGreenProvider darkMode={rest.darkMode}>
+    <SearchResult {...rest}>{children}</SearchResult>
+  </LeafyGreenProvider>
 );
 
 export const Result = Template.bind({});
