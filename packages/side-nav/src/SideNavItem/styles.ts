@@ -159,7 +159,7 @@ export const focusedStyle = css`
 export const focusedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &:focus {
-      color: ${palette.black};
+      color: ${palette.blue.dark2};
       background-color: ${palette.blue.light3};
 
       &:before {

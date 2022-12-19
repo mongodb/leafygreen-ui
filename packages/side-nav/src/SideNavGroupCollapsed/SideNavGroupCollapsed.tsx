@@ -18,7 +18,7 @@ import {
 
 import {
   collapsibleBaseStyle,
-  collapsibleFocusStyle,
+  collapsibleFocusThemeStyle,
   collapsibleGroupBaseStyles,
   collapsibleThemeStyle,
   expandIconStyle,
@@ -76,7 +76,7 @@ export function SideNavGroupCollapsed({
             width: ${width}px;
           `,
           {
-            [collapsibleFocusStyle]: usingKeyboard,
+            [collapsibleFocusThemeStyle[theme]]: usingKeyboard,
             [indentedStyle(indentLevel, darkMode)]: indentLevel > 1,
           },
         )}

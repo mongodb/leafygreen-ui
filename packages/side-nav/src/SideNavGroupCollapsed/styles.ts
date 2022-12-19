@@ -36,17 +36,30 @@ export const collapsibleThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const collapsibleFocusStyle = css`
-  &:focus {
-    color: ${palette.blue.dark3};
-    border-color: ${palette.blue.light1};
-    background-color: ${palette.blue.light2};
+export const collapsibleFocusThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:focus {
+      color: ${palette.blue.dark2};
+      border-color: ${palette.blue.base};
+      background-color: ${palette.blue.light3};
 
-    & svg {
-      color: ${palette.blue.base};
+      & svg {
+        color: ${palette.blue.base};
+      }
     }
-  }
-`;
+  `,
+  [Theme.Dark]: css`
+    &:focus {
+      color: ${palette.blue.light3};
+      border-color: ${palette.blue.light1};
+      background-color: ${palette.blue.dark3};
+
+      & svg {
+        color: ${palette.blue.light1};
+      }
+    }
+  `,
+};
 
 export const expandIconStyle = css`
   transition: ${transitionDuration.default}ms all ease-in-out;
