@@ -224,6 +224,30 @@ const handleClick = (e) => {
 
 ---
 
+### Prefer prefixing event handlers with `handle`
+
+#### Why
+Standardizes how we name and search for functions that handle events
+
+#### Prefer
+```typescript
+const handleClick = () => {}
+return (
+  <button onClick={handleClick} />
+)
+```
+
+
+#### Avoid
+```typescript
+const onClick = () => {}
+return (
+  <button onClick={onClick} />
+)
+```
+
+---
+
 ### Prefer using fragments over divs whenever possible
 
 #### Why
