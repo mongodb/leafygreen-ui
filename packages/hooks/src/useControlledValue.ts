@@ -1,6 +1,5 @@
 import {
   ChangeEventHandler,
-  ReactEventHandler,
   useEffect,
   useState,
 } from 'react';
@@ -12,9 +11,7 @@ interface ControlledValueReturnObject<T extends string> {
   /** The controlled or uncontrolled value */
   value: T;
   /** A ChangeEventHandler to assign to any onChange event */
-  onChange: ChangeEventHandler<any>;
-  /** A ReactEventHandler to assign to any onClear event */
-  onClear: ReactEventHandler<any>;
+  handleChange: ChangeEventHandler<any>;
   /**
    * A setter for the internal value.
    * Does not change the controlled value if the provided value has not changed.
@@ -30,8 +27,8 @@ interface ControlledValueReturnObject<T extends string> {
  */
 export const useControlledValue = <T extends string>(
   controlledValue?: T,
-  _onChange?: ChangeEventHandler<any>,
-  _onClear?: ReactEventHandler<any>,
+  changeHandler?: ChangeEventHandler<any>,
+  // _onClear?: ReactEventHandler<any>,
 ): ControlledValueReturnObject<T> => {
   const isControlled = !isUndefined(controlledValue);
 
@@ -47,25 +44,17 @@ export const useControlledValue = <T extends string>(
 
   // Create a change event handler that either updates the internal state
   // or fires an external change handler
-  const onChange: ChangeEventHandler<any> = e => {
-    _onChange?.(e);
+  const handleChange: ChangeEventHandler<any> = e => {
+    changeHandler?.(e);
     if (!isControlled) {
       setInternalValue(e.target.value as T);
-    }
-  };
-
-  const onClear: ReactEventHandler<any> = e => {
-    _onClear?.(e);
-    if (!isControlled) {
-      setInternalValue('' as T);
     }
   };
 
   return {
     isControlled,
     value,
-    onChange,
-    onClear,
+    handleChange,
     setInternalValue,
   };
 };

@@ -5,6 +5,7 @@ export const loadingOptionStyles = css`
   display: flex;
   align-items: center;
   gap: ${spacing[2]}px;
+  padding-block: ${spacing[1]}px;
 `;
 
 const loadingSpinner = keyframes`

@@ -9,6 +9,7 @@ export const emptyOptionStyles = css`
   gap: ${spacing[2]}px;
   font-style: italic;
   font-weight: 300;
+  padding-block: ${spacing[1]}px;
 `;
 
 export const emptyOptionThemeStyles: Record<Theme, string> = {

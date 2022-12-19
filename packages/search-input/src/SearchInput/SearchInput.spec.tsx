@@ -18,6 +18,7 @@ const defaultProps = {
   className: 'test-text-input-class',
   placeholder: 'This is some placeholder text',
   onChange: jest.fn(),
+  onClear: jest.fn(),
   onBlur: jest.fn(),
   children: [
     <SearchResult key="a" onClick={resultClickHandler}>
@@ -167,12 +168,22 @@ describe('packages/search-input', () => {
       });
     });
 
-    test('Clear button clears any input', () => {
-      const { queryByRole, inputEl } = renderSearchInput();
-      userEvent.type(inputEl, 'abc');
-      userEvent.click(queryByRole('button')!);
-      expect(inputEl).toHaveValue('');
-      expect(inputEl).toHaveFocus();
+    describe('Clear button', () => {
+      test('Clears any input', () => {
+        const { queryByRole, inputEl } = renderSearchInput();
+        userEvent.type(inputEl, 'abc');
+        userEvent.click(queryByRole('button')!);
+        expect(inputEl).toHaveValue('');
+        expect(inputEl).toHaveFocus();
+      });
+
+      test('Fires `onChange`', () => {
+        const props = { ...defaultProps };
+        const { queryByRole, inputEl } = renderSearchInput(props);
+        userEvent.type(inputEl, 'abc');
+        userEvent.click(queryByRole('button')!);
+        expect(props.onChange).toHaveBeenCalled();
+      });
     });
 
     describe('Mouse interaction', () => {

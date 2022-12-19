@@ -1,4 +1,5 @@
 import React, {
+  ChangeEvent,
   EventHandler,
   FocusEventHandler,
   FormEventHandler,
@@ -8,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -49,9 +51,6 @@ import { SearchInputProps, SizeVariant, State } from './SearchInput.types';
  *
  * SearchInput component
  *
- * ```
-<SearchInput  onChange={() => execute when value of input field changes}/>
-```
  * @param props.state The current state of the SearchInput. This can be none, or loading.
  * @param props.darkMode determines whether or not the component appears in dark theme.
  * @param props.sizeVariant determines the size of the text and the height of the input.
@@ -70,7 +69,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       state = State.Unset,
       value: valueProp,
       onChange: onChangeProp,
-      onClear: onClearProp,
       onSubmit: onSubmitProp,
       ...rest
     }: SearchInputProps,
@@ -92,10 +90,10 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const withTypeAhead = !isUndefined(children);
     const [focusedElement, trackFocusedElement] = useState<Element>();
 
-    const { value, onChange, onClear } = useControlledValue(
+    const { value, handleChange } = useControlledValue(
       valueProp,
       onChangeProp,
-      onClearProp,
+      // onClearProp,
     );
 
     /**
@@ -206,7 +204,16 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     };
 
     const handleClearButton: MouseEventHandler<HTMLButtonElement> = e => {
-      onClear(e);
+      // We convert the click event into a Change event,
+      // Update the target & value,
+      // Then fire any `onChange` handler
+      const changeEvent: ChangeEvent<any> = {
+        ...cloneDeep(e),
+        type: 'change',
+        target: inputRef.current as EventTarget,
+      };
+      changeEvent.target.value = '';
+      handleChange(changeEvent);
       inputRef?.current?.focus();
     };
 
@@ -325,7 +332,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 type="search"
                 className={cx(baseInputStyle, inputThemeStyle[theme])}
                 value={value}
-                onChange={onChange}
+                onChange={handleChange}
                 placeholder={placeholder}
                 ref={inputRef}
                 disabled={disabled}
