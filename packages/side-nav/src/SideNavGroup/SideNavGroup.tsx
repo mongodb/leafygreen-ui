@@ -117,11 +117,13 @@ function SideNavGroup({
 
   const renderHeader = () => (
     <div className={iconBaseStyles}>
-      <AccessibleGlyph
-        isActiveGroup={isActiveGroup}
-        accessibleGlyph={accessibleGlyph}
-        className={cx(iconCustomStyle, iconCustomThemeStyle[theme])}
-      />
+      {accessibleGlyph && (
+        <AccessibleGlyph
+          isActiveGroup={isActiveGroup}
+          accessibleGlyph={accessibleGlyph}
+          className={cx(iconCustomStyle, iconCustomThemeStyle[theme])}
+        />
+      )}
       <Overline className={overlineStyle}>{header}</Overline>
     </div>
   );

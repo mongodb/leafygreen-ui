@@ -14,14 +14,10 @@ export function AccessibleGlyph({
 }: AccessibleGlyphProps) {
   return (
     <>
-      {accessibleGlyph && (
-        <>
-          <span className={className}>{accessibleGlyph}</span>
-          <CollapsedSideNavItem active={isActiveGroup}>
-            {accessibleGlyph}
-          </CollapsedSideNavItem>
-        </>
-      )}
+      <span className={className}>{accessibleGlyph}</span>
+      <CollapsedSideNavItem active={isActiveGroup}>
+        {accessibleGlyph}
+      </CollapsedSideNavItem>
     </>
   );
 }

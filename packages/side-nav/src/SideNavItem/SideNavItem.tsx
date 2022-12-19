@@ -176,11 +176,13 @@ const SideNavItem: ExtendableBox<
         ref={forwardedRef}
         onClick={onClick}
       >
-        <AccessibleGlyph
-          isActiveGroup={active}
-          accessibleGlyph={accessibleGlyph}
-          className={glyphWrapperStyle}
-        />
+        {accessibleGlyph && (
+          <AccessibleGlyph
+            isActiveGroup={active}
+            accessibleGlyph={accessibleGlyph}
+            className={glyphWrapperStyle}
+          />
+        )}
 
         {renderedChildren}
       </Box>
