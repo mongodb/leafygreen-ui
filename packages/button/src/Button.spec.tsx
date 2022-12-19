@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
-import { BoxProps } from '@leafygreen-ui/box';
+import { InferredPolymorphicProps, PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic'
 
 import { ButtonProps } from './types';
 import Button from '.';
@@ -12,7 +12,7 @@ const className = 'test-button-class';
 const title = 'Test button title';
 const child = 'Button child';
 
-function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
+const renderButton = (props: InferredPolymorphicProps<ButtonProps> = {}) => {
   const utils = render(<Button {...props} data-testid="button-id" />);
   const button = utils.getByTestId('button-id');
   return { ...utils, button };
@@ -206,7 +206,7 @@ describe('packages/button', () => {
   /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
   describe.skip('types behave as expected', () => {
     test('does not throw an error when no children are passed to the component', () => {
-      <Button onClick={() => {}} />;
+      <Button onClick={() => { }} />;
     });
 
     test('accepts anchor tag attributes', () => {
