@@ -33,7 +33,8 @@ import {
   getHoverStyles,
   linkDescriptionTextStyle,
   linkStyle,
-  mainIconStyle,
+  mainIconBaseStyle,
+  mainIconThemeStyle,
   menuItemContainerStyle,
   menuItemContainerThemeStyle,
   menuItemHeight,
@@ -419,7 +420,8 @@ const SubMenu = React.forwardRef(
       React.cloneElement(glyph, {
         role: 'presentation',
         className: cx(
-          mainIconStyle,
+          mainIconBaseStyle,
+          mainIconThemeStyle[theme],
           {
             [activeIconStyle[theme]]: active,
             [focusStyles.iconStyle]: showFocus,

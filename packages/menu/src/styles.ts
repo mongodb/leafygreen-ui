@@ -90,11 +90,19 @@ export const textContainer = css`
   padding: 2px 0;
 `;
 
-export const mainIconStyle = css`
-  color: ${palette.gray.dark1};
+export const mainIconBaseStyle = css`
   margin-right: 16px;
   flex-shrink: 0;
 `;
+
+export const mainIconThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
 
 export const titleTextStyle = css`
   display: inline-flex;
@@ -242,7 +250,7 @@ export const disabledIconStyle: Record<Theme, string> = {
     color: ${palette.gray.dark2};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
   `,
 };
 
@@ -283,7 +291,7 @@ export const disabledTextStyle: Record<Theme, string> = {
     font-weight: 400;
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
     font-weight: 400;
   `,
 };
