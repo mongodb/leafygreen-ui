@@ -15,6 +15,7 @@ import {
   indentedStyle,
   themeStyle,
 } from '../SideNavGroup/styles';
+import { SideNavGroupHeader } from '../SideNavGroupHeader/SideNavGroupHeader';
 
 import {
   collapsibleBaseStyle,
@@ -38,8 +39,10 @@ export function SideNavGroupCollapsed({
   setOpen,
   menuGroupLabelId,
   indentLevel,
-  renderHeader,
   children,
+  isActiveGroup,
+  accessibleGlyph,
+  header,
 }: SideNavGroupCollapsedProps) {
   const { width, theme, darkMode } = useSideNavContext();
   const { usingKeyboard } = useUsingKeyboardContext();
@@ -82,7 +85,11 @@ export function SideNavGroupCollapsed({
         )}
         onClick={() => setOpen((curr: boolean) => !curr)}
       >
-        {renderHeader()}
+        <SideNavGroupHeader
+          isActiveGroup={isActiveGroup}
+          header={header}
+          accessibleGlyph={accessibleGlyph}
+        />
         <ChevronRight
           role="presentation"
           size={12}

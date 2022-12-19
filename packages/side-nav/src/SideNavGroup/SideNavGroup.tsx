@@ -115,19 +115,6 @@ function SideNavGroup({
         })
       : null;
 
-  const renderHeader = () => (
-    <div className={iconBaseStyles}>
-      {accessibleGlyph && (
-        <AccessibleGlyph
-          isActiveGroup={isActiveGroup}
-          accessibleGlyph={accessibleGlyph}
-          className={cx(iconCustomStyle, iconCustomThemeStyle[theme])}
-        />
-      )}
-      <Overline className={overlineStyle}>{header}</Overline>
-    </div>
-  );
-
   // generate shared props for collapsible and static headers
   const groupHeaderProps = {
     'data-testid': 'side-nav-group-header-label',
@@ -137,21 +124,23 @@ function SideNavGroup({
   const sharedProps = {
     groupHeaderProps,
     indentLevel,
-    renderHeader: () => renderHeader(),
     menuGroupLabelId,
+    accessibleGlyph,
+    isActiveGroup,
+    header,
   };
 
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
       {collapsible ? (
-        // collapsed, all items are inside a dropdown
+        // collapsed, items in menu are hidden by default but can be toggled open on click
         <>
           <SideNavGroupCollapsed open={open} setOpen={setOpen} {...sharedProps}>
             {renderedChildren}
           </SideNavGroupCollapsed>
         </>
       ) : (
-        // not collapsible, all items are visible
+        // not collapsible, all items in menu are visible
         <SideNavGroupOpen {...sharedProps}>{renderedChildren}</SideNavGroupOpen>
       )}
     </li>

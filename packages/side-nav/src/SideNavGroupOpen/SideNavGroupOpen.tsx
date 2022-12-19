@@ -5,6 +5,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import { ulStyleOverrides } from '../SideNav/styles';
 import { baseStyle, indentedStyle, themeStyle } from '../SideNavGroup/styles';
+import { SideNavGroupHeader } from '../SideNavGroupHeader/SideNavGroupHeader';
 
 import { SideNavGroupOpenProps } from './types';
 
@@ -14,9 +15,11 @@ import { SideNavGroupOpenProps } from './types';
 export function SideNavGroupOpen({
   groupHeaderProps,
   indentLevel,
-  renderHeader,
   menuGroupLabelId,
   children,
+  isActiveGroup,
+  header,
+  accessibleGlyph,
 }: SideNavGroupOpenProps) {
   const { theme, darkMode } = useSideNavContext();
 
@@ -28,7 +31,11 @@ export function SideNavGroupOpen({
           [indentedStyle(indentLevel, darkMode)]: indentLevel > 1,
         })}
       >
-        {renderHeader()}
+        <SideNavGroupHeader
+          isActiveGroup={isActiveGroup}
+          header={header}
+          accessibleGlyph={accessibleGlyph}
+        />
       </div>
 
       <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>

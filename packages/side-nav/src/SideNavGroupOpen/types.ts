@@ -1,9 +1,10 @@
 import React from 'react';
 
-export interface SideNavGroupOpenProps {
+import { SideNavGroupHeaderProps } from '../SideNavGroupHeader/types';
+
+export interface SideNavGroupOpenProps extends SideNavGroupHeaderProps {
   groupHeaderProps: { [key: string]: string };
   menuGroupLabelId: string;
   indentLevel: number;
-  renderHeader: () => React.ReactElement;
   children: React.ReactNode;
 }
