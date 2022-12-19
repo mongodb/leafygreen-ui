@@ -1,5 +1,19 @@
 # @leafygreen-ui/modal
 
+## 14.0.0
+
+### Major Changes
+
+- d5c206876: Modal now accepts a forwarded ref. In addition, it respects an `id` when the prop is set, rather than overwriting the value internally.
+
+### Patch Changes
+
+- Updated dependencies [75f26afbc]
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+  - @leafygreen-ui/icon-button@15.0.3
+  - @leafygreen-ui/icon@11.12.3
+
 ## 13.0.0
 
 ### Major Changes

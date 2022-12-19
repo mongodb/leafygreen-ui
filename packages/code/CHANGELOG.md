@@ -1,5 +1,16 @@
 # @leafygreen-ui/code
 
+## 14.0.2
+
+### Patch Changes
+
+- 48013291e: Fixing bug where numbered cells would stretch excessively in wide viewports
+- Updated dependencies [75f26afbc]
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+  - @leafygreen-ui/icon-button@15.0.3
+  - @leafygreen-ui/icon@11.12.3
+
 ## 14.0.1
 
 ### Patch Changes

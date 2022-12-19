@@ -1,0 +1,33 @@
+{
+  "name": "@leafygreen-ui/polymorphic",
+  "version": "0.0.0",
+  "description": "LeafyGreen UI Kit Polymorphic",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/polymorphic",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@emotion/styled": "^11.10.5"
+  }
+}
