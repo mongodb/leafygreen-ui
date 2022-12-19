@@ -11,11 +11,14 @@ import {
 
 import { SearchInput, SearchResult, SearchResultGroup } from '..';
 
+import { State } from './SearchInput.types';
+
 export default {
   title: 'Components/SearchInput',
   component: SearchInput,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    state: { control: 'select', options: Object.values(State) },
     id: { control: 'string' },
     placeholder: { control: 'string' },
     value: { control: 'string' },
@@ -24,7 +27,7 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: [...storybookExcludedControlParams, 'value', 'id'],
+      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
     },
   },
 } as ComponentMeta<typeof SearchInput>;

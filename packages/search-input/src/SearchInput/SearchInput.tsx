@@ -42,7 +42,7 @@ import {
   searchIconStyle,
   searchIconThemeStyle,
 } from './SearchInput.styles';
-import { SearchInputProps, SizeVariant } from './SearchInput.types';
+import { SearchInputProps, SizeVariant, State } from './SearchInput.types';
 
 /**
  * # SearchInput
@@ -67,7 +67,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       sizeVariant = SizeVariant.Default,
       disabled,
       children,
-      state,
+      state = State.Unset,
       value: valueProp,
       onChange: onChangeProp,
       onClear: onClearProp,

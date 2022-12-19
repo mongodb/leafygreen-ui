@@ -4,7 +4,7 @@ import { BaseInputOptionProps } from '@leafygreen-ui/internal-input-option';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export type SearchResultProps = DarkModeProps &
-  BaseInputOptionProps & {
+  Omit<BaseInputOptionProps, 'showWedge' | 'active' | 'isInteractive'> & {
     /**
      * The value of the result
      */

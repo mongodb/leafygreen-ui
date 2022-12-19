@@ -22,12 +22,6 @@ export default {
     focused: {
       control: 'boolean',
     },
-    active: {
-      control: 'boolean',
-    },
-    showWedge: {
-      control: 'boolean',
-    },
     href: {
       control: 'text',
       if: { arg: 'as', eq: 'a' },

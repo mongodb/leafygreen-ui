@@ -8,7 +8,7 @@ import {
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 
 export const State = {
-  None: 'none',
+  Unset: 'unset',
   Loading: 'loading',
 } as const;
 
