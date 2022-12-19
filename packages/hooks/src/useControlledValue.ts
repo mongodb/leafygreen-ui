@@ -8,19 +8,19 @@ import isUndefined from 'lodash/isUndefined';
 
 interface ControlledValueReturnObject<T extends string> {
   /** Whether the value is controlled */
-  isControlled: boolean,
+  isControlled: boolean;
   /** The controlled or uncontrolled value */
-  value: T,
+  value: T;
   /** A ChangeEventHandler to assign to any onChange event */
-  onChange: ChangeEventHandler<any>,
+  onChange: ChangeEventHandler<any>;
   /** A ReactEventHandler to assign to any onClear event */
-  onClear: ReactEventHandler<any>,
+  onClear: ReactEventHandler<any>;
   /**
    * A setter for the internal value.
    * Does not change the controlled value if the provided value has not changed.
    */
-  setInternalValue: React.Dispatch<React.SetStateAction<T>>,
-};
+  setInternalValue: React.Dispatch<React.SetStateAction<T>>;
+}
 
 /**
  * A hook that enables a component to be both controlled or uncontrolled.
