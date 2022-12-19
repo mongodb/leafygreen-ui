@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface SideNavGroupOpenProps {
-  groupHeaderProps: {};
+  groupHeaderProps: { [key: string]: string };
   menuGroupLabelId: string;
   indentLevel: number;
   renderHeader: () => React.ReactElement;

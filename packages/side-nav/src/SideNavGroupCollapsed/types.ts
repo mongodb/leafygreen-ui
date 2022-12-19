@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface SideNavGroupCollapsedProps {
-  groupHeaderProps: {};
+  groupHeaderProps: { [key: string]: string };
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   menuGroupLabelId: string;
