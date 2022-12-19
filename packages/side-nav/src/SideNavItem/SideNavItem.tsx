@@ -23,7 +23,7 @@ import {
   glyphWrapperStyle,
   liStyle,
   nestedChildrenStyles,
-  nestedULStyle,
+  nestedUlStyle,
   sideNavItemClassName,
   themeStyle,
 } from './styles';
@@ -186,7 +186,7 @@ const SideNavItem: ExtendableBox<
       </Box>
 
       {hasNestedItems && (
-        <ul className={nestedULStyle}>{renderedNestedItems}</ul>
+        <ul className={nestedUlStyle}>{renderedNestedItems}</ul>
       )}
     </li>
   );

@@ -214,7 +214,7 @@ export const nestedChildrenStyles = css`
   align-items: flex-start;
 `;
 
-export const nestedULStyle = css`
+export const nestedUlStyle = css`
   list-style: none;
   padding-inline-start: 0;
 `;
