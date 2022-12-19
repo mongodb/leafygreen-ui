@@ -80,6 +80,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const [isOpen, setOpen] = useState(false);
     // The index of the currently highlighted result option
     const [highlightIndex, setHighlightIndex] = useState<number>(0);
+
     const closeMenu = () => setOpen(false);
     const openMenu = () => setOpen(true);
 
