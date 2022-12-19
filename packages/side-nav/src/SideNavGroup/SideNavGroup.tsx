@@ -5,20 +5,11 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { Overline } from '@leafygreen-ui/typography';
 
-import { AccessibleGlyph } from '../AccessibleGlyph/AccessibleGlyph';
-import { useSideNavContext } from '../SideNav/SideNavContext';
 import { SideNavGroupCollapsed } from '../SideNavGroupCollapsed/SideNavGroupCollapsed';
 import { SideNavGroupOpen } from '../SideNavGroupOpen/SideNavGroupOpen';
 
-import {
-  iconBaseStyles,
-  iconCustomStyle,
-  iconCustomThemeStyle,
-  listItemStyle,
-  overlineStyle,
-} from './styles';
+import { listItemStyle } from './styles';
 import { SideNavGroupProps } from './types';
 
 /**
@@ -53,8 +44,6 @@ function SideNavGroup({
   const [open, setOpen] = React.useState(!initialCollapsed);
 
   const menuGroupLabelId = useIdAllocator({ prefix: 'menu-group-label-id' });
-
-  const { theme } = useSideNavContext();
 
   // Iterate over `children` and render them appropriately
   const renderedChildren = useMemo(() => {
