@@ -50,6 +50,8 @@ export const someConstant = {
   optionOne = 'option 1',
   optionTwo = 'option 2',
 } as const;
+
+export type someConstant = typeof someConstant[keyof typeof someConstant];
 ```
 
 #### Avoid
@@ -64,6 +66,10 @@ enum someConstant = {
 ---
 
 ### When creating TS entities, place them at the top of the file, above JS
+
+#### Why
+
+Maintains organization within files and makes them consistently more readable.
 
 ---
 
@@ -93,11 +99,37 @@ if (isBlah) {
 
 ---
 
+### Prefer `if/else` blocks over complex ternaries
+
+#### Why
+
+Keeps code easier to read
+
+#### Prefer
+
+```typescript
+if (isBlah) {
+  return 'a';
+} else if (isFoo) {
+  return 'b';
+} else {
+  return 'c';
+}
+```
+
+#### Avoid
+
+```typescript
+return isBlah ? 'a' : isFoo ? 'b' : 'c';
+```
+
+---
+
 ### All new (exported) functions should have a JSDoc comment explaining functionality.
 
 #### Why
 
-Documenting functions with [JSDoc](https://jsdoc.app/about-getting-started.html) helps PR reviewers better understand the intent of the function and also documents its use for other engineers using the code base. Better yet, [VS Code will automatically show in-line descriptions of a function](https://code.visualstudio.com/docs/languages/javascript#_jsdoc-support) when a user invokes that function in their editor.
+Documenting functions with [TSDoc](https://tsdoc.org/) helps PR reviewers better understand the intent of the function and also documents its use for other engineers using the code base. Better yet, [VS Code will automatically show in-line descriptions of a function](https://code.visualstudio.com/docs/languages/javascript#_jsdoc-support) when a user invokes that function in their editor.
 
 JSDocs should also clearly mention any major assumptions made about the function's input and output that may not be immediately obvious to an engineer unfamiliar with this part of the code base.
 
@@ -146,7 +178,7 @@ Keeps functions pure.
 
 #### Why
 
-Some treat each letter in an acronym as its own entity when an acronyme is included in a var name. We'll instead consider the acronym as a single entity, and only capitalize the first letter of it (if that).
+Some treat each letter in an acronym as its own entity when an acronym is included in a var name. We'll instead consider the acronym as a single entity, and only capitalize the first letter of it (if that).
 
 #### Prefer
 
@@ -170,7 +202,11 @@ let myWIPValue = 'pending';
 
 ---
 
-### Use “be” verbs for boolean types. (e.g. should`/`can`/`does`/`has`)
+### Use PascalCase for components/classes/etc.
+
+---
+
+### Use “be” verbs for boolean types. (e.g. `should`/`is`/`can`/`does`/`has`)
 
 ---
 
@@ -186,6 +222,10 @@ let myWIPValue = 'pending';
 
 ### Prefer const to let whenever possible.
 
+#### Why
+
+"const until you can'tst"
+
 ---
 
 ## <a id="Whitespace-and-line-breaks">Whitespace and line breaks</a>
@@ -200,7 +240,7 @@ let myWIPValue = 'pending';
 
 #### Why
 
-Minimizes inline javascript logic within
+Minimizes inline javascript logic, and also creates a named function that will show up in stack traces.
 
 #### Prefer
 
@@ -278,7 +318,7 @@ Immutability
 
 ---
 
-### Factor out of functional components any methods that do NOT require state
+### Prefer utility functions when full component state is not required
 
 ---
 
