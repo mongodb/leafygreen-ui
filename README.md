@@ -37,6 +37,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
 - [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline)
 - [Popover](https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover)
+- [Polymorphic](https://github.com/mongodb/leafygreen-ui/tree/main/packages/polymorphic)
 - [Portal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/portal)
 - [Radio Box Group](https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-box-group)
 - [Radio Group](https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-group)

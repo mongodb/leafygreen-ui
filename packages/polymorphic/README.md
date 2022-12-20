@@ -1,0 +1,148 @@
+# Polymorphic
+
+> ### **pol·y·morph** _(noun)_
+>
+> - an organism, inorganic object or material which takes various forms.
+
+> ### **pol·y·mor·phic** _(adjective)_
+>
+> - occurring in several different forms, in particular with reference to species or genetic variation.
+> - (of a feature of a programming language) allowing routines to use variables of different types at different times.
+
+`Polymorphic` is a suite of types, hooks, components and factories that allows users to create components that can render as any HTML element or React component.
+
+# Usage
+
+There are two main ways to use `Polymorphic`, depending on whether the `as` prop is defined _internally_ by your component, or passed in as an external prop.
+
+## Basic usage
+
+If the logic defining the `as` prop is defined internally within your component, use the standalone `Polymorph` component.
+
+```tsx
+interface MyProps {
+  someProp: string;
+}
+
+const MyComponent = (props: MyProps) => {
+  const shouldRenderAs = 'button';
+  return <Polymorph as={shouldRenderAs} {...props} />;
+};
+```
+
+## Extending Polymorphic behavior
+
+If you want to expose `as` as a prop of your component, use the `Polymorphic` factory function and related hooks.
+
+Note that any inherited props will be indeterminate in the factory function, since the value `as` is not known. (i.e. the attributes of `rest` in the following example are unknown).
+
+```tsx
+interface MyProps {
+  someProp: string;
+}
+const MyComponent = Polymorphic<MyProps>(({ as, ...rest }) => {
+  const { Component, ref } = usePolymorphic(as);
+  return <Component ref={ref} {...rest} />;
+});
+```
+
+### With Refs
+
+Accepting a forwarded ref to a Polymorphic component is as simple as passing in a ref into the render function (same as `React.forwardRef`).
+
+```tsx
+interface MyProps {
+  someProp: string;
+}
+const MyComponent = Polymorphic<MyProps>(({ as, ...rest }, forwardedRef) => {
+  const { Component } = usePolymorphic(as);
+  return <Component ref={forwardedRef} {...rest} />;
+});
+```
+
+### Inferred `as` prop
+
+Components extended using the `Polymorphic` factory function can be made to infer the `as` prop value based on the `href` passed in.
+Ensure the custom props are wrapped in `InferredPolymorphicProps`, and use the `useInferredPolymorphic` hook.
+Make sure to pass both `as` and a `rest` object (that may contain `href`) into the hook.
+
+```tsx
+export const MyInferredComponent = Polymorphic<
+  InferredPolymorphicProps<MyProps>
+>(({ as, ...rest }) => {
+  const { Component, ref } = useInferredPolymorphic(as, rest);
+  return (
+    <Component ref={ref} {...rest}>
+      {title}
+    </Component>
+  );
+});
+
+//
+
+<MyInferredComponent href="mongodb.design" />; // renders as <a>
+```
+
+## With Emotion `styled` API
+
+`Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accept the Polymorphic props you'll need to explicitly type your styled component as `PolymorphicComponentType`.
+
+```tsx
+const StyledPolymorph = styled(Polymorph)`
+  color: hotpink;
+` as PolymorphicComponentType;
+
+// or
+
+const MyStyledComponent = styled(MyComponent)`
+  color: hotpink;
+` as PolymorphicComponentType;
+```
+
+This also works with InferredPolymorphic components
+
+```tsx
+const StyledInferred = styled(MyInferredComponent)`
+  color: hotpink;
+` as InferredPolymorphicComponentType;
+```
+
+Note: TSDocs will not compile for styled polymorphs. This can be remedied by creating a wrapper around the styled function that explicitly returns a PolymorphicComponentType
+
+## Supported (but not recommended) usage
+
+While it is possible to use the `Polymorph` component to extend polymorphic behavior, it can be much more verbose and error prone than using the `Polymorphic` factory function. For completeness, an example of how to do this is provided below:
+
+```tsx
+type MyProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
+  T,
+  {
+    someProp: string;
+  }
+>;
+
+export const MyComponent = <T extends PolymorphicAs = 'div'>(
+  { as, title, ...rest }: MyProps<T>,
+  forwardedRef: PolymorphicRef<T>,
+) => {
+  return (
+    <Polymorph as={as as PolymorphicAs} ref={forwardedRef} {...rest}>
+      {title}
+    </Polymorph>
+  );
+};
+```
+
+# Prior art
+
+- [Radix](https://github.com/radix-ui/primitives/blob/2f139a832ba0cdfd445c937ebf63c2e79e0ef7ed/packages/react/polymorphic/src/polymorphic.ts)
+
+- [Reach](https://github.com/reach/reach-ui/blob/dev/packages/polymorphic/src/reach-polymorphic.ts)
+
+- [Chakra](https://github.com/chakra-ui/chakra-ui/blob/main/packages/components/layout/src/box.tsx)
+
+- [MUI](https://mui.com/material-ui/guides/composition/#component-prop)
+
+- [LogRocket](https://blog.logrocket.com/build-strongly-typed-polymorphic-components-react-typescript/)
+
+- [Ohans Emmanuel](https://github.com/ohansemmanuel/polymorphic-react-component)
