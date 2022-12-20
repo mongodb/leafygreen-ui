@@ -47,14 +47,14 @@ export const Button = Polymorphic<InferredPolymorphicProps<ButtonProps>>(functio
     usingKeyboard,
   });
 
-  const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
+  const isAnchor = Component === 'a'
 
   const buttonProps = {
     type: isAnchor ? undefined : type || 'button',
     className: cx(ButtonClassName, buttonStyles, className),
     ref: forwardRef,
     // only add a disabled prop if not an anchor
-    ...(typeof rest.href !== 'string' && { disabled }),
+    ...(!isAnchor && { disabled }),
     'aria-disabled': disabled,
     onClick: !disabled ? onClick : undefined,
     ...rest,
@@ -86,5 +86,4 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   leftGlyph: PropTypes.element,
   rightGlyph: PropTypes.element,
-  href: PropTypes.string,
 };

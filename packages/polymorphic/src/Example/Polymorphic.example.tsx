@@ -59,6 +59,8 @@ export const ExampleInferred = Polymorphic<
   );
 }, 'ExampleInferred');
 
+
+
 /**
  * Advanced usage, not recommended
  */
