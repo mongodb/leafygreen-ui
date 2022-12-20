@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputOption } from '@leafygreen-ui/internal-input-option';
+import { InputOption } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { validateChildren } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';

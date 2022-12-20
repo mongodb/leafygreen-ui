@@ -1,5 +1,5 @@
 {
-  "name": "@leafygreen-ui/internal-input-option",
+  "name": "@leafygreen-ui/input-option",
   "version": "0.0.0",
   "description": "leafyGreen UI Kit Internal Input Option",
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
   "license": "Apache-2.0",
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/internal-input-option",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/input-option",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"

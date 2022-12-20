@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
-import { InputOption } from '@leafygreen-ui/internal-input-option';
+import { InputOption } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 

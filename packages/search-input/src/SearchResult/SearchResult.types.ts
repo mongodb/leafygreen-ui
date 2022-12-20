@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BaseInputOptionProps } from '@leafygreen-ui/internal-input-option';
+import { BaseInputOptionProps } from '@leafygreen-ui/input-option';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export type SearchResultProps = DarkModeProps &

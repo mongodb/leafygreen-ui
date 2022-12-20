@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { InputOption } from '@leafygreen-ui/internal-input-option';
+import { InputOption } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import {
