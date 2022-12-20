@@ -11,10 +11,11 @@ import {
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
   ExampleInferred,
+  ExampleInferredDefaultButton,
   ExamplePolymorphic,
   ExamplePolymorphicWithRef,
   RestrictedExample,
-} from '.';
+} from './Polymorphic.example';
 
 /**
  * Here we test Example Higher-order components
@@ -58,6 +59,15 @@ describe('Polymorphic Higher-order Components', () => {
       expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
       expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
       expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+    });
+
+    test('Works with a default, and sets default props', () => {
+      const { queryByTestId } = render(
+        <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />,
+      );
+      expect(queryByTestId('hoc')).toBeInTheDocument();
+      expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('button');
+      expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
     });
   });
 
