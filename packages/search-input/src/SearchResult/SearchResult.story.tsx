@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookArgTypes,
+  // @ts-ignore
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 
@@ -17,6 +19,12 @@ export default {
   },
   argTypes: {
     ...storybookArgTypes,
+    children: {
+      control: 'text',
+    },
+    description: {
+      control: 'text',
+    },
     disabled: {
       control: 'boolean',
     },
@@ -37,7 +45,7 @@ export default {
       ],
     },
   },
-};
+} as ComponentMeta<any>;
 
 const Template = ({ children, ...rest }: SearchResultProps) => (
   <LeafyGreenProvider darkMode={rest.darkMode}>
