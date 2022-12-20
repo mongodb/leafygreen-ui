@@ -24,7 +24,7 @@
     "@leafygreen-ui/icon": "^11.12.3",
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.5",
-    "@leafygreen-ui/polymorphic": "^0.1.0-next.1",
+    "@leafygreen-ui/polymorphic": "^1.0.0",
     "@leafygreen-ui/tokens": "^1.4.1"
   },
   "devDependencies": {
