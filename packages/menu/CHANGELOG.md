@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 19.0.3
+
+### Patch Changes
+
+- 33a5dac82: Updates disabled and focus styles.
+
 ## 19.0.2
 
 ### Patch Changes
