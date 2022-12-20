@@ -17,7 +17,7 @@ export function useBackdropClick(
 ) {
   /**
    * We add two event handlers to the document to handle the backdrop click behavior.
-   * Intended behavior is to close the menu, and keep focus on the Combobox.
+   * Intended behavior is to close the menu, and keep focus on the component.
    * No other click event handlers should fire on backdrop click
    *
    * 1. Mousedown event fires
@@ -56,7 +56,7 @@ export function useBackdropClick(
   );
 
   /**
-   * Returns whether the event target is a Combobox element
+   * Returns whether the event target within the component
    */
   function doesComponentContainEventTarget({ target }: MouseEvent): boolean {
     return Array.isArray(refOrRefs)
