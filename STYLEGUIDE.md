@@ -194,7 +194,7 @@ let myWIPValue = 'pending';
 
 ---
 
-### Use UPPERCASE for static constants, and refactor to a shared file if needed.
+### Use UPPERCASE for static constants, and refactor to a shared file if needed
 
 ---
 
