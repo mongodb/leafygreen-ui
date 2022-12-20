@@ -174,26 +174,6 @@ Keeps functions pure.
 
 ## <a id="Variable-naming">Variable Naming</a>
 
-### Acronyms are considered a single entity in camel-casing
-
-#### Why
-
-Some treat each letter in an acronym as its own entity when an acronym is included in a var name. We'll instead consider the acronym as a single entity, and only capitalize the first letter of it (if that).
-
-#### Prefer
-
-```typescript
-let myWipValue = 'pending';
-```
-
-#### Avoid
-
-```typescript
-let myWIPValue = 'pending';
-```
-
----
-
 ### Use UPPERCASE for static constants, and refactor to a shared file if needed
 
 ---
@@ -311,6 +291,25 @@ return <div></div>;
 #### Why
 
 Immutability
+
+#### Prefer
+
+```typescript
+function changeValues(object) {
+  const storedValues = { ...object };
+  storedValues['newEntry'] = 'updates';
+  return storedValues;
+}
+```
+
+#### Avoid
+
+```typescript
+function changeValues(object) {
+  object['newEntry'] = 'updates';
+  return object;
+}
+```
 
 ---
 
