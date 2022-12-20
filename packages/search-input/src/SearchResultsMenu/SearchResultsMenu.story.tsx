@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { SearchResult } from '../SearchResult';
 
@@ -10,11 +10,15 @@ export default {
 };
 
 const Template = () => {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setOpen(true);
+  }, []);
   const divRef = React.useRef<HTMLDivElement>(null);
   return (
     <>
       <div ref={divRef}>SearchInput Placeholder</div>
-      <SearchResultsMenu refEl={divRef} open>
+      <SearchResultsMenu refEl={divRef} open={open}>
         <SearchResult description="This is a description">
           Example 1
         </SearchResult>

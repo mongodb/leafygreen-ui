@@ -45,13 +45,13 @@ export const WithResults: ComponentStory<typeof SearchInput> = props => (
       width: 200px;
     `}
     onChange={() => {
-      console.log('Change');
+      console.log('SB: Change');
     }}
     {...props}
   >
     <SearchResult
       onClick={() => {
-        console.log('Click Apple');
+        console.log('SB: Click Apple');
       }}
       description="This is a description"
     >
