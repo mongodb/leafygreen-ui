@@ -90,11 +90,19 @@ export const textContainer = css`
   padding: 2px 0;
 `;
 
-export const mainIconStyle = css`
-  color: ${palette.gray.dark1};
+export const mainIconBaseStyle = css`
   margin-right: 16px;
   flex-shrink: 0;
 `;
+
+export const mainIconThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
 
 export const titleTextStyle = css`
   display: inline-flex;
@@ -242,7 +250,7 @@ export const disabledIconStyle: Record<Theme, string> = {
     color: ${palette.gray.dark2};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
   `,
 };
 
@@ -283,7 +291,7 @@ export const disabledTextStyle: Record<Theme, string> = {
     font-weight: 400;
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
     font-weight: 400;
   `,
 };
@@ -311,7 +319,7 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
     &:focus {
       text-decoration: none;
       background-color: ${palette.blue.light2};
-      color: ${palette.white};
+      color: ${palette.blue.dark2};
 
       &:before {
         background-color: ${palette.blue.base};
@@ -327,28 +335,24 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
 export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
   return {
     textStyle: css`
-      .${containerClassName} {
-        &:focus & {
-          color: ${theme === Theme.Light ? palette.white : palette.blue.dark1};
-        }
+      .${containerClassName}:focus & {
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.dark1};
       }
     `,
     descriptionStyle: css`
-      .${containerClassName} {
-        &:focus & {
-          color: ${theme === Theme.Light
-            ? palette.blue.light3
-            : palette.blue.dark1};
-        }
+      .${containerClassName}:focus & {
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.dark1};
       }
     `,
     iconStyle: css`
-      .${containerClassName} {
-        &:focus > & {
-          color: ${theme === Theme.Light
-            ? palette.blue.light3
-            : palette.blue.base};
-        }
+      .${containerClassName}:focus & {
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.dark1};
       }
     `,
   };
