@@ -46,7 +46,7 @@ export const Button = React.forwardRef(function Button(
     usingKeyboard,
   });
 
-  const isAnchor = Component === 'a'
+  const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
 
   const buttonProps = {
     type: isAnchor ? undefined : type || 'button',
@@ -56,7 +56,7 @@ export const Button = React.forwardRef(function Button(
     // If consuming application passes a value for as, it will override the default set here
     as: as ? as : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
     // only add a disabled prop if not an anchor
-    ...(!isAnchor && { disabled }),
+    ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,
     onClick: !disabled ? onClick : undefined,
     ...rest,
@@ -88,4 +88,5 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   leftGlyph: PropTypes.element,
   rightGlyph: PropTypes.element,
+  href: PropTypes.string,
 };

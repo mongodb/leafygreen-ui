@@ -4,9 +4,10 @@
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
  * @checksum adeb31f2c5024263206e0b4b9a509574
  */
-import { css, cx } from '@leafygreen-ui/emotion';
-import PropTypes from 'prop-types';
 import * as React from 'react';
+import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';

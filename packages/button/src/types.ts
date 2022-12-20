@@ -93,20 +93,42 @@ interface ButtonProps {
    */
   size?: Size;
 
-
+  /**
+   * The content that will appear inside of the `<Button />` component.
+   */
+  children?: React.ReactNode;
   /**
    * An icon glyph rendered before the button text.
    * To use a custom icon, see {@link Icon}: `createIconComponent` docs
    * @type Leafygreen <Icon /> Component
    */
   leftGlyph?: React.ReactElement;
-
   /**
    * An icon glyph rendered after the button text.
    * To use a custom icon, see {@link Icon}: `createIconComponent` docs
    * @type Leafygreen <Icon /> Component
    */
   rightGlyph?: React.ReactElement;
+  /**
+   * A `href` prop that will make the Button render as an anchor tag.
+   */
+  href?: string;
+
+  /**
+   * The component or HTML Element that the button is rendered as.
+   *
+   * To use with NextJS Links, pass in a component that wraps the Link:
+   * ```js
+   * const Linker = ({ href, children, ...props }) => (
+   *  <NextLink href={href}>
+   *    <a {...props}>{children}</a>
+   *  </NextLink>
+   * );
+   * <Button as={Linker} />
+   * ```
+   * @type HTMLElement | React.Component
+   */
+  as?: React.ElementType<any>;
 }
 
 export { ButtonProps, Size, Variant };
