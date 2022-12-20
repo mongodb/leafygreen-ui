@@ -104,7 +104,10 @@ export interface PolymorphicRenderFunction<
  * PolymorphicComponentType is an interface with a generic function,
  * and a displayName.
  */
-export interface PolymorphicComponentType<XP = {}, DefaultAs extends PolymorphicAs = PolymorphicAs> {
+export interface PolymorphicComponentType<
+  XP = {},
+  DefaultAs extends PolymorphicAs = PolymorphicAs,
+> {
   <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
