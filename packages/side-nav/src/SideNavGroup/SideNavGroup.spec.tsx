@@ -5,7 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 
 import { SideNavItem } from '../SideNavItem';
 
-import { SideNavGroupProps } from './types';
+import { SideNavGroupProps } from './SideNavGroup.types';
 import { SideNavGroup } from './';
 
 describe('packages/side-nav', () => {
