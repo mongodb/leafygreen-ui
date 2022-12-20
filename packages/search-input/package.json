@@ -36,7 +36,7 @@
     "@leafygreen-ui/input-option": "^0.0.0",
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.2",
-    "@leafygreen-ui/polymorphic": "^0.0.0",
+    "@leafygreen-ui/polymorphic": "^1.0.0",
     "@leafygreen-ui/popover": "^11.0.1",
     "@leafygreen-ui/tokens": "^1.4.1",
     "@leafygreen-ui/typography": "^15.2.0",

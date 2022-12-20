@@ -1,8 +1,4 @@
-import {
-  ChangeEventHandler,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
 interface ControlledValueReturnObject<T extends string> {
