@@ -2,13 +2,14 @@ import React from 'react';
 
 import {
   storybookArgTypes,
+  // @ts-expect-error
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 
 import { InputOption, type InputOptionProps } from '.';
 
 export default {
-  title: 'Components/Internal/InputOption',
+  title: 'Components/InputOption',
   component: InputOption,
   parameters: {
     controls: {

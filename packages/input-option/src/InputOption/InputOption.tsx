@@ -18,7 +18,7 @@ import {
 } from './InputOption.style';
 import { InputOptionProps } from './InputOption.types';
 
-const InputOption = Polymorphic<InputOptionProps>(
+export const InputOption = Polymorphic<InputOptionProps>(
   (
     {
       as = 'li' as PolymorphicAs,
@@ -63,5 +63,3 @@ const InputOption = Polymorphic<InputOptionProps>(
 );
 
 InputOption.displayName = 'InputOption';
-
-export { InputOption };
