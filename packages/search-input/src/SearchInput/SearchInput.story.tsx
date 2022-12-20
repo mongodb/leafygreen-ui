@@ -6,6 +6,7 @@ import { startCase } from 'lodash';
 import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
+  // @ts-ignore
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 
@@ -45,9 +46,6 @@ export const WithResults: ComponentStory<typeof SearchInput> = props => (
     `}
     onChange={() => {
       console.log('Change');
-    }}
-    onClear={() => {
-      console.log('Clear');
     }}
     {...props}
   >
