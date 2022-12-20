@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import {
-  type InferredPolymorphicProps,
+  InferredPolymorphic,
   Polymorph,
   Polymorphic,
   PolymorphicAs,
@@ -48,18 +48,29 @@ export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
   'ExamplePolymorphicWithRef',
 );
 
-export const ExampleInferred = Polymorphic<
-  InferredPolymorphicProps<ExampleProps>
->(({ as, title, ...rest }) => {
+export const ExampleInferred = InferredPolymorphic<ExampleProps>(
+  ({ as, title, ...rest }) => {
+    const { Component, ref } = useInferredPolymorphic(as, rest);
+    return (
+      <Component ref={ref} {...rest}>
+        {title}
+      </Component>
+    );
+  },
+  'ExampleInferred',
+);
+
+export const ExampleInferredDefaultButton = InferredPolymorphic<
+  ExampleProps,
+  'button'
+>(({ as = 'button' as PolymorphicAs, title, ...rest }) => {
   const { Component, ref } = useInferredPolymorphic(as, rest);
   return (
     <Component ref={ref} {...rest}>
       {title}
     </Component>
   );
-}, 'ExampleInferred');
-
-
+}, 'ExampleInferredDefaultButton');
 
 /**
  * Advanced usage, not recommended
