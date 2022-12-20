@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 import { Meta, Story } from '@storybook/react';
 
+import { BoxProps } from '@leafygreen-ui/box';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { InferredPolymorphicProps, PolymorphicComponentType } from '@leafygreen-ui/polymorphic'
 
 import Button, { ButtonProps, Variant } from '.';
 
-export const StoryButton = (props: InferredPolymorphicProps<ButtonProps>) => (
+type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
+
+// TODO: Ensure that TSDocs are being read from the Button component directly, not this StoryButton component
+/**
+ * Buttons allow users to take actions, and make choices, with a single tap.
+ */
+export const StoryButton: React.FC<ButtonStoryProps> = props => (
   // @ts-ignore-next-line
   <Button {...props} />
 );
@@ -50,16 +56,18 @@ export default {
     children: storybookArgTypes.children,
     as: storybookArgTypes.as,
   },
-} as Meta<PolymorphicComponentType>;
+} as Meta<ButtonStoryProps>;
 
-const Template: Story<InferredPolymorphicProps<ButtonProps>> = ({
+const Template: Story<ButtonStoryProps> = ({
   leftGlyph,
   rightGlyph,
   ...args
-}: InferredPolymorphicProps<ButtonProps>) => (
+}: ButtonStoryProps) => (
   <Button
-    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as unknown as string} /> : undefined}
-    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph as unknown as string} /> : undefined}
+    // @ts-expect-error
+    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+    // @ts-expect-error
+    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
     {...args}
   />
 );
@@ -94,7 +102,7 @@ BaseGreen.args = {
   variant: Variant.BaseGreen,
 };
 
-export const WithGlobalDarkMode: Story<PolymorphicComponentType> = args => (
+export const WithGlobalDarkMode: Story<ButtonStoryProps> = args => (
   <LeafygreenProvider darkMode={true}>
     <Button {...args}>Test</Button>
   </LeafygreenProvider>

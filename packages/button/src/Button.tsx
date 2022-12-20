@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { InferredPolymorphicProps, Polymorphic, PolymorphicAs, useInferredPolymorphic } from '@leafygreen-ui/polymorphic'
 
 import { ButtonContent } from './ButtonContent';
 import { ButtonClassName, getClassName } from './styles';
@@ -16,27 +16,26 @@ import { ButtonProps, Size, Variant } from './types';
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
  */
-export const Button = Polymorphic<InferredPolymorphicProps<ButtonProps>>(function Button(
+export const Button = React.forwardRef(function Button(
   {
     variant = Variant.Default,
     size = Size.Default,
     darkMode: darkModeProp,
     baseFontSize = BaseFontSize.Body1,
     disabled = false,
-    as = 'button' as PolymorphicAs,
     onClick,
     leftGlyph,
     rightGlyph,
     children,
     className,
+    as,
     type,
     ...rest
-  },
+  }: BoxProps<'button', ButtonProps>,
   forwardRef,
 ) {
   const { usingKeyboard } = useUsingKeyboardContext();
   const { darkMode } = useDarkMode(darkModeProp);
-  const { Component } = useInferredPolymorphic(as, rest)
 
   const buttonStyles = getClassName({
     variant,
@@ -53,6 +52,9 @@ export const Button = Polymorphic<InferredPolymorphicProps<ButtonProps>>(functio
     type: isAnchor ? undefined : type || 'button',
     className: cx(ButtonClassName, buttonStyles, className),
     ref: forwardRef,
+    // Provide a default value for the as prop
+    // If consuming application passes a value for as, it will override the default set here
+    as: as ? as : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
     // only add a disabled prop if not an anchor
     ...(!isAnchor && { disabled }),
     'aria-disabled': disabled,
@@ -70,9 +72,9 @@ export const Button = Polymorphic<InferredPolymorphicProps<ButtonProps>>(functio
   } as const;
 
   return (
-    <Component {...buttonProps}>
+    <Box {...buttonProps}>
       <ButtonContent {...contentProps}>{children}</ButtonContent>
-    </Component>
+    </Box>
   );
 });
 
