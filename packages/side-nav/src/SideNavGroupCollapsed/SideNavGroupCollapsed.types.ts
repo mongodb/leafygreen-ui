@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SideNavGroupHeaderProps } from '../SideNavGroupHeader/types';
+import { SideNavGroupHeaderProps } from '../SideNavGroupHeader/SideNavGroupHeader.types';
 
 export interface SideNavGroupCollapsedProps extends SideNavGroupHeaderProps {
   groupHeaderProps: { [key: string]: string };

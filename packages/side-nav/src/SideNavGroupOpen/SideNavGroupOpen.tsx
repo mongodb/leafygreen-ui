@@ -2,12 +2,16 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
+import { ulStyleOverrides } from '../SideNav/SideNav.styles';
 import { useSideNavContext } from '../SideNav/SideNavContext';
-import { ulStyleOverrides } from '../SideNav/styles';
-import { baseStyle, indentedStyle, themeStyle } from '../SideNavGroup/styles';
+import {
+  baseStyle,
+  indentedStyle,
+  themeStyle,
+} from '../SideNavGroup/SideNavGroup.styles';
 import { SideNavGroupHeader } from '../SideNavGroupHeader/SideNavGroupHeader';
 
-import { SideNavGroupOpenProps } from './types';
+import { SideNavGroupOpenProps } from './SideNavGroupOpen.types';
 
 /**
  * @internal

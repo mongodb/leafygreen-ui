@@ -30,7 +30,12 @@ npm install @leafygreen-ui/side-nav
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 
 return (
-  <SideNav widthOverride={300}>
+  <SideNav
+    widthOverride={300}
+    className={css`
+      height: 100vh; // sets height of SideNav
+    `}
+  >
     <SideNavItem>Overview</SideNavItem>
     <SideNavItem>Introduction</SideNavItem>
     <SideNavItem>

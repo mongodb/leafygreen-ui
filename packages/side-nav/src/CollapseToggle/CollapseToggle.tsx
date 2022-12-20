@@ -15,8 +15,8 @@ import {
   iconClassName,
   iconWrapper,
   keyboardShortcut,
-} from './styles';
-import { CollapseToggleProps } from './types';
+} from './CollapseToggle.styles';
+import { CollapseToggleProps } from './CollapseToggle.types';
 
 /**
  * @internal

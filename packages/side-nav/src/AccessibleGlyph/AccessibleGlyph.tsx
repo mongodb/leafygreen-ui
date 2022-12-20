@@ -2,7 +2,7 @@ import React from 'react';
 
 import { CollapsedSideNavItem } from '../CollapsedSideNavItem/CollapsedSideNavItem';
 
-import { AccessibleGlyphProps } from './types';
+import { AccessibleGlyphProps } from './AccessibleGlyph.types';
 
 /**
  * @internal

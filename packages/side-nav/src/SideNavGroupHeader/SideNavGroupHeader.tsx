@@ -11,8 +11,8 @@ import {
   iconCustomStyle,
   iconCustomThemeStyle,
   overlineStyle,
-} from './styles';
-import { SideNavGroupHeaderProps } from './types';
+} from './SideNavGroupHeader.styles';
+import { SideNavGroupHeaderProps } from './SideNavGroupHeader.types';
 
 /**
  * @internal

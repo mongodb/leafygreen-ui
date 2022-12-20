@@ -5,8 +5,12 @@ import Portal from '@leafygreen-ui/portal';
 
 import { useSideNavContext } from '../SideNav/SideNavContext';
 
-import { activeThemeStyle, baseStyles, themeStyle } from './styles';
-import { CollapsedSideNavItemProps } from './types';
+import {
+  activeThemeStyle,
+  baseStyles,
+  themeStyle,
+} from './CollapedSideNavItem.styles';
+import { CollapsedSideNavItemProps } from './CollapsedSideNavItem.types';
 
 export function CollapsedSideNavItem({
   children,

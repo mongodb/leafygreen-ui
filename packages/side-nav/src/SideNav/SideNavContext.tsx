@@ -4,7 +4,7 @@ import { TransitionStatus } from 'react-transition-group/Transition';
 import { Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { sideNavWidth } from './styles';
+import { sideNavWidth } from './SideNav.styles';
 
 interface SideNavigationContext {
   collapsed: boolean;

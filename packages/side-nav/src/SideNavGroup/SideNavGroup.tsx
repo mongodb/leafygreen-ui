@@ -9,8 +9,8 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { SideNavGroupCollapsed } from '../SideNavGroupCollapsed/SideNavGroupCollapsed';
 import { SideNavGroupOpen } from '../SideNavGroupOpen/SideNavGroupOpen';
 
-import { listItemStyle } from './styles';
-import { SideNavGroupProps } from './types';
+import { listItemStyle } from './SideNavGroup.styles';
+import { SideNavGroupProps } from './SideNavGroup.types';
 
 /**
  * # SideNavGroup

@@ -14,7 +14,6 @@ import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { CollapseToggle } from '../CollapseToggle/CollapseToggle';
 
-import SideNavContext from './SideNavContext';
 import {
   collapsedNavStyles,
   collapsedStateStyles,
@@ -31,8 +30,9 @@ import {
   sideNavClassName,
   sideNavWidth,
   ulStyleOverrides,
-} from './styles';
-import { SideNavProps } from './types';
+} from './SideNav.styles';
+import { SideNavProps } from './SideNav.types';
+import SideNavContext from './SideNavContext';
 
 const sideNavSelector = `.${sideNavClassName}`;
 

@@ -8,8 +8,11 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 
 import { AccessibleGlyph } from '../AccessibleGlyph/AccessibleGlyph';
+import {
+  getIndentLevelStyle,
+  typographyStyle,
+} from '../SideNav/SideNav.styles';
 import { useSideNavContext } from '../SideNav/SideNavContext';
-import { getIndentLevelStyle, typographyStyle } from '../SideNav/styles';
 
 import {
   activeBaseStyle,
@@ -26,8 +29,8 @@ import {
   nestedUlStyle,
   sideNavItemClassName,
   themeStyle,
-} from './styles';
-import { SideNavItemProps } from './types';
+} from './SideNavItem.styles';
+import { SideNavItemProps } from './SideNavItem.types';
 
 /**
  * TODO: TSDoc
