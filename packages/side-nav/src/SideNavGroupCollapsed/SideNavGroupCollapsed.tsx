@@ -7,8 +7,7 @@ import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 
-import { ulStyleOverrides } from '../SideNav';
-import { useSideNavContext } from '../SideNav/SideNavContext';
+import { ulStyleOverrides, useSideNavContext } from '../SideNav';
 import {
   baseStyle,
   buttonClassName,

@@ -2,8 +2,7 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { ulStyleOverrides } from '../SideNav';
-import { useSideNavContext } from '../SideNav/SideNavContext';
+import { ulStyleOverrides, useSideNavContext } from '../SideNav';
 import {
   baseStyle,
   indentedStyle,

@@ -3,7 +3,7 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
 
-import { useSideNavContext } from '../SideNav/SideNavContext';
+import { useSideNavContext } from '../SideNav';
 
 import {
   activeThemeStyle,

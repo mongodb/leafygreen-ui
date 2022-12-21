@@ -6,6 +6,7 @@ import {
   typographyStyle,
   ulStyleOverrides,
 } from './SideNav.styles';
+import { useSideNavContext } from './SideNavContext';
 
 export {
   getIndentLevelStyle,
@@ -15,4 +16,5 @@ export {
   sideNavWidth,
   typographyStyle,
   ulStyleOverrides,
+  useSideNavContext,
 };

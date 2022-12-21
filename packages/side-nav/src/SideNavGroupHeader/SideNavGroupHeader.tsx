@@ -4,7 +4,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { Overline } from '@leafygreen-ui/typography';
 
 import { AccessibleGlyph } from '../AccessibleGlyph';
-import { useSideNavContext } from '../SideNav/SideNavContext';
+import { useSideNavContext } from '../SideNav';
 
 import {
   iconBaseStyles,
