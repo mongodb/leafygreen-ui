@@ -1,5 +1,31 @@
 # @leafygreen-ui/tooltip
 
+## 9.1.0
+
+### Minor Changes
+
+- a0d6638c4: Adds baseFontSize prop to Tooltip component, so that consuming applications are able to override font size from the LeafyGreen Provider
+
+### Patch Changes
+
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+- Updated dependencies [a0d6638c4]
+  - @leafygreen-ui/icon@11.12.3
+  - @leafygreen-ui/typography@15.2.0
+
+## 9.0.3
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/popover@11.0.2
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/typography@15.1.1
+
 ## 9.0.2
 
 ### Patch Changes

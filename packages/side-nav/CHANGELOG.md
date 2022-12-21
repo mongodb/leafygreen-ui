@@ -1,5 +1,18 @@
 # @leafygreen-ui/side-nav
 
+## 12.0.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/portal@4.0.8
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/tooltip@9.0.3
+  - @leafygreen-ui/typography@15.1.1
+
 ## 12.0.1
 
 ### Patch Changes

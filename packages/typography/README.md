@@ -126,24 +126,27 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 
 # Body
 
-| Prop       | Type                          | Description                                                                                        | Default     |
-| ---------- | ----------------------------- | -------------------------------------------------------------------------------------------------- | ----------- |
-| `weight`   | `'regular'`, `'medium'`       | font-weight applied to typography element                                                          | `'regular'` |
-| `darkMode` | `boolean`                     | Determines if the component renders in dark mode                                                   | `false`     |
-| `as`       | `keyof JSX.IntrinsicElements` | Element to render the component as. **Note**: This will supersede the behavior of any other props. | `'p'`       |
+| Prop           | Type                          | Description                                                                                        | Default                                 |
+| -------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------- |
+| `weight`       | `'regular'`, `'medium'`       | font-weight applied to typography element                                                          | `'regular'`                             |
+| `darkMode`     | `boolean`                     | Determines if the component renders in dark mode                                                   | `false`                                 |
+| `as`           | `keyof JSX.IntrinsicElements` | Element to render the component as. **Note**: This will supersede the behavior of any other props. | `'p'`                                   |
+| `baseFontSize` | `13                           | 16`                                                                                                | font-size applied to typography element | default to value set by LeafyGreen Provider. |
 
 # InlineCode
 
-| Prop       | Type                  | Description                                                                                                                                              | Default |
-| ---------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `href`     | `string`, `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
-| `darkMode` | `boolean`             | Determines if the component renders in dark mode                                                                                                         |
+| Prop           | Type                  | Description                                                                                                                                              | Default                                 |
+| -------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------- |
+| `href`         | `string`, `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |                                         |
+| `darkMode`     | `boolean`             | Determines if the component renders in dark mode                                                                                                         |
+| `baseFontSize` | `13                   | 16`                                                                                                                                                      | font-size applied to typography element | default to value set by LeafyGreen Provider. |
 
 # InlineKeyCode
 
-| Prop       | Type      | Description                                      | Default |
-| ---------- | --------- | ------------------------------------------------ | ------- |
-| `darkMode` | `boolean` | Determines if the component renders in dark mode |         |
+| Prop           | Type      | Description                                      | Default                                 |
+| -------------- | --------- | ------------------------------------------------ | --------------------------------------- | -------------------------------------------- |
+| `darkMode`     | `boolean` | Determines if the component renders in dark mode |                                         |
+| `baseFontSize` | `13       | 16`                                              | font-size applied to typography element | default to value set by LeafyGreen Provider. |
 
 # Disclaimer
 
@@ -160,24 +163,27 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 
 # Link
 
-| Prop               | Type                             | Description                                                                                                                                                                              | Default  |
-| ------------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `arrowAppearance`  | `'hover'`, `'persist'`, `'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `'none'` |
-| `hideExternalIcon` | `boolean`                        | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false`  |
-| `darkMode`         | `boolean`                        | Determines if the component renders in dark mode                                                                                                                                         | `false`  |
-| `as`               | `keyof JSX.IntrinsicElements`    | Element to render the component as. **Note**: This will supersede the behavior of any other props.                                                                                       | `'a'`    |
+| Prop               | Type                             | Description                                                                                                                                                                              | Default                                 |
+| ------------------ | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------- |
+| `arrowAppearance`  | `'hover'`, `'persist'`, `'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `'none'`                                |
+| `hideExternalIcon` | `boolean`                        | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false`                                 |
+| `darkMode`         | `boolean`                        | Determines if the component renders in dark mode                                                                                                                                         | `false`                                 |
+| `as`               | `keyof JSX.IntrinsicElements`    | Element to render the component as. **Note**: This will supersede the behavior of any other props.                                                                                       | `'a'`                                   |
+| `baseFontSize`     | `13                              | 16`                                                                                                                                                                                      | font-size applied to typography element | default to value set by LeafyGreen Provider. |
 
 _Note:_ If the current host name is different from the host of the destination URL, we will provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.
 
 # Label
 
-| Prop       | Type      | Description                                             | Default |
-| ---------- | --------- | ------------------------------------------------------- | ------- |
-| `darkMode` | `boolean` | Determines if the component renders in dark mode        | `false` |
-| `disabled` | `boolean` | Determines whether the component should appear disabled | `false` |
+| Prop           | Type      | Description                                             | Default                                 |
+| -------------- | --------- | ------------------------------------------------------- | --------------------------------------- | -------------------------------------------- |
+| `darkMode`     | `boolean` | Determines if the component renders in dark mode        | `false`                                 |
+| `disabled`     | `boolean` | Determines whether the component should appear disabled | `false`                                 |
+| `baseFontSize` | `13       | 16`                                                     | font-size applied to typography element | default to value set by LeafyGreen Provider. |
 
 # Description
 
-| Prop       | Type      | Description                                      | Default |
-| ---------- | --------- | ------------------------------------------------ | ------- |
-| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+| Prop           | Type      | Description                                      | Default                                 |
+| -------------- | --------- | ------------------------------------------------ | --------------------------------------- | -------------------------------------------- |
+| `darkMode`     | `boolean` | Determines if the component renders in dark mode | `false`                                 |
+| `baseFontSize` | `13       | 16`                                              | font-size applied to typography element | default to value set by LeafyGreen Provider. |

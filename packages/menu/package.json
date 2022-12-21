@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "19.0.1",
+  "version": "19.0.3",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,12 +23,12 @@
     "@leafygreen-ui/box": "^3.1.1",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
-    "@leafygreen-ui/icon": "^11.12.1",
-    "@leafygreen-ui/icon-button": "^15.0.1",
+    "@leafygreen-ui/icon": "^11.12.2",
+    "@leafygreen-ui/icon-button": "^15.0.2",
     "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/palette": "^3.4.4",
-    "@leafygreen-ui/popover": "^11.0.1",
-    "@leafygreen-ui/tokens": "^1.4.0",
+    "@leafygreen-ui/palette": "^3.4.5",
+    "@leafygreen-ui/popover": "^11.0.2",
+    "@leafygreen-ui/tokens": "^1.4.1",
     "lodash": "^4.17.21",
     "react-transition-group": "^4.4.1"
   },
@@ -45,6 +45,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^19.0.1"
+    "@leafygreen-ui/button": "^19.0.2"
   }
 }

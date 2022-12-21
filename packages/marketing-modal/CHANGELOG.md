@@ -1,5 +1,30 @@
 # @leafygreen-ui/marketing-modal
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [a0d6638c4]
+- Updated dependencies [d5c206876]
+  - @leafygreen-ui/typography@15.2.0
+  - @leafygreen-ui/modal@14.0.0
+
+## 4.0.0
+
+### Major Changes
+
+- 07331dad9: Updates `MarketingModal` for dark mode brand refresh.
+
+### Patch Changes
+
+- Updated dependencies [b7f7a4c95]
+- Updated dependencies [07331dad9]
+  - @leafygreen-ui/button@19.0.2
+  - @leafygreen-ui/modal@13.0.0
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/typography@15.1.1
+
 ## 3.0.10
 
 ### Patch Changes
