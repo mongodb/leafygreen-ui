@@ -7,11 +7,8 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
 
-import { AccessibleGlyph } from '../AccessibleGlyph/AccessibleGlyph';
-import {
-  getIndentLevelStyle,
-  typographyStyle,
-} from '../SideNav/SideNav.styles';
+import { AccessibleGlyph } from '../AccessibleGlyph';
+import { getIndentLevelStyle, typographyStyle } from '../SideNav';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 
 import {

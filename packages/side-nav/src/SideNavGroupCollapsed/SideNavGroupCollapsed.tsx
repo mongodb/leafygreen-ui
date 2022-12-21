@@ -7,7 +7,7 @@ import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 
-import { ulStyleOverrides } from '../SideNav/SideNav.styles';
+import { ulStyleOverrides } from '../SideNav';
 import { useSideNavContext } from '../SideNav/SideNavContext';
 import {
   baseStyle,
@@ -15,7 +15,7 @@ import {
   indentedStyle,
   themeStyle,
 } from '../SideNavGroup/SideNavGroup.styles';
-import { SideNavGroupHeader } from '../SideNavGroupHeader/SideNavGroupHeader';
+import { SideNavGroupHeader } from '../SideNavGroupHeader';
 
 import {
   collapsibleBaseStyle,

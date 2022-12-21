@@ -6,8 +6,8 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import { SideNavGroupCollapsed } from '../SideNavGroupCollapsed/SideNavGroupCollapsed';
-import { SideNavGroupOpen } from '../SideNavGroupOpen/SideNavGroupOpen';
+import { SideNavGroupCollapsed } from '../SideNavGroupCollapsed';
+import { SideNavGroupOpen } from '../SideNavGroupOpen';
 
 import { listItemStyle } from './SideNavGroup.styles';
 import { SideNavGroupProps } from './SideNavGroup.types';

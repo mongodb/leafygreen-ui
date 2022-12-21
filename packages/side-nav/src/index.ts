@@ -1,6 +1,10 @@
-import { CollapsedSideNavItem } from './CollapsedSideNavItem/CollapsedSideNavItem';
-import SideNav, { sideNavSelector } from './SideNav/SideNav';
-import { sideNavItemSidePadding, sideNavWidth } from './SideNav/SideNav.styles';
+import { CollapsedSideNavItem } from './CollapsedSideNavItem';
+import {
+  SideNav,
+  sideNavItemSidePadding,
+  sideNavSelector,
+  sideNavWidth,
+} from './SideNav';
 import { SideNavGroup } from './SideNavGroup';
 import { SideNavItem } from './SideNavItem';
 

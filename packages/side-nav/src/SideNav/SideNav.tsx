@@ -12,7 +12,7 @@ import LeafyGreenProvider, {
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { CollapseToggle } from '../CollapseToggle/CollapseToggle';
+import { CollapseToggle } from '../CollapseToggle';
 
 import {
   collapsedNavStyles,

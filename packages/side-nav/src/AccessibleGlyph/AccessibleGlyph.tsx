@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CollapsedSideNavItem } from '../CollapsedSideNavItem/CollapsedSideNavItem';
+import { CollapsedSideNavItem } from '../CollapsedSideNavItem';
 
 import { AccessibleGlyphProps } from './AccessibleGlyph.types';
 
