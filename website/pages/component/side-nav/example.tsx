@@ -19,9 +19,15 @@ type Knobs = {
   glyph: boolean;
   baseFontSize: 14 | 16;
   widthOverride: number;
+  darkMode: boolean;
 };
 
 const knobsConfig: KnobsConfigInterface<Knobs> = {
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
   header: {
     type: 'text',
     default: 'Organization',
@@ -74,6 +80,7 @@ function DefaultExample({
   glyph,
   baseFontSize,
   widthOverride,
+  darkMode,
 }: Knobs) {
   const collapsibleProps = collapsible
     ? ({
@@ -94,7 +101,11 @@ function DefaultExample({
         border: 1px solid ${uiColors.gray.light2};
       `}
     >
-      <SideNav baseFontSize={baseFontSize} widthOverride={widthOverride}>
+      <SideNav
+        darkMode={darkMode}
+        baseFontSize={baseFontSize}
+        widthOverride={widthOverride}
+      >
         <SideNavItem glyph={<Icon glyph="Calendar" />}>
           Ungrouped Item
         </SideNavItem>
