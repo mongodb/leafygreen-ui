@@ -1,4 +1,5 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { Header } from '@tanstack/react-table';
 
 export type Align = HTMLElementProps<'td'>['align'];
 
@@ -13,6 +14,6 @@ export type SortState = typeof SortState[keyof typeof SortState];
 export interface HeaderCellProps extends HTMLElementProps<'th'>, DarkModeProps {
   sortState?: SortState;
   onSortIconClick?: (newSortState: SortState) => void;
-  columnName: string;
   cellIndex?: number;
+  columnName: string;
 }

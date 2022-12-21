@@ -20,6 +20,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
     "@leafygreen-ui/icon": "^11.12.0",
@@ -28,8 +29,11 @@
     "@leafygreen-ui/palette": "^3.4.5",
     "@leafygreen-ui/tokens": "^1.4.1",
     "@leafygreen-ui/typography": "^15.1.1",
+    "@tanstack/react-query": "^4.20.4",
+    "@tanstack/react-table": "^8.7.3",
     "lodash": "^4.17.21",
-    "react-transition-group": "^4.4.1"
+    "react-transition-group": "^4.4.1",
+    "react-virtual": "^2.10.4"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"

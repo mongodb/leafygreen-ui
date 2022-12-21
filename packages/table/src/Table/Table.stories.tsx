@@ -1,25 +1,31 @@
-/* eslint-disable */
-// TODO: Table Shape is defined as `any` for now since our test data format isn't consistent.
-import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { ComponentStory, Meta } from '@storybook/react';
-import React, { useState } from 'react';
-import Cell from '../Cell/Cell';
-import HeaderCell from '../HeaderCell/HeaderCell';
-import { Align, SortState } from '../HeaderCell/types';
-import HeaderRow from '../HeaderRow/HeaderRow';
-import Row from '../Row/Row';
+import React, { Fragment } from 'react';
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
+} from '@tanstack/react-table';
+import { makeData, Person } from '../makeData';
+import Table from '../Table/Table';
 import TableHead from '../TableHead/TableHead';
+import HeaderRow from '../HeaderRow/HeaderRow';
+import HeaderCell from '../HeaderCell/HeaderCell';
+import TableContainer from '../TableContainer/TableContainer';
 import TableBody from '../TableBody/TableBody';
-import Table from './Table';
-import { TableProps } from './types';
+import Row from '../Row/Row';
+import Cell from '../Cell/Cell';
+import ExpandableContent from '../ExpandableContent/ExpandableContent';
+import useLeafygreenTable from '../useLeafygreenTable';
+import { css } from '@leafygreen-ui/emotion';
+import { TableOptions, useReactTable } from '@tanstack/react-table';
+import { useVirtual } from 'react-virtual';
 
 export default {
   title: 'Components/TableNew',
   component: Table,
-  args: {
-    withHeaders: false,
-  },
   argTypes: {
     children: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
@@ -27,126 +33,140 @@ export default {
   },
 } as Meta<typeof Table>;
 
-const testData = Array(10).fill({
-  test1: 'Test 1',
-  test2: 'Test 2',
-  test3: 'Test 3',
-});
-
-const Template: ComponentStory<typeof Table> = args => (
-  <Table {...args}>
-    <TableHead>
-      <HeaderRow>
-        {Object.keys(testData[0]).map(colHeader => (
-          <HeaderCell columnName={colHeader}>{colHeader}</HeaderCell>
-        ))}
-      </HeaderRow>
-    </TableHead>
-    <TableBody>
-      {testData.map((dataRow, i) => (
-        <Row key={i}>
-          {Object.keys(dataRow).map((cellKey: string, j: number) => (
-            <Cell key={j}>{dataRow[cellKey]}</Cell>
+const Template: ComponentStory<typeof Table> = args => {
+  const data = makeData(100);
+  return (
+    <Table {...args}>
+      <TableHead>
+        <HeaderRow>
+          {Object.keys(data[0]).map((columnName: any) => (
+            <HeaderCell key={columnName} columnName={columnName} />
           ))}
-        </Row>
-      ))}
-    </TableBody>
-  </Table>
-);
+        </HeaderRow>
+      </TableHead>
+      <TableBody>
+        {data.map((row: any) => (
+          <Row>
+            {Object.keys(row).map((cellKey: string, index: number) => {
+              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+            })}
+          </Row>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
 
 export const Basic = Template.bind({});
-
-export const WithZebraStriping = Template.bind({});
-WithZebraStriping.args = {
+export const ZebraStripes = Template.bind({});
+ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const AlignmentWorkaround = ({ ...args }: TableProps) => {
-  const isLastColumn = (i: number) => i === Object.keys(testData[0]).length - 1;
-  return (
-    <Table
-      className={css`
-        table-layout: fixed;
-        width: 600px;
-      `}
-      {...args}
-    >
-      <TableHead>
-        <HeaderRow>
-          {Object.keys(testData[0]).map((colHeader, i) => (
-            <HeaderCell
-              colSpan={isLastColumn(i) ? 4 : 1}
-              align={isLastColumn(i) ? 'right' : undefined}
-              columnName={colHeader}
-            >
-              {colHeader}
-            </HeaderCell>
-          ))}
-        </HeaderRow>
-      </TableHead>
-      <TableBody>
-        {testData.map((dataRow, j) => (
-          <Row key={j}>
-            {Object.keys(dataRow).map((cellKey: string, j: number) => (
-              <Cell key={j} colSpan={isLastColumn(j) ? 4 : 1}>
-                {cellKey}
-              </Cell>
-            ))}
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
+export const BasicWithVS = () => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data, setData] = React.useState(() => makeData(5000));
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+      {
+        accessorKey: 'progress',
+        header: 'Profile Progress',
+        size: 80,
+      },
+    ],
+    [],
   );
-};
 
-export const WithSorting = ({ ...args }: TableProps) => {
-  const isLastColumn = (i: number) => i === Object.keys(testData[0]).length - 1;
-  const [sortState, setSortState] = useState<SortState>(SortState.Ascending);
-  const handleSortIconClick = (newSortState: SortState) => {
-    console.log('sort icon clicked', newSortState);
-    setSortState(newSortState);
-  };
-  const columnAligns: Align[] = ['left', 'right', 'right'];
+  const table = useLeafygreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  const { rows } = table.getRowModel();
 
   return (
-    <Table
-      className={css`
-        table-layout: fixed;
-        width: 600px;
-      `}
-      {...args}
-    >
-      <TableHead>
-        <HeaderRow>
-          {Object.keys(testData[0]).map((colHeader, i) => (
-            <HeaderCell
-              sortState={sortState}
-              onSortIconClick={handleSortIconClick}
-              columnName={colHeader}
-              colSpan={isLastColumn(i) ? 4 : 1}
-              align={columnAligns[i]}
-            >
-              {colHeader}
-            </HeaderCell>
-          ))}
-        </HeaderRow>
-      </TableHead>
-      <TableBody>
-        {testData.map((dataRow, j) => (
-          <Row key={j}>
-            {Object.keys(dataRow).map((cellKey: string, j: number) => (
-              <Cell key={j} colSpan={isLastColumn(j) ? 4 : 1}>
-                {cellKey}
-              </Cell>
-            ))}
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
-};
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
+      </div>
 
-// Verifying that portal children like Select render correctly in all cases
-export const WithPortalChildren = ({ ...args }: TableProps) => {
-  return <></>;
+      <TableContainer ref={tableContainerRef}>
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup: any) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header: any) => {
+                  return (
+                    <HeaderCell
+                      key={header.id}
+                      columnName={header.column.columnDef.header}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+          </TableHead>
+          <TableBody table={table}>
+            {table.virtualRows.map((virtualRow: any) => {
+              const row = rows[virtualRow.index];
+              return (
+                <Row key={row.id}>
+                  {row.getVisibleCells().map((cell: any) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
 };

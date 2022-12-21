@@ -12,8 +12,8 @@ const HeaderCell = ({
   align,
   sortState,
   onSortIconClick,
-  columnName,
   cellIndex,
+  columnName,
   ...rest
 }: PropsWithChildren<HeaderCellProps>) => {
   const { setColumnAlignments } = useTableContext();
@@ -23,14 +23,16 @@ const HeaderCell = ({
   };
 
   if (isMissingOneSortProp()) {
-    consoleOnce.warn();
+    consoleOnce.warn(
+      `HeaderCell ${columnName} is missing either 'sortState' or 'onSortIconClick'.`,
+    );
   }
 
   useEffect(() => {
     setColumnAlignments &&
       cellIndex &&
       align &&
-      setColumnAlignments(oldAlignments => {
+      setColumnAlignments((oldAlignments: any) => {
         return {
           ...oldAlignments,
           [cellIndex]: align,
@@ -41,7 +43,7 @@ const HeaderCell = ({
   return (
     <th className={cx(baseStyles, className)} {...rest}>
       <div className={cx(contentContainerStyles, alignmentStyles(align))}>
-        {children}
+        {children ? children : columnName}
         {/* There will be a console warning if only one of the props is provided to the component */}
         {sortState && onSortIconClick && (
           <SortIcon

@@ -1,5 +1,3 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface TableHeadProps
-  extends HTMLElementProps<'thead'>,
-    DarkModeProps {}
+export interface TableHeadProps extends HTMLElementProps<'thead'> {}
