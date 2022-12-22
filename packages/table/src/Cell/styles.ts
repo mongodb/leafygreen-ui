@@ -15,3 +15,8 @@ export const alignmentStyles = (align: Align) =>
   css`
     text-align: ${align};
   `;
+
+export const depthPadding = (depth: number) =>
+  css`
+    padding-left: ${16 * depth}px;
+  `;

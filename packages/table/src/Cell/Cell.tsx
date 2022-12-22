@@ -1,18 +1,24 @@
 import { cx } from '@leafygreen-ui/emotion';
+import { consoleOnce } from '@leafygreen-ui/lib';
 import React, { PropsWithChildren } from 'react';
 import { useTableContext } from '../TableContext';
-import { alignmentStyles, baseStyles } from './styles';
+import ToggleExpandIcon from '../ToggleExpandedIcon';
+import { alignmentStyles, baseStyles, depthPadding } from './styles';
 import { CellProps } from './types';
 
-const Cell = ({
+const Cell = <T extends unknown>({
   children,
   className,
   cellIndex,
+  cell,
   ...rest
-}: PropsWithChildren<CellProps>) => {
+}: PropsWithChildren<CellProps<T>>) => {
   const { columnAlignments } = useTableContext();
   const align =
     cellIndex && columnAlignments ? columnAlignments[cellIndex] : undefined;
+
+  const shouldRenderArrow = cell?.row.getCanExpand() && cellIndex === 0;
+  consoleOnce.log(cell && cell.row)
 
   return (
     <td
@@ -25,7 +31,19 @@ const Cell = ({
       )}
       {...rest}
     >
-      {children}
+      <div className={cx(
+        depthPadding(cell && cellIndex === 0 ? cell.row.depth : 0)
+      )}>
+        {shouldRenderArrow &&
+          <ToggleExpandIcon
+            isExpanded={!!cell && cell.row.getIsExpanded()}
+            // this prop should be set by default if an arrow should render
+            // @ts-expect-error
+            toggleExpanded={cell?.row.getToggleExpandedHandler()}
+          />
+        }
+        {children}
+      </div>
     </td>
   );
 };

@@ -47,7 +47,7 @@ export function makeData(...lens: Array<number>) {
       return {
         ...newPerson(),
         ...(hasSubRows && lens[depth + 1]
-          ? makeDataLevel(depth + 1)
+          ? { subRows: makeDataLevel(depth + 1) }
           : undefined),
       };
     });

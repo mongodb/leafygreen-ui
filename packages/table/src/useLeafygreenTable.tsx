@@ -7,8 +7,6 @@ const useLeafygreenTable = <T extends unknown>(
   const { containerRef, ...rest } = props;
   const table = useReactTable<T>(rest);
   const { rows } = table.getRowModel();
-
-  //Virtualizing is optional, but might be necessary if we are going to potentially have hundreds or thousands of rows
   const rowVirtualizer = useVirtual({
     parentRef: containerRef,
     size: rows.length,
