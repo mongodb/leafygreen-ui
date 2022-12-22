@@ -49,7 +49,7 @@ const HeaderCell = ({
           <SortIcon
             sortState={sortState}
             onSortIconClick={onSortIconClick}
-            columnName={columnName}
+            aria-label={`Sort by ${columnName}`}
           />
         )}
       </div>

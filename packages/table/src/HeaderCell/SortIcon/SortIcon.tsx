@@ -20,7 +20,7 @@ const glyphColors: Record<SortState, string> = {
 const SortIcon = ({
   sortState,
   onSortIconClick,
-  columnName,
+  ...rest
 }: SortIconProps) => {
   const getNextState = () => {
     const allStates = Object.keys(glyphs);
@@ -33,7 +33,7 @@ const SortIcon = ({
   };
 
   return (
-    <IconButton onClick={handleClick} aria-label={`Sort ${columnName}`}>
+    <IconButton onClick={handleClick} {...rest}>
       <Icon glyph={glyphs[sortState]} fill={glyphColors[sortState]} />
     </IconButton>
   );

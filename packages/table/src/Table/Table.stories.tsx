@@ -20,11 +20,7 @@ import TableContainer from '../TableContainer/TableContainer';
 import TableBody from '../TableBody/TableBody';
 import Row from '../Row/Row';
 import Cell from '../Cell/Cell';
-import ExpandableContent from '../ExpandableContent/ExpandableContent';
 import useLeafygreenTable from '../useLeafygreenTable';
-import { css } from '@leafygreen-ui/emotion';
-import { TableOptions, useReactTable } from '@tanstack/react-table';
-import { useVirtual } from 'react-virtual';
 
 export default {
   title: 'Components/TableNew',
@@ -65,6 +61,43 @@ export const ZebraStripes = Template.bind({});
 ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
+
+export const NestedRows = () => {
+  const data = makeData(100, 3, 2);
+  const columns = Object.keys(data[0]).filter(x => x !== 'subRows')
+  return (
+    <Table>
+      <TableHead>
+        <HeaderRow>
+          {columns.map((columnName: string) => (
+            <HeaderCell key={columnName} columnName={columnName} />
+          ))}
+        </HeaderRow>
+      </TableHead>
+      <TableBody>
+        {data.map((row: any) => (
+          <Row>
+            {columns.map((cellKey: string, index: number) => {
+              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+            })}
+          </Row>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
+
+export const Sortable = () => {
+  return <>TODO</>
+}
+
+export const Selectable = () => {
+  return <>TODO</>
+}
+
+export const ExpandableContent = () => {
+  return <>TODO</>
+}
 
 export const BasicWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
@@ -349,11 +382,11 @@ export const NestedRowsWithVS = () => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table.virtualRows.length} virtual rows rendered</p>
-        <pre>{JSON.stringify(expanded, null, 2)}</pre>
+        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table shouldAlternateRowColor>
+        <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <HeaderRow key={headerGroup.id}>
@@ -377,7 +410,7 @@ export const NestedRowsWithVS = () => {
             {table.virtualRows.map((virtualRow: any) => {
               const row = rows[virtualRow.index];
               return (
-                <Row key={row.id}>
+                <Row key={row.id} row={row}>
                   {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
                     return (
                       <Cell key={cell.id} cell={cell}>
@@ -397,3 +430,15 @@ export const NestedRowsWithVS = () => {
     </>
   );
 };
+
+export const SortableWithVS = () => {
+  return <>TODO</>
+}
+
+export const SelectableWithVS = () => {
+  return <>TODO</>
+}
+
+export const ExpandableContentWithVS = () => {
+  return <>TODO</>
+}

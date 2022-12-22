@@ -18,7 +18,6 @@ const Cell = <T extends unknown>({
     cellIndex && columnAlignments ? columnAlignments[cellIndex] : undefined;
 
   const shouldRenderArrow = cell?.row.getCanExpand() && cellIndex === 0;
-  consoleOnce.log(cell && cell.row)
 
   return (
     <td
