@@ -2,8 +2,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import React, { PropsWithChildren } from 'react';
 import { useTableContext } from '../TableContext';
-import ToggleExpandIcon from '../ToggleExpandedIcon';
-import { alignmentStyles, baseStyles, depthPadding } from './styles';
+import ToggleExpandIcon from '../ToggleExpandedIcon/ToggleExpandedIcon';
+import { alignmentStyles, baseStyles, depthPadding, cellContentContainerStyles } from './styles';
 import { CellProps } from './types';
 
 const Cell = <T extends unknown>({
@@ -31,6 +31,7 @@ const Cell = <T extends unknown>({
       {...rest}
     >
       <div className={cx(
+        cellContentContainerStyles,
         depthPadding(cell && cellIndex === 0 ? cell.row.depth : 0)
       )}>
         {shouldRenderArrow &&

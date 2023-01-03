@@ -3,6 +3,11 @@ import { palette } from '@leafygreen-ui/palette';
 
 export const baseStyles = css`
   border-top: 1px solid transparent;
+
+  // emulating a border bottom on the last nested row
+  &:not([data-depth="0"]) + tr[data-depth="0"] {
+    border-top: 1px solid ${palette.gray.light2};
+  }
 `;
 
 export const zebraStyles = css`
@@ -17,10 +22,6 @@ export const zebraStyles = css`
 
 export const nestedBorderTopStyles = css`
   border-top: 1px solid ${palette.gray.light2};
-`;
-
-export const nestedBorderBottomStyles = css`
-  border-bottom: 1px solid ${palette.gray.light2};
 `;
 
 export const nestedBgStyles = css`

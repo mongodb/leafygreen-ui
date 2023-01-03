@@ -23,6 +23,10 @@ const range = (len: number) => {
   return arr;
 };
 
+function randomIntFromInterval(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 const newPerson = (): Person => {
   return {
     id: faker.datatype.number(1000),
@@ -56,7 +60,7 @@ export function makeData(renderingExpandableRows: boolean, ...lens: Array<number
     return range(len).map((d): any => {
       return {
         ...newPerson(),
-        ...(hasSubRows && lens[depth + 1]
+        ...(hasSubRows && lens[depth + 1] && randomIntFromInterval(1, 3) == 1 // only give 1 in 3 rows subrows just for demo
           ? { subRows: makeDataLevel(depth + 1) }
           : undefined),
         ...(renderingExpandableRows && {

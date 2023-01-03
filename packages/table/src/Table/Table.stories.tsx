@@ -21,6 +21,7 @@ import TableBody from '../TableBody/TableBody';
 import Row from '../Row/Row';
 import Cell from '../Cell/Cell';
 import useLeafygreenTable from '../useLeafygreenTable';
+import ExpandedContent from '../ExpandedContent/ExpandedContent';
 
 export default {
   title: 'Components/TableNew',
@@ -96,7 +97,28 @@ export const Selectable = () => {
 }
 
 export const ExpandableContent = () => {
-  return <>TODO</>
+  const data = makeData(false, 100, 3, 2);
+  const columns = Object.keys(data[0]).filter(x => x !== 'subRows')
+  return (
+    <Table>
+      <TableHead>
+        <HeaderRow>
+          {columns.map((columnName: string) => (
+            <HeaderCell key={columnName} columnName={columnName} />
+          ))}
+        </HeaderRow>
+      </TableHead>
+      <TableBody>
+        {data.map((row: any) => (
+          <Row>
+            {columns.map((cellKey: string, index: number) => {
+              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+            })}
+          </Row>
+        ))}
+      </TableBody>
+    </Table>
+  );
 }
 
 export const BasicWithVS = () => {
