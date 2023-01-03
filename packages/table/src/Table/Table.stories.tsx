@@ -21,6 +21,7 @@ import TableBody from '../TableBody/TableBody';
 import Row from '../Row/Row';
 import Cell from '../Cell/Cell';
 import useLeafygreenTable from '../useLeafygreenTable';
+import ExpandedContent from '../ExpandedContent/ExpandedContent';
 
 export default {
   title: 'Components/TableNew',
@@ -439,6 +440,450 @@ export const SelectableWithVS = () => {
   return <>TODO</>
 }
 
-export const ExpandableContentWithVS = () => {
-  return <>TODO</>
+export const ExpandableContentWithVS1 = () => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data, setData] = React.useState(() => makeData(5000, 2));
+  const [expanded, setExpanded] = React.useState<ExpandedState>({})
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+      {
+        accessorKey: 'progress',
+        header: 'Profile Progress',
+        size: 80,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafygreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    state: {
+      expanded,
+    },
+    onExpandedChange: setExpanded,
+    getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    getSubRows: row => row.subRows,
+  });
+
+  console.log(getCoreRowModel()(table)())
+
+  const { rows } = table.getRowModel();
+
+  let virtualRows = table.virtualRows;
+  let paddingTop = virtualRows.length > 0 ? virtualRows?.[0]?.start || 0 : 0;
+  let paddingBottom =
+    virtualRows.length > 0
+      ? table.totalSize - (virtualRows?.[virtualRows.length - 1]?.end || 0)
+      : 0;
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
+        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
+      </div>
+
+      <TableContainer ref={tableContainerRef}>
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup: any) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header: any) => {
+                  return (
+                    <HeaderCell
+                      key={header.id}
+                      columnName={header.column.columnDef.header}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+          </TableHead>
+          {paddingTop > 0 && (
+            <tr>
+              <td style={{ height: `${paddingTop}px` }} />
+            </tr>
+          )}
+          {table.virtualRows.map((virtualItem: any) => {
+            const row = rows[virtualItem.index];
+            return (
+              <tbody ref={virtualItem.measureRef}>
+                <Row key={row.id} row={row}>
+                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
+                    return (
+                      <Cell key={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+                {row.getIsExpanded() && (
+                  <ExpandedContent row={row}>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                  </ExpandedContent>
+                )}
+              </tbody>
+            );
+          })}
+          {paddingBottom > 0 && (
+            <tr>
+              <td style={{ height: `${paddingBottom}px` }} />
+            </tr>
+          )}
+        </Table>
+      </TableContainer>
+    </>
+  );
+}
+
+export const ExpandableContentWithVS2 = () => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data, setData] = React.useState(() => makeData(5000, 2));
+  const [expanded, setExpanded] = React.useState<ExpandedState>({})
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+      {
+        accessorKey: 'progress',
+        header: 'Profile Progress',
+        size: 80,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafygreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    state: {
+      expanded,
+    },
+    onExpandedChange: setExpanded,
+    getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    getSubRows: row => row.subRows,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
+        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
+      </div>
+
+      <TableContainer ref={tableContainerRef}>
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup: any) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header: any) => {
+                  return (
+                    <HeaderCell
+                      key={header.id}
+                      columnName={header.column.columnDef.header}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+          </TableHead>
+          <TableBody table={table}>
+            {table.virtualRows.map((virtualItem: any) => {
+              const row = rows[virtualItem.index];
+              return (
+                <>
+                  <Row key={row.id} row={row}>
+                    {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                  <ExpandedContent row={row}>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                    <p>
+                      Test
+                    </p>
+                  </ExpandedContent>
+                </>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+}
+
+export const ExpandableContentWithVS3 = () => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data, setData] = React.useState(() => makeData(5000, 2));
+  const [expanded, setExpanded] = React.useState<ExpandedState>({})
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+      {
+        accessorKey: 'progress',
+        header: 'Profile Progress',
+        size: 80,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafygreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    state: {
+      expanded,
+    },
+    onExpandedChange: setExpanded,
+    getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    getSubRows: row => row.subRows,
+  });
+
+  const { rows } = table.getRowModel();
+
+  let virtualRows = table.virtualRows;
+  let paddingTop = virtualRows.length > 0 ? virtualRows?.[0]?.start || 0 : 0;
+  let paddingBottom =
+    virtualRows.length > 0
+      ? table.totalSize - (virtualRows?.[virtualRows.length - 1]?.end || 0)
+      : 0;
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
+        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
+      </div>
+
+      <TableContainer ref={tableContainerRef}>
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup: any) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header: any) => {
+                  return (
+                    <HeaderCell
+                      key={header.id}
+                      columnName={header.column.columnDef.header}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+          </TableHead>
+          {paddingTop > 0 && (
+            <tr>
+              <td style={{ height: `${paddingTop}px` }} />
+            </tr>
+          )}
+          {table.virtualRows.map((virtualItem: any) => {
+            const row = rows[virtualItem.index];
+            return (
+              <>
+                <Row key={row.id} row={row}>
+                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
+                    return (
+                      <Cell key={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+                <ExpandedContent row={row}>
+                  <p>
+                    Test
+                  </p>
+                  <p>
+                    Test
+                  </p>
+                  <p>
+                    Test
+                  </p>
+                  <p>
+                    Test
+                  </p>
+                  <p>
+                    Test
+                  </p>
+                  <p>
+                    Test
+                  </p>
+                </ExpandedContent>
+              </>
+            );
+          })}
+          {paddingBottom > 0 && (
+            <tr>
+              <td style={{ height: `${paddingBottom}px` }} />
+            </tr>
+          )}
+        </Table>
+      </TableContainer>
+    </>
+  );
 }

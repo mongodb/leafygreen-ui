@@ -20,3 +20,8 @@ export const depthPadding = (depth: number) =>
   css`
     padding-left: ${16 * depth}px;
   `;
+
+export const cellContentContainerStyles = css`
+  display: flex;
+  align-items: center;
+`;

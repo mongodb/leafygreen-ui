@@ -1,5 +1,6 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { Row } from '@tanstack/react-table';
+import { VirtualItem } from 'react-virtual';
 
 export interface RowProps<T extends unknown> extends HTMLElementProps<'tr'>, DarkModeProps {
   /**
@@ -7,4 +8,5 @@ export interface RowProps<T extends unknown> extends HTMLElementProps<'tr'>, Dar
    */
   disabled?: boolean;
   row?: Row<T>;
+  virtualItem?: VirtualItem;
 }
