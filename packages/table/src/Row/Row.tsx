@@ -18,8 +18,8 @@ const Row = <T extends unknown>({ children, className, row, ...rest }: PropsWith
           baseStyles,
           {
             [zebraStyles]: shouldAlternateRowColor,
-            [nestedBorderTopStyles]: isNestedRowParent,
-            [nestedBorderBottomStyles]: isLastNestedRow,
+            // [nestedBorderTopStyles]: isNestedRowParent,
+            // [nestedBorderBottomStyles]: isLastNestedRow,
             [nestedBgStyles]: isNestedRowOrParent,
           },
           className,

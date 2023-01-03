@@ -1,3 +1,4 @@
+import React from 'react';
 import { faker } from '@faker-js/faker';
 import { ColumnSort, SortingState } from '@tanstack/react-table';
 
@@ -41,14 +42,15 @@ const newPerson = (): Person => {
 export function makeData(...lens: Array<number>) {
   const hasSubRows = lens.length > 1;
 
-  const makeDataLevel = (depth = 0): Array<Person> => {
+  const makeDataLevel = (depth = 0): Array<any> => {
     const len = lens[depth]!;
-    return range(len).map((d): Person => {
+    return range(len).map((d): any => {
       return {
         ...newPerson(),
         ...(hasSubRows && lens[depth + 1]
           ? { subRows: makeDataLevel(depth + 1) }
           : undefined),
+        renderExpandableContent: (row: any) => <>test</>,
       };
     });
   };
