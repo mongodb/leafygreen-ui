@@ -39,7 +39,16 @@ const newPerson = (): Person => {
   };
 };
 
-export function makeData(...lens: Array<number>) {
+const ExpandedContentComponent = ({ row }: any) => (
+  <>
+    Test
+    <pre>
+      {JSON.stringify(row, null, 2)}
+    </pre>
+  </>
+)
+
+export function makeData(renderingExpandableRows: boolean, ...lens: Array<number>) {
   const hasSubRows = lens.length > 1;
 
   const makeDataLevel = (depth = 0): Array<any> => {
@@ -50,7 +59,9 @@ export function makeData(...lens: Array<number>) {
         ...(hasSubRows && lens[depth + 1]
           ? { subRows: makeDataLevel(depth + 1) }
           : undefined),
-        renderExpandableContent: (row: any) => <>test</>,
+        ...(renderingExpandableRows && {
+          renderExpandedContent: ExpandedContentComponent,
+        })
       };
     });
   };
@@ -58,7 +69,7 @@ export function makeData(...lens: Array<number>) {
   return makeDataLevel();
 }
 
-const data = makeData(1000);
+const data = makeData(false, 1000);
 
 //simulates a backend api
 export const fetchData = (

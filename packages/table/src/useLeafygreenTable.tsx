@@ -1,7 +1,8 @@
 import { TableOptions, useReactTable } from '@tanstack/react-table';
 import { useVirtual } from 'react-virtual';
+import { Row } from '@tanstack/react-table';
 
-const useLeafygreenTable = <T extends unknown>(
+const useLeafygreenTable = <T extends unknown & { renderExpandedContent: (row: Row<T>) => JSX.Element }>(
   props: TableOptions<T> & { containerRef: any },
 ) => {
   const { containerRef, ...rest } = props;

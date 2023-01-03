@@ -7,4 +7,5 @@ export interface RowProps<T extends unknown> extends HTMLElementProps<'tr'>, Dar
    */
   disabled?: boolean;
   row?: Row<T>;
+  virtualRow?: any;
 }

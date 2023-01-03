@@ -1,17 +1,19 @@
-import React, { PropsWithChildren } from 'react';
+import React, { Fragment, PropsWithChildren } from 'react';
 import { TableBodyProps } from './types';
 
 const TableBody = ({
   children,
   table,
+  renderingExpandableRows = false,
   ...rest
 }: PropsWithChildren<TableBodyProps>) => {
   let paddingTop = 0;
   let paddingBottom = 0;
 
+  const ContainerElement = renderingExpandableRows ? Fragment : (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>) => <tbody {...props} />;
+
   if (table) {
     const { virtualRows, totalSize } = table;
-
     paddingTop = virtualRows.length > 0 ? virtualRows?.[0]?.start || 0 : 0;
     paddingBottom =
       virtualRows.length > 0
@@ -20,7 +22,7 @@ const TableBody = ({
   }
 
   return (
-    <tbody {...rest}>
+    <ContainerElement {...rest}>
       {paddingTop > 0 && (
         <tr>
           <td style={{ height: `${paddingTop}px` }} />
@@ -32,8 +34,8 @@ const TableBody = ({
           <td style={{ height: `${paddingBottom}px` }} />
         </tr>
       )}
-    </tbody>
-  );
+    </ContainerElement>
+  )
 };
 
 export default TableBody;

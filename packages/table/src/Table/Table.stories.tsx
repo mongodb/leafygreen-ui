@@ -33,7 +33,7 @@ export default {
 } as Meta<typeof Table>;
 
 const Template: ComponentStory<typeof Table> = args => {
-  const data = makeData(100);
+  const data = makeData(false, 100);
   return (
     <Table {...args}>
       <TableHead>
@@ -63,7 +63,7 @@ ZebraStripes.args = {
 };
 
 export const NestedRows = () => {
-  const data = makeData(100, 3, 2);
+  const data = makeData(false, 100, 3, 2);
   const columns = Object.keys(data[0]).filter(x => x !== 'subRows')
   return (
     <Table>
@@ -101,7 +101,7 @@ export const ExpandableContent = () => {
 
 export const BasicWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(5000));
+  const [data, setData] = React.useState(() => makeData(false, 5000));
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -209,7 +209,7 @@ export const BasicWithVS = () => {
 
 export const ZebraStripesWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(5000));
+  const [data, setData] = React.useState(() => makeData(false, 5000));
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -317,7 +317,7 @@ export const ZebraStripesWithVS = () => {
 
 export const NestedRowsWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(5000, 5, 3));
+  const [data, setData] = React.useState(() => makeData(false, 5000, 5, 3));
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -441,7 +441,7 @@ export const SelectableWithVS = () => {
 
 export const ExpandableContentWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(5000, 5, 3));
+  const [data, setData] = React.useState(() => makeData(true, 5000, 5, 3));
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -530,11 +530,11 @@ export const ExpandableContentWithVS = () => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
+          <TableBody table={table} renderingExpandableRows>
             {table.virtualRows.map((virtualRow: any) => {
               const row = rows[virtualRow.index];
               return (
-                <Row key={row.id} row={row}>
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
                   {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
                     return (
                       <Cell key={cell.id} cell={cell}>
