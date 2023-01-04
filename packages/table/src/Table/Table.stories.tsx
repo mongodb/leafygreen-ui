@@ -35,11 +35,12 @@ export default {
 
 const Template: ComponentStory<typeof Table> = args => {
   const data = makeData(false, 100);
+  const columns = Object.keys(data[0]).filter(x => x !== 'renderExpandedContent' && x !== 'subRows')
   return (
     <Table {...args}>
       <TableHead>
         <HeaderRow>
-          {Object.keys(data[0]).map((columnName: any) => (
+          {columns.map((columnName: any) => (
             <HeaderCell key={columnName} columnName={columnName} />
           ))}
         </HeaderRow>
@@ -63,9 +64,13 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
+export const StickyHeaderRow = () => {
+  return <>TODO</>
+}
+
 export const NestedRows = () => {
-  const data = makeData(false, 100, 3, 2);
-  const columns = Object.keys(data[0]).filter(x => x !== 'subRows')
+  const data = makeData(false, 100, 3);
+  const columns = Object.keys(data[0]).filter(x => x !== 'renderExpandedContent' && x !== 'subRows')
   return (
     <Table>
       <TableHead>
@@ -80,6 +85,18 @@ export const NestedRows = () => {
           <Row>
             {columns.map((cellKey: string, index: number) => {
               return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+            })}
+            {row.subRows && row.subRows.map((subRow: any) => {
+              let subRowCellKeys = Object.keys(subRow).filter(x => x !== 'renderExpandedContent' && x !== 'subRows')
+              return (
+                <Row>
+                  {subRowCellKeys.map((cellKey: string) => (
+                    <Cell>
+                      {subRow[cellKey]}
+                    </Cell>
+                  ))}
+                </Row>
+              )
             })}
           </Row>
         ))}

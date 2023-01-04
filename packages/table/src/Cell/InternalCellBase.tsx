@@ -31,7 +31,9 @@ const InternalCellBase = ({
     >
       <div className={cx(
         cellContentContainerStyles,
-        depthPadding(cellIndex === 0 ? depth : 0)
+        {
+          [depthPadding(depth)]: cellIndex === 0,
+        }
       )}>
         {shouldRenderArrow && <ToggleExpandedIcon {...toggleExpandedIconProps} />}
         {children}

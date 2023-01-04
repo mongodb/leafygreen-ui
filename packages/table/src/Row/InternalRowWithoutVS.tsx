@@ -4,9 +4,10 @@ import InternalCellWithoutVS from '../Cell/InternalCellWithoutVS';
 import InternalRowBase from './InternalRowBase';
 import { InternalRowWithoutVSProps } from './types';
 
-const InternalRowWithoutVS = ({ children, ...rest }: PropsWithChildren<InternalRowWithoutVSProps>) => {
+const InternalRowWithoutVS = ({ children, depth = 0, ...rest }: PropsWithChildren<InternalRowWithoutVSProps>) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const ExpandedContentChild = React.Children.toArray(children).filter(c => isComponentType(c, 'ExpandedContent'))[0]
+  const RowChildren = React.Children.toArray(children).filter(c => isComponentType(c, 'Row'))
   const CellChildren = React.Children.toArray(children).filter(c => isComponentType(c, 'Cell'))
   return (
     <>
@@ -15,7 +16,8 @@ const InternalRowWithoutVS = ({ children, ...rest }: PropsWithChildren<InternalR
           return React.createElement(InternalCellWithoutVS, {
             ...((child as ReactElement)?.props),
             cellIndex: index,
-            toggleExpandedIconProps: !!ExpandedContentChild ? {
+            depth,
+            toggleExpandedIconProps: (!!ExpandedContentChild || RowChildren.length > 0) ? {
               isExpanded,
               toggleExpanded: () => {
                 setIsExpanded(x => !x)
@@ -26,11 +28,23 @@ const InternalRowWithoutVS = ({ children, ...rest }: PropsWithChildren<InternalR
       </InternalRowBase>
 
       {isExpanded && (
-        <tr>
-          <td colSpan={React.Children.count(CellChildren)}>
-            {ExpandedContentChild}
-          </td>
-        </tr>
+        <>
+          {!!ExpandedContentChild && (
+            <tr>
+              <td colSpan={React.Children.count(CellChildren)}>
+                {ExpandedContentChild}
+              </td>
+            </tr>
+          )}
+          {RowChildren.length > 0 && (
+            RowChildren.map((rowChild) => {
+              return React.createElement(InternalRowWithoutVS, {
+                ...((rowChild as ReactElement)?.props),
+                depth: depth + 1,
+              });
+            })
+          )}
+        </>
       )}
     </>
   );
