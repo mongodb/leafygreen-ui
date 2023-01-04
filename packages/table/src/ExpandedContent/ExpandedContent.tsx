@@ -1,39 +1,11 @@
-import { css, cx } from '@leafygreen-ui/emotion';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
-const ExpandedContent = ({
-  children,
-  className,
-  row,
-  virtualRow,
-  ...rest
-}: PropsWithChildren<any>) => {
+const ExpandedContent = (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>) => {
   return (
-    <>
-      {row.getIsExpanded() && (
-        <tr
-        // className={
-        //   cx(
-        //     {
-        //       [css`
-        //       height: ${virtualRow?.size}px;
-        //       transform: translateY(${virtualRow?.start}px);
-        //   `]: !!virtualRow,
-        //     }
-        //   )
-        // }
-        >
-          {/* the expanded row is a custom 1 cell row */}
-          <td colSpan={row.getVisibleCells().length}>
-            <div className={className} {...rest}>
-              {children}
-            </div>
-          </td>
-        </tr>
-      )
-      }
-    </>
-  );
-};
+    <div {...props} />
+  )
+}
+
+ExpandedContent.displayName = 'ExpandedContent'
 
 export default ExpandedContent;

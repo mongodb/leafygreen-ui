@@ -98,7 +98,7 @@ export const Selectable = () => {
 
 export const ExpandableContent = () => {
   const data = makeData(false, 100, 3, 2);
-  const columns = Object.keys(data[0]).filter(x => x !== 'subRows')
+  const columns = Object.keys(data[0]).filter(x => x !== 'renderExpandedContent' && x !== 'subRows')
   return (
     <Table>
       <TableHead>
@@ -109,11 +109,18 @@ export const ExpandableContent = () => {
         </HeaderRow>
       </TableHead>
       <TableBody>
-        {data.map((row: any) => (
+        {data.map((row: any, index: number) => (
           <Row>
             {columns.map((cellKey: string, index: number) => {
               return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
             })}
+            {index % 2 === 0 && (
+              <ExpandedContent>
+                <pre>
+                  {JSON.stringify(row, null, 2)}
+                </pre>
+              </ExpandedContent>
+            )}
           </Row>
         ))}
       </TableBody>
@@ -463,7 +470,7 @@ export const SelectableWithVS = () => {
 
 export const ExpandableContentWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(true, 5000, 5, 3));
+  const [data, setData] = React.useState(() => makeData(true, 5000));
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(

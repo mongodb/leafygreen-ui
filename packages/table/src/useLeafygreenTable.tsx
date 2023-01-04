@@ -1,12 +1,19 @@
-import { TableOptions, useReactTable } from '@tanstack/react-table';
+import { Table, TableOptions, useReactTable } from '@tanstack/react-table';
 import { useVirtual } from 'react-virtual';
 import { Row } from '@tanstack/react-table';
 
-const useLeafygreenTable = <T extends unknown & { renderExpandedContent: (row: Row<T>) => JSX.Element }>(
+const useLeafygreenTable = <T extends unknown & { renderExpandedContent?: (row: Row<T>) => JSX.Element }>(
   props: TableOptions<T> & { containerRef: any },
 ) => {
-  const { containerRef, ...rest } = props;
-  const table = useReactTable<T>(rest);
+  const { containerRef, data, ...rest } = props;
+  const table: Table<T> = useReactTable<T>({
+    data,
+    getRowCanExpand: (row: Row<T>) => {
+      // console.log(!!row.original.renderExpandedContent)
+      return !!row.original.renderExpandedContent || ((table.options.enableExpanding ?? true) && !!row.subRows?.length)
+    },
+    ...rest
+  });
   const { rows } = table.getRowModel();
   const rowVirtualizer = useVirtual({
     parentRef: containerRef,

@@ -53,24 +53,27 @@ const ExpandedContentComponent = ({ row }: any) => (
 )
 
 export function makeData(renderingExpandableRows: boolean, ...lens: Array<number>) {
-  const hasSubRows = lens.length > 1;
+  const hasSubRows = !renderingExpandableRows && lens.length > 1;
 
   const makeDataLevel = (depth = 0): Array<any> => {
     const len = lens[depth]!;
     return range(len).map((d): any => {
       return {
         ...newPerson(),
-        ...(hasSubRows && lens[depth + 1] && randomIntFromInterval(1, 3) == 1 // only give 1 in 3 rows subrows just for demo
-          ? { subRows: makeDataLevel(depth + 1) }
-          : undefined),
-        ...(renderingExpandableRows && {
-          renderExpandedContent: ExpandedContentComponent,
-        })
+        subRows: hasSubRows && lens[depth + 1] && randomIntFromInterval(1, 3) == 1
+          ? makeDataLevel(depth + 1)
+          : undefined,
+        renderExpandedContent: renderingExpandableRows && randomIntFromInterval(1, 3) == 1
+          ? ExpandedContentComponent
+          : undefined,
       };
     });
   };
 
-  return makeDataLevel();
+  const data = makeDataLevel()
+  console.log(data)
+
+  return data;
 }
 
 const data = makeData(false, 1000);
