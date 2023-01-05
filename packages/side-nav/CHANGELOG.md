@@ -1,5 +1,11 @@
 # @leafygreen-ui/side-nav
 
+## 13.0.0
+
+### Major Changes
+
+- 351fbd350: Updates `SideNav` for dark mode brand refresh. Also applies new file structure internally.
+
 ## 12.0.2
 
 ### Patch Changes
