@@ -1,6 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface SideNavProps extends HTMLElementProps<'nav'> {
+export interface SideNavProps extends HTMLElementProps<'nav'>, DarkModeProps {
   /**
    * Content that will be rendered inside the root-level element.
    *
