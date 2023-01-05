@@ -4,10 +4,13 @@ import isUndefined from 'lodash/isUndefined';
 interface ControlledValueReturnObject<T extends string> {
   /** Whether the value is controlled */
   isControlled: boolean;
+
   /** The controlled or uncontrolled value */
   value: T;
+
   /** A ChangeEventHandler to assign to any onChange event */
   handleChange: ChangeEventHandler<any>;
+
   /**
    * A setter for the internal value.
    * Does not change the controlled value if the provided value has not changed.
@@ -24,7 +27,6 @@ interface ControlledValueReturnObject<T extends string> {
 export const useControlledValue = <T extends string>(
   controlledValue?: T,
   changeHandler?: ChangeEventHandler<any>,
-  // _onClear?: ReactEventHandler<any>,
 ): ControlledValueReturnObject<T> => {
   const isControlled = !isUndefined(controlledValue);
 
