@@ -5,12 +5,15 @@ import PropTypes from 'prop-types';
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import CollapseToggle from './CollapseToggle';
-import SideNavContext from './SideNavContext';
+import { CollapseToggle } from '../CollapseToggle';
+
 import {
   collapsedNavStyles,
   collapsedStateStyles,
@@ -20,14 +23,16 @@ import {
   innerNavWrapperStyle,
   listStyles,
   listWrapperStyle,
-  navStyles,
+  navBaseStyles,
+  navThemeStyles,
   outerContainerCollapsedStyle,
   outerContainerStyle,
   sideNavClassName,
   sideNavWidth,
   ulStyleOverrides,
-} from './styles';
-import { SideNavProps } from './types';
+} from './SideNav.styles';
+import { SideNavProps } from './SideNav.types';
+import SideNavContext from './SideNavContext';
 
 const sideNavSelector = `.${sideNavClassName}`;
 
@@ -61,12 +66,15 @@ function SideNav({
   widthOverride,
   collapsed: controlledCollapsed,
   setCollapsed: setControlledCollapsed = () => {},
+  darkMode: darkModeProp,
   ...rest
 }: SideNavProps) {
   const { Provider: SideNavProvider } = SideNavContext;
   const [uncontrolledCollapsed, uncontrolledSetCollapsed] = useState(false);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { usingKeyboard } = useUsingKeyboardContext();
+
+  const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
@@ -130,89 +138,97 @@ function SideNav({
             width,
             transitionState: state,
             baseFontSize,
+            darkMode,
+            theme,
           }}
         >
-          <div
-            data-testid="side-nav-container"
-            className={cx(
-              sideNavClassName,
-              outerContainerStyle,
-              css`
-                width: ${width}px;
-              `,
-              { [outerContainerCollapsedStyle]: collapsed },
-              className,
-            )}
-          >
+          <LeafyGreenProvider darkMode={darkMode}>
             <div
-              className={innerNavWrapperStyle}
-              onMouseLeave={() => setHover(false)}
+              data-testid="side-nav-container"
+              className={cx(
+                sideNavClassName,
+                outerContainerStyle,
+                css`
+                  width: ${width}px;
+                `,
+                { [outerContainerCollapsedStyle]: collapsed },
+                className,
+              )}
             >
-              <nav
-                id={navId}
-                className={cx(
-                  navStyles,
-                  css`
-                    width: ${width}px;
-                  `,
-                  {
-                    [collapsedNavStyles]: ['entering', 'entered'].includes(
-                      state,
-                    ),
-                    [hoverNavStyles]: (hover || focusExpand) && collapsed,
-                  },
-                )}
-                onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
-                onMouseEnter={() => setHover(true)}
-                {...rest}
+              <div
+                className={innerNavWrapperStyle}
+                onMouseLeave={() => setHover(false)}
               >
-                {/**
-                 * We render the sidenav items in both the expanded and collapsed states,
-                 * and transition between them. This way we can reduce layout shift from
-                 * elements appearing and disappearing
-                 */}
-                <div
-                  className={cx(listWrapperStyle, expandedStateStyles[state])}
+                <nav
+                  id={navId}
+                  className={cx(
+                    navBaseStyles,
+                    navThemeStyles[theme],
+                    css`
+                      width: ${width}px;
+                    `,
+                    {
+                      [collapsedNavStyles]: ['entering', 'entered'].includes(
+                        state,
+                      ),
+                      [hoverNavStyles]: (hover || focusExpand) && collapsed,
+                    },
+                  )}
+                  onFocus={() => setFocus(true)}
+                  onBlur={() => setFocus(false)}
+                  onMouseEnter={() => setHover(true)}
+                  {...rest}
                 >
-                  <ul
+                  {/**
+                   * We render the sidenav items in both the expanded and collapsed states,
+                   * and transition between them. This way we can reduce layout shift from
+                   * elements appearing and disappearing
+                   */}
+                  <div
+                    className={cx(listWrapperStyle, expandedStateStyles[state])}
+                  >
+                    <ul
+                      className={cx(
+                        ulStyleOverrides,
+                        listStyles,
+                        css`
+                          width: ${width}px;
+                        `,
+                      )}
+                    >
+                      {children}
+                    </ul>
+                  </div>
+
+                  <div
                     className={cx(
-                      ulStyleOverrides,
-                      listStyles,
-                      css`
-                        width: ${width}px;
-                      `,
+                      listWrapperStyle,
+                      collapsedStateStyles[state],
                     )}
                   >
-                    {children}
-                  </ul>
-                </div>
+                    <ul
+                      // We hide the duplicate items from screen readers.
+                      aria-hidden
+                      className={cx(ulStyleOverrides, listStyles)}
+                      ref={setPortalContainer}
+                    />
+                  </div>
+                </nav>
 
-                <div
-                  className={cx(listWrapperStyle, collapsedStateStyles[state])}
-                >
-                  <ul
-                    // We hide the duplicate items from screen readers.
-                    aria-hidden
-                    className={cx(ulStyleOverrides, listStyles)}
-                    ref={setPortalContainer}
-                  />
-                </div>
-              </nav>
-
-              <CollapseToggle
-                collapsed={collapsed || (!hover && !focusExpand && collapsed)}
-                onClick={() => {
-                  setCollapsed(curr => !curr);
-                  setHover(false);
-                }}
-                // This prevents any strange flickering while the navigation is transitioning.
-                hideTooltip={
-                  ['entering', 'exiting'].includes(state) || undefined
-                }
-              />
+                <CollapseToggle
+                  collapsed={collapsed || (!hover && !focusExpand && collapsed)}
+                  onClick={() => {
+                    setCollapsed(curr => !curr);
+                    setHover(false);
+                  }}
+                  // This prevents any strange flickering while the navigation is transitioning.
+                  hideTooltip={
+                    ['entering', 'exiting'].includes(state) || undefined
+                  }
+                />
+              </div>
             </div>
-          </div>
+          </LeafyGreenProvider>
         </SideNavProvider>
       )}
     </Transition>
@@ -225,6 +241,7 @@ SideNav.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   id: PropTypes.string,
+  darkMode: PropTypes.bool,
 };
 
 export default SideNav;
