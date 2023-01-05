@@ -2,19 +2,9 @@ import useEventListener from './useEventListener';
 
 export function useBackdropClick(
   callback: Function,
-  refEl: React.RefObject<HTMLElement>,
-  enabled?: boolean,
-): void;
-export function useBackdropClick(
-  callback: Function,
-  refEls: Array<React.RefObject<HTMLElement>>,
-  enabled?: boolean,
-): void;
-export function useBackdropClick(
-  callback: Function,
   refOrRefs: React.RefObject<HTMLElement> | Array<React.RefObject<HTMLElement>>,
   enabled = true,
-) {
+): void {
   /**
    * We add two event handlers to the document to handle the backdrop click behavior.
    * Intended behavior is to close the menu, and keep focus on the component.
