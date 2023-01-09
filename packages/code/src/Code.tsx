@@ -9,7 +9,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
-  useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -86,6 +85,11 @@ const codeWrapperStyle = css`
     // Ideally, we wouldn't need to set the text to wrap, but from what I can tell, this is the one possible solution to the problem.
     whiteSpace: ['pre', 'pre-wrap', 'pre'],
   })}
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px ${palette.blue.light1} inset;
+  }
 `;
 
 const codeWrapperStyleNoPanel = css`
@@ -106,16 +110,6 @@ const singleLineCodeWrapperStyle = css`
   align-items: center;
   padding-top: ${(singleLineComponentHeight - lineHeight) / 2}px;
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
-`;
-
-const codeWrapperFocusStyle = css`
-  &:focus,
-  &:active,
-  &:focus-visible,
-  &:focus-within {
-    outline: none;
-    box-shadow: 0 0 0 2px ${palette.blue.light1} inset;
-  }
 `;
 
 const panelStyles = css`
@@ -248,7 +242,6 @@ function Code({
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [showCopyBar, setShowCopyBar] = useState(false);
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
@@ -365,7 +358,6 @@ function Code({
                 [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
                 [codeWrapperStyleNoPanel]: !showPanel,
                 [singleLineCodeWrapperStyle]: !isMultiline,
-                [codeWrapperFocusStyle]: showFocus,
               },
               className,
             )}
