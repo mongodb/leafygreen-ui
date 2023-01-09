@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 
-import Card, { CardProps } from '@leafygreen-ui/card';
+import Card from '@leafygreen-ui/card';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
@@ -24,63 +24,7 @@ import {
   summaryTextThemeStyle,
   transitionDuration,
 } from './ExpandableCard.styles';
-
-/**
- * Types
- */
-interface ExpandableCardProps extends Omit<CardProps, 'contentStyle'> {
-  /**
-   * The title of the card
-   */
-  title: string;
-
-  /**
-   * Description text below the title
-   */
-  description?: ReactNode;
-
-  /**
-   * Text in parentheses immediately following the title. Typically 'optional' or 'required'
-   */
-  flagText?: 'optional' | 'required' | string;
-
-  /**
-   * Toggles dark mode
-   */
-  darkMode?: boolean;
-
-  /**
-   * Defines the default state of the card
-   */
-  defaultOpen?: boolean;
-
-  /**
-   * Forces the card state
-   */
-  isOpen?: boolean;
-
-  /**
-   * Callback fired when a user clicks the card header
-   */
-  onClick?: (
-    event: React.SyntheticEvent<HTMLDivElement, MouseEvent | KeyboardEvent>,
-  ) => void;
-
-  /**
-   * Unique id for the card
-   */
-  id?: string;
-
-  /**
-   * Styling prop for children
-   */
-  contentClassName?: string;
-
-  /**
-   * Component children
-   */
-  children?: React.ReactNode;
-}
+import { ExpandableCardProps } from './ExpandableCard.types';
 
 /**
  * TODO: Description
