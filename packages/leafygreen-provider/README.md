@@ -109,6 +109,8 @@ function InlineCode({ children, className }: InlineCodeProps) {
 
 ## useDarkMode
 
+This hook is meant for internal use. It allows components to read the value of the dark mode prop from the LeafyGreen provider and overwrite the value locally if necessary.
+
 ```js
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
