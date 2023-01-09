@@ -11,6 +11,7 @@
 - [JSX/React](#JSX-React)
 - [CSS-in-JS](#CSS-in-JS)
 - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
+- [API Patterns](#API-Patterns)
 - [References](#References)
 
 ## <a id="To-Contribute">To Contribute</a>
@@ -395,6 +396,20 @@ const childStyles = css`
   color: var(--color);
 `;
 ```
+
+---
+
+## <a id="API-Patterns">API Patterns</a>
+
+---
+
+### Input Errors
+
+#### Rules
+
+- Use `state='error'` to show the input with a warning icon and red border. This property must be set to `error` in order for an `errorMessage` to render, otherwise the `errorMessage` will be ignored.
+- Use `errorMessage` prop to set the error message that is displayed next to the input.
+- If `state='error'` but `errorMessage` is not defined, require `aria-describedby`
 
 ---
 
