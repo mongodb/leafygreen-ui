@@ -94,7 +94,7 @@ export const baseInputStyle = css`
   z-index: 1;
   outline: none;
   border-radius: 6px;
-  transition: ${transitionDuration}ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border-color, box-shadow;
 
   &:disabled {
