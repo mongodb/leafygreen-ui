@@ -122,7 +122,6 @@ function LanguageSwitcher({
   scrollContainer,
   popoverZIndex,
 }: Props) {
-  // const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { theme, darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
 
