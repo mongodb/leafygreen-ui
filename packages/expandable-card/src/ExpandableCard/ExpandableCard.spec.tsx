@@ -3,7 +3,7 @@ import { getByText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import ExpandableCard from '.';
+import ExpandableCard from './ExpandableCard';
 
 const renderCard = () =>
   render(
