@@ -1,1 +1,1 @@
-export { default } from './ExpandableCard';
+export { default } from './ExpandableCard/ExpandableCard';
