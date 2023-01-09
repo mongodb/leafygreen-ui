@@ -5,10 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import FileIcon from '@leafygreen-ui/icon/dist/File';
-import {
-  useDarkMode,
-  useUsingKeyboardContext,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Option, Select } from '@leafygreen-ui/select';
@@ -65,6 +62,10 @@ const buttonModeStyle: Record<Theme, string> = {
     &:hover {
       background-color: ${palette.gray.light2};
     }
+
+    &:focus-visible {
+      background-color: ${palette.blue.light2};
+    }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark2};
@@ -81,17 +82,8 @@ const buttonModeStyle: Record<Theme, string> = {
     &:active {
       background-color: ${palette.gray.dark1};
     }
-  `,
-};
 
-const buttonFocusStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &:focus {
-      background-color: ${palette.blue.light2};
-    }
-  `,
-  [Theme.Dark]: css`
-    &:focus {
+    &:focus-visible {
       background-color: ${palette.blue.light1};
     }
   `,
@@ -130,7 +122,7 @@ function LanguageSwitcher({
   scrollContainer,
   popoverZIndex,
 }: Props) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  // const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { theme, darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
 
@@ -175,9 +167,7 @@ function LanguageSwitcher({
     ({ className, children, ...props }: ButtonProps, ref) => (
       <Button
         {...props}
-        className={cx(className, menuButtonStyle, buttonModeStyle[theme], {
-          [buttonFocusStyle[theme]]: showFocus,
-        })}
+        className={cx(className, menuButtonStyle, buttonModeStyle[theme])}
         darkMode={darkMode}
         ref={ref}
         leftGlyph={renderedLogo}
