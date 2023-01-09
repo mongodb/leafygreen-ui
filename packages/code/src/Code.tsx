@@ -86,11 +86,6 @@ const codeWrapperStyle = css`
     // Ideally, we wouldn't need to set the text to wrap, but from what I can tell, this is the one possible solution to the problem.
     whiteSpace: ['pre', 'pre-wrap', 'pre'],
   })}
-
-  &:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px ${palette.blue.light1} inset;
-  }
 `;
 
 const codeWrapperStyleNoPanel = css`

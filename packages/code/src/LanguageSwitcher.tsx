@@ -65,10 +65,6 @@ const buttonModeStyle: Record<Theme, string> = {
     &:hover {
       background-color: ${palette.gray.light2};
     }
-
-    &:focus-visible {
-      background-color: ${palette.blue.light2};
-    }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark2};
@@ -84,10 +80,6 @@ const buttonModeStyle: Record<Theme, string> = {
     &:hover,
     &:active {
       background-color: ${palette.gray.dark1};
-    }
-
-    &:focus-visible {
-      background-color: ${palette.blue.light1};
     }
   `,
 };
