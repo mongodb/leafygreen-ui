@@ -23,7 +23,7 @@ import {
   summaryStyle,
   summaryTextThemeStyle,
   transitionDuration,
-} from './styles';
+} from './ExpandableCard.styles';
 
 /**
  * Types
