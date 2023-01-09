@@ -48,6 +48,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 | -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `children`     | `node`     | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                                                        |         |
 | `baseFontSize` | `14`, `16` | Describes the `font-size` that the application is using. `<Body/>` and `<InlineCode />` components use this value to determine the `font-size` and `line-height` applied to their content | `14`    |
+| `darkMode`     | `boolean`  | Determines if LG components should be rendered in dark mode.                                                                                                                              |         |
 
 ## useUsingKeyboardContext
 
@@ -103,5 +104,16 @@ function InlineCode({ children, className }: InlineCodeProps) {
   return (
     <code className={cx(sharedStyles, code, body, className)}>{children}</code>
   );
+}
+```
+
+## useDarkMode
+
+```js
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+function Example({ children, darkMode: darkModeProp, variant }) {
+  const { darkMode, theme, setDarkMode } = useDarkMode(darkModeProp);
+  return <div className={badgeVariants[theme][variant]}>{children}</div>;
 }
 ```
