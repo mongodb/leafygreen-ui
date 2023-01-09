@@ -16,6 +16,7 @@ import {
   childrenWrapperStyle,
   childrenWrapperTransitionStyle,
   flagTextStyle,
+  iconStyle,
   iconThemeStyle,
   iconTransitionStyle,
   summaryHeader,
@@ -143,13 +144,8 @@ const ExpandableCard = ({
   );
 
   return (
-    <Card
-      darkMode={darkMode}
-      className={cx(cardStyle(darkMode), className)}
-      id={id}
-      {...rest}
-    >
-      <LeafyGreenProvider darkMode={darkMode}>
+    <LeafyGreenProvider darkMode={darkMode}>
+      <Card className={cx(cardStyle(darkMode), className)} id={id} {...rest}>
         {/* HTML `button` elements can't be used as a grid parent */}
         <div
           role="button"
@@ -175,6 +171,7 @@ const ExpandableCard = ({
                 // Setting 'as="div"' to avoid nesting interactive components for accessibility
                 as="div"
                 className={cx(
+                  iconStyle,
                   iconThemeStyle[theme],
                   iconTransitionStyle[state],
                 )}
@@ -208,8 +205,8 @@ const ExpandableCard = ({
             </div>
           )}
         </Transition>
-      </LeafyGreenProvider>
-    </Card>
+      </Card>
+    </LeafyGreenProvider>
   );
 };
 
