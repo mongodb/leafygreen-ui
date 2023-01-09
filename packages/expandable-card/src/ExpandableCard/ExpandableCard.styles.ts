@@ -27,6 +27,7 @@ export const summaryStyle = css`
   column-gap: 8px;
   cursor: pointer;
   color: inherit;
+  align-items: center;
 `;
 
 export const summaryHeader = css`
@@ -69,39 +70,33 @@ export const flagTextStyle = css`
 
 export const iconStyle = css`
   grid-column: 2;
-  grid-row: 1/3;
+  grid-row: 1;
   color: ${palette.gray.base};
 `;
 
 export const iconThemeStyle: Record<Theme, string> = {
-  [Theme.Dark]: cx(
-    iconStyle,
-    css`
-      &:hover,
-      &:active,
-      &:focus-visible {
-        color: ${palette.gray.light1};
+  [Theme.Dark]: css`
+    &:hover,
+    &:active,
+    &:focus-visible {
+      color: ${palette.gray.light1};
 
-        &::before {
-          background-color: ${palette.gray.dark2};
-        }
+      &::before {
+        background-color: ${palette.gray.dark2};
       }
-    `,
-  ),
-  [Theme.Light]: cx(
-    iconStyle,
-    css`
-      &:hover,
-      &:active,
-      &:focus-visible {
-        color: ${palette.gray.dark1};
+    }
+  `,
+  [Theme.Light]: css`
+    &:hover,
+    &:active,
+    &:focus-visible {
+      color: ${palette.gray.dark1};
 
-        &::before {
-          background-color: ${palette.gray.light2};
-        }
+      &::before {
+        background-color: ${palette.gray.light2};
       }
-    `,
-  ),
+    }
+  `,
 };
 
 export const iconTransitionStyle: Record<TransitionStatus, string> = {
