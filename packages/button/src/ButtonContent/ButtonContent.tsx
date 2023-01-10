@@ -4,14 +4,15 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { registerRipple } from '@leafygreen-ui/ripple';
 
-import ButtonIcon from './ButtonIcon';
+import ButtonIcon from '../ButtonIcon/ButtonIcon';
+import { ButtonProps, Size, Variant } from '../types';
+
 import {
   buttonContentSizeStyle,
   buttonContentStyle,
   rippleColors,
   rippleStyle,
-} from './styles';
-import { ButtonProps, Size, Variant } from './types';
+} from './ButtonContent.styles';
 
 type ButtonContentProps = Omit<ButtonProps, 'as'>;
 

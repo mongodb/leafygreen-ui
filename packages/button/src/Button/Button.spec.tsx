@@ -5,8 +5,8 @@ import NextLink from 'next/link';
 
 import { BoxProps } from '@leafygreen-ui/box';
 
-import { ButtonProps } from './types';
-import Button from '.';
+import { ButtonProps } from '../types';
+import Button from '..';
 
 const className = 'test-button-class';
 const title = 'Test button title';
