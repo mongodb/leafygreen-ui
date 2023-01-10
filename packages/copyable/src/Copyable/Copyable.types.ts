@@ -39,4 +39,6 @@ export interface CopyableProps extends HTMLElementProps<'div'> {
    * If `true`, the tooltip rendered as feedback when the user clicks the copy button will be rendered using a portal
    */
   shouldTooltipUsePortal?: boolean;
+
+  children: string;
 }
