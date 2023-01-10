@@ -1,6 +1,6 @@
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { ComponentStory, Meta } from '@storybook/react';
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   ColumnDef,
   flexRender,
@@ -20,8 +20,9 @@ import TableContainer from '../TableContainer/TableContainer';
 import TableBody from '../TableBody/TableBody';
 import Row from '../Row/Row';
 import Cell from '../Cell/Cell';
-import useLeafygreenTable from '../useLeafygreenTable';
+import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
+import { VirtualItem } from 'react-virtual';
 
 export default {
   title: 'Components/TableNew',
@@ -109,9 +110,47 @@ export const Sortable = () => {
   return <>TODO</>
 }
 
-export const Selectable = () => {
-  return <>TODO</>
+export const SelectableRows = () => {
+  const data = makeData(false, 100);
+  const [selectedRows, setSelectedRows] = useState<Array<number>>([]);
+  const handleRowSelect = (rowIndex: number) => {
+    if (selectedRows.includes(rowIndex)) {
+
+    } else {
+      setSelectedRows(rows => rows.concat([rowIndex]))
+    }
+  }
+  const handleSelectAllRows = () => {
+    // set selectedRows to [0, 1, 2, ...]
+    if (selectedRows.length === data.length) {
+      setSelectedRows([])
+    } else {
+      setSelectedRows(Array.from(Array(data.length).keys()))
+    }
+  }
+  const columns = Object.keys(data[0]).filter(x => x !== 'renderExpandedContent' && x !== 'subRows')
+  return (
+    <Table hasSelectableRows onSelectAllRows={handleSelectAllRows}>
+      <TableHead>
+        <HeaderRow>
+          {columns.map((columnName: any) => (
+            <HeaderCell key={columnName} columnName={columnName} />
+          ))}
+        </HeaderRow>
+      </TableHead>
+      <TableBody>
+        {data.map((row: any, index: number) => (
+          <Row onSelect={(e) => handleRowSelect(index)} isSelected={selectedRows.includes(index)}>
+            {Object.keys(row).map((cellKey: string, index: number) => {
+              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+            })}
+          </Row>
+        ))}
+      </TableBody>
+    </Table>
+  );
 }
+
 
 export const ExpandableContent = () => {
   const data = makeData(false, 100, 3, 2);
@@ -131,13 +170,13 @@ export const ExpandableContent = () => {
             {columns.map((cellKey: string, index: number) => {
               return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
             })}
-            {index % 2 === 0 && (
+            {row.renderExpandedContent &&
               <ExpandedContent>
                 <pre>
                   {JSON.stringify(row, null, 2)}
                 </pre>
               </ExpandedContent>
-            )}
+            }
           </Row>
         ))}
       </TableBody>
@@ -453,7 +492,7 @@ export const NestedRowsWithVS = () => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {table.virtualRows.map((virtualRow: any) => {
+            {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               return (
                 <Row key={row.id} row={row}>
@@ -482,7 +521,132 @@ export const SortableWithVS = () => {
 }
 
 export const SelectableWithVS = () => {
-  return <>TODO</>
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data, setData] = React.useState(() => makeData(false, 5000));
+  const [rowSelection, setRowSelection] = React.useState({})
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+      {
+        accessorKey: 'progress',
+        header: 'Profile Progress',
+        size: 80,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafygreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    state: {
+      rowSelection,
+    },
+    onRowSelectionChange: setRowSelection,
+    hasSelectableRows: true,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
+        <button
+          onClick={() => console.info('rowSelection', rowSelection)}
+        >
+          Log rowSelection state
+        </button>
+        <button
+          onClick={() =>
+            console.info(
+              'table.getSelectedFlatRows()',
+              table.getSelectedRowModel().flatRows
+            )
+          }
+        >
+          Log table.getSelectedFlatRows()
+        </button>
+      </div>
+
+      <TableContainer ref={tableContainerRef}>
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup: any) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header: any) => {
+                  return (
+                    <HeaderCell
+                      key={header.id}
+                      columnName={header.column.columnDef.header}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+          </TableHead>
+          <TableBody table={table}>
+            {table.virtualRows.map((virtualRow: any) => {
+              const row = rows[virtualRow.index];
+              return (
+                <Row key={row.id}>
+                  {row.getVisibleCells().map((cell: any) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
 }
 
 export const ExpandableContentWithVS = () => {

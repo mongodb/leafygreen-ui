@@ -1,16 +1,23 @@
-import { Row as RTRow } from '@tanstack/react-table';
 import React, { PropsWithChildren } from 'react';
+import { LeafygreenTableRowData } from '../useLeafygreenTable/useLeafygreenTable';
 import InternalRowWithoutVS from './InternalRowWithoutVS';
 import InternalRowWithVS from './InternalRowWithVS';
 import { RowProps } from './types';
 
-const Row = <T extends unknown & { renderExpandedContent: ({ row }: { row: RTRow<T> }) => JSX.Element }>({ row, ...rest }: PropsWithChildren<RowProps<T>>) => {
+type RowData<T> = T extends LeafygreenTableRowData<T> ? T : LeafygreenTableRowData<T>;
+
+const Row = <T extends unknown>({
+  row,
+  virtualRow,
+  ...rest
+}: PropsWithChildren<RowProps<RowData<T>>>) => {
   const hasVS = !!row;
 
-  if (hasVS) {
+  if (hasVS && virtualRow) {
     return (
       <InternalRowWithVS
         row={row}
+        virtualRow={virtualRow}
         {...rest}
       />
     );

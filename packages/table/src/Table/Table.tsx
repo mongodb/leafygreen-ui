@@ -12,14 +12,20 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 const Table = ({
   children,
   className,
-  shouldAlternateRowColor,
+  shouldAlternateRowColor = false,
+  hasSelectableRows = false,
+  onSelectAllRows,
   baseFontSize: baseFontSizeProp,
   ...rest
 }: PropsWithChildren<TableProps>) => {
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
   return (
-    <TableContextProvider shouldAlternateRowColor={!!shouldAlternateRowColor}>
+    <TableContextProvider
+      shouldAlternateRowColor={shouldAlternateRowColor}
+      hasSelectableRows={hasSelectableRows}
+      onSelectAllRows={onSelectAllRows}
+    >
       <table
         className={cx(baseStyles, bodyTypeScaleStyles[baseFontSize], className)}
         {...rest}

@@ -86,3 +86,9 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 | `className` | `string`                       | className applied to `td` or `th` wrapper (see `isHeader` prop) |         |
 | `isHeader`  | `boolean`                      | Renders the cell as a `th` element                              | `false` |
 | ...         | native `td` or `th` attributes | Any other props will be spread on the root `td` or `th` element |         |
+
+
+# Selectable Rows
+
+- Add through `hasSelectable` prop on Table
+- or use `react-table` approach

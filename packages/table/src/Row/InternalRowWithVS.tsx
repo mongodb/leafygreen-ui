@@ -1,12 +1,18 @@
 import { cx } from '@leafygreen-ui/emotion';
-import { Row as RTRow } from '@tanstack/react-table';
 import React, { Fragment, PropsWithChildren, ReactElement, ReactNode, useState } from 'react';
 import InternalCellWithVS from '../Cell/InternalCellWithVS';
+import { LeafygreenTableRowData } from '../useLeafygreenTable/useLeafygreenTable';
 import InternalRowBase from './InternalRowBase';
 import { nestedBorderTopStyles, nestedBgStyles } from './styles';
 import { InternalRowWithVSProps } from './types';
 
-const InternalRowWithVS = <T extends unknown & { renderExpandedContent?: ({ row }: { row: RTRow<T> }) => JSX.Element }>({ children, className, row, virtualRow, ...rest }: InternalRowWithVSProps<T>) => {
+const InternalRowWithVS = <T extends unknown>({
+  children,
+  className,
+  row,
+  virtualRow,
+  ...rest
+}: InternalRowWithVSProps<LeafygreenTableRowData<T>>) => {
   const isNestedRowParent = row && row.depth === 0 && row.getIsExpanded()
   const isNestedRowOrParent = row && (row.getIsExpanded() || row.depth > 0);
   const ExpandedContentRowProp = row && row?.original.renderExpandedContent;
@@ -31,13 +37,14 @@ const InternalRowWithVS = <T extends unknown & { renderExpandedContent?: ({ row 
             ...(child as ReactElement)?.props,
             cellIndex: index,
             depth: row.depth,
+
           });
         })}
       </InternalRowBase>
       {row && row.getIsExpanded() && ExpandedContentRowProp &&
         <tr>
           <td colSpan={row?.getVisibleCells().length}>
-            <ExpandedContentRowProp row={row} />
+            {ExpandedContentRowProp(row)}
           </td>
         </tr>
       }

@@ -1,21 +1,36 @@
 import { isComponentType } from '@leafygreen-ui/lib';
 import React, { PropsWithChildren, ReactElement, ReactNode, useState } from 'react';
 import InternalCellWithoutVS from '../Cell/InternalCellWithoutVS';
+import CheckboxCell from '../CheckboxCell/CheckboxCell';
+import { useTableContext } from '../TableContext';
 import InternalRowBase from './InternalRowBase';
 import { InternalRowWithoutVSProps } from './types';
 
-const InternalRowWithoutVS = ({ children, depth = 0, ...rest }: PropsWithChildren<InternalRowWithoutVSProps>) => {
+const InternalRowWithoutVS = ({ children, depth = 0, isSelected, onSelect, ...rest }: PropsWithChildren<InternalRowWithoutVSProps>) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const { hasSelectableRows } = useTableContext();
   const ExpandedContentChild = React.Children.toArray(children).filter(c => isComponentType(c, 'ExpandedContent'))[0]
   const RowChildren = React.Children.toArray(children).filter(c => isComponentType(c, 'Row'))
   const CellChildren = React.Children.toArray(children).filter(c => isComponentType(c, 'Cell'))
   return (
     <>
       <InternalRowBase {...rest}>
+        {hasSelectableRows && (
+          <InternalCellWithoutVS
+            cellIndex={0}
+          >
+            <CheckboxCell
+              checked={isSelected}
+              onChange={onSelect}
+              // todo
+              aria-label=""
+            />
+          </InternalCellWithoutVS>
+        )}
         {React.Children.map(CellChildren, (child: ReactNode, index: number) => {
           return React.createElement(InternalCellWithoutVS, {
             ...((child as ReactElement)?.props),
-            cellIndex: index,
+            cellIndex: hasSelectableRows ? index + 1 : index,
             depth,
             toggleExpandedIconProps: (!!ExpandedContentChild || RowChildren.length > 0) ? {
               isExpanded,

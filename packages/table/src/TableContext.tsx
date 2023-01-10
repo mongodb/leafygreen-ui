@@ -13,6 +13,7 @@ export const useTableContext = () =>
 const TableContextProvider = ({
   children,
   shouldAlternateRowColor,
+  hasSelectableRows,
   selectedRows: selectedRowsProp,
 }: PropsWithChildren<Partial<TableContextValues>>) => {
   const [selectedRows, setSelectedRows] = useState<Array<number>>(
@@ -24,6 +25,7 @@ const TableContextProvider = ({
   return (
     <TableContext.Provider
       value={{
+        hasSelectableRows,
         selectedRows,
         setSelectedRows,
         shouldAlternateRowColor,

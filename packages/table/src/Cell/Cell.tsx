@@ -12,7 +12,6 @@ const Cell = <T extends unknown>({
 
   if (hasVS) {
     return (
-      // @ts-expect-error
       // missing props will be provided by cloneElement call from Row
       <InternalCellWithVS
         cell={cell}
@@ -21,7 +20,6 @@ const Cell = <T extends unknown>({
     );
   } else {
     return (
-      // @ts-expect-error
       // missing props will be provided by cloneElement call from Row
       <InternalCellWithoutVS
         toggleExpandedIconProps={toggleExpandedIconProps}

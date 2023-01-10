@@ -2,10 +2,9 @@ import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Align } from '../HeaderCell/types';
 
-const baseSidePadding = spacing[3];
+const baseSidePadding = spacing[4];
 
 export const baseStyles = css`
-  padding: 10px 8px;
   &:first-child {
     padding-left: ${baseSidePadding}px;
   }
@@ -26,4 +25,5 @@ export const depthPadding = (depth: number) => css`
 export const cellContentContainerStyles = css`
   display: flex;
   align-items: center;
+  padding: 10px 8px;
 `;
