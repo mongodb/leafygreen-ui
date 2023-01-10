@@ -13,7 +13,7 @@ import { ButtonContent } from '../ButtonContent/ButtonContent';
 import { ButtonClassName } from '../styles';
 import { ButtonProps, Size, Variant } from '../types';
 
-import {  getClassName } from './Button.styles';
+import { getClassName } from './Button.styles';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.

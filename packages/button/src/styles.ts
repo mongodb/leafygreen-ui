@@ -1,3 +1,3 @@
-import { createUniqueClassName } from "@leafygreen-ui/lib";
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 
 export const ButtonClassName = createUniqueClassName('button');

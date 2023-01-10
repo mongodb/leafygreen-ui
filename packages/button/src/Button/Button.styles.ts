@@ -392,8 +392,6 @@ const fontStyles: Record<BaseFontSize, string> = {
   `,
 };
 
-
-
 export function getClassName({
   variant,
   size: sizeProp,
@@ -422,4 +420,3 @@ export function getClassName({
     { [disabledStyle[theme]]: disabled },
   );
 }
-
