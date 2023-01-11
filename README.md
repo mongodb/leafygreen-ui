@@ -26,7 +26,6 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Icon](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon)
 - [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button)
 - [Inline Definition](https://github.com/mongodb/leafygreen-ui/tree/main/packages/inline-definition)
-- [Interaction Ring](https://github.com/mongodb/leafygreen-ui/tree/main/packages/interaction-ring)
 - [LeafyGreen Provider](https://github.com/mongodb/leafygreen-ui/tree/main/packages/leafygreen-provider)
 - [Lib](https://github.com/mongodb/leafygreen-ui/tree/main/packages/lib)
 - [Logo](https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo)
