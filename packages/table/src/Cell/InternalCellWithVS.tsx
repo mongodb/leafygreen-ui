@@ -1,10 +1,5 @@
-import { cx } from '@leafygreen-ui/emotion';
-import { consoleOnce } from '@leafygreen-ui/lib';
 import React, { PropsWithChildren } from 'react';
-import { useTableContext } from '../TableContext';
-import ToggleExpandIcon from '../ToggleExpandedIcon/ToggleExpandedIcon';
 import InternalCellBase from './InternalCellBase';
-import { alignmentStyles, baseStyles, depthPadding, cellContentContainerStyles } from './styles';
 import { InternalCellWithVSProps } from './types';
 
 const InternalCellWithVS = <T extends unknown>({

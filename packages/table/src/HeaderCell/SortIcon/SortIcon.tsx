@@ -6,15 +6,17 @@ import { SortIconProps } from './types';
 import { palette } from '@leafygreen-ui/palette';
 
 const glyphs: Record<SortState, string> = {
-  [SortState.Ascending]: 'SortAscending',
-  [SortState.Descending]: 'SortDescending',
+  [SortState.Asc]: 'SortAscending',
+  [SortState.Desc]: 'SortDescending',
   [SortState.Off]: 'Unsorted',
+  [SortState.None]: '',
 };
 
 const glyphColors: Record<SortState, string> = {
-  [SortState.Ascending]: palette.blue.base,
-  [SortState.Descending]: palette.blue.base,
+  [SortState.Asc]: palette.blue.base,
+  [SortState.Desc]: palette.blue.base,
   [SortState.Off]: palette.gray.dark1,
+  [SortState.None]: palette.white,
 };
 
 const SortIcon = ({
@@ -22,14 +24,8 @@ const SortIcon = ({
   onSortIconClick,
   ...rest
 }: SortIconProps) => {
-  const getNextState = () => {
-    const allStates = Object.keys(glyphs);
-    return allStates[(allStates.indexOf(sortState) + 1) % allStates.length];
-  };
-
-  const handleClick = () => {
-    const newSortState = getNextState();
-    onSortIconClick(newSortState);
+  const handleClick = (e: any) => {
+    onSortIconClick && onSortIconClick(e);
   };
 
   return (

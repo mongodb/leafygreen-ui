@@ -12,13 +12,11 @@ export interface InternalRowBaseProps extends HTMLElementProps<'tr'>, DarkModePr
 }
 
 export interface InternalRowWithoutVSProps extends InternalRowBaseProps {
-  isSelected?: boolean;
-  onSelect: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export interface InternalRowWithVSProps<T extends unknown> extends InternalRowBaseProps {
+export interface InternalRowWithRTProps<T extends unknown> extends InternalRowBaseProps {
   row: Row<LeafygreenTableRowData<T>>;
-  virtualRow: VirtualItem;
+  virtualRow?: VirtualItem;
 }
 
-export interface RowProps<T extends unknown> extends InternalRowWithoutVSProps, Partial<InternalRowWithVSProps<T>> { }
+export interface RowProps<T extends unknown> extends InternalRowWithoutVSProps, Partial<InternalRowWithRTProps<T>> { }

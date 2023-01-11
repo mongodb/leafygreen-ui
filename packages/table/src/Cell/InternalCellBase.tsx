@@ -10,7 +10,7 @@ const InternalCellBase = ({
   children,
   className,
   cellIndex,
-  depth,
+  depth = 0,
   shouldRenderArrow,
   toggleExpandedIconProps,
   ...rest

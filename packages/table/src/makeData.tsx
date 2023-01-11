@@ -60,18 +60,17 @@ export function makeData(renderingExpandableRows: boolean, ...lens: Array<number
     return range(len).map((d): any => {
       return {
         ...newPerson(),
-        subRows: hasSubRows && lens[depth + 1] && randomIntFromInterval(1, 3) == 1
-          ? makeDataLevel(depth + 1)
-          : undefined,
-        renderExpandedContent: renderingExpandableRows && randomIntFromInterval(1, 3) == 1
-          ? ExpandedContentComponent
-          : undefined,
+        ...(hasSubRows && lens[depth + 1] && randomIntFromInterval(1, 3) == 1 && {
+          subRows: makeDataLevel(depth + 1)
+        }),
+        ...(renderingExpandableRows && randomIntFromInterval(1, 3) == 1 && {
+          renderExpandedContent: ExpandedContentComponent
+        }),
       };
     });
   };
 
   const data = makeDataLevel()
-  console.log(data)
 
   return data;
 }

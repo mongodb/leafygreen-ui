@@ -5,35 +5,45 @@ import React, { useMemo } from 'react';
 import { LeafygreenTableOptions, LeafygreenTableRowData, LeafygreenTableValues } from './useLeafygreenTable.types';
 import CheckboxCell from '../CheckboxCell/CheckboxCell';
 
+const SelectColumnConfig = ({
+  id: 'select',
+  size: 36,
+  header: ({ table }) => (
+    <CheckboxCell
+      checked={table.getIsAllRowsSelected()}
+      indeterminate={table.getIsSomeRowsSelected()}
+      onChange={table.getToggleAllRowsSelectedHandler()}
+      aria-label="Select all rows"
+    />
+  ),
+  cell: ({ row }) => (
+    <CheckboxCell
+      checked={row.getIsSelected()}
+      indeterminate={row.getIsSomeSelected()}
+      onChange={row.getToggleSelectedHandler()}
+      aria-label={`Select row ${row.index}`}
+    />
+  ),
+});
+
 const useLeafygreenTable = <T extends unknown>(
   props: LeafygreenTableOptions<T>,
 ) => {
-  const { containerRef, data, columns: columnsProp, hasSelectableRows, ...rest } = props;
-  const columns = hasSelectableRows ? useMemo<Array<ColumnDef<T>>>(
-    () => [
-      {
-        id: 'select',
-        header: ({ table }) => (
-          <CheckboxCell
-            checked={table.getIsAllRowsSelected()}
-            indeterminate={table.getIsSomeRowsSelected()}
-            onChange={table.getToggleAllRowsSelectedHandler()}
-            aria-label="Select all rows"
-          />
-        ),
-        cell: ({ row }) => (
-          <CheckboxCell
-            checked={row.getIsSelected()}
-            indeterminate={row.getIsSomeSelected()}
-            onChange={row.getToggleSelectedHandler()}
-            aria-label={`Select row ${row.index}`}
-          />
-        ),
-      },
-      ...columnsProp,
-    ],
-    []
-  ) : columnsProp;
+  const {
+    containerRef,
+    data,
+    columns: columnsProp,
+    hasSelectableRows,
+    useVirtualScrolling,
+    ...rest
+  } = props;
+  const columns: ColumnDef<LeafygreenTableRowData<T>, any>[] = [
+    ...(hasSelectableRows ? [SelectColumnConfig as ColumnDef<LeafygreenTableRowData<T>, any>] : []),
+    ...(columnsProp.map(propColumn => ({
+      ...propColumn,
+      enableSorting: propColumn.enableSorting ?? false
+    } as ColumnDef<LeafygreenTableRowData<T>, any>))),
+  ];
 
   const table: Table<LeafygreenTableRowData<T>> = useReactTable<LeafygreenTableRowData<T>>({
     data,
@@ -41,18 +51,24 @@ const useLeafygreenTable = <T extends unknown>(
     getRowCanExpand: (row: Row<LeafygreenTableRowData<T>>) => {
       return !!row.original.renderExpandedContent || ((table.options.enableExpanding ?? true) && !!row.subRows?.length)
     },
+    enableSortingRemoval: true,
     ...rest
   });
-  const { rows } = table.getRowModel();
-  const rowVirtualizer = useVirtual({
-    parentRef: containerRef,
-    size: rows.length,
-  });
-  const { virtualItems: virtualRows, totalSize } = rowVirtualizer;
+  let rowVirtualizer;
+  if (useVirtualScrolling) {
+    const { rows } = table.getRowModel();
+    rowVirtualizer = useVirtual({
+      parentRef: containerRef,
+      size: rows.length,
+    });
+  }
+
   return {
     ...table,
-    virtualRows,
-    totalSize,
+    ...(rowVirtualizer ? {
+      virtualRows: rowVirtualizer.virtualItems,
+      totalSize: rowVirtualizer.totalSize,
+    } : {}),
   } as LeafygreenTableValues<LeafygreenTableRowData<T>>;
 };
 

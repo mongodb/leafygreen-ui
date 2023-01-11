@@ -1,31 +1,36 @@
-import { cx } from '@leafygreen-ui/emotion';
-import { consoleOnce } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useTableContext } from '../TableContext';
 import SortIcon from './SortIcon/SortIcon';
 import { baseStyles, alignmentStyles, contentContainerStyles } from './styles';
-import { HeaderCellProps } from './types';
+import { HeaderCellProps, SortState } from './types';
 
-const HeaderCell = ({
+const HeaderSortState: { [key: string]: SortState } = {
+  'false': SortState.Off,
+  'asc': SortState.Asc,
+  'desc': SortState.Desc,
+}
+
+const HeaderCell = <T extends unknown>({
   children,
   className,
   align,
-  sortState,
-  onSortIconClick,
   cellIndex,
-  columnName,
+  header,
   ...rest
-}: PropsWithChildren<HeaderCellProps>) => {
+}: PropsWithChildren<HeaderCellProps<T>>) => {
   const { setColumnAlignments } = useTableContext();
-
-  const isMissingOneSortProp = () => {
-    return (!sortState && onSortIconClick) || (!onSortIconClick && sortState);
-  };
-
-  if (isMissingOneSortProp()) {
-    consoleOnce.warn(
-      `HeaderCell ${columnName} is missing either 'sortState' or 'onSortIconClick'.`,
-    );
+  let columnName;
+  let sortState;
+  let onSortIconClick;
+  if (header && header.column.getCanSort()) {
+    columnName = header.column.columnDef.header as string;
+    let headerSortDirection = header.column.getIsSorted().toString();
+    sortState = HeaderSortState[headerSortDirection];
+    onSortIconClick = header.column.getToggleSortingHandler()
+  } else {
+    columnName = '';
+    sortState = SortState.None;
   }
 
   useEffect(() => {
@@ -41,10 +46,9 @@ const HeaderCell = ({
   }, [cellIndex, align, setColumnAlignments]);
 
   return (
-    <th className={cx(baseStyles, className)} {...rest}>
+    <th className={cx(baseStyles, css`width: ${header?.getSize()}px`, className)} {...rest}>
       <div className={cx(contentContainerStyles, alignmentStyles(align))}>
-        {children ? children : columnName}
-        {/* There will be a console warning if only one of the props is provided to the component */}
+        {children}
         {sortState && onSortIconClick && (
           <SortIcon
             sortState={sortState}

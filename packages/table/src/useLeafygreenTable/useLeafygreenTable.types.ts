@@ -25,6 +25,7 @@ export type LeafygreenTableRowData<T extends unknown> = T & {
 export type LeafygreenTableOptions<T> = TableOptions<LeafygreenTableRowData<T>> & {
   containerRef: any;
   hasSelectableRows?: boolean;
+  useVirtualScrolling?: boolean;
 };
 
 export type LeafygreenTableValues<T> =

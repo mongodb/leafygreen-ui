@@ -4,19 +4,19 @@ import InternalCellWithVS from '../Cell/InternalCellWithVS';
 import { LeafygreenTableRowData } from '../useLeafygreenTable/useLeafygreenTable';
 import InternalRowBase from './InternalRowBase';
 import { nestedBorderTopStyles, nestedBgStyles } from './styles';
-import { InternalRowWithVSProps } from './types';
+import { InternalRowWithRTProps } from './types';
 
-const InternalRowWithVS = <T extends unknown>({
+const InternalRowWithRT = <T extends unknown>({
   children,
   className,
   row,
   virtualRow,
   ...rest
-}: InternalRowWithVSProps<LeafygreenTableRowData<T>>) => {
+}: InternalRowWithRTProps<LeafygreenTableRowData<T>>) => {
   const isNestedRowParent = row && row.depth === 0 && row.getIsExpanded()
   const isNestedRowOrParent = row && (row.getIsExpanded() || row.depth > 0);
   const ExpandedContentRowProp = row && row?.original.renderExpandedContent;
-  const ContainerElement = ExpandedContentRowProp ? (props: any) => <tbody {...props} ref={virtualRow && virtualRow.measureRef} /> : Fragment;
+  const ContainerElement = ExpandedContentRowProp ? (props: any) => <tbody {...props} ref={virtualRow ? virtualRow.measureRef : undefined} /> : Fragment;
 
   return (
     <ContainerElement>
@@ -52,4 +52,4 @@ const InternalRowWithVS = <T extends unknown>({
   );
 };
 
-export default InternalRowWithVS;
+export default InternalRowWithRT;

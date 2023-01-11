@@ -19,26 +19,26 @@ npm install @leafygreen-ui/table
 ## Example
 
 ```js
-import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
+import { Table, TableHead, HeaderRow, TableBody, Row, Cell } from '@leafygreen-ui/table';
 
-<Table
-  data={defaultData}
-  columns={[
-    <TableHeader label="Name" />,
-    <TableHeader label="Age" />,
-    <TableHeader label="Color" sortBy={datum => datum.color} />,
-    <TableHeader label="Location" />,
-  ]}
->
-  {({ datum }) => (
-    <Row key={datum.name}>
-      <Cell>{datum.name}</Cell>
-      <Cell>{datum.age}</Cell>
-      <Cell>{datum.color}</Cell>
-      <Cell>{datum.location}</Cell>
-    </Row>
-  )}
-</Table>;
+<Table {...args}>
+  <TableHead>
+    <HeaderRow>
+      {columns.map((columnName: any) => (
+        <HeaderCell key={columnName} columnName={columnName} />
+      ))}
+    </HeaderRow>
+  </TableHead>
+  <TableBody>
+    {data.map((row: any) => (
+      <Row>
+        {Object.keys(row).map((cellKey: string, index: number) => {
+          return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+        })}
+      </Row>
+    ))}
+  </TableBody>
+</Table>
 ```
 
 ## Table Properties

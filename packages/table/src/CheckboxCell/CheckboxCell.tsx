@@ -8,7 +8,6 @@ const CheckboxCell = (props: CheckboxProps) => (
     css`
       // break the first-cell padding. would be better to use a className here, but createUniqueClassname would have performance concerns.
       margin-left: -16px;
-      // break table-layout: fixed;
       width: 36px;
     `
   }>

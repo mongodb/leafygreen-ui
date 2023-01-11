@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { LeafygreenTableRowData } from '../useLeafygreenTable/useLeafygreenTable';
 import InternalRowWithoutVS from './InternalRowWithoutVS';
-import InternalRowWithVS from './InternalRowWithVS';
+import InternalRowWithRT from './InternalRowWithRT';
 import { RowProps } from './types';
 
 type RowData<T> = T extends LeafygreenTableRowData<T> ? T : LeafygreenTableRowData<T>;
@@ -11,11 +11,10 @@ const Row = <T extends unknown>({
   virtualRow,
   ...rest
 }: PropsWithChildren<RowProps<RowData<T>>>) => {
-  const hasVS = !!row;
 
-  if (hasVS && virtualRow) {
+  if (!!row) {
     return (
-      <InternalRowWithVS
+      <InternalRowWithRT
         row={row}
         virtualRow={virtualRow}
         {...rest}
