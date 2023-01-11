@@ -4,7 +4,7 @@ import { ComponentStory } from '@storybook/react';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { TextAreaProps } from './types';
+import { TextAreaProps } from './TextArea/TextArea.types';
 import TextArea from '.';
 
 type LGProviderBaseFontSize = 14 | 16;

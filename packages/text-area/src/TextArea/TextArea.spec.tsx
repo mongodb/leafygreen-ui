@@ -8,7 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import TextArea, { State } from './';
+import TextArea, { State } from '.';
 
 const onChange = jest.fn();
 
