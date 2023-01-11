@@ -18,15 +18,6 @@ export default {
   title: 'Components/Modals/Modal',
   component: Modal,
   argTypes: {
-    open: {
-      control: false,
-    },
-    setOpen: {
-      control: false,
-    },
-    children: {
-      control: false,
-    },
     darkMode: storybookArgTypes.darkMode,
     size: {
       options: Object.values(ModalSize),
@@ -36,6 +27,11 @@ export default {
       options: Object.values(CloseIconColor),
       control: 'radio',
     },
+  },
+  args: {
+    className: css`
+      z-index: 1;
+    `,
   },
   parameters: {
     controls: {
