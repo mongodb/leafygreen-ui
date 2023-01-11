@@ -61,7 +61,6 @@ return (
 | ------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `id`          | `string`                       | id to describe the `<textarea>` element                                                                                   |          |
 | `darkMode`    | `boolean`                      | Determines whether or not the component will appear in dark mode.                                                         | `false`  |
-| `optional`    | `boolean`                      | Determines whether or not the `<textarea>` is optional                                                                    | `true`   |
 | `label`       | `string`                       | Label for `<textarea>`                                                                                                    |          |
 | `description` | `string`                       | Description below label                                                                                                   |          |
 | `state`       | `'none'`, `'valid'`, `'error'` | Determines the state of the `<textarea>`                                                                                  | `'none'` |
