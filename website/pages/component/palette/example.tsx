@@ -4,7 +4,6 @@ import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
-import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { keyMap } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -126,20 +125,18 @@ function WrappedColorBlock({ color, name, darkMode }: ColorBlockProps) {
   }, [blockRef, color, copied]);
 
   const trigger = (
-    <InteractionRing borderRadius="8px">
-      <button
-        onClick={() => setCopied(true)}
-        onKeyDown={e => {
-          if (e.keyCode === keyMap.Space) {
-            setCopied(true);
-          }
-        }}
-        ref={setBlockRef}
-        className={resetButtonStyles}
-      >
-        <ColorBlock key={color} color={color} name={name} darkMode={darkMode} />
-      </button>
-    </InteractionRing>
+    <button
+      onClick={() => setCopied(true)}
+      onKeyDown={e => {
+        if (e.keyCode === keyMap.Space) {
+          setCopied(true);
+        }
+      }}
+      ref={setBlockRef}
+      className={resetButtonStyles}
+    >
+      <ColorBlock key={color} color={color} name={name} darkMode={darkMode} />
+    </button>
   );
 
   return (
