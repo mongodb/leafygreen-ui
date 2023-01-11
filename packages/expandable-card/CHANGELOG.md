@@ -1,5 +1,15 @@
 # @leafygreen-ui/expandable-card
 
+## 3.0.3
+
+### Patch Changes
+
+- e4b2aade8: Quick fix to vertically center title and updates internal file structure.
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
 ## 3.0.2
 
 ### Patch Changes

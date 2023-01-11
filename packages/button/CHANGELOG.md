@@ -1,5 +1,13 @@
 # @leafygreen-ui/button
 
+## 19.0.3
+
+### Patch Changes
+
+- c7f7fff56: Refactors Button component internals
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/palette@3.4.6
+
 ## 19.0.2
 
 ### Patch Changes
