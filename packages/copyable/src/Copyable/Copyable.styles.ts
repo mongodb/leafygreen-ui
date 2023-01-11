@@ -11,7 +11,7 @@ import {
 } from '@leafygreen-ui/tokens';
 import { labelTypeScaleStyles } from '@leafygreen-ui/typography';
 
-import { Size } from './types';
+import { Size } from './Copyable.types';
 
 export const containerStyle = css`
   position: relative;
