@@ -19,8 +19,8 @@ import {
   errorMessageLabelStyles,
   errorMessageStyle,
   textAreaStyle,
-} from './styles';
-import { State, TextAreaProps } from './types';
+} from './TextArea.styles';
+import { State, TextAreaProps } from './TextArea.types';
 
 /**
  * # TextArea
