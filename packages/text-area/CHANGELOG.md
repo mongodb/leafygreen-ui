@@ -1,5 +1,15 @@
 # @leafygreen-ui/text-area
 
+## 8.0.2
+
+### Patch Changes
+
+- a79ee7f5d: Remove `optional` from prop documentation, as the prop is not supported by the component
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
 ## 8.0.1
 
 ### Patch Changes
