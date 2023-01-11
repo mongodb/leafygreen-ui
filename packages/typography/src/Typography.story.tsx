@@ -11,6 +11,7 @@ import {
   Body,
   Description,
   Disclaimer,
+  Error,
   H1,
   H2,
   H3,
@@ -157,6 +158,8 @@ export const AllTypography = ({
             Inline definition
           </InlineDefinition>{' '}
         </Body>
+
+        <Error>Hello I am an Error!</Error>
 
         <div className={cx(displayBlock)}>
           <Label darkMode={darkMode} htmlFor="id">
