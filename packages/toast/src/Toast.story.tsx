@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
@@ -21,11 +22,11 @@ export default {
     open: true,
     variant: Variant.Note,
     darkMode: false,
+    className: css`
+      z-index: 1;
+    `,
   },
   argTypes: {
-    className: {
-      control: 'text',
-    },
     progress: {
       control: { type: 'range', min: 0, max: 1, step: 0.1 },
       if: { arg: 'variant', eq: Variant.Progress },
