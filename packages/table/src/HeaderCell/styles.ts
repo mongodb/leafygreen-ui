@@ -1,10 +1,9 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Align } from './types';
 
 export const baseStyles = css`
-  border-bottom: 3px solid ${palette.gray.light2};
-  color: ${palette.gray.dark3};
   vertical-align: middle;
   &:first-child {
     padding-left: 24px;
@@ -25,3 +24,12 @@ export const alignmentStyles = (align: Align) =>
   css`
     justify-content: ${align};
   `;
+
+// export const themeStyles: Record<Theme, string> = {
+//   [Theme.Dark]: css`
+//     color: ${palette.grey.light2};
+//   `,
+//   [Theme.Light]: css`
+    
+//   `,
+// };

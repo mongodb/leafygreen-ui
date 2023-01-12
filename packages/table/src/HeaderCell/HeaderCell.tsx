@@ -1,4 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useTableContext } from '../TableContext';
 import SortIcon from './SortIcon/SortIcon';
@@ -19,6 +20,7 @@ const HeaderCell = <T extends unknown>({
   header,
   ...rest
 }: PropsWithChildren<HeaderCellProps<T>>) => {
+  // const { theme } = useDarkMode();
   const { setColumnAlignments } = useTableContext();
   let columnName;
   let sortState;
@@ -46,7 +48,14 @@ const HeaderCell = <T extends unknown>({
   }, [cellIndex, align, setColumnAlignments]);
 
   return (
-    <th className={cx(baseStyles, css`width: ${header?.getSize()}px`, className)} {...rest}>
+    <th className={cx(
+      baseStyles,
+      // themeStyles[theme],
+      {
+        [css`width: ${header?.getSize()}px`]: !!header?.getSize(),
+      },
+      className
+    )} {...rest}>
       <div className={cx(contentContainerStyles, alignmentStyles(align))}>
         {children}
         {sortState && onSortIconClick && (

@@ -10,43 +10,12 @@ const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
     }: PropsWithChildren<TableContainerProps>,
     forwardedRef,
   ) => {
-    // const [sorting, setSorting] = React.useState<SortingState>([])
-
-    // // //we must flatten the array of arrays from the useInfiniteQuery hook
-    // const flatData = React.useMemo(
-    //   () => data?.pages?.flatMap(page => page.data) ?? [],
-    //   [data]
-    // )
-    // const totalDBRowCount = data?.pages?.[0]?.meta?.totalRowCount ?? 0
-    // const totalFetched = flatData.length
-
-    // const fetchMoreOnBottomReached = React.useCallback( //called on scroll and possibly on mount to fetch more data as the user scrolls and reaches bottom of table
-    //   (containerRefElement?: HTMLDivElement | null) => {
-    //     if (containerRefElement) {
-    //       const { scrollHeight, scrollTop, clientHeight } = containerRefElement
-    //       //once the user has scrolled within 300px of the bottom of the table, fetch more data if there is any
-    //       if (
-    //         scrollHeight - scrollTop - clientHeight < 300 &&
-    //         !isFetching &&
-    //         totalFetched < totalDBRowCount
-    //       ) {
-    //         fetchNextPage()
-    //       }
-    //     }
-    //   },
-    //   [fetchNextPage, isFetching, totalFetched, totalDBRowCount]
-    // )
 
     const handleScroll:
       | React.UIEventHandler<HTMLDivElement>
       | undefined = e => {
-      // fetchMoreOnBottomReached(e.target as HTMLDivElement)
-      onScrollProp && onScrollProp(e);
-    };
-
-    // if (isLoading) {
-    //   return <>Loading...</>
-    // }
+        onScrollProp && onScrollProp(e);
+      };
 
     return (
       <div
@@ -56,6 +25,7 @@ const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
           overflow: auto;
           height: 500px;
           width: 100%;
+          position: relative;
         `}
       >
         {children}

@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 export const baseStyles = css`
@@ -10,20 +11,42 @@ export const baseStyles = css`
   }
 `;
 
-export const zebraStyles = css`
-  &:nth-of-type(even) {
+export const themeZebraStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    &:nth-of-type(even) {
+      background-color: ${palette.gray.dark4};
+    }
+  `,
+  [Theme.Light]: css`
+    &:nth-of-type(even) {
+      background-color: ${palette.gray.light3};
+    }
+  `
+};
+
+export const nestedBorderTopStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    border-top: 1px solid ${palette.gray.dark2};
+  `,
+  [Theme.Light]: css`
+    border-top: 1px solid ${palette.gray.light2};
+  `
+};
+
+export const nestedBgStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+  `,
+  [Theme.Light]: css`
     background-color: ${palette.gray.light3};
-  }
+  `
+};
 
-  &:nth-of-type(odd) > th {
-    background-color: ${palette.white};
-  }
-`;
-
-export const nestedBorderTopStyles = css`
-  border-top: 1px solid ${palette.gray.light2};
-`;
-
-export const nestedBgStyles = css`
-  background-color: ${palette.gray.light3};
-`;
+export const expandedContentStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+  `,
+  [Theme.Light]: css`
+    background-color: ${palette.gray.light3};
+  `
+};

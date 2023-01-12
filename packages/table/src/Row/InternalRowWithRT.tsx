@@ -1,9 +1,10 @@
 import { cx } from '@leafygreen-ui/emotion';
-import React, { Fragment, PropsWithChildren, ReactElement, ReactNode, useState } from 'react';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import React, { Fragment, ReactElement, ReactNode } from 'react';
 import InternalCellWithVS from '../Cell/InternalCellWithVS';
-import { LeafygreenTableRowData } from '../useLeafygreenTable/useLeafygreenTable';
+import { LeafygreenTableRowData } from '../useLeafygreenTable/useLeafygreenTable.types';
 import InternalRowBase from './InternalRowBase';
-import { nestedBorderTopStyles, nestedBgStyles } from './styles';
+import { nestedBorderTopStyles, nestedBgStyles, expandedContentStyles } from './styles';
 import { InternalRowWithRTProps } from './types';
 
 const InternalRowWithRT = <T extends unknown>({
@@ -13,6 +14,7 @@ const InternalRowWithRT = <T extends unknown>({
   virtualRow,
   ...rest
 }: InternalRowWithRTProps<LeafygreenTableRowData<T>>) => {
+  const { theme } = useDarkMode();
   const isNestedRowParent = row && row.depth === 0 && row.getIsExpanded()
   const isNestedRowOrParent = row && (row.getIsExpanded() || row.depth > 0);
   const ExpandedContentRowProp = row && row?.original.renderExpandedContent;
@@ -24,8 +26,8 @@ const InternalRowWithRT = <T extends unknown>({
         className={
           cx(
             {
-              [nestedBorderTopStyles]: isNestedRowParent,
-              [nestedBgStyles]: isNestedRowOrParent,
+              [nestedBorderTopStyles[theme]]: isNestedRowParent,
+              [nestedBgStyles[theme]]: isNestedRowOrParent,
             },
             className
           )
@@ -43,7 +45,7 @@ const InternalRowWithRT = <T extends unknown>({
       </InternalRowBase>
       {row && row.getIsExpanded() && ExpandedContentRowProp &&
         <tr>
-          <td colSpan={row?.getVisibleCells().length}>
+          <td colSpan={row?.getVisibleCells().length} className={expandedContentStyles[theme]}>
             {ExpandedContentRowProp(row)}
           </td>
         </tr>

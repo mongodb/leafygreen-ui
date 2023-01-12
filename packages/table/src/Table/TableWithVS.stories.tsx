@@ -23,90 +23,130 @@ import TableBody from '../TableBody/TableBody';
 import Row from '../Row/Row';
 import Cell from '../Cell/Cell';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
+import { VirtualItem } from 'react-virtual';
 
 export default {
-  title: 'Components/Table',
+  title: 'Components/Table/With Virtualized Scrolling',
   component: Table,
   argTypes: {
     children: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
-  args: {
-    darkMode: true,
-  }
 } as Meta<typeof Table>;
 
-const Template: ComponentStory<typeof Table> = args => {
-  const data = makeData(false, 100);
-  const columns = Object.keys(data[0]).filter(x => x !== 'renderExpandedContent' && x !== 'subRows')
-  return (
-    <Table {...args}>
-      <TableHead>
-        <HeaderRow>
-          {columns.map((columnName: any) => (
-            <HeaderCell key={columnName}>
-              {columnName}
-            </HeaderCell>
-          ))}
-        </HeaderRow>
-      </TableHead>
-      <TableBody>
-        {data.map((row: any) => (
-          <Row>
-            {Object.keys(row).map((cellKey: string, index: number) => {
-              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
-            })}
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
-};
-
-export const Basic = Template.bind({});
-
-export const ZebraStripes = Template.bind({});
-ZebraStripes.args = {
-  shouldAlternateRowColor: true,
-};
-
-export const StickyHeaderRow: ComponentStory<typeof Table> = (args) => {
-  const data = makeData(false, 100);
-  const columns = Object.keys(data[0]);
-  return (
-    <TableContainer>
-      <Table {...args}>
-        <TableHead isSticky>
-          <HeaderRow>
-            {columns.map((columnName: any) => (
-              <HeaderCell key={columnName}>
-                {columnName}
-              </HeaderCell>
-            ))}
-          </HeaderRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row: any) => (
-            <Row>
-              {Object.keys(row).map((cellKey: string, index: number) => {
-                return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
-              })}
-            </Row>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-}
-
-export const DisabledRows: ComponentStory<typeof Table> = () => {
-  return <>TODO</>
-}
-
-export const NestedRows: ComponentStory<typeof Table> = (args) => {
+export const BasicWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(false, 100, 5, 3));
+  const [data, setData] = React.useState(() => makeData(false, 5000));
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+      {
+        accessorKey: 'progress',
+        header: 'Profile Progress',
+        size: 80,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafygreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    useVirtualScrolling: true,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
+      </div>
+
+      <TableContainer ref={tableContainerRef}>
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup: any) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header: any) => {
+                  return (
+                    <HeaderCell
+                      key={header.id}
+                      header={header}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+          </TableHead>
+          <TableBody table={table}>
+            {table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
+              return (
+                <Row key={row.id}>
+                  {row.getVisibleCells().map((cell: any) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+
+export const NestedRowsWithVS = () => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data, setData] = React.useState(() => makeData(false, 5000, 5, 3));
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -162,19 +202,20 @@ export const NestedRows: ComponentStory<typeof Table> = (args) => {
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getSubRows: row => row.subRows,
+    useVirtualScrolling: true,
   });
 
   const { rows } = table.getRowModel();
 
   return (
     <>
-      <div >
+      <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <HeaderRow key={headerGroup.id}>
@@ -195,9 +236,10 @@ export const NestedRows: ComponentStory<typeof Table> = (args) => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: TSRow<Person>) => {
+            {table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
               return (
-                <Row key={row.id} row={row}>
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
                   {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
                     return (
                       <Cell key={cell.id} cell={cell}>
@@ -218,9 +260,10 @@ export const NestedRows: ComponentStory<typeof Table> = (args) => {
   );
 };
 
-export const SortableRows: ComponentStory<typeof Table> = (args) => {
+
+export const SortableRowsWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(false, 100));
+  const [data, setData] = React.useState(() => makeData(false, 5000));
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -278,6 +321,7 @@ export const SortableRows: ComponentStory<typeof Table> = (args) => {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    useVirtualScrolling: true,
   });
 
   const { rows } = table.getRowModel();
@@ -286,10 +330,11 @@ export const SortableRows: ComponentStory<typeof Table> = (args) => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
@@ -310,12 +355,13 @@ export const SortableRows: ComponentStory<typeof Table> = (args) => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: TSRow<Person>) => {
+            {table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
               return (
-                <Row key={row.id} row={row}>
+                <Row key={row.id}>
                   {row.getVisibleCells().map((cell: any) => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -333,9 +379,9 @@ export const SortableRows: ComponentStory<typeof Table> = (args) => {
   );
 }
 
-export const SelectableRows: ComponentStory<typeof Table> = (args) => {
+export const SelectableRowsWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(false, 100));
+  const [data, setData] = React.useState(() => makeData(false, 5000));
   const [rowSelection, setRowSelection] = React.useState({})
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -390,6 +436,7 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
     onRowSelectionChange: setRowSelection,
     hasSelectableRows: true,
     getCoreRowModel: getCoreRowModel(),
+    useVirtualScrolling: true,
   });
 
   const { rows } = table.getRowModel();
@@ -398,6 +445,7 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
         <button
           onClick={() => console.info('rowSelection', rowSelection)}
         >
@@ -416,7 +464,7 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <HeaderRow key={headerGroup.id}>
@@ -437,7 +485,8 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: TSRow<Person>) => {
+            {table.virtualRows.map((virtualRow: any) => {
+              const row = rows[virtualRow.index];
               return (
                 <Row key={row.id}>
                   {row.getVisibleCells().map((cell: any) => {
@@ -460,9 +509,9 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
   );
 }
 
-export const ExpandableContent: ComponentStory<typeof Table> = (args) => {
+export const ExpandableContentWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(true, 100));
+  const [data, setData] = React.useState(() => makeData(true, 5000));
   const [expanded, setExpanded] = React.useState<ExpandedState>({})
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -518,6 +567,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = (args) => {
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getSubRows: row => row.subRows,
+    useVirtualScrolling: true,
   });
 
   const { rows } = table.getRowModel();
@@ -526,11 +576,12 @@ export const ExpandableContent: ComponentStory<typeof Table> = (args) => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.virtualRows.length} virtual rows rendered</p>
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <HeaderRow key={headerGroup.id}>
@@ -551,9 +602,10 @@ export const ExpandableContent: ComponentStory<typeof Table> = (args) => {
             ))}
           </TableHead>
           <TableBody table={table} renderingExpandableRows>
-            {rows.map((row: TSRow<Person>) => {
+            {table.virtualRows.map((virtualRow: any) => {
+              const row = rows[virtualRow.index];
               return (
-                <Row key={row.id} row={row}>
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
                   {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
                     return (
                       <Cell key={cell.id} cell={cell}>

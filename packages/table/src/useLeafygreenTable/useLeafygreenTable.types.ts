@@ -1,6 +1,8 @@
 import { Row, Table, TableOptions } from "@tanstack/react-table";
 import { VirtualItem } from "react-virtual";
 
+// Below is copied from react-virtual as their types are exported
+
 type ScrollAlignment = 'start' | 'center' | 'end' | 'auto'
 
 interface ScrollToOptions {
@@ -18,6 +20,8 @@ interface VirtualizerValues {
   measure: () => void
 };
 
+// Above is copied from react-virtual as their types are exported
+
 export type LeafygreenTableRowData<T extends unknown> = T & {
   renderExpandedContent?: (row: Row<T>) => JSX.Element
 };
@@ -31,5 +35,5 @@ export type LeafygreenTableOptions<T> = TableOptions<LeafygreenTableRowData<T>> 
 export type LeafygreenTableValues<T> =
   Table<LeafygreenTableRowData<T>> &
   Pick<VirtualizerValues, 'totalSize'> & {
-    virtualRows: VirtualItem[]
+    virtualRows?: VirtualItem[]
   };

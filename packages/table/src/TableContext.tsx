@@ -5,6 +5,7 @@ import React, {
   useState,
 } from 'react';
 import { TableContextValues } from './types';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 export const TableContext = createContext({});
 export const useTableContext = () =>
@@ -12,29 +13,24 @@ export const useTableContext = () =>
 
 const TableContextProvider = ({
   children,
+  darkMode,
   shouldAlternateRowColor,
-  hasSelectableRows,
-  selectedRows: selectedRowsProp,
 }: PropsWithChildren<Partial<TableContextValues>>) => {
-  const [selectedRows, setSelectedRows] = useState<Array<number>>(
-    selectedRowsProp ?? [],
-  );
   const [columnAlignments, setColumnAlignments] =
     useState<Record<number, 'left' | 'right' | 'center'>>();
 
   return (
-    <TableContext.Provider
-      value={{
-        hasSelectableRows,
-        selectedRows,
-        setSelectedRows,
-        shouldAlternateRowColor,
-        columnAlignments,
-        setColumnAlignments,
-      }}
-    >
-      {children}
-    </TableContext.Provider>
+    <LeafygreenProvider darkMode={darkMode}>
+      <TableContext.Provider
+        value={{
+          shouldAlternateRowColor,
+          columnAlignments,
+          setColumnAlignments,
+        }}
+      >
+        {children}
+      </TableContext.Provider>
+    </LeafygreenProvider> 
   );
 };
 
