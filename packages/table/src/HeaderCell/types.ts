@@ -12,7 +12,9 @@ export const SortState: { [key: string]: string } = {
 
 export type SortState = typeof SortState[keyof typeof SortState];
 
-export interface HeaderCellProps<T extends unknown> extends HTMLElementProps<'th'>, DarkModeProps {
+export interface HeaderCellProps<T extends unknown>
+  extends HTMLElementProps<'th'>,
+    DarkModeProps {
   sortState?: SortState;
   cellIndex?: number;
   header?: Header<T, any>;

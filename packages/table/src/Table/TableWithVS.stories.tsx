@@ -105,10 +105,7 @@ export const BasicWithVS = () => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: any) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
@@ -147,7 +144,7 @@ export const BasicWithVS = () => {
 export const NestedRowsWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000, 5, 3));
-  const [expanded, setExpanded] = React.useState<ExpandedState>({})
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -221,10 +218,7 @@ export const NestedRowsWithVS = () => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: any) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
@@ -260,11 +254,10 @@ export const NestedRowsWithVS = () => {
   );
 };
 
-
 export const SortableRowsWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000));
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -340,10 +333,7 @@ export const SortableRowsWithVS = () => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: Header<Person, any>) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
@@ -377,12 +367,12 @@ export const SortableRowsWithVS = () => {
       </TableContainer>
     </>
   );
-}
+};
 
 export const SelectableRowsWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000));
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -446,16 +436,14 @@ export const SelectableRowsWithVS = () => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table.virtualRows.length} virtual rows rendered</p>
-        <button
-          onClick={() => console.info('rowSelection', rowSelection)}
-        >
+        <button onClick={() => console.info('rowSelection', rowSelection)}>
           Log rowSelection state
         </button>
         <button
           onClick={() =>
             console.info(
               'table.getSelectedFlatRows()',
-              table.getSelectedRowModel().flatRows
+              table.getSelectedRowModel().flatRows,
             )
           }
         >
@@ -470,10 +458,7 @@ export const SelectableRowsWithVS = () => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: any) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
@@ -507,12 +492,12 @@ export const SelectableRowsWithVS = () => {
       </TableContainer>
     </>
   );
-}
+};
 
 export const ExpandableContentWithVS = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(true, 5000));
-  const [expanded, setExpanded] = React.useState<ExpandedState>({})
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -587,10 +572,7 @@ export const ExpandableContentWithVS = () => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: any) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),

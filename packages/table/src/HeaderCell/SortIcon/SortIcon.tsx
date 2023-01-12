@@ -27,19 +27,19 @@ const themeGlyphColors: Record<Theme, Record<SortState, string>> = {
   },
 };
 
-const SortIcon = ({
-  sortState,
-  onSortIconClick,
-  ...rest
-}: SortIconProps) => {
+const SortIcon = ({ sortState, onSortIconClick, ...rest }: SortIconProps) => {
   const { theme } = useDarkMode();
+
   const handleClick = (e: any) => {
     onSortIconClick && onSortIconClick(e);
   };
 
   return (
     <IconButton onClick={handleClick} {...rest}>
-      <Icon glyph={glyphs[sortState]} fill={themeGlyphColors[theme][sortState]} />
+      <Icon
+        glyph={glyphs[sortState]}
+        fill={themeGlyphColors[theme][sortState]}
+      />
     </IconButton>
   );
 };

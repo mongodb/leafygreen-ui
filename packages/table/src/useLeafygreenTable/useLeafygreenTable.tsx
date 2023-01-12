@@ -2,10 +2,14 @@ import { ColumnDef, Table, useReactTable } from '@tanstack/react-table';
 import { useVirtual } from 'react-virtual';
 import { Row } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
-import { LeafygreenTableOptions, LeafygreenTableRowData, LeafygreenTableValues } from './useLeafygreenTable.types';
+import {
+  LeafygreenTableOptions,
+  LeafygreenTableRowData,
+  LeafygreenTableValues,
+} from './useLeafygreenTable.types';
 import CheckboxCell from '../CheckboxCell/CheckboxCell';
 
-const SelectColumnConfig = ({
+const SelectColumnConfig = {
   id: 'select',
   size: 36,
   header: ({ table }) => (
@@ -24,7 +28,7 @@ const SelectColumnConfig = ({
       aria-label={`Select row ${row.index}`}
     />
   ),
-});
+};
 
 const useLeafygreenTable = <T extends unknown>(
   props: LeafygreenTableOptions<T>,
@@ -37,24 +41,35 @@ const useLeafygreenTable = <T extends unknown>(
     useVirtualScrolling,
     ...rest
   } = props;
-  const columns: ColumnDef<LeafygreenTableRowData<T>, any>[] = [
-    ...(hasSelectableRows ? [SelectColumnConfig as ColumnDef<LeafygreenTableRowData<T>, any>] : []),
-    ...(columnsProp.map(propColumn => ({
-      ...propColumn,
-      enableSorting: propColumn.enableSorting ?? false
-    } as ColumnDef<LeafygreenTableRowData<T>, any>))),
+  const columns: Array<ColumnDef<LeafygreenTableRowData<T>, any>> = [
+    ...(hasSelectableRows
+      ? [SelectColumnConfig as ColumnDef<LeafygreenTableRowData<T>, any>]
+      : []),
+    ...columnsProp.map(
+      propColumn =>
+        ({
+          ...propColumn,
+          enableSorting: propColumn.enableSorting ?? false,
+        } as ColumnDef<LeafygreenTableRowData<T>, any>),
+    ),
   ];
 
-  const table: Table<LeafygreenTableRowData<T>> = useReactTable<LeafygreenTableRowData<T>>({
+  const table: Table<LeafygreenTableRowData<T>> = useReactTable<
+    LeafygreenTableRowData<T>
+  >({
     data,
     columns,
     getRowCanExpand: (row: Row<LeafygreenTableRowData<T>>) => {
-      return !!row.original.renderExpandedContent || ((table.options.enableExpanding ?? true) && !!row.subRows?.length)
+      return (
+        !!row.original.renderExpandedContent ||
+        ((table.options.enableExpanding ?? true) && !!row.subRows?.length)
+      );
     },
     enableSortingRemoval: true,
-    ...rest
+    ...rest,
   });
   let rowVirtualizer;
+
   if (useVirtualScrolling) {
     const { rows } = table.getRowModel();
     rowVirtualizer = useVirtual({
@@ -65,10 +80,12 @@ const useLeafygreenTable = <T extends unknown>(
 
   return {
     ...table,
-    ...(rowVirtualizer ? {
-      virtualRows: rowVirtualizer.virtualItems,
-      totalSize: rowVirtualizer.totalSize,
-    } : {}),
+    ...(rowVirtualizer
+      ? {
+          virtualRows: rowVirtualizer.virtualItems,
+          totalSize: rowVirtualizer.totalSize,
+        }
+      : {}),
   } as LeafygreenTableValues<LeafygreenTableRowData<T>>;
 };
 

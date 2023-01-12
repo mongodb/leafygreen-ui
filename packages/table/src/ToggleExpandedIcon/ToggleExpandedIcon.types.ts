@@ -1,1 +1,4 @@
-export default interface ToggleExpandedIconProps { isExpanded: boolean; toggleExpanded: () => void; }
+export default interface ToggleExpandedIconProps {
+  isExpanded: boolean;
+  toggleExpanded: () => void;
+}

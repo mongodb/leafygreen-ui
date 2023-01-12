@@ -10,7 +10,14 @@ const TableBody = ({
   let paddingTop = 0;
   let paddingBottom = 0;
 
-  const ContainerElement = renderingExpandableRows ? Fragment : (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement>) => <tbody {...props} />;
+  const ContainerElement = renderingExpandableRows
+    ? Fragment
+    : (
+        props: React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLTableSectionElement>,
+          HTMLTableSectionElement
+        >,
+      ) => <tbody {...props} />;
 
   if (table && table.virtualRows) {
     const { virtualRows, totalSize } = table;
@@ -35,7 +42,7 @@ const TableBody = ({
         </tr>
       )}
     </ContainerElement>
-  )
+  );
 };
 
 export default TableBody;

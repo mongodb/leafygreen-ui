@@ -3,7 +3,12 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 import React, { PropsWithChildren } from 'react';
 import { useTableContext } from '../TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon/ToggleExpandedIcon';
-import { alignmentStyles, baseStyles, depthPadding, cellContentContainerStyles } from './styles';
+import {
+  alignmentStyles,
+  baseStyles,
+  depthPadding,
+  cellContentContainerStyles,
+} from './styles';
 import { InternalCellBaseProps } from './types';
 
 const InternalCellBase = ({
@@ -29,13 +34,14 @@ const InternalCellBase = ({
       )}
       {...rest}
     >
-      <div className={cx(
-        cellContentContainerStyles,
-        {
+      <div
+        className={cx(cellContentContainerStyles, {
           [depthPadding(depth)]: cellIndex === 0,
-        }
-      )}>
-        {shouldRenderArrow && <ToggleExpandedIcon {...toggleExpandedIconProps} />}
+        })}
+      >
+        {shouldRenderArrow && (
+          <ToggleExpandedIcon {...toggleExpandedIconProps} />
+        )}
         {children}
       </div>
     </td>

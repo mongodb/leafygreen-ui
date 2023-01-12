@@ -13,13 +13,14 @@ const TableHead = ({
 }: PropsWithChildren<TableHeadProps>) => {
   const { theme } = useDarkMode();
   return (
-    <thead className={cx(
-      {
-        [stickyStyles]: isSticky,
-      },
-      themeStyles[theme],
-      className,
-    )}
+    <thead
+      className={cx(
+        {
+          [stickyStyles]: isSticky,
+        },
+        themeStyles[theme],
+        className,
+      )}
       {...rest}
     >
       {children}

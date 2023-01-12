@@ -13,10 +13,7 @@ const Cell = <T extends unknown>({
   if (hasVS) {
     return (
       // missing props will be provided by cloneElement call from Row
-      <InternalCellWithVS
-        cell={cell}
-        {...rest}
-      />
+      <InternalCellWithVS cell={cell} {...rest} />
     );
   } else {
     return (

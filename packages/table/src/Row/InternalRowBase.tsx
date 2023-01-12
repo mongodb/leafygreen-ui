@@ -5,7 +5,10 @@ import { useTableContext } from '../TableContext';
 import { baseStyles, themeZebraStyles } from './styles';
 import { InternalRowBaseProps } from './types';
 
-const InternalRowBase = ({ className, ...rest }: PropsWithChildren<InternalRowBaseProps>) => {
+const InternalRowBase = ({
+  className,
+  ...rest
+}: PropsWithChildren<InternalRowBaseProps>) => {
   const { theme } = useDarkMode();
   const { shouldAlternateRowColor } = useTableContext();
   return (

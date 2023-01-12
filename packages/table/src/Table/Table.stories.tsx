@@ -34,20 +34,20 @@ export default {
   },
   args: {
     darkMode: true,
-  }
+  },
 } as Meta<typeof Table>;
 
 const Template: ComponentStory<typeof Table> = args => {
   const data = makeData(false, 100);
-  const columns = Object.keys(data[0]).filter(x => x !== 'renderExpandedContent' && x !== 'subRows')
+  const columns = Object.keys(data[0]).filter(
+    x => x !== 'renderExpandedContent' && x !== 'subRows',
+  );
   return (
     <Table {...args}>
       <TableHead>
         <HeaderRow>
           {columns.map((columnName: any) => (
-            <HeaderCell key={columnName}>
-              {columnName}
-            </HeaderCell>
+            <HeaderCell key={columnName}>{columnName}</HeaderCell>
           ))}
         </HeaderRow>
       </TableHead>
@@ -71,7 +71,7 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const StickyHeaderRow: ComponentStory<typeof Table> = (args) => {
+export const StickyHeaderRow: ComponentStory<typeof Table> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]);
   return (
@@ -80,9 +80,7 @@ export const StickyHeaderRow: ComponentStory<typeof Table> = (args) => {
         <TableHead isSticky>
           <HeaderRow>
             {columns.map((columnName: any) => (
-              <HeaderCell key={columnName}>
-                {columnName}
-              </HeaderCell>
+              <HeaderCell key={columnName}>{columnName}</HeaderCell>
             ))}
           </HeaderRow>
         </TableHead>
@@ -98,16 +96,16 @@ export const StickyHeaderRow: ComponentStory<typeof Table> = (args) => {
       </Table>
     </TableContainer>
   );
-}
+};
 
 export const DisabledRows: ComponentStory<typeof Table> = () => {
-  return <>TODO</>
-}
+  return <>TODO</>;
+};
 
-export const NestedRows: ComponentStory<typeof Table> = (args) => {
+export const NestedRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 100, 5, 3));
-  const [expanded, setExpanded] = React.useState<ExpandedState>({})
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -168,7 +166,7 @@ export const NestedRows: ComponentStory<typeof Table> = (args) => {
 
   return (
     <>
-      <div >
+      <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
@@ -180,10 +178,7 @@ export const NestedRows: ComponentStory<typeof Table> = (args) => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: any) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
@@ -218,10 +213,10 @@ export const NestedRows: ComponentStory<typeof Table> = (args) => {
   );
 };
 
-export const SortableRows: ComponentStory<typeof Table> = (args) => {
+export const SortableRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 100));
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -295,10 +290,7 @@ export const SortableRows: ComponentStory<typeof Table> = (args) => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: Header<Person, any>) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
@@ -331,12 +323,12 @@ export const SortableRows: ComponentStory<typeof Table> = (args) => {
       </TableContainer>
     </>
   );
-}
+};
 
-export const SelectableRows: ComponentStory<typeof Table> = (args) => {
+export const SelectableRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 100));
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -398,16 +390,14 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <button
-          onClick={() => console.info('rowSelection', rowSelection)}
-        >
+        <button onClick={() => console.info('rowSelection', rowSelection)}>
           Log rowSelection state
         </button>
         <button
           onClick={() =>
             console.info(
               'table.getSelectedFlatRows()',
-              table.getSelectedRowModel().flatRows
+              table.getSelectedRowModel().flatRows,
             )
           }
         >
@@ -422,10 +412,7 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: any) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
@@ -458,12 +445,12 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
       </TableContainer>
     </>
   );
-}
+};
 
-export const ExpandableContent: ComponentStory<typeof Table> = (args) => {
+export const ExpandableContent: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(true, 100));
-  const [expanded, setExpanded] = React.useState<ExpandedState>({})
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -536,10 +523,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = (args) => {
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header: any) => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),

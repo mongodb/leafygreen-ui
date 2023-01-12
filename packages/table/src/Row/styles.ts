@@ -6,7 +6,7 @@ export const baseStyles = css`
   border-top: 1px solid transparent;
 
   // emulating a border bottom on the last nested row
-  &:not([data-depth="0"]) + tr[data-depth="0"] {
+  &:not([data-depth='0']) + tr[data-depth='0'] {
     border-top: 1px solid ${palette.gray.light2};
   }
 `;
@@ -21,7 +21,7 @@ export const themeZebraStyles: Record<Theme, string> = {
     &:nth-of-type(even) {
       background-color: ${palette.gray.light3};
     }
-  `
+  `,
 };
 
 export const nestedBorderTopStyles: Record<Theme, string> = {
@@ -30,7 +30,7 @@ export const nestedBorderTopStyles: Record<Theme, string> = {
   `,
   [Theme.Light]: css`
     border-top: 1px solid ${palette.gray.light2};
-  `
+  `,
 };
 
 export const nestedBgStyles: Record<Theme, string> = {
@@ -39,7 +39,7 @@ export const nestedBgStyles: Record<Theme, string> = {
   `,
   [Theme.Light]: css`
     background-color: ${palette.gray.light3};
-  `
+  `,
 };
 
 export const expandedContentStyles: Record<Theme, string> = {
@@ -48,5 +48,5 @@ export const expandedContentStyles: Record<Theme, string> = {
   `,
   [Theme.Light]: css`
     background-color: ${palette.gray.light3};
-  `
+  `,
 };

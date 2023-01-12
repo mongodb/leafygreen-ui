@@ -30,6 +30,6 @@ export const alignmentStyles = (align: Align) =>
 //     color: ${palette.grey.light2};
 //   `,
 //   [Theme.Light]: css`
-    
+
 //   `,
 // };

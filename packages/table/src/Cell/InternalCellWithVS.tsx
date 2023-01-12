@@ -8,7 +8,6 @@ const InternalCellWithVS = <T extends unknown>({
   toggleExpandedIconProps,
   ...rest
 }: PropsWithChildren<InternalCellWithVSProps<T>>) => {
-
   const shouldRenderArrow = cell?.row.getCanExpand() && cellIndex === 0;
 
   return (
@@ -17,7 +16,7 @@ const InternalCellWithVS = <T extends unknown>({
       cellIndex={cellIndex}
       toggleExpandedIconProps={{
         isExpanded: cell.row.getIsExpanded(),
-        toggleExpanded: cell.row.getToggleExpandedHandler()
+        toggleExpanded: cell.row.getToggleExpandedHandler(),
       }}
       {...rest}
     />

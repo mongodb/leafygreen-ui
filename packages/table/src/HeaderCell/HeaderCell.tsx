@@ -7,10 +7,10 @@ import { baseStyles, alignmentStyles, contentContainerStyles } from './styles';
 import { HeaderCellProps, SortState } from './types';
 
 const HeaderSortState: { [key: string]: SortState } = {
-  'false': SortState.Off,
-  'asc': SortState.Asc,
-  'desc': SortState.Desc,
-}
+  false: SortState.Off,
+  asc: SortState.Asc,
+  desc: SortState.Desc,
+};
 
 const HeaderCell = <T extends unknown>({
   children,
@@ -25,11 +25,12 @@ const HeaderCell = <T extends unknown>({
   let columnName;
   let sortState;
   let onSortIconClick;
+
   if (header && header.column.getCanSort()) {
     columnName = header.column.columnDef.header as string;
-    let headerSortDirection = header.column.getIsSorted().toString();
+    const headerSortDirection = header.column.getIsSorted().toString();
     sortState = HeaderSortState[headerSortDirection];
-    onSortIconClick = header.column.getToggleSortingHandler()
+    onSortIconClick = header.column.getToggleSortingHandler();
   } else {
     columnName = '';
     sortState = SortState.None;
@@ -48,14 +49,19 @@ const HeaderCell = <T extends unknown>({
   }, [cellIndex, align, setColumnAlignments]);
 
   return (
-    <th className={cx(
-      baseStyles,
-      // themeStyles[theme],
-      {
-        [css`width: ${header?.getSize()}px`]: !!header?.getSize(),
-      },
-      className
-    )} {...rest}>
+    <th
+      className={cx(
+        baseStyles,
+        // themeStyles[theme],
+        {
+          [css`
+            width: ${header?.getSize()}px;
+          `]: !!header?.getSize(),
+        },
+        className,
+      )}
+      {...rest}
+    >
       <div className={cx(contentContainerStyles, alignmentStyles(align))}>
         {children}
         {sortState && onSortIconClick && (

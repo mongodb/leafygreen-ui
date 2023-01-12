@@ -30,7 +30,7 @@ const TableContextProvider = ({
       >
         {children}
       </TableContext.Provider>
-    </LeafygreenProvider> 
+    </LeafygreenProvider>
   );
 };
 

@@ -31,7 +31,7 @@ const Table = ({
           baseStyles,
           themeStyles[theme],
           bodyTypeScaleStyles[baseFontSize],
-          className
+          className,
         )}
         {...rest}
       >
