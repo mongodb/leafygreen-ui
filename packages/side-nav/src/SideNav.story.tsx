@@ -17,8 +17,16 @@ import { CollapsedSideNavItem, SideNav, SideNavGroup, SideNavItem } from '.';
 export default {
   title: 'Components/SideNav',
   component: SideNav,
+  parameters: {
+    controls: {
+      exclude: ['children', 'className', 'setCollapsed', 'id'],
+    },
+  },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+  },
+  args: {
+    widthOverride: 200,
   },
 } as ComponentMeta<typeof SideNav>;
 
@@ -30,20 +38,24 @@ export const Basic: ComponentStory<typeof SideNav> = ({
   className,
   ...args
 }: SideNavProps) => {
-  return (
-    <SideNav className={cx(basicStyles, className)} {...args}>
-      <SideNavGroup glyph={<Icon glyph="Support" />} header="Header text">
-        <SideNavItem active>Active State</SideNavItem>
-        <SideNavItem disabled>Disabled State</SideNavItem>
-      </SideNavGroup>
-
-      <SideNavGroup header="Test">
-        <SideNavItem>Default root element</SideNavItem>
-        <SideNavItem href="#">Anchor root element</SideNavItem>
-        <SideNavItem>Another item</SideNavItem>
-      </SideNavGroup>
-    </SideNav>
-  );
+  return <SideNav className={cx(basicStyles, className)} {...args} />;
+};
+Basic.args = {
+  children: [
+    <SideNavGroup
+      key="header"
+      glyph={<Icon glyph="Support" />}
+      header="Header text"
+    >
+      <SideNavItem active>Active State</SideNavItem>
+      <SideNavItem disabled>Disabled State</SideNavItem>
+    </SideNavGroup>,
+    <SideNavGroup key="test" header="Test">
+      <SideNavItem>Default root element</SideNavItem>
+      <SideNavItem href="#">Anchor root element</SideNavItem>
+      <SideNavItem>Another item</SideNavItem>
+    </SideNavGroup>,
+  ],
 };
 
 const appContainer = css`

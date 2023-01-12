@@ -5,7 +5,6 @@ import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 import Icon, { glyphs, Size } from '@leafygreen-ui/icon';
 import { GlyphName } from '@leafygreen-ui/icon/dist/glyphs';
-import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { keyMap } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette/';
 import Tooltip from '@leafygreen-ui/tooltip';
@@ -80,23 +79,21 @@ function WrappedIconBlock({ glyph, size }: { glyph: string; size: Size }) {
   }, [blockRef, glyph, copied]);
 
   const trigger = (
-    <InteractionRing borderRadius="5px">
-      <button
-        onClick={() => setCopied(true)}
-        onKeyDown={e => {
-          if (e.keyCode === keyMap.Space) {
-            setCopied(true);
-          }
-        }}
-        ref={setBlockRef}
-        className={resetButtonStyles}
-      >
-        <div key={glyph} className={containerStyle}>
-          <Icon glyph={glyph as GlyphName} fill="#000000" size={size} />
-          <div className={textStyle}>{glyph}</div>
-        </div>
-      </button>
-    </InteractionRing>
+    <button
+      onClick={() => setCopied(true)}
+      onKeyDown={e => {
+        if (e.keyCode === keyMap.Space) {
+          setCopied(true);
+        }
+      }}
+      ref={setBlockRef}
+      className={resetButtonStyles}
+    >
+      <div key={glyph} className={containerStyle}>
+        <Icon glyph={glyph as GlyphName} fill="#000000" size={size} />
+        <div className={textStyle}>{glyph}</div>
+      </div>
+    </button>
   );
 
   return (

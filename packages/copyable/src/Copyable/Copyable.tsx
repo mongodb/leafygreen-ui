@@ -34,8 +34,8 @@ import {
   labelNoButtonStyle,
   noButtonContainerStyle,
   noButtonContainerStyleMode,
-} from './styles';
-import { CopyableProps, Size } from './types';
+} from './Copyable.styles';
+import { CopyableProps, Size } from './Copyable.types';
 
 export default function Copyable({
   darkMode: darkModeProp,

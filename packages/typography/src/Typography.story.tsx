@@ -44,6 +44,11 @@ const displayFlex = css`
 
 export default {
   title: 'Components/Typography',
+  parameters: {
+    controls: {
+      exclude: ['className'],
+    },
+  },
   argTypes: {
     baseFontSize: {
       options: [14, 16],
@@ -52,11 +57,6 @@ export default {
         'Storybook prop only. This font size is passed into the LeafygreenProvider.',
     },
     darkMode: storybookArgTypes.darkMode,
-    className: {
-      table: {
-        disable: true,
-      },
-    },
   },
 };
 
@@ -69,105 +69,73 @@ export const AllTypography = ({
   darkMode: boolean;
 }) => {
   return (
-    <LeafygreenProvider baseFontSize={baseFontSize}>
+    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
       <div className={cx(wrapperStyles)}>
-        <H1 darkMode={darkMode} className={displayBlock}>
-          Heading 1
-        </H1>
-        <H2 darkMode={darkMode} className={displayBlock}>
-          Heading 2
-        </H2>
-        <H3 darkMode={darkMode} className={displayBlock}>
-          Heading 3
-        </H3>
-        <Subtitle darkMode={darkMode} className={displayBlock}>
-          Subtitle
-        </Subtitle>
+        <H1>Heading 1</H1>
+        <H2>Heading 2</H2>
+        <H3>Heading 3</H3>
+        <Subtitle>Subtitle</Subtitle>
 
-        <Body darkMode={darkMode} className={cx(displayBlock)}>
-          <div>Body</div>
-          <div>
+        <div className={cx(displayFlex)}>
+          <Body>Body</Body>
+          <Body>
             <strong>Body (Semibold)</strong>
-          </div>
-          <div>
+          </Body>
+        </div>
+        <div className={cx(displayFlex)}>
+          <Body>
             <em>Body (Italic)</em>
-          </div>
-          <div>
+          </Body>
+          <Body>
             <strong>
               <em>Body (Semibold Italic)</em>
             </strong>
-          </div>
-        </Body>
-
-        <Body className={cx(displayFlex)}>
-          <InlineCode darkMode={darkMode}>&quot;Inline Code&quot;</InlineCode>
-          <InlineCode
-            darkMode={darkMode}
-            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
-          >
-            &quot;Inline Code Link&quot;
-          </InlineCode>
-        </Body>
+          </Body>
+        </div>
 
         <div className={cx(displayFlex)}>
-          <Link
-            href="http://localhost:9001"
-            arrowAppearance="hover"
-            darkMode={darkMode}
-          >
+          <InlineCode>&quot;Inline Code&quot;</InlineCode>
+          <InlineCode href="https://mongodb.github.io/leafygreen-ui/?path=/story/*">
+            &quot;Inline Code Link&quot;
+          </InlineCode>
+        </div>
+
+        <div className={cx(displayFlex)}>
+          <Link href="http://localhost:9001" arrowAppearance="hover">
             Local (Arrow on Hover)
           </Link>
-          <Link
-            href="http://localhost:9001"
-            arrowAppearance="none"
-            darkMode={darkMode}
-          >
+          <Link href="http://localhost:9001" arrowAppearance="none">
             Local (No Arrow)
           </Link>
-          <Link
-            href="?path=/story/button--icon-only"
-            arrowAppearance="persist"
-            darkMode={darkMode}
-          >
+          <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
             Internal (Persist Arrow)
           </Link>
           <Link
             href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
             arrowAppearance="persist"
-            darkMode={darkMode}
           >
             External
           </Link>
         </div>
 
-        <Body darkMode={darkMode} className={displayBlock}>
-          <InlineKeyCode darkMode={darkMode}>CTRL</InlineKeyCode>
+        <div className={displayBlock}>
+          <InlineKeyCode>CTRL</InlineKeyCode>
           <code> + </code>
-          <InlineKeyCode darkMode={darkMode}>C</InlineKeyCode>
-        </Body>
+          <InlineKeyCode>C</InlineKeyCode>
+        </div>
 
-        <Overline darkMode={darkMode} className={displayBlock}>
-          Overline
-        </Overline>
-        <Disclaimer darkMode={darkMode} className={displayBlock}>
-          Disclaimer
-        </Disclaimer>
+        <Overline className={displayBlock}>Overline</Overline>
+        <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
 
-        <Body darkMode={darkMode}>
-          <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
-            Inline definition
-          </InlineDefinition>{' '}
-        </Body>
+        <InlineDefinition definition="Tooltip Definition">
+          Inline definition
+        </InlineDefinition>
 
         <Error>Hello I am an Error!</Error>
 
         <div className={cx(displayBlock)}>
-          <Label darkMode={darkMode} htmlFor="id">
-            This is a label
-          </Label>
-          <Description darkMode={darkMode}>
-            This is the description for said label
-          </Description>
+          <Label htmlFor="id">This is a label</Label>
+          <Description>This is the description for said label</Description>
         </div>
       </div>
     </LeafygreenProvider>
