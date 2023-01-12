@@ -406,12 +406,3 @@ export const errorMessageStyle = css`
   padding-top: 4px;
   font-weight: normal;
 `;
-
-export const errorMessageModeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};
