@@ -1,6 +1,6 @@
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { ComponentStory, Meta } from '@storybook/react';
-import React, { Fragment, useState } from 'react';
+import React from 'react';
 import {
   ColumnDef,
   flexRender,
@@ -13,7 +13,7 @@ import {
   Header,
 } from '@tanstack/react-table';
 import { Cell as TSCell, Row as TSRow } from '@tanstack/table-core';
-import { makeData, Person } from '../makeData';
+import { makeData, Person } from '../utils/makeData';
 import Table from '../Table/Table';
 import TableHead from '../TableHead/TableHead';
 import HeaderRow from '../HeaderRow/HeaderRow';
@@ -35,7 +35,7 @@ export default {
   },
 } as Meta<typeof Table>;
 
-export const BasicWithVS = () => {
+export const BasicWithRT = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000));
 
@@ -72,11 +72,6 @@ export const BasicWithVS = () => {
         header: 'Status',
         size: 90,
       },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
-      },
     ],
     [],
   );
@@ -95,6 +90,8 @@ export const BasicWithVS = () => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
+        {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+        {/* @ts-ignore */}
         <p>{table.virtualRows.length} virtual rows rendered</p>
       </div>
 
@@ -117,6 +114,8 @@ export const BasicWithVS = () => {
             ))}
           </TableHead>
           <TableBody table={table}>
+            {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+            {/* @ts-ignore */}
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               return (
@@ -141,7 +140,7 @@ export const BasicWithVS = () => {
   );
 };
 
-export const NestedRowsWithVS = () => {
+export const NestedRowsWithRT: ComponentStory<typeof Table> = (args) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000, 5, 3));
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -179,11 +178,6 @@ export const NestedRowsWithVS = () => {
         header: 'Status',
         size: 90,
       },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
-      },
     ],
     [],
   );
@@ -208,11 +202,14 @@ export const NestedRowsWithVS = () => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
+        {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+        {/* @ts-ignore */}
+        <p>{table.virtualRows.length} virtual rows rendered</p>
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table {...args}>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <HeaderRow key={headerGroup.id}>
@@ -230,6 +227,8 @@ export const NestedRowsWithVS = () => {
             ))}
           </TableHead>
           <TableBody table={table}>
+            {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+            {/* @ts-ignore */}
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               return (
@@ -254,7 +253,7 @@ export const NestedRowsWithVS = () => {
   );
 };
 
-export const SortableRowsWithVS = () => {
+export const SortableRowsWithRT = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000));
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -295,11 +294,6 @@ export const SortableRowsWithVS = () => {
         header: 'Status',
         size: 90,
       },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
-      },
     ],
     [],
   );
@@ -323,6 +317,8 @@ export const SortableRowsWithVS = () => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
+        {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+        {/* @ts-ignore */}
         <p>{table.virtualRows.length} virtual rows rendered</p>
       </div>
 
@@ -345,6 +341,8 @@ export const SortableRowsWithVS = () => {
             ))}
           </TableHead>
           <TableBody table={table}>
+            {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+            {/* @ts-ignore */}
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               return (
@@ -369,7 +367,7 @@ export const SortableRowsWithVS = () => {
   );
 };
 
-export const SelectableRowsWithVS = () => {
+export const SelectableRowsWithRT = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000));
   const [rowSelection, setRowSelection] = React.useState({});
@@ -407,11 +405,6 @@ export const SelectableRowsWithVS = () => {
         header: 'Status',
         size: 90,
       },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
-      },
     ],
     [],
   );
@@ -435,6 +428,8 @@ export const SelectableRowsWithVS = () => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
+        {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+        {/* @ts-ignore */}
         <p>{table.virtualRows.length} virtual rows rendered</p>
         <button onClick={() => console.info('rowSelection', rowSelection)}>
           Log rowSelection state
@@ -470,6 +465,8 @@ export const SelectableRowsWithVS = () => {
             ))}
           </TableHead>
           <TableBody table={table}>
+            {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+            {/* @ts-ignore */}
             {table.virtualRows.map((virtualRow: any) => {
               const row = rows[virtualRow.index];
               return (
@@ -494,7 +491,7 @@ export const SelectableRowsWithVS = () => {
   );
 };
 
-export const ExpandableContentWithVS = () => {
+export const ExpandableContentWithRT = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(true, 5000));
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -532,11 +529,6 @@ export const ExpandableContentWithVS = () => {
         header: 'Status',
         size: 90,
       },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
-      },
     ],
     [],
   );
@@ -561,6 +553,8 @@ export const ExpandableContentWithVS = () => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
+        {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+        {/* @ts-ignore */}
         <p>{table.virtualRows.length} virtual rows rendered</p>
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
@@ -584,6 +578,8 @@ export const ExpandableContentWithVS = () => {
             ))}
           </TableHead>
           <TableBody table={table} renderingExpandableRows>
+            {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+            {/* @ts-ignore */}
             {table.virtualRows.map((virtualRow: any) => {
               const row = rows[virtualRow.index];
               return (

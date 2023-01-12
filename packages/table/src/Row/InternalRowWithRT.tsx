@@ -1,14 +1,14 @@
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import React, { Fragment, ReactElement, ReactNode } from 'react';
-import InternalCellWithVS from '../Cell/InternalCellWithVS';
-import { LeafygreenTableRowData } from '../useLeafygreenTable/useLeafygreenTable.types';
+import InternalCellWithRT from '../Cell/InternalCellWithRT';
+import { LeafygreenTableType } from '../useLeafygreenTable';
 import InternalRowBase from './InternalRowBase';
 import {
   nestedBorderTopStyles,
   nestedBgStyles,
   expandedContentStyles,
-} from './styles';
+} from './Row.styles';
 import { InternalRowWithRTProps } from './types';
 
 const InternalRowWithRT = <T extends unknown>({
@@ -16,19 +16,20 @@ const InternalRowWithRT = <T extends unknown>({
   className,
   row,
   virtualRow,
+  disabled,
   ...rest
-}: InternalRowWithRTProps<LeafygreenTableRowData<T>>) => {
+}: InternalRowWithRTProps<LeafygreenTableType<T>>) => {
   const { theme } = useDarkMode();
-  const isNestedRowParent = row && row.depth === 0 && row.getIsExpanded();
-  const isNestedRowOrParent = row && (row.getIsExpanded() || row.depth > 0);
-  const ExpandedContentRowProp = row && row?.original.renderExpandedContent;
+  const isNestedRowParent = row.depth === 0 && row.getIsExpanded();
+  const isNestedRowOrParent = row.getIsExpanded() || row.depth > 0;
+  const ExpandedContentRowProp = row?.original.renderExpandedContent;
   const ContainerElement = ExpandedContentRowProp
     ? (props: any) => (
-        <tbody
-          {...props}
-          ref={virtualRow ? virtualRow.measureRef : undefined}
-        />
-      )
+      <tbody
+        {...props}
+        ref={virtualRow ? virtualRow.measureRef : undefined}
+      />
+    )
     : Fragment;
 
   return (
@@ -41,17 +42,20 @@ const InternalRowWithRT = <T extends unknown>({
           },
           className,
         )}
+        disabled={disabled}
+        data-depth={row.depth}
         {...rest}
       >
         {React.Children.map(children, (child: ReactNode, index: number) => {
-          return React.createElement(InternalCellWithVS, {
+          return React.createElement(InternalCellWithRT, {
             ...(child as ReactElement)?.props,
             cellIndex: index,
             depth: row.depth,
+            disabled,
           });
         })}
       </InternalRowBase>
-      {row && row.getIsExpanded() && ExpandedContentRowProp && (
+      {row.getIsExpanded() && ExpandedContentRowProp && (
         <tr>
           <td
             colSpan={row?.getVisibleCells().length}

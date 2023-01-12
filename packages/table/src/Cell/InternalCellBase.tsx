@@ -1,5 +1,4 @@
 import { cx } from '@leafygreen-ui/emotion';
-import { consoleOnce } from '@leafygreen-ui/lib';
 import React, { PropsWithChildren } from 'react';
 import { useTableContext } from '../TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon/ToggleExpandedIcon';
@@ -8,15 +7,14 @@ import {
   baseStyles,
   depthPadding,
   cellContentContainerStyles,
-} from './styles';
-import { InternalCellBaseProps } from './types';
+} from './Cell.styles';
+import { InternalCellBaseProps } from './Cell.types';
 
 const InternalCellBase = ({
   children,
   className,
   cellIndex,
   depth = 0,
-  shouldRenderArrow,
   toggleExpandedIconProps,
   ...rest
 }: PropsWithChildren<InternalCellBaseProps>) => {
@@ -39,7 +37,7 @@ const InternalCellBase = ({
           [depthPadding(depth)]: cellIndex === 0,
         })}
       >
-        {shouldRenderArrow && (
+        {!!toggleExpandedIconProps && (
           <ToggleExpandedIcon {...toggleExpandedIconProps} />
         )}
         {children}

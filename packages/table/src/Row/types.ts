@@ -1,26 +1,21 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
-import { Row } from '@tanstack/react-table';
-import { ChangeEvent } from 'react';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { VirtualItem } from 'react-virtual';
-import { LeafygreenTableRowData } from '../useLeafygreenTable/useLeafygreenTable';
+import { LeafygreenTableRow } from '../useLeafygreenTable';
 
 export interface InternalRowBaseProps
-  extends HTMLElementProps<'tr'>,
-    DarkModeProps {
+  extends HTMLElementProps<'tr'> {
   /**
    * Determines whether or not the row is disabled
    */
   disabled?: boolean;
 }
 
-export interface InternalRowWithoutVSProps extends InternalRowBaseProps {}
+export interface InternalRowWithoutRTProps extends InternalRowBaseProps { }
 
 export interface InternalRowWithRTProps<T extends unknown>
   extends InternalRowBaseProps {
-  row: Row<LeafygreenTableRowData<T>>;
+  row: LeafygreenTableRow<T>;
   virtualRow?: VirtualItem;
 }
 
-export interface RowProps<T extends unknown>
-  extends InternalRowWithoutVSProps,
-    Partial<InternalRowWithRTProps<T>> {}
+export type RowProps<T extends unknown> = InternalRowWithoutRTProps | InternalRowWithRTProps<T>;

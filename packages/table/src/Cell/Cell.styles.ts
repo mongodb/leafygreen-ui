@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Align } from '../HeaderCell/types';
+import { Align } from '../HeaderCell/HeaderCell.types';
 
 const baseSidePadding = spacing[4];
 

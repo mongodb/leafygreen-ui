@@ -3,8 +3,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useTableContext } from '../TableContext';
 import SortIcon from './SortIcon/SortIcon';
-import { baseStyles, alignmentStyles, contentContainerStyles } from './styles';
-import { HeaderCellProps, SortState } from './types';
+import { baseStyles, alignmentStyles, contentContainerStyles, setWidth } from './HeaderCell.styles';
+import { HeaderCellProps, SortState } from './HeaderCell.types';
 
 const HeaderSortState: { [key: string]: SortState } = {
   false: SortState.Off,
@@ -20,7 +20,6 @@ const HeaderCell = <T extends unknown>({
   header,
   ...rest
 }: PropsWithChildren<HeaderCellProps<T>>) => {
-  // const { theme } = useDarkMode();
   const { setColumnAlignments } = useTableContext();
   let columnName;
   let sortState;
@@ -52,11 +51,10 @@ const HeaderCell = <T extends unknown>({
     <th
       className={cx(
         baseStyles,
-        // themeStyles[theme],
         {
-          [css`
-            width: ${header?.getSize()}px;
-          `]: !!header?.getSize(),
+          // cx boolean should ensure header.getSize() is not undefined
+          // @ts-expect-error
+          [setWidth(header?.getSize())]: !!header?.getSize(),
         },
         className,
       )}

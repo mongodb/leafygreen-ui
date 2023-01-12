@@ -5,11 +5,3 @@ export interface TableProps extends HTMLElementProps<'table'>, DarkModeProps {
   shouldAlternateRowColor?: boolean;
   baseFontSize?: BaseFontSize;
 }
-
-export type WithRequiredProperty<Type, Key extends keyof Type> = Type & {
-  [Property in Key]-?: Type[Property];
-};
-
-export type WithOptionalProperty<Type, Key extends keyof Type> = Type & {
-  [Property in Key]?: Type[Property];
-};

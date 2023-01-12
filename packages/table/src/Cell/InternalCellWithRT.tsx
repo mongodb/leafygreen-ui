@@ -1,26 +1,26 @@
 import React, { PropsWithChildren } from 'react';
 import InternalCellBase from './InternalCellBase';
-import { InternalCellWithVSProps } from './types';
+import { InternalCellWithRTProps } from './Cell.types';
 
-const InternalCellWithVS = <T extends unknown>({
+const InternalCellWithRT = <T extends unknown>({
   cell,
   cellIndex,
   toggleExpandedIconProps,
   ...rest
-}: PropsWithChildren<InternalCellWithVSProps<T>>) => {
+}: PropsWithChildren<InternalCellWithRTProps<T>>) => {
   const shouldRenderArrow = cell?.row.getCanExpand() && cellIndex === 0;
 
   return (
     <InternalCellBase
-      shouldRenderArrow={!!shouldRenderArrow}
       cellIndex={cellIndex}
-      toggleExpandedIconProps={{
+      toggleExpandedIconProps={shouldRenderArrow ? {
         isExpanded: cell.row.getIsExpanded(),
         toggleExpanded: cell.row.getToggleExpandedHandler(),
-      }}
+      } : undefined
+      }
       {...rest}
     />
   );
 };
 
-export default InternalCellWithVS;
+export default InternalCellWithRT;

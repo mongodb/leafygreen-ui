@@ -9,10 +9,10 @@ interface ScrollToOptions {
   align: ScrollAlignment;
 }
 
-interface ScrollToOffsetOptions extends ScrollToOptions {}
-interface ScrollToIndexOptions extends ScrollToOptions {}
+interface ScrollToOffsetOptions extends ScrollToOptions { }
+interface ScrollToIndexOptions extends ScrollToOptions { }
 
-interface VirtualizerValues {
+export interface VirtualizerValues {
   virtualItems: Array<VirtualItem>;
   totalSize: number;
   scrollToOffset: (index: number, options?: ScrollToOffsetOptions) => void;
@@ -22,19 +22,29 @@ interface VirtualizerValues {
 
 // Above is copied from react-virtual as their types are exported
 
-export type LeafygreenTableRowData<T extends unknown> = T & {
-  renderExpandedContent?: (row: Row<T>) => JSX.Element;
+// Might need to use a recursive deep replace to support the below.
+// https://stackoverflow.com/questions/70632026/generic-to-recursively-modify-a-given-type-interface-in-typescript
+export type LeafygreenTableType<T extends unknown> = T & {
+  renderExpandedContent?: (row: Row<unknown>) => JSX.Element;
 };
 
-export type LeafygreenTableOptions<T> = TableOptions<
-  LeafygreenTableRowData<T>
-> & {
+export type LeafygreenTableRow<T extends unknown> = Row<LeafygreenTableType<T>>;
+
+interface LeafygreenTableOptionsWithoutVS<T> extends TableOptions<LeafygreenTableType<T>> {
   containerRef: any;
   hasSelectableRows?: boolean;
-  useVirtualScrolling?: boolean;
 };
 
-export type LeafygreenTableValues<T> = Table<LeafygreenTableRowData<T>> &
-  Pick<VirtualizerValues, 'totalSize'> & {
-    virtualRows?: Array<VirtualItem>;
-  };
+interface LeafygreenTableOptionsWithVS<T> extends LeafygreenTableOptionsWithoutVS<T> {
+  useVirtualScrolling: boolean;
+}
+
+export type LeafygreenTableOptions<T> = LeafygreenTableOptionsWithoutVS<T> | LeafygreenTableOptionsWithVS<T>;
+
+interface LeafygreenTableValuesWithoutVS<T extends unknown> extends Table<LeafygreenTableType<T>> { }
+
+interface LeafygreenTableValuesWithVS<T> extends LeafygreenTableValuesWithoutVS<T>, Pick<VirtualizerValues, 'totalSize'> {
+  virtualRows: Array<VirtualItem>;
+};
+
+export type LeafygreenTableValues<T> = LeafygreenTableValuesWithoutVS<T> | LeafygreenTableValuesWithVS<T>;

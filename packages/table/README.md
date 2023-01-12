@@ -5,10 +5,12 @@
 #### Temp todos
 
 - ensure parity between v10 and v11 functionalities
+- accessibility checks (keyboard controls, aria labels, etc.)
 - propTypes for all exported components
+- replace `WithVS` with `WithRT` in all files
+- create index.ts for all subcomponents
 - import all react-table and react-virtual exports and export them from our package
-- styles for disabled rows and clickable rows
-- remove unused imports
+- remove unused imports from all files
 - replace all instances of unnecessary `any` types
 - ensure TS types are failsafe
 - resolve any UI discrepancies
@@ -85,6 +87,8 @@ _Upgrading from v10 to v11? Check out our [upgrade guide](https://github.com/mon
 ## Feature Examples
 
 ### Virtualized Scrolling
+
+https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/Table.stories.tsx#L45-L64
 
 ### Sortable Rows
 

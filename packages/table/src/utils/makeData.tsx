@@ -1,6 +1,5 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
-import { ColumnSort, SortingState } from '@tanstack/react-table';
 
 export interface Person {
   id: any;
@@ -8,7 +7,6 @@ export interface Person {
   lastName: string;
   age: number;
   visits: number;
-  progress: number;
   status: 'relationship' | 'complicated' | 'single';
   subRows?: Array<Person>;
 }
@@ -34,7 +32,6 @@ const newPerson = (): Person => {
     lastName: faker.name.lastName(),
     age: faker.datatype.number({ min: 20, max: 100 }),
     visits: faker.datatype.number(1000),
-    progress: faker.datatype.number(100),
     status: faker.helpers.shuffle<Person['status']>([
       'relationship',
       'complicated',
@@ -64,12 +61,12 @@ export function makeData(
         ...(hasSubRows &&
           lens[depth + 1] &&
           randomIntFromInterval(1, 3) == 1 && {
-            subRows: makeDataLevel(depth + 1),
-          }),
+          subRows: makeDataLevel(depth + 1),
+        }),
         ...(renderingExpandableRows &&
           randomIntFromInterval(1, 3) == 1 && {
-            renderExpandedContent: ExpandedContentComponent,
-          }),
+          renderExpandedContent: ExpandedContentComponent,
+        }),
       };
     });
   };
@@ -78,33 +75,3 @@ export function makeData(
 
   return data;
 }
-
-const data = makeData(false, 1000);
-
-//simulates a backend api
-export const fetchData = (
-  start: number,
-  size: number,
-  sorting: SortingState,
-) => {
-  const dbData = [...data];
-
-  if (sorting.length) {
-    const sort = sorting[0] as ColumnSort;
-    const { id, desc } = sort as { id: keyof Person; desc: boolean };
-    dbData.sort((a, b) => {
-      if (desc) {
-        return a[id] < b[id] ? 1 : -1;
-      }
-
-      return a[id] > b[id] ? 1 : -1;
-    });
-  }
-
-  return {
-    data: dbData.slice(start, start + size),
-    meta: {
-      totalRowCount: dbData.length,
-    },
-  };
-};

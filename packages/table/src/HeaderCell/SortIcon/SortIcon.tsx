@@ -1,7 +1,7 @@
 import React from 'react';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import { SortState } from '../types';
+import { SortState } from '../HeaderCell.types';
 import { SortIconProps } from './SortIcon.types';
 import { palette } from '@leafygreen-ui/palette';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';

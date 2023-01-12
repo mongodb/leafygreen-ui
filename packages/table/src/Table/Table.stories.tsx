@@ -13,7 +13,7 @@ import {
   Header,
 } from '@tanstack/react-table';
 import { Cell as TSCell, Row as TSRow } from '@tanstack/table-core';
-import { makeData, Person } from '../makeData';
+import { makeData, Person } from '../utils/makeData';
 import Table from '../Table/Table';
 import TableHead from '../TableHead/TableHead';
 import HeaderRow from '../HeaderRow/HeaderRow';
@@ -31,9 +31,6 @@ export default {
     children: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
-  },
-  args: {
-    darkMode: true,
   },
 } as Meta<typeof Table>;
 
@@ -71,38 +68,7 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const StickyHeaderRow: ComponentStory<typeof Table> = args => {
-  const data = makeData(false, 100);
-  const columns = Object.keys(data[0]);
-  return (
-    <TableContainer>
-      <Table {...args}>
-        <TableHead isSticky>
-          <HeaderRow>
-            {columns.map((columnName: any) => (
-              <HeaderCell key={columnName}>{columnName}</HeaderCell>
-            ))}
-          </HeaderRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row: any) => (
-            <Row>
-              {Object.keys(row).map((cellKey: string, index: number) => {
-                return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
-              })}
-            </Row>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-export const DisabledRows: ComponentStory<typeof Table> = () => {
-  return <>TODO</>;
-};
-
-export const NestedRows: ComponentStory<typeof Table> = args => {
+export const NestedRows = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 100, 5, 3));
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -140,11 +106,6 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
         header: 'Status',
         size: 90,
       },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
-      },
     ],
     [],
   );
@@ -172,7 +133,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <HeaderRow key={headerGroup.id}>
@@ -253,11 +214,6 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         accessorKey: 'status',
         header: 'Status',
         size: 90,
-      },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
       },
     ],
     [],
@@ -362,11 +318,6 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
         accessorKey: 'status',
         header: 'Status',
         size: 90,
-      },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
       },
     ],
     [],
@@ -484,11 +435,6 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
         accessorKey: 'status',
         header: 'Status',
         size: 90,
-      },
-      {
-        accessorKey: 'progress',
-        header: 'Profile Progress',
-        size: 80,
       },
     ],
     [],

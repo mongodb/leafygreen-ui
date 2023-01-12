@@ -1,25 +1,25 @@
 import React, { PropsWithChildren } from 'react';
-import InternalCellWithoutVS from './InternalCellWithoutVS';
-import InternalCellWithVS from './InternalCellWithVS';
-import { CellProps } from './types';
+import InternalCellBase from './InternalCellBase';
+import InternalCellWithRT from './InternalCellWithRT';
+import { CellProps } from './Cell.types';
 
 const Cell = <T extends unknown>({
   cell,
-  toggleExpandedIconProps,
   ...rest
 }: PropsWithChildren<CellProps<T>>) => {
-  const hasVS = !!cell;
+  const usesRT = !!cell;
 
-  if (hasVS) {
+  if (usesRT) {
     return (
-      // missing props will be provided by cloneElement call from Row
-      <InternalCellWithVS cell={cell} {...rest} />
+      // missing cellIndex prop will be provided by cloneElement call from Row
+      // @ts-expect-error
+      <InternalCellWithRT cell={cell} {...rest} />
     );
   } else {
     return (
-      // missing props will be provided by cloneElement call from Row
-      <InternalCellWithoutVS
-        toggleExpandedIconProps={toggleExpandedIconProps}
+      // missing cellIndex prop will be provided by cloneElement call from Row
+      // @ts-expect-error
+      <InternalCellBase
         {...rest}
       />
     );

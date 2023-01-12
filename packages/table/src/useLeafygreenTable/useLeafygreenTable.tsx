@@ -1,65 +1,69 @@
 import { ColumnDef, Table, useReactTable } from '@tanstack/react-table';
 import { useVirtual } from 'react-virtual';
 import { Row } from '@tanstack/react-table';
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   LeafygreenTableOptions,
-  LeafygreenTableRowData,
   LeafygreenTableValues,
 } from './useLeafygreenTable.types';
 import CheckboxCell from '../CheckboxCell/CheckboxCell';
+import { LeafygreenTableRow, LeafygreenTableType, VirtualizerValues } from '.';
 
-const SelectColumnConfig = {
-  id: 'select',
-  size: 36,
-  header: ({ table }) => (
-    <CheckboxCell
-      checked={table.getIsAllRowsSelected()}
-      indeterminate={table.getIsSomeRowsSelected()}
-      onChange={table.getToggleAllRowsSelectedHandler()}
-      aria-label="Select all rows"
-    />
-  ),
-  cell: ({ row }) => (
-    <CheckboxCell
-      checked={row.getIsSelected()}
-      indeterminate={row.getIsSomeSelected()}
-      onChange={row.getToggleSelectedHandler()}
-      aria-label={`Select row ${row.index}`}
-    />
-  ),
-};
+const getSelectColumnConfig = <T extends unknown>() => {
+  return {
+    id: 'select',
+    size: 36,
+    header: ({ table }) => (
+      <CheckboxCell
+        checked={table.getIsAllRowsSelected()}
+        indeterminate={table.getIsSomeRowsSelected()}
+        onChange={table.getToggleAllRowsSelectedHandler()}
+        aria-label="Select all rows"
+      />
+    ),
+    cell: ({ row }) => (
+      <CheckboxCell
+        checked={row.getIsSelected()}
+        indeterminate={row.getIsSomeSelected()}
+        onChange={row.getToggleSelectedHandler()}
+        aria-label={`Select row ${row.index}`}
+      />
+    ),
+  } as ColumnDef<LeafygreenTableType<T>, any>;
+}
 
-const useLeafygreenTable = <T extends unknown>(
+function useLeafygreenTable<T extends unknown>(
   props: LeafygreenTableOptions<T>,
-) => {
+): (LeafygreenTableValues<T>) {
   const {
     containerRef,
     data,
     columns: columnsProp,
     hasSelectableRows,
+    // not sure what's going on here since the prop is clearly defined
+    // @ts-ignore
     useVirtualScrolling,
     ...rest
   } = props;
-  const columns: Array<ColumnDef<LeafygreenTableRowData<T>, any>> = [
+  const columns: Array<ColumnDef<LeafygreenTableType<T>, any>> = [
     ...(hasSelectableRows
-      ? [SelectColumnConfig as ColumnDef<LeafygreenTableRowData<T>, any>]
+      ? [getSelectColumnConfig() as ColumnDef<LeafygreenTableType<T>, any>]
       : []),
     ...columnsProp.map(
       propColumn =>
-        ({
-          ...propColumn,
-          enableSorting: propColumn.enableSorting ?? false,
-        } as ColumnDef<LeafygreenTableRowData<T>, any>),
+      ({
+        ...propColumn,
+        enableSorting: propColumn.enableSorting ?? false,
+      } as ColumnDef<LeafygreenTableType<T>, any>),
     ),
   ];
 
-  const table: Table<LeafygreenTableRowData<T>> = useReactTable<
-    LeafygreenTableRowData<T>
+  const table: Table<LeafygreenTableType<T>> = useReactTable<
+    LeafygreenTableType<T>
   >({
     data,
     columns,
-    getRowCanExpand: (row: Row<LeafygreenTableRowData<T>>) => {
+    getRowCanExpand: (row: LeafygreenTableRow<T>) => {
       return (
         !!row.original.renderExpandedContent ||
         ((table.options.enableExpanding ?? true) && !!row.subRows?.length)
@@ -68,7 +72,7 @@ const useLeafygreenTable = <T extends unknown>(
     enableSortingRemoval: true,
     ...rest,
   });
-  let rowVirtualizer;
+  let rowVirtualizer: VirtualizerValues | undefined;
 
   if (useVirtualScrolling) {
     const { rows } = table.getRowModel();
@@ -80,13 +84,11 @@ const useLeafygreenTable = <T extends unknown>(
 
   return {
     ...table,
-    ...(rowVirtualizer
-      ? {
-          virtualRows: rowVirtualizer.virtualItems,
-          totalSize: rowVirtualizer.totalSize,
-        }
-      : {}),
-  } as LeafygreenTableValues<LeafygreenTableRowData<T>>;
+    ...(rowVirtualizer && {
+      virtualRows: rowVirtualizer.virtualItems,
+      totalSize: rowVirtualizer.totalSize,
+    }),
+  } as LeafygreenTableValues<T>;
 };
 
 export default useLeafygreenTable;

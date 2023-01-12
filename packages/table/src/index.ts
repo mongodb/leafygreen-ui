@@ -1,3 +1,6 @@
-import ExpandableContent from './ExpandedContent/ExpandedContent';
+import Table, { TableProps } from './Table';
 
-export { ExpandableContent };
+export * from '@tanstack/react-table';
+export { Table, TableProps };
+
+export default Table;
