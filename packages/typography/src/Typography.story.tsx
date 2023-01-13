@@ -11,6 +11,7 @@ import {
   Body,
   Description,
   Disclaimer,
+  Error,
   H1,
   H2,
   H3,
@@ -126,9 +127,17 @@ export const AllTypography = ({
         <Overline className={displayBlock}>Overline</Overline>
         <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
 
-        <InlineDefinition definition="Tooltip Definition">
-          Inline definition
-        </InlineDefinition>
+        <div
+          className={css`
+            color: ${darkMode ? palette.gray.light2 : palette.black};
+          `}
+        >
+          <InlineDefinition definition="Tooltip Definition">
+            Inline definition
+          </InlineDefinition>
+        </div>
+
+        <Error>Hello I am an Error!</Error>
 
         <div className={cx(displayBlock)}>
           <Label htmlFor="id">This is a label</Label>
