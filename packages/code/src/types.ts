@@ -132,27 +132,27 @@ export type CodeProps = Omit<
   darkMode?: boolean;
 } & (
     | {
-      /**
-       * The language to format the code. See {@link SupportedLanguages}.
-       */
-      language: Language;
-      languageOptions?: undefined;
-      onChange?: undefined;
-    }
+        /**
+         * The language to format the code. See {@link SupportedLanguages}.
+         */
+        language: Language;
+        languageOptions?: undefined;
+        onChange?: undefined;
+      }
     | {
-      /**
-       * The `displayName` of the selected `languageOption`
-       */
-      language: LanguageOption['displayName'];
-      /**
-       * An array of `LanguageOptions` to select from. Enables the Language switcher.
-       */
-      languageOptions: Array<LanguageOption>;
-      /**
-       * Callback fired when the language option changes.
-       */
-      onChange: (arg0: LanguageOption) => void;
-    }
+        /**
+         * The `displayName` of the selected `languageOption`
+         */
+        language: LanguageOption['displayName'];
+        /**
+         * An array of `LanguageOptions` to select from. Enables the Language switcher.
+         */
+        languageOptions: Array<LanguageOption>;
+        /**
+         * Callback fired when the language option changes.
+         */
+        onChange: (arg0: LanguageOption) => void;
+      }
   ) &
   PopoverProps;
 
