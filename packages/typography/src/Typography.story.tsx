@@ -127,9 +127,11 @@ export const AllTypography = ({
         <Overline className={displayBlock}>Overline</Overline>
         <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
 
-        <InlineDefinition definition="Tooltip Definition">
-          Inline definition
-        </InlineDefinition>
+        <div className={css`color: ${darkMode ? palette.gray.light2 : palette.black}`}>
+          <InlineDefinition definition="Tooltip Definition">
+            Inline definition
+          </InlineDefinition>
+        </div>
 
         <Error>Hello I am an Error!</Error>
 
