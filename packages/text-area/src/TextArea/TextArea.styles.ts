@@ -41,8 +41,7 @@ export const textAreaStyle = css`
   }
 `;
 
-export const errorMessageStyle = css`
-  font-family: ${fontFamilies.default};
+export const errorContainerStyle = css`
   display: flex;
   height: 20px;
   margin-top: 5px;
@@ -61,7 +60,7 @@ export const errorIconStyle = css`
 interface ColorSets {
   textArea: string;
   errorBorder: string;
-  errorMessage: string;
+  errorIcon: string;
 }
 
 export const colorSets: Record<Theme, ColorSets> = {
@@ -100,7 +99,7 @@ export const colorSets: Record<Theme, ColorSets> = {
       }
     `,
 
-    errorMessage: css`
+    errorIcon: css`
       color: ${palette.red.base};
     `,
   },
@@ -139,7 +138,7 @@ export const colorSets: Record<Theme, ColorSets> = {
       }
     `,
 
-    errorMessage: css`
+    errorIcon: css`
       color: ${palette.red.light1};
     `,
   },
