@@ -1,8 +1,19 @@
 import useEventListener from './useEventListener';
 
 export function useBackdropClick(
+  /**
+   * Function called when any element other than those provided is clicked
+   */
   callback: Function,
+  /**
+   * The primary element(s) that are excluded from backdrop click
+   */
   refOrRefs: React.RefObject<HTMLElement> | Array<React.RefObject<HTMLElement>>,
+  /**
+   * Whether the callback is enabled.
+   * It's recommended to set this to `false` when not in use,
+   * and toggle to `true` when the main elements (menu, tooltip, etc) are visible
+   */
   enabled = true,
 ): void {
   /**
