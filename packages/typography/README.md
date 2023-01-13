@@ -95,6 +95,7 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `Link`          | `a`     |
 | `Label`         | `label` |
 | `Description`   | `p`     |
+| `Label`         | `p`     |
 
 # H1
 
@@ -149,6 +150,12 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `baseFontSize` | `13       | 16`                                              | font-size applied to typography element | default to value set by LeafyGreen Provider. |
 
 # Disclaimer
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# Error
 
 | Prop       | Type      | Description                                      | Default |
 | ---------- | --------- | ------------------------------------------------ | ------- |
