@@ -1,5 +1,17 @@
 # @leafygreen-ui/copyable
 
+## 8.0.3
+
+### Patch Changes
+
+- f952172c1: Migrates internal directory structure of Copyable componenet
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+- Updated dependencies [c7f7fff56]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+  - @leafygreen-ui/button@19.0.3
+
 ## 8.0.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.4.6
+
+### Patch Changes
+
+- 703db871f: Renames Palette.story.tsx (uppercase) for documentation purposes
+
 ## 3.4.5
 
 ### Patch Changes

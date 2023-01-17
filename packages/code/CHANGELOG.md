@@ -1,5 +1,18 @@
 # @leafygreen-ui/code
 
+## 14.1.0
+
+### Minor Changes
+
+- 10dd1dc50: Remove `useUsingKeyboardContext` hook and use `focus-visible` to show focus states.
+
+### Patch Changes
+
+- Updated dependencies [703db871f]
+- Updated dependencies [c7f7fff56]
+  - @leafygreen-ui/palette@3.4.6
+  - @leafygreen-ui/button@19.0.3
+
 ## 14.0.2
 
 ### Patch Changes
