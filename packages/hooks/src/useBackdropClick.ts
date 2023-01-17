@@ -29,7 +29,9 @@ export function useBackdropClick(
 ): void {
   /**
    * We add two event handlers to the document to handle the backdrop click behavior.
-   * Intended behavior is to close the menu, and keep focus on the component.
+   * Intended behavior is to fire the callback (usually closing a menu, tooltip, etc.),
+   * and keep focus on the component.
+   *
    * No other click event handlers should fire on backdrop click
    *
    * 1. Mousedown event fires
