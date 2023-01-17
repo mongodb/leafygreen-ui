@@ -32,6 +32,7 @@ import { SearchResultsMenu } from '../SearchResultsMenu';
 
 import {
   baseInputStyle,
+  formStyle,
   inputThemeStyle,
   inputWrapperDisabledStyle,
   inputWrapperFocusStyles,
@@ -86,6 +87,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const searchBoxRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLUListElement>(null);
     const inputRef = useForwardedRef(forwardRef, null);
+    const clearButtonRef = useRef<HTMLButtonElement>(null);
     const resultRefs = useDynamicRefs<HTMLElement>({ prefix: 'result' });
     const withTypeAhead = !isUndefined(children);
     const [focusedElement, trackFocusedElement] = useState<Element>();
@@ -192,10 +194,15 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const handleSearchBoxClick: MouseEventHandler = handleOpenMenuAction;
 
+    // Fired whenever the wrapper gains focus,
+    // and any time the focus within changes
     const handleSearchBoxFocus: FocusEventHandler = e => {
-      // Fired whenever the wrapper gains focus,
-      // and any time the focus within changes
-      trackFocusedElement(e.target);
+      const target =
+        e.target !== clearButtonRef.current
+          ? inputRef.current ?? (e.target as HTMLElement)
+          : clearButtonRef.current;
+      target.focus();
+      trackFocusedElement(target);
       handleOpenMenuAction(e);
     };
 
@@ -285,7 +292,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           <form
             role="search"
             ref={formRef}
-            className={className}
+            className={cx(formStyle, className)}
             onSubmit={handleSubmit}
             onBlur={handleBlur}
             {...rest}
@@ -335,6 +342,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               />
               {value && (
                 <IconButton
+                  ref={clearButtonRef}
                   type="button"
                   aria-label="Clear search"
                   onClick={handleClearButton}

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   createEvent,
   fireEvent,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
@@ -209,8 +210,8 @@ describe('packages/search-input', () => {
         expect(menuContainerEl).toBeInTheDocument();
       });
 
-      test('Clicking elsewhere on the searchBox opens the menu', () => {
-        const { getMenuElements, searchBoxEl } = renderSearchInput({
+      test('Clicking anywhere on the searchBox opens the menu & sets focus', () => {
+        const { getMenuElements, searchBoxEl, inputEl } = renderSearchInput({
           ...defaultProps,
         });
 
@@ -218,6 +219,7 @@ describe('packages/search-input', () => {
         const { menuContainerEl } = getMenuElements();
         expect(menuContainerEl).not.toBeNull();
         expect(menuContainerEl).toBeInTheDocument();
+        expect(inputEl).toHaveFocus();
       });
 
       test('Menu closes on click-away', async () => {

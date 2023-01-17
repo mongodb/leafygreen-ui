@@ -16,6 +16,10 @@ import { SizeVariant } from './SearchInput.types';
  */
 const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
+export const formStyle = css`
+  outline: none;
+`;
+
 export const inputWrapperStyle = css`
   position: relative;
   display: grid;
