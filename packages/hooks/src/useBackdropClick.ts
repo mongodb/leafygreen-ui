@@ -1,14 +1,25 @@
 import useEventListener from './useEventListener';
 
+/**
+ * Fires a callback when any element(s)
+ * _except_ those passed in as `foreground` is clicked.
+ *
+ * Note: Disable this hook (with the `enabled` arg)
+ * if the `foreground` element(s) are not in view (e.g. menu, tooltip, etc.).
+ */
 export function useBackdropClick(
   /**
    * Function called when any element other than those provided is clicked
    */
   callback: Function,
+
   /**
    * The primary element(s) that are excluded from backdrop click
    */
-  refOrRefs: React.RefObject<HTMLElement> | Array<React.RefObject<HTMLElement>>,
+  foreground:
+    | React.RefObject<HTMLElement>
+    | Array<React.RefObject<HTMLElement>>,
+
   /**
    * Whether the callback is enabled.
    * It's recommended to set this to `false` when not in use,
@@ -60,8 +71,8 @@ export function useBackdropClick(
    * Returns whether the event target within the component
    */
   function doesComponentContainEventTarget({ target }: MouseEvent): boolean {
-    return Array.isArray(refOrRefs)
-      ? refOrRefs.some(ref => ref.current?.contains(target as Node))
-      : refOrRefs.current?.contains(target as Node) || false;
+    return Array.isArray(foreground)
+      ? foreground.some(ref => ref.current?.contains(target as Node))
+      : foreground.current?.contains(target as Node) || false;
   }
 }
