@@ -69,6 +69,17 @@ describe('Polymorphic/Example Higher-order Components', () => {
       expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('button');
       expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
     });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('Types work when a default is used', () => {
+      <>
+        <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />
+        <ExampleInferredDefaultButton />
+        {/* @ts-expect-error - Require href when as="a" */}
+        <ExampleInferredDefaultButton as="a" />
+        <ExampleInferredDefaultButton as="a" href="mongodb.design" />
+      </>;
+    });
   });
 
   describe.each([
@@ -109,8 +120,6 @@ describe('Polymorphic/Example Higher-order Components', () => {
         <ExampleComponent as="div" href="mongodb.design" />
 
         <ExampleComponent as="input" />
-        {/* TODO: ts-expect-error - Input should not accept children */}
-        {/* <ExampleComponent as="input">some content</ExampleComponent> */}
 
         <ExampleComponent as={Wrapper} />
         <ExampleComponent as={Wrapper} ref={spanRef} />
