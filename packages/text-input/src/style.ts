@@ -94,7 +94,7 @@ export const baseInputStyle = css`
   z-index: 1;
   outline: none;
   border-radius: 6px;
-  transition: ${transitionDuration}ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border-color, box-shadow;
 
   &:disabled {
@@ -406,12 +406,3 @@ export const errorMessageStyle = css`
   padding-top: 4px;
   font-weight: normal;
 `;
-
-export const errorMessageModeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};

@@ -63,9 +63,6 @@
       "path": "./packages/input-option"
     },
     {
-      "path": "./packages/interaction-ring"
-    },
-    {
       "path": "./packages/leafygreen-provider"
     },
     {

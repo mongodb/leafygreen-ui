@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
@@ -19,6 +20,9 @@ export default {
     children:
       'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
     closeIconColor: CloseIconColor.Default,
+    className: css`
+      z-index: 1;
+    `,
   },
   argTypes: {
     open: { control: false },

@@ -8,6 +8,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   bodyTypeScaleStyles,
   Description,
+  Error,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
@@ -15,12 +16,12 @@ import {
 import {
   colorSets,
   containerStyles,
+  errorContainerStyle,
   errorIconStyle,
   errorMessageLabelStyles,
-  errorMessageStyle,
   textAreaStyle,
-} from './styles';
-import { State, TextAreaProps } from './types';
+} from './TextArea.styles';
+import { State, TextAreaProps } from './TextArea.types';
 
 /**
  * # TextArea
@@ -139,16 +140,17 @@ export const TextArea: TextArea = forwardRef<
         value={value}
       />
       {!disabled && state === State.Error && errorMessage && (
-        <div className={cx(errorMessageStyle, colorSets[theme].errorMessage)}>
-          <Warning className={errorIconStyle} />
-          <label
+        <div className={errorContainerStyle}>
+          <Warning className={cx(errorIconStyle, colorSets[theme].errorIcon)} />
+          <Error
+            darkMode={darkMode}
             className={cx(
               bodyTypeScaleStyles[errorBaseFontSize],
               errorMessageLabelStyles,
             )}
           >
             {errorMessage}
-          </label>
+          </Error>
         </div>
       )}
     </div>
