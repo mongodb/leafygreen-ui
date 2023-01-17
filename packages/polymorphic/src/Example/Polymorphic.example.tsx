@@ -68,6 +68,7 @@ export const ExampleInferred = InferredPolymorphic<ExampleProps>(
 );
 
 /**
+ * A test mocking the Button component
  * @example
  */
 export const ExampleInferredDefaultButton = InferredPolymorphic<
