@@ -33,11 +33,14 @@ export default {
   },
 } as ComponentMeta<typeof SearchInput>;
 
-const Template: ComponentStory<typeof SearchInput> = props => (
-  <SearchInput {...props} />
+export const Basic: ComponentStory<typeof SearchInput> = props => (
+  <SearchInput
+    className={css`
+      width: 200px;
+    `}
+    {...props}
+  />
 );
-
-export const Basic = Template.bind({});
 
 export const WithResults: ComponentStory<typeof SearchInput> = props => (
   <SearchInput

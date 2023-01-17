@@ -31,6 +31,7 @@ export const SearchResultsMenu = React.forwardRef<
 
   return (
     <Popover
+      data-testid="lg-search-input-popover"
       spacing={spacing[2]}
       active={open}
       align="bottom"

@@ -12,6 +12,7 @@ export const LoadingOption = () => {
 
   return (
     <InputOption
+      data-testid="lg-search-input-loading-option"
       aria-label="Loading results"
       isInteractive={false}
       className={loadingOptionStyles}

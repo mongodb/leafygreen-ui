@@ -38,7 +38,9 @@ export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
    * Returns the menu element and its contents
    */
   function getMenuElements() {
-    const menuContainerEl = renderResult.queryByRole('listbox');
+    const menuContainerEl = renderResult.queryByTestId(
+      'lg-search-input-popover',
+    );
     const resultsElements = renderResult.queryAllByRole('option');
 
     return {

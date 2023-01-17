@@ -90,11 +90,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const withTypeAhead = !isUndefined(children);
     const [focusedElement, trackFocusedElement] = useState<Element>();
 
-    const { value, handleChange } = useControlledValue(
-      valueProp,
-      onChangeProp,
-      // onClearProp,
-    );
+    const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
     /**
      * Helper function that both counts the number of `SearchResult` descendants

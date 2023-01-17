@@ -12,6 +12,8 @@ import * as _LGTL from '@leafygreen-ui/testing-lib';
 import { renderSearchInput } from '../utils/SearchInput.testutils';
 import { SearchInput, SearchResult, SizeVariant } from '..';
 
+import { State } from './SearchInput.types';
+
 const resultClickHandler = jest.fn();
 
 const defaultProps = {
@@ -421,6 +423,37 @@ describe('packages/search-input', () => {
     test.todo(
       'Highlight moves to first result if the previously highlighted result no longer exists',
     );
+  });
+
+  describe('`state` prop', () => {
+    test('shows a loading menu when the input is focused', () => {
+      const { getMenuElements, inputEl, getByTestId } = renderSearchInput({
+        ...defaultProps,
+        state: State.Loading,
+      });
+
+      const { menuContainerEl: initialMenu } = getMenuElements();
+      expect(initialMenu).not.toBeInTheDocument();
+
+      userEvent.click(inputEl);
+      const { menuContainerEl } = getMenuElements();
+      expect(menuContainerEl).not.toBeNull();
+      expect(menuContainerEl).toBeInTheDocument();
+
+      const loadingOption = getByTestId('lg-search-input-loading-option');
+      expect(loadingOption).toBeInTheDocument();
+    });
+
+    test('has no effect when there are no children', () => {
+      const { inputEl, getMenuElements } = renderSearchInput({
+        state: State.Loading,
+      });
+
+      userEvent.click(inputEl);
+      const { menuContainerEl } = getMenuElements();
+
+      expect(menuContainerEl).not.toBeInTheDocument();
+    });
   });
 
   /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
