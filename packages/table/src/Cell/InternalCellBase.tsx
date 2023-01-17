@@ -1,5 +1,6 @@
 import { cx } from '@leafygreen-ui/emotion';
-import React, { PropsWithChildren } from 'react';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { useTableContext } from '../TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon/ToggleExpandedIcon';
 import {
@@ -16,18 +17,25 @@ const InternalCellBase = ({
   cellIndex,
   depth = 0,
   toggleExpandedIconProps,
+  align: alignProp,
   ...rest
 }: PropsWithChildren<InternalCellBaseProps>) => {
   const { columnAlignments } = useTableContext();
-  const align = columnAlignments ? columnAlignments[cellIndex] : undefined;
+  const [align, setAlign] = useState<HTMLElementProps<'td'>['align']>(alignProp);
+
+  useEffect(() => {
+    if (
+      columnAlignments !== undefined &&
+      cellIndex !== undefined
+    ) {
+      setAlign(columnAlignments[cellIndex])
+    }
+  }, [cellIndex, columnAlignments]);
 
   return (
     <td
       className={cx(
         baseStyles,
-        {
-          [alignmentStyles(align)]: !!columnAlignments && !!align,
-        },
         className,
       )}
       {...rest}
@@ -35,6 +43,7 @@ const InternalCellBase = ({
       <div
         className={cx(cellContentContainerStyles, {
           [depthPadding(depth)]: cellIndex === 0,
+          [alignmentStyles(align)]: !!align,
         })}
       >
         {!!toggleExpandedIconProps && (

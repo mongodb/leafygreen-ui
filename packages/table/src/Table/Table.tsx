@@ -1,7 +1,7 @@
 import { cx } from '@leafygreen-ui/emotion';
 import React, { PropsWithChildren } from 'react';
 import TableContextProvider from '../TableContext';
-import { TableProps } from './types';
+import { TableProps } from './Table.types';
 import { baseStyles, themeStyles } from './styles';
 import {
   bodyTypeScaleStyles,

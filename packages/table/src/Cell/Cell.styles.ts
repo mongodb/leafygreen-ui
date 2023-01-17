@@ -5,6 +5,9 @@ import { Align } from '../HeaderCell/HeaderCell.types';
 const baseSidePadding = spacing[4];
 
 export const baseStyles = css`
+  &:focus-visible {
+    box-shadow: inset;
+  }
   &:first-child {
     padding-left: ${baseSidePadding}px;
   }
@@ -13,10 +16,19 @@ export const baseStyles = css`
   }
 `;
 
-export const alignmentStyles = (align: Align) =>
-  css`
-    text-align: ${align};
-  `;
+const flexAlignment: Record<string, string> = {
+  'left': 'start',
+  'right': 'end',
+  'center': 'center',
+}
+
+export const alignmentStyles = (align: Align) => {
+  if (align) {
+    return (css`
+      justify-content: ${flexAlignment[align]};
+    `);
+  }
+}
 
 export const depthPadding = (depth: number) => css`
   padding-left: ${16 * depth}px;

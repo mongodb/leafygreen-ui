@@ -1,5 +1,5 @@
 import React, { Fragment, PropsWithChildren } from 'react';
-import { TableBodyProps } from './types';
+import { TableBodyProps } from './TableBody.types';
 
 const TableBody = ({
   children,

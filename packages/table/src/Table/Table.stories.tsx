@@ -29,6 +29,8 @@ export default {
   component: Table,
   argTypes: {
     children: { control: 'none' },
+    className: { control: 'none' },
+    shouldAlternateRowColor: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },

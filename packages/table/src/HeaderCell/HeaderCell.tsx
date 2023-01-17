@@ -37,7 +37,7 @@ const HeaderCell = <T extends unknown>({
 
   useEffect(() => {
     setColumnAlignments &&
-      cellIndex &&
+      cellIndex !== undefined &&
       align &&
       setColumnAlignments((oldAlignments: any) => {
         return {

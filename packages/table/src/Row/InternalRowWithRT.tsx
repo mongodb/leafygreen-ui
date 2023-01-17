@@ -9,7 +9,7 @@ import {
   nestedBgStyles,
   expandedContentStyles,
 } from './Row.styles';
-import { InternalRowWithRTProps } from './types';
+import { InternalRowWithRTProps } from './Row.types';
 
 const InternalRowWithRT = <T extends unknown>({
   children,

@@ -14,8 +14,21 @@ export type SortState = typeof SortState[keyof typeof SortState];
 
 export interface HeaderCellProps<T extends unknown>
   extends HTMLElementProps<'th'>,
-    DarkModeProps {
+  DarkModeProps {
+  /**
+   * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
+   */
+  align?: HTMLElementProps<'th'>['align'];
+  /**
+   * Determines the current sorting direction.
+   */
   sortState?: SortState;
-  cellIndex?: number;
+  /**
+   * Header object passed from the `useLeafygreenTable` hook.
+   */
   header?: Header<T, any>;
+  /**
+   * Index of the HeaderCell set internally in HeaderRow
+   */
+  cellIndex?: number;
 }

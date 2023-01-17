@@ -1,6 +1,5 @@
 import { ColumnDef, Table, useReactTable } from '@tanstack/react-table';
 import { useVirtual } from 'react-virtual';
-import { Row } from '@tanstack/react-table';
 import React from 'react';
 import {
   LeafygreenTableOptions,

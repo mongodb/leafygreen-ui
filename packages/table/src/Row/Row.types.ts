@@ -14,7 +14,13 @@ export interface InternalRowWithoutRTProps extends InternalRowBaseProps { }
 
 export interface InternalRowWithRTProps<T extends unknown>
   extends InternalRowBaseProps {
+  /**
+   * Row object passed from the `useLeafygreenTable` hook.
+   */
   row: LeafygreenTableRow<T>;
+  /**
+   * Virtual row passed from the `useLeafygreenTable` hook
+   */
   virtualRow?: VirtualItem;
 }
 

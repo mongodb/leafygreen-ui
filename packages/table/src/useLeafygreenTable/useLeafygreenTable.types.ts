@@ -48,3 +48,5 @@ interface LeafygreenTableValuesWithVS<T> extends LeafygreenTableValuesWithoutVS<
 };
 
 export type LeafygreenTableValues<T> = LeafygreenTableValuesWithoutVS<T> | LeafygreenTableValuesWithVS<T>;
+
+export type LeafygreenTable = LeafygreenTableValues<unknown>;

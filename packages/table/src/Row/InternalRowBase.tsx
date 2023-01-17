@@ -3,7 +3,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import React, { PropsWithChildren } from 'react';
 import { useTableContext } from '../TableContext';
 import { baseStyles, clickableStyles, disabledStyles, zebraStyles } from './Row.styles';
-import { InternalRowBaseProps } from './types';
+import { InternalRowBaseProps } from './Row.types';
 
 const InternalRowBase = ({
   className,
