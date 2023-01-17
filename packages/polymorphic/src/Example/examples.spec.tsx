@@ -15,14 +15,14 @@ import {
   ExamplePolymorphic,
   ExamplePolymorphicWithRef,
   RestrictedExample,
-} from './Polymorphic.example';
+} from '.';
 
 /**
  * Here we test Example Higher-order components
  * and ensure Polymorphic behavior is properly extendable
  */
 
-describe('Polymorphic Higher-order Components', () => {
+describe('Polymorphic/Example Higher-order Components', () => {
   test('`as` type can be restricted', () => {
     const { getByTestId } = render(
       <RestrictedExample as="button" data-testid="restricted" />,
@@ -292,39 +292,39 @@ describe('Polymorphic Higher-order Components', () => {
     },
   );
 
+  /**
+   * Ensure that any components that build on top of Polymorphic
+   * also generate TSDoc
+   */
   describe('TSDoc output', () => {
-    /**
-     * Ensure that any components that build on top of Polymorphic
-     * also generate TSDoc
-     */
-    describe('Higher-Order components', () => {
-      const docs = parseTSDoc('polymorphic/src/Example');
-
-      const exampleComponentNames = [
-        'ExamplePolymorphic',
-        'ExamplePolymorphicWithRef',
-        'AdvancedPolymorphic',
-        'AdvancedPolymorphicWithRef',
-        // 'StyledExample', // Styled does not work with TSDoc
-      ];
-
-      describe.each(exampleComponentNames)(
-        'Docs for test components',
-        displayName => {
-          test(`${displayName} docs exist`, () => {
-            const doc = docs?.find(doc => doc.displayName === displayName);
-            expect(doc).not.toBeUndefined();
-          });
-
-          test(`${displayName} docs contain the expected props`, () => {
-            const doc = docs?.find(doc => doc.displayName === displayName);
-            expect(doc!.props).toHaveProperty('AsProp');
-            expect(doc!.props).toHaveProperty(`ExampleProps`);
-            expect(doc!.props).toHaveProperty('AriaAttributes');
-            expect(doc!.props).toHaveProperty('DOMAttributes');
-          });
-        },
-      );
+    const docs = parseTSDoc('polymorphic/src/Example', {
+      excludeTags: [], // Include all tags
     });
+
+    const exampleComponentNames = [
+      'ExamplePolymorphic',
+      'ExamplePolymorphicWithRef',
+      'AdvancedPolymorphic',
+      'AdvancedPolymorphicWithRef',
+      // 'StyledExample', // Styled does not work with TSDoc
+    ];
+
+    describe.each(exampleComponentNames)(
+      'Docs for test components',
+      displayName => {
+        test(`${displayName} docs exist`, () => {
+          const doc = docs?.find(doc => doc.displayName === displayName);
+          expect(doc).not.toBeUndefined();
+        });
+
+        test(`${displayName} docs contain the expected props`, () => {
+          const doc = docs?.find(doc => doc.displayName === displayName);
+          expect(doc!.props).toHaveProperty('AsProp');
+          expect(doc!.props).toHaveProperty(`ExampleProps`);
+          expect(doc!.props).toHaveProperty('AriaAttributes');
+          expect(doc!.props).toHaveProperty('DOMAttributes');
+        });
+      },
+    );
   });
 });

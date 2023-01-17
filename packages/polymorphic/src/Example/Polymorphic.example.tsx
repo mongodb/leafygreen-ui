@@ -22,8 +22,9 @@ interface ExampleProps {
 
 /**
  * Uses `usePolymorphic` hook
+ *
+ * @example
  */
-
 export const ExamplePolymorphic = Polymorphic<ExampleProps>(
   ({ as, title, ...rest }) => {
     const { Component, ref } = usePolymorphic(as);
@@ -36,6 +37,9 @@ export const ExamplePolymorphic = Polymorphic<ExampleProps>(
   'ExamplePolymorphic',
 );
 
+/**
+ * @example
+ */
 export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
   ({ as, title, ...rest }, ref) => {
     const { Component } = usePolymorphic(as);
@@ -48,6 +52,9 @@ export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
   'ExamplePolymorphicWithRef',
 );
 
+/**
+ * @example
+ */
 export const ExampleInferred = InferredPolymorphic<ExampleProps>(
   ({ as, title, ...rest }) => {
     const { Component, ref } = useInferredPolymorphic(as, rest);
@@ -60,6 +67,9 @@ export const ExampleInferred = InferredPolymorphic<ExampleProps>(
   'ExampleInferred',
 );
 
+/**
+ * @example
+ */
 export const ExampleInferredDefaultButton = InferredPolymorphic<
   ExampleProps,
   'button'
@@ -81,7 +91,7 @@ type AdvancedProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
 >;
 /**
  * Extends Polymorphic
- * @test
+ * @example
  */
 export const AdvancedPolymorphic = <T extends PolymorphicAs = 'div'>({
   as,
@@ -98,7 +108,7 @@ AdvancedPolymorphic.displayName = 'AdvancedPolymorphic';
 
 /**
  * Extends Polymorphic
- * @test
+ * @example
  */
 export const AdvancedPolymorphicWithRef = React.forwardRef(
   <T extends PolymorphicAs = 'div'>(
@@ -116,6 +126,7 @@ AdvancedPolymorphicWithRef.displayName = 'AdvancedPolymorphicWithRef';
 
 /**
  * Ensure `as` types can be restricted
+ * @example
  */
 type RestrictedType = 'a' | 'button' | React.ComponentType;
 type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
@@ -126,8 +137,7 @@ type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
 >;
 
 /**
- *
- * @test
+ * @example
  */
 export const RestrictedExample = <T extends RestrictedType = 'button'>({
   as,
@@ -138,7 +148,7 @@ export const RestrictedExample = <T extends RestrictedType = 'button'>({
 
 /**
  * Styled version of ExampleComponent
- * @test
+ * @example
  */
 export const StyledExample = styled(ExamplePolymorphic)`
   color: hotpink;
