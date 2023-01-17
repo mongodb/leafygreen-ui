@@ -2,7 +2,6 @@ import React from 'react';
 import {
   createEvent,
   fireEvent,
-  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
