@@ -33,8 +33,6 @@ fs.mkdir(newDirectory, { recursive: true }, err => {
   fs.mkdir(`${newDirectory}/src`, { recursive: true }, err => {
     handleErr(err);
 
-    fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}.tsx`, rootFile, handleErr);
-
     fs.writeFile(`${newDirectory}/src/index.ts`, index, handleErr);
 
     fs.writeFile(
@@ -43,7 +41,19 @@ fs.mkdir(newDirectory, { recursive: true }, err => {
       handleErr,
     );
 
-    fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}.spec.tsx`, spec, handleErr);
+    fs.mkdir(`${newDirectory}/src/${PACKAGE_UC}`, { recursive: true }, err => {
+      handleErr(err);
+
+      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/${PACKAGE_UC}.tsx`, rootFile, handleErr);
+
+      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/index.tsx`, index, handleErr);
+
+      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/${PACKAGE_UC}.spec.tsx`, spec, handleErr);
+
+      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/${PACKAGE_UC}.styles.ts`, styles, handleErr);
+
+      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/${PACKAGE_UC}.types.ts`, types , handleErr);
+    });
   });
 });
 
@@ -130,19 +140,22 @@ npm install @leafygreen-ui/${PACKAGE_LC}
 const rootFile = `
 import React from 'react';
 
-export default function ${PACKAGE_UC}({}) {
+export function ${PACKAGE_UC}({}) {
   return <div>your content here</div>;
 }
+
+${PACKAGE_UC}.displayName = '${PACKAGE_UC}';
 `;
 
 const index = `
-export { default } from './${PACKAGE_UC}';
+export { ${PACKAGE_UC} } from './${PACKAGE_UC}';
 `;
 
 const storybook = `
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
-import ${PACKAGE_UC} from '.';
+
+import {${PACKAGE_UC}} from '.';
 
 export default {
   title: 'Components/${PACKAGE_UC}',
@@ -160,7 +173,8 @@ export const Basic = Template.bind({});
 const spec = `
 import React from 'react';
 import { render } from '@testing-library/react';
-import ${PACKAGE_UC} from '.';
+
+import {${PACKAGE_UC}} from '.';
 
 describe('packages/${PACKAGE_LC}', () => {
   test('condition', () => {
@@ -168,3 +182,7 @@ describe('packages/${PACKAGE_LC}', () => {
   })
 })
 `;
+
+const types = ``;
+
+const styles = `import { css } from '@leafygreen-ui/emotion';`
