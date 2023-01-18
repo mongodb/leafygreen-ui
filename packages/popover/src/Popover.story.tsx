@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Meta } from '@storybook/react';
 
+import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -119,7 +120,7 @@ export const Template = ({
 
   return (
     <div className={regularStyles}>
-      <button
+      <Button
         className={cx(buttonStyles, position)}
         onClick={() => setActive(active => !active)}
       >
@@ -127,7 +128,7 @@ export const Template = ({
         <Popover {...args} active={active}>
           <div className={popoverStyle}>Popover content</div>
         </Popover>
-      </button>
+      </Button>
     </div>
   );
 };
@@ -145,7 +146,7 @@ export const ScrollableContainer = ({
   return (
     <div className={scrollableStyle}>
       <div className={scrollableInnerStyle} ref={portalContainer}>
-        <button
+        <Button
           onClick={() => setActive(active => !active)}
           className={position}
         >
@@ -159,7 +160,7 @@ export const ScrollableContainer = ({
           >
             <div className={popoverStyle}>Popover content</div>
           </Popover>
-        </button>
+        </Button>
       </div>
     </div>
   );
