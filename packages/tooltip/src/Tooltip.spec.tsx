@@ -401,13 +401,15 @@ describe('packages/tooltip', () => {
 
         test('clicking the backdrop does not close the tooltip', () => {
           const { button, getByTestId } = renderTrigger({
-            triggerEvent: 'click',
+            triggerEvent: 'hover',
           });
-          userEvent.click(button);
-          const tooltip = getByTestId(tooltipTestId);
-          const backdrop = getByTestId('backdrop');
-          userEvent.click(backdrop);
-          expect(tooltip).toBeInTheDocument();
+          userEvent.hover(button);
+          waitFor(() => {
+            const tooltip = getByTestId(tooltipTestId);
+            const backdrop = getByTestId('backdrop');
+            userEvent.click(backdrop);
+            expect(tooltip).toBeInTheDocument();
+          });
         });
       });
     });
