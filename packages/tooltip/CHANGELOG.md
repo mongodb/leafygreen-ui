@@ -1,5 +1,15 @@
 # @leafygreen-ui/tooltip
 
+## 9.1.1
+
+### Patch Changes
+
+- c736a5bd5: Storybook updates: Sets Tooltip trigger in storybook `args`. Disables `open` control on Basic story
+- Updated dependencies [405636249]
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/hooks@7.4.0
+  - @leafygreen-ui/typography@15.3.0
+
 ## 9.1.0
 
 ### Minor Changes
