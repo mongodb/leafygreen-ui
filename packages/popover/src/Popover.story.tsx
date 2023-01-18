@@ -32,7 +32,7 @@ const regularStyles = css`
 const scrollableStyle = css`
   width: 500px;
   height: 90vh;
-  background-color: #e8edeb;
+  background-color: ${palette.gray.light2};
   overflow: scroll;
   position: relative;
 `;
@@ -102,6 +102,9 @@ export default {
       defaultValue: 'centered',
     },
   },
+  parameters: {
+    default: 'Basic',
+  },
 } as Meta<typeof Popover>;
 
 type PopoverStoryProps = PopoverProps & {
@@ -109,7 +112,7 @@ type PopoverStoryProps = PopoverProps & {
   refButtonPosition: string;
 };
 
-export const Template = ({
+export const Basic = ({
   refButtonPosition,
   buttonText,
   ...args
