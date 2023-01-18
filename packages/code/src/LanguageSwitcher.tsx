@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@leafygreen-ui/button';
+import Button, { ButtonPolymorphicProps } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
@@ -163,7 +163,7 @@ function LanguageSwitcher({
 
   // eslint-disable-next-line react/display-name
   const LanguageSwitcherButton = React.forwardRef(
-    ({ className, children, ...props }: ButtonProps, ref) => (
+    ({ className, children, ...props }: ButtonPolymorphicProps, ref) => (
       <Button
         {...props}
         className={cx(className, menuButtonStyle, buttonModeStyle[theme])}

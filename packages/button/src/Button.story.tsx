@@ -1,20 +1,27 @@
-import React, { ElementType } from 'react';
+import React from 'react';
 import { Meta, Story } from '@storybook/react';
 
-import { BoxProps } from '@leafygreen-ui/box';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+  PolymorphicProps,
+} from '@leafygreen-ui/polymorphic';
 
 import Button, { ButtonProps, Variant } from '.';
 
-type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
+type ButtonRenderProps = PolymorphicProps<
+  PolymorphicAs,
+  InferredPolymorphicProps<ButtonProps>
+>;
 
 // TODO: Ensure that TSDocs are being read from the Button component directly, not this StoryButton component
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
  */
-export const StoryButton: React.FC<ButtonStoryProps> = props => (
+export const StoryButton: React.FC<ButtonRenderProps> = props => (
   // @ts-ignore-next-line
   <Button {...props} />
 );
@@ -56,13 +63,13 @@ export default {
     children: storybookArgTypes.children,
     as: storybookArgTypes.as,
   },
-} as Meta<ButtonStoryProps>;
+} as Meta<ButtonRenderProps>;
 
-const Template: Story<ButtonStoryProps> = ({
+const Template: Story<ButtonRenderProps> = ({
   leftGlyph,
   rightGlyph,
   ...args
-}: ButtonStoryProps) => (
+}: ButtonRenderProps) => (
   <Button
     // @ts-expect-error
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
@@ -102,7 +109,7 @@ BaseGreen.args = {
   variant: Variant.BaseGreen,
 };
 
-export const WithGlobalDarkMode: Story<ButtonStoryProps> = args => (
+export const WithGlobalDarkMode: Story<ButtonRenderProps> = args => (
   <LeafygreenProvider darkMode={true}>
     <Button {...args}>Test</Button>
   </LeafygreenProvider>

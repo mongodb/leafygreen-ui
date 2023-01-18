@@ -4,8 +4,9 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { getTheme, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
+import { ButtonPolymorphicProps } from '../Button';
 import { ButtonClassName } from '../styles';
-import { ButtonProps, Size, Variant } from '../types';
+import { Size, Variant } from '../types';
 
 const baseIconStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
@@ -148,7 +149,10 @@ function ButtonIcon({
   isIconOnlyButton,
   className,
 }: Required<
-  Pick<ButtonProps, 'variant' | 'size' | 'darkMode' | 'disabled' | 'className'>
+  Pick<
+    ButtonPolymorphicProps,
+    'variant' | 'size' | 'darkMode' | 'disabled' | 'className'
+  >
 > & {
   isIconOnlyButton: boolean;
   glyph: React.ReactElement;

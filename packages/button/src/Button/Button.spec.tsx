@@ -236,6 +236,7 @@ describe('packages/button', () => {
     test('Polymorphic props', () => {
       <>
         <Button>Test</Button>
+        <Button as="button">Test</Button>
         <Button href="mongodb.design">Test</Button>
         <Button as="a" href="mongodb.design">
           Test
