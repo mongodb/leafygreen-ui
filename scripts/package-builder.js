@@ -16,6 +16,8 @@ const PACKAGE_HUMANREADABLE = PACKAGE.split('-')
 const splitDir = __dirname.split('scripts')[0];
 const srcDir = `${splitDir}packages`;
 const newDirectory = `${srcDir}/${PACKAGE_LC}`;
+const srcDirectory = `${newDirectory}/src`;
+const subDirectory = `${srcDirectory}/${PACKAGE_UC}`;
 
 const handleErr = err => {
   if (err) throw err;
@@ -30,10 +32,10 @@ fs.mkdir(newDirectory, { recursive: true }, err => {
 
   fs.writeFile(`${newDirectory}/README.md`, readMe, handleErr);
 
-  fs.mkdir(`${newDirectory}/src`, { recursive: true }, err => {
+  fs.mkdir(`${srcDirectory}`, { recursive: true }, err => {
     handleErr(err);
 
-    fs.writeFile(`${newDirectory}/src/index.ts`, index, handleErr);
+    fs.writeFile(`${srcDirectory}/index.ts`, index, handleErr);
 
     fs.writeFile(
       `${newDirectory}/src/${PACKAGE_UC}.story.tsx`,
@@ -41,18 +43,18 @@ fs.mkdir(newDirectory, { recursive: true }, err => {
       handleErr,
     );
 
-    fs.mkdir(`${newDirectory}/src/${PACKAGE_UC}`, { recursive: true }, err => {
+    fs.mkdir(`${subDirectory}`, { recursive: true }, err => {
       handleErr(err);
 
-      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/${PACKAGE_UC}.tsx`, rootFile, handleErr);
+      fs.writeFile(`${subDirectory}/${PACKAGE_UC}.tsx`, rootFile, handleErr);
 
-      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/index.tsx`, index, handleErr);
+      fs.writeFile(`${subDirectory}/index.tsx`, index, handleErr);
 
-      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/${PACKAGE_UC}.spec.tsx`, spec, handleErr);
+      fs.writeFile(`${subDirectory}/${PACKAGE_UC}.spec.tsx`, spec, handleErr);
 
-      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/${PACKAGE_UC}.styles.ts`, styles, handleErr);
+      fs.writeFile(`${subDirectory}/${PACKAGE_UC}.styles.ts`, styles, handleErr);
 
-      fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}/${PACKAGE_UC}.types.ts`, types , handleErr);
+      fs.writeFile(`${subDirectory}/${PACKAGE_UC}.types.ts`, types , handleErr);
     });
   });
 });
