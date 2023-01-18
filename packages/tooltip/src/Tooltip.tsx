@@ -311,7 +311,7 @@ function Tooltip({
 
   useEscapeKey(handleClose, { enabled: open });
 
-  useBackdropClick(handleClose, [tooltipRef], open);
+  useBackdropClick(handleClose, [tooltipRef], open && triggerEvent === 'click');
 
   const popoverProps = {
     refEl,
