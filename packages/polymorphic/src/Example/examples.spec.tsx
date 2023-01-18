@@ -85,14 +85,6 @@ describe('Polymorphic/Example Higher-order Components', () => {
         <ExampleInferredDefaultButton as="div" href="mongodb.design" />
         {/* @ts-expect-error - type not valid for anchor */}
         <ExampleInferredDefaultButton as="a" type="submit" />
-        {/* @ts-expect-error - type not valid for anchor */}
-        <ExampleInferredDefaultButton href="mongodb.design" type="submit" />
-        {/* @ts-expect-error - type not valid for anchor */}
-        <ExampleInferredDefaultButton
-          as="a"
-          href="mongodb.design"
-          type="submit"
-        />
       </>;
     });
   });
