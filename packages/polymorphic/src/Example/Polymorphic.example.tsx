@@ -76,6 +76,7 @@ export const ExampleInferredDefaultButton = InferredPolymorphic<
   'button'
 >(({ as = 'button' as PolymorphicAs, title, ...rest }) => {
   const { Component, ref } = useInferredPolymorphic(as, rest);
+
   return (
     <Component ref={ref} {...rest}>
       {title}

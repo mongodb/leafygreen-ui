@@ -25,7 +25,8 @@ export const Polymorphic = <
   displayName?: string,
 ): PolymorphicComponentType<XP, DefaultAs> => {
   // Here we only know the additional props,
-  // but don' t know what `as` is, or what props to inherit
+  // but we don't know what `as` is, or what props to inherit
+  // (i.e. we don't know if `as="button"`, and if `type` is a valid prop)
 
   // If no `ref` arg was passed in, we use the plain render function
   const PolyComponent: PolymorphicComponentType<XP, DefaultAs> =

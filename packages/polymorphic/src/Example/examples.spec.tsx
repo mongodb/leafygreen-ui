@@ -75,6 +75,7 @@ describe('Polymorphic/Example Higher-order Components', () => {
       <>
         <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />
         <ExampleInferredDefaultButton />
+        <ExampleInferredDefaultButton type="submit" />
         {/* @ts-expect-error - Require href when as="a" */}
         <ExampleInferredDefaultButton as="a" />
         <ExampleInferredDefaultButton as="a" href="mongodb.design" />
@@ -82,6 +83,16 @@ describe('Polymorphic/Example Higher-order Components', () => {
         <ExampleInferredDefaultButton as="button" href="mongodb.design" />
         {/* @ts-expect-error - href not valid when explicitly set to div */}
         <ExampleInferredDefaultButton as="div" href="mongodb.design" />
+        {/* @ts-expect-error - type not valid for anchor */}
+        <ExampleInferredDefaultButton as="a" type="submit" />
+        {/* @ts-expect-error - type not valid for anchor */}
+        <ExampleInferredDefaultButton href="mongodb.design" type="submit" />
+        {/* @ts-expect-error - type not valid for anchor */}
+        <ExampleInferredDefaultButton
+          as="a"
+          href="mongodb.design"
+          type="submit"
+        />
       </>;
     });
   });

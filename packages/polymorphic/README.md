@@ -83,6 +83,24 @@ export const MyInferredComponent = Polymorphic<
 <MyInferredComponent href="mongodb.design" />; // renders as <a>
 ```
 
+#### With a default `as` value
+
+To set a default value for the inferred as value, you'll need to provide the default value both to TypeScript and React:
+
+```tsx
+export const MyInferredComponentWitDefault = InferredPolymorphic<
+  ExampleProps,
+  'button'
+>(({ as = 'button' as PolymorphicAs, title, ...rest }) => {
+  const { Component, ref } = useInferredPolymorphic(as, rest);
+  return (
+    <Component ref={ref} {...rest}>
+      {title}
+    </Component>
+  );
+});
+```
+
 ## With Emotion `styled` API
 
 `Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accept the Polymorphic props you'll need to explicitly type your styled component as `PolymorphicComponentType`.
