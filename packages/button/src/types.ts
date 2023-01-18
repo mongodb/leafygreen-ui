@@ -61,11 +61,6 @@ interface ButtonProps {
   type?: HTMLProps<HTMLButtonElement>['type'];
 
   /**
-   * Specifies a CSS class passed to the element.
-   */
-  className?: HTMLProps<HTMLButtonElement>['className'];
-
-  /**
    * Sets the variant for the Button
    *
    * @default 'default'
@@ -109,26 +104,6 @@ interface ButtonProps {
    * @type Leafygreen <Icon /> Component
    */
   rightGlyph?: React.ReactElement;
-  /**
-   * A `href` prop that will make the Button render as an anchor tag.
-   */
-  href?: string;
-
-  /**
-   * The component or HTML Element that the button is rendered as.
-   *
-   * To use with NextJS Links, pass in a component that wraps the Link:
-   * ```js
-   * const Linker = ({ href, children, ...props }) => (
-   *  <NextLink href={href}>
-   *    <a {...props}>{children}</a>
-   *  </NextLink>
-   * );
-   * <Button as={Linker} />
-   * ```
-   * @type HTMLElement | React.Component
-   */
-  as?: React.ElementType<any>;
 }
 
 export { ButtonProps, Size, Variant };

@@ -3,7 +3,11 @@ import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
-import { BoxProps } from '@leafygreen-ui/box';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+  PolymorphicProps,
+} from '@leafygreen-ui/polymorphic';
 
 import { ButtonProps } from '../types';
 import Button from '..';
@@ -12,7 +16,16 @@ const className = 'test-button-class';
 const title = 'Test button title';
 const child = 'Button child';
 
-function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
+type ButtonRenderProps = PolymorphicProps<
+  PolymorphicAs,
+  InferredPolymorphicProps<ButtonProps>
+>;
+
+function renderButton(
+  props: ButtonRenderProps = {
+    as: 'button' as PolymorphicAs,
+  },
+) {
   const utils = render(<Button {...props} data-testid="button-id" />);
   const button = utils.getByTestId('button-id');
   return { ...utils, button };
@@ -56,6 +69,7 @@ describe('packages/button', () => {
 
     test(`renders "${title}" as the button title`, () => {
       const { button } = renderButton({
+        as: 'button',
         title,
       });
       expect(button.title).toBe(title);
@@ -94,9 +108,7 @@ describe('packages/button', () => {
     });
 
     test(`renders component inside of \`button\` tag when "href" prop is undefined`, () => {
-      const { button } = renderButton({
-        href: undefined,
-      });
+      const { button } = renderButton();
       expect(button.tagName.toLowerCase()).toBe('button');
     });
 
@@ -219,6 +231,33 @@ describe('packages/button', () => {
 
     test('accepts a component as `as`', () => {
       <Button as={() => <>JSX</>} />;
+    });
+
+    test('Polymorphic props', () => {
+      <>
+        <Button>Test</Button>
+        <Button href="mongodb.design">Test</Button>
+        <Button as="a" href="mongodb.design">
+          Test
+        </Button>
+        {/* @ts-expect-error - href is required */}
+        <Button as="a">Test</Button>
+
+        {/* @ts-expect-error - href is required */}
+        <Button as="a" type="button">
+          Test
+        </Button>
+
+        {/* @ts-expect-error - href is required */}
+        <Button as="a" type="submit">
+          Test
+        </Button>
+
+        {/* type is a valid attribute on `a` */}
+        <Button href="string" type="submit">
+          Test
+        </Button>
+      </>;
     });
   });
 });

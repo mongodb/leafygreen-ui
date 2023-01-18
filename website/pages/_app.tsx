@@ -131,6 +131,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
+    /// @ts-expect-error
     <MDXProvider components={MDXComponentMap}>
       <Head>
         <title>Home – LeafyGreen Design System | MongoDB</title>

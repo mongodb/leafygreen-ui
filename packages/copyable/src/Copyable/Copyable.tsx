@@ -161,7 +161,7 @@ export default function Copyable({
               justify={Justify.Middle}
               trigger={
                 <Button
-                  ref={setButtonRef}
+                  ref={setButtonRef as any}
                   variant="default"
                   darkMode={darkMode}
                   className={buttonStyle}

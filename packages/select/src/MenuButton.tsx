@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { MutableRefObject, useCallback, useContext } from 'react';
 
 import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -306,7 +306,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   return (
     <Component
       {...rest}
-      ref={ref}
+      ref={ref as MutableRefObject<HTMLButtonElement>}
       name={name}
       value={value}
       disabled={disabled}
