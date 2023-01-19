@@ -40,6 +40,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/palette": "^3.4.5"
+    "@leafygreen-ui/palette": "^3.4.5",
+    "@leafygreen-ui/button": "^19.0.3"
   }
 }
