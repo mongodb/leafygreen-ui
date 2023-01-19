@@ -33,7 +33,6 @@ import { SearchResultsMenu } from '../SearchResultsMenu';
 import {
   baseInputStyle,
   clearButtonSizeStyle,
-  clearButtonStyle,
   formStyle,
   inputSizeStyles,
   inputThemeStyle,
