@@ -5,6 +5,7 @@ import {
 } from 'react';
 
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const State = {
   Unset: 'unset',
@@ -22,16 +23,12 @@ export const SizeVariant = {
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
 interface BaseSearchInputProps
-  extends Omit<ComponentPropsWithoutRef<'form'>, 'onChange'> {
+  extends DarkModeProps,
+    Omit<ComponentPropsWithoutRef<'form'>, 'onChange'> {
   /**
    * The current state of the SearchInput. This can be none, or loading.
    */
   state?: State;
-
-  /**
-   * Determines whether the component appears in dark theme.
-   */
-  darkMode?: boolean;
 
   /**
    * Determines the font size and padding.
