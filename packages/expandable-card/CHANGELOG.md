@@ -1,5 +1,15 @@
 # @leafygreen-ui/expandable-card
 
+## 3.0.4
+
+### Patch Changes
+
+- 48ffa944d: Sets a default story for `ExpandableCard`
+- Updated dependencies [405636249]
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/hooks@7.4.0
+  - @leafygreen-ui/typography@15.3.0
+
 ## 3.0.3
 
 ### Patch Changes
