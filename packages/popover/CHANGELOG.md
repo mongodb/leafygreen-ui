@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 11.0.3
+
+### Patch Changes
+
+- a9b66c29b: Storybook: uses LG button in story. Sets default story
+
 ## 11.0.2
 
 ### Patch Changes
