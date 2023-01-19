@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
+  useBackdropClick,
   useEscapeKey,
-  useEventListener,
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
@@ -239,9 +239,9 @@ function Tooltip({
   const setOpen =
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
-  const [tooltipNode, setTooltipNode] = useState<HTMLDivElement | null>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const existingId = id ?? tooltipNode?.id;
+  const existingId = id ?? tooltipRef.current?.id;
   const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });
   const { darkMode: localDarkMode, theme } = useDarkMode(darkThemeProp);
 
@@ -288,7 +288,7 @@ function Tooltip({
           return {
             onClick: (e: MouseEvent) => {
               // ensure that we don't close the tooltip when content inside tooltip is clicked
-              if (e.target !== tooltipNode) {
+              if (e.target !== tooltipRef.current) {
                 userTriggerHandler('onClick', e);
                 setOpen((curr: boolean) => !curr);
               }
@@ -306,30 +306,12 @@ function Tooltip({
           triggerProps[handler](e);
       }
     },
-    [handleClose, setOpen, tooltipNode],
+    [handleClose, setOpen, tooltipRef],
   );
 
   useEscapeKey(handleClose, { enabled: open });
 
-  const handleBackdropClick = useCallback(
-    (e: MouseEvent) => {
-      /**
-       * Close the tooltip iff the clicked target (e.target) is NOT the tooltip element
-       *
-       * This handler is added to the document.
-       * No need to check whether the click target is the trigger node
-       * since clicks on that element are stopped from propagating by the <Popover>
-       */
-      if (tooltipNode && !tooltipNode.contains(e.target as HTMLElement)) {
-        handleClose();
-      }
-    },
-    [handleClose, tooltipNode],
-  );
-
-  useEventListener('click', handleBackdropClick, {
-    enabled: open && triggerEvent === 'click',
-  });
+  useBackdropClick(handleClose, [tooltipRef], open && triggerEvent === 'click');
 
   const popoverProps = {
     refEl,
@@ -398,7 +380,7 @@ function Tooltip({
                 },
                 className,
               )}
-              ref={setTooltipNode}
+              ref={tooltipRef}
             >
               <div
                 className={cx(
