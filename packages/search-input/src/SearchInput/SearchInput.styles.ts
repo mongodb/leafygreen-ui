@@ -126,7 +126,7 @@ export const baseInputStyle = css`
   background-color: inherit;
   font-family: ${fontFamilies.default};
   width: 100%;
-  height: 2em;
+  height: 1.5em;
   font-weight: normal;
   z-index: 1;
   outline: none;
@@ -253,15 +253,9 @@ export const inputThemeStyle: Record<Theme, string> = {
 };
 
 export const inputSizeStyles: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css`
-    height: 28px;
-  `,
-  [SizeVariant.Default]: css`
-    height: 36px;
-  `,
-  [SizeVariant.Large]: css`
-    height: 48px;
-  `,
+  [SizeVariant.Small]: css``,
+  [SizeVariant.Default]: css``,
+  [SizeVariant.Large]: css``,
 };
 
 export const searchIconStyle = css``;
@@ -293,5 +287,21 @@ export const searchIconDisabledStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.dark1};
+  `,
+};
+
+export const clearButtonStyle = css``;
+export const clearButtonSizeStyle: Record<SizeVariant, string> = {
+  [SizeVariant.Small]: css`
+    height: 26px;
+    width: 26px;
+  `,
+  [SizeVariant.Default]: css`
+    height: 28px;
+    width: 28px;
+  `,
+  [SizeVariant.Large]: css`
+    height: 28px;
+    width: 28px;
   `,
 };

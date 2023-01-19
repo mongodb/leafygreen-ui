@@ -32,7 +32,10 @@ import { SearchResultsMenu } from '../SearchResultsMenu';
 
 import {
   baseInputStyle,
+  clearButtonSizeStyle,
+  clearButtonStyle,
   formStyle,
+  inputSizeStyles,
   inputThemeStyle,
   inputWrapperDisabledStyle,
   inputWrapperFocusStyles,
@@ -333,7 +336,11 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               />
               <input
                 type="search"
-                className={cx(baseInputStyle, inputThemeStyle[theme])}
+                className={cx(
+                  baseInputStyle,
+                  inputThemeStyle[theme],
+                  inputSizeStyles[sizeVariant],
+                )}
                 value={value}
                 onChange={handleChange}
                 placeholder={placeholder}
@@ -346,6 +353,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   type="button"
                   aria-label="Clear search"
                   onClick={handleClearButton}
+                  className={clearButtonSizeStyle[sizeVariant]}
                 >
                   <XIcon />
                 </IconButton>

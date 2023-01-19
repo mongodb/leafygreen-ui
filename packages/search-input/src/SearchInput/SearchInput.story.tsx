@@ -28,7 +28,13 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'value',
+        'id',
+        'showWedge',
+        'onSubmit',
+      ],
     },
   },
 } as ComponentMeta<typeof SearchInput>;
