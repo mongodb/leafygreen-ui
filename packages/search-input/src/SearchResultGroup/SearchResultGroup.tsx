@@ -5,7 +5,10 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { validateChildren } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';
 
-import { searchResultLabelStyle } from './SearchResultGroup.styles';
+import {
+  searchResultLabelStyle,
+  searchResultLabelWrapperStyle,
+} from './SearchResultGroup.styles';
 import { SearchResultGroupProps } from './SearchResultGroup.types';
 
 export const SearchResultGroup = ({
@@ -21,7 +24,11 @@ export const SearchResultGroup = ({
 
   return (
     <div>
-      <InputOption aria-label={label} isInteractive={false}>
+      <InputOption
+        aria-label={label}
+        isInteractive={false}
+        className={searchResultLabelWrapperStyle}
+      >
         <Overline className={searchResultLabelStyle[theme]}>{label}</Overline>
       </InputOption>
       {validatedChildren}
