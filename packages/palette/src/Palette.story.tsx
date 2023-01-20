@@ -13,11 +13,12 @@ import Tooltip from '@leafygreen-ui/tooltip';
 
 import palette from './palette';
 
+const BLOCK_WIDTH = 88;
+
 const colorBlockWrapper = css`
   display: inline-block;
   position: relative;
-  margin: 10px;
-  width: 88px;
+  width: ${BLOCK_WIDTH}px;
 `;
 
 const colorBlock = css`
@@ -161,8 +162,9 @@ export function AllColors() {
       <div
         key={hue}
         className={css`
-          grid-template-columns: repeat(${ShadeNames.length}, 1fr);
+          grid-template-columns: repeat(${ShadeNames.length}, ${BLOCK_WIDTH}px);
           display: grid;
+          gap: 24px;
         `}
       >
         {(Object.keys(hueValues) as Array<keyof typeof hueValues>).map(

@@ -16,7 +16,7 @@ export default {
   parameters: {
     default: 'AllIcons',
     controls: {
-      exclude: ['className'],
+      exclude: ['className', 'title', 'data-testid'],
     },
   },
   argTypes: {
