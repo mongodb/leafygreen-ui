@@ -31,7 +31,7 @@ export default {
 } as ComponentMeta<typeof SideNav>;
 
 const basicStyles = css`
-  height: 100vw;
+  height: 50vh;
 `;
 
 export const Basic: ComponentStory<typeof SideNav> = ({
