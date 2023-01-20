@@ -59,22 +59,26 @@ const ShadeNames = [
   'light2',
   'light3',
 ] as const;
+type ShadeName = typeof ShadeNames[number];
 
 interface ColorBlockProps {
   hue: HueName;
   name: string;
-  shade?: typeof ShadeNames[number];
+  shade?: ShadeName;
 }
 
 function ColorBlock({ hue, shade }: ColorBlockProps) {
   const [copied, setCopied] = useState(false);
   const colorBlockRef = useRef<HTMLButtonElement>(null);
-
-  const color = !(isUndefined(shade) || ['white', 'black'].includes(hue))
-    ? palette[hue][shade]
-    : palette[hue];
-
   const name = `${hue} ${shade ?? ''}`;
+
+  let color: string;
+
+  if (isUndefined(shade) || hue === 'white' || hue === 'black') {
+    color = palette[hue as 'white' | 'black'];
+  } else {
+    color = (palette[hue] as Record<ShadeName, string>)[shade];
+  }
 
   const colorBlockWrapperDynamic = css`
     grid-column: ${shade ? ShadeNames.indexOf(shade) + 1 : 'unset'};
@@ -106,7 +110,12 @@ function ColorBlock({ hue, shade }: ColorBlockProps) {
       <button className={cx(colorBlock, colorBlockColor)} onClick={copyHex} />
       <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
       <div className={nameLabelStyle}>{name}</div>
-      <Tooltip open={copied} refEl={colorBlockRef} usePortal={false}>
+      <Tooltip
+        open={copied}
+        refEl={colorBlockRef}
+        usePortal={false}
+        spacing={0}
+      >
         Copied {color}
       </Tooltip>
     </div>
