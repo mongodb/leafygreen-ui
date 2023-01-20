@@ -19,7 +19,7 @@ export default {
   component: SideNav,
   parameters: {
     controls: {
-      exclude: ['children', 'className', 'setCollapsed', 'id'],
+      exclude: ['children', 'className', 'setCollapsed', 'id', 'collapsed'],
     },
   },
   argTypes: {
