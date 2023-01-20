@@ -3,7 +3,12 @@ import { isUndefined } from 'lodash';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { typeScales } from '@leafygreen-ui/tokens';
+import {
+  focusRing,
+  hoverRing,
+  transitionDuration,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import palette from './palette';
@@ -23,6 +28,15 @@ const colorBlock = css`
   padding-bottom: 100%;
   border-radius: 8px;
   cursor: pointer;
+  transition: box-shadow ease-in-out ${transitionDuration.default}ms;
+
+  &:hover {
+    box-shadow: ${hoverRing.light.gray};
+  }
+
+  &:focus {
+    box-shadow: ${focusRing.light.default};
+  }
 `;
 
 const hexLabelStyle = css`
