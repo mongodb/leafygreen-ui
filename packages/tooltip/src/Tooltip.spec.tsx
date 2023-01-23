@@ -361,27 +361,55 @@ describe('packages/tooltip', () => {
         expect(button).toHaveTextContent(buttonText);
       });
 
-      test('when trigger event is click, `click` triggers opening and closing of tooltip', async () => {
-        const { button, getByTestId } = renderTrigger({
-          triggerEvent: 'click',
-        });
-        userEvent.click(button);
-        const tooltip = getByTestId(tooltipTestId);
-        expect(tooltip).toBeInTheDocument();
-        userEvent.click(button);
-        await waitForElementToBeRemoved(tooltip);
-      });
-
-      test('when trigger event is hover, `hover` triggers opening and closing of tooltip', () => {
-        const { button, getByTestId } = renderTrigger({
-          triggerEvent: 'hover',
-        });
-        userEvent.hover(button);
-        waitFor(async () => {
+      describe('triggerEvent is `click`', () => {
+        test('click event triggers opening and closing of tooltip', () => {
+          const { button, getByTestId } = renderTrigger({
+            triggerEvent: 'click',
+          });
+          userEvent.click(button);
           const tooltip = getByTestId(tooltipTestId);
           expect(tooltip).toBeInTheDocument();
-          userEvent.unhover(button);
-          await waitForElementToBeRemoved(tooltip);
+          userEvent.click(button);
+          waitForElementToBeRemoved(tooltip);
+        });
+
+        test('clicking the backdrop closes the tooltip', () => {
+          const { button, getByTestId } = renderTrigger({
+            triggerEvent: 'click',
+          });
+          userEvent.click(button);
+          const tooltip = getByTestId(tooltipTestId);
+          const backdrop = getByTestId('backdrop');
+          userEvent.click(backdrop);
+          waitForElementToBeRemoved(tooltip);
+        });
+      });
+
+      describe('triggerEvent is `hover`', () => {
+        test('hover event triggers opening and closing of tooltip', () => {
+          const { button, getByTestId } = renderTrigger({
+            triggerEvent: 'hover',
+          });
+          userEvent.hover(button);
+          waitFor(() => {
+            const tooltip = getByTestId(tooltipTestId);
+            expect(tooltip).toBeInTheDocument();
+            userEvent.unhover(button);
+            waitForElementToBeRemoved(tooltip);
+          });
+        });
+
+        test('clicking the backdrop does not close the tooltip', () => {
+          const { button, getByTestId } = renderTrigger({
+            triggerEvent: 'hover',
+          });
+          userEvent.hover(button);
+          waitFor(() => {
+            const tooltip = getByTestId(tooltipTestId);
+            const backdrop = getByTestId('backdrop');
+            userEvent.click(backdrop);
+            expect(tooltip).toBeInTheDocument();
+          });
         });
       });
     });

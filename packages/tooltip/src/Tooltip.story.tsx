@@ -16,6 +16,7 @@ export default {
     children: 'I am a tooltip!',
     trigger: <Button>trigger</Button>,
     enabled: true,
+    usePortal: true,
   },
   argTypes: {
     open: { control: 'boolean' },

@@ -36,6 +36,7 @@ export default {
         Spider
       </Option>,
     ],
+    usePortal: true,
   },
   argTypes: {
     children: { control: false },

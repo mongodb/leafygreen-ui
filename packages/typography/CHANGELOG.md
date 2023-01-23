@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 15.3.0
+
+### Minor Changes
+
+- 53d77f55d: Introduces Error component to Typography package
+
 ## 15.2.1
 
 ### Patch Changes
