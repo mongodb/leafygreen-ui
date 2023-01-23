@@ -6,14 +6,26 @@ import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
 import { IconProps } from './createIconComponent';
+import { Size } from './glyphCommon';
 import { GlyphName } from './glyphs';
 import Icon, { glyphs } from '.';
 
 export default {
-  title: 'Components/Icons',
+  title: 'Components/Icon',
   component: Icon,
   parameters: {
-    default: 'Single',
+    default: 'AllIcons',
+    controls: {
+      exclude: ['className', 'title', 'data-testid'],
+    },
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+      defaultValue: Size.Default,
+    },
+    glyph: { control: 'none' },
   },
 } as Meta<typeof Icon>;
 
