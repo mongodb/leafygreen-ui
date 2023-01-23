@@ -23,7 +23,7 @@
   },
   "scripts": {
     "init": "yarn && yarn build",
-    "create-package": "node ./scripts/create-package.js",
+    "create-package": "node ./scripts/package-builder.js",
     "pre-build": "node ./scripts/pre-build.js",
     "build": "npm-run-all --serial \"build:* {@}\" --",
     "build:packages": "yarn ts-node ./scripts/build.ts",
