@@ -213,6 +213,26 @@ Make sure that the PR includes the changes made by running this command.
 git push --follow-tags
 ```
 
+### Publishing Pre-releases
+
+Read more in-depth [pre-release guides here](https://github.com/changesets/changesets/blob/main/docs/prereleases.md)
+
+Pre-releases let you publish an alpha/beta/next version of a component, allowing developers to test a component before fully releasing a component.
+
+Let's imagine we want to publish a `beta` release of some component. Our work is being done on a branch called `new-feature`
+
+1. Create a new branch off your component branch `git branch pre-release; git checkout pre-release`
+   - this makes sure your package updates stay independent
+2. Enter pre-release mode: `yarn changeset pre enter beta` (name can be `next`, `beta`, `alpha`, or any other name)
+3. Update package versions `yarn changeset version`
+   - This will update any packages with existing changeset files to version `X.Y.Z-beta.0` (or whatever name you used)
+4. Commit these updates `git commit -am "Prerelease version packages"`
+5. Publish the prerelease with `yarn changeset publish`
+6. Push the prerelease tags to GH `git push --follow-tags`
+
+Any new work you do should be done in the _original_ (`new-feature`) branch.
+To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5
+
 ## Deploy gh-pages
 
 You can deploy a static build of our Storybook site to gh-pages from the `main` branch.
