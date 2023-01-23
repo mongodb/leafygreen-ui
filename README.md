@@ -231,7 +231,9 @@ Let's imagine we want to publish a `beta` release of some component. Our work is
 6. Push the prerelease tags to GH `git push --follow-tags`
 
 Any new work you do should be done in the _original_ (`new-feature`) branch.
-To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5
+To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5.
+
+When `new-feature` is merged into `main`, you can safely delete the `pre-release` branch
 
 ## Deploy gh-pages
 
