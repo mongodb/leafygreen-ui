@@ -17,6 +17,7 @@ const InternalRowBase = ({
     <tr
       onClick={onClick}
       aria-disabled={disabled}
+      tabIndex={!!onClick ? 0 : undefined}
       className={cx(
         baseStyles,
         {

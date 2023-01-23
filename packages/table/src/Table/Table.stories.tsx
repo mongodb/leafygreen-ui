@@ -42,24 +42,26 @@ const Template: ComponentStory<typeof Table> = args => {
     x => x !== 'renderExpandedContent' && x !== 'subRows',
   );
   return (
-    <Table {...args}>
-      <TableHead>
-        <HeaderRow>
-          {columns.map((columnName: any) => (
-            <HeaderCell key={columnName}>{columnName}</HeaderCell>
+    <TableContainer>
+      <Table {...args}>
+        <TableHead>
+          <HeaderRow>
+            {columns.map((columnName: any) => (
+              <HeaderCell key={columnName}>{columnName}</HeaderCell>
+            ))}
+          </HeaderRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row: any) => (
+            <Row>
+              {Object.keys(row).map((cellKey: string, index: number) => {
+                return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+              })}
+            </Row>
           ))}
-        </HeaderRow>
-      </TableHead>
-      <TableBody>
-        {data.map((row: any) => (
-          <Row>
-            {Object.keys(row).map((cellKey: string, index: number) => {
-              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
-            })}
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
@@ -483,6 +485,113 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody table={table} renderingExpandableRows>
+            {rows.map((row: TSRow<Person>) => {
+              return (
+                <Row key={row.id} row={row}>
+                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
+                    return (
+                      <Cell key={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+
+export const KitchenSink = () => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data, setData] = React.useState(() => makeData(false, 100, 5, 3));
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+        enableSorting: true,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafygreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    state: {
+      expanded,
+    },
+    onExpandedChange: setExpanded,
+    getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    getSubRows: row => row.subRows,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
+      </div>
+
+      <TableContainer ref={tableContainerRef}>
+        <Table>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup: any) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header: any) => {
+                  return (
+                    <HeaderCell key={header.id} header={header}>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+          </TableHead>
+          <TableBody table={table}>
             {rows.map((row: TSRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>

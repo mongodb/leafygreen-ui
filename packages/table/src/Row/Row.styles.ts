@@ -57,10 +57,12 @@ export const clickableStyles: Record<Theme, string> = {
     border-radius: 6px;
     cursor: pointer;
     &:hover:not(:focus) {
+      outline: none;
       box-shadow: inset ${hoverRing[Theme.Dark].gray};
     }
 
     &:focus, &:focus-visible {
+      outline: none;
       box-shadow: inset ${focusRing[Theme.Dark].input}; 
     }
   `,
@@ -68,10 +70,12 @@ export const clickableStyles: Record<Theme, string> = {
     border-radius: 6px;
     cursor: pointer;
     &:hover:not(:focus) {
+      outline: none;
       box-shadow: inset ${hoverRing[Theme.Light].gray};
     }
 
     &:focus, &:focus-visible {
+      outline: none;
       box-shadow: inset ${focusRing[Theme.Light].input};  
     }
   `,
@@ -87,5 +91,7 @@ export const disabledStyles: Record<Theme, string> = {
     pointer-events: none;
     background-color: ${palette.gray.light2};
     color: ${palette.gray.base};
+    border-top: 1px inset ${palette.gray.dark1};
+    border-bottom: 1px inset ${palette.gray.dark1};
   `,
 };

@@ -18,7 +18,6 @@ const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
 
     return (
       <div
-        role="region"
         ref={forwardedRef}
         onScroll={handleScroll}
         className={css`

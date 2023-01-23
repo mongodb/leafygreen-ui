@@ -11,9 +11,10 @@ import { LeafygreenTableRow, LeafygreenTableType, VirtualizerValues } from '.';
 const getSelectColumnConfig = <T extends unknown>() => {
   return {
     id: 'select',
-    size: 36,
+    size: 32,
     header: ({ table }) => (
       <CheckboxCell
+        isHeader
         checked={table.getIsAllRowsSelected()}
         indeterminate={table.getIsSomeRowsSelected()}
         onChange={table.getToggleAllRowsSelectedHandler()}

@@ -140,7 +140,7 @@ export const BasicWithRT = () => {
   );
 };
 
-export const NestedRowsWithRT: ComponentStory<typeof Table> = (args) => {
+export const NestedRowsWithRT: ComponentStory<typeof Table> = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000, 5, 3));
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -209,7 +209,7 @@ export const NestedRowsWithRT: ComponentStory<typeof Table> = (args) => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <HeaderRow key={headerGroup.id}>

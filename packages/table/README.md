@@ -19,7 +19,6 @@ The Table component ...
 #### Temp todos
 
 - ensure parity between v10 and v11 functionalities
-- accessibility checks (keyboard controls, aria labels, etc.)
 - propTypes for all exported components
 - create index.ts for all subcomponents
 - import all react-table and react-virtual exports and export them from our package
