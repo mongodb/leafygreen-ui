@@ -21,6 +21,7 @@ export default {
     controls: {
       exclude: ['className', 'children', 'onChange', 'name', 'value'],
     },
+    default: 'Uncontrolled',
   },
 } as Meta<typeof RadioBoxGroup>;
 
