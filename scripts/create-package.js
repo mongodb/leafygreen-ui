@@ -6,10 +6,12 @@ if (process.argv.length <= 2) {
 
 const packageName = process.argv[process.argv.length - 1];
 const packageNameKebab = packageName.toLowerCase();
-const packageNamePascal = packageName.split('-')
+const packageNamePascal = packageName
+  .split('-')
   .map(el => el.replace(/^\w/, c => c.toUpperCase()))
   .join('');
-const packageNameHumanReadable = packageName.split('-')
+const packageNameHumanReadable = packageName
+  .split('-')
   .map(el => el.replace(/^\w/, c => c.toUpperCase()))
   .join(' ');
 
@@ -46,15 +48,31 @@ fs.mkdir(newDir, { recursive: true }, err => {
     fs.mkdir(`${newSubDir}`, { recursive: true }, err => {
       handleErr(err);
 
-      fs.writeFile(`${newSubDir}/${packageNamePascal}.tsx`, rootFile, handleErr);
+      fs.writeFile(
+        `${newSubDir}/${packageNamePascal}.tsx`,
+        rootFile,
+        handleErr,
+      );
 
       fs.writeFile(`${newSubDir}/index.tsx`, index, handleErr);
 
-      fs.writeFile(`${newSubDir}/${packageNamePascal}.spec.tsx`, spec, handleErr);
+      fs.writeFile(
+        `${newSubDir}/${packageNamePascal}.spec.tsx`,
+        spec,
+        handleErr,
+      );
 
-      fs.writeFile(`${newSubDir}/${packageNamePascal}.styles.ts`, styles, handleErr);
+      fs.writeFile(
+        `${newSubDir}/${packageNamePascal}.styles.ts`,
+        styles,
+        handleErr,
+      );
 
-      fs.writeFile(`${newSubDir}/${packageNamePascal}.types.ts`, types , handleErr);
+      fs.writeFile(
+        `${newSubDir}/${packageNamePascal}.types.ts`,
+        types,
+        handleErr,
+      );
     });
   });
 });
@@ -190,4 +208,4 @@ describe('packages/${packageNameKebab}', () => {
 
 const types = `export interface ${packageNamePascal}Props {}`;
 
-const styles = `import { css } from '@leafygreen-ui/emotion';`
+const styles = `import { css } from '@leafygreen-ui/emotion';`;
