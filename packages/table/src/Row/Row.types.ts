@@ -5,7 +5,7 @@ import { LeafygreenTableRow } from '../useLeafygreenTable';
 export interface InternalRowBaseProps
   extends HTMLElementProps<'tr'> {
   /**
-   * Determines whether or not the row is disabled
+   * Determines whether the row is disabled
    */
   disabled?: boolean;
 }
@@ -19,7 +19,7 @@ export interface InternalRowWithRTProps<T extends unknown>
    */
   row: LeafygreenTableRow<T>;
   /**
-   * Virtual row passed from the `useLeafygreenTable` hook
+   * Virtual row object passed from the `useLeafygreenTable` hook
    */
   virtualRow?: VirtualItem;
 }

@@ -35,7 +35,7 @@ export default {
   },
 } as Meta<typeof Table>;
 
-export const BasicWithRT = () => {
+export const Basic = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000));
 
@@ -140,7 +140,7 @@ export const BasicWithRT = () => {
   );
 };
 
-export const NestedRowsWithRT: ComponentStory<typeof Table> = () => {
+export const NestedRows: ComponentStory<typeof Table> = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000, 5, 3));
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -253,7 +253,7 @@ export const NestedRowsWithRT: ComponentStory<typeof Table> = () => {
   );
 };
 
-export const SortableRowsWithRT = () => {
+export const SortableRows = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000));
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -367,7 +367,7 @@ export const SortableRowsWithRT = () => {
   );
 };
 
-export const SelectableRowsWithRT = () => {
+export const SelectableRows = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(false, 5000));
   const [rowSelection, setRowSelection] = React.useState({});
@@ -491,7 +491,7 @@ export const SelectableRowsWithRT = () => {
   );
 };
 
-export const ExpandableContentWithRT = () => {
+export const ExpandableContent = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data, setData] = React.useState(() => makeData(true, 5000));
   const [expanded, setExpanded] = React.useState<ExpandedState>({});

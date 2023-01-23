@@ -4,9 +4,9 @@
 
 > _Upgrading from pre-v10 to v11? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md)._
 
-The Table component ...
+The Table component displays data in rows and columns and optionally supports row selection, sorting, and other features.
 
-## Quick features
+## Supported features
 
 - Virtualized scrolling
 - Nested rows
@@ -14,18 +14,16 @@ The Table component ...
 - Selectable rows
 - Sortable rows
 - Sticky headers
-- ...and everything else from [`react-table`](https://github.com/tanstack/table#quick-features)!
+
+While other features from [`react-table`](https://github.com/tanstack/table#quick-features) could be supported, we discourage developers from utilizing them unless they are explicitly supported by Leafygreen, as they would not align with MongoDB design systems guidelines.
 
 #### Temp todos
 
-- ensure parity between v10 and v11 functionalities
 - propTypes for all exported components
 - create index.ts for all subcomponents
-- import all react-table and react-virtual exports and export them from our package
 - remove unused imports from all files
 - replace all instances of unnecessary `any` types
 - ensure TS types are failsafe
-- resolve any UI discrepancies
 - write tests
 
 # Installation
@@ -152,29 +150,58 @@ All HTML `tr` element props
 |--- |--- |--- |--- |
 |align|The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.|`td` `align` values||
 |sortState|Determines the current sorting direction.|`SortState`|`'asc' 'desc' 'off' 'none'`|
-|header|`Header` object passed from the `useLeafygreenTable` hook. | Header<T, any> |-|
+|header|`Header` object returned from the `useLeafygreenTable` hook. | Header<T, any> |-|
 \+ other HTML `th` element props
 
 ### TableBody
+|Name|Description|Type|Default|
+|--- |--- |--- |--- |
+|renderingExpandableRows|Indicate whether the Table is rendering expandable rows in its body. |`boolean`|`false`|
+|table|Return value from the `useLeafygreenTable` hook. | `LeafygreenTable` |-|
+\+ other HTML `tbody` element props
+
+> The `TableBody` will render as a `React.Fragment` when `renderingExpandableRows` is `true` to support virtualized scrolling on rows with unknown heights. 
+> 
+> This is done to ensure that dynamic heights of rows with expandable content can be measured using a `ref` using a `tbody` element. In lieu of a `rowgroup` HTML element, expandable content relies on `tbody` to track groups of rows. This means the `TableBody` needs to render as a `React.Fragment` to ensure there aren't `tbody` elements inside `tbody` elements.
 
 ### Row
+|Name|Description|Type|Default|
+|--- |--- |--- |--- |
+|disabled|Determines whether the row is disabled |`boolean`|`false`|
+|row|Row object passed from the `useLeafygreenTable` hook.| `LeafygreenTableRow<T>` |-|
+|virtualRow|Virtual row object passed from the `useLeafygreenTable` hook.| `VirtualItem` |-|
+\+ other HTML `tr` element props
 
 ### Cell
+|Name|Description|Type|Default|
+|--- |--- |--- |--- |
+|cell|Cell object passed from the `useLeafygreenTable` hook.| `LeafygreenCell<T>` |-|
+\+ other HTML `td` element props
 
 ## Feature Examples
 
 ### Virtualized Scrolling
-[Demo]()
+[Demo](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--basic)
 
-https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/Table.stories.tsx#L45-L64
+https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/TableWithVS.stories.tsx#L101-L139
 
 ### Sortable Rows
-[Demo]()
-[Demo with virtualized scrolling]()
+[Demo](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table--sortable-rows)
+
+[Demo with virtualized scrolling](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--sortable-rows)
+
+https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/Table.stories.tsx#L221-L228
 
 ### Selectable Rows
-[Demo]()
-[Demo with virtualized scrolling]()
+[Demo](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table--selectable-rows)
+
+[Demo with virtualized scrolling](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--selectable-rows)
+
+https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/Table.stories.tsx#L375-L385
+
 ### Expandable Content
-[Demo]()
-[Demo with virtualized scrolling]()
+[Demo](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table--expandable-content)
+
+[Demo with virtualized scrolling](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--expandable-content)
+
+To add expandable content to your Table, ensure the `renderExpandedContent` prop is passed to the row's data through `useLeafygreenTable`'s data prop.

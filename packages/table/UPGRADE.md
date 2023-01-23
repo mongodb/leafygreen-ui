@@ -19,3 +19,7 @@ Other functionalities offered by [react-table](https://tanstack.com/table/v8) co
 ### Other changes
 
 - **Zebra striping behavior is no longer applied by default for data sets over 10 rows.** Use the `shouldAlternateRowColor` prop on the `Table` component to achieve the same effect. Note that we discourage the usage of zebra stripes in conjunction with nested rows or expandable content.
+
+- **Disabled cells are no longer supported.** We found in our design audit that this prop was not being used. We recommend applying styles that match our disabled rows if you would like to disable specific cells.
+
+- **Multi-row headers are no longer supported.** We found in our design audit that this prop was not being used. Reach out to the Design Systems team if this prop is crucial to your team's needs.
