@@ -15,12 +15,13 @@ export default {
     controls: {
       exclude: ['children', 'className', 'aria-label', 'onChange'],
     },
+    default: 'Uncontrolled',
   },
   argTypes: {
     label: { control: 'text' },
     description: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
-    checked: { control: 'boolean' },
+    checked: { control: 'none' },
     disabled: { control: 'boolean' },
     bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
@@ -44,8 +45,8 @@ const Template: Story<CheckboxProps & { baseFontSize: BaseFontSize }> = ({
   </LeafygreenProvider>
 );
 
-export const Basic = Template.bind({});
-Basic.args = {
+export const Uncontrolled = Template.bind({});
+Uncontrolled.args = {
   animate: true,
   label: 'I agree to this thing.',
   description:
@@ -53,6 +54,11 @@ Basic.args = {
   className: css`
     max-width: 700px;
   `,
+};
+
+export const Controlled = Template.bind({});
+Controlled.argTypes = {
+  checked: { control: 'boolean' },
 };
 
 export const NoDescription = Template.bind({});
