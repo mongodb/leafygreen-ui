@@ -1,5 +1,13 @@
 # @leafygreen-ui/tooltip
 
+## 9.1.2
+
+### Patch Changes
+
+- 5865ddf99: Fixes a bug where, when set to trigger on click, the Tooltip could close immediately
+- Updated dependencies [a9b66c29b]
+  - @leafygreen-ui/popover@11.0.3
+
 ## 9.1.1
 
 ### Patch Changes
