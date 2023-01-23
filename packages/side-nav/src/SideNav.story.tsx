@@ -19,7 +19,7 @@ export default {
   component: SideNav,
   parameters: {
     controls: {
-      exclude: ['children', 'className', 'setCollapsed', 'id'],
+      exclude: ['children', 'className', 'setCollapsed', 'id', 'collapsed'],
     },
   },
   argTypes: {
@@ -31,7 +31,7 @@ export default {
 } as ComponentMeta<typeof SideNav>;
 
 const basicStyles = css`
-  height: 100vw;
+  height: 50vh;
 `;
 
 export const Basic: ComponentStory<typeof SideNav> = ({
