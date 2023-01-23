@@ -10,6 +10,27 @@
   "references": [
     {
       "path": "../lib"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
     }
   ]
 }
