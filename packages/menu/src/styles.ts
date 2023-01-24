@@ -301,7 +301,7 @@ export const disabledTextStyle: Record<Theme, string> = {
  */
 export const focusedMenuItemContainerStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus {
+    &:focus-visible {
       text-decoration: none;
       background-color: ${palette.blue.dark3};
       color: ${palette.white};
@@ -316,7 +316,7 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    &:focus {
+    &:focus-visible {
       text-decoration: none;
       background-color: ${palette.blue.light2};
       color: ${palette.blue.dark2};
@@ -335,21 +335,21 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
 export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
   return {
     textStyle: css`
-      .${containerClassName}:focus & {
+      .${containerClassName}:focus-visible & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
           : palette.blue.dark1};
       }
     `,
     descriptionStyle: css`
-      .${containerClassName}:focus & {
+      .${containerClassName}:focus-visible & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
           : palette.blue.dark1};
       }
     `,
     iconStyle: css`
-      .${containerClassName}:focus & {
+      .${containerClassName}:focus-visible & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
           : palette.blue.dark1};
@@ -364,14 +364,14 @@ export const linkStyle = css`
 
 export const focusedSubMenuItemBorderStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus {
+    &:focus-visible {
       &::after {
         background-color: ${palette.blue.dark3};
       }
     }
   `,
   [Theme.Dark]: css`
-    &:focus {
+    &:focus-visible {
       &::after {
         background-color: ${palette.blue.light2};
       }
