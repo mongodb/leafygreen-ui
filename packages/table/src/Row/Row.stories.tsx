@@ -1,23 +1,22 @@
 import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
-import { makeData, Person } from '../utils/makeData';
-import Table from '../Table/Table';
-import TableHead from '../TableHead/TableHead';
-import HeaderRow from '../HeaderRow/HeaderRow';
-import HeaderCell from '../HeaderCell/HeaderCell';
-import TableContainer from '../TableContainer/TableContainer';
-import TableBody from '../TableBody/TableBody';
-import Row from '../Row/Row';
-import Cell from '../Cell/Cell';
-import { Cell as TSCell, Row as TSRow } from '@tanstack/table-core';
 import {
   ColumnDef,
+  ExpandedState,
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
-  ExpandedState,
 } from '..';
+import Cell from '../Cell/Cell';
+import HeaderCell from '../HeaderCell/HeaderCell';
+import HeaderRow from '../HeaderRow/HeaderRow';
+import Row from '../Row/Row';
+import Table from '../Table/Table';
+import TableBody from '../TableBody/TableBody';
+import TableContainer from '../TableContainer/TableContainer';
+import TableHead from '../TableHead/TableHead';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
+import { makeData, Person } from '../utils/makeData';
 
 export default {
   title: 'Components/Table/Row',
@@ -27,6 +26,10 @@ export default {
     ref: { control: 'none' },
   },
 } as Meta<typeof Table>;
+
+interface AnyDict {
+  [key: string]: any;
+}
 
 const Template: ComponentStory<typeof Row> = args => {
   const data = makeData(false, 100);
@@ -43,8 +46,8 @@ const Template: ComponentStory<typeof Row> = args => {
           </HeaderRow>
         </TableHead>
         <TableBody>
-          {data.map((row: any) => (
-            <Row {...args}>
+          {data.map((row: AnyDict) => (
+            <Row {...args} key={row.id}>
               {Object.keys(row).map((cellKey: string, index: number) => {
                 return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
               })}
@@ -56,7 +59,6 @@ const Template: ComponentStory<typeof Row> = args => {
   );
 };
 
-
 export const DisabledRows = Template.bind({});
 DisabledRows.args = {
   disabled: true,
@@ -64,7 +66,7 @@ DisabledRows.args = {
 
 export const DisabledNestedRows: ComponentStory<typeof Row> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(false, 100, 5, 3));
+  const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -83,15 +85,18 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
+        // eslint-disable-next-line react/display-name
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
+        // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
+        // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -169,15 +174,15 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = args => {
 };
 DisabledNestedRows.args = {
   disabled: true,
-}
+};
 
 export const ClickableRows = Template.bind({});
 ClickableRows.args = {
-  onClick: () => { }
+  onClick: () => {},
 };
 
 export const DisabledClickableRows = Template.bind({});
 DisabledClickableRows.args = {
-  onClick: () => { },
+  onClick: () => {},
   disabled: true,
 };

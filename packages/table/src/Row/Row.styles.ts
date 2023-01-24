@@ -61,9 +61,10 @@ export const clickableStyles: Record<Theme, string> = {
       box-shadow: inset ${hoverRing[Theme.Dark].gray};
     }
 
-    &:focus, &:focus-visible {
+    &:focus,
+    &:focus-visible {
       outline: none;
-      box-shadow: inset ${focusRing[Theme.Dark].input}; 
+      box-shadow: inset ${focusRing[Theme.Dark].input};
     }
   `,
   [Theme.Light]: css`
@@ -74,12 +75,13 @@ export const clickableStyles: Record<Theme, string> = {
       box-shadow: inset ${hoverRing[Theme.Light].gray};
     }
 
-    &:focus, &:focus-visible {
+    &:focus,
+    &:focus-visible {
       outline: none;
-      box-shadow: inset ${focusRing[Theme.Light].input};  
+      box-shadow: inset ${focusRing[Theme.Light].input};
     }
   `,
-}
+};
 
 export const disabledStyles: Record<Theme, string> = {
   [Theme.Dark]: css`

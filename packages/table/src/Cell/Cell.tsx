@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
+import { CellProps } from './Cell.types';
 import InternalCellBase from './InternalCellBase';
 import InternalCellWithRT from './InternalCellWithRT';
-import { CellProps } from './Cell.types';
 
 const Cell = <T extends unknown>({
   cell,
@@ -19,9 +19,7 @@ const Cell = <T extends unknown>({
     return (
       // missing cellIndex prop will be provided by cloneElement call from Row
       // @ts-expect-error
-      <InternalCellBase
-        {...rest}
-      />
+      <InternalCellBase {...rest} />
     );
   }
 };

@@ -1,4 +1,3 @@
-import { css, cx } from '@leafygreen-ui/emotion';
 import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { HeaderRowProps } from './HeaderRow.types';
 

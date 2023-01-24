@@ -1,25 +1,25 @@
 import React, { Fragment, PropsWithChildren } from 'react';
 import { TableBodyProps } from './TableBody.types';
 
-const TableBody = ({
+const TableBody = <T extends unknown>({
   children,
   table,
   renderingExpandableRows = false,
   ...rest
-}: PropsWithChildren<TableBodyProps>) => {
+}: PropsWithChildren<TableBodyProps<T>>) => {
   let paddingTop = 0;
   let paddingBottom = 0;
 
   const ContainerElement = renderingExpandableRows
     ? Fragment
     : (
-        props: React.DetailedHTMLProps<
-          React.HTMLAttributes<HTMLTableSectionElement>,
-          HTMLTableSectionElement
-        >,
-      ) => <tbody {...props} />;
+      props: React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLTableSectionElement>,
+        HTMLTableSectionElement
+      >,
+    ) => <tbody {...props} />;
 
-  if (table && table.virtualRows) {
+  if (table && 'virtualRows' in table) {
     const { virtualRows, totalSize } = table;
     paddingTop = virtualRows.length > 0 ? virtualRows?.[0]?.start || 0 : 0;
     paddingBottom =

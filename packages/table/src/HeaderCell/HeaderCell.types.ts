@@ -14,7 +14,7 @@ export type SortState = typeof SortState[keyof typeof SortState];
 
 export interface HeaderCellProps<T extends unknown>
   extends HTMLElementProps<'th'>,
-  DarkModeProps {
+    DarkModeProps {
   /**
    * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
    */

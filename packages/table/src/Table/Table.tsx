@@ -1,14 +1,14 @@
 import { cx } from '@leafygreen-ui/emotion';
-import React, { PropsWithChildren } from 'react';
-import TableContextProvider from '../TableContext';
-import { TableProps } from './Table.types';
-import { baseStyles, themeStyles } from './Table.styles';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import React, { PropsWithChildren } from 'react';
+import TableContextProvider from '../TableContext/TableContext';
+import { baseStyles, themeStyles } from './Table.styles';
+import { TableProps } from './Table.types';
 
 const Table = ({
   children,

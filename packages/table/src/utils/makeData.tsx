@@ -1,5 +1,5 @@
-import React from 'react';
 import { faker } from '@faker-js/faker';
+import React from 'react';
 
 export interface Person {
   id: any;
@@ -61,12 +61,12 @@ export function makeData(
         ...(hasSubRows &&
           lens[depth + 1] &&
           randomIntFromInterval(1, 3) == 1 && {
-          subRows: makeDataLevel(depth + 1),
-        }),
+            subRows: makeDataLevel(depth + 1),
+          }),
         ...(renderingExpandableRows &&
           randomIntFromInterval(1, 3) == 1 && {
-          renderExpandedContent: ExpandedContentComponent,
-        }),
+            renderExpandedContent: ExpandedContentComponent,
+          }),
       };
     });
   };

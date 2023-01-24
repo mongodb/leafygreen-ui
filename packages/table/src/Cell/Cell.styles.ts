@@ -17,18 +17,18 @@ export const baseStyles = css`
 `;
 
 const flexAlignment: Record<string, string> = {
-  'left': 'start',
-  'right': 'end',
-  'center': 'center',
-}
+  left: 'start',
+  right: 'end',
+  center: 'center',
+};
 
 export const alignmentStyles = (align: Align) => {
   if (align) {
-    return (css`
+    return css`
       justify-content: ${flexAlignment[align]};
-    `);
+    `;
   }
-}
+};
 
 export const depthPadding = (depth: number) => css`
   padding-left: ${16 * depth}px;

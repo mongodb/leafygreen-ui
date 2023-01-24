@@ -1,9 +1,9 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { PropsWithChildren } from 'react';
 import { VirtualItem } from 'react-virtual';
 import { LeafygreenTableRow } from '../useLeafygreenTable';
 
-export interface InternalRowBaseProps
-  extends HTMLElementProps<'tr'> {
+export interface InternalRowBaseProps extends HTMLElementProps<'tr'> {
   /**
    * Determines whether the row is disabled
    */
@@ -24,4 +24,7 @@ export interface InternalRowWithRTProps<T extends unknown>
   virtualRow?: VirtualItem;
 }
 
-export type RowProps<T extends unknown> = InternalRowWithoutRTProps | InternalRowWithRTProps<T>;
+export type RowProps<T extends unknown> = PropsWithChildren<
+  | InternalRowWithoutRTProps
+  | InternalRowWithRTProps<T>
+>

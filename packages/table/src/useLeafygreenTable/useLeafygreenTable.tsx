@@ -1,17 +1,18 @@
 import { ColumnDef, Table, useReactTable } from '@tanstack/react-table';
-import { useVirtual } from 'react-virtual';
 import React from 'react';
+import { useVirtual } from 'react-virtual';
+import { LeafygreenTableRow, LeafygreenTableType, VirtualizerValues } from '.';
+import CheckboxCell from '../CheckboxCell/CheckboxCell';
 import {
   LeafygreenTableOptions,
   LeafygreenTableValues,
 } from './useLeafygreenTable.types';
-import CheckboxCell from '../CheckboxCell/CheckboxCell';
-import { LeafygreenTableRow, LeafygreenTableType, VirtualizerValues } from '.';
 
 const getSelectColumnConfig = <T extends unknown>() => {
   return {
     id: 'select',
     size: 32,
+    // eslint-disable-next-line react
     header: ({ table }) => (
       <CheckboxCell
         isHeader
@@ -30,18 +31,21 @@ const getSelectColumnConfig = <T extends unknown>() => {
       />
     ),
   } as ColumnDef<LeafygreenTableType<T>, any>;
-}
+};
+
+type NonNullable<T> = Exclude<T, null | undefined>;
+
+function useLeafygreenTable<T extends unknown>(props: LeafygreenTableOptions<T>): LeafygreenTableValues<T, true>
+function useLeafygreenTable<T extends unknown>(props: LeafygreenTableOptions<T>): LeafygreenTableValues<T, false>
 
 function useLeafygreenTable<T extends unknown>(
   props: LeafygreenTableOptions<T>,
-): (LeafygreenTableValues<T>) {
+): LeafygreenTableValues<T, NonNullable<typeof props.useVirtualScrolling>> {
   const {
     containerRef,
     data,
     columns: columnsProp,
     hasSelectableRows,
-    // not sure what's going on here since the prop is clearly defined
-    // @ts-ignore
     useVirtualScrolling,
     ...rest
   } = props;
@@ -88,7 +92,7 @@ function useLeafygreenTable<T extends unknown>(
       virtualRows: rowVirtualizer.virtualItems,
       totalSize: rowVirtualizer.totalSize,
     }),
-  } as LeafygreenTableValues<T>;
-};
+  } as LeafygreenTableValues<T, NonNullable<typeof useVirtualScrolling>>;
+}
 
 export default useLeafygreenTable;

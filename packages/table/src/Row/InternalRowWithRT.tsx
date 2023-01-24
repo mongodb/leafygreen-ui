@@ -5,9 +5,9 @@ import InternalCellWithRT from '../Cell/InternalCellWithRT';
 import { LeafygreenTableType } from '../useLeafygreenTable';
 import InternalRowBase from './InternalRowBase';
 import {
-  nestedBorderTopStyles,
-  nestedBgStyles,
   expandedContentStyles,
+  nestedBgStyles,
+  nestedBorderTopStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
 
@@ -25,11 +25,11 @@ const InternalRowWithRT = <T extends unknown>({
   const ExpandedContentRowProp = row?.original.renderExpandedContent;
   const ContainerElement = ExpandedContentRowProp
     ? (props: any) => (
-      <tbody
-        {...props}
-        ref={virtualRow ? virtualRow.measureRef : undefined}
-      />
-    )
+        <tbody
+          {...props}
+          ref={virtualRow ? virtualRow.measureRef : undefined}
+        />
+      )
     : Fragment;
 
   return (

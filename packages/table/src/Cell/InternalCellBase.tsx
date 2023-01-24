@@ -1,13 +1,13 @@
 import { cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { useTableContext } from '../TableContext';
+import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon/ToggleExpandedIcon';
 import {
   alignmentStyles,
   baseStyles,
-  depthPadding,
   cellContentContainerStyles,
+  depthPadding,
 } from './Cell.styles';
 import { InternalCellBaseProps } from './Cell.types';
 
@@ -21,25 +21,17 @@ const InternalCellBase = ({
   ...rest
 }: PropsWithChildren<InternalCellBaseProps>) => {
   const { columnAlignments } = useTableContext();
-  const [align, setAlign] = useState<HTMLElementProps<'td'>['align']>(alignProp);
+  const [align, setAlign] =
+    useState<HTMLElementProps<'td'>['align']>(alignProp);
 
   useEffect(() => {
-    if (
-      columnAlignments !== undefined &&
-      cellIndex !== undefined
-    ) {
-      setAlign(columnAlignments[cellIndex])
+    if (columnAlignments !== undefined && cellIndex !== undefined) {
+      setAlign(columnAlignments[cellIndex]);
     }
   }, [cellIndex, columnAlignments]);
 
   return (
-    <td
-      className={cx(
-        baseStyles,
-        className,
-      )}
-      {...rest}
-    >
+    <td className={cx(baseStyles, className)} {...rest}>
       <div
         className={cx(cellContentContainerStyles, {
           [depthPadding(depth)]: cellIndex === 0,

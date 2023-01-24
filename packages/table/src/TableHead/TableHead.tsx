@@ -1,6 +1,5 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { palette } from '@leafygreen-ui/palette';
 import React, { PropsWithChildren } from 'react';
 import { stickyStyles, themeStyles } from './TableHead.styles';
 import { TableHeadProps } from './TableHead.types';

@@ -30,23 +30,24 @@ export type LeafygreenTableType<T extends unknown> = T & {
 
 export type LeafygreenTableRow<T extends unknown> = Row<LeafygreenTableType<T>>;
 
-interface LeafygreenTableOptionsWithoutVS<T> extends TableOptions<LeafygreenTableType<T>> {
+export interface LeafygreenTableOptions<T extends unknown>
+  extends TableOptions<LeafygreenTableType<T>> {
   containerRef: any;
   hasSelectableRows?: boolean;
-};
-
-interface LeafygreenTableOptionsWithVS<T> extends LeafygreenTableOptionsWithoutVS<T> {
-  useVirtualScrolling: boolean;
+  useVirtualScrolling?: boolean;
 }
 
-export type LeafygreenTableOptions<T> = LeafygreenTableOptionsWithoutVS<T> | LeafygreenTableOptionsWithVS<T>;
+interface LeafygreenTableValuesWithoutVS<T extends unknown>
+  extends Table<LeafygreenTableType<T>> { }
 
-interface LeafygreenTableValuesWithoutVS<T extends unknown> extends Table<LeafygreenTableType<T>> { }
-
-interface LeafygreenTableValuesWithVS<T> extends LeafygreenTableValuesWithoutVS<T>, Pick<VirtualizerValues, 'totalSize'> {
+interface LeafygreenTableValuesWithVS<T>
+  extends LeafygreenTableValuesWithoutVS<T>,
+  Pick<VirtualizerValues, 'totalSize'> {
   virtualRows: Array<VirtualItem>;
-};
+}
 
-export type LeafygreenTableValues<T> = LeafygreenTableValuesWithoutVS<T> | LeafygreenTableValuesWithVS<T>;
+export type LeafygreenTableValues<T, VS extends boolean> = VS extends true
+  ? LeafygreenTableValuesWithVS<T>
+  : LeafygreenTableValuesWithoutVS<T>;
 
-export type LeafygreenTable = LeafygreenTableValues<unknown>;
+export type LeafygreenTable<T extends unknown> = LeafygreenTableValuesWithVS<T> | LeafygreenTableValuesWithoutVS<T>;

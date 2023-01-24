@@ -1,8 +1,13 @@
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import React, { PropsWithChildren } from 'react';
-import { useTableContext } from '../TableContext';
-import { baseStyles, clickableStyles, disabledStyles, zebraStyles } from './Row.styles';
+import { useTableContext } from '../TableContext/TableContext';
+import {
+  baseStyles,
+  clickableStyles,
+  disabledStyles,
+  zebraStyles,
+} from './Row.styles';
 import { InternalRowBaseProps } from './Row.types';
 
 const InternalRowBase = ({
@@ -17,7 +22,7 @@ const InternalRowBase = ({
     <tr
       onClick={onClick}
       aria-disabled={disabled}
-      tabIndex={!!onClick ? 0 : undefined}
+      tabIndex={onClick ? 0 : undefined}
       className={cx(
         baseStyles,
         {

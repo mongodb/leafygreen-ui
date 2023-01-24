@@ -1,14 +1,14 @@
 import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
-import { makeData } from '../utils/makeData';
-import Table from '../Table/Table';
-import TableHead from '../TableHead/TableHead';
-import HeaderRow from '../HeaderRow/HeaderRow';
-import HeaderCell from '../HeaderCell/HeaderCell';
-import TableContainer from '../TableContainer/TableContainer';
-import TableBody from '../TableBody/TableBody';
-import Row from '../Row/Row';
 import Cell from '../Cell/Cell';
+import HeaderCell from '../HeaderCell/HeaderCell';
+import HeaderRow from '../HeaderRow/HeaderRow';
+import Row from '../Row';
+import Table from '../Table/Table';
+import TableBody from '../TableBody/TableBody';
+import TableContainer from '../TableContainer/TableContainer';
+import TableHead from '../TableHead/TableHead';
+import { makeData } from '../utils/makeData';
 
 export default {
   title: 'Components/Table/HeaderCell',
@@ -22,8 +22,12 @@ export default {
   },
 } as Meta<typeof Table>;
 
+interface AnyDict {
+  [key: string]: any;
+}
+
 const Template: ComponentStory<typeof HeaderCell> = args => {
-  const data = makeData(false, 100);
+  const data: Array<AnyDict> = makeData(false, 100);
   const columns = Object.keys(data[0]);
   return (
     <TableContainer>
@@ -31,13 +35,15 @@ const Template: ComponentStory<typeof HeaderCell> = args => {
         <TableHead>
           <HeaderRow>
             {columns.map((columnName: string) => (
-              <HeaderCell key={columnName} {...args}>{columnName}</HeaderCell>
+              <HeaderCell key={columnName} {...args}>
+                {columnName}
+              </HeaderCell>
             ))}
           </HeaderRow>
         </TableHead>
         <TableBody>
-          {data.map((row: any) => (
-            <Row>
+          {data.map((row: AnyDict) => (
+            <Row key={row.id}>
               {Object.keys(row).map((cellKey: string, index: number) => {
                 return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
               })}
@@ -48,7 +54,6 @@ const Template: ComponentStory<typeof HeaderCell> = args => {
     </TableContainer>
   );
 };
-
 
 export const RightAlignedHeader = Template.bind({});
 RightAlignedHeader.args = {

@@ -1,14 +1,14 @@
 import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
-import { makeData } from '../utils/makeData';
-import Table from '../Table/Table';
-import TableHead from './TableHead';
-import HeaderRow from '../HeaderRow/HeaderRow';
-import HeaderCell from '../HeaderCell/HeaderCell';
-import TableContainer from '../TableContainer/TableContainer';
-import TableBody from '../TableBody/TableBody';
-import Row from '../Row/Row';
 import Cell from '../Cell/Cell';
+import HeaderCell from '../HeaderCell/HeaderCell';
+import HeaderRow from '../HeaderRow/HeaderRow';
+import Row from '../Row/Row';
+import Table from '../Table/Table';
+import TableBody from '../TableBody/TableBody';
+import TableContainer from '../TableContainer/TableContainer';
+import { makeData } from '../utils/makeData';
+import TableHead from './TableHead';
 
 export default {
   title: 'Components/Table/TableHead',
@@ -18,6 +18,10 @@ export default {
     ref: { control: 'none' },
   },
 } as Meta<typeof Table>;
+
+interface AnyDict {
+  [key: string]: any;
+}
 
 const Template: ComponentStory<typeof TableHead> = args => {
   const data = makeData(false, 100);
@@ -33,8 +37,8 @@ const Template: ComponentStory<typeof TableHead> = args => {
           </HeaderRow>
         </TableHead>
         <TableBody>
-          {data.map((row: any) => (
-            <Row>
+          {data.map((row: AnyDict) => (
+            <Row key={row.id}>
               {Object.keys(row).map((cellKey: string, index: number) => {
                 return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
               })}
@@ -45,7 +49,6 @@ const Template: ComponentStory<typeof TableHead> = args => {
     </TableContainer>
   );
 };
-
 
 export const StickyHeader = Template.bind({});
 StickyHeader.args = {

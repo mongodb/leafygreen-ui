@@ -33,4 +33,6 @@ const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
   },
 );
 
+TableContainer.displayName = 'TableContainer';
+
 export default TableContainer;

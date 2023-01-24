@@ -1,9 +1,9 @@
-import React from 'react';
-import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import React from 'react';
 import { iconButtonStyles, iconFills } from './ToggleExpandedIcon.styles';
 import ToggleExpandedIconProps from './ToggleExpandedIcon.types';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const ToggleExpandedIcon = ({
   isExpanded,

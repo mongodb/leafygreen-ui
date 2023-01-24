@@ -4,7 +4,7 @@ import ToggleExpandedIconProps from '../ToggleExpandedIcon/ToggleExpandedIcon.ty
 
 export interface InternalCellBaseProps
   extends HTMLElementProps<'td'>,
-  DarkModeProps {
+    DarkModeProps {
   /**
    * Index of the cell in its parent row.
    */
@@ -27,6 +27,5 @@ export interface InternalCellWithRTProps<T extends unknown>
   cell: Cell<T, any>;
 }
 
-export type CellProps<T extends unknown> =
-  HTMLElementProps<'td'> &
+export type CellProps<T extends unknown> = HTMLElementProps<'td'> &
   Partial<Pick<InternalCellWithRTProps<T>, 'cell'>>;

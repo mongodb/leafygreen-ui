@@ -1,28 +1,28 @@
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { ComponentStory, Meta } from '@storybook/react';
-import React, { Fragment, useState } from 'react';
 import {
   ColumnDef,
+  ExpandedState,
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
   getSortedRowModel,
-  SortingState,
-  ExpandedState,
-  HeaderGroup,
   Header,
+  HeaderGroup,
+  SortingState,
 } from '@tanstack/react-table';
 import { Cell as TSCell, Row as TSRow } from '@tanstack/table-core';
-import { makeData, Person } from '../utils/makeData';
-import Table from '../Table/Table';
-import TableHead from '../TableHead/TableHead';
-import HeaderRow from '../HeaderRow/HeaderRow';
-import HeaderCell from '../HeaderCell/HeaderCell';
-import TableContainer from '../TableContainer/TableContainer';
-import TableBody from '../TableBody/TableBody';
-import Row from '../Row/Row';
+import React from 'react';
 import Cell from '../Cell/Cell';
+import HeaderCell from '../HeaderCell/HeaderCell';
+import HeaderRow from '../HeaderRow/HeaderRow';
+import Row from '../Row/Row';
+import Table from '../Table/Table';
+import TableBody from '../TableBody/TableBody';
+import TableContainer from '../TableContainer/TableContainer';
+import TableHead from '../TableHead/TableHead';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
+import { makeData, Person } from '../utils/makeData';
 
 export default {
   title: 'Components/Table',
@@ -36,6 +36,10 @@ export default {
   },
 } as Meta<typeof Table>;
 
+interface AnyDict {
+  [key: string]: any;
+}
+
 const Template: ComponentStory<typeof Table> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]).filter(
@@ -46,14 +50,14 @@ const Template: ComponentStory<typeof Table> = args => {
       <Table {...args}>
         <TableHead>
           <HeaderRow>
-            {columns.map((columnName: any) => (
+            {columns.map((columnName: string) => (
               <HeaderCell key={columnName}>{columnName}</HeaderCell>
             ))}
           </HeaderRow>
         </TableHead>
         <TableBody>
-          {data.map((row: any) => (
-            <Row>
+          {data.map((row: AnyDict) => (
+            <Row key={row.id}>
               {Object.keys(row).map((cellKey: string, index: number) => {
                 return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
               })}
@@ -74,7 +78,7 @@ ZebraStripes.args = {
 
 export const NestedRows = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(false, 100, 5, 3));
+  const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -93,15 +97,18 @@ export const NestedRows = () => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
+        // eslint-disable-next-line react/display-name
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
+        // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
+        // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -180,7 +187,7 @@ export const NestedRows = () => {
 
 export const SortableRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(false, 100));
+  const data = React.useState(() => makeData(false, 100))[0];
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -200,17 +207,20 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
+        // eslint-disable-next-line react/display-name
         header: () => <span>Last Name</span>,
         enableSorting: true,
       },
       {
         accessorKey: 'age',
+        // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
         enableSorting: true,
       },
       {
         accessorKey: 'visits',
+        // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -287,7 +297,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
 
 export const SelectableRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(false, 100));
+  const data = React.useState(() => makeData(false, 100))[0];
   const [rowSelection, setRowSelection] = React.useState({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -306,15 +316,18 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
+        // eslint-disable-next-line react/display-name
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
+        // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
+        // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -345,11 +358,17 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <button onClick={() => console.info('rowSelection', rowSelection)}>
+        <button
+          onClick={
+            // eslint-disable-next-line no-console
+            () => console.info('rowSelection', rowSelection)
+          }
+        >
           Log rowSelection state
         </button>
         <button
           onClick={() =>
+            // eslint-disable-next-line no-console
             console.info(
               'table.getSelectedFlatRows()',
               table.getSelectedRowModel().flatRows,
@@ -404,7 +423,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
 
 export const ExpandableContent: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(true, 100));
+  const data = React.useState(() => makeData(true, 100))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -423,15 +442,18 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
+        // eslint-disable-next-line react/display-name
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
+        // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
+        // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -510,7 +532,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
 
 export const KitchenSink = () => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = React.useState(() => makeData(false, 100, 5, 3));
+  const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
@@ -530,15 +552,18 @@ export const KitchenSink = () => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
+        // eslint-disable-next-line react/display-name
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
+        // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
+        // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
       },

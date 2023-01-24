@@ -1,11 +1,11 @@
-import React from 'react';
-import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import { SortState } from '../HeaderCell.types';
-import { SortIconProps } from './SortIcon.types';
-import { palette } from '@leafygreen-ui/palette';
+import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import React from 'react';
+import { SortState } from '../HeaderCell.types';
+import { SortIconProps } from './SortIcon.types';
 
 const glyphs: Record<SortState, string> = {
   [SortState.Asc]: 'SortAscending',
