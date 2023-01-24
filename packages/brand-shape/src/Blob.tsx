@@ -1,10 +1,12 @@
 import React from 'react';
+import { useMemo } from 'react';
+
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { BlobProps } from './types';
+
 import { generateBlobPath } from './generateBlobPath';
-import { useMemo } from 'react';
+import { BlobProps } from './types';
 
 export function Blob({
   shape,
