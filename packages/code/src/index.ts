@@ -4,7 +4,7 @@ export { variantColors } from './globalStyles';
 export type {
   CodeProps,
   LineHighlightingDefinition,
-  LanguageOption,
+  SyntaxProps,
 } from './types';
 export type { LanguageOption } from './types';
 export { Language, Mode } from './types';

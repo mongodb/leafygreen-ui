@@ -254,7 +254,7 @@ export const ScrollableContainer = ({
   justify,
   align,
   ...args
-}: TooltipScrollableyProps) => {
+}: TooltipScrollableProps) => {
   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
     null,
   );
