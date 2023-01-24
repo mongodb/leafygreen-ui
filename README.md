@@ -227,8 +227,8 @@ Let's imagine we want to publish a `beta` release of some component. Our work is
 3. Update package versions `yarn changeset version`
    - This will update any packages with existing changeset files to version `X.Y.Z-beta.0` (or whatever name you used)
 4. Commit these updates `git commit -am "Prerelease version packages"`
-5. Publish the prerelease with `yarn changeset publish`
-6. Push the prerelease tags to GH `git push --follow-tags`
+5. Build the component(s) you're pre-releasing `yarn build <...components>`
+6. Publish the prerelease with `yarn changeset publish`
 
 Any new work you do should be done in the _original_ (`new-feature`) branch.
 To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5.
