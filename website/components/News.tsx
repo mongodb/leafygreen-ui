@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { css } from '@emotion/css';
-import { uiColors } from '@leafygreen-ui/palette';
-import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
-import { spacing } from '@leafygreen-ui/tokens';
 import { UpdateProps } from 'utils/fetchUpdates';
 import { mq } from 'utils/mediaQuery';
+
+import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
+import { H2, Overline, Subtitle } from '@leafygreen-ui/typography';
+
+import { css } from '@emotion/css';
 
 const newsContainer = css`
   display: flex;

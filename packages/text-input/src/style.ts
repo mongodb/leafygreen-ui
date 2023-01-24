@@ -6,8 +6,10 @@ import {
   focusRing,
   fontFamilies,
   hoverRing,
+  transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
+
 import { SizeVariant, State } from './types';
 
 /**
@@ -92,7 +94,7 @@ export const baseInputStyle = css`
   z-index: 1;
   outline: none;
   border-radius: 6px;
-  transition: 150ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border-color, box-shadow;
 
   &:disabled {
@@ -138,13 +140,13 @@ export const inputModeStyles: Record<Theme, string> = {
       -webkit-text-fill-color: ${palette.black};
       box-shadow: ${autofillShadowOverride(palette.white)};
 
-      &:focus {
+      &:not(:disabled):focus {
         box-shadow: ${autofillShadowOverride(palette.white)},
           ${focusRing.light.input};
         border-color: ${palette.white};
       }
 
-      &:hover:not(:focus) {
+      &:not(:disabled):hover:not(:focus) {
         box-shadow: ${autofillShadowOverride(palette.white)},
           ${hoverRing.light.gray};
       }
@@ -157,7 +159,7 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not(:focus) {
+      &:not(:disabled):not(:focus) {
         box-shadow: ${hoverRing.light.gray};
       }
     }
@@ -195,13 +197,13 @@ export const inputModeStyles: Record<Theme, string> = {
       -webkit-text-fill-color: ${palette.gray.light3};
       box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
 
-      &:focus {
+      &:not(:disabled):focus {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
           ${focusRing.dark.input};
         border-color: ${palette.blue.light1};
       }
 
-      &:hover:not(:focus) {
+      &:not(:disabled):hover:not(:focus) {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
           ${hoverRing.dark.gray};
       }
@@ -209,13 +211,13 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not(:focus) {
+      &:not(:disabled):not(:focus) {
         box-shadow: ${hoverRing.dark.gray};
       }
     }
 
     &::placeholder {
-      color: ${palette.gray.base};
+      color: ${palette.gray.dark1};
       font-weight: normal;
     }
 
@@ -244,13 +246,13 @@ export const inputModeStyles: Record<Theme, string> = {
 
 export const inputFocusStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus {
+    &:not(:disabled):focus {
       box-shadow: ${focusRing.light.input};
       border-color: ${palette.white};
     }
   `,
   [Theme.Dark]: css`
-    &:focus {
+    &:not(:disabled):focus {
       box-shadow: ${focusRing.dark.input};
       border-color: ${palette.gray.dark4};
     }
@@ -284,7 +286,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
 
         &:hover,
         &:active {
-          &:not(:focus) {
+          &:not(:disabled):not(:focus) {
             box-shadow: ${hoverRing.light.green};
           }
         }
@@ -296,7 +298,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
 
         &:hover,
         &:active {
-          &:not(:focus) {
+          &:not(:disabled):not(:focus) {
             box-shadow: ${hoverRing.dark.green};
           }
         }
@@ -310,7 +312,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
 
         &:hover,
         &:active {
-          &:not(:focus) {
+          &:not(:disabled):not(:focus) {
             box-shadow: ${hoverRing.light.red};
           }
         }
@@ -322,7 +324,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
 
         &:hover,
         &:active {
-          &:not(:focus) {
+          &:not(:disabled):not(:focus) {
             box-shadow: ${hoverRing.dark.red};
           }
         }
@@ -383,12 +385,20 @@ export const stateIndicatorStyles: Record<
   },
 };
 
-export const optionalTextStyle = css`
+export const optionalTextBaseStyle = css`
   font-size: 12px;
   font-style: italic;
   font-weight: normal;
-  color: ${palette.gray.dark1}; // Same in light & dark theme
 `;
+
+export const optionalTextThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
+  `,
+};
 
 export const errorMessageStyle = css`
   ${inheritTypeScale};
@@ -396,12 +406,3 @@ export const errorMessageStyle = css`
   padding-top: 4px;
   font-weight: normal;
 `;
-
-export const errorMessageModeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};

@@ -1,174 +1,21 @@
 import React, { HTMLProps, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
-import { css, cx } from '@leafygreen-ui/emotion';
+
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import Size from './Size';
-import { useRadioBoxGroupContext, RadioBoxGroupContext } from './context';
+import {
+  useDarkMode,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 
-const radioBoxWrapper = createDataProp('radio-box-wrapper');
-const radioBoxInput = createDataProp('radio-box-input');
-
-export const radioBoxSizes: { [K in Size]: string } = {
-  [Size.Default]: css`
-    width: 169px;
-  `,
-
-  [Size.Compact]: css`
-    padding-right: 12px;
-    padding-left: 12px;
-  `,
-
-  [Size.Full]: css`
-    flex: 1;
-  `,
-};
-
-const inputStyles = css`
-  opacity: 0;
-  position: absolute;
-  pointer-events: none;
-`;
-
-interface StateForStyles {
-  checked: boolean;
-  disabled: boolean;
-  size: Size;
-  showFocus: boolean;
-}
-
-const getRadioDisplayStyles = ({
-  checked,
-  disabled,
-  size,
-  showFocus,
-}: StateForStyles) => {
-  return cx(
-    css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 16px 24px;
-
-      font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      overflow-wrap: break-word;
-      background-color: ${palette.white};
-      border-radius: 6px;
-      color: ${palette.black};
-      border: 1px solid ${palette.gray.base};
-
-      cursor: pointer;
-      pointer-events: auto;
-      transition: 150ms ease-in-out;
-      transition-property: border-color, box-shadow;
-
-      &:hover,
-      &:active {
-        box-shadow: 0 0 0 3px ${palette.gray.light2};
-      }
-    `,
-    {
-      [css`
-        border-color: transparent;
-        box-shadow: 0 0 0 3px ${palette.green.dark1};
-        &:hover,
-        &:active {
-          box-shadow: 0 0 0 3px ${palette.green.dark1};
-        }
-      `]: checked,
-      [css`
-        color: ${palette.gray.light1};
-        background: ${palette.gray.light3};
-        font-weight: 400;
-        border-color: ${palette.gray.light2};
-        cursor: not-allowed;
-        &:hover,
-        &:active {
-          box-shadow: unset;
-        }
-      `]: disabled,
-      [css`
-        input:focus + & {
-          border-color: ${palette.gray.base};
-          box-shadow: 0 0 0 2px ${palette.white},
-            0 0 0 4px ${palette.blue.light1};
-        }
-      `]: showFocus,
-    },
-    radioBoxSizes[size],
-  );
-};
-
-export const radioWrapper = css`
-  font-family: ${fontFamilies.default};
-  display: flex;
-  position: relative;
-
-  &:not(:last-of-type) {
-    margin-right: 12px;
-  }
-`;
-
-export interface RadioBoxProps extends Omit<HTMLElementProps<'input'>, 'size'> {
-  /**
-   * Indicates whether or not the box will be checked
-   * @default false
-   */
-  checked?: boolean;
-
-  /**
-   * Callback to be executed when a RadioBox is selected.
-   * @default () => {}
-   */
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-
-  /**
-   * Name passed to each RadioBox belonging to the RadioGroup.
-   */
-  name?: string;
-
-  /**
-   * Determines size of RadioBox components ['default', 'compact', 'full'].
-   * @default 'default''
-   */
-  size?: Size;
-
-  /**
-   * Determines what RadioBox will be checked on default. Component will be controlled if this prop is used.
-   */
-  value: string | number;
-
-  /**
-   * className supplied to RadioBox container.
-   */
-  className?: string;
-
-  /**
-   * Boolean that determines if the RadioBox is disabled.
-   */
-  disabled?: boolean;
-
-  /**
-   * Id for RadioBox and respective label.
-   */
-  id?: string;
-
-  /**
-   * Content that will appear inside of the RadioBox component's label.
-   */
-  children?: React.ReactNode;
-
-  /**
-   * If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
-   */
-  default?: boolean;
-}
+import { RadioBoxGroupContext, useRadioBoxGroupContext } from './context';
+import {
+  getRadioDisplayStyles,
+  inputStyles,
+  radioBoxSizes,
+  radioWrapper,
+} from './RadioBox.styles';
+import { RadioBoxProps, Size } from './types';
 
 function isChecked({
   checkedProp,
@@ -216,6 +63,7 @@ export function RadioBox({
   size: sizeProp = Size.Default,
   children,
   name: nameProp,
+  darkMode: darkModeProp,
   onMouseEnter,
   onMouseLeave,
   onFocus,
@@ -225,6 +73,7 @@ export function RadioBox({
 }: RadioBoxProps) {
   const radioBoxGroupContext = useRadioBoxGroupContext();
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { darkMode: darkModeContext } = useDarkMode(darkModeProp);
 
   const localId = useIdAllocator({
     prefix: 'radio-box',
@@ -234,6 +83,7 @@ export function RadioBox({
 
   const size = radioBoxGroupContext?.size ?? sizeProp;
   const name = radioBoxGroupContext?.name ?? nameProp;
+  const darkMode = radioBoxGroupContext?.darkMode ?? darkModeContext;
   const checked = isChecked({
     value,
     checkedProp,
@@ -254,6 +104,7 @@ export function RadioBox({
     disabled,
     size,
     showFocus,
+    darkMode,
   });
 
   const tooltipTriggerHandlers = {
@@ -266,7 +117,6 @@ export function RadioBox({
 
   return (
     <label
-      {...radioBoxWrapper.prop}
       {...tooltipTriggerHandlers}
       htmlFor={id}
       className={cx(
@@ -279,7 +129,6 @@ export function RadioBox({
     >
       <input
         {...rest}
-        {...radioBoxInput.prop}
         type="radio"
         id={id}
         name={name}
@@ -309,4 +158,5 @@ RadioBox.propTypes = {
   name: PropTypes.string,
   children: PropTypes.node,
   default: PropTypes.bool,
+  darkMode: PropTypes.bool,
 };

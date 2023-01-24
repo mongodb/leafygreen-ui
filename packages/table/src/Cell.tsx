@@ -1,12 +1,14 @@
 import React, { forwardRef } from 'react';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { getCommonCellStyles } from './styles';
-import { useFontSizeContext } from './FontSizeContext';
-import { useDarkModeContext } from './DarkModeContext';
-import { palette } from '@leafygreen-ui/palette';
 
-export const tdInnerDiv = createDataProp('td-inner-div');
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+
+import { getCommonCellStyles } from './styles';
+
+export const tdInnerDivClassName = createUniqueClassName('td-inner-div');
 
 interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
@@ -35,7 +37,6 @@ interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
 type CellProps = HeaderCellProps | TableCellProps;
 
 const baseStyles = css`
-  line-height: 20px;
   position: relative;
 `;
 
@@ -49,8 +50,8 @@ const lightModeThStyles = css`
 `;
 
 const darkModeThStyles = css`
-  border-right: 3px solid ${palette.gray.dark1};
-  background-color: ${palette.gray.dark2};
+  border-right: 3px solid ${palette.gray.dark2};
+  background-color: ${palette.gray.dark4};
 `;
 
 const innerDivStyles = css`
@@ -78,13 +79,13 @@ const Cell = forwardRef(
   ) => {
     const Root = isHeader ? 'th' : 'td';
 
-    const baseFontSize = useFontSizeContext();
-    const darkMode = useDarkModeContext();
+    const baseFontSize = useUpdatedBaseFontSize();
+    const { darkMode } = useDarkMode();
 
     const props: Partial<CellProps> = {
       ref,
       className: cx(
-        getCommonCellStyles(baseFontSize, darkMode),
+        getCommonCellStyles(baseFontSize),
         baseStyles,
         {
           [thStyles]: isHeader,
@@ -104,7 +105,7 @@ const Cell = forwardRef(
 
     return (
       <Root {...props} {...rest}>
-        <div className={innerDivStyles} {...tdInnerDiv.prop}>
+        <div className={cx(tdInnerDivClassName, innerDivStyles)}>
           <span
             className={css`
               display: flex;

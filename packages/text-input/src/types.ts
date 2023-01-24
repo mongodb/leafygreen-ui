@@ -1,4 +1,4 @@
-import { HTMLElementProps, Either } from '@leafygreen-ui/lib';
+import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {
@@ -38,26 +38,44 @@ export const TextInputFontSize = {
 export type TextInputFontSize =
   typeof TextInputFontSize[keyof typeof TextInputFontSize];
 
-export interface BaseTextInputProps
-  extends HTMLElementProps<'input', HTMLInputElement> {
-  /**
-   * id associated with the TextInput component.
-   */
-  id?: string;
-
+interface AriaLabelProps {
   /**
    * Text shown in bold above the input element.
    *
-   * Optional if `aria-labelledby` is provided
+   * Optional if `aria-labelledby` or `aria-label` is provided
    */
-  label: string | null;
+  label?: string;
 
   /**
    * Screen-reader label element.
    *
-   * Optional if `label` is provided
+   * Optional if `label` or `aria-label` is provided
    */
-  ['aria-labelledby']: string;
+  ['aria-labelledby']?: string;
+
+  /**
+   * Screen reader label text
+   *
+   * Optional if `label` or `aria-labelledby` is provided
+   *
+   */
+  ['aria-label']?: string;
+}
+
+type AriaLabels = keyof AriaLabelProps;
+
+interface TextInputTypeProp {
+  /**
+   * The input type.
+   */
+  type?: TextInputType;
+}
+export interface BaseTextInputProps
+  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels> {
+  /**
+   * id associated with the TextInput component.
+   */
+  id?: string;
 
   /**
    * Text that gives more detail about the requirements for the input.
@@ -117,13 +135,6 @@ export interface BaseTextInputProps
   darkMode?: boolean;
 
   /**
-   * The input type.
-   *
-   * Requires an `aria-label` if `"search"` is provided
-   */
-  type?: TextInputType;
-
-  /**
    * Callback called whenever validation should be run.
    *
    * See [Form Validation & Error Handling](https://www.mongodb.design/foundation/forms/#form-validation--error-handling) for more
@@ -143,13 +154,7 @@ export interface BaseTextInputProps
   baseFontSize?: BaseFontSize;
 }
 
-type AriaLabels = 'label' | 'aria-labelledby';
-export type TextInputProps =
-  | Either<BaseTextInputProps, AriaLabels>
-  | (BaseTextInputProps & {
-      type: 'search';
-      /**
-       * Required if `type` is `"search"`
-       */
-      'aria-label': string;
-    });
+export type TextInputProps = Either<
+  BaseTextInputProps & AriaLabelProps & TextInputTypeProp,
+  AriaLabels
+>;

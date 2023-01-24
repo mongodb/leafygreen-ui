@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
+import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
-import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
+
 import { beaconStyles, timeout1, timeout2 } from './styles';
-import { GuideCueProps } from './types';
 import TooltipContent from './TooltipContent';
+import { GuideCueProps } from './types';
 
 function GuideCue({
   open,
@@ -116,6 +119,14 @@ function GuideCue({
     ...sharedProps,
     ...tooltipProps,
   };
+
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useIsomorphicLayoutEffect(() => setShouldRender(true), []);
+
+  if (!shouldRender) {
+    return null;
+  }
 
   return (
     <>

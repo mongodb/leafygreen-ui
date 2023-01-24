@@ -1,7 +1,9 @@
-import { ComponentStory } from '@storybook/react';
 import React from 'react';
-import Copyable from '.';
+import { ComponentStory } from '@storybook/react';
+
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import Copyable from '.';
 
 export default {
   title: 'Components/Copyable',
@@ -32,4 +34,11 @@ Basic.args = {
   label: 'Label',
   description: 'Description',
   children: 'npm install @leafygreen-ui/copyable',
+};
+
+export const LongText = Template.bind({});
+LongText.args = {
+  label: 'Label',
+  description: 'Description',
+  children: 'npm install @leafygreen-ui/leafygreen-provider',
 };

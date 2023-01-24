@@ -1,44 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
-import Size from './Size';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { Provider } from './context';
-
-const baseGroupStyle = css`
-  display: flex;
-`;
-
-export interface RadioBoxGroupProps extends HTMLElementProps<'div'> {
-  /**
-   * Content that will appear inside of RadioBoxGroup component.
-   * @type `<RadioBox />`
-   */
-  children?: React.ReactNode;
-
-  /**
-   * Callback to be executed when a RadioBox is selected.
-   * @default () => {}
-   */
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-
-  /**
-   * Name passed to each RadioBox belonging to the RadioGroup.
-   */
-  name?: string;
-
-  /**
-   * Determines what RadioBox will be checked on default. Component will be controlled if this prop is used.
-   */
-  value?: string | number;
-
-  /**
-   * Determines size of RadioBox components ['default', 'compact', 'full'].
-   * @default 'default''
-   */
-  size?: Size;
-}
+import { baseGroupStyle } from './RadioBoxGroup.styles';
+import { RadioBoxGroupProps, Size } from './types';
 
 /**
  *
@@ -62,11 +31,14 @@ export function RadioBoxGroup({
   onChange = () => {},
   name, // = this.defaultName,
   value: controlledValue,
+  darkMode: darkModeProp,
   ...rest
 }: RadioBoxGroupProps) {
   const [uncontrolledValue, setUncontrolledValue] = React.useState<
     string | number | undefined
   >();
+
+  const { darkMode } = useDarkMode(darkModeProp);
 
   const defaultName = useIdAllocator({
     prefix: 'radio-box-group',
@@ -92,6 +64,7 @@ export function RadioBoxGroup({
         name: defaultName,
         size,
         onChange: handleChange,
+        darkMode,
       }}
     >
       <div
@@ -113,6 +86,7 @@ RadioBoxGroup.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  size: PropTypes.oneOf(['compact', 'default', 'full']),
+  size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
+  darkMode: PropTypes.bool,
 };

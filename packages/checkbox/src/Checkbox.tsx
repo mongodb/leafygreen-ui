@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Description, Label } from '@leafygreen-ui/typography';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import {
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { Description, Label } from '@leafygreen-ui/typography';
+
 import { Check } from './Check';
-import { CheckboxProps } from './types';
 import {
   checkWrapperClassName,
   containerStyle,
   descriptionStyle,
   disabledContainerStyle,
-  disabledLabelStyle,
   disabledLabelDarkThemeOverrideStyle,
+  disabledLabelStyle,
   inputClassName,
   inputFocusStyles,
   inputStyle,
@@ -23,6 +24,7 @@ import {
   labelStyle,
   labelTextStyle,
 } from './Checkbox.style';
+import { CheckboxProps } from './types';
 
 /**
  * Checkboxes should be used whenever a user has an option they’d like to opt in or out of.
@@ -30,7 +32,7 @@ import {
  * Unlike toggles, checkboxes are used for actions, or features, that don’t immediately turn on or off. Checkboxes are usually found in forms as opposed to config pages.
  */
 function Checkbox({
-  darkMode = false,
+  darkMode: darkModeProp,
   checked: checkedProp,
   label = '',
   description,
@@ -52,7 +54,7 @@ function Checkbox({
     [checkedProp, checked],
   );
   const { usingKeyboard } = useUsingKeyboardContext();
-  const { theme } = useDarkMode(darkMode);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
   const labelId = `${checkboxId}-label`;

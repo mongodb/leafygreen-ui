@@ -1,9 +1,8 @@
-export { Language, Mode } from './types';
+export { default } from './Code';
+export { variantColors } from './globalStyles';
 export type {
-  SyntaxProps,
   CodeProps,
   LineHighlightingDefinition,
-  LanguageOption,
+  SyntaxProps,
 } from './types';
-export { variantColors } from './globalStyles';
-export { default } from './Code';
+export { Language, Mode } from './types';

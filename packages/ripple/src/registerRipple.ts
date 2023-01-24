@@ -1,7 +1,9 @@
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import { getRippleGlobalNamespace } from './getRippleGlobalNamespace';
 import { Options } from './utils';
 
-const TRANSITION_TIME = 300;
+const TRANSITION_TIME = transitionDuration.slower;
 const RIPPLE_NAMESPACE = getRippleGlobalNamespace();
 
 function rippleEvent(event: MouseEvent) {

@@ -1,4 +1,9 @@
 import React, { useRef, useState } from 'react';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import {
   GuideCue,
   TooltipAlign,
@@ -6,9 +11,6 @@ import {
 } from '@leafygreen-ui/guide-cue';
 import { Align as BeaconAlign } from '@leafygreen-ui/popover';
 import { Body } from '@leafygreen-ui/typography';
-import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const Align = {
   Top: 'top',

@@ -1,19 +1,25 @@
+import { Transition } from 'react-transition-group';
+import { transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
-import InfoWithCircle from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
+import InfoWithCircle from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, typeScales, spacing } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
-import { Transition } from 'react-transition-group';
-import { StyledElements, Variant } from './types';
+import {
+  fontFamilies,
+  spacing,
+  transitionDuration,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
+import { StyledElements, Variant } from './types';
+
 export const toastWidth = 400;
-export const transitionDuration = 150;
 
 export const baseElementStyles: Partial<Record<StyledElements, string>> = {
   toast: css`
@@ -31,7 +37,7 @@ export const baseElementStyles: Partial<Record<StyledElements, string>> = {
     transform: translate3d(0, ${spacing[3]}px, 0) scale(0.95);
     transform-origin: bottom center;
     opacity: 0;
-    transition: all ${transitionDuration}ms ease-in-out;
+    transition: all ${transitionDuration.default}ms ease-in-out;
     border: 1px solid;
 
     .${anchorClassName}, a {
@@ -75,7 +81,7 @@ export const baseElementStyles: Partial<Record<StyledElements, string>> = {
     position: absolute;
     top: 8px;
     right: 12px;
-    transition: color 0.15s ease-in-out;
+    transition: color ${transitionDuration.default}ms ease-in-out;
 
     &:focus-visible {
       outline: none;

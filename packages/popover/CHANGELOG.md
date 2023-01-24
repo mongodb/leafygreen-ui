@@ -1,5 +1,52 @@
 # @leafygreen-ui/popover
 
+## 11.0.3
+
+### Patch Changes
+
+- a9b66c29b: Storybook: uses LG button in story. Sets default story
+
+## 11.0.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/portal@4.0.8
+  - @leafygreen-ui/tokens@1.4.1
+
+## 11.0.1
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+
+## 11.0.0
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 10.0.1
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/portal@4.0.7
+
+## 10.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ## 9.1.1
 
 ### Patch Changes

@@ -1,18 +1,22 @@
+/* eslint-disable no-console */
 require('dotenv').config();
 import { WebClient } from '@slack/web-api';
-import { isUndefined, sample } from 'lodash';
-// import fetch from 'node-fetch';
-import { Command } from 'commander';
 import chalk from 'chalk';
+import { Command } from 'commander';
+import _, { isUndefined, sample } from 'lodash';
+import fetch from 'node-fetch';
 
 interface ComponentUpdateObject {
   name: string;
   version: string;
+  updates?: Array<string>;
 }
 interface SortedUpdates {
   major: Array<ComponentUpdateObject>;
   minor: Array<ComponentUpdateObject>;
   patch: Array<ComponentUpdateObject>;
+  /** Components with only a dependency update patch   */
+  dependency: Array<ComponentUpdateObject>;
 }
 
 const isComponentUpdateObject = (obj: any): obj is ComponentUpdateObject =>
@@ -28,6 +32,12 @@ const Channels = {
   'leafygreen-ui-releases': 'C01CBLPFD35',
 } as const;
 
+interface Opts {
+  channel: keyof typeof Channels;
+  test: boolean;
+  dry: boolean;
+}
+
 const cli = new Command('slackbot')
   .arguments('<updates>')
   .option(
@@ -35,6 +45,8 @@ const cli = new Command('slackbot')
     'Channel to post to.',
     'leafygreen-ui-releases',
   )
+  .option('--test', 'Post to `design-system-testing`', false)
+  .option('--dry', 'Dry run. Does not post', false)
   .parse(process.argv);
 
 cli.addHelpText(
@@ -54,9 +66,13 @@ cli.addHelpText(
 `,
 );
 
+const { channel, test, dry }: Opts = cli.opts();
+
 try {
   const botToken = process.env.SLACK_BOT_TOKEN;
-  const channelName = cli.opts()['channel'];
+  const channelName: keyof typeof Channels = test
+    ? 'design-system-testing'
+    : channel;
   const updatesArray: any = JSON.parse(cli.args[0]);
   let errMsg = '';
 
@@ -70,7 +86,7 @@ try {
           'Updates array not found/incorrect format. Expected array of `{name: "@xx/yy", version: "a.b.c"}`';
       }
     } else {
-      errMsg = `Channel name incorrect. Recieved ${channelName}`;
+      errMsg = `Channel name incorrect. Received ${channelName}`;
     }
   } else {
     errMsg = 'Bot Token not found';
@@ -85,51 +101,114 @@ async function slackbot(
   channel: string,
   updates: Array<ComponentUpdateObject>,
 ) {
-  const sortedUpdates: SortedUpdates = updates.reduce(
-    (updates: SortedUpdates, component: ComponentUpdateObject) => {
-      if (component.version.endsWith('.0.0')) updates.major.push(component);
-      else if (component.version.endsWith('.0')) updates.minor.push(component);
-      else updates.patch.push(component);
-      return updates;
-    },
-    {
-      major: [] as Array<ComponentUpdateObject>,
-      minor: [] as Array<ComponentUpdateObject>,
-      patch: [] as Array<ComponentUpdateObject>,
-    },
-  );
+  const sortedUpdates: SortedUpdates = {
+    major: [],
+    minor: [],
+    patch: [],
+    dependency: [],
+  };
 
-  const majorUpdatesString = (
-    await Promise.all(sortedUpdates.major.map(parseMajorChangeString))
-  ).join('\n');
+  for (const component of updates) {
+    const { majorUpdates, minorUpdates, patchUpdates } = await parseChangeLog(
+      component,
+    );
 
+    if (majorUpdates)
+      sortedUpdates.major.push({ ...component, updates: majorUpdates });
+    else if (minorUpdates)
+      sortedUpdates.minor.push({ ...component, updates: minorUpdates });
+    else if (patchUpdates) {
+      if (!patchUpdates[0].includes('Updated dependencies')) {
+        sortedUpdates.patch.push(component);
+      } else {
+        sortedUpdates.dependency.push(component);
+      }
+    }
+  }
+
+  const constructBasicUpdateText = (component: ComponentUpdateObject) => {
+    const { fullName, changelogUrl } = generateOutputStrings(component);
+    return `*<${changelogUrl} | ${fullName}>*`;
+  };
+
+  const constructUpdateTextWithChangelog = (
+    component: ComponentUpdateObject,
+  ) => {
+    const { updates } = component;
+    return (
+      constructBasicUpdateText(component) +
+      '\n' +
+      updates?.map(u => `\t• ${u}\n`)
+    );
+  };
+
+  const constructShortUpdateText = (component: ComponentUpdateObject) => {
+    const { shortName, changelogUrl } = generateOutputStrings(component);
+    return `<${changelogUrl} | ${shortName}@${component.version}>`;
+  };
+
+  const majorUpdatesString = sortedUpdates.major
+    .map(constructUpdateTextWithChangelog)
+    .join('\n');
   const minorUpdatesString = sortedUpdates.minor
-    .map(parseMinorChangeString)
+    .map(constructUpdateTextWithChangelog)
     .join('\n');
-
   const patchUpdatesString = sortedUpdates.patch
-    .map(parsePatchChangeString)
+    .map(constructBasicUpdateText)
     .join('\n');
-
-  const greeting = getGreeting(updates.length);
-  const allUpdateStrings = [greeting];
-
-  if (majorUpdatesString.length > 0)
-    allUpdateStrings.push(`*Major Changes*\n${majorUpdatesString}`);
-  if (minorUpdatesString.length > 0)
-    allUpdateStrings.push(`*Minor Changes*\n${minorUpdatesString}`);
-  if (patchUpdatesString.length > 0)
-    allUpdateStrings.push(`*Patch Changes*\n${patchUpdatesString}`);
+  const depsUpdatesString = sortedUpdates.dependency
+    .map(constructShortUpdateText)
+    .join(', ');
 
   const web = new WebClient(botToken);
 
-  const text = allUpdateStrings.join('\n\n');
-
-  if (exists(text)) {
-    // post message
-    web.chat.postMessage({ text, channel });
-    // eslint-disable-next-line no-console
-    console.log(`Sent message to ${channel}`);
+  /** Post to the channel */
+  if (
+    exists(
+      majorUpdatesString ||
+        minorUpdatesString ||
+        patchUpdatesString ||
+        depsUpdatesString,
+    )
+  ) {
+    if (!dry) {
+      // post message(s) synchronously
+      await web.chat.postMessage({
+        text: getGreeting(updates.length),
+        channel,
+      });
+      majorUpdatesString.length > 0 &&
+        (await web.chat.postMessage({
+          text: `*Major Changes*\n${majorUpdatesString}`,
+          channel,
+        }));
+      minorUpdatesString.length > 0 &&
+        (await web.chat.postMessage({
+          text: `*Minor Changes*\n${minorUpdatesString}`,
+          channel,
+        }));
+      patchUpdatesString.length > 0 &&
+        (await web.chat.postMessage({
+          text: `*Patch Changes*\n${patchUpdatesString}`,
+          channel,
+        }));
+      depsUpdatesString.length > 0 &&
+        (await web.chat.postMessage({
+          text: `*Dependency updates*\n${depsUpdatesString}`,
+          channel,
+        }));
+      console.log(`Sent message(s) to ${channel}`);
+    } else {
+      console.log('Dry run. Would have posted:');
+      majorUpdatesString &&
+        console.log(`*Major Changes*\n${majorUpdatesString}`);
+      minorUpdatesString &&
+        console.log(`*Minor Changes*\n${minorUpdatesString}`);
+      patchUpdatesString &&
+        console.log(`*Patch Changes*\n${patchUpdatesString}`);
+      depsUpdatesString &&
+        console.log(`*Dependency updates*\n${depsUpdatesString}`);
+    }
   } else {
     console.warn('Missing message text. Did not send message.');
   }
@@ -195,38 +274,107 @@ function generateOutputStrings({ name, version }: ComponentUpdateObject) {
     shortName,
     changelogUrl,
     fullName,
+    name,
+    version,
   };
 }
 
-function parseMinorChangeString(component: ComponentUpdateObject) {
-  const { fullName, changelogUrl } = generateOutputStrings(component);
-  return `*<${changelogUrl} | ${fullName}>*`;
+async function fetchChangelogText(
+  component: ComponentUpdateObject,
+): Promise<string> {
+  const { shortName } = generateOutputStrings(component);
+  const rawChangelogUrl = `https://raw.githubusercontent.com/mongodb/leafygreen-ui/main/packages/${shortName}/CHANGELOG.md`;
+  const response = await fetch(rawChangelogUrl);
+  return await response.text();
 }
 
-function parsePatchChangeString(component: ComponentUpdateObject) {
-  const { fullName, changelogUrl } = generateOutputStrings(component);
-  return `*<${changelogUrl} | ${fullName}>*`;
+async function fetchLatestChangelogText(
+  component: ComponentUpdateObject,
+): Promise<string> {
+  const fullChangelogText = await fetchChangelogText(component);
+  const { version } = component;
+  const startIndex = fullChangelogText.indexOf(`## ${version}`);
+  const endIndex = fullChangelogText.indexOf(
+    `\n## `,
+    startIndex + version.length,
+  );
+  const latestChangelog = fullChangelogText.substring(startIndex, endIndex);
+  return latestChangelog;
 }
 
-// // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-// async function fetchChangelogText(component: ComponentUpdateObject) {
-//   const { shortName } = generateOutputStrings(component);
-//   const rawChangelogUrl = `https://raw.githubusercontent.com/mongodb/leafygreen-ui/main/packages/${shortName}/CHANGELOG.md`;
-//   const response = await fetch(rawChangelogUrl);
-//   return await response.text();
-// }
+/**
+ * Given a component update object
+ * Parse the changelog text into separate majorUpdates, minorUpdates & patchUpdates arrays
+ */
+async function parseChangeLog(component: ComponentUpdateObject) {
+  const latestChangelog = await fetchLatestChangelogText(component);
+  const majorUpdates = parseMajorChange(latestChangelog);
+  const minorUpdates = parseMinorChange(latestChangelog);
+  const patchUpdates = parsePatchChange(latestChangelog);
 
-async function parseMajorChangeString(component: ComponentUpdateObject) {
-  const { fullName, changelogUrl } = generateOutputStrings(component);
-  // TODO: decide how we want to format the changelog text
-  // const changelogText = await fetchChangelogText(component)
-  // copy until the second H2
-  // const startIndex = changelogText.indexOf(component.version) + component.version.length
-  // const relevantChangelog = changelogText.substring(
-  //   startIndex,
-  //   changelogText.indexOf('\n## ', startIndex)
-  // )
-  // .replace(/###/, '')
-  // .trim()
-  return `*<${changelogUrl} | ${fullName}>*`;
+  return {
+    majorUpdates,
+    minorUpdates,
+    patchUpdates,
+  };
+}
+
+const majorChangeIndex = (changelog: string) =>
+  changelog.indexOf(`### Major Changes`) >= 0
+    ? changelog.indexOf(`### Major Changes`)
+    : undefined;
+const minorChangeIndex = (changelog: string) =>
+  changelog.indexOf(`### Minor Changes`) >= 0
+    ? changelog.indexOf(`### Minor Changes`)
+    : undefined;
+const patchChangeIndex = (changelog: string) =>
+  changelog.indexOf(`### Patch Changes`) >= 0
+    ? changelog.indexOf(`### Patch Changes`)
+    : undefined;
+
+const getChangesArray = (changelog: string, start: number, end: number) => {
+  const changeString = changelog.substring(start + 17, end).trim();
+  return _.uniq(
+    changeString
+      .split(/\n- /g) // Split on each bullet
+      .map(str =>
+        str
+          .replace(/(- |\[)[a-z0-9]{8}]?:?/g, '') // remove GH Commit hashes
+          .replace('-', '') // Remove any remaining dashes
+          .trim(),
+      ),
+  );
+};
+
+function parseMajorChange(changelog: string): Array<string> | undefined {
+  const startIndex = majorChangeIndex(changelog);
+
+  if (startIndex) {
+    const endIndex =
+      minorChangeIndex(changelog) ??
+      patchChangeIndex(changelog) ??
+      changelog.length;
+    const changes = getChangesArray(changelog, startIndex, endIndex);
+    return changes;
+  }
+}
+
+function parseMinorChange(changelog: string) {
+  const startIndex = minorChangeIndex(changelog);
+
+  if (startIndex) {
+    const endIndex = patchChangeIndex(changelog) ?? changelog.length;
+    const changes = getChangesArray(changelog, startIndex, endIndex);
+    return changes;
+  }
+}
+
+function parsePatchChange(changelog: string) {
+  const startIndex = patchChangeIndex(changelog);
+
+  if (startIndex) {
+    const endIndex = changelog.length;
+    const changes = getChangesArray(changelog, startIndex, endIndex);
+    return changes;
+  }
 }

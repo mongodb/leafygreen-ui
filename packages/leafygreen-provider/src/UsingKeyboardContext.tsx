@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { useEventListener } from '@leafygreen-ui/hooks';
 
 interface UsingKeyboardState {
@@ -7,10 +8,13 @@ interface UsingKeyboardState {
   setUsingKeyboard: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const UsingKeyboardContext = createContext<UsingKeyboardState>({
+const initialState: UsingKeyboardState = {
   usingKeyboard: true,
   setUsingKeyboard: () => {},
-});
+};
+
+export const UsingKeyboardContext =
+  createContext<UsingKeyboardState>(initialState);
 
 // All keys here are used to manage focus through keyboard interaction.
 export const NavigationKeyCodes: { readonly [k: string]: number } = {
@@ -30,12 +34,18 @@ interface UsingKeyboardProviderProps {
 }
 
 function UsingKeyboardProvider({ children }: UsingKeyboardProviderProps) {
-  const [usingKeyboard, setUsingKeyboard] = useState(false);
+  // Initialize `usingKeyboard` to true
+  // Defaulting to true allows autofocus to display a focus state.
+  const [usingKeyboard, setUsingKeyboard] = useState(
+    initialState.usingKeyboard,
+  );
 
+  // When the user uses the mouse, they're not using the keyboard
   useEventListener('mousedown', () => setUsingKeyboard(false), {
     enabled: usingKeyboard,
   });
 
+  // When the user presses a navigation key, they are using the keyboard
   useEventListener(
     'keydown',
     ({ keyCode }) => {

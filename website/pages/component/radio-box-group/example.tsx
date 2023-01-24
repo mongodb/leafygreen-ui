@@ -1,7 +1,10 @@
 import React from 'react';
-import { css } from '@emotion/css';
-import { RadioBoxGroup, RadioBox, Size } from '@leafygreen-ui/radio-box-group';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { RadioBox, RadioBoxGroup, Size } from '@leafygreen-ui/radio-box-group';
+
+import { css } from '@emotion/css';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -9,6 +12,7 @@ type Knobs = {
   size: Size;
   disabled: boolean;
   children: string;
+  darkMode: boolean;
 };
 
 const knobsConfig: KnobsConfigInterface<Knobs> = {
@@ -28,9 +32,14 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
     default: 'Mumbai (ap-south-1)',
     label: 'Children',
   },
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
 };
 
-function DefaultExample({ size, disabled, children }: Knobs) {
+function DefaultExample({ size, disabled, children, darkMode }: Knobs) {
   return (
     <div
       className={css`
@@ -42,7 +51,11 @@ function DefaultExample({ size, disabled, children }: Knobs) {
         justify-content: center;
       `}
     >
-      <RadioBoxGroup size={size} name="radio-box-group-default">
+      <RadioBoxGroup
+        darkMode={darkMode}
+        size={size}
+        name="radio-box-group-default"
+      >
         <RadioBox value="1">N. Virginia (us-east-1)</RadioBox>
         <RadioBox value="2">{children}</RadioBox>
         <RadioBox disabled={disabled} value="option-4">

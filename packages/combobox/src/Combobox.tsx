@@ -1,9 +1,3 @@
-import clone from 'lodash/clone';
-import isArray from 'lodash/isArray';
-import isEqual from 'lodash/isEqual';
-import isNull from 'lodash/isNull';
-import isString from 'lodash/isString';
-import isUndefined from 'lodash/isUndefined';
 import React, {
   useCallback,
   useEffect,
@@ -11,8 +5,15 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import clone from 'lodash/clone';
+import isArray from 'lodash/isArray';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
-import { Description, Label } from '@leafygreen-ui/typography';
+
+import { cx } from '@leafygreen-ui/emotion';
 import {
   useDynamicRefs,
   useEventListener,
@@ -21,55 +22,57 @@ import {
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
-import {
-  ComboboxProps,
-  getNullSelection,
-  onChangeType,
-  SelectValueType,
-  OptionObject,
-  ComboboxElement,
-  ComboboxSize,
-  State,
-  Overflow,
-  TruncationLocation,
-  SearchState,
-} from './Combobox.types';
-import {
-  flattenChildren,
-  getOptionObjectFromValue,
-  getDisplayNameForValue,
-  getValueForDisplayName,
-  getNameAndValue,
-} from './utils';
-import { ComboboxContext, useDarkMode } from './ComboboxContext';
-import { InternalComboboxGroup } from './ComboboxGroup';
-import { InternalComboboxOption } from './ComboboxOption';
+import { palette } from '@leafygreen-ui/palette';
+import { Description, Label } from '@leafygreen-ui/typography';
+
+import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
 import { Chip } from './Chip';
 import {
-  comboboxFocusStyle,
-  inputWrapperStyle,
   baseComboboxStyles,
-  comboboxThemeStyles,
-  comboboxSizeStyles,
+  baseInputElementStyle,
+  clearButtonStyle,
   comboboxDisabledStyles,
   comboboxErrorStyles,
+  comboboxFocusStyle,
   comboboxParentStyle,
-  baseInputElementStyle,
-  inputElementSizeStyle,
-  inputElementTransitionStyles,
-  multiselectInputElementStyle,
-  clearButtonStyle,
-  endIconStyle,
-  errorMessageThemeStyle,
-  errorMessageSizeStyle,
-  labelDescriptionContainerStyle,
-  inputElementThemeStyle,
   comboboxSelectionStyles,
+  comboboxSizeStyles,
+  comboboxThemeStyles,
+  endIconStyle,
+  errorMessageSizeStyle,
+  errorMessageThemeStyle,
+  inputElementSizeStyle,
+  inputElementThemeStyle,
+  inputElementTransitionStyles,
+  inputWrapperStyle,
+  labelDescriptionContainerStyle,
+  multiselectInputElementStyle,
 } from './Combobox.styles';
-import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
+import {
+  ComboboxElement,
+  ComboboxProps,
+  ComboboxSize,
+  getNullSelection,
+  onChangeType,
+  OptionObject,
+  Overflow,
+  SearchState,
+  SelectValueType,
+  State,
+  TruncationLocation,
+} from './Combobox.types';
+import { ComboboxContext } from './ComboboxContext';
+import { InternalComboboxGroup } from './ComboboxGroup';
+import { InternalComboboxOption } from './ComboboxOption';
+import {
+  flattenChildren,
+  getDisplayNameForValue,
+  getNameAndValue,
+  getOptionObjectFromValue,
+  getValueForDisplayName,
+} from './utils';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -84,7 +87,7 @@ export function Combobox<M extends boolean>({
   'aria-label': ariaLabel,
   disabled = false,
   size = ComboboxSize.Default,
-  darkMode = false,
+  darkMode: darkModeProp,
   state = 'none',
   errorMessage,
   searchState = 'unset',
@@ -110,7 +113,7 @@ export function Combobox<M extends boolean>({
   popoverZIndex,
   ...rest
 }: ComboboxProps<M>) {
-  const theme = useDarkMode(darkMode);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
   const getOptionRef = useDynamicRefs<HTMLLIElement>({ prefix: 'option' });
   const getChipRef = useDynamicRefs<HTMLSpanElement>({ prefix: 'chip' });
 
@@ -1189,6 +1192,7 @@ export function Combobox<M extends boolean>({
       value={{
         multiselect,
         darkMode,
+        theme,
         size,
         withIcons,
         disabled,
@@ -1366,11 +1370,11 @@ export function Combobox<M extends boolean>({
 Combobox.propTypes = {
   // Multiselect props
   multiselect: PropTypes.bool,
-  value: PropTypes.oneOf([
+  value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),
-  initialValue: PropTypes.oneOf([
+  initialValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),

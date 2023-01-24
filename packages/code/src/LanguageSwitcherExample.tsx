@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Code from '.';
+
 import { Language, LanguageOption } from './types';
+import Code from '.';
 
 export function PythonLogo({ className }: { className?: string }) {
   return (
@@ -132,7 +133,7 @@ function LanguageSwitcher({
 }: {
   darkMode?: boolean;
   onChange?: Function;
-  customActionButtons?: Array<React.ReactNode>;
+  customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
 }) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);

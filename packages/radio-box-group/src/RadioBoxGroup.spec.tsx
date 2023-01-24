@@ -1,7 +1,9 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import { typeIs } from '@leafygreen-ui/lib';
+
 import { RadioBox } from './RadioBox';
 import { RadioBoxGroup } from './RadioBoxGroup';
 
@@ -92,9 +94,13 @@ describe('packages/RadioBoxGroup', () => {
   const option2 = radioBoxGroupContainer.children[2];
   const wrapped = radioBoxGroupContainer.children[3];
 
-  test.todo(`correct number of children render`);
-  // expect(radioBoxGroupContainer.children).toHaveLength(4)
-  // radioBoxGroupContainer.children.length returns 1
+  const allChildren = radioBoxGroupContainer.children.length;
+
+  test(`correct number of children render`, () => {
+    // expect(radioBoxGroupContainer.children).toHaveLength(4)
+    // inside this test radioBoxGroupContainer.children.length returns 3 but outside it returns 4
+    expect(allChildren).toEqual(4);
+  });
 
   test(`input ids are all unique`, () => {
     const radioChildren = [option1, option2, wrapped];

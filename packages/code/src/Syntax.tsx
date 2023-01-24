@@ -1,17 +1,22 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { cx, css } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { LeafyGreenHighlightResult } from './highlight';
-import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import { HLJSOptions, HLJSPlugin } from 'highlight.js';
+import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import hljsDefineGraphQL from 'highlightjs-graphql';
-import { Language, SyntaxProps, Mode } from './types';
-import { SupportedLanguages, languageParsers } from './languages';
+import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+
 import { injectGlobalStyles } from './globalStyles';
+import { LeafyGreenHighlightResult } from './highlight';
+import { languageParsers, SupportedLanguages } from './languages';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { Language, SyntaxProps } from './types';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -57,15 +62,12 @@ function initializeSyntaxHighlighting() {
 
 const codeStyles = css`
   color: inherit;
-  font-size: 13px;
   font-family: ${fontFamilies.code};
-  line-height: 24px;
 `;
 
 function Syntax({
   children,
   language,
-  darkMode = false,
   showLineNumbers = false,
   lineNumberStart,
   highlightLines = [],
@@ -98,14 +100,14 @@ function Syntax({
       highlightedContent.react
     );
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const { theme, darkMode } = useDarkMode();
 
   const baseFontSize = useBaseFontSize();
-  // TODO: Refresh - remove darkMode logic
-  const codeFontSize = baseFontSize === 14 ? 13 : darkMode ? 16 : 15;
-
+  // TODO: remove 14 check when useBaseFontSize is updated
+  const typeScale = baseFontSize === 14 ? typeScales.code1 : typeScales.code2;
   const codeFontStyles = css`
-    font-size: ${codeFontSize}px;
+    font-size: ${typeScale.fontSize}px;
+    line-height: ${typeScale.lineHeight}px;
   `;
 
   return (
@@ -120,7 +122,7 @@ function Syntax({
       <code
         {...rest}
         className={cx(
-          `lg-highlight-hljs-${mode}`,
+          `lg-highlight-hljs-${theme}`,
           codeStyles,
           codeFontStyles,
           language,
@@ -130,7 +132,6 @@ function Syntax({
         <table
           className={css`
             border-spacing: 0;
-            width: 100%;
           `}
         >
           <tbody>{content}</tbody>

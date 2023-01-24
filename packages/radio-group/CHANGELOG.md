@@ -1,5 +1,57 @@
 # @leafygreen-ui/radio-group
 
+## 10.0.3
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+
+## 10.0.2
+
+### Patch Changes
+
+- a593238ff: Change darkMode disabled color from gray.dark1 to gray.base
+
+## 10.0.1
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+
+## 10.0.0
+
+### Major Changes
+
+- 30207122: Updates `RadioGroup` for dark mode brand refresh
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 9.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/interaction-ring@6.0.0
+  - @leafygreen-ui/lib@10.0.0
+
+## 8.1.2
+
+### Patch Changes
+
+- @leafygreen-ui/interaction-ring@5.0.0
+
 ## 8.1.1
 
 ### Patch Changes

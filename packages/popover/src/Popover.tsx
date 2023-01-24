@@ -1,30 +1,34 @@
-import React, { useMemo, Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, useMemo, useState } from 'react';
 import { Transition } from 'react-transition-group';
+import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import Portal from '@leafygreen-ui/portal';
 import {
-  usePopoverPortalContainer,
-  usePopoverContext,
-} from '@leafygreen-ui/leafygreen-provider';
-import {
-  useViewportSize,
-  useMutationObserver,
   useIsomorphicLayoutEffect,
+  useMutationObserver,
   useObjectDependency,
   usePrevious,
+  useViewportSize,
 } from '@leafygreen-ui/hooks';
-import { Align, Justify, PopoverProps } from './types';
+import {
+  usePopoverContext,
+  usePopoverPortalContainer,
+} from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
+import Portal from '@leafygreen-ui/portal';
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import {
   calculatePosition,
-  getElementViewportPosition,
   getElementDocumentPosition,
+  getElementViewportPosition,
 } from './positionUtils';
-import { consoleOnce } from '@leafygreen-ui/lib';
+import { Align, Justify, PopoverProps } from './types';
 
 const rootPopoverStyle = css`
   position: absolute;
-  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
+  transition: transform ${transitionDuration.default}ms ease-in-out,
+    opacity ${transitionDuration.default}ms ease-in-out;
   opacity: 0;
 `;
 

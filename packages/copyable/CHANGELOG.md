@@ -1,5 +1,89 @@
 # @leafygreen-ui/copyable
 
+## 8.0.3
+
+### Patch Changes
+
+- f952172c1: Migrates internal directory structure of Copyable componenet
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+- Updated dependencies [c7f7fff56]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+  - @leafygreen-ui/button@19.0.3
+
+## 8.0.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/button@19.0.2
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/tooltip@9.0.3
+  - @leafygreen-ui/typography@15.1.1
+
+## 8.0.1
+
+### Patch Changes
+
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [ed0e425e5]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/button@19.0.1
+  - @leafygreen-ui/tooltip@9.0.1
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+
+## 8.0.0
+
+### Patch Changes
+
+- 07b3c797: Shows copyable shadow only when text overflows
+- Updated dependencies [07b3c797]
+- Updated dependencies [95c9fb0d]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/tooltip@9.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+  - @leafygreen-ui/button@19.0.0
+
+## 7.0.1
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/button@18.0.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/tooltip@8.0.1
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/typography@14.0.1
+
+## 7.0.0
+
+### Patch Changes
+
+- Updated dependencies [0b6435fa]
+- Updated dependencies [7162f1ab]
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/button@17.0.0
+  - @leafygreen-ui/tooltip@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 6.0.3
 
 ### Patch Changes

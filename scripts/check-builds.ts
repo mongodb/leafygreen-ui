@@ -3,12 +3,13 @@
  */
 
 /* eslint-disable no-console */
+import chalk from 'chalk';
+import { spawnSync } from 'child_process';
+import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
-import { spawnSync } from 'child_process';
-import { Command } from 'commander';
-import chalk from 'chalk';
+
 import { getRelevantPackages } from './utils/getRelevantPackages';
 
 const ModuleType = {
@@ -46,7 +47,7 @@ if (
   )
 ) {
   console.log('Builds not found. Building...');
-  spawnSync('yarn', ['build', ...packages]);
+  spawnSync('yarn', ['build', ...packages], { stdio: 'inherit' });
 }
 
 // Check that every package's /dist folder has a valid UMD, ESM & TS files

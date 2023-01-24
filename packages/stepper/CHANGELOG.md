@@ -1,5 +1,51 @@
 # @leafygreen-ui/stepper
 
+## 3.1.5
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [ed0e425e5]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/tooltip@9.0.1
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+
+## 3.1.4
+
+### Patch Changes
+
+- Updated dependencies [07b3c797]
+- Updated dependencies [95c9fb0d]
+- Updated dependencies [07b3c797]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/tooltip@9.0.0
+
+## 3.1.3
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/tooltip@8.0.1
+  - @leafygreen-ui/typography@14.0.1
+
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies [7162f1ab]
+  - @leafygreen-ui/tooltip@8.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 3.1.1
 
 ### Patch Changes

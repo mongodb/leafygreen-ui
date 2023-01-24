@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
-import LeafyGreenProvider from './LeafyGreenContext';
+
+import LeafyGreenProvider from '.';
 
 const TestComponent = () => <div>This is a test component.</div>;
 

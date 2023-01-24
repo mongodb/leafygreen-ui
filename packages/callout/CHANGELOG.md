@@ -1,5 +1,57 @@
 # @leafygreen-ui/callout
 
+## 9.0.2
+
+### Patch Changes
+
+- 787bb5b9c: Introduces Callout subdirectory, in an effort to internally organize how we structure our packages
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+- Updated dependencies [a0d6638c4]
+  - @leafygreen-ui/icon@11.12.3
+  - @leafygreen-ui/typography@15.2.0
+
+## 9.0.1
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/typography@15.1.1
+
+## 9.0.0
+
+### Patch Changes
+
+- Updated dependencies [07b3c797]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/typography@14.0.1
+
+## 8.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 7.1.1
 
 ### Patch Changes

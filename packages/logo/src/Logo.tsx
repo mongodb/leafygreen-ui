@@ -1,23 +1,21 @@
 import React from 'react';
 
-import MongoDBLogo from './MongoDBLogo';
-import MongoDBLogoMark from './MongoDBLogoMark';
-import AtlasLogo from './AtlasLogo';
-
+import AtlasForGovernmentLogoLockup from './AtlasForGovernmentLogoLockup';
 // Product Family Logo Lockups
 import AtlasLogoLockup from './AtlasLogoLockup';
-import AtlasForGovernmentLogoLockup from './AtlasForGovernmentLogoLockup';
-import RealmLogoLockup from './RealmLogoLockup';
-import EnterpriseAdvancedLogoLockup from './EnterpriseAdvancedLogoLockup';
+import AtlasNavGraphic from './AtlasNavGraphic';
 import CommunityEditionLogoLockup from './CommunityEditionLogoLockup';
+import EnterpriseAdvancedLogoLockup from './EnterpriseAdvancedLogoLockup';
+import MongoDBLogo from './MongoDBLogo';
+import MongoDBLogoMark from './MongoDBLogoMark';
+import RealmLogoLockup from './RealmLogoLockup';
 import UniversityLogoLockup from './UniversityLogoLockup';
-
 import { LogoProps } from './utils';
 
 export const LogoNames = [
   'MongoDBLogoMark',
   'MongoDBLogo',
-  'AtlasLogo',
+  'AtlasNavGraphic',
   'AtlasLogoLockup',
   'AtlasForGovernmentLogoLockup',
   'RealmLogoLockup',
@@ -48,7 +46,7 @@ export default function GenericLogo({
   const LogoMap = {
     MongoDBLogo,
     MongoDBLogoMark,
-    AtlasLogo,
+    AtlasNavGraphic,
     AtlasLogoLockup,
     AtlasForGovernmentLogoLockup,
     RealmLogoLockup,

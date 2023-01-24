@@ -1,5 +1,74 @@
 # @leafygreen-ui/menu
 
+## 19.0.3
+
+### Patch Changes
+
+- 33a5dac82: Updates disabled and focus styles.
+
+## 19.0.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/icon-button@15.0.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/popover@11.0.2
+  - @leafygreen-ui/tokens@1.4.1
+
+## 19.0.1
+
+### Patch Changes
+
+- 1a335d0b2: Migrate component internals to check for glyphs explicity, rather than for Icon components as well
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/icon-button@15.0.1
+  - @leafygreen-ui/popover@11.0.1
+
+## 19.0.0
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+  - @leafygreen-ui/icon-button@15.0.0
+  - @leafygreen-ui/popover@11.0.0
+
+## 18.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
+### Patch Changes
+
+- Updated dependencies [2195359a]
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon-button@14.0.1
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/popover@10.0.1
+
+## 17.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/icon-button@14.0.0
+  - @leafygreen-ui/popover@10.0.0
+
 ## 16.1.1
 
 ### Patch Changes

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { uniq } from 'lodash';
+
 import { getAllPackageNames } from './getAllPackageNames';
 import { getGitDiff } from './getGitDiff';
 import {
@@ -31,27 +32,30 @@ export function getRelevantPackages(
 ) {
   // If we used the `diff` flag, we use packages based on the current git diff, regardless of what was passed in
   if (diff) {
-    console.log(
-      chalk.bold(`\nUsing changed packages against ${chalk.bgWhite('main')}`),
-    );
-    packages.length > 0 &&
-      console.log(chalk.yellow(`\tIgnoring package names provided`));
-
-    const changedPackages = getGitDiff();
-    packages =
-      changedPackages.length > 0 ? changedPackages : getAllPackageNames();
+    const changedPackages = uniq(getGitDiff());
 
     if (changedPackages.length > 0) {
+      console.log(
+        chalk.bold(
+          `\nUsing changed packages against ${chalk.bgWhite.black('main')}`,
+        ),
+      );
+
+      packages.length > 0 &&
+        console.log(chalk.yellow(`\tIgnoring package names provided`));
       console.log(
         `\t${changedPackages.length} diffs found:`,
         chalk.blue(changedPackages),
       );
       packages = changedPackages;
     } else {
-      console.log('\tNo diffs found. Aborting.');
-      process.exit(0);
+      // no diffs found
+      packages = packages.length > 0 ? packages : getAllPackageNames();
+      console.log(`\tNo diffs found. Using ${packages.length} packages`);
+      return uniq(packages);
     }
   } else {
+    // `diff` is false
     packages = packages.length > 0 ? packages : getAllPackageNames();
   }
 

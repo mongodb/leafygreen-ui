@@ -1,7 +1,8 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+
 import { Size } from './types';
 
 export const svgWidth = 24;
@@ -30,7 +31,7 @@ export const menuItemContainerStyle = css`
   cursor: pointer;
   border: none;
 
-  transition: background-color 150ms ease-in-out;
+  transition: background-color ${transitionDuration.default}ms ease-in-out;
 
   &:focus {
     outline: none;
@@ -44,7 +45,7 @@ export const menuItemContainerStyle = css`
     left: 0px;
     border-radius: 0 ${wedgeWidth}px ${wedgeWidth}px 0;
     background-color: transparent;
-    transition: background-color 150ms ease-in-out;
+    transition: background-color ${transitionDuration.default}ms ease-in-out;
   }
 
   &:hover {
@@ -89,11 +90,19 @@ export const textContainer = css`
   padding: 2px 0;
 `;
 
-export const mainIconStyle = css`
-  color: ${palette.gray.dark1};
+export const mainIconBaseStyle = css`
   margin-right: 16px;
   flex-shrink: 0;
 `;
+
+export const mainIconThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
 
 export const titleTextStyle = css`
   display: inline-flex;
@@ -149,17 +158,21 @@ export const linkDescriptionTextStyle = css`
  * Hover Styles
  */
 
-export const getHoverStyles = (container: string, theme: Theme) => ({
+export const getHoverStyles = (containerClass: string, theme: Theme) => ({
   text: css`
-    ${container}:not(:disabled):hover & {
-      font-weight: 700;
+    .${containerClass} {
+      &:not(:disabled):hover & {
+        font-weight: 700;
+      }
     }
   `,
   activeText: css`
-    ${container}:not(:disabled):hover & {
-      color: ${theme === Theme.Light
-        ? palette.green.base
-        : palette.green.dark3};
+    .${containerClass} {
+      &:not(:disabled):hover & {
+        color: ${theme === Theme.Light
+          ? palette.green.base
+          : palette.green.dark3};
+      }
     }
   `,
 });
@@ -237,7 +250,7 @@ export const disabledIconStyle: Record<Theme, string> = {
     color: ${palette.gray.dark2};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
   `,
 };
 
@@ -278,7 +291,7 @@ export const disabledTextStyle: Record<Theme, string> = {
     font-weight: 400;
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
     font-weight: 400;
   `,
 };
@@ -306,7 +319,7 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
     &:focus {
       text-decoration: none;
       background-color: ${palette.blue.light2};
-      color: ${palette.white};
+      color: ${palette.blue.dark2};
 
       &:before {
         background-color: ${palette.blue.base};
@@ -319,25 +332,27 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
   `,
 };
 
-export const getFocusedStyles = (selector: string, theme: Theme) => {
+export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
   return {
     textStyle: css`
-      ${selector}:focus & {
-        color: ${theme === Theme.Light ? palette.white : palette.blue.dark1};
+      .${containerClassName}:focus & {
+        color: ${theme === Theme.Light
+          ? palette.blue.light3
+          : palette.blue.dark1};
       }
     `,
     descriptionStyle: css`
-      ${selector}:focus & {
+      .${containerClassName}:focus & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
           : palette.blue.dark1};
       }
     `,
     iconStyle: css`
-      ${selector}:focus > & {
+      .${containerClassName}:focus & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
-          : palette.blue.base};
+          : palette.blue.dark1};
       }
     `,
   };

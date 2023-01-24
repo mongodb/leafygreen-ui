@@ -1,22 +1,23 @@
 import React, { useCallback, useContext } from 'react';
+
 import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
-  breakpoints,
   focusRing,
-  spacing,
   hoverRing,
+  spacing,
 } from '@leafygreen-ui/tokens';
-import { palette } from '@leafygreen-ui/palette';
-import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
-import { mobileSizeSet, sizeSets } from './styleSets';
+
 import SelectContext from './SelectContext';
-import { useForwardedRef } from './utils';
-import { State, Size } from './types';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { mobileSizeSet, sizeSets } from './styleSets';
+import { Size, State } from './types';
+import { MobileMediaQuery, useForwardedRef } from './utils';
 
 const menuButtonStyleOverrides = css`
   // Override button defaults
@@ -293,7 +294,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         },
         css`
           width: 100%;
-          @media only screen and (max-width: ${breakpoints.Desktop}px) {
+          ${MobileMediaQuery} {
             height: ${mobileSizeSet.height}px;
             font-size: ${mobileSizeSet.text}px;
           }

@@ -1,5 +1,36 @@
 # @leafygreen-ui/badge
 
+## 8.0.1
+
+### Patch Changes
+
+- e3969eeeb: Standardizing file structure
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+
+## 8.0.0
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 7.0.1
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+
+## 7.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ## 6.1.2
 
 ### Patch Changes

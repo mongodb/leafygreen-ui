@@ -1,9 +1,13 @@
-import React, { useState, useRef } from 'react';
-import { css, cx } from '@emotion/css';
+import React, { useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
+
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { uiColors } from '@leafygreen-ui/palette';
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
+
+import { css, cx } from '@emotion/css';
 
 const buttonResetStyles = css`
   background-color: transparent;
@@ -28,7 +32,7 @@ const groupButtonStyles = css`
 
 const openIconStyle = css`
   transform: rotate(90deg);
-  transition: 150ms all ease-in-out;
+  transition: ${transitionDuration.default}ms all ease-in-out;
 `;
 
 const navItemStyle = css`
@@ -39,7 +43,7 @@ const navItemStyle = css`
 `;
 
 const defaultStyle = css`
-  transition: all 150ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   max-height: 0;
   overflow: hidden;
   opacity: 1;

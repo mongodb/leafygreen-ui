@@ -1,5 +1,90 @@
 # @leafygreen-ui/side-nav
 
+## 13.0.1
+
+### Patch Changes
+
+- 86e2924c8: Updates Story file with better default props
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
+## 13.0.0
+
+### Major Changes
+
+- 351fbd350: Updates `SideNav` for dark mode brand refresh. Also applies new file structure internally.
+
+## 12.0.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/portal@4.0.8
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/tooltip@9.0.3
+  - @leafygreen-ui/typography@15.1.1
+
+## 12.0.1
+
+### Patch Changes
+
+- 1a335d0b2: Migrate component internals to check for glyphs explicity, rather than for Icon components as well
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [ed0e425e5]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/tooltip@9.0.1
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+
+## 12.0.0
+
+### Patch Changes
+
+- Updated dependencies [07b3c797]
+- Updated dependencies [95c9fb0d]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/tooltip@9.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/tooltip@8.0.1
+  - @leafygreen-ui/a11y@1.3.4
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/portal@4.0.7
+  - @leafygreen-ui/typography@14.0.1
+
+## 11.0.0
+
+### Patch Changes
+
+- Updated dependencies [7162f1ab]
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/tooltip@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 10.1.2
 
 ### Patch Changes

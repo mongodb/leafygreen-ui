@@ -1,5 +1,65 @@
 # @leafygreen-ui/toast
 
+## 4.0.2
+
+### Patch Changes
+
+- 2cb1e6116: Adds toggle button to Toast story
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/typography@15.3.0
+
+## 4.0.1
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+  - @leafygreen-ui/icon-button@15.0.1
+
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies [07b3c797]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+  - @leafygreen-ui/icon-button@15.0.0
+
+## 3.0.1
+
+### Patch Changes
+
+- 2195359a: Updates some packges to use a caret instead of an exact version
+- Updated dependencies [2195359a]
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon-button@14.0.1
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/portal@4.0.7
+  - @leafygreen-ui/typography@14.0.1
+
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/icon-button@14.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 2.0.3
 
 ### Patch Changes

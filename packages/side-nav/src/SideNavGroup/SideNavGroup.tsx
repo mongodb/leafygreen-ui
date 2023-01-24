@@ -1,30 +1,16 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Transition, TransitionStatus } from 'react-transition-group';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
-import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import { palette } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
+
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { CollapsedSideNavItem } from '../SideNavItem';
-import { useSideNavContext } from '../SideNavContext';
-import { ulStyleOverrides, getIndentLevelStyle } from '../styles';
-import {
-  buttonClassName,
-  collapsibleHeaderFocusStyle,
-  collapsibleHeaderStyle,
-  customIconStyles,
-  sideNavCollapsibleGroupBaseStyles,
-  expandIconStyle,
-  headerStyle,
-  listItemStyle,
-  openExpandIconStyle,
-  transitionStyles,
-} from './SideNavGroup.styles';
-import { SideNavGroupProps } from './types';
-import { Overline } from '@leafygreen-ui/typography';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
+import { isComponentType } from '@leafygreen-ui/lib';
+
+import { SideNavGroupCollapsed } from '../SideNavGroupCollapsed';
+import { SideNavGroupOpen } from '../SideNavGroupOpen';
+
+import { listItemStyle } from './SideNavGroup.styles';
+import { SideNavGroupProps } from './SideNavGroup.types';
 
 /**
  * # SideNavGroup
@@ -56,13 +42,8 @@ function SideNavGroup({
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
-  const nodeRef = React.useRef(null);
-  const ulRef = React.useRef<HTMLUListElement>(null);
-  const { usingKeyboard } = useUsingKeyboardContext();
 
   const menuGroupLabelId = useIdAllocator({ prefix: 'menu-group-label-id' });
-  const menuId = useIdAllocator({ prefix: 'menu' });
-  const { width } = useSideNavContext();
 
   // Iterate over `children` and render them appropriately
   const renderedChildren = useMemo(() => {
@@ -115,59 +96,13 @@ function SideNavGroup({
 
   // render the provided glyph with appropriate aria roles
   const accessibleGlyph =
-    glyph && (isComponentGlyph(glyph) || isComponentType(glyph, 'Icon'))
+    glyph && isComponentGlyph(glyph)
       ? React.cloneElement(glyph, {
-          className: cx(customIconStyles, glyph.props.className),
+          className: glyph.props.className,
           role: 'presentation',
           'data-testid': 'side-nav-group-header-icon',
         })
       : null;
-
-  // Render the header text
-  const renderedHeader = (
-    <div
-      className={css`
-        display: inline-flex;
-        align-items: center;
-      `}
-    >
-      {accessibleGlyph && (
-        <>
-          {accessibleGlyph}
-
-          <CollapsedSideNavItem active={isActiveGroup}>
-            {accessibleGlyph}
-          </CollapsedSideNavItem>
-        </>
-      )}
-      <Overline
-        className={css`
-          color: inherit;
-        `}
-      >
-        {header}
-      </Overline>
-    </div>
-  );
-
-  // compute styles for indented items
-  const indentedStyle = cx(
-    getIndentLevelStyle(indentLevel),
-    css`
-      padding-top: 16px;
-      padding-bottom: 8px;
-    `,
-  );
-
-  // compute the entered ul wrapper styles based on the ul height
-  useEffect(() => {
-    const ulHeight = ulRef?.current?.getBoundingClientRect().height ?? 0;
-    transitionStyles['entered'] = css`
-      opacity: 1;
-      max-height: ${ulHeight + 1}px; // +1 for border
-      border-bottom: 1px solid ${palette.gray.light2};
-    `;
-  }, [open, ulRef]);
 
   // generate shared props for collapsible and static headers
   const groupHeaderProps = {
@@ -175,93 +110,27 @@ function SideNavGroup({
     id: menuGroupLabelId,
   };
 
+  const sharedProps = {
+    groupHeaderProps,
+    indentLevel,
+    menuGroupLabelId,
+    accessibleGlyph,
+    isActiveGroup,
+    header,
+  };
+
   return (
     <li className={cx(listItemStyle, className)} {...rest}>
       {collapsible ? (
+        // collapsed, items in menu are hidden by default but can be toggled open on click
         <>
-          <button
-            {...groupHeaderProps}
-            aria-controls={menuId}
-            aria-expanded={open}
-            className={cx(
-              buttonClassName,
-              headerStyle,
-              collapsibleHeaderStyle,
-              css`
-                width: ${width}px;
-              `,
-              {
-                [collapsibleHeaderFocusStyle]: usingKeyboard,
-                [indentedStyle]: indentLevel > 1,
-              },
-            )}
-            onClick={() => setOpen(curr => !curr)}
-          >
-            {renderedHeader}
-            <ChevronRight
-              role="presentation"
-              size={12}
-              className={cx(expandIconStyle, {
-                [openExpandIconStyle]: open,
-              })}
-            />
-          </button>
-
-          <Transition
-            in={open}
-            appear
-            timeout={150}
-            nodeRef={nodeRef}
-            mountOnEnter
-            unmountOnExit
-          >
-            {(state: TransitionStatus) => (
-              <div
-                ref={nodeRef}
-                className={cx(
-                  sideNavCollapsibleGroupBaseStyles,
-                  transitionStyles[state],
-                )}
-              >
-                <ul
-                  ref={ulRef}
-                  id={menuId}
-                  aria-labelledby={menuGroupLabelId}
-                  className={cx(
-                    ulStyleOverrides,
-                    css`
-                      transition: opacity 150ms ease-in-out;
-                      opacity: 0;
-                    `,
-                    {
-                      [css`
-                        opacity: 1;
-                      `]: ['entering', 'entered'].includes(state),
-                    },
-                  )}
-                >
-                  {renderedChildren}
-                </ul>
-              </div>
-            )}
-          </Transition>
+          <SideNavGroupCollapsed open={open} setOpen={setOpen} {...sharedProps}>
+            {renderedChildren}
+          </SideNavGroupCollapsed>
         </>
       ) : (
-        // not collapsible
-        <>
-          <div
-            {...groupHeaderProps}
-            className={cx(headerStyle, {
-              [indentedStyle]: indentLevel > 1,
-            })}
-          >
-            {renderedHeader}
-          </div>
-
-          <ul aria-labelledby={menuGroupLabelId} className={ulStyleOverrides}>
-            {renderedChildren}
-          </ul>
-        </>
+        // not collapsible, all items in menu are visible
+        <SideNavGroupOpen {...sharedProps}>{renderedChildren}</SideNavGroupOpen>
       )}
     </li>
   );

@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import Icon from '@leafygreen-ui/icon';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import Icon from '@leafygreen-ui/icon';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { keyMap } from '@leafygreen-ui/lib';
-import { typeScales } from '@leafygreen-ui/tokens';
-import { ChipProps, ComboboxSize as Size, Theme } from './Combobox.types';
-import { ComboboxContext, useDarkMode } from './ComboboxContext';
+import { keyMap, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
+
 import {
   chipClassName,
   chipWrapperPaddingY,
   inputHeight,
 } from './Combobox.styles';
+import { ChipProps, ComboboxSize as Size } from './Combobox.types';
+import { ComboboxContext } from './ComboboxContext';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;
@@ -89,7 +91,7 @@ const chipButtonStyle = css`
   border: none;
   background-color: transparent;
   cursor: pointer;
-  transition: background-color 100ms ease-in-out;
+  transition: background-color ${transitionDuration.faster}ms ease-in-out;
 `;
 
 const chipButtonSizeStyle: Record<Size, string> = {
@@ -143,12 +145,12 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
     const {
       darkMode,
+      theme,
       size,
       disabled,
       chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
-    const theme = useDarkMode(darkMode);
 
     const isTruncated =
       !!chipCharacterLimit &&

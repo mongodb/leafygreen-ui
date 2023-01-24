@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { Theme } from '@leafygreen-ui/lib';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
 
 const triggerElementStyles = css`
   border-radius: 2px;

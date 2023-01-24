@@ -1,12 +1,15 @@
-import { ComponentStory } from '@storybook/react';
 import React, { SyntheticEvent, useState } from 'react';
-import ExpandableCard from '.';
+import { ComponentStory } from '@storybook/react';
+
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import ExpandableCard from '.';
 
 export default {
   title: 'Components/ExpandableCard',
   component: ExpandableCard,
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: [
         'className',
@@ -15,6 +18,7 @@ export default {
         'onClick',
         'isOpen',
         'defaultOpen',
+        'ref',
       ],
     },
   },
@@ -37,12 +41,9 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof ExpandableCard> = args => (
+export const Basic: ComponentStory<typeof ExpandableCard> = args => (
   <ExpandableCard {...args} />
 );
-
-export const Uncontrolled = Template.bind({});
-Uncontrolled.args = {};
 
 export const Controlled: ComponentStory<typeof ExpandableCard> = args => {
   const [isOpen, setIsOpen] = useState(false);

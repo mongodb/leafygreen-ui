@@ -1,5 +1,97 @@
 # @leafygreen-ui/expandable-card
 
+## 3.0.4
+
+### Patch Changes
+
+- 48ffa944d: Sets a default story for `ExpandableCard`
+- Updated dependencies [405636249]
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/hooks@7.4.0
+  - @leafygreen-ui/typography@15.3.0
+
+## 3.0.3
+
+### Patch Changes
+
+- e4b2aade8: Quick fix to vertically center title and updates internal file structure.
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
+## 3.0.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/icon-button@15.0.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/typography@15.1.1
+
+## 3.0.1
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [ed0e425e5]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/card@9.0.1
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+  - @leafygreen-ui/icon-button@15.0.1
+
+## 3.0.0
+
+### Minor Changes
+
+- 88afe8c6: Updates focus and hover styles to match figma specs. Also wraps contents in a `LeafyGreenProvider` so that `darkMode` values are passed down to LG components.
+
+### Patch Changes
+
+- Updated dependencies [07b3c797]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+  - @leafygreen-ui/card@9.0.0
+  - @leafygreen-ui/icon-button@15.0.0
+
+## 2.0.1
+
+### Patch Changes
+
+- 2195359a: Updates some packges to use a caret instead of an exact version
+- Updated dependencies [2195359a]
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon-button@14.0.1
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/card@8.0.1
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/typography@14.0.1
+
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/card@8.0.0
+  - @leafygreen-ui/icon-button@14.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 1.1.2
 
 ### Patch Changes

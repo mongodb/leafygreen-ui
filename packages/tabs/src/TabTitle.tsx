@@ -1,10 +1,15 @@
-import React, { useRef, useEffect, RefObject } from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+import React, { RefObject, useEffect, useRef } from 'react';
+
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import {
+  fontFamilies,
+  transitionDuration,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 interface ListTitleMode {
   base: string;
@@ -124,7 +129,7 @@ const listTitleStyles = css`
   border: 0px;
   margin: 0;
   text-decoration: none;
-  transition: 150ms color ease-in-out;
+  transition: ${transitionDuration.default}ms color ease-in-out;
 
   &:focus:not(:disabled) {
     outline: none;
@@ -151,7 +156,7 @@ const listTitleStyles = css`
     bottom: 0;
     height: 4px;
     border-radius: 4px 4px 0 0;
-    transition: all 150ms ease-in-out;
+    transition: all ${transitionDuration.default}ms ease-in-out;
     background-color: transparent;
     transform: scaleX(0.8);
   }

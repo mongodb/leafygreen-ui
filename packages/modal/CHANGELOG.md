@@ -1,5 +1,80 @@
 # @leafygreen-ui/modal
 
+## 14.0.0
+
+### Major Changes
+
+- d5c206876: Modal now accepts a forwarded ref. In addition, it respects an `id` when the prop is set, rather than overwriting the value internally.
+
+### Patch Changes
+
+- Updated dependencies [75f26afbc]
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+  - @leafygreen-ui/icon-button@15.0.3
+  - @leafygreen-ui/icon@11.12.3
+
+## 13.0.0
+
+### Major Changes
+
+- 07331dad9: Updates `Modal` for dark mode brand refresh.
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/icon-button@15.0.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/portal@4.0.8
+  - @leafygreen-ui/tokens@1.4.1
+
+## 12.0.1
+
+### Patch Changes
+
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/icon-button@15.0.1
+
+## 12.0.0
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+  - @leafygreen-ui/icon-button@15.0.0
+
+## 11.0.1
+
+### Patch Changes
+
+- 2195359a: Updates some packges to use a caret instead of an exact version
+- Updated dependencies [2195359a]
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon-button@14.0.1
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/portal@4.0.7
+
+## 11.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/icon-button@14.0.0
+
 ## 10.1.2
 
 ### Patch Changes

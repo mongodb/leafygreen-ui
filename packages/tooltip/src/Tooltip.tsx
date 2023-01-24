@@ -1,31 +1,35 @@
-import React, { useEffect, useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
-import { transparentize } from 'polished';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from 'lodash/debounce';
-import Popover, {
-  PopoverProps,
-  Align as PopoverAlign,
-  Justify,
-  ElementPosition,
-} from '@leafygreen-ui/popover';
+import { transparentize } from 'polished';
+import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  useEventListener,
+  useBackdropClick,
   useEscapeKey,
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
-import { HTMLElementProps, isComponentType, Theme } from '@leafygreen-ui/lib';
-import {
-  useUpdatedBaseFontSize,
-  bodyTypeScaleStyles,
-} from '@leafygreen-ui/typography';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { notchPositionStyles } from './tooltipUtils';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import Popover, {
+  Align as PopoverAlign,
+  ElementPosition,
+  Justify,
+  PopoverProps,
+} from '@leafygreen-ui/popover';
+import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
+import {
+  bodyTypeScaleStyles,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
+
 import SvgNotch from './Notch';
 import { borderRadius, notchWidth } from './tooltipConstants';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { notchPositionStyles } from './tooltipUtils';
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -162,6 +166,12 @@ export type TooltipProps = Omit<
      *
      */
     onClose?: () => void;
+
+    /**
+     * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
+     *
+     */
+    baseFontSize?: BaseFontSize;
   };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
@@ -186,7 +196,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.children Content to appear inside of Tooltip.
  * @param props.open Boolean to describe whether or not Tooltip is open.
  * @param props.setOpen Callback to change the open state of the Tooltip.
- * @param props.darkMode Whether the Tooltip will apepar in dark mode.
+ * @param props.darkMode Whether the Tooltip will appear in dark mode.
  * @param props.className Classname applied to Tooltip.
  * @param props.align Alignment of Tooltip relative to trigger: `top`, `bottom`, `left`, `right`.
  * @param props.justify Justification of Tooltip relative to trigger: `start`, `middle`, `end`.
@@ -200,46 +210,44 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
 function Tooltip({
   open: controlledOpen,
   setOpen: controlledSetOpen,
-  className,
-  children,
-  trigger,
-  triggerEvent = TriggerEvent.Hover,
   darkMode: darkThemeProp,
+  baseFontSize: baseFontSizeOverride,
+  triggerEvent = TriggerEvent.Hover,
   enabled = true,
   align = 'top',
   justify = 'start',
   spacing = 12,
+  usePortal = true,
+  onClose = () => {},
   id,
   shouldClose,
-  usePortal = true,
   portalClassName,
   portalContainer,
   scrollContainer,
   popoverZIndex,
   refEl,
-  onClose = () => {},
+  className,
+  children,
+  trigger,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const size = useUpdatedBaseFontSize();
+  const size = useUpdatedBaseFontSize(baseFontSizeOverride);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
-  const [tooltipNode, setTooltipNode] = useState<HTMLDivElement | null>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const existingId = id ?? tooltipNode?.id;
+  const existingId = id ?? tooltipRef.current?.id;
   const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });
-  const { theme } = useDarkMode(darkThemeProp);
+  const { darkMode: localDarkMode, theme } = useDarkMode(darkThemeProp);
 
   useEffect(() => {
     // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
-    if (
-      (trigger && isComponentType(trigger, 'Icon')) ||
-      isComponentGlyph(trigger)
-    ) {
+    if (trigger && isComponentGlyph(trigger)) {
       console.warn(
         'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip, as these components do not render their children. To use, please wrap your trigger element in another HTML tag.',
       );
@@ -280,7 +288,7 @@ function Tooltip({
           return {
             onClick: (e: MouseEvent) => {
               // ensure that we don't close the tooltip when content inside tooltip is clicked
-              if (e.target !== tooltipNode) {
+              if (e.target !== tooltipRef.current) {
                 userTriggerHandler('onClick', e);
                 setOpen((curr: boolean) => !curr);
               }
@@ -298,30 +306,12 @@ function Tooltip({
           triggerProps[handler](e);
       }
     },
-    [handleClose, setOpen, tooltipNode],
+    [handleClose, setOpen, tooltipRef],
   );
 
   useEscapeKey(handleClose, { enabled: open });
 
-  const handleBackdropClick = useCallback(
-    (e: MouseEvent) => {
-      /**
-       * Close the tooltip iff the clicked target (e.target) is NOT the tooltip element
-       *
-       * This handler is added to the document.
-       * No need to check whether the click target is the trigger node
-       * since clicks on that element are stopped from propogating by the <Popover>
-       */
-      if (tooltipNode && !tooltipNode.contains(e.target as HTMLElement)) {
-        handleClose();
-      }
-    },
-    [handleClose, tooltipNode],
-  );
-
-  useEventListener('click', handleBackdropClick, {
-    enabled: open && triggerEvent === 'click',
-  });
+  useBackdropClick(handleClose, [tooltipRef], open && triggerEvent === 'click');
 
   const popoverProps = {
     refEl,
@@ -374,38 +364,42 @@ function Tooltip({
         });
 
         return (
-          <div
-            role="tooltip"
-            {...rest}
-            id={tooltipId}
-            className={cx(
-              baseStyles,
-              tooltipNotchStyle,
-              colorSet[theme].tooltip,
-              {
-                [minHeightStyle]: isLeftOrRightAligned,
-              },
-              className,
-            )}
-            ref={setTooltipNode}
-          >
+          // Establish a new DarkMode context so any LG components inherit the correct value
+          // (since tooltip backgrounds are inverse to the outer context's theme)
+          <LeafyGreenProvider darkMode={!localDarkMode}>
             <div
+              role="tooltip"
+              {...rest}
+              id={tooltipId}
               className={cx(
-                baseTypeStyle,
-                bodyTypeScaleStyles[size],
-                colorSet[theme].children,
+                baseStyles,
+                tooltipNotchStyle,
+                colorSet[theme].tooltip,
+                {
+                  [minHeightStyle]: isLeftOrRightAligned,
+                },
+                className,
               )}
+              ref={tooltipRef}
             >
-              {children}
-            </div>
+              <div
+                className={cx(
+                  baseTypeStyle,
+                  bodyTypeScaleStyles[size],
+                  colorSet[theme].children,
+                )}
+              >
+                {children}
+              </div>
 
-            <div className={notchContainerStyle}>
-              <SvgNotch
-                className={cx(notchStyle)}
-                fill={colorSet[theme].notchFill}
-              />
+              <div className={notchContainerStyle}>
+                <SvgNotch
+                  className={cx(notchStyle)}
+                  fill={colorSet[theme].notchFill}
+                />
+              </div>
             </div>
-          </div>
+          </LeafyGreenProvider>
         );
       }}
     </Popover>

@@ -1,5 +1,64 @@
 # @leafygreen-ui/toggle
 
+## 10.0.3
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+
+## 10.0.2
+
+### Patch Changes
+
+- dbcf23db0: Spreads `className` prop on root button element
+
+## 10.0.1
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [1a335d0b2]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+
+## 10.0.0
+
+### Major Changes
+
+- 30207122: Updates `Toggle` for dark mode brand refresh
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 9.0.0
+
+### Major Changes
+
+- f2d63a60: Removes leafygreen data attributes (prefixed with `data-leafygreen-ui-`), and replaces them with deterministic classNames (prefixed with `lg-ui-`)
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/interaction-ring@6.0.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/a11y@1.3.4
+
+## 8.0.6
+
+### Patch Changes
+
+- @leafygreen-ui/interaction-ring@5.0.0
+
 ## 8.0.5
 
 ### Patch Changes

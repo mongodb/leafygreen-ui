@@ -1,14 +1,16 @@
 import React from 'react';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+
 import {
-  spritesheetLight,
   disabledLight,
   disabledLightChecked,
   indeterminateLight,
+  spritesheetLight,
 } from './img';
 import { CheckProps } from './types';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 const height = 20;
 const width = 600;
@@ -23,7 +25,7 @@ const wrapperStyleAlignment: Record<BaseFontSize, string> = {
 };
 
 const wrapperStyleAnimated = css`
-  transition: 300ms opacity ease-in-out;
+  transition: ${transitionDuration.slower}ms opacity ease-in-out;
 `;
 
 const wrapperStyle = css`

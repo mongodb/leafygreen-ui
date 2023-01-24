@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  render,
   fireEvent,
-  screen,
+  render,
   RenderResult,
+  screen,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { Tabs, Tab } from '.';
+
+import { Tab, Tabs } from '.';
 
 const tabsClassName = 'tabs-class-name';
 const tabsTestId = 'tabs-component';
@@ -302,5 +303,42 @@ describe('packages/tab', () => {
     expect(screen.getAllByRole('tab')[0].getAttribute('data-test-prop')).toBe(
       'test-prop',
     );
+  });
+});
+
+/* eslint-disable jest/expect-expect */
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Prop Types behave as expected', () => {
+  test('children is required', () => {
+    /// @ts-expect-error
+    render(<Tabs aria-label="tabs"></Tabs>);
+    render(<Tabs aria-label="tabs">Test</Tabs>);
+  });
+  test('`aria-label` or `aria-labelledby` is required', () => {
+    /// @ts-expect-error
+    render(<Tabs>Test</Tabs>);
+    render(<Tabs aria-label="tabs">Test</Tabs>);
+    render(<Tabs aria-labelledby="tabs">Test</Tabs>);
+  });
+  describe('`setSelected`', () => {
+    it('accepts a generic function', () => {
+      const setSelected = (index: number) => {
+        index;
+      };
+      render(
+        <Tabs aria-label="tabs" setSelected={setSelected}>
+          Test
+        </Tabs>,
+      );
+    });
+
+    it('accepts a React.Dispatch function', () => {
+      const [_, setSelected] = useState<number>(0);
+      render(
+        <Tabs aria-label="tabs" setSelected={setSelected}>
+          Test
+        </Tabs>,
+      );
+    });
   });
 });

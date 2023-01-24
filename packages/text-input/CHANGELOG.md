@@ -1,5 +1,89 @@
 # @leafygreen-ui/text-input
 
+## 12.1.3
+
+### Patch Changes
+
+- 53d77f55d: Uses Error component from Typography package to handle formatting `errorMessage` prop
+- Updated dependencies [405636249]
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/hooks@7.4.0
+  - @leafygreen-ui/typography@15.3.0
+
+## 12.1.2
+
+### Patch Changes
+
+- 9c869ced2: Fixes transition property, so that animations on hover and focus work properly
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
+## 12.1.1
+
+### Patch Changes
+
+- 1271944b2: Updates darkMode placeholder and optional text colors to match figma specs.
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+- Updated dependencies [a0d6638c4]
+  - @leafygreen-ui/icon@11.12.3
+  - @leafygreen-ui/typography@15.2.0
+
+## 12.1.0
+
+### Minor Changes
+
+- fa158335c: - Updates TS types: now Any one of `label`, `aria-label` and `aria-labelledby` is sufficient for all text input types
+
+  - Fixes a regression when `type="search"`. Providing `aria-label` is sufficient for accessibility
+
+### Patch Changes
+
+- a1d093f30: Resolves aria type issues
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+
+## 12.0.0
+
+### Patch Changes
+
+- 3cb2e1f7: Removes hover box-shadow from disabled inputs. Adds console warning suggestion to use SearchInput component in place of TextInput with type="search".
+- Updated dependencies [07b3c797]
+- Updated dependencies [07b3c797]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/typography@15.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+  - @leafygreen-ui/typography@14.0.1
+
+## 11.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/typography@14.0.0
+
 ## 10.2.1
 
 ### Patch Changes

@@ -1,22 +1,28 @@
 import React from 'react';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
+import InlineDefinition from '@leafygreen-ui/inline-definition';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
 import {
+  Body,
+  Description,
+  Disclaimer,
+  Error,
   H1,
   H2,
   H3,
-  Subtitle,
-  Body,
   InlineCode,
   InlineKeyCode,
-  Disclaimer,
-  Overline,
   Label,
-  Description,
   Link,
+  Overline,
+  StaticWidthText,
+  Subtitle,
 } from '.';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { cx, css } from '@leafygreen-ui/emotion';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 const wrapperStyles = css`
   padding: 0;
@@ -38,6 +44,11 @@ const displayFlex = css`
 
 export default {
   title: 'Components/Typography',
+  parameters: {
+    controls: {
+      exclude: ['className'],
+    },
+  },
   argTypes: {
     baseFontSize: {
       options: [14, 16],
@@ -46,11 +57,6 @@ export default {
         'Storybook prop only. This font size is passed into the LeafygreenProvider.',
     },
     darkMode: storybookArgTypes.darkMode,
-    className: {
-      table: {
-        disable: true,
-      },
-    },
   },
 };
 
@@ -63,105 +69,166 @@ export const AllTypography = ({
   darkMode: boolean;
 }) => {
   return (
-    <LeafygreenProvider baseFontSize={baseFontSize}>
+    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
       <div className={cx(wrapperStyles)}>
-        <H1 darkMode={darkMode} className={displayBlock}>
-          Heading 1
-        </H1>
-        <H2 darkMode={darkMode} className={displayBlock}>
-          Heading 2
-        </H2>
-        <H3 darkMode={darkMode} className={displayBlock}>
-          Heading 3
-        </H3>
-        <Subtitle darkMode={darkMode} className={displayBlock}>
-          Subtitle
-        </Subtitle>
+        <H1>Heading 1</H1>
+        <H2>Heading 2</H2>
+        <H3>Heading 3</H3>
+        <Subtitle>Subtitle</Subtitle>
 
-        <Body darkMode={darkMode} className={cx(displayBlock)}>
-          <div>Body</div>
-          <div>
+        <div className={cx(displayFlex)}>
+          <Body>Body</Body>
+          <Body>
             <strong>Body (Semibold)</strong>
-          </div>
-          <div>
+          </Body>
+        </div>
+        <div className={cx(displayFlex)}>
+          <Body>
             <em>Body (Italic)</em>
-          </div>
-          <div>
+          </Body>
+          <Body>
             <strong>
               <em>Body (Semibold Italic)</em>
             </strong>
-          </div>
-        </Body>
-
-        <Body className={cx(displayFlex)}>
-          <InlineCode darkMode={darkMode}>&quot;Inline Code&quot;</InlineCode>
-          <InlineCode
-            darkMode={darkMode}
-            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
-          >
-            &quot;Inline Code Link&quot;
-          </InlineCode>
-        </Body>
+          </Body>
+        </div>
 
         <div className={cx(displayFlex)}>
-          <Link
-            href="http://localhost:9001"
-            arrowAppearance="hover"
-            darkMode={darkMode}
-          >
+          <InlineCode>&quot;Inline Code&quot;</InlineCode>
+          <InlineCode href="https://mongodb.github.io/leafygreen-ui/?path=/story/*">
+            &quot;Inline Code Link&quot;
+          </InlineCode>
+        </div>
+
+        <div className={cx(displayFlex)}>
+          <Link href="http://localhost:9001" arrowAppearance="hover">
             Local (Arrow on Hover)
           </Link>
-          <Link
-            href="http://localhost:9001"
-            arrowAppearance="none"
-            darkMode={darkMode}
-          >
+          <Link href="http://localhost:9001" arrowAppearance="none">
             Local (No Arrow)
           </Link>
-          <Link
-            href="?path=/story/button--icon-only"
-            arrowAppearance="persist"
-            darkMode={darkMode}
-          >
+          <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
             Internal (Persist Arrow)
           </Link>
           <Link
             href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
             arrowAppearance="persist"
-            darkMode={darkMode}
           >
             External
           </Link>
         </div>
 
-        <Body darkMode={darkMode} className={displayBlock}>
-          <InlineKeyCode darkMode={darkMode}>CTRL</InlineKeyCode>
+        <div className={displayBlock}>
+          <InlineKeyCode>CTRL</InlineKeyCode>
           <code> + </code>
-          <InlineKeyCode darkMode={darkMode}>C</InlineKeyCode>
-        </Body>
+          <InlineKeyCode>C</InlineKeyCode>
+        </div>
 
-        <Overline darkMode={darkMode} className={displayBlock}>
-          Overline
-        </Overline>
-        <Disclaimer darkMode={darkMode} className={displayBlock}>
-          Disclaimer
-        </Disclaimer>
+        <Overline className={displayBlock}>Overline</Overline>
+        <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
 
-        <Body darkMode={darkMode}>
-          <InlineDefinition darkMode={darkMode} definition="Tooltip Definition">
+        <div
+          className={css`
+            color: ${darkMode ? palette.gray.light2 : palette.black};
+          `}
+        >
+          <InlineDefinition definition="Tooltip Definition">
             Inline definition
-          </InlineDefinition>{' '}
-        </Body>
+          </InlineDefinition>
+        </div>
+
+        <Error>Hello I am an Error!</Error>
 
         <div className={cx(displayBlock)}>
-          <Label darkMode={darkMode} htmlFor="id">
-            This is a label
-          </Label>
-          <Description darkMode={darkMode}>
-            This is the description for said label
-          </Description>
+          <Label htmlFor="id">This is a label</Label>
+          <Description>This is the description for said label</Description>
         </div>
       </div>
     </LeafygreenProvider>
+  );
+};
+
+export const StaticWidthTextStory = () => {
+  const hoverBold = css`
+    font-weight: 400;
+    cursor: pointer;
+    outline: 1px solid ${palette.red.light2};
+    outline-offset: -1px;
+
+    &:hover {
+      font-weight: 700;
+    }
+  `;
+
+  const tabStyle = css`
+    outline: 1px solid ${palette.blue.light1};
+    padding: 10px;
+    width: max-content;
+    max-width: 200px;
+  `;
+
+  const buttonStyle = css`
+    outline: 1px solid gray;
+    padding: 10px;
+    width: max-content;
+    max-width: 148px;
+    display: flex;
+    align-items: center;
+  `;
+
+  return (
+    <div
+      className={css`
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 20px;
+      `}
+    >
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <div className={tabStyle}>
+          <StaticWidthText className={hoverBold}>Some Tabs</StaticWidthText>
+        </div>
+        <div className={tabStyle}>
+          <StaticWidthText
+            className={cx(
+              hoverBold,
+              css`
+                flex: 1;
+              `,
+            )}
+          >
+            Some long text that will be truncated eventually because its long
+          </StaticWidthText>
+        </div>
+        <div className={tabStyle}>
+          <StaticWidthText className={hoverBold}>
+            Some more text
+          </StaticWidthText>
+        </div>
+      </div>
+      <br />
+      <div className={cx(hoverBold, buttonStyle)}>
+        <StaticWidthText>Some button</StaticWidthText>
+        <Icon glyph="CaretDown" />
+      </div>
+      <br />
+      <div className={cx(hoverBold, buttonStyle)}>
+        <StaticWidthText
+          className={cx(
+            css`
+              flex: 1;
+            `,
+          )}
+        >
+          Some long text button that should be truncated
+        </StaticWidthText>
+        <Icon glyph="CaretDown" />
+      </div>
+    </div>
   );
 };

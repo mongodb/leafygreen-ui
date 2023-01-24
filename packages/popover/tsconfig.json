@@ -23,7 +23,7 @@
       "path": "../portal"
     },
     {
-      "path": "../palette"
+      "path": "../tokens"
     },
     {
       "path": "../leafygreen-provider"

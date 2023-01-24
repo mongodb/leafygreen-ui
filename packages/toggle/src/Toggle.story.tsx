@@ -1,7 +1,10 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
+
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+
+import { Size } from './Toggle/types';
 import Toggle from '.';
 
 export default {
@@ -11,9 +14,20 @@ export default {
     darkMode: {
       control: 'boolean',
     },
-    checked: {
+    checked: { control: 'none' },
+    disabled: {
       control: 'boolean',
     },
+    size: {
+      control: 'radio',
+      options: Object.values(Size),
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'onChange'],
+    },
+    default: 'Uncontrolled',
   },
 };
 
@@ -21,7 +35,11 @@ const Template: ComponentStory<typeof Toggle> = args => (
   <Toggle aria-labelledby="toggle" {...args} />
 );
 
-export const Basic = Template.bind({});
+export const Uncontrolled = Template.bind({});
+export const Controlled = Template.bind({});
+Controlled.argTypes = {
+  checked: { control: 'boolean' },
+};
 
 export const WithLabel: ComponentStory<typeof Toggle> = ({
   // eslint-disable-next-line react/prop-types

@@ -1,25 +1,37 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
-import Tooltip, { Align, Justify, TooltipProps } from '.';
+
 import Button from '@leafygreen-ui/button';
-import Icon from '@leafygreen-ui/icon';
 import { css } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
+
+import Tooltip, { Align, Justify, TooltipProps } from '.';
 
 export default {
   title: 'Components/Tooltip',
   component: Tooltip,
   args: {
     children: 'I am a tooltip!',
+    trigger: <Button>trigger</Button>,
+    enabled: true,
+    usePortal: true,
   },
   argTypes: {
     open: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,
     children: storybookArgTypes.children,
   },
+  parameters: {
+    default: 'Basic',
+    controls: {
+      exclude: ['trigger', 'className'],
+    },
+  },
 };
 
-const Template: ComponentStory<typeof Tooltip> = ({
+export const Basic: ComponentStory<typeof Tooltip> = ({
   darkMode,
   ...args
 }: TooltipProps) => (
@@ -28,21 +40,32 @@ const Template: ComponentStory<typeof Tooltip> = ({
       padding: 100px;
     `}
   >
-    <Tooltip
-      darkMode={darkMode}
-      trigger={<Button darkMode={darkMode}>trigger</Button>}
-      {...args}
-    />
+    <Tooltip darkMode={darkMode} {...args} />
   </div>
 );
-
-export const ControlledWithStorybook = Template.bind({});
-export const ControlledWithState = (args: TooltipProps) => {
-  const [open, setOpen] = useState(true);
-  return <Template {...args} open={open} setOpen={setOpen} />;
+Basic.argTypes = {
+  open: {
+    control: 'none',
+  },
 };
 
-export const Test = ({ darkMode, ...args }: TooltipProps) => {
+export const ControlledWithState = (args: TooltipProps) => {
+  const [open, setOpen] = useState(true);
+  return <Tooltip {...args} open={open} setOpen={setOpen} />;
+};
+
+export const WithLeafyGreenChildren = Basic.bind({});
+WithLeafyGreenChildren.args = {
+  children: (
+    <>
+      <Subtitle>Example</Subtitle>
+      <Body>Use Tooltip in your codebase:</Body>
+      <InlineCode>@leafygreen-ui/tooltip</InlineCode>
+    </>
+  ),
+};
+
+export const AlignmentTest = ({ darkMode, ...args }: TooltipProps) => {
   return (
     <div
       className={css`
@@ -59,7 +82,7 @@ export const Test = ({ darkMode, ...args }: TooltipProps) => {
     >
       {Object.values(Align).map(a =>
         Object.values(Justify).map(j => (
-          <Template
+          <Tooltip
             {...args}
             key={a + j}
             darkMode={darkMode}
@@ -68,14 +91,14 @@ export const Test = ({ darkMode, ...args }: TooltipProps) => {
             triggerEvent="click"
           >
             Align {a}, Justify {j}.
-          </Template>
+          </Tooltip>
         )),
       )}
     </div>
   );
 };
 
-export const LongText = Template.bind({});
+export const LongText = Basic.bind({});
 LongText.args = {
   children:
     '5hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf95hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf9',
@@ -119,7 +142,7 @@ const referenceElPositions: { [key: string]: string } = {
   `,
 };
 
-type TooltipScrollableyProps = TooltipProps & {
+type TooltipScrollableProps = TooltipProps & {
   buttonText: string;
   refButtonPosition: string;
 };
@@ -130,7 +153,7 @@ export const ScrollableContainer = ({
   justify,
   align,
   ...args
-}: TooltipScrollableyProps) => {
+}: TooltipScrollableProps) => {
   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
     null,
   );

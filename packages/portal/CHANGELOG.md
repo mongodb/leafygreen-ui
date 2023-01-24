@@ -1,5 +1,18 @@
 # @leafygreen-ui/portal
 
+## 4.0.8
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+
+## 4.0.7
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+
 ## 4.0.6
 
 ### Patch Changes

@@ -12,6 +12,7 @@ import ArrowRight from './ArrowRight.svg';
 import ArrowUp from './ArrowUp.svg';
 import Beaker from './Beaker.svg';
 import Bell from './Bell.svg';
+import Biometric from './Biometric.svg';
 import Building from './Building.svg';
 import Bulb from './Bulb.svg';
 import Calendar from './Calendar.svg';
@@ -42,18 +43,21 @@ import Diagram2 from './Diagram2.svg';
 import Diagram3 from './Diagram3.svg';
 import Disconnect from './Disconnect.svg';
 import Download from './Download.svg';
+import Drag from './Drag.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
+import Email from './Email.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
 import File from './File.svg';
 import Filter from './Filter.svg';
+import Folder from './Folder.svg';
 import FullScreenEnter from './FullScreenEnter.svg';
 import FullScreenExit from './FullScreenExit.svg';
-import Folder from './Folder.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
 import Home from './Home.svg';
+import Import from './Import.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
@@ -76,15 +80,18 @@ import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
+import Read from './Read.svg';
 import Redo from './Redo.svg';
 import Refresh from './Refresh.svg';
 import Relationship from './Relationship.svg';
 import ReplicaSet from './ReplicaSet.svg';
+import Resize from './Resize.svg';
 import Save from './Save.svg';
 import Serverless from './Serverless.svg';
-import ShardedCluster from './ShardedCluster.svg';
 import Settings from './Settings.svg';
+import ShardedCluster from './ShardedCluster.svg';
 import Shell from './Shell.svg';
+import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
@@ -105,6 +112,7 @@ import VerticalEllipsis from './VerticalEllipsis.svg';
 import Visibility from './Visibility.svg';
 import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
+import Write from './Write.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
@@ -119,6 +127,7 @@ const _glyphs = {
   ArrowUp,
   Beaker,
   Bell,
+  Biometric,
   Building,
   Bulb,
   Calendar,
@@ -149,8 +158,10 @@ const _glyphs = {
   Diagram3,
   Disconnect,
   Download,
+  Drag,
   Edit,
   Ellipsis,
+  Email,
   Export,
   Favorite,
   File,
@@ -161,6 +172,7 @@ const _glyphs = {
   GlobeAmericas,
   GovernmentBuilding,
   Home,
+  Import,
   ImportantWithCircle,
   InfoWithCircle,
   InviteUser,
@@ -183,15 +195,18 @@ const _glyphs = {
   Plus,
   PlusWithCircle,
   QuestionMarkWithCircle,
+  Read,
   Redo,
   Refresh,
   Relationship,
   ReplicaSet,
+  Resize,
   Save,
   Serverless,
   ShardedCluster,
   Settings,
   Shell,
+  SMS,
   SortAscending,
   SortDescending,
   SplitHorizontal,
@@ -212,6 +227,7 @@ const _glyphs = {
   Visibility,
   VisibilityOff,
   Warning,
+  Write,
   X,
   XWithCircle,
 } as const;

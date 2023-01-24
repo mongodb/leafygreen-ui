@@ -1,37 +1,41 @@
-import React, { forwardRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
   Description,
+  Error,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { TextInputProps, SizeVariant, State, TextInputType } from './types';
+
 import {
-  iconClassName,
-  wrapperStyle,
-  errorMessageStyle,
-  inputContainerStyle,
-  optionalTextStyle,
   baseInputStyle,
-  stateIndicatorStyles,
-  errorMessageModeStyle,
+  errorMessageStyle,
   getWrapperFontSize,
-  inputSizeStyles,
-  inputModeStyles,
-  inputStateStyles,
-  inputFocusStyles,
-  inputIndicatorStyle,
-  inputIndicatorSizeStyle,
+  iconClassName,
   inheritTypeScale,
+  inputContainerStyle,
+  inputFocusStyles,
+  inputIndicatorSizeStyle,
+  inputIndicatorStyle,
+  inputModeStyles,
+  inputSizeStyles,
+  inputStateStyles,
+  optionalTextBaseStyle,
+  optionalTextThemeStyle,
+  stateIndicatorStyles,
   textContainerStyle,
+  wrapperStyle,
 } from './style';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { SizeVariant, State, TextInputProps, TextInputType } from './types';
 
 /**
  * # TextInput
@@ -57,8 +61,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
  * @param props.sizeVariant determines the size of the text and the height of the input.
  */
 
-type TextInput = React.ForwardRefExoticComponent<TextInputProps>;
-const TextInput: TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+type TextInputComponentType = React.ForwardRefExoticComponent<TextInputProps>;
+const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       label,
@@ -119,10 +123,15 @@ const TextInput: TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
-    if (type === 'search' && !rest['aria-label']) {
-      console.error(
-        'For screen-reader accessibility, aria-label must be provided to TextInput.',
+    if (type === 'search') {
+      consoleOnce.warn(
+        'We recommend using the Leafygreen SearchInput for `type="search" inputs.',
       );
+      if (!rest['aria-label']) {
+        console.error(
+          'For screen-reader accessibility, aria-label must be provided to TextInput.',
+        );
+      }
     }
 
     const RenderedCheckmarkIcon = darkMode
@@ -212,27 +221,33 @@ const TextInput: TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             )}
 
             {state === State.None && !disabled && optional && (
-              <div className={optionalTextStyle}>
+              <div
+                className={cx(
+                  optionalTextBaseStyle,
+                  optionalTextThemeStyle[theme],
+                )}
+              >
                 <p>Optional</p>
               </div>
             )}
           </div>
         </div>
         {state === State.Error && errorMessage && (
-          <div className={cx(errorMessageStyle, errorMessageModeStyle[theme])}>
-            <span>{errorMessage}</span>
-          </div>
+          <Error darkMode={darkMode} className={errorMessageStyle}>
+            {errorMessage}
+          </Error>
         )}
       </div>
     );
   },
-);
+) as TextInputComponentType;
 
 TextInput.displayName = 'TextInput';
 
 TextInput.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
+  'aria-labelledby': PropTypes.string,
   description: PropTypes.string,
   optional: PropTypes.bool,
   disabled: PropTypes.bool,

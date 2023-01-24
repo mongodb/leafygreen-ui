@@ -1,9 +1,12 @@
 import React from 'react';
-import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
-import Icon from '@leafygreen-ui/icon';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
-import { css } from '@emotion/css';
+
+import Icon from '@leafygreen-ui/icon';
 import { uiColors } from '@leafygreen-ui/palette/dist';
+import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
+
+import { css } from '@emotion/css';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -16,9 +19,15 @@ type Knobs = {
   glyph: boolean;
   baseFontSize: 14 | 16;
   widthOverride: number;
+  darkMode: boolean;
 };
 
 const knobsConfig: KnobsConfigInterface<Knobs> = {
+  darkMode: {
+    type: 'boolean',
+    default: false,
+    label: 'Dark Mode',
+  },
   header: {
     type: 'text',
     default: 'Organization',
@@ -71,6 +80,7 @@ function DefaultExample({
   glyph,
   baseFontSize,
   widthOverride,
+  darkMode,
 }: Knobs) {
   const collapsibleProps = collapsible
     ? ({
@@ -91,7 +101,11 @@ function DefaultExample({
         border: 1px solid ${uiColors.gray.light2};
       `}
     >
-      <SideNav baseFontSize={baseFontSize} widthOverride={widthOverride}>
+      <SideNav
+        darkMode={darkMode}
+        baseFontSize={baseFontSize}
+        widthOverride={widthOverride}
+      >
         <SideNavItem glyph={<Icon glyph="Calendar" />}>
           Ungrouped Item
         </SideNavItem>

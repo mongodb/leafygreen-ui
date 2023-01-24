@@ -1,5 +1,98 @@
 # @leafygreen-ui/code
 
+## 14.1.1
+
+### Patch Changes
+
+- 48ffa944d: Adds TSDoc annotations for `language`, `languageOptions` & `onChange`
+- Updated dependencies [405636249]
+  - @leafygreen-ui/hooks@7.4.0
+
+## 14.1.0
+
+### Minor Changes
+
+- 10dd1dc50: Remove `useUsingKeyboardContext` hook and use `focus-visible` to show focus states.
+
+### Patch Changes
+
+- Updated dependencies [703db871f]
+- Updated dependencies [c7f7fff56]
+  - @leafygreen-ui/palette@3.4.6
+  - @leafygreen-ui/button@19.0.3
+
+## 14.0.2
+
+### Patch Changes
+
+- 48013291e: Fixing bug where numbered cells would stretch excessively in wide viewports
+- Updated dependencies [75f26afbc]
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+  - @leafygreen-ui/icon-button@15.0.3
+  - @leafygreen-ui/icon@11.12.3
+
+## 14.0.1
+
+### Patch Changes
+
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [696adb1b6]
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [ed0e425e5]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [7ca2da507]
+  - @leafygreen-ui/select@10.1.0
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/button@19.0.1
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/icon-button@15.0.1
+
+## 14.0.0
+
+### Major Changes
+
+- 30207122: Updates `Code` for dark mode brand refresh.
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+  - @leafygreen-ui/button@19.0.0
+  - @leafygreen-ui/icon-button@15.0.0
+  - @leafygreen-ui/select@10.0.0
+
+## 13.0.1
+
+### Patch Changes
+
+- Updated dependencies [2195359a]
+- Updated dependencies [209f77ed]
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/icon-button@14.0.1
+  - @leafygreen-ui/icon@11.12.0
+  - @leafygreen-ui/button@18.0.0
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/select@9.0.0
+  - @leafygreen-ui/a11y@1.3.4
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+
+## 13.0.0
+
+### Patch Changes
+
+- Updated dependencies [0b6435fa]
+- Updated dependencies [f21e42a0]
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/button@17.0.0
+  - @leafygreen-ui/select@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+  - @leafygreen-ui/icon-button@14.0.0
+
 ## 12.1.1
 
 ### Patch Changes

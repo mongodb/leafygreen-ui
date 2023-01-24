@@ -1,15 +1,17 @@
 import React from 'react';
-import { usePrevious } from '@leafygreen-ui/hooks';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
 import Button, { ButtonProps } from '@leafygreen-ui/button';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { usePrevious } from '@leafygreen-ui/hooks';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import FileIcon from '@leafygreen-ui/icon/dist/File';
-import { Select, Option } from '@leafygreen-ui/select';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { Option, Select } from '@leafygreen-ui/select';
+import { spacing } from '@leafygreen-ui/tokens';
+
 import { LanguageOption, PopoverProps } from './types';
-import { palette, uiColors } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
   display: flex;
@@ -45,12 +47,11 @@ const menuButtonStyle = css`
   }
 `;
 
-const buttonModeStyle = {
-  light: css`
+const buttonModeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
     background-color: ${palette.white};
     border-right: 1px solid ${palette.gray.light2};
     box-shadow: 0 0 0 0;
-    font-family: ${fontFamilies.default};
 
     &:hover,
     &:active,
@@ -61,42 +62,36 @@ const buttonModeStyle = {
     &:hover {
       background-color: ${palette.gray.light2};
     }
+
+    &:focus-visible {
+      background-color: ${palette.blue.light2};
+    }
   `,
-  dark: css`
-    background-color: ${uiColors.gray.dark2};
-    border-right: 1px solid ${uiColors.gray.dark3};
-    font-family: ${fontFamilies.legacy};
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark2};
+    border-right: 1px solid ${palette.gray.dark1};
     color: ${palette.gray.light2};
 
     &:hover,
     &:focus,
     &:active {
-      border-right: 1px solid ${uiColors.gray.dark2};
+      border-right: 1px solid ${palette.gray.dark1};
     }
 
     &:hover,
     &:active {
-      background-color: ${uiColors.gray.dark1};
+      background-color: ${palette.gray.dark1};
     }
-  `,
-};
 
-const buttonFocusStyle = {
-  light: css`
-    &:focus {
-      background-color: ${palette.blue.light2};
-    }
-  `,
-  dark: css`
-    &:focus {
-      background-color: ${uiColors.focus};
+    &:focus-visible {
+      background-color: ${palette.blue.light1};
     }
   `,
 };
 
 const selectStyle = css`
   min-width: 144px;
-  height: 100%;s
+  height: 100%;
 `;
 
 const iconMargin = css`
@@ -115,23 +110,19 @@ interface Props extends PopoverProps {
   language: LanguageOption;
   languageOptions: Array<LanguageOption>;
   onChange: (arg0: LanguageOption) => void;
-  darkMode?: boolean;
 }
 
 function LanguageSwitcher({
   language,
   languageOptions,
   onChange,
-  darkMode,
   usePortal,
   portalClassName,
   portalContainer,
   scrollContainer,
   popoverZIndex,
 }: Props) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const mode = darkMode ? 'dark' : 'light';
-
+  const { theme, darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
 
   const handleChange = (val: string) => {
@@ -151,7 +142,7 @@ function LanguageSwitcher({
   const iconStyle = cx(
     iconMargin,
     css`
-      color: ${darkMode ? uiColors.white : uiColors.gray.dark1};
+      color: ${darkMode ? palette.gray.light1 : palette.gray.base};
     `,
   );
 
@@ -175,14 +166,7 @@ function LanguageSwitcher({
     ({ className, children, ...props }: ButtonProps, ref) => (
       <Button
         {...props}
-        className={cx(className, menuButtonStyle, buttonModeStyle[mode], {
-          [buttonFocusStyle[mode]]: showFocus,
-          // TODO: Refresh - remove darkMode logic
-          [css`
-            font-family: ${fontFamilies.legacy};
-            font-size: 14px;
-          `]: darkMode,
-        })}
+        className={cx(className, menuButtonStyle, buttonModeStyle[theme])}
         darkMode={darkMode}
         ref={ref}
         leftGlyph={renderedLogo}

@@ -1,5 +1,49 @@
 # @leafygreen-ui/card
 
+## 9.0.3
+
+### Patch Changes
+
+- 737691760: Reorganizes files internally to match new Design Systems style guide
+
+## 9.0.2
+
+### Patch Changes
+
+- 38181cc1d: Update to consume darkMode from `useDarkMode`. Some components were setting `darkMode = false` as a default which would override the default value provided by the `LeafyGreenProvider`.
+
+## 9.0.1
+
+### Patch Changes
+
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+
+## 9.0.0
+
+### Patch Changes
+
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+
+## 8.0.0
+
+### Patch Changes
+
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ## 7.1.1
 
 ### Patch Changes

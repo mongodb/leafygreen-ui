@@ -1,5 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { ReactNode } from 'react';
+
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const Size = {
   XSmall: 'xsmall',

@@ -1,22 +1,23 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import { cx, css } from '@leafygreen-ui/emotion';
-import Portal from '@leafygreen-ui/portal';
-import { spacing } from '@leafygreen-ui/tokens';
-import { Body } from '@leafygreen-ui/typography';
-import IconButton from '@leafygreen-ui/icon-button';
+import PropTypes from 'prop-types';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import ProgressBar from './ToastProgressBar';
+import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import Portal from '@leafygreen-ui/portal';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { Body } from '@leafygreen-ui/typography';
+
 import {
-  variantIcons,
-  variantStyles,
-  transitionDuration,
   baseElementStyles,
   toastThemeStyles,
   toastTransitionStateStyles,
+  variantIcons,
+  variantStyles,
 } from './styles';
+import ProgressBar from './ToastProgressBar';
 import { ToastProps, Variant } from './types';
 
 function Toast({
@@ -48,7 +49,7 @@ function Toast({
       >
         <Transition
           in={open}
-          timeout={transitionDuration}
+          timeout={transitionDuration.default}
           mountOnEnter
           unmountOnExit
           nodeRef={nodeRef}

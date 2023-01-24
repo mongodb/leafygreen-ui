@@ -1,7 +1,9 @@
 import React from 'react';
-import { css } from '@emotion/css';
+
 import IconDo from './icons/IconDo';
 import IconDont from './icons/IconDont';
+
+import { css } from '@emotion/css';
 
 const GuidelineImageFrame = ({
   type,

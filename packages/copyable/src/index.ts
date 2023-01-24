@@ -1,1 +1,2 @@
-export { default, Size } from './Copyable';
+export { default } from './Copyable';
+export { Size } from './Copyable';

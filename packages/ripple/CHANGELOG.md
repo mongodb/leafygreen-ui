@@ -1,5 +1,21 @@
 # @leafygreen-ui/ripple
 
+## 1.1.7
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/tokens@1.4.1
+
+## 1.1.6
+
+### Patch Changes
+
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+
 ## 1.1.5
 
 ### Patch Changes

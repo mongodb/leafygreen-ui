@@ -1,32 +1,35 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  useViewportSize,
-  useIdAllocator,
   useEventListener,
+  useIdAllocator,
+  useViewportSize,
 } from '@leafygreen-ui/hooks';
-import { palette } from '@leafygreen-ui/palette';
-import { keyMap } from '@leafygreen-ui/lib';
-import {
-  fontFamilies,
-  breakpoints,
-  spacing,
-  BaseFontSize,
-} from '@leafygreen-ui/tokens';
-import { Label, Description } from '@leafygreen-ui/typography';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { mobileSizeSet, sizeSets, SizeSet } from './styleSets';
-import { SelectProps, Size, State } from './types';
+import { keyMap } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import {
+  BaseFontSize,
+  fontFamilies,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
+import { Description, Label } from '@leafygreen-ui/typography';
+
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
-import SelectContext from './SelectContext';
 import { InternalOption, OptionElement } from './Option';
+import SelectContext from './SelectContext';
+import { mobileSizeSet, SizeSet, sizeSets } from './styleSets';
+import { SelectProps, Size, State } from './types';
 import {
   convertToInternalElements,
   getOptionValue,
   isOptionDisabled,
   isOptionSelectable,
+  MobileMediaQuery,
   reconcileOption,
   traverseSelectChildren,
   useStateRef,
@@ -59,8 +62,8 @@ const errorTextStyle = ({
   font-size: ${sizeSet.text}px;
   margin-top: ${spacing[1]}px;
   padding-left: 2px;
-  transition: color 100ms ease-in-out;
-  transition-delay: 100ms;
+  transition: color ${transitionDuration.faster}ms ease-in-out;
+  transition-delay: ${transitionDuration.faster}ms;
 `;
 
 /**
@@ -510,7 +513,7 @@ export default function Select({
               pointer-events: none;
             `,
             css`
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+              ${MobileMediaQuery} {
                 font-size: ${mobileSizeSet.label.text}px;
                 line-height: ${mobileSizeSet.label.lineHeight}px;
               }
@@ -535,7 +538,7 @@ export default function Select({
               `]: size === Size.Default,
             },
             css`
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+              ${MobileMediaQuery} {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }
@@ -593,7 +596,7 @@ export default function Select({
           className={cx(
             errorTextStyle({ darkMode, sizeSet }),
             css`
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+              ${MobileMediaQuery} {
                 font-size: ${mobileSizeSet.description.text}px;
                 line-height: ${mobileSizeSet.description.lineHeight}px;
               }

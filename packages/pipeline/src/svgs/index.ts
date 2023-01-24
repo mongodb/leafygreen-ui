@@ -1,4 +1,4 @@
-export { SegmentXs } from './SegmentXs';
-export { SegmentS } from './SegmentS';
-export { SegmentM } from './SegmentM';
 export { SegmentL } from './SegmentL';
+export { SegmentM } from './SegmentM';
+export { SegmentS } from './SegmentS';
+export { SegmentXs } from './SegmentXs';

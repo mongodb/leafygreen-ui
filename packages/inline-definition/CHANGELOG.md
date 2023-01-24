@@ -1,5 +1,42 @@
 # @leafygreen-ui/inline-definition
 
+## 6.0.1
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tooltip@9.0.3
+
+## 6.0.0
+
+### Patch Changes
+
+- Updated dependencies [95c9fb0d]
+- Updated dependencies [b9b09a86]
+  - @leafygreen-ui/tooltip@9.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.0
+
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [f2d63a60]
+  - @leafygreen-ui/lib@10.0.0
+  - @leafygreen-ui/tooltip@8.0.1
+  - @leafygreen-ui/leafygreen-provider@3.0.1
+
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies [7162f1ab]
+- Updated dependencies [e399f1b9]
+- Updated dependencies [e399f1b9]
+  - @leafygreen-ui/tooltip@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.0.0
+
 ## 4.1.1
 
 ### Patch Changes

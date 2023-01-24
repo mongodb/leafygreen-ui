@@ -1,15 +1,18 @@
 import React, { useCallback, useState } from 'react';
-import { useRouter } from 'next/router';
-import { css, cx } from '@emotion/css';
 import { Transition } from 'react-transition-group';
-import { uiColors } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
-import IconButton from '@leafygreen-ui/icon-button';
-import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
-import { MongoDBLogo } from '@leafygreen-ui/logo';
-import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
-import MobileNavigationProvider from './NavigationContext';
+import { useRouter } from 'next/router';
 import { HOME_PAGE } from 'utils/routes';
+
+import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
+import IconButton from '@leafygreen-ui/icon-button';
+import { MongoDBLogo } from '@leafygreen-ui/logo';
+import { uiColors } from '@leafygreen-ui/palette';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+
+import MobileNavigationProvider from './NavigationContext';
+import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
+
+import { css, cx } from '@emotion/css';
 
 const resetButtonStyle = css`
   background-color: white;
@@ -37,7 +40,7 @@ const navStyle = css`
   min-height: 100%;
   opacity: 0;
   transform: translate3d(-320px, 0, 0);
-  transition: all 300ms ease-in-out;
+  transition: all ${transitionDuration.slower}ms ease-in-out;
 `;
 
 const backdrop = css`
@@ -50,7 +53,7 @@ const backdrop = css`
   bottom: 0;
   opacity: 0;
   z-index: 3;
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${transitionDuration.slower}ms ease-in-out;
 `;
 
 const logoContainer = css`

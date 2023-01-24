@@ -1,23 +1,36 @@
-import React, { useRef, useMemo, forwardRef } from 'react';
+import React, { forwardRef, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { css, cx } from '@leafygreen-ui/emotion';
-import CollapsedSideNavItem from './CollapsedSideNavItem';
-import { useSideNavContext } from '../SideNavContext';
-import { getIndentLevelStyle, typographyStyle } from '../styles';
+import { cx } from '@leafygreen-ui/emotion';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
+
+import { AccessibleGlyph } from '../AccessibleGlyph';
 import {
-  baseNavItemStyle,
-  activeNavItemStyle,
-  disabledNavItemStyle,
-  focusedNavItemStyle,
-  focusedDisabledNavItemStyle,
-  glyphWrapper,
+  getIndentLevelStyle,
+  typographyStyle,
+  useSideNavContext,
+} from '../SideNav';
+
+import {
+  activeBaseStyle,
+  activeThemeStyle,
+  baseStyle,
+  disabledStyle,
+  focusedDisabledStyle,
+  focusedDisabledThemeStyle,
+  focusedStyle,
+  focusedThemeStyle,
+  glyphWrapperStyle,
+  liStyle,
   nestedChildrenStyles,
+  nestedUlStyle,
   sideNavItemClassName,
+  themeStyle,
 } from './SideNavItem.styles';
-import { SideNavItemProps } from './types';
+import { SideNavItemProps } from './SideNavItem.types';
 
 /**
  * TODO: TSDoc
@@ -34,6 +47,7 @@ import { SideNavItemProps } from './types';
  @param props.ariaCurrentValue The aria-current attribute value set when the component is active.
  @param props.className Class name that will be applied to the root-level element.
  @param props.children Content that will be rendered inside the root-level element.
+ @param props.indentLevel Change the indentation. Will not work if `<SideNavItem>` is a child of `<SideNavGroup>`
  *
  ### Optional Polymorphic Props
  @param props.href When provided, the component will be rendered as an anchor element. This and
@@ -57,7 +71,7 @@ const SideNavItem: ExtendableBox<
     ...rest
   } = props;
   const { usingKeyboard } = useUsingKeyboardContext();
-  const { baseFontSize } = useSideNavContext();
+  const { baseFontSize, theme, darkMode } = useSideNavContext();
   const hasNestedChildren = useRef(false);
 
   const onClick = disabled
@@ -70,7 +84,7 @@ const SideNavItem: ExtendableBox<
       };
 
   const accessibleGlyph =
-    (glyph && isComponentType(glyph, 'Glyph')) || isComponentType(glyph, 'Icon')
+    glyph && isComponentGlyph(glyph)
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
@@ -140,25 +154,23 @@ const SideNavItem: ExtendableBox<
   }, [children]);
 
   return (
-    <li
-      className={css`
-        width: 100%;
-      `}
-    >
+    <li className={liStyle}>
       <Box
         as={props.href ? 'a' : 'button'}
         {...rest}
         className={cx(
           sideNavItemClassName,
-          baseNavItemStyle,
+          baseStyle,
+          themeStyle[theme],
           typographyStyle[baseFontSize],
           {
-            [activeNavItemStyle]: active,
-            [disabledNavItemStyle]: disabled,
-            [focusedNavItemStyle]: usingKeyboard,
-            [focusedDisabledNavItemStyle]: usingKeyboard && disabled,
+            [cx(activeBaseStyle, activeThemeStyle[theme])]: active,
+            [disabledStyle]: disabled,
+            [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard,
+            [cx(focusedDisabledStyle, focusedDisabledThemeStyle[theme])]:
+              usingKeyboard && disabled,
             [nestedChildrenStyles]: hasNestedChildren.current,
-            [getIndentLevelStyle(indentLevel)]: indentLevel > 1,
+            [getIndentLevelStyle(indentLevel, darkMode)]: indentLevel > 1,
           },
           className,
         )}
@@ -168,27 +180,18 @@ const SideNavItem: ExtendableBox<
         onClick={onClick}
       >
         {accessibleGlyph && (
-          <span className={glyphWrapper}>
-            {accessibleGlyph}
-
-            <CollapsedSideNavItem active={active}>
-              {accessibleGlyph}
-            </CollapsedSideNavItem>
-          </span>
+          <AccessibleGlyph
+            isActiveGroup={active}
+            accessibleGlyph={accessibleGlyph}
+            className={glyphWrapperStyle}
+          />
         )}
 
         {renderedChildren}
       </Box>
 
       {hasNestedItems && (
-        <ul
-          className={css`
-            list-style: none;
-            padding-inline-start: 0;
-          `}
-        >
-          {renderedNestedItems}
-        </ul>
+        <ul className={nestedUlStyle}>{renderedNestedItems}</ul>
       )}
     </li>
   );

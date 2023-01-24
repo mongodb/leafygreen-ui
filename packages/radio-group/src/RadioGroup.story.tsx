@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
-import { Radio, RadioGroup } from '.';
-import { RadioGroupProps } from './RadioGroup';
+
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import { RadioGroupProps, Size } from './types';
+import { Radio, RadioGroup } from '.';
 
 export default {
   title: 'Components/RadioGroup',
@@ -10,9 +12,16 @@ export default {
   argTypes: {
     children: { control: false },
     darkMode: storybookArgTypes.darkMode,
-    onChange: { control: false },
-    name: { control: 'text' },
-    value: { control: 'text' },
+    size: {
+      control: 'radio',
+      options: Object.values(Size),
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['children', 'className', 'onChange', 'name', 'value'],
+    },
+    default: 'Uncontrolled',
   },
 } as Meta<typeof RadioGroup>;
 

@@ -1,6 +1,8 @@
 import { transparentize } from 'polished';
-import { palette } from '@leafygreen-ui/palette';
+
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+
 import { Size } from './types';
 
 interface ColorSet {

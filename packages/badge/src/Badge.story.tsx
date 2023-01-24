@@ -1,7 +1,9 @@
-import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
-import Badge from './Badge';
+import { ComponentStory, Meta } from '@storybook/react';
+
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import Badge from './Badge/Badge';
 
 export default {
   title: 'Components/Badge',

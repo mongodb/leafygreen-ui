@@ -1,24 +1,26 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
+
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { SupportedColors, LogoProps } from './utils';
+
+import { LogoNames } from './Logo';
+import { LogoProps, SupportedColors } from './utils';
 import {
+  AtlasForGovernmentLogoLockup,
+  AtlasLogoLockup,
+  AtlasLogoMark,
+  AtlasNavGraphic,
+  ChartsLogoMark,
+  CommunityEditionLogoLockup,
+  EnterpriseAdvancedLogoLockup,
   MongoDBLogo,
   MongoDBLogoMark,
-  AtlasLogo,
-  AtlasLogoLockup,
-  AtlasForGovernmentLogoLockup,
   RealmLogoLockup,
-  EnterpriseAdvancedLogoLockup,
-  CommunityEditionLogoLockup,
-  UniversityLogoLockup,
-  AtlasLogoMark,
   RealmLogoMark,
-  ChartsLogoMark,
+  UniversityLogoLockup,
 } from '.';
 import Logo, { LogoName } from '.';
-import { LogoNames } from './Logo';
 
 export default {
   title: 'Components/Logo',
@@ -93,7 +95,7 @@ Default.args = {
 };
 
 export const MongoDB = (args: LogoProps) => Template(MongoDBLogo, args);
-export const Atlas = (args: LogoProps) => Template(AtlasLogo, args);
+export const Atlas = (args: LogoProps) => Template(AtlasNavGraphic, args);
 export const MongoDBMark = (args: LogoProps) => Template(MongoDBLogoMark, args);
 export const AtlasLockup = (args: LogoProps) => Template(AtlasLogoLockup, args);
 export const AtlasForGovernmentLockup = (args: LogoProps) =>

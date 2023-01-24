@@ -1,7 +1,9 @@
 import { css, keyframes } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
-import { ComboboxSize, Theme } from './Combobox.types';
+
+import { ComboboxSize } from './Combobox.types';
 
 /** Height of a menu item (in px) */
 export const menuItemHeight = 36;
@@ -42,8 +44,8 @@ export const menuBaseStyle = css`
 
 export const menuThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${uiColors.gray.dark3};
-    background-color: ${uiColors.white};
+    color: ${palette.gray.dark3};
+    background-color: ${palette.white};
   `,
   [Theme.Dark]: css``, // TODO: DarkMode
 };
@@ -63,7 +65,7 @@ export const menuMessageBaseStyle = css`
 
 export const menuMessageThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    ${uiColors.gray.dark1}
+    ${palette.gray.dark1}
   `,
   [Theme.Dark]: css``, // TODO: DarkMode
 };

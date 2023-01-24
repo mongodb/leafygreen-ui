@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import UsingKeyboardProvider, {
   NavigationKeyCodes,
-  UsingKeyboardContext,
   useUsingKeyboardContext,
+  UsingKeyboardContext,
 } from './UsingKeyboardContext';
-import userEvent from '@testing-library/user-event';
 
 const childTestID = 'using-keyboard-provider';
 const buttonTestId = 'test-button';
@@ -43,9 +44,9 @@ describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
     expect(container.firstChild).toBe(testChild);
   });
 
-  test('usingKeyboard is initialized as false', () => {
+  test('usingKeyboard is initialized as true', () => {
     const { testChild } = renderProvider();
-    expect(testChild.textContent).toBe('false');
+    expect(testChild.textContent).toBe('true');
   });
 
   Object.values(NavigationKeyCodes).forEach(keyCode => {
@@ -139,9 +140,9 @@ describe('useUsingKeyboardContext', () => {
       };
     }
 
-    test('before interaction, usingKeyboard is false', () => {
+    test('before interaction, usingKeyboard is true', () => {
       const { testChildElement } = renderTestComponent();
-      expect(testChildElement.textContent).toBe('false');
+      expect(testChildElement.textContent).toBe('true');
     });
 
     test(`usingKeyboard is true after userEvent.tab`, () => {

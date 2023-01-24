@@ -1,11 +1,13 @@
 import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+
 import {
+  getAccessibleProps,
   LogoProps,
   SupportedColors,
   SupportedColorsMap,
-  getAccessibleProps,
 } from './utils';
 
 /**

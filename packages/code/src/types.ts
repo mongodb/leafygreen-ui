@@ -1,4 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import { SupportedLanguages } from './languages';
 
 export const Mode = {
@@ -30,13 +31,6 @@ export interface SyntaxProps extends HTMLElementProps<'code'> {
    * The language to highlight the syntax of.
    */
   language: Language;
-
-  /**
-   * Determines whether or not the syntax will be rendered in dark mode.
-   *
-   * @default `false`
-   */
-  darkMode?: boolean;
 
   /**
    * Shows line numbers. This is specifically used for the Code component implementation.
@@ -118,22 +112,46 @@ export type CodeProps = Omit<
   onCopy?: Function;
 
   /**
-   * Custom action buttons.
+   * Custom action buttons. Should be an array of `IconButton`.
    *
+   * @type <IconButton />[]
    */
-  customActionButtons?: Array<React.ReactNode>;
+  customActionButtons?: Array<React.ReactElement>;
 
   /**
    * When true, custom action buttons will be shown.
    *
    */
   showCustomActionButtons?: boolean;
+
+  /**
+   * Determines whether or not the syntax will be rendered in dark mode.
+   *
+   * @default `false`
+   */
+  darkMode?: boolean;
 } & (
-    | { language: Language; languageOptions?: undefined; onChange?: undefined }
     | {
-        onChange: (arg0: LanguageOption) => void;
+        /**
+         * The language to format the code. See {@link SupportedLanguages}.
+         */
+        language: Language;
+        languageOptions?: undefined;
+        onChange?: undefined;
+      }
+    | {
+        /**
+         * The `displayName` of the selected `languageOption`
+         */
         language: LanguageOption['displayName'];
+        /**
+         * An array of `LanguageOptions` to select from. Enables the Language switcher.
+         */
         languageOptions: Array<LanguageOption>;
+        /**
+         * Callback fired when the language option changes.
+         */
+        onChange: (arg0: LanguageOption) => void;
       }
   ) &
   PopoverProps;
