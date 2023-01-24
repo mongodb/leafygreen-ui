@@ -1,5 +1,25 @@
 # @leafygreen-ui/text-area
 
+## 8.0.3
+
+### Patch Changes
+
+- 53d77f55d: Uses Error component from Typography package to handle formatting `errorMessage` prop
+- Updated dependencies [405636249]
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/hooks@7.4.0
+  - @leafygreen-ui/typography@15.3.0
+
+## 8.0.2
+
+### Patch Changes
+
+- a79ee7f5d: Remove `optional` from prop documentation, as the prop is not supported by the component
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
 ## 8.0.1
 
 ### Patch Changes

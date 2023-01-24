@@ -14,9 +14,7 @@ export default {
     darkMode: {
       control: 'boolean',
     },
-    checked: {
-      control: 'boolean',
-    },
+    checked: { control: 'none' },
     disabled: {
       control: 'boolean',
     },
@@ -29,6 +27,7 @@ export default {
     controls: {
       exclude: ['className', 'onChange'],
     },
+    default: 'Uncontrolled',
   },
 };
 
@@ -36,7 +35,11 @@ const Template: ComponentStory<typeof Toggle> = args => (
   <Toggle aria-labelledby="toggle" {...args} />
 );
 
-export const Basic = Template.bind({});
+export const Uncontrolled = Template.bind({});
+export const Controlled = Template.bind({});
+Controlled.argTypes = {
+  checked: { control: 'boolean' },
+};
 
 export const WithLabel: ComponentStory<typeof Toggle> = ({
   // eslint-disable-next-line react/prop-types

@@ -11,13 +11,13 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
   Description,
+  Error,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
 import {
   baseInputStyle,
-  errorMessageModeStyle,
   errorMessageStyle,
   getWrapperFontSize,
   iconClassName,
@@ -233,9 +233,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           </div>
         </div>
         {state === State.Error && errorMessage && (
-          <div className={cx(errorMessageStyle, errorMessageModeStyle[theme])}>
-            <span>{errorMessage}</span>
-          </div>
+          <Error darkMode={darkMode} className={errorMessageStyle}>
+            {errorMessage}
+          </Error>
         )}
       </div>
     );

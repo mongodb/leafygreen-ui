@@ -30,7 +30,12 @@ npm install @leafygreen-ui/side-nav
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 
 return (
-  <SideNav widthOverride={300}>
+  <SideNav
+    widthOverride={300}
+    className={css`
+      height: 100vh; // sets height of SideNav
+    `}
+  >
     <SideNavItem>Overview</SideNavItem>
     <SideNavItem>Introduction</SideNavItem>
     <SideNavItem>
@@ -289,6 +294,7 @@ _Any other properties will be spread on the root-level element._
 | `href`             | `string`                                           | When provided, the component will be rendered as an anchor element.                                                                                                                                                                                                                      | `undefined` |
 | `onClick`          | `function`                                         | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.                                                                                                                                                                        |             |
 | `as`               | `React.ElementType`                                | When provided, the component will be rendered as the component or html tag indicated by this prop. Other additional props will be spread on the anchor element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `undefined` |
+| `indentLevel`      | `Number`                                           | Changes the indentation. Will not work if `<SideNavItem>` is a child of `<SideNavGroup>`.                                                                                                                                                                                                | `1`         |
 | ...                | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                                                                                                                                                                                                                       |             |
 
 # CollapsedSideNavItem

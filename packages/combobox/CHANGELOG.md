@@ -1,5 +1,15 @@
 # @leafygreen-ui/combobox
 
+## 5.0.5
+
+### Patch Changes
+
+- c4eb3ec26: Removes use of uiColors from component
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
 ## 5.0.4
 
 ### Patch Changes

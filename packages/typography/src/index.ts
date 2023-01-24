@@ -1,6 +1,7 @@
 export { default as Body } from './Body/Body';
 export { default as Description } from './Description/Description';
 export { default as Disclaimer } from './Disclaimer/Disclaimer';
+export { default as Error } from './Error/Error';
 export { default as H1 } from './H1/H1';
 export { default as H2 } from './H2/H2';
 export { default as H3 } from './H3/H3';

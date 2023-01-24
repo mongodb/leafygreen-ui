@@ -1,5 +1,25 @@
 # @leafygreen-ui/text-input
 
+## 12.1.3
+
+### Patch Changes
+
+- 53d77f55d: Uses Error component from Typography package to handle formatting `errorMessage` prop
+- Updated dependencies [405636249]
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/hooks@7.4.0
+  - @leafygreen-ui/typography@15.3.0
+
+## 12.1.2
+
+### Patch Changes
+
+- 9c869ced2: Fixes transition property, so that animations on hover and focus work properly
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
 ## 12.1.1
 
 ### Patch Changes

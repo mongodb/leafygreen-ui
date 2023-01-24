@@ -1,5 +1,21 @@
 # @leafygreen-ui/side-nav
 
+## 13.0.1
+
+### Patch Changes
+
+- 86e2924c8: Updates Story file with better default props
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
+## 13.0.0
+
+### Major Changes
+
+- 351fbd350: Updates `SideNav` for dark mode brand refresh. Also applies new file structure internally.
+
 ## 12.0.2
 
 ### Patch Changes

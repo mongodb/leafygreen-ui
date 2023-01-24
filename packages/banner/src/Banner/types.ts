@@ -1,16 +1,14 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-const Variant = {
+export const Variant = {
   Info: 'info',
   Warning: 'warning',
   Danger: 'danger',
   Success: 'success',
 } as const;
 
-type Variant = typeof Variant[keyof typeof Variant];
-
-export { Variant };
+export type Variant = typeof Variant[keyof typeof Variant];
 
 export interface BannerProps
   extends HTMLElementProps<'div', never>,

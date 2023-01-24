@@ -1,5 +1,19 @@
 # @leafygreen-ui/typography
 
+## 15.3.0
+
+### Minor Changes
+
+- 53d77f55d: Introduces Error component to Typography package
+
+## 15.2.1
+
+### Patch Changes
+
+- d8c589d35: Updates Storybook example DOM structure (removes 'invalid nesting' error) & uses provider for darkMode on Typography story
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/palette@3.4.6
+
 ## 15.2.0
 
 ### Minor Changes

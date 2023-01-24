@@ -9,6 +9,7 @@ export default {
   title: 'Components/ExpandableCard',
   component: ExpandableCard,
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: [
         'className',
@@ -40,12 +41,9 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof ExpandableCard> = args => (
+export const Basic: ComponentStory<typeof ExpandableCard> = args => (
   <ExpandableCard {...args} />
 );
-
-export const Uncontrolled = Template.bind({});
-Uncontrolled.args = {};
 
 export const Controlled: ComponentStory<typeof ExpandableCard> = args => {
   const [isOpen, setIsOpen] = useState(false);

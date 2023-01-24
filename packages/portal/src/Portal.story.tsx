@@ -10,7 +10,9 @@ const portalChildrenStyle = css`
 `;
 
 function getRoot() {
-  const root = document.getElementById('root');
+  const root =
+    document.getElementById('root') ||
+    document.getElementById('story-container');
 
   if (root == null) {
     throw new Error('Could not find root element');
@@ -31,6 +33,12 @@ export default {
     },
     children: {
       control: false,
+    },
+  },
+  parameters: {
+    default: 'Basic',
+    controls: {
+      exclude: ['className', 'container'],
     },
   },
 } as Meta<typeof Portal>;
