@@ -3,7 +3,8 @@ import { Meta, Story } from '@storybook/react';
 import { cloneDeep, upperFirst } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
-import Code, { Language, LanguageOption } from '@leafygreen-ui/code';
+import Code, { Language } from '@leafygreen-ui/code';
+import { LanguageOption } from '@leafygreen-ui/code/src/types';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import {

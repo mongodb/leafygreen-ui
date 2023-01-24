@@ -22,7 +22,14 @@ _DEBUG && console.clear();
 
 const bezierDistance = 0.5525;
 
-export function generateBlobPath(shape: blobCode, _DEBUG = false) {
+/**
+ * Given a blobCode array,
+ * returns an svg path string
+ */
+export function generateBlobPath(
+  shape: blobCode,
+  _DEBUG = false,
+): string | undefined {
   if (!isValidShape(shape)) return;
 
   const vertexes = calcVertexes(shape);
