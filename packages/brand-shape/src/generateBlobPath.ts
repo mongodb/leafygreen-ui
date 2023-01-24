@@ -1,21 +1,21 @@
 /* eslint-disable no-console */
 import {
+  blobCode,
+  Coordinate,
+  countDirections,
+  Direction,
+  InverseDirection,
+  isCardinalDirection,
+  NextDirection,
+  PathPoint,
+  Vertex,
+} from './types';
+import {
   adjacentRowColumnCoordinates,
   isValidShape,
   makeBlobUtils,
   vertexCoordinatesForCenterPoint,
 } from './utils';
-import {
-  blobCode,
-  Direction,
-  PathPoint,
-  isCardinalDirection,
-  InverseDirection,
-  NextDirection,
-  countDirections,
-  Vertex,
-  Coordinate,
-} from './types';
 
 const _DEBUG = false;
 _DEBUG && console.clear();

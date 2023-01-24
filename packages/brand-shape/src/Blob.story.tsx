@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { cloneDeep, upperFirst } from 'lodash';
 import { Meta, Story } from '@storybook/react';
+import { cloneDeep, upperFirst } from 'lodash';
+
+import Button from '@leafygreen-ui/button';
+import Code, { Language, LanguageOption } from '@leafygreen-ui/code';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { Description, H1, H2 } from '@leafygreen-ui/typography';
-import Button from '@leafygreen-ui/button';
 import {
   SegmentedControl,
   SegmentedControlOption,
 } from '@leafygreen-ui/segmented-control';
-import Code, { Language, LanguageOption } from '@leafygreen-ui/code';
-import { Blob } from '.';
+import { Description, H1, H2 } from '@leafygreen-ui/typography';
+
 import { generateBlobPath } from './generateBlobPath';
 import {
   blobCode,
@@ -19,6 +20,7 @@ import {
   isCharEmpty,
   isCharLarge,
 } from './types';
+import { Blob } from '.';
 
 export default {
   title: 'Components/Blob',
