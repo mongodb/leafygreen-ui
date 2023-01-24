@@ -2304,11 +2304,6 @@
   dependencies:
     lodash "^4.17.21"
 
-"@leafygreen-ui/polymorphic@^0.1.0-next.1":
-  version "0.1.0-next.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/polymorphic/-/polymorphic-0.1.0-next.1.tgz#28ab5f405ccacf827d9314a1ee45283d6b851444"
-  integrity sha512-yQX3Twj2+QZ9Wyi6Y8bcdpmQa6L/YcNKQdvjDr15Ip+/piZoyZYi71b3mHVmd0E3Mq+u1xqdJsm5xTtq9QLbUg==
-
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"
