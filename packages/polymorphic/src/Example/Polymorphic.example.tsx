@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import {
-  type InferredPolymorphicProps,
+  InferredPolymorphic,
   Polymorph,
   Polymorphic,
   PolymorphicAs,
@@ -22,8 +22,9 @@ interface ExampleProps {
 
 /**
  * Uses `usePolymorphic` hook
+ *
+ * @example
  */
-
 export const ExamplePolymorphic = Polymorphic<ExampleProps>(
   ({ as, title, ...rest }) => {
     const { Component, ref } = usePolymorphic(as);
@@ -36,6 +37,9 @@ export const ExamplePolymorphic = Polymorphic<ExampleProps>(
   'ExamplePolymorphic',
 );
 
+/**
+ * @example
+ */
 export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
   ({ as, title, ...rest }, ref) => {
     const { Component } = usePolymorphic(as);
@@ -48,16 +52,37 @@ export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
   'ExamplePolymorphicWithRef',
 );
 
-export const ExampleInferred = Polymorphic<
-  InferredPolymorphicProps<ExampleProps>
->(({ as, title, ...rest }) => {
+/**
+ * @example
+ */
+export const ExampleInferred = InferredPolymorphic<ExampleProps>(
+  ({ as, title, ...rest }) => {
+    const { Component, ref } = useInferredPolymorphic(as, rest);
+    return (
+      <Component ref={ref} {...rest}>
+        {title}
+      </Component>
+    );
+  },
+  'ExampleInferred',
+);
+
+/**
+ * A test mocking the Button component
+ * @example
+ */
+export const ExampleInferredDefaultButton = InferredPolymorphic<
+  ExampleProps,
+  'button'
+>(({ as = 'button' as PolymorphicAs, title, ...rest }) => {
   const { Component, ref } = useInferredPolymorphic(as, rest);
+
   return (
     <Component ref={ref} {...rest}>
       {title}
     </Component>
   );
-}, 'ExampleInferred');
+}, 'ExampleInferredDefaultButton');
 
 /**
  * Advanced usage, not recommended
@@ -68,7 +93,7 @@ type AdvancedProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
 >;
 /**
  * Extends Polymorphic
- * @test
+ * @example
  */
 export const AdvancedPolymorphic = <T extends PolymorphicAs = 'div'>({
   as,
@@ -85,7 +110,7 @@ AdvancedPolymorphic.displayName = 'AdvancedPolymorphic';
 
 /**
  * Extends Polymorphic
- * @test
+ * @example
  */
 export const AdvancedPolymorphicWithRef = React.forwardRef(
   <T extends PolymorphicAs = 'div'>(
@@ -103,6 +128,7 @@ AdvancedPolymorphicWithRef.displayName = 'AdvancedPolymorphicWithRef';
 
 /**
  * Ensure `as` types can be restricted
+ * @example
  */
 type RestrictedType = 'a' | 'button' | React.ComponentType;
 type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
@@ -113,8 +139,7 @@ type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
 >;
 
 /**
- *
- * @test
+ * @example
  */
 export const RestrictedExample = <T extends RestrictedType = 'button'>({
   as,
@@ -125,7 +150,7 @@ export const RestrictedExample = <T extends RestrictedType = 'button'>({
 
 /**
  * Styled version of ExampleComponent
- * @test
+ * @example
  */
 export const StyledExample = styled(ExamplePolymorphic)`
   color: hotpink;

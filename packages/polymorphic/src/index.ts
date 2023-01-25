@@ -1,4 +1,5 @@
 export {
+  InferredPolymorphic,
   type InferredPolymorphicComponentType,
   type InferredPolymorphicProps,
   useInferredPolymorphic,
