@@ -7,6 +7,7 @@ import ErrorIcon from '@leafygreen-ui/icon/dist/X';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { States } from '../PasswordInput/PasswordInput.types';
+import { srOnly } from '../TogglePassword/TogglePassword.styles';
 
 import {
   baseStyles,
@@ -14,7 +15,7 @@ import {
   iconThemeStateStyles,
   themeStyles,
 } from './ValidationMessage.styles';
-import { ValidationMessageProps } from './ValidationMessage.types';
+import { ValidationValidationStateProps } from './ValidationMessage.types';
 
 const validationIcons: Record<States, React.ComponentType<any>> = {
   [States.Error]: ErrorIcon,
@@ -26,7 +27,7 @@ const validationIcons: Record<States, React.ComponentType<any>> = {
 export const ValidationMessage = ({
   message,
   state,
-}: ValidationMessageProps) => {
+}: ValidationValidationStateProps) => {
   const ValidationIcon = validationIcons[state];
 
   const { theme } = useDarkMode();
@@ -37,6 +38,10 @@ export const ValidationMessage = ({
         className={cx(iconBaseStyles, iconThemeStateStyles[theme][state])}
       />
       <span>{message}</span>
+      <div className={srOnly}>
+        {/* TODO: is this message clear enough for screen readers? */}
+        {message}: {state}
+      </div>
     </li>
   );
 };

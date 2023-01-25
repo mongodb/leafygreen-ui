@@ -19,24 +19,10 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export interface ValidationProps {
-  message: string;
+export interface ValidationStateProps {
+  message?: string;
   state: States;
 }
-
-interface DescribedbyProps {
-  ['aria-describedby']: string;
-  state: States;
-}
-
-interface IgnoredProps {
-  // TODO: ValidationProps
-  ['aria-describedby']?: undefined;
-  state?: never;
-  // TODO: add validations
-}
-
-type ConditionalProps = DescribedbyProps | IgnoredProps;
 
 // TODO: check this
 interface AriaLabelProps {
@@ -65,10 +51,38 @@ interface AriaLabelProps {
 
 type AriaLabels = keyof AriaLabelProps;
 
+// Using custom message container with aria-describedby
+interface StateOnlyProps {
+  /**
+   *
+   */
+  ['aria-describedby']: string;
+
+  /**
+   * Determines what messages will appear
+   */
+  validationState: States;
+}
+
+// using default message container, no aria-describedby
+interface StateAndMessageProps {
+  /**
+   *
+   */
+  ['aria-describedby']?: never;
+
+  /**
+   * Determines what messages will appear
+   */
+  validationState?: Array<ValidationStateProps>;
+}
+
+export type MessagesProp = StateAndMessageProps | StateOnlyProps;
+
 interface BasePasswordInputProps
   extends Omit<
       ComponentPropsWithoutRef<'input'>,
-      'onChange' | 'type' | AriaLabels
+      'onChange' | 'type' | AriaLabels | 'aria-describedby'
     >,
     DarkModeProps {
   /**
@@ -102,55 +116,8 @@ interface BasePasswordInputProps
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.
    */
   id?: string;
-
-  /**
-   * Determines what validations will appear.
-   */
-  validations: Array<ValidationProps>; //TODO: consider making conditional
 }
 
 export type PasswordInputProps = BasePasswordInputProps &
-  ConditionalProps &
+  MessagesProp &
   AriaLabelProps;
-
-// export type PasswordInputProps = {
-//   /**
-//    * The current value of the input.
-//    */
-//   value?: string;
-
-//   /**
-//    * Determines the font size and padding.
-//    */
-
-//   sizeVariant?: SizeVariant;
-
-//   /**
-//    * Determines whether the field is currently disabled.
-//    * Default: false
-//    */
-//   disabled?: boolean;
-
-//   /**
-//    * Callback fired when the input value changes
-//    */
-//   onChange?: ChangeEventHandler<HTMLInputElement>;
-
-//   /**
-//    * Label that appears above the input.
-//    */
-//   label?: string;
-
-//   /**
-//    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.
-//    */
-//   id?: string;
-
-//   /**
-//    * Determines what validations will appear.
-//    */
-//   validations: Array<ValidationProps>;
-// } & ConditionalProps &
-//   AriaLabels &
-//   Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'type'> &
-//   DarkModeProps;

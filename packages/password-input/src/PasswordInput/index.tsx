@@ -1,2 +1,2 @@
 export { PasswordInput } from './PasswordInput';
-export { SizeVariant } from './PasswordInput.types';
+export { MessagesProp, SizeVariant } from './PasswordInput.types';

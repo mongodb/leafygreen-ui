@@ -19,11 +19,16 @@ import {
   labelBaseStyles,
   messageWrapperStyles,
 } from './PasswordInput.styles';
-import { PasswordInputProps, SizeVariant, States } from './PasswordInput.types';
+import {
+  PasswordInputProps,
+  SizeVariant,
+  States,
+  ValidationStateProps,
+} from './PasswordInput.types';
 
-// function allEqual(arr: Array<any>) {
-//   return new Set(arr).size == 1;
-// }
+function allEqual(arr: Array<any>) {
+  return new Set(arr).size == 1;
+}
 
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
@@ -38,18 +43,16 @@ export const PasswordInput = React.forwardRef<
       darkMode: darkModeProp,
       label,
       sizeVariant = SizeVariant.Default,
-      validations = [],
+      validationState = [],
       disabled = false,
       autoComplete = 'new-password',
       id: idProp,
       'aria-describedby': ariaDescribedbyProp,
       'aria-labelledby': ariaLabelledbyProp,
-      state: stateProp, //TODO: get rid of this prop
       ...rest
     }: PasswordInputProps,
     forwardedRef,
   ) => {
-    const [state, setState] = useState<States>(States.None);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const prefix = 'passwordinput';
     const inputId = useIdAllocator({ prefix, id: idProp });
@@ -62,11 +65,31 @@ export const PasswordInput = React.forwardRef<
       id: ariaLabelledbyProp,
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
+
+    // TODO: handle validation hook
+
     // const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
-    // const validationStates: Array<States> = useMemo(() => [], []);
-
     const handleTogglePasswordClick = () => setShowPassword(s => !s);
+
+    const getStateFromArray = (): States => {
+      if (validationState.length === 0) return States.None;
+
+      const statesArray: Array<States> = (
+        validationState as Array<ValidationStateProps>
+      ).map((message: ValidationStateProps) => message.state);
+
+      // if (statesArray.length === 1) return statesArray[0];
+      if (allEqual(statesArray)) return statesArray[0];
+      if (statesArray.includes(States.Error)) return States.Error;
+      if (statesArray.includes(States.Warning)) return States.Warning;
+
+      return States.None;
+    };
+
+    const state: States = Array.isArray(validationState)
+      ? getStateFromArray()
+      : validationState;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -106,15 +129,24 @@ export const PasswordInput = React.forwardRef<
               sizeVariant={sizeVariant}
             />
           </div>
-          <ul className={messageWrapperStyles} id={ariaDescribedby}>
-            <ValidationMessage message="one" state={States.Error} />
-            <ValidationMessage message="two" state={States.Warning} />
-            <ValidationMessage
-              message="This is a really long line of text that will wrap"
-              state={States.Valid}
-            />
-            <ValidationMessage message="four" state={States.None} />
-          </ul>
+          {!ariaDescribedbyProp && Array.isArray(validationState) && (
+            // We're using aria-polite to announce when a message has changed. In order for aria-polite to work correctly the message wrapper needs to remain on the page even if there are no messages. If a custom message container is specified with aria-describedby then this wrapper will not render.
+            <ul
+              aria-live="polite"
+              className={messageWrapperStyles}
+              id={ariaDescribedby}
+            >
+              {(validationState as Array<ValidationStateProps>).map(
+                (message, index) => (
+                  <ValidationMessage
+                    key={index}
+                    message={message.message as string}
+                    state={message.state}
+                  />
+                ),
+              )}
+            </ul>
+          )}
         </div>
       </LeafyGreenProvider>
     );
@@ -122,3 +154,5 @@ export const PasswordInput = React.forwardRef<
 );
 
 PasswordInput.displayName = 'PasswordInput';
+
+//TODO: propTypes!

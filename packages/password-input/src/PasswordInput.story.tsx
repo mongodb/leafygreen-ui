@@ -1,9 +1,10 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { Story } from '@storybook/react';
 
 import {
+  PasswordInputProps,
   SizeVariant,
-  ValidationProps,
+  ValidationStateProps,
 } from './PasswordInput/PasswordInput.types';
 import { PasswordInput } from '.';
 
@@ -53,15 +54,31 @@ export default {
 //   },
 // ];
 
-const validations: Array<ValidationProps> = [
+const validations: Array<ValidationStateProps> = [
   {
     message: 'This is an error message',
-    state: 'valid',
+    state: 'error',
+  },
+  {
+    message: 'This is an error message',
+    state: 'error',
   },
 ];
 
-const Template: ComponentStory<typeof PasswordInput> = props => (
-  <PasswordInput {...props} validations={validations} />
+const Template: Story<PasswordInputProps> = props => (
+  <PasswordInput
+    {...props}
+    validationState={validations}
+    aria-describedby={undefined} //TODO: figure out why i need this
+  />
 );
 
 export const Basic = Template.bind({});
+
+export const CustomContainer = (props: PasswordInputProps) => (
+  <PasswordInput
+    {...props}
+    validationState="valid"
+    aria-describedby={'my-id'}
+  />
+);
