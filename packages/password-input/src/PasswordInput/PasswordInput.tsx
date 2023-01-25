@@ -96,6 +96,8 @@ export const PasswordInput = React.forwardRef<
     const hasValidationMessages =
       !ariaDescribedbyProp && Array.isArray(validationState);
 
+    //TODO: make showpassword false if disabled
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div className={cx(className)} ref={forwardedRef}>
@@ -121,8 +123,8 @@ export const PasswordInput = React.forwardRef<
                 inputBaseStyles,
                 inputSizeStyles[sizeVariant],
                 inputFocusThemeStyles[theme],
-                inputThemeStyles[theme][state],
                 {
+                  [inputThemeStyles[theme][state]]: !disabled,
                   [cx(
                     inputDisabledBaseStyles,
                     inputDisabledThemeStyles[theme],
@@ -132,6 +134,7 @@ export const PasswordInput = React.forwardRef<
                 },
               )}
               onChange={handleChange}
+              readOnly={disabled ? true : false}
               {...rest}
             />
             {/* Visual icons inside the input will only render if aria-describedby is set and the state is not `none`. None does not need a visible icon */}

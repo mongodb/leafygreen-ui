@@ -74,23 +74,19 @@ export const inputBaseStyles = css`
 
 export const inputFocusThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:not(:disabled) {
-      color: ${palette.black};
-      background: ${palette.white};
-    }
+    color: ${palette.black};
+    background: ${palette.white};
 
-    &:not(:disabled):focus-visible {
+    &:focus-visible {
       box-shadow: ${focusRing.light.input};
       border-color: ${palette.white};
     }
   `,
   [Theme.Dark]: css`
-    &:not(:disabled) {
-      background-color: ${palette.gray.dark4};
-      color: ${palette.gray.light2};
-    }
+    background-color: ${palette.gray.dark4};
+    color: ${palette.gray.light2};
 
-    &:not(:disabled):focus-visible {
+    &:focus-visible {
       box-shadow: ${focusRing.dark.input};
       border-color: ${palette.gray.dark4};
     }
@@ -119,26 +115,22 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
 };
 
 export const errorWarningDarkThemeStyles = css`
-  &:not(:disabled) {
-    border-color: ${palette.red.base};
+  border-color: ${palette.red.base};
 
-    &:hover,
-    &:active {
-      &:not(:disabled):not(:focus) {
-        box-shadow: ${hoverRing.dark.red};
-      }
+  &:hover,
+  &:active {
+    &:not(:focus-visible) {
+      box-shadow: ${hoverRing.dark.red};
     }
   }
 `;
 export const errorWarningLightThemeStyles = css`
-  &:not(:disabled) {
-    border-color: ${palette.red.base};
+  border-color: ${palette.red.base};
 
-    &:hover,
-    &:active {
-      &:not(:disabled):not(:focus) {
-        box-shadow: ${hoverRing.light.red};
-      }
+  &:hover,
+  &:active {
+    &:not(:focus-visible) {
+      box-shadow: ${hoverRing.light.red};
     }
   }
 `;
@@ -152,26 +144,22 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
       ${errorWarningLightThemeStyles};
     `,
     [States.Valid]: css`
-      &:not(:disabled) {
-        border-color: ${palette.green.dark1};
+      border-color: ${palette.green.dark1};
 
-        &:hover,
-        &:active {
-          &:not(:disabled):not(:focus) {
-            box-shadow: ${hoverRing.light.green};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus-visible) {
+          box-shadow: ${hoverRing.light.green};
         }
       }
     `,
     [States.None]: css`
-      &:not(:disabled) {
-        border-color: ${palette.gray.base};
+      border-color: ${palette.gray.base};
 
-        &:hover,
-        &:active {
-          &:not(:disabled):not(:focus) {
-            box-shadow: ${hoverRing.light.gray};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus-visible) {
+          box-shadow: ${hoverRing.light.gray};
         }
       }
     `,
@@ -184,26 +172,22 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
       ${errorWarningDarkThemeStyles};
     `,
     [States.Valid]: css`
-      &:not(:disabled) {
-        border-color: ${palette.green.dark1};
+      border-color: ${palette.green.dark1};
 
-        &:hover,
-        &:active {
-          &:not(:disabled):not(:focus) {
-            box-shadow: ${hoverRing.dark.green};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus-visible) {
+          box-shadow: ${hoverRing.dark.green};
         }
       }
     `,
     [States.None]: css`
-      &:not(:disabled) {
-        border-color: ${palette.gray.base};
+      border-color: ${palette.gray.base};
 
-        &:hover,
-        &:active {
-          &:not(:disabled):not(:focus) {
-            box-shadow: ${hoverRing.dark.gray};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus-visible) {
+          box-shadow: ${hoverRing.dark.gray};
         }
       }
     `,
@@ -221,10 +205,22 @@ export const messageWrapperStyles = css`
   }
 `;
 
+//TODO: add padding!!
 export const inputIconStyles = css``;
 
-export const inputDisabledBaseStyles = css``;
+export const inputDisabledBaseStyles = css`
+  cursor: not-allowed;
+`;
+
 export const inputDisabledThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css``,
-  [Theme.Dark]: css``,
+  [Theme.Light]: css`
+    background-color: ${palette.gray.light2};
+    border-color: ${palette.gray.light1};
+    color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark3};
+    border-color: ${palette.gray.dark2};
+    color: ${palette.gray.dark1};
+  `,
 };
