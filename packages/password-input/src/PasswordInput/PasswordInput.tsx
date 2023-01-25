@@ -68,7 +68,7 @@ export const PasswordInput = React.forwardRef<
 
     // TODO: handle validation hook
 
-    // const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
+    const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
     const handleTogglePasswordClick = () => setShowPassword(s => !s);
 
@@ -107,7 +107,7 @@ export const PasswordInput = React.forwardRef<
             <input
               ref={forwardedRef}
               type={showPassword ? 'text' : 'password'}
-              // value={value}
+              value={value}
               id={inputId}
               autoComplete={autoComplete}
               aria-describedby={ariaDescribedby}
@@ -119,7 +119,7 @@ export const PasswordInput = React.forwardRef<
                 inputFocusThemeStyles[theme],
                 inputThemeStyles[theme][state],
               )}
-              // onChange={handleChange}
+              onChange={handleChange}
               {...rest}
             />
             <TogglePassword
