@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { RadioGroupProps, Size } from './types';
@@ -25,7 +26,7 @@ import { RadioGroupProps, Size } from './types';
  * @param props.size Determines the size of the Radio components Can be 'small' or 'default.
  */
 function RadioGroup({
-  darkMode = false,
+  darkMode: darkModeProp,
   size = Size.Default,
   className,
   onChange,
@@ -36,6 +37,8 @@ function RadioGroup({
 }: RadioGroupProps) {
   let isControlled = controlledValue != null ? true : false,
     defaultChecked = '';
+
+  const { darkMode } = useDarkMode(darkModeProp);
 
   React.Children.forEach(children, child => {
     if (isComponentType(child, 'Radio')) {
