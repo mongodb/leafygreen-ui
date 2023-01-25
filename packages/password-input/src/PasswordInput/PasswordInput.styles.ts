@@ -220,3 +220,11 @@ export const messageWrapperStyles = css`
     margin-top: ${spacing[1]}px;
   }
 `;
+
+export const inputIconStyles = css``;
+
+export const inputDisabledBaseStyles = css``;
+export const inputDisabledThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css``,
+  [Theme.Dark]: css``,
+};

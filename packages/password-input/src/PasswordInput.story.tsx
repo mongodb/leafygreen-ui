@@ -4,6 +4,7 @@ import { Story } from '@storybook/react';
 import {
   PasswordInputProps,
   SizeVariant,
+  States,
   ValidationStateProps,
 } from './PasswordInput/PasswordInput.types';
 import { PasswordInput } from '.';
@@ -65,6 +66,7 @@ const validations: Array<ValidationStateProps> = [
   },
 ];
 
+// TODO: HELP
 const Template: Story<PasswordInputProps> = props => (
   <PasswordInput
     {...props}
@@ -75,10 +77,20 @@ const Template: Story<PasswordInputProps> = props => (
 
 export const Basic = Template.bind({});
 
-export const CustomContainer = (props: PasswordInputProps) => (
+export const CustomContainer = ({
+  validationState,
+  ...rest
+}: PasswordInputProps) => (
   <PasswordInput
-    {...props}
-    validationState="valid"
+    {...rest}
+    validationState={validationState as States}
     aria-describedby={'my-id'}
   />
 );
+
+CustomContainer.argTypes = {
+  validationState: {
+    control: 'select',
+    options: Object.values(States),
+  },
+};

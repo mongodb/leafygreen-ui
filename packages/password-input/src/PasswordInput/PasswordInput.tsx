@@ -7,12 +7,16 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Label } from '@leafygreen-ui/typography';
 
+import { InputIcon } from '../InputIcon';
 import { TogglePassword } from '../TogglePassword';
 import { ValidationMessage } from '../ValidationMessage';
 
 import {
   inputBaseStyles,
+  inputDisabledBaseStyles,
+  inputDisabledThemeStyles,
   inputFocusThemeStyles,
+  inputIconStyles,
   inputSizeStyles,
   inputThemeStyles,
   inputWrapperStyles,
@@ -65,10 +69,8 @@ export const PasswordInput = React.forwardRef<
       id: ariaLabelledbyProp,
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
-
-    // TODO: handle validation hook
-
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
+    // TODO: handle validation hook
 
     const handleTogglePasswordClick = () => setShowPassword(s => !s);
 
@@ -91,9 +93,12 @@ export const PasswordInput = React.forwardRef<
       ? getStateFromArray()
       : validationState;
 
+    const hasValidationMessages =
+      !ariaDescribedbyProp && Array.isArray(validationState);
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div className={cx(className)}>
+        <div className={cx(className)} ref={forwardedRef}>
           {label && (
             <Label
               id={ariaLabelledby}
@@ -105,7 +110,6 @@ export const PasswordInput = React.forwardRef<
           )}
           <div className={inputWrapperStyles}>
             <input
-              ref={forwardedRef}
               type={showPassword ? 'text' : 'password'}
               value={value}
               id={inputId}
@@ -118,10 +122,22 @@ export const PasswordInput = React.forwardRef<
                 inputSizeStyles[sizeVariant],
                 inputFocusThemeStyles[theme],
                 inputThemeStyles[theme][state],
+                {
+                  [cx(
+                    inputDisabledBaseStyles,
+                    inputDisabledThemeStyles[theme],
+                  )]: disabled,
+                  [inputIconStyles]:
+                    !hasValidationMessages && state !== States.None,
+                },
               )}
               onChange={handleChange}
               {...rest}
             />
+            {/* Visual icons inside the input will only render if aria-describedby is set and the state is not `none`. None does not need a visible icon */}
+            {!hasValidationMessages && state !== States.None && (
+              <InputIcon state={state} />
+            )}
             <TogglePassword
               disabled={disabled}
               showPassword={showPassword}
@@ -129,7 +145,7 @@ export const PasswordInput = React.forwardRef<
               sizeVariant={sizeVariant}
             />
           </div>
-          {!ariaDescribedbyProp && Array.isArray(validationState) && (
+          {hasValidationMessages && (
             // We're using aria-polite to announce when a message has changed. In order for aria-polite to work correctly the message wrapper needs to remain on the page even if there are no messages. If a custom message container is specified with aria-describedby then this wrapper will not render.
             <ul
               aria-live="polite"
@@ -139,7 +155,7 @@ export const PasswordInput = React.forwardRef<
               {(validationState as Array<ValidationStateProps>).map(
                 (message, index) => (
                   <ValidationMessage
-                    key={index}
+                    key={index} //TODO: don't use index
                     message={message.message as string}
                     state={message.state}
                   />
