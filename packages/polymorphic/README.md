@@ -18,6 +18,7 @@ There are two main ways to use `Polymorphic`, depending on whether the `as` prop
 ## Basic usage
 
 If the logic defining the `as` prop is defined internally within your component, use the standalone `Polymorph` component.
+A simple example of this may be rendering an element as a header or paragraph text depending on certain props passed in.
 
 ```tsx
 interface MyProps {
@@ -25,7 +26,7 @@ interface MyProps {
 }
 
 const MyComponent = (props: MyProps) => {
-  const shouldRenderAs = 'button';
+  const shouldRenderAs = props.isHeader ? 'h1' : 'p';
   return <Polymorph as={shouldRenderAs} {...props} />;
 };
 ```
@@ -33,6 +34,7 @@ const MyComponent = (props: MyProps) => {
 ## Extending Polymorphic behavior
 
 If you want to expose `as` as a prop of your component, use the `Polymorphic` factory function and related hooks.
+This is likely the more common use case, since it allows you to create new polymorphic components (such as a `Button` component that can render as a link, etc.)
 
 Note that any inherited props will be indeterminate in the factory function, since the value `as` is not known. (i.e. the attributes of `rest` in the following example are unknown).
 
@@ -83,8 +85,10 @@ export const MyInferredComponent = Polymorphic<
 <MyInferredComponent href="mongodb.design" />; // renders as <a>
 ```
 
-#### With a default `as` value
+#### Inferred `as` with a default value
 
+Sometimes, when developing a component that uses Polymorphic, you'll want to set a default value for the `as` prop.
+For example, when creating a Button component, you may want to have the `as` prop default to the HTML `button` element.
 To set a default value for the inferred as value, you'll need to provide the default value both to TypeScript and React:
 
 ```tsx
