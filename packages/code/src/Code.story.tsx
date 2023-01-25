@@ -97,6 +97,7 @@ export default {
         'scrollContainer',
         'popoverZIndex',
         'ref',
+        'languageOptions',
       ],
     },
   },
