@@ -69,6 +69,7 @@ import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import Minus from './Minus.svg';
+import NoFilter from './NoFilter.svg';
 import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
 import OpenNewTab from './OpenNewTab.svg';
@@ -184,6 +185,7 @@ const _glyphs = {
   Megaphone,
   Menu,
   Minus,
+  NoFilter,
   NotAllowed,
   Note,
   OpenNewTab,
