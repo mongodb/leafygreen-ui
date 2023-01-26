@@ -5,7 +5,7 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import { TableContextValues } from './TableContext.types';
+import { ColumnAlignment, TableContextValues } from './TableContext.types';
 
 export const TableContext = createContext({});
 export const useTableContext = () =>
@@ -17,7 +17,7 @@ const TableContextProvider = ({
   shouldAlternateRowColor,
 }: PropsWithChildren<Partial<TableContextValues>>) => {
   const [columnAlignments, setColumnAlignments] =
-    useState<Record<number, 'left' | 'right' | 'center'>>();
+    useState<Record<number, ColumnAlignment>>();
 
   return (
     <LeafygreenProvider darkMode={darkMode}>

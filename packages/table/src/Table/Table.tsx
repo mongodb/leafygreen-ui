@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -39,6 +40,12 @@ const Table = ({
       </table>
     </TableContextProvider>
   );
+};
+
+Table.propTypes = {
+  darkMode: PropTypes.bool,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
+  shouldAlternateRowColor: PropTypes.bool,
 };
 
 export default Table;

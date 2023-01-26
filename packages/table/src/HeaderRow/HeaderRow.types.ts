@@ -1,3 +1,3 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface HeaderRowProps extends HTMLElementProps<'tr'>, DarkModeProps {}
+export interface HeaderRowProps extends HTMLElementProps<'tr'> {}

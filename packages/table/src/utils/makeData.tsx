@@ -55,7 +55,7 @@ export function makeData(
 
   const makeDataLevel = (depth = 0): Array<any> => {
     const len = lens[depth]!;
-    return range(len).map((d): any => {
+    return range(len).map((_): any => {
       return {
         ...newPerson(),
         ...(hasSubRows &&

@@ -22,13 +22,9 @@ const flexAlignment: Record<string, string> = {
   center: 'center',
 };
 
-export const alignmentStyles = (align: Align) => {
-  if (align) {
-    return css`
-      justify-content: ${flexAlignment[align]};
-    `;
-  }
-};
+export const alignmentStyles = (align: Align = 'left') => css`
+  justify-content: ${flexAlignment[align]};
+`;
 
 export const depthPadding = (depth: number) => css`
   padding-left: ${16 * depth}px;

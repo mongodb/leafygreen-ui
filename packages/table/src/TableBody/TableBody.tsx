@@ -13,11 +13,11 @@ const TableBody = <T extends unknown>({
   const ContainerElement = renderingExpandableRows
     ? Fragment
     : (
-      props: React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLTableSectionElement>,
-        HTMLTableSectionElement
-      >,
-    ) => <tbody {...props} />;
+        props: React.DetailedHTMLProps<
+          React.HTMLAttributes<HTMLTableSectionElement>,
+          HTMLTableSectionElement
+        >,
+      ) => <tbody {...props} />;
 
   if (table && 'virtualRows' in table) {
     const { virtualRows, totalSize } = table;

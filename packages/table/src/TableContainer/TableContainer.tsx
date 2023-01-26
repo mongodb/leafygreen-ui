@@ -13,8 +13,8 @@ const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
     const handleScroll:
       | React.UIEventHandler<HTMLDivElement>
       | undefined = e => {
-        onScrollProp && onScrollProp(e);
-      };
+      onScrollProp && onScrollProp(e);
+    };
 
     return (
       <div

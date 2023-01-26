@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types*/
 import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
 import {
@@ -15,6 +16,7 @@ import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
+import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
 
@@ -64,7 +66,10 @@ DisabledRows.args = {
   disabled: true,
 };
 
-export const DisabledNestedRows: ComponentStory<typeof Row> = args => {
+export const DisabledNestedRows: ComponentStory<typeof Row> = ({
+  row,
+  ...rest
+}) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -150,19 +155,21 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = args => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: TSRow<Person>) => {
+            {rows.map((row: LeafygreenTableRow<Person>) => {
               return (
-                <Row key={row.id} row={row} {...args}>
-                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
-                    return (
-                      <Cell key={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
+                <Row key={row.id} row={row} {...rest}>
+                  {row
+                    .getVisibleCells()
+                    .map((cell: LeafygreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
                 </Row>
               );
             })}

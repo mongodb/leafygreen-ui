@@ -10,7 +10,7 @@ export interface InternalRowBaseProps extends HTMLElementProps<'tr'> {
   disabled?: boolean;
 }
 
-export interface InternalRowWithoutRTProps extends InternalRowBaseProps { }
+export interface InternalRowWithoutRTProps extends InternalRowBaseProps {}
 
 export interface InternalRowWithRTProps<T extends unknown>
   extends InternalRowBaseProps {
@@ -25,6 +25,5 @@ export interface InternalRowWithRTProps<T extends unknown>
 }
 
 export type RowProps<T extends unknown> = PropsWithChildren<
-  | InternalRowWithoutRTProps
-  | InternalRowWithRTProps<T>
->
+  InternalRowWithoutRTProps & Partial<InternalRowWithRTProps<T>>
+>;

@@ -2,7 +2,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import React, { Fragment, ReactElement, ReactNode } from 'react';
 import InternalCellWithRT from '../Cell/InternalCellWithRT';
-import { LeafygreenTableType } from '../useLeafygreenTable';
+import { LeafygreenTableRow } from '../useLeafygreenTable';
 import InternalRowBase from './InternalRowBase';
 import {
   expandedContentStyles,
@@ -18,7 +18,7 @@ const InternalRowWithRT = <T extends unknown>({
   virtualRow,
   disabled,
   ...rest
-}: InternalRowWithRTProps<LeafygreenTableType<T>>) => {
+}: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
   const isNestedRowParent = row.depth === 0 && row.getIsExpanded();
   const isNestedRowOrParent = row.getIsExpanded() || row.depth > 0;
@@ -61,7 +61,7 @@ const InternalRowWithRT = <T extends unknown>({
             colSpan={row?.getVisibleCells().length}
             className={expandedContentStyles[theme]}
           >
-            {ExpandedContentRowProp(row)}
+            {ExpandedContentRowProp(row as LeafygreenTableRow<T>)}
           </td>
         </tr>
       )}

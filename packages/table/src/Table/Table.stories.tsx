@@ -10,8 +10,7 @@ import {
   Header,
   HeaderGroup,
   SortingState,
-} from '@tanstack/react-table';
-import { Cell as TSCell, Row as TSRow } from '@tanstack/table-core';
+} from '..';
 import React from 'react';
 import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
@@ -21,6 +20,7 @@ import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
+import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
 
@@ -33,6 +33,11 @@ export default {
     shouldAlternateRowColor: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
+  },
+  parameters: {
+    docs: {
+      source: { type: 'code' },
+    },
   },
 } as Meta<typeof Table>;
 
@@ -76,7 +81,7 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const NestedRows = () => {
+export const NestedRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -144,7 +149,7 @@ export const NestedRows = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table {...args}>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <HeaderRow key={headerGroup.id}>
@@ -162,19 +167,21 @@ export const NestedRows = () => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: TSRow<Person>) => {
+            {rows.map((row: LeafygreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
-                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
-                    return (
-                      <Cell key={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
+                  {row
+                    .getVisibleCells()
+                    .map((cell: LeafygreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
                 </Row>
               );
             })}
@@ -272,7 +279,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: TSRow<Person>) => {
+            {rows.map((row: LeafygreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map((cell: any) => {
@@ -398,7 +405,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: TSRow<Person>) => {
+            {rows.map((row: LeafygreenTableRow<Person>) => {
               return (
                 <Row key={row.id}>
                   {row.getVisibleCells().map((cell: any) => {
@@ -507,19 +514,21 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody table={table} renderingExpandableRows>
-            {rows.map((row: TSRow<Person>) => {
+            {rows.map((row: LeafygreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
-                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
-                    return (
-                      <Cell key={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
+                  {row
+                    .getVisibleCells()
+                    .map((cell: LeafygreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
                 </Row>
               );
             })}
@@ -617,19 +626,21 @@ export const KitchenSink = () => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: TSRow<Person>) => {
+            {rows.map((row: LeafygreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
-                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
-                    return (
-                      <Cell key={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
+                  {row
+                    .getVisibleCells()
+                    .map((cell: LeafygreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
                 </Row>
               );
             })}
