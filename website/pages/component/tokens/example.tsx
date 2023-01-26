@@ -89,7 +89,7 @@ export default function TokensLiveExample() {
                 font-size: 14px;
               `}
             >
-              Akzidenz, Helvetica Neue, Helvetica, Arial, sans-serif
+              Euclid Circular A, Helvetica Neue, Helvetica, Arial, sans-serif
             </p>
             <p
               className={css`
