@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "11.0.3",
+  "version": "11.0.4",
   "description": "LeafyGreen UI Kit Popover",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,8 +23,8 @@
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
     "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/portal": "^4.0.8",
-    "@leafygreen-ui/tokens": "^1.4.1",
+    "@leafygreen-ui/portal": "^4.0.9",
+    "@leafygreen-ui/tokens": "^2.0.0",
     "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {
@@ -40,7 +40,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/palette": "^3.4.5",
-    "@leafygreen-ui/button": "^19.0.3"
+    "@leafygreen-ui/palette": "^3.4.7",
+    "@leafygreen-ui/button": "^19.0.4"
   }
 }

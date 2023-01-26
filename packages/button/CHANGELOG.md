@@ -1,5 +1,17 @@
 # @leafygreen-ui/button
 
+## 19.0.4
+
+### Patch Changes
+
+- c82ed35d5: Removes `useUsingKeyboardContext` from component, in favor of `&:focus-visible`
+- b24b21462: Storybook: Updates story files to be on par with existing mongodb.design examples
+- Updated dependencies [741cdd408]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/tokens@2.0.0
+  - @leafygreen-ui/palette@3.4.7
+  - @leafygreen-ui/ripple@1.1.8
+
 ## 19.0.3
 
 ### Patch Changes

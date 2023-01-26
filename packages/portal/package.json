@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/portal",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "LeafyGreen UI Kit Portal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
