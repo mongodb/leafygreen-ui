@@ -94,7 +94,6 @@ export interface PolymorphicRenderFunction<
   displayName?: string;
   propTypes?: never;
 }
-
 /**
  * An explicit definition of the component type
  *
