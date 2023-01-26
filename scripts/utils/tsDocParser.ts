@@ -7,7 +7,7 @@ import {
 } from 'react-docgen-typescript';
 import chalk from 'chalk';
 import fs from 'fs';
-import { camelCase, isUndefined, uniqBy } from 'lodash';
+import { camelCase, defaults, isUndefined, uniqBy } from 'lodash';
 import path from 'path';
 import { CompilerOptions, JsxEmit } from 'typescript';
 
@@ -58,17 +58,47 @@ const compilerOptions: CompilerOptions = {
 
 const Parser = withCompilerOptions(compilerOptions, TSDocOptions);
 
+interface ParseFunctionOptions {
+  /**
+   * The path to the `packages` directory.
+   * Defaults to this repository's `packages/` folder.
+   *
+   * Set this to a remote repository's `node_modules/@leafygreen-ui` path
+   * to generate fresh docs in that repo.
+   */
+  packagesRoot?: string;
+
+  /**
+   * Any components with these excluded TSDoc `@tags`
+   * will be excluded from docs generation.
+   *
+   * Useful for excluding internal or example files from the TSDoc build
+   *
+   * @default `['example', 'internal']
+   */
+  excludeTags?: Array<string>;
+}
+const defaultParseFunctionOptions = {
+  packagesRoot: path.resolve(__dirname, '../../packages'),
+  excludeTags: ['example', 'internal'],
+};
+
 /**
  * Parses the TSDocs for the provided component
  * @param componentName string
  * @returns CustomComponentDoc[]
- * @param packagesRoot string = '../packages'
+ * @param options ParseFunctionOptions
  *
  */
 export function parseTSDoc(
   componentName: string,
-  packagesRoot = path.resolve(__dirname, '../../packages'),
+  options: ParseFunctionOptions = defaultParseFunctionOptions,
 ): Array<CustomComponentDoc> | undefined {
+  const { packagesRoot, excludeTags } = defaults(
+    options,
+    defaultParseFunctionOptions,
+  );
+
   const componentDir = path.resolve(
     __dirname,
     `${packagesRoot}/${componentName}`,
@@ -85,8 +115,8 @@ export function parseTSDoc(
             !doc.filePath.includes('node_modules') &&
             // Remove any components with no props
             Object.keys(doc.props).length > 0 &&
-            // Remove any internal components
-            isUndefined(doc.tags?.internal)
+            // Remove any docs with excluded tags
+            excludeTags.every(tag => isUndefined(doc.tags?.[tag]))
           );
         })
         .map(({ displayName, props, filePath, ...rest }) => {
