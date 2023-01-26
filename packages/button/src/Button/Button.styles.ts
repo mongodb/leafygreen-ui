@@ -243,78 +243,78 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
 const focusStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: css`
-      &:focus {
+      &:focus-visible {
         background-color: ${palette.white};
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.Primary]: css`
-      &:focus {
+      &:focus-visible {
         color: ${palette.white};
         background-color: #00593f; // Not quite dark3
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.PrimaryOutline]: css`
-      &:focus {
+      &:focus-visible {
         background-color: ${transparentize(0.96, palette.green.base)};
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.Danger]: css`
-      &:focus {
+      &:focus-visible {
         color: ${palette.white};
         background-color: #c82222; // not quite dark1
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.DangerOutline]: css`
-      &:focus {
+      &:focus-visible {
         color: ${palette.red.dark2};
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.BaseGreen]: css`
-      &:focus {
+      &:focus-visible {
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
   },
   [Theme.Dark]: {
     [Variant.Default]: css`
-      &:focus {
+      &:focus-visible {
         background-color: ${palette.gray.dark1};
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.Primary]: css`
-      &:focus {
+      &:focus-visible {
         background-color: #00593f; // Off palette
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.PrimaryOutline]: css`
-      &:focus {
+      &:focus-visible {
         background-color: ${transparentize(0.96, palette.green.base)};
         border-color: ${palette.green.base};
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.Danger]: css`
-      &:focus {
+      &:focus-visible {
         background-color: #c82222; // Off palette
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.DangerOutline]: css`
-      &:focus {
+      &:focus-visible {
         background-color: ${transparentize(0.96, palette.red.base)};
         border-color: ${palette.red.light1};
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.BaseGreen]: css`
-      &:focus {
+      &:focus-visible {
         background-color: ${palette.green.base};
         box-shadow: ${focusBoxShadow(palette.black)};
       }
@@ -398,12 +398,11 @@ export function getClassName({
   darkMode,
   baseFontSize,
   disabled,
-  usingKeyboard,
 }: Required<
   Pick<
     ButtonProps,
     'baseFontSize' | 'variant' | 'size' | 'darkMode' | 'disabled'
-  > & { usingKeyboard: boolean }
+  >
 >) {
   const theme = getTheme(darkMode);
   const color = colorSet[theme][variant];
@@ -416,7 +415,7 @@ export function getClassName({
     color,
     fontSize,
     size,
-    { [focus]: usingKeyboard && !disabled },
+    { [focus]: !disabled },
     { [disabledStyle[theme]]: disabled },
   );
 }
