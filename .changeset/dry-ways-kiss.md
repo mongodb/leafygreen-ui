@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/tokens': patch
+'@leafygreen-ui/tokens': major
 ---
 
-Remove Akzidenz from list of fallback fonts
+Removes Akzidenz from list of fallback fonts. Also removes `Legacy` from list of `fontFamilies`.
