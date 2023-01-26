@@ -1,5 +1,5 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
-import { Header } from '@tanstack/react-table';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { Header } from '..';
 
 export type Align = HTMLElementProps<'td'>['align'];
 
@@ -12,9 +12,12 @@ export const SortState: { [key: string]: string } = {
 
 export type SortState = typeof SortState[keyof typeof SortState];
 
+export interface SortStates {
+  [key: string]: SortState;
+}
+
 export interface HeaderCellProps<T extends unknown>
-  extends HTMLElementProps<'th'>,
-    DarkModeProps {
+  extends HTMLElementProps<'th'> {
   /**
    * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
    */

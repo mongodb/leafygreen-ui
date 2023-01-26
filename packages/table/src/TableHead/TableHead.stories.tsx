@@ -8,6 +8,7 @@ import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import { makeData } from '../utils/makeData';
+import { AnyDict } from '../utils/types';
 import TableHead from './TableHead';
 
 export default {
@@ -18,10 +19,6 @@ export default {
     ref: { control: 'none' },
   },
 } as Meta<typeof Table>;
-
-interface AnyDict {
-  [key: string]: any;
-}
 
 const Template: ComponentStory<typeof TableHead> = args => {
   const data = makeData(false, 100);

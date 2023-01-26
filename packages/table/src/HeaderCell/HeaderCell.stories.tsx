@@ -9,6 +9,7 @@ import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
 import { makeData } from '../utils/makeData';
+import { AnyDict } from '../utils/types';
 
 export default {
   title: 'Components/Table/HeaderCell',
@@ -21,10 +22,6 @@ export default {
     children: { control: 'none' },
   },
 } as Meta<typeof Table>;
-
-interface AnyDict {
-  [key: string]: any;
-}
 
 const Template: ComponentStory<typeof HeaderCell> = args => {
   const data: Array<AnyDict> = makeData(false, 100);

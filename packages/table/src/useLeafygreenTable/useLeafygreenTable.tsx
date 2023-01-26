@@ -37,7 +37,7 @@ const getSelectColumnConfig = <T extends unknown>() => {
         aria-label={`Select row ${row.index}`}
       />
     ),
-  } as ColumnDef<T, any>;
+  } as ColumnDef<T>;
 };
 
 type NonNullable<T> = Exclude<T, null | undefined>;
@@ -60,16 +60,16 @@ function useLeafygreenTable<T extends unknown>(
     useVirtualScrolling,
     ...rest
   } = props;
-  const columns: Array<ColumnDef<LeafygreenTableType<T>, any>> = [
+  const columns: Array<ColumnDef<LeafygreenTableType<T>>> = [
     ...(hasSelectableRows
-      ? [getSelectColumnConfig() as ColumnDef<LeafygreenTableType<T>, any>]
+      ? [getSelectColumnConfig() as ColumnDef<LeafygreenTableType<T>>]
       : []),
     ...columnsProp.map(
       propColumn =>
         ({
           ...propColumn,
           enableSorting: propColumn.enableSorting ?? false,
-        } as ColumnDef<LeafygreenTableType<T>, any>),
+        } as ColumnDef<LeafygreenTableType<T>>),
     ),
   ];
 

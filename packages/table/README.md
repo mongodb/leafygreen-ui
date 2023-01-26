@@ -19,11 +19,7 @@ While other features from [`react-table`](https://github.com/tanstack/table#quic
 
 #### Temp todos
 
-- propTypes for all exported components
 - create index.ts for all subcomponents
-- remove unused imports from all files
-- replace all instances of unnecessary `any` types
-- ensure TS types are failsafe
 - write tests
 
 # Installation
@@ -59,13 +55,13 @@ import {
 <Table {...args}>
   <TableHead>
     <HeaderRow>
-      {columns.map((columnName: any) => (
+      {columns.map((columnName: string) => (
         <HeaderCell key={columnName} columnName={columnName} />
       ))}
     </HeaderRow>
   </TableHead>
   <TableBody>
-    {data.map((row: any) => (
+    {data.map((row: LeafygreenTableRow<T>) => (
       <Row>
         {Object.keys(row).map((cellKey: string, index: number) => {
           return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;

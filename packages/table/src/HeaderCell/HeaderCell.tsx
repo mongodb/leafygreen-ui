@@ -7,15 +7,18 @@ import {
   contentContainerStyles,
   setWidth,
 } from './HeaderCell.styles';
-import { HeaderCellProps, SortState } from './HeaderCell.types';
+import { HeaderCellProps, SortState, SortStates } from './HeaderCell.types';
 import SortIcon from './SortIcon/SortIcon';
 
-const HeaderSortState: { [key: string]: SortState } = {
+const HeaderSortState: SortStates = {
   false: SortState.Off,
   asc: SortState.Asc,
   desc: SortState.Desc,
 };
 
+/**
+ * Component to wrap `<th>` elements for use inside `<thead>` elements.
+ */
 const HeaderCell = <T extends unknown>({
   children,
   className,
@@ -43,7 +46,7 @@ const HeaderCell = <T extends unknown>({
     setColumnAlignments &&
       cellIndex !== undefined &&
       align &&
-      setColumnAlignments((oldAlignments: any) => {
+      setColumnAlignments((oldAlignments?: SortStates) => {
         return {
           ...oldAlignments,
           [cellIndex]: align,
@@ -62,6 +65,7 @@ const HeaderCell = <T extends unknown>({
         },
         className,
       )}
+      scope="col"
       {...rest}
     >
       <div className={cx(contentContainerStyles, alignmentStyles(align))}>

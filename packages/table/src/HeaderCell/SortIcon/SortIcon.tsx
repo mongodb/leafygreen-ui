@@ -3,7 +3,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { SortState } from '../HeaderCell.types';
 import { SortIconProps } from './SortIcon.types';
 
@@ -30,7 +30,7 @@ const themeGlyphColors: Record<Theme, Record<SortState, string>> = {
 const SortIcon = ({ sortState, onSortIconClick, ...rest }: SortIconProps) => {
   const { theme } = useDarkMode();
 
-  const handleClick = (e: any) => {
+  const handleClick: MouseEventHandler = e => {
     onSortIconClick && onSortIconClick(e);
   };
 

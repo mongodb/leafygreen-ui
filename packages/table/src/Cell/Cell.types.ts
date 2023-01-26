@@ -1,10 +1,8 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
-import { Cell } from '@tanstack/table-core';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import ToggleExpandedIconProps from '../ToggleExpandedIcon/ToggleExpandedIcon.types';
+import { LeafygreenTableCell } from '../useLeafygreenTable';
 
-export interface InternalCellBaseProps
-  extends HTMLElementProps<'td'>,
-    DarkModeProps {
+export interface InternalCellBaseProps extends HTMLElementProps<'td'> {
   /**
    * Index of the cell in its parent row.
    */
@@ -24,7 +22,7 @@ export interface InternalCellWithRTProps<T extends unknown>
   /**
    * `Cell` object returned from the `useLeafygreenTable` hook
    */
-  cell: Cell<T, any>;
+  cell: LeafygreenTableCell<T>;
 }
 
 export type CellProps<T extends unknown> = HTMLElementProps<'td'> &

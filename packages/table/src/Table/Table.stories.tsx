@@ -7,8 +7,6 @@ import {
   getCoreRowModel,
   getExpandedRowModel,
   getSortedRowModel,
-  Header,
-  HeaderGroup,
   SortingState,
 } from '..';
 import React from 'react';
@@ -23,6 +21,7 @@ import TableHead from '../TableHead/TableHead';
 import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
+import { AnyDict } from '../utils/types';
 
 export default {
   title: 'Components/Table',
@@ -34,16 +33,14 @@ export default {
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
+  // This is needed as a workaround to make arg spreading performant
+  // https://github.com/storybookjs/storybook/issues/11657
   parameters: {
     docs: {
       source: { type: 'code' },
     },
   },
 } as Meta<typeof Table>;
-
-interface AnyDict {
-  [key: string]: any;
-}
 
 const Template: ComponentStory<typeof Table> = args => {
   const data = makeData(false, 100);
@@ -151,9 +148,9 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args}>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -263,9 +260,9 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args}>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: Header<Person, any>) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -282,7 +279,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
             {rows.map((row: LeafygreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
-                  {row.getVisibleCells().map((cell: any) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
                       <Cell key={cell.id} cell={cell}>
                         {flexRender(
@@ -389,9 +386,9 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args}>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -408,7 +405,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
             {rows.map((row: LeafygreenTableRow<Person>) => {
               return (
                 <Row key={row.id}>
-                  {row.getVisibleCells().map((cell: any) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(
@@ -498,9 +495,9 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args}>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -610,9 +607,9 @@ export const KitchenSink = () => {
       <TableContainer ref={tableContainerRef}>
         <Table>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(

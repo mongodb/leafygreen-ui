@@ -1,4 +1,5 @@
 import { Cell, Row, Table, TableOptions } from '@tanstack/react-table';
+import { RefObject } from 'react';
 import { VirtualItem } from 'react-virtual';
 
 // Below is copied from react-virtual as their types are exported
@@ -34,7 +35,7 @@ export type LeafygreenTableRow<T extends unknown> = unknown &
 
 export interface LeafygreenTableOptions<T extends unknown>
   extends TableOptions<LeafygreenTableType<T>> {
-  containerRef: any;
+  containerRef: RefObject<HTMLDivElement>;
   hasSelectableRows?: boolean;
   useVirtualScrolling?: boolean;
 }

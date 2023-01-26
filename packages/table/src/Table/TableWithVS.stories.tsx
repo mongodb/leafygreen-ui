@@ -7,11 +7,8 @@ import {
   getCoreRowModel,
   getExpandedRowModel,
   getSortedRowModel,
-  Header,
-  HeaderGroup,
   SortingState,
-} from '@tanstack/react-table';
-import { Cell as TSCell } from '@tanstack/table-core';
+} from '..';
 import React from 'react';
 import { VirtualItem } from 'react-virtual';
 import Cell from '../Cell/Cell';
@@ -100,9 +97,9 @@ export const Basic = () => {
       <TableContainer ref={tableContainerRef}>
         <Table>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -120,7 +117,7 @@ export const Basic = () => {
               const row = rows[virtualRow.index];
               return (
                 <Row key={row.id}>
-                  {row.getVisibleCells().map((cell: any) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(
@@ -212,9 +209,9 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
       <TableContainer ref={tableContainerRef}>
         <Table>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -234,7 +231,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
               const row = rows[virtualRow.index];
               return (
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
                       <Cell key={cell.id} cell={cell}>
                         {flexRender(
@@ -327,9 +324,9 @@ export const SortableRows = () => {
       <TableContainer ref={tableContainerRef}>
         <Table>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: Header<Person, any>) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -347,7 +344,7 @@ export const SortableRows = () => {
               const row = rows[virtualRow.index];
               return (
                 <Row key={row.id}>
-                  {row.getVisibleCells().map((cell: any) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(
@@ -456,9 +453,9 @@ export const SelectableRows = () => {
       <TableContainer ref={tableContainerRef}>
         <Table>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -472,11 +469,11 @@ export const SelectableRows = () => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {table.virtualRows.map((virtualRow: any) => {
+            {table.virtualRows.map(virtualRow => {
               const row = rows[virtualRow.index];
               return (
                 <Row key={row.id}>
-                  {row.getVisibleCells().map((cell: any) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(
@@ -568,9 +565,9 @@ export const ExpandableContent = () => {
       <TableContainer ref={tableContainerRef}>
         <Table>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
@@ -584,11 +581,11 @@ export const ExpandableContent = () => {
             ))}
           </TableHead>
           <TableBody table={table} renderingExpandableRows>
-            {table.virtualRows.map((virtualRow: any) => {
+            {table.virtualRows.map(virtualRow => {
               const row = rows[virtualRow.index];
               return (
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {row.getVisibleCells().map((cell: TSCell<Person, any>) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
                       <Cell key={cell.id} cell={cell}>
                         {flexRender(

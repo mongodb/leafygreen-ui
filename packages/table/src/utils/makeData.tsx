@@ -1,8 +1,9 @@
 import { faker } from '@faker-js/faker';
 import React from 'react';
+import { LeafygreenTableRow } from '../useLeafygreenTable';
 
 export interface Person {
-  id: any;
+  id: number;
   firstName: string;
   lastName: string;
   age: number;
@@ -40,12 +41,14 @@ const newPerson = (): Person => {
   };
 };
 
-const ExpandedContentComponent = ({ row }: any) => (
-  <>
-    Test
-    <pre>{JSON.stringify(row, null, 2)}</pre>
-  </>
-);
+const ExpandedContentComponent = (row: LeafygreenTableRow<unknown>) => {
+  return (
+    <>
+      Test
+      <pre>{JSON.stringify(row, null, 2)}</pre>
+    </>
+  );
+};
 
 export function makeData(
   renderingExpandableRows: boolean,
@@ -53,9 +56,9 @@ export function makeData(
 ) {
   const hasSubRows = !renderingExpandableRows && lens.length > 1;
 
-  const makeDataLevel = (depth = 0): Array<any> => {
+  const makeDataLevel = (depth = 0): Array<Person> => {
     const len = lens[depth]!;
-    return range(len).map((_): any => {
+    return range(len).map((_): Person => {
       return {
         ...newPerson(),
         ...(hasSubRows &&

@@ -19,6 +19,7 @@ import TableHead from '../TableHead/TableHead';
 import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
+import { AnyDict } from '../utils/types';
 
 export default {
   title: 'Components/Table/Row',
@@ -28,10 +29,6 @@ export default {
     ref: { control: 'none' },
   },
 } as Meta<typeof Table>;
-
-interface AnyDict {
-  [key: string]: any;
-}
 
 const Template: ComponentStory<typeof Row> = args => {
   const data = makeData(false, 100);
@@ -139,9 +136,9 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
       <TableContainer ref={tableContainerRef}>
         <Table>
           <TableHead>
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header: any) => {
+                {headerGroup.headers.map(header => {
                   return (
                     <HeaderCell key={header.id} header={header}>
                       {flexRender(
