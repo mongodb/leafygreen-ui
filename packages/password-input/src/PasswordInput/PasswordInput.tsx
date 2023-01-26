@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
@@ -72,6 +72,11 @@ export const PasswordInput = React.forwardRef<
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
     // TODO: handle validation hook
 
+    // If disabled then hide password
+    useEffect(() => {
+      if (disabled) setShowPassword(false);
+    }, [disabled]);
+
     const handleTogglePasswordClick = () => setShowPassword(s => !s);
 
     const getStateFromArray = (): States => {
@@ -96,8 +101,6 @@ export const PasswordInput = React.forwardRef<
     const hasValidationMessages =
       !ariaDescribedbyProp && Array.isArray(validationState);
 
-    //TODO: make showpassword false if disabled
-
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div className={cx(className)} ref={forwardedRef}>
@@ -106,6 +109,7 @@ export const PasswordInput = React.forwardRef<
               id={ariaLabelledby}
               className={labelBaseStyles}
               htmlFor={inputId}
+              disabled={disabled}
             >
               {label}
             </Label>

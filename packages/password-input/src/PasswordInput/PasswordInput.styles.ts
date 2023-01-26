@@ -19,6 +19,7 @@ const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
 export const labelBaseStyles = css`
   display: block;
+  margin-bottom: ${spacing[1]}px;
 `;
 
 export const inheritTypeScale = css`
