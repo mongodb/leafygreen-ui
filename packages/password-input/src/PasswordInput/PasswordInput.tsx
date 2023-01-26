@@ -123,6 +123,7 @@ export const PasswordInput = React.forwardRef<
               aria-describedby={ariaDescribedby}
               aria-labelledby={ariaLabelledby}
               aria-disabled={disabled}
+              aria-invalid={state === States.Error || state === States.Warning}
               className={cx(
                 inputBaseStyles,
                 inputSizeStyles[sizeVariant],
