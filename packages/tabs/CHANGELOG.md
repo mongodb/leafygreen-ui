@@ -1,5 +1,16 @@
 # @leafygreen-ui/tabs
 
+## 11.0.3
+
+### Patch Changes
+
+- c82ed35d5: Removes `useUsingKeyboardContext` from component, in favor of `&:focus-visible`
+- Updated dependencies [741cdd408]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/tokens@2.0.0
+  - @leafygreen-ui/palette@3.4.7
+  - @leafygreen-ui/portal@4.0.9
+
 ## 11.0.2
 
 ### Patch Changes

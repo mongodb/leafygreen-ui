@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.4.7
+
+### Patch Changes
+
+- b24b21462: Storybook: Updates story files to be on par with existing mongodb.design examples
+
 ## 3.4.6
 
 ### Patch Changes

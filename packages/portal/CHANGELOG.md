@@ -1,5 +1,11 @@
 # @leafygreen-ui/portal
 
+## 4.0.9
+
+### Patch Changes
+
+- b24b21462: Storybook: Updates story files to be on par with existing mongodb.design examples
+
 ## 4.0.8
 
 ### Patch Changes
