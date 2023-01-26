@@ -1,17 +1,14 @@
 import React from 'react';
 
-import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { getNodeTextContent, HTMLElementProps } from '@leafygreen-ui/lib';
+import { getNodeTextContent } from '@leafygreen-ui/lib';
+import {
+  Polymorph,
+  PolymorphicAs,
+  PolymorphicPropsWithRef,
+} from '@leafygreen-ui/polymorphic';
 
-type StaticWidthTextProps<T extends keyof JSX.IntrinsicElements> = Omit<
-  HTMLElementProps<T>,
-  'children'
-> & {
-  /**
-   * Text to render
-   */
-  children: string;
+interface LocalProps {
   /**
    * The maximum future weight of the text. Determines the width of the component.
    * @default 700
@@ -21,8 +18,12 @@ type StaticWidthTextProps<T extends keyof JSX.IntrinsicElements> = Omit<
    * Defines the pseudo element used to force the element width
    */
   pseudoElement?: 'before' | 'after';
-  as?: T;
-};
+}
+
+type StaticWidthTextProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
+  T,
+  LocalProps
+>;
 
 const staticWidthTextStyle = ({
   pseudoElement,
@@ -86,8 +87,8 @@ const childWrapper = css`
  * @internal
  *
  */
-export function StaticWidthText<T extends keyof JSX.IntrinsicElements>({
-  as = 'span' as T,
+export function StaticWidthText<T extends PolymorphicAs = 'span'>({
+  as,
   children,
   maxFontWeight = 700,
   pseudoElement = 'after',
@@ -97,16 +98,16 @@ export function StaticWidthText<T extends keyof JSX.IntrinsicElements>({
   // calling getNodeTextContent in case a node gets passed in without TS
   const textContent = getNodeTextContent(children);
   return (
-    <Box
+    <Polymorph
       className={cx(
         staticWidthTextStyle({ pseudoElement, maxFontWeight }),
         className,
       )}
-      as={as}
+      as={as ?? ('span' as PolymorphicAs)}
       data-text={textContent}
       {...rest}
     >
       <span className={childWrapper}>{children}</span>
-    </Box>
+    </Polymorph>
   );
 }
