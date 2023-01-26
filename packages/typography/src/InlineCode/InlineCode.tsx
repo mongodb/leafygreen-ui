@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import {
-  useDarkMode,
-  useUsingKeyboardContext,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { codeTypeScaleStyles } from '../styles';
@@ -34,7 +31,6 @@ const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
     }: InlineCodeProps,
     forwardedRef,
   ) => {
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
@@ -52,10 +48,10 @@ const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
           codeTypeScaleStyles[baseFontSize],
           code,
           codeModes[theme],
+          codeFocusModes[theme],
           whiteSpace,
           {
             [codeLinkStyleModes[theme]]: isAnchor,
-            [codeFocusModes[theme]]: showFocus,
           },
           className,
         )}
