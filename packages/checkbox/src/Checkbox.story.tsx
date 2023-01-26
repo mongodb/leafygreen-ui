@@ -1,10 +1,12 @@
-import { css } from '@leafygreen-ui/emotion';
-import { ComponentMeta, Story } from '@storybook/react';
 import React from 'react';
-import Checkbox from '.';
-import { CheckboxProps } from './types';
+import { ComponentMeta, Story } from '@storybook/react';
+
+import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import { CheckboxProps } from './types';
+import Checkbox from '.';
 
 export default {
   title: 'Components/Checkbox',
@@ -13,12 +15,13 @@ export default {
     controls: {
       exclude: ['children', 'className', 'aria-label', 'onChange'],
     },
+    default: 'Uncontrolled',
   },
   argTypes: {
     label: { control: 'text' },
     description: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
-    checked: { control: 'boolean' },
+    checked: { control: 'none' },
     disabled: { control: 'boolean' },
     bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
@@ -42,8 +45,8 @@ const Template: Story<CheckboxProps & { baseFontSize: BaseFontSize }> = ({
   </LeafygreenProvider>
 );
 
-export const Basic = Template.bind({});
-Basic.args = {
+export const Uncontrolled = Template.bind({});
+Uncontrolled.args = {
   animate: true,
   label: 'I agree to this thing.',
   description:
@@ -51,6 +54,11 @@ Basic.args = {
   className: css`
     max-width: 700px;
   `,
+};
+
+export const Controlled = Template.bind({});
+Controlled.argTypes = {
+  checked: { control: 'boolean' },
 };
 
 export const NoDescription = Template.bind({});

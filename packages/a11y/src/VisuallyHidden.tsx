@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const visuallyHidden = css`
   clip: rect(0, 0, 0, 0);

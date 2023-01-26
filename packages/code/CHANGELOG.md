@@ -1,5 +1,56 @@
 # @leafygreen-ui/code
 
+## 14.1.1
+
+### Patch Changes
+
+- 48ffa944d: Adds TSDoc annotations for `language`, `languageOptions` & `onChange`
+- Updated dependencies [405636249]
+  - @leafygreen-ui/hooks@7.4.0
+
+## 14.1.0
+
+### Minor Changes
+
+- 10dd1dc50: Remove `useUsingKeyboardContext` hook and use `focus-visible` to show focus states.
+
+### Patch Changes
+
+- Updated dependencies [703db871f]
+- Updated dependencies [c7f7fff56]
+  - @leafygreen-ui/palette@3.4.6
+  - @leafygreen-ui/button@19.0.3
+
+## 14.0.2
+
+### Patch Changes
+
+- 48013291e: Fixing bug where numbered cells would stretch excessively in wide viewports
+- Updated dependencies [75f26afbc]
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+  - @leafygreen-ui/icon-button@15.0.3
+  - @leafygreen-ui/icon@11.12.3
+
+## 14.0.1
+
+### Patch Changes
+
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [696adb1b6]
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [ed0e425e5]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [7ca2da507]
+  - @leafygreen-ui/select@10.1.0
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/button@19.0.1
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/icon-button@15.0.1
+
 ## 14.0.0
 
 ### Major Changes

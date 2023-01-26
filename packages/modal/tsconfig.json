@@ -35,9 +35,6 @@
       "path": "../tokens"
     },
     {
-      "path": "../button"
-    },
-    {
       "path": "../leafygreen-provider"
     }
   ]

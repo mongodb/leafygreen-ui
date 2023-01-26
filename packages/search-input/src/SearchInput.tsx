@@ -1,20 +1,22 @@
-import React, { forwardRef } from 'react';
-import { SearchInputProps, SizeVariant } from './types';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import React from 'react';
+
+import { cx } from '@leafygreen-ui/emotion';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import {
   baseInputStyle,
-  wrapperFontStyle,
   inputContainerStyle,
   inputFocusStyles,
-  inputThemeStyle,
   inputSizeStyles,
+  inputThemeStyle,
+  searchIconDisabledStyle,
+  searchIconSizeStyle,
   searchIconStyle,
   searchIconThemeStyle,
-  searchIconSizeStyle,
-  searchIconDisabledStyle,
+  wrapperFontStyle,
 } from './styles';
-import { cx } from '@leafygreen-ui/emotion';
+import { SearchInputProps, SizeVariant } from './types';
 
 /**
  * # SearchInput
@@ -29,9 +31,10 @@ import { cx } from '@leafygreen-ui/emotion';
  * @param props.sizeVariant determines the size of the text and the height of the input.
  * @param props.baseFontSize determines the base font size if sizeVariant is set to default.
  */
-type SearchInput = React.ForwardRefExoticComponent<SearchInputProps>;
-const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
-  (
+
+type SearchInputType = React.ForwardRefExoticComponent<SearchInputProps>;
+const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
+  function SearchInput(
     {
       placeholder = 'Search',
       className,
@@ -41,7 +44,7 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
-  ) => {
+  ) {
     const { theme } = useDarkMode(darkModeProp);
 
     return (
@@ -78,7 +81,7 @@ const SearchInput: SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       </div>
     );
   },
-);
+) as SearchInputType;
 
 SearchInput.displayName = 'SearchInput';
 

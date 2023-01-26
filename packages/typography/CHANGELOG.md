@@ -1,5 +1,57 @@
 # @leafygreen-ui/typography
 
+## 15.3.0
+
+### Minor Changes
+
+- 53d77f55d: Introduces Error component to Typography package
+
+## 15.2.1
+
+### Patch Changes
+
+- d8c589d35: Updates Storybook example DOM structure (removes 'invalid nesting' error) & uses provider for darkMode on Typography story
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/palette@3.4.6
+
+## 15.2.0
+
+### Minor Changes
+
+- a0d6638c4: Allows consuming applications to override baseFontSize as inherited from LeafyGreen Provider
+
+### Patch Changes
+
+- Updated dependencies [95bd93ef9]
+- Updated dependencies [3bb4b7506]
+  - @leafygreen-ui/icon@11.12.3
+
+## 15.1.1
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+
+## 15.1.0
+
+### Minor Changes
+
+- 6a266b813: Adds internal `StaticWidthText` component to prevent layout shift on font-weight change
+
+### Patch Changes
+
+- ba97d1ef7: Refactors component to follow new directory file structure
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [1a335d0b2]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+
 ## 15.0.0
 
 ### Minor Changes

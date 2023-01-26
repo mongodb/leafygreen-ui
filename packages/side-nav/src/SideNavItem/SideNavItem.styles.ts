@@ -1,17 +1,22 @@
+import { transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   fontFamilies,
   spacing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
 
 export const sideNavItemClassName = createUniqueClassName('side-nav-item');
 
+export const liStyle = css`
+  width: 100%;
+`;
+
 // container styles
-export const baseNavItemStyle = css`
+export const baseStyle = css`
   // Unset defaults
   margin: 0;
   appearance: none;
@@ -34,11 +39,9 @@ export const baseNavItemStyle = css`
   text-align: left;
   text-decoration: none;
   text-transform: capitalize;
-  color: ${palette.black};
 
   // Stateful transitions
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
-  background-color: ${transparentize(100, palette.gray.light3)};
 
   &:hover {
     background-color: ${palette.gray.light2};
@@ -69,25 +72,66 @@ export const baseNavItemStyle = css`
   }
 `;
 
-export const activeNavItemStyle = css`
+export const themeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.black};
+
+    background-color: ${transparentize(100, palette.gray.light3)};
+
+    &:hover {
+      background-color: ${palette.gray.light2};
+    }
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.light2};
+
+    background-color: ${transparentize(100, palette.gray.light3)};
+
+    &:hover {
+      background-color: ${palette.gray.dark3};
+    }
+  `,
+};
+
+export const activeBaseStyle = css`
   cursor: default;
   font-weight: bold;
   text-decoration: none;
-  color: ${palette.green.dark2};
-
-  &,
-  &:hover {
-    background-color: ${palette.green.light3};
-  }
 
   // The active wedge
   &:before {
     transform: scaleY(1);
-    background-color: ${palette.green.dark1};
   }
 `;
 
-export const disabledNavItemStyle = css`
+export const activeThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.green.dark2};
+
+    &,
+    &:hover {
+      background-color: ${palette.green.light3};
+    }
+
+    &:before {
+      background-color: ${palette.green.dark1};
+    }
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.white};
+
+    &,
+    &:hover {
+      background-color: ${palette.green.dark3};
+    }
+
+    &:before {
+      background-color: ${palette.green.base};
+    }
+  `,
+};
+
+export const disabledStyle = css`
   background-color: transparent;
   font-weight: normal;
   cursor: not-allowed;
@@ -99,34 +143,66 @@ export const disabledNavItemStyle = css`
   }
 `;
 
-export const focusedNavItemStyle = css`
+export const focusedStyle = css`
   position: relative;
 
   &:focus {
     text-decoration: none;
-    color: ${palette.blue.dark3};
-    background-color: ${palette.blue.light2};
 
     // The focus wedge
     &:before {
       transform: scaleY(1);
-      background-color: ${palette.blue.light1};
     }
   }
 `;
 
-export const focusedDisabledNavItemStyle = css`
-  &:focus {
-    color: ${palette.blue.light1};
-    background-color: ${transparentize(0.1, palette.blue.light3)};
+export const focusedThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:focus {
+      color: ${palette.blue.dark2};
+      background-color: ${palette.blue.light3};
 
+      &:before {
+        background-color: ${palette.blue.base};
+      }
+    }
+  `,
+  [Theme.Dark]: css`
+    &:focus {
+      color: ${palette.blue.light3};
+      background-color: ${palette.blue.dark3};
+
+      &:before {
+        background-color: ${palette.blue.light1};
+      }
+    }
+  `,
+};
+
+export const focusedDisabledStyle = css`
+  &:focus {
     &:before {
       content: unset;
     }
   }
 `;
 
-export const glyphWrapper = css`
+export const focusedDisabledThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:focus {
+      color: ${palette.blue.light1};
+      background-color: ${transparentize(0.1, palette.blue.light3)};
+    }
+  `,
+  [Theme.Dark]: css`
+    &:focus {
+      color: ${palette.blue.light1};
+      background-color: ${transparentize(0.1, palette.blue.dark3)};
+    }
+  `,
+};
+
+export const glyphWrapperStyle = css`
   margin-right: ${spacing[2]}px;
   display: inline-flex;
   align-items: center;
@@ -136,4 +212,9 @@ export const nestedChildrenStyles = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+`;
+
+export const nestedUlStyle = css`
+  list-style: none;
+  padding-inline-start: 0;
 `;

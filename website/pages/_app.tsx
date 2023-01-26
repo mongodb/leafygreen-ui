@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
-import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
-import { MDXProvider } from '@mdx-js/react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
-import { globalStyles } from 'styles/globals';
+import { MDXProvider } from '@mdx-js/react';
 import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';
-import metaTagKey from 'utils/metaTagKey';
 import FoundationLayout from 'layouts/FoundationLayout';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { globalStyles } from 'styles/globals';
+import * as ga from 'utils/googleAnalytics';
+import metaTagKey from 'utils/metaTagKey';
+
 import {
   Body,
   H1,
@@ -19,7 +21,6 @@ import {
   Link,
   Subtitle,
 } from '@leafygreen-ui/typography';
-import * as ga from 'utils/googleAnalytics';
 
 const headerStyle = css`
   margin-block: 0.5em;
@@ -130,7 +131,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    /// @ts-expect-error
     <MDXProvider components={MDXComponentMap}>
       <Head>
         <title>Home – LeafyGreen Design System | MongoDB</title>

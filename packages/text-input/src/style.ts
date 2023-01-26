@@ -9,6 +9,7 @@ import {
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
+
 import { SizeVariant, State } from './types';
 
 /**
@@ -93,7 +94,7 @@ export const baseInputStyle = css`
   z-index: 1;
   outline: none;
   border-radius: 6px;
-  transition: ${transitionDuration}ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border-color, box-shadow;
 
   &:disabled {
@@ -216,7 +217,7 @@ export const inputModeStyles: Record<Theme, string> = {
     }
 
     &::placeholder {
-      color: ${palette.gray.base};
+      color: ${palette.gray.dark1};
       font-weight: normal;
     }
 
@@ -384,12 +385,20 @@ export const stateIndicatorStyles: Record<
   },
 };
 
-export const optionalTextStyle = css`
+export const optionalTextBaseStyle = css`
   font-size: 12px;
   font-style: italic;
   font-weight: normal;
-  color: ${palette.gray.dark1}; // Same in light & dark theme
 `;
+
+export const optionalTextThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
+  `,
+};
 
 export const errorMessageStyle = css`
   ${inheritTypeScale};
@@ -397,12 +406,3 @@ export const errorMessageStyle = css`
   padding-top: 4px;
   font-weight: normal;
 `;
-
-export const errorMessageModeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};

@@ -1,11 +1,14 @@
 import React from 'react';
-import { css } from '@emotion/css';
-import ExpandableCard from '@leafygreen-ui/expandable-card';
-import { Label } from '@leafygreen-ui/typography';
-import { uiColors } from '@leafygreen-ui/palette';
+
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import ExpandableCard from '@leafygreen-ui/expandable-card';
+import { uiColors } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import Toggle from '@leafygreen-ui/toggle';
+import { Label } from '@leafygreen-ui/typography';
+
+import { css } from '@emotion/css';
 
 const knobsConfig: KnobsConfigInterface<{
   title: string;

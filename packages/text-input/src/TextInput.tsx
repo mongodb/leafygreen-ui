@@ -1,38 +1,41 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
   Description,
+  Error,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { TextInputProps, SizeVariant, State, TextInputType } from './types';
+
 import {
-  iconClassName,
-  wrapperStyle,
-  errorMessageStyle,
-  inputContainerStyle,
-  optionalTextStyle,
   baseInputStyle,
-  stateIndicatorStyles,
-  errorMessageModeStyle,
+  errorMessageStyle,
   getWrapperFontSize,
-  inputSizeStyles,
-  inputModeStyles,
-  inputStateStyles,
-  inputFocusStyles,
-  inputIndicatorStyle,
-  inputIndicatorSizeStyle,
+  iconClassName,
   inheritTypeScale,
+  inputContainerStyle,
+  inputFocusStyles,
+  inputIndicatorSizeStyle,
+  inputIndicatorStyle,
+  inputModeStyles,
+  inputSizeStyles,
+  inputStateStyles,
+  optionalTextBaseStyle,
+  optionalTextThemeStyle,
+  stateIndicatorStyles,
   textContainerStyle,
+  wrapperStyle,
 } from './style';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce } from '@leafygreen-ui/lib';
+import { SizeVariant, State, TextInputProps, TextInputType } from './types';
 
 /**
  * # TextInput
@@ -59,11 +62,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
  */
 
 type TextInputComponentType = React.ForwardRefExoticComponent<TextInputProps>;
-/// @ts-expect-error
-const TextInput: TextInputComponentType = React.forwardRef<
-  HTMLInputElement,
-  TextInputProps
->(
+const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       label,
@@ -222,21 +221,26 @@ const TextInput: TextInputComponentType = React.forwardRef<
             )}
 
             {state === State.None && !disabled && optional && (
-              <div className={optionalTextStyle}>
+              <div
+                className={cx(
+                  optionalTextBaseStyle,
+                  optionalTextThemeStyle[theme],
+                )}
+              >
                 <p>Optional</p>
               </div>
             )}
           </div>
         </div>
         {state === State.Error && errorMessage && (
-          <div className={cx(errorMessageStyle, errorMessageModeStyle[theme])}>
-            <span>{errorMessage}</span>
-          </div>
+          <Error darkMode={darkMode} className={errorMessageStyle}>
+            {errorMessage}
+          </Error>
         )}
       </div>
     );
   },
-);
+) as TextInputComponentType;
 
 TextInput.displayName = 'TextInput';
 

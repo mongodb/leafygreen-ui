@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Option, OptionGroup, Select } from '.';
-import { SelectProps } from './types';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import { SelectProps } from './types';
+import { Option, OptionGroup, Select } from '.';
 
 export default {
   title: 'Components/Select',
@@ -34,6 +36,7 @@ export default {
         Spider
       </Option>,
     ],
+    usePortal: true,
   },
   argTypes: {
     children: { control: false },

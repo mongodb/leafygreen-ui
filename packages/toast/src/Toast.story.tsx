@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
+
+import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
-import Toast, { Variant } from '.';
 import { Link } from '@leafygreen-ui/typography';
+
+import Toast, { Variant } from '.';
 
 export default {
   title: 'Components/Toast',
   component: Toast,
   parameters: {
     controls: {
-      exclude: ['close', 'className'],
+      exclude: ['open', 'close', 'className'],
     },
   },
   args: {
@@ -18,17 +22,14 @@ export default {
     open: true,
     variant: Variant.Note,
     darkMode: false,
+    className: css`
+      z-index: 1;
+    `,
   },
   argTypes: {
-    className: {
-      control: 'text',
-    },
     progress: {
       control: { type: 'range', min: 0, max: 1, step: 0.1 },
       if: { arg: 'variant', eq: Variant.Progress },
-    },
-    open: {
-      control: 'boolean',
     },
     darkMode: storybookArgTypes.darkMode,
     body: {
@@ -40,19 +41,35 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof Toast> = args => <Toast {...args} />;
+export const Basic: ComponentStory<typeof Toast> = args => {
+  const [open, setOpen] = useState(false);
+  const { darkMode } = args;
 
-export const Basic = Template.bind({});
-
-export const Dismissible = Template.bind({});
-Dismissible.args = {
-  close: () => {
-    // eslint-disable-next-line no-console
-    console.log('close');
-  },
+  return (
+    <>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        {open ? 'Close' : 'Open'} Toast
+      </Button>
+      <Toast {...args} open={open} />
+    </>
+  );
 };
 
-export const WithLink = Template.bind({});
+export const Dismissible: ComponentStory<typeof Toast> = args => {
+  const [open, setOpen] = useState(false);
+  const { darkMode } = args;
+
+  return (
+    <>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        {open ? 'Close' : 'Open'} Toast
+      </Button>
+      <Toast {...args} open={open} close={() => setOpen(false)} />
+    </>
+  );
+};
+
+export const WithLink = Basic.bind({});
 WithLink.args = {
   body: (
     <>

@@ -1,5 +1,41 @@
 # @leafygreen-ui/text-area
 
+## 8.0.3
+
+### Patch Changes
+
+- 53d77f55d: Uses Error component from Typography package to handle formatting `errorMessage` prop
+- Updated dependencies [405636249]
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/hooks@7.4.0
+  - @leafygreen-ui/typography@15.3.0
+
+## 8.0.2
+
+### Patch Changes
+
+- a79ee7f5d: Remove `optional` from prop documentation, as the prop is not supported by the component
+- Updated dependencies [d8c589d35]
+- Updated dependencies [703db871f]
+  - @leafygreen-ui/typography@15.2.1
+  - @leafygreen-ui/palette@3.4.6
+
+## 8.0.1
+
+### Patch Changes
+
+- a1d093f30: Resolves aria type issues
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+
 ## 8.0.0
 
 ### Patch Changes

@@ -1,10 +1,13 @@
 import React, { ElementType } from 'react';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
-import Button, { Variant, ButtonProps } from '.';
-import { BoxProps } from '@leafygreen-ui/box';
 import { Meta, Story } from '@storybook/react';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import { BoxProps } from '@leafygreen-ui/box';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import { Size } from './types';
+import Button, { ButtonProps, Variant } from '.';
 
 type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
 
@@ -13,7 +16,6 @@ type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
  * Buttons allow users to take actions, and make choices, with a single tap.
  */
 export const StoryButton: React.FC<ButtonStoryProps> = props => (
-  // @ts-ignore-next-line
   <Button {...props} />
 );
 
@@ -23,6 +25,12 @@ export default {
   excludeStories: ['StoryButton'],
   args: {
     children: 'MongoDB',
+    variant: Variant.Default,
+  },
+  parameters: {
+    controls: {
+      exclude: ['ref', 'onClick', 'className'],
+    },
   },
   argTypes: {
     disabled: {
@@ -36,23 +44,20 @@ export default {
       options: Object.keys(glyphs),
       control: { type: 'select' },
     },
-    onClick: {
-      control: 'none',
-    },
     type: {
-      control: 'text',
+      control: 'select',
+      options: ['button', 'submit'],
+      defaultValue: 'button',
     },
-    className: {
-      control: 'text',
-    },
-    darkMode: {
-      control: 'boolean',
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+      defaultValue: Size.Default,
     },
     href: {
       control: 'text',
     },
-    children: storybookArgTypes.children,
-    as: storybookArgTypes.as,
+    ...storybookArgTypes,
   },
 } as Meta<ButtonStoryProps>;
 

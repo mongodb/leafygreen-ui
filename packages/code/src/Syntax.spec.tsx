@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+
 import Syntax from './Syntax';
 
 function testSnippetRenders(codeSnippet: string) {

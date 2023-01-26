@@ -1,16 +1,20 @@
 import React from 'react';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
-import Banner, { Variant } from '.';
 import { ComponentStory, Meta } from '@storybook/react';
+
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
+
+import Banner from './Banner/Banner';
+import { BannerProps, Variant } from './Banner/types';
 
 export default {
   title: 'Components/Banner',
   component: Banner,
   parameters: {
+    default: 'Basic',
     controls: {
-      exclude: ['ref', 'className', 'onClose'],
+      exclude: ['ref', 'className', 'onClose', 'image'],
     },
   },
   args: {
@@ -20,15 +24,13 @@ export default {
     dismissible: false,
   },
   argTypes: {
-    image: {
-      options: Object.keys(glyphs),
-      control: { type: 'select' },
-    },
     dismissible: {
       control: 'boolean',
     },
-    onClose: {
-      control: 'none',
+    variant: {
+      options: Object.values(Variant),
+      control: { type: 'select' },
+      defaultValue: Variant.Info,
     },
     children: storybookArgTypes.children,
     ref: storybookArgTypes.ref,
@@ -37,32 +39,22 @@ export default {
 } as Meta<typeof Banner>;
 
 // eslint-disable-next-line react/prop-types
-const Template: ComponentStory<typeof Banner> = ({ image, ...args }) => (
-  <Banner
-    // @ts-expect-error
-    image={image ? <Icon glyph={image} /> : undefined}
-    {...args}
-  />
+export const Basic: ComponentStory<typeof Banner> = ({ ...args }) => (
+  <Banner {...args} />
 );
 
-export const Success = Template.bind({});
-Success.args = {
-  variant: Variant.Success,
-};
-
-export const Warning = Template.bind({});
-Warning.args = {
-  variant: Variant.Warning,
-};
-
-export const Danger = Template.bind({});
-Danger.args = {
-  variant: Variant.Danger,
-};
-
-export const Info = Template.bind({});
-Info.args = {
-  variant: Variant.Info,
+export const WithIcon: ComponentStory<any> = ({
+  glyph,
+  ...args
+}: BannerProps & { glyph: keyof typeof glyphs }) => (
+  <Banner image={glyph ? <Icon glyph={glyph} /> : undefined} {...args} />
+);
+WithIcon.argTypes = {
+  glyph: {
+    options: Object.keys(glyphs),
+    control: { type: 'select' },
+    defaultValue: 'ActivityFeed',
+  },
 };
 
 export const WithLink: ComponentStory<typeof Banner> = ({
@@ -87,9 +79,10 @@ export const WithLink: ComponentStory<typeof Banner> = ({
   );
 };
 
-export const WithCustomImage = Template.bind({});
+export const WithCustomImage: ComponentStory<typeof Banner> = ({ ...args }) => (
+  /// @ts-ignore
+  <Banner image="copy" {...args} />
+);
 WithCustomImage.args = {
   variant: Variant.Info,
-  /// @ts-ignore
-  image: 'Copy',
 };

@@ -1,5 +1,25 @@
 # @leafygreen-ui/icon
 
+## 11.12.3
+
+### Patch Changes
+
+- 95bd93ef9: Adds Drag, Read, Resize, and Write icons
+- 3bb4b7506: Removing clipPath from Edit icon
+
+## 11.12.2
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+
+## 11.12.1
+
+### Patch Changes
+
+- 4b4c2d27d: Added Biometric icon
+- 1a335d0b2: Explicitly include `data-testid` in allowed props for Glyph components
+
 ## 11.12.0
 
 ### Minor Changes

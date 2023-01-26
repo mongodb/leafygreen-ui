@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/pipeline",
-  "version": "5.0.0",
+  "version": "5.0.2",
   "description": "LeafyGreen UI Kit Pipeline",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,11 +22,11 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
-    "@leafygreen-ui/icon": "^11.12.0",
+    "@leafygreen-ui/icon": "^11.12.2",
     "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/palette": "^3.4.4",
-    "@leafygreen-ui/tooltip": "^9.0.0",
-    "@leafygreen-ui/tokens": "^1.3.3",
+    "@leafygreen-ui/palette": "^3.4.5",
+    "@leafygreen-ui/tooltip": "^9.0.3",
+    "@leafygreen-ui/tokens": "^1.4.1",
     "react-intersection-observer": "^8.25.1"
   },
   "peerDependencies": {

@@ -1,2 +1,2 @@
-export { Card as default, ContentStyle } from './Card';
-export type { CardProps } from './Card';
+export { type CardProps, ContentStyle } from './Card';
+export { Card as default } from './Card';

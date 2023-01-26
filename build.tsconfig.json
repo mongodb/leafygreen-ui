@@ -60,9 +60,6 @@
       "path": "./packages/inline-definition"
     },
     {
-      "path": "./packages/interaction-ring"
-    },
-    {
       "path": "./packages/leafygreen-provider"
     },
     {
@@ -88,6 +85,9 @@
     },
     {
       "path": "./packages/popover"
+    },
+    {
+      "path": "./packages/polymorphic"
     },
     {
       "path": "./packages/portal"

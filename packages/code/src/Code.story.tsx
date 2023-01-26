@@ -1,11 +1,13 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
 import { Story } from '@storybook/react';
-import LGCode, { CodeProps, Language } from '.';
+
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import LanguageSwitcherExample from './LanguageSwitcherExample';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+
+import LanguageSwitcherExample from './LanguageSwitcherExample';
+import LGCode, { CodeProps, Language } from '.';
 
 // TODO: Import below comment directly from component definition.
 /**
@@ -95,6 +97,7 @@ export default {
         'scrollContainer',
         'popoverZIndex',
         'ref',
+        'languageOptions',
       ],
     },
   },

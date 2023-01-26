@@ -2,11 +2,13 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 4ed07b15de60dfcd76dd3fb8d6f1b8ca
+ * @checksum 68abf027b3df897c5c921f094d81cb32
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+
 import { css, cx } from '@leafygreen-ui/emotion';
+
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface EditProps extends LGGlyph.ComponentProps {}
@@ -48,19 +50,10 @@ const Edit = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g clipPath="url(#clip0)">
-        <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M11.922 1.68126C12.2982 1.30501 12.9082 1.30501 13.2845 1.68126L14.647 3.04377C15.0233 3.42002 15.0233 4.03003 14.647 4.40628L13.2845 5.76879L10.5595 3.04377L9.53759 4.06566L12.2626 6.79068L5.10942 13.9439L1.36251 14.9657L2.3844 11.2188L11.922 1.68126Z"
-          fill={'currentColor'}
-        />
-      </g>
-      <defs>
-        <clipPath id="clip0">
-          <rect width={16} height={16} fill={'currentColor'} />
-        </clipPath>
-      </defs>
+      <path
+        d="M10.9219 0.681233C11.2981 0.304986 11.9082 0.304986 12.2844 0.681233L13.6469 2.04375C14.0232 2.41999 14.0232 3.03001 13.6469 3.40626L12.2844 4.76877L9.55939 2.04375L8.5375 3.06563L11.2625 5.79066L4.10934 12.9438L0.362427 13.9657L1.38431 10.2188L10.9219 0.681233Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };

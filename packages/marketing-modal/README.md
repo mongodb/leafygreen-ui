@@ -121,6 +121,6 @@ function Example() {
 | `linkText`       | `string`                                      | Text content of the alternate action link.                                                                                                |            |
 | `className`      | `string`                                      | Style to be applied to the container's root node.                                                                                         |            |
 | `darkMode`       | `boolean`                                     | Determines if the component will appear in dark mode.                                                                                     | `false`    |
-| `closeIconColor` | `'default'`, `'dark'`, `'light'`              | Determines the color of the close icon. Currently will only work if `darkMode` is set to false.                                           |
+| `closeIconColor` | `'default'`, `'dark'`, `'light'`              | Determines the color of the close icon.                                                                                                   |
 | `showBlob`       | `boolean`                                     | Determines if the blob illustration should appear in the background of the modal. Currently will only work if `darkMode` is set to false. | `false`    |
-| `blobPosition`   | `'top left'`, `'top right'`, `'bottom right'` | Determines the position of the blob if `showBlob` is set to `true`. Currently will only work if `darkMode` is set to false.               | `top left` |
+| `blobPosition`   | `'top left'`, `'top right'`, `'bottom right'` | Determines the position of the blob if `showBlob` is set to `true`.                                                                       | `top left` |

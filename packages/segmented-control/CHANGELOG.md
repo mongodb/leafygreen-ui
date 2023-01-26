@@ -1,5 +1,38 @@
 # @leafygreen-ui/segmented-control
 
+## 7.0.1
+
+### Patch Changes
+
+- 9854dfd33: Fixes bug where SegmentedControl component was not properly keeping track of externally set state.
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/icon@11.12.2
+  - @leafygreen-ui/palette@3.4.5
+  - @leafygreen-ui/tokens@1.4.1
+  - @leafygreen-ui/typography@15.1.1
+
+## 7.0.0
+
+### Major Changes
+
+- 8d520f6d2: Adds slot for `glyph` and adds an ellipsis to prevent wrapping of long text. Passing in an `<Icon>` as a child will not produce an error but is discouraged because styles will be broken. A slot was introduced to separate icon from text which makes it easier to apply icon only and text only styles.
+
+## 6.0.1
+
+### Patch Changes
+
+- ed0e425e5: Adds `polished` as an explicit dependency
+- ae5421cf6: Updates components to use internal transition tokens
+- Updated dependencies [ae5421cf6]
+- Updated dependencies [4b4c2d27d]
+- Updated dependencies [6a266b813]
+- Updated dependencies [1a335d0b2]
+- Updated dependencies [ba97d1ef7]
+- Updated dependencies [ae5421cf6]
+  - @leafygreen-ui/tokens@1.4.0
+  - @leafygreen-ui/icon@11.12.1
+  - @leafygreen-ui/typography@15.1.0
+
 ## 6.0.0
 
 ### Major Changes

@@ -1,18 +1,20 @@
 import React, { ReactElement } from 'react';
 import {
   act,
-  render,
   fireEvent,
+  render,
   screen,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import Tooltip, { TooltipProps } from './Tooltip';
+
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+
+import Tooltip, { TooltipProps } from './Tooltip';
 
 const buttonText = 'trigger button';
 const tooltipTestId = 'tooltip-test-id';
@@ -359,27 +361,55 @@ describe('packages/tooltip', () => {
         expect(button).toHaveTextContent(buttonText);
       });
 
-      test('when trigger event is click, `click` triggers opening and closing of tooltip', async () => {
-        const { button, getByTestId } = renderTrigger({
-          triggerEvent: 'click',
-        });
-        userEvent.click(button);
-        const tooltip = getByTestId(tooltipTestId);
-        expect(tooltip).toBeInTheDocument();
-        userEvent.click(button);
-        await waitForElementToBeRemoved(tooltip);
-      });
-
-      test('when trigger event is hover, `hover` triggers opening and closing of tooltip', () => {
-        const { button, getByTestId } = renderTrigger({
-          triggerEvent: 'hover',
-        });
-        userEvent.hover(button);
-        waitFor(async () => {
+      describe('triggerEvent is `click`', () => {
+        test('click event triggers opening and closing of tooltip', () => {
+          const { button, getByTestId } = renderTrigger({
+            triggerEvent: 'click',
+          });
+          userEvent.click(button);
           const tooltip = getByTestId(tooltipTestId);
           expect(tooltip).toBeInTheDocument();
-          userEvent.unhover(button);
-          await waitForElementToBeRemoved(tooltip);
+          userEvent.click(button);
+          waitForElementToBeRemoved(tooltip);
+        });
+
+        test('clicking the backdrop closes the tooltip', () => {
+          const { button, getByTestId } = renderTrigger({
+            triggerEvent: 'click',
+          });
+          userEvent.click(button);
+          const tooltip = getByTestId(tooltipTestId);
+          const backdrop = getByTestId('backdrop');
+          userEvent.click(backdrop);
+          waitForElementToBeRemoved(tooltip);
+        });
+      });
+
+      describe('triggerEvent is `hover`', () => {
+        test('hover event triggers opening and closing of tooltip', () => {
+          const { button, getByTestId } = renderTrigger({
+            triggerEvent: 'hover',
+          });
+          userEvent.hover(button);
+          waitFor(() => {
+            const tooltip = getByTestId(tooltipTestId);
+            expect(tooltip).toBeInTheDocument();
+            userEvent.unhover(button);
+            waitForElementToBeRemoved(tooltip);
+          });
+        });
+
+        test('clicking the backdrop does not close the tooltip', () => {
+          const { button, getByTestId } = renderTrigger({
+            triggerEvent: 'hover',
+          });
+          userEvent.hover(button);
+          waitFor(() => {
+            const tooltip = getByTestId(tooltipTestId);
+            const backdrop = getByTestId('backdrop');
+            userEvent.click(backdrop);
+            expect(tooltip).toBeInTheDocument();
+          });
         });
       });
     });
@@ -504,34 +534,38 @@ describe('packages/tooltip', () => {
   });
 
   describe('Renders warning when', () => {
-    test('LeafyGreen UI Glyph is passed to trigger', () => {
-      const spy = jest.spyOn(console, 'warn');
+    const expectedWarnMsg =
+      'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip,' +
+      ' as these components do not render their children.' +
+      ' To use, please wrap your trigger element in another HTML tag.';
+    let warn: jest.SpyInstance;
+    beforeEach(() => {
+      warn = jest.spyOn(global.console, 'warn').mockImplementation(() => {});
+    });
 
+    afterEach(() => {
+      warn.mockClear();
+      warn.mockRestore();
+    });
+
+    test('LeafyGreen UI Glyph is passed to trigger', () => {
       render(<Tooltip trigger={<CloudIcon />}>TooltipContent</Tooltip>);
 
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(
-        'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip,' +
-          ' as these components do not render their children.' +
-          ' To use, please wrap your trigger element in another HTML tag.',
-      );
-      spy.mockClear();
+      waitFor(() => {
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn).toHaveBeenCalledWith(expectedWarnMsg);
+      });
     });
 
     test('LeafyGreen UI Icon is passed to trigger', () => {
-      const spy = jest.spyOn(console, 'warn');
-
       render(
         <Tooltip trigger={<Icon glyph="Cloud" />}>TooltipContent</Tooltip>,
       );
 
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(
-        'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip,' +
-          ' as these components do not render their children.' +
-          ' To use, please wrap your trigger element in another HTML tag.',
-      );
-      spy.mockClear();
+      waitFor(() => {
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn).toHaveBeenCalledWith(expectedWarnMsg);
+      });
     });
 
     test('No warning for default props', () => {
@@ -540,9 +574,11 @@ describe('packages/tooltip', () => {
         trigger: <button>hi</button>,
       };
 
-      const spy = jest.spyOn(console, 'warn');
       render(<Tooltip {...defaultProps} />);
-      expect(spy).not.toHaveBeenCalled();
+
+      waitFor(() => {
+        expect(warn).not.toHaveBeenCalled();
+      });
     });
   });
 

@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.4.0
+
+### Minor Changes
+
+- 405636249: Adds `useBackdropClick` hook. Fires a callback when any element _except_ the provided foreground element(s) are clicked
+
 ## 7.3.3
 
 ### Patch Changes

@@ -1,38 +1,41 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
+import Box, { BoxProps } from '@leafygreen-ui/box';
+import { cx } from '@leafygreen-ui/emotion';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   createUniqueClassName,
   getNodeTextContent,
   HTMLElementProps,
 } from '@leafygreen-ui/lib';
-import { cx } from '@leafygreen-ui/emotion';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import Box, { BoxProps } from '@leafygreen-ui/box';
+
+import MenuContext from './MenuContext';
 import {
-  menuItemContainerStyle,
-  menuItemContainerThemeStyle,
-  activeMenuItemContainerStyle,
-  disabledMenuItemContainerThemeStyle,
-  focusedMenuItemContainerStyle,
-  linkStyle,
-  disabledTextStyle,
-  mainIconStyle,
+  activeDescriptionTextStyle,
   activeIconStyle,
-  disabledIconStyle,
-  titleTextStyle,
+  activeMenuItemContainerStyle,
   activeTitleTextStyle,
   descriptionTextThemeStyle,
-  linkDescriptionTextStyle,
-  activeDescriptionTextStyle,
-  textContainer,
-  menuItemHeight,
+  disabledIconStyle,
+  disabledMenuItemContainerThemeStyle,
+  disabledTextStyle,
+  focusedMenuItemContainerStyle,
   getFocusedStyles,
   getHoverStyles,
+  linkDescriptionTextStyle,
+  linkStyle,
+  mainIconBaseStyle,
+  mainIconThemeStyle,
+  menuItemContainerStyle,
+  menuItemContainerThemeStyle,
+  menuItemHeight,
+  textContainer,
+  titleTextStyle,
 } from './styles';
 import { Size } from './types';
-import MenuContext from './MenuContext';
 
-const MenuItemContainerClassName = createUniqueClassName('menu-item-container');
+const menuItemContainerClassName = createUniqueClassName('menu-item-container');
 interface BaseMenuItemProps extends HTMLElementProps<'button'> {
   /**
    * Determines whether or not the MenuItem is active.
@@ -110,8 +113,8 @@ const MenuItem = React.forwardRef(
   ) => {
     const { theme } = useContext(MenuContext);
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const hoverStyles = getHoverStyles(MenuItemContainerClassName, theme);
-    const focusStyles = getFocusedStyles(MenuItemContainerClassName, theme);
+    const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
+    const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
 
     const isAnchor = typeof rest.href === 'string';
 
@@ -120,8 +123,8 @@ const MenuItem = React.forwardRef(
       React.cloneElement(glyph, {
         role: 'presentation',
         className: cx(
-          MenuItemContainerClassName,
-          mainIconStyle,
+          mainIconBaseStyle,
+          mainIconThemeStyle[theme],
           {
             [activeIconStyle[theme]]: active,
             [focusStyles.iconStyle]: showFocus,
@@ -190,6 +193,7 @@ const MenuItem = React.forwardRef(
           {...anchorProps}
           {...rest}
           className={cx(
+            menuItemContainerClassName,
             menuItemContainerStyle,
             menuItemContainerThemeStyle[theme],
             menuItemHeight(size),

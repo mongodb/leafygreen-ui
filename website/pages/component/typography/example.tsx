@@ -1,21 +1,24 @@
 import React from 'react';
-import { css, cx } from '@emotion/css';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import { spacing } from '@leafygreen-ui/tokens';
 import {
+  Body,
+  Description,
+  Disclaimer,
   H1,
   H2,
   H3,
-  Subtitle,
-  Body,
   InlineCode,
   InlineKeyCode,
-  Disclaimer,
-  Overline,
-  Link,
   Label,
-  Description,
+  Link,
+  Overline,
+  Subtitle,
 } from '@leafygreen-ui/typography';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
+import { css, cx } from '@emotion/css';
 
 const displayBlock = css`
   display: block;

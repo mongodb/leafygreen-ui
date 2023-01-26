@@ -1,10 +1,12 @@
 import React from 'react';
+
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+
 import TextInput, {
+  SizeVariant,
   State,
   TextInputType,
-  SizeVariant,
 } from '@leafygreen-ui/text-input';
-import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 const knobsConfig: KnobsConfigInterface<{

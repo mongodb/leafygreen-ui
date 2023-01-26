@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
+
 import Button from '@leafygreen-ui/button';
-import ConfirmationModal, { Variant } from '.';
+import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+
+import { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
+import { Variant } from './ConfirmationModal/types';
 
 export default {
   title: 'Components/Modals/ConfirmationModal',
@@ -12,6 +16,9 @@ export default {
     buttonText: 'Confirm',
     children:
       'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here. This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
+    className: css`
+      z-index: 1;
+    `,
   },
   argTypes: {
     requiredInputText: { control: 'text' },
@@ -19,20 +26,33 @@ export default {
     title: { control: 'text' },
     buttonText: { control: 'text' },
     children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: ['className', 'onConfirm', 'onCancel', 'open', 'variant'],
+    },
   },
 };
 
-const ControlledTemplate: ComponentStory<typeof ConfirmationModal> = args => {
+const ControlledTemplate: ComponentStory<typeof ConfirmationModal> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
     <>
-      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
+      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+        Open Modal
+      </Button>
       <ConfirmationModal
         {...args}
         open={open}
         onCancel={handleClose}
         onConfirm={handleClose}
+        darkMode={darkMode}
       />
     </>
   );

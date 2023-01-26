@@ -1,5 +1,9 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { isFragment } from 'react-is';
+
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
+import { breakpoints } from '@leafygreen-ui/tokens';
+
 import {
   InternalOption,
   InternalProps as InternalOptionProps,
@@ -7,8 +11,6 @@ import {
   ReactEmpty,
 } from './Option';
 import { InternalOptionGroup, OptionGroupElement } from './OptionGroup';
-import { isFragment } from 'react-is';
-import { breakpoints } from '@leafygreen-ui/tokens';
 
 // Any screen smaller than a tablet with no pointer, or a coarse pointer and no hover capability (i.e. touch screen)
 // For more details, see: https://css-tricks.com/touch-devices-not-judged-size/

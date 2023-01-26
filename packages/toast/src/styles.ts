@@ -1,21 +1,23 @@
+import { Transition } from 'react-transition-group';
+import { transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
-import InfoWithCircle from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
+import InfoWithCircle from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   fontFamilies,
-  typeScales,
   spacing,
   transitionDuration,
+  typeScales,
 } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
-import { Transition } from 'react-transition-group';
-import { StyledElements, Variant } from './types';
 import { anchorClassName } from '@leafygreen-ui/typography';
+
+import { StyledElements, Variant } from './types';
 
 export const toastWidth = 400;
 

@@ -1,5 +1,19 @@
 # @leafygreen-ui/tokens
 
+## 1.4.1
+
+### Patch Changes
+
+- b7f7a4c95: Updates package dependencies & devDependencies, and ensures each package is appropriately listed. Ensures `tsconfig` has no circular dependencies
+- Updated dependencies [b7f7a4c95]
+  - @leafygreen-ui/palette@3.4.5
+
+## 1.4.0
+
+### Minor Changes
+
+- ae5421cf6: Adds `transitionDuration` token to package. `transitionDuration` has three values: faster (100), default (150), and slower (300) which correspond to the length in ms of the transition duration.
+
 ## 1.3.4
 
 ### Patch Changes

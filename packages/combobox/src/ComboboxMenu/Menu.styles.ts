@@ -1,8 +1,11 @@
+import { transparentize } from 'polished';
+
 import { css, keyframes } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
-import { transparentize } from 'polished';
-import { ComboboxSize as Size, Theme } from '../Combobox.types';
+
+import { ComboboxSize as Size } from '../Combobox.types';
 
 export const menuItemPadding: Record<Size, { x: number; y: number }> = {
   [Size.Default]: { x: 12, y: 8 },

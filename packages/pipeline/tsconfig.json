@@ -26,10 +26,13 @@
       "path": "../palette"
     },
     {
+      "path": "../tooltip"
+    },
+    {
       "path": "../tokens"
     },
     {
-      "path": "../tooltip"
+      "path": "../leafygreen-provider"
     }
   ]
 }
