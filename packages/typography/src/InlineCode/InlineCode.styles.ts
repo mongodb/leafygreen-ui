@@ -43,14 +43,14 @@ export const codeModes: Record<Theme, string> = {
 
 export const codeFocusModes: Record<Theme, string> = {
   [Theme.Light]: css`
-    .${anchorClassName}:focus > & {
+    .${anchorClassName}:focus-visible > & {
       box-shadow: ${focusRing[Theme.Light].default};
       border: 1px solid ${palette.blue.base};
     }
   `,
 
   [Theme.Dark]: css`
-    .${anchorClassName}:focus > & {
+    .${anchorClassName}:focus-visible > & {
       box-shadow: ${focusRing[Theme.Dark].default};
       border: 1px solid ${palette.blue.base};
     }

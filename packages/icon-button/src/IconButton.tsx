@@ -5,10 +5,7 @@ import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import Box from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
-import {
-  useDarkMode,
-  useUsingKeyboardContext,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import {
@@ -38,7 +35,6 @@ export const IconButton = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const { theme } = useDarkMode(darkModeProp);
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const isAnchor: boolean = typeof rest.href === 'string';
 
     // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
@@ -85,8 +81,8 @@ export const IconButton = React.forwardRef(
         baseIconButtonStyle,
         iconButtonSizes[size],
         iconButtonMode[theme],
+        focusStyle[theme],
         {
-          [focusStyle[theme]]: showFocus,
           [activeStyle[theme]]: active && !disabled,
           [disabledStyle[theme]]: disabled,
         },
