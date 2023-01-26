@@ -41,7 +41,7 @@ export default {
   },
 } as Meta<typeof Table>;
 
-export const Basic: ComponentStory<typeof Table> = (args) => {
+export const Basic: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000))[0];
 
@@ -146,7 +146,7 @@ export const Basic: ComponentStory<typeof Table> = (args) => {
   );
 };
 
-export const NestedRows: ComponentStory<typeof Table> = (args) => {
+export const NestedRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -260,7 +260,7 @@ export const NestedRows: ComponentStory<typeof Table> = (args) => {
   );
 };
 
-export const SortableRows: ComponentStory<typeof Table> = (args) => {
+export const SortableRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000))[0];
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -373,7 +373,7 @@ export const SortableRows: ComponentStory<typeof Table> = (args) => {
   );
 };
 
-export const SelectableRows: ComponentStory<typeof Table> = (args) => {
+export const SelectableRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000))[0];
   const [rowSelection, setRowSelection] = React.useState({});
@@ -502,7 +502,7 @@ export const SelectableRows: ComponentStory<typeof Table> = (args) => {
   );
 };
 
-export const ExpandableContent = (args) => {
+export const ExpandableContent: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(true, 5000))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});

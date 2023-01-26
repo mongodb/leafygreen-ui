@@ -538,7 +538,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
   );
 };
 
-export const KitchenSink: ComponentStory<typeof Table> = (args) => {
+export const KitchenSink: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
