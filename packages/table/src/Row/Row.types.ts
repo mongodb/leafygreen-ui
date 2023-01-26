@@ -1,6 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PropsWithChildren } from 'react';
 import { VirtualItem } from 'react-virtual';
+
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import { LeafygreenTableRow } from '../useLeafygreenTable';
 
 export interface InternalRowBaseProps extends HTMLElementProps<'tr'> {

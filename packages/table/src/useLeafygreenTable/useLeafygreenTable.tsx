@@ -1,18 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { ColumnDef, Table, useReactTable } from '@tanstack/react-table';
 import { useVirtual } from 'react-virtual';
+import { ColumnDef, Table, useReactTable } from '@tanstack/react-table';
+import PropTypes from 'prop-types';
+
+import CheckboxCell from '../CheckboxCell/CheckboxCell';
+
+import {
+  LeafygreenTableOptions,
+  LeafygreenTableValues,
+} from './useLeafygreenTable.types';
 import {
   LeafygreenTable,
   LeafygreenTableRow,
   LeafygreenTableType,
   VirtualizerValues,
 } from '.';
-import CheckboxCell from '../CheckboxCell/CheckboxCell';
-import {
-  LeafygreenTableOptions,
-  LeafygreenTableValues,
-} from './useLeafygreenTable.types';
 
 const getSelectColumnConfig = <T extends unknown>() => {
   return {

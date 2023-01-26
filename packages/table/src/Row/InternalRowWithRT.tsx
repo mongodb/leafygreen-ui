@@ -1,9 +1,12 @@
+import React, { Fragment, ReactElement, ReactNode } from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import React, { Fragment, ReactElement, ReactNode } from 'react';
+
 import InternalCellWithRT from '../Cell/InternalCellWithRT';
 import { LeafygreenTableRow } from '../useLeafygreenTable';
+
 import InternalRowBase from './InternalRowBase';
 import {
   expandedContentStyles,

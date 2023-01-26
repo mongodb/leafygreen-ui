@@ -1,6 +1,6 @@
-import { Cell, Row, Table, TableOptions } from '@tanstack/react-table';
 import { RefObject } from 'react';
 import { VirtualItem } from 'react-virtual';
+import { Cell, Row, Table, TableOptions } from '@tanstack/react-table';
 
 // Below is copied from react-virtual as their types are exported
 

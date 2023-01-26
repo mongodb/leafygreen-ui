@@ -1,8 +1,11 @@
+import React, { PropsWithChildren, useEffect, useState } from 'react';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+
 import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon/ToggleExpandedIcon';
+
 import {
   alignmentStyles,
   baseStyles,

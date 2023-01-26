@@ -1,5 +1,6 @@
-import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
+import { ComponentStory, Meta } from '@storybook/react';
+
 import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
 import HeaderRow from '../HeaderRow/HeaderRow';

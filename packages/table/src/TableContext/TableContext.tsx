@@ -1,10 +1,12 @@
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import React, {
   createContext,
   PropsWithChildren,
   useContext,
   useState,
 } from 'react';
+
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+
 import { ColumnAlignment, TableContextValues } from './TableContext.types';
 
 export const TableContext = createContext({});

@@ -1,8 +1,10 @@
-import Checkbox from '@leafygreen-ui/checkbox';
+import React from 'react';
 import PropTypes from 'prop-types';
+
+import Checkbox from '@leafygreen-ui/checkbox';
 import { CheckboxProps } from '@leafygreen-ui/checkbox/src/types';
 import { cx } from '@leafygreen-ui/emotion';
-import React from 'react';
+
 import { baseStyles, headerStyles } from './Checkbox.styles';
 
 const CheckboxCell = (props: CheckboxProps & { isHeader?: boolean }) => (

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import InternalRowWithoutRT from './InternalRowWithoutRT';
 import InternalRowWithRT from './InternalRowWithRT';
 import { RowProps } from './Row.types';

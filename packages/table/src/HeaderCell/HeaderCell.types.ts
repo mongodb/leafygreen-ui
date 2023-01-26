@@ -1,4 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import { Header } from '..';
 
 export type Align = HTMLElementProps<'td'>['align'];

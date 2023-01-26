@@ -1,5 +1,6 @@
-import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
+import { ComponentStory, Meta } from '@storybook/react';
+
 import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
 import HeaderRow from '../HeaderRow/HeaderRow';
@@ -9,6 +10,7 @@ import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import { makeData } from '../utils/makeData';
 import { AnyDict } from '../utils/types';
+
 import TableHead from './TableHead';
 
 export default {
@@ -17,6 +19,15 @@ export default {
   argTypes: {
     children: { control: 'none' },
     ref: { control: 'none' },
+    className: { control: 'none' },
+    isSticky: { control: 'boolean' },
+  },
+  // This is needed as a workaround to make arg spreading performant
+  // https://github.com/storybookjs/storybook/issues/11657
+  parameters: {
+    docs: {
+      source: { type: 'code' },
+    },
   },
 } as Meta<typeof Table>;
 

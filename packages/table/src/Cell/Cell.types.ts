@@ -1,4 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import ToggleExpandedIconProps from '../ToggleExpandedIcon/ToggleExpandedIcon.types';
 import { LeafygreenTableCell } from '../useLeafygreenTable';
 

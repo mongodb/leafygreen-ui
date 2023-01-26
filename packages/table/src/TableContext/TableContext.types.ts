@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+
 import { TableProps } from '../Table/Table.types';
 
 export type ColumnAlignment = 'left' | 'right' | 'center';

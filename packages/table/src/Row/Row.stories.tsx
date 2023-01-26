@@ -1,13 +1,7 @@
 /* eslint-disable react/prop-types*/
-import { ComponentStory, Meta } from '@storybook/react';
 import React from 'react';
-import {
-  ColumnDef,
-  ExpandedState,
-  flexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-} from '..';
+import { ComponentStory, Meta } from '@storybook/react';
+
 import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
 import HeaderRow from '../HeaderRow/HeaderRow';
@@ -20,6 +14,13 @@ import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
 import { AnyDict } from '../utils/types';
+import {
+  ColumnDef,
+  ExpandedState,
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+} from '..';
 
 export default {
   title: 'Components/Table/Row',
@@ -27,6 +28,17 @@ export default {
   argTypes: {
     children: { control: 'none' },
     ref: { control: 'none' },
+    virtualRow: { control: 'none' },
+    row: { control: 'none' },
+    className: { control: 'none' },
+    disabled: { control: 'boolean' },
+  },
+  // This is needed as a workaround to make arg spreading performant
+  // https://github.com/storybookjs/storybook/issues/11657
+  parameters: {
+    docs: {
+      source: { type: 'code' },
+    },
   },
 } as Meta<typeof Table>;
 

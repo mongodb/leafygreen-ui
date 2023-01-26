@@ -1,16 +1,9 @@
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { ComponentStory, Meta } from '@storybook/react';
-import {
-  ColumnDef,
-  ExpandedState,
-  flexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getSortedRowModel,
-  SortingState,
-} from '..';
 import React from 'react';
 import { VirtualItem } from 'react-virtual';
+import { ComponentStory, Meta } from '@storybook/react';
+
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
 import HeaderRow from '../HeaderRow/HeaderRow';
@@ -21,6 +14,15 @@ import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
+import {
+  ColumnDef,
+  ExpandedState,
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getSortedRowModel,
+  SortingState,
+} from '..';
 
 export default {
   title: 'Components/Table/With Virtualized Scrolling',
@@ -30,9 +32,16 @@ export default {
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
+  // This is needed as a workaround to make arg spreading performant
+  // https://github.com/storybookjs/storybook/issues/11657
+  parameters: {
+    docs: {
+      source: { type: 'code' },
+    },
+  },
 } as Meta<typeof Table>;
 
-export const Basic = () => {
+export const Basic: ComponentStory<typeof Table> = (args) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000))[0];
 
@@ -95,7 +104,7 @@ export const Basic = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table {...args}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -137,7 +146,7 @@ export const Basic = () => {
   );
 };
 
-export const NestedRows: ComponentStory<typeof Table> = () => {
+export const NestedRows: ComponentStory<typeof Table> = (args) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -207,7 +216,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table {...args}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -251,7 +260,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
   );
 };
 
-export const SortableRows = () => {
+export const SortableRows: ComponentStory<typeof Table> = (args) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000))[0];
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -322,7 +331,7 @@ export const SortableRows = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table {...args}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -364,7 +373,7 @@ export const SortableRows = () => {
   );
 };
 
-export const SelectableRows = () => {
+export const SelectableRows: ComponentStory<typeof Table> = (args) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000))[0];
   const [rowSelection, setRowSelection] = React.useState({});
@@ -451,7 +460,7 @@ export const SelectableRows = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table {...args}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -493,7 +502,7 @@ export const SelectableRows = () => {
   );
 };
 
-export const ExpandableContent = () => {
+export const ExpandableContent = (args) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(true, 5000))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -563,7 +572,7 @@ export const ExpandableContent = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table {...args}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>

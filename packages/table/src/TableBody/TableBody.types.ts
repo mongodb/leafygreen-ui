@@ -1,4 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import { LeafygreenTable } from '../useLeafygreenTable';
 
 export interface TableBodyProps<T extends unknown>

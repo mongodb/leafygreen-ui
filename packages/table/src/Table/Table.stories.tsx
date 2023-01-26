@@ -1,15 +1,8 @@
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { ComponentStory, Meta } from '@storybook/react';
-import {
-  ColumnDef,
-  ExpandedState,
-  flexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getSortedRowModel,
-  SortingState,
-} from '..';
 import React from 'react';
+import { ComponentStory, Meta } from '@storybook/react';
+
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
 import HeaderRow from '../HeaderRow/HeaderRow';
@@ -22,6 +15,15 @@ import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
 import { AnyDict } from '../utils/types';
+import {
+  ColumnDef,
+  ExpandedState,
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getSortedRowModel,
+  SortingState,
+} from '..';
 
 export default {
   title: 'Components/Table',
@@ -536,7 +538,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
   );
 };
 
-export const KitchenSink = () => {
+export const KitchenSink: ComponentStory<typeof Table> = (args) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -605,7 +607,7 @@ export const KitchenSink = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table {...args}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>

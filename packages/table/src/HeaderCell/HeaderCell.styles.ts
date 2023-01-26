@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+
 import { Align } from './HeaderCell.types';
 
 export const baseStyles = css`

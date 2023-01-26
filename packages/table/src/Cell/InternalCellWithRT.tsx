@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+
 import { InternalCellWithRTProps } from './Cell.types';
 import InternalCellBase from './InternalCellBase';
 

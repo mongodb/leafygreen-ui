@@ -1,5 +1,7 @@
-import { css } from '@leafygreen-ui/emotion';
 import React, { forwardRef, PropsWithChildren } from 'react';
+
+import { css } from '@leafygreen-ui/emotion';
+
 import TableContainerProps from './TableContainer.types';
 
 const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(

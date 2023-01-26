@@ -1,8 +1,10 @@
-import Icon from '@leafygreen-ui/icon';
+import React from 'react';
 import PropTypes from 'prop-types';
+
+import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import React from 'react';
+
 import { iconButtonStyles, iconFills } from './ToggleExpandedIcon.styles';
 import ToggleExpandedIconProps from './ToggleExpandedIcon.types';
 

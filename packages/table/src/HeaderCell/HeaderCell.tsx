@@ -1,6 +1,10 @@
-import { cx } from '@leafygreen-ui/emotion';
 import React, { PropsWithChildren, useEffect } from 'react';
+
+import { cx } from '@leafygreen-ui/emotion';
+
 import { useTableContext } from '../TableContext/TableContext';
+
+import SortIcon from './SortIcon/SortIcon';
 import {
   alignmentStyles,
   baseStyles,
@@ -8,7 +12,6 @@ import {
   setWidth,
 } from './HeaderCell.styles';
 import { HeaderCellProps, SortState, SortStates } from './HeaderCell.types';
-import SortIcon from './SortIcon/SortIcon';
 
 const HeaderSortState: SortStates = {
   false: SortState.Off,
