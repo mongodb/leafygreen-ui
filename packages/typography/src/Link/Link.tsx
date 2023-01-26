@@ -4,11 +4,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import {
-  Polymorphic,
-  PolymorphicAs,
-  usePolymorphic,
-} from '@leafygreen-ui/polymorphic';
+import { Polymorphic, usePolymorphic } from '@leafygreen-ui/polymorphic';
 
 import { bodyTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
@@ -35,7 +31,7 @@ const Link = Polymorphic<LinkProps>(
     baseFontSize: baseFontSizeOverride,
     target: targetProp,
     darkMode: darkModeProp,
-    as = 'a' as PolymorphicAs,
+    as,
     ...rest
   }) => {
     const [currentHostname, setCurrentHostname] = useState('');
@@ -44,7 +40,7 @@ const Link = Polymorphic<LinkProps>(
     }, []);
 
     const { theme } = useDarkMode(darkModeProp);
-    const { Component } = usePolymorphic(as);
+    const { Component } = usePolymorphic(as ? as : href ? 'a' : 'span');
 
     const hrefHostname = useMemo(() => {
       if (!href) return;
@@ -85,9 +81,7 @@ const Link = Polymorphic<LinkProps>(
       );
     }
 
-    const elementProps = href
-      ? ({ as: 'a', href, target, rel } as const)
-      : ({ as: 'span' } as const);
+    const elementProps = Component === 'a' && ({ href, target, rel } as const);
 
     return (
       <Component
