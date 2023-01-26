@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   createUniqueClassName,
   getNodeTextContent,
@@ -112,7 +111,6 @@ const MenuItem = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const { theme } = useContext(MenuContext);
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
 
@@ -125,9 +123,9 @@ const MenuItem = React.forwardRef(
         className: cx(
           mainIconBaseStyle,
           mainIconThemeStyle[theme],
+          focusStyles.iconStyle,
           {
             [activeIconStyle[theme]]: active,
-            [focusStyles.iconStyle]: showFocus,
             [disabledIconStyle[theme]]: disabled,
           },
           glyph.props?.className,
@@ -158,23 +156,31 @@ const MenuItem = React.forwardRef(
           <div
             // Add text as data attribute to ensure no layout shift on hover
             data-text={getNodeTextContent(children)}
-            className={cx(titleTextStyle, hoverStyles.text, {
-              [activeTitleTextStyle[theme]]: active,
-              [hoverStyles.activeText]: active,
-              [disabledTextStyle[theme]]: disabled,
-              [focusStyles.textStyle]: showFocus,
-            })}
+            className={cx(
+              titleTextStyle,
+              hoverStyles.text,
+              {
+                [activeTitleTextStyle[theme]]: active,
+                [hoverStyles.activeText]: active,
+                [disabledTextStyle[theme]]: disabled,
+              },
+              focusStyles.textStyle,
+            )}
           >
             {children}
           </div>
           {description && (
             <div
-              className={cx(descriptionTextThemeStyle[theme], {
-                [activeDescriptionTextStyle[theme]]: active,
-                [disabledTextStyle[theme]]: disabled,
-                [focusStyles.descriptionStyle]: showFocus,
-                [linkDescriptionTextStyle]: typeof rest.href === 'string',
-              })}
+              className={cx(
+                descriptionTextThemeStyle[theme],
+                {
+                  [activeDescriptionTextStyle[theme]]: active,
+                  [disabledTextStyle[theme]]: disabled,
+
+                  [linkDescriptionTextStyle]: typeof rest.href === 'string',
+                },
+                focusStyles.descriptionStyle,
+              )}
             >
               {description}
             </div>
@@ -201,8 +207,8 @@ const MenuItem = React.forwardRef(
             {
               [activeMenuItemContainerStyle[theme]]: active,
               [disabledMenuItemContainerThemeStyle[theme]]: disabled,
-              [focusedMenuItemContainerStyle[theme]]: showFocus,
             },
+            focusedMenuItemContainerStyle[theme],
             className,
           )}
         >

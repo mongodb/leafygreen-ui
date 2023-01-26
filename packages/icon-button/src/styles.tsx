@@ -95,7 +95,7 @@ export const iconButtonMode: Record<Theme, string> = {
 
 export const focusStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus {
+    &:focus-visible {
       color: ${palette.black};
       box-shadow: ${focusRing[Theme.Light].default};
 
@@ -105,7 +105,7 @@ export const focusStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    &:focus {
+    &:focus-visible {
       color: ${palette.gray.light3};
       box-shadow: ${focusRing[Theme.Dark].default};
 
