@@ -1,5 +1,23 @@
 # @leafygreen-ui/typography
 
+## 16.0.0
+
+### Major Changes
+
+- 866144167: Uses `Polymorphic` instead of Box to support `as` prop. Adds support for `as` prop to `Label` component.
+
+### Patch Changes
+
+- c82ed35d5: Removes `useUsingKeyboardContext` from component, in favor of `&:focus-visible`
+- Updated dependencies [050f1f8a9]
+- Updated dependencies [741cdd408]
+- Updated dependencies [9f06c9495]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/icon@11.12.4
+  - @leafygreen-ui/tokens@2.0.0
+  - @leafygreen-ui/polymorphic@1.1.0
+  - @leafygreen-ui/palette@3.4.7
+
 ## 15.3.0
 
 ### Minor Changes
