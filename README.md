@@ -221,7 +221,7 @@ Pre-releases let you publish an alpha/beta/next version of a component, allowing
 
 Let's imagine we want to publish a `beta` release of some component. Our work is being done on a branch called `new-feature`
 
-1. Create a new branch off your component branch `git branch pre-release; git checkout pre-release`
+1. Create a new branch off your component branch `git checkout -b pre-release`
    - this makes sure your package updates stay independent
 2. Enter pre-release mode: `yarn changeset pre enter beta` (name can be `next`, `beta`, `alpha`, or any other name)
 3. Update package versions `yarn changeset version`
