@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
-import { AccessibleFieldProps,LabelProps } from './types';
+import { AccessibleFieldProps, LabelProps } from './types';
 
 export const useLabel = ({
   label,
