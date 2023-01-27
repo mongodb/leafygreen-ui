@@ -206,8 +206,17 @@ export const messageWrapperStyles = css`
   }
 `;
 
-//TODO: add padding!!
-export const inputIconStyles = css``;
+export const inputIconSizeStyles: Record<SizeVariant, string> = {
+  [SizeVariant.Small]: css`
+    padding-right: ${spacing[1] * 13}px;
+  `,
+  [SizeVariant.Default]: css`
+    padding-right: ${spacing[1] * 14}px;
+  `,
+  [SizeVariant.Large]: css`
+    padding-right: ${spacing[1] * 16}px;
+  `,
+};
 
 export const inputDisabledBaseStyles = css`
   cursor: not-allowed;

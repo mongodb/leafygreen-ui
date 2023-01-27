@@ -16,7 +16,7 @@ import {
   inputDisabledBaseStyles,
   inputDisabledThemeStyles,
   inputFocusThemeStyles,
-  inputIconStyles,
+  inputIconSizeStyles,
   inputSizeStyles,
   inputThemeStyles,
   inputWrapperStyles,
@@ -41,7 +41,6 @@ export const PasswordInput = React.forwardRef<
   (
     {
       value: valueProp,
-      placeholder,
       onChange: onChangeProp,
       className,
       darkMode: darkModeProp,
@@ -70,7 +69,6 @@ export const PasswordInput = React.forwardRef<
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
-    // TODO: handle validation hook
 
     // If disabled then hide password
     useEffect(() => {
@@ -134,7 +132,7 @@ export const PasswordInput = React.forwardRef<
                     inputDisabledBaseStyles,
                     inputDisabledThemeStyles[theme],
                   )]: disabled,
-                  [inputIconStyles]:
+                  [inputIconSizeStyles[sizeVariant]]:
                     !hasValidationMessages && state !== States.None,
                 },
               )}
@@ -144,7 +142,7 @@ export const PasswordInput = React.forwardRef<
             />
             {/* Visual icons inside the input will only render if aria-describedby is set and the state is not `none`. None does not need a visible icon */}
             {!hasValidationMessages && state !== States.None && (
-              <InputIcon state={state} />
+              <InputIcon state={state} sizeVariant={sizeVariant} />
             )}
             <TogglePassword
               disabled={disabled}

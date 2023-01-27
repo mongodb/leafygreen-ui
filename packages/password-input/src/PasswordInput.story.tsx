@@ -1,11 +1,12 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 
+import { storybookArgTypes } from '@leafygreen-ui/lib';
+
 import {
   PasswordInputProps,
   SizeVariant,
   States,
-  ValidationStateProps,
 } from './PasswordInput/PasswordInput.types';
 import { PasswordInput } from '.';
 
@@ -14,11 +15,27 @@ export default {
   component: PasswordInput,
   args: {
     label: 'label',
+    validationState: [
+      {
+        message: "i'm an error",
+        state: 'error',
+      },
+      {
+        message: "i'm a warning",
+        state: 'warning',
+      },
+      {
+        message: "i'm valid",
+        state: 'valid',
+      },
+      {
+        message: "i'm waiting",
+        state: 'none',
+      },
+    ],
   },
   argTypes: {
-    darkMode: {
-      control: 'boolean',
-    },
+    darkMode: storybookArgTypes.darkMode,
     disabled: {
       control: 'boolean',
     },
@@ -35,45 +52,23 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: ['value', 'className', 'onBlur', 'onChange', 'aria-labelledby'],
+      exclude: [
+        'value',
+        'className',
+        'onBlur',
+        'onChange',
+        'aria-labelledby',
+        'aria-describedby',
+        'aria-label',
+        'id',
+      ],
     },
   },
 };
 
-// const validations: Array<ValidationProps> = [
-//   {
-//     message: 'This is an error message',
-//     state: 'valid',
-//   },
-//   {
-//     message: 'This is another error message',
-//     state: 'valid',
-//   },
-//   {
-//     message: 'This is another error message',
-//     state: 'error',
-//   },
-// ];
-
-const validations: Array<ValidationStateProps> = [
-  {
-    message: 'This is an error message',
-    state: 'error',
-  },
-  {
-    message: 'This is an error message',
-    state: 'error',
-  },
-];
-
-// TODO: HELP
-const Template: Story<PasswordInputProps> = props => (
-  <PasswordInput
-    {...props}
-    validationState={validations}
-    aria-describedby={undefined} //TODO: figure out why i need this
-  />
-);
+const Template: Story<PasswordInputProps> = props => {
+  return <PasswordInput {...props} />;
+};
 
 export const Basic = Template.bind({});
 

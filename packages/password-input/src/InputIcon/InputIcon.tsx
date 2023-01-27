@@ -8,7 +8,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { States } from '../PasswordInput/PasswordInput.types';
 
-import { baseStyles, themeStateStyles } from './InputIcon.styles';
+import { baseStyles, sizeStyles, themeStateStyles } from './InputIcon.styles';
 import { InputIconProps, StateProps } from './InputIcon.types';
 
 const validationIcons: Record<StateProps, React.ComponentType<any>> = {
@@ -17,14 +17,18 @@ const validationIcons: Record<StateProps, React.ComponentType<any>> = {
   [States.Valid]: CheckmarkIcon,
 };
 
-export const InputIcon = ({ state }: InputIconProps) => {
+export const InputIcon = ({ state, sizeVariant }: InputIconProps) => {
   const ValidationIcon = validationIcons[state];
 
   const { theme } = useDarkMode();
 
   return (
     <ValidationIcon
-      className={cx(baseStyles, themeStateStyles[theme][state])}
+      className={cx(
+        baseStyles,
+        sizeStyles[sizeVariant],
+        themeStateStyles[theme][state],
+      )}
     />
   );
 };
