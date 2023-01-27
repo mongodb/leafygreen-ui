@@ -1,0 +1,31 @@
+
+  {
+    "name": "@leafygreen-ui/form-control",
+    "version": "0.9.0",
+    "description": "leafyGreen UI Kit Form Control",
+    "main": "./dist/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/index.d.ts",
+    "typesVersions": {
+      "<3.9": { "*": ["ts3.4/*"] }
+    },
+    "scripts": {
+      "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    },
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-control",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mongodb/leafygreen-ui"
+    },
+    "bugs": {
+      "url": "https://jira.mongodb.org/projects/PD/summary"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "dependencies": {
+      "@leafygreen-ui/lib": "^10.0.0", 
+      "@leafygreen-ui/hooks": "^7.4.0"
+    }
+  }
