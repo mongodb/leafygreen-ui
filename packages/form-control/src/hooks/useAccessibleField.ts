@@ -10,12 +10,12 @@ export const useLabel = ({
   'aria-labelledby': ariaLabelledby,
   'aria-label': ariaLabel,
 }: LabelProps) => {
-  const id = useIdAllocator({ prefix: 'lg-input', id: idProp });
+  const inputId = useIdAllocator({ prefix: 'lg-input', id: idProp });
   const labelId = useIdAllocator({ prefix: 'lg-label' });
 
   const labelProps = {
     id: labelId,
-    htmlFor: id,
+    htmlFor: inputId,
   };
 
   if (!label && !ariaLabelledby && !ariaLabel) {
@@ -25,7 +25,7 @@ export const useLabel = ({
   }
 
   const fieldProps = {
-    id,
+    id: inputId,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledby
       ? `${ariaLabelledby} ${labelId}`
