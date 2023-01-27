@@ -53,7 +53,6 @@ function Checkbox({
     () => (checkedProp != null ? checkedProp : checked),
     [checkedProp, checked],
   );
-  const { usingKeyboard } = useUsingKeyboardContext();
   const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
@@ -112,9 +111,7 @@ function Checkbox({
         <input
           {...rest}
           id={checkboxId}
-          className={cx(inputClassName, inputStyle, {
-            [inputFocusStyles[theme]]: usingKeyboard,
-          })}
+          className={cx(inputClassName, inputStyle, inputFocusStyles[theme])}
           type="checkbox"
           name={name}
           disabled={disabled}
