@@ -18,8 +18,6 @@ The Table component displays data in rows and columns and optionally supports ro
 While other features from [`react-table`](https://github.com/tanstack/table#quick-features) could be supported, we discourage developers from utilizing them unless they are explicitly supported by Leafygreen, as they would not align with MongoDB design systems guidelines.
 
 #### Temp todos
-
-- create index.ts for all subcomponents
 - write tests
 
 # Installation

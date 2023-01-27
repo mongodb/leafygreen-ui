@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useRef } from 'react';
 
 import { InternalCellWithRTProps } from './Cell.types';
 import InternalCellBase from './InternalCellBase';
@@ -7,6 +7,7 @@ const InternalCellWithRT = <T extends unknown>({
   cell,
   cellIndex,
   toggleExpandedIconProps,
+  depth,
   ...rest
 }: PropsWithChildren<InternalCellWithRTProps<T>>) => {
   const shouldRenderArrow = cell?.row.getCanExpand() && cellIndex === 0;
@@ -14,6 +15,7 @@ const InternalCellWithRT = <T extends unknown>({
   return (
     <InternalCellBase
       cellIndex={cellIndex}
+      depth={depth}
       toggleExpandedIconProps={
         shouldRenderArrow
           ? {
@@ -23,7 +25,8 @@ const InternalCellWithRT = <T extends unknown>({
           : undefined
       }
       {...rest}
-    />
+    >
+    </InternalCellBase>
   );
 };
 
