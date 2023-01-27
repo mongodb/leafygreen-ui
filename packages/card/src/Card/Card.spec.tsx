@@ -30,7 +30,6 @@ function renderCard({
   const cardId = 'cardID';
 
   const { container, getByTestId } = render(
-    // @ts-expect-error
     <Card data-testid={cardId} className={className} {...rest}>
       {children}
     </Card>,
