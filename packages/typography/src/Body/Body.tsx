@@ -1,12 +1,8 @@
 import React from 'react';
 
+import Box from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import {
-  Polymorphic,
-  PolymorphicAs,
-  usePolymorphic,
-} from '@leafygreen-ui/polymorphic';
 
 import {
   baseTypographyStyles,
@@ -31,42 +27,40 @@ const fontWeights: Record<
   },
 } as const;
 
-const Body = Polymorphic<BodyProps>(
-  ({
-    baseFontSize: baseFontSizeOverride,
-    darkMode: darkModeProp,
-    className,
-    weight = 'regular',
-    as = 'p' as PolymorphicAs,
-    ...rest
-  }) => {
-    const { theme } = useDarkMode(darkModeProp);
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
-    const { Component } = usePolymorphic(as);
+export function Body<T extends keyof JSX.IntrinsicElements>({
+  baseFontSize: baseFontSizeOverride,
+  darkMode: darkModeProp,
+  className,
+  weight = 'regular',
+  as = 'p' as T,
+  ...rest
+}: BodyProps<T>) {
+  const { theme } = useDarkMode(darkModeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
-    // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
-    const fontWeight = css`
-      font-weight: ${fontWeights['default'][weight]};
-      strong,
-      b {
-        font-weight: ${fontWeights['strong'][weight]};
-      }
-    `;
+  // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
+  const fontWeight = css`
+    font-weight: ${fontWeights['default'][weight]};
+    strong,
+    b {
+      font-weight: ${fontWeights['strong'][weight]};
+    }
+  `;
 
-    return (
-      <Component
-        className={cx(
-          baseTypographyStyles,
-          bodyTypeScaleStyles[baseFontSize],
-          defaultTextColor[theme],
-          fontWeight,
-          className,
-        )}
-        {...rest}
-      />
-    );
-  },
-);
+  return (
+    <Box
+      as={as}
+      className={cx(
+        baseTypographyStyles,
+        bodyTypeScaleStyles[baseFontSize],
+        defaultTextColor[theme],
+        fontWeight,
+        className,
+      )}
+      {...rest}
+    />
+  );
+}
 
 Body.displayName = 'Body';
 

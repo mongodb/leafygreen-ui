@@ -2,39 +2,28 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import {
-  Polymorphic,
-  PolymorphicAs,
-  usePolymorphic,
-} from '@leafygreen-ui/polymorphic';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+import { CommonTypographyProps } from '../types';
 
 import { errorMessageModeStyle, errorMessageStyle } from './Error.styles';
-import { ErrorProps } from './Error.types';
 
-const Error = Polymorphic<ErrorProps>(
-  ({
-    as = 'p' as PolymorphicAs,
-    darkMode: darkModeProp,
-    children,
-    className,
-    ...rest
-  }) => {
-    const { theme } = useDarkMode(darkModeProp);
-    const { Component } = usePolymorphic(as);
+const Error = ({
+  children,
+  darkMode: darkModeProp,
+  className,
+  ...rest
+}: HTMLElementProps<'p'> & CommonTypographyProps) => {
+  const { theme } = useDarkMode(darkModeProp);
 
-    return (
-      <Component
-        {...rest}
-        className={cx(
-          errorMessageStyle,
-          errorMessageModeStyle[theme],
-          className,
-        )}
-      >
-        {children}
-      </Component>
-    );
-  },
-);
+  return (
+    <p
+      {...rest}
+      className={cx(errorMessageStyle, errorMessageModeStyle[theme], className)}
+    >
+      {children}
+    </p>
+  );
+};
 
 export default Error;
