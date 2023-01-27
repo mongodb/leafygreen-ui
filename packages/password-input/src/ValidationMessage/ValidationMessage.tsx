@@ -14,8 +14,9 @@ import {
   iconBaseStyles,
   iconThemeStateStyles,
   themeStyles,
+  wrapperStyles,
 } from './ValidationMessage.styles';
-import { ValidationValidationStateProps } from './ValidationMessage.types';
+import { ValidationMessageStateProps } from './ValidationMessage.types';
 
 const validationIcons: Record<States, React.ComponentType<any>> = {
   [States.Error]: ErrorIcon,
@@ -25,24 +26,31 @@ const validationIcons: Record<States, React.ComponentType<any>> = {
 };
 
 export const ValidationMessage = ({
-  message,
-  state,
-}: ValidationValidationStateProps) => {
-  const ValidationIcon = validationIcons[state];
-
+  ariaDescribedby,
+  messages,
+}: ValidationMessageStateProps) => {
   const { theme } = useDarkMode();
 
   return (
-    <li className={cx(baseStyles, themeStyles[theme][state])}>
-      <ValidationIcon
-        className={cx(iconBaseStyles, iconThemeStateStyles[theme][state])}
-      />
-      <span>{message}</span>
-      <div className={srOnly}>
-        {/* TODO: is this message clear enough for screen readers? */}
-        {message}: {state}
-      </div>
-    </li>
+    // We're using aria-polite to announce when a message has changed. In order for aria-polite to work correctly the message wrapper needs to remain on the page even if there are no messages. If a custom message container is specified with aria-describedby then this wrapper will not render.
+    <ul aria-live="polite" className={wrapperStyles} id={ariaDescribedby}>
+      {messages.map((item, index) => {
+        const { state, message } = item;
+        const ValidationIcon = validationIcons[state];
+        return (
+          <li key={index} className={cx(baseStyles, themeStyles[theme][state])}>
+            <ValidationIcon
+              className={cx(iconBaseStyles, iconThemeStateStyles[theme][state])}
+            />
+            <span>{message}</span>
+            <div className={srOnly}>
+              {/* TODO: is this message clear enough for screen readers? */}
+              {message}: {state}
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 

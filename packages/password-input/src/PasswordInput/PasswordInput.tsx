@@ -21,13 +21,12 @@ import {
   inputThemeStyles,
   inputWrapperStyles,
   labelBaseStyles,
-  messageWrapperStyles,
 } from './PasswordInput.styles';
 import {
+  MessageProps,
   PasswordInputProps,
   SizeVariant,
   States,
-  ValidationStateProps,
 } from './PasswordInput.types';
 
 function allEqual(arr: Array<any>) {
@@ -81,8 +80,8 @@ export const PasswordInput = React.forwardRef<
       if (validationState.length === 0) return States.None;
 
       const statesArray: Array<States> = (
-        validationState as Array<ValidationStateProps>
-      ).map((message: ValidationStateProps) => message.state);
+        validationState as Array<MessageProps>
+      ).map((message: MessageProps) => message.state);
 
       // if (statesArray.length === 1) return statesArray[0];
       if (allEqual(statesArray)) return statesArray[0];
@@ -152,22 +151,10 @@ export const PasswordInput = React.forwardRef<
             />
           </div>
           {hasValidationMessages && (
-            // We're using aria-polite to announce when a message has changed. In order for aria-polite to work correctly the message wrapper needs to remain on the page even if there are no messages. If a custom message container is specified with aria-describedby then this wrapper will not render.
-            <ul
-              aria-live="polite"
-              className={messageWrapperStyles}
-              id={ariaDescribedby}
-            >
-              {(validationState as Array<ValidationStateProps>).map(
-                (message, index) => (
-                  <ValidationMessage
-                    key={index} //TODO: don't use index
-                    message={message.message as string}
-                    state={message.state}
-                  />
-                ),
-              )}
-            </ul>
+            <ValidationMessage
+              ariaDescribedby={ariaDescribedby}
+              messages={validationState as Array<MessageProps>}
+            />
           )}
         </div>
       </LeafyGreenProvider>

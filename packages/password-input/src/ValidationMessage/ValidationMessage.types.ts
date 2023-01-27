@@ -1,6 +1,6 @@
-import { States } from '../PasswordInput/PasswordInput.types';
+import { MessageProps } from '../PasswordInput/PasswordInput.types';
 
-export interface ValidationValidationStateProps {
-  message: string;
-  state: States;
+export interface ValidationMessageStateProps {
+  ariaDescribedby: string;
+  messages: Array<MessageProps>;
 }

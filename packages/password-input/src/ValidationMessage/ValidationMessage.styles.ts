@@ -5,6 +5,17 @@ import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import { States } from '../PasswordInput/PasswordInput.types';
 
+export const wrapperStyles = css`
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  // TODO: add comment
+  li:first-of-type {
+    margin-top: ${spacing[1]}px;
+  }
+`;
+
 export const baseStyles = css`
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;

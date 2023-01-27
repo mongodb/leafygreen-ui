@@ -19,12 +19,12 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export interface ValidationStateProps {
+export interface MessageProps {
   message?: string;
   state: States;
 }
 
-// TODO: check this
+// TODO: check this PICK!!
 interface AriaLabelProps {
   /**
    * Text shown in bold above the input element.
@@ -74,7 +74,7 @@ interface StateAndMessageProps {
   /**
    * Determines what messages will appear
    */
-  validationState?: Array<ValidationStateProps>;
+  validationState?: Array<MessageProps>;
 }
 
 export type MessagesProp = StateAndMessageProps | StateOnlyProps;
