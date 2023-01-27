@@ -2351,25 +2351,6 @@
   dependencies:
     lodash "^4.17.21"
 
-"@leafygreen-ui/tokens@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/tokens/-/tokens-1.4.1.tgz#67e068d5fbc560acd463d78f6c64ddf95598d60f"
-  integrity sha512-ap9IdpQy+wg8IG9rJbWZB9F9zihhixClz68UFcwJMbDqcvxcqRPBvRpkbqiJdAPwOSrbYZfrHSGEtdJk9bzZAg==
-  dependencies:
-    "@leafygreen-ui/palette" "^3.4.5"
-
-"@leafygreen-ui/typography@^16.0.0":
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-16.0.0.tgz#aa17ee40e9581d3f9b544a21bcd3c6b49bb33314"
-  integrity sha512-jlblxTcYQqSfTOBoQ/vXDGstqzL+wiEsaGuC3pIwk2YCqXpOa6IcDlCPsNiJ5VMgnarY/PLJy2hoIN8lVlbf8Q==
-  dependencies:
-    "@leafygreen-ui/emotion" "^4.0.3"
-    "@leafygreen-ui/icon" "^11.12.4"
-    "@leafygreen-ui/lib" "^10.0.0"
-    "@leafygreen-ui/palette" "^3.4.7"
-    "@leafygreen-ui/polymorphic" "^1.1.0"
-    "@leafygreen-ui/tokens" "^2.0.0"
-
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"
