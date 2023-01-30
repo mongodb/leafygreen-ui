@@ -24,6 +24,7 @@ export default {
     },
     darkMode: storybookArgTypes.darkMode,
     stages: {
+      storybookOnly: true,
       description:
         '[STORYBOOK ONLY]\n\nThis prop is used to generate DOM elements to render children. It is not defined in the component.',
     },
