@@ -11,35 +11,18 @@ export default {
   title: 'Components/Pipeline',
   component: Pipeline,
   args: {
-    stages: ['$match', '$group', '$project', '$addFields', '$limit'].join(','),
     darkMode: false,
     size: Size.Normal,
+    children: ['$match', '$group', '$project', '$addFields', '$limit'].map(
+      (stage, index) => <Stage key={`${stage}-${index}`}>{stage}</Stage>,
+    ),
   },
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
     darkMode: storybookArgTypes.darkMode,
-    stages: {
-      storybookOnly: true,
-      description:
-        '[STORYBOOK ONLY]\n\nThis prop is used to generate DOM elements to render children. It is not defined in the component.',
-    },
   },
+  parameters: { controls: { exclude: ['children', 'className'] } },
 } as Meta<typeof Pipeline>;
 
-export const Basic = ({
-  stages,
-  ...args
-}: PipelineProps & { stages: string }) => {
-  return (
-    <Pipeline {...args}>
-      {stages.split(',').map((stage, index) => (
-        <Stage key={`${stage}-${index}`}>{stage}</Stage>
-      ))}
-    </Pipeline>
-  );
+export const Basic = ({ ...args }: PipelineProps & { stages: string }) => {
+  return <Pipeline {...args} />;
 };
