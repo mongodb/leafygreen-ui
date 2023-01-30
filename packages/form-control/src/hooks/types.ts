@@ -14,4 +14,5 @@ export interface AccessibleFieldProps extends AriaLabels {
   description?: string;
   errorMessage?: string;
   validationState?: ValidationState;
+  ['aria-describedby']?: string;
 }

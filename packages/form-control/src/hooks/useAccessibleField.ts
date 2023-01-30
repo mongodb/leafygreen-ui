@@ -41,6 +41,7 @@ export const useLabel = ({
 export const useAccessibleField = ({
   label,
   id,
+  'aria-describedby': ariaDescribedbyProp,
   'aria-labelledby': ariaLabelledby,
   'aria-label': ariaLabel,
   description,
@@ -61,7 +62,7 @@ export const useAccessibleField = ({
     () =>
       `${description ? descriptionId : ''} ${
         errorMessage && validationState === 'error' ? errorMessageId : ''
-      }`.trim(),
+      } ${ariaDescribedbyProp ? ariaDescribedbyProp : ''}`.trim(),
     [description, errorMessage, validationState, descriptionId, errorMessageId],
   );
 
