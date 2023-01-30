@@ -2297,12 +2297,31 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@leafygreen-ui/hooks@^7.4.0":
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/hooks/-/hooks-7.4.0.tgz#1b4a11cae74b156fb823faa81097dc363ce7dd65"
+  integrity sha512-oIYqq3lmi3BDjdNf9zWg9PGgWWLOyrdDUAOvOhY+wlcG0U1ZTB38PB6es5vXnVzDGXQurTdIV/GDh4x3QcwZRg==
+  dependencies:
+    lodash "^4.17.21"
+
 "@leafygreen-ui/lib@^9.2.1", "@leafygreen-ui/lib@^9.4.2":
   version "9.5.2"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-9.5.2.tgz#c80d7920e819c89ee544866b1046667fe99ea8d3"
   integrity sha512-soC5ZSnhqoqbFv9b2kAe+1s7nUnAcdcBzrI0yIJZymExCJsZnmI3VWjLTUbViuTrsO1GfnmLDdsUeDr3ezTOOg==
   dependencies:
     lodash "^4.17.21"
+
+"@leafygreen-ui/typography@^15.3.0":
+  version "15.3.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-15.3.0.tgz#9553dadff61d2b78e0589e0efcc7793a3b79a938"
+  integrity sha512-JmdCGHvFpX0/KyB42zcAjo5ViBKuoIL74MQwN25neWgWAg19Q4VMPrTm+hnysqaPW0ntCwRayexbWnTI+XPD+Q==
+  dependencies:
+    "@leafygreen-ui/box" "^3.1.1"
+    "@leafygreen-ui/emotion" "^4.0.3"
+    "@leafygreen-ui/icon" "^11.12.3"
+    "@leafygreen-ui/lib" "^10.0.0"
+    "@leafygreen-ui/palette" "^3.4.6"
+    "@leafygreen-ui/tokens" "^1.4.1"
 
 "@lerna/add@3.20.0":
   version "3.20.0"

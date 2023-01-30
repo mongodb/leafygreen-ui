@@ -19,12 +19,12 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export interface MessageProps {
+export interface NotificationProps {
   message?: string;
   state: States;
 }
 
-// TODO: check this PICK!!
+// TODO: check this
 interface AriaLabelProps {
   /**
    * Text shown in bold above the input element.
@@ -61,7 +61,7 @@ interface StateOnlyProps {
   /**
    * Determines what messages will appear
    */
-  validationState: States;
+  stateNotifications: States;
 }
 
 // using default message container, no aria-describedby
@@ -74,10 +74,10 @@ interface StateAndMessageProps {
   /**
    * Determines what messages will appear
    */
-  validationState?: Array<MessageProps>;
+  stateNotifications?: Array<NotificationProps>;
 }
 
-export type MessagesProp = StateAndMessageProps | StateOnlyProps;
+export type StateNotificationProps = StateAndMessageProps | StateOnlyProps;
 
 interface BasePasswordInputProps
   extends Omit<
@@ -119,5 +119,5 @@ interface BasePasswordInputProps
 }
 
 export type PasswordInputProps = BasePasswordInputProps &
-  MessagesProp &
+  StateNotificationProps &
   AriaLabelProps;

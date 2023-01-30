@@ -8,8 +8,8 @@ import LeafyGreenProvider, {
 import { Label } from '@leafygreen-ui/typography';
 
 import { InputIcon } from '../InputIcon';
+import { StateNotifications } from '../StateNotifications';
 import { TogglePassword } from '../TogglePassword';
-import { ValidationMessage } from '../ValidationMessage';
 
 import {
   inputBaseStyles,
@@ -23,7 +23,7 @@ import {
   labelBaseStyles,
 } from './PasswordInput.styles';
 import {
-  MessageProps,
+  type NotificationProps,
   PasswordInputProps,
   SizeVariant,
   States,
@@ -45,7 +45,7 @@ export const PasswordInput = React.forwardRef<
       darkMode: darkModeProp,
       label,
       sizeVariant = SizeVariant.Default,
-      validationState = [],
+      stateNotifications = [],
       disabled = false,
       autoComplete = 'new-password',
       id: idProp,
@@ -67,7 +67,7 @@ export const PasswordInput = React.forwardRef<
       id: ariaLabelledbyProp,
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
-    const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
+    // const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
     // If disabled then hide password
     useEffect(() => {
@@ -77,11 +77,11 @@ export const PasswordInput = React.forwardRef<
     const handleTogglePasswordClick = () => setShowPassword(s => !s);
 
     const getStateFromArray = (): States => {
-      if (validationState.length === 0) return States.None;
+      if (stateNotifications.length === 0) return States.None;
 
       const statesArray: Array<States> = (
-        validationState as Array<MessageProps>
-      ).map((message: MessageProps) => message.state);
+        stateNotifications as Array<NotificationProps>
+      ).map((message: NotificationProps) => message.state);
 
       // if (statesArray.length === 1) return statesArray[0];
       if (allEqual(statesArray)) return statesArray[0];
@@ -91,12 +91,12 @@ export const PasswordInput = React.forwardRef<
       return States.None;
     };
 
-    const state: States = Array.isArray(validationState)
+    const state: States = Array.isArray(stateNotifications)
       ? getStateFromArray()
-      : validationState;
+      : stateNotifications;
 
     const hasValidationMessages =
-      !ariaDescribedbyProp && Array.isArray(validationState);
+      !ariaDescribedbyProp && Array.isArray(stateNotifications);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -114,7 +114,7 @@ export const PasswordInput = React.forwardRef<
           <div className={inputWrapperStyles}>
             <input
               type={showPassword ? 'text' : 'password'}
-              value={value}
+              // value={value}
               id={inputId}
               autoComplete={autoComplete}
               aria-describedby={ariaDescribedby}
@@ -135,7 +135,7 @@ export const PasswordInput = React.forwardRef<
                     !hasValidationMessages && state !== States.None,
                 },
               )}
-              onChange={handleChange}
+              // onChange={handleChange}
               readOnly={disabled ? true : false}
               {...rest}
             />
@@ -151,9 +151,9 @@ export const PasswordInput = React.forwardRef<
             />
           </div>
           {hasValidationMessages && (
-            <ValidationMessage
+            <StateNotifications
               ariaDescribedby={ariaDescribedby}
-              messages={validationState as Array<MessageProps>}
+              messages={stateNotifications as Array<NotificationProps>}
             />
           )}
         </div>

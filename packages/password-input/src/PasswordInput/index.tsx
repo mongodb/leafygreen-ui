@@ -1,2 +1,5 @@
 export { PasswordInput } from './PasswordInput';
-export { MessagesProp, SizeVariant } from './PasswordInput.types';
+export {
+  SizeVariant,
+  type StateNotificationProps,
+} from './PasswordInput.types';

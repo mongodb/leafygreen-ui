@@ -27,7 +27,7 @@
     "dependencies": {
       "@leafygreen-ui/emotion":"^4.0.3",
       "@leafygreen-ui/hooks": "^7.4.0",
-      "@leafygreen-ui/lib": "^6.1.0",
+      "@leafygreen-ui/lib": "^10.0.0",
       "@leafygreen-ui/tokens": "^1.4.1",
       "@leafygreen-ui/typography": "^15.3.0",
       "@leafygreen-ui/icon": "^11.12.3",

@@ -1,1 +1,0 @@
-export { ValidationMessage } from './ValidationMessage';

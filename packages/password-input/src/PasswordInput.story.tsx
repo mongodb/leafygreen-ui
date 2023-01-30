@@ -15,7 +15,7 @@ export default {
   component: PasswordInput,
   args: {
     label: 'label',
-    validationState: [
+    stateNotifications: [
       {
         message: "i'm an error",
         state: 'error',
@@ -73,18 +73,18 @@ const Template: Story<PasswordInputProps> = props => {
 export const Basic = Template.bind({});
 
 export const CustomContainer = ({
-  validationState,
+  stateNotifications,
   ...rest
 }: PasswordInputProps) => (
   <PasswordInput
     {...rest}
-    validationState={validationState as States}
+    stateNotifications={stateNotifications as States}
     aria-describedby={'my-id'}
   />
 );
 
 CustomContainer.argTypes = {
-  validationState: {
+  stateNotifications: {
     control: 'select',
     options: Object.values(States),
   },

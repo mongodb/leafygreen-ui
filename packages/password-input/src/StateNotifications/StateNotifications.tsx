@@ -15,20 +15,20 @@ import {
   iconThemeStateStyles,
   themeStyles,
   wrapperStyles,
-} from './ValidationMessage.styles';
-import { ValidationMessageStateProps } from './ValidationMessage.types';
+} from './StateNotifications.styles';
+import { StateNotificationsProps } from './StateNotifications.types';
 
-const validationIcons: Record<States, React.ComponentType<any>> = {
+const icons: Record<States, React.ComponentType<any>> = {
   [States.Error]: ErrorIcon,
   [States.Warning]: WarningIcon,
   [States.Valid]: CheckmarkIcon,
   [States.None]: CheckmarkIcon,
 };
 
-export const ValidationMessage = ({
+export const StateNotifications = ({
   ariaDescribedby,
   messages,
-}: ValidationMessageStateProps) => {
+}: StateNotificationsProps) => {
   const { theme } = useDarkMode();
 
   return (
@@ -36,7 +36,7 @@ export const ValidationMessage = ({
     <ul aria-live="polite" className={wrapperStyles} id={ariaDescribedby}>
       {messages.map((item, index) => {
         const { state, message } = item;
-        const ValidationIcon = validationIcons[state];
+        const ValidationIcon = icons[state];
         return (
           <li key={index} className={cx(baseStyles, themeStyles[theme][state])}>
             <ValidationIcon
@@ -54,4 +54,4 @@ export const ValidationMessage = ({
   );
 };
 
-ValidationMessage.displayName = 'ValidationMessage';
+StateNotifications.displayName = 'StateNotifications';
