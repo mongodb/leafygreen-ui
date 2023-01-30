@@ -13,13 +13,17 @@ export default {
   title: 'Components/FormFooter',
   component: FormFooter,
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: ['onCancel', 'contentClassName', 'className', 'onBackClick'],
     },
+    wrapperStyle: css`
+      width: 90%;
+    `,
   },
   args: {
     darkMode: false,
-    primaryButtonText: 'Primary button text',
+    primaryButtonText: 'Button',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -43,7 +47,13 @@ const Template: ComponentStory<typeof FormFooter> = ({
   primaryButtonText,
   ...args
 }: FormFooterStoryProps) => (
-  <FormFooter {...args} primaryButton={{ text: primaryButtonText as string }} />
+  <FormFooter
+    className={css`
+      width: 100%;
+    `}
+    {...args}
+    primaryButton={{ text: primaryButtonText as string }}
+  />
 );
 
 export const Basic = Template.bind({});
