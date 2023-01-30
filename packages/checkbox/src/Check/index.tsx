@@ -3,7 +3,6 @@ import { Transition } from 'react-transition-group';
 
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -51,7 +50,6 @@ export function Check({
   animate,
   selector,
 }: CheckProps) {
-  const { usingKeyboard } = useUsingKeyboardContext();
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const CheckSVG = indeterminate ? SvgIndeterminate : SvgCheck;
@@ -89,19 +87,17 @@ export function Check({
           )}
         </Transition>
       </div>
-      {!usingKeyboard && (
-        <div
-          className={cx(
-            rippleClassName,
-            rippleBaseStyles,
-            rippleThemeStyles[theme],
-            {
-              [rippleCheckedStyles]: isChecked && shouldAnimate,
-              [disableAnimation]: !shouldAnimate,
-            },
-          )}
-        />
-      )}
+      <div
+        className={cx(
+          rippleClassName,
+          rippleBaseStyles,
+          rippleThemeStyles[theme],
+          {
+            [rippleCheckedStyles]: isChecked && shouldAnimate,
+            [disableAnimation]: !shouldAnimate,
+          },
+        )}
+      />
     </>
   );
 }
