@@ -237,6 +237,34 @@ describe('Polymorphic/Example Higher-order Components', () => {
           expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
           expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
         });
+
+        test('With styled props', () => {
+          // We need to define the additional props that styled should expect
+          interface StyledProps {
+            color: string;
+            size: string;
+          }
+
+          const StyledExample = styled(ExampleComponent)<StyledProps>`
+            color: ${props => props.color};
+            font-size: ${props => props.size}px;
+          `;
+
+          const { getByTestId } = render(
+            <StyledExample
+              title="Title"
+              data-testid="styled"
+              color="#ff69b4"
+              size="16"
+            >
+              Some text
+            </StyledExample>,
+          );
+          expect(getByTestId('styled')).toBeInTheDocument();
+          expect(getByTestId('styled').tagName.toLowerCase()).toBe('div');
+          expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+          expect(getByTestId('styled')).toHaveStyle(`font-size: 16px;`);
+        });
       });
     });
   });
