@@ -75,12 +75,12 @@ export const inputStyle = css`
 
 export const inputFocusStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus + .${checkWrapperClassName} {
+    &:focus-visible + .${checkWrapperClassName} {
       box-shadow: ${focusRing.light.default};
     }
   `,
   [Theme.Dark]: css`
-    &:focus + .${checkWrapperClassName} {
+    &:focus-visible + .${checkWrapperClassName} {
       box-shadow: ${focusRing.dark.default};
     }
   `,
