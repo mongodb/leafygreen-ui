@@ -25,9 +25,6 @@ export default {
     `,
   },
   argTypes: {
-    open: { control: false },
-    onClose: { control: false },
-    graphic: { control: false },
     graphicStyle: {
       control: 'radio',
       options: Object.values(GraphicStyle),
@@ -43,6 +40,11 @@ export default {
     },
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: ['open', 'onClose', 'graphic', 'onButtonClick', 'onLinkClick'],
+    },
   },
 } as Meta<typeof MarketingModal>;
 
