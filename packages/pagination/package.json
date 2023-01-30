@@ -28,6 +28,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/leafygreen-provider": "^3.1.0",
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/select": "^10.1.1",

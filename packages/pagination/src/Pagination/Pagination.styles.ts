@@ -1,13 +1,24 @@
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
-// util style
-export const flexContainerStyles = css`
+export const baseStyles = css`
   display: flex;
-  gap: ${spacing[1]}px;
+  justify-content: space-between;
+  width: 100%;
+
+  > div:first-child {
+    justify-content: flex-start;
+  }
+  > div:last-child {
+    justify-content: flex-end;
+  }
 `;
 
-// used in conjunction with flexContainerStyles
-export const baseStyles = css`
-  justify-content: space-between;
+// util style
+export const flexSectionStyles = css`
+  flex: 1;
+  display: flex;
+  gap: ${spacing[1]}px;
+  align-items: center;
+  justify-content: center;
 `;

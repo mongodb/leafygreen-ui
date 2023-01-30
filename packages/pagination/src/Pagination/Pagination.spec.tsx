@@ -14,7 +14,7 @@ const defaultProps: PaginationProps = {
   itemsPerPageOptions: [10, 20, 30],
   onBackArrowClick: jest.fn(),
   onForwardArrowClick: jest.fn(),
-}
+};
 
 describe('packages/pagination', () => {
   describe('a11y', () => {

@@ -8,18 +8,20 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Option, Select } from '@leafygreen-ui/select';
-import { Body, Label } from '@leafygreen-ui/typography';
+import { Body } from '@leafygreen-ui/typography';
 
-import { baseStyles, flexContainerStyles } from './Pagination.styles';
+import { baseStyles, flexSectionStyles } from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
+
+const DEFAULT_ITEMS_PER_PAGE_OPTIONS = [10, 25, 50];
 
 function Pagination({
   id: idProp,
   className,
-  itemsPerPage,
-  itemsPerPageOptions,
+  itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0],
+  itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS,
   onItemsPerPageOptionChange,
-  currentPage,
+  currentPage = 1,
   onCurrentPageOptionChange,
   numTotalItems,
   onBackArrowClick,
@@ -27,6 +29,7 @@ function Pagination({
   darkMode: darkModeProp,
   ...rest
 }: PaginationProps) {
+  const { darkMode } = useDarkMode(darkModeProp);
   const itemsPerPageLabelId = useIdAllocator({
     prefix: 'pagination',
     id: idProp,
@@ -35,81 +38,97 @@ function Pagination({
     prefix: 'pagination',
     id: idProp,
   });
-  const { darkMode } = useDarkMode(darkModeProp);
 
   const getCurrentRangeString = () => {
-    return `${itemsPerPage * currentPage + 1} - ${
-      itemsPerPage * (currentPage + 1)
-    }`;
+    return `${itemsPerPage * (currentPage - 1) + 1} - ${Math.min(
+      itemsPerPage * currentPage,
+      numTotalItems ?? itemsPerPage * currentPage,
+    )}`;
   };
 
   const getRangeMaxString = () => {
     return numTotalItems ? `${numTotalItems} items` : 'many';
   };
 
-  const getTotalNumPages = () => {
-    return Math.ceil(numTotalItems / itemsPerPage);
+  const getTotalNumPages = (numItems: number) => {
+    return Math.ceil(numItems / itemsPerPage);
   };
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <div className={cx(flexContainerStyles, baseStyles, className)} {...rest}>
-        <div className={flexContainerStyles}>
-          {onItemsPerPageOptionChange ?? (
+      <div className={cx(baseStyles, className)} {...rest}>
+        <div className={flexSectionStyles}>
+          {onItemsPerPageOptionChange !== undefined && (
             <>
-              <Label id={itemsPerPageLabelId} htmlFor={itemsPerPageSelectId}>
+              <Body
+                as="label"
+                id={itemsPerPageLabelId}
+                htmlFor={itemsPerPageSelectId}
+              >
                 Items per page:
-              </Label>
-              {/* @ts-expect-error */}
+              </Body>
               <Select
                 onChange={onItemsPerPageOptionChange}
                 aria-labelledby={itemsPerPageLabelId}
-                value={itemsPerPage.toString()}
+                value={String(itemsPerPage)}
                 id={itemsPerPageSelectId}
                 allowDeselect={false}
+                size="xsmall"
               >
-                {itemsPerPageOptions.map((option: number) => {
-                  <Option value={option.toString()}>{option}</Option>;
-                })}
+                {itemsPerPageOptions.map((option: number) => (
+                  <Option key={option} value={String(option)}>
+                    {option}
+                  </Option>
+                ))}
               </Select>
             </>
           )}
         </div>
-        <div>
+        <div className={flexSectionStyles}>
           <Body>
             {getCurrentRangeString()} of {getRangeMaxString()}
           </Body>
         </div>
-        <div className={flexContainerStyles}>
-          {onCurrentPageOptionChange && numTotalItems ? (
+        <div className={flexSectionStyles}>
+          {onCurrentPageOptionChange !== undefined && numTotalItems ? (
             <>
-              {/* @ts-expect-error */}
+              {/* @ts-expect-error no label element */}
               <Select
                 onChange={onCurrentPageOptionChange}
                 aria-label="Set current page"
-                value={currentPage.toString()}
+                value={String(currentPage)}
                 allowDeselect={false}
+                size="xsmall"
               >
-                {Array.from(Array(getTotalNumPages()).keys()).map(
+                {Array.from(Array(getTotalNumPages(numTotalItems)).keys()).map(
                   (pageIndex: number) => {
-                    const option = pageIndex + 1;
-                    <Option value={option.toString()}>{option}</Option>;
+                    return (
+                      <Option key={pageIndex} value={String(pageIndex + 1)}>
+                        {pageIndex + 1}
+                      </Option>
+                    );
                   },
                 )}
               </Select>
-              <Body>of {getTotalNumPages()}</Body>
+              <Body>of {getTotalNumPages(numTotalItems)}</Body>
             </>
           ) : (
             <Body>
-              {currentPage} of {numTotalItems ? getTotalNumPages() : 'many'}
+              {currentPage} of{' '}
+              {numTotalItems ? getTotalNumPages(numTotalItems) : 'many'}
             </Body>
           )}
-          <IconButton aria-label="Previous page" onClick={onBackArrowClick}>
-            <ChevronLeft />
-          </IconButton>
-          <IconButton aria-label="Next page" onClick={onForwardArrowClick}>
-            <ChevronRight />
-          </IconButton>
+          {(1 < currentPage || numTotalItems === undefined) && (
+            <IconButton aria-label="Previous page" onClick={onBackArrowClick}>
+              <ChevronLeft />
+            </IconButton>
+          )}
+          {(numTotalItems === undefined ||
+            currentPage < getTotalNumPages(numTotalItems)) && (
+            <IconButton aria-label="Next page" onClick={onForwardArrowClick}>
+              <ChevronRight />
+            </IconButton>
+          )}
         </div>
       </div>
     </LeafyGreenProvider>

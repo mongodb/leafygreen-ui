@@ -40,7 +40,7 @@ fs.mkdir(newDir, { recursive: true }, err => {
     fs.writeFile(`${newSrcDir}/index.ts`, rootIndex, handleErr);
 
     fs.writeFile(
-      `${newDir}/src/${packageNamePascal}.story.tsx`,
+      `${newDir}/src/${packageNamePascal}.stories.tsx`,
       storybook,
       handleErr,
     );
