@@ -228,11 +228,16 @@ interface MenuButtonProps
   >;
 }
 
+type LabelProp = Pick<
+    JSX.IntrinsicElements['div'],
+    'aria-label' | 'aria-labelledby'
+  >
+
 type Props = MenuButtonProps &
   Required<
-    Pick<
+    LabelProp | Pick<
       JSX.IntrinsicElements['div'],
-      'aria-labelledby' | 'aria-controls' | 'aria-expanded' | 'aria-describedby'
+      'aria-controls' | 'aria-expanded' | 'aria-describedby'
     >
   >;
 

@@ -157,6 +157,7 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'error'), spy => {
       spy.mockImplementation();
       render(
+        // @ts-expect-error
         <Select {...defaultProps} label={undefined}>
           <Option>Option</Option>
         </Select>,
@@ -165,7 +166,7 @@ describe('packages/select', () => {
     });
   });
 
-  test('must have one of: label, aria-label, or aria-labelledby', () => {
+  test('does not console error when one of: label, aria-label, or aria-labelledby is set', () => {
     Context.within(Jest.spyContext(console, 'error'), spy => {
       spy.mockImplementation();
 
@@ -179,7 +180,6 @@ describe('packages/select', () => {
       render(
         <Select
           {...defaultProps}
-          label={undefined}
           aria-label="test aria-label"
         >
           <Option>Option</Option>
