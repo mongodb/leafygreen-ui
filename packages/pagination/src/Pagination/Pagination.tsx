@@ -12,6 +12,11 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { baseStyles, flexSectionStyles } from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
+import {
+  getCurrentRangeString,
+  getRangeMaxString,
+  getTotalNumPages,
+} from './utils';
 
 const DEFAULT_ITEMS_PER_PAGE_OPTIONS = [10, 25, 50];
 
@@ -38,21 +43,6 @@ function Pagination({
     prefix: 'lg-pagination-items-per-page-select',
     id: idProp,
   });
-
-  const getCurrentRangeString = () => {
-    return `${itemsPerPage * (currentPage - 1) + 1} - ${Math.min(
-      itemsPerPage * currentPage,
-      numTotalItems ?? itemsPerPage * currentPage,
-    )}`;
-  };
-
-  const getRangeMaxString = () => {
-    return numTotalItems ? `${numTotalItems} items` : 'many';
-  };
-
-  const getTotalNumPages = (numItems: number) => {
-    return Math.ceil(numItems / itemsPerPage);
-  };
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
@@ -86,7 +76,8 @@ function Pagination({
         </div>
         <div className={flexSectionStyles}>
           <Body data-testid="lg-pagination-item-range">
-            {getCurrentRangeString()} of {getRangeMaxString()}
+            {getCurrentRangeString(itemsPerPage, currentPage, numTotalItems)} of{' '}
+            {getRangeMaxString(numTotalItems)}
           </Body>
         </div>
         <div className={flexSectionStyles}>
@@ -100,22 +91,24 @@ function Pagination({
                 size="xsmall"
                 data-testid="lg-pagination-page-select"
               >
-                {Array.from(Array(getTotalNumPages(numTotalItems)).keys()).map(
-                  (pageIndex: number) => {
-                    return (
-                      <Option key={pageIndex} value={String(pageIndex + 1)}>
-                        {pageIndex + 1}
-                      </Option>
-                    );
-                  },
-                )}
+                {Array.from(
+                  Array(getTotalNumPages(numTotalItems, itemsPerPage)).keys(),
+                ).map((pageIndex: number) => {
+                  return (
+                    <Option key={pageIndex} value={String(pageIndex + 1)}>
+                      {pageIndex + 1}
+                    </Option>
+                  );
+                })}
               </Select>
-              <Body>of {getTotalNumPages(numTotalItems)}</Body>
+              <Body>of {getTotalNumPages(numTotalItems, itemsPerPage)}</Body>
             </>
           ) : (
             <Body data-testid="lg-pagination-page-range">
               {currentPage} of{' '}
-              {numTotalItems ? getTotalNumPages(numTotalItems) : 'many'}
+              {numTotalItems
+                ? getTotalNumPages(numTotalItems, itemsPerPage)
+                : 'many'}
             </Body>
           )}
           {(1 < currentPage || numTotalItems === undefined) && (
@@ -124,7 +117,7 @@ function Pagination({
             </IconButton>
           )}
           {(numTotalItems === undefined ||
-            currentPage < getTotalNumPages(numTotalItems)) && (
+            currentPage < getTotalNumPages(numTotalItems, itemsPerPage)) && (
             <IconButton aria-label="Next page" onClick={onForwardArrowClick}>
               <ChevronRight />
             </IconButton>
