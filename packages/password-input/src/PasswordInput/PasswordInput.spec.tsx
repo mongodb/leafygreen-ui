@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { PasswordInput } from '.';
-import userEvent from '@testing-library/user-event';
 
 const defaultProps = {
   className: 'password-input-class',
