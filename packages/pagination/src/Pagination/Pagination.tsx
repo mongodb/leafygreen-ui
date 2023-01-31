@@ -31,11 +31,11 @@ function Pagination({
 }: PaginationProps) {
   const { darkMode } = useDarkMode(darkModeProp);
   const itemsPerPageLabelId = useIdAllocator({
-    prefix: 'pagination',
+    prefix: 'lg-pagination-items-per-page-label',
     id: idProp,
   });
   const itemsPerPageSelectId = useIdAllocator({
-    prefix: 'pagination',
+    prefix: 'lg-pagination-items-per-page-select',
     id: idProp,
   });
 
@@ -85,7 +85,7 @@ function Pagination({
           )}
         </div>
         <div className={flexSectionStyles}>
-          <Body>
+          <Body data-testid="lg-pagination-item-range">
             {getCurrentRangeString()} of {getRangeMaxString()}
           </Body>
         </div>
@@ -99,6 +99,7 @@ function Pagination({
                 value={String(currentPage)}
                 allowDeselect={false}
                 size="xsmall"
+                data-testid="lg-pagination-page-select"
               >
                 {Array.from(Array(getTotalNumPages(numTotalItems)).keys()).map(
                   (pageIndex: number) => {
@@ -113,7 +114,7 @@ function Pagination({
               <Body>of {getTotalNumPages(numTotalItems)}</Body>
             </>
           ) : (
-            <Body>
+            <Body data-testid="lg-pagination-page-range">
               {currentPage} of{' '}
               {numTotalItems ? getTotalNumPages(numTotalItems) : 'many'}
             </Body>

@@ -26,6 +26,10 @@ const Template: ComponentStory<typeof Pagination> = props => (
   </div>
 );
 
+export const Test: ComponentStory<typeof Pagination> = args => {
+  return <Template {...args} />;
+};
+
 export const Basic: ComponentStory<typeof Pagination> = args => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(
