@@ -136,7 +136,7 @@ describe('packages/select', () => {
   });
 
   test('must render options in <Select>', () => {
-    Context.within(Jest.spyContext(console, 'error'), spy => {
+    Context.within(Jest.spyContext(console, 'warn'), spy => {
       spy.mockImplementation();
 
       expect(() => {
@@ -150,6 +150,45 @@ describe('packages/select', () => {
           </OptionGroup>,
         );
       }).toThrowError('`OptionGroup` must be a child of a `Select` instance');
+    });
+  });
+
+  test('console errors if missing label, aria-label, or aria-labelledby', () => {
+    Context.within(Jest.spyContext(console, 'error'), spy => {
+      spy.mockImplementation();
+      render(
+        <Select {...defaultProps} label={undefined}>
+          <Option>Option</Option>
+        </Select>,
+      );
+      expect(console.error).toHaveBeenCalled();
+    });
+  });
+
+  test('must have one of: label, aria-label, or aria-labelledby', () => {
+    Context.within(Jest.spyContext(console, 'error'), spy => {
+      spy.mockImplementation();
+
+      render(
+        <Select {...defaultProps}>
+          <Option>Option</Option>
+        </Select>,
+      );
+      expect(console.error).not.toHaveBeenCalled();
+
+      render(
+        <Select {...defaultProps} label={undefined} aria-label="test aria-label">
+          <Option>Option</Option>
+        </Select>,
+      );
+      expect(console.error).not.toHaveBeenCalled();
+
+      render(
+        <Select {...defaultProps} label={undefined} aria-labelledby="test aria-labelledby">
+          <Option>Option</Option>
+        </Select>,
+      );
+      expect(console.error).not.toHaveBeenCalled();
     });
   });
 

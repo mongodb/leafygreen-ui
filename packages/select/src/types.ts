@@ -83,7 +83,7 @@ interface BaseSelectProps
 }
 
 export type SelectProps = BaseSelectProps &
-  OneOf<{ label: string }, { 'aria-labelledby': string }> &
+  ({ label: string } | { 'aria-labelledby': string } | { 'aria-label': string }) &
   (
     | // Uncontrolled
     ({

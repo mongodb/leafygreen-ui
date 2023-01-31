@@ -82,6 +82,7 @@ export default function Select({
   id: idProp,
   label,
   'aria-labelledby': ariaLabelledby,
+  'aria-label': ariaLabel,
   description,
   name,
   defaultValue,
@@ -105,9 +106,9 @@ export default function Select({
     [ariaLabelledby, id],
   );
 
-  if (!label && !ariaLabelledby) {
+  if (!label && !ariaLabelledby && !ariaLabel) {
     console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
+      'For screen-reader accessibility, label, aria-label, or aria-labelledby must be provided to Select.',
     );
   }
 
@@ -566,6 +567,7 @@ export default function Select({
           onOpen={onOpen}
           onClose={onClose}
           aria-labelledby={labelId}
+          aria-label={ariaLabel}
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
@@ -622,6 +624,7 @@ Select.displayName = 'Select';
 Select.propTypes = {
   label: PropTypes.string,
   'aria-labelledby': PropTypes.string,
+  'aria-label': PropTypes.string,
   description: PropTypes.string,
   placeholder: PropTypes.string,
   className: PropTypes.string,
