@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon
 
+## 11.12.4
+
+### Patch Changes
+
+- 050f1f8a9: Adds `NoFilter` icon
+- b24b21462: Storybook: Updates story files to be on par with existing mongodb.design examples
+
 ## 11.12.3
 
 ### Patch Changes

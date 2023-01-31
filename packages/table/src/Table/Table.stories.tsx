@@ -23,7 +23,7 @@ import {
   getExpandedRowModel,
   getSortedRowModel,
   SortingState,
-} from '..';
+} from '@tanstack/react-table';
 
 export default {
   title: 'Components/Table',

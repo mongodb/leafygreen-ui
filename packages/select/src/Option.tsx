@@ -6,7 +6,6 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 
@@ -54,7 +53,7 @@ const iconStyle = css`
 
 const glyphFocusStyle = css`
   .${OptionClassName} {
-    &:focus & {
+    &:focus-visible & {
       color: currentColor;
     }
   }
@@ -100,7 +99,6 @@ export function InternalOption({
   ...rest
 }: InternalProps) {
   const { theme } = useContext(SelectContext);
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   const { option: colorSet } = colorSets[theme];
 
@@ -181,8 +179,8 @@ export function InternalOption({
           css`
             color: ${colorSet.icon.base};
           `,
+          glyphFocusStyle,
           {
-            [glyphFocusStyle]: showFocus,
             [css`
               color: ${colorSet.icon.disabled};
             `]: disabled,
@@ -201,8 +199,8 @@ export function InternalOption({
         css`
           color: ${colorSet.icon.selected};
         `,
+        glyphFocusStyle,
         {
-          [glyphFocusStyle]: showFocus,
           [css`
             color: ${colorSet.icon.disabled};
           `]: disabled,
@@ -265,7 +263,7 @@ export function InternalOption({
             }
           `]: !disabled,
           [css`
-            &:focus {
+            &:focus-visible {
               color: ${colorSet.text.focused};
               background-color: ${colorSet.background.focused};
 
@@ -275,7 +273,7 @@ export function InternalOption({
                 background-color: ${colorSet.indicator.focused};
               }
             }
-          `]: showFocus && !disabled,
+          `]: !disabled,
           [css`
             cursor: not-allowed;
             color: ${colorSet.text.disabled};

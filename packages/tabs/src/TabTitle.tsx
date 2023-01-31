@@ -2,7 +2,6 @@ import React, { RefObject, useEffect, useRef } from 'react';
 
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -34,7 +33,7 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
       }
     `,
     focus: css`
-      &:focus {
+      &:focus-visible {
         color: ${palette.blue.base};
 
         &:after {
@@ -81,7 +80,7 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
       }
     `,
     focus: css`
-      &:focus {
+      &:focus-visible {
         color: ${palette.blue.light1};
 
         &:after {
@@ -207,7 +206,6 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   parentRef,
   ...rest
 }: BaseTabTitleProps) => {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
 
   const theme = darkMode ? Theme.Dark : Theme.Light;
@@ -239,10 +237,10 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
       listTitleModeStyles[theme].base,
       {
         [listTitleModeStyles[theme].selected]: selected,
-        [listTitleModeStyles[theme].focus]: showFocus,
         [listTitleModeStyles[theme].hover]: !disabled && !selected,
         [listTitleModeStyles[theme].disabled]: disabled,
       },
+      listTitleModeStyles[theme].focus,
       className,
     ),
     role: 'tab',

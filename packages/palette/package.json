@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "3.4.6",
+  "version": "3.4.7",
   "description": "LeafyGreen UI Palettes",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

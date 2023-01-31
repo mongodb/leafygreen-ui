@@ -4,7 +4,6 @@ import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -94,13 +93,13 @@ const menuButtonModeOverrides: Record<Theme, string> = {
 // Override default button focus styles
 const menuButtonFocusStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus {
+    &:focus-visible {
       box-shadow: ${focusRing['light'].input};
       border-color: rgba(255, 255, 255, 0);
     }
   `,
   [Theme.Dark]: css`
-    &:focus {
+    &:focus-visible {
       background-color: ${palette.gray.dark4};
       box-shadow: ${focusRing['dark'].input};
       border-color: rgba(255, 255, 255, 0);
@@ -229,12 +228,18 @@ interface MenuButtonProps
   >;
 }
 
+type LabelProp = Pick<
+  JSX.IntrinsicElements['div'],
+  'aria-label' | 'aria-labelledby'
+>;
+
 type Props = MenuButtonProps &
   Required<
-    Pick<
-      JSX.IntrinsicElements['div'],
-      'aria-labelledby' | 'aria-controls' | 'aria-expanded' | 'aria-describedby'
-    >
+    | LabelProp
+    | Pick<
+        JSX.IntrinsicElements['div'],
+        'aria-controls' | 'aria-expanded' | 'aria-describedby'
+      >
   >;
 
 const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
@@ -255,8 +260,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
   }: Props,
   forwardedRef,
 ) {
-  const { usingKeyboard } = useUsingKeyboardContext();
-
   const { theme, open, size, disabled } = useContext(SelectContext);
 
   const ref = useForwardedRef(forwardedRef, null);
@@ -282,8 +285,8 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         menuButtonStyleOverrides,
         menuButtonModeOverrides[theme],
         menuButtonSizeStyle[size],
+        menuButtonFocusStyle[theme],
         {
-          [menuButtonFocusStyle[theme]]: usingKeyboard,
           [menuButtonDeselectedStyles[theme]]: deselected,
           [menuButtonDisabledThemeStyles[theme]]: disabled,
           [menuButtonErrorStyle[theme]]:
