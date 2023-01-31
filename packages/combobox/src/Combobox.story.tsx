@@ -23,6 +23,7 @@ export default {
   title: 'Components/Combobox',
   component: Combobox,
   parameters: {
+    default: 'Multiselect',
     controls: {
       exclude: [
         'children',
@@ -217,6 +218,15 @@ Multiselect.args = {
   placeholder: 'Select fruit',
   multiselect: true,
   children: ComboboxOptions,
+};
+Multiselect.argTypes = {
+  multiselect: {
+    control: {
+      type: 'boolean',
+      disabled: true,
+      description: 'Multiselect cannot change between renders',
+    },
+  },
 };
 
 export const ControlledSingleSelect = () => {
