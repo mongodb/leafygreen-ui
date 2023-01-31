@@ -31,7 +31,7 @@ describe('packages/pagination', () => {
     test('Default items per page select is rendered', async () => {
       const { getByTestId } = renderPagination(defaultProps);
       expect(
-        getByTestId('leafygreen-ui-select-menubutton')
+        getByTestId('leafygreen-ui-select-menubutton'),
       ).toBeInTheDocument();
     });
     test('Default options are rendered', async () => {
@@ -45,22 +45,16 @@ describe('packages/pagination', () => {
         return listbox;
       });
 
-      expect(
-        getByText(listbox, '10'),
-      ).toBeInTheDocument();
-      expect(
-        getByText(listbox, '50'),
-      ).toBeInTheDocument();
-      expect(
-        getByText(listbox, '100'),
-      ).toBeInTheDocument();
+      expect(getByText(listbox, '10')).toBeInTheDocument();
+      expect(getByText(listbox, '50')).toBeInTheDocument();
+      expect(getByText(listbox, '100')).toBeInTheDocument();
     });
   });
 
   test('Custom options are rendered', async () => {
     const { getByTestId, queryByRole } = renderPagination({
       ...defaultProps,
-      itemsPerPageOptions: [1,2,3]
+      itemsPerPageOptions: [1, 2, 3],
     });
     const selectButton = getByTestId('leafygreen-ui-select-menubutton');
     userEvent.click(selectButton);
@@ -71,15 +65,9 @@ describe('packages/pagination', () => {
       return listbox;
     });
 
-    expect(
-      getByText(listbox, '1'),
-    ).toBeInTheDocument();
-    expect(
-      getByText(listbox, '2'),
-    ).toBeInTheDocument();
-    expect(
-      getByText(listbox, '3'),
-    ).toBeInTheDocument();
+    expect(getByText(listbox, '1')).toBeInTheDocument();
+    expect(getByText(listbox, '2')).toBeInTheDocument();
+    expect(getByText(listbox, '3')).toBeInTheDocument();
   });
 
   describe('renders correct item ranges', () => {
@@ -88,18 +76,18 @@ describe('packages/pagination', () => {
         ...defaultProps,
         numTotalItems: undefined,
       });
-      expect(
-        getByTestId('lg-pagination-item-range').textContent
-      ).toBe('1 - 10 of many');
+      expect(getByTestId('lg-pagination-item-range').textContent).toBe(
+        '1 - 10 of many',
+      );
     });
 
     test('Correct number of total items is rendered in item range text', async () => {
       const { getByTestId } = renderPagination({
         ...defaultProps,
       });
-      expect(
-        getByTestId('lg-pagination-item-range').textContent
-      ).toBe('1 - 10 of 1021 items');
+      expect(getByTestId('lg-pagination-item-range').textContent).toBe(
+        '1 - 10 of 1021 items',
+      );
     });
 
     test('Item range changed according to current page', async () => {
@@ -107,9 +95,9 @@ describe('packages/pagination', () => {
         ...defaultProps,
         currentPage: 2,
       });
-      expect(
-        getByTestId('lg-pagination-item-range').textContent
-      ).toBe('11 - 20 of 1021 items');
+      expect(getByTestId('lg-pagination-item-range').textContent).toBe(
+        '11 - 20 of 1021 items',
+      );
     });
 
     test('Item range changed according to items per page', async () => {
@@ -117,9 +105,9 @@ describe('packages/pagination', () => {
         ...defaultProps,
         itemsPerPage: 50,
       });
-      expect(
-        getByTestId('lg-pagination-item-range').textContent
-      ).toBe('1 - 50 of 1021 items');
+      expect(getByTestId('lg-pagination-item-range').textContent).toBe(
+        '1 - 50 of 1021 items',
+      );
     });
 
     test('Item range changed according to current page and items per page', async () => {
@@ -128,9 +116,9 @@ describe('packages/pagination', () => {
         currentPage: 2,
         itemsPerPage: 50,
       });
-      expect(
-        getByTestId('lg-pagination-item-range').textContent
-      ).toBe('51 - 100 of 1021 items');
+      expect(getByTestId('lg-pagination-item-range').textContent).toBe(
+        '51 - 100 of 1021 items',
+      );
     });
   });
 
@@ -140,18 +128,18 @@ describe('packages/pagination', () => {
         ...defaultProps,
         numTotalItems: undefined,
       });
-      expect(
-        getByTestId('lg-pagination-page-range').textContent
-      ).toBe('1 of many');
+      expect(getByTestId('lg-pagination-page-range').textContent).toBe(
+        '1 of many',
+      );
     });
 
     test('Correct number of total pages is rendered in item range text', async () => {
       const { getByTestId } = renderPagination({
         ...defaultProps,
       });
-      expect(
-        getByTestId('lg-pagination-page-range').textContent
-      ).toBe('1 of 103');
+      expect(getByTestId('lg-pagination-page-range').textContent).toBe(
+        '1 of 103',
+      );
     });
 
     test('Page range select is not rendered by default', async () => {
@@ -159,7 +147,7 @@ describe('packages/pagination', () => {
         ...defaultProps,
       });
       expect(
-        queryByTestId('lg-pagination-page-select')
+        queryByTestId('lg-pagination-page-select'),
       ).not.toBeInTheDocument();
     });
 
@@ -168,9 +156,7 @@ describe('packages/pagination', () => {
         ...defaultProps,
         onCurrentPageOptionChange: jest.fn(),
       });
-      expect(
-        queryByTestId('lg-pagination-page-select')
-      ).toBeInTheDocument();
+      expect(queryByTestId('lg-pagination-page-select')).toBeInTheDocument();
     });
   });
 });

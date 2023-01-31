@@ -24,5 +24,13 @@ npm install @leafygreen-ui/pagination
 
 ## Properties
 
-| Prop | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
+| Prop                       | Type                                 | Description                                                                        | Default    |
+| -------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------- | ---------- |
+| itemsPerPage               | number                               | Number of items visible on the current page.                                       | 10         |
+| itemsPerPageOptions        | number[]                             | Options to be shown in the Select to indicate items per page.                      | [10,25,50] |
+| onItemsPerPageOptionChange | SelectProps['onChange']              | onChange prop passed to the Select component that controls the items per page.     |            |
+| currentPage                | number                               | Current index of page shown (starting from 1)                                      | 1          |
+| onCurrentPageOptionChange  | SelectProps['onChange']              | onChange prop passed to the Select component that controls the current page index. |            |
+| numTotalItems              | number                               | Total number of records.                                                           |            |
+| onForwardArrowClick        | AccessibleIconButtonProps['onClick'] | Function called when the forward arrow icon is clicked                             |            |
+| onBackArrowClick           | AccessibleIconButtonProps['onClick'] | Function called when the forward arrow icon is clicked                             |            |
