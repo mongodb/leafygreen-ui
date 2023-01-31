@@ -84,6 +84,9 @@
       "path": "./packages/pipeline"
     },
     {
+      "path": "./packages/password-input"
+    },
+    {
       "path": "./packages/popover"
     },
     {

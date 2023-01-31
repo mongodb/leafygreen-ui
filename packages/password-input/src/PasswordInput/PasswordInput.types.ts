@@ -19,7 +19,7 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export interface NotificationProps {
+export interface MessageProps {
   message?: string;
   state: States;
 }
@@ -74,7 +74,7 @@ interface StateAndMessageProps {
   /**
    * Determines what messages will appear
    */
-  stateNotifications?: Array<NotificationProps>;
+  stateNotifications?: Array<MessageProps>;
 }
 
 export type StateNotificationProps = StateAndMessageProps | StateOnlyProps;

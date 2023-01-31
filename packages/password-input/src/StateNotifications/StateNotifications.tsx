@@ -38,7 +38,11 @@ export const StateNotifications = ({
         const { state, message } = item;
         const ValidationIcon = icons[state];
         return (
-          <li key={index} className={cx(baseStyles, themeStyles[theme][state])}>
+          <li
+            key={`${index}-${state}`}
+            className={cx(baseStyles, themeStyles[theme][state])}
+            aria-hidden={state === States.None}
+          >
             <ValidationIcon
               className={cx(iconBaseStyles, iconThemeStateStyles[theme][state])}
             />

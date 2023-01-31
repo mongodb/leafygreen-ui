@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
@@ -23,7 +24,7 @@ import {
   labelBaseStyles,
 } from './PasswordInput.styles';
 import {
-  type NotificationProps,
+  type MessageProps,
   PasswordInputProps,
   SizeVariant,
   States,
@@ -67,6 +68,7 @@ export const PasswordInput = React.forwardRef<
       id: ariaLabelledbyProp,
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
+    //TODO: can't find hook for some reason
     // const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
     // If disabled then hide password
@@ -80,8 +82,8 @@ export const PasswordInput = React.forwardRef<
       if (stateNotifications.length === 0) return States.None;
 
       const statesArray: Array<States> = (
-        stateNotifications as Array<NotificationProps>
-      ).map((message: NotificationProps) => message.state);
+        stateNotifications as Array<MessageProps>
+      ).map((message: MessageProps) => message.state);
 
       // if (statesArray.length === 1) return statesArray[0];
       if (allEqual(statesArray)) return statesArray[0];
@@ -153,7 +155,7 @@ export const PasswordInput = React.forwardRef<
           {hasValidationMessages && (
             <StateNotifications
               ariaDescribedby={ariaDescribedby}
-              messages={stateNotifications as Array<NotificationProps>}
+              messages={stateNotifications as Array<MessageProps>}
             />
           )}
         </div>
@@ -164,4 +166,101 @@ export const PasswordInput = React.forwardRef<
 
 PasswordInput.displayName = 'PasswordInput';
 
-//TODO: propTypes!
+// const stateNotificationPropCheck = () => {
+//   const stateProp = PropTypes.oneOf(Object.values(States)).isRequired;
+//   const arrayProp = PropTypes.arrayOf(
+//     PropTypes.shape({
+//       state: PropTypes.oneOf(Object.values(States)).isRequired,
+//       message: PropTypes.string.isRequired,
+//     }),
+//   );
+//   const ariaProp = 'aria-describedby';
+
+//   return function validate(
+//     props: { [x: string]: any },
+//     propName: string,
+//     ...rest: Array<any> // ...rest: ['componentName', 'location', 'propFullName']
+//   ) {
+//     const originalPropType1 = stateProp(props, propName, ...rest);
+//     const originalPropType2 = arrayProp(props, propName, ...rest);
+//     if (
+//       typeof props[ariaProp] === 'string' &&
+//       typeof props[propName] !== 'string'
+//     )
+//       return originalPropType1;
+//     if (typeof props[ariaProp] === 'undefined') return originalPropType2;
+//     return new Error('Error');
+//   };
+// };
+
+const check = function (
+  props: { [x: string]: any },
+  propName: string,
+  ...rest: ['componentName', 'location', 'propFullName']
+) {
+  const stateProp = PropTypes.oneOf(Object.values(States)).isRequired;
+  const arrayProp = PropTypes.arrayOf(
+    PropTypes.shape({
+      state: PropTypes.oneOf(Object.values(States)).isRequired,
+      message: PropTypes.string.isRequired,
+    }),
+  );
+  const ariaProp = 'aria-describedby';
+
+  const originalPropType1 = stateProp(props, propName, ...rest);
+  const originalPropType2 = arrayProp(props, propName, ...rest);
+
+  if (
+    typeof props[ariaProp] === 'string' &&
+    typeof props[propName] !== 'string'
+  )
+    return originalPropType1;
+  if (typeof props[ariaProp] === 'undefined') return originalPropType2;
+};
+
+PasswordInput.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.string,
+  'aria-labelledby': PropTypes.string,
+  className: PropTypes.string,
+  darkMode: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  placeholder: PropTypes.string,
+  sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
+  value: PropTypes.string,
+  /// @ts-ignore
+  'aria-describedby': PropTypes.string,
+  /// @ts-ignore
+  // stateNotifications: PropTypes.oneOfType([
+  //   PropTypes.oneOf(Object.values(States)).isRequired,
+  //   PropTypes.arrayOf(
+  //     PropTypes.shape({
+  //       state: PropTypes.oneOf(Object.values(States)).isRequired,
+  //       message: PropTypes.string.isRequired,
+  //     }),
+  //   ),
+  // ]),
+
+  // stateNotifications: function (props: { [x: string]: any }, propName: string) {
+  //   if (
+  //     typeof props['aria-describedby'] === 'string' &&
+  //     typeof props[propName] !== 'string'
+  //   ) {
+  //     return new Error(
+  //       '`stateNotifications` must be of type `"error" | "warning" | "valid" | "none"`, expected string',
+  //     );
+  //   }
+
+  //   return PropTypes.arrayOf(
+  //     PropTypes.shape({
+  //       state: PropTypes.oneOf(Object.values(States)).isRequired,
+  //       message: PropTypes.string.isRequired,
+  //     }),
+  //   );
+  // },
+
+  // stateNotifications: stateNotificationPropCheck(),
+  stateNotifications: check,
+};

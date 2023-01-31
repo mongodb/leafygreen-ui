@@ -259,6 +259,7 @@ TextInput.propTypes = {
   className: PropTypes.string,
   sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
+  darkMode: PropTypes.bool,
 };
 
 export default TextInput;
