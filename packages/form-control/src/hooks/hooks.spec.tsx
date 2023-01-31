@@ -2,8 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
-import { ValidationState } from '../types';
-
 import { AccessibleFieldProps } from './types';
 import { useAccessibleField } from '.';
 
@@ -12,9 +10,9 @@ describe('packages/form-control', () => {
     const defaultArgs = {
       label: 'string',
       id: 'testId',
-      errorMessage: 'this is an error',
+      message: 'this is an error',
       description: 'this is a description',
-      validationState: 'valid' as ValidationState,
+      isMessageShown: false,
     };
 
     const ExampleInput = (props: AccessibleFieldProps) => {
@@ -46,7 +44,7 @@ describe('packages/form-control', () => {
 
     test('it properly relates the objects with one another', () => {
       const { result } = renderHook(() =>
-        useAccessibleField({ ...defaultArgs, validationState: 'error' }),
+        useAccessibleField({ ...defaultArgs, isMessageShown: true }),
       );
       const { current } = result;
 
@@ -73,7 +71,7 @@ describe('packages/form-control', () => {
       test('with errorMessage, description, and validationState="error"', () => {
         const args = {
           ...defaultArgs,
-          validationState: 'error' as ValidationState,
+          isMessageShown: true,
         };
         const utils = render(<ExampleInput {...args} />);
         expect(
@@ -95,7 +93,7 @@ describe('packages/form-control', () => {
       test('with just an error', () => {
         const args = {
           ...defaultArgs,
-          validationState: 'error' as ValidationState,
+          isMessageShown: true,
           description: undefined,
         };
         const utils = render(<ExampleInput {...args} />);
