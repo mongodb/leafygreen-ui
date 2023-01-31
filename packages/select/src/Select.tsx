@@ -102,8 +102,8 @@ export default function Select({
 }: SelectProps) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
   const labelId = useMemo(
-    () => ariaLabelledby ?? `${id}-label`,
-    [ariaLabelledby, id],
+    () => (ariaLabel && !label ? undefined : ariaLabelledby ?? `${id}-label`),
+    [ariaLabelledby, ariaLabel, label, id],
   );
 
   if (!label && !ariaLabelledby && !ariaLabel) {
@@ -567,7 +567,7 @@ export default function Select({
           onOpen={onOpen}
           onClose={onClose}
           aria-labelledby={labelId}
-          aria-label={ariaLabel}
+          aria-label={!label && !ariaLabelledby ? ariaLabel : undefined}
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
