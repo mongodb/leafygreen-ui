@@ -1,4 +1,4 @@
-import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -83,7 +83,11 @@ interface BaseSelectProps
 }
 
 export type SelectProps = BaseSelectProps &
-  ({ label: string } | { 'aria-labelledby': string } | { 'aria-label': string }) &
+  (
+    | { label: string }
+    | { 'aria-labelledby': string }
+    | { 'aria-label': string }
+  ) &
   (
     | // Uncontrolled
     ({

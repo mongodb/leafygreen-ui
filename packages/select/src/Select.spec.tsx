@@ -177,14 +177,22 @@ describe('packages/select', () => {
       expect(console.error).not.toHaveBeenCalled();
 
       render(
-        <Select {...defaultProps} label={undefined} aria-label="test aria-label">
+        <Select
+          {...defaultProps}
+          label={undefined}
+          aria-label="test aria-label"
+        >
           <Option>Option</Option>
         </Select>,
       );
       expect(console.error).not.toHaveBeenCalled();
 
       render(
-        <Select {...defaultProps} label={undefined} aria-labelledby="test aria-labelledby">
+        <Select
+          {...defaultProps}
+          label={undefined}
+          aria-labelledby="test aria-labelledby"
+        >
           <Option>Option</Option>
         </Select>,
       );
