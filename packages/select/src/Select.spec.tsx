@@ -136,7 +136,7 @@ describe('packages/select', () => {
   });
 
   test('must render options in <Select>', () => {
-    Context.within(Jest.spyContext(console, 'warn'), spy => {
+    Context.within(Jest.spyContext(console, 'error'), spy => {
       spy.mockImplementation();
 
       expect(() => {
