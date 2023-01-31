@@ -42,7 +42,7 @@ describe('packages/pagination', () => {
       const listbox = await waitFor(() => {
         const listbox = queryByRole('listbox');
         expect(listbox).toBeVisible();
-        return listbox;
+        return listbox as HTMLElement;
       });
 
       expect(getByText(listbox, '10')).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('packages/pagination', () => {
     const listbox = await waitFor(() => {
       const listbox = queryByRole('listbox');
       expect(listbox).toBeVisible();
-      return listbox;
+      return listbox as HTMLElement;
     });
 
     expect(getByText(listbox, '1')).toBeInTheDocument();
@@ -142,6 +142,16 @@ describe('packages/pagination', () => {
       );
     });
 
+    test('Correct number of total pages is rendered in item range text when itemsPerPage changes', async () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        itemsPerPage: 50,
+      });
+      expect(getByTestId('lg-pagination-page-range').textContent).toBe(
+        '1 of 21',
+      );
+    });
+
     test('Page range select is not rendered by default', async () => {
       const { queryByTestId } = renderPagination({
         ...defaultProps,
@@ -157,6 +167,25 @@ describe('packages/pagination', () => {
         onCurrentPageOptionChange: jest.fn(),
       });
       expect(queryByTestId('lg-pagination-page-select')).toBeInTheDocument();
+    });
+
+    test('Page range options are rendered', async () => {
+      const { getByTestId, queryByRole } = renderPagination({
+        ...defaultProps,
+        onCurrentPageOptionChange: jest.fn(),
+      });
+      const selectButton = getByTestId('lg-pagination-page-select');
+      userEvent.click(selectButton);
+
+      const listbox = await waitFor(() => {
+        const listbox = queryByRole('listbox');
+        expect(listbox).toBeVisible();
+        return listbox as HTMLElement;
+      });
+
+      expect(getByText(listbox, '1')).toBeInTheDocument();
+      expect(getByText(listbox, '2')).toBeInTheDocument();
+      expect(getByText(listbox, '3')).toBeInTheDocument();
     });
   });
 });

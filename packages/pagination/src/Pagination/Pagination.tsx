@@ -92,10 +92,9 @@ function Pagination({
         <div className={flexSectionStyles}>
           {onCurrentPageOptionChange !== undefined && numTotalItems ? (
             <>
-              {/* @ts-expect-error no label element */}
               <Select
-                onChange={onCurrentPageOptionChange}
                 aria-label="Set current page"
+                onChange={onCurrentPageOptionChange}
                 value={String(currentPage)}
                 allowDeselect={false}
                 size="xsmall"
