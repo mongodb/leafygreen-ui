@@ -178,10 +178,7 @@ describe('packages/select', () => {
       expect(console.error).not.toHaveBeenCalled();
 
       render(
-        <Select
-          {...defaultProps}
-          aria-label="test aria-label"
-        >
+        <Select {...defaultProps} aria-label="test aria-label">
           <Option>Option</Option>
         </Select>,
       );

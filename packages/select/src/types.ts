@@ -82,7 +82,7 @@ interface BaseSelectProps
   >;
 }
 
-type LabelProp = { 
+interface LabelProp {
   label: string;
   'aria-labelledby': string;
   'aria-label': string;
