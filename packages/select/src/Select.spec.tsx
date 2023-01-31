@@ -153,6 +153,50 @@ describe('packages/select', () => {
     });
   });
 
+  test('console errors if missing label, aria-label, or aria-labelledby', () => {
+    Context.within(Jest.spyContext(console, 'error'), spy => {
+      spy.mockImplementation();
+      render(
+        // @ts-expect-error
+        <Select {...defaultProps} label={undefined}>
+          <Option>Option</Option>
+        </Select>,
+      );
+      expect(console.error).toHaveBeenCalled();
+    });
+  });
+
+  test('does not console error when one of: label, aria-label, or aria-labelledby is set', () => {
+    Context.within(Jest.spyContext(console, 'error'), spy => {
+      spy.mockImplementation();
+
+      render(
+        <Select {...defaultProps}>
+          <Option>Option</Option>
+        </Select>,
+      );
+      expect(console.error).not.toHaveBeenCalled();
+
+      render(
+        <Select {...defaultProps} aria-label="test aria-label">
+          <Option>Option</Option>
+        </Select>,
+      );
+      expect(console.error).not.toHaveBeenCalled();
+
+      render(
+        <Select
+          {...defaultProps}
+          label={undefined}
+          aria-labelledby="test aria-labelledby"
+        >
+          <Option>Option</Option>
+        </Select>,
+      );
+      expect(console.error).not.toHaveBeenCalled();
+    });
+  });
+
   test('trigger passes through data props', () => {
     const result = render(
       <Select label="Label" data-testid="lg-select">

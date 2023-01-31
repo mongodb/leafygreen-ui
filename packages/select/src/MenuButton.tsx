@@ -228,12 +228,18 @@ interface MenuButtonProps
   >;
 }
 
+type LabelProp = Pick<
+  JSX.IntrinsicElements['div'],
+  'aria-label' | 'aria-labelledby'
+>;
+
 type Props = MenuButtonProps &
   Required<
-    Pick<
-      JSX.IntrinsicElements['div'],
-      'aria-labelledby' | 'aria-controls' | 'aria-expanded' | 'aria-describedby'
-    >
+    | LabelProp
+    | Pick<
+        JSX.IntrinsicElements['div'],
+        'aria-controls' | 'aria-expanded' | 'aria-describedby'
+      >
   >;
 
 const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
