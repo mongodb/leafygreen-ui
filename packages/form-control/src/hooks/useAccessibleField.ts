@@ -45,8 +45,8 @@ export const useAccessibleField = ({
   'aria-labelledby': ariaLabelledby,
   'aria-label': ariaLabel,
   description,
-  errorMessage,
-  validationState,
+  message,
+  isMessageShown,
 }: AccessibleFieldProps) => {
   const { labelProps, fieldProps } = useLabel({
     label,
@@ -56,20 +56,20 @@ export const useAccessibleField = ({
   });
 
   const descriptionId = useIdAllocator({ prefix: 'lg-description' });
-  const errorMessageId = useIdAllocator({ prefix: 'lg-errorMessage' });
+  const messageId = useIdAllocator({ prefix: 'lg-message' });
 
   const ariaDescribedby = useMemo(
     () =>
       `${description ? descriptionId : ''} ${
-        errorMessage && validationState === 'error' ? errorMessageId : ''
+        message && isMessageShown ? messageId : ''
       } ${ariaDescribedbyProp ? ariaDescribedbyProp : ''}`.trim(),
-    [description, errorMessage, validationState, descriptionId, errorMessageId],
+    [description, message, isMessageShown, descriptionId, messageId],
   );
 
   return {
     labelProps,
     fieldProps: { ...fieldProps, ['aria-describedby']: ariaDescribedby },
     descriptionProps: { id: descriptionId },
-    errorMessageProps: { id: errorMessageId },
+    errorMessageProps: { id: messageId },
   };
 };
