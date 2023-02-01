@@ -55,12 +55,14 @@ type LabelProps = Either<AriaLabelProps, AriaLabelkeys>;
 // Using custom message container with aria-describedby
 interface StateOnlyProps {
   /**
-   *
+   * The id reference to the custom message container
    */
   ['aria-describedby']: string;
 
   /**
    * Determines what messages will appear
+   *
+   * @default 'none'
    */
   stateNotifications: States;
 }
@@ -68,12 +70,14 @@ interface StateOnlyProps {
 // using default message container, no aria-describedby
 interface StateAndMessageProps {
   /**
-   *
+   * The id reference to the custom message container
    */
   ['aria-describedby']?: never;
 
   /**
    * Determines what messages will appear
+   *
+   * @default []
    */
   stateNotifications?: Array<MessageProps>;
 }
@@ -101,7 +105,7 @@ interface BasePasswordInputProps
 
   /**
    * Determines whether the field is currently disabled.
-   * Default: false
+   * @default false
    */
   disabled?: boolean;
 

@@ -10,6 +10,7 @@ const defaultProps = {
   label: 'This is the Label test',
   placeholder: 'This is some placeholder text',
   ariaDescribedby: 'This is aria-describedby text',
+  autoComplete: 'new-password',
   id: 'This is id',
   onChange: jest.fn(),
   onBlur: jest.fn(),
@@ -37,7 +38,6 @@ function renderPasswordInput(props = {}) {
 }
 
 describe('packages/password-input', () => {
-  // TODO: placeholder test
   // auto-complete
 
   describe('a11y', () => {
@@ -75,11 +75,38 @@ describe('packages/password-input', () => {
       expect(screen.queryByRole('label')).not.toBeInTheDocument();
     });
 
+    test(`renders ${defaultProps.placeholder} as placeholder text`, () => {
+      const { getByPlaceholderText } = renderPasswordInput({
+        placeholder: defaultProps.placeholder,
+      });
+      expect(getByPlaceholderText(defaultProps.placeholder)).toBeVisible();
+    });
+
+    test(`renders ${defaultProps.className} in the classList`, () => {
+      const { container } = renderPasswordInput({
+        className: defaultProps.className,
+      });
+      expect(
+        (container?.firstChild as HTMLElement)?.classList.contains(
+          defaultProps.className,
+        ),
+      ).toBe(true);
+    });
+
     test('input id attribute matches id prop', async () => {
       const { passwordInput } = renderPasswordInput({
         id: defaultProps.id,
       });
       expect(passwordInput.getAttribute('id')).toBe(defaultProps.id);
+    });
+
+    test('renders ${defaultProps.autoComplete} as autoComplete text', async () => {
+      const { passwordInput } = renderPasswordInput({
+        autoComplete: defaultProps.autoComplete,
+      });
+      expect(passwordInput.getAttribute('autoComplete')).toBe(
+        defaultProps.autoComplete,
+      );
     });
 
     test('value change triggers onChange callback', () => {
