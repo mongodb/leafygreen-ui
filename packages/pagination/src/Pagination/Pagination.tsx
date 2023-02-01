@@ -44,6 +44,20 @@ function Pagination({
     id: idProp,
   });
 
+  if (
+    currentPage < 1 ||
+    (numTotalItems &&
+      getTotalNumPages(numTotalItems, itemsPerPage) < currentPage)
+  ) {
+    console.error(`Value of the 'currentPage' prop is invalid.`);
+  }
+
+  if (!itemsPerPageOptions.includes(itemsPerPage)) {
+    console.error(
+      `Value of the 'itemsPerPage' prop is not a valid option specified in 'itemsPerPageOptions'.`,
+    );
+  }
+
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={cx(baseStyles, className)} {...rest}>
@@ -112,13 +126,21 @@ function Pagination({
             </Body>
           )}
           {(1 < currentPage || numTotalItems === undefined) && (
-            <IconButton aria-label="Previous page" onClick={onBackArrowClick}>
+            <IconButton
+              aria-label="Previous page"
+              onClick={onBackArrowClick}
+              data-testid="lg-pagination-back-button"
+            >
               <ChevronLeft />
             </IconButton>
           )}
           {(numTotalItems === undefined ||
             currentPage < getTotalNumPages(numTotalItems, itemsPerPage)) && (
-            <IconButton aria-label="Next page" onClick={onForwardArrowClick}>
+            <IconButton
+              aria-label="Next page"
+              onClick={onForwardArrowClick}
+              data-testid="lg-pagination-next-button"
+            >
               <ChevronRight />
             </IconButton>
           )}

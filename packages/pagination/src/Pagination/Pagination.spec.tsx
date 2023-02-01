@@ -1,8 +1,10 @@
 import React from 'react';
 import { getByText, waitFor } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { fireEvent,render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
+
+import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
 import Pagination, { PaginationProps } from '.';
 
@@ -10,13 +12,32 @@ function renderPagination(props: PaginationProps) {
   return render(<Pagination {...props} data-testid="pagination-test" />);
 }
 
+const onBackArrowClick = jest.fn();
+const onForwardArrowClick = jest.fn();
+
 const defaultProps: PaginationProps = {
   numTotalItems: 1021,
   itemsPerPageOptions: [10, 50, 100],
   onItemsPerPageOptionChange: jest.fn(),
-  onBackArrowClick: jest.fn(),
-  onForwardArrowClick: jest.fn(),
+  onBackArrowClick: onBackArrowClick,
+  onForwardArrowClick: onForwardArrowClick,
 };
+
+let offsetParentSpy: jest.SpyInstance;
+
+beforeAll(() => {
+  offsetParentSpy = jest.spyOn(HTMLElement.prototype, 'offsetParent', 'get');
+
+  // JSDOM doesn't implement `HTMLElement.prototype.offsetParent`, so this
+  // falls back to the parent element since it doesn't matter for these tests.
+  offsetParentSpy.mockImplementation(function (this: HTMLElement) {
+    return this.parentElement;
+  });
+});
+
+afterAll(() => {
+  offsetParentSpy.mockRestore();
+});
 
 describe('packages/pagination', () => {
   describe('a11y', () => {
@@ -24,6 +45,31 @@ describe('packages/pagination', () => {
       const { container } = renderPagination(defaultProps);
       const results = await axe(container);
       expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('only accepts correct prop values', () => {
+    test('console errors when itemsPerPage is not a valid option', async () => {
+      Context.within(Jest.spyContext(console, 'error'), spy => {
+        spy.mockImplementation();
+        renderPagination({...defaultProps, itemsPerPage: 22 });
+        expect(console.error).toHaveBeenCalled();
+      });
+    });
+    test('console errors when currentPage is less than 1', async () => {
+      Context.within(Jest.spyContext(console, 'error'), spy => {
+        spy.mockImplementation();
+        renderPagination({...defaultProps, currentPage: 0 });
+        expect(console.error).toHaveBeenCalled();
+      });
+    });
+
+    test('console errors when currentPage is greater than the total number of pages', async () => {
+      Context.within(Jest.spyContext(console, 'error'), spy => {
+        spy.mockImplementation();
+        renderPagination({...defaultProps, currentPage: 150 });
+        expect(console.error).toHaveBeenCalled();
+      });
     });
   });
 
@@ -186,6 +232,70 @@ describe('packages/pagination', () => {
       expect(getByText(listbox, '1')).toBeInTheDocument();
       expect(getByText(listbox, '2')).toBeInTheDocument();
       expect(getByText(listbox, '3')).toBeInTheDocument();
+    });
+  });
+  describe('only renders arrow buttons when appropriate', () => {
+    test('Back button is not rendered on the first page', async () => {
+      const { queryByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 1,
+      });
+      const backButton = queryByTestId('lg-pagination-back-button');
+      expect(backButton).not.toBeInTheDocument();
+    });
+    test('Back button is rendered on a middle page', async () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 2,
+      });
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton).toBeInTheDocument();
+    });
+    test('Back button is rendered on the last page', async () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 103,
+      });
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton).toBeInTheDocument();
+    });
+    test('Next button is rendered on the first page', async () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 1,
+      });
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton).toBeInTheDocument();
+    });
+    test('Next button is rendered on a middle page', async () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 2,
+      });
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton).toBeInTheDocument();
+    });
+    test('Next button is not rendered on the last page', async () => {
+      const { queryByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 103,
+      });
+      const nextButton = queryByTestId('lg-pagination-next-button');
+      expect(nextButton).not.toBeInTheDocument();
+    });
+  });
+  describe('clicking arrow buttons calls functions', () => {
+    test('onBackArrowClick fires once when the back button is clicked', () => {
+      const { getByTestId } = renderPagination({...defaultProps, currentPage: 2,});
+      const backButton = getByTestId('lg-pagination-back-button');
+      fireEvent.click(backButton);
+      expect(onBackArrowClick).toHaveBeenCalledTimes(1);
+    });
+    test('onForwardArrowClick fires once when the back button is clicked', () => {
+      const { getByTestId } = renderPagination({...defaultProps, currentPage: 2,});
+      const nextButton = getByTestId('lg-pagination-next-button');
+      fireEvent.click(nextButton);
+      expect(onForwardArrowClick).toHaveBeenCalledTimes(1);
     });
   });
 });
