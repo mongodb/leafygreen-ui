@@ -93,3 +93,7 @@ CustomContainer.argTypes = {
     options: Object.values(States),
   },
 };
+
+CustomContainer.args = {
+  stateNotifications: States.Error,
+};

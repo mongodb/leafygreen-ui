@@ -150,39 +150,12 @@ export const PasswordInput = React.forwardRef<
 
 PasswordInput.displayName = 'PasswordInput';
 
-// const stateNotificationPropCheck = () => {
-//   const stateProp = PropTypes.oneOf(Object.values(States)).isRequired;
-//   const arrayProp = PropTypes.arrayOf(
-//     PropTypes.shape({
-//       state: PropTypes.oneOf(Object.values(States)).isRequired,
-//       message: PropTypes.string.isRequired,
-//     }),
-//   );
-//   const ariaProp = 'aria-describedby';
-
-//   return function validate(
-//     props: { [x: string]: any },
-//     propName: string,
-//     ...rest: Array<any> // ...rest: ['componentName', 'location', 'propFullName']
-//   ) {
-//     const originalPropType1 = stateProp(props, propName, ...rest);
-//     const originalPropType2 = arrayProp(props, propName, ...rest);
-//     if (
-//       typeof props[ariaProp] === 'string' &&
-//       typeof props[propName] !== 'string'
-//     )
-//       return originalPropType1;
-//     if (typeof props[ariaProp] === 'undefined') return originalPropType2;
-//     return new Error('Error');
-//   };
-// };
-
-const check = function (
+const stateNotificationCheck = function (
   props: { [x: string]: any },
   propName: string,
   ...rest: ['componentName', 'location', 'propFullName']
 ) {
-  const stateProp = PropTypes.oneOf(Object.values(States)).isRequired;
+  const stateStringProp = PropTypes.oneOf(Object.values(States)).isRequired;
   const arrayProp = PropTypes.arrayOf(
     PropTypes.shape({
       state: PropTypes.oneOf(Object.values(States)).isRequired,
@@ -191,15 +164,13 @@ const check = function (
   );
   const ariaProp = 'aria-describedby';
 
-  const originalPropType1 = stateProp(props, propName, ...rest);
-  const originalPropType2 = arrayProp(props, propName, ...rest);
+  const stateStringType = stateStringProp(props, propName, ...rest);
+  const arrayType = arrayProp(props, propName, ...rest);
 
-  if (
-    typeof props[ariaProp] === 'string' &&
-    typeof props[propName] !== 'string'
-  )
-    return originalPropType1;
-  if (typeof props[ariaProp] === 'undefined') return originalPropType2;
+  if (typeof props[ariaProp] === 'string') return stateStringType;
+  if (typeof props[ariaProp] === 'undefined') return arrayType;
+
+  return new Error('Error');
 };
 
 PasswordInput.propTypes = {
@@ -217,34 +188,5 @@ PasswordInput.propTypes = {
   /// @ts-ignore
   'aria-describedby': PropTypes.string,
   /// @ts-ignore
-  // stateNotifications: PropTypes.oneOfType([
-  //   PropTypes.oneOf(Object.values(States)).isRequired,
-  //   PropTypes.arrayOf(
-  //     PropTypes.shape({
-  //       state: PropTypes.oneOf(Object.values(States)).isRequired,
-  //       message: PropTypes.string.isRequired,
-  //     }),
-  //   ),
-  // ]),
-
-  // stateNotifications: function (props: { [x: string]: any }, propName: string) {
-  //   if (
-  //     typeof props['aria-describedby'] === 'string' &&
-  //     typeof props[propName] !== 'string'
-  //   ) {
-  //     return new Error(
-  //       '`stateNotifications` must be of type `"error" | "warning" | "valid" | "none"`, expected string',
-  //     );
-  //   }
-
-  //   return PropTypes.arrayOf(
-  //     PropTypes.shape({
-  //       state: PropTypes.oneOf(Object.values(States)).isRequired,
-  //       message: PropTypes.string.isRequired,
-  //     }),
-  //   );
-  // },
-
-  // stateNotifications: stateNotificationPropCheck(),
-  stateNotifications: check,
+  stateNotifications: stateNotificationCheck,
 };
