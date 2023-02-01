@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -66,8 +66,7 @@ export const PasswordInput = React.forwardRef<
       id: ariaLabelledbyProp,
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
-    //TODO: storybbok error: can't find hook for some reason
-    // const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
+    const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
     // If disabled then hide password
     useEffect(() => {
@@ -101,7 +100,7 @@ export const PasswordInput = React.forwardRef<
           <div className={inputWrapperStyles}>
             <input
               type={showPassword ? 'text' : 'password'}
-              // value={value}
+              value={value}
               id={inputId}
               autoComplete={autoComplete}
               aria-describedby={ariaDescribedby}
@@ -122,7 +121,7 @@ export const PasswordInput = React.forwardRef<
                     !hasValidationMessages && state !== States.None,
                 },
               )}
-              // onChange={handleChange}
+              onChange={handleChange}
               readOnly={disabled ? true : false}
               {...rest}
             />

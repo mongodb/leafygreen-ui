@@ -39,7 +39,6 @@ function renderPasswordInput(props = {}) {
 describe('packages/password-input', () => {
   // TODO: passing a value shows the values
   // TODO: onChange fires callback
-  // TODO: label test
 
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
@@ -83,9 +82,7 @@ describe('packages/password-input', () => {
       expect(passwordInput.getAttribute('id')).toBe(defaultProps.id);
     });
 
-    // TODO: fix hook for this to work
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('value change triggers onChange callback', () => {
+    test('value change triggers onChange callback', () => {
       const { passwordInput } = renderPasswordInput({
         label: defaultProps.label,
         onChange: defaultProps.onChange,
