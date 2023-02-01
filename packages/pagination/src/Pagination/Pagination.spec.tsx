@@ -1,6 +1,6 @@
 import React from 'react';
 import { getByText, waitFor } from '@testing-library/dom';
-import { fireEvent,render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -52,14 +52,14 @@ describe('packages/pagination', () => {
     test('console errors when itemsPerPage is not a valid option', async () => {
       Context.within(Jest.spyContext(console, 'error'), spy => {
         spy.mockImplementation();
-        renderPagination({...defaultProps, itemsPerPage: 22 });
+        renderPagination({ ...defaultProps, itemsPerPage: 22 });
         expect(console.error).toHaveBeenCalled();
       });
     });
     test('console errors when currentPage is less than 1', async () => {
       Context.within(Jest.spyContext(console, 'error'), spy => {
         spy.mockImplementation();
-        renderPagination({...defaultProps, currentPage: 0 });
+        renderPagination({ ...defaultProps, currentPage: 0 });
         expect(console.error).toHaveBeenCalled();
       });
     });
@@ -67,7 +67,7 @@ describe('packages/pagination', () => {
     test('console errors when currentPage is greater than the total number of pages', async () => {
       Context.within(Jest.spyContext(console, 'error'), spy => {
         spy.mockImplementation();
-        renderPagination({...defaultProps, currentPage: 150 });
+        renderPagination({ ...defaultProps, currentPage: 150 });
         expect(console.error).toHaveBeenCalled();
       });
     });
@@ -286,13 +286,19 @@ describe('packages/pagination', () => {
   });
   describe('clicking arrow buttons calls functions', () => {
     test('onBackArrowClick fires once when the back button is clicked', () => {
-      const { getByTestId } = renderPagination({...defaultProps, currentPage: 2,});
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 2,
+      });
       const backButton = getByTestId('lg-pagination-back-button');
       fireEvent.click(backButton);
       expect(onBackArrowClick).toHaveBeenCalledTimes(1);
     });
     test('onForwardArrowClick fires once when the back button is clicked', () => {
-      const { getByTestId } = renderPagination({...defaultProps, currentPage: 2,});
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 2,
+      });
       const nextButton = getByTestId('lg-pagination-next-button');
       fireEvent.click(nextButton);
       expect(onForwardArrowClick).toHaveBeenCalledTimes(1);

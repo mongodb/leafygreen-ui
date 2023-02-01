@@ -10,7 +10,11 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Option, Select } from '@leafygreen-ui/select';
 import { Body } from '@leafygreen-ui/typography';
 
-import { baseStyles, flexSectionStyles } from './Pagination.styles';
+import {
+  baseStyles,
+  flexSectionStyles,
+  selectPortalStyles,
+} from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
 import {
   getCurrentRangeString,
@@ -78,6 +82,7 @@ function Pagination({
                 id={itemsPerPageSelectId}
                 allowDeselect={false}
                 size="xsmall"
+                portalClassName={selectPortalStyles}
               >
                 {itemsPerPageOptions.map((option: number) => (
                   <Option key={option} value={String(option)}>
@@ -104,6 +109,7 @@ function Pagination({
                 allowDeselect={false}
                 size="xsmall"
                 data-testid="lg-pagination-page-select"
+                portalClassName={selectPortalStyles}
               >
                 {Array.from(
                   Array(getTotalNumPages(numTotalItems, itemsPerPage)).keys(),
