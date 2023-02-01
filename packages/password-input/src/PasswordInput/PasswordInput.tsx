@@ -22,6 +22,7 @@ import {
   inputThemeStyles,
   inputWrapperStyles,
   labelBaseStyles,
+  labelLargeOverrideStyles,
 } from './PasswordInput.styles';
 import {
   type MessageProps,
@@ -29,10 +30,7 @@ import {
   SizeVariant,
   States,
 } from './PasswordInput.types';
-
-function allEqual(arr: Array<any>) {
-  return new Set(arr).size == 1;
-}
+import { getStateFromArray } from './utils';
 
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
@@ -78,23 +76,8 @@ export const PasswordInput = React.forwardRef<
 
     const handleTogglePasswordClick = () => setShowPassword(s => !s);
 
-    const getStateFromArray = (): States => {
-      if (stateNotifications.length === 0) return States.None;
-
-      const statesArray: Array<States> = (
-        stateNotifications as Array<MessageProps>
-      ).map((message: MessageProps) => message.state);
-
-      // if (statesArray.length === 1) return statesArray[0];
-      if (allEqual(statesArray)) return statesArray[0];
-      if (statesArray.includes(States.Error)) return States.Error;
-      if (statesArray.includes(States.Warning)) return States.Warning;
-
-      return States.None;
-    };
-
     const state: States = Array.isArray(stateNotifications)
-      ? getStateFromArray()
+      ? getStateFromArray(stateNotifications)
       : stateNotifications;
 
     const hasValidationMessages =
@@ -106,7 +89,9 @@ export const PasswordInput = React.forwardRef<
           {label && (
             <Label
               id={ariaLabelledby}
-              className={labelBaseStyles}
+              className={cx(labelBaseStyles, {
+                [labelLargeOverrideStyles]: sizeVariant === SizeVariant.Large,
+              })}
               htmlFor={inputId}
               disabled={disabled}
             >

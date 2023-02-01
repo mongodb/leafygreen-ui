@@ -18,7 +18,7 @@ export const TogglePassword = ({
   return (
     <>
       <IconButton
-        aria-label="Toggle password"
+        aria-label="Toggle password visibility"
         aria-disabled={disabled}
         disabled={disabled}
         onClick={handleTogglePasswordClick}

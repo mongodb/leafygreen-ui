@@ -22,6 +22,10 @@ export const labelBaseStyles = css`
   margin-bottom: ${spacing[1]}px;
 `;
 
+export const labelLargeOverrideStyles = css`
+  font-size: 18px;
+`;
+
 export const inheritTypeScale = css`
   font-size: inherit;
   line-height: inherit;
