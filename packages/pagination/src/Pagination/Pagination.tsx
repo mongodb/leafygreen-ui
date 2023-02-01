@@ -113,7 +113,10 @@ function Pagination<T extends number>({
                 data-testid="lg-pagination-page-select"
                 portalClassName={selectPortalStyles}
               >
-                {range(1, getTotalNumPages(numTotalItems, itemsPerPage) + 1).map((pageNumber: number) => {
+                {range(
+                  1,
+                  getTotalNumPages(numTotalItems, itemsPerPage) + 1,
+                ).map((pageNumber: number) => {
                   return (
                     <Option key={pageNumber} value={String(pageNumber)}>
                       {pageNumber}
@@ -166,7 +169,8 @@ Pagination.propTypes = {
   onItemsPerPageOptionChange: PropTypes.func,
   itemsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
   itemsPerPage: PropTypes.number,
-};
+  // casting to unknown ensures TS does not infer types from these prop-types
+} as unknown;
 
 Pagination.displayName = 'Pagination';
 
