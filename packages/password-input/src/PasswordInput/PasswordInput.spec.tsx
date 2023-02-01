@@ -38,7 +38,6 @@ function renderPasswordInput(props = {}) {
 
 describe('packages/password-input', () => {
   // TODO: passing a value shows the values
-  // TODO: onChange fires callback
 
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
@@ -88,14 +87,16 @@ describe('packages/password-input', () => {
         onChange: defaultProps.onChange,
       });
 
+      expect((passwordInput as HTMLInputElement).value).toBe('');
+
       fireEvent.change(passwordInput, {
         target: { value: 'a' },
       });
 
+      expect((passwordInput as HTMLInputElement).value).toBe('a');
       expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
     test('blur triggers onBlur callback', () => {
       const { passwordInput } = renderPasswordInput({
         label: defaultProps.label,
