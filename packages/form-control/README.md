@@ -23,13 +23,7 @@ import { useAccessibleFormField } from '@leafygreen-ui/form-control';
 
 const TextInput = () => {
   const { labelProps, fieldProps, descriptionProps, errorMessageProps } =
-    useAccessibleFormField(
-      label,
-      description,
-      errorMessage,
-      id,
-      validationState,
-    );
+    useAccessibleFormField(label, description, message, isMessageShown, id);
 
   return (
     <>
@@ -48,12 +42,11 @@ const TextInput = () => {
 
 ## Properties
 
-| Prop              | Type                       | Description                                 | Default |
-| ----------------- | -------------------------- | ------------------------------------------- | ------- |
-| `label`           | `string`                   | Label for the input                         |         |
-| `aria-label`      | `string`                   | Aria label for the input                    |         |
-| `aria-labelledby` | `string`                   | `id` that associates label to field         |         |
-| `id`              | `string`                   | Assigns `id` to field                       |         |
-| `description`     | `string`                   | Description for field element               |         |
-| `errorMessage`    | `string`                   | Error Message displayed by field element    |         |
-| `validationState` | `'none', 'valid', 'error'` | Describes validation state of field element |         |
+| Prop                  | Type     | Description                                                 | Default |
+| --------------------- | -------- | ----------------------------------------------------------- | ------- |
+| `label`               | `string` | Label for the input                                         |         |
+| `aria-label`          | `string` | Aria label for the input                                    |         |
+| `aria-labelledby`     | `string` | `id` that associates label to field                         |         |
+| `id`                  | `string` | Assigns `id` to field                                       |         |
+| `isDescriptionShown`  | boolean  | Lets hook know that there is a description for the input    |         |
+| `isErrorMessageShown` | boolean  | Lets hook know that there is an error message for the input |         |

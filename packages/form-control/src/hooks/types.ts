@@ -9,8 +9,7 @@ export interface LabelProps extends AriaLabels {
 
 export interface AccessibleFieldProps extends AriaLabels {
   id?: string;
-  description?: string;
-  message?: string;
-  isMessageShown?: boolean;
+  isDescriptionShown?: boolean;
+  isErrorMessageShown?: boolean;
   ['aria-describedby']?: string;
 }

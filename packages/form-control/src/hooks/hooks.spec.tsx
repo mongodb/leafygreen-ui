@@ -10,9 +10,8 @@ describe('packages/form-control', () => {
     const defaultArgs = {
       label: 'string',
       id: 'testId',
-      message: 'this is an error',
-      description: 'this is a description',
-      isMessageShown: false,
+      isDescriptionShown: true,
+      isErrorMessageShown: false,
     };
 
     const ExampleInput = (props: AccessibleFieldProps) => {
@@ -44,7 +43,7 @@ describe('packages/form-control', () => {
 
     test('it properly relates the objects with one another', () => {
       const { result } = renderHook(() =>
-        useAccessibleField({ ...defaultArgs, isMessageShown: true }),
+        useAccessibleField({ ...defaultArgs, isErrorMessageShown: true }),
       );
       const { current } = result;
 
@@ -60,18 +59,18 @@ describe('packages/form-control', () => {
       );
     });
 
-    describe('it returns the proper value for aria-describedby based on validation state', () => {
-      test('with errorMessage, description, and validationState="valid"', () => {
+    describe('it returns the proper value for aria-describedby', () => {
+      test('with isErrorMessageShown=false, isDescriptionShown=true', () => {
         const utils = render(<ExampleInput {...defaultArgs} />);
         expect(
           utils.getByRole('textbox').getAttribute('aria-describedby'),
         ).toEqual(utils.getByText('Description').getAttribute('id'));
       });
 
-      test('with errorMessage, description, and validationState="error"', () => {
+      test('with isErrorMessageShown=true isDescriptionShown=true', () => {
         const args = {
           ...defaultArgs,
-          isMessageShown: true,
+          isErrorMessageShown: true,
         };
         const utils = render(<ExampleInput {...args} />);
         expect(
@@ -82,19 +81,11 @@ describe('packages/form-control', () => {
         ).toContain(utils.getByText('Error!').getAttribute('id'));
       });
 
-      test('with just description', () => {
-        const args = { ...defaultArgs, errorMessage: undefined };
-        const utils = render(<ExampleInput {...args} />);
-        expect(
-          utils.getByRole('textbox').getAttribute('aria-describedby'),
-        ).toEqual(utils.getByText('Description').getAttribute('id'));
-      });
-
-      test('with just an error', () => {
+      test('with isErrorMessageShown=true', () => {
         const args = {
           ...defaultArgs,
-          isMessageShown: true,
-          description: undefined,
+          isErrorMessageShown: true,
+          isDescriptionShown: false,
         };
         const utils = render(<ExampleInput {...args} />);
         expect(
