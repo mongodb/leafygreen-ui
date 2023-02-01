@@ -27,6 +27,7 @@ const defaultProps = {
 
 function renderPasswordInput(props = {}) {
   const utils = render(
+    // @ts-expect-error
     <PasswordInput data-testid="password-input" {...props} />,
   );
   const passwordInput = utils.getByTestId('password-input');
@@ -152,14 +153,26 @@ describe('packages/password-input', () => {
     <>
       {/* @ts-expect-error - Must include stateNotification prop */}
       <PasswordInput aria-describedby="my-id" />
+      {/* @ts-expect-error */}
       <PasswordInput
         label="mylabel"
         aria-describedby="my-id"
-        //  @ts-expect-error - Must pass the correct stateNotifications type
+        stateNotifications={[{ message: 'hi', state: 'error' }]}
+      />
+      {/* @ts-expect-error - needs label/aria-label/aria-labelledby */}
+      <PasswordInput stateNotifications={[{ message: 'hi', state: 'error' }]} />
+      <PasswordInput
+        label="label"
         stateNotifications={[{ message: 'hi', state: 'error' }]}
       />
       <PasswordInput
-        label="my label"
+        data-attribute="data test"
+        aria-label="label"
+        stateNotifications={[{ message: 'hi', state: 'error' }]}
+      />
+      <PasswordInput
+        data-attribute="data test"
+        aria-labelledby="label"
         stateNotifications={[{ message: 'hi', state: 'error' }]}
       />
     </>;

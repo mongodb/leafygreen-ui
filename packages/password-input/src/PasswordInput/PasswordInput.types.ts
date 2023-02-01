@@ -24,7 +24,6 @@ export interface MessageProps {
   state: States;
 }
 
-// TODO: check this
 interface AriaLabelProps {
   /**
    * Text shown in bold above the input element.
@@ -49,29 +48,9 @@ interface AriaLabelProps {
   ['aria-label']?: string;
 }
 
-// type AriaLabels = keyof AriaLabelProps;
+type AriaLabelkeys = keyof AriaLabelProps;
 
-interface LabelOnlyProps {
-  label: string;
-  ['aria-labelledby']?: string;
-  ['aria-label']?: string;
-}
-
-interface AriaLabelledbyOnlyProps {
-  label?: string;
-  ['aria-labelledby']: string;
-  ['aria-label']?: string;
-}
-
-interface AriaLabelOnlyProps {
-  label?: string;
-  ['aria-labelledby']?: string;
-  ['aria-label']: string;
-}
-
-type labelProps = LabelOnlyProps | AriaLabelledbyOnlyProps | AriaLabelOnlyProps;
-
-type AriaLabels = keyof labelProps;
+type LabelProps = Either<AriaLabelProps, AriaLabelkeys>;
 
 // Using custom message container with aria-describedby
 interface StateOnlyProps {
@@ -101,12 +80,12 @@ interface StateAndMessageProps {
 
 export type StateNotificationProps = StateAndMessageProps | StateOnlyProps;
 
-type ConditionalProps = labelProps & StateNotificationProps;
+type ConditionalProps = LabelProps & StateNotificationProps;
 
 interface BasePasswordInputProps
   extends Omit<
       ComponentPropsWithoutRef<'input'>,
-      'onChange' | 'type' | AriaLabels | 'aria-describedby'
+      'onChange' | 'type' | AriaLabelkeys | 'aria-describedby'
     >,
     DarkModeProps {
   /**
