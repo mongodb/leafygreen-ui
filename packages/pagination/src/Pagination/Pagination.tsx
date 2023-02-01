@@ -1,4 +1,5 @@
 import React from 'react';
+import { range } from 'lodash';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -25,11 +26,11 @@ import {
 
 const DEFAULT_ITEMS_PER_PAGE_OPTIONS = [10, 25, 50];
 
-function Pagination({
+function Pagination<T extends number>({
   id: idProp,
   className,
-  itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0],
-  itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS,
+  itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0] as T,
+  itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS as Array<T>,
   onItemsPerPageOptionChange,
   currentPage = 1,
   onCurrentPageOptionChange,
@@ -38,7 +39,7 @@ function Pagination({
   onForwardArrowClick,
   darkMode: darkModeProp,
   ...rest
-}: PaginationProps) {
+}: PaginationProps<T>) {
   const { darkMode } = useDarkMode(darkModeProp);
   const itemsPerPageLabelId = useIdAllocator({
     prefix: 'lg-pagination-items-per-page-label',
@@ -112,12 +113,10 @@ function Pagination({
                 data-testid="lg-pagination-page-select"
                 portalClassName={selectPortalStyles}
               >
-                {Array.from(
-                  Array(getTotalNumPages(numTotalItems, itemsPerPage)).keys(),
-                ).map((pageIndex: number) => {
+                {range(1, getTotalNumPages(numTotalItems, itemsPerPage) + 1).map((pageNumber: number) => {
                   return (
-                    <Option key={pageIndex} value={String(pageIndex + 1)}>
-                      {pageIndex + 1}
+                    <Option key={pageNumber} value={String(pageNumber)}>
+                      {pageNumber}
                     </Option>
                   );
                 })}

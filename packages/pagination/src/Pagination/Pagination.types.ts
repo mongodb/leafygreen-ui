@@ -2,16 +2,16 @@ import { AccessibleIconButtonProps } from '@leafygreen-ui/icon-button';
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { SelectProps } from '@leafygreen-ui/select';
 
-interface PaginationProps extends HTMLElementProps<'div'>, DarkModeProps {
+interface PaginationProps<T extends number = number> extends HTMLElementProps<'div'>, DarkModeProps {
   /**
    * Number of items visible on the current page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: ExcludeFromTypeInference<T>;
 
   /**
    * Options to be shown in the Select to indicate items per page.
    */
-  itemsPerPageOptions?: Array<number>;
+  itemsPerPageOptions?: Array<T>;
 
   /**
    * onChange prop passed to the Select component that controls the items per page.
@@ -43,5 +43,7 @@ interface PaginationProps extends HTMLElementProps<'div'>, DarkModeProps {
    */
   onBackArrowClick: AccessibleIconButtonProps['onClick'];
 }
+
+type ExcludeFromTypeInference<T> = [T][T extends any ? 0 : never];
 
 export type { PaginationProps };

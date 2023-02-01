@@ -52,7 +52,13 @@ describe('packages/pagination', () => {
     test('console errors when itemsPerPage is not a valid option', async () => {
       Context.within(Jest.spyContext(console, 'error'), spy => {
         spy.mockImplementation();
-        renderPagination({ ...defaultProps, itemsPerPage: 22 });
+        render(
+          <Pagination
+            {...defaultProps}
+            itemsPerPageOptions={[1, 2, 3]}
+            itemsPerPage={22}
+          />,
+        );
         expect(console.error).toHaveBeenCalled();
       });
     });

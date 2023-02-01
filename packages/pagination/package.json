@@ -32,7 +32,8 @@
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/select": "^10.1.1",
     "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/icon-button": "^15.0.4"
+    "@leafygreen-ui/icon-button": "^15.0.4",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
