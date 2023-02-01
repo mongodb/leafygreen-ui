@@ -12,11 +12,14 @@ export default {
     onCurrentPageOptionChange: undefined,
   },
   argTypes: {
-    currentPage: { control: 'number' },
+    currentPage: { control: false },
     numTotalItems: { control: 'number' },
-    itemsPerPage: { control: 'none' },
-    ref: { control: 'none' },
+    itemsPerPage: { control: false },
+    className: { control: false },
+    ref: { control: false },
     darkMode: storybookArgTypes.darkMode,
+    onBackArrowClick: { control: false },
+    onForwardArrowClick: { control: false },
   },
 };
 
@@ -26,12 +29,12 @@ const Template: ComponentStory<typeof Pagination> = props => (
   </div>
 );
 
-export const Test: ComponentStory<typeof Pagination> = args => {
+export const Default: ComponentStory<typeof Pagination> = args => {
   return <Template {...args} />;
 };
 
 export const Basic: ComponentStory<typeof Pagination> = args => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(args.currentPage ?? 1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(
     args.itemsPerPageOptions ? args.itemsPerPageOptions[0] : 10,
   );
