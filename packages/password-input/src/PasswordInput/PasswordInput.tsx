@@ -125,7 +125,7 @@ export const PasswordInput = React.forwardRef<
               readOnly={disabled ? true : false}
               {...rest}
             />
-            {/* Visual icons inside the input will only render if aria-describedby is set and the state is not `none`. None does not need a visible icon */}
+            {/* Visual icons inside the input will only render if aria-describedby is set and the state is not `none`. `none` does not need a visible icon */}
             {!hasValidationMessages && state !== States.None && (
               <InputIcon state={state} sizeVariant={sizeVariant} />
             )}
