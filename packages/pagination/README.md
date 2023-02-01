@@ -32,5 +32,7 @@ npm install @leafygreen-ui/pagination
 | currentPage                | number                               | Current index of page shown (starting from 1)                                      | 1          |
 | onCurrentPageOptionChange  | SelectProps['onChange']              | onChange prop passed to the Select component that controls the current page index. |            |
 | numTotalItems              | number                               | Total number of records.                                                           |            |
-| onForwardArrowClick        | AccessibleIconButtonProps['onClick'] | Function called when the forward arrow icon is clicked                             |            |
 | onBackArrowClick           | AccessibleIconButtonProps['onClick'] | Function called when the forward arrow icon is clicked                             |            |
+| disableBackArrowButton        | boolean | Disables the back arrow button. Back arrow button is only disabled on the first page by default                             | false           |
+| onForwardArrowClick        | AccessibleIconButtonProps['onClick'] | Function called when the forward arrow icon is clicked                             |            |
+| disableForwardArrowButton        | boolean | Disables the forward arrow button. Forward arrow button is only disabled on the last page by default                             | false           |
