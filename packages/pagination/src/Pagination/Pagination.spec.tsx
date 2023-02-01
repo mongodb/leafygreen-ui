@@ -241,54 +241,54 @@ describe('packages/pagination', () => {
       expect(getByText(listbox, '3')).toBeInTheDocument();
     });
   });
-  describe('only renders arrow buttons when appropriate', () => {
-    test('Back button is not rendered on the first page', async () => {
-      const { queryByTestId } = renderPagination({
+  describe('only disables arrow buttons when appropriate', () => {
+    test('Back button is disabled on the first page', async () => {
+      const { getByTestId } = renderPagination({
         ...defaultProps,
         currentPage: 1,
       });
-      const backButton = queryByTestId('lg-pagination-back-button');
-      expect(backButton).not.toBeInTheDocument();
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton.getAttribute('aria-disabled')).toBe('true');
     });
-    test('Back button is rendered on a middle page', async () => {
+    test('Back button is not disabled on a middle page', async () => {
       const { getByTestId } = renderPagination({
         ...defaultProps,
         currentPage: 2,
       });
       const backButton = getByTestId('lg-pagination-back-button');
-      expect(backButton).toBeInTheDocument();
+      expect(backButton.getAttribute('aria-disabled')).toBe('false');
     });
-    test('Back button is rendered on the last page', async () => {
+    test('Back button is not disabled on the last page', async () => {
       const { getByTestId } = renderPagination({
         ...defaultProps,
         currentPage: 103,
       });
       const backButton = getByTestId('lg-pagination-back-button');
-      expect(backButton).toBeInTheDocument();
+      expect(backButton.getAttribute('aria-disabled')).toBe('false');
     });
-    test('Next button is rendered on the first page', async () => {
+    test('Next button is not disabled on the first page', async () => {
       const { getByTestId } = renderPagination({
         ...defaultProps,
         currentPage: 1,
       });
       const nextButton = getByTestId('lg-pagination-next-button');
-      expect(nextButton).toBeInTheDocument();
+      expect(nextButton.getAttribute('aria-disabled')).toBe('false');
     });
-    test('Next button is rendered on a middle page', async () => {
+    test('Next button is not disabled on a middle page', async () => {
       const { getByTestId } = renderPagination({
         ...defaultProps,
         currentPage: 2,
       });
       const nextButton = getByTestId('lg-pagination-next-button');
-      expect(nextButton).toBeInTheDocument();
+      expect(nextButton.getAttribute('aria-disabled')).toBe('false');
     });
-    test('Next button is not rendered on the last page', async () => {
-      const { queryByTestId } = renderPagination({
+    test('Next button is disabled on the last page', async () => {
+      const { getByTestId } = renderPagination({
         ...defaultProps,
         currentPage: 103,
       });
-      const nextButton = queryByTestId('lg-pagination-next-button');
-      expect(nextButton).not.toBeInTheDocument();
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton.getAttribute('aria-disabled')).toBe('true');
     });
   });
   describe('clicking arrow buttons calls functions', () => {
@@ -309,6 +309,114 @@ describe('packages/pagination', () => {
       const nextButton = getByTestId('lg-pagination-next-button');
       fireEvent.click(nextButton);
       expect(onForwardArrowClick).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe('shouldDisableBackButton overrides default behavior', () => {
+    test('value of true overrides correctly on first page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        shouldDisableBackArrow: true,
+      });
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton.getAttribute('aria-disabled')).toBe('true');
+    });
+    test('value of true overrides correctly on middle page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 2,
+        shouldDisableBackArrow: true,
+      });
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton.getAttribute('aria-disabled')).toBe('true');
+    });
+    test('value of true overrides correctly on last page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 103,
+        shouldDisableBackArrow: true,
+      });
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton.getAttribute('aria-disabled')).toBe('true');
+    });
+    test('value of false overrides correctly on first page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        shouldDisableBackArrow: false,
+      });
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton.getAttribute('aria-disabled')).toBe('false');
+    });
+    test('value of false overrides correctly on middle page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 2,
+        shouldDisableBackArrow: false,
+      });
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton.getAttribute('aria-disabled')).toBe('false');
+    });
+    test('value of false overrides correctly on last page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 103,
+        shouldDisableBackArrow: false,
+      });
+      const backButton = getByTestId('lg-pagination-back-button');
+      expect(backButton.getAttribute('aria-disabled')).toBe('false');
+    });
+  });
+  describe('shouldDisableForwardButton overrides default behavior', () => {
+    test('value of true overrides correctly on first page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        shouldDisableForwardArrow: true,
+      });
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton.getAttribute('aria-disabled')).toBe('true');
+    });
+    test('value of true overrides correctly on middle page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 2,
+        shouldDisableForwardArrow: true,
+      });
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton.getAttribute('aria-disabled')).toBe('true');
+    });
+    test('value of true overrides correctly on last page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 103,
+        shouldDisableForwardArrow: true,
+      });
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton.getAttribute('aria-disabled')).toBe('true');
+    });
+    test('value of false overrides correctly on first page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        shouldDisableForwardArrow: false,
+      });
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton.getAttribute('aria-disabled')).toBe('false');
+    });
+    test('value of false overrides correctly on middle page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 2,
+        shouldDisableForwardArrow: false,
+      });
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton.getAttribute('aria-disabled')).toBe('false');
+    });
+    test('value of false overrides correctly on last page', () => {
+      const { getByTestId } = renderPagination({
+        ...defaultProps,
+        currentPage: 103,
+        shouldDisableForwardArrow: false,
+      });
+      const nextButton = getByTestId('lg-pagination-next-button');
+      expect(nextButton.getAttribute('aria-disabled')).toBe('false');
     });
   });
 });

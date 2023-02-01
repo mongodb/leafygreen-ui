@@ -36,7 +36,9 @@ function Pagination<T extends number>({
   onCurrentPageOptionChange,
   numTotalItems,
   onBackArrowClick,
+  shouldDisableBackArrow,
   onForwardArrowClick,
+  shouldDisableForwardArrow,
   darkMode: darkModeProp,
   ...rest
 }: PaginationProps<T>) {
@@ -49,6 +51,15 @@ function Pagination<T extends number>({
     prefix: 'lg-pagination-items-per-page-select',
     id: idProp,
   });
+  const shouldDisableBackButton =
+    shouldDisableBackArrow !== undefined
+      ? shouldDisableBackArrow
+      : numTotalItems !== undefined && currentPage <= 1;
+  const shouldDisableForwardButton =
+    shouldDisableForwardArrow !== undefined
+      ? shouldDisableForwardArrow
+      : numTotalItems !== undefined &&
+        currentPage >= getTotalNumPages(numTotalItems, itemsPerPage);
 
   if (
     currentPage < 1 ||
@@ -134,25 +145,22 @@ function Pagination<T extends number>({
                 : 'many'}
             </Body>
           )}
-          {(1 < currentPage || numTotalItems === undefined) && (
-            <IconButton
-              aria-label="Previous page"
-              onClick={onBackArrowClick}
-              data-testid="lg-pagination-back-button"
-            >
-              <ChevronLeft />
-            </IconButton>
-          )}
-          {(numTotalItems === undefined ||
-            currentPage < getTotalNumPages(numTotalItems, itemsPerPage)) && (
-            <IconButton
-              aria-label="Next page"
-              onClick={onForwardArrowClick}
-              data-testid="lg-pagination-next-button"
-            >
-              <ChevronRight />
-            </IconButton>
-          )}
+          <IconButton
+            aria-label="Previous page"
+            disabled={shouldDisableBackButton}
+            onClick={onBackArrowClick}
+            data-testid="lg-pagination-back-button"
+          >
+            <ChevronLeft />
+          </IconButton>
+          <IconButton
+            aria-label="Next page"
+            disabled={shouldDisableForwardButton}
+            onClick={onForwardArrowClick}
+            data-testid="lg-pagination-next-button"
+          >
+            <ChevronRight />
+          </IconButton>
         </div>
       </div>
     </LeafyGreenProvider>

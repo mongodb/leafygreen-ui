@@ -36,14 +36,24 @@ interface PaginationProps<T extends number = number>
   numTotalItems?: number;
 
   /**
+   * Function called when the back arrow icon is clicked
+   */
+  onBackArrowClick: AccessibleIconButtonProps['onClick'];
+
+  /**
+   * Disables the back arrow button. Back arrow button is only disabled on the first page by default
+   */
+  shouldDisableBackArrow?: boolean;
+
+  /**
    * Function called when the forward arrow icon is clicked
    */
   onForwardArrowClick: AccessibleIconButtonProps['onClick'];
 
   /**
-   * Function called when the back arrow icon is clicked
+   * Disables the forward arrow button. Forward arrow button is only disabled on the last page by default
    */
-  onBackArrowClick: AccessibleIconButtonProps['onClick'];
+  shouldDisableForwardArrow?: boolean;
 }
 
 type ExcludeFromTypeInference<T> = [T][T extends number ? 0 : never];
