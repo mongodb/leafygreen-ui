@@ -5,7 +5,6 @@ import csharp from 'highlight.js/lib/languages/csharp';
 import dart from 'highlight.js/lib/languages/dart';
 import diff from 'highlight.js/lib/languages/diff';
 import go from 'highlight.js/lib/languages/go';
-import html from 'highlight.js/lib/languages/html';
 import http from 'highlight.js/lib/languages/http';
 import ini from 'highlight.js/lib/languages/ini';
 import java from 'highlight.js/lib/languages/java';
@@ -34,7 +33,6 @@ export const languageParsers = {
   cpp,
   csharp,
   go,
-  html,
   http,
   ini,
   java,
@@ -68,7 +66,7 @@ export const SupportedLanguages = {
   Csharp: 'csharp',
   Cs: 'cs', // C# alias
   Go: 'go',
-  Html: 'html',
+  Html: 'xml', // HTML alias
   Http: 'http',
   Ini: 'ini',
   Java: 'java',
