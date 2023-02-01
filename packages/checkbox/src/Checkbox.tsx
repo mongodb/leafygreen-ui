@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import {
-  useDarkMode,
-  useUsingKeyboardContext,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 import { Check } from './Check';
@@ -53,7 +50,6 @@ function Checkbox({
     () => (checkedProp != null ? checkedProp : checked),
     [checkedProp, checked],
   );
-  const { usingKeyboard } = useUsingKeyboardContext();
   const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
@@ -112,9 +108,7 @@ function Checkbox({
         <input
           {...rest}
           id={checkboxId}
-          className={cx(inputClassName, inputStyle, {
-            [inputFocusStyles[theme]]: usingKeyboard,
-          })}
+          className={cx(inputClassName, inputStyle, inputFocusStyles[theme])}
           type="checkbox"
           name={name}
           disabled={disabled}

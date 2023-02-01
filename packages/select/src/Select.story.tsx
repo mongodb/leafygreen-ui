@@ -36,6 +36,7 @@ export default {
         Spider
       </Option>,
     ],
+    usePortal: true,
   },
   argTypes: {
     children: { control: false },
@@ -43,6 +44,7 @@ export default {
     disabled: { control: 'boolean' },
     label: { control: 'text' },
     'aria-labelledby': { control: 'text' },
+    'aria-label': { control: 'text' },
     description: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
     id: { control: 'text' },

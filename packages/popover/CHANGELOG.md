@@ -1,5 +1,20 @@
 # @leafygreen-ui/popover
 
+## 11.0.4
+
+### Patch Changes
+
+- Updated dependencies [741cdd408]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/tokens@2.0.0
+  - @leafygreen-ui/portal@4.0.9
+
+## 11.0.3
+
+### Patch Changes
+
+- a9b66c29b: Storybook: uses LG button in story. Sets default story
+
 ## 11.0.2
 
 ### Patch Changes

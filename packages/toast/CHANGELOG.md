@@ -1,5 +1,29 @@
 # @leafygreen-ui/toast
 
+## 4.0.3
+
+### Patch Changes
+
+- Updated dependencies [050f1f8a9]
+- Updated dependencies [741cdd408]
+- Updated dependencies [866144167]
+- Updated dependencies [c82ed35d5]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/icon@11.12.4
+  - @leafygreen-ui/tokens@2.0.0
+  - @leafygreen-ui/typography@16.0.0
+  - @leafygreen-ui/icon-button@15.0.4
+  - @leafygreen-ui/palette@3.4.7
+  - @leafygreen-ui/portal@4.0.9
+
+## 4.0.2
+
+### Patch Changes
+
+- 2cb1e6116: Adds toggle button to Toast story
+- Updated dependencies [53d77f55d]
+  - @leafygreen-ui/typography@15.3.0
+
 ## 4.0.1
 
 ### Patch Changes

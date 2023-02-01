@@ -1,5 +1,16 @@
 # @leafygreen-ui/tokens
 
+## 2.0.0
+
+### Major Changes
+
+- 741cdd408: Removes Akzidenz from list of fallback fonts. Also removes `Legacy` from list of `fontFamilies`.
+
+### Patch Changes
+
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/palette@3.4.7
+
 ## 1.4.1
 
 ### Patch Changes

@@ -34,7 +34,6 @@ interface StateForStyles {
   checked: boolean;
   disabled: boolean;
   size: Size;
-  showFocus: boolean;
   darkMode: boolean;
 }
 
@@ -42,7 +41,6 @@ export const getRadioDisplayStyles = ({
   checked,
   disabled,
   size,
-  showFocus,
   darkMode,
 }: StateForStyles) => {
   return cx(
@@ -71,6 +69,13 @@ export const getRadioDisplayStyles = ({
       &:active {
         box-shadow: ${darkMode ? hoverRing.dark.gray : hoverRing.light.gray};
       }
+
+      input:focus-visible + & {
+        border-color: ${palette.gray.base};
+        box-shadow: ${darkMode
+          ? focusRing.dark.default
+          : focusRing.light.default};
+      }
     `,
     {
       [css`
@@ -92,14 +97,6 @@ export const getRadioDisplayStyles = ({
           box-shadow: unset;
         }
       `]: disabled,
-      [css`
-        input:focus + & {
-          border-color: ${palette.gray.base};
-          box-shadow: ${darkMode
-            ? focusRing.dark.default
-            : focusRing.light.default};
-        }
-      `]: showFocus,
     },
     radioBoxSizes[size],
   );

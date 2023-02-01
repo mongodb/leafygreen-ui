@@ -8,7 +8,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import IconButton from '@leafygreen-ui/icon-button';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   createUniqueClassName,
   getNodeTextContent,
@@ -140,14 +139,14 @@ const iconButtonThemeStyle: Record<Theme, string> = {
 
 const iconButtonFocusedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:focus {
+    &:focus-visible {
       .${chevronClassName} {
         color: ${palette.white};
       }
     }
   `,
   [Theme.Dark]: css`
-    &:focus {
+    &:focus-visible {
       .${chevronClassName} {
         color: ${palette.black};
       }
@@ -370,7 +369,6 @@ const SubMenu = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const { theme, darkMode } = useContext(MenuContext);
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);
     const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
 
@@ -422,9 +420,9 @@ const SubMenu = React.forwardRef(
         className: cx(
           mainIconBaseStyle,
           mainIconThemeStyle[theme],
+          focusStyles.iconStyle,
           {
             [activeIconStyle[theme]]: active,
-            [focusStyles.iconStyle]: showFocus,
           },
           glyph.props?.className,
         ),
@@ -454,23 +452,30 @@ const SubMenu = React.forwardRef(
         <div className={textContainer}>
           <div
             data-text={getNodeTextContent(children)}
-            className={cx(titleTextStyle, hoverStyles.text, {
-              [activeTitleTextStyle[theme]]: active,
-              [hoverStyles.activeText]: active,
-              [disabledTextStyle[theme]]: disabled,
-              [focusStyles.textStyle]: showFocus,
-            })}
+            className={cx(
+              titleTextStyle,
+              hoverStyles.text,
+              {
+                [activeTitleTextStyle[theme]]: active,
+                [hoverStyles.activeText]: active,
+                [disabledTextStyle[theme]]: disabled,
+              },
+              focusStyles.textStyle,
+            )}
           >
             {title}
           </div>
           {description && (
             <div
-              className={cx(descriptionTextThemeStyle[theme], {
-                [activeDescriptionTextStyle[theme]]: active,
-                [disabledTextStyle[theme]]: disabled,
-                [focusStyles.descriptionStyle]: showFocus,
-                [linkDescriptionTextStyle]: typeof rest.href === 'string',
-              })}
+              className={cx(
+                descriptionTextThemeStyle[theme],
+                {
+                  [activeDescriptionTextStyle[theme]]: active,
+                  [disabledTextStyle[theme]]: disabled,
+                  [linkDescriptionTextStyle]: typeof rest.href === 'string',
+                },
+                focusStyles.descriptionStyle,
+              )}
             >
               {description}
             </div>
@@ -498,9 +503,9 @@ const SubMenu = React.forwardRef(
             {
               [activeMenuItemContainerStyle[theme]]: active,
               [disabledMenuItemContainerThemeStyle[theme]]: disabled,
-              [focusedMenuItemContainerStyle[theme]]: showFocus,
               [subMenuOpenStyle[theme]]: open,
             },
+            focusedMenuItemContainerStyle[theme],
             className,
           )}
         >
@@ -514,9 +519,9 @@ const SubMenu = React.forwardRef(
               iconButtonClassName,
               iconButtonStyle,
               iconButtonThemeStyle[theme],
+              iconButtonFocusedThemeStyle[theme],
               {
                 [openIconButtonStyle[theme]]: open,
-                [iconButtonFocusedThemeStyle[theme]]: showFocus,
               },
             )}
             onClick={handleChevronClick}
@@ -601,9 +606,7 @@ const SubMenu = React.forwardRef(
                           );
                         }
                       `,
-                      {
-                        [focusedSubMenuItemBorderStyles[theme]]: showFocus,
-                      },
+                      focusedSubMenuItemBorderStyles[theme],
                       child.props.className,
                     ),
                     onClick: (

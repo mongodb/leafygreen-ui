@@ -82,6 +82,7 @@ export default function Select({
   id: idProp,
   label,
   'aria-labelledby': ariaLabelledby,
+  'aria-label': ariaLabel,
   description,
   name,
   defaultValue,
@@ -101,13 +102,13 @@ export default function Select({
 }: SelectProps) {
   const id = useIdAllocator({ prefix: 'select', id: idProp });
   const labelId = useMemo(
-    () => ariaLabelledby ?? `${id}-label`,
-    [ariaLabelledby, id],
+    () => (ariaLabel && !label ? undefined : ariaLabelledby ?? `${id}-label`),
+    [ariaLabelledby, ariaLabel, label, id],
   );
 
-  if (!label && !ariaLabelledby) {
+  if (!label && !ariaLabelledby && !ariaLabel) {
     console.error(
-      'For screen-reader accessibility, label or aria-labelledby must be provided to Select.',
+      'For screen-reader accessibility, label, aria-label, or aria-labelledby must be provided to Select.',
     );
   }
 
@@ -566,6 +567,7 @@ export default function Select({
           onOpen={onOpen}
           onClose={onClose}
           aria-labelledby={labelId}
+          aria-label={!label && !ariaLabelledby ? ariaLabel : undefined}
           aria-controls={menuId}
           aria-expanded={open}
           aria-describedby={descriptionId}
@@ -622,6 +624,7 @@ Select.displayName = 'Select';
 Select.propTypes = {
   label: PropTypes.string,
   'aria-labelledby': PropTypes.string,
+  'aria-label': PropTypes.string,
   description: PropTypes.string,
   placeholder: PropTypes.string,
   className: PropTypes.string,

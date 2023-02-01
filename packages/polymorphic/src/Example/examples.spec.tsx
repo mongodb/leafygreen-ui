@@ -11,6 +11,7 @@ import {
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
   ExampleInferred,
+  ExampleInferredDefaultButton,
   ExamplePolymorphic,
   ExamplePolymorphicWithRef,
   RestrictedExample,
@@ -21,7 +22,7 @@ import {
  * and ensure Polymorphic behavior is properly extendable
  */
 
-describe('Polymorphic Higher-order Components', () => {
+describe('Polymorphic/Example Higher-order Components', () => {
   test('`as` type can be restricted', () => {
     const { getByTestId } = render(
       <RestrictedExample as="button" data-testid="restricted" />,
@@ -58,6 +59,33 @@ describe('Polymorphic Higher-order Components', () => {
       expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
       expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
       expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+    });
+
+    test('Works with a default, and sets default props', () => {
+      const { queryByTestId } = render(
+        <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />,
+      );
+      expect(queryByTestId('hoc')).toBeInTheDocument();
+      expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('button');
+      expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('Types work when a default is used', () => {
+      <>
+        <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />
+        <ExampleInferredDefaultButton />
+        <ExampleInferredDefaultButton type="submit" />
+        {/* @ts-expect-error - Require href when as="a" */}
+        <ExampleInferredDefaultButton as="a" />
+        <ExampleInferredDefaultButton as="a" href="mongodb.design" />
+        {/* @ts-expect-error - href not valid when explicitly set to button */}
+        <ExampleInferredDefaultButton as="button" href="mongodb.design" />
+        {/* @ts-expect-error - href not valid when explicitly set to div */}
+        <ExampleInferredDefaultButton as="div" href="mongodb.design" />
+        {/* @ts-expect-error - type not valid for anchor */}
+        <ExampleInferredDefaultButton as="a" type="submit" />
+      </>;
     });
   });
 
@@ -99,8 +127,6 @@ describe('Polymorphic Higher-order Components', () => {
         <ExampleComponent as="div" href="mongodb.design" />
 
         <ExampleComponent as="input" />
-        {/* TODO: ts-expect-error - Input should not accept children */}
-        {/* <ExampleComponent as="input">some content</ExampleComponent> */}
 
         <ExampleComponent as={Wrapper} />
         <ExampleComponent as={Wrapper} ref={spanRef} />
@@ -211,6 +237,34 @@ describe('Polymorphic Higher-order Components', () => {
           expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
           expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
         });
+
+        test('With styled props', () => {
+          // We need to define the additional props that styled should expect
+          interface StyledProps {
+            color: string;
+            size: string;
+          }
+
+          const StyledExample = styled(ExampleComponent)<StyledProps>`
+            color: ${props => props.color};
+            font-size: ${props => props.size}px;
+          `;
+
+          const { getByTestId } = render(
+            <StyledExample
+              title="Title"
+              data-testid="styled"
+              color="#ff69b4"
+              size="16"
+            >
+              Some text
+            </StyledExample>,
+          );
+          expect(getByTestId('styled')).toBeInTheDocument();
+          expect(getByTestId('styled').tagName.toLowerCase()).toBe('div');
+          expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+          expect(getByTestId('styled')).toHaveStyle(`font-size: 16px;`);
+        });
       });
     });
   });
@@ -282,39 +336,39 @@ describe('Polymorphic Higher-order Components', () => {
     },
   );
 
+  /**
+   * Ensure that any components that build on top of Polymorphic
+   * also generate TSDoc
+   */
   describe('TSDoc output', () => {
-    /**
-     * Ensure that any components that build on top of Polymorphic
-     * also generate TSDoc
-     */
-    describe('Higher-Order components', () => {
-      const docs = parseTSDoc('polymorphic/src/Example');
-
-      const exampleComponentNames = [
-        'ExamplePolymorphic',
-        'ExamplePolymorphicWithRef',
-        'AdvancedPolymorphic',
-        'AdvancedPolymorphicWithRef',
-        // 'StyledExample', // Styled does not work with TSDoc
-      ];
-
-      describe.each(exampleComponentNames)(
-        'Docs for test components',
-        displayName => {
-          test(`${displayName} docs exist`, () => {
-            const doc = docs?.find(doc => doc.displayName === displayName);
-            expect(doc).not.toBeUndefined();
-          });
-
-          test(`${displayName} docs contain the expected props`, () => {
-            const doc = docs?.find(doc => doc.displayName === displayName);
-            expect(doc!.props).toHaveProperty('AsProp');
-            expect(doc!.props).toHaveProperty(`ExampleProps`);
-            expect(doc!.props).toHaveProperty('AriaAttributes');
-            expect(doc!.props).toHaveProperty('DOMAttributes');
-          });
-        },
-      );
+    const docs = parseTSDoc('polymorphic/src/Example', {
+      excludeTags: [], // Include all tags
     });
+
+    const exampleComponentNames = [
+      'ExamplePolymorphic',
+      'ExamplePolymorphicWithRef',
+      'AdvancedPolymorphic',
+      'AdvancedPolymorphicWithRef',
+      // 'StyledExample', // Styled does not work with TSDoc
+    ];
+
+    describe.each(exampleComponentNames)(
+      'Docs for test components',
+      displayName => {
+        test(`${displayName} docs exist`, () => {
+          const doc = docs?.find(doc => doc.displayName === displayName);
+          expect(doc).not.toBeUndefined();
+        });
+
+        test(`${displayName} docs contain the expected props`, () => {
+          const doc = docs?.find(doc => doc.displayName === displayName);
+          expect(doc!.props).toHaveProperty('AsProp');
+          expect(doc!.props).toHaveProperty(`ExampleProps`);
+          expect(doc!.props).toHaveProperty('AriaAttributes');
+          expect(doc!.props).toHaveProperty('DOMAttributes');
+        });
+      },
+    );
   });
 });

@@ -34,7 +34,7 @@ export type PolymorphicRef<T extends PolymorphicAs> =
 /**
  * Union of prop types potentially re-defined in React.ComponentProps
  */
-type PropsToOmit<T extends PolymorphicAs, P> = keyof (P & AsProp<T>);
+export type PropsToOmit<T extends PolymorphicAs, P> = keyof (P & AsProp<T>);
 
 /**
  * Ensures `href` is required for anchors
@@ -48,7 +48,7 @@ export type AnchorProps = Omit<ComponentPropsWithoutRef<'a'>, 'href'> & {
  * Parses the expected inherited Props,
  * and adds restrictions based on the passed in type
  */
-type InheritedProps<T extends PolymorphicAs> = T extends 'a'
+export type InheritedProps<T extends PolymorphicAs> = T extends 'a'
   ? AnchorProps
   : ComponentPropsWithoutRef<T>;
 
@@ -82,17 +82,18 @@ export type PolymorphicPropsWithRef<
  * An explicit definition of the component render function
  *
  * Differs from `PolymorphicComponentType` only by the `propTypes` attribute
- *
  */
-export interface PolymorphicRenderFunction<XP = {}> {
-  <T extends PolymorphicAs>(
+export interface PolymorphicRenderFunction<
+  XP = {},
+  DefaultAs extends PolymorphicAs = PolymorphicAs,
+> {
+  <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
   ): ReactElement | null;
   displayName?: string;
   propTypes?: never;
 }
-
 /**
  * An explicit definition of the component type
  *
@@ -102,8 +103,11 @@ export interface PolymorphicRenderFunction<XP = {}> {
  * PolymorphicComponentType is an interface with a generic function,
  * and a displayName.
  */
-export interface PolymorphicComponentType<XP = {}> {
-  <T extends PolymorphicAs>(
+export interface PolymorphicComponentType<
+  XP = {},
+  DefaultAs extends PolymorphicAs = PolymorphicAs,
+> {
+  <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
   ): ReactElement | null;
