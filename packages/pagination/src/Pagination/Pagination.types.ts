@@ -44,6 +44,6 @@ interface PaginationProps<T extends number = number> extends HTMLElementProps<'d
   onBackArrowClick: AccessibleIconButtonProps['onClick'];
 }
 
-type ExcludeFromTypeInference<T> = [T][T extends any ? 0 : never];
+type ExcludeFromTypeInference<T> = [T][T extends number ? 0 : never];
 
 export type { PaginationProps };
