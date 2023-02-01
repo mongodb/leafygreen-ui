@@ -151,6 +151,10 @@ To get started quickly and easily run `yarn create-package my-new-package`. When
 
 Note: it's important to follow the kebab-casing convention described above.
 
+- Add the new component to `build.tsconfig.json`
+- If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
+- Run `yarn run init` to link all packages before starting development
+
 ## Formatting and linting
 
 When you run `yarn fix`, we do the following:
