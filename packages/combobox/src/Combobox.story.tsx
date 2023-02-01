@@ -4,6 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import { storybookExcludedControlParams } from '@leafygreen-ui/lib';
 
 import {
   ComboboxSize,
@@ -23,22 +24,17 @@ export default {
   title: 'Components/Combobox',
   component: Combobox,
   parameters: {
-    default: 'Multiselect',
+    default: 'Demo',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
+        'onChange',
+        'onClear',
+        'onFilter',
         'children',
         'aria-label',
         'setError',
-        'onFilter',
-        'onClear',
-        'onChange',
         'filteredOptions',
-        'className',
-        'usePortal',
-        'portalClassName',
-        'portalContainer',
-        'scrollContainer',
-        'popoverZIndex',
         'initialValue',
         'value',
       ],
@@ -178,27 +174,16 @@ const Template: ComponentStory<typeof Combobox> = args => (
   </div>
 );
 
-export const Basic = Template.bind({});
-Basic.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick one',
-  placeholder: 'Select fruit',
-  children: ComboboxOptions,
-};
-
-export const Empty = Template.bind({});
-Empty.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick one',
-  placeholder: 'Select fruit',
-};
-
 export const SingleSelect = Template.bind({});
 SingleSelect.args = {
   label: 'Choose a fruit',
   description: 'Please pick one',
   placeholder: 'Select fruit',
+  multiselect: false,
   children: ComboboxOptions,
+};
+SingleSelect.argTypes = {
+  multiselect: { control: 'none' },
 };
 
 export const WithError = Template.bind({});
@@ -214,18 +199,14 @@ WithError.args = {
 export const Multiselect = Template.bind({});
 Multiselect.args = {
   label: 'Choose a fruit',
-  description: 'Please pick one',
+  description: 'Please pick some',
   placeholder: 'Select fruit',
   multiselect: true,
   children: ComboboxOptions,
 };
 Multiselect.argTypes = {
   multiselect: {
-    control: {
-      type: 'boolean',
-      disabled: true,
-      description: 'Multiselect cannot change between renders',
-    },
+    control: 'none',
   },
 };
 
@@ -290,4 +271,23 @@ export const ExternalFilter = () => {
       ))}
     </Combobox>
   );
+};
+
+export const Demo: ComponentStory<typeof Combobox> = args => {
+  return (
+    <div className={wrapperStyle}>
+      {/* Since Combobox doesn't fully refresh when `multiselect` changes, we need to explicitly render a different instance */}
+      {args.multiselect ? (
+        <Combobox key="multi" {...args} multiselect={true} />
+      ) : (
+        <Combobox key="single" {...args} multiselect={false} />
+      )}
+    </div>
+  );
+};
+Demo.args = {
+  label: 'Choose a fruit',
+  description: 'Please pick fruit(s)',
+  placeholder: 'Select fruit',
+  children: ComboboxOptions,
 };
