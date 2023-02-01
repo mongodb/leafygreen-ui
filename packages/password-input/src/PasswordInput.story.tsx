@@ -80,8 +80,6 @@ export const CustomContainer = ({
     {...rest}
     stateNotifications={stateNotifications as States}
     aria-describedby={'my-id'}
-    onBlur={() => console.log('blur')}
-    required
   />
 );
 

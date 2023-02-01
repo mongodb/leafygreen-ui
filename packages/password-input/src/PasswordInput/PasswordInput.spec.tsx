@@ -82,7 +82,7 @@ describe('packages/password-input', () => {
       expect(passwordInput.getAttribute('id')).toBe(defaultProps.id);
     });
 
-    // TODO: fix hook
+    // TODO: fix hook for this to work
     // eslint-disable-next-line jest/no-disabled-tests
     test.skip('value change triggers onChange callback', () => {
       const { passwordInput } = renderPasswordInput({
@@ -98,7 +98,7 @@ describe('packages/password-input', () => {
     });
 
     // eslint-disable-next-line jest/no-disabled-tests
-    test('blue triggers onBlur callback', () => {
+    test('blur triggers onBlur callback', () => {
       const { passwordInput } = renderPasswordInput({
         label: defaultProps.label,
         onBlur: defaultProps.onBlur,
@@ -153,11 +153,15 @@ describe('packages/password-input', () => {
       {/* @ts-expect-error - Must include stateNotification prop */}
       <PasswordInput aria-describedby="my-id" />
       <PasswordInput
+        label="mylabel"
         aria-describedby="my-id"
         //  @ts-expect-error - Must pass the correct stateNotifications type
         stateNotifications={[{ message: 'hi', state: 'error' }]}
       />
-      <PasswordInput stateNotifications={[{ message: 'hi', state: 'error' }]} />
+      <PasswordInput
+        label="my label"
+        stateNotifications={[{ message: 'hi', state: 'error' }]}
+      />
     </>;
   });
 });

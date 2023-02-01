@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -68,7 +68,7 @@ export const PasswordInput = React.forwardRef<
       id: ariaLabelledbyProp,
     });
     const { theme, darkMode } = useDarkMode(darkModeProp);
-    //TODO: can't find hook for some reason
+    //TODO: storybbok error: can't find hook for some reason
     // const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
     // If disabled then hide password
