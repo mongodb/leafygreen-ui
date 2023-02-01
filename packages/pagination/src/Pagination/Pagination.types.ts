@@ -2,7 +2,9 @@ import { AccessibleIconButtonProps } from '@leafygreen-ui/icon-button';
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { SelectProps } from '@leafygreen-ui/select';
 
-interface PaginationProps<T extends number = number> extends HTMLElementProps<'div'>, DarkModeProps {
+interface PaginationProps<T extends number = number>
+  extends HTMLElementProps<'div'>,
+    DarkModeProps {
   /**
    * Number of items visible on the current page.
    */

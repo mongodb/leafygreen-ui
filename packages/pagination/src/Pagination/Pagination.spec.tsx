@@ -310,4 +310,13 @@ describe('packages/pagination', () => {
       expect(onForwardArrowClick).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('Types', () => {
+    <Pagination
+      itemsPerPage={1}
+      itemsPerPageOptions={[5, 6, 7]}
+      onForwardArrowClick={() => {}}
+      onBackArrowClick={() => {}}
+    />;
+  });
 });

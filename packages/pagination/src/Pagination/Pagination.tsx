@@ -26,7 +26,7 @@ import {
 
 const DEFAULT_ITEMS_PER_PAGE_OPTIONS = [10, 25, 50];
 
-function Pagination<T extends number>({
+const Pagination = <T extends number>({
   id: idProp,
   className,
   itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0] as T,
@@ -39,7 +39,7 @@ function Pagination<T extends number>({
   onForwardArrowClick,
   darkMode: darkModeProp,
   ...rest
-}: PaginationProps<T>) {
+}: PaginationProps<T>) => {
   const { darkMode } = useDarkMode(darkModeProp);
   const itemsPerPageLabelId = useIdAllocator({
     prefix: 'lg-pagination-items-per-page-label',
@@ -113,7 +113,10 @@ function Pagination<T extends number>({
                 data-testid="lg-pagination-page-select"
                 portalClassName={selectPortalStyles}
               >
-                {range(1, getTotalNumPages(numTotalItems, itemsPerPage) + 1).map((pageNumber: number) => {
+                {range(
+                  1,
+                  getTotalNumPages(numTotalItems, itemsPerPage) + 1,
+                ).map((pageNumber: number) => {
                   return (
                     <Option key={pageNumber} value={String(pageNumber)}>
                       {pageNumber}
@@ -154,7 +157,7 @@ function Pagination<T extends number>({
       </div>
     </LeafyGreenProvider>
   );
-}
+};
 
 Pagination.propTypes = {
   darkMode: PropTypes.bool,
@@ -164,9 +167,9 @@ Pagination.propTypes = {
   onCurrentPageOptionChange: PropTypes.func,
   currentPage: PropTypes.number,
   onItemsPerPageOptionChange: PropTypes.func,
-  itemsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
   itemsPerPage: PropTypes.number,
-};
+  itemsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
+} as unknown;
 
 Pagination.displayName = 'Pagination';
 

@@ -9,6 +9,7 @@ export default {
   title: 'Components/Pagination',
   component: Pagination,
   args: {
+    itemsPerPage: '5',
     onCurrentPageOptionChange: undefined,
   },
   argTypes: {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { TsTestProps } from './TsTest.types';
 
@@ -10,3 +11,7 @@ export function TsTest<T extends number>({
 }
 
 TsTest.displayName = 'TsTest';
+TsTest.propTypes = {
+  value: PropTypes.number,
+  options: PropTypes.arrayOf(PropTypes.number),
+} as unknown;
