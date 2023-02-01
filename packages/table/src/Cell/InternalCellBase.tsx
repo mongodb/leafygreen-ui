@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 

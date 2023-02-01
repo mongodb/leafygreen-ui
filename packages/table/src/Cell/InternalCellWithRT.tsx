@@ -25,8 +25,7 @@ const InternalCellWithRT = <T extends unknown>({
           : undefined
       }
       {...rest}
-    >
-    </InternalCellBase>
+    ></InternalCellBase>
   );
 };
 
