@@ -6,13 +6,13 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import CopyButton from './CopyButton';
-import LanguageSwitcher from './LanguageSwitcher';
-import { PopoverProps } from './types';
+import CopyButton from '../CopyButton/CopyButton';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import {
   LanguageOption,
   LanguageSwitcher as LanguageSwitcherProps,
-} from './types';
+  PopoverProps,
+} from '../types';
 
 const basePanelStyle = css`
   display: flex;

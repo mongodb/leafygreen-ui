@@ -9,8 +9,8 @@ import {
   LeafyGreenHighlightResult,
   LeafyGreenHLJSPlugin,
   TokenObject,
-} from './highlight';
-import { useSyntaxContext } from './SyntaxContext';
+} from '../highlight';
+import { useSyntaxContext } from '../Syntax/SyntaxContext';
 
 interface TokenProps {
   kind?: string;

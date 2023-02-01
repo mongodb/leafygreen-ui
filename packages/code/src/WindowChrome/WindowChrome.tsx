@@ -7,7 +7,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 
-import { variantColors } from './globalStyles';
+import { variantColors } from '../globalStyles';
 
 export const windowChromeHeight = 28;
 const controlSize = 12;

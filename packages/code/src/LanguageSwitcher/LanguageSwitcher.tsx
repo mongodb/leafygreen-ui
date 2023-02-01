@@ -11,7 +11,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { Option, Select } from '@leafygreen-ui/select';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { LanguageOption, PopoverProps } from './types';
+import { LanguageOption, PopoverProps } from '../types';
 
 const containerStyle = css`
   display: flex;

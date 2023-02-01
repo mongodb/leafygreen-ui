@@ -14,11 +14,11 @@ import { isComponentType, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { variantColors } from './globalStyles';
-import Panel from './Panel';
-import Syntax from './Syntax';
-import { CodeProps, Language } from './types';
-import WindowChrome from './WindowChrome';
+import { variantColors } from '../globalStyles';
+import Panel from '../Panel/Panel';
+import Syntax from '../Syntax/Syntax';
+import { CodeProps, Language } from '../types';
+import WindowChrome from '../WindowChrome/WindowChrome';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
