@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -155,6 +156,18 @@ function Pagination({
     </LeafyGreenProvider>
   );
 }
+
+Pagination.propTypes = {
+  darkMode: PropTypes.bool,
+  onBackArrowClick: PropTypes.func.isRequired,
+  onForwardArrowClick: PropTypes.func.isRequired,
+  numTotalItems: PropTypes.number,
+  onCurrentPageOptionChange: PropTypes.func,
+  currentPage: PropTypes.number,
+  onItemsPerPageOptionChange: PropTypes.func,
+  itemsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
+  itemsPerPage: PropTypes.number,
+};
 
 Pagination.displayName = 'Pagination';
 
