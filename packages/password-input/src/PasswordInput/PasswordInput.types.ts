@@ -121,13 +121,4 @@ interface BasePasswordInputProps
   id?: string;
 }
 
-// export type PasswordInputProps = Either<
-//   BasePasswordInputProps & StateNotificationProps & AriaLabelProps,
-//   AriaLabels
-// >;
-
-// export type PasswordInputProps = BasePasswordInputProps &
-//   StateNotificationProps &
-//   AriaLabelProps;
-
 export type PasswordInputProps = BasePasswordInputProps & ConditionalProps;

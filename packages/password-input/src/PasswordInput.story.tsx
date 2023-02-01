@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Story } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
@@ -75,13 +75,17 @@ export const Basic = Template.bind({});
 export const CustomContainer = ({
   stateNotifications,
   ...rest
-}: PasswordInputProps) => (
-  <PasswordInput
-    {...rest}
-    stateNotifications={stateNotifications as States}
-    aria-describedby={'my-id'}
-  />
-);
+}: PasswordInputProps) => {
+  const ref = useRef<HTMLInputElement>(null);
+  return (
+    <PasswordInput
+      {...rest}
+      stateNotifications={stateNotifications as States}
+      aria-describedby={'my-id'}
+      ref={ref}
+    />
+  );
+};
 
 CustomContainer.argTypes = {
   stateNotifications: {

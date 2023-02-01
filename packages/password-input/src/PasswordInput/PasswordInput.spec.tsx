@@ -37,7 +37,8 @@ function renderPasswordInput(props = {}) {
 }
 
 describe('packages/password-input', () => {
-  // TODO: passing a value shows the values
+  // TODO: placeholder test
+  // auto-complete
 
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
@@ -162,6 +163,10 @@ describe('packages/password-input', () => {
       <PasswordInput
         label="label"
         stateNotifications={[{ message: 'hi', state: 'error' }]}
+        autoComplete="new-password"
+        value="the value"
+        sizeVariant="small"
+        disabled
       />
       <PasswordInput
         data-attribute="data test"
