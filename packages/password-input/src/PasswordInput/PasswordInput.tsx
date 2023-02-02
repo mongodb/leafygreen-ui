@@ -68,6 +68,12 @@ export const PasswordInput = React.forwardRef<
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
+    if (!label && !ariaLabelledbyProp && !rest['aria-label']) {
+      console.warn(
+        'For screen-reader accessibility, label, aria-labelledby, or aria-label must be provided',
+      );
+    }
+
     // If disabled then hide password
     useEffect(() => {
       if (disabled) setShowPassword(false);
