@@ -78,6 +78,7 @@ const HeaderCell = <T extends unknown>({
             sortState={sortState}
             onSortIconClick={onSortIconClick}
             aria-label={`Sort by ${columnName}`}
+            data-testid="lg-table-sort-icon-button"
           />
         )}
       </div>

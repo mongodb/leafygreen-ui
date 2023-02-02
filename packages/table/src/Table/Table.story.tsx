@@ -18,7 +18,7 @@ import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
 import HeaderRow from '../HeaderRow/HeaderRow';
 import Row from '../Row/Row';
-import Table from '../Table/Table';
+import Table from './Table';
 import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
@@ -204,6 +204,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         accessorKey: 'id',
         header: 'ID',
         size: 60,
+        enableSorting: true,
       },
       {
         accessorKey: 'firstName',
@@ -607,7 +608,7 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
         numTotalItems={data.length}
         currentPage={table.getState().pagination.pageIndex + 1}
         onCurrentPageOptionChange={(value, e) => {
-          table.setPageIndex(Number(value))
+          table.setPageIndex(Number(value) - 1)
         }}
         onBackArrowClick={() => table.previousPage()}
         onForwardArrowClick={() => table.nextPage()}

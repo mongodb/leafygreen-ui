@@ -1,6 +1,6 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
 
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 import TableContainerProps from './TableContainer.types';
 
@@ -9,25 +9,29 @@ const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
     {
       children,
       onScroll: onScrollProp,
+      className,
     }: PropsWithChildren<TableContainerProps>,
     forwardedRef,
   ) => {
     const handleScroll:
       | React.UIEventHandler<HTMLDivElement>
       | undefined = e => {
-      onScrollProp && onScrollProp(e);
-    };
+        onScrollProp && onScrollProp(e);
+      };
 
     return (
       <div
         ref={forwardedRef}
         onScroll={handleScroll}
-        className={css`
-          overflow: auto;
-          height: 500px;
-          width: 100%;
-          position: relative;
-        `}
+        className={cx(
+          css`
+            overflow: auto;
+            height: 500px;
+            width: 100%;
+            position: relative;
+          `,
+          className,
+        )}
       >
         {children}
       </div>
