@@ -28,12 +28,18 @@ const icons: Record<States, React.ComponentType<any>> = {
 export const StateNotifications = ({
   ariaDescribedby,
   notifications,
+  ...rest
 }: StateNotificationsProps) => {
   const { theme } = useDarkMode();
 
   return (
     // We're using aria-polite to announce when a message has changed. In order for aria-polite to work correctly the message wrapper needs to remain on the page even if there are no messages. If a custom message container is specified with aria-describedby then this wrapper will not render.
-    <ul aria-live="polite" className={wrapperStyles} id={ariaDescribedby}>
+    <ul
+      aria-live="polite"
+      className={wrapperStyles}
+      id={ariaDescribedby}
+      {...rest}
+    >
       {notifications.map((item, index) => {
         const { state, notification } = item;
         const ValidationIcon = icons[state];
