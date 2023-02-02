@@ -34,6 +34,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
 - [MongoNav](https://github.com/10gen/leafygreen-ui-private/tree/main/packages/mongo-nav) (This package lives in a private repository)
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
+- [Password Input](https://github.com/mongodb/leafygreen-ui/tree/main/packages/password-input)
 - [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline)
 - [Popover](https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover)
 - [Polymorphic](https://github.com/mongodb/leafygreen-ui/tree/main/packages/polymorphic)
