@@ -14,11 +14,16 @@ export const baseStyles = css`
   }
 `;
 
-// util style
 export const flexSectionStyles = css`
   flex: 1;
   display: flex;
   gap: ${spacing[1]}px;
   align-items: center;
   justify-content: center;
+`;
+
+export const selectPortalStyles = css`
+  [role='listbox'] {
+    min-width: 80px;
+  }
 `;

@@ -1,4 +1,6 @@
 import React from 'react';
+import { range } from 'lodash';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -10,7 +12,11 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Option, Select } from '@leafygreen-ui/select';
 import { Body } from '@leafygreen-ui/typography';
 
-import { baseStyles, flexSectionStyles } from './Pagination.styles';
+import {
+  baseStyles,
+  flexSectionStyles,
+  selectPortalStyles,
+} from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
 import {
   getCurrentRangeString,
@@ -20,20 +26,22 @@ import {
 
 const DEFAULT_ITEMS_PER_PAGE_OPTIONS = [10, 25, 50];
 
-function Pagination({
+function Pagination<T extends number>({
   id: idProp,
   className,
-  itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0],
-  itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS,
+  itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0] as T,
+  itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS as Array<T>,
   onItemsPerPageOptionChange,
   currentPage = 1,
   onCurrentPageOptionChange,
   numTotalItems,
   onBackArrowClick,
+  shouldDisableBackArrow,
   onForwardArrowClick,
+  shouldDisableForwardArrow,
   darkMode: darkModeProp,
   ...rest
-}: PaginationProps) {
+}: PaginationProps<T>) {
   const { darkMode } = useDarkMode(darkModeProp);
   const itemsPerPageLabelId = useIdAllocator({
     prefix: 'lg-pagination-items-per-page-label',
@@ -43,6 +51,29 @@ function Pagination({
     prefix: 'lg-pagination-items-per-page-select',
     id: idProp,
   });
+  const shouldDisableBackButton =
+    shouldDisableBackArrow !== undefined
+      ? shouldDisableBackArrow
+      : numTotalItems !== undefined && currentPage <= 1;
+  const shouldDisableForwardButton =
+    shouldDisableForwardArrow !== undefined
+      ? shouldDisableForwardArrow
+      : numTotalItems !== undefined &&
+        currentPage >= getTotalNumPages(numTotalItems, itemsPerPage);
+
+  if (
+    currentPage < 1 ||
+    (numTotalItems &&
+      getTotalNumPages(numTotalItems, itemsPerPage) < currentPage)
+  ) {
+    console.error(`Value of the 'currentPage' prop is invalid.`);
+  }
+
+  if (!itemsPerPageOptions.includes(itemsPerPage)) {
+    console.error(
+      `Value of the 'itemsPerPage' prop is not a valid option specified in 'itemsPerPageOptions'.`,
+    );
+  }
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
@@ -64,6 +95,7 @@ function Pagination({
                 id={itemsPerPageSelectId}
                 allowDeselect={false}
                 size="xsmall"
+                portalClassName={selectPortalStyles}
               >
                 {itemsPerPageOptions.map((option: number) => (
                   <Option key={option} value={String(option)}>
@@ -90,13 +122,15 @@ function Pagination({
                 allowDeselect={false}
                 size="xsmall"
                 data-testid="lg-pagination-page-select"
+                portalClassName={selectPortalStyles}
               >
-                {Array.from(
-                  Array(getTotalNumPages(numTotalItems, itemsPerPage)).keys(),
-                ).map((pageIndex: number) => {
+                {range(
+                  1,
+                  getTotalNumPages(numTotalItems, itemsPerPage) + 1,
+                ).map((pageNumber: number) => {
                   return (
-                    <Option key={pageIndex} value={String(pageIndex + 1)}>
-                      {pageIndex + 1}
+                    <Option key={pageNumber} value={String(pageNumber)}>
+                      {pageNumber}
                     </Option>
                   );
                 })}
@@ -111,22 +145,40 @@ function Pagination({
                 : 'many'}
             </Body>
           )}
-          {(1 < currentPage || numTotalItems === undefined) && (
-            <IconButton aria-label="Previous page" onClick={onBackArrowClick}>
-              <ChevronLeft />
-            </IconButton>
-          )}
-          {(numTotalItems === undefined ||
-            currentPage < getTotalNumPages(numTotalItems, itemsPerPage)) && (
-            <IconButton aria-label="Next page" onClick={onForwardArrowClick}>
-              <ChevronRight />
-            </IconButton>
-          )}
+          <IconButton
+            aria-label="Previous page"
+            disabled={shouldDisableBackButton}
+            onClick={onBackArrowClick}
+            data-testid="lg-pagination-back-button"
+          >
+            <ChevronLeft />
+          </IconButton>
+          <IconButton
+            aria-label="Next page"
+            disabled={shouldDisableForwardButton}
+            onClick={onForwardArrowClick}
+            data-testid="lg-pagination-next-button"
+          >
+            <ChevronRight />
+          </IconButton>
         </div>
       </div>
     </LeafyGreenProvider>
   );
 }
+
+Pagination.propTypes = {
+  darkMode: PropTypes.bool,
+  onBackArrowClick: PropTypes.func.isRequired,
+  onForwardArrowClick: PropTypes.func.isRequired,
+  numTotalItems: PropTypes.number,
+  onCurrentPageOptionChange: PropTypes.func,
+  currentPage: PropTypes.number,
+  onItemsPerPageOptionChange: PropTypes.func,
+  itemsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
+  itemsPerPage: PropTypes.number,
+  // casting to unknown ensures TS does not infer types from these prop-types
+} as unknown;
 
 Pagination.displayName = 'Pagination';
 
