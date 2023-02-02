@@ -34,12 +34,17 @@ function renderPasswordInput(props = {}) {
   const passwordInput = utils.getByTestId('password-input');
   const labelElement = utils.container.querySelector('label');
   const messageContainer = utils.container.querySelector('ul');
-  return { ...utils, passwordInput, labelElement, messageContainer };
+  const toggleButton = utils.container.querySelector('button');
+  return {
+    ...utils,
+    passwordInput,
+    labelElement,
+    messageContainer,
+    toggleButton,
+  };
 }
 
 describe('packages/password-input', () => {
-  // auto-complete
-
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = renderPasswordInput({ label: defaultProps.label });
@@ -136,6 +141,16 @@ describe('packages/password-input', () => {
       userEvent.tab(); // blur
 
       expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
+    });
+
+    test('toggles password type on click of toggle icon ', () => {
+      const { passwordInput, toggleButton } = renderPasswordInput();
+
+      expect(passwordInput.getAttribute('type')).toBe('password');
+      fireEvent.click(toggleButton as HTMLButtonElement);
+      expect(passwordInput.getAttribute('type')).toBe('text');
+      fireEvent.click(toggleButton as HTMLButtonElement);
+      expect(passwordInput.getAttribute('type')).toBe('password');
     });
   });
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Story } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
@@ -67,7 +67,7 @@ export default {
 };
 
 const Template: Story<PasswordInputProps> = props => {
-  return <PasswordInput {...props} />;
+  return <PasswordInput data-testid="test-id" {...props} />;
 };
 
 export const Basic = Template.bind({});
