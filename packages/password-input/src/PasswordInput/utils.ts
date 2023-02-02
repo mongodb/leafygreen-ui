@@ -1,9 +1,23 @@
 import { NotificationProps, States } from './PasswordInput.types';
 
-export function allEqual(arr: Array<any>) {
+/**
+ * Utility function that checks if the values in an array are all equal
+ *
+ * Returns a boolean
+ *
+ * @param arr `Array<States>`
+ */
+export function allEqual(arr: Array<States>): boolean {
   return new Set(arr).size == 1;
 }
 
+/**
+ * Utility function that takes in an array of `NotificationProps` objects to compute the overall input state.
+ *
+ * Returns a `States` value
+ *
+ * @param stateNotifications `Array<NotificationProps>`
+ */
 export function getStateFromArray(
   stateNotifications: Array<NotificationProps>,
 ): States {

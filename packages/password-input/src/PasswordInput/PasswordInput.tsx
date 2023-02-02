@@ -81,11 +81,17 @@ export const PasswordInput = React.forwardRef<
 
     const handleTogglePasswordClick = () => setShowPassword(s => !s);
 
+    /**
+     * The overall state of the component
+     */
     const state: States = Array.isArray(stateNotifications)
       ? getStateFromArray(stateNotifications)
       : stateNotifications;
 
-    const hasValidationMessages =
+    /**
+     * Checks if there are any notifications
+     */
+    const hasNotifications: boolean =
       !ariaDescribedbyProp && Array.isArray(stateNotifications);
 
     return (
@@ -124,7 +130,7 @@ export const PasswordInput = React.forwardRef<
                     inputDisabledThemeStyles[theme],
                   )]: disabled,
                   [inputIconSizeStyles[sizeVariant]]:
-                    !hasValidationMessages && state !== States.None,
+                    !hasNotifications && state !== States.None,
                 },
               )}
               onChange={handleChange}
@@ -132,7 +138,7 @@ export const PasswordInput = React.forwardRef<
               {...rest}
             />
             {/* Visual icons inside the input will only render if aria-describedby is set and the state is not `none`. `none` does not need a visible icon */}
-            {!hasValidationMessages && state !== States.None && (
+            {!hasNotifications && state !== States.None && (
               <InputIcon state={state} sizeVariant={sizeVariant} />
             )}
             <TogglePassword
@@ -142,7 +148,7 @@ export const PasswordInput = React.forwardRef<
               sizeVariant={sizeVariant}
             />
           </div>
-          {hasValidationMessages && (
+          {hasNotifications && (
             <StateNotifications
               ariaDescribedby={ariaDescribedby}
               notifications={stateNotifications as Array<NotificationProps>}
