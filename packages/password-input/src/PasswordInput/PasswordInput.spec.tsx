@@ -194,11 +194,16 @@ describe('packages/password-input', () => {
     <>
       {/* @ts-expect-error - Must include stateNotification prop */}
       <PasswordInput aria-describedby="my-id" />
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error - Must include correct stateNotification type if using aria-describedBy */}
       <PasswordInput
         label="mylabel"
         aria-describedby="my-id"
         stateNotifications={[{ notification: 'hi', state: 'error' }]}
+      />
+      <PasswordInput
+        aria-describedby="my-id"
+        stateNotifications="error"
+        label="my label"
       />
       {/* @ts-expect-error - needs label/aria-label/aria-labelledby */}
       <PasswordInput stateNotifications={[{ message: 'hi', state: 'error' }]} />
