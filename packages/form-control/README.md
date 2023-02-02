@@ -23,7 +23,7 @@ import { useAccessibleFormField } from '@leafygreen-ui/form-control';
 
 const TextInput = () => {
   const { labelProps, fieldProps, descriptionProps, errorMessageProps } =
-    useAccessibleFormField(label, description, message, isMessageShown, id);
+    useAccessibleFormField(label, isDescriptionShown, isErrorMessageShown, id);
 
   return (
     <>
