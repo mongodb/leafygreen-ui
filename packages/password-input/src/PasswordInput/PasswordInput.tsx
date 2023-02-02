@@ -177,7 +177,9 @@ PasswordInput.propTypes = {
   id: PropTypes.string,
   /// @ts-ignore
   'aria-label': PropTypes.string,
+  /// @ts-ignore
   'aria-labelledby': PropTypes.string,
+  /// @ts-ignore
   label: PropTypes.string,
   /// @ts-ignore
   'aria-describedby': PropTypes.string,
