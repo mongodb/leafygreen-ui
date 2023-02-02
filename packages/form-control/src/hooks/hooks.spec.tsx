@@ -14,16 +14,19 @@ describe('packages/form-control', () => {
       isErrorMessageShown: false,
     };
 
-    const ExampleInput = (props: AccessibleFieldProps) => {
+    const ExampleInput = ({
+      isErrorMessageShown,
+      ...rest
+    }: AccessibleFieldProps) => {
       const { labelProps, fieldProps, descriptionProps, errorMessageProps } =
-        useAccessibleField(props);
+        useAccessibleField({ isErrorMessageShown, ...rest });
 
       return (
         <>
           <label {...labelProps}>{defaultArgs.label}</label>
           <div {...descriptionProps}>Description</div>
           <input {...fieldProps} />
-          <div {...errorMessageProps}>Error!</div>
+          {isErrorMessageShown && <div {...errorMessageProps}>Error!</div>}
         </>
       );
     };
