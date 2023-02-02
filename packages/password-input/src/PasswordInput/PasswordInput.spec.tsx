@@ -14,13 +14,13 @@ const defaultProps = {
   id: 'This is id',
   onChange: jest.fn(),
   onBlur: jest.fn(),
-  messages: [
+  notifications: [
     {
-      message: 'message one',
+      notification: 'message one',
       state: 'error',
     },
     {
-      message: 'message two',
+      notification: 'message two',
       state: 'error',
     },
   ],
@@ -162,7 +162,7 @@ describe('packages/password-input', () => {
 
     test('renders message container with two messages', async () => {
       const { messageContainer } = renderPasswordInput({
-        stateNotifications: defaultProps.messages,
+        stateNotifications: defaultProps.notifications,
       });
       const allMessages = messageContainer?.querySelectorAll('li');
       expect(allMessages).toHaveLength(2);
@@ -198,13 +198,13 @@ describe('packages/password-input', () => {
       <PasswordInput
         label="mylabel"
         aria-describedby="my-id"
-        stateNotifications={[{ message: 'hi', state: 'error' }]}
+        stateNotifications={[{ notification: 'hi', state: 'error' }]}
       />
       {/* @ts-expect-error - needs label/aria-label/aria-labelledby */}
       <PasswordInput stateNotifications={[{ message: 'hi', state: 'error' }]} />
       <PasswordInput
         label="label"
-        stateNotifications={[{ message: 'hi', state: 'error' }]}
+        stateNotifications={[{ notification: 'hi', state: 'error' }]}
         autoComplete="new-password"
         value="the value"
         sizeVariant="small"
@@ -213,12 +213,12 @@ describe('packages/password-input', () => {
       <PasswordInput
         data-attribute="data test"
         aria-label="label"
-        stateNotifications={[{ message: 'hi', state: 'error' }]}
+        stateNotifications={[{ notification: 'hi', state: 'error' }]}
       />
       <PasswordInput
         data-attribute="data test"
         aria-labelledby="label"
-        stateNotifications={[{ message: 'hi', state: 'error' }]}
+        stateNotifications={[{ notification: 'hi', state: 'error' }]}
       />
     </>;
   });

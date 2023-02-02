@@ -10,7 +10,7 @@ export const wrapperStyles = css`
   margin: 0;
   list-style-type: none;
 
-  // TODO: add comment
+  // Adding margin to the first item only, this way if there are no items the parent wrapper will not have any margins
   li:first-of-type {
     margin-top: ${spacing[1]}px;
   }

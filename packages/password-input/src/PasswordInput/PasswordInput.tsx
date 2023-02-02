@@ -25,7 +25,7 @@ import {
   labelLargeOverrideStyles,
 } from './PasswordInput.styles';
 import {
-  type MessageProps,
+  type NotificationProps,
   PasswordInputProps,
   SizeVariant,
   States,
@@ -139,7 +139,7 @@ export const PasswordInput = React.forwardRef<
           {hasValidationMessages && (
             <StateNotifications
               ariaDescribedby={ariaDescribedby}
-              messages={stateNotifications as Array<MessageProps>}
+              notifications={stateNotifications as Array<NotificationProps>}
             />
           )}
         </div>
@@ -159,7 +159,7 @@ const stateNotificationCheck = function (
   const arrayProp = PropTypes.arrayOf(
     PropTypes.shape({
       state: PropTypes.oneOf(Object.values(States)).isRequired,
-      message: PropTypes.string.isRequired,
+      notification: PropTypes.string.isRequired,
     }),
   );
   const ariaProp = 'aria-describedby';

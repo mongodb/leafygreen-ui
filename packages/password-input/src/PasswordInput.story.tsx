@@ -17,19 +17,19 @@ export default {
     label: 'label',
     stateNotifications: [
       {
-        message: "i'm an error",
+        notification: "i'm an error",
         state: 'error',
       },
       {
-        message: "i'm a warning",
+        notification: "i'm a warning",
         state: 'warning',
       },
       {
-        message: "i'm valid",
+        notification: "i'm valid",
         state: 'valid',
       },
       {
-        message: "i'm waiting",
+        notification: "i'm waiting",
         state: 'none',
       },
     ],

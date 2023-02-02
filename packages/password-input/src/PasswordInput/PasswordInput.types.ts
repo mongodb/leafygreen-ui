@@ -19,8 +19,8 @@ export const SizeVariant = {
 
 export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
-export interface MessageProps {
-  message?: string;
+export interface NotificationProps {
+  notification?: string;
   state: States;
 }
 
@@ -52,37 +52,37 @@ type AriaLabelkeys = keyof AriaLabelProps;
 
 type LabelProps = Either<AriaLabelProps, AriaLabelkeys>;
 
-// Using custom message container with aria-describedby
+// Using custom notification container with aria-describedby
 interface StateOnlyProps {
   /**
-   * The id reference to the custom message container
+   * The id reference to the custom notification container
    */
   ['aria-describedby']: string;
 
   /**
-   * Determines what messages will appear
+   * Determines what notifications will appear
    *
    * @default 'none'
    */
   stateNotifications: States;
 }
 
-// using default message container, no aria-describedby
-interface StateAndMessageProps {
+// using default notification container, no aria-describedby
+interface StateAndNotificationProps {
   /**
-   * The id reference to the custom message container
+   * The id reference to the custom notification container
    */
   ['aria-describedby']?: never;
 
   /**
-   * Determines what messages will appear
+   * Determines what notifications will appear
    *
    * @default []
    */
-  stateNotifications?: Array<MessageProps>;
+  stateNotifications?: Array<NotificationProps>;
 }
 
-export type StateNotificationProps = StateAndMessageProps | StateOnlyProps;
+export type StateNotificationProps = StateAndNotificationProps | StateOnlyProps;
 
 type ConditionalProps = LabelProps & StateNotificationProps;
 
