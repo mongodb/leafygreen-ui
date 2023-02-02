@@ -199,17 +199,6 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
   },
 };
 
-export const messageWrapperStyles = css`
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-
-  // TODO: add comment
-  li:first-of-type {
-    margin-top: ${spacing[1]}px;
-  }
-`;
-
 export const inputIconSizeStyles: Record<SizeVariant, string> = {
   [SizeVariant.Small]: css`
     padding-right: ${spacing[1] * 13}px;
