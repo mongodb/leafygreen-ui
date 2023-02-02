@@ -33,6 +33,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
 - [MongoNav](https://github.com/10gen/leafygreen-ui-private/tree/main/packages/mongo-nav) (This package lives in a private repository)
+- [Pagination](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pagination)
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
 - [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline)
 - [Popover](https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover)
@@ -149,6 +150,10 @@ npx create-leafygreen-app@latest --packages-only
 To get started quickly and easily run `yarn create-package my-new-package`. When you run this command, we create a directory containing all of the boilerplate code that you'll need to start developing your new Component.
 
 Note: it's important to follow the kebab-casing convention described above.
+
+- Add the new component to `build.tsconfig.json`
+- If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
+- Run `yarn run init` to link all packages before starting development
 
 ## Formatting and linting
 
