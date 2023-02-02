@@ -175,8 +175,12 @@ const stateNotificationCheck = function (
 
 PasswordInput.propTypes = {
   id: PropTypes.string,
-  label: PropTypes.string,
+  /// @ts-ignore
+  'aria-label': PropTypes.string,
   'aria-labelledby': PropTypes.string,
+  label: PropTypes.string,
+  /// @ts-ignore
+  'aria-describedby': PropTypes.string,
   className: PropTypes.string,
   darkMode: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -185,8 +189,6 @@ PasswordInput.propTypes = {
   placeholder: PropTypes.string,
   sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
   value: PropTypes.string,
-  /// @ts-ignore
-  'aria-describedby': PropTypes.string,
   /// @ts-ignore
   stateNotifications: stateNotificationCheck,
 };

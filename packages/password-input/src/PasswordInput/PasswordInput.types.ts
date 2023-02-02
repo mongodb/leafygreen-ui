@@ -115,11 +115,6 @@ interface BasePasswordInputProps
   onChange?: ChangeEventHandler<HTMLInputElement>;
 
   /**
-   * Label that appears above the input.
-   */
-  label?: string;
-
-  /**
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.
    */
   id?: string;
