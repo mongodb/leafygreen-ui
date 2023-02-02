@@ -14,9 +14,9 @@ import { TogglePassword } from '../TogglePassword';
 
 import {
   inputBaseStyles,
+  inputBaseThemeStyles,
   inputDisabledBaseStyles,
   inputDisabledThemeStyles,
-  inputFocusThemeStyles,
   inputIconSizeStyles,
   inputSizeStyles,
   inputThemeStyles,
@@ -110,7 +110,7 @@ export const PasswordInput = React.forwardRef<
               className={cx(
                 inputBaseStyles,
                 inputSizeStyles[sizeVariant],
-                inputFocusThemeStyles[theme],
+                inputBaseThemeStyles[theme],
                 {
                   [inputThemeStyles[theme][state]]: !disabled,
                   [cx(

@@ -15,7 +15,7 @@ import { SizeVariant, States } from './PasswordInput.types';
 /**
  * Adds an inset box shadow to hide the UA background styles for autofilled inputs
  */
-// const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
+const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
 export const labelBaseStyles = css`
   display: block;
@@ -77,23 +77,51 @@ export const inputBaseStyles = css`
   }
 `;
 
-export const inputFocusThemeStyles: Record<Theme, string> = {
+export const inputBaseThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.black};
-    background: ${palette.white};
+    &,
+    &:-webkit-autofill {
+      color: ${palette.black};
+      background: ${palette.white};
+    }
 
     &:focus-visible {
       box-shadow: ${focusRing.light.input};
       border-color: ${palette.white};
     }
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: ${palette.black};
+      box-shadow: ${autofillShadowOverride(palette.white)};
+
+      &:focus-visible {
+        box-shadow: ${autofillShadowOverride(palette.white)},
+          ${focusRing.light.input};
+        border-color: ${palette.white};
+      }
+    }
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
-    color: ${palette.gray.light2};
+    &,
+    &:-webkit-autofill {
+      background-color: ${palette.gray.dark4};
+      color: ${palette.gray.light2};
+    }
 
     &:focus-visible {
       box-shadow: ${focusRing.dark.input};
       border-color: ${palette.gray.dark4};
+    }
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: ${palette.gray.light2};
+      box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
+
+      &:focus-visible {
+        box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+          ${focusRing.dark.input};
+        border-color: ${palette.gray.dark4};
+      }
     }
   `,
 };
@@ -120,7 +148,17 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
 };
 
 export const errorWarningDarkThemeStyles = css`
-  border-color: ${palette.red.base};
+  &,
+  &:-webkit-autofill {
+    border-color: ${palette.red.base};
+  }
+
+  &:-webkit-autofill {
+    &:hover:not(:focus-visible) {
+      box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+        ${hoverRing.dark.red};
+    }
+  }
 
   &:hover,
   &:active {
@@ -130,7 +168,17 @@ export const errorWarningDarkThemeStyles = css`
   }
 `;
 export const errorWarningLightThemeStyles = css`
-  border-color: ${palette.red.base};
+  &,
+  &:-webkit-autofill {
+    border-color: ${palette.red.base};
+  }
+
+  &:-webkit-autofill {
+    &:hover:not(:focus-visible) {
+      box-shadow: ${autofillShadowOverride(palette.white)},
+        ${hoverRing.light.red};
+    }
+  }
 
   &:hover,
   &:active {
@@ -149,7 +197,17 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
       ${errorWarningLightThemeStyles};
     `,
     [States.Valid]: css`
-      border-color: ${palette.green.dark1};
+      &,
+      &:-webkit-autofill {
+        border-color: ${palette.green.dark1};
+      }
+
+      &:-webkit-autofill {
+        &:hover:not(:focus-visible) {
+          box-shadow: ${autofillShadowOverride(palette.white)},
+            ${hoverRing.light.green};
+        }
+      }
 
       &:hover,
       &:active {
@@ -159,7 +217,17 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
       }
     `,
     [States.None]: css`
-      border-color: ${palette.gray.base};
+      &,
+      &:-webkit-autofill {
+        border-color: ${palette.gray.base};
+      }
+
+      &:-webkit-autofill {
+        &:hover:not(:focus-visible) {
+          box-shadow: ${autofillShadowOverride(palette.white)},
+            ${hoverRing.light.gray};
+        }
+      }
 
       &:hover,
       &:active {
@@ -177,7 +245,17 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
       ${errorWarningDarkThemeStyles};
     `,
     [States.Valid]: css`
-      border-color: ${palette.green.dark1};
+      &,
+      &:-webkit-autofill {
+        border-color: ${palette.green.dark1};
+      }
+
+      &:-webkit-autofill {
+        &:hover:not(:focus-visible) {
+          box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+            ${hoverRing.dark.green};
+        }
+      }
 
       &:hover,
       &:active {
@@ -187,7 +265,17 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
       }
     `,
     [States.None]: css`
-      border-color: ${palette.gray.base};
+      &,
+      &:-webkit-autofill {
+        border-color: ${palette.gray.base};
+      }
+
+      &:-webkit-autofill {
+        &:hover:not(:focus-visible) {
+          box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+            ${hoverRing.dark.gray};
+        }
+      }
 
       &:hover,
       &:active {
@@ -220,10 +308,18 @@ export const inputDisabledThemeStyles: Record<Theme, string> = {
     background-color: ${palette.gray.light2};
     border-color: ${palette.gray.light1};
     color: ${palette.gray.base};
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: ${palette.gray.base};
+    }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark3};
     border-color: ${palette.gray.dark2};
     color: ${palette.gray.dark1};
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: ${palette.gray.dark1};
+    }
   `,
 };
