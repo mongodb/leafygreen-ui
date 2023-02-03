@@ -131,19 +131,19 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 28px;
-    padding: 0 ${spacing[5]}px 0 10px; //TODO: spacing tokens
+    padding: 0 ${spacing[5]}px 0 10px;
   `,
   [SizeVariant.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 36px;
-    padding: 0 ${spacing[2] * 5}px 0 ${spacing[3]}px; //TODO: spacing tokens
+    padding: 0 ${spacing[2] * 5}px 0 ${spacing[3]}px;
   `,
   [SizeVariant.Large]: css`
     font-size: 18px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 48px;
-    padding: 0 ${spacing[2] * 5}px 0 ${spacing[3]}px; //TODO: spacing tokens
+    padding: 0 ${spacing[2] * 5}px 0 ${spacing[3]}px;
   `,
 };
 

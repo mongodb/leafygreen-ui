@@ -76,13 +76,14 @@ describe('packages/password-input', () => {
     });
 
     test('renders no label tag when label is not supplied', () => {
-      renderPasswordInput();
+      renderPasswordInput({ ['aria-label']: defaultProps.label });
       expect(screen.queryByRole('label')).not.toBeInTheDocument();
     });
 
     test(`renders ${defaultProps.placeholder} as placeholder text`, () => {
       const { getByPlaceholderText } = renderPasswordInput({
         placeholder: defaultProps.placeholder,
+        label: defaultProps.label,
       });
       expect(getByPlaceholderText(defaultProps.placeholder)).toBeVisible();
     });
@@ -90,6 +91,7 @@ describe('packages/password-input', () => {
     test(`renders ${defaultProps.className} in the classList`, () => {
       const { container } = renderPasswordInput({
         className: defaultProps.className,
+        label: defaultProps.label,
       });
       expect(
         (container?.firstChild as HTMLElement)?.classList.contains(
@@ -101,6 +103,7 @@ describe('packages/password-input', () => {
     test('input id attribute matches id prop', async () => {
       const { passwordInput } = renderPasswordInput({
         id: defaultProps.id,
+        label: defaultProps.label,
       });
       expect(passwordInput.getAttribute('id')).toBe(defaultProps.id);
     });
@@ -108,6 +111,7 @@ describe('packages/password-input', () => {
     test('renders ${defaultProps.autoComplete} as autoComplete text', async () => {
       const { passwordInput } = renderPasswordInput({
         autoComplete: defaultProps.autoComplete,
+        label: defaultProps.label,
       });
       expect(passwordInput.getAttribute('autoComplete')).toBe(
         defaultProps.autoComplete,
@@ -144,7 +148,9 @@ describe('packages/password-input', () => {
     });
 
     test('toggles password type on click of toggle icon ', () => {
-      const { passwordInput, toggleButton } = renderPasswordInput();
+      const { passwordInput, toggleButton } = renderPasswordInput({
+        label: defaultProps.label,
+      });
 
       expect(passwordInput.getAttribute('type')).toBe('password');
       fireEvent.click(toggleButton as HTMLButtonElement);
@@ -156,13 +162,16 @@ describe('packages/password-input', () => {
 
   describe('Password input with stateNotifications array', () => {
     test('renders message container', async () => {
-      const { messageContainer } = renderPasswordInput();
+      const { messageContainer } = renderPasswordInput({
+        label: defaultProps.label,
+      });
       expect(messageContainer).toBeInTheDocument();
     });
 
     test('renders message container with two messages', async () => {
       const { messageContainer } = renderPasswordInput({
         stateNotifications: defaultProps.notifications,
+        label: defaultProps.label,
       });
       const allMessages = messageContainer?.querySelectorAll('li');
       expect(allMessages).toHaveLength(2);
@@ -174,6 +183,7 @@ describe('packages/password-input', () => {
       const { messageContainer } = renderPasswordInput({
         [`aria-describedby`]: defaultProps.ariaDescribedby,
         stateNotifications: 'error',
+        label: defaultProps.label,
       });
       expect(messageContainer).not.toBeInTheDocument();
     });
@@ -182,6 +192,7 @@ describe('packages/password-input', () => {
       const { passwordInput } = renderPasswordInput({
         [`aria-describedby`]: defaultProps.ariaDescribedby,
         stateNotifications: 'error',
+        label: defaultProps.label,
       });
       expect(passwordInput.getAttribute('aria-describedby')).toBe(
         defaultProps.ariaDescribedby,
@@ -228,3 +239,5 @@ describe('packages/password-input', () => {
     </>;
   });
 });
+
+// TODO: add tests for icon inside input when custom message container is used

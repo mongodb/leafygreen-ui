@@ -13,9 +13,24 @@ const defaultProps = {
     },
     {
       notification: 'message two',
-      state: 'error',
+      state: 'warning',
+    },
+    {
+      notification: 'message three',
+      state: 'valid',
+    },
+    {
+      notification: 'message four',
+      state: 'none',
     },
   ],
+};
+
+const iconAriaLabels = {
+  warning: 'Warning Icon',
+  error: 'X Icon',
+  valid: 'Checkmark Icon',
+  none: 'Checkmark Icon',
 };
 
 function renderStateNotifications(props = {}) {
@@ -43,7 +58,7 @@ describe('sub-component StateNotifications', () => {
     test('renders message container with two messages', () => {
       const { stateNotification } = renderStateNotifications(defaultProps);
       const allMessages = stateNotification?.querySelectorAll('li');
-      expect(allMessages).toHaveLength(2);
+      expect(allMessages).toHaveLength(4);
     });
 
     test('renders message with correct text', () => {
@@ -54,6 +69,33 @@ describe('sub-component StateNotifications', () => {
       );
       expect(allMessages[1]).toHaveTextContent(
         defaultProps.notifications[1].notification,
+      );
+      expect(allMessages[2]).toHaveTextContent(
+        defaultProps.notifications[2].notification,
+      );
+      expect(allMessages[3]).toHaveTextContent(
+        defaultProps.notifications[3].notification,
+      );
+    });
+
+    test('renders message with correct icon', () => {
+      const { stateNotification } = renderStateNotifications(defaultProps);
+      const allMessages = stateNotification?.querySelectorAll('li');
+      expect(allMessages[0].querySelector('svg')).toHaveAttribute(
+        'aria-label',
+        iconAriaLabels.error,
+      );
+      expect(allMessages[1].querySelector('svg')).toHaveAttribute(
+        'aria-label',
+        iconAriaLabels.warning,
+      );
+      expect(allMessages[2].querySelector('svg')).toHaveAttribute(
+        'aria-label',
+        iconAriaLabels.valid,
+      );
+      expect(allMessages[3].querySelector('svg')).toHaveAttribute(
+        'aria-label',
+        iconAriaLabels.none,
       );
     });
 
