@@ -20,11 +20,8 @@ export default {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     state: { control: 'select', options: Object.values(State) },
-    id: { control: 'string' },
-    placeholder: { control: 'string' },
-    value: { control: 'string' },
+    placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
-    ref: { control: 'none' },
   },
   parameters: {
     controls: {
@@ -84,7 +81,7 @@ export const WithResults: ComponentStory<typeof SearchInput> = props => (
   </SearchInput>
 );
 
-export const LiveSearch: ComponentStory<typeof SearchInput> = () => {
+export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
   const data = [
     'apple',
     'banana',
@@ -127,6 +124,7 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = () => {
       className={css`
         width: 256px;
       `}
+      {...args}
     >
       {searchResults.map(datum => (
         <SearchResult key={datum}>{startCase(datum)}</SearchResult>
@@ -134,3 +132,4 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = () => {
     </SearchInput>
   );
 };
+LiveSearch.argTypes = {};

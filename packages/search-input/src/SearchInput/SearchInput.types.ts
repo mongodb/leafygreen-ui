@@ -59,6 +59,11 @@ interface BaseSearchInputProps
    * (in this case the enter key fires the `onClick` handler on the search result)
    */
   onSubmit?: FormEventHandler<HTMLFormElement>;
+
+  /**
+   * The placeholder text shown in the input field before the user begins typing.
+   */
+  placeholder?: string;
 }
 
 export type SearchInputProps = BaseSearchInputProps & AriaLabelProps;
