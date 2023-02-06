@@ -10,10 +10,10 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import Panel from '../Panel/Panel';
-import Syntax from '../Syntax/Syntax';
+import { Panel } from '../Panel';
+import { Syntax } from '../Syntax';
 import { CodeProps, Language } from '../types';
-import WindowChrome from '../WindowChrome/WindowChrome';
+import { WindowChrome } from '../WindowChrome';
 
 import {
   baseScrollShadowStyles,
