@@ -9,6 +9,7 @@ import {
   validateAriaLabelProps,
   VisuallyHidden,
 } from '.';
+import { AriaLabelProps, AriaLabelPropsWithLabel } from './AriaLabelProps';
 
 describe('packages/a11y', () => {
   describe('VisuallyHidden', () => {
@@ -110,6 +111,55 @@ describe('packages/a11y', () => {
 
       // @ts-expect-error
       expect(prefersReducedMotion({})).toEqual('');
+    });
+  });
+
+  // testing types
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect, @typescript-eslint/no-unused-vars */
+  describe.skip('AriaLabelProps types', () => {
+    test('AriaLabelProps', () => {
+      // @ts-expect-error
+      const props1: AriaLabelProps = {};
+      const props2: AriaLabelProps = {
+        'aria-label': 'some label',
+      };
+      const props3: AriaLabelProps = {
+        'aria-labelledby': '#some-id',
+      };
+      const props4: AriaLabelProps = {
+        'aria-label': 'some label',
+        'aria-labelledby': '#some-id',
+      };
+    });
+    test('AriaLabelPropsWithLabel', () => {
+      // @ts-expect-error
+      const props1: AriaLabelPropsWithLabel = {};
+      const props2: AriaLabelPropsWithLabel = {
+        'aria-label': 'some label',
+      };
+      const props3: AriaLabelPropsWithLabel = {
+        'aria-labelledby': '#some-id',
+      };
+      const props4: AriaLabelPropsWithLabel = {
+        'aria-label': 'some label',
+        'aria-labelledby': '#some-id',
+      };
+      const props5: AriaLabelPropsWithLabel = {
+        label: 'some label',
+      };
+      const props6: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-label': 'some label',
+      };
+      const props7: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-labelledby': '#some-id',
+      };
+      const props8: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-label': 'some label',
+        'aria-labelledby': '#some-id',
+      };
     });
   });
 });

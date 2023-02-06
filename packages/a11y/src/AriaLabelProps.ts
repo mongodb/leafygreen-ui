@@ -15,18 +15,9 @@ export type AriaLabelProps =
  * A union interface requiring _either_ `label`, `aria-label` or `aria-labelledby`
  */
 export type AriaLabelPropsWithLabel =
-  | {
+  | ({
+      label?: string;
+    } & AriaLabelProps)
+  | ({
       label: string;
-      'aria-label'?: string;
-      'aria-labelledby'?: string;
-    }
-  | {
-      label?: string;
-      'aria-label': string;
-      'aria-labelledby'?: string;
-    }
-  | {
-      label?: string;
-      'aria-label'?: string;
-      'aria-labelledby': string;
-    };
+    } & Partial<AriaLabelProps>);
