@@ -3,13 +3,13 @@ import { render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { axe } from 'jest-axe';
 
+import { AriaLabelProps, AriaLabelPropsWithLabel } from './AriaLabelProps';
 import {
   prefersReducedMotion,
   useAccessibleForm,
   validateAriaLabelProps,
   VisuallyHidden,
 } from '.';
-import { AriaLabelProps, AriaLabelPropsWithLabel } from './AriaLabelProps';
 
 describe('packages/a11y', () => {
   describe('VisuallyHidden', () => {
