@@ -1,9 +1,4 @@
-import FocusableMenuItem from './FocusableMenuItem';
-import Menu from './Menu';
-import MenuItem from './MenuItem';
-import MenuSeparator from './MenuSeparator';
-import SubMenu from './SubMenu';
-import { MenuProps } from './types';
-
-export { FocusableMenuItem, Menu, MenuItem, MenuSeparator, SubMenu };
-export type { MenuProps };
+export { Menu, type MenuProps } from './Menu';
+export { FocusableMenuItem, MenuItem } from './MenuItem';
+export { MenuSeparator } from './MenuSeparator';
+export { SubMenu } from './SubMenu/SubMenu';

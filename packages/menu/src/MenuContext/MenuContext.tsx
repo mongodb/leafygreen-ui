@@ -1,14 +1,9 @@
 import { createContext } from 'react';
 
-import { Theme } from '@leafygreen-ui/lib';
-
-interface MenuData {
-  theme: Theme;
-  darkMode: boolean;
-}
+import { MenuData } from './MenuContext.types';
 
 export const MenuContext = createContext<MenuData>({
-  theme: Theme.Light,
+  theme: 'light',
   darkMode: false,
 });
 

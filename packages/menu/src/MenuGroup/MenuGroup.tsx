@@ -1,18 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-interface MenuGroupProps {
-  /**
-   * Content that will appear inside of MenuGroup component.
-   * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`
-   */
-  children: React.ReactNode;
-
-  /**
-   * className that will be applied to root MenuGroup element.
-   */
-  className?: string;
-}
+import { MenuGroupProps } from './MenuGroup.types';
 
 /**
  * # MenuGroup
@@ -26,7 +15,7 @@ interface MenuGroupProps {
  * @param props.children Content to appear inside of the MenuGroup.
  *
  */
-function MenuGroup({ children, className, ...rest }: MenuGroupProps) {
+export function MenuGroup({ children, className, ...rest }: MenuGroupProps) {
   return (
     <section {...rest} className={className}>
       {children}

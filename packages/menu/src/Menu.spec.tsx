@@ -8,15 +8,31 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+  PolymorphicPropsWithRef,
+} from '@leafygreen-ui/polymorphic';
+
+import { MenuProps } from './Menu';
 import { MenuItemProps } from './MenuItem';
 import { SubMenuProps } from './SubMenu';
-import { MenuProps } from './types';
 import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
 const className = 'menu-item-class-name';
 const trigger = <button data-testid="menu-trigger">trigger</button>;
 const onClick = jest.fn();
+
+type WrappedMenuItemProps = PolymorphicPropsWithRef<
+  PolymorphicAs,
+  InferredPolymorphicProps<MenuItemProps>
+>;
+
+type WrappedSubMenuProps = PolymorphicPropsWithRef<
+  PolymorphicAs,
+  InferredPolymorphicProps<SubMenuProps>
+>;
 
 function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
@@ -29,7 +45,7 @@ function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   return utils;
 }
 
-function renderMenuItem(props: MenuItemProps = {}) {
+function renderMenuItem(props: WrappedMenuItemProps = {}) {
   const utils = render(
     <MenuItem {...props} data-testid="menu-item-test-id">
       Item 1
@@ -39,7 +55,7 @@ function renderMenuItem(props: MenuItemProps = {}) {
   return { ...utils, menuItem };
 }
 
-function renderSubMenuItem(props: SubMenuProps = {}) {
+function renderSubMenuItem(props: WrappedSubMenuProps = {}) {
   const utils = render(
     <Menu open={true} setOpen={jest.fn()}>
       <SubMenu title="First SubMenu" data-testid="sub-menu-a" {...props}>
