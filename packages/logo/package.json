@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/lib": "^10.0.0",
+    "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/palette": "^3.4.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo",

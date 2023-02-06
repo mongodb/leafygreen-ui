@@ -24,7 +24,7 @@
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
     "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/lib": "^10.0.0",
+    "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/palette": "^3.4.7",
     "@leafygreen-ui/tokens": "^2.0.0",
     "@leafygreen-ui/tooltip": "^9.1.3",

@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/lib": "^10.0.0",
+    "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/select": "^10.2.0",
     "@leafygreen-ui/icon": "^11.12.4",
     "@leafygreen-ui/icon-button": "^15.0.5",
