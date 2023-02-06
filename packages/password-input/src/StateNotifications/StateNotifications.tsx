@@ -53,7 +53,7 @@ export const StateNotifications = ({
               className={cx(iconBaseStyles, iconThemeStateStyles[theme][state])}
             />
             <span>{notification}</span>
-            <div className={srOnly}>
+            <div className={srOnly} aria-live="assertive">
               {/* TODO: is this message clear enough for screen readers? */}
               {notification}: {state}
             </div>
