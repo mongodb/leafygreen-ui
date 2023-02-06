@@ -25,10 +25,9 @@ describe('packages/a11y', () => {
   describe('useAccessibleFormField', () => {
     test('when id is supplied to hook', () => {
       const inputId = 'text-input-id';
-      const { result } = renderHook(
-        (props: string) => useAccessibleForm(props),
-        { initialProps: inputId },
-      );
+      const { result } = renderHook((_: string) => useAccessibleForm(_), {
+        initialProps: inputId,
+      });
 
       expect(result.current.inputProps.id).toEqual(inputId);
       expect(result.current.inputProps.id).toEqual(
@@ -40,9 +39,7 @@ describe('packages/a11y', () => {
     });
 
     test('when no id is supplied to hook', () => {
-      const { result } = renderHook((props: string) =>
-        useAccessibleForm(props),
-      );
+      const { result } = renderHook((_: string) => useAccessibleForm(_));
 
       expect(result.current.inputProps.id).toEqual(
         result.current.labelProps.htmlFor,
@@ -52,7 +49,7 @@ describe('packages/a11y', () => {
       );
     });
 
-    test('updates props correctly when the parameter passed to the hook changes', () => {
+    test('updates _ correctly when the parameter passed to the hook changes', () => {
       let inputId = 'text-input-id';
 
       const { result, rerender } = renderHook(() => useAccessibleForm(inputId));
@@ -82,7 +79,7 @@ describe('packages/a11y', () => {
   describe('validateAriaLabelProps', () => {
     beforeEach(() => (consoleSpy = jest.spyOn(console, 'error')));
     afterEach(() => jest.clearAllMocks());
-    test('when prop object does not contain valid props', () => {
+    test('when prop object does not contain valid _', () => {
       validateAriaLabelProps({}, 'TestComponent');
       expect(consoleSpy).toHaveBeenCalledWith(
         'For screen-reader accessibility, aria-label or aria-labelledby must be provided to TestComponent.',
@@ -119,47 +116,49 @@ describe('packages/a11y', () => {
   describe.skip('AriaLabelProps types', () => {
     test('AriaLabelProps', () => {
       // @ts-expect-error
-      const props1: AriaLabelProps = {};
-      const props2: AriaLabelProps = {
+      const _1: AriaLabelProps = {};
+      const _2: AriaLabelProps = {
         'aria-label': 'some label',
       };
-      const props3: AriaLabelProps = {
+      const _3: AriaLabelProps = {
         'aria-labelledby': '#some-id',
       };
-      const props4: AriaLabelProps = {
+      const _4: AriaLabelProps = {
         'aria-label': 'some label',
         'aria-labelledby': '#some-id',
       };
+      [_1, _2, _3, _4]; // Avoid TS error
     });
     test('AriaLabelPropsWithLabel', () => {
       // @ts-expect-error
-      const props1: AriaLabelPropsWithLabel = {};
-      const props2: AriaLabelPropsWithLabel = {
+      const _1: AriaLabelPropsWithLabel = {};
+      const _2: AriaLabelPropsWithLabel = {
         'aria-label': 'some label',
       };
-      const props3: AriaLabelPropsWithLabel = {
+      const _3: AriaLabelPropsWithLabel = {
         'aria-labelledby': '#some-id',
       };
-      const props4: AriaLabelPropsWithLabel = {
-        'aria-label': 'some label',
-        'aria-labelledby': '#some-id',
-      };
-      const props5: AriaLabelPropsWithLabel = {
-        label: 'some label',
-      };
-      const props6: AriaLabelPropsWithLabel = {
-        label: 'some label',
-        'aria-label': 'some label',
-      };
-      const props7: AriaLabelPropsWithLabel = {
-        label: 'some label',
-        'aria-labelledby': '#some-id',
-      };
-      const props8: AriaLabelPropsWithLabel = {
-        label: 'some label',
+      const _4: AriaLabelPropsWithLabel = {
         'aria-label': 'some label',
         'aria-labelledby': '#some-id',
       };
+      const _5: AriaLabelPropsWithLabel = {
+        label: 'some label',
+      };
+      const _6: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-label': 'some label',
+      };
+      const _7: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-labelledby': '#some-id',
+      };
+      const _8: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-label': 'some label',
+        'aria-labelledby': '#some-id',
+      };
+      [_1, _2, _3, _4, _5, _6, _7, _8]; // Avoid TS error
     });
   });
 });
