@@ -72,7 +72,6 @@ export const TextArea: TextArea = forwardRef<
   forwardedRef: React.Ref<HTMLTextAreaElement>,
 ) {
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-  const errorBaseFontSize = useUpdatedBaseFontSize();
   const id = useIdAllocator({ prefix: 'textarea', id: idProp });
   const { darkMode, theme } = useDarkMode(darkModeProp);
 
@@ -112,12 +111,21 @@ export const TextArea: TextArea = forwardRef<
   return (
     <div className={cx(containerStyles, className)}>
       {label && (
-        <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
+        <Label
+          baseFontSize={baseFontSize}
+          darkMode={darkMode}
+          htmlFor={id}
+          disabled={disabled}
+        >
           {label}
         </Label>
       )}
       {description && (
-        <Description darkMode={darkMode} disabled={disabled}>
+        <Description
+          baseFontSize={baseFontSize}
+          darkMode={darkMode}
+          disabled={disabled}
+        >
           {description}
         </Description>
       )}
@@ -145,7 +153,7 @@ export const TextArea: TextArea = forwardRef<
           <Error
             darkMode={darkMode}
             className={cx(
-              bodyTypeScaleStyles[errorBaseFontSize],
+              bodyTypeScaleStyles[baseFontSize],
               errorMessageLabelStyles,
             )}
           >
