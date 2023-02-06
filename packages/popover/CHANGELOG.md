@@ -1,5 +1,22 @@
 # @leafygreen-ui/popover
 
+## 11.0.5
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+- Updated dependencies [64eee134d]
+  - @leafygreen-ui/lib@10.1.0
+
+## 11.0.4
+
+### Patch Changes
+
+- Updated dependencies [741cdd408]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/tokens@2.0.0
+  - @leafygreen-ui/portal@4.0.9
+
 ## 11.0.3
 
 ### Patch Changes

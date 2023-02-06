@@ -1,5 +1,25 @@
 # @leafygreen-ui/guide-cue
 
+## 4.0.0
+
+### Major Changes
+
+- 3a77f3ff7: Remove `TooltipContent` export from index.ts
+
+### Patch Changes
+
+- Updated dependencies [050f1f8a9]
+- Updated dependencies [866144167]
+- Updated dependencies [c82ed35d5]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/icon@11.12.4
+  - @leafygreen-ui/typography@16.0.0
+  - @leafygreen-ui/button@19.0.4
+  - @leafygreen-ui/icon-button@15.0.4
+  - @leafygreen-ui/palette@3.4.7
+  - @leafygreen-ui/tooltip@9.1.3
+  - @leafygreen-ui/popover@11.0.4
+
 ## 3.0.1
 
 ### Patch Changes

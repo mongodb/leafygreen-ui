@@ -33,6 +33,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
 - [MongoNav](https://github.com/10gen/leafygreen-ui-private/tree/main/packages/mongo-nav) (This package lives in a private repository)
+- [Pagination](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pagination)
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
 - [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline)
 - [Popover](https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover)
@@ -150,6 +151,10 @@ To get started quickly and easily run `yarn create-package my-new-package`. When
 
 Note: it's important to follow the kebab-casing convention described above.
 
+- Add the new component to `build.tsconfig.json`
+- If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
+- Run `yarn run init` to link all packages before starting development
+
 ## Formatting and linting
 
 When you run `yarn fix`, we do the following:
@@ -212,6 +217,28 @@ Make sure that the PR includes the changes made by running this command.
 ```
 git push --follow-tags
 ```
+
+### Publishing Pre-releases
+
+Read more in-depth [pre-release guides here](https://github.com/changesets/changesets/blob/main/docs/prereleases.md)
+
+Pre-releases let you publish an alpha/beta/next version of a component, allowing developers to test a component before fully releasing a component.
+
+Let's imagine we want to publish a `beta` release of some component. Our work is being done on a branch called `new-feature`
+
+1. Create a new branch off your component branch `git checkout -b pre-release`
+   - this makes sure your package updates stay independent
+2. Enter pre-release mode: `yarn changeset pre enter beta` (name can be `next`, `beta`, `alpha`, or any other name)
+3. Update package versions `yarn changeset version`
+   - This will update any packages with existing changeset files to version `X.Y.Z-beta.0` (or whatever name you used)
+4. Commit these updates `git commit -am "Prerelease version packages"`
+5. Build the component(s) you're pre-releasing `yarn build <...components>`
+6. Publish the prerelease with `yarn changeset publish`
+
+Any new work you do should be done in the _original_ (`new-feature`) branch.
+To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5.
+
+When `new-feature` is merged into `main`, you can safely delete the `pre-release` branch
 
 ## Deploy gh-pages
 

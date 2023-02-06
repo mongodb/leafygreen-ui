@@ -18,6 +18,7 @@ There are two main ways to use `Polymorphic`, depending on whether the `as` prop
 ## Basic usage
 
 If the logic defining the `as` prop is defined internally within your component, use the standalone `Polymorph` component.
+A simple example of this may be rendering an element as a header or paragraph text depending on certain props passed in.
 
 ```tsx
 interface MyProps {
@@ -25,7 +26,7 @@ interface MyProps {
 }
 
 const MyComponent = (props: MyProps) => {
-  const shouldRenderAs = 'button';
+  const shouldRenderAs = props.isHeader ? 'h1' : 'p';
   return <Polymorph as={shouldRenderAs} {...props} />;
 };
 ```
@@ -33,6 +34,7 @@ const MyComponent = (props: MyProps) => {
 ## Extending Polymorphic behavior
 
 If you want to expose `as` as a prop of your component, use the `Polymorphic` factory function and related hooks.
+This is likely the more common use case, since it allows you to create new polymorphic components (such as a `Button` component that can render as a link, etc.)
 
 Note that any inherited props will be indeterminate in the factory function, since the value `as` is not known. (i.e. the attributes of `rest` in the following example are unknown).
 
@@ -83,6 +85,26 @@ export const MyInferredComponent = Polymorphic<
 <MyInferredComponent href="mongodb.design" />; // renders as <a>
 ```
 
+#### Inferred `as` with a default value
+
+Sometimes, when developing a component that uses Polymorphic, you'll want to set a default value for the `as` prop.
+For example, when creating a Button component, you may want to have the `as` prop default to the HTML `button` element.
+To set a default value for the inferred as value, you'll need to provide the default value both to TypeScript and React:
+
+```tsx
+export const MyInferredComponentWitDefault = InferredPolymorphic<
+  ExampleProps,
+  'button'
+>(({ as = 'button' as PolymorphicAs, title, ...rest }) => {
+  const { Component, ref } = useInferredPolymorphic(as, rest);
+  return (
+    <Component ref={ref} {...rest}>
+      {title}
+    </Component>
+  );
+});
+```
+
 ## With Emotion `styled` API
 
 `Polymorphic` also supports usage with Emotions `styled` API. To get TypeScript to accept the Polymorphic props you'll need to explicitly type your styled component as `PolymorphicComponentType`.
@@ -105,6 +127,21 @@ This also works with InferredPolymorphic components
 const StyledInferred = styled(MyInferredComponent)`
   color: hotpink;
 ` as InferredPolymorphicComponentType;
+```
+
+### With styled props (and Typescript)
+
+Since Polymorphic components are strictly typed, to use styled props with Typescript
+you will need to define the additional props you expect to use within styled, and pass these into styled as generic type.
+
+```tsx
+interface StyledProps {
+  color: string;
+}
+
+const MyStyledComponent = styled(MyComponent)<StyledProps>`
+  color: ${props => props.color};
+` as PolymorphicComponentType;
 ```
 
 Note: TSDocs will not compile for styled polymorphs. This can be remedied by creating a wrapper around the styled function that explicitly returns a PolymorphicComponentType

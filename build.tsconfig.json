@@ -81,6 +81,9 @@
       "path": "./packages/modal"
     },
     {
+      "path": "./packages/pagination"
+    },
+    {
       "path": "./packages/palette"
     },
     {

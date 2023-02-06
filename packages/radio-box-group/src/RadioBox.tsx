@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import {
-  useDarkMode,
-  useUsingKeyboardContext,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { RadioBoxGroupContext, useRadioBoxGroupContext } from './context';
 import {
@@ -72,7 +69,6 @@ export function RadioBox({
   ...rest
 }: RadioBoxProps) {
   const radioBoxGroupContext = useRadioBoxGroupContext();
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { darkMode: darkModeContext } = useDarkMode(darkModeProp);
 
   const localId = useIdAllocator({
@@ -103,7 +99,6 @@ export function RadioBox({
     checked,
     disabled,
     size,
-    showFocus,
     darkMode,
   });
 

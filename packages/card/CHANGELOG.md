@@ -1,5 +1,14 @@
 # @leafygreen-ui/card
 
+## 9.0.4
+
+### Patch Changes
+
+- Updated dependencies [741cdd408]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/tokens@2.0.0
+  - @leafygreen-ui/palette@3.4.7
+
 ## 9.0.3
 
 ### Patch Changes

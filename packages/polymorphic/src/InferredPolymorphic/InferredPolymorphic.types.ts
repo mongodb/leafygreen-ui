@@ -1,5 +1,6 @@
 import {
   AnchorProps,
+  PolymorphicAs,
   PolymorphicComponentType,
 } from '../Polymorphic/Polymorphic.types';
 
@@ -17,5 +18,7 @@ export type InferredPolymorphicProps<P = {}> =
 /**
  * An extension of `PolymorphicComponentType` that wraps additional props in `InferredPolymorphicProps`
  */
-export type InferredPolymorphicComponentType<XP = {}> =
-  PolymorphicComponentType<InferredPolymorphicProps<XP>>;
+export type InferredPolymorphicComponentType<
+  XP = {},
+  DefaultAs extends PolymorphicAs = PolymorphicAs,
+> = PolymorphicComponentType<InferredPolymorphicProps<XP>, DefaultAs>;

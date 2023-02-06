@@ -1,5 +1,33 @@
 # @leafygreen-ui/select
 
+## 10.2.0
+
+### Minor Changes
+
+- a089bf899: Allows aria-label as acceptable aria label prop in Select
+
+### Patch Changes
+
+- c1c259036: Exporting types
+
+## 10.1.1
+
+### Patch Changes
+
+- c82ed35d5: Removes `useUsingKeyboardContext` from component, in favor of `&:focus-visible`
+- b24b21462: Storybook: Updates story files to be on par with existing mongodb.design examples
+- Updated dependencies [050f1f8a9]
+- Updated dependencies [741cdd408]
+- Updated dependencies [866144167]
+- Updated dependencies [c82ed35d5]
+- Updated dependencies [b24b21462]
+  - @leafygreen-ui/icon@11.12.4
+  - @leafygreen-ui/tokens@2.0.0
+  - @leafygreen-ui/typography@16.0.0
+  - @leafygreen-ui/button@19.0.4
+  - @leafygreen-ui/palette@3.4.7
+  - @leafygreen-ui/popover@11.0.4
+
 ## 10.1.0
 
 ### Minor Changes

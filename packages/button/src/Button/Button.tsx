@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 
 import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
-import {
-  useDarkMode,
-  useUsingKeyboardContext,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { ButtonContent } from '../ButtonContent/ButtonContent';
@@ -36,7 +33,6 @@ export const Button = React.forwardRef(function Button(
   }: BoxProps<'button', ButtonProps>,
   forwardRef,
 ) {
-  const { usingKeyboard } = useUsingKeyboardContext();
   const { darkMode } = useDarkMode(darkModeProp);
 
   const buttonStyles = getClassName({
@@ -45,7 +41,6 @@ export const Button = React.forwardRef(function Button(
     darkMode,
     baseFontSize,
     disabled,
-    usingKeyboard,
   });
 
   const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
