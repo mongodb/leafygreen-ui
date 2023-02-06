@@ -1,5 +1,13 @@
 # @leafygreen-ui/toast
 
+## 4.0.4
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+- Updated dependencies [64eee134d]
+  - @leafygreen-ui/lib@10.1.0
+
 ## 4.0.3
 
 ### Patch Changes
