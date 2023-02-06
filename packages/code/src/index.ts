@@ -1,4 +1,5 @@
-export { default } from './Code/Code';
+import { Code } from './Code';
+export { Code };
 export { variantColors } from './globalStyles';
 export type {
   CodeProps,
@@ -6,3 +7,5 @@ export type {
   SyntaxProps,
 } from './types';
 export { Language, Mode } from './types';
+
+export default Code;

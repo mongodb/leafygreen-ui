@@ -14,6 +14,7 @@ import Panel from '../Panel/Panel';
 import Syntax from '../Syntax/Syntax';
 import { CodeProps, Language } from '../types';
 import WindowChrome from '../WindowChrome/WindowChrome';
+
 import {
   baseScrollShadowStyles,
   codeWrapperStyle,
