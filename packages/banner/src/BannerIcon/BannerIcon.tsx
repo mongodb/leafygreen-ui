@@ -23,6 +23,9 @@ const Icons: Record<Variant, React.ComponentType<any>> = {
   [Variant.Success]: CheckmarkWithCircleIcon,
 };
 
+/**
+ * @internal
+ */
 const BannerIcon = ({
   image,
   baseFontSize,
