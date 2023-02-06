@@ -1,5 +1,15 @@
 # @leafygreen-ui/select
 
+## 10.2.0
+
+### Minor Changes
+
+- a089bf899: Allows aria-label as acceptable aria label prop in Select
+
+### Patch Changes
+
+- c1c259036: Exporting types
+
 ## 10.1.1
 
 ### Patch Changes
