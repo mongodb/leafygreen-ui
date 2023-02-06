@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 10.1.0
+
+### Minor Changes
+
+- 64eee134d: Adds additional storybook exports from `lib`
+
 ## 10.0.0
 
 ### Major Changes
