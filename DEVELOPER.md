@@ -71,3 +71,10 @@ We use @testing-library/react for writing tests locally. This library helps mock
 #### Linking
 
 We also have a link script, such that you can test components that are in development in environments beyond Storybook. To do so, run `yarn run link -- [path-to-application]`.
+
+## Creating a new component
+
+- Run `yarn create-package <package-name>` to create a new component directory with default configurations
+- Add the new component to `build.tsconfig.json`
+- If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
+- Run `yarn run init` to link all packages before starting development
