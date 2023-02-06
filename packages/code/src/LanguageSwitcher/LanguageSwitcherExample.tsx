@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Language, LanguageOption } from './types';
-import Code from '.';
+import { Language, LanguageOption } from '../types';
+import Code from '..';
 
 export function PythonLogo({ className }: { className?: string }) {
   return (
