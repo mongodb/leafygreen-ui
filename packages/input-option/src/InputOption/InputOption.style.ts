@@ -16,6 +16,7 @@ export const inputOptionStyles = css`
   margin: 0;
   text-align: left;
   text-decoration: none;
+  cursor: pointer;
 
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
@@ -44,14 +45,12 @@ export const inputOptionThemeStyles: Record<Theme, string> = {
 
 export const inputOptionHoverStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    cursor: pointer;
     &:hover {
       outline: none;
       background-color: ${palette.gray.light2};
     }
   `,
   [Theme.Dark]: css`
-    cursor: pointer;
     &:hover {
       outline: none;
       background-color: ${palette.gray.dark4};

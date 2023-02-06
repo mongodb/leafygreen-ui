@@ -9,7 +9,6 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
  *
  * `active`: The element is selected, or otherwise active (including `:active`)
  */
-
 export interface BaseInputOptionProps {
   /**
    * Content to appear inside of option
@@ -43,7 +42,6 @@ export interface BaseInputOptionProps {
 
   /**
    * Determines whether to show hover, focus and active styles
-   *
    * @default true
    */
   isInteractive?: boolean;

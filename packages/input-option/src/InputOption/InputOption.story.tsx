@@ -45,4 +45,4 @@ const Template = (props: InputOptionProps) => (
   <InputOption {...props}>Some text</InputOption>
 );
 
-export const Generic = Template.bind({});
+export const Basic = Template.bind({});
