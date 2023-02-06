@@ -1,10 +1,11 @@
 import React from 'react';
 
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
-import { baseStyles, sizeStyles, srOnly } from './TogglePassword.styles';
+import { baseStyles, sizeStyles } from './TogglePassword.styles';
 import { TogglePasswordProps } from './TogglePassword.types';
 
 export const TogglePassword = ({
@@ -28,9 +29,9 @@ export const TogglePassword = ({
       >
         <Icon aria-hidden={true} glyph={showPasswordIcon} />
       </IconButton>
-      <p aria-live="polite" id="password-text" className={srOnly}>
+      <VisuallyHidden aria-live="polite" id="password-text">
         {showPassword ? 'Password shown' : 'Password hidden'}
-      </p>
+      </VisuallyHidden>
     </>
   );
 };

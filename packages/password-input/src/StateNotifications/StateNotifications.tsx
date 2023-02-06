@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
@@ -7,7 +8,6 @@ import ErrorIcon from '@leafygreen-ui/icon/dist/X';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { States } from '../PasswordInput/PasswordInput.types';
-import { srOnly } from '../TogglePassword/TogglePassword.styles';
 
 import {
   baseStyles,
@@ -53,10 +53,10 @@ export const StateNotifications = ({
               className={cx(iconBaseStyles, iconThemeStateStyles[theme][state])}
             />
             <span>{notification}</span>
-            <div className={srOnly} aria-live="assertive">
+            <VisuallyHidden aria-live="assertive">
               {/* TODO: is this message clear enough for screen readers? */}
               {notification}: {state}
-            </div>
+            </VisuallyHidden>
           </li>
         );
       })}

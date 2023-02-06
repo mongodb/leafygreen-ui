@@ -9,6 +9,9 @@
   "include": ["src/**/*"],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
       "path": "../lib"
     },
     {
