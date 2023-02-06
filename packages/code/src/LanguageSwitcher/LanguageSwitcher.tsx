@@ -6,97 +6,19 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType, Theme } from '@leafygreen-ui/lib';
+import { isComponentType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Option, Select } from '@leafygreen-ui/select';
-import { spacing } from '@leafygreen-ui/tokens';
 
-import { LanguageOption, PopoverProps } from './types';
+import { LanguageOption, PopoverProps } from '../types';
 
-const containerStyle = css`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const menuButtonStyle = css`
-  // Override default menuButton styles
-  margin-top: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 0px;
-  border: 0;
-  font-size: 12px;
-
-  &:hover,
-  &:focus,
-  &:active {
-    box-shadow: 0 0 0 0;
-    border: 0;
-  }
-
-  // Override button defaults
-  > *:last-child {
-    grid-template-columns: 16px 1fr 16px;
-    padding: 0 12px;
-    > svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
-`;
-
-const buttonModeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${palette.white};
-    border-right: 1px solid ${palette.gray.light2};
-    box-shadow: 0 0 0 0;
-
-    &:hover,
-    &:active,
-    &:focus {
-      border-right: 1px solid ${palette.gray.light2};
-    }
-
-    &:hover {
-      background-color: ${palette.gray.light2};
-    }
-
-    &:focus-visible {
-      background-color: ${palette.blue.light2};
-    }
-  `,
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark2};
-    border-right: 1px solid ${palette.gray.dark1};
-    color: ${palette.gray.light2};
-
-    &:hover,
-    &:focus,
-    &:active {
-      border-right: 1px solid ${palette.gray.dark1};
-    }
-
-    &:hover,
-    &:active {
-      background-color: ${palette.gray.dark1};
-    }
-
-    &:focus-visible {
-      background-color: ${palette.blue.light1};
-    }
-  `,
-};
-
-const selectStyle = css`
-  min-width: 144px;
-  height: 100%;
-`;
-
-const iconMargin = css`
-  margin-right: ${spacing[3]}px;
-`;
+import {
+  buttonModeStyle,
+  containerStyle,
+  iconMargin,
+  menuButtonStyle,
+  selectStyle,
+} from './LanguageSwitcher.styles';
 
 function isLeafyGreenIcon(element: React.ReactNode) {
   if (isComponentGlyph(element) || isComponentType(element, 'Icon')) {

@@ -8,8 +8,11 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
+import LanguageSwitcherExample, {
+  PythonLogo,
+} from '../LanguageSwitcher/LanguageSwitcherExample';
+
 import Code, { hasMultipleLines } from './Code';
-import LanguageSwitcherExample, { PythonLogo } from './LanguageSwitcherExample';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
