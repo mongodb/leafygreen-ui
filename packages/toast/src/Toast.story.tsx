@@ -22,6 +22,7 @@ export default {
     open: true,
     variant: Variant.Note,
     darkMode: false,
+    progress: 0,
     className: css`
       z-index: 1;
     `,
