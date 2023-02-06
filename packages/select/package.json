@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/select",
-  "version": "10.1.1",
+  "version": "10.2.0",
   "description": "leafyGreen UI Kit Select",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
