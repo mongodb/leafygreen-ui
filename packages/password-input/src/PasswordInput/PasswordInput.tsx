@@ -150,7 +150,7 @@ export const PasswordInput = React.forwardRef<
           </div>
           {hasNotifications && (
             <StateNotifications
-              ariaDescribedby={descriptionId}
+              id={descriptionId}
               notifications={stateNotifications as Array<NotificationProps>}
             />
           )}

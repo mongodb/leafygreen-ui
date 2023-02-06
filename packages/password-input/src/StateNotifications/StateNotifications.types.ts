@@ -4,6 +4,6 @@ import { NotificationProps } from '../PasswordInput/PasswordInput.types';
 
 export interface StateNotificationsProps
   extends ComponentPropsWithoutRef<'ul'> {
-  ariaDescribedby: string;
+  id: string;
   notifications: Array<NotificationProps>;
 }

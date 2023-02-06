@@ -26,7 +26,7 @@ const icons: Record<States, React.ComponentType<any>> = {
 };
 
 export const StateNotifications = ({
-  ariaDescribedby,
+  id,
   notifications,
   ...rest
 }: StateNotificationsProps) => {
@@ -34,12 +34,7 @@ export const StateNotifications = ({
 
   return (
     // We're using aria-polite to announce when a message has changed. In order for aria-polite to work correctly the message wrapper needs to remain on the page even if there are no messages. If a custom message container is specified with aria-describedby then this wrapper will not render.
-    <ul
-      aria-live="polite"
-      className={wrapperStyles}
-      id={ariaDescribedby}
-      {...rest}
-    >
+    <ul aria-live="polite" className={wrapperStyles} id={id} {...rest}>
       {notifications.map((item, index) => {
         const { state, notification } = item;
         const ValidationIcon = icons[state];
@@ -55,7 +50,7 @@ export const StateNotifications = ({
             <span>{notification}</span>
             <VisuallyHidden aria-live="assertive">
               {/* TODO: is this message clear enough for screen readers? */}
-              {notification}: {state}
+              {`${notification}: ${state}`}
             </VisuallyHidden>
           </li>
         );

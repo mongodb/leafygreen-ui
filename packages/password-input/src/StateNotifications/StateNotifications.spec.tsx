@@ -5,7 +5,7 @@ import { axe } from 'jest-axe';
 import { StateNotifications } from '.';
 
 const defaultProps = {
-  ['aria-describedby']: 'This is aria-describedby text',
+  id: 'This is aria-describedby text',
   notifications: [
     {
       notification: 'message one',
@@ -101,9 +101,7 @@ describe('sub-component StateNotifications', () => {
 
     test('input aria-describedby attribute matches aria-describedby prop', () => {
       const { stateNotification } = renderStateNotifications(defaultProps);
-      expect(stateNotification.getAttribute('aria-describedby')).toBe(
-        defaultProps['aria-describedby'],
-      );
+      expect(stateNotification.getAttribute('id')).toBe(defaultProps.id);
     });
   });
 });
