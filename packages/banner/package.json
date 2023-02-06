@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/banner",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "description": "leafyGreen UI Kit Banner",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^10.0.0",
+    "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/palette": "^3.4.7",
     "@leafygreen-ui/icon": "^11.12.4",

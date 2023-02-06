@@ -1,5 +1,11 @@
 # @leafygreen-ui/marketing-modal
 
+## 4.0.3
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+
 ## 4.0.2
 
 ### Patch Changes
