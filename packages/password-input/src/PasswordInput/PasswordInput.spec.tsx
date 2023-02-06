@@ -26,6 +26,12 @@ const defaultProps = {
   ],
 };
 
+const iconAriaLabels = {
+  warning: 'Warning Icon',
+  error: 'X Icon',
+  valid: 'Checkmark Icon',
+};
+
 function renderPasswordInput(props = {}) {
   const utils = render(
     // @ts-expect-error
@@ -198,6 +204,50 @@ describe('packages/password-input', () => {
         defaultProps.ariaDescribedby,
       );
     });
+
+    test('input shows error(x) icon', async () => {
+      const { container } = renderPasswordInput({
+        [`aria-describedby`]: defaultProps.ariaDescribedby,
+        stateNotifications: 'error',
+        label: defaultProps.label,
+      });
+      expect(
+        container.querySelector(`[aria-label='${iconAriaLabels.error}']`),
+      ).toBeInTheDocument();
+    });
+
+    test('input shows warning icon', async () => {
+      const { container } = renderPasswordInput({
+        [`aria-describedby`]: defaultProps.ariaDescribedby,
+        stateNotifications: 'warning',
+        label: defaultProps.label,
+      });
+      expect(
+        container.querySelector(`[aria-label='${iconAriaLabels.warning}']`),
+      ).toBeInTheDocument();
+    });
+
+    test('input shows checkmark icon', async () => {
+      const { container } = renderPasswordInput({
+        [`aria-describedby`]: defaultProps.ariaDescribedby,
+        stateNotifications: 'valid',
+        label: defaultProps.label,
+      });
+      expect(
+        container.querySelector(`[aria-label='${iconAriaLabels.valid}']`),
+      ).toBeInTheDocument();
+    });
+
+    test('input does not show checkmark icon', async () => {
+      const { container } = renderPasswordInput({
+        [`aria-describedby`]: defaultProps.ariaDescribedby,
+        stateNotifications: 'none',
+        label: defaultProps.label,
+      });
+      expect(
+        container.querySelector(`[aria-label='${iconAriaLabels.valid}']`),
+      ).not.toBeInTheDocument();
+    });
   });
 
   /* eslint-disable jest/no-disabled-tests */
@@ -239,5 +289,3 @@ describe('packages/password-input', () => {
     </>;
   });
 });
-
-// TODO: add tests for icon inside input when custom message container is used
