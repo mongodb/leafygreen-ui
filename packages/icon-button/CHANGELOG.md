@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 15.0.5
+
+### Patch Changes
+
+- c1c259036: Exporting types
+
 ## 15.0.4
 
 ### Patch Changes

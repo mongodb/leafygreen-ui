@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 1.1.1
+
+### Patch Changes
+
+- 97cf09502: Adds additional styled test, and documents `styled` props best practice
+
 ## 1.1.0
 
 ### Minor Changes
