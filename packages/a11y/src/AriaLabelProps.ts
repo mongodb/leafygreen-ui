@@ -11,7 +11,9 @@ export type AriaLabelProps =
       'aria-labelledby': string;
     };
 
-// https://jira.mongodb.org/browse/LG-2858
+/**
+ * A union interface requiring _either_ `label`, `aria-label` or `aria-labelledby`
+ */
 export type AriaLabelPropsWithLabel =
   | {
       label: string;
