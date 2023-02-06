@@ -27,7 +27,7 @@
     "@leafygreen-ui/lib": "^10.0.0",
     "@leafygreen-ui/palette": "^3.4.7",
     "@leafygreen-ui/popover": "^11.0.4",
-    "@leafygreen-ui/polymorphic": "1.1.0",
+    "@leafygreen-ui/polymorphic": "^1.1.0",
     "@leafygreen-ui/tokens": "^2.0.0",
     "lodash": "^4.17.21",
     "react-transition-group": "^4.4.1"
