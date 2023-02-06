@@ -12,6 +12,7 @@
 - [CSS-in-JS](#CSS-in-JS)
 - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
 - [API Patterns](#API-Patterns)
+- [Forwarding Refs](#Forwarding-Refs)
 - [References](#References)
 
 ## <a id="To-Contribute">To Contribute</a>
@@ -410,6 +411,26 @@ const childStyles = css`
 - Use `state='error'` to show the input with a warning icon and red border. This property must be set to `error` in order for an `errorMessage` to render, otherwise the `errorMessage` will be ignored.
 - Use `errorMessage` prop to set the error message that is displayed next to the input.
 - If `state='error'` but `errorMessage` is not defined, require `aria-describedby`
+
+---
+
+## <a id="Forwarding-Refs">Forwarding Refs</a>
+
+---
+
+Ref forwarding allows us to expose the parent wrapper DOM element when a `ref` is passed to a LG component. For more information on ref forwarding, check out the React [docs](https://reactjs.org/docs/forwarding-refs.html).
+
+#### Prefer
+
+```typescript
+const Button = React.forwardRef((props, ref) => (
+  <button ref={ref}>{props.children}</button>
+));
+
+// You can now get a ref directly to the DOM button:
+const ref = useRef<null | HTMLButtonElement>(null);
+<Button ref={ref}>Click me!</Button>;
+```
 
 ---
 
