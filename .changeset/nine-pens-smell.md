@@ -2,4 +2,4 @@
 '@leafygreen-ui/text-input': patch
 ---
 
-add `darkMode` to PropTypes
+Adds `darkMode` to PropTypes and adds warning to use `PasswordInput` if `type='password'`.

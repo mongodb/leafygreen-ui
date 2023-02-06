@@ -125,13 +125,19 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 
     if (type === 'search') {
       consoleOnce.warn(
-        'We recommend using the Leafygreen SearchInput for `type="search" inputs.',
+        'We recommend using the Leafygreen SearchInput for `type="search"` inputs.',
       );
       if (!rest['aria-label']) {
         console.error(
           'For screen-reader accessibility, aria-label must be provided to TextInput.',
         );
       }
+    }
+
+    if (type === 'password') {
+      consoleOnce.warn(
+        'We recommend using the Leafygreen PasswordInput for `type="password"` inputs.',
+      );
     }
 
     const RenderedCheckmarkIcon = darkMode
