@@ -40,28 +40,28 @@ export const PasswordInput = React.forwardRef<
     {
       value: valueProp,
       onChange: onChangeProp,
-      className,
       darkMode: darkModeProp,
-      label,
+      id: idProp,
+      'aria-describedby': ariaDescribedbyProp,
+      'aria-labelledby': ariaLabelledbyProp,
       sizeVariant = SizeVariant.Default,
       stateNotifications = [],
       disabled = false,
       autoComplete = 'new-password',
-      id: idProp,
-      'aria-describedby': ariaDescribedbyProp,
-      'aria-labelledby': ariaLabelledbyProp,
+      className,
+      label,
       ...rest
     }: PasswordInputProps,
     forwardedRef,
   ) => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const prefix = 'passwordinput';
+    const prefix = 'lg-passwordinput';
     const inputId = useIdAllocator({ prefix, id: idProp });
-    const ariaDescribedby = useIdAllocator({
+    const descriptionId = useIdAllocator({
       prefix,
       id: ariaDescribedbyProp,
     });
-    const ariaLabelledby = useIdAllocator({
+    const labelId = useIdAllocator({
       prefix,
       id: ariaLabelledbyProp,
     });
@@ -96,10 +96,10 @@ export const PasswordInput = React.forwardRef<
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div className={cx(className)} ref={forwardedRef}>
+        <div className={className} ref={forwardedRef}>
           {label && (
             <Label
-              id={ariaLabelledby}
+              id={labelId}
               className={cx(labelBaseStyles, {
                 [labelLargeOverrideStyles]: sizeVariant === SizeVariant.Large,
               })}
@@ -115,8 +115,8 @@ export const PasswordInput = React.forwardRef<
               value={value}
               id={inputId}
               autoComplete={autoComplete}
-              aria-describedby={ariaDescribedby}
-              aria-labelledby={ariaLabelledby}
+              aria-describedby={descriptionId}
+              aria-labelledby={labelId}
               aria-disabled={disabled}
               aria-invalid={state === States.Error || state === States.Warning}
               className={cx(
@@ -150,7 +150,7 @@ export const PasswordInput = React.forwardRef<
           </div>
           {hasNotifications && (
             <StateNotifications
-              ariaDescribedby={ariaDescribedby}
+              ariaDescribedby={descriptionId}
               notifications={stateNotifications as Array<NotificationProps>}
             />
           )}
