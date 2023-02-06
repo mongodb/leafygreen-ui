@@ -1,31 +1,33 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+} from '@leafygreen-ui/lib';
 
 import { TextAreaProps } from './TextArea/TextArea.types';
 import TextArea from '.';
 
 type LGProviderBaseFontSize = 14 | 16;
 
-export const StoryTextArea: React.FC<
+const StoryTextArea: React.FC<
   TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }
 > = props => <TextArea {...props} />;
 
 export default {
   title: 'Components/TextArea',
   component: StoryTextArea,
+  parameters: {
+    controls: {
+      exclude: [...storybookExcludedControlParams],
+    },
+  },
   argTypes: {
     baseFontSize: {
       options: [undefined, 13, 16],
       control: { type: 'radio' },
-    },
-    lgProviderBaseFontSize: {
-      options: [14, 16],
-      control: { type: 'radio' },
-      description:
-        'Storybook prop only. This font size is passed into the LeafygreenProvider. ',
     },
     label: { control: 'text' },
     description: { control: 'text' },
@@ -33,10 +35,24 @@ export default {
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
-  excludeStories: ['StoryTextArea'],
-};
+  args: {
+    label: 'Label',
+    description: 'This is a description for the text area',
+    errorMessage: 'This is an error message',
+    disabled: false,
+    placeholder: 'Placeholder',
+  },
+} as ComponentMeta<typeof TextArea>;
 
-const Template: ComponentStory<typeof StoryTextArea> = ({
+export const Basic: ComponentStory<typeof TextArea> = ({
+  baseFontSize,
+  darkMode,
+  ...args
+}: TextAreaProps) => (
+  <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
+);
+
+export const WithProvider: ComponentStory<typeof StoryTextArea> = ({
   baseFontSize,
   darkMode,
   lgProviderBaseFontSize,
@@ -46,13 +62,14 @@ const Template: ComponentStory<typeof StoryTextArea> = ({
     <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
   </LeafygreenProvider>
 );
-
-export const Basic = Template.bind({});
-Basic.args = {
-  label: 'Label',
-  description: 'This is a description for the text area',
-  errorMessage: 'This is an error message',
-  disabled: false,
-  placeholder: 'Placeholder',
+WithProvider.argTypes = {
+  lgProviderBaseFontSize: {
+    options: [14, 16],
+    control: { type: 'radio' },
+    description:
+      'Storybook prop only. This font size is passed into the LeafygreenProvider. ',
+  },
+};
+WithProvider.args = {
   lgProviderBaseFontSize: 14,
 };
