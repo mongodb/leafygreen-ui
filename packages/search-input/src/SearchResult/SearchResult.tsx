@@ -37,6 +37,11 @@ export const SearchResult = Polymorphic<
   ) => {
     const { theme } = useDarkMode(darkMode);
     const textContent = getNodeTextContent(children);
+    /**
+     * If `rest[aria-label]` exists, use that;
+     * if `rest['aria-labelledby']` exists, then we have no label;
+     * if neither exist we set the label to `textContent`
+     */
     const ariaLabel =
       rest['aria-label'] ?? rest['aria-labelledby'] ? '' : textContent;
 
